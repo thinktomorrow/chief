@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class="active"><a href="tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Tutorial Menu
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> LESS Tutorial </a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="#less-1" data-toggle="tab">FAQs</a>
+                                    </li>
+                                    <li><a href="#less-2" data-toggle="tab">Getting Started</a>
+                                    </li>
+                                    <li><a href="#less-3" data-toggle="tab">Theme File Structure</a>
+                                    </li>
+                                    <li><a href="#less-4" data-toggle="tab">Less Optimizations</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item cdisable">
+                                <a class="cdisable" href="admin-forms.html" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!"> Email Templates </a>
+                            </li>
+                            <li class="list-group-item cdisable">
+                                <a class="cdisable" href="admin-forms.html" data-toggle="tooltip" data-placement="bottom" title="Coming Soon!"> Performance Optimizations </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To Plugin Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           LESS TUTORIAL
+                        ----------------------->
+
+                        <div class="tab-pane fade in active" id="less-1" role="tabpanel">
+
+
+                        	<div class="pull-right posr" style="top: -10px;"> 
+                        		<img src="../resources/img/less-logo.png" width="95" height="43" title="less logo">
+                        	</div>
+
+                            <h3 id="" class="page-header">Less Tutorial - FAQs </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">What is Less?</h2>
+                                <p class="mb10">Less is a CSS pre-processor, meaning that it extends the CSS language, adding features that allow variables, mixins, functions and many other techniques that allow you to make CSS that is more maintainable, themable and extendable.</p>
+                                <p>Less runs inside Node, in the browser and inside Rhino. There are also many 3rd party tools that allow you to compile your files and watch for changes.</p>
+
+                                <h2 id="forms-horizontal">Why use Less?</h2>
+                                <p>AdminDesigns uses Less to perform many theme optimizations and performance improvements. By using Less you unlock the themes true framework power. You can modify header and sidebar options, create new color schemes, or disable plugins and resources in the blink of an eye. </p>
+
+                                <h2 class="mb20">Where can I learn More?</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://lesscss.org/#">http://lesscss.org/#</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://lesscss.org/features/">http://lesscss.org/features/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/less/less.js">https://github.com/less/less.js</a></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+                    <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade" id="less-2" role="tabpanel">
+
+
+                        	<div class="pull-right posr" style="top: -10px;"> 
+                        		<img src="../resources/img/less-logo.png" width="95" height="43" title="less logo">
+                        	</div>
+
+                            <h3 id="" class="page-header">Less Tutorial - Getting Started</h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <h2 id="forms-horizontal">Picking a Compiler</h2>
+                                <p> As previously mentioned Less is a css pre-processor, which means that the data needs to be compiled prior to use. There are many advanced ways to do this. However, for the purpose of this tutorial we are going to use the <b>Windows</b> based GUI compiler <b class="text-info">WinLESS</b>. This will allow even those who have never used Less to get up and started quickly.</p>
+                                <div class="table-responsive mb40">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-2">
+                                        <col class="col-xs-7">
+                                        <col class="col-xs-3">
+                                      </colgroup>
+                                      <thead class="">
+                                        <tr>
+                                          <th>GUI Compiler</th>
+                                          <th>Website</th>
+                                          <th>Operating System</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">WinLess:</th>
+                                          <td><a target="_blank" href="https://github.com/marklagendijk/WinLess">https://github.com/marklagendijk/WinLess</a></td>
+                                          <td>Windows</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">LESS.app:</th>
+                                          <td><a target="_blank" href="http://incident57.com/less">http://incident57.com/less</a></td>
+                                          <td>OSx</td> 
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Plessc:</th>
+                                          <td><a target="_blank" href="https://github.com/Mte90/Plessc">https://github.com/Mte90/Plessc</a></td>
+                                          <td>Linux</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">More Info:</th>
+                                          <td><a target="_blank" href="http://lesscss.org/usage/#guis-for-less">http://lesscss.org/usage/#guis-for-less</a></td>
+                                          <td>Mixed</td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                 <h2 id="forms-horizontal">Step 1 - Download Your Compiler</h2>
+                                 <div class="panel-body br-a br-grey mb20" style="border-left: 4px solid #e9573f !important">
+                                 This tutorial uses the <b>Windows</b> based GUI compiler <b>WinLESS</b>. There are many alternate and more advanced ways to compile your Less project. If you choose to use another method or compiler than this tutorial will simply help explain the AdminDesigns Less file structure                                 </div>
+                                 <div class="img-step mt30">
+                                 	<img src="../resources/img/step1.jpg" class="img-responsive" title="step1">
+                                 </div>
+
+
+                                 <h2 id="forms-horizontal">Step 2 - Install The Compiler</h2>
+                                 <div class="img-step mt30">
+                                 	<img src="../resources/img/step2.png" class="img-responsive" title="step2">
+                                 </div>
+
+ 
+                                 <h2 id="forms-horizontal">Step 3 - Configure Compiler Settings</h2>
+                                 <div class="img-step mt30">
+                                 	<img src="../resources/img/step3.jpg" class="img-responsive" title="step3">
+                                 </div>
+
+
+                                 <h2 id="forms-horizontal">Step 4 - Add Child Theme Less Folder</h2>
+                                 <div class="img-step mt30">
+                                 	<img src="../resources/img/step4.jpg" class="img-responsive" title="step4">
+                                 </div>
+
+
+                                 <h2 id="forms-horizontal">Step 5 - Select only Master Less File</h2>
+                                 <div class="panel-body br-a br-grey mb20" style="border-left: 4px solid #e9573f !important">
+                                 <b>theme.less</b> is the master less file and is the only file which needs to be compiled. It pulls in all of the options and resources required for the entire theme and outputs them to a single css file(theme.css).</div>
+                                 <div class="img-step mt30">
+                                 	<img src="../resources/img/step6.jpg" class="img-responsive" title="step6">
+                                 </div>
+
+
+                                 <h2 id="forms-horizontal">That's it<small> -  Make changes and await success message!</small></h2>
+                                 <div class="panel-body br-a br-grey mb20" style="border-left: 4px solid #70ca63 !important">
+                                 All changes made to <code>.less</code> files are automatically detected and recompiled into <code>theme.css</code>. If you do not see a confirmation message please check that the setting in "Step 3" has been turned on.</div>
+                                 <div class="img-step mt30">
+                                 	<img src="../resources/img/step-complete.png" class="img-responsive" title="completed">
+                                 </div>
+
+
+
+                    <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade" id="less-3" role="tabpanel">
+
+
+                        	<div class="pull-right posr" style="top: -10px;"> 
+                        		<img src="../resources/img/less-logo.png" width="95" height="43" title="less logo">
+                        	</div>
+
+                            <h3 id="" class="page-header">Less Tutorial - Theme File Structure</h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <h2 id="forms-horizontal">Child Themes and Inheritance <small class="text-danger">Important</small></h2>
+                                <p> AdminDesigns uses a <b class="text-info">Child-Theme</b> based file methodology to organize and structure its files. Many individuals with experience in Wordpress or Drupal may already be familiar with this system. This type of organization focuses on creating a "Parent" or "Base" theme which is responsible for creating nearly every element found in the framework. A "Child" theme is then created which inheritants these Parent base styles.</p>
+
+                                <p> By using this system the user can make theme edits and changes without <b>ever</b> modifying the themes core, a task solely reserved for the themes author. This ensures theme stability and most importantly seperates the authors work from yours.</p>
+
+                                <code> Author Updates - Theme Core/"Parent Theme"</code><br>
+                                <code> User Updates - Child Theme(default-skin) or any other you create</code><br><br>
+
+                                <ul class="fs14 list-unstyled list-spacing-10 mb10 pl5 hidden">
+                                    <li>
+                                      <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                      Can make theme modifications without editing any of the themes core styles
+                                    </li>
+                                    <li>
+                                      <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                      <b> Three</b> new contextual classes have been added -
+                                                        <span class="label label-alert ph10 mh5">Alert</span>
+                                                        <span class="label label-system ph10 mr5">System</span>
+                                                        <span class="label label-dark ph10">Dark</span>
+                                    </li>
+                                    <li>
+                                      <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                      These contextual classes have been extended to nearly all elements, inputs, and widgets.
+                                    </li>
+                                    <li>
+                                      <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                      Each contextual has an additional <b> two shades </b> to select from <code> .light .dark </code>
+                                    </li>
+                                    <li>
+                                      <i class="fa fa-exclamation-circle text-warning fa-lg pr10"></i>
+                                      To reduce CSS bloat individual contextuals can be easily disabled <b>(see LESS section of Docs)</b>
+                                    </li>
+                                  </ul>
+
+                                <h2 id="forms-horizontal">Child Theme - Default Skin</h2>
+                                <p> The "default_skin" is a premade Child-Theme we have provided to get you started. It applies all of its own settings, colors, and options to the elements it pulls from the Parent Theme. Creating a new unique theme without ever directly modifying the themes core.</p>
+                                <div class="bs-example required-url">
+                                    <code>theme/assets/skins/default_skin/less/</code>
+                                </div>
+                                <div class="bs-example required-files">
+                                    <code> - theme.less</code><br>
+                                    <code> - theme-base.less</code><br>
+                                    <code> - theme-settings.less</code><br>
+                                    <code> - theme-variables.less</code><br>
+                                </div>
+                                <div class="table-responsive mb40">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-2">
+                                        <col class="col-xs-10">
+                                      </colgroup>
+                                      <thead class="">
+                                        <tr>
+                                          <th>Directory File</th>
+                                          <th>File Overview</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <td>theme.less</td>
+                                          <td>Themes <b>Master</b> Less file. Pulls in all options and resources required for the entire theme and outputs a single theme.css file. This is the <b class="text-danger">only file</b> which needs to be compiled.</td>
+                                        </tr>
+                                        <tr>
+                                          <td>theme-base.less</td>
+                                          <td>Responsible for taking set variables and using them to <b>create all of the themes UI elements</b>. Including the grid, buttons, tabs, etc. It handles nearly everything except colors, plugins, and general theme settings.</td>
+                                        </tr>
+                                        <tr>
+                                          <td>theme-settings.less</td>
+                                          <td>File is responsible for determining what skins are activiated, what plugins are used, and what external resources are pulled. Its primary role is to <b>help quickly reduce the bloat</b> added from unwanted features or skins.</td>
+                                        </tr>
+                                        <tr>
+                                          <td>theme-variables.less</td>
+                                          <td>This file sets variables which <b>determine the appearance</b> of nearly all theme elements. While theme-base.less creates the elements, it's this file which determines what color, size, and shape they should be. </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade" id="less-4" role="tabpanel">
+
+
+                        	<div class="pull-right posr" style="top: -10px;"> 
+                        		<img src="../resources/img/less-logo.png" width="95" height="43" title="less logo">
+                        	</div>
+
+                            <h3 id="" class="page-header">Less Tutorial - Optimizations </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Optimizing your Child Theme</h2>
+
+                                <div class="panel-body pv10 br-a br-grey mv30" style="border-left: 4px solid #c7254e !important">
+                                   <b> As of 03/15/15 patch 1.4 is unreleased.</b> This tutorial was created specifically for use with patch <b> 1.4</b> or above and should <b>NOT</b> until the patch has been released. 
+                                </div>
+
+                                <p>Many websites will not need every feature, skin, or option that our framework includes. To help minimize bloat, reduce file size, and increase site performance we have included many built-in Less variables and settings. Nearly all of these performance options are found in your child themes <code>theme-settings.less</code> file. Below you will find a listing of Less variables that will help you create a unique theme optimized specifically for <b> your needs</b></p>
+
+
+                                <h2 id="forms-horizontal">Configure Animations <small>(theme-settings.less)</small></h2>
+                                <p>
+                                 AdminDesigns contains a css animation library called <b>Animate.css</b>. AdminDesigns has broken the library into several smaller peices as its file size is very large when all animations are included. You can help reduce the overall file size of <code>theme.css</code> by setting animation styles you do not need to "false".
+                                </p>
+                                <code>theme/assets/skins/default_skin/less/settings.less</code> 
+                                <div class="img-step">
+                                  <img src="../resources/img/settings1.png" class="img-responsive" title="settings1">
+                                </div>
+
+                                <h2 id="forms-horizontal">Configure Fonts <small>(theme-settings.less)</small></h2>
+                                <p>
+                                 As of patch 1.4 AdminDesigns removed Glyphicons Pro from its core as it is very large in size. Glyphicons Halflings and Font Awesome are now the only two libraries activated by default. This greatly helps reduce the overall file size of <code>theme.css</code>. However, if you need an additional font library simply uncomment any of the desired font libraries.
+                                </p>
+                                <code>theme/assets/skins/default_skin/less/settings.less</code> 
+                                <div class="img-step">
+                                  <img src="../resources/img/settings2.png" class="img-responsive" title="settings2">
+                                </div>
+
+                                <h2 id="forms-horizontal">Configure Plugins <small>(theme-settings.less)</small></h2>
+                                <p>
+                                 As seen below all plugins have had their stylesheets listed/imported in the same area. This makes it incredibly easy to disable any plugin styles you do not need. This will slightly reduce the file size of <code>theme.css</code>. When combined with other optimizations this can help squeeze out every last bit of performance from the theme.
+                                </p>
+                                <code>theme/assets/skins/default_skin/less/settings.less</code> 
+                                <div class="img-step">
+                                  <img src="../resources/img/settings3.png" class="img-responsive" title="settings3">
+                                </div>
+
+                                <h2 id="forms-horizontal">Configure Master Skin <small>(theme-settings.less)</small></h2>
+                                <p>
+                                 AdminDesigns includes <b>Eight</b> seperate contextual styles which can be applied to nearly every element in the framework. However, many sites will only need to use 2-3 different colors(contextuals). You can greatly reduce the overall file size of <code>theme.css</code> by setting colors you do not need to "false".
+                                </p>
+                                <code>theme/assets/skins/default_skin/less/settings.less</code> 
+                                <div class="img-step">
+                                  <img src="../resources/img/settings4.png" class="img-responsive" title="settings4">
+                                </div>
+
+                                <h2 id="forms-horizontal">Configure Element Skins <small>(theme-settings.less)</small></h2>
+                                <p>
+                                 Sometimes you may need a contextual/color but find you only need to use it on several elements. Here you can disable the color on a per-element basis. This will slightly reduce the file size of <code>theme.css</code>. When combined with other optimizations this can help squeeze out every last bit of performance from the theme. 
+                                </p>
+                                <div class="panel-body pv10 br-a br-grey mb30" style="border-left: 4px solid #c7254e !important">
+                                  If the master color above is set to <b>false</b> this setting will not have any effect as the color has been disabled <b>globally</b>. For example if you are using the color/contextual "warning" then the master color "@skin-success-warning" should be set to <b>true</b>. But if you don't need the color for badges(or anything else) you can proceed to set the variable "@skin-warning-badge" to <b>false</b>. 
+                                </div>
+
+                                <code>theme/assets/skins/default_skin/less/settings.less</code> 
+                                <div class="img-step">
+                                  <img src="../resources/img/settings5.png" class="img-responsive" title="settings5">
+                                </div>
+
+
+                    <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+    		$('[data-toggle="tooltip"]').tooltip()
+
+    		$('a.cdisable').on('click',function(e) {
+    			e.preventDefault();
+    			return false;
+    		});
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

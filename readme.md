@@ -1,10 +1,5 @@
-#  ##PROJECT_NAME##
-_korte introductie van het project_
+#  Chief application skeleton
 
-- klant: 
-- Dropboxfiles: 
-- Invision: 
+Project skeleton for faster and consistent development.
 
-# Setup
-  
-# Sitemap
+WIP.

@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- AdminForms CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/admin-tools/admin-forms/css/admin-forms.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Admin Forms </a>
+                                <ul class="collapse list-disc">
+                                    <li class="list-label">Input General</li>
+                                    <li class="active"><a href="#admin-inputs" data-toggle="tab">Form Inputs</a>
+                                    </li>
+                                    <li><a href="#admin-formpanels" data-toggle="tab">Form Panels</a>
+                                    </li>
+                                    <li><a href="#admin-layouts" data-toggle="tab">Form Layouts</a>
+                                    </li>
+                                    <li class="list-label">Input Plugins</li>
+                                    <li><a href="#admin-tp" data-toggle="tab">Timepicker</a>
+                                    </li>
+                                    <li><a href="#admin-dp" data-toggle="tab">Datepicker</a>
+                                    </li>
+                                    <li><a href="#admin-dtp" data-toggle="tab">DateTimepicker</a>
+                                    </li>
+                                    <li><a href="#admin-mp" data-toggle="tab">Monthpicker</a>
+                                    </li>
+                                    <li><a href="#admin-cp" data-toggle="tab">Color Picker</a>
+                                    </li>
+                                    <li><a href="#admin-sliders" data-toggle="tab">Sliders</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           ADMINFORMS
+                        ----------------------->
+
+                        <!-- ADMINFORMS - INPUTS -->
+                        <div class="tab-pane active" id="admin-inputs" role="tabpanel">
+                            <h3 id="" class="page-header">AdminForms - Inputs </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <!-- <h3>Plugin Info & Requirements Information</h3> -->
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>AdminForms</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>AdminDesigns</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>Paid - Themeforest.net/license</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://themeforest.net/item/admindesigns-bootstrap-admin-template-framework/9903221">http://themeforest.net/admindesigns</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;assets/admin-tools/admin-forms/css/admin-forms.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js">
+                                    <code>Form widgets may require additional scripts. Widget requirements can be found in individual widget description.</code>
+                                </div>
+                
+                                <!-- basic input -->
+                                <h2 id="admin-icon">Input Field</h2>
+                                <p>Use AdminDesigns predefined form requires that all inputs and widgets are wrapped in a parent container with the class <code>.admin-form</code>. This parent container should also be independent and not added to an existing parent such as a row, panel, etc.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <label class="field">
+                                        <input type="text" name="from" id="from" class="gui-input" placeholder="Input no icon">
+                                    </label>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight" data-label><pre><code class="language-html" data-lang="html">
+&lt;label class=&quot;field&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;from&quot; id=&quot;from&quot; class=&quot;gui-input&quot; placeholder=&quot;Input no icon&quot;&gt;
+&lt;/label&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- input icons -->
+                                <h2 id="admin-input-icon">Input Icons</h2>
+                                <p>Add an inline icon by adding <code>.prepend-icon .append-icon</code> and an additional label containing the desired form icon markup.
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="section">
+                                                <label class="field prepend-icon">
+                                                    <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="Input icon left">
+                                                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
+                                                    </label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="section">
+                                                <label class="field append-icon">
+                                                    <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="Input icon right">
+                                                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
+                                                    </label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight" data-label><pre><code class="language-html" data-lang="html">
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;firstname&quot; id=&quot;firstname&quot; class=&quot;gui-input&quot; placeholder=&quot;Input icon left&quot;&gt;
+    &lt;label for=&quot;firstname&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field append-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;firstname&quot; id=&quot;firstname&quot; class=&quot;gui-input&quot; placeholder=&quot;Input icon right&quot;&gt;
+    &lt;label for=&quot;firstname&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- multi selects -->
+                                <h2 id="admin-input-icon">Multi Selects</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select id="selectID" name="selectID">
+                                                            <option value="">Select with single arrow</option>
+                                                            <option value="1">Option 1</option>
+                                                            <option value="2">Option</option>
+                                                        </select>
+                                                        <i class="arrow"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="section">
+                                                    <label class="field select">
+                                                        <select id="selectID2" name="selectID2">
+                                                            <option value="">Select with double arrows</option>
+                                                            <option value="1">Option 1</option>
+                                                            <option value="2">Option</option>
+                                                        </select>
+                                                        <i class="arrow double"></i>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;label class=&quot;field select&quot;&gt;
+    &lt;select id=&quot;selectID&quot; name=&quot;selectID&quot;&gt;
+        &lt;option value=&quot;&quot;&gt;Select with single arrow&lt;/option&gt;
+        &lt;option value=&quot;1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;2&quot;&gt;Option&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;i class=&quot;arrow&quot;&gt;&lt;/i&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field select&quot;&gt;
+    &lt;select id=&quot;selectID2&quot; name=&quot;selectID2&quot;&gt;
+        &lt;option value=&quot;&quot;&gt;Select with double arrows&lt;/option&gt;
+        &lt;option value=&quot;1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;2&quot;&gt;Option&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;i class=&quot;arrow double&quot;&gt;&lt;/i&gt;
+&lt;/label&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- text area -->
+                                <h2 id="admin-input-icon">Text Area</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <label class="field prepend-icon mb10">
+                                        <textarea class="gui-textarea" id="comment" name="comment" placeholder="Text area"></textarea>
+                                        <label for="comment" class="field-icon"><i class="fa fa-comments"></i>
+                                        </label>
+                                        <span class="input-footer">
+                                            <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span>
+                                    </label>
+
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;textarea class=&quot;gui-textarea&quot; id=&quot;comment&quot; name=&quot;comment&quot; placeholder=&quot;Text area&quot;&gt;&lt;/textarea&gt;
+    &lt;label for=&quot;comment&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-comments&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+    &lt;span class=&quot;input-footer&quot;&gt;
+        &lt;strong&gt;Hint:&lt;/strong&gt;Don&#39;t be negative or off topic! just be awesome...&lt;/span&gt;
+&lt;/label&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- tool Tips -->
+                                <h2 id="admin-input-icon">Input Tooltips</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb20">
+                                                    <label class="field prepend-icon">
+                                                        <input type="text" name="tooltip5" id="tooltip5" class="gui-input" placeholder="Right">
+                                                        <b class="tooltip tip-right"><em> I am a right aligned tooltip!</em></b>
+                                                        <label for="tooltip5" class="field-icon"><i class="fa fa-flag"></i>
+                                                        </label>
+                                                    </label>
+                                            </div>
+                                            <div class="col-md-6 mb20">
+                                                    <label class="field prepend-icon">
+                                                        <input type="text" name="tooltip2" id="tooltip2" class="gui-input" placeholder="Left">
+                                                         <b class="tooltip tip-left"><em> I am a left aligned tooltip!</em></b>
+                                                        <label for="tooltip2" class="field-icon"><i class="fa fa-flag"></i>
+                                                        </label>
+                                                    </label>
+
+                                            </div>
+                                            <div class="col-md-6 mb20">
+                                                    <label class="field prepend-icon">
+                                                        <input type="text" name="tooltip1" id="tooltip1" class="gui-input" placeholder="Top Right">
+                                                         <b class="tooltip tip-right-top"><em> I am a top right aligned tooltip! Pretty useful huh.</em></b>
+                                                        <label for="tooltip1" class="field-icon"><i class="fa fa-flag"></i>
+                                                        </label>
+                                                    </label>
+                                            </div>
+                                            <div class="col-md-6 mb20">
+                                                    <label class="field prepend-icon">
+                                                        <input type="text" name="tooltip4" id="tooltip4" class="gui-input" placeholder="Top Left">
+                                                         <b class="tooltip tip-left-top"><em> I am a top left aligned tooltip! Pretty useful huh.</em></b>
+                                                        <label for="tooltip4" class="field-icon"><i class="fa fa-flag"></i>
+                                                        </label>
+                                                    </label>
+                                            </div>
+                                            <div class="col-md-6 mb20">
+                                               <label class="field prepend-icon">
+                                                        <input type="text" name="tooltip3" id="tooltip3" class="gui-input" placeholder="Bottom Right">
+                                                         <b class="tooltip tip-right-bottom"><em> I am a bottom right aligned tooltip! Pretty useful huh.</em></b>
+                                                        <label for="tooltip3" class="field-icon"><i class="fa fa-flag"></i>
+                                                        </label>
+                                                    </label>
+                                            </div>
+                                            <div class="col-md-6 mb20">
+                                               <label class="field prepend-icon">
+                                                        <input type="text" name="tooltip6" id="tooltip6" class="gui-input" placeholder="Bottom Left">
+                                                        <b class="tooltip tip-left-bottom"><em> I am a bottom left aligned tooltip! Pretty useful huh.</em></b>
+                                                        <label for="tooltip6" class="field-icon"><i class="fa fa-flag"></i>
+                                                        </label>
+                                                    </label>
+                                            </div>
+                                        </div>
+
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;tooltip2&quot; id=&quot;tooltip2&quot; class=&quot;gui-input&quot; placeholder=&quot;Left&quot;&gt;
+     &lt;b class=&quot;tooltip tip-left&quot;&gt;&lt;em&gt; I am a left aligned tooltip!&lt;/em&gt;&lt;/b&gt;
+    &lt;label for=&quot;tooltip2&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-flag&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;tooltip5&quot; id=&quot;tooltip5&quot; class=&quot;gui-input&quot; placeholder=&quot;Right&quot;&gt;
+    &lt;b class=&quot;tooltip tip-right&quot;&gt;&lt;em&gt; I am a right aligned tooltip!&lt;/em&gt;&lt;/b&gt;
+    &lt;label for=&quot;tooltip5&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-flag&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;tooltip4&quot; id=&quot;tooltip4&quot; class=&quot;gui-input&quot; placeholder=&quot;Top Left&quot;&gt;
+     &lt;b class=&quot;tooltip tip-left-top&quot;&gt;&lt;em&gt; I am a top left aligned tooltip! Pretty useful huh.&lt;/em&gt;&lt;/b&gt;
+    &lt;label for=&quot;tooltip4&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-flag&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;tooltip1&quot; id=&quot;tooltip1&quot; class=&quot;gui-input&quot; placeholder=&quot;Top Right&quot;&gt;
+     &lt;b class=&quot;tooltip tip-right-top&quot;&gt;&lt;em&gt; I am a top right aligned tooltip! Pretty useful huh.&lt;/em&gt;&lt;/b&gt;
+    &lt;label for=&quot;tooltip1&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-flag&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;tooltip3&quot; id=&quot;tooltip3&quot; class=&quot;gui-input&quot; placeholder=&quot;Bottom Right&quot;&gt;
+     &lt;b class=&quot;tooltip tip-right-bottom&quot;&gt;&lt;em&gt; I am a bottom right aligned tooltip! Pretty useful huh.&lt;/em&gt;&lt;/b&gt;
+    &lt;label for=&quot;tooltip3&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-flag&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field prepend-icon&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;tooltip6&quot; id=&quot;tooltip6&quot; class=&quot;gui-input&quot; placeholder=&quot;Bottom Left&quot;&gt;
+    &lt;b class=&quot;tooltip tip-left-bottom&quot;&gt;&lt;em&gt; I am a bottom left aligned tooltip! Pretty useful huh.&lt;/em&gt;&lt;/b&gt;
+    &lt;label for=&quot;tooltip6&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-flag&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+</code></pre>
+                                </div>    
+
+
+                                <!-- File Uploader -->
+                                <h2 id="admin-input-icon">File Uploader</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="section">
+                                                    <label class="field prepend-icon append-button file">
+                                                        <span class="button btn-primary">Choose File</span>
+                                                        <input type="file" class="gui-file" name="file1" id="file1" onChange="document.getElementById('uploader1').value = this.value;">
+                                                        <input type="text" class="gui-input" id="uploader1" placeholder="Please Select A File">
+                                                        <label class="field-icon"><i class="fa fa-upload"></i>
+                                                        </label>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="section">
+                                                    <label class="field prepend-icon file">
+                                                        <span class="button btn-primary">Choose File</span>
+                                                        <input type="file" class="gui-file" name="file2" id="file2" onChange="document.getElementById('uploader2').value = this.value;">
+                                                        <input type="text" class="gui-input" id="uploader2" placeholder="Please Select A File">
+                                                        <label class="field-icon"><i class="fa fa-upload"></i>
+                                                        </label>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;label class=&quot;field prepend-icon append-button file&quot;&gt;
+    &lt;span class=&quot;button btn-primary&quot;&gt;Choose File&lt;/span&gt;
+    &lt;input type=&quot;file&quot; class=&quot;gui-file&quot; name=&quot;file1&quot; id=&quot;file1&quot; onChange=&quot;document.getElementById(&#39;uploader1&#39;).value = this.value;&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;gui-input&quot; id=&quot;uploader1&quot; placeholder=&quot;Please Select A File&quot;&gt;
+    &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-upload&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+
+&lt;label class=&quot;field prepend-icon file&quot;&gt;
+    &lt;span class=&quot;button btn-primary&quot;&gt;Choose File&lt;/span&gt;
+    &lt;input type=&quot;file&quot; class=&quot;gui-file&quot; name=&quot;file2&quot; id=&quot;file2&quot; onChange=&quot;document.getElementById(&#39;uploader2&#39;).value = this.value;&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;gui-input&quot; id=&quot;uploader2&quot; placeholder=&quot;Please Select A File&quot;&gt;
+    &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-upload&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/label&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- Input Addons -->
+                                <h2 id="admin-input-icon">Input Addon/Groups</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="section">
+                                                    <div class="smart-widget sm-right smr-50">
+                                                        <label class="field">
+                                                            <input type="text" name="sub" id="sub" class="gui-input" placeholder="Smart widget right 50">
+                                                        </label>
+                                                        <button type="submit" class="button"> <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- end .smart-widget section -->
+                                                </div>
+                                                <!-- end section -->
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="section">
+                                                    <div class="smart-widget sm-left sml-50">
+                                                        <label class="field">
+                                                            <input type="text" name="sm3" id="sm3" class="gui-input" placeholder="Smart widget left 50">
+                                                        </label>
+                                                        <label for="sm3" class="button"> <i class="fa fa-search"></i>
+                                                        </label>
+                                                    </div>
+                                                    <!-- end .smart-widget section -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;smart-widget sm-right smr-50&quot;&gt;
+    &lt;label class=&quot;field&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;sub&quot; id=&quot;sub&quot; class=&quot;gui-input&quot; placeholder=&quot;Smart widget right 50&quot;&gt;
+    &lt;/label&gt;
+    &lt;button type=&quot;submit&quot; class=&quot;button&quot;&gt; &lt;i class=&quot;fa fa-search&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+&lt;/div&gt;
+&lt;div class=&quot;smart-widget sm-left sml-50&quot;&gt;
+    &lt;label class=&quot;field&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;sm3&quot; id=&quot;sm3&quot; class=&quot;gui-input&quot; placeholder=&quot;Smart widget left 50&quot;&gt;
+    &lt;/label&gt;
+    &lt;label for=&quot;sm3&quot; class=&quot;button&quot;&gt; &lt;i class=&quot;fa fa-search&quot;&gt;&lt;/i&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Checkboxes -->
+                                <h2 id="admin-input-icon">Checkboxes</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <div class="section mv15">
+                                        <div class="option-group field">
+                                            <label class="option">
+                                                <input type="checkbox" name="checked" value="" checked>
+                                                <span class="checkbox"></span>Checked
+                                            </label>
+                                            <label class="option">
+                                                <input type="checkbox" name="empty" value="">
+                                                <span class="checkbox"></span>Empty
+                                            </label>
+                                            <label class="option">
+                                                <input type="checkbox" name="disabled" value="" disabled>
+                                                <span class="checkbox"></span>Disabled
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;option-group field&quot;&gt;
+
+    &lt;label class=&quot;option&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;checked&quot; value=&quot;&quot; checked&gt;
+        &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Checked
+    &lt;/label&gt;
+
+    &lt;label class=&quot;option&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;empty&quot; value=&quot;&quot;&gt;
+        &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Empty
+    &lt;/label&gt;
+
+    &lt;label class=&quot;option&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; name=&quot;disabled&quot; value=&quot;&quot; disabled&gt;
+        &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Disabled
+    &lt;/label&gt;
+
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Radios -->
+                                <h2 id="admin-input-icon">Radios</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <div class="section mb15">
+                                        <div class="option-group field">
+                                            <label class="option">
+                                                <input type="radio" name="checked" checked>
+                                                <span class="radio"></span>Checked
+                                            </label>
+                                            <label class="option">
+                                                <input type="radio" name="empty">
+                                                <span class="radio"></span>Empty
+                                            </label>
+                                            <label class="option">
+                                                <input type="radio" name="disabled" disabled>
+                                                <span class="radio"></span>Disabled
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;section mb15&quot;&gt;
+    &lt;div class=&quot;option-group field&quot;&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;checked&quot; checked&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Checked
+        &lt;/label&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;disabled&quot; disabled&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Disabled
+        &lt;/label&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;empty&quot;&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Empty
+        &lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Switches -->
+                                <h2 id="admin-input-icon">Switches</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <div class="section">
+                                        <label class="switch block mb15">
+                                            <input type="checkbox" name="Switch1" id="Switch1" value="1">
+                                            <label for="Switch1" data-on="ON" data-off="OFF"></label>
+                                            <span>Default</span>
+                                        </label>
+                                        <label class="switch block">
+                                            <input type="checkbox" name="Switch2" id="Switch2" value="2" checked>
+                                            <label for="Switch2" data-on="ON" data-off="OFF"></label>
+                                            <span>Checked</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;section mb15&quot;&gt;
+    &lt;div class=&quot;option-group field&quot;&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;checked&quot; checked&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Checked
+        &lt;/label&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;disabled&quot; disabled&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Disabled
+        &lt;/label&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;empty&quot;&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Empty
+        &lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- Switches(alt) -->
+                                <h2 id="admin-input-icon">Switches Round</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <div class="section">
+                                        <label class="switch switch-round block mb15">
+                                            <input type="checkbox" name="Switch3" id="Switch3" value="1">
+                                            <label for="Switch3" data-on="YES" data-off="NO"></label>
+                                            <span>Default</span>
+                                        </label>
+                                        <label class="switch switch-round block">
+                                            <input type="checkbox" name="Switch4" id="Switch4" value="2" checked>
+                                            <label for="Switch4" data-on="YES" data-off="NO"></label>
+                                            <span>Checked</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;section mb15&quot;&gt;
+    &lt;div class=&quot;option-group field&quot;&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;checked&quot; checked&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Checked
+        &lt;/label&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;disabled&quot; disabled&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Disabled
+        &lt;/label&gt;
+        &lt;label class=&quot;option&quot;&gt;
+            &lt;input type=&quot;radio&quot; name=&quot;empty&quot;&gt;
+            &lt;span class=&quot;radio&quot;&gt;&lt;/span&gt;Empty
+        &lt;/label&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+                                <!-- Rating/Star Widget -->
+                                <h2 id="admin-input-icon">Rating/Star Widget</h2>
+                                <p>Use Bootstrap's predefined grid classes to align labels and groups of form controls in a horizontal layout by adding <code>.form-horizontal</code> to the form.</p>
+                                <div class="bs-example admin-form" data-example-id="contextual-panels">
+
+                                    <div class="section mw200">
+                                        <span class="rating block" style="width: 110px;">
+                                            <input class="rating-input" id="star5" type="radio" name="star">
+                                            <label class="rating-star" for="star5"><i class="fa fa-star"></i></label>
+                                            <input class="rating-input" id="star4" type="radio" name="star">
+                                            <label class="rating-star" for="star4"><i class="fa fa-star"></i></label>
+                                            <input class="rating-input" id="star3" type="radio" name="star" checked>
+                                            <label class="rating-star" for="star3"><i class="fa fa-star"></i></label>
+                                            <input class="rating-input" id="star2" type="radio" name="star">
+                                            <label class="rating-star" for="star2"><i class="fa fa-star"></i></label>
+                                            <input class="rating-input" id="star1" type="radio" name="star">
+                                            <label class="rating-star" for="star1"><i class="fa fa-star"></i></label>
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight"><pre><code class="language-html" data-lang="html">
+&lt;span class=&quot;rating block&quot; style=&quot;width: 110px;&quot;&gt;
+    &lt;input class=&quot;rating-input&quot; id=&quot;star5&quot; type=&quot;radio&quot; name=&quot;star&quot;&gt;
+    &lt;label class=&quot;rating-star&quot; for=&quot;star5&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+
+    &lt;input class=&quot;rating-input&quot; id=&quot;star4&quot; type=&quot;radio&quot; name=&quot;star&quot;&gt;
+    &lt;label class=&quot;rating-star&quot; for=&quot;star4&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+
+    &lt;input class=&quot;rating-input&quot; id=&quot;star3&quot; type=&quot;radio&quot; name=&quot;star&quot; checked&gt;
+    &lt;label class=&quot;rating-star&quot; for=&quot;star3&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+
+    &lt;input class=&quot;rating-input&quot; id=&quot;star2&quot; type=&quot;radio&quot; name=&quot;star&quot;&gt;
+    &lt;label class=&quot;rating-star&quot; for=&quot;star2&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+
+    &lt;input class=&quot;rating-input&quot; id=&quot;star1&quot; type=&quot;radio&quot; name=&quot;star&quot;&gt;
+    &lt;label class=&quot;rating-star&quot; for=&quot;star1&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+&lt;/span&gt;
+</code></pre>
+                                </div>
+
+
+
+
+
+
+                                <!-- end bs doc section -->
+                            </div>
+                        </div>
+
+
+                        <!-- ADMINFORMS - PANELS -->
+                        <div class="tab-pane" id="admin-formpanels" role="tabpanel">
+                            <h3 id="" class="page-header"> Admin Forms - Panels </h3>
+                            <section class="bs-docs-section">
+
+                                <h3 id="panels-basic">Basic example</h3>
+                                <p>By default, all the <code>.panel</code> does is apply some basic border and padding to contain some content.</p>
+
+                                <p class="hidden">Panels are one of AdminDesigns most <b>important</b> theme elements. They have been created using Bootstraps native "panel" system. However, AdminDesigns adds a great deal of extra functionality to the Bootstrap panel system, especially if the "AdminPanels" plugin is used. As a result panels are used on virtually every page and are the ideal element to create widgets and present data. It's recommended that you become very familiar with their structure and functionality.
+                                </p>
+
+                                <div class="bs-example" data-example-id="simple-panel">
+                                    
+                                    <div class="admin-form">
+                                        <div class="panel">
+                                            <div class="panel-body">
+                                                Basic panel example - Body content
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+            Basic panel example - Body content
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+                                <h2 id="panels-heading">Panel with heading</h2>
+                                <p>Easily add a heading container to your panel with <code>.panel-heading</code>.</p>
+                                <div class="bs-example" data-example-id="panel-with-heading">
+
+                                    <div class="admin-form">
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <span class="panel-title">Panel Title</span>
+                                            </div>
+                                            <div class="panel-body" style="min-height: 150px;">
+                                               Body content
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;span class=&quot;panel-title&quot;&gt;Panel Title&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+           Body content
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+                                <h2 id="panels-footer">Panel with footer</h2>
+                                <p>Wrap buttons or secondary text in <code>.panel-footer</code>. Note that panel footers <strong>do not</strong> inherit colors and borders when using contextual variations as they are not meant to be in the foreground.</p>
+                                <div class="bs-example" data-example-id="panel-with-footer">
+
+                                    <div class="admin-form">
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <span class="panel-title">Panel Title</span>
+                                            </div>
+                                            <div class="panel-body" style="min-height: 150px;">
+                                               Body content
+                                            </div>
+                                        <div class="panel-footer p20">Panel footer</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;span class=&quot;panel-title&quot;&gt;Panel Title&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+           Body content
+        &lt;/div&gt;
+    &lt;div class=&quot;panel-footer&quot;&gt;Panel footer&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+                                <h2 id="panels-footer">Top Border Style</h2>
+                                <p>Wrap buttons or secondary text in <code>.panel-footer</code>. Note that panel footers <strong>do not</strong> inherit colors and borders when using contextual variations as they are not meant to be in the foreground.</p>
+                                <div class="bs-example" data-example-id="panel-with-footer">
+
+                                    <div class="admin-form">                                 
+                                        <div class="panel panel-primary heading-border">
+                                            <div class="panel-heading">
+                                                <span class="panel-title">Panel Title</span>
+                                            </div>
+                                            <div class="panel-body" style="min-height: 150px;">
+                                               Body content
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;                                 
+    &lt;div class=&quot;panel panel-primary heading-border&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;span class=&quot;panel-title&quot;&gt;Panel Title&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;...&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+
+                                <h2 id="panels-footer">Top Border Contextual</h2>
+                                <p>Wrap buttons or secondary text in <code>.panel-footer</code>. Note that panel footers <strong>do not</strong> inherit colors and borders when using contextual variations as they are not meant to be in the foreground.</p>
+                                <div class="bs-example" data-example-id="panel-with-footer">
+
+                                    <div class="admin-form"> 
+                                        <div class="row">
+                                          <div class="col-md-4">
+                                            <div class="panel panel-primary heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Primary</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-success heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Success</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-info heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Info</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-warning heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Warning</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-danger heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Danger</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-alert heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Alert</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-system heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">System</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <div class="panel panel-dark heading-border">
+                                                <div class="panel-heading">
+                                                    <span class="panel-title">Dark</span>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                    </div>
+      
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;panel panel-primary heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-success heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-info heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-warning heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-danger heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-alert heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-system heading-border&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;panel panel-dark heading-border&quot;&gt;...&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+                            </section>
+                        </div>
+
+
+                        <!-- ADMINFORMS - LAYOUTS -->
+                        <div class="tab-pane" id="admin-layouts" role="tabpanel">
+                            <h3 id="" class="page-header"> AdminForm Layout Templates </h3>
+                            <section class="bs-docs-section">
+
+                                <h3 id="panels-basic">Form Layouts</h3>
+                                <p>By default, all the <code>.panel</code> does is apply some basic border and padding to contain some content.</p>
+
+                                <div class="bs-example text-center fs16 pb25" data-label="comment">
+                                    <div class="row mb15">
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_comment1.html">
+                                            <span class="fa fa-comments fs30 holder-icon"></span>
+                                            <br> Comment <b>1</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_comment2.html">
+                                            <span class="fa fa-comments fs30 holder-icon"></span>
+                                            <br> Comment <b>2</b>
+                                        </a>
+                                      </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="bs-example text-center fs16" data-label="contact">
+                                    <div class="row mb15">
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_contact1.html">
+                                            <span class="fa fa-envelope-o fs30 holder-icon"></span>
+                                            <br> Contact <b>1</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_contact2.html">
+                                            <span class="fa fa-envelope-o fs30 holder-icon"></span>
+                                            <br> Contact <b>2</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_contact3.html">
+                                            <span class="fa fa-envelope-o fs30 holder-icon"></span>
+                                            <br> Contact <b>3</b>
+                                        </a>
+                                      </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="bs-example text-center fs16" data-label="login">
+                                    <div class="row mb15">
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_login1.html">
+                                            <span class="fa fa-lock fs30 holder-icon"></span>
+                                            <br> Login <b>1</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_login2.html">
+                                            <span class="fa fa-lock fs30 holder-icon"></span>
+                                            <br> Login <b>2</b>
+                                        </a>
+                                      </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="bs-example text-center fs16" data-label="register">
+                                    <div class="row mb15">
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_register1.html">
+                                            <span class="fa fa-user fs30 holder-icon"></span>
+                                            <br> Register <b>1</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_register2.html">
+                                            <span class="fa fa-user fs30 holder-icon"></span>
+                                            <br> Register <b>2</b>
+                                        </a>
+                                      </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="bs-example text-center fs16" data-label="order">
+                                    <div class="row mb15">
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_order1.html">
+                                            <span class="fa fa-shopping-cart fs30 holder-icon"></span>
+                                            <br> Order <b>1</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_order2.html">
+                                            <span class="fa fa-shopping-cart fs30 holder-icon"></span>
+                                            <br> Order <b>2</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_order3.html">
+                                            <span class="fa fa-shopping-cart fs30 holder-icon"></span>
+                                            <br> Order <b>3</b>
+                                        </a>
+                                      </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="bs-example text-center fs16" data-label="misc">
+                                    <div class="row mb15">
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_feedback.html">
+                                            <span class="fa fa-users fs30 holder-icon"></span>
+                                            <br> Feedback <b>1</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_project-quote.html">
+                                            <span class="fa fa-usd fs30 holder-icon"></span>
+                                            <br> Project Quote <b>2</b>
+                                        </a>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <a class="holder-style p10" target="_blank" href="../templates/form-layouts/adminform_survey.html">
+                                            <span class="fa fa-check fs30 holder-icon"></span>
+                                            <br> Survey <b>3</b>
+                                        </a>
+                                      </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="zero-clipboard hidden"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-html hidden"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+            Basic panel example - Body content
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+
+
+
+                            </section>
+                        </div>
+
+
+                        <!-- ADMINFORMS - TIMEPICKER -->
+                        <div class="tab-pane" id="admin-tp" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns Forms - Timepicker </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <!-- basic timepicker -->
+                                <h2 id="forms-horizontal">Basic Timepicker</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="timepicker-basic" class="field prepend-icon">
+                                            <input type="text" id="timepicker-basic" name="timepicker-basic" class="gui-input" placeholder="timepicker Popup">
+                                            <label class="field-icon"><i class="fa fa-calendar-o"></i>
+                                            </label>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="../../assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;timepicker-basic&quot; class=&quot;field prepend-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;timepicker-basic&quot; name=&quot;timepicker-basic&quot; class=&quot;gui-input&quot; placeholder=&quot;timepicker Popup&quot;&gt;
+        &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;
+        &lt;/label&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Timepicker Basic
+$(&#39;#timepicker-basic&#39;).timepicker({
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- timepicker addon -->
+                                <h2 id="forms-horizontal">Timepicker Addon</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="timepicker-addon" class="field prepend-picker-icon">
+                                            <input type="text" id="timepicker-addon" name="timepicker-addon" class="gui-input" placeholder="timepicker Addon">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;timepicker-addon&quot; class=&quot;field prepend-picker-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;timepicker-addon&quot; name=&quot;timepicker-addon&quot; class=&quot;gui-input&quot; placeholder=&quot;timepicker Addon&quot;&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Timepicker Addon
+$(&#39;#timepicker-addon&#39;).timepicker({
+    showOn: &#39;both&#39;,
+    buttonText: &#39;&lt;i class=&quot;fa fa-clock-o&quot;&gt;&lt;/i&gt;&#39;,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- inline timepicker -->
+                                <h2 id="forms-horizontal">Inline Timepicker</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10" style="max-width: 300px;">
+                                        <div id="timepicker-inline"></div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;div id=&quot;timepicker-inline&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Timepicker Inline
+$(&#39;#timepicker-inline&#39;).timepicker();
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://trentrichardson.com/examples/timepicker/#tp-options">http://trentrichardson.com/examples/timepicker/#tp-options</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://trentrichardson.com/examples/timepicker/#tp-examples">http://trentrichardson.com/examples/timepicker/#tp-examples</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- ADMINFORMS - DATEPICKER -->
+                        <div class="tab-pane" id="admin-dp" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns Forms - Datepicker </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <!-- basic datepicker -->
+                                <h2 id="forms-horizontal">Basic Datepicker</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="datepicker-basic" class="field prepend-icon">
+                                            <input type="text" id="datepicker-basic" name="datepicker-basic" class="gui-input" placeholder="Datepicker Popup">
+                                            <label class="field-icon"><i class="fa fa-calendar-o"></i>
+                                            </label>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;datepicker-basic&quot; class=&quot;field prepend-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;datepicker-basic&quot; name=&quot;datepicker-basic&quot; class=&quot;gui-input&quot; placeholder=&quot;Datepicker Popup&quot;&gt;
+        &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;
+        &lt;/label&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&quot;#datepicker-basic&quot;).datepicker({
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+    showButtonPanel: false,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- datepicker addon -->
+                                <h2 id="forms-horizontal">Datepicker Addon</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="datepicker-addon" class="field prepend-picker-icon">
+                                            <input type="text" id="datepicker-addon" name="datepicker-addon" class="gui-input" placeholder="Datepicker Addon">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;datepicker-addon&quot; class=&quot;field prepend-picker-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;datepicker-addon&quot; name=&quot;datepicker-addon&quot; class=&quot;gui-input&quot; placeholder=&quot;Datepicker Addon&quot;&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#datepicker-addon&#39;).datepicker({
+    numberOfMonths: 3,
+    showOn: &#39;both&#39;,
+    buttonText: &#39;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;&#39;,
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- inline datepicker -->
+                                <h2 id="forms-horizontal">Inline Datepicker</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10" style="max-width: 300px;">
+                                        <div id="datepicker-inline"></div>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;div id=&quot;datepicker-inline&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&quot;#datepicker-inline&quot;).datepicker({
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- datepicker range -->
+                                <h2 id="forms-horizontal">Datepicker Range</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+
+ 
+                                    <div class="row">
+
+                                      <!-- DateRange From Input --> 
+                                      <div class="col-md-6">
+                                        <div class="admin-form theme-primary">
+                                            <label for="datepicker-from" class="field prepend-icon">
+                                                <input type="text" id="datepicker-from" name="datepicker-from" class="gui-input" placeholder="Datepicker From">
+                                                <label class="field-icon"><i class="fa fa-calendar-o"></i></label>
+                                            </label>
+                                        </div>
+                                      </div>
+
+                                      <!-- DateRange To Input --> 
+                                      <div class="col-md-6">
+                                        <div class="admin-form theme-primary">
+                                            <label for="datepicker-to" class="field prepend-icon">
+                                                <input type="text" id="datepicker-to" name="datepicker-to" class="gui-input" placeholder="Datepicker To">
+                                                <label class="field-icon"><i class="fa fa-calendar-o"></i></label>
+                                            </label>
+                                        </div>
+                                      </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;row&quot;&gt;
+
+  &lt;!-- DateRange From Input --&gt; 
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;admin-form theme-primary&quot;&gt;
+        &lt;label for=&quot;datepicker-from&quot; class=&quot;field prepend-icon&quot;&gt;
+            &lt;input type=&quot;text&quot; id=&quot;datepicker-from&quot; name=&quot;datepicker-from&quot; class=&quot;gui-input&quot; placeholder=&quot;Datepicker From&quot;&gt;
+            &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+        &lt;/label&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- DateRange To Input --&gt; 
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;admin-form theme-primary&quot;&gt;
+        &lt;label for=&quot;datepicker-to&quot; class=&quot;field prepend-icon&quot;&gt;
+            &lt;input type=&quot;text&quot; id=&quot;datepicker-to&quot; name=&quot;datepicker-to&quot; class=&quot;gui-input&quot; placeholder=&quot;Datepicker To&quot;&gt;
+            &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;&lt;/label&gt;
+        &lt;/label&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Datepicker Range From
+$(&quot;#datepicker-from&quot;).datepicker({
+  defaultDate: &quot;+1w&quot;,
+  numberOfMonths: 3,
+  prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+  nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+  beforeShow: function(input, inst) {
+    var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+    var smartpikr = inst.dpDiv.parent();
+    if (!smartpikr.hasClass(themeClass)) {
+        inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+    }
+  },
+  onClose: function( selectedDate ) {
+    $(&quot;#datepicker-to&quot;).datepicker( &quot;option&quot;, &quot;minDate&quot;, selectedDate );
+  }
+});
+
+// Datepicker Range To
+$(&quot;#datepicker-to&quot;).datepicker({
+  defaultDate: &quot;+1w&quot;,
+  numberOfMonths: 3,
+  prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+  nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+  beforeShow: function(input, inst) {
+    var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+    var smartpikr = inst.dpDiv.parent();
+    if (!smartpikr.hasClass(themeClass)) {
+        inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+    }
+  },
+  onClose: function( selectedDate ) {
+    $(&quot;#datepicker-from&quot;).datepicker( &quot;option&quot;, &quot;maxDate&quot;, selectedDate );
+  }
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://jqueryui.com/datepicker/">http://jqueryui.com/datepicker/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://api.jqueryui.com/datepicker/">http://api.jqueryui.com/datepicker/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- ADMINFORMS - DATETIMEPICKER -->
+                        <div class="tab-pane" id="admin-dtp" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns Forms - DateTimepicker </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <!-- basic datetimepicker -->
+                                <h2 id="forms-horizontal">Basic DateTimepicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="datetimepicker-basic" class="field prepend-icon">
+                                            <input type="text" id="datetimepicker-basic" name="datetimepicker-basic" class="gui-input" placeholder="DateTimepicker Popup">
+                                            <label class="field-icon"><i class="fa fa-calendar-o"></i>
+                                            </label>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="../../assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;datetimepicker-basic&quot; class=&quot;field prepend-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;datetimepicker-basic&quot; name=&quot;datetimepicker-basic&quot; class=&quot;gui-input&quot; placeholder=&quot;Basic&quot;&gt;
+        &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;
+        &lt;/label&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// DateTimepicker Basic
+$(&#39;#datetimepicker-basic&#39;).datetimepicker({
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- datetimepicker addon -->
+                                <h2 id="forms-horizontal">DateTimepicker Addon</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="datetimepicker-addon" class="field prepend-picker-icon">
+                                            <input type="text" id="datetimepicker-addon" name="datetimepicker-addon" class="gui-input" placeholder="DateTimepicker Addon">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;datetimepicker-addon&quot; class=&quot;field prepend-picker-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;datetimepicker-addon&quot; name=&quot;datetimepicker-addon&quot; class=&quot;gui-input&quot; placeholder=&quot;Addon&quot;&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// DateTimepicker Addon
+$(&#39;#datetimepicker-addon&#39;).datetimepicker({
+    showOn: &#39;both&#39;,
+    buttonText: &#39;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;&#39;,
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- inline datetimepicker -->
+                                <h2 id="forms-horizontal">Inline DateTimepicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10" style="max-width: 300px;">
+                                        <div id="datetimepicker-inline"></div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;div id=&quot;datetimepicker-inline&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// DateTimepicker Inline
+$(&#39;#datetimepicker-inline&#39;).datetimepicker({
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://jqueryui.com/datepicker/">http://jqueryui.com/datepicker/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://api.jqueryui.com/datepicker/">http://api.jqueryui.com/datepicker/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- ADMINFORMS - MONTHPICKER -->
+                        <div class="tab-pane" id="admin-mp" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns Forms - Monthpicker </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <!-- basic monthpicker -->
+                                <h2 id="forms-horizontal">Basic Monthpicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="monthpicker-basic" class="field prepend-icon">
+                                            <input type="text" id="monthpicker-basic" name="monthpicker-basic" class="gui-input" placeholder="Monthpicker Popup">
+                                            <label class="field-icon"><i class="fa fa-calendar-o"></i>
+                                            </label>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="../../assets/admin-tools/admin-forms/js/jquery-ui-monthpicker.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;monthpicker-basic&quot; class=&quot;field prepend-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;monthpicker-basic&quot; name=&quot;monthpicker-basic&quot; class=&quot;gui-input&quot; placeholder=&quot;monthpicker Popup&quot;&gt;
+        &lt;label class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;
+        &lt;/label&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Monthpicker Basic
+$(&quot;#monthpicker-basic&quot;).monthpicker({
+    changeYear: false,
+    stepYears: 1,
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+    showButtonPanel: true,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- monthpicker addon -->
+                                <h2 id="forms-horizontal">Monthpicker Addon</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10">
+                                        <label for="monthpicker-addon" class="field prepend-picker-icon">
+                                            <input type="text" id="monthpicker-addon" name="monthpicker-addon" class="gui-input" placeholder="Monthpicker Addon">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;label for=&quot;monthpicker-addon&quot; class=&quot;field prepend-picker-icon&quot;&gt;
+        &lt;input type=&quot;text&quot; id=&quot;monthpicker-addon&quot; name=&quot;monthpicker-addon&quot; class=&quot;gui-input&quot; placeholder=&quot;monthpicker Addon&quot;&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Monthpicker Addon
+$(&quot;#monthpicker-addon&quot;).monthpicker({
+    prevText: &#39;&lt;i class=&quot;fa fa-chevron-left&quot;&gt;&lt;/i&gt;&#39;,
+    nextText: &#39;&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;/i&gt;&#39;,
+    showOn: &#39;both&#39;,
+    buttonText: &#39;&lt;i class=&quot;fa fa-calendar-o&quot;&gt;&lt;/i&gt;&#39;,
+    showButtonPanel: true,
+    beforeShow: function(input, inst) {
+        var themeClass = $(this).parents(&#39;.admin-form&#39;).attr(&#39;class&#39;);
+        var smartpikr = inst.dpDiv.parent();
+        if (!smartpikr.hasClass(themeClass)) {
+            inst.dpDiv.wrap(&#39;&lt;div class=&quot;&#39; + themeClass + &#39;&quot;&gt;&lt;/div&gt;&#39;);
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- inline monthpicker -->
+                                <h2 id="forms-horizontal">Inline Monthpicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary mb10" style="max-width: 300px;">
+                                        <div id="monthpicker-inline"></div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary&quot;&gt;
+    &lt;div id=&quot;monthpicker-inline&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Monthpicker Inline
+$('#monthpicker-inline').monthpicker({
+    prevText: '<i class="fa fa-chevron-left"></i>',
+    nextText: '<i class="fa fa-chevron-right"></i>',
+    showButtonPanel: true
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://api.jqueryui.com/datepicker/">http://api.jqueryui.com/datepicker/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="https://github.com/thecodingmachine/jquery.tcm.monthpicker">https://github.com/thecodingmachine/jquery.tcm.monthpicker</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- ADMINFORMS - COLORPICKER -->
+                        <div class="tab-pane" id="admin-cp" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns Forms - Colorpicker </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <!-- basic datetimepicker -->
+                                <h2 id="forms-horizontal">Basic Colorpicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary posr">
+                                        <label class="field sfcolor" for="colorpicker-basic">
+                                            <input type="text" name="colorpicker-basic" id="colorpicker-basic" class="gui-input" placeholder="Basic Picker">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src="../../assets/admin-tools/admin-forms/js/jquery.spectrum.min.js"&gt;&lt;/script&gt;</code>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary posr&quot;&gt;
+    &lt;label class=&quot;field sfcolor&quot; for=&quot;colorpicker-basic&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;colorpicker-basic&quot; id=&quot;colorpicker-basic&quot; class=&quot;gui-input&quot; placeholder=&quot;Basic Picker&quot;&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Colorpicker Basic
+var cpBasic = $(&quot;#colorpicker-basic&quot;);
+cpBasic.spectrum({
+    color: &#39;#4a89dc&#39;, // set default color
+    appendTo: cpBasic.parents(&#39;.admin-form&#39;), // append popup to parent container
+    containerClassName: &#39;sp-left&#39; // add helper class to align popup left of addon
+});
+cpBasic.show();
+</code></pre>
+                                </div>
+
+
+                                <!-- basic datetimepicker -->
+                                <h2 id="forms-horizontal">Advanced Colorpicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary posr">
+                                        <label class="field sfcolor" for="colorpicker-advanced">
+                                            <input type="text" name="colorpicker-advanced" id="colorpicker-advanced" class="gui-input" placeholder="Advanced">
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary posr&quot;&gt;
+    &lt;label class=&quot;field sfcolor&quot; for=&quot;colorpicker-advanced&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;colorpicker-advanced&quot; id=&quot;colorpicker-advanced&quot; class=&quot;gui-input&quot; placeholder=&quot;Advanced&quot;&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Colorpicker Advanced
+var cpAdvanced = $(&quot;#colorpicker-advanced&quot;);
+cpAdvanced.spectrum({
+    color: &#39;#4a89dc&#39;, // set default color
+    appendTo: cpAdvanced.parents(&#39;.admin-form&#39;), // append popup to parent container
+    containerClassName: &#39;sp-left&#39;, // add helper class to align popup left of addon
+    showInput: true,
+    showPalette: true, // show advanced color pallete
+    palette: [ // set displayed pallete colors
+        [bgPrimary, bgSuccess, bgInfo],
+        [bgWarning, bgDanger, bgAlert],
+        [bgSystem, bgDark, bgBlack]
+    ]
+});
+cpAdvanced.show();
+</code></pre>
+                                </div>
+
+
+                                <!-- inline colorpicker -->
+                                <h2 id="forms-horizontal">Inline Colorpicker</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form theme-primary posr center-block" style="max-width: 320px;">
+                                        <!-- inline-cp class required -->
+                                        <div id="colorpicker-inline" class="inline-cp"></div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form theme-primary posr center-block&quot; style=&quot;max-width: 320px;&quot;&gt;
+    &lt;!-- inline-cp class required --&gt;
+    &lt;div id=&quot;colorpicker-inline&quot; class=&quot;inline-cp&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Colorpicker Inline
+var cpInline = $(&quot;.inline-cp&quot;);
+cpInline.spectrum({
+    color: &#39;#4a89dc&#39;, // set default color
+    showInput: true, // show advanced color input
+    showPalette: true, // show advanced color pallete
+    chooseText: &quot;Select Color&quot;, // set text
+    flat: true, 
+    palette: [ // set displayed pallete colors
+        [bgPrimary, bgSuccess, bgInfo, bgWarning,
+            bgDanger, bgAlert, bgSystem, bgDark,
+            bgSystem, bgDark, bgBlack
+        ]
+    ]
+});
+cpInline.show();
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://bgrins.github.io/spectrum/">http://bgrins.github.io/spectrum/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://bgrins.github.io/spectrum/#modes">http://bgrins.github.io/spectrum/#modes</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- ADMINFORMS - SLIDERS -->
+                        <div class="tab-pane" id="admin-sliders" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns Forms - Sliders </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <!-- slider single -->
+                                <h2 id="forms-horizontal">Single Slider</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form">
+                                        <div class="slider-wrapper slider-primary">
+                                            <div id="slider-single"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;div class=&quot;slider-wrapper slider-primary&quot;&gt;
+        &lt;div id=&quot;slider-single&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Slider Single
+$(&quot;#slider-single&quot;).slider({
+    range: &quot;min&quot;,
+    min: 0,
+    max: 100,
+    value: 30,
+});
+</code></pre>
+                                </div>
+
+                                <!-- Slider Double -->
+                                <h2 id="forms-horizontal">Double Slider</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form">
+                                        <div class="slider-wrapper slider-primary">
+                                            <div id="slider-double"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;div class=&quot;slider-wrapper slider-primary&quot;&gt;
+        &lt;div id=&quot;slider-double&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Slider Double
+$(&quot;#slider-double&quot;).slider({
+    range: true,
+    values: [27, 63]
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Slider Count -->
+                                <h2 id="forms-horizontal">Slider with Counter</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="admin-form">
+                                        <input type="text" id="amount" class="slider-countbox mb5" readonly="" value="$30">
+                                        <div class="slider-wrapper slider-primary">
+                                            <div id="slider-count"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;admin-form&quot;&gt;
+    &lt;input type=&quot;text&quot; id=&quot;amount&quot; class=&quot;slider-countbox mb5&quot; readonly=&quot;&quot; value=&quot;$30&quot;&gt;
+    &lt;div class=&quot;slider-wrapper slider-primary&quot;&gt;
+        &lt;div id=&quot;slider-count&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Slider with Counter
+$(&quot;#slider-count&quot;).slider({
+    range: &quot;min&quot;,
+    min: 0,
+    max: 100,
+    value: 40,
+    slide: function( event, ui ) {
+       $( &quot;#amount&quot; ).val( &quot;$&quot; + ui.value );
+    }
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://api.jqueryui.com/slider/">http://api.jqueryui.com/slider/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://jqueryui.com/slider/">http://jqueryui.com/slider/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+ 
+    <!-- AdminForms JS -->
+    <script src="../../assets/admin-tools/admin-forms/js/jquery-ui-monthpicker.min.js"></script>
+    <script src="../../assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"></script>
+    <script src="../../assets/admin-tools/admin-forms/js/jquery.spectrum.min.js"></script>
+    <script src="../../assets/admin-tools/admin-forms/js/jquery.stepper.min.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

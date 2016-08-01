@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html class="template-page">
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" type="text/css" href="../../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../../assets/skin/default_skin/css/theme.css">
+
+    <!-- Demo CSS -->
+    <link rel="stylesheet" type="text/css" href="../../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+
+
+    <!-- Start: Sidebar Left -->
+    <aside id="sidebar_left" class="nano nano-primary">
+
+      <!-- Start: Sidebar Left Content -->
+      <div class="sidebar-left-content nano-content">
+
+        <!-- Start: Sidebar Header -->
+        <header class="sidebar-header">
+          <div class="user-menu">
+            <div class="row text-center mbn">
+              <div class="col-xs-4">
+                <a href="#" class="text-primary" data-toggle="tooltip" data-placement="top" title="Dashboard">
+                  <span class="glyphicon glyphicon-home"></span>
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="#" class="text-info" data-toggle="tooltip" data-placement="top" title="Messages">
+                  <span class="glyphicon glyphicon-inbox"></span>
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="#" class="text-alert" data-toggle="tooltip" data-placement="top" title="Tasks">
+                  <span class="glyphicon glyphicon-bell"></span>
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="#" class="text-system" data-toggle="tooltip" data-placement="top" title="Activity">
+                  <span class="fa fa-desktop"></span>
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" title="Settings">
+                  <span class="fa fa-gears"></span>
+                </a>
+              </div>
+              <div class="col-xs-4">
+                <a href="#" class="text-warning" data-toggle="tooltip" data-placement="top" title="Cron Jobs">
+                  <span class="fa fa-flask"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- End: Sidebar Header -->
+
+        <!-- Start: Sidebar Left Menu -->
+        <ul class="nav sidebar-menu">
+          <li class="sidebar-label pt20">Menu Items</li>
+          <li>
+            <a href="#">
+              <span class="fa fa-calendar"></span>
+              <span class="sidebar-title">Default Item</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="#">
+              <span class="glyphicon glyphicon-home"></span>
+              <span class="sidebar-title">Active Item</span>
+            </a>
+          </li>
+
+          <li class="sidebar-label pt20">Item with Label</li>
+          <li>
+            <a href="#">
+              <span class="fa fa-calendar"></span>
+              <span class="sidebar-title"> Item + Label</span>
+              <span class="sidebar-title-tray">
+                <span class="label label-xs bg-primary">New</span>
+              </span>
+            </a>
+          </li>
+
+          <li class="sidebar-label pt20">Item with Submenu</li>
+          <li>
+            <a class="accordion-toggle" href="#">
+              <span class="glyphicon glyphicon-check"></span>
+              <span class="sidebar-title">Dropdown Item</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="nav sub-nav">
+              <li>
+                <a href="#">
+                  <span class="glyphicon glyphicon-check"></span> Sub-Item 1 </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="glyphicon glyphicon-check"></span> Sub-Item 2 </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="glyphicon glyphicon-check"></span> Sub-Item 3 </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- sidebar bullets -->
+          <li class="sidebar-label pt20">Project Item</li>
+          <li class="sidebar-proj">
+            <a href="#projectOne">
+              <span class="fa fa-dot-circle-o text-primary"></span>
+              <span class="sidebar-title">Website Redesign</span>
+            </a>
+          </li>
+          <li class="sidebar-proj">
+            <a href="#projectTwo">
+              <span class="fa fa-dot-circle-o text-info"></span>
+              <span class="sidebar-title">Ecommerce Panel</span>
+            </a>
+          </li>
+
+          <!-- sidebar progress bars -->
+          <li class="sidebar-label pt25 pb10">Stat Item</li>
+          <li class="sidebar-stat mb10">
+            <a href="#projectOne" class="fs11">
+              <span class="fa fa-inbox text-info"></span>
+              <span class="sidebar-title text-muted">Email Storage</span>
+              <span class="pull-right mr20 text-muted">35%</span>
+              <div class="progress progress-bar-xs ml20 mr20">
+                <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 35%">
+                  <span class="sr-only">35% Complete</span>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+        <!-- End: Sidebar Menu -->
+
+	      <!-- Start: Sidebar Collapse Button -->
+	      <div class="sidebar-toggle-mini">
+	        <a href="#">
+	          <span class="fa fa-sign-out"></span>
+	        </a>
+	      </div>
+	      <!-- End: Sidebar Collapse Button -->
+
+      </div>
+      <!-- End: Sidebar Left Content -->
+
+    </aside>
+    <!-- End: Sidebar Left -->
+
+
+
+    <div class="mw1000 center-block mt30">
+        <div class="bs-example required-css" data-example-id="contextual-colors-helpers">
+            <code>None Required. Included in Core</code>
+        </div>
+        <div class="bs-example required-js" data-example-id="contextual-colors-helpers">
+            <code>None Required. Included in Core</code>
+        </div>
+        <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+        </div>
+<div class="highlight mn"><pre><code class="language-html" data-lang="html">
+&lt;!-- Start: Sidebar Left --&gt;
+&lt;aside id=&quot;sidebar_left&quot; class=&quot;nano nano-primary&quot;&gt;
+
+  &lt;!-- Start: Sidebar Left Content --&gt;
+  &lt;div class=&quot;sidebar-left-content nano-content&quot;&gt;
+
+    &lt;!-- Start: Sidebar Header --&gt;
+    &lt;header class=&quot;sidebar-header&quot;&gt;
+      &lt;div class=&quot;user-menu&quot;&gt;
+        &lt;div class=&quot;row text-center mbn&quot;&gt;
+          &lt;div class=&quot;col-xs-4&quot;&gt;
+            &lt;a href=&quot;dashboard.html&quot; class=&quot;text-primary&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Dashboard&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-home&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-xs-4&quot;&gt;
+            &lt;a href=&quot;pages_messages.html&quot; class=&quot;text-info&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Messages&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-inbox&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-xs-4&quot;&gt;
+            &lt;a href=&quot;pages_profile.html&quot; class=&quot;text-alert&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Tasks&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-bell&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-xs-4&quot;&gt;
+            &lt;a href=&quot;pages_timeline.html&quot; class=&quot;text-system&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Activity&quot;&gt;
+              &lt;span class=&quot;fa fa-desktop&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-xs-4&quot;&gt;
+            &lt;a href=&quot;pages_profile.html&quot; class=&quot;text-danger&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Settings&quot;&gt;
+              &lt;span class=&quot;fa fa-gears&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;col-xs-4&quot;&gt;
+            &lt;a href=&quot;pages_gallery.html&quot; class=&quot;text-warning&quot; data-toggle=&quot;tooltip&quot; data-placement=&quot;top&quot; title=&quot;Cron Jobs&quot;&gt;
+              &lt;span class=&quot;fa fa-flask&quot;&gt;&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+    &lt;!-- End: Sidebar Header --&gt;
+
+    &lt;!-- Start: Sidebar Left Menu --&gt;
+    &lt;ul class=&quot;nav sidebar-menu&quot;&gt;
+      &lt;li class=&quot;sidebar-label pt20&quot;&gt;Menu Items&lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href=&quot;pages_calendar.html&quot;&gt;
+          &lt;span class=&quot;fa fa-calendar&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title&quot;&gt;Default Item&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li class=&quot;active&quot;&gt;
+        &lt;a href=&quot;dashboard.html&quot;&gt;
+          &lt;span class=&quot;glyphicon glyphicon-home&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title&quot;&gt;Active Item&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+
+      &lt;li class=&quot;sidebar-label pt20&quot;&gt;Item with Label&lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href=&quot;pages_calendar.html&quot;&gt;
+          &lt;span class=&quot;fa fa-calendar&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title&quot;&gt; Item + Label&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title-tray&quot;&gt;
+            &lt;span class=&quot;label label-xs bg-primary&quot;&gt;New&lt;/span&gt;
+          &lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+
+      &lt;li class=&quot;sidebar-label pt20&quot;&gt;Item with Submenu&lt;/li&gt;
+      &lt;li&gt;
+        &lt;a class=&quot;accordion-toggle&quot; href=&quot;#&quot;&gt;
+          &lt;span class=&quot;glyphicon glyphicon-check&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title&quot;&gt;Dropdown Item&lt;/span&gt;
+          &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;ul class=&quot;nav sub-nav&quot;&gt;
+          &lt;li&gt;
+            &lt;a href=&quot;#&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-check&quot;&gt;&lt;/span&gt; Sub-Item 1 &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href=&quot;#&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-check&quot;&gt;&lt;/span&gt; Sub-Item 2 &lt;/a&gt;
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;a href=&quot;#&quot;&gt;
+              &lt;span class=&quot;glyphicon glyphicon-check&quot;&gt;&lt;/span&gt; Sub-Item 3 &lt;/a&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+
+      &lt;!-- sidebar bullets --&gt;
+      &lt;li class=&quot;sidebar-label pt20&quot;&gt;Project Item&lt;/li&gt;
+      &lt;li class=&quot;sidebar-proj&quot;&gt;
+        &lt;a href=&quot;#projectOne&quot;&gt;
+          &lt;span class=&quot;fa fa-dot-circle-o text-primary&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title&quot;&gt;Website Redesign&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+      &lt;li class=&quot;sidebar-proj&quot;&gt;
+        &lt;a href=&quot;#projectTwo&quot;&gt;
+          &lt;span class=&quot;fa fa-dot-circle-o text-info&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title&quot;&gt;Ecommerce Panel&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+
+      &lt;!-- sidebar progress bars --&gt;
+      &lt;li class=&quot;sidebar-label pt25 pb10&quot;&gt;Stat Item&lt;/li&gt;
+      &lt;li class=&quot;sidebar-stat mb10&quot;&gt;
+        &lt;a href=&quot;#projectOne&quot; class=&quot;fs11&quot;&gt;
+          &lt;span class=&quot;fa fa-inbox text-info&quot;&gt;&lt;/span&gt;
+          &lt;span class=&quot;sidebar-title text-muted&quot;&gt;Email Storage&lt;/span&gt;
+          &lt;span class=&quot;pull-right mr20 text-muted&quot;&gt;35%&lt;/span&gt;
+          &lt;div class=&quot;progress progress-bar-xs ml20 mr20&quot;&gt;
+            &lt;div class=&quot;progress-bar progress-bar-info&quot; role=&quot;progressbar&quot; aria-valuenow=&quot;45&quot; aria-valuemin=&quot;0&quot; aria-valuemax=&quot;100&quot; style=&quot;width: 35%&quot;&gt;
+              &lt;span class=&quot;sr-only&quot;&gt;35% Complete&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;!-- End: Sidebar Menu --&gt;
+
+      &lt;!-- Start: Sidebar Collapse Button --&gt;
+      &lt;div class=&quot;sidebar-toggle-mini&quot;&gt;
+        &lt;a href=&quot;#&quot;&gt;
+          &lt;span class=&quot;fa fa-sign-out&quot;&gt;&lt;/span&gt;
+        &lt;/a&gt;
+      &lt;/div&gt;
+      &lt;!-- End: Sidebar Collapse Button --&gt;
+
+  &lt;/div&gt;
+  &lt;!-- End: Sidebar Left Content --&gt;
+
+&lt;/aside&gt;
+&lt;!-- End: Sidebar Left --&gt;
+</code></pre>
+        </div>
+
+        <div class="zero-clipboard hidden"><span class="btn-clipboard">Copy</span>
+        </div>
+        <div class="highlight hljs-label-js mb50 hidden"><pre><code class="language-js" data-lang="js">
+// Init AdminPanels on columns inside the &quot;.admin-panels&quot; container
+$(&#39;.admin-panels&#39;).adminpanel({
+grid: &#39;.admin-grid&#39;,
+draggable: true,
+// On AdminPanel Init complete we fade in the content. Optional
+onFinish: function() {
+    $(&#39;.admin-panels&#39;).addClass(&#39;animated fadeIn&#39;).removeClass(&#39;fade-onload&#39;);
+},
+// We trigger a window resize after a panel has been modified. This helps catch
+// any plugins which may need to update after the panel was changed. Optional
+onSave: function() {
+    $(window).trigger(&#39;resize&#39;);
+}
+});
+</code></pre>
+        </div>
+
+        <a href="#" id="template-return" class="template-btn hidden">Return to Template <span class="fa fa-long-arrow-right pl15"></span></a>
+
+    </div>
+
+
+
+
+
+    <style>
+    /*demo styles*/
+    
+    body {
+        min-height: 2000px;
+    }
+    .admin-panels .panel .panel-body {
+        min-height: 180px;
+    }
+    #sidebar_left {
+    	padding-top: 0 !important;
+    }
+    #sidebar_left:before {
+    	content: "";
+    	position: fixed;
+    	top: 0;
+    	bottom: 0;
+    	width: 230px;
+  		background-color: #30363e;
+    }
+    </style>
+
+    <!-- jQuery JS -->
+    <script src="../../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+
+    <!-- Plugin js -->
+    <script src="../../../vendor/plugins/highlight/highlight.pack.js"></script>
+    <script src="../../../vendor/plugins/holder/holder.min.js"></script>
+
+    <script src="../../../assets/js/utility/utility.js"></script>
+    <script src="../../../assets/js/main.js"></script>
+    <script src="../../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        "use strict";
+
+        // Init Demo Core    
+        Docs.init();
+
+
+        // Init Theme Core    
+        Core.init();
+
+
+        // Init AdminPanels on columns inside the ".admin-panels" container
+        $('.admin-panels').adminpanel({
+            grid: '.admin-grid',
+            draggable: true,
+            // On AdminPanel Init complete we fade in the content. Optional
+            onFinish: function() {
+                $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
+            },
+            // We trigger a window resize after a panel has been modified. This helps catch
+            // any plugins which may need to update after the panel was changed. Optional
+            onSave: function() {
+                $(window).trigger('resize');
+            }
+        });
+
+
+    });
+    </script>
+    <!-- END: PAGE SCRIPTS -->
+
+</body>
+
+</html>

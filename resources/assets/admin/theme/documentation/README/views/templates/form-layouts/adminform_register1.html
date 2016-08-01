@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html class="template-page">
+
+<head>
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+  <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+  <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+  <meta name="author" content="AdminDesigns">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font CSS (Via CDN) -->
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" type="text/css" href="../../../vendor/plugins/highlight/styles/github.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" type="text/css" href="../../../assets/skin/default_skin/css/theme.css">
+
+  <!-- Demo CSS -->
+  <link rel="stylesheet" type="text/css" href="../../resources/css/styles.css">
+
+  <!-- AdminForms CSS -->
+  <link rel="stylesheet" type="text/css" href="../../../assets/admin-tools/admin-forms/css/admin-forms.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../../assets/favicon.ico">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+
+  <!-- layout template -->
+  <div id="onScreen" class="container-fluid">
+
+    <div class="mw600 center-block mt30">
+
+      <a href="#" id="template-code" class=" template-btn"> <span class="fa fa-long-arrow-left pr15"></span> GET TEMPLATE CODE</a>
+
+      <!-- Registration 1 -->
+      <div class="admin-form theme-danger" id="register1">
+        <div class="panel panel-danger heading-border">
+          <div class="panel-heading">
+            <span class="panel-title"><i class="fa fa-pencil-square"></i>Create Account
+                        </span>
+          </div>
+          <!-- end .form-header section -->
+
+          <form method="post" action="/" id="form-register1">
+            <div class="panel-body p25">
+              <label for="names" class="field-label">Your names</label>
+              <div class="section row">
+                <div class="col-md-6">
+                  <label for="firstname" class="field prepend-icon">
+                    <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="First name...">
+                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
+                    </label>
+                  </label>
+                </div>
+                <!-- end section -->
+
+                <div class="col-md-6">
+                  <label for="lastname" class="field prepend-icon">
+                    <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                    <label for="lastname" class="field-icon"><i class="fa fa-user"></i>
+                    </label>
+                  </label>
+                </div>
+                <!-- end section -->
+
+              </div>
+              <!-- end section row section -->
+
+              <div class="section">
+                <label for="username" class="field-label">Choose your username</label>
+                <div class="smart-widget sm-right smr-120">
+                  <label for="username" class="field prepend-icon">
+                    <input type="text" name="username" id="username" class="gui-input" placeholder="john-doe">
+                    <label for="username" class="field-icon"><i class="fa fa-user"></i>
+                    </label>
+                  </label>
+                  <label for="username" class="button">.envato.com</label>
+                </div>
+                <!-- end .smart-widget section -->
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="password" class="field-label">Create a password</label>
+                <label for="password" class="field prepend-icon">
+                  <input type="password" name="password" id="password" class="gui-input">
+                  <label for="password" class="field-icon"><i class="fa fa-lock"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="confirmPassword" class="field-label">Confirm your password</label>
+                <label for="confirmPassword" class="field prepend-icon">
+                  <input type="password" name="confirmPassword" id="confirmPassword" class="gui-input">
+                  <label for="confirmPassword" class="field-icon"><i class="fa fa-unlock-alt"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <label for="birthday" class="field-label">Your birthday</label>
+              <div class="section row">
+                <div class="col-md-4">
+                  <label for="month" class="field select">
+                    <select id="month" name="month">
+                      <option value="01">01 - Jan</option>
+                      <option value="02">02 - Feb</option>
+                      <option value="03">03 - Mar</option>
+                      <option value="04">04 - Apr</option>
+                      <option value="05">05 - May</option>
+                      <option value="06">06 - Jun</option>
+                      <option value="07">07 - Jul</option>
+                      <option value="08">08 - Aug</option>
+                      <option value="09">09 - Sep</option>
+                      <option value="10">10 - Oct</option>
+                      <option value="11">11 - Nov</option>
+                      <option value="12">12 - Dec</option>
+                    </select>
+                    <i class="arrow double"></i>
+                  </label>
+                </div>
+                <!-- end section -->
+
+                <div class="col-md-4">
+                  <label for="day" class="field">
+                    <input type="text" name="day" id="day" class="gui-input" placeholder="Day...">
+                  </label>
+                </div>
+                <!-- end section -->
+
+                <div class="col-md-4">
+                  <label for="year" class="field">
+                    <input type="text" name="year" id="year" class="gui-input" placeholder="Year...">
+                  </label>
+                </div>
+                <!-- end section -->
+
+              </div>
+              <!-- end .section row section -->
+
+              <div class="section">
+                <label for="location" class="field-label">Location</label>
+                <label class="field select">
+                  <select id="location" name="location">
+                    <option value="">Select country...</option>
+                    <option value="AL">Albania</option>
+                    <option value="DZ">Algeria</option>
+                    <option value="AD">Andorra</option>
+                    <option value="AO">Angola</option>
+                    <option value="AI">Anguilla</option>
+                    <option value="AG">Antigua and Barbuda</option>
+                    <option value="AR">Argentina</option>
+                    <option value="AM">Armenia</option>
+                    <option value="AW">Aruba</option>
+                    <option value="AU">Australia</option>
+                    <option value="AT">Austria</option>
+                    <option value="AZ">Azerbaijan Republic</option>
+                    <option value="BS">Bahamas</option>
+                    <option value="BH">Bahrain</option>
+                    <option value="BB">Barbados</option>
+                    <option value="BE">Belgium</option>
+                    <option value="BZ">Belize</option>
+                    <option value="BJ">Benin</option>
+                    <option value="BM">Bermuda</option>
+                    <option value="BT">Bhutan</option>
+                    <option value="BO">Bolivia</option>
+                    <option value="BA">Bosnia and Herzegovina</option>
+                    <option value="BW">Botswana</option>
+                    <option value="BR">Brazil</option>
+                    <option value="BN">Brunei</option>
+                    <option value="BG">Bulgaria</option>
+                    <option value="BF">Burkina Faso</option>
+                    <option value="BI">Burundi</option>
+                    <option value="KH">Cambodia</option>
+                    <option value="CA">Canada</option>
+                    <option value="CV">Cape Verde</option>
+                    <option value="KY">Cayman Islands</option>
+                    <option value="TD">Chad</option>
+                    <option value="CL">Chile</option>
+                    <option value="C2">China Worldwide</option>
+                    <option value="CO">Colombia</option>
+                    <option value="KM">Comoros</option>
+                    <option value="CK">Cook Islands</option>
+                    <option value="CR">Costa Rica</option>
+                    <option value="HR">Croatia</option>
+                    <option value="CY">Cyprus</option>
+                    <option value="CZ">Czech Republic</option>
+                    <option value="CD">Democratic Republic of the Congo</option>
+                    <option value="DK">Denmark</option>
+                    <option value="DJ">Djibouti</option>
+                    <option value="DM">Dominica</option>
+                    <option value="DO">Dominican Republic</option>
+                    <option value="EC">Ecuador</option>
+                    <option value="EG">Egypt</option>
+                    <option value="SV">El Salvador</option>
+                    <option value="ER">Eritrea</option>
+                    <option value="EE">Estonia</option>
+                    <option value="ET">Ethiopia</option>
+                    <option value="FK">Falkland Islands</option>
+                    <option value="FO">Faroe Islands</option>
+                    <option value="FJ">Fiji</option>
+                    <option value="FI">Finland</option>
+                    <option value="FR">France</option>
+                    <option value="GF">French Guiana</option>
+                    <option value="PF">French Polynesia</option>
+                    <option value="GA">Gabon Republic</option>
+                    <option value="GM">Gambia</option>
+                    <option value="GE">Georgia</option>
+                    <option value="DE">Germany</option>
+                    <option value="GI">Gibraltar</option>
+                    <option value="GR">Greece</option>
+                    <option value="GL">Greenland</option>
+                    <option value="GD">Grenada</option>
+                    <option value="GP">Guadeloupe</option>
+                    <option value="GT">Guatemala</option>
+                    <option value="GN">Guinea</option>
+                    <option value="GW">Guinea Bissau</option>
+                    <option value="GY">Guyana</option>
+                    <option value="HN">Honduras</option>
+                    <option value="HK">Hong Kong</option>
+                    <option value="HU">Hungary</option>
+                    <option value="IS">Iceland</option>
+                    <option value="IN">India</option>
+                    <option value="ID">Indonesia</option>
+                    <option value="IE">Ireland</option>
+                    <option value="IL">Israel</option>
+                    <option value="IT">Italy</option>
+                    <option value="JM">Jamaica</option>
+                    <option value="JP">Japan</option>
+                    <option value="JO">Jordan</option>
+                    <option value="KZ">Kazakhstan</option>
+                    <option value="KE">Kenya</option>
+                    <option value="KI">Kiribati</option>
+                    <option value="KW">Kuwait</option>
+                    <option value="KG">Kyrgyzstan</option>
+                    <option value="LA">Laos</option>
+                    <option value="LV">Latvia</option>
+                    <option value="LS">Lesotho</option>
+                    <option value="LI">Liechtenstein</option>
+                    <option value="LT">Lithuania</option>
+                    <option value="LU">Luxembourg</option>
+                    <option value="MG">Madagascar</option>
+                    <option value="MW">Malawi</option>
+                    <option value="MY">Malaysia</option>
+                    <option value="MV">Maldives</option>
+                    <option value="ML">Mali</option>
+                    <option value="MT">Malta</option>
+                    <option value="MH">Marshall Islands</option>
+                    <option value="MQ">Martinique</option>
+                    <option value="MR">Mauritania</option>
+                    <option value="MU">Mauritius</option>
+                    <option value="YT">Mayotte</option>
+                    <option value="MX">Mexico</option>
+                    <option value="FM">Micronesia</option>
+                    <option value="MN">Mongolia</option>
+                    <option value="MS">Montserrat</option>
+                    <option value="MA">Morocco</option>
+                    <option value="MZ">Mozambique</option>
+                    <option value="NA">Namibia</option>
+                    <option value="NR">Nauru</option>
+                    <option value="NP">Nepal</option>
+                    <option value="NL">Netherlands</option>
+                    <option value="AN">Netherlands Antilles</option>
+                    <option value="NC">New Caledonia</option>
+                    <option value="NZ">New Zealand</option>
+                    <option value="NI">Nicaragua</option>
+                    <option value="NE">Niger</option>
+                    <option value="NU">Niue</option>
+                    <option value="NF">Norfolk Island</option>
+                    <option value="NO">Norway</option>
+                    <option value="OM">Oman</option>
+                    <option value="PW">Palau</option>
+                    <option value="PA">Panama</option>
+                    <option value="PG">Papua New Guinea</option>
+                    <option value="PE">Peru</option>
+                    <option value="PH">Philippines</option>
+                    <option value="PN">Pitcairn Islands</option>
+                    <option value="PL">Poland</option>
+                    <option value="PT">Portugal</option>
+                    <option value="QA">Qatar</option>
+                    <option value="CG">Republic of the Congo</option>
+                    <option value="RE">Reunion</option>
+                    <option value="RO">Romania</option>
+                    <option value="RU">Russia</option>
+                    <option value="RW">Rwanda</option>
+                    <option value="KN">Saint Kitts and Nevis Anguilla</option>
+                    <option value="PM">Saint Pierre and Miquelon</option>
+                    <option value="VC">Saint Vincent and Grenadines</option>
+                    <option value="WS">Samoa</option>
+                    <option value="SM">San Marino</option>
+                    <option value="ST">São Tomé and Príncipe</option>
+                    <option value="SA">Saudi Arabia</option>
+                    <option value="SN">Senegal</option>
+                    <option value="RS">Serbia</option>
+                    <option value="SC">Seychelles</option>
+                    <option value="SL">Sierra Leone</option>
+                    <option value="SG">Singapore</option>
+                    <option value="SK">Slovakia</option>
+                    <option value="SI">Slovenia</option>
+                    <option value="SB">Solomon Islands</option>
+                    <option value="SO">Somalia</option>
+                    <option value="ZA">South Africa</option>
+                    <option value="KR">South Korea</option>
+                    <option value="ES">Spain</option>
+                    <option value="LK">Sri Lanka</option>
+                    <option value="SH">St. Helena</option>
+                    <option value="LC">St. Lucia</option>
+                    <option value="SR">Suriname</option>
+                    <option value="SJ">Svalbard and Jan Mayen Islands</option>
+                    <option value="SZ">Swaziland</option>
+                    <option value="SE">Sweden</option>
+                    <option value="CH">Switzerland</option>
+                    <option value="TW">Taiwan</option>
+                    <option value="TJ">Tajikistan</option>
+                    <option value="TZ">Tanzania</option>
+                    <option value="TH">Thailand</option>
+                    <option value="TG">Togo</option>
+                    <option value="TO">Tonga</option>
+                    <option value="TT">Trinidad and Tobago</option>
+                    <option value="TN">Tunisia</option>
+                    <option value="TR">Turkey</option>
+                    <option value="TM">Turkmenistan</option>
+                    <option value="TC">Turks and Caicos Islands</option>
+                    <option value="TV">Tuvalu</option>
+                    <option value="UG">Uganda</option>
+                    <option value="UA">Ukraine</option>
+                    <option value="AE">United Arab Emirates</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="US">United States</option>
+                    <option value="UY">Uruguay</option>
+                    <option value="VU">Vanuatu</option>
+                    <option value="VA">Vatican City State</option>
+                    <option value="VE">Venezuela</option>
+                    <option value="VN">Vietnam</option>
+                    <option value="VG">Virgin Islands (British)</option>
+                    <option value="WF">Wallis and Futuna Islands</option>
+                    <option value="YE">Yemen</option>
+                    <option value="ZM">Zambia</option>
+                  </select>
+                  <i class="arrow double"></i>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="gender" class="field-label">Gender</label>
+                <label class="field select">
+                  <select id="gender" name="gender">
+                    <option value="">I am...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <i class="arrow double"></i>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="email" class="field-label">Your email address</label>
+                <label for="email" class="field prepend-icon">
+                  <input type="email" name="email" id="email" class="gui-input" placeholder="example@domain.com...">
+                  <label for="email" class="field-icon"><i class="fa fa-envelope"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="mobile" class="field-label">Mobile phone</label>
+                <label for="mobile" class="field prepend-icon">
+                  <input type="tel" name="mobile" id="mobile" class="gui-input" placeholder="+256">
+                  <label for="mobile" class="field-icon"><i class="fa fa-phone-square"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="verify" class="field-label">Prove you're not a robot</label>
+                <div class="smart-widget sm-left sml-80">
+                  <label for="verify" class="field prepend-icon">
+                    <input type="text" name="verify" id="verify" class="gui-input" placeholder="Enter captcha">
+                    <label for="verify" class="field-icon"><i class="fa fa-shield"></i>
+                    </label>
+                  </label>
+                  <label for="verify" class="button">4 + 12</label>
+                </div>
+                <!-- end .smart-widget section -->
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label class="option">
+                  <input type="checkbox" name="check1">
+                  <span class="checkbox mr10"></span>Agree to our
+                  <a href="#" class="theme-link"> terms of service </a>
+                </label>
+              </div>
+              <!-- end section -->
+
+            </div>
+            <!-- end .form-body section -->
+            <div class="panel-footer">
+              <button type="submit" class="button btn-primary">Create Account</button>
+            </div>
+            <!-- end .form-footer section -->
+          </form>
+        </div>
+        <!-- end .admin-form section -->
+      </div>
+      <!-- end: .admin-form -->
+
+    </div>
+
+  </div>
+
+  <div id="offScreen" class="container-fluid">
+    <div class="mw1000 center-block mt30 mb50">
+      <a href="#" id="template-return" class="template-btn">Return to Template <span class="fa fa-long-arrow-right pl15"></span></a>
+      <div class="bs-example required-css" data-example-id="contextual-colors-helpers">
+        <code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;assets/admin-tools/admin-forms/css/admin-forms.css&quot;&gt;</code>
+      </div>
+
+      <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+      </div>
+      <div class="highlight hljs-label-html mn"><pre><code class="language-html" data-lang="html">
+&lt;!-- Registration 1 --&gt;
+&lt;div class=&quot;admin-form theme-danger&quot; id=&quot;register1&quot;&gt;
+    &lt;div class=&quot;panel panel-danger heading-border&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;span class=&quot;panel-title&quot;&gt;&lt;i class=&quot;fa fa-pencil-square&quot;&gt;&lt;/i&gt;Create Account
+            &lt;/span&gt;
+        &lt;/div&gt;
+        &lt;!-- end .form-header section --&gt;
+
+        &lt;form method=&quot;post&quot; action=&quot;/&quot; id=&quot;form-register1&quot;&gt;
+            &lt;div class=&quot;panel-body p25&quot;&gt;
+                &lt;label for=&quot;names&quot; class=&quot;field-label&quot;&gt;Your names&lt;/label&gt;
+                &lt;div class=&quot;section row&quot;&gt;
+                    &lt;div class=&quot;col-md-6&quot;&gt;
+                        &lt;label for=&quot;firstname&quot; class=&quot;field prepend-icon&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;firstname&quot; id=&quot;firstname&quot; class=&quot;gui-input&quot; placeholder=&quot;First name...&quot;&gt;
+                            &lt;label for=&quot;firstname&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+                            &lt;/label&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                    &lt;div class=&quot;col-md-6&quot;&gt;
+                        &lt;label for=&quot;lastname&quot; class=&quot;field prepend-icon&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;lastname&quot; id=&quot;lastname&quot; class=&quot;gui-input&quot; placeholder=&quot;Last name...&quot;&gt;
+                            &lt;label for=&quot;lastname&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+                            &lt;/label&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                &lt;/div&gt;
+                &lt;!-- end section row section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;username&quot; class=&quot;field-label&quot;&gt;Choose your username&lt;/label&gt;
+                    &lt;div class=&quot;smart-widget sm-right smr-120&quot;&gt;
+                        &lt;label for=&quot;username&quot; class=&quot;field prepend-icon&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot; class=&quot;gui-input&quot; placeholder=&quot;john-doe&quot;&gt;
+                            &lt;label for=&quot;username&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+                            &lt;/label&gt;
+                        &lt;/label&gt;
+                        &lt;label for=&quot;username&quot; class=&quot;button&quot;&gt;.envato.com&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end .smart-widget section --&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;password&quot; class=&quot;field-label&quot;&gt;Create a password&lt;/label&gt;
+                    &lt;label for=&quot;password&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;password&quot; name=&quot;password&quot; id=&quot;password&quot; class=&quot;gui-input&quot;&gt;
+                        &lt;label for=&quot;password&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-lock&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;confirmPassword&quot; class=&quot;field-label&quot;&gt;Confirm your password&lt;/label&gt;
+                    &lt;label for=&quot;confirmPassword&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;password&quot; name=&quot;confirmPassword&quot; id=&quot;confirmPassword&quot; class=&quot;gui-input&quot;&gt;
+                        &lt;label for=&quot;confirmPassword&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-unlock-alt&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;label for=&quot;birthday&quot; class=&quot;field-label&quot;&gt;Your birthday&lt;/label&gt;
+                &lt;div class=&quot;section row&quot;&gt;
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;month&quot; class=&quot;field select&quot;&gt;
+                            &lt;select id=&quot;month&quot; name=&quot;month&quot;&gt;
+                                &lt;option value=&quot;01&quot;&gt;01 - Jan&lt;/option&gt;
+                                &lt;option value=&quot;02&quot;&gt;02 - Feb&lt;/option&gt;
+                                &lt;option value=&quot;03&quot;&gt;03 - Mar&lt;/option&gt;
+                                &lt;option value=&quot;04&quot;&gt;04 - Apr&lt;/option&gt;
+                                &lt;option value=&quot;05&quot;&gt;05 - May&lt;/option&gt;
+                                &lt;option value=&quot;06&quot;&gt;06 - Jun&lt;/option&gt;
+                                &lt;option value=&quot;07&quot;&gt;07 - Jul&lt;/option&gt;
+                                &lt;option value=&quot;08&quot;&gt;08 - Aug&lt;/option&gt;
+                                &lt;option value=&quot;09&quot;&gt;09 - Sep&lt;/option&gt;
+                                &lt;option value=&quot;10&quot;&gt;10 - Oct&lt;/option&gt;
+                                &lt;option value=&quot;11&quot;&gt;11 - Nov&lt;/option&gt;
+                                &lt;option value=&quot;12&quot;&gt;12 - Dec&lt;/option&gt;
+                            &lt;/select&gt;
+                            &lt;i class=&quot;arrow double&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;day&quot; class=&quot;field&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;day&quot; id=&quot;day&quot; class=&quot;gui-input&quot; placeholder=&quot;Day...&quot;&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                    &lt;div class=&quot;col-md-4&quot;&gt;
+                        &lt;label for=&quot;year&quot; class=&quot;field&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;year&quot; id=&quot;year&quot; class=&quot;gui-input&quot; placeholder=&quot;Year...&quot;&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                &lt;/div&gt;
+                &lt;!-- end .section row section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;location&quot; class=&quot;field-label&quot;&gt;Location&lt;/label&gt;
+                    &lt;label class=&quot;field select&quot;&gt;
+                        &lt;select id=&quot;location&quot; name=&quot;location&quot;&gt;
+                            &lt;option value=&quot;&quot;&gt;Select country...&lt;/option&gt;
+                            &lt;option value=&quot;AL&quot;&gt;Albania&lt;/option&gt;
+                            &lt;option value=&quot;DZ&quot;&gt;Algeria&lt;/option&gt;
+                            &lt;option value=&quot;AD&quot;&gt;Andorra&lt;/option&gt;
+                            &lt;option value=&quot;AO&quot;&gt;Angola&lt;/option&gt;
+                            &lt;option value=&quot;AI&quot;&gt;Anguilla&lt;/option&gt;
+                            &lt;option value=&quot;AG&quot;&gt;Antigua and Barbuda&lt;/option&gt;
+                            &lt;option value=&quot;AR&quot;&gt;Argentina&lt;/option&gt;
+                            &lt;option value=&quot;AM&quot;&gt;Armenia&lt;/option&gt;
+                            &lt;option value=&quot;AW&quot;&gt;Aruba&lt;/option&gt;
+                            &lt;option value=&quot;AU&quot;&gt;Australia&lt;/option&gt;
+                            &lt;option value=&quot;AT&quot;&gt;Austria&lt;/option&gt;
+                            &lt;option value=&quot;AZ&quot;&gt;Azerbaijan Republic&lt;/option&gt;
+                            &lt;option value=&quot;BS&quot;&gt;Bahamas&lt;/option&gt;
+                            &lt;option value=&quot;BH&quot;&gt;Bahrain&lt;/option&gt;
+                            &lt;option value=&quot;BB&quot;&gt;Barbados&lt;/option&gt;
+                            &lt;option value=&quot;BE&quot;&gt;Belgium&lt;/option&gt;
+                            &lt;option value=&quot;BZ&quot;&gt;Belize&lt;/option&gt;
+                            &lt;option value=&quot;BJ&quot;&gt;Benin&lt;/option&gt;
+                            &lt;option value=&quot;BM&quot;&gt;Bermuda&lt;/option&gt;
+                            &lt;option value=&quot;BT&quot;&gt;Bhutan&lt;/option&gt;
+                            &lt;option value=&quot;BO&quot;&gt;Bolivia&lt;/option&gt;
+                            &lt;option value=&quot;BA&quot;&gt;Bosnia and Herzegovina&lt;/option&gt;
+                            &lt;option value=&quot;BW&quot;&gt;Botswana&lt;/option&gt;
+                            &lt;option value=&quot;BR&quot;&gt;Brazil&lt;/option&gt;
+                            &lt;option value=&quot;BN&quot;&gt;Brunei&lt;/option&gt;
+                            &lt;option value=&quot;BG&quot;&gt;Bulgaria&lt;/option&gt;
+                            &lt;option value=&quot;BF&quot;&gt;Burkina Faso&lt;/option&gt;
+                            &lt;option value=&quot;BI&quot;&gt;Burundi&lt;/option&gt;
+                            &lt;option value=&quot;KH&quot;&gt;Cambodia&lt;/option&gt;
+                            &lt;option value=&quot;CA&quot;&gt;Canada&lt;/option&gt;
+                            &lt;option value=&quot;CV&quot;&gt;Cape Verde&lt;/option&gt;
+                            &lt;option value=&quot;KY&quot;&gt;Cayman Islands&lt;/option&gt;
+                            &lt;option value=&quot;TD&quot;&gt;Chad&lt;/option&gt;
+                            &lt;option value=&quot;CL&quot;&gt;Chile&lt;/option&gt;
+                            &lt;option value=&quot;C2&quot;&gt;China Worldwide&lt;/option&gt;
+                            &lt;option value=&quot;CO&quot;&gt;Colombia&lt;/option&gt;
+                            &lt;option value=&quot;KM&quot;&gt;Comoros&lt;/option&gt;
+                            &lt;option value=&quot;CK&quot;&gt;Cook Islands&lt;/option&gt;
+                            &lt;option value=&quot;CR&quot;&gt;Costa Rica&lt;/option&gt;
+                            &lt;option value=&quot;HR&quot;&gt;Croatia&lt;/option&gt;
+                            &lt;option value=&quot;CY&quot;&gt;Cyprus&lt;/option&gt;
+                            &lt;option value=&quot;CZ&quot;&gt;Czech Republic&lt;/option&gt;
+                            &lt;option value=&quot;CD&quot;&gt;Democratic Republic of the Congo&lt;/option&gt;
+                            &lt;option value=&quot;DK&quot;&gt;Denmark&lt;/option&gt;
+                            &lt;option value=&quot;DJ&quot;&gt;Djibouti&lt;/option&gt;
+                            &lt;option value=&quot;DM&quot;&gt;Dominica&lt;/option&gt;
+                            &lt;option value=&quot;DO&quot;&gt;Dominican Republic&lt;/option&gt;
+                            &lt;option value=&quot;EC&quot;&gt;Ecuador&lt;/option&gt;
+                            &lt;option value=&quot;EG&quot;&gt;Egypt&lt;/option&gt;
+                            &lt;option value=&quot;SV&quot;&gt;El Salvador&lt;/option&gt;
+                            &lt;option value=&quot;ER&quot;&gt;Eritrea&lt;/option&gt;
+                            &lt;option value=&quot;EE&quot;&gt;Estonia&lt;/option&gt;
+                            &lt;option value=&quot;ET&quot;&gt;Ethiopia&lt;/option&gt;
+                            &lt;option value=&quot;FK&quot;&gt;Falkland Islands&lt;/option&gt;
+                            &lt;option value=&quot;FO&quot;&gt;Faroe Islands&lt;/option&gt;
+                            &lt;option value=&quot;FJ&quot;&gt;Fiji&lt;/option&gt;
+                            &lt;option value=&quot;FI&quot;&gt;Finland&lt;/option&gt;
+                            &lt;option value=&quot;FR&quot;&gt;France&lt;/option&gt;
+                            &lt;option value=&quot;GF&quot;&gt;French Guiana&lt;/option&gt;
+                            &lt;option value=&quot;PF&quot;&gt;French Polynesia&lt;/option&gt;
+                            &lt;option value=&quot;GA&quot;&gt;Gabon Republic&lt;/option&gt;
+                            &lt;option value=&quot;GM&quot;&gt;Gambia&lt;/option&gt;
+                            &lt;option value=&quot;GE&quot;&gt;Georgia&lt;/option&gt;
+                            &lt;option value=&quot;DE&quot;&gt;Germany&lt;/option&gt;
+                            &lt;option value=&quot;GI&quot;&gt;Gibraltar&lt;/option&gt;
+                            &lt;option value=&quot;GR&quot;&gt;Greece&lt;/option&gt;
+                            &lt;option value=&quot;GL&quot;&gt;Greenland&lt;/option&gt;
+                            &lt;option value=&quot;GD&quot;&gt;Grenada&lt;/option&gt;
+                            &lt;option value=&quot;GP&quot;&gt;Guadeloupe&lt;/option&gt;
+                            &lt;option value=&quot;GT&quot;&gt;Guatemala&lt;/option&gt;
+                            &lt;option value=&quot;GN&quot;&gt;Guinea&lt;/option&gt;
+                            &lt;option value=&quot;GW&quot;&gt;Guinea Bissau&lt;/option&gt;
+                            &lt;option value=&quot;GY&quot;&gt;Guyana&lt;/option&gt;
+                            &lt;option value=&quot;HN&quot;&gt;Honduras&lt;/option&gt;
+                            &lt;option value=&quot;HK&quot;&gt;Hong Kong&lt;/option&gt;
+                            &lt;option value=&quot;HU&quot;&gt;Hungary&lt;/option&gt;
+                            &lt;option value=&quot;IS&quot;&gt;Iceland&lt;/option&gt;
+                            &lt;option value=&quot;IN&quot;&gt;India&lt;/option&gt;
+                            &lt;option value=&quot;ID&quot;&gt;Indonesia&lt;/option&gt;
+                            &lt;option value=&quot;IE&quot;&gt;Ireland&lt;/option&gt;
+                            &lt;option value=&quot;IL&quot;&gt;Israel&lt;/option&gt;
+                            &lt;option value=&quot;IT&quot;&gt;Italy&lt;/option&gt;
+                            &lt;option value=&quot;JM&quot;&gt;Jamaica&lt;/option&gt;
+                            &lt;option value=&quot;JP&quot;&gt;Japan&lt;/option&gt;
+                            &lt;option value=&quot;JO&quot;&gt;Jordan&lt;/option&gt;
+                            &lt;option value=&quot;KZ&quot;&gt;Kazakhstan&lt;/option&gt;
+                            &lt;option value=&quot;KE&quot;&gt;Kenya&lt;/option&gt;
+                            &lt;option value=&quot;KI&quot;&gt;Kiribati&lt;/option&gt;
+                            &lt;option value=&quot;KW&quot;&gt;Kuwait&lt;/option&gt;
+                            &lt;option value=&quot;KG&quot;&gt;Kyrgyzstan&lt;/option&gt;
+                            &lt;option value=&quot;LA&quot;&gt;Laos&lt;/option&gt;
+                            &lt;option value=&quot;LV&quot;&gt;Latvia&lt;/option&gt;
+                            &lt;option value=&quot;LS&quot;&gt;Lesotho&lt;/option&gt;
+                            &lt;option value=&quot;LI&quot;&gt;Liechtenstein&lt;/option&gt;
+                            &lt;option value=&quot;LT&quot;&gt;Lithuania&lt;/option&gt;
+                            &lt;option value=&quot;LU&quot;&gt;Luxembourg&lt;/option&gt;
+                            &lt;option value=&quot;MG&quot;&gt;Madagascar&lt;/option&gt;
+                            &lt;option value=&quot;MW&quot;&gt;Malawi&lt;/option&gt;
+                            &lt;option value=&quot;MY&quot;&gt;Malaysia&lt;/option&gt;
+                            &lt;option value=&quot;MV&quot;&gt;Maldives&lt;/option&gt;
+                            &lt;option value=&quot;ML&quot;&gt;Mali&lt;/option&gt;
+                            &lt;option value=&quot;MT&quot;&gt;Malta&lt;/option&gt;
+                            &lt;option value=&quot;MH&quot;&gt;Marshall Islands&lt;/option&gt;
+                            &lt;option value=&quot;MQ&quot;&gt;Martinique&lt;/option&gt;
+                            &lt;option value=&quot;MR&quot;&gt;Mauritania&lt;/option&gt;
+                            &lt;option value=&quot;MU&quot;&gt;Mauritius&lt;/option&gt;
+                            &lt;option value=&quot;YT&quot;&gt;Mayotte&lt;/option&gt;
+                            &lt;option value=&quot;MX&quot;&gt;Mexico&lt;/option&gt;
+                            &lt;option value=&quot;FM&quot;&gt;Micronesia&lt;/option&gt;
+                            &lt;option value=&quot;MN&quot;&gt;Mongolia&lt;/option&gt;
+                            &lt;option value=&quot;MS&quot;&gt;Montserrat&lt;/option&gt;
+                            &lt;option value=&quot;MA&quot;&gt;Morocco&lt;/option&gt;
+                            &lt;option value=&quot;MZ&quot;&gt;Mozambique&lt;/option&gt;
+                            &lt;option value=&quot;NA&quot;&gt;Namibia&lt;/option&gt;
+                            &lt;option value=&quot;NR&quot;&gt;Nauru&lt;/option&gt;
+                            &lt;option value=&quot;NP&quot;&gt;Nepal&lt;/option&gt;
+                            &lt;option value=&quot;NL&quot;&gt;Netherlands&lt;/option&gt;
+                            &lt;option value=&quot;AN&quot;&gt;Netherlands Antilles&lt;/option&gt;
+                            &lt;option value=&quot;NC&quot;&gt;New Caledonia&lt;/option&gt;
+                            &lt;option value=&quot;NZ&quot;&gt;New Zealand&lt;/option&gt;
+                            &lt;option value=&quot;NI&quot;&gt;Nicaragua&lt;/option&gt;
+                            &lt;option value=&quot;NE&quot;&gt;Niger&lt;/option&gt;
+                            &lt;option value=&quot;NU&quot;&gt;Niue&lt;/option&gt;
+                            &lt;option value=&quot;NF&quot;&gt;Norfolk Island&lt;/option&gt;
+                            &lt;option value=&quot;NO&quot;&gt;Norway&lt;/option&gt;
+                            &lt;option value=&quot;OM&quot;&gt;Oman&lt;/option&gt;
+                            &lt;option value=&quot;PW&quot;&gt;Palau&lt;/option&gt;
+                            &lt;option value=&quot;PA&quot;&gt;Panama&lt;/option&gt;
+                            &lt;option value=&quot;PG&quot;&gt;Papua New Guinea&lt;/option&gt;
+                            &lt;option value=&quot;PE&quot;&gt;Peru&lt;/option&gt;
+                            &lt;option value=&quot;PH&quot;&gt;Philippines&lt;/option&gt;
+                            &lt;option value=&quot;PN&quot;&gt;Pitcairn Islands&lt;/option&gt;
+                            &lt;option value=&quot;PL&quot;&gt;Poland&lt;/option&gt;
+                            &lt;option value=&quot;PT&quot;&gt;Portugal&lt;/option&gt;
+                            &lt;option value=&quot;QA&quot;&gt;Qatar&lt;/option&gt;
+                            &lt;option value=&quot;CG&quot;&gt;Republic of the Congo&lt;/option&gt;
+                            &lt;option value=&quot;RE&quot;&gt;Reunion&lt;/option&gt;
+                            &lt;option value=&quot;RO&quot;&gt;Romania&lt;/option&gt;
+                            &lt;option value=&quot;RU&quot;&gt;Russia&lt;/option&gt;
+                            &lt;option value=&quot;RW&quot;&gt;Rwanda&lt;/option&gt;
+                            &lt;option value=&quot;KN&quot;&gt;Saint Kitts and Nevis Anguilla&lt;/option&gt;
+                            &lt;option value=&quot;PM&quot;&gt;Saint Pierre and Miquelon&lt;/option&gt;
+                            &lt;option value=&quot;VC&quot;&gt;Saint Vincent and Grenadines&lt;/option&gt;
+                            &lt;option value=&quot;WS&quot;&gt;Samoa&lt;/option&gt;
+                            &lt;option value=&quot;SM&quot;&gt;San Marino&lt;/option&gt;
+                            &lt;option value=&quot;ST&quot;&gt;S&#227;o Tom&#233; and Pr&#237;ncipe&lt;/option&gt;
+                            &lt;option value=&quot;SA&quot;&gt;Saudi Arabia&lt;/option&gt;
+                            &lt;option value=&quot;SN&quot;&gt;Senegal&lt;/option&gt;
+                            &lt;option value=&quot;RS&quot;&gt;Serbia&lt;/option&gt;
+                            &lt;option value=&quot;SC&quot;&gt;Seychelles&lt;/option&gt;
+                            &lt;option value=&quot;SL&quot;&gt;Sierra Leone&lt;/option&gt;
+                            &lt;option value=&quot;SG&quot;&gt;Singapore&lt;/option&gt;
+                            &lt;option value=&quot;SK&quot;&gt;Slovakia&lt;/option&gt;
+                            &lt;option value=&quot;SI&quot;&gt;Slovenia&lt;/option&gt;
+                            &lt;option value=&quot;SB&quot;&gt;Solomon Islands&lt;/option&gt;
+                            &lt;option value=&quot;SO&quot;&gt;Somalia&lt;/option&gt;
+                            &lt;option value=&quot;ZA&quot;&gt;South Africa&lt;/option&gt;
+                            &lt;option value=&quot;KR&quot;&gt;South Korea&lt;/option&gt;
+                            &lt;option value=&quot;ES&quot;&gt;Spain&lt;/option&gt;
+                            &lt;option value=&quot;LK&quot;&gt;Sri Lanka&lt;/option&gt;
+                            &lt;option value=&quot;SH&quot;&gt;St. Helena&lt;/option&gt;
+                            &lt;option value=&quot;LC&quot;&gt;St. Lucia&lt;/option&gt;
+                            &lt;option value=&quot;SR&quot;&gt;Suriname&lt;/option&gt;
+                            &lt;option value=&quot;SJ&quot;&gt;Svalbard and Jan Mayen Islands&lt;/option&gt;
+                            &lt;option value=&quot;SZ&quot;&gt;Swaziland&lt;/option&gt;
+                            &lt;option value=&quot;SE&quot;&gt;Sweden&lt;/option&gt;
+                            &lt;option value=&quot;CH&quot;&gt;Switzerland&lt;/option&gt;
+                            &lt;option value=&quot;TW&quot;&gt;Taiwan&lt;/option&gt;
+                            &lt;option value=&quot;TJ&quot;&gt;Tajikistan&lt;/option&gt;
+                            &lt;option value=&quot;TZ&quot;&gt;Tanzania&lt;/option&gt;
+                            &lt;option value=&quot;TH&quot;&gt;Thailand&lt;/option&gt;
+                            &lt;option value=&quot;TG&quot;&gt;Togo&lt;/option&gt;
+                            &lt;option value=&quot;TO&quot;&gt;Tonga&lt;/option&gt;
+                            &lt;option value=&quot;TT&quot;&gt;Trinidad and Tobago&lt;/option&gt;
+                            &lt;option value=&quot;TN&quot;&gt;Tunisia&lt;/option&gt;
+                            &lt;option value=&quot;TR&quot;&gt;Turkey&lt;/option&gt;
+                            &lt;option value=&quot;TM&quot;&gt;Turkmenistan&lt;/option&gt;
+                            &lt;option value=&quot;TC&quot;&gt;Turks and Caicos Islands&lt;/option&gt;
+                            &lt;option value=&quot;TV&quot;&gt;Tuvalu&lt;/option&gt;
+                            &lt;option value=&quot;UG&quot;&gt;Uganda&lt;/option&gt;
+                            &lt;option value=&quot;UA&quot;&gt;Ukraine&lt;/option&gt;
+                            &lt;option value=&quot;AE&quot;&gt;United Arab Emirates&lt;/option&gt;
+                            &lt;option value=&quot;GB&quot;&gt;United Kingdom&lt;/option&gt;
+                            &lt;option value=&quot;US&quot;&gt;United States&lt;/option&gt;
+                            &lt;option value=&quot;UY&quot;&gt;Uruguay&lt;/option&gt;
+                            &lt;option value=&quot;VU&quot;&gt;Vanuatu&lt;/option&gt;
+                            &lt;option value=&quot;VA&quot;&gt;Vatican City State&lt;/option&gt;
+                            &lt;option value=&quot;VE&quot;&gt;Venezuela&lt;/option&gt;
+                            &lt;option value=&quot;VN&quot;&gt;Vietnam&lt;/option&gt;
+                            &lt;option value=&quot;VG&quot;&gt;Virgin Islands (British)&lt;/option&gt;
+                            &lt;option value=&quot;WF&quot;&gt;Wallis and Futuna Islands&lt;/option&gt;
+                            &lt;option value=&quot;YE&quot;&gt;Yemen&lt;/option&gt;
+                            &lt;option value=&quot;ZM&quot;&gt;Zambia&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;i class=&quot;arrow double&quot;&gt;&lt;/i&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;gender&quot; class=&quot;field-label&quot;&gt;Gender&lt;/label&gt;
+                    &lt;label class=&quot;field select&quot;&gt;
+                        &lt;select id=&quot;gender&quot; name=&quot;gender&quot;&gt;
+                            &lt;option value=&quot;&quot;&gt;I am...&lt;/option&gt;
+                            &lt;option value=&quot;male&quot;&gt;Male&lt;/option&gt;
+                            &lt;option value=&quot;female&quot;&gt;Female&lt;/option&gt;
+                            &lt;option value=&quot;other&quot;&gt;Other&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;i class=&quot;arrow double&quot;&gt;&lt;/i&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;email&quot; class=&quot;field-label&quot;&gt;Your email address&lt;/label&gt;
+                    &lt;label for=&quot;email&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;email&quot; name=&quot;email&quot; id=&quot;email&quot; class=&quot;gui-input&quot; placeholder=&quot;example@domain.com...&quot;&gt;
+                        &lt;label for=&quot;email&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-envelope&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;mobile&quot; class=&quot;field-label&quot;&gt;Mobile phone&lt;/label&gt;
+                    &lt;label for=&quot;mobile&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;tel&quot; name=&quot;mobile&quot; id=&quot;mobile&quot; class=&quot;gui-input&quot; placeholder=&quot;+256&quot;&gt;
+                        &lt;label for=&quot;mobile&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-phone-square&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;verify&quot; class=&quot;field-label&quot;&gt;Prove you&#39;re not a robot&lt;/label&gt;
+                    &lt;div class=&quot;smart-widget sm-left sml-80&quot;&gt;
+                        &lt;label for=&quot;verify&quot; class=&quot;field prepend-icon&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;verify&quot; id=&quot;verify&quot; class=&quot;gui-input&quot; placeholder=&quot;Enter captcha&quot;&gt;
+                            &lt;label for=&quot;verify&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-shield&quot;&gt;&lt;/i&gt;
+                            &lt;/label&gt;
+                        &lt;/label&gt;
+                        &lt;label for=&quot;verify&quot; class=&quot;button&quot;&gt;4 + 12&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end .smart-widget section --&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label class=&quot;option&quot;&gt;
+                        &lt;input type=&quot;checkbox&quot; name=&quot;check1&quot;&gt;
+                        &lt;span class=&quot;checkbox mr10&quot;&gt;&lt;/span&gt;Agree to our
+                        &lt;a href=&quot;#&quot; class=&quot;theme-link&quot;&gt; terms of service &lt;/a&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+            &lt;/div&gt;
+            &lt;!-- end .form-body section --&gt;
+            &lt;div class=&quot;panel-footer&quot;&gt;
+                &lt;button type=&quot;submit&quot; class=&quot;button btn-primary&quot;&gt;Create Account&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;!-- end .form-footer section --&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;!-- end .admin-form section --&gt;
+&lt;/div&gt;
+&lt;!-- end: .admin-form --&gt;
+</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- jQuery JS -->
+  <script src="../../../vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="../../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+  <!-- Plugin js -->
+  <script src="../../../vendor/plugins/highlight/highlight.pack.js"></script>
+  <script src="../../../vendor/plugins/holder/holder.min.js"></script>
+
+  <!-- AdminForms JS -->
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery-ui-monthpicker.min.js"></script>
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"></script>
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery.spectrum.min.js"></script>
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery.stepper.min.js"></script>
+
+  <!-- Page JS -->
+  <script src="../../resources/js/docs.js"></script>
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    Docs.init();
+  });
+  </script>
+
+</body>
+
+</html>

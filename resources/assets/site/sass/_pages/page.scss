@@ -1,0 +1,137 @@
+.service, .module, .searchresults{
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    min-height: calc(575px + 4rem);
+    span{
+        background-color: $green;
+    }
+    
+    h1{
+        font-weight: normal;
+        strong{
+            font-weight: normal;
+        }
+        a{
+            text-decoration: none;
+        }
+        br{
+            display: none;
+        }
+    }
+    
+    h2{
+        font-weight: normal;
+        strong{
+            font-weight: normal;
+        }
+        a{
+            text-decoration: none;
+        }
+        br{
+            display: none;
+        }
+    }
+    
+    li{
+        list-style-type: circle;
+    }
+    
+    h3{
+        color: $green;
+    }
+}
+
+.history{
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    span{
+        background-color: $green;
+    }
+    
+    h2{
+        font-weight: normal;
+        strong{
+            font-weight: normal;
+        }
+        a{
+            text-decoration: none;
+        }
+        br{
+            display: none;
+        }
+    }
+    
+    li{
+        list-style-type: none;
+    }
+    
+    h3{
+        color: $green;
+    }
+}
+
+.svg-icon{
+    max-width: 25px;
+    max-height: 15px;
+    opacity: 0.3;
+    margin: 5px 10px;
+}
+
+.troeven-wrapper{
+    padding: 4rem 0;
+    background: $light-grey ;
+
+    h1{
+        border-left: 4px solid $green;
+        padding-left: 15px;
+        color: $green;
+    }
+    .troeven{
+        h3{
+            color: $green;
+        }
+    }
+}
+.troeven{
+    padding-left: 50px;
+
+}
+
+.partner-icon{
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    svg{
+        width: 35px;
+        margin: 5px 10px;
+        path{
+            fill: $green;
+        }
+    }        
+}
+
+.faq{
+    h3{
+        &:before{
+            content: '\26ac';
+            display: inline-block;
+            margin-right: 5px;
+        }
+    }
+}
+
+.bnp-content{
+    color: #5d5d5d;
+    p,ul{
+        color: #5d5d5d;
+    }        
+    span{
+        display: none;
+    }
+    a{
+        color: $green;
+    }
+}
+
+
+

@@ -1,0 +1,16 @@
+a.active{
+  color:#15925f;
+  outline:0;
+}
+
+h1 a{
+  color:inherit;
+}
+
+/* Bookmark (internal link) accounts for top sticky nav */
+.bookmark-target{
+  display:block;
+  position:relative;
+  top:-250px;
+  visibility:hidden;
+}

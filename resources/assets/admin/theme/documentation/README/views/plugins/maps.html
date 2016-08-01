@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link href="../../vendor/plugins/mapplic/mapplic/mapplic.css" rel="stylesheet" type="text/css">
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Maps </a>
+                                <ul class="collapse">
+                                    <li class="hidden"><a href="#maps-gmap2" data-toggle="tab">GMap</a>
+                                    </li>
+                                    <li class="active"><a href="#maps-gmap" data-toggle="tab">GMap</a>
+                                    </li>
+                                    <li><a href="#maps-jvectormap" data-toggle="tab">JVectormap</a>
+                                    </li>
+                                    <li class="hidden"><a href="#maps-mappelic" data-toggle="tab">Mappelic</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           MAPS
+                        ----------------------->
+
+
+
+                        <!-- MAPS - GMAPS.JS -->
+                        <div class="tab-pane fade" id="maps-gmap2" role="tabpanel">
+                            <h3 id="" class="page-header">Maps - gmaps.js </h3>
+
+                            <div class="bs-docs-section">
+
+
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Takes away some of the head aches from working with the Google Map API.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Gmap</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Johan Sall Larsson</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="https://code.google.com/p/jquery-ui-map/">https://code.google.com</a></td>
+                                        </tr>
+                                        <tr class="hidden">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/ckeditor/ckeditor5-core">ckeditor/ckeditor5-core</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/gmap/jquery.ui.map.min.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code>&lt;script src=&quot;vendor/plugins/gmap/ui/jquery.ui.map.extensions.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a class="test-popup-link btn btn-primary" href="assets/docs/jquery-logo-thumb.png">Open popup</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a class=&quot;test-popup-link btn btn-primary&quot; href=&quot;path-to-image.jpg&quot;&gt;Open popup&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.test-popup-link&#39;).magnificPopup({ 
+  type: &#39;image&#39;
+  // other options
+  // gallery:{enabled:true}
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://hpneo.github.io/gmaps/documentation.html">http://hpneo.github.io/gmaps/documentation.html</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://hpneo.github.io/gmaps/examples.html">http://hpneo.github.io/gmaps/examples.html</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- MAPS - GMAP -->
+                        <div class="tab-pane fade in active" id="maps-gmap" role="tabpanel">
+                            <h3 id="" class="page-header">Maps - Gmap </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>gmaps.js allows you to use the potential of Google Maps in a simple way.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>gmaps.js</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Gustavo Leon</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://hpneo.github.io/gmaps/">http://hpneo.github.io/gmaps/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/hpneo/gmaps">hpneo/gmaps</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/map/gmaps.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic GMap</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                  <div id="basic-gmap" class="map"></div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;basic-gmap&quot; class=&quot;map&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Basic GMap
+new GMaps({
+  div: &#39;#basic-gmap&#39;,
+  lat: -12.043333,
+  lng: -77.028333
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Panorama GMap</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                  <div id="panorama-gmap" class="map"></div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;panorama-gmap&quot; class=&quot;map&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Streetview for panorama map
+var panorama = GMaps.createPanorama({
+    el: &#39;#panorama-gmap&#39;,
+    lat: 51.693249,
+    lng: -0.419630,
+    pov: {
+        heading: 194,
+        pitch: 8
+    }
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Searchable Map -->
+                                <h2 id="forms-horizontal">Searchable GMap</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                  <div class="mb5 clearfix">
+                                    <!-- Map Search Form -->
+                                    <form method="post" id="geocoding_form">
+                                        <div class="col-xs-9 prn">
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="Enter an Address...">
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <input type="submit" class="btn btn-default light btn-block" value="Search">
+                                        </div>
+                                    </form>
+                                  </div>
+
+                                  <!-- Gmap Container  -->
+                                  <div class="p15">
+                                    <div id="searchable-map" class="map"></div>
+                                  </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Map Search Form --&gt;
+&lt;form method=&quot;post&quot; id=&quot;geocoding_form&quot;&gt;
+    &lt;div class=&quot;col-xs-9 prn&quot;&gt;
+        &lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;address&quot; name=&quot;address&quot; placeholder=&quot;Enter an Address...&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-xs-3&quot;&gt;
+        &lt;input type=&quot;submit&quot; class=&quot;btn btn-default light btn-block&quot; value=&quot;Search&quot;&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+
+&lt;!-- Gmap Container  --&gt;
+&lt;div id=&quot;map&quot; class=&quot;map&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Map using GMaps plugin
+var map = new GMaps({
+    div: &#39;#searchable-gmap&#39;,
+    lat: -12.043333,
+    lng: -77.028333,
+});
+
+// Add search bar to map
+$(&#39;#geocoding_form&#39;).submit(function(e) {
+    e.preventDefault();
+    GMaps.geocode({
+        address: $(&#39;#address&#39;).val().trim(),
+        callback: function(results, status) {
+            if (status == &#39;OK&#39;) {
+                var latlng = results[0].geometry.location;
+                map.setCenter(latlng.lat(), latlng.lng());
+                map.addMarker({
+                    lat: latlng.lat(),
+                    lng: latlng.lng()
+                });
+            }
+        }
+    });
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://hpneo.github.io/gmaps/documentation.html">http://hpneo.github.io/gmaps/documentation.html</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://hpneo.github.io/gmaps/examples.html">http://hpneo.github.io/gmaps/examples.html</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- MAPS - JVECTORMAP -->
+                        <div class="tab-pane fade" id="maps-jvectormap" role="tabpanel">
+                            <h3 id="" class="page-header">Maps - JVectorMap </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>jVectorMap is a vector-based, cross-browser and cross-platform component for interactive geography-related data visualization on the web..</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>JVectorMap</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Kirill Lebedev</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://jvectormap.com/">http://jvectormap.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/bjornd/jvectormap">bjornd/jvectormap</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/jvectormap/jquery.jvectormap.min.js&quot;&gt;&lt;/script&gt;</code>
+                                    <br>
+                                    <code>&lt;script src=&quot;../../vendor/plugins/jvectormap/assets/jquery-jvectormap-us-lcc-en.js&quot;&gt;&lt;/script&gt;</code><br><br>
+                                    <code>jVectorMap requires additional map data to operate. "us-lcc-en.js" has been used for this example. You may need to set or use another map depending on what geographic location you wish to target.</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Map - United States</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="vectorMap" style="width: 100%; height: 300px;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+ &lt;div id=&quot;vectorMap&quot; style=&quot;width: 100%; height: 300px;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Jvector Map
+$(&#39;#vectorMap&#39;).vectorMap({
+    map: &#39;us_lcc_en&#39;, // Set Map
+    backgroundColor: &#39;transparent&#39;, // Map Background
+    series: {
+        markers: [{
+            values: mapData, // modify marker data
+            attribute: &#39;r&#39;, // modify marker radius
+            scale: [3, 7] // modify marker scale
+        }]
+    },
+    regionStyle: {
+        initial: {
+            fill: &#39;#E5E5E5&#39; // Region Background Color
+        },
+        hover: {
+            &quot;fill-opacity&quot;: 0.3 // Map Hover Color
+        }
+    },
+    markers: [{ // Marker Locations
+        latLng: [37.78, -122.41],
+        name: &#39;San Francisco,CA&#39;
+    }, {
+        latLng: [36.73, -103.98],
+        name: &#39;Texas,TX&#39;
+    }],
+    markerStyle: {
+        initial: {
+            fill: &#39;#a288d5&#39;, // marker color
+            stroke: &#39;#b49ae0&#39;, // marker outline
+            &quot;fill-opacity&quot;: 1, // color opacity
+            &quot;stroke-width&quot;: 10, // outline width
+            &quot;stroke-opacity&quot;: 0.3, // outline opacity
+            r: 3
+        }
+    },
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://jvectormap.com/documentation/">http://jvectormap.com/documentation/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://jvectormap.com/examples/world-gdp/">http://jvectormap.com/examples/world-gdp/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Additional Maps:</th>
+                                          <td><a target="_blank" href="http://jvectormap.com/maps/world/europe/">http://jvectormap.com/maps/world/europe/</a></td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- MAPS - MAPPELIC-->
+                        <div class="tab-pane fade" id="maps-mappelic" role="tabpanel">
+                            <h3 id="" class="page-header">Maps - Mappelic </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A Custom Interactive Map jQuery Plugin.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Mapplic</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Sekler</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td><a target="_blank" href="http://codecanyon.net/item/mapplic-custom-interactive-map-jquery-plugin/6275001">Commercial</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://codecanyon.net/item/mapplic-custom-interactive-map-jquery-plugin/6275001">http://codecanyon.net/6275001</a></td>
+                                        </tr>
+                                        <tr class="hidden">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/hpneo/gmaps">hpneo/gmaps</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/mapplic/mapplic/mapplic.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/mapplic/mapplic/mapplic.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a class="test-popup-link btn btn-primary" href="assets/docs/jquery-logo-thumb.png">Open popup</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a class=&quot;test-popup-link btn btn-primary&quot; href=&quot;path-to-image.jpg&quot;&gt;Open popup&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.test-popup-link&#39;).magnificPopup({ 
+  type: &#39;image&#39;
+  // other options
+  // gallery:{enabled:true}
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://dimsemenov.com/plugins/magnific-popup/documentation.html">http://dimsemenov.com/docs</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://codepen.io/collection/nLcqo/">http://codepen.io/collection/nLcqo/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- Google Map API -->
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+
+    <!-- External Plugins -->
+    <script src="../../vendor/plugins/map/gmaps.min.js"></script>
+    <script src="../../vendor/plugins/gmap/jquery.ui.map.min.js"></script>
+    <script src="../../vendor/plugins/gmap/ui/jquery.ui.map.extensions.min.js"></script>
+    <script src="../../vendor/plugins/jvectormap/jquery.jvectormap.min.js"></script>
+    <script src="../../vendor/plugins/jvectormap/assets/jquery-jvectormap-us-lcc-en.js"></script>
+    <script src="../../vendor/plugins/mapplic/mapplic/mapplic.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+
+      // Trigger resize on tab change. Helps catch plugins which have hidden problems
+      $('li.list-group-item a[data-toggle]').on('click', function() {
+          setTimeout(function() {
+            $(window).trigger('resize');
+          },800);
+      });
+
+
+      // Trigger resize on tab change. Helps catch plugins which have hidden problems
+      $('li.list-group-item a[data-toggle]').on('click', function(e) {
+
+          var Source = $(this).attr('href');
+
+          setTimeout(function() {
+
+            // If Mixitup init plugin
+            if (Source === '#maps-jvectormap') { InitVectorMap(); }
+
+            // resize catch for plugins
+            $(window).trigger('resize');
+          },400);
+      });
+
+
+
+        // GMAPS
+        //////////////////
+
+        // Basic GMap
+        new GMaps({
+          div: '#basic-gmap',
+          lat: -12.043333,
+          lng: -77.028333
+        });
+
+       // Panorama GMap (streetview)
+        var panorama = GMaps.createPanorama({
+            el: '#panorama-gmap',
+            lat: 51.693249,
+            lng: -0.419630,
+            pov: {
+                heading: 194,
+                pitch: 8
+            }
+        });
+
+        // Searchable GMap
+        var map = new GMaps({
+            div: '#searchable-map',
+            lat: -12.043333,
+            lng: -77.028333,
+        });
+        // Add SearchBar to GMap
+        $('#geocoding_form').submit(function(e) {
+            e.preventDefault();
+            GMaps.geocode({
+                address: $('#address').val().trim(),
+                callback: function(results, status) {
+                    if (status == 'OK') {
+                        var latlng = results[0].geometry.location;
+                        map.setCenter(latlng.lat(), latlng.lng());
+                        map.addMarker({
+                            lat: latlng.lat(),
+                            lng: latlng.lng()
+                        });
+                    }
+                }
+            });
+        });
+
+
+        // JVECTORMAP
+        //////////////////
+
+        function InitVectorMap() {
+            
+            // Map Data Set
+            var mapData = [900, 700, 350, 500];
+
+            // Init Jvector Map
+            $('#vectorMap').vectorMap({
+                map: 'us_lcc_en', // Set Map
+                backgroundColor: 'transparent', // Map Background
+                series: {
+                    markers: [{
+                        values: mapData, // modify marker data
+                        attribute: 'r', // modify marker radius
+                        scale: [3, 7] // modify marker scale
+                    }]
+                },
+                regionStyle: {
+                    initial: {
+                        fill: '#E5E5E5' // Region Background Color
+                    },
+                    hover: {
+                        "fill-opacity": 0.3 // Map Hover Color
+                    }
+                },
+                markers: [{ // Marker Locations
+                    latLng: [37.78, -122.41],
+                    name: 'San Francisco,CA'
+                }, {
+                    latLng: [36.73, -103.98],
+                    name: 'Texas,TX'
+                }],
+                markerStyle: {
+                    initial: {
+                        fill: '#a288d5', // marker color
+                        stroke: '#b49ae0', // marker outline
+                        "fill-opacity": 1, // color opacity
+                        "stroke-width": 10, // outline width
+                        "stroke-opacity": 0.3, // outline opacity
+                        r: 3
+                    }
+                },
+            });
+
+          };
+
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,3172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+  <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+  <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+  <meta name="author" content="AdminDesigns">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font CSS (Via CDN) -->
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+  <!-- Docs CSS -->
+  <link rel="stylesheet" type="text/css" href="../vendor/plugins/footable/css/footable.core.min.css">
+  <link rel="stylesheet" type="text/css" href="../vendor/plugins/highlight/styles/github.css">
+  <link rel="stylesheet" type="text/css" href="../vendor/plugins/magnific/magnific-popup.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" type="text/css" href="../assets/skin/default_skin/css/theme.css">
+  <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../assets/favicon.ico">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+  <!-- Navbar -->
+  <nav class="navbar docs-navbar bg-light">
+
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><b>AdminDesigns</b> Framework</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+          <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="../index.html">Documentation</a>
+            </li>
+            <li>
+              <a href="plugins.html" class="ph25">Plugins</a>
+            </li>
+            <li class="active">
+              <a href="changelog.html">Changelog</a>
+            </li>
+            <li class="hidden">
+              <a href="templates.html">Templates</a>
+            </li>
+            <li class="">
+              <a href="tutorials/tutorial_less.html">Tutorials</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+  <!-- Doc Container -->
+  <div class="container">
+
+    <div class="docs-container mt40" id="docs">
+
+      <!-- Changelog Intro -->
+      <div class="row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col">
+
+          <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+          <!-- Navspy wrapper -->
+          <div id="nav-spy" class="posr">
+
+            <!-- version info list group -->
+            <ul class="list-group">
+              <li class="list-group-item list-group-header br-n">
+                Current Version
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-primary">1.5</span> Theme Core
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-info">3.32</span> Bootstrap
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-warning">3.21</span> Font-Awesome
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion smoothscroll-list">
+              <li class="list-group-item list-group-header br-n">
+                <i class="fa fa-level-down pr5 text-primary"></i> Jump To Changelog:
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog5"> Update 1.5 </a>
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog4"> Update 1.45 </a>
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog3"> Update 1.4 </a>
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog2"> Update 1.3 </a>
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog1"> Update 1.2</a>
+              </li>
+            </ul>
+
+            <a href="#" class="scrollup">
+              <span class="fa fa-level-up"></span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t">
+
+          <div id="docs-content">
+
+            <h3 id="" class="page-header">AdminDesigns - Changelog <span class="vid">v1.5</span> </h3>
+
+            <div class="bs-docs-section">
+
+              <div class="alert alert-danger alert-border-left hidden" role="alert">
+                <b style="font-weight: 800;"> Warning - Read this before updating to version 1.5</b>. Modifications have been made to AdminDesigns which will cause unexpected results unless you read the patch notes and understand the changes made.
+              </div>
+
+              <h4><i class="fa fa-bell pr5 hidden"></i>General Patch Overview:</h4>
+              <p>
+                Update <b>v1.5</b> is a small but useful update that adds a page template system, fixes several small bugs, and adds collapsible table rows to DataTables and FooTables. We are also going to go back and cleanup the documentation a bit. Some of the information is missing or outdated at this point and could use a refresh. All the more reason to make sure you are using the online documentation when available.
+              </p>
+
+              <h4><i class="fa fa-bell pr5 hidden"></i>We Need Your Help!</h4>
+              <p>
+                We are trying to crack down on known bugs and theme problems. Submitting a detailed report to our support helps reduce the time it takes to discover and fix bugs. Please make use of our new helpdesk and rid those pesky bugs that slow you down. You can submit a private ticket <a href="http://support.admindesigns.com/support/tickets/new">Here,</a> or post the problem publicly using our Bug Forum found <a href="http://support.admindesigns.com/support/discussions/forums/6000018182">Here</a>.
+              </p>
+
+              <div class="hidden">
+                <h4><i class="fa fa-bell pr5 hidden"></i><b class="text-danger">Important:</b> The Admin "Smooth" Skin will become depreciated in v1.55</h4>
+                <p> </p>
+              </div>
+
+              <hr class="">
+
+              <!-- general theme rules -->
+              <div class="">
+                <h3 class="">General Development Rules:</h3>
+
+                <p class="lead"> Separating your work and customizations from the themes default styles is absolutely key to smoothly transitioning through theme patches and updates.</p>
+
+                <h4 class="text-primary mt30">LESS Users:</h4>
+                <p> All changes and new styles have been added to the themes base skin. That being said ALL custom changes should <b> always </b> be added to your <b>child</b> skin (default-skin/less). You should <b>never</b> modify the base theme as it will frequently be changed and updated. This is key to smoothly transitioning through theme patches and updates. </p>
+
+                <h4 class="mt20 text-danger">Standard CSS Users:</h4>
+                <p>All style changes, fixes, and improvements made in theme updates will typically be added to <code>theme.css</code>. Users should never directly edit or modify theme.css. To prevent losing your changes, you should add all of your customizations to a new stylesheet and include it separately in your pages.</p>
+
+                <p class="mbn">It is also <b>highly</b> recommended that you transition to using the themes LESS system as it is far superior, and offers a great deal of features and optimizations. A beginners Less guide has been added to the tutorials section of the documentation. It can be found here:
+                  <a href="tutorials/tutorial_less.html" title="Less tutorial">Link</a>
+                </p>
+              </div>
+
+              <!-- end bs doc section -->
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Changelog v1.5 -->
+      <div class="row changelog-row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col pt40">
+
+          <!-- Navspy wrapper -->
+          <div id="" class="posr">
+
+            <!-- list group menu -->
+            <ul class="list-group mb35">
+              <li class="list-group-item list-group-header br-n">
+                Changelog Details
+              </li>
+              <li class="list-group-item">
+                Update Version:
+                <span class="pull-right text-info fw600">1.5</span>
+              </li>
+              <li class="list-group-item">
+                Update Release:
+                <span class="pull-right text-danger fw600">05/28/15</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t br-t br-grey pt30">
+
+          <div id="changelog5">
+
+            <div class="bs-docs-section">
+
+              <div class="row mt30">
+                <div class="col-md-6">
+                  <h4 class=""><i class="fa fa-bug text-danger pr5"></i>  Corrected Bugs/Errors: </h4>
+                  <div class="panel br-t bw2 br0 br-danger">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>Fixed Problematic <b>"}"</b> when compiling mixins/tabs.less</li>
+                        <li>Fixed Improper Height inheritance in #sidebar_left</li>
+                        <li>Fixed #sidebar_left scrolling bug from nano-scroller</li>
+                        <li>Fixed #sidebar_right position bug w/affixed #topbar</li>
+                        <li>Fixed Javascript error on admin_forms-wizard.html</li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h4><i class="fa fa-check-square-o text-primary pr5"></i> Notable Changes and Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-primary">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>The FooTable plugin has been added</li>
+                        <li>Collapsable DataTables rows added</li>
+                        <li>30+ Layout Templates have been added</li>
+                        <li>Fixed content panes have been added</li>
+                        <li>A Horizontal Menu has been added</li>
+                        <li>A Boxed Layout has been Added</li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="alt short mt5">
+
+              <h3 class="mt35 mb25"> Changes that can cause <b class="text-danger">Breaks/Problems:</b></h3>
+
+              <ul class="list pl15 list-unstyled">
+
+                <li class="mt15 fs15"> <b class="text-danger">1.</b> Parts of <code>main.js</code> have been modified. Users who have directly modified this file should take care. </li>
+
+                <li class="mt15 fs15"> <b class="text-danger">2.</b> Parts of <code>sidebar_left.less</code> have been modified. Users who have directly modified this file should take care. </li>
+
+              </ul>
+
+            </div>
+
+            <div class="bs-docs-section">
+
+              <hr class="alt mt40">
+
+              <!-- Changelog Entries (footable) -->
+              <span class="entry-count hidden"></span>
+              <table id="table5" class="table footable changelog-table" style="" data-page-size="250">
+                <thead>
+                  <tr>
+                    <th>
+                      Action
+                    </th>
+                    <th data-toggle="true">
+                      Details
+                    </th>
+                    <th data-hide="all">
+                      Details
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> <code>main.js</code> has been modified</td>
+                    <td> Code was added to aid in the creation of a horizontal menu</td>
+                  </tr>
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> <code>sidebar.less</code> has been modified</td>
+                    <td> Code was added to aid in the creation of a horizontal menu</td>
+                  </tr>
+
+                  <!-- Added Entry -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>30+ new template files to theme directory</td>
+                    <td>These template files can be found in primary directory and start with the file prefix <code>layout_</code> </td>
+                  </tr>
+                  <!-- Added Entry -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The FooTable plugin to theme</td>
+                    <td>Cooresponding vendor/plugin and base/plugins files have been added to supplement the new plugin.</td>
+                  </tr>
+
+                  <!-- Added Entry -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New resources to the DataTables <code>plugins/datatables</code> folder</td>
+                    <td>One data source and two images were added to allow for collapsing DataTables rows</td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td><code>admin_forms-wizard.html</code> javascript bug </td>
+                    <td>Fixed inline javascript on the wizard page: Improper data attribute formatting on "holder" objects</td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Several Sidebar bugs caused by improper Height calculates </td>
+                    <td><code>sidebar_left.less</code> was modified to correct how the height of a sidebar is calculated by the browser</td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <!-- end bs doc section -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Changelog v1.45 -->
+      <div class="row changelog-row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col pt40">
+
+          <!-- Navspy wrapper -->
+          <div id="" class="posr">
+
+            <!-- list group menu -->
+            <ul class="list-group mb35">
+              <li class="list-group-item list-group-header br-n">
+                Changelog Details
+              </li>
+              <li class="list-group-item">
+                Update Version:
+                <span class="pull-right text-info fw600">1.45</span>
+              </li>
+              <li class="list-group-item">
+                Update Release:
+                <span class="pull-right text-danger fw600">04/28/15</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t br-t br-grey pt30">
+
+          <div id="changelog4">
+
+            <div class="bs-docs-section">
+
+              <h3 class="mt10 mb15"><b class="text-primary">Patch v1.45</b> - Brief Skin Overview:</h3>
+
+              <ul class="list pl30">
+
+                <li class="mt15 fs15"> New skins will not be massively different from the original theme. The point of a skin is accomplish a small change in the overall design style. While maintaining the <b>exact</b> functionality as the default skin you are already familiar with. A true plug and play style swap.</li>
+
+                <li class="mt15 fs15">Features found in new skins will almost always be available for use in the default skin. New Topbar/dropdown styles etc. </li>
+
+                <li class="mt15 fs15">We will continue to add new skins in future patches. Have a design style you would like to see introduced as a skin? You can request it <a href="http://support.admindesigns.com/support/discussions/forums/6000008240">Here</a> </li>
+
+              </ul>
+
+              <div class="row mt30">
+                <div class="col-md-6">
+                  <h4 class=""><i class="fa fa-bug text-danger pr5"></i>  Corrected Bugs/Errors: </h4>
+                  <div class="panel br-t bw2 br0 br-danger">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>Fixed Demo Javascript "Strict-mode" Error</li>
+                        <li>Fixed Demo Javascript Sidebar Scrolling Bug</li>
+                        <li>Fixed Sidebar Overflow Scrolling Bug</li>
+                        <li>Fixed Globalize.js Error on form_plugins.html</li>
+                        <li>Fixed Topbar Scrolling Bug when menu is ".affix"</li>
+                        <li>Fixed Inaccurate AdminForm Template Documentation</li>
+                        <li>Fixed PNotify Bug on pages_messages.html</li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h4><i class="fa fa-check-square-o text-primary pr5"></i> New Features and Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-primary">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>A new skin has been added - <a href="http://admindesigns.com/demos/admindesigns/theme_smooth/dashboard.html" target="_blank">AdminSmooth</a></li>
+                        <li>Alternate Topbar style added</li>
+                        <li>Alternate Topbar DropMenu added</li>
+                        <li>Alternate Navbar menu added - Buttons</li>
+                        <li>A new tabbable Navbar Dropdown added</li>
+                        <li>Two new Sidebar Widgets added</li>
+                        <li>Many new Less Sidebar variables added</li>
+                        <li>A new "Confirmation" page added -
+                           - <a href="http://admindesigns.com/demos/admindesigns/theme/pages_confirmation.html" target="_blank"> Link</a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="alt short mt5">
+
+              <h3 class="mt35 mb25"> Changes that can cause <b class="text-danger">Breaks/Problems:</b></h3>
+
+              <div class="panel-group" id="fix-accord" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                  <div class="panel-heading" role="tab" id="headingOne">
+                    <span class="panel-title">
+                      <a class="accordion-icon icon-right" data-toggle="collapse" data-parent="#fix-accord" href="#fixOne" aria-expanded="true" aria-controls="fixOne">
+                        <b class="text-danger">1.</b> The "bg-light" Navbar class/skin has been made default and is no longer required 
+                      </a>
+                    </span>
+                  </div>
+                  <div id="fixOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body pn br-n">
+                      <div class="table-responsive" style="margin-top: -1px;">
+                        <table class="table table-bordered table-striped br-t-n">
+                          <colgroup>
+                            <col class="col-xs-1">
+                              <col class="col-xs-7">
+                          </colgroup>
+                          <thead class="hidden">
+                            <tr>
+                              <th>Class</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" class="text-right text-danger pr15">The What:</th>
+                              <td>The "bg-light" Navbar class/skin has been made default and should no longer be added.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-warning pr15">The Why:</th>
+                              <td>A default skin class should not be required and as such we have made the white skin the permanent default navbar style.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-success pr15">The Change:</th>
+                              <td>Users should remove all instances of "bg-light" classes from the Navbar component.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="bs-docs-section">
+
+              <!-- Changelog Entries (footable) -->
+              <span class="entry-count hidden"></span>
+              <table id="table4" class="table footable changelog-table" style="" data-page-size="250">
+                <thead>
+                  <tr>
+                    <th>
+                      Action
+                    </th>
+                    <th data-toggle="true">
+                      Details
+                    </th>
+                    <th data-hide="all">
+                      Details
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <!-- Combined Entries -->
+                  <tr class="entry-combined hidden">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td>Waypoints plugin into existing plugin script - AdminPanels.</td>
+                    <td>Original Waypoints plugin folder removed.</td>
+                  </tr>
+
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> AdminForm Layout "Templates" in the documentation</td>
+                    <td> All templates were inaccurate and contained the same content. This has been fixed</td>
+                  </tr>
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> The skin "Components" section in the documentation</td>
+                    <td> Corresponding documentation for newly added skin features was added to the "components" section of the documentation.</td>
+                  </tr>
+
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Login button text and display style in pages_login(alt).html</td>
+                    <td> Corrected the text "Register" to "Sign Up" so that it matched the pages purpose</td>
+                  </tr>
+
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Navbar UserMenu dropdown responsive styles</td>
+                    <td> Moved avatar margin to that span cause it makes for better responsiveness</td>
+                  </tr>
+
+                  <!-- Moved Entries -->
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>Topbar responsive styles to new stylesheet</td>
+                    <td>Topbar responsive styles have been removed from responsive.less to native topbar.less file</td>
+                  </tr>
+
+                  <!-- Removed Entries -->
+                  <tr class="entry-removed hidden">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>pages <code>ui_tiles.html</code> from theme</td>
+                    <td>This page is now part of the new widget package seen at <code>widgets_tile.html</code>. It can be viewed
+                      <a href="http://admindesigns.com/framework/widgets_tile.html">Here.</a>
+                    </td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Demo.js Hoisting Bug - "Uncaught SyntaxError.."</td>
+                    <td>Changed code on line 139 of assets/js/demo/demo.js to: <code>var cleanSource = function(html) {</code></td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Sidebar scrolling bug on several operating systems</td>
+                    <td>Changed code on line 12 of skin/base/plugins/nanoscroller.less to: <code>.nano>.nano-content{overflow-y:  auto;}</code></td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Faulty link location for the Globalize plugin</td>
+                    <td>A bad link to the Globalize library was causing errors on form_inputs.html. This has been corrected</td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Incorrect minified Sidebar menu positioning </td>
+                    <td>When the Sidebar was minified and using the "light skin" the popout on hover menus were misaligned. This has been corrected.</td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Incorrect Topbar positioning when affixed</td>
+                    <td>In some scenarios the Topbar component was improperly positioned when used in the fixed setting. This has been corrected</td>
+                  </tr>
+
+
+                  <!-- HEADER - SKIN CHANGES -->
+                  <!-- Added Entries -->
+                  <tr class="footable-group-row">
+                    <th class="p15" data-group="adminforms-group" colspan="12">Theme Skin Additions:</th>
+                  </tr>
+
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New Skin to theme: <b>"AdminSmooth"</b> - <a href="http://admindesigns.com/demos/admindesigns/theme_smooth/dashboard.html" target="_blank"> Link</a></td>
+                    <td>A new directory folder has been added to the themes root. </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>Confirmation</b> page to all theme skins - <a href="http://admindesigns.com/framework/pages_confirmation.html" target="_blank"> Link</a></td>
+                    <td>A new html file has been added to each theme skin. <code>pages_confirmation.html</code></td>
+                  </tr>
+
+
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New Topbar ".alt" style to theme.</td>
+                    <td>This style is used and can be viewed in the newly added "smooth" skin. </td>
+                  </tr>
+                  <!-- Added Entries -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New Topbar Dropmenu ".alt" style to theme.</td>
+                    <td>This style is used and can be viewed in the newly added "smooth" skin. </td>
+                  </tr>
+
+                  <!-- Added Entries -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New Navbar dropdown button menus to theme.</td>
+                    <td>This style is used and can be viewed in the newly added "smooth" skin. </td>
+                  </tr>
+
+                  <!-- Added Entries -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New transparent navbar search input to theme.</td>
+                    <td>This style is used and can be viewed in the newly added "smooth" skin. </td>
+                  </tr>
+
+                  <!-- Added Entries -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New content footer option to theme.</td>
+                    <td>This style is used and can be viewed in the newly added "smooth" skin. </td>
+                  </tr>
+
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New functions to <code>main.js</code></td>
+                    <td>Functions for newly added footer, topbar dropmenu, navbar scrollers added to main.js</td>
+                  </tr>
+
+
+
+                </tbody>
+              </table>
+
+              <!-- end bs doc section -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Changelog v1.4 -->
+      <div class="row changelog-row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col pt40">
+
+          <!-- Navspy wrapper -->
+          <div id="" class="posr">
+
+            <!-- list group menu -->
+            <ul class="list-group mb35">
+              <li class="list-group-item list-group-header br-n">
+                Changelog Details
+              </li>
+              <li class="list-group-item">
+                Update Version:
+                <span class="pull-right text-info fw600">1.4</span>
+              </li>
+              <li class="list-group-item hidden">
+                Update Notes:
+                <span data-target="#modal-v1-4" data-toggle="modal" class="pull-right text-primary fw600 cursor" i>Link</span>
+              </li>
+              <li class="list-group-item">
+                Update Release:
+                <span class="pull-right text-danger fw600">04/10/15</span>
+              </li>
+            </ul>
+
+            <div class="hidden">
+              <h4 class="mt35"> Notable Changes: </h4>
+              <div class="panel br-t bw3 br0 br-primary">
+                <div class="panel-body ">
+                  <ul class="list pl15 list-spacing-5 mb5">
+                    <li>Font Awesome updated to v4.3.0</li>
+                    <li>Ecommerce System Added</li>
+                    <li>Email Templates Added </li>
+                    <li>Message Pages Improved</li>
+                  </ul>
+                </div>
+              </div>
+              <h4 class="mt35"> Font Changes: </h4>
+              <div class="panel br-t bw3 br0 br-success">
+                <div class="panel-body">
+                  <ul class="list pl15 list-spacing-5 mb5">
+                    <li>Font Awesome updated to v4.3.0</li>
+                    <li>Ecommerce System Added</li>
+                    <li>Email Templates Added </li>
+                    <li>Message Pages Improved</li>
+                  </ul>
+                </div>
+              </div>
+              <h4 class="mt35"> AdminForm Changes: </h4>
+              <div class="panel br-t bw3 br0 br-warning">
+                <div class="panel-body">
+                  <ul class="list pl15 list-spacing-5 mb5">
+                    <li>Font Awesome updated to v4.3.0</li>
+                    <li>Ecommerce System Added</li>
+                    <li>Email Templates Added </li>
+                    <li>Message Pages Improved</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t br-t br-grey pt30">
+
+          <div id="changelog3">
+
+            <div class="bs-docs-section">
+
+              <h4>Update v1.4 - Performance and Usability Changes:</h4>
+
+              <p> Patch v1.4 was the update of a thousand changes. Most modifications were so small they will go unnoticed by most customers. However, a thousand small changes can lead to big results. <b>We compared the top selling admin themes on Themeforest to AdminDesigns. Read the changes below and then check out the results.</b> </p>
+
+              <ul class="list pl30 mb40">
+
+                <li class="mt15 fs15"> Documentation was entirely scrapped and recreated from the ground up. It now includes hundreds of demos covering virtually every element in the theme, including 3rd party plugins.</li>
+
+                <li class="mt15 fs15">We removed hundreds if not thousands of overused HTML helper classes. Making it tremendously easier to navigate and to recreate the elements/components your application needs.</li>
+
+                <li class="mt15 fs15">To help streamline development many HTML based elements will now present their source code upon hover.
+                  <a href="resources/img/changelog/preview1.png" class="image-link">Click here for a Preview Image</a>.</li>
+
+                <li class="mt15 fs15"> An AdminDesigns Helpdesk is now available. Our customers now have direct access to community support forums, announcements, and personal support solutions via our helpdesk ticketing system.
+                  <a href="http://support.admindesigns.com" target="_blank"> Take a look here.</a>
+                </li>
+
+                <li class="mt15 fs15"> A major cleanup was performed on virtually every page/HTML element. We removed a great deal of leftover development code, and "hidden" elements. We're sorry they were present in the first place.
+
+                  <li class="mt15 fs15">Several theme resources have been disabled, moved out of Core, or replaced with better/faster solutions. These changes will be the biggest nuisance as it will require customers to fix/add/remove several previous resource URLs. You can read more about these changes below.</li>
+
+                  <li class="mt15 fs15">Many theme/javascript resources have been better optimized, reorganized, and restructured. Resulting in drastically faster page loads and a substantial reduction in overall HTTP request. <b> Making AdminDesigns the <b class="text-primary">ONLY</b> best selling admin theme on ThemeForest which loads in <b class="text-danger">miliseconds</b>... not seconds. Which frankly is a little scary.</b>
+                  </li>
+
+              </ul>
+
+              <!-- Column Graph -->
+              <div class="panel">
+                <div class="panel-heading">
+                  <div class="panel-icon">
+                    <i class="fa fa-pencil hidden"></i>
+                  </div>
+                  <span class="panel-title">
+                    Load Times Compared - Themeforest's Best Selling Admin Themes
+                  </span>
+                </div>
+                <div class="alert alert-primary alert-border-bottom mbn">
+                  Load time test were conducted on each themes homepage via Chrome Developer Tools Network Logging.
+                  <br> 1. <b>Cache</b> was Disabled. <b>|</b> 2. Time is the <b>Average of 5 load times.</b> <b>|</b> 3. Internet speed of testing device: <b>50Mpbs</b>
+
+                </div>
+                <div class="panel-body pn">
+                  <div class="row table-layout table-clear-sm">
+                    <div class="col-md-8 va-m bg-light">
+                      <div id="high-column" style="width: 100%; height: 350px; margin: 0 auto"></div>
+                    </div>
+                    <div class="col-md-4 br-l pn">
+                      <table class="table mbn tc-text-right-last">
+                        <thead>
+                          <tr>
+                            <th>Theme</th>
+                            <th class="text-right">Load Time(s)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="warning">
+                            <td class="fs14">
+                              <span class="fa fa-trophy text-warning fs14 mr10"></span> AdminDesigns</td>
+                            <td>0.69 Seconds</td>
+                          </tr>
+                          <tr class="">
+                            <td class="fs14">
+                              <span class="fa fa-circle text-primary fs14 mr10"></span> #3 Admin Theme</td>
+                            <td class="text-right">1.7 Seconds</td>
+                          </tr>
+                          <tr>
+                            <td class="fs14">
+                              <span class="fa fa-circle text-info fs14 mr10"></span> #2 Admin Theme</td>
+                            <td>3.0 Seconds</td>
+                          </tr>
+                          <tr>
+                            <td class="fs14">
+                              <span class="fa fa-circle text-alert fs14 mr10"></span> #4 Admin Theme</td>
+                            <td>3.1 Seconds</td>
+                          </tr>
+                          <tr>
+                            <td class="fs14">
+                              <span class="fa fa-circle text-danger fs14 mr10"></span> #7 Admin Theme</td>
+                            <td>3.2 Seconds</td>
+                          </tr>
+                          <tr>
+                            <td class="fs14">
+                              <span class="fa fa-circle text-success fs14 mr10"></span> #1 Admin Theme</td>
+                            <td>4.3 Seconds</td>
+                          </tr>
+                          <tr>
+                            <td class="fs14">
+                              <span class="fa fa-circle text-system fs14 mr10"></span> #8 Admin Theme</td>
+                            <td>7.0 Seconds</td>
+                          </tr>
+                          <tr>
+                            <td class="fs14">
+                              <span class="fa fa-circle text-make fs14 mr10"></span> #5 Admin Theme</td>
+                            <td>7.4 Seconds</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-footer hidden">
+                  <button class="btn btn-default btn-gradient btn-block" type="button" data-toggle="collapse" data-target="#speedTestInfo">
+                    Click for More Testing Information
+                  </button>
+                </div>
+                <div class="panel-body pn br-n" id="speedTestInfo">
+                  <div class="table-responsive">
+                    <table class="table  table-bordered table-striped text-center">
+                      <colgroup>
+                        <col style="width: 140px">
+                          <col style="width: 110px">
+                            <col style="width: 110px">
+                              <col style="width: 95px">
+                                <col style="width: 95px">
+                                  <col style="width: 95px">
+                                    <col style="width: 95px">
+                                      <col style="width: 95px">
+                      </colgroup>
+                      <thead class="text-center">
+                        <tr>
+                          <th>Theme</th>
+                          <th class="text-center">HTTP Request</th>
+                          <th class="text-center">Page Size</th>
+                          <th class="text-center">Load #1</th>
+                          <th class="text-center">Load #2</th>
+                          <th class="text-center">Load #3</th>
+                          <th class="text-center">Load #4</th>
+                          <th class="text-center">Load #5</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th scope="row" style="border-bottom: 2px solid #f6bb42;">AdminDesigns
+                            <span class="fa fa-trophy text-warning fs14 ml5"></span>
+                          </th>
+                          <td>29</td>
+                          <td>568 kb</td>
+                          <td>656 ms</td>
+                          <td>703 ms</td>
+                          <td>713 ms</td>
+                          <td>697 ms</td>
+                          <td>688 ms</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #1 </th>
+                          <td>85</td>
+                          <td>1.6 MB</td>
+                          <td>4.23 s</td>
+                          <td>4.17 s</td>
+                          <td>4.67 s</td>
+                          <td>4.48 s</td>
+                          <td>4.03 s</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #2 </th>
+                          <td>41</td>
+                          <td>651 kb</td>
+                          <td>3.05 s</td>
+                          <td>3.32 s</td>
+                          <td>2.60 s</td>
+                          <td>3.14 s</td>
+                          <td>3.20 s</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #3 </th>
+                          <td>28</td>
+                          <td>499 kb</td>
+                          <td>1.47 s</td>
+                          <td>1.50 s</td>
+                          <td>1.54 s</td>
+                          <td>1.65 s</td>
+                          <td>1.52 s</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #4 </th>
+                          <td>97</td>
+                          <td>2.9 MB</td>
+                          <td>3.24 s</td>
+                          <td>3.33 s</td>
+                          <td>3.60 s</td>
+                          <td>2.99 s</td>
+                          <td>3.07 s</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #5 </th>
+                          <td>135</td>
+                          <td>2.0 MB</td>
+                          <td>7.43 s</td>
+                          <td>6.39 s</td>
+                          <td>7.16 s</td>
+                          <td>7.60 s</td>
+                          <td>7.37 s</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #7 </th>
+                          <td>78</td>
+                          <td>2.6 MB</td>
+                          <td>3.25 s</td>
+                          <td>3.09 s</td>
+                          <td>3.47 s</td>
+                          <td>3.53 s</td>
+                          <td>3.21 s</td>
+                        </tr>
+                        <tr>
+                          <th scope="row"> Top Seller #8 </th>
+                          <td>65</td>
+                          <td>619 kb</td>
+                          <td>6.97 s</td>
+                          <td>7.03 s</td>
+                          <td>6.99 s</td>
+                          <td>6.60 s</td>
+                          <td>7.03 s</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Speedtest Disclaimer -->
+              <div class="">
+                <h3 class="mt40 mb15"> Speed Testing <b class="text-primary">Methods</b> and Notice:</h3>
+                <p>All themes tested are current top sellers and reflect the best Themeforest has to offer. As a courtesty to our competitors we have not included the names of the theme tested. The load time of a website is based on many factors. Server performance and location will also have large impacts on load time. However, the AdminDesigns demo is currently hosted on a low cost shared hosting plan and therfor should not have an advantage over any competitor. </p>
+
+              </div>
+
+              <div class="row mt50">
+                <div class="col-md-4">
+                  <h4 class=""> New Page Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-primary">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>New Session Timeout Page:
+                          <a href="http://admindesigns.com/framework/misc_timeout.html">Link</a>
+                        </li>
+                        <li>New Page Loader Page:
+                          <a href="http://admindesigns.com/framework/misc_nprogress.html">Link</a>
+                        </li>
+
+                        <li>New Search Results Page:
+                          <a href="http://admindesigns.com/framework/pages_search-results.html">Link</a>
+                        </li>
+                        <li>New Alternate Login Page:
+                          <a href="http://admindesigns.com/framework/pages_login(alt).html">Link</a>
+                        </li>
+                        <li>New Alternate Register Page:
+                          <a href="http://admindesigns.com/framework/pages_register(alt).html">Link</a>
+                        </li>
+                        <li>New Alternate Screenlock Page:
+                          <a href="http://admindesigns.com/framework/pages_screenlock(alt).html">Link</a>
+                        </li>
+                        <li>New Alternate Forgot PW Page:
+                          <a href="http://admindesigns.com/framework/pages_forgotpw(alt).html">Link</a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h4 class=""> More Page Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-primary">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>New Tile Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_tile.html">Link</a>
+                        </li>
+                        <li>New Panel Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_panel.html">Link</a>
+                        </li>
+                        <li>New Scroller Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_scroller.html">Link</a>
+                        </li>
+                        <li>New Admin Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_data.html">Link</a>
+                        </li>
+
+                        <li>New Form Plugin Page:
+                          <a href="http://admindesigns.com/framework/form_plugins.html">Link</a>
+                        </li>
+                        <li>New ImageTools Page:
+                          <a href="http://admindesigns.com/framework/form_image-tools.html">Link</a>
+                        </li>
+                        <li>New BS Tour Page:
+                          <a href="http://admindesigns.com/framework/misc_tour.html">Link</a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h4 class=""> New Plugin Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-info">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+                        <li>Select2 Added</li>
+                        <li>Session Timeout Added</li>
+                        <li>Page Loader Added</li>
+                        <li>ImageCrop and Zoom Added</li>
+                        <li>Dual-List Select Added</li>
+                        <li>MaxLength Added</li>
+                        <li>TypeAhead Added</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 hidden">
+                  <h4 class=""> Distruptive Changes: </h4>
+                  <div class="panel br-t bw2 br0 br-success">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+                        <li>Glyphicons Pro Icons Replaced</li>
+                        <li>PNotify replaced by Bootbox for Core notices</li>
+                        <li>Email Templates Modified</li>
+                        <li>Sidebar Classes Changed</li>
+                        <li>Dozens of scripts relocated or merged into core</li>
+                        <li>JVectormap removed from sidebar and Core</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="alt short mt15">
+
+              <h3 class="mt35 mb25"> Changes that can cause <b class="text-danger">Breaks/Problems:</b></h3>
+
+              <div class="panel-group" id="fix-accord" role="tablist" aria-multiselectable="true">
+                <div class="panel">
+                  <div class="panel-heading" role="tab" id="headingOne">
+                    <span class="panel-title">
+                      <a class="accordion-icon icon-right collapsed" data-toggle="collapse" data-parent="#fix-accord" href="#fixOne" aria-expanded="true" aria-controls="fixOne">
+                        <b class="text-danger">1.</b> Glyphicons PRO icon library is no longer enabled by default
+                      </a>
+                    </span>
+                  </div>
+                  <div id="fixOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body pn br-n">
+                      <div class="table-responsive" style="margin-top: -1px;">
+                        <table class="table table-bordered table-striped br-t-n">
+                          <colgroup>
+                            <col class="col-xs-1">
+                              <col class="col-xs-7">
+                          </colgroup>
+                          <thead class="hidden">
+                            <tr>
+                              <th>Class</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" class="text-right text-danger pr15">The What:</th>
+                              <td>Glyphicons PRO icons have been removed from every page and theme element.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-warning pr15">The Why:</th>
+                              <td>Glyphicons PRO is a huge library and should be used sparingly, or atleast not in combination with Glyphicons Halfling and FontAwesome like past updates had done.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-success pr15">The Fix:</th>
+                              <td>You should remove all Glyphicons PRO icons used in your current application. <b> - OR -</b> use the font library by including Glyphicons PRO on your pages.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-heading" role="tab" id="headingOne">
+                    <span class="panel-title">
+                      <a class="accordion-icon icon-right collapsed" data-toggle="collapse" data-parent="#fix-accord" href="#fixTwo" aria-expanded="true" aria-controls="fixTwo">
+                        <b class="text-danger">2.</b> PNotify is no longer the themes Core notification plugin.
+                      </a>
+                    </span>
+                  </div>
+                  <div id="fixTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body pn br-n">
+                      <div class="table-responsive" style="margin-top: -1px;">
+                        <table class="table table-bordered table-striped br-t-n">
+                          <colgroup>
+                            <col class="col-xs-1">
+                              <col class="col-xs-7">
+                          </colgroup>
+                          <thead class="hidden">
+                            <tr>
+                              <th>Class</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" class="text-right text-danger pr15">The What:</th>
+                              <td>PNotify has been replaced by <b>BootBox</b> as the themes Core notification plugin.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-warning pr15">The Why:</th>
+                              <td>PNotify was a bit heavier than we wanted and we found majority of customers were using Bootbox for notifications/confirmations.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-success pr15">The Fix:</th>
+                              <td>Pages will no longer require you to link Bootbox as it is now included in Core. Pages that you want to use PNotify on will now require you to include the required plugin resources. See the plugins section of this documentation for usage.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-heading" role="tab" id="headingThree">
+                    <span class="panel-title">
+                      <a class="accordion-icon icon-right collapsed" data-toggle="collapse" data-parent="#fix-accord" href="#fixThree" aria-expanded="true" aria-controls="fixThree">
+                        <b class="text-danger">3.</b> All AdminPlugins have been moved into theme Core
+                      </a>
+                    </span>
+                  </div>
+                  <div id="fixThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body pn br-n">
+                      <div class="table-responsive" style="margin-top: -1px;">
+                        <table class="table table-bordered table-striped br-t-n">
+                          <colgroup>
+                            <col class="col-xs-1">
+                              <col class="col-xs-7">
+                          </colgroup>
+                          <thead class="hidden">
+                            <tr>
+                              <th>Class</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" class="text-right text-danger pr15">The What:</th>
+                              <td>All <b>AdminPlugins</b> have been minified, compressed, and moved into theme Core.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-warning pr15">The Why:</th>
+                              <td>Most of these plugins were widely used and very small in size. To save on HTTP request they have been minified and merged into theme Core.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-success pr15">The Fix:</th>
+                              <td>Pages using AdminPanels, AdminDock, and AdminModals effects will no longer require you to include css/js scripts as you previously had to do. They are now activated by default.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-heading" role="tab" id="headingFour">
+                    <span class="panel-title">
+                      <a class="accordion-icon icon-right collapsed" data-toggle="collapse" data-parent="#fix-accord" href="#fixFour" aria-expanded="true" aria-controls="fixFour">
+                        <b class="text-danger">4.</b> Bootstrap.js has been moved into theme Core
+                      </a>
+                    </span>
+                  </div>
+                  <div id="fixFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                    <div class="panel-body pn br-n">
+                      <div class="table-responsive" style="margin-top: -1px;">
+                        <table class="table table-bordered table-striped br-t-n">
+                          <colgroup>
+                            <col class="col-xs-1">
+                              <col class="col-xs-7">
+                          </colgroup>
+                          <thead class="hidden">
+                            <tr>
+                              <th>Class</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" class="text-right text-danger pr15">The What:</th>
+                              <td><b>Bootstrap.js</b> has been minified, compressed, and moved into theme Core. <code>assets/js/bootstrap</code> has been removed.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-warning pr15">The Why:</th>
+                              <td>The script was lightweight and used on every page. To save on HTTP request and redundant linking we have moved it to Core. One less thing to worry about.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-success pr15">The Fix:</th>
+                              <td>Any page you have included the Bootstrap.js file can be safely removed.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-heading" role="tab" id="headingFive">
+                    <span class="panel-title">
+                      <a class="accordion-icon icon-right collapsed" data-toggle="collapse" data-parent="#fix-accord" href="#fixFive" aria-expanded="true" aria-controls="fixFive">
+                        <b class="text-danger">5.</b> All theme Demo javascript has been moved to "js/demo"
+                      </a>
+                    </span>
+                  </div>
+                  <div id="fixFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+                    <div class="panel-body pn br-n">
+                      <div class="table-responsive" style="margin-top: -1px;">
+                        <table class="table table-bordered table-striped br-t-n">
+                          <colgroup>
+                            <col class="col-xs-1">
+                              <col class="col-xs-7">
+                          </colgroup>
+                          <thead class="hidden">
+                            <tr>
+                              <th>Class</th>
+                              <th>Description</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row" class="text-right text-danger pr15">The What:</th>
+                              <td>All demo related javascript has been moved to <code>assets/js/demo</code>. The previous "pages" folder has been removed. <b>Bootstrap.js</b> has been minified, compressed, and moved into theme Core. <code>assets/js/bootstrap</code>. has been removed.</td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-warning pr15">The Why:</th>
+                              <td>The previous theme javascript structure resulted in file confusion. It was unclear why and where files were used. This adds a bit of clarity. </td>
+                            </tr>
+                            <tr>
+                              <th scope="row text-right" class="text-right text-success pr15">The Fix:</th>
+                              <td>Most pages using demo code from <code>assets/js/demo.js</code> will need to have its url updated to <code>assets/js/demo/demo.js</code>. This also goes for most pages using the demo AdminPanel code and demo charts code.</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- end bs doc section -->
+            </div>
+
+            <div class="bs-docs-section">
+
+              <!-- Changelog Entries (footable) -->
+              <span class="entry-count hidden"></span>
+              <table id="table3" class="table footable changelog-table" style="" data-page-size="250">
+                <thead>
+                  <tr>
+                    <th>
+                      Action
+                    </th>
+                    <th data-toggle="true">
+                      Details
+                    </th>
+                    <th data-hide="all">
+                      Details
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <!-- Added Entries -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New navigation style - <b>Page Tabs</b>.</td>
+                    <td>A new type of navigation menu has been added. Corresponding styles can be found in <code>base/tabs.less</code>. An example page using these tabs can be seen
+                      <a href="http://admindesigns.com/framework/widgets_panel.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>List-Group</b> style which can be used make a list of links</td>
+                    <td>A new list group has been added which handles a series of links much better than original list groups</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>runDemoSourceCode function to <code>assets/js/demo/demo.js</code></td>
+                    <td>Many HTML theme elements will now use this function to display their source code upon hover.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>widgets_tile.html</code>to theme</td>
+                    <td>A new page added to the widget package which includes tile based widgets. New styles have been added to <code>base/widgets/tile-widgets.less</code> It can be viewed here
+                      <a href="http://admindesigns.com/framework/widgets_tile.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>widgets_panel.html</code>to theme</td>
+                    <td>A new page added to the widget package which includes utility based panel widgets. New styles have been added to <code>base/widgets/panel-widgets.less</code> It can be viewed here
+                      <a href="http://admindesigns.com/framework/widgets_panel.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>widgets_scroller.html</code>to theme</td>
+                    <td>A new page added to the widget package which includes fixed scrolling content based widgets. New styles have been added to <code>base/widgets/tile-scroller.less</code> It can be viewed here
+                      <a href="http://admindesigns.com/framework/widgets_scroller.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>widgets_data.html</code>to theme</td>
+                    <td>A new page added to the widget package which includes data based <b> admin</b> widgets. It can be viewed here
+                      <a href="http://admindesigns.com/framework/widgets_data.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>pages_search-results.html</code>to theme</td>
+                    <td>A new page to display search results and privacy related settings has been added to theme. New styles have been added to <code>base/pages.less</code> It can be viewed here
+                      <a href="http://admindesigns.com/framework/pages_search-results.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>pages_login(alt).html</code>to theme</td>
+                    <td>An alternate minimalist login page has been added to the theme. It can be viewed here
+                      <a href="http://admindesigns.com/framework/pages_login(alt).html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>pages_login(alt).html</code>to theme</td>
+                    <td>An alternate minimalist login page has been added to the theme. It can be viewed here
+                      <a href="http://admindesigns.com/framework/pages_login(alt).html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>pages_forgotpw(alt).html</code>to theme</td>
+                    <td>An alternate minimalist forgot password page has been added to the theme. It can be viewed here
+                      <a href="http://admindesigns.com/framework/pages_forgotpw(alt).html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>page</b> <code>pages_screenlock(alt).html</code>to theme</td>
+                    <td>An alternate minimalist screenlock page has been added to the theme. It can be viewed here
+                      <a href="http://admindesigns.com/framework/pages_screenlock(alt).html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>new <b>page</b> <code>form_plugins.html</code> page which displays the themes most recently added plugins </td>
+                    <td>Read changelog entries for a list of what new plugins were added this patch.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>Styles</b> for bootstrap timeout page. </td>
+                    <td>New styles pertaining to the the Bootstrap Timeout have been added starting at <b>line 953</b> of <code>base/pages.less</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Multiple new <b>Left Sidebar Menu Items</b> to reflect newly added pages</td>
+                    <td>Several new menu items/submenus exist to reflect the new pages added. This includes the "Misc" section, forms_plugins.html page, forms_image-tools.html and others</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Coresponding contextuals to active item in button dropdowns.</td>
+                    <td>The active item in a button dropdown will now retain the same contextual its parent button contains.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Coresponding contextuals to <code>.navbar</code> dropdowns</td>
+                    <td>The active menu dropdown will now contain contextuals pertaining to that of its navbar. For example a yellow(.bg-warning) navbar will have menu borders and dropdowns that are also yellow.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Contextual styles for List-Groups.</td>
+                    <td>New styles added to <code>assets/skin/base/mixins/list-group.less</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Contextual styles for Table-Rows.</td>
+                    <td>New styles added to <code>assets/skin/base/mixins/table-row.less</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Contextual styles for Input-Groups.</td>
+                    <td>New styles added to <code>assets/skin/base/mixins/forms.less</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Contextual styles for <b>Nav Tabs</b> have been added</td>
+                    <td>New tab contextual styles can be found with all of the other theme skin mixins in <code>base/theme.less</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Contextual styles for <b>Nav Pills</b> have been added</td>
+                    <td>New tab contextual styles can be found with all of the other theme skin mixins in <code>base/theme.less</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Variables in <code>theme-settings.less</code> to control default active item colors (dropdowns/btns</td>
+                    <td>New variables found in <code>theme-settings.less</code> will allow you to set the default contextual colors found in dropdowns and buttons. Rather than always having them as the default .bg-primary contextual.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Twitter's <b>TypeAhead</b> plugin has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/typeahead</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_plugins.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>Dual-Box List</b> plugin has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/duallistbox</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_plugins.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>Cropper</b> plugin has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/cropper</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_image-tools.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>Image Zoom</b> plugin has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/imagezoom</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_image-tools.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>MarkDown Editor</b> plugin has replaced the previous Markitup editor.</td>
+                    <td>A new plugin folder <code>plugins/markdown</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_editors.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>Select2</b> plugin has has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/select2</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_plugins.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>NProgress</b> plugin has has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/nprogress</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/misc_nprgoress.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>The <b>MaxLength</b> plugin has has been added to the theme</td>
+                    <td>A new plugin folder <code>plugins/maxlength</code> has been added. The Core plugin list and <code>default-skin/theme-settings.less</code> have been updated to reflect the new addition. A new plugin demo can be found at
+                      <a href="http://admindesigns.com/framework/form_plugins.html">Here</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>A new custom icon font to theme Core <code>assets/skin/base/fonts/admindesigns.less</code>.</td>
+                    <td>Added required import code to line 30 of <code>default-skin/theme-settings.less</code>: <code>@import "@{base-fonts-path}/admindesigns.less";</code></td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Dynamic-bg.js to external pages(login, register,coming-soon, etc).</td>
+                    <td>All plugins previously used to create the animated background hover effect have been rewritten and compiled into a single new file (dynamic-bg.js). And thus needs to be added to the page</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td><code>img</code> folder in email templates.</td>
+                    <td>Added new PSDS to help customize the email templates in the image folder</td>
+                  </tr>
+
+                  <!-- Combined Entries -->
+                  <tr class="entry-combined">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td>Waypoints plugin into existing plugin script - AdminPanels.</td>
+                    <td>Original Waypoints plugin folder removed.</td>
+                  </tr>
+                  <tr class="entry-combined">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td>FitText plugin into existing plugin script - Chart Circles.</td>
+                    <td>Original FitText plugin folder removed.</td>
+                  </tr>
+                  <tr class="entry-combined">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td>jQuery Spin plugin into existing plugin script - Ladda.</td>
+                    <td>Original jQuery Spin plugin folder moved to <code>vendor/plugins</code></td>
+                  </tr>
+                  <tr class="entry-combined">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td><code>external-pages</code> resource javascript into single plugin <code>canvas-bg</code></td>
+                    <td>All resources required to create the particle hover effect seen on external pages(login,register,etc) have been merged into a new plugin(canvas-bg) and moved into the plugins folder at <code>plugins/canvasbg</code></td>
+                  </tr>
+
+                  <!-- Updated Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Dropdowns found in <code>.navbar</code> to use radios</td>
+                    <td> Navbar dropdowns previously accepted multiple options(checkboxes) which didn't make sense. They are now single value dropdowns using radios</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Glyphicons Halfing(included with Bootstrap) <code>assets/skin/base/fonts/glyphicons</code> to version 3.3.4.</td>
+                    <td> Also updated css version found in <code>assets/fonts/glyphicons</code> to version 3.3.4.</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Octicons font library <code>assets/skin/base/fonts/octicons</code> to version v2.2.0</td>
+                    <td> Also updated css version found in <code>assets/fonts/octicons</code> to version v2.2.0.</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Updated all HolderJS plugin links, as plugin location was moved</td>
+                    <td> <b> Pages with links updated: </b>
+                      <ul class="list list-spacing-5 pt10 pl15">
+                        <li>ecommerce_settings.html</li>
+                        <li>ecommerce_products.html</li>
+                        <li>ecommerce_customers.html</li>
+                        <li>form_nestable.html</li>
+                        <li>pages_gallery.html</li>
+                        <li>pages_timeline.html</li>
+                        <li>pages_timeline-single.html</li>
+                        <li>ui_typography.html</li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> HighlightJS plugin links, as plugin location was moved. </td>
+                    <td>Highlight plugin css/skin links were also updated <code>vendor/plugins/highlight/styles/github.css</code>. <b> Pages with links updated: </b>
+                      <ul class="list list-spacing-5 pt10 pl15">
+                        <li>ecommerce_settings.html</li>
+                        <li>ecommerce_products.html</li>
+                        <li>ecommerce_customers.html</li>
+                        <li>form_nestable.html</li>
+                        <li>pages_gallery.html</li>
+                        <li>pages_timeline.html</li>
+                        <li>pages_timeline-single.html</li>
+                        <li>ui_typography.html</li>
+                      </ul>
+                    </td>
+                  </tr>
+
+                  <!-- Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Email templates bug that occured in Googles Gmail.</td>
+                    <td>Removed faulty responsive code in email templates that caused a display bug in Gmail</td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Topbar dropdown z-index bug on calendar.html.</td>
+                    <td>Added a new style to line 158 of <code>assets/skin/base/plugins/fullcalendar.less<code></td>
+                                        </tr>
+                                        <tr class="entry-fixed">
+                                            <td><span class="label label-warning">Fixed</span>
+                                            </td>
+                                            <td>Overflow bug on pages-timeline.html and pages-timeline-single.html</td>
+                                            <td>Removed overflow style from line 145 of <code>assets/skin/base/utility/demo.less</code></td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Bug causing unexpected Dropcap colors</td>
+                    <td>The "Muted" and "Default" contextuals have been switched</td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Script order of <code>main.js and demo.js</code> in all pages(HTML).</td>
+                    <td>The scripts have had their order switched so that the demo.js can manipulate any and all changes after main.js has ran. Fine tunes its control over the theme.</td>
+                  </tr>
+
+                  <!-- Moved Entries -->
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>Bootstrap.js plugins into Core(utility.js)</td>
+                    <td>Plugin removed from original location: <code>vendor/</code></td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>FullScreen plugin into Core(utility.js).</td>
+                    <td>Plugin removed from original location: <code>vendor/</code></td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>Bootbox plugin into Core(utility.js).</td>
+                    <td>Plugin removed from original location: <code>vendor/</code></td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>PNotify plugin to <code>vendor/plugins</code>.</td>
+                    <td>Removed from Core(utility.js). Bootbox is now the default notification plugin.</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>jQuery Spin plugin to <code>vendor/plugins</code>.</td>
+                    <td>Removed from Core(utility.js). Also added to ladda.js plugin.</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>jQuery Expose plugin to <code>vendor/plugins</code></td>
+                    <td>Removed from Core(utility.js)</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>JVectormap plugin to <code>vendor/plugins</code></td>
+                    <td>Removed from Core(utility.js)</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>HighlightJS plugin to <code>vendor/plugins</code></td>
+                    <td>Removed from Core(utility.js)</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>HolderJS plugin to <code>vendor/plugins</code></td>
+                    <td>Removed from Core(utility.js)</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>All editor plugins to <code>vendor/plugins</code>.</td>
+                    <td>Removed from <code>vendor/</code></td>
+                  </tr>
+
+                  <!-- Removed Entries -->
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>pages <code>ui_tiles.html</code> from theme</td>
+                    <td>This page is now part of the new widget package seen at <code>widgets_tile.html</code>. It can be viewed
+                      <a href="http://admindesigns.com/framework/widgets_tile.html">Here.</a>
+                    </td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Attribute <code>type="script"</code> from all Javascript links</td>
+                    <td>This attribute is no longer required and distrupts readability</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td><code>assets/fonts/fonts.css</code> as it was redundant in its purpose.</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td><code>assets/js/bootstrap/</code> as it was redundant in its purpose.</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>ScrollTo plugin from <code>vendor/plugins</code> - Unused in Theme</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>ZeroClipBoard plugin from <code>vendor/plugins</code> - Unused in Theme</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>GenerateFile plugin from <code>vendor/plugins</code> - Unused in Theme</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>BackStretch plugin from <code>vendor/plugins</code> - Unused in Theme</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Raphael Library from <code>vendor/plugins</code>.</td>
+                    <td>No longer a plugin dependency. All reference links have been removed from theme HTML.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>JVectormap initilization code from <code>assets/js/demo.js</code></td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>JVectormap HTML from <code>#sidebar_right</code></td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>The Font "Roboto" has been removed from theme. All font references have been removed</td>
+                    <td>Using existing Open Sans font instead Sans. <b> References removed: </b>
+                      <ul class="unstyled list-spacing-5 pl15">
+                        <li>line 6 - sidebar.less</li>
+                        <li>line 596 - plugins.less</li>
+                        <li>line 16+ 76 - shared.less</li>
+                      </ul>
+                    </td>
+                  </tr>
+
+                  <!-- Removed Entries - "Components" -->
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Hidden Sidebar toggle buttons from <code>.navbar</code></td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Hidden menu settings dropdown from <code>.navbar</code></td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>All Glyphicons Pro Icons from <code>#sidebar_left</code>.</td>
+                    <td>This library is no longer activated by default. See Less tutorial for explanation. Sidebar icons were replaced with Font Awesome or Halflings icons.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Hidden editor item/menu from <code>#sidebar_left .sidebar-menu</code></td>
+                    <td>This was a hidden menu and submenu found in the "Form Elements" section of <code>#sidebar_left .sidebar-menu</code></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>All Glyphicons Pro Icons from <code>#topbar</code>.</td>
+                    <td>This library is no longer activated by default. See Less tutorial for explanation. Sidebar icons were replaced with Font Awesome or Halflings icons.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Background classes from <code>#topbar-dropmenu</code></td>
+                    <td>These unneeded classes provided redundant functionality.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Background plugins from external pages(login, register,coming-soon, etc)</td>
+                    <td>All plugins used to create the animated vector hover effect have been rewritten and compiled into a single file (dynamic-bg.js)</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Backstrech Plugin from <code>coming-soon.html</code>. </td>
+                    <td>These unneeded classes provided redundant functionality.</td>
+                  </tr>
+
+                  <!-- HEADER - ADMINFORMS -->
+                  <tr class="footable-group-row">
+                    <th class="p15" data-group="adminforms-group" colspan="12">AdminForms Changelog Entries:</th>
+                  </tr>
+
+                  <!-- Adminforms - Added Entries -->
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Individual contextual mixins for each AdminForm skin.</td>
+                    <td>This allows you to only compile skin colors that you need. See the updated <code>admin-forms.less</code> for new skin control variables.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Contextual settings variables to <code>admin-forms.less</code></td>
+                    <td>This allows you to only compile skin colors that you need.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New styles for displaying a counter box with jQuery slider.</td>
+                    <td>Simple styles used to display the value of a jQuery slider in AdminForms.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>AdminForms javascript source files to <code>assets/admin-tools/admin-forms/js/source</code>.</td>
+                    <td>Source javascript files have been added to a this folder and all original scripts have been minified/compressed. </td>
+                  </tr>
+
+                  <!-- Adminforms - Moved Entries -->
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td> Updated Minified and Compressed all AdminForms javascript files.</td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>All timepicker.js links to the new changed/merged script "datepicker.min.js". </td>
+                    <td>See "Combined" changelog entry regarding the merge of </td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>And renamed <code>assets/admin-tools/admin-forms/less/forms.less</code> to <code>elements.less</code></td>
+                    <td></td>
+                  </tr>
+
+                  <!-- Adminforms - Moved Entries -->
+                  <tr class="entry-combined">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td><code>timepicker.js</code> and <code>datetimepicker.js</code> into single plugin script - <code>datepicker.js</code>.</td>
+                    <td>Added new required Datepicker plugin styles to <code>assets/skin/base/plugins/datepicker.less</code> and the required "@import" to <code>assets/skin/default_skin/theme-settings.less</code>. Original Timepicker/Datepicker plugin scripts have been removed. </td>
+                  </tr>
+                  <tr class="entry-combined">
+                    <td>
+                      <span class="label label-system">Combined</span>
+                    </td>
+                    <td>AdminForm Less file <code>assets/admin-tools/admin-forms/shared.less</code> with <code>assets/admin-tools/admin-forms/elements.less</code></td>
+                    <td>Original shared.less file has been removed.</td>
+                  </tr>
+
+                  <!-- Adminforms - Fixed Entries -->
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Select input bug caused from improper z-index value.</td>
+                    <td>Style modified from line 258 of <code>elements.less</code>.</td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Mozilla specific input display bug caused by unneeded background style.</td>
+                    <td>Style removed from line 260 of <code>elements.less</code>.</td>
+                  </tr>
+
+                  <!-- Adminforms - Added Entries -->
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>custom.js</code>.</td>
+                    <td>No longer required for proper theme functionality.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>form_elements.js</code></td>
+                    <td>No longer required for proper theme functionality.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>jquery.maskedinput.js</code></td>
+                    <td>Redundant script in <code>vendor/plugins/jquerymask</code>.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>jquery.placeholder.js</code>.</td>
+                    <td>Redundant script in <code>vendor/plugins/holder</code></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>jquery-1.9.1.min.js</code>.</td>
+                    <td>Redundant script in <code>vendor/jquery</code></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>jquery-ui-1.10.4.custom.min.js</code>.</td>
+                    <td>Redundant script in <code>vendor/jquery</code></td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>AdminForms javascript file <code>jquery-ui-monthpicker.min(orig).js</code>.</td>
+                    <td>Script backup that is no longer needed</td>
+                  </tr>
+
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Captcha styles from <code>forms.less</code>.</td>
+                    <td>We have decided not to implement this style/feature.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Rounded Button styles from <code>forms.less</code>.</td>
+                    <td>We have decided not to implement this style/feature.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Pointed and Shaped Button styles from <code>forms.less</code>.</td>
+                    <td>We have decided not to implement this style/feature.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Pricing Boxes and Ribbon styles from <code>bootstrap_mod.less</code>.</td>
+                    <td>We have decided not to implement this style/feature.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Pricing Boxes and Ribbon styles from <code>skins/mixins.less</code>.</td>
+                    <td>We have decided not to implement this style/feature.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Notification styles from <code>bootstrap_mod.less</code>.</td>
+                    <td>Redundant styles provided by theme Core.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td>Wizard plugin script from validation page</td>
+                    <td>Plugin was not needed on this page and added unintentionally.</td>
+                  </tr>
+
+                  <!-- Adminforms - Moved Entries -->
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>AdminForms javascript file <code>jquery-ui-touch-punch.min.js</code> to Core(utility.js).</td>
+                    <td>Script is incredibly small and is best served combined and minified into core.</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>And renamed Less mixins folder <code>admin-forms/less/admin-skins.less</code> to <code>admin-forms/less/skins/admin-skins.less</code></td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>AdminForms Less file <code>admin-skins.less</code> to newly changed "skins" folder. </td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>Map Styles from Less file <code>bootstrap_mod.less</code> to <code>plugins.less</code></td>
+                    <td></td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>AdminForm Less file <code>assets/admin-tools/admin-forms/colors.less</code> to <code>skin/</code> folder</td>
+                    <td></td>
+                  </tr>
+
+                  <!-- HEADER - ADMINPLUGINS -->
+                  <tr class="footable-group-row">
+                    <th class="p15" data-group="adminplugins-group" colspan="12">AdminPlugin Changelog Entries:</th>
+                  </tr>
+
+                  <!-- Adminplugins- Moved Entries -->
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>AdminPanels plugin into Core(utility.js).</td>
+                    <td>Its CSS is located <code>assets/skin/base/plugins/adminpanels.less</code>. Removed all HTML script/css links from theme pages(as they are now part of core and not needed).</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>AdminDock plugin into Core(utility.js).</td>
+                    <td>Its CSS is located <code>assets/skin/base/plugins/admindock.less</code>. Removed all HTML script/css links from theme pages(as they are now part of core and not needed).</td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>AdminModal plugin into Core(utility.js)..</td>
+                    <td>Its CSS is located <code>assets/skin/base/plugins/adminmodal.less</code>. Removed all HTML script/css links from theme pages(as they are now part of core and not needed).</td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+              <!-- end bs doc section -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Changelog v1.3 -->
+      <div class="row changelog-row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col pt40">
+
+          <!-- Navspy wrapper -->
+          <div id="" class="posr">
+
+            <!-- list group menu -->
+            <ul class="list-group">
+              <li class="list-group-item list-group-header br-n">
+                Changelog Details
+              </li>
+              <li class="list-group-item">
+                Update Version:
+                <span class="pull-right text-info fw600">1.3</span>
+              </li>
+              <li class="list-group-item hidden">
+                Update Notes:
+                <span data-target="#modal-v1-3" data-toggle="modal" class="pull-right text-primary fw600 cursor" i>Link</span>
+              </li>
+              <li class="list-group-item">
+                Update Release:
+                <span class="pull-right text-danger fw600">02/07/15</span>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t br-t br-grey pt30">
+
+          <div id="changelog2">
+
+            <div class="bs-docs-section">
+
+              <!-- Changelog Entries (footable) -->
+              <table id="table2" class="table footable changelog-table" style="" data-page-size="50">
+                <thead>
+                  <tr>
+                    <th>
+                      Action
+                    </th>
+                    <th data-toggle="true">
+                      Details
+                    </th>
+                    <th data-hide="all">
+                      Details
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>Sidemenu <b>navigation</b> links</td>
+                    <td>The left sidemenu has been updated with links that correspond to the 5 new ecommerce pages, 2 new message pages, and new email template page.</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>pages_messages.html with a <b>Quick Compose</b> popup form</td>
+                    <td>Both messages pages have had the magnific plugin added to the page and much of the pages HTML has been cleaned up. New inline Javascript was added which adds functionality for the new quick compose form popup </td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>Font Awesome Icon Library to <b>v4.3.0</b>
+                    </td>
+                    <td>fonts.css and font-awesome.css have been updated to the lastest version</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>Timeline CSS/LESS to reflect a new timeline widget used on ecommerce dashboard</td>
+                    <td>The Timeline styles starting at line 445 in <b>pages.less</b> have been completely rewritten and are now LESS friendly</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td><b>Datatables Plugin</b> to include trial of Table Editor</td>
+                    <td>Entire Datatables plugin folder has been replaced. Editor functionality requires a working database.</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>tables_datatables-editor.html</b> page to the theme</td>
+                    <td>A new tables_datatables-editor.html was added to the theme. The stylesheet datatables.less has been rewritten </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New <b>pages_compose.html</b> to the theme</td>
+                    <td>A new pages_compose.html and pages_compose(alt).html was added to the theme. New message related styles were added starting at line 241 of <b>pages.less</b> </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New LESS file <b>"base/widgets.less"</b>
+                    </td>
+                    <td>A new file <b>"base/widgets.less"</b> has been added which includes styles used for widgets found on new ecommerce pages. "@import @{base-path}/widgets.less;" has been added to line 55 of "default-skin/less/theme_base.less" so that the new widget file is compiled into theme.css </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New class to rightside topbar dropdown menu(hidden)</td>
+                    <td>Added the ".hidden" class to all dropdowns in the topbar menu. This prevented the plugin from expanding the topbar while the dropdown was converted to a dynamic bootstrap dropdown (plugin). </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>No-repeat style to external page backgrounds</td>
+                    <td> The "no-repeat" style was added to background on line 342 of <b>pages.less</b>. Makes for a nicer display on ultra high resolution monitors </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Missing navbar search form CSS</td>
+                    <td>Added bottom border to mobile search bar on line 359 of navbar.less </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive class to fullscreen icon in Navbar</td>
+                    <td>The ".hidden-xs" class was added to the fullscreen icon to prevent overflow on less than 360px resolutions </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Style for grey/default top border on panels</td>
+                    <td>added "&.panel-border.panel-default" to line 36 of <b>panels.less</b>. This allows for grey top panel borders scene on new commerce pages </td>
+                  </tr>
+                  <tr class="entry-moved">
+                    <td>
+                      <span class="label label-alert">Moved</span>
+                    </td>
+                    <td>Inline CSS on map pages to <b>pages.less</b>
+                    </td>
+                    <td>Inline CSS on maps_full.html and maps_vector.html was removed and relocated to line 626 of <b>pages.less</b>. The CSS was mistakingly left on page and was never intended to remain inline styled.</td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Improper line-height values for admin-form buttons</td>
+                    <td>The line-height for admin form buttons on line 908 of <b>admin-forms/forms.less</b> was changed to 42px </td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Improper on-hover colors for admin-form buttons</td>
+                    <td>The on <b>:hover</b> border-color property for admin form buttons at line 118 of <b>mixins/admin-skins.less</b> was fixed to properly reflect the set color scheme(theme-primary, etc). </td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> <b>tables_formatted.html</b> from theme directory</td>
+                    <td> This page was merged with the existing <b>tables_basic.html</b> page.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> Animated from right sidemenu toggle button</td>
+                    <td> The animation was found to cause graphical animation lag in some scenarions in the chrome browser.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> Top positioning from content trays in <b>content-trays.less</b>
+                    </td>
+                    <td> removed "top: 60px" from line 20 of <b>content_trays.less</b> to fix occassional undesired position</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- end bs doc section -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Changelog v1.2 -->
+      <div class="row changelog-row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col pt40">
+
+          <!-- Navspy wrapper -->
+          <div id="" class="posr">
+
+            <!-- list group menu  -->
+            <ul class="list-group">
+              <li class="list-group-item list-group-header br-n">
+                Changelog Details
+              </li>
+              <li class="list-group-item">
+                Update Version:
+                <span class="pull-right text-info fw600">1.2</span>
+              </li>
+              <li class="list-group-item">
+                Update Release:
+                <span class="pull-right text-danger fw600">01/27/15</span>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t br-t br-grey pt30">
+
+          <div id="changelog1">
+
+            <div class="bs-docs-section">
+
+              <!-- Changelog Entries (footable) -->
+              <table id="changelog1" class="table footable changelog-table" data-page-size="50">
+                <thead>
+                  <tr>
+                    <th>
+                      Action
+                    </th>
+                    <th data-toggle="true">
+                      Details
+                    </th>
+                    <th data-hide="all">
+                      Details
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>Gallery image modals on <b>pages_gallery.html</b>
+                    </td>
+                    <td>Removed unneeded comments from inline magnific javascript. Added adminmodals.css to header as an animation was added to gallery image modal</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>Stock images. Many images removed and better compressed.</td>
+                    <td>To reduce overall file size many unsused stock images were removed from the img folder. Please contact us if you wish to be sent a royalty free zip file of the removed stock images.</td>
+                  </tr>
+                  <tr class="entry-updated">
+                    <td>
+                      <span class="label label-info">Updated</span>
+                    </td>
+                    <td>Flag Icons moved to sprite folder. <b>sprites.less</b> updated to reflect change</td>
+                    <td>Flag icon sprite was moved to a more relevant folder - <b> assets/img/sprites</b>. The url's in <b>sprites.less</b> have been updated to reflect the change</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Placeholder setting to <b>adminpanels.js</b>
+                    </td>
+                    <td>A preserve grid setting has been added to line <b>94</b> of adminpanels.js. Passing this setting on plugin init will allow the user to drag a panel to an otherwise empty column. <b>Example</b> plugin init:
+                      <br>
+                      <code>$('.admin-panels').adminpanel({ grid: '.admin-grid', draggable: true, preserveGrid: true});</code>
+                    </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Helper code to <b>main.js</b>
+                    </td>
+                    <td>Added code to detect internet explorer version, adds class to body if ie9. Starts @ line <b> 25</b> ends <b> 35</b> </td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>New plugin <b>Folder</b> to vendor/plugins</td>
+                    <td>The folder 'bstour' has been added to <b>assets/vendor/plugins</b>. Required for newly added ui_tour.html page</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Function call added to end of <b>main.js</b>
+                    </td>
+                    <td>Added function call to new IE helper function on line <b>503</b> - runHelpers();</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Label-xs styling to MultiLevel sidebar menus</td>
+                    <td>Added label styles to lines <b>128 and 151</b> of sidebar_left.less</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive styles to components/navbar.less</td>
+                    <td>Added responsive styles and new mobile search dropdown to line <b>311</b> of navbar.less</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive styles to components/sidebar.less</td>
+                    <td>Added responsive styles to <b>311</b> of navbar.less</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive styles to components/topbar.less</td>
+                    <td>Added responsive styles to <b>133</b> of topbar.less</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive Gallery styles to pages.less</td>
+                    <td>Added responsive Gallery.html styles to <b>164</b> of pages.less</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive Messages styles to pages.less</td>
+                    <td>Added responsive messages.html styles to <b>267</b> of pages.less</td>
+                  </tr>
+                  <tr class="entry-added">
+                    <td>
+                      <span class="label label-success">Added</span>
+                    </td>
+                    <td>Responsive Calendar styles to pages.less</td>
+                    <td>Added responsive messages.html styles to <b>231</b> of pages.less</td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Sidebar top margin. Added top margin to inner container - important change</td>
+                    <td>Removed 'margin-top: 60px' - line <b>20</b> of sidebar_left.less
+                      <br> Added 'margin-top: 60px' - line <b>13</b> nanoscroller.less
+                      <br> Change was to prevent sibling element height distruption </td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td>Incorrect input type on <b>pages_login.html</b> and <b>pages_register.html</b>
+                    </td>
+                    <td>Password fields on these pages were changed from "text" to "password"</td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td> Topbar animation bug in IE9 - changes made to <b>main.js</b>
+                    </td>
+                    <td> Added ".css('opacity',1);' to end of line <b>204</b> of main.js </td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td> Firefox whitespace bug in navbar dropdown <b></b>
+                    </td>
+                    <td> New style added to line <b>306</b> of navbar.less, fixed whitespace problem with inline menu labels </td>
+                  </tr>
+                  <tr class="entry-fixed">
+                    <td>
+                      <span class="label label-warning">Fixed</span>
+                    </td>
+                    <td> LineHeight problem with AdminForm social buttons</td>
+                    <td> Added 'line-height: 42px !important;' to line <b>1203</b> of adminforms/forms.less </td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> @media style from <b>adminmodals.css</b>
+                    </td>
+                    <td> Removed entire '@media screen" style from line <b>723</b> of adminmodals.css</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> Readme file from javascript utility folder</td>
+                    <td> File was old, incorrect and added mistakenly</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> Responsive navbar styles from responsive.less</td>
+                    <td> Navbar responsive styles have been moved to components/navbar.less</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> Most images in <b>assets/img/plugins/</b>
+                    </td>
+                    <td> Major image cleanup - almost all of the images in this folder were unused and have been removed.</td>
+                  </tr>
+                  <tr class="entry-removed">
+                    <td>
+                      <span class="label label-danger">Removed</span>
+                    </td>
+                    <td> Most images in <b>assets/img/patterns/</b>
+                    </td>
+                    <td> Major image cleanup - almost all of the images in this folder were unused and have been removed.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- end bs doc section -->
+            </div>
+
+            <!-- RETURN TO TOP BUTTON -->
+            <div class="top-wrapper clearfix">
+              <a href="#" class="return-top">Return to Top</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!---------------------
+                Saved Templates
+             --------------------->
+
+      <!-- Changelog Speed Comparision -->
+      <div class="row table-layout hidden">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col">
+
+          <!-- Navspy wrapper -->
+          <div id="nav-spy" class="posr hidden">
+
+            <!-- version info list group -->
+            <ul class="list-group">
+              <li class="list-group-item list-group-header br-n">
+                Testing Procedure
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-primary">1.5</span> Theme Core
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-info">3.32</span> Bootstrap
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-warning">3.21</span> Font-Awesome
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion smoothscroll-list">
+              <li class="list-group-item list-group-header br-n">
+                Changelog Entries
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog3"> Update 1.4 </a>
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog2"> Update 1.3 </a>
+              </li>
+              <li class="list-group-item">
+                <a href="#changelog1"> Update 1.2</a>
+              </li>
+            </ul>
+
+            <a href="#" class="scrollup">
+              <span class="fa fa-level-up"></span>
+            </a>
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t pt10">
+
+          <div id="docs-content">
+
+            <h3 id="" class="page-header">Important Patch Info and Changes <span class="vid">v1.4</span> </h3>
+
+            <div class="bs-docs-section">
+
+              <div class="alert alert-danger alert-border-left hidden" role="alert">
+                <b style="font-weight: 800;"> Warning - Read this before updating to version 1.4</b>. Large modifications have been made to AdminDesigns which will cause unexpected results unless you read the patch notes and understand the changes made.
+              </div>
+
+              <h4>The Biggy - Performance and Usability Changes:</h4>
+
+              <p> Patch v1.4 was the update of a thousand changes. Most modifications were so small they will go unnoticed by most customers. However, a thousand small changes can lead to big results. <b>We compared the top selling admin themes on Themeforest to AdminDesigns. Read the changes below and then check out the results.</b> </p>
+
+              <ul class="list pl30 mb40">
+
+                <li class="mt15 fs15"> Documentation was entirely scrapped and recreated from the ground up. It now includes hundreds of demos covering virtually every element in the theme, including 3rd party plugins.</li>
+
+                <li class="mt15 fs15">We removed hundreds if not thousands of overused HTML helper classes. Making it tremendously easier to navigate and to recreate the elements/components your application needs.</li>
+
+                <li class="mt15 fs15">To help streamline development many HTML based elements will now present their source code upon hover.
+                  <a href="resources/img/changelog/preview1.png" class="image-link">Click here for a Preview Image</a>.</li>
+
+                <li class="mt15 fs15"> An AdminDesigns Helpdesk is now available. Our customers now have direct access to community support forums, announcements, and personal support solutions via our helpdesk ticketing system.
+                  <a href="http://support.admindesigns.com" target="_blank"> Take a look here.</a>
+                </li>
+
+                <li class="mt15 fs15"> A major cleanup was performed on virtually every page/HTML element. We removed a great deal of leftover development code, and "hidden" elements. We're sorry they were present in the first place.
+
+                  <li class="mt15 fs15">Several theme resources have been disabled, moved out of Core, or replaced with better/faster solutions. These changes will be the biggest nuisance as it will require customers to fix/add/remove several previous resource URLs. You can read more about these changes below.</li>
+
+                  <li class="mt15 fs15">Many theme/javascript resources have been better optimized, reorganized, and restructured. Resulting in drastically faster page loads and a substantial reduction in overall HTTP request. <b> Making AdminDesigns the <b class="text-primary">ONLY</b> best selling admin theme on ThemeForest which loads in <b class="text-danger">miliseconds</b>... not seconds. Which frankly is a little scary.</b>
+                  </li>
+
+              </ul>
+
+              <!-- Speedtest Disclaimer -->
+              <div class="">
+                <h3 class="mt40 mb15"> Speed Testing <b class="text-primary">Methods</b> and Notice:</h3>
+                <p>All themes tested are current top sellers and reflect the best Themeforest has to offer. As a courtesty to our competitors we have not included the names of the theme tested. The load time of a website is based on many factors. Server performance and location will also have large impacts on load time. However, the AdminDesigns demo is currently hosted on a low cost shared hosting plan and therfor should not have an advantage over any competitor. </p>
+
+              </div>
+
+              <div class="row mt50">
+                <div class="col-md-4">
+                  <h4 class=""> New Page Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-primary">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>New Session Timeout Page:
+                          <a href="http://admindesigns.com/framework/misc_timeout.html">Link</a>
+                        </li>
+                        <li>New Page Loader Page:
+                          <a href="http://admindesigns.com/framework/misc_nprogress.html">Link</a>
+                        </li>
+
+                        <li>New Search Results Page:
+                          <a href="http://admindesigns.com/framework/pages_search-results.html">Link</a>
+                        </li>
+                        <li>New Alternate Login Page:
+                          <a href="http://admindesigns.com/framework/pages_login(alt).html">Link</a>
+                        </li>
+                        <li>New Alternate Register Page:
+                          <a href="http://admindesigns.com/framework/pages_register(alt).html">Link</a>
+                        </li>
+                        <li>New Alternate Screenlock Page:
+                          <a href="http://admindesigns.com/framework/pages_screenlock(alt).html">Link</a>
+                        </li>
+                        <li>New Alternate Forgot PW Page:
+                          <a href="http://admindesigns.com/framework/pages_forgotpw(alt).html">Link</a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h4 class=""> More Page Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-primary">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+
+                        <li>New Tile Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_tile.html">Link</a>
+                        </li>
+                        <li>New Panel Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_panel.html">Link</a>
+                        </li>
+                        <li>New Scroller Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_scroller.html">Link</a>
+                        </li>
+                        <li>New Admin Widgets Page:
+                          <a href="http://admindesigns.com/framework/widgets_data.html">Link</a>
+                        </li>
+
+                        <li>New Form Plugin Page:
+                          <a href="http://admindesigns.com/framework/form_plugins.html">Link</a>
+                        </li>
+                        <li>New ImageTools Page:
+                          <a href="http://admindesigns.com/framework/form_image-tools.html">Link</a>
+                        </li>
+                        <li>New BS Tour Page:
+                          <a href="http://admindesigns.com/framework/misc_tour.html">Link</a>
+                        </li>
+
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h4 class=""> New Plugin Additions: </h4>
+                  <div class="panel br-t bw2 br0 br-info">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+                        <li>Select2 Added</li>
+                        <li>Session Timeout Added</li>
+                        <li>Page Loader Added</li>
+                        <li>ImageCrop and Zoom Added</li>
+                        <li>Dual-List Select Added</li>
+                        <li>MaxLength Added</li>
+                        <li>TypeAhead Added</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 hidden">
+                  <h4 class=""> Distruptive Changes: </h4>
+                  <div class="panel br-t bw2 br0 br-success">
+                    <div class="panel-body br-n">
+                      <ul class="list pl15 list-spacing-5 mb5">
+                        <li>Glyphicons Pro Icons Replaced</li>
+                        <li>PNotify replaced by Bootbox for Core notices</li>
+                        <li>Email Templates Modified</li>
+                        <li>Sidebar Classes Changed</li>
+                        <li>Dozens of scripts relocated or merged into core</li>
+                        <li>JVectormap removed from sidebar and Core</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="alt short mt15">
+
+
+
+              <!-- end bs doc section -->
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- changelog modal v1.3 -->
+  <div class="modal fade" id="modal-v1-3" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+
+          <h4>A Header for Migration:</h4>
+
+          <p class="alt">So far we feel the framework is heading in the right direction and contains many of the unique features we wanted to see deployed. However, there are several items and features which could use a redesign, be better organized/explained, or should have an easier means of implementation. For this reason we have decided to take a step back from developing new features/pages and focus our attention on improving the theme in its current state. </p>
+
+          <h4> Some of the issues we will be changing/focusing on: </h4>
+          <ul class="list">
+            <li>Usability, usability, usability. Our goal in all of these changes is to vastly improve the frameworks overall usability and fluidness.</li>
+            <li> Documentation will be entirely reconstructed and redesigned. This is possibly our biggest priority, expect documentation size to triple.</li>
+            <li>Provide further ways to greatly reduce the overall size and footprint of the framework in a production enviroment. By improving existing plugin structure and adding additional LESS settings.</li>
+            <li> Create several video tutorials explaining some of the themes more complex topics. Particulary the frameworks LESS system and it's importantance.</li>
+            <li> Possibly removing the Admin Plugin folder and moving the plugins into core. As they are lightweight and frequently used</li>
+            <li>Review helper class usage. They feel over used in some areas.</li>
+            <li>To greatly improve sidebar functionality we want to convert the system into a plugin with many more settings/options</li>
+            <li> Make vastly better use of inline HTML comments to help explain an elements implementation and use</li>
+            <li> Creating a discussion forum/input portal for our customers</li>
+          </ul>
+
+          <h2 class="mt20"> Migration Notices </h2>
+          <p class="alt">Breaking/Ruining live sites. HTML structure sitewide will remain the same. As always we take absolutely every precaution to ensure updates have no impact on the functionality of your live sites.</p>
+
+          <h4>And back to update 1.3 - Notable Changes:</h4>
+          <ul class="list">
+            <li>Font Awesome Library updated to v4.3.0</li>
+            <li>Ecommerce System Added - 5 new pages</li>
+            <li>Email Templates Added - 10 new pages</li>
+            <li>Message Pages Improved - 2 new pages</li>
+          </ul>
+
+          <h4 class="mt20">New Pages Added:</h4>
+          <ul class="list mt20">
+            <li>Ecommerce Dashboard -
+              <a href="http://admindesigns.com/framework/ecommerce_dashboard.html" target="_blank">Link</a>
+            </li>
+            <li>Ecommerce Orders Page -
+              <a href="http://admindesigns.com/framework/ecommerce_orders.html" target="_blank">Link</a>
+            </li>
+            <li>Ecommerce Products Page -
+              <a href="http://admindesigns.com/framework/ecommerce_products.html" target="_blank">Link</a>
+            </li>
+            <li>Ecommerce Customers Page -
+              <a href="http://admindesigns.com/framework/ecommerce_customers.html" target="_blank">Link</a>
+            </li>
+            <li>Ecommerce Settings Page -
+              <a href="http://admindesigns.com/framework/ecommerce_settings.html" target="_blank">Link</a>
+            </li>
+          </ul>
+
+          <hr>
+
+          <h4 class="text-info">General Rules:</h4>
+
+          <p class="lead"> Seperating your work and customizations from the themes default styles is absolutely key to smoothly transitioning through theme patches and updates.</p>
+
+          <h4 class="text-primary mt20">LESS Users:</h4>
+          <p> All changes and new styles have been added to the themes base skin. That being said ALL custom changes should <b> always </b> be added to your <b>child</b> skin (default-skin/less). You should <b>never</b> modify the base theme as it will frequently be changed and updated. This is key to smoothly transitioning through theme patches and updates. </p>
+
+          <h4 class="mt20 text-danger">Standard CSS Users:</h4>
+          <p>All style changes made in update 1.2 have been added to theme.css. Users should never edit or modify theme.css. All style customizations and additions should be added to a new stylesheet and included separately in your pages.</p>
+
+          <p>It is also <b>highly</b> recommended that you transition to using the themes LESS system as it is far superior, and offers a great deal of features and optimizations. Please contact us, or leave a comment if you would like to see a LESS tutorial added to the themes documentation.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Close Notes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+  /* changelog accord style changes */
+  
+  #fix-accord.panel-group .panel + .panel {
+    margin-top: 10px;
+  }
+  
+  #fix-accord.panel-group .panel-heading {
+    height: 44px;
+    line-height: 42px;
+  }
+  
+  #fix-accord.panel-group .panel-heading a {
+    font-size: 14px;
+    text-decoration: none !important;
+  }
+  
+  #fix-accord.panel-group .panel-heading a .text-danger {
+    padding-right: 8px;
+    font-weight: 800;
+  }
+  </style>
+
+  <!-- jQuery JS -->
+  <script src="../vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+  <!-- Doc Plugins -->
+  <script src="../vendor/plugins/footable/js/footable.all.min.js"></script>
+  <script src="../vendor/plugins/highlight/highlight.pack.js"></script>
+  <script src="../vendor/plugins/highcharts/highcharts.js"></script>
+  <script src="../vendor/plugins/magnific/jquery.magnific-popup.js"></script>
+
+  <!-- Page JS -->
+  <script src="../assets/js/utility/utility.js"></script>
+  <script src="resources/js/docs.js"></script>
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    // Init Documentation Scripts
+    Docs.init();
+    // Init Magnific Demo Images
+    var magImages = $('.image-link');
+    if (magImages.length) {
+      magImages.magnificPopup({
+        type: 'image'
+      });
+    }
+    // Changelog entries count
+    $('.entry-count').each(function(i, e) {
+      var Table = $(this).next().find('tbody');
+      var Count = Table.children('tr').length;
+      $(this).html(Count)
+    });
+    // Init Demo smoothscroll
+    $('#nav-spy ul.smoothscroll-list a').smoothScroll({
+      offset: -55
+    });
+    // bold text doesn't bubble properly on click. Manually assign
+    $('table.footable tr b').on('click', function() {
+      var row = $(this).parent('td');
+      row.click();
+    });
+    // label text doesn't bubble properly on click. Manually assign
+    $('table.footable tr .label').on('click', function() {
+      var row = $(this).parent('td');
+      row.click();
+    });
+    // code text doesn't bubble properly on click. Manually assign
+    $('table.footable tr code').on('click', function() {
+      var row = $(this).parent('td');
+      row.click();
+    });
+    // Define chart color patterns
+    var highColors = [bgWarning, bgPrimary, bgInfo, bgAlert,
+      bgDanger, bgSuccess, bgSystem, bgDark
+    ];
+    // Init Speedtest Demo
+    $('#high-column').highcharts({
+      credits: false,
+      colors: highColors,
+      chart: {
+        backgroundColor: 'transparent',
+        type: 'column',
+        // padding: 0,
+        // margin: 0,
+        // marginTop: 0,
+        marginBottom: 29,
+        marginLeft: 5,
+        marginRight: 5,
+      },
+      title: {
+        text: null
+      },
+      xAxis: {
+        type: 'category',
+        // gridLineColor: '#EEE',
+        // lineColor: '#EEE',
+        // tickColor: '#EEE',
+        // lineWidth: 0,
+        // tickLength: 0,
+        // minorTickLength: 0,
+        labels: {
+          // rotation: -45,
+          style: {
+            fontSize: '13px',
+          }
+        }
+      },
+      yAxis: {
+        gridLineColor: 'transparent',
+        // lineColor: '#EEE',
+        // tickColor: '#EEE',
+        // lineWidth: 0,
+        // tickLength: 0,
+        // minorTickLength: 0,
+        min: 0,
+        title: {
+          text: 'Load Time (seconds)'
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        pointFormat: 'Loading Time: <b>{point.y:.1f} seconds</b>'
+      },
+      plotOptions: {
+        column: {
+          colorByPoint: true,
+          groupPadding: 0.05,
+          pointPadding: 0.18,
+          borderWidth: 0
+        }
+      },
+      series: [{
+        name: 'Population',
+        data: [
+          ['Admin Designs', 0.6],
+          ['#3 Best Selling Theme', 1.55],
+          ['#2 Best Selling Theme', 3.0],
+          ['#4 Best Selling Theme', 3.1],
+          ['#7 Best Selling Theme', 3.2],
+          ['#1 Best Selling Theme', 4.4],
+          ['#8 Best Selling Theme', 7.0],
+          ['#5 Best Selling Theme', 7.3],
+        ],
+        dataLabels: {
+          enabled: false,
+          rotation: 0,
+          color: '#666',
+          align: 'center',
+          useHTML: 'true',
+          format: '<span class="text-center fs11">{point.y:.1f} seconds</span>', // one decimal
+          y: -10, // 10 pixels down from the top
+        }
+      }]
+    });
+  });
+  </script>
+
+</body>
+
+</html>

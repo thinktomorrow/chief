@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link href="../../vendor/plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/fancytree/skin-win8/ui.fancytree.min.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/nestable/nestable.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/slick/slick.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/bstour/bootstrap-tour.css" rel="stylesheet" type="text/css">
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Data </a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="#data-datatables" data-toggle="tab">DataTables</a>
+                                    </li>
+                                    <li><a href="#data-fancytree" data-toggle="tab">FancyTree</a>
+                                    </li>
+                                    <li><a href="#data-fullcalendar" data-toggle="tab">FullCalendar</a>
+                                    </li>
+                                    <li><a href="#data-mixitup" data-toggle="tab">Mixitup</a>
+                                    </li>
+                                    <li><a href="#data-nestable" data-toggle="tab">Nestable</a>
+                                    </li>
+                                    <li><a href="#data-slick" data-toggle="tab">Slick Slider</a>
+                                    </li>
+                                    <li><a href="#data-bstour" data-toggle="tab">Bootstrap Tour</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           DATA
+                        ----------------------->
+
+
+                        <!-- DATA - DATATABLES -->
+                        <div class="tab-pane fade in active" id="data-datatables" role="tabpanel">
+                            <h3 id="" class="page-header">Data - DataTables </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>DataTables will add advanced interaction controls to any HTML table.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>DataTables</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>SpryMedia</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://datatables.net/">http://datatables.net/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/DataTables/DataTables">DataTables/DataTables</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/datatables/media/css/dataTables.bootstrap.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/datatables/media/js/jquery.dataTables.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code>&lt;script src=&quot;vendor/plugins/datatables/media/js/dataTables.bootstrap.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code>DataTables has many addons, check official documentation for detailed usage of what's required </code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic DataTable</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                  <div class="panel-body pn">
+                                    <table class="table table-striped" id="datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Office</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>Edinburgh</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cedric Kelly</td>
+                                                <td>Edinburgh</td>
+                                                <td>$433,060</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Brielle Williamson</td>
+                                                <td>New York</td>
+                                                <td>$372,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>Edinburgh</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html highlight-hover"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;panel-body pn&quot;&gt;
+  &lt;table class=&quot;table table-striped&quot; id=&quot;datatable&quot;&gt;
+      &lt;thead&gt;
+          &lt;tr&gt;
+              &lt;th&gt;Name&lt;/th&gt;
+              &lt;th&gt;Office&lt;/th&gt;
+              &lt;th&gt;Salary&lt;/th&gt;
+          &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+          &lt;tr&gt;
+              &lt;td&gt;Tiger Nixon&lt;/td&gt;
+              &lt;td&gt;Edinburgh&lt;/td&gt;
+              &lt;td&gt;$320,800&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+              &lt;td&gt;Cedric Kelly&lt;/td&gt;
+              &lt;td&gt;Edinburgh&lt;/td&gt;
+              &lt;td&gt;$433,060&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+              &lt;td&gt;Brielle Williamson&lt;/td&gt;
+              &lt;td&gt;New York&lt;/td&gt;
+              &lt;td&gt;$372,000&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+              &lt;td&gt;Tiger Nixon&lt;/td&gt;
+              &lt;td&gt;Edinburgh&lt;/td&gt;
+              &lt;td&gt;$320,800&lt;/td&gt;
+          &lt;/tr&gt;
+      &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#datatable&#39;).dataTable({
+    &quot;sDom&quot;: &#39;t&lt;&quot;dt-panelfooter clearfix&quot;ip&gt;&#39;, // required for generating styling markup
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://datatables.net/reference/index">http://datatables.net/reference/index</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://datatables.net/examples/index">http://datatables.net/examples/index</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- DATA - FANCYTREE -->
+                        <div class="tab-pane fade" id="data-fancytree" role="tabpanel">
+                            <h3 id="" class="page-header">Data - FancyTree </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Tree plugin for jQuery with support for persistence, keyboard, checkboxes, tables (grid), drag'n'drop, and lazy loading.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>FancyTree</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Martin Wendt</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://wwwendt.de/tech/fancytree/demo/">http://wwwendt.de/tech/fancytree</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/mar10/fancytree">mar10/fancytree</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/fancytree/skin-win8/ui.fancytree.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/fancytree/jquery.fancytree-all.min.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code> FancyTree has many addons, check official documentation for detailed usage of what's required </code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Example</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                  <div id="tree">
+                                      <ul id="treeData">
+                                          <li id="1">Node 1 </li>
+                                          <li id="2" class="folder expanded active">Folder 1
+                                              <ul>
+                                                  <li id="2.1">Node 2.1 </li>
+                                                  <li id="2.2">Node 2.2 </li>
+                                              </ul>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;tree&quot;&gt;
+    &lt;ul id=&quot;treeData&quot; style=&quot;display: none;&quot;&gt;
+        &lt;li id=&quot;1&quot;&gt;Node 1 &lt;/li&gt;
+        &lt;li id=&quot;2&quot; class=&quot;folder expanded active&quot;&gt;Folder 1
+            &lt;ul&gt;
+                &lt;li id=&quot;2.1&quot;&gt;Node 2.1 &lt;/li&gt;
+                &lt;li id=&quot;2.2&quot;&gt;Node 2.2 &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Basic FancyTree
+$(&quot;#tree&quot;).fancytree();
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="https://github.com/mar10/fancytree/wiki">https://github.com/mar10/fancytree/wiki</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://wwwendt.de/tech/fancytree/demo/">http://wwwendt.de/tech/fancytree/demo/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- DATA - FULLCALENDAR -->
+                        <div class="tab-pane fade" id="data-fullcalendar" role="tabpanel">
+                            <h3 id="" class="page-header">Data - FullCalendar </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A Full-sized drag & drop event calendar.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>FullCalendar</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Adam Shaw</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://fullcalendar.io/">http://fullcalendar.io/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/arshaw/fullcalendar">arshaw/fullcalendar</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/fullcalendar/fullcalendar.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/fullcalendar/lib/moment.min.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code>&lt;script src=&quot;vendor/plugins/fullcalendar/fullcalendar.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Example</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                     <div id="calendar" class="p10"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;calendar&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#calendar&#39;).fullCalendar({
+    // put your options and callbacks here
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://fullcalendar.io/docs/">http://fullcalendar.io/docs/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://fullcalendar.io/">http://fullcalendar.io/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- DATA - MIXITUP -->
+                        <div class="tab-pane fade" id="data-mixitup" role="tabpanel">
+                            <h3 id="" class="page-header">Data - Mixitup </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>MixItUp is a jQuery plugin providing animated filtering and sorting.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Mixitup</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Patrickkunka</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>Mixed - <a target="_blank" href="https://mixitup.kunkalabs.com/licenses/">Commercial</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="https://mixitup.kunkalabs.com/">https://mixitup.kunkalabs.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/patrickkunka/mixitup">patrickkunka/mixitup</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/mixitup/jquery.mixitup.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+<style>
+
+.mix-container{
+  min-height: 300px;
+  padding: 2% 2% 0;
+  text-align: justify;
+  font-size: 0.1px;
+  
+  -webkit-backface-visibility: hidden;
+}
+
+.mix-container:after{
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+.mix-container .mix,
+.mix-container .gap{
+  display: inline-block;
+  width: 49%;
+}
+
+.mix-container .mix{
+  text-align: left;
+  background: #f4f4f4;
+  border: 1px solid #DDD;
+  margin-bottom: 2%;
+  display: none;
+}
+
+.mix-container .mix.category-1{
+  border-top: 3px solid #4a89dc;
+}
+
+.mix-container .mix.category-2{
+  border-top: 3px solid #269dc9;
+}
+
+.mix-container .mix:after{
+  content: attr(data-myorder);
+  display: inline-block;
+  vertical-align: top;
+  padding: 4% 6%;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mix-container .mix:before{
+  content: '';
+  display: inline-block;
+  padding-top: 60%;
+}
+
+@media all and (min-width: 420px){
+  .mix-container .mix,
+  .mix-container .gap{
+    width: 32%;
+  }
+}
+
+@media all and (min-width: 640px){
+  .mix-container .mix,
+  .mix-container .gap{
+    width: 23.5%;
+  }
+}
+</style>
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+
+                                  <!-- Mixitup Filters -->
+                                  <div class="controls mt15">
+                                    <label class="ml5 mr10">Filter:</label>
+                                    <button class="filter btn btn-primary btn-sm" data-filter="all">All</button>
+                                    <button class="filter btn btn-primary btn-sm" data-filter=".category-1">Category 1</button>
+                                    <button class="filter btn btn-info btn-sm" data-filter=".category-2">Category 2</button>
+                                    
+                                    <label class="ml20 mr10">Sort:</label>
+                                    <button class="sort btn btn-default btn-sm" data-sort="myorder:asc">Asc</button>
+                                    <button class="sort btn btn-default btn-sm" data-sort="myorder:desc">Desc</button>
+                                  </div>
+
+                                  <hr class="alt short">
+
+                                  <!-- Mixitup Items -->
+                                  <div id="mix-items" class="mix-container">
+                                    <div class="mix category-1" data-myorder="1"></div>
+                                    <div class="mix category-1" data-myorder="2"></div>
+                                    <div class="mix category-1" data-myorder="3"></div>
+                                    <div class="mix category-2" data-myorder="4"></div>
+                                    <div class="mix category-1" data-myorder="5"></div>
+                                    <div class="mix category-1" data-myorder="6"></div>
+                                    <div class="mix category-2" data-myorder="7"></div>
+                                    <div class="mix category-2" data-myorder="8"></div>
+                                    <div class="gap"></div>
+                                    <div class="gap"></div>
+                                  </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Mixitup Filters --&gt;
+&lt;div class=&quot;controls mt15&quot;&gt;
+  &lt;label class=&quot;ml5 mr10&quot;&gt;Filter:&lt;/label&gt;
+  &lt;button class=&quot;filter btn btn-primary btn-sm&quot; data-filter=&quot;all&quot;&gt;All&lt;/button&gt;
+  &lt;button class=&quot;filter btn btn-primary btn-sm&quot; data-filter=&quot;.category-1&quot;&gt;Category 1&lt;/button&gt;
+  &lt;button class=&quot;filter btn btn-primary btn-sm&quot; data-filter=&quot;.category-2&quot;&gt;Category 2&lt;/button&gt;
+  
+  &lt;label class=&quot;ml20 mr10&quot;&gt;Sort:&lt;/label&gt;
+  &lt;button class=&quot;sort btn btn-info btn-sm&quot; data-sort=&quot;myorder:asc&quot;&gt;Asc&lt;/button&gt;
+  &lt;button class=&quot;sort btn btn-info btn-sm&quot; data-sort=&quot;myorder:desc&quot;&gt;Desc&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Mixitup Items --&gt;
+&lt;div id=&quot;mix-items&quot; class=&quot;mix-container&quot;&gt;
+  &lt;div class=&quot;mix category-1&quot; data-myorder=&quot;1&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-1&quot; data-myorder=&quot;2&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-1&quot; data-myorder=&quot;3&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-2&quot; data-myorder=&quot;4&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-1&quot; data-myorder=&quot;5&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-1&quot; data-myorder=&quot;6&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-2&quot; data-myorder=&quot;7&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;mix category-2&quot; data-myorder=&quot;8&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;gap&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;gap&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$('#mix-items').mixItUp();
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="https://mixitup.kunkalabs.com/docs/">https://mixitup.kunkalabs.com/docs/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="https://mixitup.kunkalabs.com/learn/tutorial/get-started/">https://mixitup.kunkalabs.com/learn/tutorial/get-started/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- DATA - NESTABLE -->
+                        <div class="tab-pane fade" id="data-nestable" role="tabpanel">
+                            <h3 id="" class="page-header">Data - Nestable </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Drag & drop hierarchical list with mouse and touch compatibility.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Nestable</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>David Bushell</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://dbushell.github.io/Nestable/">http://dbushell.github.io/Nestable/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/dbushell/Nestable">dbushell/Nestable</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/nestable/nestable.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/nestable/jquery.nestable.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <!-- Nestable List -->
+                                    <div id="nestable" class="dd">
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="1">
+                                                <div class="dd-handle">Item 1</div>
+                                            </li>
+                                            <li class="dd-item" data-id="2">
+                                                <div class="dd-handle">Item 2</div>
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="3">
+                                                        <div class="dd-handle">Item 3 - Nested</div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li class="dd-item" data-id="4">
+                                                <div class="dd-handle">Item 4</div>
+                                            </li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Nestable List --&gt;
+&lt;div id=&quot;nestable&quot; class=&quot;dd&quot;&gt;
+    &lt;ol class=&quot;dd-list&quot;&gt;
+        &lt;li class=&quot;dd-item&quot; data-id=&quot;1&quot;&gt;
+            &lt;div class=&quot;dd-handle&quot;&gt;Item 1&lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;dd-item&quot; data-id=&quot;2&quot;&gt;
+            &lt;div class=&quot;dd-handle&quot;&gt;Item 2&lt;/div&gt;
+            &lt;ol class=&quot;dd-list&quot;&gt;
+                &lt;li class=&quot;dd-item&quot; data-id=&quot;3&quot;&gt;
+                    &lt;div class=&quot;dd-handle&quot;&gt;Item 3 - Nested&lt;/div&gt;
+                &lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;dd-item&quot; data-id=&quot;4&quot;&gt;
+            &lt;div class=&quot;dd-handle&quot;&gt;Item 4&lt;/div&gt;
+        &lt;/li&gt;
+    &lt;/ol&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Nestable on list
+$(&#39;#nestable&#39;).nestable({
+    group: 1 // Link to a nestable group
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="https://github.com/patrickkunka/mixitup/tree/master/docs">https://github.com/patrickkunka/mixitup/tree/master/docs</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://dbushell.github.io/Nestable/">http://dbushell.github.io/Nestable/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- DATA - SLICK SLIDER -->
+                        <div class="tab-pane fade" id="data-slick" role="tabpanel">
+                            <h3 id="" class="page-header">Data - Slick Slider </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A fully featured responsive content caraousel and slider.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Slick Slider</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Ken Wheeler</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://kenwheeler.github.io/slick/">http://kenwheeler.github.io/slick</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/kenwheeler/slick">kenwheeler/slick</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/slick/slick.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/slick/slick.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Single Slider</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                      <!-- Single Item -->
+                                      <div class="single-item">
+                                          <div class="slick-slide">
+                                              <h1>1</h1>
+                                          </div>
+                                          <div class="slick-slide">
+                                              <h1>2</h1>
+                                          </div>
+                                          <div class="slick-slide">
+                                              <h1>3</h1>
+                                          </div>
+                                          <div class="slick-slide">
+                                              <h1>4</h1>
+                                          </div>
+                                      </div>
+                                                                 
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Single Item --&gt;
+&lt;div class=&quot;single-item&quot;&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;1&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;2&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;3&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;4&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Slick Slider
+$(&#39;.single-item&#39;).slick({
+    dots: true
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Example 2 -->
+                                <h2 id="forms-horizontal">Basic Multi Slider</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                      <!-- Multiple Items -->
+                                      <div class="multiple-items">
+                                          <div class="slick-slide">
+                                              <h1>1</h1>
+                                          </div>
+                                          <div class="slick-slide">
+                                              <h1>2</h1>
+                                          </div>
+                                          <div class="slick-slide">
+                                              <h1>3</h1>
+                                          </div>
+                                          <div class="slick-slide">
+                                              <h1>4</h1>
+                                          </div>
+                                      </div>
+                                         
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Multiple Items --&gt;
+&lt;div class=&quot;multiple-items&quot;&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;1&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;2&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;3&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;slick-slide&quot;&gt;
+        &lt;h1&gt;4&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Slick Slider
+$(&#39;.multiple-items&#39;).slick({
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://kenwheeler.github.io/slick/#usage">http://kenwheeler.github.io/slick/#usage</a></td>
+                                        </tr>
+                             
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- UTILITY - BOOTSTRAP TOUR -->
+                        <div class="tab-pane fade" id="data-bstour" role="tabpanel">
+                            <h3 id="" class="page-header">Utility - Bootstrap Tour </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Quick and easy product tours with Twitter Bootstrap Popovers.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Bootsrap Tour</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Ulrich Sossou</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://bootstraptour.com/">http://bootstraptour.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/sorich87/bootstrap-tour">sorich87/bootstrap-tour</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/bstour/bootstrap-tour.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/bstour/bootstrap-tour.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Tour</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                              <!-- Tour Activation btn -->
+                              <button class="btn btn-primary" id="tour_start" type="button">Begin Tour</button>
+
+                                    <hr class="alt short">
+
+                                    <!-- Tour Steps -->
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="panel" id="tour-item1">
+                                            <div class="panel-heading">
+                                              <span class="panel-title"> Panel 1</span>
+                                            </div>    
+                                            <div class="panel-body" style="min-height: 100px;">
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="panel" id="tour-item2">
+                                            <div class="panel-heading">
+                                              <span class="panel-title"> Panel 2</span>
+                                            </div>    
+                                            <div class="panel-body" style="min-height: 100px;">
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tour Activation Btn --&gt;
+&lt;button class=&quot;btn btn-primary&quot; id=&quot;tour_start&quot; type=&quot;button&quot;&gt;Begin Tour&lt;/button&gt;
+
+&lt;!-- Tour Steps --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;panel&quot; id=&quot;tour-item1&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+          &lt;span class=&quot;panel-title&quot;&gt; Panel 1&lt;/span&gt;
+        &lt;/div&gt;    
+        &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;panel&quot; id=&quot;tour-item2&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+          &lt;span class=&quot;panel-title&quot;&gt; Panel 2&lt;/span&gt;
+        &lt;/div&gt;    
+        &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Tour steps
+var tour = new Tour({
+  steps: [
+    {
+      element: &quot;#tour-item1&quot;, // item selector
+      title: &quot;Tour item title!&quot;, // title
+      content: &quot;I&#39;m the content&quot;, // content
+      placement: &#39;top&#39; // left, right, top, bottom
+    },
+    {
+      element: &quot;#tour-item2&quot;,
+      title: &quot;Tour item title!&quot;,
+      content: &quot;I&#39;m the content&quot;, 
+      placement: &#39;top&#39;
+    }
+  ]
+});
+
+// Start Tour on click
+$(&#39;#tour_start&#39;).on(&#39;click&#39;,function(){
+    tour.restart();
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Example 2 -->
+                                <h2 id="forms-horizontal">Tour Backdrop</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                              <!-- Tour Activation btn -->
+                              <button class="btn btn-primary" id="tour_start2" type="button">Begin Tour</button>
+                                    <hr class="alt short">
+                                    <!-- Tour Steps -->
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="panel" id="tour-item3">
+                                            <div class="panel-heading">
+                                              <span class="panel-title"> Panel 1</span>
+                                            </div>    
+                                            <div class="panel-body" style="min-height: 100px;">
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="panel" id="tour-item4">
+                                            <div class="panel-heading">
+                                              <span class="panel-title"> Panel 2</span>
+                                            </div>    
+                                            <div class="panel-body" style="min-height: 100px;">
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tour Activation Btn --&gt;
+&lt;button class=&quot;btn btn-primary&quot; id=&quot;tour_start&quot; type=&quot;button&quot;&gt;Begin Tour&lt;/button&gt;
+
+&lt;!-- Tour Steps --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;panel&quot; id=&quot;tour-item1&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+          &lt;span class=&quot;panel-title&quot;&gt; Panel 1&lt;/span&gt;
+        &lt;/div&gt;    
+        &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;panel&quot; id=&quot;tour-item2&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+          &lt;span class=&quot;panel-title&quot;&gt; Panel 2&lt;/span&gt;
+        &lt;/div&gt;    
+        &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Tour steps
+var tour = new Tour({
+  backdrop: true, // can mask content in a modal
+  steps: [
+    {
+      element: &quot;#tour-item1&quot;, // item selector
+      title: &quot;Tour item title!&quot;, // title
+      content: &quot;I&#39;m the content&quot;, // content
+      placement: &#39;top&#39; // left, right, top, bottom
+    },
+    {
+      element: &quot;#tour-item2&quot;,
+      title: &quot;Tour item title!&quot;,
+      content: &quot;I&#39;m the content&quot;, 
+      placement: &#39;top&#39;
+    },
+  ]
+});
+
+// Start Tour on click
+$(&#39;#tour_start&#39;).on(&#39;click&#39;,function(){
+    tour.restart();
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Example 3 -->
+                                <h2 id="forms-horizontal">Tour Backdrop</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                              <!-- Tour Activation btn -->
+                              <button class="btn btn-primary" id="tour_start3" type="button">Begin Tour</button>
+                                    <hr class="alt short">
+                                    <!-- Tour Steps -->
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="panel" id="tour-item5">
+                                            <div class="panel-heading">
+                                              <span class="panel-title"> Panel 1</span>
+                                            </div>    
+                                            <div class="panel-body" style="min-height: 100px;">
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="panel" id="tour-item6">
+                                            <div class="panel-heading">
+                                              <span class="panel-title"> Panel 2</span>
+                                            </div>    
+                                            <div class="panel-body" style="min-height: 100px;">
+                                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tour Activation Btn --&gt;
+&lt;button class=&quot;btn btn-primary&quot; id=&quot;tour_start&quot; type=&quot;button&quot;&gt;Begin Tour&lt;/button&gt;
+
+&lt;!-- Tour Steps --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;panel&quot; id=&quot;tour-item1&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+          &lt;span class=&quot;panel-title&quot;&gt; Panel 1&lt;/span&gt;
+        &lt;/div&gt;    
+        &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+    &lt;div class=&quot;panel&quot; id=&quot;tour-item2&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+          &lt;span class=&quot;panel-title&quot;&gt; Panel 2&lt;/span&gt;
+        &lt;/div&gt;    
+        &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Tour steps
+var tour = new Tour({
+  steps: [
+    {
+      element: &quot;#tour-item1&quot;, // item selector
+      title: &quot;Tour item title!&quot;, // title
+      content: &quot;I&#39;m the content&quot;, // content
+      placement: &#39;top&#39; // left, right, top, bottom
+    },
+    {
+      element: &quot;#tour-item2&quot;,
+      title: &quot;Tour item title!&quot;,
+      content: &quot;I&#39;m the content&quot;, 
+      placement: &#39;top&#39;
+    },
+  ],
+  onStart: function(tour) { // On Tour Start
+    alert(&#39;This is an &quot;onStart&quot; callback&#39;);
+  },
+  onNext: function(tour) { // On Tour Next Item
+    alert(&#39;This is an &quot;onNext&quot; callback&#39;);
+  },
+  onPrev: function(tour) { // On Tour Prev Item
+    alert(&#39;This is an &quot;onPrev&quot; callback&#39;);
+  },
+  onEnd: function(tour) { // On Tour Complete
+    alert(&#39;This is an &quot;onEnd&quot; callback&#39;);
+  }
+});
+
+// Start Tour on click
+$(&#39;#tour_start&#39;).on(&#39;click&#39;,function(){
+    tour.restart();
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://bootstraptour.com/api/">http://bootstraptour.com/api/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+    /*fullcalendar demo styles*/
+    .fc-toolbar h2 {
+      margin-top: 5px !important;
+      font-size: 20px !important;
+      font-weight: 600 !important;
+    }
+
+    /*slick slider demo styles*/
+    .slick-slide h1 {
+        background: #FFF;
+        border: 1px solid #DDD;
+        height: 200px;
+        line-height: 190px;
+        margin: 15px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 32px;
+        color: #3498db;
+    }
+    .center-mode h1 {
+        opacity: 0.8;
+        transition: all 300ms ease;
+    }
+    .center-mode .slick-center h1 {
+        color: #e67e22;
+        opacity: 1;
+        -webkit-transform: scale(1.08);
+        transform: scale(1.08);
+    }
+    </style>
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+
+    <!-- External Plugins -->
+    <script src="../../vendor/plugins/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="../../vendor/plugins/datatables/media/js/dataTables.bootstrap.js"></script>
+    <script src="../../vendor/plugins/fancytree/jquery.fancytree-all.min.js"></script>
+    <script src="../../vendor/plugins/fullcalendar/lib/moment.min.js"></script>
+    <script src="../../vendor/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script src="../../vendor/plugins/mixitup/jquery.mixitup.min.js"></script>
+    <script src="../../vendor/plugins/nestable/jquery.nestable.js"></script>
+    <script src="../../vendor/plugins/slick/slick.js"></script>
+    <script src="../../vendor/plugins/bstour/bootstrap-tour.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+      // Trigger resize on tab change. Helps catch plugins which have hidden problems
+      $('li.list-group-item a[data-toggle]').on('click', function() {
+          setTimeout(function() {
+            $(window).trigger('resize');
+          },800);
+      });
+
+
+      // Trigger resize on tab change. Helps catch plugins which have hidden problems
+      $('li.list-group-item a[data-toggle]').on('click', function(e) {
+
+          var Source = $(this).attr('href');
+
+          setTimeout(function() {
+
+            // If Mixitup init plugin
+            if (Source === '#data-mixitup') { InitMixitup(); }
+
+            // If FullCalendar init plugin
+            if (Source === '#data-fullcalendar') { InitFullCalendar(); }
+
+            // If SlickSlider init plugin
+            if (Source === '#data-slick') { InitSlick(); }
+
+            // resize catch for plugins
+            $(window).trigger('resize');
+          },400);
+      });
+
+
+      // Init Plugins onLoad
+      setTimeout(function() {
+        // Init plugin
+        InitDataTables();
+
+        // resize catch for plugins
+        $(window).trigger('resize');
+      },300);
+
+
+      // DATATABLES BASIC
+      //////////////////////////
+      function InitDataTables() {
+        // Init Basic DataTable
+        $('#datatable').dataTable({
+            "sDom": 't<"dt-panelfooter clearfix"ip>', // required for generating styling markup
+        });
+      }
+
+
+      // FANCYTREE BASIC
+      //////////////////////////
+      // function InitFancyTree() {
+      $("#tree").fancytree();
+
+
+      // FULLCALENDAR BASIC
+      //////////////////////////
+      function InitFullCalendar() {
+        // Init FullCalendar
+        $('#calendar').fullCalendar({
+            // put your options and callbacks here
+        });
+      }
+
+
+      // MIXITUP BASIC
+      //////////////////////////
+      function InitMixitup() {
+        // Init MixItUp
+        $('#mix-items').mixItUp();
+      }
+
+
+      // NESTABLE BASIC
+      //////////////////////////
+
+      // Init Nestable on list
+      $('#nestable').nestable({
+          group: 1 // Link to a nestable group
+      });
+
+
+      // SLICK SLIDER BASIC
+      //////////////////////////
+
+      function InitSlick() {
+	      // Init Slick Slider
+	      $('.single-item').slick({
+	          dots: true
+	      });
+
+	      $('.multiple-items').slick({
+	          dots: true,
+	          infinite: true,
+	          slidesToShow: 3,
+	          slidesToScroll: 3
+	      });
+	   }
+
+      // TOUR - BASIC EXAMPLE
+      /////////////////////////
+
+        // Create tour steps
+        var tour = new Tour({
+          steps: [
+            {
+              element: "#tour-item1",
+              title: "Tour item title!", // title
+              content: "I'm the content", // content
+              placement: 'top' // left, right, top, bottom
+            },
+            {
+              element: "#tour-item2",
+              title: "Tour item title!",
+              content: "I'm the content", 
+              placement: 'top'
+            }
+          ]
+        });
+
+        // Start tour on click
+        $('#tour_start').on('click',function(){
+            tour.restart();
+        });
+
+
+      // TOUR- BACKDROP EXAMPLE
+      /////////////////////////
+
+        // Create Tour steps
+        var tour2 = new Tour({
+          backdrop: true, // can mask content in a modal
+          steps: [
+            {
+              element: "#tour-item3",
+              title: "Tour item title!", // title
+              content: "I'm the content", // content
+              placement: 'top' // left, right, top, bottom
+            },
+            {
+              element: "#tour-item4",
+              title: "Tour item title!",
+              content: "I'm the content", 
+              placement: 'top'
+            },
+          ]
+        });
+    
+        // Start Tour on click
+        $('#tour_start2').on('click',function(){
+            tour2.restart();
+        });
+
+
+
+      // TOUR - CALLBACKS EXAMPLE
+      /////////////////////////
+
+        // Create Tour steps
+        var tour3 = new Tour({
+          steps: [
+            {
+              element: "#tour-item5",
+              title: "Tour item title!", // title
+              content: "I'm the content", // content
+              placement: 'top' // left, right, top, bottom
+            },
+            {
+              element: "#tour-item6",
+              title: "Tour item title!",
+              content: "I'm the content", 
+              placement: 'top'
+            },
+          ],
+          onStart: function(tour) { // On Tour Start
+            alert('This is an "onStart" callback');
+          },
+          onNext: function(tour) { // On Tour Next Item
+            alert('This is an "onNext" callback');
+          },
+          onPrev: function(tour) { // On Tour Prev Item
+            alert('This is an "onPrev" callback');
+          },
+          onEnd: function(tour) { // On Tour Complete
+            alert('This is an "onEnd" callback');
+          }
+        });
+
+        // Start Tour on click
+        $('#tour_start3').on('click',function(){
+            tour3.restart();
+        });
+
+    });
+    </script>
+
+
+</body>
+
+</html>

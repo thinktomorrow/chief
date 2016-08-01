@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link href="../../vendor/plugins/markitup/skins/simple/style.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/markitup/sets/default/style.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/summernote/summernote.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/summernote/summernote-bs3.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/plugins/xeditable/css/bootstrap-editable.css" rel="stylesheet" type="text/css">
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Editors </a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="#editors-ckeditor" data-toggle="tab">CKEditor</a>
+                                    </li>
+                                    <li><a href="#editors-summernote" data-toggle="tab">Summernote</a>
+                                    </li>
+                                    <li><a href="#editors-markitup" data-toggle="tab">Markitup</a>
+                                    </li>
+                                    <li><a href="#editors-xeditable" data-toggle="tab">XEditable</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           EDITORS
+                        ----------------------->
+
+
+                        <!-- EDITORS - CKEDITOR -->
+                        <div class="tab-pane fade in active" id="editors-ckeditor" role="tabpanel">
+                            <h3 id="" class="page-header">Editors - CKEditor </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>The best web text editor for everyone.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>CKEditor</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Frederico Knabben</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://ckeditor.com/">http://ckeditor.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/ckeditor/ckeditor5-core">ckeditor/ckeditor5-core</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/ckeditor/ckeditor.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Editor</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+									<textarea id="ckeditor-basic" name="ckeditor-basic" rows="6">
+				                        This is a basic <b>Ckeditor</b> Instance...
+				                    </textarea>
+
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;textarea id=&quot;ckeditor-basic&quot; name=&quot;ckeditor-basic&quot; rows=&quot;6&quot;&gt;
+This is a basic &lt;b&gt;Ckeditor&lt;/b&gt; Instance...
+&lt;/textarea&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Ckeditor
+CKEDITOR.replace('ckeditor-basic', {
+    height: 210,
+    on: {
+        instanceReady: function(evt) {
+            $('.cke').addClass('admin-skin cke-hide-bottom');
+        }
+    },
+});
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Inline Editor</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+		                            <div id="ckeditor-inline" contenteditable="true">
+		                                <h3> Edit in Real Time - Inline Editor!</h3>
+		                                <p> <strong> Lorem ipsum dolor sit amet dolor. Duis blandit vestibulum faucibus a, tortor. </strong> </p>
+		                                <p> Proin nunc justo felis mollis tincidunt, risus risus pede, posuere cubilia Curae, Nullam euismod, enim. Etiam nibh ultricies dolor ac dignissim erat volutpat. Vivamus fermentum
+		                                    <a href="http://ckeditor.com/">nisl nulla sem in</a> metus. Maecenas wisi. Donec nec erat volutpat. </p>
+		                            </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;ckeditor-inline&quot; contenteditable=&quot;true&quot;&gt;
+    &lt;p&gt; Editable Inline Text Here... &lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Inline Ckeditor
+CKEDITOR.inline('ckeditor-inline');
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://docs.cksource.com/">http://docs.cksource.com/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://ckeditor.com/demo">http://ckeditor.com/demo</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- EDITORS - SUMMERNOTE -->
+                        <div class="tab-pane fade" id="editors-summernote" role="tabpanel">
+                            <h3 id="" class="page-header">Editors - Summernote </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A Super Simple WYSIWYG Editor for Bootstrap.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Summernote</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td><a target="_blank" href="http://summernote.org/#/team">Multiple</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://summernote.org/">http://summernote.org</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/summernote/summernote">summernote/summernote</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/summernote/summernote.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code><br>
+                                    <code>&lt;link href=&quot;vendor/plugins/summernote/summernote-bs3.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code><br>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/summernote/summernote.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Editor</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+                                    <div class="summernote" style="height: 250px;">This is the <b>Summernote</b> Editor...</div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;summernote&quot; style=&quot;height: 250px;&quot;&gt;This is the &lt;b&gt;Summernote&lt;/b&gt; Editor...&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Summernote
+$(&#39;.summernote&#39;).summernote({
+    height: 255, //set editable area&#39;s height
+    focus: false, //set focus editable area after Initialize summernote
+    oninit: function() {},
+    onChange: function(contents, $editable) {},
+});
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Inline Editor</h2>
+                                <p>Highlighting a section of text will bring up the editor toolbar./p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+									<div class="summernote-inline">
+		                                <h3> Highlight this text to Inline Edit!</h3>
+		                                <p> <strong> Lorem ipsum dolor sit amet dolor. Duis blandit vestibulum faucibus a, tortor. </strong> </p>
+		                                <p> Proin nunc justo felis mollis tincidunt, risus risus pede, posuere cubilia Curae, Nullam euismod, enim. Etiam nibh ultricies dolor ac dignissim erat volutpat. Vivamus fermentum
+		                                    <a href="http://ckeditor.com/">nisl nulla sem in</a> metus. Maecenas wisi. Donec nec erat volutpat. </p>
+		                                <blockquote>
+		                                    <p> Libero nunc, rhoncus ante ipsum non ipsum. Nunc eleifend pede turpis id sollicitudin fringilla. Phasellus ultrices, velit ac arcu. </p>
+		                                </blockquote>
+		                                <p>Pellentesque nunc. Donec suscipit erat. Pellentesque habitant morbi tristique ullamcorper.</p>
+		                                <p>
+		                                    <s>Mauris mattis feugiat lectus nec mauris. Nullam vitae ante.</s>
+		                                </p>
+		                            </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;summernote-inline&quot;&gt;
+	&lt;p&gt;Editable Inline Text Here...&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Inline Summernote
+$(&#39;.summernote-inline&#39;).summernote({
+    airMode: true,
+    focus: false //set focus editable area after Initialize summernote            
+});
+</code></pre>
+                                </div>
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://summernote.org/jsduck/">http://summernote.org/jsduck/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://summernote.org/#/example">http://summernote.org/#/example</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- EDITORS - MARKITUP -->
+                        <div class="tab-pane fade" id="editors-markitup" role="tabpanel">
+                            <h3 id="" class="page-header">Editors - Markitup </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A universal markup jQuery editor.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Markitup</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Jay Salvat</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://markitup.jaysalvat.com/home/">http://markitup.jaysalvat.com</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/markitup/1.x">markitup/1.x</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/markitup/skins/simple/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code><br>
+                                    <code>&lt;link href=&quot;vendor/plugins/markitup/sets/default/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/markitup/jquery.markitup.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code>&lt;script src=&quot;vendor/plugins/markitup/sets/default/set.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+		                            <form>
+		                                <textarea id="markitup" name="content" rows="10"> This is the MarkItUp Editor...</textarea>
+		                            </form>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;form&gt;
+	&lt;textarea id=&quot;markitup&quot; name=&quot;content&quot; rows=&quot;10&quot;&gt; This is the MarkItUp Editor...&lt;/textarea&gt;
+&lt;/form&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Markitup Editor
+$(&quot;#markitup&quot;).markItUp(mySettings);
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://markitup.jaysalvat.com/documentation/">http://markitup.jaysalvat.com/documentation/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://markitup.jaysalvat.com/examples/">http://markitup.jaysalvat.com/examples/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- EDITORS - XEDITABLE -->
+                        <div class="tab-pane fade" id="editors-xeditable" role="tabpanel">
+                            <h3 id="" class="page-header">Editors - XEditable </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>In-place editing for use with Twitters Bootstrap 3</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>XEditable</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Vitaliy Potapov</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://vitalets.github.io/x-editable/">http://vitalets.github.io</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/vitalets/x-editable">vitalets/x-editable</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/xeditable/css/bootstrap-editable.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/moment/moment.min.js&quot;&gt;&lt;/script&gt;</code>
+                                    <code>&lt;script src=&quot;vendor/plugins/xeditable/js/bootstrap-editable.min.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code> XEditable has many addons, check official documentation for detailed usage of what's required </code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic XEditable</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a href="#" id="xedit-basic" data-type="text" data-pk="1" data-title="Basic Editable Data" class="editable editable-click">Editable Field</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a href=&quot;#&quot; id=&quot;xedit-basic&quot; data-type=&quot;text&quot; data-pk=&quot;1&quot; data-title=&quot;Editable Data&quot; class=&quot;editable editable-click&quot;&gt;Basic Editable Field&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Basic XEdit
+$(&#39;#xedit-basic&#39;).editable({
+    type: &#39;text&#39;,
+    pk: 1,
+    name: &#39;editable&#39;,
+    title: &#39;Editable Data&#39;
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Inline XEditable</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a href="#" id="xedit-inline" data-type="text" data-pk="2" data-title="Editable Data" class="editable editable-click">Inline Editable Field</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a href=&quot;#&quot; id=&quot;xedit-inline&quot; data-type=&quot;text&quot; data-pk=&quot;1&quot; data-title=&quot;Editable Data&quot; class=&quot;editable editable-click&quot;&gt;Inline Editable Field&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Basic XEdit
+$(&#39;#xedit-basic&#39;).editable({
+    type: &#39;text&#39;,
+    mode: 'inline',
+    pk: 1,
+    name: &#39;editable&#39;,
+    title: &#39;Editable Data&#39;
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Textarea XEditable</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a href="#" id="xedit-textarea" data-type="textarea" data-pk="3" data-title="Editable Data" class="editable editable-click">Inline Editable Field</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a href=&quot;#&quot; id=&quot;xedit-textarea&quot; data-type=&quot;textarea&quot; data-pk=&quot;3&quot; data-title=&quot;Editable Data&quot; class=&quot;editable editable-click&quot;&gt;Inline Editable Field&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Textarea XEdit
+$(&#39;#xedit-basic&#39;).editable({
+    type: &#39;textarea&#39;,
+    pk: 1,
+    name: &#39;editable&#39;,
+    title: &#39;Editable Data&#39;
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://vitalets.github.io/x-editable/docs.html">http://vitalets.github.io/x-editable/docs.html</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://vitalets.github.io/x-editable/demo-bs3.html">http://vitalets.github.io/x-editable/demo-bs3.html</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<style>
+/* summernote demo styles */
+.note-editor {
+	border: 1px solid #E6E6E6 !important;
+}
+.note-editor .note-editable {
+	background: #FFF !important;
+}
+
+/* markitup demo styles */
+.markItUp {
+	border: 1px solid #E6E6E6 !important;
+}
+</style>
+
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+
+    <!-- CKEditor -->
+    <script src="../../vendor/plugins/ckeditor/ckeditor.js"></script>
+
+    <!-- Markitup -->
+    <script src="../../vendor/plugins/markitup/jquery.markitup.js"></script>
+    <script src="../../vendor/plugins/markitup/sets/default/set.js"></script>
+
+    <!-- Summernote -->
+    <script src="../../vendor/plugins/summernote/summernote.min.js"></script>
+
+    <!-- Xedit JS -->
+    <script src="../../vendor/plugins/moment/moment.min.js"></script> <!-- Dependency -->
+    <script src="../../vendor/plugins/xeditable/js/bootstrap-editable.js"></script>
+    <script src="../../vendor/plugins/xeditable/inputs/address/address.js"></script>
+    <script src="../../vendor/plugins/xeditable/inputs/typeaheadjs/lib/typeahead.js"></script>
+    <script src="../../vendor/plugins/xeditable/inputs/typeaheadjs/typeaheadjs.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+        // CKEDITOR
+        //////////////////
+
+        // Turn off automatic editor initilization.
+        // Used to prevent conflictions with multiple text 
+        // editors being displayed on the same page.
+        CKEDITOR.disableAutoInline = true;
+
+        // Init Ckeditor
+        CKEDITOR.replace('ckeditor-basic', {
+            height: 210,
+            on: {
+                instanceReady: function(evt) {
+                    $('.cke').addClass('admin-skin cke-hide-bottom');
+                }
+            },
+        });
+
+        // Init Inline Ckeditors
+        CKEDITOR.inline('ckeditor-inline');
+
+
+        // SUMMERNOTE
+        //////////////////
+
+        // Init Summernote
+        $('.summernote').summernote({
+            height: 255, //set editable area's height
+            focus: false, //set focus editable area after Initialize summernote
+            oninit: function() {},
+            onChange: function(contents, $editable) {},
+        });
+
+        // Init Inline Summernote
+        $('.summernote-inline').summernote({
+            airMode: true,
+            focus: false //set focus editable area after Initialize summernote            
+        });
+
+
+        // MARKITUP
+        //////////////////
+
+        // Init Markitup Editor
+        $("#markitup").markItUp(mySettings);
+
+
+
+        // XEDITABLE
+        //////////////////
+
+        // Init Basic XEdit
+        $('#xedit-basic').editable({
+            type: 'text',
+            pk: 1,
+            name: 'editable',
+            title: 'Editable Data'
+        });
+
+        // Init Inline XEdit
+        $('#xedit-inline').editable({
+            type: 'text',
+            mode: 'inline',
+            pk: 2,
+            name: 'editable',
+            title: 'Editable Data'
+        });            
+
+        // Init Inline XEdit
+        $('#xedit-textarea').editable({
+            type: 'textarea',
+            pk: 3,
+            name: 'editable',
+            title: 'Editable Data'
+        });      
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

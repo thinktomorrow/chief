@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html class="template-page">
+
+<head>
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+  <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+  <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+  <meta name="author" content="AdminDesigns">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font CSS (Via CDN) -->
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" type="text/css" href="../../../vendor/plugins/highlight/styles/github.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" type="text/css" href="../../../assets/skin/default_skin/css/theme.css">
+
+  <!-- Demo CSS -->
+  <link rel="stylesheet" type="text/css" href="../../resources/css/styles.css">
+
+  <!-- AdminForms CSS -->
+  <link rel="stylesheet" type="text/css" href="../../../assets/admin-tools/admin-forms/css/admin-forms.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../../assets/favicon.ico">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+
+  <!-- layout template -->
+  <div id="onScreen" class="container-fluid">
+
+    <div class="mw600 center-block mt30">
+
+      <a href="#" id="template-code" class=" template-btn"> <span class="fa fa-long-arrow-left pr15"></span> GET TEMPLATE CODE</a>
+
+      <!-- Feedback Form -->
+      <div class="admin-form theme-info" id="feedback1">
+        <div class="panel panel-info heading-border">
+          <div class="panel-heading">
+            <span class="panel-title"><i class="fa fa-rocket"></i>Your feedback</span>
+          </div>
+          <!-- end .form-header section -->
+
+          <form method="post" action="/" id="form-feedback">
+            <div class="panel-body p25">
+              <div class="section row">
+                <div class="col-md-6">
+                  <label for="firstname" class="field prepend-icon">
+                    <input type="text" name="firstname" id="firstname" class="gui-input" placeholder="First name...">
+                    <label for="firstname" class="field-icon"><i class="fa fa-user"></i>
+                    </label>
+                  </label>
+                </div>
+                <!-- end section -->
+
+                <div class="col-md-6">
+                  <label for="lastname" class="field prepend-icon">
+                    <input type="text" name="lastname" id="lastname" class="gui-input" placeholder="Last name...">
+                    <label for="lastname" class="field-icon"><i class="fa fa-user"></i>
+                    </label>
+                  </label>
+                </div>
+                <!-- end section -->
+
+              </div>
+              <!-- end section row section -->
+
+              <div class="section">
+                <label for="company" class="field prepend-icon">
+                  <input type="text" name="company" id="company" class="gui-input" placeholder="Company">
+                  <label for="company" class="field-icon"><i class="fa fa-building-o"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="email" class="field prepend-icon">
+                  <input type="email" name="email" id="email" class="gui-input" placeholder="Email address">
+                  <label for="email" class="field-icon"><i class="fa fa-envelope"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="mobile" class="field prepend-icon">
+                  <input type="tel" name="mobile" id="mobile" class="gui-input" placeholder="Moble contact">
+                  <label for="mobile" class="field-icon"><i class="fa fa-phone-square"></i>
+                  </label>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label class="field select">
+                  <select id="gender" name="gender">
+                    <option value="">Select department...</option>
+                    <option value="admin">Administration</option>
+                    <option value="sales">Marketing &amp; Sales</option>
+                    <option value="tech">Technical</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <i class="arrow double"></i>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="section">
+                <label for="comment" class="field prepend-icon">
+                  <textarea class="gui-textarea" id="comment" name="comment" placeholder="Feedback message"></textarea>
+                  <label for="comment" class="field-icon"><i class="fa fa-comments"></i>
+                  </label>
+                  <span class="input-footer">
+                                        <strong>Hint:</strong>Please enter between 80 - 300 characters.</span>
+                </label>
+              </div>
+              <!-- end section -->
+
+              <div class="spacer mb20"></div>
+              <div class="section">
+                <span class="rating block">
+                                    <span class="lbl-text">Rate our products</span>
+                <input class="rating-input" id="five-stars" type="radio" name="product-rate">
+                <label class="rating-star" for="five-stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="four-stars" type="radio" name="product-rate">
+                <label class="rating-star" for="four-stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="three-stars" type="radio" name="product-rate" checked>
+                <label class="rating-star" for="three-stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="two-stars" type="radio" name="product-rate">
+                <label class="rating-star" for="two-stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="one-star" type="radio" name="product-rate">
+                <label class="rating-star" for="one-star"><i class="fa fa-star"></i>
+                </label>
+                </span>
+                <span class="rating block">
+                                    <span class="lbl-text">Rate support team</span>
+                <input class="rating-input" id="5stars" type="radio" name="support-rate">
+                <label class="rating-star" for="5stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="4stars" type="radio" name="support-rate">
+                <label class="rating-star" for="4stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="3stars" type="radio" name="support-rate">
+                <label class="rating-star" for="3stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="2stars" type="radio" name="support-rate" checked>
+                <label class="rating-star" for="2stars"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="1star" type="radio" name="support-rate">
+                <label class="rating-star" for="1star"><i class="fa fa-star"></i>
+                </label>
+                </span>
+                <span class="rating block">
+                                    <span class="lbl-text">Rate our response</span>
+                <input class="rating-input" id="5s" type="radio" name="response-rate">
+                <label class="rating-star" for="5s"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="4s" type="radio" name="response-rate">
+                <label class="rating-star" for="4s"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="3s" type="radio" name="response-rate">
+                <label class="rating-star" for="3s"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="2s" type="radio" name="response-rate">
+                <label class="rating-star" for="2s"><i class="fa fa-star"></i>
+                </label>
+                <input class="rating-input" id="1s" type="radio" name="response-rate" checked>
+                <label class="rating-star" for="1s"><i class="fa fa-star"></i>
+                </label>
+                </span>
+              </div>
+              <!-- end  section -->
+
+              <div class="spacer mb25"></div>
+              <div class="mb20">
+                <label class="field-label">Which areas require further improvement?</label>
+              </div>
+              <div class="section row">
+                <div class="col-md-6">
+                  <label class="option block mb10">
+                    <input type="checkbox" name="response">
+                    <span class="checkbox"></span>Response time</label>
+                  <label class="option block mb10">
+                    <input type="checkbox" name="support">
+                    <span class="checkbox"></span>Customer support</label>
+                  <label class="option block">
+                    <input type="checkbox" name="updates">
+                    <span class="checkbox"></span>Product updates</label>
+                </div>
+                <!-- end section -->
+                <div class="col-md-6">
+                  <label class="option block mb10">
+                    <input type="checkbox" name="invoicing">
+                    <span class="checkbox"></span>Timely invoicing</label>
+                  <label class="option block mb10">
+                    <input type="checkbox" name="social">
+                    <span class="checkbox"></span>Social features</label>
+                  <label class="option block">
+                    <input type="checkbox" name="reports">
+                    <span class="checkbox"></span>Reports &amp; analytics</label>
+                </div>
+                <!-- end section -->
+              </div>
+              <!-- end .section row section -->
+
+            </div>
+            <!-- end .form-body section -->
+            <div class="panel-footer">
+              <button type="submit" class="button btn-primary">Submit Feedback</button>
+            </div>
+            <!-- end .form-footer section -->
+          </form>
+        </div>
+        <!-- end .panel -->
+      </div>
+      <!-- end: .admin-form -->
+
+    </div>
+
+  </div>
+
+  <div id="offScreen" class="container-fluid">
+    <div class="mw1000 center-block mt30 mb50">
+      <a href="#" id="template-return" class="template-btn">Return to Template <span class="fa fa-long-arrow-right pl15"></span></a>
+      <div class="bs-example required-css" data-example-id="contextual-colors-helpers">
+        <code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;assets/admin-tools/admin-forms/css/admin-forms.css&quot;&gt;</code>
+      </div>
+
+      <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+      </div>
+      <div class="highlight hljs-label-html mn"><pre><code class="language-html" data-lang="html">
+&lt;!-- Feedback Form --&gt;
+&lt;div class=&quot;admin-form theme-info&quot; id=&quot;feedback1&quot;&gt;
+    &lt;div class=&quot;panel panel-info heading-border&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;span class=&quot;panel-title&quot;&gt;&lt;i class=&quot;fa fa-rocket&quot;&gt;&lt;/i&gt;Your feedback&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;!-- end .form-header section --&gt;
+
+        &lt;form method=&quot;post&quot; action=&quot;/&quot; id=&quot;form-feedback&quot;&gt;
+            &lt;div class=&quot;panel-body p25&quot;&gt;
+                &lt;div class=&quot;section row&quot;&gt;
+                    &lt;div class=&quot;col-md-6&quot;&gt;
+                        &lt;label for=&quot;firstname&quot; class=&quot;field prepend-icon&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;firstname&quot; id=&quot;firstname&quot; class=&quot;gui-input&quot; placeholder=&quot;First name...&quot;&gt;
+                            &lt;label for=&quot;firstname&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+                            &lt;/label&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                    &lt;div class=&quot;col-md-6&quot;&gt;
+                        &lt;label for=&quot;lastname&quot; class=&quot;field prepend-icon&quot;&gt;
+                            &lt;input type=&quot;text&quot; name=&quot;lastname&quot; id=&quot;lastname&quot; class=&quot;gui-input&quot; placeholder=&quot;Last name...&quot;&gt;
+                            &lt;label for=&quot;lastname&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-user&quot;&gt;&lt;/i&gt;
+                            &lt;/label&gt;
+                        &lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+
+                &lt;/div&gt;
+                &lt;!-- end section row section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;company&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;text&quot; name=&quot;company&quot; id=&quot;company&quot; class=&quot;gui-input&quot; placeholder=&quot;Company&quot;&gt;
+                        &lt;label for=&quot;company&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-building-o&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;email&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;email&quot; name=&quot;email&quot; id=&quot;email&quot; class=&quot;gui-input&quot; placeholder=&quot;Email address&quot;&gt;
+                        &lt;label for=&quot;email&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-envelope&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;mobile&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;input type=&quot;tel&quot; name=&quot;mobile&quot; id=&quot;mobile&quot; class=&quot;gui-input&quot; placeholder=&quot;Moble contact&quot;&gt;
+                        &lt;label for=&quot;mobile&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-phone-square&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label class=&quot;field select&quot;&gt;
+                        &lt;select id=&quot;gender&quot; name=&quot;gender&quot;&gt;
+                            &lt;option value=&quot;&quot;&gt;Select department...&lt;/option&gt;
+                            &lt;option value=&quot;admin&quot;&gt;Administration&lt;/option&gt;
+                            &lt;option value=&quot;sales&quot;&gt;Marketing &amp;amp; Sales&lt;/option&gt;
+                            &lt;option value=&quot;tech&quot;&gt;Technical&lt;/option&gt;
+                            &lt;option value=&quot;other&quot;&gt;Other&lt;/option&gt;
+                        &lt;/select&gt;
+                        &lt;i class=&quot;arrow double&quot;&gt;&lt;/i&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;label for=&quot;comment&quot; class=&quot;field prepend-icon&quot;&gt;
+                        &lt;textarea class=&quot;gui-textarea&quot; id=&quot;comment&quot; name=&quot;comment&quot; placeholder=&quot;Feedback message&quot;&gt;&lt;/textarea&gt;
+                        &lt;label for=&quot;comment&quot; class=&quot;field-icon&quot;&gt;&lt;i class=&quot;fa fa-comments&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;span class=&quot;input-footer&quot;&gt;
+                            &lt;strong&gt;Hint:&lt;/strong&gt;Please enter between 80 - 300 characters.&lt;/span&gt;
+                    &lt;/label&gt;
+                &lt;/div&gt;
+                &lt;!-- end section --&gt;
+
+                &lt;div class=&quot;spacer mb20&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;section&quot;&gt;
+                    &lt;span class=&quot;rating block&quot;&gt;
+                        &lt;span class=&quot;lbl-text&quot;&gt;Rate our products&lt;/span&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;five-stars&quot; type=&quot;radio&quot; name=&quot;product-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;five-stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;four-stars&quot; type=&quot;radio&quot; name=&quot;product-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;four-stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;three-stars&quot; type=&quot;radio&quot; name=&quot;product-rate&quot; checked&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;three-stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;two-stars&quot; type=&quot;radio&quot; name=&quot;product-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;two-stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;one-star&quot; type=&quot;radio&quot; name=&quot;product-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;one-star&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/span&gt;
+                    &lt;span class=&quot;rating block&quot;&gt;
+                        &lt;span class=&quot;lbl-text&quot;&gt;Rate support team&lt;/span&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;5stars&quot; type=&quot;radio&quot; name=&quot;support-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;5stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;4stars&quot; type=&quot;radio&quot; name=&quot;support-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;4stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;3stars&quot; type=&quot;radio&quot; name=&quot;support-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;3stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;2stars&quot; type=&quot;radio&quot; name=&quot;support-rate&quot; checked&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;2stars&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;1star&quot; type=&quot;radio&quot; name=&quot;support-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;1star&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/span&gt;
+                    &lt;span class=&quot;rating block&quot;&gt;
+                        &lt;span class=&quot;lbl-text&quot;&gt;Rate our response&lt;/span&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;5s&quot; type=&quot;radio&quot; name=&quot;response-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;5s&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;4s&quot; type=&quot;radio&quot; name=&quot;response-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;4s&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;3s&quot; type=&quot;radio&quot; name=&quot;response-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;3s&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;2s&quot; type=&quot;radio&quot; name=&quot;response-rate&quot;&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;2s&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                        &lt;input class=&quot;rating-input&quot; id=&quot;1s&quot; type=&quot;radio&quot; name=&quot;response-rate&quot; checked&gt;
+                        &lt;label class=&quot;rating-star&quot; for=&quot;1s&quot;&gt;&lt;i class=&quot;fa fa-star&quot;&gt;&lt;/i&gt;
+                        &lt;/label&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;
+                &lt;!-- end  section --&gt;
+
+                &lt;div class=&quot;spacer mb25&quot;&gt;&lt;/div&gt;
+                &lt;div class=&quot;mb20&quot;&gt;
+                    &lt;label class=&quot;field-label&quot;&gt;Which areas require further improvement?&lt;/label&gt;
+                &lt;/div&gt;
+                &lt;div class=&quot;section row&quot;&gt;
+                    &lt;div class=&quot;col-md-6&quot;&gt;
+                        &lt;label class=&quot;option block mb10&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;response&quot;&gt;
+                            &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Response time&lt;/label&gt;
+                        &lt;label class=&quot;option block mb10&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;support&quot;&gt;
+                            &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Customer support&lt;/label&gt;
+                        &lt;label class=&quot;option block&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;updates&quot;&gt;
+                            &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Product updates&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+                    &lt;div class=&quot;col-md-6&quot;&gt;
+                        &lt;label class=&quot;option block mb10&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;invoicing&quot;&gt;
+                            &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Timely invoicing&lt;/label&gt;
+                        &lt;label class=&quot;option block mb10&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;social&quot;&gt;
+                            &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Social features&lt;/label&gt;
+                        &lt;label class=&quot;option block&quot;&gt;
+                            &lt;input type=&quot;checkbox&quot; name=&quot;reports&quot;&gt;
+                            &lt;span class=&quot;checkbox&quot;&gt;&lt;/span&gt;Reports &amp;amp; analytics&lt;/label&gt;
+                    &lt;/div&gt;
+                    &lt;!-- end section --&gt;
+                &lt;/div&gt;
+                &lt;!-- end .section row section --&gt;
+
+            &lt;/div&gt;
+            &lt;!-- end .form-body section --&gt;
+            &lt;div class=&quot;panel-footer&quot;&gt;
+                &lt;button type=&quot;submit&quot; class=&quot;button btn-primary&quot;&gt;Submit Feedback&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;!-- end .form-footer section --&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;!-- end .panel --&gt;
+&lt;/div&gt;
+&lt;!-- end: .admin-form --&gt;
+</code></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- jQuery JS -->
+  <script src="../../../vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="../../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+  <!-- Plugin js -->
+  <script src="../../../vendor/plugins/highlight/highlight.pack.js"></script>
+  <script src="../../../vendor/plugins/holder/holder.min.js"></script>
+
+  <!-- AdminForms JS -->
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery-ui-monthpicker.min.js"></script>
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"></script>
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery.spectrum.min.js"></script>
+  <script src="../../../assets/admin-tools/admin-forms/js/jquery.stepper.min.js"></script>
+
+  <!-- Page JS -->
+  <script src="../../resources/js/docs.js"></script>
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    Docs.init();
+  });
+  </script>
+
+</body>
+
+</html>

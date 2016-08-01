@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link href="../../vendor/plugins/bstour/bootstrap-tour.css" rel="stylesheet" type="text/css">
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Utility </a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="#utility-bstour" data-toggle="tab">Bootstrap Tour</a>
+                                    </li>
+                                    <li><a href="#utility-highlight" data-toggle="tab">Highlight</a>
+                                    </li>
+                                    <li><a href="#utility-waypoints" data-toggle="tab">WayPoints</a>
+                                    </li>
+                                    <li class="hidden"><a href="#utility-mp" data-toggle="tab">Countdown</a>
+                                    </li>
+                                    <li class="hidden"><a href="#utility-sliders" data-toggle="tab">JQuery Spin</a>
+                                    </li>
+                                    <li class="hidden"><a href="#utility-sliders" data-toggle="tab">Globalize</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           UTILITY
+                        ----------------------->
+
+
+                        <!-- UTILITY - BOOTSTRAP TOUR -->
+                        <div class="tab-pane active fade in" id="utility-bstour" role="tabpanel">
+                            <h3 id="" class="page-header">Utility - Bootstrap Tour </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Quick and easy product tours with Twitter Bootstrap Popovers.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Bootsrap Tour</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Ulrich Sossou</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://bootstraptour.com/">http://bootstraptour.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/sorich87/bootstrap-tour">sorich87/bootstrap-tour</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/bstour/bootstrap-tour.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/bstour/bootstrap-tour.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Tour</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+
+			                        <!-- Tour Activation btn -->
+			                        <button class="btn btn-primary" id="tour_start" type="button">Begin Tour</button>
+
+                                    <hr class="alt short">
+
+                                    <!-- Tour Steps -->
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                      	<div class="panel" id="tour-item1">
+                                      	    <div class="panel-heading">
+                                      	   	  <span class="panel-title"> Panel 1</span>
+                                      	    </div>		
+                                      	    <div class="panel-body" style="min-height: 100px;">
+                                      	    </div>
+                                      	</div>
+                                      </div>
+                                      <div class="col-md-6">
+                                      	<div class="panel" id="tour-item2">
+                                      	    <div class="panel-heading">
+                                      	   	  <span class="panel-title"> Panel 2</span>
+                                      	    </div>		
+                                      	    <div class="panel-body" style="min-height: 100px;">
+                                      	    </div>
+                                      	</div>
+                                      </div>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tour Activation Btn --&gt;
+&lt;button class=&quot;btn btn-primary&quot; id=&quot;tour_start&quot; type=&quot;button&quot;&gt;Begin Tour&lt;/button&gt;
+
+&lt;!-- Tour Steps --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+  	&lt;div class=&quot;panel&quot; id=&quot;tour-item1&quot;&gt;
+  	    &lt;div class=&quot;panel-heading&quot;&gt;
+  	   	  &lt;span class=&quot;panel-title&quot;&gt; Panel 1&lt;/span&gt;
+  	    &lt;/div&gt;		
+  	    &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+  	    &lt;/div&gt;
+  	&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+  	&lt;div class=&quot;panel&quot; id=&quot;tour-item2&quot;&gt;
+  	    &lt;div class=&quot;panel-heading&quot;&gt;
+  	   	  &lt;span class=&quot;panel-title&quot;&gt; Panel 2&lt;/span&gt;
+  	    &lt;/div&gt;		
+  	    &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+  	    &lt;/div&gt;
+  	&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Tour steps
+var tour = new Tour({
+  steps: [
+    {
+      element: &quot;#tour-item1&quot;, // item selector
+      title: &quot;Tour item title!&quot;, // title
+      content: &quot;I&#39;m the content&quot;, // content
+      placement: &#39;top&#39; // left, right, top, bottom
+    },
+    {
+      element: &quot;#tour-item2&quot;,
+      title: &quot;Tour item title!&quot;,
+      content: &quot;I&#39;m the content&quot;, 
+      placement: &#39;top&#39;
+    }
+  ]
+});
+
+// Start Tour on click
+$(&#39;#tour_start&#39;).on(&#39;click&#39;,function(){
+    tour.restart();
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Example 2 -->
+                                <h2 id="forms-horizontal">Tour Backdrop</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+			                        <!-- Tour Activation btn -->
+			                        <button class="btn btn-primary" id="tour_start2" type="button">Begin Tour</button>
+                                    <hr class="alt short">
+                                    <!-- Tour Steps -->
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                      	<div class="panel" id="tour-item3">
+                                      	    <div class="panel-heading">
+                                      	   	  <span class="panel-title"> Panel 1</span>
+                                      	    </div>		
+                                      	    <div class="panel-body" style="min-height: 100px;">
+                                      	    </div>
+                                      	</div>
+                                      </div>
+                                      <div class="col-md-6">
+                                      	<div class="panel" id="tour-item4">
+                                      	    <div class="panel-heading">
+                                      	   	  <span class="panel-title"> Panel 2</span>
+                                      	    </div>		
+                                      	    <div class="panel-body" style="min-height: 100px;">
+                                      	    </div>
+                                      	</div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tour Activation Btn --&gt;
+&lt;button class=&quot;btn btn-primary&quot; id=&quot;tour_start&quot; type=&quot;button&quot;&gt;Begin Tour&lt;/button&gt;
+
+&lt;!-- Tour Steps --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+  	&lt;div class=&quot;panel&quot; id=&quot;tour-item1&quot;&gt;
+  	    &lt;div class=&quot;panel-heading&quot;&gt;
+  	   	  &lt;span class=&quot;panel-title&quot;&gt; Panel 1&lt;/span&gt;
+  	    &lt;/div&gt;		
+  	    &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+  	    &lt;/div&gt;
+  	&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+  	&lt;div class=&quot;panel&quot; id=&quot;tour-item2&quot;&gt;
+  	    &lt;div class=&quot;panel-heading&quot;&gt;
+  	   	  &lt;span class=&quot;panel-title&quot;&gt; Panel 2&lt;/span&gt;
+  	    &lt;/div&gt;		
+  	    &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+  	    &lt;/div&gt;
+  	&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Tour steps
+var tour = new Tour({
+  backdrop: true, // can mask content in a modal
+  steps: [
+    {
+      element: &quot;#tour-item1&quot;, // item selector
+      title: &quot;Tour item title!&quot;, // title
+      content: &quot;I&#39;m the content&quot;, // content
+      placement: &#39;top&#39; // left, right, top, bottom
+    },
+    {
+      element: &quot;#tour-item2&quot;,
+      title: &quot;Tour item title!&quot;,
+      content: &quot;I&#39;m the content&quot;, 
+      placement: &#39;top&#39;
+    },
+  ]
+});
+
+// Start Tour on click
+$(&#39;#tour_start&#39;).on(&#39;click&#39;,function(){
+    tour.restart();
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Example 3 -->
+                                <h2 id="forms-horizontal">Tour Backdrop</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+			                        <!-- Tour Activation btn -->
+			                        <button class="btn btn-primary" id="tour_start3" type="button">Begin Tour</button>
+                                    <hr class="alt short">
+                                    <!-- Tour Steps -->
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                      	<div class="panel" id="tour-item5">
+                                      	    <div class="panel-heading">
+                                      	   	  <span class="panel-title"> Panel 1</span>
+                                      	    </div>		
+                                      	    <div class="panel-body" style="min-height: 100px;">
+                                      	    </div>
+                                      	</div>
+                                      </div>
+                                      <div class="col-md-6">
+                                      	<div class="panel" id="tour-item6">
+                                      	    <div class="panel-heading">
+                                      	   	  <span class="panel-title"> Panel 2</span>
+                                      	    </div>		
+                                      	    <div class="panel-body" style="min-height: 100px;">
+                                      	    </div>
+                                      	</div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tour Activation Btn --&gt;
+&lt;button class=&quot;btn btn-primary&quot; id=&quot;tour_start&quot; type=&quot;button&quot;&gt;Begin Tour&lt;/button&gt;
+
+&lt;!-- Tour Steps --&gt;
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+  	&lt;div class=&quot;panel&quot; id=&quot;tour-item1&quot;&gt;
+  	    &lt;div class=&quot;panel-heading&quot;&gt;
+  	   	  &lt;span class=&quot;panel-title&quot;&gt; Panel 1&lt;/span&gt;
+  	    &lt;/div&gt;		
+  	    &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+  	    &lt;/div&gt;
+  	&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;col-md-6&quot;&gt;
+  	&lt;div class=&quot;panel&quot; id=&quot;tour-item2&quot;&gt;
+  	    &lt;div class=&quot;panel-heading&quot;&gt;
+  	   	  &lt;span class=&quot;panel-title&quot;&gt; Panel 2&lt;/span&gt;
+  	    &lt;/div&gt;		
+  	    &lt;div class=&quot;panel-body&quot; style=&quot;min-height: 100px;&quot;&gt;
+  	    &lt;/div&gt;
+  	&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Tour steps
+var tour = new Tour({
+  steps: [
+    {
+      element: &quot;#tour-item1&quot;, // item selector
+      title: &quot;Tour item title!&quot;, // title
+      content: &quot;I&#39;m the content&quot;, // content
+      placement: &#39;top&#39; // left, right, top, bottom
+    },
+    {
+      element: &quot;#tour-item2&quot;,
+      title: &quot;Tour item title!&quot;,
+      content: &quot;I&#39;m the content&quot;, 
+      placement: &#39;top&#39;
+    },
+  ],
+  onStart: function(tour) { // On Tour Start
+    alert(&#39;This is an &quot;onStart&quot; callback&#39;);
+  },
+  onNext: function(tour) { // On Tour Next Item
+    alert(&#39;This is an &quot;onNext&quot; callback&#39;);
+  },
+  onPrev: function(tour) { // On Tour Prev Item
+    alert(&#39;This is an &quot;onPrev&quot; callback&#39;);
+  },
+  onEnd: function(tour) { // On Tour Complete
+    alert(&#39;This is an &quot;onEnd&quot; callback&#39;);
+  }
+});
+
+// Start Tour on click
+$(&#39;#tour_start&#39;).on(&#39;click&#39;,function(){
+    tour.restart();
+});
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- UTILITY - WAYPOINTS -->
+                        <div class="tab-pane fade" id="utility-waypoints" role="tabpanel">
+                            <h3 id="" class="page-header">Utility - Waypoints </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Waypoints is the easiest way to trigger a function when you scroll to an element.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Waypoints</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Caleb Troughton</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://imakewebthings.com/waypoints/">http://imakewebthings.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/imakewebthings/waypoints">imakewebthings/waypoints</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/waypoints/jquery.waypoints.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a class="test-popup-link btn btn-primary" href="assets/docs/jquery-logo-thumb.png">Open popup</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a class=&quot;test-popup-link btn btn-primary&quot; href=&quot;path-to-image.jpg&quot;&gt;Open popup&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.test-popup-link&#39;).magnificPopup({ 
+  type: &#39;image&#39;
+  // other options
+  // gallery:{enabled:true}
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://dimsemenov.com/plugins/magnific-popup/documentation.html">http://dimsemenov.com/docs</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://codepen.io/collection/nLcqo/">http://codepen.io/collection/nLcqo/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- UTILITY - HIGHLIGHT.JS -->
+                        <div class="tab-pane fade" id="utility-highlight" role="tabpanel">
+                            <h3 id="" class="page-header">Utility - Highlight.js </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A clean, lightweight javascript syntax highlighter.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Highlight.js</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Ivan Sagalaev</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="https://highlightjs.org/">https://highlightjs.org/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/isagalaev/highlight.js">isagalaev/highlight.js</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/highlight/styles/github.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Init</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot;&gt;Example&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a class=&quot;test-popup-link btn btn-primary&quot; href=&quot;path-to-image.jpg&quot;&gt;Open popup&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Highlight.js Plugin
+$('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://dimsemenov.com/plugins/magnific-popup/documentation.html">http://dimsemenov.com/docs</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://codepen.io/collection/nLcqo/">http://codepen.io/collection/nLcqo/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+
+    <!-- External Plugins -->
+    <script src="../../vendor/plugins/bstour/bootstrap-tour.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+    
+    	// BASIC EXAMPLE
+    	/////////////////////////
+
+        // Create tour steps
+        var tour = new Tour({
+          steps: [
+            {
+              element: "#tour-item1",
+              title: "Tour item title!", // title
+              content: "I'm the content", // content
+              placement: 'top' // left, right, top, bottom
+            },
+            {
+              element: "#tour-item2",
+              title: "Tour item title!",
+              content: "I'm the content", 
+              placement: 'top'
+            }
+          ]
+        });
+
+        // Start tour on click
+        $('#tour_start').on('click',function(){
+            tour.restart();
+        });
+
+
+    	// BACKDROP EXAMPLE
+    	/////////////////////////
+
+        // Create Tour steps
+        var tour2 = new Tour({
+          backdrop: true, // can mask content in a modal
+          steps: [
+            {
+              element: "#tour-item3",
+              title: "Tour item title!", // title
+              content: "I'm the content", // content
+              placement: 'top' // left, right, top, bottom
+            },
+            {
+              element: "#tour-item4",
+              title: "Tour item title!",
+              content: "I'm the content", 
+              placement: 'top'
+            },
+          ]
+        });
+    
+        // Start Tour on click
+        $('#tour_start2').on('click',function(){
+            tour2.restart();
+        });
+
+
+
+    	// CALLBACKS EXAMPLE
+    	/////////////////////////
+
+        // Create Tour steps
+        var tour3 = new Tour({
+          steps: [
+            {
+              element: "#tour-item5",
+              title: "Tour item title!", // title
+              content: "I'm the content", // content
+              placement: 'top' // left, right, top, bottom
+            },
+            {
+              element: "#tour-item6",
+              title: "Tour item title!",
+              content: "I'm the content", 
+              placement: 'top'
+            },
+          ],
+          onStart: function(tour) { // On Tour Start
+            alert('This is an "onStart" callback');
+          },
+          onNext: function(tour) { // On Tour Next Item
+            alert('This is an "onNext" callback');
+          },
+          onPrev: function(tour) { // On Tour Prev Item
+            alert('This is an "onPrev" callback');
+          },
+          onEnd: function(tour) { // On Tour Complete
+            alert('This is an "onEnd" callback');
+          }
+        });
+
+        // Start Tour on click
+        $('#tour_start3').on('click',function(){
+            tour3.restart();
+        });
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

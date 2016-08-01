@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar bg-light docs-navbar">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../index.html">Documentation</a></li>
+              <li class="active"><a href="plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="tutorials/tutorial_less.html">Tutorials</a></li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="" href="plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="plugins/maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="plugins/utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+                        <!---------------------
+                           GENERAL
+                        ----------------------->
+
+                        <!-- PLUGINS - GENERAL INFO -->
+                        <div class="tab-pane active fade in" id="general" role="tabpanel">
+                            <h3 id="" class="page-header">AdminDesigns - Plugin Directory </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- basic input -->
+                                <!-- <h2 id="">Plugin Overview</h2> -->
+                               <!--  <p>Use AdminDesigns predefined form requires that all inputs and widgets are wrapped in a parent container with the class <code>.admin-form</code>.</p> -->
+                            
+								<table class="table table-bordered footable" data-page-size="25">
+                                  <colgroup>
+                                    <col class="col-xs-2">
+                                    <col class="col-xs-6">
+                                    <col class="col-xs-2">
+                                    <col class="col-xs-2">
+                                  </colgroup>
+	                              <thead class="foo-header">
+	                                 <tr>
+	                                    <th>Plugin</th>
+	                                    <th>Website</th>
+	                                    <th>Author</th>
+	                                    <th>License</th>
+	                                 </tr>
+	                              </thead>
+	                              <tbody>
+
+	                                 <tr>
+	                                    <td>Select2</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://select2.github.io/">https://select2.github.io/</a>
+	                                    </td>
+	                                    <td>Kirill Lebedev</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/bjornd/jvectormap">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>JVectorMap</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://jvectormap.com/">http://jvectormap.com/</a>
+	                                    </td>
+	                                    <td>Kirill Lebedev</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/bjornd/jvectormap">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Glyphicons PRO</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://glyphicons.com/">http://glyphicons.com/</a>
+	                                    </td>
+	                                    <td>Nathaniel Higgins</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/nathggns/Scrollbars/blob/master/LICENSE-MIT">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Color Picker</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://www.eyecon.ro/bootstrap-colorpicker/">http://www.eyecon.ro/</a>
+	                                    </td>
+	                                    <td>Eye Con</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://www.eyecon.ro/bootstrap-colorpicker/">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Date Picker</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://www.eyecon.ro/bootstrap-datepicker/">http://www.eyecon.ro/</a>
+	                                    </td>
+	                                    <td>Eye Con</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://www.eyecon.ro/bootstrap-colorpicker/">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Date Range Picker</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/dangrossman/bootstrap-daterangepicker">http://www.dangrossman.info/</a>
+	                                    </td>
+	                                    <td>Dan Grossman</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/dangrossman/bootstrap-daterangepicker">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Dropzone</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://www.dropzonejs.com/">http://www.dropzonejs.com/</a>
+	                                    </td>
+	                                    <td>Matias Meno </td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/enyo/dropzone">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Masked Input</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://digitalbush.com/projects/masked-input-plugin/">http://digitalbush.com/</a>
+	                                    </td>
+	                                    <td>Josh Bush</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://digitalbush.com/projects/masked-input-plugin/">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Tags Manager</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://welldonethings.com/tags/manager/v3">http://welldonethings.com/manager</a>
+	                                    </td>
+	                                    <td>Max Favilli</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/max-favilli/tagmanager/blob/master/license.txt">MOZ</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Timepicker</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://jdewit.github.io/bootstrap-timepicker/">http://github.io/timepicker/</a>
+	                                    </td>
+	                                    <td>Joris de Wit</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/jdewit/bootstrap-timepicker/blob/gh-pages/LICENSE">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Jquery Validate</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://docs.jquery.com/Plugins/Validation">http://docs.jquery.com/Validation</a>
+	                                    </td>
+	                                    <td>Jörn Zaefferer</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/jzaefferer/jquery-validation">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Ckeditor</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://ckeditor.com/">http://ckeditor.com/</a>
+	                                    </td>
+	                                    <td>Frederico Knabben</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/ckeditor/ckeditor-releases/blob/stable/standard/LICENSE.md">Multi</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>SummerNote</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://hackerwins.github.io/summernote/">http://github.io/summernote/</a>
+	                                    </td>
+	                                    <td>Alan Hong</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/HackerWins/summernote">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>MarkItUp</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://markitup.jaysalvat.com/home/">http://markitup.jaysalvat.com/</a>
+	                                    </td>
+	                                    <td>Jay Salvat</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://markitup.jaysalvat.com/home/">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Xeditable</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://github.com/vitalets/x-editable">http://github.com/x-editable</a>
+	                                    </td>
+	                                    <td>Vitaliy Potapov</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/vitalets/x-editable/blob/master/LICENSE-MIT">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Ladda</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://lab.hakim.se/ladda">http://lab.hakim.se/ladda</a>
+	                                    </td>
+	                                    <td>Hakim El Hattab</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/hakimel/Ladda/blob/master/LICENSE">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>JQuery Globalize</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://github.com/jquery/globalize">http://github.com/globalize</a>
+	                                    </td>
+	                                    <td>Vitaliy Potapov</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/jquery/globalize/blob/master/LICENSE">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Calendar</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://arshaw.com/fullcalendar/">http://arshaw.com/fullcalendar/</a>
+	                                    </td>
+	                                    <td>Adam Shaw</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://arshaw.com/fullcalendar/license/">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Countdown</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://code.google.com/p/jquery-countdown/">https://google.com/countdown/</a>
+	                                    </td>
+	                                    <td>Martin Donell</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://code.google.com/p/jquery-countdown/">Apache</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>DataTables</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://datatables.net/">http://datatables.net/</a>
+	                                    </td>
+	                                    <td>Vitaliy Potapov</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://datatables.net/faqs">Multi</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>JQuery Flot</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://www.flotcharts.org/">http://www.flotcharts.org/</a>
+	                                    </td>
+	                                    <td>Ole Laursen</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/flot/flot/blob/master/LICENSE.txt">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Gmap</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://hpneo.github.com/gmaps/">http://hpneo.github.com/gmaps/</a>
+	                                    </td>
+	                                    <td>Gustavo Leon</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/hpneo/gmaps">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Magnific Popup</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://dimsemenov.com/plugins/magnific-popup/">http://dimsemenov.com/magnific/</a>
+	                                    </td>
+	                                    <td>Dmitry Semenov</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/dimsemenov/Magnific-Popup/blob/master/LICENSE">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>MixItUp</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://mixitup.io">http://mixitup.io</a>
+	                                    </td>
+	                                    <td>Patrick Kunka</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://mixitup.io/#Documentation">MIT</a>
+	                                    </td>
+	                                 </tr>
+	                                 <tr>
+	                                    <td>Sparkline</td>
+	                                    <td>
+	                                       <a target="_blank" href="http://omnipotent.net/jquery.sparkline/">http://omnipotent.net/jquery.sparkline/</a>
+	                                    </td>
+	                                    <td>Gareth Watts</td>
+	                                    <td>
+	                                       <a target="_blank" href="https://github.com/gwatts/jquery.sparkline/">BSD</a>
+	                                    </td>
+	                                 </tr>
+	                              </tbody>
+								  <tfoot class="foo-footer">
+									<tr>
+										<td colspan="5">
+											<nav class="text-right">
+												<ul class="pagination hide-if-no-paging va-m"></ul>
+											</nav>
+										</td>
+									</tr>
+								   </tfoot>
+	                            </table>
+
+                                <!-- end bs doc section -->
+                            </div>
+                        </div>
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery JS -->
+    <script src="../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../assets/js/utility/utility.js"></script>
+    <script src="resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

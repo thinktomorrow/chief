@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\ChiefSetupCommand;
+use App\Console\Chief\ChiefSetupCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

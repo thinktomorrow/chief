@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+  <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+  <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+  <meta name="author" content="AdminDesigns">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font CSS (Via CDN) -->
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+  <!-- AdminForms CSS -->
+  <link rel="stylesheet" type="text/css" href="../../assets/admin-tools/admin-forms/css/admin-forms.css">
+
+  <!-- Docs CSS -->
+  <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+  <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+  <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+  <!-- Navbar -->
+  <nav class="navbar docs-navbar bg-light">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+          <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+          <ul class="nav navbar-nav">
+            <li><a href="../../index.html">Documentation</a></li>
+            <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+            <li><a href="../changelog.html">Changelog</a></li>
+            <li class="hidden"><a href="templates.html">Templates</a></li>
+            <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+            <li class="dropdown hidden">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+  <!-- Doc Container -->
+  <div class="container">
+
+    <div class="docs-container mt40" id="docs">
+
+      <div class="row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col">
+
+          <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+          <!-- Navspy wrapper -->
+          <div id="nav-spy" class="posr">
+
+            <!-- version info list group -->
+            <ul class="list-group">
+              <li class="list-group-item list-group-header br-n">
+                Current Version
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-primary">1.5</span> Theme Core
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-info">3.32</span> Bootstrap
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-warning">3.21</span> Font-Awesome
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion">
+              <li class="list-group-item list-group-header br-n">
+                Admin Plugin Menu
+              </li>
+              <li class="list-group-item active">
+                <a class="" href="admin-panels.html"> Admin Panels </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="admin-forms.html"> Admin Forms </a>
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion">
+              <li class="list-group-item list-group-header br-n">
+                3rd Party Plugin Menu
+              </li>
+              <li class="list-group-item">
+                <a class="" href="../plugins.html"> Directory </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="modals.html"> Modals/Popups </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="forms.html"> Forms </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="charts-highcharts.html"> Charts </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="data.html"> Data </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="editors.html"> Editors </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="maps.html"> Maps </a>
+              </li>
+              <li class="list-group-item hidden">
+                <a class="" href="utility.html"> Utility </a>
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion">
+              <li class="list-group-item list-group-header br-n">
+                Further Documentation
+              </li>
+              <li class="list-group-item">
+                <a href="../../index.html"> Go To General Docs </a>
+              </li>
+            </ul>
+            <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+          </div>
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t">
+
+          <div id="docs-content" class="tab-content pn">
+
+            <!---------------------
+                           ADMIN PANELS
+                        ----------------------->
+
+            <!-- ADMINPANELS-->
+            <div class="tab-pane fade in active" id="admin-panels" role="tabpanel">
+
+              <div class="pull-right posr" style="top: -10px;">
+
+                <button id="local-clear" class="btn btn-default btn-sm" type="button"><i class="fa fa-check pr5"></i>Clear LocalStorage</button>
+
+              </div>
+
+              <h3 id="" class="page-header">AdminPanels - Plugin Info & Requirements </h3>
+
+              <div class="bs-docs-section">
+
+
+                                <!-- Plugin Information -->
+                                <!-- <h3>Plugin Info & Requirements Information</h3> -->
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>AdminPanels</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>AdminDesigns</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>Paid - Themeforest.net/license</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://themeforest.net/item/admindesigns-bootstrap-admin-template-framework/9903221">http://themeforest.net/admindesigns</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>All resources have been included in theme core(utility.js)</code>
+                                </div>
+                
+
+
+
+                <!-- basic example -->
+                <h2 id="forms-horizontal">Basic Panel Setup</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                  <!-- Wrap content in admin-panel class -->
+                  <div class="admin-panels">
+
+                    <!-- Create a new row for each panel -->
+                    <div class="row">
+
+                      <!-- mark column with required admin-grid class -->
+                      <div class="col-md-12 admin-grid">
+
+                        <!-- set a unique ID for every panel -->
+                        <div class="panel disable-mobile-controls" id="p" data-panel-callback="true">
+                          <div class="panel-heading">
+                            <span class="panel-title"> Admin Panel</span>
+                          </div>
+                          <div class="panel-body" style="min-height: 110px;">
+                            Body Content!
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html force-height"><pre><code class="language-html" data-lang="html">
+&lt;!-- Wrap content in admin-panel class --&gt;
+&lt;div class=&quot;admin-panels&quot;&gt;
+
+    &lt;!-- Create a new row for each panel --&gt;
+    &lt;div class=&quot;row&quot;&gt;
+
+      &lt;!-- mark column with required admin-grid class --&gt;
+      &lt;div class=&quot;col-md-12 admin-grid&quot;&gt;
+
+        &lt;!-- set a unique ID for every panel --&gt;
+        &lt;div class=&quot;panel&quot; id=&quot;p1&quot;&gt;
+            &lt;div class=&quot;panel-heading&quot;&gt;
+                 &lt;span class=&quot;panel-icon&quot;&gt;&lt;i class=&quot;fa fa-check&quot;&gt;&lt;/i&gt;&lt;/span&gt;
+                 &lt;span class=&quot;panel-title&quot;&gt; Admin Panel&lt;/span&gt;
+            &lt;/div&gt;        
+            &lt;div class=&quot;panel-body&quot; &gt;&lt;/div&gt;
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Admin Panels on widgets inside the &quot;.admin-panels&quot; container
+$(&#39;.admin-panels&#39;).adminpanel({
+    grid: &#39;.admin-grid&#39;, // set column class
+    onFinish: function() {
+        // On Init complete fadeIn adminpanel content
+        $(&#39;.admin-panels&#39;).addClass(&#39;animated fadeIn&#39;).removeClass(&#39;fade-onload&#39;);
+    },
+});
+</code></pre>
+                </div>
+
+                <!-- basic example -->
+                <h2 id="forms-horizontal">Options</h2>
+
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js mn"><pre><code class="language-js" data-lang="js">
+$(&#39;.admin-panels&#39;).adminpanel({
+    grid: &#39;.admin-grid&#39;,
+    draggable: true,
+    preserveGrid: true,
+    mobile: true
+});
+</code></pre>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped bs-events-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 150px;">Option</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>grid:</td>
+                        <td>This currently should always be set to <code>.admin-grid</code>. However, this will change in a future javascript rework</td>
+                      </tr>
+                      <tr>
+                        <td>preserveGrid:</td>
+                        <td>Setting this option <code>true</code> will dynamically insert an invisible placeholder into empty rows so that they are always available for use. Otherwise empty rows will be ignored.</td>
+                      </tr>
+                      <tr>
+                        <td>draggable:</td>
+                        <td>Setting this <code>true</code> will allow admin panels to be dragged and placed into new positions.</td>
+                      </tr>
+                      <tr>
+                        <td>mobile:</td>
+                        <td>Setting this <code>true</code> will force admin panels to have a mobile friendly toolbar. This automatically occurs when an admin panels width does not allow for a toolbar in its header</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- basic example -->
+                <h2 id="forms-horizontal">Callbacks</h2>
+
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight force-height hljs-label-js mn"><pre><code class="language-js" data-lang="js">
+$(&#39;.admin-panels&#39;).adminpanel({
+    onStart: function() {
+        // Do something
+    },
+    onFinish: function() {
+        // Do something
+    },
+    onDrop: function() {
+        // Do something
+    }
+    onSave: function() {
+        // Do something
+    }
+    onPanel: function() {
+        // Do something
+    },
+});
+</code></pre>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped bs-events-table">
+                    <thead>
+                      <tr>
+                        <th style="width: 150px;">Callback</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>onStart</td>
+                        <td>This event fires on plugin initilization but before admin panels have had their options calculated.</td>
+                      </tr>
+                      <tr>
+                        <td>onFinish</td>
+                        <td>This event fires after admin panels have had their position and options calculated and applied.</td>
+                      </tr>
+                      <tr>
+                        <td>onDrop</td>
+                        <td>This event fires when an admin panel has been dragged and dropped. If the panel is dropped into a new area an onSave callback will also fire.</td>
+                      </tr>
+                      <tr>
+                        <td>onSave</td>
+                        <td>This event fires when an admin panel option or position has been changed.</td>
+                      </tr>
+                      <tr>
+                        <td>onPanel</td>
+                        <td>This callback fires when a user has clicked the custom onPanel toolbar button.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- basic example -->
+                <h2 id="forms-horizontal">Accessing Panel Data</h2>
+                <p>Admin Panels stores all of its settings in a LocalStorage object which can be accessed using the unique keys below</p>
+
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span></div>
+                <div class="highlight hljs-label-js mn force-height"><pre><code class="language-js" data-lang="js">
+// Panel LocalStorage Keys
+var settingsKey = &#39;panel-settings_&#39; + location.pathname;
+var positionsKey = &#39;panel-positions_&#39; + location.pathname;
+
+// Pull panels LocalStorage data
+var settingsGet = localStorage.getItem(settingsKey);
+var positionsGet = localStorage.getItem(positionsKey);
+
+// Parse LocalStorage data string
+var parseSettings = JSON.parse(settingsGet);
+
+// Data contains an array of objects with individual panel data such as
+{&quot;panel&quot;:{
+    &quot;id&quot;: &quot;p2&quot;, // panel unique ID
+    &quot;title&quot;: &quot;Charts&quot;, // panel title
+    &quot;collapsed&quot;: 0, // panel collapsed state
+    &quot;hidden&quot;: 0, // panel hidden(removed) state
+    &quot;color&quot;: &quot;panel-alert&quot;} // panel contextual color
+}
+</code></pre>
+                </div>
+
+                <h2 id="forms-horizontal">Manipulating Panel Data</h2>
+                <p> Combine with callback methods to update data you need sent to an app or database </p>
+
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span></div>
+                <div class="highlight hljs-label-js mn force-height"><pre><code class="language-js" data-lang="js">
+// Init Admin Panels on widgets
+$(&#39;.admin-panels&#39;).adminpanel({
+    grid: &#39;.admin-grid&#39;,
+    onSave: function() { // onSave callback - we pull updated data
+
+        // Panel LocalStorage Keys
+        var settingsKey = &#39;panel-settings_&#39; + location.pathname;
+        var positionsKey = &#39;panel-positions_&#39; + location.pathname;
+
+        // Pull panels LocalStorage data
+        var settingsGet = localStorage.getItem(settingsKey);
+        var positionsGet = localStorage.getItem(positionsKey);
+
+        // Parse LocalStorage data string
+        var parseSettings = JSON.parse(settingsGet);
+
+        // Do something with returned data
+        // such as update a database or app
+        console.log(&#39;Key contains: &#39;, parseSettings);
+
+    }
+});
+</code></pre>
+                </div>
+
+                <h2 id="forms-horizontal">Clearing Local Storage</h2>
+                <p>It is a good idea to clear your LocalStorage anytime you manually edit HTML that contains Admin Panels. This can help prevent and stop many <b>errors</b> you may encounter. A basic method used to clear a users local storage/AdminPanel data:</p>
+
+                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span></div>
+                <div class="highlight hljs-label-js mn force-height"><pre><code class="language-js" data-lang="js">
+// Clear a browsers local storage
+localStorage.clear();
+
+// Refresh a browser window
+location.reload();
+
+// Example combining both methods - Attached to click event
+$(&#39;#Example-button&#39;).on(&#39;click&#39;, function() {
+    localStorage.clear();
+    location.reload();
+});
+
+</code></pre>
+                </div>
+
+                <!-- Templates -->
+                <h2 class="mt30 mb20">Panel Grid Templates:</h2>
+                <p class="mb20">We have provided several premade <b>templates</b> to aid you in the creation of AdminPanel grids. Links to these templates can be found below: </p>
+                <a class="btn btn-primary mr5" href="../templates/panel-layouts/panel_layout_6-6.html" title="2 Column Grid" target="_blank"> 2 Column Grid</a>
+                <a class="btn btn-info mr5" href="../templates/panel-layouts/panel_layout_4-4-4.html" title="3 Column Grid" target="_blank"> 3 Column Grid</a>
+                <a class="btn btn-success mr5" href="../templates/panel-layouts/panel_layout_5-4-3.html" title="Mixed 3 Column Grid" target="_blank"> Mixed 3 Column Grid</a>
+                <a class="btn btn-warning mr5" href="../templates/panel-layouts/panel_layout_12-6-6.html" title="Multiple Row Grid 1" target="_blank"> Multi Row Grid 1</a>
+                <a class="btn btn-danger mr5" href="../templates/panel-layouts/panel_layout_12-6-6-4-4-4.html" title="Multiple Row Grid 2" target="_blank"> Multi Row Grid 2</a>
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+            <!-- RETURN TO TOP BUTTON -->
+            <div class="top-wrapper clearfix">
+              <a href="#" class="return-top">Return to Top</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery JS -->
+  <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+  <!-- Doc Plugins -->
+  <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+  <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+  <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+  <!-- Page JS -->
+  <script src="../../assets/js/utility/utility.js"></script>
+  <script src="../resources/js/docs.js"></script>
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+    Docs.init();
+    $('#local-clear').on('click', function() {
+      localStorage.clear();
+      location.reload();
+    });
+    $('.admin-panels').adminpanel({
+      grid: '.admin-grid', // set column class
+      draggable: true,
+      preserveGrid: true,
+      onPanel: function() {
+        // Custom panel callback button
+        alert("A Custom Panel Callback Button!");
+      },
+      onFinish: function() {
+        // On Init complete fadeIn adminpanel content
+        // $('.admin-panels').addClass('animated fadeIn').removeClass('fade-onload');
+      },
+    });
+  });
+  </script>
+
+</body>
+
+</html>

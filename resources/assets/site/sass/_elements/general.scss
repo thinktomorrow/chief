@@ -1,0 +1,65 @@
+h1{
+    color: $green;
+    margin-bottom: 0;
+    font-weight: lighter;
+    font-size: 2em;
+}
+
+p, a{
+    color: $grey;
+}
+img{
+    max-width: 100%;
+}
+span{
+    width: 50px;
+    display: inline-block;
+    height: 3px;
+    background-color: inherit;
+}
+
+.centered{
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.expanded{
+    max-width: none;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.centered{
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.relative{
+    position: relative;
+}
+
+.right{
+    float: right;
+}
+
+.no-padding{
+padding: 0!important;
+}
+
+.modal-hide{
+    position: absolute;
+    bottom: 0;
+    right: 107px;
+    width: 250px;
+    background: #E9E9E9;
+    height: 60px;
+    line-height: 60px;
+}
+
+.typeform-widget.typeform-ready .typeform-title{
+    visibility: hidden!important;
+}

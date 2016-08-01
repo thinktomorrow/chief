@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Charts </a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="charts-highcharts.html">HighCharts</a>
+                                    </li>
+                                    <li><a href="charts-c3.html">C3/D3</a>
+                                    </li>
+                                    <li><a href="charts-flot.html">Flot</a>
+                                    </li>
+                                    <li><a href="charts-sparklines.html">SparkLines</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+
+                        <!---------------------
+                           HIGHCHARTS
+                        ----------------------->
+
+
+                        <!-- CHARTS - HIGHCHARTS -->
+                        <div class="tab-pane fade active in" id="charts-highcharts" role="tabpanel">
+                            <h3 id="" class="page-header">Charts - HighCharts </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Create interactive charts easily for your web projects.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Highcharts</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Highslide Software</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>Mixed - <a href="http://shop.highsoft.com/highcharts.html" target="_blank">CC NonCommercial</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://www.highcharts.com/">http://www.highcharts.com/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/highslide-software/highcharts.com/">highslide-software/highcharts.com/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/highcharts/highcharts.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Column Chart -->
+                                <h2 id="forms-horizontal">Basic Column Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="highchart-column" style="width: 100%; height: 250px; margin: 0 auto"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;highchart-column&quot; style=&quot;width: 100%; height: 250px; margin: 0 auto&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Column Chart
+var HighChartColumn = $(&#39;#highchart-column&#39;);
+if (HighChartColumn.length) {
+
+    HighChartColumn.highcharts({
+        credits: false,
+        colors: [&#39;#f6bb42&#39;, &#39;#4a89dc&#39;, &#39;#3bafda&#39;],
+        chart: {
+            backgroundColor: &#39;transparent&#39;,
+            marginTop: 30,
+            marginBottom: 30,
+            type: &#39;column&#39;,
+        },
+        legend: {
+            enabled: false
+        },
+        title: {
+            text: null,
+        },
+        xAxis: {
+            lineWidth: 0,
+            tickLength: 6,
+            title: {
+                text: null
+            },
+            labels: {
+                enabled: true
+            }
+        },
+        yAxis: {
+            max: 20,
+            lineWidth: 0,
+            gridLineWidth: 0,
+            lineColor: &#39;#EEE&#39;,
+            gridLineColor: &#39;#EEE&#39;,
+            title: {
+                text: null
+            },
+            labels: {
+                enabled: false,
+                style: {
+                    fontWeight: &#39;400&#39;
+                }
+            }
+        },
+        tooltip: {
+            headerFormat: &#39;&lt;span style=&quot;font-size:10px&quot;&gt;{point.key}&lt;/span&gt;&lt;table&gt;&#39;,
+            pointFormat: &#39;&lt;tr&gt;&lt;td style=&quot;color:{series.color};padding:0&quot;&gt;{series.name}: &lt;/td&gt;&#39; +
+                &#39;&lt;td style=&quot;padding:0&quot;&gt;&lt;b&gt;{point.y:.1f} mm&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&#39;,
+            footerFormat: &#39;&lt;/table&gt;&#39;,
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                colorByPoint: true,
+            }
+        },
+        series: [{
+            name: &#39;Tokyo&#39;,
+            data: [12, 14, 20, 19, 8, 12,
+                14, 20, 5, 16, 8, 12,
+                14, 20, 19, 5, 16, 8,
+                12, 14, 20, 19, 5, 16,
+                8
+            ]
+        }]
+    });
+}
+</code></pre>
+                                </div>
+
+
+                                <!-- Bar Chart -->
+                                <h2 id="forms-horizontal">Basic Bar Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="highchart-bar" style="width: 100%; height: 250px; margin: 0 auto"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;highchart-bar&quot; style=&quot;width: 100%; height: 250px; margin: 0 auto&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Bar Chart
+var HighChartBar = $(&#39;#highchart-bar&#39;);      
+if (HighChartBar.length) {
+
+  HighChartBar.highcharts({
+      credits: false,
+      colors: [&#39;#f6bb42&#39;, &#39;#4a89dc&#39;, &#39;#3bafda&#39;],
+      chart: {
+          type: &#39;bar&#39;,
+          backgroundColor: &#39;transparent&#39;,
+      },
+      legend: {
+          enabled: false,
+          verticalAlign: &#39;top&#39;,
+          y: -5,
+      },
+      title: {
+          text: null
+      },
+      xAxis: {
+          showEmpty: false,
+          tickLength: 80,
+          lineColor: &#39;#EEE&#39;,
+          tickColor: &#39;#EEE&#39;,
+          offset: 1,
+          categories: [&#39;TV&#39;, &#39;Radio&#39;],
+          title: {
+              text: null
+          },
+          labels: {
+              align: &#39;right&#39;,
+          }
+      },
+      yAxis: {
+          min: 0,
+          gridLineWidth: 0,
+          showEmpty: false,
+      },
+      tooltip: {
+          valueSuffix: &#39; Million Viewers&#39;
+      },
+      series: [{
+          name: &#39;Children&#39;,
+          data: [100, 100]
+      }, {
+          name: &#39;Women&#39;,
+          data: [36, 55]
+      }, {
+          name: &#39;Men&#39;,
+          data: [65, 45]
+      }]
+  });
+}
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Spline Chart -->
+                                <h2 id="forms-horizontal">Basic Line Chart</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="highchart-line" style="width: 100%; height: 250px; margin: 0 auto"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;highchart-line&quot; style=&quot;width: 100%; height: 250px; margin: 0 auto&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Line Chart
+var HighChartLine = $(&#39;#highchart-line&#39;);
+if (HighChartLine.length) {
+
+    HighChartLine.highcharts({
+        credits: false,
+        colors: [&#39;#f6bb42&#39;, &#39;#4a89dc&#39;, &#39;#3bafda&#39;],
+        chart: {
+            type: &#39;line&#39;,
+            backgroundColor: &#39;transparent&#39;,
+        },
+        title: {
+            text: null
+        },
+        xAxis: {
+            gridLineColor: &#39;#EEE&#39;,
+            lineColor: &#39;#EEE&#39;,
+            tickColor: &#39;#EEE&#39;,
+        },
+        yAxis: {
+            gridLineColor: &#39;#EEE&#39;,
+            title: {
+                text: null,
+            }
+        },
+        legend: {
+            enabled: false,
+        },
+        series: [{
+            name: &#39;Yahoo&#39;,
+            data: [7.0, 6, 9, 14, 18, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: &#39;CNN&#39;,
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+}
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Area Chart -->
+                                <h2 id="forms-horizontal">Basic Area Chart</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="highchart-area" style="width: 100%; height: 250px; margin: 0 auto"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;highchart-area&quot; style=&quot;width: 100%; height: 250px; margin: 0 auto&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Area Chart
+var HighChartArea = $(&#39;#highchart-area&#39;);
+if (HighChartArea.length) {
+
+    HighChartArea.highcharts({
+        credits: false,
+        colors: [&#39;#f6bb42&#39;, &#39;#4a89dc&#39;, &#39;#3bafda&#39;],
+        chart: {
+            type: &#39;areaspline&#39;,
+            backgroundColor: &#39;transparent&#39;,
+        },
+        title: {
+            text: null
+        },
+        legend: {
+            enabled: false
+        },
+        xAxis: {
+            allowDecimals: false,
+            tickColor: &#39;#EEE&#39;,
+        },
+        yAxis: {
+            title: {
+                text: null
+            },
+            gridLineColor: &#39;transparent&#39;,
+        },
+        plotOptions: {
+            areaspline: {
+                fillOpacity: 0.25,
+            }
+        },
+        series: [{
+            name: &#39;USA&#39;,
+            data: [150, 220, 160, 100, 150,200, 240]
+        }, {
+            name: &#39;Russia&#39;,
+            data: [10, 20, 40, 120, 240, 180, 160]
+        }]
+    });
+}
+</code></pre>
+                                </div>
+
+
+                                <!-- Pie Chart -->
+                                <h2 id="forms-horizontal">Basic Pie Chart</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="highchart-pie" style="width: 100%; height: 250px; margin: 0 auto"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;highchart-pie&quot; style=&quot;width: 100%; height: 250px; margin: 0 auto&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Pie Chart
+var HighChartPie = $(&#39;#highchart-pie&#39;);
+if (HighChartPie.length) {
+
+    HighChartPie.highcharts({
+        credits: false, // Disable HighCharts logo
+        colors: [&#39;#f6bb42&#39;, &#39;#4a89dc&#39;, &#39;#3bafda&#39;], // Set Colors
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: null
+        },
+        tooltip: {
+            pointFormat: &#39;{series.name}: &lt;b&gt;{point.percentage:.1f}%&lt;/b&gt;&#39;
+        },
+        plotOptions: {
+            pie: {
+                center: [&#39;30%&#39;, &#39;50%&#39;],
+                allowPointSelect: true,
+                cursor: &#39;pointer&#39;,
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        legend: {
+            x: 90,
+            floating: true,
+            verticalAlign: &quot;middle&quot;,
+            layout: &quot;vertical&quot;,
+            itemMarginTop: 10
+        },
+        series: [{
+            type: &#39;pie&#39;,
+            name: &#39;Browser share&#39;,
+            data: [
+                [&#39;Firefox&#39;, 35.0],
+                [&#39;IE&#39;, 36.8],
+                {
+                  name: &#39;Chrome&#39;,
+                  y: 15.8,
+                  sliced: true,
+                  selected: true
+                }
+            ]
+        }]
+    });
+}
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://api.highcharts.com/highcharts">http://api.highcharts.com/highcharts</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://www.highcharts.com/demo">http://www.highcharts.com/demo</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+   
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+
+    <!-- Documentation Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Highcharts -->
+    <script src="../../vendor/plugins/highcharts/highcharts.js"></script>
+    <script src="../../vendor/plugins/circles/circles.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+        // HIGHCHARTS
+        //////////////////
+
+        // Column Chart
+        var HighChartColumn = $('#highchart-column');
+        if (HighChartColumn.length) {
+
+            // Basic Column Chart
+            HighChartColumn.highcharts({
+                credits: false,
+                colors: ['#f6bb42', '#4a89dc', '#3bafda'],
+                chart: {
+                    backgroundColor: 'transparent',
+                    marginTop: 30,
+                    marginBottom: 30,
+                    type: 'column',
+                },
+                legend: {
+                    enabled: false
+                },
+                title: {
+                    text: null,
+                },
+                xAxis: {
+                    lineWidth: 0,
+                    tickLength: 6,
+                    title: {
+                        text: null
+                    },
+                    labels: {
+                        enabled: true
+                    }
+                },
+                yAxis: {
+                    max: 20,
+                    lineWidth: 0,
+                    gridLineWidth: 0,
+                    lineColor: '#EEE',
+                    gridLineColor: '#EEE',
+                    title: {
+                        text: null
+                    },
+                    labels: {
+                        enabled: false,
+                        style: {
+                            fontWeight: '400'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        colorByPoint: true,
+                    }
+                },
+                series: [{
+                    name: 'Tokyo',
+                    data: [12, 14, 20, 19, 8, 12,
+                        14, 20, 5, 16, 8, 12,
+                        14, 20, 19, 5, 16, 8,
+                        12, 14, 20, 19, 5, 16,
+                        8
+                    ]
+                }]
+            });
+        }
+
+        var HighChartBar = $('#highchart-bar');      
+        if (HighChartBar.length) {
+
+          // Bar Chart
+          HighChartBar.highcharts({
+              credits: false,
+              colors: ['#f6bb42', '#4a89dc', '#3bafda'],
+              chart: {
+                  type: 'bar',
+                  backgroundColor: 'transparent',
+              },
+              legend: {
+                  enabled: false,
+                  verticalAlign: 'top',
+                  y: -5,
+              },
+              title: {
+                  text: null
+              },
+              xAxis: {
+                  showEmpty: false,
+                  tickLength: 80,
+                  lineColor: '#EEE',
+                  tickColor: '#EEE',
+                  offset: 1,
+                  categories: ['TV', 'Radio'],
+                  title: {
+                      text: null
+                  },
+                  labels: {
+                      align: 'right',
+                  }
+              },
+              yAxis: {
+                  min: 0,
+                  gridLineWidth: 0,
+                  showEmpty: false,
+              },
+              tooltip: {
+                  valueSuffix: ' Million Viewers'
+              },
+              series: [{
+                  name: 'Children',
+                  data: [100, 100]
+              }, {
+                  name: 'Women',
+                  data: [36, 55]
+              }, {
+                  name: 'Men',
+                  data: [65, 45]
+              }]
+          });
+      }
+
+        // Area Chart
+        var HighChartArea = $('#highchart-area');
+        if (HighChartArea.length) {
+
+            HighChartArea.highcharts({
+                credits: false,
+                colors: ['#f6bb42', '#4a89dc', '#3bafda'],
+                chart: {
+                    type: 'areaspline',
+                    backgroundColor: 'transparent',
+                },
+                title: {
+                    text: null
+                },
+                legend: {
+                    enabled: false
+                },
+                xAxis: {
+                    allowDecimals: false,
+                    tickColor: '#EEE',
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    },
+                    gridLineColor: 'transparent',
+                },
+                plotOptions: {
+                    areaspline: {
+                        fillOpacity: 0.25,
+                    }
+                },
+                series: [{
+                    name: 'USA',
+                    data: [150, 220, 160, 100, 150,200, 240]
+                }, {
+                    name: 'Russia',
+                    data: [10, 20, 40, 120, 240, 180, 160]
+                }]
+            });
+        }
+
+        var HighChartLine = $('#highchart-line');
+        if (HighChartLine.length) {
+
+            // Line Chart
+            HighChartLine.highcharts({
+                credits: false,
+                colors: ['#f6bb42', '#4a89dc', '#3bafda'],
+                chart: {
+                    type: 'line',
+                    backgroundColor: 'transparent',
+                },
+                title: {
+                    text: null
+                },
+                xAxis: {
+                    gridLineColor: '#EEE',
+                    lineColor: '#EEE',
+                    tickColor: '#EEE',
+                },
+                yAxis: {
+                    gridLineColor: '#EEE',
+                    title: {
+                        text: null,
+                    }
+                },
+                legend: {
+                    enabled: false,
+                },
+                series: [{
+                    name: 'Yahoo',
+                    data: [7.0, 6, 9, 14, 18, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }, {
+                    name: 'CNN',
+                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]
+            });
+
+        }
+
+
+        var HighChartPie = $('#highchart-pie');
+        if (HighChartPie.length) {
+
+            // Pie Chart
+            HighChartPie.highcharts({
+                credits: false, // Disable HighCharts logo
+                colors: ['#f6bb42', '#4a89dc', '#3bafda'], // Set Colors
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false
+                },
+                title: {
+                    text: null
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        center: ['30%', '50%'],
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                legend: {
+                    x: 90,
+                    floating: true,
+                    verticalAlign: "middle",
+                    layout: "vertical",
+                    itemMarginTop: 10
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                        ['Firefox', 35.0],
+                        ['IE', 36.8],
+                        {
+                          name: 'Chrome',
+                          y: 15.8,
+                          sliced: true,
+                          selected: true
+                        }
+                    ]
+                }]
+            });
+        }
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

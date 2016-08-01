@@ -1,0 +1,3737 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+  <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+  <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+  <meta name="author" content="AdminDesigns">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font CSS (Via CDN) -->
+  <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+  <!-- Plugin CSS -->
+  <link href="../../vendor/plugins/magnific/magnific-popup.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/datepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/daterange/daterangepicker.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/dropzone/css/dropzone.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/ladda/ladda.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/tagmanager/tagmanager.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/plugins/select2/css/core.css" rel="stylesheet" type="text/css">
+
+  <!-- Docs CSS -->
+  <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+  <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+  <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+  <!-- Navbar -->
+  <nav class="navbar docs-navbar bg-light">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          <b>AdminDesigns</b> Framework</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="../../index.html">Documentation</a>
+            </li>
+            <li class="active">
+              <a href="../plugins.html" class="ph25">Plugins</a>
+            </li>
+            <li>
+              <a href="../changelog.html">Changelog</a>
+            </li>
+            <li class="hidden">
+              <a href="templates.html">Templates</a>
+            </li>
+            <li class="">
+              <a href="../tutorials/tutorial_less.html">Tutorials</a>
+            </li>
+            <li class="dropdown hidden">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="#">Action</a>
+                </li>
+                <li>
+                  <a href="#">Another action</a>
+                </li>
+                <li>
+                  <a href="#">Something else here</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#">Separated link</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- Doc Container -->
+  <div class="container">
+
+    <div class="docs-container mt40" id="docs">
+
+      <div class="row table-layout">
+
+        <!-- Documentation Nav -->
+        <div class="col-xs-3 left-col">
+
+          <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+          <!-- Navspy wrapper -->
+          <div id="nav-spy" class="posr">
+
+            <!-- version info list group -->
+            <ul class="list-group">
+              <li class="list-group-item list-group-header br-n">
+                Current Version
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-primary">1.5</span> Theme Core
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-info">3.32</span> Bootstrap
+              </li>
+              <li class="list-group-item">
+                <span class="badge badge-warning">3.21</span> Font-Awesome
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion">
+              <li class="list-group-item list-group-header br-n">
+                Admin Plugin Menu
+              </li>
+              <li class="list-group-item">
+                <a class="" href="admin-panels.html"> Admin Panels </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="admin-forms.html"> Admin Forms</a>
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion">
+              <li class="list-group-item list-group-header br-n">
+                3rd Party Plugin Menu
+              </li>
+              <li class="list-group-item">
+                <a class="" href="../plugins.html"> Directory </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="modals.html"> Modals/Popups </a>
+              </li>
+              <li class="list-group-item active">
+                <a class="sign-toggle"> Forms </a>
+                <ul class="collapse">
+                  <li class="active">
+                    <a href="#forms-colorpicker" data-toggle="tab">Colorpicker</a>
+                  </li>
+                  <li>
+                    <a href="#forms-datepicker" data-toggle="tab">Datepicker</a>
+                  </li>
+                  <li>
+                    <a href="#forms-daterangepicker" data-toggle="tab">DateRangepicker</a>
+                  </li>
+                  <li>
+                    <a href="#forms-dropzone" data-toggle="tab">Dropzone</a>
+                  </li>
+                  <li>
+                    <a href="#forms-fileupload" data-toggle="tab">FileUpload</a>
+                  </li>
+                  <li>
+                    <a href="#forms-ladda" data-toggle="tab">Ladda Buttons</a>
+                  </li>
+                  <li>
+                    <a href="#forms-tagmanager" data-toggle="tab">TagManager</a>
+                  </li>
+                  <li>
+                    <a href="#forms-spinners" data-toggle="tab">JQuery Spinners</a>
+                  </li>
+                  <li>
+                    <a href="#forms-multiselect" data-toggle="tab">Multiselect</a>
+                  </li>
+                  <li>
+                    <a href="#forms-select2" data-toggle="tab">Select2</a>
+                  </li>
+                  <li>
+                    <a href="#forms-nprogress" data-toggle="tab">NProgress</a>
+                  </li>
+                  <li>
+                    <a href="#forms-dualselect" data-toggle="tab">DualSelect</a>
+                  </li>
+                  <li>
+                    <a href="#forms-typeahead" data-toggle="tab">Typeahead</a>
+                  </li>
+                  <li>
+                    <a href="#forms-maxlength" data-toggle="tab">MaxLength</a>
+                  </li>
+                  <li>
+                    <a href="#forms-mask" data-toggle="tab">JQuery Mask</a>
+                  </li>
+                  <li class="hidden">
+                    <a href="#forms-validate" data-toggle="tab">JQuery Validate</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="charts-highcharts.html"> Charts </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="data.html"> Data </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="editors.html"> Editors </a>
+              </li>
+              <li class="list-group-item">
+                <a class="" href="maps.html"> Maps </a>
+              </li>
+              <li class="list-group-item hidden">
+                <a class="" href="utility.html"> Utility </a>
+              </li>
+            </ul>
+
+            <!-- list group menu accordion -->
+            <ul class="list-group list-group-accordion">
+              <li class="list-group-item list-group-header br-n">
+                Further Documentation
+              </li>
+              <li class="list-group-item">
+                <a href="../../index.html"> Go To General Docs </a>
+              </li>
+            </ul>
+            <a href="#" class="scrollup">
+              <span class="fa fa-level-up"></span>
+            </a>
+          </div>
+
+
+        </div>
+
+        <!-- Documentation Content -->
+        <div class="col-xs-9 center-col va-t">
+
+          <div id="docs-content" class="tab-content pn">
+
+
+            <!---------------------
+                 FORM RELATED
+            ----------------------->
+
+
+            <!-- FORMS - COLORPICKER -->
+            <div class="tab-pane fade in active" id="forms-colorpicker" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Bootstrap Colorpicker </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>A nice and customizable colorpicker plugin for Twitter Bootstrap 3</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Bootstrap Colorpicker</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Mjolnic</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://mjolnic.com/bootstrap-colorpicker/">http://mjolnic.com</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/mjolnic/bootstrap-colorpicker">mjolnic/bootstrap-colorpicker</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/colorpicker/css/bootstrap-colorpicker.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/colorpicker/js/bootstrap-colorpicker.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Colorpicker Element</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <button id="demo-cp-btn" class="btn btn-primary" data-color="#5384ce">Click to open me!</button>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button id=&quot;demo-cp-btn&quot; class=&quot;btn btn-primary&quot; data-color=&quot;#5384ce&quot;&gt;Click to open me!&lt;/button&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// on button
+$(&#39;#demo-cp-btn&#39;).colorpicker({
+    color: &#39;#4a89dc&#39;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 2 -->
+                <h2 id="forms-horizontal">Colorpicker Input</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <input id="demo-cp-input" type="text" class="form-control" value="#5367ce" />
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;input id=&quot;demo-cp-input&quot; type=&quot;text&quot; class=&quot;form-control&quot; value=&quot;#5367ce&quot; /&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// on input
+$(&#39;#demo-cp-input&#39;).colorpicker({
+    color: &#39;#4a89dc&#39;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 3 -->
+                <h2 id="forms-horizontal">Colorpicker Addon</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <div id="demo-cp-addon" class="input-group cursor">
+                    <span class="input-group-addon">
+                      <i></i>
+                    </span>
+                    <input type="text" value="" class="form-control" />
+                  </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;demo-cp-addon&quot; class=&quot;input-group cursor&quot;&gt;
+    &lt;span class=&quot;input-group-addon&quot;&gt;&lt;i&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;input type=&quot;text&quot; value=&quot;&quot; class=&quot;form-control&quot; /&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// with addon
+$(&#39;#demo-cp-addon&#39;).colorpicker({
+    color: &#39;#4a89dc&#39;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://mjolnic.com/bootstrap-colorpicker/">http://dimsemenov.com/docs</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - DATEPICKER -->
+            <div class="tab-pane fade" id="forms-datepicker" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Bootstrap Datepicker </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>Date/Time picker widget based on Twitters Bootstrap 3.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Bootstrap Colorpicker</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Eonasdan</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://eonasdan.github.io/bootstrap-datetimepicker/">http://eonasdan.github.io</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/Eonasdan/bootstrap-datetimepicker">Eonasdan/bootstrap-datetimepicker</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/datepicker/css/bootstrap-datetimepicker.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/datepicker/js/bootstrap-datetimepicker.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Datepicker</h2>
+                <p>The simplest way to initilize a Datepicker</p>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <input type="text" class="form-control" id="datetimepicker1">
+                  <div class="clearfix"></div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; id=&quot;datetimepicker&quot;&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// basic
+$(&#39;#datetimepicker&#39;).datetimepicker();
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 2 -->
+                <h2 id="forms-horizontal">Datepicker Addon</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <div class="input-group date" id="datetimepicker2">
+                    <span class="input-group-addon cursor">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="clearfix"></div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;input-group date&quot; id=&quot;datetimepicker&quot;&gt;
+    &lt;span class=&quot;input-group-addon cursor&quot;&gt;&lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// with addon
+$(&#39;#datetimepicker&#39;).datetimepicker();
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 3 -->
+                <h2 id="forms-horizontal">Inline Datepicker</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <div id="datetimepicker3">
+                    <input type="text" class="form-control" style="max-width: 250px;">
+                  </div>
+                  <div class="clearfix"></div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;datetimepicker&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; style=&quot;max-width: 250px;&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Inline
+$(&#39;#datetimepicker&#39;).datetimepicker({
+    defaultDate: &quot;9/4/2014&quot;, 
+    inline: true
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://eonasdan.github.io/bootstrap-datetimepicker/">http://eonasdan.github.io/bootstrap-datetimepicker/</a>
+                        </td>
+                      </tr>
+
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - DATERANGEPICKER -->
+            <div class="tab-pane fade" id="forms-daterangepicker" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Bootstrap Datepicker </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>Date range picker component for Bootstrap 3.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Bootstrap DateRangepicker</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Dan Grossman</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://www.dangrossman.info/2012/08/20/a-date-range-picker-for-twitter-bootstrap/">http://www.dangrossman.info</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/dangrossman/bootstrap-daterangepicker">dangrossman/bootstrap-daterangepicker</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/daterange/daterangepicker.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/daterange/daterangepicker.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+                <p>The simplest way to initilize a Daterangepicker</p>
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                  <input type="text" class="form-control" name="daterangepicker1" id="daterangepicker1">
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;daterangepicker&quot; id=&quot;daterangepicker&quot;&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// DateRangepicker Input
+$(&#39;#daterangepicker1&#39;).daterangepicker();  
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 2 -->
+                <h2 id="forms-horizontal">DateRangepicker Addon</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <div class="input-group" id="daterangepicker2">
+                    <span class="input-group-addon cursor">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;input-group&quot; id=&quot;daterangepicker&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;form-control&quot;&gt;
+    &lt;span class=&quot;input-group-addon cursor&quot;&gt;&lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt;
+    &lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Set DateRangepicker Options
+var rangeOptions = {
+    ranges: {
+        &#39;Today&#39;: [moment(), moment()],
+        &#39;Yesterday&#39;: [moment().subtract(&#39;days&#39;, 1), moment().subtract(&#39;days&#39;, 1)],
+        &#39;Last 7 Days&#39;: [moment().subtract(&#39;days&#39;, 6), moment()],
+        &#39;Last 30 Days&#39;: [moment().subtract(&#39;days&#39;, 29), moment()],
+        &#39;This Month&#39;: [moment().startOf(&#39;month&#39;), moment().endOf(&#39;month&#39;)],
+        &#39;Last Month&#39;: [moment().subtract(&#39;month&#39;, 1).startOf(&#39;month&#39;), moment().subtract(&#39;month&#39;, 1).endOf(&#39;month&#39;)]
+    },
+    startDate: moment().subtract(&#39;days&#39;, 29),
+    endDate: moment()
+}
+
+// DateRangepicker Component
+$(&#39;#daterangepicker2&#39;).daterangepicker(
+    rangeOptions,
+    function(start, end) {
+        $(&#39;#reportrange span&#39;).html(start.format(&#39;MMMM D, YYYY&#39;) + &#39; - &#39; + end.format(&#39;MMMM D, YYYY&#39;));
+    }
+);
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/dangrossman/bootstrap-daterangepicker">https://github.com/dangrossman/bootstrap-daterangepicker</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - DROPZONE -->
+            <div class="tab-pane fade" id="forms-dropzone" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Dropzone </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>DropzoneJS is an open source library that provides drag’n’drop file uploads with image previews.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Dropzone</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Enyo</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://www.dropzonejs.com/">http://www.dropzonejs.com/</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/enyo/dropzone">enyo/dropzone</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/dropzone/css/dropzone.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/dropzone/dropzone.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <style>
+                .dropzone .dz-default.dz-message {
+                  top: 13%;
+                }
+                </style>
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <form action="/file-upload" class="dropzone" id="dropZone" style="height: 250px;">
+                    <div class="fallback">
+                      <input name="file" type="file" multiple />
+                    </div>
+                  </form>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;form action=&quot;/file-upload&quot; class=&quot;dropzone&quot; id=&quot;dropZone&quot; style=&quot;height: 250px;&quot;&gt;
+    &lt;div class=&quot;fallback&quot;&gt;
+        &lt;input name=&quot;file&quot; type=&quot;file&quot; multiple /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+Dropzone.options.dropZone = {
+    paramName: &quot;file&quot;, // The name that will be used to transfer the file
+    maxFilesize: 0, // Max file size - in MB
+    addRemoveLinks: true, // Toggle remove links
+    dictDefaultMessage: &#39;&lt;i class=&quot;fa fa-cloud-upload&quot;&gt;&lt;/i&gt; \
+     &lt;span class=&quot;main-text&quot;&gt;&lt;b&gt;Drop Files&lt;/b&gt; to upload&lt;/span&gt; &lt;br /&gt; \
+     &lt;span class=&quot;sub-text&quot;&gt;(or click)&lt;/span&gt; \
+    &#39;,
+    dictResponseError: &#39;Server not Configured&#39;
+};
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://www.dropzonejs.com/#usage">http://www.dropzonejs.com/#usage</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - FILEUPLOAD -->
+            <div class="tab-pane fade" id="forms-fileupload" role="tabpanel">
+              <h3 id="" class="page-header">Forms - FileUpload </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>The file input plugin allows you to create a visually appealing file or image input widgets.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Fileupload</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Jasny</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://jasny.github.io/bootstrap/javascript/#fileinput">http://jasny.github.io</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/fileupload/fileupload.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+                <p>You can also use the "Holder.js" plugin to create a temporary placeholder image.</p>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <div class="fileupload fileupload-new" data-provides="fileupload" style="max-width: 300px;">
+                    <div class="fileupload-preview thumbnail cursor mb15">
+                      <img src="../../assets/img/stock/5.jpg" title="placeholder img">
+                    </div>
+                    <span class="btn btn-primary btn-file btn-block">
+                      <span class="fileupload-new">Change</span>
+                      <span class="fileupload-exists">Change</span>
+                      <input type="file">
+                    </span>
+                  </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;fileupload fileupload-new&quot; data-provides=&quot;fileupload&quot;&gt;
+    &lt;div class=&quot;fileupload-preview thumbnail cursor mb15&quot;&gt;
+        &lt;img src=&quot;../../assets/img/stock/5.jpg&quot; title=&quot;placeholder img&quot;&gt;
+    &lt;/div&gt;
+    &lt;span class=&quot;btn btn-primary btn-file btn-block&quot;&gt;
+      &lt;span class=&quot;fileupload-new&quot;&gt;Change&lt;/span&gt;
+      &lt;span class=&quot;fileupload-exists&quot;&gt;Change&lt;/span&gt;
+      &lt;input type=&quot;file&quot;&gt;
+    &lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// None Required. Fileupload will autoattach to DOM instances
+
+// You can use the code below if you wish to grant the
+// FileUpload preview frame the ability to open onclick 
+$('.fileupload-preview').on('click', function() {
+    $('.btn-file > input').click();
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://jasny.github.io/bootstrap/javascript/#fileinput">http://jasny.github.io/bootstrap/javascript/#fileinput</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - LADDA BTNS -->
+            <div class="tab-pane fade" id="forms-ladda" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Ladda Loading Buttons </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>Buttons with built-in loading indicators, effectively bridging the gap between action and feedback.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Ladda Loaders</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Msurguy</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://msurguy.github.io/ladda-bootstrap/">http://msurguy.github.io</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/msurguy/ladda-bootstrap">msurguy/ladda-bootstrap</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/ladda/ladda.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/ladda/ladda.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Loading Button</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <button type="button" class="btn btn-primary ladda-button" data-style="expand-right">
+                    <span class="ladda-label">Load Right</span>
+                  </button>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary ladda-button&quot; data-style=&quot;expand-right&quot;&gt;
+    &lt;span class=&quot;ladda-label&quot;&gt;Load Right&lt;/span&gt;
+&lt;/button&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Ladda Plugin on buttons
+Ladda.bind(&#39;.ladda-button&#39;, {
+    timeout: 3000
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 2 -->
+                <h2 id="forms-horizontal">Progress Loading Button</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                  <button type="button" class="btn btn-primary ladda-button progress-button" data-style="expand-right">
+                    <span class="ladda-label">Load Right</span>
+                  </button>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button type=&quot;button&quot; class=&quot;btn btn-primary ladda-button progress-button&quot; data-style=&quot;expand-right&quot;&gt;
+    &lt;span class=&quot;ladda-label&quot;&gt;Load Right&lt;/span&gt;
+&lt;/button&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Bind progress buttons and simulate loading progress. Still requires &quot;.ladda-button&quot; class.
+Ladda.bind(&#39;.progress-button&#39;, {
+    callback: function(instance) {
+        var progress = 0;
+        var interval = setInterval(function() {
+            progress = Math.min(progress + Math.random() * 0.1, 1);
+            instance.setProgress(progress);
+
+            if (progress === 1) {
+                instance.stop();
+                clearInterval(interval);
+            }
+        }, 200);
+    }
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://msurguy.github.io/ladda-bootstrap/">http://msurguy.github.io/ladda-bootstrap/</a>
+                        </td>
+                      </tr>
+
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - JQUERYMASK -->
+            <div class="tab-pane fade" id="forms-mask" role="tabpanel">
+              <h3 id="" class="page-header">Forms - JQuery Mask </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>An inputmask helps the user with the input by ensuring a predefined format. This can be useful for dates, numerics, phone numbers, etc.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>JQuery Mask</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Josh Bush</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://digitalbush.com/projects/masked-input-plugin/">http://digitalbush.com</a>
+                        </td>
+                      </tr>
+                      <tr class="hidden">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/msurguy/ladda-bootstrap">msurguy/ladda-bootstrap</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/jquerymask/jquery.maskedinput.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Masking Examples</h2>
+                <div class="bs-example" data-example-id="contextual-panels">
+
+
+                  <div class="form-horizontal">
+
+                    <!-- masked date -->
+                    <div class="form-group">
+                      <label for="maskedDate" class="col-md-1 control-label">Date</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedDate" class="form-control" maxlength="10" placeholder="11/11/1111">
+                      </div>
+                    </div>
+
+                    <!-- masked time -->
+                    <div class="form-group">
+                      <label for="maskedTime" class="col-md-1 control-label">Time</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedTime" class="form-control" maxlength="10" placeholder="00:00:00">
+                      </div>
+                    </div>
+
+                    <!-- masked datetime -->
+                    <div class="form-group">
+                      <label for="maskedDatetime" class="col-md-1 control-label">DateTime</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedDateTime" class="form-control" maxlength="10" placeholder="99/99/9999 00:00:00">
+                      </div>
+                    </div>
+
+                    <!-- masked zip -->
+                    <div class="form-group">
+                      <label for="maskedZip" class="col-md-1 control-label">Zip</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedZip" class="form-control" maxlength="10" placeholder="99999-999">
+                      </div>
+                    </div>
+
+
+                    <!-- masked Phone -->
+                    <div class="form-group">
+                      <label for="maskedPhone" class="col-md-1 control-label">Phone</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedPhone" class="form-control" maxlength="10" placeholder="(999) 999-9999">
+                      </div>
+                    </div>
+
+                    <!-- masked money -->
+                    <div class="form-group">
+                      <label for="maskedMoney" class="col-md-1 control-label">Money</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedMoney" class="form-control" maxlength="10" placeholder="000.000.000.000">
+                      </div>
+                    </div>
+
+
+                    <!-- masked zip -->
+                    <div class="form-group">
+                      <label for="maskedID" class="col-md-1 control-label">ID</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedID" class="form-control" maxlength="10" placeholder="99999-999">
+                      </div>
+                    </div>
+
+                    <!-- masked SSN -->
+                    <div class="form-group">
+                      <label for="maskedSSN" class="col-md-1 control-label">SSN</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedSSN" class="form-control" maxlength="10" placeholder="999-99-9999">
+                      </div>
+                    </div>
+
+
+                    <!-- masked Script -->
+                    <div class="form-group">
+                      <label for="maskedScript" class="col-md-1 control-label">Script</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedScript" class="form-control" maxlength="10" placeholder="0ZZ.0ZZ.0ZZ.0ZZ">
+                      </div>
+                    </div>
+
+
+                    <!-- custom mask-->
+                    <div class="form-group">
+                      <label for="maskedCustom" class="col-md-1 control-label">Custom</label>
+                      <div class="col-md-10">
+                        <input type="text" id="maskedCustom" class="form-control" maxlength="10" placeholder="1-22-333-4444">
+                      </div>
+                    </div>
+
+
+                  </div>
+
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- masked date --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedDate&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;11/11/1111&quot;&gt;
+
+&lt;!-- masked time --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedTime&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;00:00:00&quot;&gt;
+
+&lt;!-- masked datetime --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedDateTime&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;99/99/9999 00:00:00&quot;&gt;
+
+&lt;!-- masked zip --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedZip&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;99999-999&quot;&gt;
+
+&lt;!-- masked phone --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedPhone&quot; class=&quot;form-control &quot; maxlength=&quot;10&quot; placeholder=&quot;(999) 999-9999&quot;&gt;
+
+&lt;!-- masked money --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedMoney&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;000.000.000.000&quot;&gt;
+
+&lt;!-- masked TIN --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedID&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;99999-999&quot;&gt;
+
+&lt;!-- masked SSN --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedSSN&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;999-99-9999&quot;&gt;
+
+&lt;!-- masked eyescript --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedScript&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;0ZZ.0ZZ.0ZZ.0ZZ&quot;&gt;
+
+&lt;!-- custom mask --&gt;
+&lt;input type=&quot;text&quot; id=&quot;maskedCustom&quot; class=&quot;form-control&quot; maxlength=&quot;10&quot; placeholder=&quot;1-22-333-4444&quot;&gt;                   
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init jQuery masked inputs
+$(&#39;#maskedDate&#39;).mask(&#39;99/99/9999&#39;);
+$(&#39;#maskedTime&#39;).mask(&#39;99:99:99&#39;);
+$(&#39;#maskedDatetime&#39;).mask(&#39;99/99/9999 99:99:99&#39;);
+$(&#39;#maskedZip&#39;).mask(&#39;99999-999&#39;);
+$(&#39;#maskedPhone&#39;).mask(&#39;(999) 999-9999&#39;);
+$(&quot;#maskedMoney&quot;).mask(&quot;999,999,999.999&quot;);
+$(&quot;#maskedID&quot;).mask(&quot;99-9999999&quot;);
+$(&quot;#maskedSSN&quot;).mask(&quot;999-99-9999&quot;);
+$(&quot;#maskedScript&quot;).mask(&quot;~9.99 ~9.99 999&quot;);
+$(&quot;#maskedCustom&quot;).mask(&quot;9.99.999.9999&quot;);
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://digitalbush.com/projects/masked-input-plugin/">http://digitalbush.com/projects/masked-input-plugin/</a>
+                        </td>
+                      </tr>
+
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - TAG MANAGER -->
+            <div class="tab-pane fade" id="forms-tagmanager" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Tag Manager </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>A jQuery plugin to create tag input fields using Twitters Bootstrap 3</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Tag Manager</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Max Favilli</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://welldonethings.com/tags/manager/v3">http://welldonethings.com</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/max-favilli/tagmanager">max-favilli/tagmanager</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/tagmanager/tagmanager.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/tagmanager/tagmanager.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                  <!-- Tag Input Field -->
+                  <input type="text" id="tagmanager" class="form-control" placeholder="Create a new tag..">
+
+                  <!-- Tag Container  -->
+                  <div class="tag-container tags"></div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Tag Input Field --&gt;
+&lt;input type=&quot;text&quot; id=&quot;tagmanager&quot; class=&quot;form-control&quot; placeholder=&quot;Create a new tag..&quot;&gt;
+
+&lt;!-- Tag Container  --&gt;
+&lt;div class=&quot;tag-container tags&quot;&gt;&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init jQuery Tags Manager 
+$(&quot;#tagmanager&quot;).tagsManager({
+    tagsContainer: &#39;.tags&#39;, // set tag container
+    tagClass: &#39;tm-tag-primary&#39;, // set tag contextual
+    prefilled: [&quot;Tag 1&quot;, &quot;Tag 2&quot;, &quot;Tag 3&quot;], // set initial tags
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://welldonethings.com/tags/manager/v3">http://welldonethings.com/tags/manager/v3</a>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+            <!-- FORMS - JQUERY SPINNERS -->
+            <div class="tab-pane fade" id="forms-spinners" role="tabpanel">
+              <h3 id="" class="page-header">Forms - JQuery Input Spinners</h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>JQuery Spinners</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>JQuery UI</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="https://jqueryui.com/spinner/">https://jqueryui.com/spinner/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://api.jqueryui.com/spinner/">http://api.jqueryui.com/spinner/</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required - In Core</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>None Required - In Core</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Spinner Setup</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                      <div class="form-group mw400">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="fa fa-level-up"></i>
+                            </span>
+                            <input id="spinner-basic" class="form-control ui-spinner-input" name="spinner" value="15" />
+                          </div>
+                      </div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group mw400&quot;&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;span class=&quot;input-group-addon&quot;&gt;
+      &lt;i class=&quot;fa fa-level-up&quot;&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;input id=&quot;spinner-basic&quot; class=&quot;form-control ui-spinner-input&quot; name=&quot;spinner&quot; value=&quot;15&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init jQuery spinner init - default
+$(&quot;#spinner-basic&quot;).spinner();
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Currency Spinner</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                      <div class="form-group mw400">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="fa fa-usd"></i>
+                            </span>
+                            <input id="spinner-currency" class="form-control ui-spinner-input" name="spinner" value="35" />
+                          </div>
+                      </div>
+
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group mw400&quot;&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;span class=&quot;input-group-addon&quot;&gt;
+      &lt;i class=&quot;fa fa-usd&quot;&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;input id=&quot;spinner-currency&quot; class=&quot;form-control ui-spinner-input&quot; name=&quot;spinner&quot; value=&quot;35&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init jQuery spinner init - currency 
+$(&quot;#spinner-currency&quot;).spinner({
+  min: 5,
+  max: 2500,
+  step: 25,
+  start: 1000,
+  //numberFormat: &quot;C&quot;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Decimal Spinner</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                      <div class="form-group mw400">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <i class="fa fa-signal"></i>
+                            </span>
+                            <input id="spinner-decimal" class="form-control ui-spinner-input" name="spinner" value="13.5" />
+                          </div>
+                      </div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group mw400&quot;&gt;
+  &lt;div class=&quot;input-group&quot;&gt;
+    &lt;span class=&quot;input-group-addon&quot;&gt;
+      &lt;i class=&quot;fa fa-signal&quot;&gt;&lt;/i&gt;
+    &lt;/span&gt;
+    &lt;input id=&quot;spinner-decimal&quot; class=&quot;form-control ui-spinner-input&quot; name=&quot;spinner&quot; value=&quot;13.5&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init jQuery spinner init - decimal  
+$(&quot;#spinner-decimal&quot;).spinner({
+  step: 0.01,
+  numberFormat: &quot;n&quot;
+});
+</code></pre>
+                </div>
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Advanced Examples:</th>
+                        <td>
+                          <a target="_blank" href="https://jqueryui.com/spinner/#default">https://jqueryui.com/spinner/#default</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://api.jqueryui.com/spinner/">http://api.jqueryui.com/spinner/</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - SELECT2 -->
+            <div class="tab-pane fade" id="forms-select2" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Select2 </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>The jQuery replacement for select boxes</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Select2</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Kevin Brown</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="https://select2.github.io/">https://select2.github.io/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/select2/select2">select2/select2</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>&lt;link href=&quot;vendor/plugins/select2/css/core.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/select2/select2.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Single</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+              
+                    <div class="form-group">
+                         <select class="basic-single form-control w200">
+                            <option value="CA">California</option>
+                            <option value="AL">Alabama</option>
+                            <option value="WY">Wyoming</option>
+                          </select>
+                      </div>
+
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+ &lt;select class=&quot;basic-single form-control w200&quot;&gt;
+    &lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+    &lt;option value=&quot;AL&quot;&gt;Alabama&lt;/option&gt;
+    &lt;option value=&quot;WY&quot;&gt;Wyoming&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// basic single
+$(&quot;.basic-single&quot;).select2();
+</code></pre>
+                </div>
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Contextual</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+              
+                    <div class="form-group">
+                         <select class="contextual-single form-control select-primary w200">
+                            <option value="CA">California</option>
+                            <option value="AL">Alabama</option>
+                            <option value="WY">Wyoming</option>
+                          </select>
+                      </div>
+          
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+ &lt;select class=&quot;contextual-single form-control select-primary w200&quot;&gt;
+    &lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+    &lt;option value=&quot;AL&quot;&gt;Alabama&lt;/option&gt;
+    &lt;option value=&quot;WY&quot;&gt;Wyoming&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// contextual single
+$(&quot;.contextual-single&quot;).select2();
+</code></pre>
+                </div>
+
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Multiple</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+              
+                    <div class="form-group">
+                          <select class="basic-multiple form-control w200" multiple="multiple">
+                            <option value="CA">California</option>
+                            <option value="AL">Alabama</option>
+                            <option value="WY">Wyoming</option>
+                          </select>
+                      </div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select class=&quot;basic-multiple form-control w200&quot; multiple=&quot;multiple&quot;&gt;
+    &lt;option value=&quot;CA&quot;&gt;California&lt;/option&gt;
+    &lt;option value=&quot;AL&quot;&gt;Alabama&lt;/option&gt;
+    &lt;option value=&quot;WY&quot;&gt;Wyoming&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// basic multiple
+$(&quot;.basic-multiple&quot;).select2({
+  placeholder: &quot;Select a state&quot;
+});
+</code></pre>
+                </div>
+
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Tags</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+              
+                       <div class="form-group">
+                          <select class="basic-tags form-control w200" multiple="multiple">
+                            <option value="CA" selected>California</option>
+                            <option value="AL">Alabama</option>
+                            <option value="WY">Wyoming</option>
+                          </select>
+                        </div>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select class=&quot;basic-tags form-control w200&quot; multiple=&quot;multiple&quot;&gt;
+    &lt;option value=&quot;CA&quot; selected&gt;California&lt;/option&gt;
+    &lt;option value=&quot;AL&quot;&gt;Alabama&lt;/option&gt;
+    &lt;option value=&quot;WY&quot;&gt;Wyoming&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// basic tags
+$(&quot;.basic-tags&quot;).select2({
+  tags: true,
+});
+</code></pre>
+                </div>
+
+
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="https://select2.github.io/examples.html">https://select2.github.io/examples.html</a>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - MULTISELECT -->
+            <div class="tab-pane fade" id="forms-multiselect" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Tag Manager </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>A JQuery multiselect plugin based on Twitter Bootstrap</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Bootstrap Multiselect</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>David Stutz</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://davidstutz.github.io/bootstrap-multiselect/">http://davidstutz.com/bootstrap-multiselect/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/davidstutz/bootstrap-multiselect">bootstrap-multiselect</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required - In Core</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>None Required - In Core</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Single</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                        <div class="form-group">
+                          <select id="multiselect-single">
+                            <option value="cheese">Cheese</option>
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="mozarella" selected>Mozzarella</option>
+                            <option value="mushrooms">Mushrooms</option>
+                            <option value="pepperoni">Pepperoni</option>
+                            <option value="onions">Onions</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select id=&quot;multiselect-single&quot;&gt;
+    &lt;option value=&quot;cheese&quot;&gt;Cheese&lt;/option&gt;
+    &lt;option value=&quot;tomatoes&quot;&gt;Tomatoes&lt;/option&gt;
+    &lt;option value=&quot;mozarella&quot; selected&gt;Mozzarella&lt;/option&gt;
+    &lt;option value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/option&gt;
+    &lt;option value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/option&gt;
+    &lt;option value=&quot;onions&quot;&gt;Onions&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// multiselect - single 
+$(&#39;#multiselect-single&#39;).multiselect();
+</code></pre>
+                </div>
+
+
+
+                <!-- Plugin Example 2 -->
+                <h2 id="forms-horizontal">Basic Multiple</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                        <div class="form-group">
+                          <select id="multiselect-multiple" multiple="multiple">
+                            <option value="cheese">Cheese</option>
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="mozarella" selected>Mozzarella</option>
+                            <option value="mushrooms">Mushrooms</option>
+                            <option value="pepperoni">Pepperoni</option>
+                            <option value="onions">Onions</option>
+                          </select>
+                        </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select id=&quot;multiselect-multiple&quot; multiple=&quot;multiple&quot;&gt;
+    &lt;option value=&quot;cheese&quot;&gt;Cheese&lt;/option&gt;
+    &lt;option value=&quot;tomatoes&quot;&gt;Tomatoes&lt;/option&gt;
+    &lt;option value=&quot;mozarella&quot; selected&gt;Mozzarella&lt;/option&gt;
+    &lt;option value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/option&gt;
+    &lt;option value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/option&gt;
+    &lt;option value=&quot;onions&quot;&gt;Onions&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// multiselect - muliple
+$(&#39;#multiselect-multiple&#39;).multiselect({
+  includeSelectAllOption: true
+});
+</code></pre>
+                </div>
+
+
+
+                <!-- Plugin Example 3 -->
+                <h2 id="forms-horizontal">Basic Label</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                        <div class="form-group">
+                          <select id="multiselect-labels" class="multiselect-withlabels" multiple="multiple">
+                            <optgroup label="Mathematics">
+                              <option value="analysis">Analysis</option>
+                              <option value="discrete">Discrete Mathematics</option>
+                              <option value="probability">Probability Theory</option>
+                            </optgroup>
+                            <optgroup label="Computer Science">
+                              <option value="programming">Introduction to Programming</option>
+                              <option value="automata">Automata Theory</option>
+                              <option value="complexity">Complexity Theory</option>
+                            </optgroup>
+                          </select>
+                        </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select id=&quot;multiselect-labels&quot; class=&quot;multiselect-withlabels&quot; multiple=&quot;multiple&quot;&gt;
+    &lt;optgroup label=&quot;Mathematics&quot;&gt;
+      &lt;option value=&quot;analysis&quot;&gt;Analysis&lt;/option&gt;
+      &lt;option value=&quot;discrete&quot;&gt;Discrete Mathematics&lt;/option&gt;
+      &lt;option value=&quot;probability&quot;&gt;Probability Theory&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label=&quot;Computer Science&quot;&gt;
+      &lt;option value=&quot;programming&quot;&gt;Introduction to Programming&lt;/option&gt;
+      &lt;option value=&quot;automata&quot;&gt;Automata Theory&lt;/option&gt;
+      &lt;option value=&quot;complexity&quot;&gt;Complexity Theory&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// multiselect with labels
+$(&#39;#multiselect-labels&#39;).multiselect();
+</code></pre>
+                </div>
+
+
+
+                <!-- Plugin Example 4 -->
+                <h2 id="forms-horizontal">Basic Search</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                        <div class="form-group">
+                          <select id="multiselect-sorting" multiple="multiple">
+                            <option value="cheese">Cheese</option>
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="mozarella">Mozzarella</option>
+                            <option value="mushrooms">Mushrooms</option>
+                            <option value="pepperoni">Pepperoni</option>
+                            <option value="onions">Onions</option>
+                          </select>
+                      </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select id=&quot;multiselect-sorting&quot; multiple=&quot;multiple&quot;&gt;
+    &lt;option value=&quot;cheese&quot;&gt;Cheese&lt;/option&gt;
+    &lt;option value=&quot;tomatoes&quot;&gt;Tomatoes&lt;/option&gt;
+    &lt;option value=&quot;mozarella&quot;&gt;Mozzarella&lt;/option&gt;
+    &lt;option value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/option&gt;
+    &lt;option value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/option&gt;
+    &lt;option value=&quot;onions&quot;&gt;Onions&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// multiselect with sorting
+$(&#39;#multiselect-sorting&#39;).multiselect({
+  enableFiltering: true,
+});
+</code></pre>
+                </div>
+
+
+
+                <!-- Plugin Example 5 -->
+                <h2 id="forms-horizontal">Basic Contextual</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                        <div class="form-group">
+                          <select id="multiselect-contextual">
+                            <option value="mozarella">Mozzarella</option>
+                            <option value="cheese">Cheese</option>
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="mushrooms">Mushrooms</option>
+                            <option value="pepperoni">Pepperoni</option>
+                            <option value="onions">Onions</option>
+                          </select>
+                      </div>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;form-group&quot;&gt;
+  &lt;select id=&quot;multiselect-contextual&quot;&gt;
+    &lt;option value=&quot;mozarella&quot;&gt;Mozzarella&lt;/option&gt;
+    &lt;option value=&quot;cheese&quot;&gt;Cheese&lt;/option&gt;
+    &lt;option value=&quot;tomatoes&quot;&gt;Tomatoes&lt;/option&gt;
+    &lt;option value=&quot;mushrooms&quot;&gt;Mushrooms&lt;/option&gt;
+    &lt;option value=&quot;pepperoni&quot;&gt;Pepperoni&lt;/option&gt;
+    &lt;option value=&quot;onions&quot;&gt;Onions&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// multiselect - contextual 
+$(&#39;#multiselect-contextual&#39;).multiselect({
+  buttonClass: &#39;multiselect dropdown-toggle btn btn-primary&#39;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://welldonethings.com/tags/manager/v3">http://welldonethings.com/tags/manager/v3</a>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - NPROGRESS -->
+            <div class="tab-pane fade" id="forms-nprogress" role="tabpanel">
+              <h3 id="" class="page-header">Forms - NProgress </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>For slim progress bars like on YouTube, Medium, etc</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>NProgress</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Rico Sta. Cruz</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://ricostacruz.com/nprogress/">http://ricostacruz.com/nprogress/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/rstacruz/nprogress">rstacruz/nprogress</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required - Can be modified via plugins.less</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/nprogress/nprogress.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Usage</h2>
+                <p>Simply call start() and done() to control the progress bar.</p>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Start/Stop NProgress
+NProgress.start();
+NProgress.done();
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Advanced Usage</h2>
+                <p><b>Percentages:</b> To set a progress percentage, call .set(n), where n is a number between 0..1.</p>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Percentages
+NProgress.set(0.0);  // Sort of the same as .start()
+NProgress.set(0.4);  // Move bar to 40%
+NProgress.set(1.0);  // Sort of the same as .done()
+</code></pre>
+                </div>
+
+
+                <p><b>Incrementing:</b> To increment the progress bar, just use .inc(). This increments it with a random amount. This will never get to 100%: use it for every image load (or similar).</p>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Increment
+NProgress.inc();
+NProgress.inc(0.2);  // This will get the current status value and adds 0.2 until status is 0.994
+</code></pre>
+                </div>
+
+
+
+
+                <!-- Plugin Example 2 -->
+                <h2 id="forms-horizontal">Plugin Configuration</h2>
+
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init jQuery Tags Manager 
+&lt;!-- Configure NProgress --&gt;
+NProgress.configure({
+  minimum: 0.15, // minimum bar load
+  trickleRate: .07, // rate at which bar increases
+  trickleSpeed: 360, // speed at which bar increases
+  showSpinner: false, // show/hide additional spinner during load
+  barColor: &#39;&#39;, // npr-warning, npr-success, npr-primary, etc (all contextuals available)
+  barPos: &#39;&#39; // &#39;null&#39; - (default) - bar position: top of page
+    // &#39;npr-bottom&#39; -  bar position: bottom of page header      
+    // &#39;npr-header&#39; -  bar position: below header                
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/rstacruz/nprogress">https://github.com/rstacruz/nprogress</a>
+                        </td>
+                      </tr>
+                    <tr>
+                        <th scope="row">Theme Example:</th>
+                        <td>
+                          <a target="_blank" href="http://admindesigns.com/framework/dashboard.html">http://admindesigns.com/framework/form_nprogress.html</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - DUAL SELECTLIST -->
+            <div class="tab-pane fade" id="forms-dualselect" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Dual Select-List </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>A jQuery plugin to create tag input fields using Twitters Bootstrap 3</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Bootstrap Dual Listbox</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>István Ujj-Mészáros</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://www.virtuosoft.eu/code/bootstrap-duallistbox/">http://www.virtuosoft.eu/duallistbox</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox">/istvan-ujjmeszaros/duallistbox</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required - Can be modified via plugins.less</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/duallistbox/jquery.bootstrap-duallistbox.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+                <p> Created inside <b>panel</b> element </p>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                      <form id="list-demo" class="mw700 pl30" action="#" method="post">
+                        <div class="panel-heading">
+                          <span class="panel-title"> Dual Select Listbox </span>
+                        </div>
+                        <div class="panel-body p25">
+                          <select class="list-basic" multiple="multiple" size="10" name="list-basic">
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                            <option value="option5">Option 5</option>
+                            <option value="option6">Option 6</option>
+                            <option value="option7">Option 7</option>
+                            <option value="option8">Option 8</option>
+                            <option value="option9">Option 9</option>
+                            <option value="option10">Option 10</option>
+                            <option value="option11">Option 11</option>
+                            <option value="option12">Option 12</option>
+                          </select>
+                        </div>
+                        <div class="panel-footer">
+                          <button type="submit" class="btn btn-default light btn-block">Submit Data</button>
+                        </div>
+                      </form>
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+  &lt;form id=&quot;list-demo&quot; class=&quot;mw700 pl30&quot; action=&quot;#&quot; method=&quot;post&quot;&gt;
+    &lt;div class=&quot;panel-heading&quot;&gt;
+      &lt;span class=&quot;panel-title&quot;&gt; Dual Select Listbox &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;panel-body p25&quot;&gt;
+      &lt;select class=&quot;list-basic&quot; multiple=&quot;multiple&quot; size=&quot;10&quot; name=&quot;list-basic&quot;&gt;
+        &lt;option value=&quot;option1&quot;&gt;Option 1&lt;/option&gt;
+        &lt;option value=&quot;option2&quot;&gt;Option 2&lt;/option&gt;
+        &lt;option value=&quot;option3&quot;&gt;Option 3&lt;/option&gt;
+        &lt;option value=&quot;option4&quot;&gt;Option 4&lt;/option&gt;
+        &lt;option value=&quot;option5&quot;&gt;Option 5&lt;/option&gt;
+        &lt;option value=&quot;option6&quot;&gt;Option 6&lt;/option&gt;
+        &lt;option value=&quot;option7&quot;&gt;Option 7&lt;/option&gt;
+        &lt;option value=&quot;option8&quot;&gt;Option 8&lt;/option&gt;
+        &lt;option value=&quot;option9&quot;&gt;Option 9&lt;/option&gt;
+        &lt;option value=&quot;option10&quot;&gt;Option 10&lt;/option&gt;
+        &lt;option value=&quot;option11&quot;&gt;Option 11&lt;/option&gt;
+        &lt;option value=&quot;option12&quot;&gt;Option 12&lt;/option&gt;
+      &lt;/select&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;panel-footer&quot;&gt;
+      &lt;button type=&quot;submit&quot; class=&quot;btn btn-default light btn-block&quot;&gt;Submit Data&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Create Dual Select List
+var duallist = $(&#39;.list-basic&#39;).bootstrapDualListbox({
+  nonSelectedListLabel: &#39;Options&#39;,
+  selectedListLabel: &#39;Selected&#39;,
+  preserveSelectionOnMove: &#39;moved&#39;,
+  moveOnSelect: true,
+  nonSelectedFilter: &#39;ion ([7-9]|[1][0-2])&#39;,
+  selectorMinimalHeight: 200,
+});
+
+// Catch form submit and alert options
+$(&quot;#list-demo&quot;).submit(function() {
+  alert(&quot;Options Selected: &quot; + $(&#39;.demo1&#39;).val());
+  return false;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Settings</h2>
+                <p> When calling <b>$("#element").bootstrapDualListbox()</b> you can pass a parameters object with zero or more of the following:</p>
+
+                <table class="table table-striped table-bordered docs">
+                    <thead>
+                      <tr>
+                        <th>Option</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>bootstrap2Compatible</code></td>
+                        <td><code><strong>false</strong></code>: set this to <code>true</code> if you want graphic compatibility with Bootstrap 2.</td>
+                      </tr>
+                      <tr>
+                        <td><code>filterTextClear</code></td>
+                        <td><code><strong>'show all'</strong></code>: the text for the "Show All" button.</td>
+                      </tr>
+                      <tr>
+                        <td><code>filterPlaceHolder</code></td>
+                        <td><code><strong>'Filter'</strong></code>: the placeholder for the <code>input</code> element for filtering elements.</td>
+                      </tr>
+                      <tr>
+                        <td><code>moveSelectedLabel</code></td>
+                        <td><code><strong>'Move selected'</strong></code>: the label for the "Move Selected" button.</td>
+                      </tr>
+                      <tr>
+                        <td><code>moveAllLabel</code></td>
+                        <td><code><strong>'Move all'</strong></code>: the label for the "Move All" button.</td>
+                      </tr>
+                      <tr>
+                        <td><code>removeSelectedLabel</code></td>
+                        <td><code><strong>'Remove selected'</strong></code>: the label for the "Remove Selected" button.</td>
+                      </tr>
+                      <tr>
+                        <td><code>removeAllLabel</code></td>
+                        <td><code><strong>'Remove all'</strong></code>: the label for the "Remove All" button.</td>
+                      </tr>
+                      <tr>
+                        <td><code>moveOnSelect</code></td>
+                        <td><code><strong>true</strong></code>: determines whether to move <code>options</code> upon selection. This option is forced to <code>true</code> on the Android browser.</td>
+                      </tr>
+                      <tr>
+                        <td><code>preserveSelectionOnMove</code></td>
+                        <td><code><strong>false</strong></code>: can be <code>'all'</code> (for selecting both moved elements and the already selected ones in the target list) or <code>'moved'</code> (for selecting moved elements only)</td>
+                      </tr>
+                      <tr>
+                        <td><code>selectedListLabel</code></td>
+                        <td><code><strong>false</strong></code>: can be a string specifying the name of the selected list.</td>
+                      </tr>
+                      <tr>
+                        <td><code>nonSelectedListLabel</code></td>
+                        <td><code><strong>false</strong></code>: can be a string specifying the name of the non selected list.</td>
+                      </tr>
+                      <tr>
+                        <td><code>helperSelectNamePostfix</code></td>
+                        <td><code><strong>'_helper'</strong></code>: The added selects will have the same name as the original one, concatenated with this string and 1 (for the non selected list, e.g. element_helper1) or 2 (for the selected list, e.g. element_helper2).</td>
+                      </tr>
+                      <tr>
+                        <td><code>selectorMinimalHeight</code></td>
+                        <td><code><strong>100</strong></code>: represents the minimal height of the generated dual listbox.</td>
+                      </tr>
+                      <tr>
+                        <td><code>showFilterInputs</code></td>
+                        <td><code><strong>true</strong></code>: whether to show filter inputs.</td>
+                      </tr>
+                      <tr>
+                        <td><code>nonSelectedFilter</code></td>
+                        <td><code><strong>''</strong></code>: initializes the dual listbox with a filter for the non selected elements. This is applied only if <code>showFilterInputs</code> is set to <code>true</code>.</td>
+                      </tr>
+                      <tr>
+                        <td><code>selectedFilter</code></td>
+                        <td><code><strong>''</strong></code>: initializes the dual listbox with a filter for the selected elements. This is applied only if <code>showFilterInputs</code> is set to <code>true</code>.</td>
+                      </tr>
+                      <tr>
+                        <td><code>infoText</code></td>
+                        <td><code><strong>'Showing all {0}'</strong></code>: determines which string format to use when all options are visible. Set this to <code>false</code> to hide this information. Remember to insert the <code>{0}</code> placeholder.</td>
+                      </tr>
+                      <tr>
+                        <td><code>infoTextFiltered</code></td>
+                        <td><code><strong>'&lt;span class="label label-warning"&gt;Filtered&lt;/span&gt; {0} from {1}'</strong></code>: determines which element format to use when some element is filtered. Remember to insert the <code>{0}</code> and <code>{1}</code> placeholders.</td>
+                      </tr>
+                      <tr>
+                        <td><code>infoTextEmpty</code></td>
+                        <td><code><strong>'Empty list'</strong></code>: determines the string to use when there are no options in the list.</td>
+                      </tr>
+                      <tr>
+                        <td><code>filterOnValues</code></td>
+                        <td><code><strong>false</strong></code>: set this to <code>true</code> to filter the options according to their values and not their HTML contents.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Methods</h2>
+                <p class="mb5"> You can modify the behavior and aspect of the dual listbox by calling its methods, all of which accept a value and a refresh option. The value determines the new parameter value, while refresh (optional, defaults to false) tells whether to update the plugin UI or not. To call methods on the dual listbox instance, use the following syntax:</p>
+
+                <p> <code>$(selector).bootstrapDualListbox(methodName, parameter);</code> </p>
+
+                <table class="table table-striped table-bordered docs">
+                    <thead>
+                      <tr>
+                        <th>Method</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>refresh()</code></td>
+                        <td>update the plugin element UI.</td>
+                      </tr>
+                      <tr>
+                        <td><code>destroy()</code></td>
+                        <td>restore the original <code>select</code> element and delete the plugin element.</td>
+                      </tr>
+                      <tr>
+                        <td><code>getContainer()</code></td>
+                        <td>get the container element.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setBootstrap2Compatible(value, refresh)</code></td>
+                        <td>change the <code>bootstrap2Compatible</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setFilterTextClear(value, refresh)</code></td>
+                        <td>change the <code>filterTextClear</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setFilterPlaceHolder(value, refresh)</code></td>
+                        <td>change the <code>filterPlaceHolder</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setMoveSelectedLabel(value, refresh)</code></td>
+                        <td>change the <code>moveSelectedLabel</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setMoveAllLabel(value, refresh)</code></td>
+                        <td>change the <code>moveAllLabel</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setRemoveSelectedLabel(value, refresh)</code></td>
+                        <td>change the <code>removeSelectedLabel</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setRemoveAllLabel(value, refresh)</code></td>
+                        <td>change the <code>removeAllLabel</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setMoveOnSelect(value, refresh)</code></td>
+                        <td>change the <code>moveOnSelect</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setPreserveSelectionOnMove(value, refresh)</code></td>
+                        <td>change the <code>preserveSelectionOnMove</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setSelectedListLabel(value, refresh)</code></td>
+                        <td>change the <code>selectedListLabel</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setNonSelectedListLabel(value, refresh)</code></td>
+                        <td>change the <code>nonSelectedListLabel</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setHelperSelectNamePostfix(value, refresh)</code></td>
+                        <td>change the <code>helperSelectNamePostfix</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setSelectOrMinimalHeight(value, refresh)</code></td>
+                        <td>change the <code>selectOrMinimalHeight</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setShowFilterInputs(value, refresh)</code></td>
+                        <td>change the <code>showFilterInputs</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setNonSelectedFilter(value, refresh)</code></td>
+                        <td>change the <code>nonSelectedFilter</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setSelectedFilter(value, refresh)</code></td>
+                        <td>change the <code>selectedFilter</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setInfoText(value, refresh)</code></td>
+                        <td>change the <code>infoText</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setInfoTextFiltered(value, refresh)</code></td>
+                        <td>change the <code>infoTextFiltered</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setInfoTextEmpty(value, refresh)</code></td>
+                        <td>change the <code>infoTextEmpty</code> parameter.</td>
+                      </tr>
+                      <tr>
+                        <td><code>setFilterOnValues(value, refresh)</code></td>
+                        <td>change the <code>filterOnValues</code> parameter.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="http://welldonethings.com/tags/manager/v3">http://welldonethings.com/tags/manager/v3</a>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - TYPEAHEAD -->
+            <div class="tab-pane fade" id="forms-typeahead" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Typeahead </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>typeahead.js is a fast and fully-featured autocomplete library</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Typeahead</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Twitter Inc.</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="https://twitter.github.io/typeahead.js/">https://twitter.github.io/typeahead.js/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/twitter/typeahead.js">twitter/typeahead.js</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/typeahead/typeahead.bundle.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                  <!-- Typeahead Field -->
+                  <input type="text" class="form-control typeahead" id="typeahead-field" placeholder="Fruit List">
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Typeahead Input Field --&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control typeahead&quot; id=&quot;typeahead-field&quot; placeholder=&quot;Fruit List&quot;&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Twitter Typeahead.js
+var substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substrRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, &#39;i&#39;);
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        // the typeahead jQuery plugin expects suggestions to a
+        // JavaScript object, refer to typeahead docs for more info
+        matches.push({
+          value: str
+        });
+      }
+    });
+
+    cb(matches);
+  };
+};
+
+// Define List
+var fruits = [&#39;Apple&#39;, &#39;Orange&#39;, &#39;Lemon&#39;, &#39;Banana&#39;, &#39;Watermelon&#39;];
+
+// Init Typeahead
+$(&#39;.typeahead&#39;).typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+}, {
+  name: &#39;fruits&#39;,
+  displayKey: &#39;value&#39;,
+  source: substringMatcher(fruits)
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Advanced Examples:</th>
+                        <td>
+                          <a target="_blank" href="http://twitter.github.io/typeahead.js/examples/">http://twitter.github.io/typeahead.js/examples/</a>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md">https://github.com/twitter/typeahead.js/doc/jquery_typeahead.md</a>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>   
+
+
+            <!-- FORMS - MAXLENGTH-->
+            <div class="tab-pane fade" id="forms-maxlength" role="tabpanel">
+              <h3 id="" class="page-header">Forms - Bootstrap MaxLength</h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>A plugin that integrates with Twitter bootstrap to display a fields maximum length via badges.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>Bootstrap Maxlength</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Maurizio</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://mimo84.github.io/bootstrap-maxlength/">http://mimo84.github.io/bootstrap-maxlength/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/mimo84/bootstrap-maxlength/">mimo84/bootstrap-maxlength</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required - Can be modified via plugins.less</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/maxlength/bootstrap-maxlength.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Basic Setup</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+
+                  <!-- Maxlength Input Field -->
+                  <input type="text" class="form-control mw500" maxlength="15" placeholder="Maxlength of 15 characters..">
+
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;!-- Maxlength Input Field --&gt;
+&lt;input type=&quot;text&quot; class=&quot;form-control&quot; maxlength=&quot;15&quot; placeholder=&quot;Maxlength of 15 characters..&quot;&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Init Bootstrap Maxlength Plugin
+$(&#39;input[maxlength]&#39;).maxlength({
+  threshold: 15,
+  placement: &quot;right&quot;
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Advanced Examples:</th>
+                        <td>
+                          <a target="_blank" href="http://mimo84.github.io/bootstrap-maxlength/">http://mimo84.github.io/bootstrap-maxlength/</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/mimo84/bootstrap-maxlength/">https://github.com/mimo84/bootstrap-maxlength/</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- FORMS - JQUERY VALIDATE -->
+            <div class="tab-pane fade" id="forms-validate" role="tabpanel">
+              <h3 id="" class="page-header">Forms - JQuery Validate </h3>
+
+              <div class="bs-docs-section">
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Plugin Information</h2>
+                <p>A jQuery plugin to create tag input fields using Twitters Bootstrap 3</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Plugin Name:</th>
+                        <td>JQuery Validate</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Author:</th>
+                        <td>Jorn Zaefferer</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">License:</th>
+                        <td>MIT licensed</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Website:</th>
+                        <td>
+                          <a target="_blank" href="http://jqueryvalidation.org/">http://jqueryvalidation.org/</a>
+                        </td>
+                      </tr>
+                      <tr class="">
+                        <th scope="row">Git Branch:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/jzaefferer/jquery-validation">jzaefferer/jquery-validation</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Dependencies:</th>
+                        <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="bs-example required-css">
+                  <code>None Required</code>
+                </div>
+                <div class="bs-example required-js pb25">
+                  <code>&lt;script src=&quot;vendor/plugins/validate/jquery.validate.min.js&quot;&gt;&lt;/script&gt;</code>
+                </div>
+
+
+                <!-- Plugin Example 1 -->
+                <h2 id="forms-horizontal">Method 1: From an HTML element</h2>
+
+                <div class="bs-example" data-example-id="contextual-panels">
+                  <a class="test-popup-link btn btn-primary" href="assets/docs/jquery-logo-thumb.png">Open popup</a>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a class=&quot;test-popup-link btn btn-primary&quot; href=&quot;path-to-image.jpg&quot;&gt;Open popup&lt;/a&gt;
+</code></pre>
+                </div>
+                <div class="zero-clipboard">
+                  <span class="btn-clipboard">Copy</span>
+                </div>
+                <div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.test-popup-link&#39;).magnificPopup({ 
+  type: &#39;image&#39;
+  // other options
+  // gallery:{enabled:true}
+});
+</code></pre>
+                </div>
+
+
+                <!-- Plugin Information -->
+                <h2 id="forms-horizontal">Extended Information</h2>
+                <p> For more detailed documentation you should refer to the plugins
+                  <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                <div class="table-responsive">
+                  <table class="table table-bordered table-striped">
+                    <colgroup>
+                      <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead class="hidden">
+                      <tr>
+                        <th>Class</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Documentation:</th>
+                        <td>
+                          <a target="_blank" href="https://github.com/jzaefferer/jquery-validation">https://github.com/jzaefferer/jquery-validation</a>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <!-- end bs-doc-section -->
+              </div>
+            </div>
+
+
+            <!-- RETURN TO TOP BUTTON -->
+            <div class="top-wrapper clearfix">
+              <a href="#" class="return-top">Return to Top</a>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery JS -->
+  <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+  <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+  <!-- External Plugins -->
+  <script src="../../vendor/plugins/moment/moment.min.js"></script>
+  <script src="../../vendor/plugins/holder/holder.min.js"></script>
+  <script src="../../vendor/plugins/colorpicker/js/bootstrap-colorpicker.min.js"></script>
+  <script src="../../vendor/plugins/datepicker/js/bootstrap-datetimepicker.js"></script>
+  <script src="../../vendor/plugins/daterange/daterangepicker.js"></script>
+  <script src="../../vendor/plugins/dropzone/dropzone.min.js"></script>
+  <script src="../../vendor/plugins/fileupload/fileupload.js"></script>
+  <script src="../../vendor/plugins/ladda/ladda.min.js"></script>
+  <script src="../../vendor/plugins/tagmanager/tagmanager.js"></script>
+  <script src="../../vendor/plugins/jquerymask/jquery.maskedinput.min.js"></script>
+  <script src="../../vendor/plugins/validate/jquery.validate.min.js"></script>
+  <script src="../../vendor/plugins/nprogress/nprogress.js"></script>
+  <script src="../../vendor/plugins/duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+  <script src="../../vendor/plugins/maxlength/bootstrap-maxlength.min.js"></script>
+  <script src="../../vendor/plugins/select2/select2.min.js"></script>
+  <script src="../../vendor/plugins/typeahead/typeahead.bundle.min.js"></script>
+
+  <!-- Doc Plugins -->
+  <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+  <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+  <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+  <!-- Page JS -->
+  <script src="../../assets/js/utility/utility.js"></script>
+  <script src="../resources/js/docs.js"></script>
+  <script type="text/javascript">
+  jQuery(document).ready(function() {
+
+    Docs.init();
+
+
+
+    // SELECT2
+    //////////////////
+
+    // basic single
+    $(".basic-single").select2();
+
+    // contextual single
+    $(".contextual-single").select2();
+
+    // basic multiple
+    $(".basic-multiple").select2({
+      placeholder: "Select a state"
+    });
+
+    // basic tags
+    $(".basic-tags").select2({
+      tags: true,
+    });
+
+
+    // MULTISELECT
+    //////////////////
+
+    // multiselect - single 
+    $('#multiselect-single').multiselect();
+
+    // multiselect - muliple
+    $('#multiselect-multiple').multiselect({
+      includeSelectAllOption: true
+    });
+
+    // multiselect with labels
+    $('#multiselect-labels').multiselect();
+
+    // multiselect with sorting
+    $('#multiselect-sorting').multiselect({
+      enableFiltering: true,
+    });
+
+    $('#multiselect-contextual').multiselect({
+      buttonClass: 'multiselect dropdown-toggle btn btn-primary'
+    });
+
+
+    // DUAL-LIST SELECT
+    //////////////////
+
+    // Create Dual Select List
+    var duallist = $('.list-basic').bootstrapDualListbox({
+      nonSelectedListLabel: 'Options',
+      selectedListLabel: 'Selected',
+      preserveSelectionOnMove: 'moved',
+      moveOnSelect: true,
+      nonSelectedFilter: 'ion ([7-9]|[1][0-2])',
+      selectorMinimalHeight: 200,
+    });
+
+    // Catch form submit and alert options
+    $("#list-demo").submit(function() {
+      alert("Options Selected: " + $('.demo1').val());
+      return false;
+    });
+
+
+    // TYPEAHEAD
+    //////////////////
+
+    // Init Twitter Typeahead.js
+    var substringMatcher = function(strs) {
+      return function findMatches(q, cb) {
+        var matches, substrRegex;
+
+        // an array that will be populated with substring matches
+        matches = [];
+
+        // regex used to determine if a string contains the substring `q`
+        substrRegex = new RegExp(q, 'i');
+
+        // iterate through the pool of strings and for any string that
+        // contains the substring `q`, add it to the `matches` array
+        $.each(strs, function(i, str) {
+          if (substrRegex.test(str)) {
+            // the typeahead jQuery plugin expects suggestions to a
+            // JavaScript object, refer to typeahead docs for more info
+            matches.push({
+              value: str
+            });
+          }
+        });
+
+        cb(matches);
+      };
+    };
+
+    // Define List
+    var fruits = ['Apple', 'Orange', 'Lemon', 'Banana', 'Watermelon'];
+
+    // Init Typeahead
+    $('.typeahead').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: 'fruits',
+      displayKey: 'value',
+      source: substringMatcher(fruits)
+    });
+
+
+    // MAXLENGTH
+    //////////////////
+
+    // Init Bootstrap Maxlength Plugin
+    $('input[maxlength]').maxlength({
+      threshold: 15,
+      placement: "right"
+    });
+
+
+    // JQUERY SPINNERS
+    //////////////////
+
+    // Init jQuery spinner init - default
+    $("#spinner-basic").spinner();
+
+    // Init jQuery spinner init - currency 
+    $("#spinner-currency").spinner({
+      min: 5,
+      max: 2500,
+      step: 25,
+      start: 1000,
+      //numberFormat: "C"
+    });
+
+    // Init jQuery spinner init - decimal  
+    $("#spinner-decimal").spinner({
+      step: 0.01,
+      numberFormat: "n"
+    });
+
+
+    // COLORPICKER
+    //////////////////
+
+    // on button
+    $('#demo-cp-btn').colorpicker({
+      color: '#4a89dc'
+    });
+    // on input
+    $('#demo-cp-input').colorpicker({
+      color: '#4a89dc'
+    });
+    // with addon
+    $('#demo-cp-addon').colorpicker({
+      color: '#4a89dc'
+    });
+
+    // DATEPICKER
+    //////////////////
+
+    // basic
+    $('#datetimepicker1').datetimepicker();
+
+    // with addon
+    $('#datetimepicker2').datetimepicker();
+
+    // Inline
+    $('#datetimepicker3').datetimepicker({
+      defaultDate: "9/4/2014",
+      inline: true
+    });
+
+    // DATERANGEPICKER
+    //////////////////
+
+    // DateRangepicker Input
+    $('#daterangepicker1').daterangepicker();
+
+    // Set DateRangepicker Options
+    var rangeOptions = {
+      ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract('days', 1), moment().subtract('days', 1)],
+        'Last 7 Days': [moment().subtract('days', 6), moment()],
+        'Last 30 Days': [moment().subtract('days', 29), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+      },
+      startDate: moment().subtract('days', 29),
+      endDate: moment()
+    }
+
+    // DateRangepicker Component
+    $('#daterangepicker2').daterangepicker(
+      rangeOptions,
+      function(start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+      }
+    );
+
+    // DROPZONE
+    //////////////////
+
+    // Dropzone Autoattaches to "dropzone" class.
+    // Configure Dropzone options
+    Dropzone.options.dropZone = {
+      paramName: "file", // The name that will be used to transfer the file
+      maxFilesize: 0, // MB
+      addRemoveLinks: true,
+      dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> \
+             <span class="main-text"><b>Drop Files</b> to upload</span> <br /> \
+             <span class="sub-text">(or click)</span> \
+            ',
+      dictResponseError: 'Server not Configured'
+    };
+
+    // FILEUPLOAD
+    //////////////////
+
+    // Grant FileUpload Preview onclick functionality
+    $('.fileupload-preview').on('click', function() {
+      $('.btn-file > input').click();
+    });
+
+    // LADDA BUTTONS
+    //////////////////
+
+    // Init Ladda Plugin on buttons
+    Ladda.bind('.ladda-button', {
+      timeout: 3000
+    });
+
+    // Bind progress buttons and simulate loading progress. Still requires ".ladda-button" class.
+    Ladda.bind('.progress-button', {
+      callback: function(instance) {
+        var progress = 0;
+        var interval = setInterval(function() {
+          progress = Math.min(progress + Math.random() * 0.1, 1);
+          instance.setProgress(progress);
+
+          if (progress === 1) {
+            instance.stop();
+            clearInterval(interval);
+          }
+        }, 200);
+      }
+    });
+
+    // JQUERY MASK
+    //////////////////
+
+    // Init jQuery masked inputs
+    $('#maskedDate').mask('99/99/9999');
+    $('#maskedTime').mask('99:99:99');
+    $('#maskedDatetime').mask('99/99/9999 99:99:99');
+    $('#maskedZip').mask('99999-999');
+    $('#maskedPhone').mask('(999) 999-9999');
+    $("#maskedMoney").mask("999,999,999.999");
+    $("#maskedID").mask("99-9999999");
+    $("#maskedSSN").mask("999-99-9999");
+    $("#maskedScript").mask("~9.99 ~9.99 999");
+    $("#maskedCustom").mask("9.99.999.9999");
+
+    // TAG MANAGER
+    //////////////////
+
+    // Init jQuery Tags Manager 
+    $("#tagmanager").tagsManager({
+      tagsContainer: '.tags', // set tag container
+      tagClass: 'tm-tag-primary', // set tag contextual
+      prefilled: ["Tag 1", "Tag 2", "Tag 3"], // set initial tags
+    });
+
+  });
+  </script>
+
+
+</body>
+
+</html>

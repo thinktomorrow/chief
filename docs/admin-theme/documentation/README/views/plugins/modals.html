@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link href="../../vendor/plugins/magnific/magnific-popup.css" rel="stylesheet" type="text/css" >
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Modals/Popups </a>
+                                <ul class="collapse">
+                                    <li class="active"><a href="#modals-magnific" data-toggle="tab">Magnific</a>
+                                    </li>
+                                    <li><a href="#modals-bootbox" data-toggle="tab">BootBox</a>
+                                    </li>
+                                    <li><a href="#modals-pnotify" data-toggle="tab">PNotify</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="charts-highcharts.html"> Charts </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+
+                        <!---------------------
+                           MODALS
+                        ----------------------->
+
+                        <!-- MODALS - MAGNIFIC -->
+                        <div class="tab-pane fade in active" id="modals-magnific" role="tabpanel">
+                            <h3 id="" class="page-header">Modals - Magnific Popup </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Magnific Popup is a responsive lightbox & dialog script with focus on performance and providing best experience for the user on any device.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Magnific Popup</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Dmitry Semenov</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://dimsemenov.com/plugins/magnific-popup/">http://dimsemenov.com/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/dimsemenov/Magnific-Popup/">dimsemenov/Magnific/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/magnific/magnific-popup.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; &gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/magnific/jquery.magnific-popup.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+                                <!-- Basic Configuration -->
+                                <h2>Initializing a popup</h2>
+                                <p>Popup initialization code should be executed after document ready, for example:</p>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(document).ready(function() {
+  $(&#39;.image-link&#39;).magnificPopup({type:&#39;image&#39;});
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Init - Method 1 -->
+                                <h2>Method 1: From an HTML element</h2>
+                                <p>The simplest way to initilize a Magnific Popup</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a class="magnific-link btn btn-primary" href="../../assets/img/stock/1.jpg">Open popup</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;a class=&quot;magnific-link btn btn-primary&quot; href=&quot;path-to-image.jpg&quot;&gt;Open popup&lt;/a&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.magnific-link&#39;).magnificPopup({ 
+  type: &#39;image&#39;
+  // other options
+  // gallery:{enabled:true}
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Init - Method 2 -->
+                                <h2>Method 2: From a group of elements</h2>
+                                <p>Note: This method does not enable gallery mode, each item will be opened as a single popup</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div class="magnific-container">
+                                      <a class="btn btn-primary mr10" href="../../assets/img/stock/1.jpg">Open popup 1</a>
+                                      <a class="btn btn-primary mr10" href="../../assets/img/stock/2.jpg">Open popup 2</a>
+                                      <a class="btn btn-primary" href="../../assets/img/stock/3.jpg">Open popup 3</a>
+                                    </div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;magnific-container&quot;&gt;
+  &lt;a class=&quot;btn btn-primary&quot; href=&quot;assets/img/stock/1.jpg&quot;&gt;Open popup 1&lt;/a&gt;
+  &lt;a class=&quot;btn btn-primary&quot; href=&quot;assets/img/stock/2.jpg&quot;&gt;Open popup 2&lt;/a&gt;
+  &lt;a class=&quot;btn btn-primary&quot; href=&quot;assets/img/stock/3.jpg&quot;&gt;Open popup 3&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.magnific-container&#39;).magnificPopup({
+  delegate: &#39;a&#39;, // child items selector, by clicking on it popup will open
+  type: &#39;image&#39;
+  // other options
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Init - Method 3 -->
+                                <h2>Method 3: From a group of Thumbnails</h2>
+                                <p>Note: This method does not enable gallery mode, each item will be opened as a single popup</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div class="magnific-gallery">
+                                      <a href="../../assets/img/stock/1.jpg" title=""><img src="../../assets/img/stock/1.jpg" width="131" height="87"></a>
+                                      <a href="../../assets/img/stock/2.jpg" title=""><img src="../../assets/img/stock/2.jpg" width="131" height="87"></a>
+                                      <a href="../../assets/img/stock/3.jpg" title=""><img src="../../assets/img/stock/3.jpg" width="131" height="87"></a>
+                                    </div>
+
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div class=&quot;magnific-gallery&quot;&gt;
+  &lt;a href=&quot;../../assets/img/stock/1.jpg&quot; title=&quot;&quot;&gt;&lt;img src=&quot;../../assets/img/stock/1.jpg&quot; width=&quot;131&quot; height=&quot;87&quot;&gt;&lt;/a&gt;
+  &lt;a href=&quot;../../assets/img/stock/2.jpg&quot; title=&quot;&quot;&gt;&lt;img src=&quot;../../assets/img/stock/2.jpg&quot; width=&quot;131&quot; height=&quot;87&quot;&gt;&lt;/a&gt;
+  &lt;a href=&quot;../../assets/img/stock/3.jpg&quot; title=&quot;&quot;&gt;&lt;img src=&quot;../../assets/img/stock/3.jpg&quot; width=&quot;131&quot; height=&quot;87&quot;&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.magnific-gallery&#39;).magnificPopup({
+  delegate: &#39;a&#39;, // child items selector, by clicking on it popup will open
+  type: &#39;image&#39;,
+  gallery:{enabled:true}
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Init - Method 4 -->
+                                <h2>Method 4: From the ‘items’ option</h2>
+                                <p>The <code>items</code> option defines data for the popup item(s) and makes Magnific Popup ignore all attributes on the target DOM element. The value for <code>items</code> can be a single object or an array of objects.</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button class="magnific-item btn btn-primary" type="button">Open From Item Source</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html hidden"><pre><code class="language-html" data-lang="html">
+&lt;button class=&quot;magnific-item btn btn-primary&quot; type=&quot;button&quot;&gt;Open popup&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Example with single object
+$('.magnific-item').magnificPopup({
+    items: {
+      src: 'path-to-image-1.jpg'
+    },
+    type: 'image' // this is default type
+});
+</code></pre>
+                                </div>
+
+                                <!-- Init - Method 5 -->
+                                <h2>Method 5: Ajax Loading option</h2>
+                                <p>To create such type of popup, first of define the path to the file that you wish to display and select ajax type of the popup.</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <a href="data.html" class="magnific-ajax btn btn-primary" type="button">Show Ajax Popup</a>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html hidden"><pre><code class="language-html" data-lang="html">
+&lt;button class=&quot;magnific-item btn btn-primary&quot; type=&quot;button&quot;&gt;Open popup&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Example with single object
+$('.magnific-item').magnificPopup({
+    items: {
+      src: 'path-to-image-1.jpg'
+    },
+    type: 'image' // this is default type
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Init - Method 3 -->
+                                <h2>With Animation</h2>
+                                <p>We can add a custom animation to the modal popup by modifying how a modal is created. Several modifications are required to a popups HTML and Javascript initilization.</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button class="magnific-animate btn btn-primary" type="button">Open With Animation</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html hidden"><pre><code class="language-html" data-lang="html">
+&lt;button class=&quot;magnific-animate btn btn-primary&quot; type=&quot;button&quot;&gt;Open with Animation&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;.magnific-animate&#39;).magnificPopup({ 
+    items: { // Set item source
+      src: &#39;../../assets/img/stock/1.jpg&#39;
+    },
+    type: &#39;image&#39;, // set source type (image default)
+    removalDelay: 500, // delay removal by X to allow out-animation,
+    callbacks: {
+      beforeOpen: function(e) {
+          // Set Magnific Animation
+          var Animation = &quot;mfp-rotateUp&quot;;
+          this.st.mainClass = Animation;
+
+          // Inform content container there is an animation
+          this.contentContainer.addClass(&#39;mfp-with-anim&#39;);
+      },
+    }
+});
+
+// Animations classes available:
+// mfp-flipInY, mfp-flipInX
+// mfp-zoomIn, mfp-zoomOut
+// mfp-rotateUp, mfp-rotateDown, mfp-rotateLeft, mfp-rotateRight
+// mfp-slideUp, mfp-slideDown, mfp-slideLeft, mfp-slideRight
+// mfp-sign, mfp-newspaper
+// mfp-fullscale, mfp-with-fade
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://dimsemenov.com/plugins/magnific-popup/documentation.html">http://dimsemenov.com/docs</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://codepen.io/collection/nLcqo/">http://codepen.io/collection/nLcqo/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- MODALS - BOOTBOX -->
+                        <div class="tab-pane fade" id="modals-bootbox" role="tabpanel">
+                            <h3 id="" class="page-header">Modals - Bootbox </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Bootbox.js is a small JavaScript library which allows you to create programmatic dialog boxes using Bootstrap modals</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Bootbox</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Nick Payne</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://bootboxjs.com/">http://bootboxjs.com/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/makeusabrew/bootbox">makeusabrew/bootbox</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>Considered Core - &lt;script src=&quot;assets/js/utility/utility.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Init - Method 1 -->
+                                <h2 id="forms-horizontal">BootBox Alert Dialog</h2>
+                                <p>The simplest way to initilize a Bootstrap dialog Popup</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button id="some-button2" class="btn btn-primary">Open popup</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button id=&quot;some-button&quot; class=&quot;btn btn-primary&quot;&gt;Open popup&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#some-button&#39;).on(&#39;click&#39;,function() {
+    bootbox.alert(&quot;Hello world!&quot;, function() {
+      // do something
+    });
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Init - Method 1 -->
+                                <h2 id="forms-horizontal">BootBox Confirm Dialog</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button id="some-button3" class="btn btn-primary">Open popup</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button id=&quot;some-button&quot; class=&quot;btn btn-primary&quot;&gt;Open popup&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#some-button&#39;).on(&#39;click&#39;,function() {
+    bootbox.confirm(&quot;Are you sure?&quot;, function() {
+      // do something
+    });
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://bootboxjs.com/documentation.html">http://bootboxjs.com/documentation.html</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">More Examples:</th>
+                                          <td><a target="_blank" href="http://bootboxjs.com/">http://bootboxjs.com/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- MODALS - PNOTIFY -->
+                        <div class="tab-pane fade" id="modals-pnotify" role="tabpanel">
+                            <h3 id="" class="page-header">Modals - PNotify </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>JavaScript notifications for Bootstrap, jQuery UI, and the Web Notifications Draft.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>PNotify</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Sciactive</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://sciactive.github.io/pnotify/">http://sciactive.github.io/pnotify/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/sciactive/pnotify">sciactive/pnotify</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/pnotify/pnotify.custom.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Example 1 -->
+                                <h2 id="forms-horizontal">Basic Example</h2>
+                                <p>The simplest way to initilize a PNotify dialog</p>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button id="pnotify-demo1" class="btn btn-primary">Example 1</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button id=&quot;pnotify-demo&quot; class=&quot;btn btn-primary&quot;&gt;Example&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#pnotify-demo&#39;).on(&#39;click&#39;,function() {
+    bootbox.alert(&quot;Hello world!&quot;, function() {
+      // do something
+    });
+});
+</code></pre>
+                                </div>
+
+
+                                <!--  Example 2 -->
+                                <h2 id="forms-horizontal">Contextual Example</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button id="pnotify-demo2" class="btn btn-primary">Example 2</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button id=&quot;pnotify-demo&quot; class=&quot;btn btn-primary&quot;&gt;Example&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$(&#39;#pnotify-demo&#39;).on(&#39;click&#39;, function() {
+    new PNotify({
+        title: &#39;Regular Notice&#39;,
+        text: &#39;Check me out! I\&#39;m a notice.&#39;,
+        type: &#39;info&#39; // all contextuals available(info,system,warning,etc)
+    });
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Init - Method 1 -->
+                                <h2 id="forms-horizontal">Positioning "Stack" Example</h2>
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <button id="pnotify-demo3" class="btn btn-primary">Example 3</button>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;button id=&quot;pnotify-demo&quot; class=&quot;btn btn-primary&quot;&gt;Example&lt;/button&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+$('#pnotify-demo').on('click', function() {
+    var myStack = {"dir1":"down", "dir2":"right", "push":"top"}; // define new stack properties
+    new PNotify({
+        title: "Over Here",
+        text: "Check me out. I'm in a different stack.",
+        addclass: "stack-custom",
+        stack: myStack
+    })
+});
+</code></pre>
+                                </div>
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://sciactive.com/pnotify/">http://sciactive.com/pnotify/</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">More Examples:</th>
+                                          <td><a target="_blank" href="http://sciactive.com/pnotify/#demos-simple">http://sciactive.com/pnotify/#demos-simple</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+
+    <!-- External Plugins -->
+    <script src="../../vendor/plugins/magnific/jquery.magnific-popup.js"></script>
+    <script src="../../vendor/plugins/holder/holder.min.js"></script>
+    <script src="../../vendor/plugins/pnotify/pnotify.js"></script>
+
+    <!-- Doc Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+        // MAGNIFIC
+        ///////////////////
+        $('.magnific-link').magnificPopup({ 
+          type: 'image'
+        });
+
+
+        $('.magnific-container').magnificPopup({
+          delegate: 'a', // child items selector, by clicking on it popup will open
+          type: 'image',
+          gallery:{enabled:true}
+        });
+
+
+        $('.magnific-gallery').magnificPopup({
+          delegate: 'a', // child items selector, by clicking on it popup will open
+          type: 'image',
+          gallery:{enabled:true}
+        });
+
+
+        $('.magnific-item').magnificPopup({
+            items: {
+              src: '../../assets/img/stock/1.jpg'
+            },
+            type: 'image' // this is default type
+        });
+
+        $('.magnific-ajax').magnificPopup({
+          type: 'ajax'
+        });
+
+
+        $('.magnific-animate').magnificPopup({ 
+            items: { // Set item source
+              src: '../../assets/img/stock/1.jpg'
+            },
+            type: 'image', // set source type (image default)
+            removalDelay: 500, // delay removal by X to allow out-animation,
+            callbacks: {
+              beforeOpen: function(e) {
+                  // Set Magnific Animation
+                  var Animation = "mfp-rotateUp";
+                  this.st.mainClass = Animation;
+
+                  // Inform content container there is an animation
+                  this.contentContainer.addClass('mfp-with-anim');
+              },
+            }
+        });
+
+
+
+
+
+
+        // BOOTBOX
+        ///////////////////
+        $('#some-button2').on('click',function() {
+            bootbox.alert("Hello world!", function() {
+              // Example.show("Hello world callback");
+            });
+        });
+        $('#some-button3').on('click',function() {
+            bootbox.confirm("Are you sure?", function() {
+              // Example.show("Hello world callback");
+            });
+        });  
+
+
+
+        // PNOTIFY
+        ///////////////////
+        $('#pnotify-demo1').on('click', function() {
+            new PNotify({
+                title: 'Regular Notice',
+                text: 'Check me out! I\'m a notice.'
+            })
+        });
+        $('#pnotify-demo2').on('click', function() {
+            new PNotify({
+                title: 'Regular Notice',
+                text: 'Check me out! I\'m a notice.',
+                type: 'info' // all contextuals available(info,system,warning,etc)
+            })
+        });
+        $('#pnotify-demo3').on('click', function() {
+            var myStack = {"dir1":"down", "dir2":"right", "push":"top"};
+            new PNotify({
+                title: "Over Here",
+                text: "Check me out. I'm in a different stack.",
+                addclass: "stack-custom",
+                stack: myStack,
+                type: 'warning'
+            })
+        });
+
+
+
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

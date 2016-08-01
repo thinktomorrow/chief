@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Charts </a>
+                                <ul class="collapse">
+                                    <li><a href="charts-highcharts.html">HighCharts</a>
+                                    </li>
+                                    <li><a href="charts-c3.html">C3/D3</a>
+                                    </li>
+                                    <li class="active"><a href="charts-flot.html">Flot</a>
+                                    </li>
+                                    <li><a href="charts-sparklines.html">SparkLines</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+
+                        <!---------------------
+                           CHARTS
+                        ----------------------->
+
+
+                        <!-- CHARTS - FLOT -->
+                        <div class="tab-pane fade active in" id="charts-flot" role="tabpanel">
+                            <h3 id="" class="page-header">Charts - Flot </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>Create interactive charts easily for your web projects.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>Flot</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Ole Laursen/David Schnur</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://www.flotcharts.org/">http://www.flotcharts.org/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/flot/flot">flot/flot</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>None Required</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/jqueryflot/jquery.flot.min.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code> Flot has many addons, check official documentation for detailed usage of what's required </code>
+                                </div>
+
+
+                                <!-- Spline Chart-->
+                                <h2 id="forms-horizontal">Basic Spline Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-spline" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-spline&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [];
+for (var i = 0; i < 14; i += 0.5) {
+    d1.push([i, Math.sin(i)]);
+}
+
+// Define Grid Style/Options
+var Grid = {
+    grid: {
+        show: true,
+        aboveData: true,
+        color: &quot;#bbbbbb&quot;,
+        labelMargin: 15,
+        axisMargin: 0,
+        borderWidth: 0,
+        borderColor: null,
+        minBorderMargin: 5,
+        clickable: true,
+        hoverable: true,
+        autoHighlight: true,
+        mouseActiveRadius: 20,
+    },
+    tooltip: true,
+    //activate tooltip
+    tooltipOpts: {
+        content: &quot;%x : %y.0&quot;,
+        shifts: {
+            x: -30,
+            y: -50
+        },
+        defaultTheme: false
+    }
+}
+
+// Plot Flot Chart
+$.plot(&quot;#flot-spline&quot;, [{
+    data: d1,
+    lines: {
+        show: true,
+        fill: true
+    },
+    color: &quot;#4a89dc&quot;
+}], Grid);
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Bar Chart -->
+                                <h2 id="forms-horizontal">Basic Bar Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-bar" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-bar&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [
+    [0, 10],
+    [4, 8],
+    [8, 4],
+    [12, 22],
+    [16, 25],
+    [20, 14],
+    [24, 10],
+    [28, 16],
+    [32, 10],
+    [36, 8],
+    [40, 10]
+];
+var d2 = [
+    [1, 7],
+    [5, 12],
+    [9, 19],
+    [13, 9],
+    [17, 11],
+    [21, 33],
+    [25, 4],
+    [29, 25],
+    [33, 7],
+    [37, 12],
+    [41, 14]
+];
+var d3 = [
+    [2, 12],
+    [6, 19],
+    [10, 10],
+    [14, 4],
+    [18, 18],
+    [22, 25],
+    [26, 18],
+    [30, 11],
+    [34, 12],
+    [38, 19],
+    [42, 18]
+];
+
+// Define Grid Style/Options
+var Grid = {
+    grid: {
+        show: true,
+        aboveData: true,
+        color: &quot;#bbbbbb&quot;,
+        labelMargin: 15,
+        axisMargin: 0,
+        borderWidth: 0,
+        borderColor: null,
+        minBorderMargin: 5,
+        clickable: true,
+        hoverable: true,
+        autoHighlight: true,
+        mouseActiveRadius: 20,
+    },
+    tooltip: true,
+    //activate tooltip
+    tooltipOpts: {
+        content: &quot;%x : %y.0&quot;,
+        shifts: {
+            x: -30,
+            y: -50
+        },
+        defaultTheme: false
+    }
+}
+
+// Plot Flot Chart
+$.plot("#flot-bar", [{
+    data: d1,
+    bars: {
+        show: true,
+        fill: 1,
+        fillColor: {
+            colors: [{
+                opacity: 0.8
+            }, {
+                opacity: 1
+            }]
+        }
+    },
+    color: &quot;#F6BB42&quot;
+}, {
+    data: d2,
+    bars: {
+        show: true,
+        fill: 1,
+        fillColor: {
+            colors: [{
+                opacity: 0.8
+            }, {
+                opacity: 1
+            }]
+        }
+    },
+    color: &quot;#4A89DC&quot;
+}, {
+    data: d3,
+    bars: {
+        show: true,
+        fill: 1,
+        fillColor: {
+            colors: [{
+                opacity: 0.8
+            }, {
+                opacity: 1
+            }]
+        }
+    },
+    color: &quot;#3BAFDA&quot;
+}], Grid);
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Step Chart -->
+                                <h2 id="forms-horizontal">Basic Step Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-step" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-step&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [];
+for (var i = 0; i < 14; i += 0.5 + Math.random()) {
+    d1.push([i, Math.sqrt(2 * i + Math.sin(i) + 5)]);
+}
+
+// Define Grid Style/Options
+var Grid = {
+    grid: {
+        show: true,
+        aboveData: true,
+        color: &quot;#bbbbbb&quot;,
+        labelMargin: 15,
+        axisMargin: 0,
+        borderWidth: 0,
+        borderColor: null,
+        minBorderMargin: 5,
+        clickable: true,
+        hoverable: true,
+        autoHighlight: true,
+        mouseActiveRadius: 20,
+    },
+    tooltip: true,
+    //activate tooltip
+    tooltipOpts: {
+        content: &quot;%x : %y.0&quot;,
+        shifts: {
+            x: -30,
+            y: -50
+        },
+        defaultTheme: false
+    }
+}
+
+// Plot Flot Chart
+$.plot(&quot;#flot-step&quot;, [{
+    data: d1,
+    lines: {
+        show: true,
+        steps: true
+    },
+    color: &quot;#4A89DC&quot;
+}], Grid);
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Line Chart -->
+                                <h2 id="forms-horizontal">Basic Line Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-line" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-line&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [];
+for (var i = 0; i < 14; i += 0.5) {
+    d1.push([i, Math.sqrt(i)]);
+}
+
+// Define Grid Style/Options
+var Grid = {
+    grid: {
+        show: true,
+        aboveData: true,
+        color: &quot;#bbbbbb&quot;,
+        labelMargin: 15,
+        axisMargin: 0,
+        borderWidth: 0,
+        borderColor: null,
+        minBorderMargin: 5,
+        clickable: true,
+        hoverable: true,
+        autoHighlight: true,
+        mouseActiveRadius: 20,
+    },
+    tooltip: true,
+    //activate tooltip
+    tooltipOpts: {
+        content: &quot;%x : %y.0&quot;,
+        shifts: {
+            x: -30,
+            y: -50
+        },
+        defaultTheme: false
+    }
+}
+
+// Plot Flot Chart
+$.plot(&quot;#flot-line&quot;, [{
+    data: d1,
+    lines: {
+        show: true
+    },
+    points: {
+        show: true
+    },
+    color: &quot;#4A89DC&quot;
+}], Grid);
+</code></pre>
+                                </div>
+
+
+
+
+                                <!-- Area Chart -->
+                                <h2 id="forms-horizontal">Basic Area Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-area" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-area&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [];
+for (var i = 0; i &lt; 14; i += 0.1) {
+    d1.push([i, Math.sqrt(i * 10)]);
+}
+
+// Define Grid Style/Options
+var Grid = {
+    grid: {
+        show: true,
+        aboveData: true,
+        color: &quot;#bbbbbb&quot;,
+        labelMargin: 15,
+        axisMargin: 0,
+        borderWidth: 0,
+        borderColor: null,
+        minBorderMargin: 5,
+        clickable: true,
+        hoverable: true,
+        autoHighlight: true,
+        mouseActiveRadius: 20,
+    },
+    tooltip: true,
+    //activate tooltip
+    tooltipOpts: {
+        content: &quot;%x : %y.0&quot;,
+        shifts: {
+            x: -30,
+            y: -50
+        },
+        defaultTheme: false
+    }
+}
+
+// Plot Flot Chart
+$.plot(&quot;#flot-area&quot;, [{
+    data: d1,
+    lines: {
+        show: true,
+        fill: true
+    },
+    color: &quot;#4A89DC&quot;
+}], Grid);
+</code></pre>
+                                </div>
+
+
+                                <!-- Matrix Chart -->
+                                <h2 id="forms-horizontal">Basic Matrix Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-matrix" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-matrix&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [];
+for (var i = 0; i &lt; 14; i += 0.6) {
+    d1.push([i, Math.cos(i)]);
+}
+var d2 = [];
+for (var i = 0; i &lt; 14; i += 0.6) {
+    d2.push([i, Math.sin(i)]);
+}
+
+// Define Grid Style/Options
+var Grid = {
+    grid: {
+        show: true,
+        aboveData: true,
+        color: &quot;#bbbbbb&quot;,
+        labelMargin: 15,
+        axisMargin: 0,
+        borderWidth: 0,
+        borderColor: null,
+        minBorderMargin: 5,
+        clickable: true,
+        hoverable: true,
+        autoHighlight: true,
+        mouseActiveRadius: 20,
+    },
+    tooltip: true,
+    //activate tooltip
+    tooltipOpts: {
+        content: &quot;%x : %y.0&quot;,
+        shifts: {
+            x: -30,
+            y: -50
+        },
+        defaultTheme: false
+    }
+}
+
+// Plot Flot Chart
+$.plot(&quot;#flot-matrix&quot;, [{
+    data: d1,
+    points: {
+        show: true,
+        radius: 4
+    },
+    lines: {
+        show: true
+    },
+    color: &quot;#4A89DC&quot;
+}, {
+    data: d2,
+    points: {
+        show: true,
+        radius: 4
+    },
+    lines: {
+        show: true
+    },
+    color: &quot;#3BAFDA&quot;,
+}], Grid);
+</code></pre>
+                                </div> 
+
+
+
+
+
+
+                                <!-- Donut Chart -->
+                                <h2 id="forms-horizontal">Basic Donut Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-donut" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-donut&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [
+	{data: 5, color: &quot;#4A89DC&quot;},
+	{data: 15, color: &quot;#3BAFDA&quot;},
+	{data: 10, color: &quot;#F6BB42&quot;}
+]
+
+// Plot Flot Chart
+$.plot(&#39;#flot-donut&#39;, d1, {
+    series: {
+        pie: {
+            innerRadius: 0.5,
+            show: true,
+        }
+    },
+});
+</code></pre>
+                                </div> 
+
+
+
+
+
+                                <!-- Pie Chart -->
+                                <h2 id="forms-horizontal">Basic Pie Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="flot-pie" style="height: 220px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;flot-pie&quot; style=&quot;height: 220px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Define Dataset
+var d1 = [
+	{data: 6, color: &quot;#4A89DC&quot;},
+	{data: 4, color: &quot;#3BAFDA&quot;},
+	{data: 3, color: &quot;#F6BB42&quot;},
+	{data: 4, color: &quot;#967ADC&quot;}
+]
+
+// Plot Flot Chart
+$.plot(&#39;#flot-pie&#39;, d1, {
+    series: {
+        pie: {
+            innerRadius: 0,
+            show: true,
+        }
+    },
+});
+</code></pre>
+                                </div> 
+
+
+
+
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="https://github.com/flot/flot/blob/master/API.md">https://github.com/flot/flot/blob/master/API.md</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://www.flotcharts.org/flot/examples/">http://www.flotcharts.org/flot/examples/</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+    <!-- Documentation Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- Flot Charts -->
+    <script src="../../vendor/plugins/jqueryflot/jquery.flot.min.js"></script>
+    <script src="../../vendor/plugins/jqueryflot/jquery.flot.resize.min.js"></script>
+    <script src="../../vendor/plugins/jqueryflot/jquery.flot.pie.min.js"></script>
+    <script src="../../vendor/plugins/jqueryflot/jquery.flot.tooltip.min.js"></script>
+
+    <!-- Flot Compiled JS -->
+    <script src="../resources/js/flot.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+        // This page contains more Initilization Javascript than normal.
+        // As a result it has its own js page. See charts.js for more info
+        FlotCharts.init();
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

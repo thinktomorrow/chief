@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <title>AdminDesigns - A Responsive HTML5 Admin UI Framework</title>
+    <meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
+    <meta name="description" content="AdminDesigns - A Responsive HTML5 Admin UI Framework">
+    <meta name="author" content="AdminDesigns">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font CSS (Via CDN) -->
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/c3charts/c3.min.css">
+
+    <!-- Docs CSS -->
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/footable/css/footable.core.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/plugins/highlight/styles/github.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" type="text/css" href="../../assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/styles.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../../assets/favicon.ico">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="min-height: 1500px;" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+
+
+    <!-- Navbar -->
+   <nav class="navbar docs-navbar bg-light">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html"><b>AdminDesigns</b> Framework</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+
+        <!-- navbar right -->
+        <div class="navbar-right">
+              <a type="button" target="_blank" href="http://support.admindesigns.com" class="btn btn-info dark btn-gradient navbar-btn btn-sm br2">Support</a>
+        </div>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+              <li><a href="../../index.html">Documentation</a></li>
+              <li class="active"><a href="../plugins.html" class="ph25">Plugins</a></li>
+              <li><a href="../changelog.html">Changelog</a></li>
+              <li class="hidden"><a href="templates.html">Templates</a></li>
+              <li class=""><a href="../tutorials/tutorial_less.html">Tutorials</a></li>
+              <li class="dropdown hidden">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+
+    <!-- Doc Container -->
+    <div class="container">
+
+        <div class="docs-container mt40" id="docs">
+
+            <div class="row table-layout">
+
+                <!-- Documentation Nav -->
+                <div class="col-xs-3 left-col">
+
+                    <span id="left-col-toggle" class="fa fa-navicon"></span>
+
+                    <!-- Navspy wrapper -->
+                    <div id="nav-spy" class="posr">
+
+                        <!-- version info list group -->
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-header br-n">
+                                Current Version
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-primary">1.5</span> Theme Core
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-info">3.32</span> Bootstrap
+                            </li>
+                            <li class="list-group-item">
+                                <span class="badge badge-warning">3.21</span> Font-Awesome
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Admin Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-panels.html"> Admin Panels </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="admin-forms.html"> Admin Forms</a>
+                            </li>
+                        </ul>
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                               3rd Party Plugin Menu
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="../plugins.html"> Directory </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="modals.html"> Modals/Popups </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="forms.html"> Forms </a>
+                            </li>
+                            <li class="list-group-item active">
+                                <a class="sign-toggle"> Charts </a>
+                                <ul class="collapse">
+                                    <li><a href="charts-highcharts.html">HighCharts</a>
+                                    </li>
+                                    <li class="active"><a href="charts-c3.html">C3/D3</a>
+                                    </li>
+                                    <li><a href="charts-flot.html">Flot</a>
+                                    </li>
+                                    <li><a href="charts-sparklines.html">SparkLines</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="data.html"> Data </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="editors.html"> Editors </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a class="" href="maps.html"> Maps </a>
+                            </li>
+                            <li class="list-group-item hidden">
+                                <a class="" href="utility.html"> Utility </a>
+                            </li>
+                        </ul>
+
+
+                        <!-- list group menu accordion -->
+                        <ul class="list-group list-group-accordion">
+                            <li class="list-group-item list-group-header br-n">
+                                Further Documentation
+                            </li>
+                            <li class="list-group-item">
+                                <a href="../../index.html"> Go To General Docs </a>
+                            </li>
+                        </ul>
+                        <a href="#" class="scrollup"><span class="fa fa-level-up"></span></a>
+                    </div>
+
+
+                </div>
+
+                <!-- Documentation Content -->
+                <div class="col-xs-9 center-col va-t">
+
+                    <div id="docs-content" class="tab-content pn">
+
+
+
+                        <!---------------------
+                           CHARTS
+                        ----------------------->
+
+                        <!-- CHARTS - C3 CHARTS -->
+                        <div class="tab-pane fade active in" id="charts-c3" role="tabpanel">
+                            <h3 id="" class="page-header">Charts - C3 Charts </h3>
+
+                            <div class="bs-docs-section">
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Plugin Information</h2>
+                                <p>A D3-based reusable chart library</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Plugin Name:</th>
+                                          <td>C3 CHARTS</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Author:</th>
+                                          <td>Masayuki Tanaka</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">License:</th>
+                                          <td>MIT licensed</td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Website:</th>
+                                          <td><a target="_blank" href="http://c3js.org/">http://c3js.org/</a></td>
+                                        </tr>
+                                        <tr class="">
+                                          <th scope="row">Git Branch:</th>
+                                          <td><a target="_blank" href="https://github.com/masayuki0812/c3">masayuki0812/c3</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Dependencies:</th>
+                                          <td><img title="jquery logo" src="../resources/img/jquery-logo-thumb.png" width="97" height="22"> </td> 
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                <div class="bs-example required-css">
+                                    <code>&lt;link href=&quot;vendor/plugins/c3charts/c3.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;</code>
+                                </div>
+                                <div class="bs-example required-js pb25">
+                                    <code>&lt;script src=&quot;vendor/plugins/c3charts/d3.min.js&quot;&gt;&lt;/script&gt;</code><br>
+                                    <code>&lt;script src=&quot;vendor/plugins/c3charts/c3.min.js&quot;&gt;&lt;/script&gt;</code>
+                                </div>
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Area Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="area-chart" style="height: 250px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;area-chart&quot; style=&quot;height: 250px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Area Chart
+var areaChart = c3.generate({
+    bindto: &#39;#area-chart&#39;,
+    color: {
+      pattern: Colors,
+    },
+    padding: {
+    left: 30,
+      right: 15,
+      top: 0,
+      bottom: 0,
+   },
+    data: {
+        columns: [
+            [&#39;data1&#39;, 300, 350, 300, 0, 0, 0],
+            [&#39;data2&#39;, 130, 100, 140, 200, 150, 50]
+        ],
+        types: {
+            data1: &#39;area&#39;,
+            data2: &#39;area-spline&#39;
+        }
+    }
+});
+</code></pre>
+                                </div>
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Line Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="line-chart" style="height: 250px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;line-chart&quot; style=&quot;height: 250px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Line Chart
+var lineChart = c3.generate({
+  bindto: &#39;#line-chart&#39;,
+  color: {
+    pattern: Colors,
+  },
+  point: {
+    r: 3
+  },
+  padding: {
+    left: 30,
+    right: 30,
+    top: 0,
+    bottom: 0,
+  },
+  data: {
+    columns: [
+      [&#39;data1&#39;, 30, 200, 100, 400, 150, 250],
+      [&#39;data2&#39;, 50, 20, 10, 40, 15, 25]
+    ],
+    axes: {
+      data1: &#39;y&#39;,
+      data2: &#39;y2&#39;,
+    }
+  },
+  axis: {
+    x: {
+      label: &#39;X Label&#39;
+    },
+    y: {
+      label: {
+        text: &#39;Y Axis Label&#39;,
+        position: &#39;outer-middle&#39;
+      }
+    },
+    y2: {
+      show: true,
+      label: {
+        text: &#39;Y2 Axis Label&#39;,
+        position: &#39;outer-middle&#39;
+      }
+    }
+  }
+});
+</code></pre>
+                                </div>    
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Bar Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="bar-chart" style="height: 250px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;bar-chart&quot; style=&quot;height: 250px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Bar Chart
+var barChart = c3.generate({
+    bindto: &#39;#bar-chart&#39;,
+    color: {
+      pattern: Colors,
+    },
+    padding: {
+    left: 30,
+      right: 15,
+      top: 0,
+      bottom: 0,
+   },
+    data: {
+        columns: [
+            [&#39;data1&#39;, 30, 200, 100, 400, 150, 250],
+            [&#39;data2&#39;, 130, 100, 140, 200, 150, 50]
+        ],
+        type: &#39;bar&#39;
+    },
+    bar: {
+        width: {
+            ratio: 0.5 // this makes bar width 50% of length between ticks
+        }
+    }
+});
+</code></pre>
+                                </div>          
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Step Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="step-chart" style="height: 250px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;step-chart&quot; style=&quot;height: 250px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Step Chart
+var stepChart = c3.generate({
+    bindto: &#39;#step-chart&#39;,
+    color: {
+      pattern: Colors,
+    },
+    padding: {
+      left: 30,
+      right: 15,
+      top: 0,
+      bottom: 0,
+   },
+    data: {
+        columns: [
+            [&#39;data1&#39;, 300, 350, 300, 0, 0, 100],
+            [&#39;data2&#39;, 130, 100, 140, 200, 150, 50]
+        ],
+        types: {
+            data1: &#39;step&#39;,
+            data2: &#39;area-step&#39;
+        }
+    }
+});
+</code></pre>
+                                </div>       
+
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Donut Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="donut-chart" style="height: 250px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;donut-chart&quot; style=&quot;height: 250px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Donut Chart
+var donutChart = c3.generate({
+    bindto: &#39;#donut-chart&#39;,
+    color: {
+      pattern: Colors,
+    },
+    data: {
+        columns: [
+            [&#39;data1&#39;, 30],
+            [&#39;data2&#39;, 120],
+        ],
+        type : &#39;donut&#39;,
+        onclick: function (d, i) { console.log(&quot;onclick&quot;, d, i); },
+        onmouseover: function (d, i) { console.log(&quot;onmouseover&quot;, d, i); },
+        onmouseout: function (d, i) { console.log(&quot;onmouseout&quot;, d, i); }
+    },
+    donut: {
+        title: &quot;Iris Petal Width&quot;
+    }
+});
+</code></pre>
+                                </div>     
+
+
+
+
+                                <!-- Plugin Example 1 -->
+                                <h2 id="forms-horizontal">Basic Pie Chart</h2>
+                                
+                                <div class="bs-example" data-example-id="contextual-panels">
+                                    <div id="pie-chart" style="height: 250px; width: 100%;"></div>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight mn hljs-label-html"><pre><code class="language-html" data-lang="html">
+&lt;div id=&quot;pie-chart&quot; style=&quot;height: 250px; width: 100%;&quot;&gt;&lt;/div&gt;
+</code></pre>
+                                </div>
+                                <div class="zero-clipboard"><span class="btn-clipboard">Copy</span>
+                                </div>
+<div class="highlight hljs-label-js"><pre><code class="language-js" data-lang="js">
+// Pie Chart
+var pieChart = c3.generate({
+    bindto: &#39;#pie-chart&#39;,
+    color: {
+      pattern: Colors,
+    },
+    data: {
+        columns: [
+            [&#39;data1&#39;, 30],
+            [&#39;data2&#39;, 120],
+        ],
+        type : &#39;pie&#39;,
+        onclick: function (d, i) { console.log(&quot;onclick&quot;, d, i); },
+        onmouseover: function (d, i) { console.log(&quot;onmouseover&quot;, d, i); },
+        onmouseout: function (d, i) { console.log(&quot;onmouseout&quot;, d, i); }
+    }
+});
+</code></pre>
+                                </div>     
+
+                                <!-- Plugin Information -->
+                                <h2 id="forms-horizontal">Extended Information</h2>
+                                <p> For more detailed documentation you should refer to the plugins <b>original</b> documentation. Several additional resources have been listed below which contain further useful information.</p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                      <colgroup>
+                                        <col class="col-xs-1">
+                                        <col class="col-xs-7">
+                                      </colgroup>
+                                      <thead class="hidden">
+                                        <tr>
+                                          <th>Class</th>
+                                          <th>Description</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row">Documentation:</th>
+                                          <td><a target="_blank" href="http://c3js.org/reference.html">http://c3js.org/reference.html</a></td>
+                                        </tr>
+                                        <tr>
+                                          <th scope="row">Advanced Examples:</th>
+                                          <td><a target="_blank" href="http://c3js.org/examples.html">http://c3js.org/examples.html</a></td>
+                                        </tr>
+
+                                      </tbody>
+                                    </table>
+                                  </div>
+
+
+                                <!-- end bs-doc-section -->
+                            </div>
+                        </div>
+   
+
+                        <!-- RETURN TO TOP BUTTON -->
+                        <div class="top-wrapper clearfix">
+                            <a href="#" class="return-top">Return to Top</a>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    /*demo chart styling*/
+      .c3 {}
+
+    /* tick color */
+    .c3 .tick {
+        fill: #AAA;
+    }
+    
+    /* axis color */
+    .c3 line,
+    .c3 path {
+        stroke: #BBB;
+    }
+    
+    /*axis label color*/
+    .c3 .c3-axis-x-label,
+    .c3 .c3-axis-y-label {
+        fill: #AAA;
+    }
+    
+    /*legend label text color*/
+    .c3-legend-item {
+        fill: #888;
+        font-size: 14px;
+    }
+    </style>
+
+
+    <!-- jQuery JS -->
+    <script src="../../vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script src="../../vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+
+    <!-- Documentation Plugins -->
+    <script src="../../vendor/plugins/footable/js/footable.all.min.js"></script>
+    <script src="../../vendor/plugins/footable/js/footable.paginate.min.js"></script>
+    <script src="../../vendor/plugins/highlight/highlight.pack.js"></script>
+
+    <!-- C3 Charts -->
+    <script src="../../vendor/plugins/c3charts/d3.min.js"></script>
+    <script src="../../vendor/plugins/c3charts/c3.min.js"></script>
+
+    <!-- Demo C3 Charts -->
+    <script src="../resources/js/d3.js"></script>
+
+    <!-- Page JS -->
+    <script src="../../assets/js/utility/utility.js"></script>
+    <script src="../resources/js/docs.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+
+        Docs.init();
+
+
+        // This page contains more Initilization Javascript than normal.
+        // As a result it has its own js page. See charts.js for more info
+        D3Charts.init();
+
+
+    });
+    </script>
+
+
+</body>
+
+</html>

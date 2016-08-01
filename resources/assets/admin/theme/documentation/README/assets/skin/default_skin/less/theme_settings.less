@@ -1,0 +1,308 @@
+
+// Define base file path
+// ----------------------------
+@base-path:	 "../../base";
+
+
+// Define included Animations
+// ----------------------------
+@import "@{base-path}/animate.less"; // core animation styles
+@animate-flips:       true;
+@animate-slides:      true; 
+@animate-zooms:       true; 
+@animate-fades:       true; 
+@animate-fades-big:   false; 
+@animate-bounces:     false; 
+@animate-rotates:     false; 
+@animate-specials:    false; 
+@animate-lightspeed:  false; 
+@animate-attention:   false; 
+
+// All Animation styles have been listed above
+// so that you may uncomment/remove those
+// that you do not need. This will help reduce
+// theme.css overall file size
+
+
+// Define included Fonts
+// -----------------------------------
+@base-fonts-path:  "../../base/fonts";
+@import "@{base-fonts-path}/admindesigns.less"; // added v1.3.1
+@import "@{base-fonts-path}/glyphicons.less";
+@import "@{base-fonts-path}/font-awesome.less";
+// @import "@{base-fonts-path}/glyphicons-pro.less";
+// @import "@{base-fonts-path}/octicons.less";
+// @import "@{base-fonts-path}/stateface.less";
+// @import "@{base-fonts-path}/zocial.less";
+// @import "@{base-fonts-path}/open-sans.less"; // using google fonts cdn
+
+// All Font libraries have been listed above
+// so that you may uncomment/remove those
+// that you do not need. Will drastically 
+// reduce theme.css overall file size
+
+
+// Define included Plugin Styles
+// -------------------------------------
+@plugins-path:	 "../../base/plugins";
+@import "@{plugins-path}/circlegraphs.less";
+@import "@{plugins-path}/ckeditor.less";
+@import "@{plugins-path}/countdown.less";
+@import "@{plugins-path}/datatables.less";
+@import "@{plugins-path}/dropzone.less";
+@import "@{plugins-path}/expose.less";
+@import "@{plugins-path}/fileupload.less";
+@import "@{plugins-path}/flot.less";
+@import "@{plugins-path}/fullcalendar.less";
+@import "@{plugins-path}/gmap.less";
+@import "@{plugins-path}/highcharts.less"; // required for many demo widgets
+@import "@{plugins-path}/jqueryspinner.less";
+@import "@{plugins-path}/jvectormap.less";
+@import "@{plugins-path}/magnific.less"; 
+@import "@{plugins-path}/markitup.less";
+@import "@{plugins-path}/mapplic.less"; 
+@import "@{plugins-path}/multiselect.less"; // considered core plugin
+@import "@{plugins-path}/nestable.less";
+@import "@{plugins-path}/pickers.less"; 
+@import "@{plugins-path}/pnotify.less"; 
+@import "@{plugins-path}/rangeslider.less";
+@import "@{plugins-path}/summernote.less";
+@import "@{plugins-path}/tagmanager.less";
+@import "@{plugins-path}/treeview.less";
+@import "@{plugins-path}/datepicker.less";   // added patch v1.4
+@import "@{plugins-path}/tagsinput.less";    // added patch v1.4
+@import "@{plugins-path}/admindock.less";    // added patch v1.4
+@import "@{plugins-path}/adminmodals.less";  // added patch v1.4
+@import "@{plugins-path}/adminpanels.less";  // added patch v1.4
+
+// @import "@{base-path}/plugins/all_plugins.less"; 
+// The above import includes all theme plugin
+// stylesheets. However, they have been listed 
+// individually so that you may uncomment/remove
+// plugins that you do not need. This will help
+// reduce theme.css overall file size
+
+
+
+// Activated Skin Colors - Master Color Variables
+// ---------------------------------------------------------
+// Setting a color to false will disable the color sitewide
+// You will not be able to use the color on ANY site element
+// This can help greatly reduce theme.css overall file size
+
+@skin-primary:  true;
+@skin-success:  true;
+@skin-info:     true;
+@skin-warning:  true;
+@skin-danger:   true;
+@skin-alert:    true;
+@skin-system:   true;
+@skin-dark:     true;
+@skin-light:    true;
+
+
+// Activated Element Colors - Does not override above settings
+// ----------------------------------------------------------------------------
+// Useful when you want a color active, but don't need it on various elements
+// If the color above is "false" these per-element settings will have no effect.
+
+// Background Skin Colors
+@skin-primary-bg:  true;
+@skin-success-bg:  true;
+@skin-info-bg:     true;
+@skin-warning-bg:  true;
+@skin-danger-bg:   true;
+@skin-alert-bg:    true;
+@skin-system-bg:   true;
+@skin-dark-bg:     true;
+@skin-light-bg:    true;
+
+// Badge Skin Colors
+@skin-primary-badge:  true;
+@skin-success-badge:  true;
+@skin-info-badge:     true;
+@skin-warning-badge:  true;
+@skin-danger-badge:   true;
+@skin-alert-badge:    true;
+@skin-system-badge:   true;
+@skin-dark-badge:     true;
+@skin-light-badge:    true;
+
+// Label Skin Colors
+@skin-primary-label:  true;
+@skin-success-label:  true;
+@skin-info-label:     true;
+@skin-warning-label:  true;
+@skin-danger-label:   true;
+@skin-alert-label:    true;
+@skin-system-label:   true;
+@skin-dark-label:     true;
+@skin-light-label:    true;
+
+// Button Skin Colors
+@skin-primary-btn:  true;
+@skin-success-btn:  true;
+@skin-info-btn:     true;
+@skin-warning-btn:  true;
+@skin-danger-btn:   true;
+@skin-alert-btn:    true;
+@skin-system-btn:   true;
+@skin-dark-btn:     true;
+@skin-light-btn:    true;
+
+// Checkbox/Radio Skin Colors
+@skin-primary-checkbox:  true;
+@skin-success-checkbox:  true;
+@skin-info-checkbox:     true;
+@skin-warning-checkbox:  true;
+@skin-danger-checkbox:   true;
+@skin-alert-checkbox:    true;
+@skin-system-checkbox:   true;
+@skin-dark-checkbox:     true;
+@skin-light-checkbox:    true;
+
+// List Group Skin Colors
+@skin-primary-listgroup:  true;
+@skin-success-listgroup:  true;
+@skin-info-listgroup:     true;
+@skin-warning-listgroup:  true;
+@skin-danger-listgroup:   true;
+@skin-alert-listgroup:    true;
+@skin-system-listgroup:   true;
+@skin-dark-listgroup:     true;
+@skin-light-listgroup:    true;
+
+// Panel Skin Colors
+@skin-primary-panel:  true;
+@skin-success-panel:  true;
+@skin-info-panel:     true;
+@skin-warning-panel:  true;
+@skin-danger-panel:   true;
+@skin-alert-panel:    true;
+@skin-system-panel:   true;
+@skin-dark-panel:     true;
+@skin-light-panel:    true;
+
+// Progress Bar Skin Colors
+@skin-primary-pbar:  true;
+@skin-success-pbar:  true;
+@skin-info-pbar:     true;
+@skin-warning-pbar:  true;
+@skin-danger-pbar:   true;
+@skin-alert-pbar:    true;
+@skin-system-pbar:   true;
+@skin-dark-pbar:     true;
+@skin-light-pbar:    true;
+
+// Switch Skin Colors
+@skin-primary-switch:  true;
+@skin-success-switch:  true;
+@skin-info-switch:     true;
+@skin-warning-switch:  true;
+@skin-danger-switch:   true;
+@skin-alert-switch:    true;
+@skin-system-switch:   true;
+@skin-dark-switch:     true;
+@skin-light-switch:    true;
+
+// Table Skin Colors
+@skin-primary-table:  true;
+@skin-success-table:  true;
+@skin-info-table:     true;
+@skin-warning-table:  true;
+@skin-danger-table:   true;
+@skin-alert-table:    true;
+@skin-system-table:   true;
+@skin-dark-table:     true;
+@skin-light-table:    true;
+
+// Text Skin Colors
+@skin-primary-text:  true;
+@skin-success-text:  true;
+@skin-info-text:     true;
+@skin-warning-text:  true;
+@skin-danger-text:   true;
+@skin-alert-text:    true;
+@skin-system-text:   true;
+@skin-dark-text:     true;
+@skin-light-text:    true;
+
+// Blockquote Skin Colors
+@skin-primary-blockquote:  true;
+@skin-success-blockquote:  true;
+@skin-info-blockquote:     true;
+@skin-warning-blockquote:  true;
+@skin-danger-blockquote:   true;
+@skin-alert-blockquote:    true;
+@skin-system-blockquote:   true;
+@skin-dark-blockquote:     true;
+@skin-light-blockquote:    true;
+
+// Dropcap Skin Colors
+@skin-primary-dropcap:  true;
+@skin-success-dropcap:  true;
+@skin-info-dropcap:     true;
+@skin-warning-dropcap:  true;
+@skin-danger-dropcap:   true;
+@skin-alert-dropcap:    true;
+@skin-system-dropcap:   true;
+@skin-dark-dropcap:     true;
+@skin-light-dropcap:    true;
+
+// Alert Skin Colors
+@skin-primary-alert:  true;
+@skin-success-alert:  true;
+@skin-info-alert:     true;
+@skin-warning-alert:  true;
+@skin-danger-alert:   true;
+@skin-alert-alert:    true;
+@skin-system-alert:   true;
+@skin-dark-alert:     true;
+@skin-light-alert:    true;
+
+
+
+// Sidebar Colors Customization Settings
+// --------------------------------------
+// Only applies to the default dark skin
+// --------------------------------------
+
+
+// Sidebar Label Text
+@sb-label: #70829a;
+
+// Menu Item Links 
+@sb-links: #FFF;
+
+// Menu Item Caret
+@sb-caret: #FFF;
+
+// Open Menu Item Caret
+@sb-caret-open: @brand-primary;
+
+// 1st level menu items (top most level)
+@sb-menu-item-hover:        transparent;    // bg color on hover (unused)
+@sb-menu-border-hover:      transparent;    // border color on hover (unused)
+@sb-active-bg:              transparent;    // active item bg color (unused)
+@sb-active-border:          @transparent;   // active item border color (unused)
+@sb-active-icon:            @brand-primary; // active item icon color 
+
+// 2nd level menu items (submenus)
+@sub-menu-item-hover:       #22262c;         // bg color on hover
+@sub-menu-border-hover:     @brand-primary;  // border color on hover
+@sub-active-bg:             transparent;     // active item bg color (unused)
+@sub-active-icon:           @brand-primary;  // active item icon color 
+@sub-active-border:         @brand-primary;  // active item border color
+ 
+// 3rd level menu items (multi-level menus)
+@multi-menu-item-hover:     transparent;   // bg color on hover (unused)
+@multi-menu-border-hover:   @brand-alert;  // broder color on hover
+@multi-active-bg:           transparent;   // active item bg color (unused)
+@multi-active-icon:         #FFF;          // active item icon color 
+@multi-active-border:       @brand-alert;  // active item border color
+
+// User menu
+@sb-usermenu-bg:            #282d33; // usermenu bg color
+@sb-usermenu-bg-hover:      rgba(255, 255, 255, 0.1); // usermenu bg color:hover
+@sb-usermenu-icon:    	    #DDD; // item icon color - set "inherit" to use html color classes(".text-primary", etc)
+@sb-usermenu-icon-hover:    @brand-primary; // item icon color:hover - set "inherit" to use html color classes(".text-primary", etc)
