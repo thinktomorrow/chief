@@ -3,11 +3,14 @@
 namespace App\Exceptions;
 
 use Exception;
+use HttpResponseException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -59,7 +62,7 @@ class Handler extends ExceptionHandler
 
         if(config('app.debug')) return parent::render($request, $e);
 
-        return $this->displayError($e);
+        return $this->displayError($request, $e);
     }
 
     /**
@@ -69,10 +72,18 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $e
      * @return \Illuminate\Http\Response
      */
-    protected function displayError(Exception $e)
+    protected function displayError($request, Exception $e)
     {
-        if ($this->isUnauthorizedException($e)) {
+        if ($e instanceof HttpResponseException) {
+            return $e->getResponse();
+        } elseif ($e instanceof ModelNotFoundException) {
+            $e = new NotFoundHttpException($e->getMessage(), $e);
+        } elseif ($e instanceof AuthenticationException) {
+            return $this->unauthenticated($request, $e);
+        } elseif ($e instanceof AuthorizationException) {
             $e = new HttpException(403, $e->getMessage());
+        } elseif ($e instanceof ValidationException && $e->getResponse()) {
+            return $e->getResponse();
         }
 
         if ($this->isHttpException($e)) {
