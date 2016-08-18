@@ -20,6 +20,7 @@ class Environment extends ChiefTask implements ChiefTaskContract
         {
             echo exec('cp .env.example ' . $filename);
             $this->setApplicationKeyInEnvironmentFile($filename);
+            $this->setDebugFlag($filename);
             $this->console->comment('Creating ['.$filename.'] environment file with new application key');
         }
         else
@@ -28,14 +29,25 @@ class Environment extends ChiefTask implements ChiefTaskContract
         }
     }
 
+    private function setDebugFlag($filename)
+    {
+        $newvalue = ($filename == '.env') ? 'true' : 'false';
+
+        $this->changeValue($filename,'APP_DEBUG',$newvalue);
+    }
+
     private function setApplicationKeyInEnvironmentFile($filename)
     {
-        file_put_contents(base_path($filename), str_replace(
-            'APP_KEY='.config('app.key'),
-            'APP_KEY='.$this->generateRandomKey(),
-            file_get_contents(base_path($filename))
-        ));
+        $this->changeValue($filename,'APP_KEY',$this->generateRandomKey());
     }
+
+    private function changeValue($filename,$key,$value)
+    {
+        $content = preg_replace('#'.$key.'=[^\\n]*#',$key.'='.$value, file_get_contents(base_path($filename)));
+
+        file_put_contents(base_path($filename), $content);
+    }
+
     /**
      * Generate a random key for the application.
      *

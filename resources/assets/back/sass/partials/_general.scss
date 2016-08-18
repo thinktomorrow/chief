@@ -1,0 +1,60 @@
+.table > tbody > tr > td{
+  vertical-align:top;
+}
+
+.admin-form{
+
+  .panel-heading{
+    padding:6px 21px;
+  }
+
+  .panel-title{
+    font-size:16px;
+  }
+
+}
+
+.subtle-btn{
+  padding: 1px 13px;
+  display: inline-block;
+  background-color: #dddddd;
+  border-radius: 9px;
+  font-size: 11px;
+  cursor:pointer;
+
+  &:hover, &:focus {
+    background-color: darken($color-info, 10%);
+    color:#ffffff;
+    text-decoration: none;
+  }
+}
+
+.btn-error, a.btn-error{
+  background-color:$color-error;
+  color:#ffffff;
+  cursor:pointer;
+
+  &:hover, &:focus {
+    color: #ffffff;
+    background-color: darken($color-error, 10%);
+    text-decoration: none;
+  }
+}
+
+.form-inline{
+  display:inline-block;
+}
+
+.breadcrumb{
+  padding:8px 15px;
+}
+
+
+.navbar-brand img{
+  max-width:96%;
+}
+
+.admin-form .switch > input + label:after,
+.admin-form .switch > input:checked + label:after{
+  margin-top:-2px;
+}

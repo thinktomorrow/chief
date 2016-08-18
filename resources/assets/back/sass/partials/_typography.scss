@@ -1,0 +1,49 @@
+
+a{
+  color: $color-primary;
+
+  &:hover,&:focus,&:active{
+    color:darken($color-primary,5%);
+  }
+}
+
+.text-error{
+  color: $color-error;
+}
+
+/* row status lines - enforce color of table rows */
+.row-text-default{
+  color:#999999;
+
+  a{
+    color:#999999;
+  }
+}
+
+.row-text-danger{
+  color:$color-error;
+
+  a{
+    color:$color-error;
+  }
+}
+
+
+.subtle-remark{
+  font-size: 0.8em;
+  padding-top: 6px;
+  font-style:italic;
+  color: #bbbbbb;
+}
+
+.subtle{
+  color: #999999;
+  font-size: 0.8em;
+}
+
+a.subtle-danger:hover,
+a.subtle-danger:focus,
+a.subtle-danger:active{
+  color:#e9573f;
+  text-decoration:none;
+}

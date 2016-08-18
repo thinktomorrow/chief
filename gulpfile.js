@@ -1,16 +1,8 @@
-var elixir = require('laravel-elixir');
-
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
+/**
+ * We maintain two buildfiles: one for frontend and one for backend.
+ *
+ * By default the frontend build will be referenced from the root
+ * For building the backend assets, you should run gulp inside
+ * the ./resources/assets/back/ folder
  */
-
-elixir(function(mix) {
-    mix.sass('app.scss');
-});
+require('./resources/assets/front/gulpfile.js');

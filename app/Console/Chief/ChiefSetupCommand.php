@@ -43,7 +43,7 @@ class ChiefSetupCommand extends Command
         $tasks = [
             Environment::class,
             Composer::class,
-            //Domain::class, no domain classes for the time being
+//            Domain::class, no domain classes for the time being
         ];
 
         foreach($tasks as $task)

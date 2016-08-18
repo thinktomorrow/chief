@@ -4,9 +4,14 @@ namespace Chief\Locale;
 
 class Locale
 {
+    public static function all()
+    {
+        return config('translatable.locales');
+    }
+
     public static function getForSelect()
     {
-        $locales = config('translatable.locales');
+        $locales = self::all();
 
         // full word representations
         $names = [

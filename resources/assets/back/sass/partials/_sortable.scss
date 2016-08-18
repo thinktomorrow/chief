@@ -1,0 +1,25 @@
+/* Sortable */
+.sortable .list-group-item{
+  padding:5px 8px;
+}
+
+.sortable .current{
+  background-color:rgba($color-primary,0.1);
+}
+.sortable-chosen{
+  background-color:rgba($color-primary,0.1);
+  border:none;
+  color:transparent;
+}
+
+.sortable-ghost{
+  background-color:rgba($color-primary,0.4);
+  color:black;
+  zoom:1.1;
+}
+
+.sortable .list-group-item:hover{
+  cursor:move;
+  cursor:grab;
+  cursor:-webkit-grab;
+}

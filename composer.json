@@ -1,16 +1,19 @@
 {
-  "name": "thinktomorrow/Projectname",
-  "description": "Projectname site development",
+  "name": "thinktomorrow/Skeletor",
+  "description": "Skeletor site development",
   "keywords": ["thinktomorrow", "laravel"],
   "license": "none",
   "type": "project",
   "require": {
     "php": ">=5.5.9",
     "laravel/framework": "5.2.*",
-    "thinktomorrow/locale":"^0.0.6",
     "laravelcollective/html": "^5.2",
     "dimsav/laravel-translatable":"^5.4",
-    "bugsnag/bugsnag-laravel": "^1.6"
+    "bugsnag/bugsnag-laravel": "^1.6",
+    "intervention/image": "^2.3",
+    "thinktomorrow/locale":"^1.0",
+    "thinktomorrow/repo": "^1.0",
+    "barryvdh/laravel-debugbar": "^2.2"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -26,7 +29,7 @@
     "psr-4": {
       "App\\": "app/",
       "Chief\\" : "chief-core/",
-      "Projectname\\" : "src/"
+      "Skeletor\\" : "src/"
     },
     "files": [
       "chief-core/utils/vendors/htmlLawed.php",

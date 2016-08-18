@@ -2,74 +2,44 @@
 
 namespace Chief\Locale;
 
+use Illuminate\Http\Request;
+
 trait TranslatableController
 {
+    use TranslatableCommand;
+
     /**
-     * Update or create translatable fields for a translatable entity
-     *
-     * @param $translations
-     * @param TranslatableContract $entity
-     * @param array $keys pass the columns that need to be translated. these need to match the passed request keys
+     * @param Request $request
      */
-    protected function saveTranslations($translations, TranslatableContract $entity, array $keys)
+    protected function validateTranslationRequest(Request $request, array $rules, array $attributes = [], array $messages = [])
     {
-        $available_locales = config('translatable.locales');
-        foreach ($available_locales as $available_locale)
+        $translationrules = [];
+        $translationattributes = [];
+        $translationmessages = [];
+
+        foreach ($request->get('trans') as $locale => $trans)
         {
-            // Remove the product translation if any already exists
-            // Translation is also removed if all fields of a translation are left empty
-            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation))
+            if ($this->isCompletelyEmpty($rules, $trans))
             {
-                $entity->removeTranslation($available_locale);
                 continue;
             }
 
-            $this->updateTranslation($entity, $keys, $translation, $available_locale);
-        }
-    }
-
-    /**
-     * @param TranslatableContract $entity
-     * @param array $keys
-     * @param $translation
-     * @param $available_locale
-     */
-    protected function updateTranslation(TranslatableContract $entity, array $keys, array $translation, $available_locale)
-    {
-        $attributes = [];
-
-        foreach ($keys as $key)
-        {
-            if(isset($translation[$key]))
+            foreach($rules as $key => $rule)
             {
-                $attributes[$key] = $translation[$key];
+                $translationrules['trans.' . $locale . '.'.$key] = $rule;
+            }
+
+            foreach($attributes as $key => $attribute)
+            {
+                $translationattributes['trans.' . $locale . '.'.$key] = $attribute;
+            }
+
+            foreach($messages as $key => $message)
+            {
+                $translationmessages['trans.' . $locale . '.'.$key] = $message;
             }
         }
 
-        $entity->updateTranslation($available_locale, $attributes);
-    }
-
-    /**
-     * Check if certain locale input submission is left empty
-     *
-     * @param array $keys
-     * @param $translation
-     * @return array
-     */
-    protected function isCompletelyEmpty(array $keys, array $translation)
-    {
-        $is_completely_empty = true;
-
-        foreach ($keys as $key)
-        {
-            if(!isset($translation[$key])) continue;
-
-            if (trim($translation[$key]))
-            {
-                $is_completely_empty = false;
-            }
-        }
-
-        return $is_completely_empty;
+        $this->validate($request, $translationrules,$translationattributes,$translationmessages);
     }
 }

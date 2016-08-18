@@ -1,0 +1,119 @@
+.table > tbody > tr > td {
+  vertical-align: top; }
+
+.admin-form .panel-heading {
+  padding: 6px 21px; }
+
+.admin-form .panel-title {
+  font-size: 16px; }
+
+.subtle-btn {
+  padding: 1px 13px;
+  display: inline-block;
+  background-color: #dddddd;
+  border-radius: 9px;
+  font-size: 11px;
+  cursor: pointer; }
+  .subtle-btn:hover, .subtle-btn:focus {
+    background-color: #40b2e5;
+    color: #ffffff;
+    text-decoration: none; }
+
+.btn-error, a.btn-error {
+  background-color: #ED7764;
+  color: #ffffff;
+  cursor: pointer; }
+  .btn-error:hover, .btn-error:focus, a.btn-error:hover, a.btn-error:focus {
+    color: #ffffff;
+    background-color: #e84f36;
+    text-decoration: none; }
+
+.form-inline {
+  display: inline-block; }
+
+.breadcrumb {
+  padding: 8px 15px; }
+
+.navbar-brand img {
+  max-width: 96%; }
+
+.admin-form .switch > input + label:after,
+.admin-form .switch > input:checked + label:after {
+  margin-top: -2px; }
+
+a {
+  color: #6eb04e; }
+  a:hover, a:focus, a:active {
+    color: #639e46; }
+
+.text-error {
+  color: #ED7764; }
+
+/* row status lines - enforce color of table rows */
+.row-text-default {
+  color: #999999; }
+  .row-text-default a {
+    color: #999999; }
+
+.row-text-danger {
+  color: #ED7764; }
+  .row-text-danger a {
+    color: #ED7764; }
+
+.subtle-remark {
+  font-size: 0.8em;
+  padding-top: 6px;
+  font-style: italic;
+  color: #bbbbbb; }
+
+.subtle {
+  color: #999999;
+  font-size: 0.8em; }
+
+a.subtle-danger:hover,
+a.subtle-danger:focus,
+a.subtle-danger:active {
+  color: #e9573f;
+  text-decoration: none; }
+
+/* nested-categories */
+.nested-item {
+  margin: 3px 0;
+  padding: 3px 5px;
+  list-style: none outside none;
+  color: #777;
+  font-weight: normal;
+  border-radius: 0;
+  cursor: move; }
+
+/* Sortable */
+.sortable .list-group-item {
+  padding: 5px 8px; }
+
+.sortable .current {
+  background-color: rgba(110, 176, 78, 0.1); }
+
+.sortable-chosen {
+  background-color: rgba(110, 176, 78, 0.1);
+  border: none;
+  color: transparent; }
+
+.sortable-ghost {
+  background-color: rgba(110, 176, 78, 0.4);
+  color: black;
+  zoom: 1.1; }
+
+.sortable .list-group-item:hover {
+  cursor: move;
+  cursor: grab;
+  cursor: -webkit-grab; }
+
+.clearfix {
+  *zoom: 1; }
+  .clearfix:before, .clearfix:after {
+    content: " ";
+    display: table; }
+  .clearfix:after {
+    clear: both; }
+
+/*# sourceMappingURL=main.css.map */

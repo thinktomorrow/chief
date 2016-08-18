@@ -4,6 +4,7 @@ namespace Chief\Locale;
 
 use InvalidArgumentException;
 
+
 /**
  * Trait Translatable
  * @author Ben Cavens
@@ -55,6 +56,24 @@ trait Translatable
     }
 
     /**
+     * Get translation for a specific column
+     *
+     * @param $attribute
+     * @param $locale
+     * @param bool $strict false = use fallback locale, true = no result if locale not present
+     * @return null
+     */
+    public function getTranslationFor($attribute,$locale = null, $strict = true)
+    {
+        // No locale given means we take the current defaulted locale (handled automagically)
+        if(!$locale) return $this->getAttribute($attribute);
+
+        if (!$this->hasTranslation($locale) && $strict) return null;
+
+        return $this->getTranslation($locale)->{$attribute};
+    }
+
+    /**
      * Create or update a translation attribute.
      * Note: only sets to entity, does not save it.
      *
@@ -101,11 +120,6 @@ trait Translatable
         return $this->fetchLocales(false);
     }
 
-    public function getAvailableLocales()
-    {
-        return config('translatable.locales');
-    }
-
     /**
      * Get all locales associated with this entity
      *
@@ -114,13 +128,18 @@ trait Translatable
      */
     private function fetchLocales($available = true)
     {
-        $available_locales = config('translatable.locales');
+        $available_locales = self::getAvailableLocales();
         $current_locales = $this->translations()->lists('locale')->toArray();
 
         return array_filter($available_locales, function ($v) use ($current_locales, $available)
         {
             return $available ? in_array($v, $current_locales) : !in_array($v, $current_locales);
         }, ARRAY_FILTER_USE_BOTH);
+    }
+
+    public static function getAvailableLocales()
+    {
+        return config('translatable.locales');
     }
 
     /**

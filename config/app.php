@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'europe/brussels',
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -148,7 +148,15 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-        /*
+        /**
+         * Chief dependencies
+         */
+        \Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
+        \Dimsav\Translatable\TranslatableServiceProvider::class,
+        \Thinktomorrow\Locale\LocaleServiceProvider::class,
+        \Collective\Html\HtmlServiceProvider::class,
+
+        /**
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -156,6 +164,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+    ],
+
+    'dev-providers' => [
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -201,6 +213,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        'Form' => \Collective\Html\FormFacade::class,
 
     ],
 

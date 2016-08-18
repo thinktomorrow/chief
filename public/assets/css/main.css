@@ -1,0 +1,192 @@
+/**
+ * Frontend styling guide
+ *
+ * Best practices is to follow the BEM naming convention:
+ * http://getbem.com/introduction/
+ *
+ * Styling rules are divided by level of abstraction. As a starting point the following structure is maintained:
+ * - general: applicable to the entire site
+ * - elements: specifies a small reusable element of the site. e.g. button, alert,
+ * - modules: specifies a larger reusable block of the site: e.g. navigation, footer widget
+ *
+ */
+/* Mobile means everything smaller than desktop */
+/***********************************************
+*	BRAND COLORS							   *
+***********************************************/
+/***********************************************
+*	OTHER COLORS							   *
+***********************************************/
+a.active {
+  color: #149560;
+  outline: 0; }
+
+h1 a {
+  color: inherit; }
+
+a.btn {
+  text-decoration: none;
+  text-transform: uppercase; }
+
+.btn {
+  padding: 15px;
+  display: inline-block;
+  color: inherit;
+  background-color: inherit;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer; }
+  .btn:hover, .btn:focus, .btn:active, .btn.active {
+    background-color: #FFF;
+    color: #149560;
+    border: 1px solid #FFF; }
+
+#note {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 2rem;
+  background: #149560;
+  overflow: hidden;
+  box-shadow: 0 0 5px black;
+  -webkit-transform: translateY(-125px);
+  -webkit-animation: slideDown 5s 1.0s 1 ease forwards;
+  -moz-transform: translateY(-125px);
+  -moz-animation: slideDown 5s 1.0s 1 ease forwards;
+  transform: translateY(-125px);
+  animation: slideDown 5s 1.0s 1 ease forwards; }
+  #note p {
+    color: #FFF;
+    text-align: left;
+    line-height: 2.5;
+    font-size: 0.9em;
+    width: 90%;
+    float: left; }
+  #note .close-note img {
+    width: 30px;
+    float: right;
+    margin: 35px 0; }
+  #note a {
+    color: #ffffff;
+    text-decoration: underline; }
+    #note a:hover {
+      text-decoration: none; }
+  #note.sticky {
+    /* Keep it open */
+    animation: slideDown 5s 1.0s 1 ease forwards; }
+  #note.success {
+    background: #149560; }
+  #note.info {
+    background: #FFF;
+    color: #5d5d5d; }
+  #note.danger {
+    background: #a62a32; }
+
+.cssanimations.csstransforms #close {
+  display: none; }
+
+@keyframes slideDownAndUp {
+  0%, 100% {
+    transform: translateY(-50px); }
+  10%, 90% {
+    transform: translateY(0px); } }
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-50px); }
+  10%, 100% {
+    transform: translateY(0px); } }
+
+.centered {
+  float: none;
+  margin-left: auto;
+  margin-right: auto; }
+
+.expanded {
+  max-width: none; }
+
+.text-center {
+  text-align: center; }
+
+.centered {
+  float: none;
+  margin-left: auto;
+  margin-right: auto; }
+
+.relative {
+  position: relative; }
+
+.right {
+  float: right; }
+
+.no-padding {
+  padding: 0 !important; }
+
+/* Paddings */
+.pt-5 {
+  padding-top: 5px; }
+
+.pt-20 {
+  padding-top: 20px; }
+
+.pt-25 {
+  padding-top: 25px; }
+
+.pt-30 {
+  padding-top: 30px; }
+
+.pt-50 {
+  padding-top: -50px; }
+
+.pb-5 {
+  padding-bottom: 5px; }
+
+.pb-15 {
+  padding-bottom: 15px; }
+
+.pb-20 {
+  padding-bottom: 20px; }
+
+.pb-25 {
+  padding-bottom: 25px; }
+
+.pb-30 {
+  padding-bottom: 30px; }
+
+/* Margins */
+.mt-5 {
+  margin-top: 5px; }
+
+.mt-20 {
+  margin-top: 20px; }
+
+.mt-25 {
+  margin-top: 25px; }
+
+.mt-30 {
+  margin-top: 30px; }
+
+.mt-50 {
+  margin-top: 50px; }
+
+.mt-100 {
+  margin-top: 100px; }
+
+.mb-15 {
+  margin-bottom: 15px; }
+
+.mb-20 {
+  margin-bottom: 20px; }
+
+.mb-25 {
+  margin-bottom: 25px; }
+
+.mb-30 {
+  margin-bottom: 30px; }
+
+.no-gutter {
+  padding-right: 0px !important;
+  padding-left: 0px !important; }
+
+/*# sourceMappingURL=main.css.map */
