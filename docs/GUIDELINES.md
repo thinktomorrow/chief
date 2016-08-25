@@ -1,11 +1,12 @@
-## BNP 
+## Frontend Guidelines
+
+Note: for the server management, please view the SERVER.md documentation.
 
 ## Asset build process
 For the build process of style and script assets, we make use of npm and bower. The script responsible for the entire workflow is gulp.
 
 ### Setup
 - In your terminal go to the projectroot and run `npm install`. This will install all the gulp dependencies.
-- Next install all our frontend dependencies via `bower install`. This will download any frontend dependencies in the `public/bower_components` folder. 
 
 ### Workflow
 All frontend code development can be done in the `resources/assets` folder. There is a distinction in the front (website frontend) code and the back (website backend) one.
