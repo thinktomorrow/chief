@@ -23,7 +23,6 @@ elixir.config.publicPath = publicPath;
 
 elixir(function(mix) {
     mix.sass('main.scss',publicPath+'/css/main.css');
-    mix.sass('theme.scss',publicPath+'/css/theme.css');
 });
 
 elixir(function(mix) {

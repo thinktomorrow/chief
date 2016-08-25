@@ -687,8 +687,8 @@ Copyright (c) 2014 Daniel Eden
 /* Load font library */
 @font-face {
   font-family: "AdminDesigns";
-  src: url("../../../fonts/admindesigns/admindesigns.eot");
-  src: url("../../../fonts/admindesigns/admindesigns.eot?#iefix") format("embedded-opentype"), url("../../../fonts/admindesigns/admindesigns.woff") format("woff"), url("../../../fonts/admindesigns/admindesigns.ttf") format("truetype"), url("../../../fonts/admindesigns/admindesigns.svg#admindesigns") format("svg");
+  src: url("../fonts/admindesigns/admindesigns.eot");
+  src: url("../fonts/admindesigns/admindesigns.eot?#iefix") format("embedded-opentype"), url("../fonts/admindesigns/admindesigns.woff") format("woff"), url("../fonts/admindesigns/admindesigns.ttf") format("truetype"), url("../fonts/admindesigns/admindesigns.svg#admindesigns") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -731,8 +731,8 @@ Copyright (c) 2014 Daniel Eden
 /* Load font library */
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../../../fonts/glyphicons/glyphicons-halflings-regular.eot');
-  src: url('../../../fonts/glyphicons/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../fonts/glyphicons/glyphicons-halflings-regular.woff2') format('woff2'), url('../../../fonts/glyphicons/glyphicons-halflings-regular.woff') format('woff'), url('../../../fonts/glyphicons/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../fonts/glyphicons/glyphicons-halflings-regular.svg#@glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons/glyphicons-halflings-regular.svg#@glyphicons_halflingsregular') format('svg');
 }
 /*Catchall baseclass*/
 .glyphicon {
@@ -1532,8 +1532,8 @@ Copyright (c) 2014 Daniel Eden
 /* Load font library */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../../../fonts/font-awesome/fontawesome-webfont.eot?v=4.3.0');
-  src: url('../../../fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../../../fonts/font-awesome/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../../../fonts/font-awesome/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../../../fonts/font-awesome/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../../../fonts/font-awesome/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+  src: url('../fonts/font-awesome/fontawesome-webfont.eot?v=4.3.0');
+  src: url('../fonts/font-awesome/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../fonts/font-awesome/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../fonts/font-awesome/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/font-awesome/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/font-awesome/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -3328,8 +3328,8 @@ Copyright (c) 2014 Daniel Eden
 }
 @font-face {
   font-family: 'StateFaceRegular';
-  src: url('../../../fonts/stateface/stateface-regular-webfont.eot');
-  src: url('../../../fonts/stateface/stateface-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../../../fonts/stateface/stateface-regular-webfont.woff') format('woff'), url('../../../fonts/stateface/stateface-regular-webfont.ttf') format('truetype'), url('../../../fonts/stateface/stateface-regular-webfont.svg#StateFaceRegular') format('svg');
+  src: url('../fonts/stateface/stateface-regular-webfont.eot');
+  src: url('../fonts/stateface/stateface-regular-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/stateface/stateface-regular-webfont.woff') format('woff'), url('../fonts/stateface/stateface-regular-webfont.ttf') format('truetype'), url('../fonts/stateface/stateface-regular-webfont.svg#StateFaceRegular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
