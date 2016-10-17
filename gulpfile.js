@@ -9,21 +9,33 @@
 var gulp = require('gulp');
 var chug = require( 'gulp-chug' );
 
-function defaultTask()
+var pathFront = './resources/assets/front/gulpfile.js';
+var pathBack = './resources/assets/back/gulpfile.js';
+
+// Piping the commands
+gulp.task('watch:front', watchTaskFront);
+gulp.task('watch:back', watchTaskBack);
+gulp.task('default:front', defaultTaskFront);
+gulp.task('default:back', defaultTaskBack);
+
+// Frontend shortcuts
+gulp.task('default', defaultTaskFront);
+gulp.task('watch', watchTaskFront);
+
+function defaultTaskFront(){ return pipeCommand('default','front');}
+function watchTaskFront(){ return pipeCommand('watch','front');}
+function defaultTaskBack(){ return pipeCommand('default','back');}
+function watchTaskBack(){ return pipeCommand('watch','back');}
+
+function pipeCommand(command,env)
 {
-	gulp.src( './resources/assets/front/gulpfile.js', { read: false } )
+	var paths = {
+		front: pathFront,
+		back: pathBack,
+	};
+
+	gulp.src( paths[env], { read: false } )
 		.pipe( chug({
-			tasks: ['watch']
+			tasks: [command]
 		}) )
 }
-
-gulp.task('watch:front', defaultTask);
-gulp.task('default', defaultTask);
-gulp.task('watch', defaultTask);
-
-gulp.task( 'watch:back', function () {
-	gulp.src( './resources/assets/back/gulpfile.js', { read: false } )
-		.pipe( chug({
-			tasks: ['watch']
-		}) )
-} );

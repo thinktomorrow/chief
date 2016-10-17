@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use HttpResponseException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

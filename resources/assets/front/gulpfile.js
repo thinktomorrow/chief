@@ -4,12 +4,22 @@ var imagemin = require('gulp-imagemin');
 
 /*
  * ---------------------------------------------------------------------------------
- * PATH CONFIGURATION
+ * LOCALHOST
  * ---------------------------------------------------------------------------------
  *
+ * Set this proxy to match your localhost.
+ * e.g. localhost:8888 or project.dev
+ */
+var localhost = 'localhost:8888';
+
+/*
+ * ---------------------------------------------------------------------------------
+ * PATHS
+ * ---------------------------------------------------------------------------------
  */
 var assetsPath = __dirname;
 var publicPath = assetsPath + '/../../../public/assets';
+
 elixir.config.assetsPath = assetsPath;
 elixir.config.publicPath = publicPath;
 
@@ -22,11 +32,13 @@ elixir.config.publicPath = publicPath;
  */
 
 elixir(function(mix) {
-    mix.sass('main.scss',publicPath+'/css/main.css');
+    mix.sass('main.scss',publicPath+'/css/main.css').browserSync({
+        proxy: localhost
+    });
 });
 
 elixir(function(mix) {
-    mix.scripts('main.js',publicPath+'/js/main.js');
+    mix.scriptsIn(assetsPath+'/js',publicPath+'/js/combined.js');
 });
 
 /*
