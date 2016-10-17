@@ -1,10 +1,20 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-imagemin": "^3.0.3"
+	"browser-sync": "^2.12.3",
+	"del": "^2.2.0",
+	"gulp": "^3.9.1",
+	"gulp-autoprefixer": "^3.1.0",
+	"gulp-concat": "^2.6.0",
+	"gulp-imagemin": "^3.0.1",
+	"gulp-rev": "^7.0.0",
+	"gulp-sass": "^2.2.0",
+	"gulp-sourcemaps": "^1.6.0",
+	"gulp-uglify": "^1.5.3",
+	"run-sequence": "^1.2.1",
+	"gulp-chug": "^0.5.1"
   },
   "dependencies": {
-    "laravel-elixir": "^5.0.0"
+	"laravel-elixir": "^5.0.0"
   }
 }
