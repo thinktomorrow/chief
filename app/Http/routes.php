@@ -39,7 +39,7 @@ Route::get('lang',['as' => 'lang.switch','uses' => LanguageSwitcher::class.'@sto
  * PUBLIC TRANSLATABLE ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => app(Thinktomorrow\Locale\Locale::class)->set()],function(){
+Route::group(['prefix' => app(Thinktomorrow\Locale\Locale::class)->set(),'namespace' => 'Front'],function(){
 
     Route::get('/', ['as' => 'pages.home', 'uses' => function(){
         return view('front.home');
