@@ -51,10 +51,56 @@
 
 
 .navbar-brand img{
-  max-width:96%;
+  max-height:96%;
 }
 
 .admin-form .switch > input + label:after,
 .admin-form .switch > input:checked + label:after{
   margin-top:-2px;
+}
+
+a, a:focus, a:active{
+  color:#149560;
+}
+
+a:hover{
+  color:#11794E;
+}
+
+.topbar-left h3{
+  margin:18px 0;
+}
+
+.topbar-left .topbar-inside-right{
+  float:right;
+  margin-top:-6px; /* nice alignment with h3 header text */
+}
+
+// Rounded image
+.rounded{
+  border-radius:15px;
+}
+
+.circle{
+  border-radius: 50%;
+}
+
+/* FILEUPLOAD */
+// Croppie uploads a circular cutout as a real circle cutout but we want a square cutout
+// and only display circle via css. So we set the croppie to square and fake the preview as circle
+.thumbnail{
+  display:inline-block;
+}
+
+.thumb-preview-circle .cr-vp-square{
+  border-radius:50%;
+}
+
+.thumb-preview-rounded .cr-vp-square{
+  border-radius:15px;
+}
+
+.croppie-container{
+  padding:0;
+  padding-bottom:30px;
 }

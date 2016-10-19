@@ -22,11 +22,18 @@ elixir.config.publicPath = publicPath;
  */
 
 elixir(function(mix) {
-    mix.sass('main.scss',publicPath+'/css/main.css');
+    mix.sass([
+        '/../js/croppie/croppie.css',
+        'main.scss'
+    ],publicPath+'/css/main.css');
 });
 
 elixir(function(mix) {
-    mix.scripts('main.js',publicPath+'/js/main.js');
+    mix.scripts([
+        'croppie/croppie.js',
+        'cropper.js',
+        'main.js'
+    ],publicPath+'/js/main.js');
 });
 
 /*

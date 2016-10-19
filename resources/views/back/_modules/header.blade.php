@@ -1,7 +1,7 @@
 <header class="navbar navbar-fixed-top">
     <div class="navbar-branding">
-        <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="Chief">
+        <a class="navbar-brand" href="{{ route('back.dashboard') }}">
+            <img src="{{ asset('assets/img/logo.png') }}" alt="Hura">
         </a>
         <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
     </div>
@@ -16,7 +16,7 @@
 
                 <li class="dropdown-footer">
                     <a href="/logout" class="">
-                        <span class="fa fa-power-off pr5"></span> Logout </a>
+                        <span class="fa fa-power-off pr5"></span> Log uit </a>
                 </li>
 
             </ul>
