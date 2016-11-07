@@ -42,9 +42,7 @@ De Github wiki wordt gebruikt voor meeting notities en onverwerkte feedback.
 - [ ] Opzet github project en verlenen rechten aan team
 - [ ] Aanmaken master en develop branch. Development gebeurt volgens git flow principe. Voor eerste release wordt steeds in develop branch gewerkt. Na release wordt er vanuit master gewerkt met feature (tijdelijke) branches.
 - [ ] Deployment opzet:	SFTP koppeling met staging en productie server. Indien mogelijk atomic. 
-
 - [ ] Opzet framework (Chief / Laravel / ...)
-- [ ] Aandacht voor o.a. volgende:
 - [ ] Opzet environments: aparte ENV KEYS, session names.
 - [ ] Integratie Bugsnag
 - [ ] Frontend build setup: sass en scripts, browsersync (live reload), minify and concat css en js, versioning assets
@@ -67,13 +65,11 @@ Extra aandacht voor admin.
 
 - [ ] Cleane API voor frontend integratie
 - [ ] Aanmaken van Seeders
-
 - [ ] Admin beheerbaarheid van site componenten.
 - [ ] Admin login form
 - [ ] Login credentials voor klant.
 - [ ] Dashboard statistics: GA, FB-pixel,...
 - [ ] Main features in admin: media gallery, user roles, cropping tool
-
 - [ ] Preview: Doorgeven aan klant van logingegevens voor staging + voor admin. Staging is nog steeds een testomgeving!
 - [ ] Preproductie: Vanaf bepaald moment wordt de data op staging beschouwd als preproductie data en mag niet meer worden bezoedeld.
 
