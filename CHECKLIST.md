@@ -8,7 +8,7 @@ komen deze elementen tijdig aan bod. Bij een eerste meeting bij de klant worden 
 requirements ontbloot. 
 
 - [ ] Initiële meeting met de klant waarbij projectscope wordt bepaald.
-- [ ] Opmaak feature listing en requirements obv [feature template](CHECKLIST_FEATURE_LISTING_.md)
+- [ ] Opmaak feature listing en requirements obv [feature template](CHECKLIST_FEATURE_LISTING.md)
 - [ ] Opzet sitemap. Dit geeft een indicatie voor de horizontale workload.
 - [ ] Bepalen techstack obv feature rapport
 - [ ] Evt: wireframing obv feature rapport
@@ -64,7 +64,7 @@ zo weinig mogelijk scripting aan te pas
 Extra aandacht voor admin.
 
 - [ ] Cleane API voor frontend integratie
-- [ ] Implementeren van de [code quality checklist](CHECKLIST_QUALITY_.md)
+- [ ] Implementeren van de [code quality checklist](CHECKLIST_QUALITY.md)
 - [ ] Aanmaken van Seeders
 - [ ] Admin beheerbaarheid van site componenten.
 - [ ] Admin login form
