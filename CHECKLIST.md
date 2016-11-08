@@ -18,7 +18,7 @@ requirements ontbloot.
 ## Design
 TODO...
 
-## Hosting setup
+## Hosting/Credentials setup
 		
 Hosting- en accountgegevens zijn steeds vertrouwelijk te behandelen. De gegevens van
 hosting, email en database dienen in teamleader onder de projectomschrijving te staan
