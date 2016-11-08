@@ -57,6 +57,7 @@ CHECKLIST QUALITY
 - [ ] Altijd labels gebruiken voor formvelden		
 - [ ] Audit	https://accessibility.oit.ncsu.edu/sortsite/	
 - [ ] Audit with screen reader	http://www.nvaccess.org/	
+- [ ] Test using text only/voice only browsers
 		
 
 ## COMPATIBILITY 
