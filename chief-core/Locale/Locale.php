@@ -9,6 +9,11 @@ class Locale
         return config('translatable.locales');
     }
 
+    public static function getDefault()
+    {
+        return config('app.locale');
+    }
+
     public static function getForSelect()
     {
         $locales = self::all();

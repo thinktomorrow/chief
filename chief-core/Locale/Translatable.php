@@ -2,6 +2,7 @@
 
 namespace Chief\Locale;
 
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 
@@ -139,7 +140,7 @@ trait Translatable
 
     public static function getAvailableLocales()
     {
-        return config('translatable.locales');
+        return config('translatable.locales', []);
     }
 
     /**
@@ -149,7 +150,7 @@ trait Translatable
      */
     private function validateLocale($locale)
     {
-        if (!in_array($locale, config('translatable.locales',[])))
+        if (!in_array($locale, self::getAvailableLocales()))
         {
             throw new InvalidArgumentException('Locale [' . $locale . '] is not available');
         }
@@ -165,5 +166,16 @@ trait Translatable
     public function toRawArray()
     {
         return parent::toArray();
+    }
+
+    /**
+     * Checks how many locales we have configured.
+     * We use this check to prevent showing of stuff like tabs when we only have 1 locale set up.
+     *
+     * @return bool
+     */
+    public function hasMultipleApplicationLocales()
+    {
+        return count(self::getAvailableLocales()) > 1 ?: false;
     }
 }

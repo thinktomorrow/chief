@@ -9,6 +9,11 @@ trait Publishable
         return ($this->published);
     }
 
+    public function isDraft()
+    {
+        return (!$this->published);
+    }
+
     public function scopePublished($query)
     {
         $query->where('published',1);

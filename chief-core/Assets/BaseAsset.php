@@ -134,6 +134,22 @@ abstract class BaseAsset {
         return $this;
     }
 
+    public function dataURI($dataURI, $filename, $force_unique = true)
+    {
+        $binary = $this->decodeBase64($dataURI);
+
+        return $this->importBinary($binary,$filename, $force_unique);
+    }
+
+    private function decodeBase64($base_64_image)
+    {
+        $base_64_image = str_replace('data:image/jpeg;base64,', '', $base_64_image);
+        $base_64_image = str_replace('data:image/jpg;base64,', '', $base_64_image);
+        $base_64_image = str_replace('data:image/png;base64,', '', $base_64_image);
+
+        return base64_decode($base_64_image);
+    }
+
     /**
      * Copy existing file to the asset location
      *
