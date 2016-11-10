@@ -40,6 +40,12 @@ class UserSeeder extends Seeder
             'email' => 'johnny@thinktomorrow.be',
             'password' => bcrypt('kevin#emma')
         ]);
+
+        \App\User::create([
+            'name'  => 'Philippe Damen',
+            'email' => 'philippe@thinktomorrow.be',
+            'password' => bcrypt('ph1l1pp3')
+        ]);
     }
 
     protected function clientAccounts()
