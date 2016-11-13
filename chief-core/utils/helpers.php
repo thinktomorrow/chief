@@ -145,3 +145,57 @@ if (! function_exists('revasset')) {
         return asset($file);
     }
 }
+
+
+if (!function_exists('addQueryToUrl'))
+{
+    /**
+     * Inject a query parameter into an url
+     * If the query key already exists, it will be overwritten with the new value
+     *
+     * @param $url
+     * @param array $query_params
+     * @param array $overrides
+     * @return string
+     */
+    function addQueryToUrl($url, array $query_params = [], $overrides = [])
+    {
+        $parsed_url = parse_url($url);
+
+        $parsed_url = array_merge(array_fill_keys([
+            'scheme', 'host', 'port', 'path', 'query', 'fragment'
+        ], null), $parsed_url, $overrides);
+
+        $scheme = $parsed_url['scheme'] ? $parsed_url['scheme'] . '://' : null;
+        $port = $parsed_url['port'] ? ':' . $parsed_url['port'] : null;
+        $fragment = $parsed_url['fragment'] ? '#' . $parsed_url['fragment'] : null;
+
+        $baseurl = $scheme . $parsed_url['host'] . $port . $parsed_url['path'];
+        $current_query = [];
+
+        $_query = explode('&', $parsed_url['query']);
+
+        array_map(function ($v) use (&$current_query)
+        {
+            if (!$v)
+            {
+                return;
+            }
+            $split = explode('=', $v);
+            if(count($split) == 2) $current_query[$split[0]] = $split[1];
+
+        }, $_query);
+
+        foreach ($query_params as $key => $value)
+        {
+            if (isset($current_query[$key]))
+            {
+                unset($current_query[$key]);
+            }
+        }
+
+        $query = urldecode(http_build_query(array_merge($current_query, $query_params)));
+
+        return $baseurl . '?' . $query . $fragment;
+    }
+}
