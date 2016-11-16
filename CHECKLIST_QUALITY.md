@@ -23,7 +23,8 @@ CHECKLIST QUALITY
 - [ ] algemene audittool: https://auditor.raventools.com
 - [ ] Controle van request headers	https://redbot.org	
 - [ ] audit HTML kwaliteit	https://validator.w3.org/nu/	
-- [ ] audit CSS kwaliteit	https://jigsaw.w3.org/css-validator/, http://csslint.net/	
+- [ ] audit CSS kwaliteit	https://jigsaw.w3.org/css-validator/, http://csslint.net/
+- [ ] audit form quality 	https://formlinter.com/
 		
 		
 ## SEO		
