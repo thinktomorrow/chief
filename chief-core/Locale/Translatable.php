@@ -130,7 +130,7 @@ trait Translatable
     private function fetchLocales($available = true)
     {
         $available_locales = self::getAvailableLocales();
-        $current_locales = $this->translations()->lists('locale')->toArray();
+        $current_locales = $this->translations()->pluck('locale')->toArray();
 
         return array_filter($available_locales, function ($v) use ($current_locales, $available)
         {
