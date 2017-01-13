@@ -6,14 +6,7 @@ use Illuminate\Console\Command;
 
 class ChiefTask
 {
-    protected $config;
     protected $console;
-
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-        return $this;
-    }
 
     public function setConsole(Command $console)
     {
@@ -24,7 +17,7 @@ class ChiefTask
     protected function copyWithParameters($source, $destination)
     {
         $content = file_get_contents($source);
-        $content = str_replace('##PROJECT_NAME##',ucfirst($this->config['project']),$content);
+        $content = str_replace('##PROJECT_NAME##',ucfirst(ChiefConfig::project()),$content);
         file_put_contents($destination,$content);
     }
 }

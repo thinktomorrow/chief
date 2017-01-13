@@ -2,6 +2,7 @@
 
 namespace App\Console\Chief\Tasks;
 
+use App\Console\Chief\ChiefConfig;
 use App\Console\Chief\ChiefTask;
 use App\Console\Chief\ChiefTaskContract;
 
@@ -20,12 +21,14 @@ class Environment extends ChiefTask implements ChiefTaskContract
         {
             echo exec('cp .env.example ' . $filename);
             $this->setApplicationKeyInEnvironmentFile($filename);
+            $this->setEnvironmentFlag($filename);
             $this->setDebugFlag($filename);
+            $this->setUrl($filename);
             $this->console->comment('Creating ['.$filename.'] environment file with new application key');
         }
         else
         {
-            $this->console->comment('Environment file ['.$filename.'] already exists.');
+            $this->console->comment('Environment file ['.$filename.'] already exists. You should delete this manually first.');
         }
     }
 
@@ -34,6 +37,25 @@ class Environment extends ChiefTask implements ChiefTaskContract
         $newvalue = ($filename == '.env') ? 'true' : 'false';
 
         $this->changeValue($filename,'APP_DEBUG',$newvalue);
+    }
+
+    private function setEnvironmentFlag($filename)
+    {
+        // Environment is taken from last part of string
+        $environment = substr($filename,strrpos($filename,'.')+1);
+        if($environment == 'env') $environment = 'local';
+
+        $this->changeValue($filename,'APP_ENV',$environment);
+    }
+
+    private function setUrl($filename)
+    {
+        $environment = substr($filename,strrpos($filename,'.')+1);
+        if($environment == 'env') return;
+        if($environment == 'production') $url = ChiefConfig::url();
+        if($environment == 'staging') $url = ChiefConfig::project().'.thinktomorrow.be';
+
+        $this->changeValue($filename,'APP_URL',$url);
     }
 
     private function setApplicationKeyInEnvironmentFile($filename)

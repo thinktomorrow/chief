@@ -2,6 +2,7 @@
 
 namespace App\Console\Chief\Tasks;
 
+use App\Console\Chief\ChiefConfig;
 use App\Console\Chief\ChiefTask;
 use App\Console\Chief\ChiefTaskContract;
 
@@ -11,7 +12,7 @@ class Composer extends ChiefTask implements ChiefTaskContract
     {
         $setupComposerFile = true;
 
-        if(filemtime(base_path('composer.json')) > $this->config['mtime'])
+        if(filemtime(base_path('composer.json')) > ChiefConfig::mtime())
         {
             $setupComposerFile = $this->console->confirm('Composer.json file has been altered. Do you wish to override it with a fresh one?', false);
         }

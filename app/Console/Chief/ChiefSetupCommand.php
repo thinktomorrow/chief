@@ -10,8 +10,6 @@ use Illuminate\Support\Str;
 
 class ChiefSetupCommand extends Command
 {
-    static protected $config = [];
-
     /**
      * The name and signature of the console command.
      *
@@ -48,27 +46,28 @@ class ChiefSetupCommand extends Command
 
         foreach($tasks as $task)
         {
-            app($task)->setConfig(static::$config)
-                      ->setConsole($this)
+            app($task)->setConsole($this)
                       ->handle();
         }
 
-        $this->info('Chief setup finished.');
+        $this->info('You strong bear. You finished setup. Be wise and remember to:');
+        $this->info('- set db credentials and bugsnag key for each environment');
+        $this->info('- add the mail credentials so you can communicate with other clans.');
+        $this->info('- have fun creating this white man invention.');
     }
 
     public function globalConfiguration()
     {
         $project = $this->ask('Projectname (required)');
         $client = $this->ask('Client (required)');
-        $url = $this->ask('Site url',Str::slug($project).'.be');
+        $url = $this->ask('Site url','https://'.Str::slug($project).'.be');
         $namespace = $this->ask('Namespace',Str::slug($project));
 
-        static::$config = array_merge(static::$config,[
-            'mtime' => filemtime(base_path('server.php')),
-            'project' => $project,
-            'client' => $client,
-            'url'   => $url,
-            'namespace' => $namespace
-        ]);
+        (new ChiefConfig())
+            ->set('mtime',filemtime(base_path('server.php')))
+            ->set('project',$project)
+            ->set('client',$client)
+            ->set('url',$url)
+            ->set('namespace',$namespace);
     }
 }
