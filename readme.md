@@ -1,15 +1,9 @@
 #  Chief application skeleton
 
-## Project checklists
-At Think Tomorrow we make use of a project checklist to ensure all aspects of a project, small or large, are taken care of.
-- [Project checklist](CHECKLIST.md)
-- [Feature template](CHECKLIST_FEATURE_LISTING.md)
-- [Code quality checklist](CHECKLIST_QUALITY.md)
+## Project checklist
+At Think Tomorrow we make use of a [Project checklist](https://github.com/thinktomorrow/chief-launch-checklist) to ensure all aspects of a project, small or large, are ready for their release.
 
-## Chief setup (wip)
-1. put client logo on following locations:
-    - /public/assets/img/logo.png
-    - /public/assets/img/logo.svg
-    
-2. Set clientname on following locations:
-    - admin/_layouts/master.blade.php: title
+## Chief setup
+1. fetch the latest code from Chief repo. (! drop the git history)
+2. Save your client logo as `/public/assets/img/<project>logo.png` where `<project>` is the lowercased name of the project.
+3. In the root of your project run `php artisan chief:setup` to complete the setup. 
