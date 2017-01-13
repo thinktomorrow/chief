@@ -5,6 +5,7 @@ namespace App\Console\Chief;
 use App\Console\Chief\Tasks\Composer;
 use App\Console\Chief\Tasks\Domain;
 use App\Console\Chief\Tasks\Environment;
+use App\Console\Chief\Tasks\Project;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
@@ -41,6 +42,7 @@ class ChiefSetupCommand extends Command
         $tasks = [
             Environment::class,
             Composer::class,
+            Project::class,
 //            Domain::class, no domain classes for the time being
         ];
 

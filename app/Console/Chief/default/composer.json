@@ -1,6 +1,6 @@
 {
-  "name": "thinktomorrow/##PROJECT_NAME##",
-  "description": "##PROJECT_NAME## site development",
+  "name": "thinktomorrow/##PROJECT##",
+  "description": "##PROJECT## site development",
   "keywords": ["thinktomorrow", "laravel"],
   "license": "none",
   "type": "project",
@@ -30,7 +30,7 @@
     "psr-4": {
       "App\\": "app/",
       "Chief\\" : "chief-core/",
-      "##PROJECT_NAME##\\" : "src/"
+      "##PROJECT##\\" : "src/"
     },
     "files": [
       "chief-core/utils/vendors/htmlLawed.php",
