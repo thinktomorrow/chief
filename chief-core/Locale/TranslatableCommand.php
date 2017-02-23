@@ -53,7 +53,7 @@ trait TranslatableCommand
      *
      * @param array $keys
      * @param $translation
-     * @return array
+     * @return bool
      */
     protected function isCompletelyEmpty(array $keys, array $translation)
     {
