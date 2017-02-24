@@ -2,7 +2,7 @@
 
 return [
 
-    /**
+    /*
      * Available locales for the application
      *
      * These should reflect the locale folders
@@ -10,7 +10,7 @@ return [
      */
     'available_locales'     => ['nl','en'],
 
-    /**
+    /*
      * Hidden locale
      *
      * Provide the default locale for non-localized url endpoints. This displays the content
@@ -20,7 +20,7 @@ return [
      */
     'hidden_locale'       => 'nl',
 
-    /**
+    /*
      * Fallback locale
      *
      * Use this locale when no locale has been set.
@@ -31,7 +31,15 @@ return [
      */
     'fallback_locale'       => null,
 
-    /**
+    /*
+     * Query parameter
+     *
+     * The locale can be passed as query parameter to pass a specific locale to the request.
+     * This can be handy for ajax requests. By default this is set to 'locale'.
+     */
+    'query_key' => 'locale',
+
+    /*
      * Route uri placeholder
      *
      * When this parameter key is passed, it will inject a

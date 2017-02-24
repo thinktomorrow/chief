@@ -1,5 +1,9 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
+
 class AddQueryToUrlTest extends TestCase
 {
     /**

@@ -23,15 +23,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->setupDevProviders();
+        $this->setupEnvironmentProviders();
     }
 
     /**
-     * Conditionally loads providers for non-production environments
+     * Conditionally loads providers for specific environments.
+     *
+     * The app()->register() will both trigger the register and boot
+     * methods of the service provider
      */
-    private function setupDevProviders()
+    private function setupEnvironmentProviders()
     {
-        if (!$this->app->environment('production') && $services = config('app.dev-providers'))
+        if (!$this->app->environment('production') && $services = config('app.providers-'.app()->environment(),false))
         {
             foreach($services as $service)
             {

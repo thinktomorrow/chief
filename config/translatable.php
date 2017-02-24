@@ -13,10 +13,6 @@ return [
     'locales' => [
         'en',
         'fr',
-        'es' => [
-            'MX', // mexican spanish
-            'CO', // colombian spanish
-        ],
     ],
 
     /*
@@ -93,16 +89,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Make translated attributes always fillable
+    | Always load translations when converting to array
     |--------------------------------------------------------------------------
+    | Setting this to false will have a performance improvement but will
+    | not return the translations when using toArray(), unless the
+    | translations relationship is already loaded.
     |
-    | If true, translatable automatically sets
-    | translated attributes as fillable.
-    |
-    | WARNING!
-    | Set this to true only if you understand the security risks.
-    |
-    */
-    'always_fillable' => false,
-
+     */
+    'to_array_always_loads_translations' => true,
 ];

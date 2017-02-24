@@ -1,6 +1,6 @@
 * text=auto
 *.css linguist-vendored
-*.less linguist-vendored
+*.scss linguist-vendored
 
 # Ignore all tests and documentation
 /tests          export-ignore
