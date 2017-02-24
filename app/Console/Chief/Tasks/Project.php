@@ -12,7 +12,7 @@ class Project extends ChiefTask implements ChiefTaskContract
     {
         $setupProjectConfigFile = true;
 
-        if(filemtime(base_path('config/project.php')) > ChiefConfig::mtime())
+        if(file_exists(base_path('config/project.php')) && filemtime(base_path('config/project.php')) > ChiefConfig::mtime())
         {
             $setupProjectConfigFile = $this->console->confirm('/confirm/project.php file has been altered. Do you wish to override it with a fresh one?', false);
         }
