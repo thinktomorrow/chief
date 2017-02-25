@@ -4,7 +4,7 @@
 <head>
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
-    <title>Hura admin</title>
+    <title>Chief admin</title>
     <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

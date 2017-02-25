@@ -13,7 +13,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('translations/{slug}',['as' => 'back.trans.edit','uses' => '\Chief\Trans\Controllers\TranslationController@edit']);
     Route::put('translations/{group_id}',['as' => 'back.trans.update','uses' => '\Chief\Trans\Controllers\TranslationController@update']);
 
-    Route::get('/',['as' => 'back.dashboard','uses' => DashboardController::class.'@show']);
+    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
 
 });
 
@@ -43,9 +43,9 @@ Route::get('/', function () {
 });
 
 // Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('admin.login');
+Route::post('login', 'Auth\LoginController@login')->name('admin.login.store');
+Route::post('logout', 'Auth\LoginController@logout')->name('admin.logout');
 
 // Registration Routes...
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');

@@ -94,7 +94,7 @@
                 <div class="bs-component">
                     <ul class="list-group sortable">
 
-                        @foreach(Hura\Articles\Article::sequence()->get() as $sibling)
+                        @foreach(Chief\Articles\Article::sequence()->get() as $sibling)
 
                             <?php $current = ($sibling->id === $article->id) ? ' current' : null; ?>
 

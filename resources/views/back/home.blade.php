@@ -2,6 +2,6 @@
 
 @section('content')
 
-    Welkom
+    Welkom op jouw chief dashboard
 
 @stop
