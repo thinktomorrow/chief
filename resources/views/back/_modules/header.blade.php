@@ -15,8 +15,13 @@
             <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
 
                 <li class="dropdown-footer">
-                    <a href="/logout" class="">
-                        <span class="fa fa-power-off pr5"></span> Log uit </a>
+                    <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <span class="fa fa-power-off pr5"></span> Log uit
+                    </a>
+
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
                 </li>
 
             </ul>

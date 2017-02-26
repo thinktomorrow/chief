@@ -7,6 +7,9 @@
  */
 Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],function(){
 
+    // ARTICLES
+    Route::get('articles','ArticlesController@index')->name('admin.articles.index');
+
     // FOR DEVS ONLY!
     Route::get('translations/{slug}/lines/create',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.create','uses' => '\Chief\Trans\Controllers\TranslationLineController@create']);
     Route::post('translations/{slug}/lines',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.store','uses' => '\Chief\Trans\Controllers\TranslationLineController@store']);
@@ -38,9 +41,13 @@ Route::group(['prefix' => Locale::set(),'namespace' => 'Front'],function(){
 });
 
 // SETUP ROUTES
-Route::get('/', function () {
+Route::get('/setup', function () {
     return view('setup.welcome');
 });
+
+Route::get('/',function(){
+    return view('setup.welcome');
+})->name('home');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('admin.login');

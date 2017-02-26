@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -13,7 +14,7 @@ class AdminLoginTest extends TestCase
     use DatabaseMigrations, DatabaseTransactions;
 
     /** @test */
-    public function it_redirects_non_authenticated_to_admin_login()
+    public function non_authenticated_are_kept_out()
     {
         $response = $this->get('/admin');
         $response->assertRedirect('/login');
@@ -22,13 +23,15 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
-        $this->createAdminUser();
+        $admin = $this->createAdminUser();
 
         $response = $this->post(route('admin.login.store'),[
             'email' => 'foo@example.com',
             'password' => 'foobar',
         ]);
 
+        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertFalse(session()->has('errors'));
         $response->assertRedirect(route('admin.home'));
     }
 
@@ -37,25 +40,44 @@ class AdminLoginTest extends TestCase
     {
         $this->createAdminUser();
 
-        // Visit the login page
-        $this->get(route('admin.login'));
-
         // Enter invalid credentials
         $response = $this->post(route('admin.login.store'),[
             'email' => 'foo@example.com',
             'password' => 'xxx',
         ]);
 
-        $response->assertRedirect(route('admin.login'));
+        $this->assertNull(Auth::user());
+        $this->assertTrue(session()->has('errors'));
+        $response->assertRedirect(route('home'));
     }
 
     /** @test */
-    public function it_can_display_admin_page_for_authenticated()
+    public function it_displays_admin_page_for_authenticated()
     {
         $admin = $this->createAdminUser();
 
         $response = $this->actingAs($admin)->get('/admin');
         $response->assertStatus(200);
+        $this->assertInstanceOf(User::class, Auth::user());
+        $this->assertFalse(session()->has('errors'));
+    }
+
+    /** @test */
+    public function it_redirects_authenticated_admin_to_intended_page()
+    {
+        $admin = $this->createAdminUser();
+
+        $resp = $this->get(route('admin.articles.index'));
+        $resp->assertRedirect(route('admin.login'));
+
+        $response = $this->post(route('admin.login.store'),[
+            'email' => 'foo@example.com',
+            'password' => 'foobar',
+        ]);
+
+        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertFalse(session()->has('errors'));
+        $response->assertRedirect(route('admin.articles.index'));
     }
 
     private function createAdminUser()
