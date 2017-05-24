@@ -1,6 +1,6 @@
 {
-  "name": "thinktomorrow/Skeletor",
-  "description": "Skeletor site development",
+  "name": "thinktomorrow/Chief",
+  "description": "Chief site development",
   "keywords": ["thinktomorrow", "laravel"],
   "license": "none",
   "type": "project",
@@ -30,7 +30,7 @@
     "psr-4": {
       "App\\": "app/",
       "Chief\\" : "chief-core/",
-      "Skeletor\\" : "src/"
+      "Chief\\" : "src/"
     },
     "files": [
       "chief-core/utils/vendors/htmlLawed.php",
