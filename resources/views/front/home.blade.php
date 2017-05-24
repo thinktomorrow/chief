@@ -3,7 +3,7 @@
 @section('content')
         <div class="container">
             <div class="content">
-                <div class="title">{{ env('APP_NAME', 'Chief') }} awaits your command</div>
+                <div class="title">Have fun with {{ env('APP_NAME', 'Chief') }}</div>
             </div>
         </div>
 @stop
