@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
-use BNP\Locale\TranslatableContract;
-use BNP\Locale\TranslatableController;
-use BNP\Services\Service;
+use Chief\Locale\TranslatableContract;
+use Chief\Locale\TranslatableController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Symfony\Component\EventDispatcher\Tests\Service;
 
 class ServiceController extends Controller
 {

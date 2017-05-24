@@ -5,6 +5,7 @@
 /storage/*.key
 /storage/debugbar
 /vendor
+/report
 /.idea
 Homestead.json
 Homestead.yaml

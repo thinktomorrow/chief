@@ -54,10 +54,6 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('admin.login');
 Route::post('login', 'Auth\LoginController@login')->name('admin.login.store');
 Route::post('logout', 'Auth\LoginController@logout')->name('admin.logout');
 
-// Registration Routes...
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register');
-
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
