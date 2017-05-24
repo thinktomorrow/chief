@@ -169,6 +169,8 @@ return [
         \Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
         \Thinktomorrow\Locale\LocaleServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...

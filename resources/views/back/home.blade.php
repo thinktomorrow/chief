@@ -2,6 +2,7 @@
 
 @section('content')
 
-    Welkom op jouw chief dashboard
-
+    @role('Admin')
+        Welkom op jouw chief dashboard
+    @endrole
 @stop
