@@ -17,6 +17,12 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
 //    Route::put('translations/{group_id}',['as' => 'back.trans.update','uses' => '\Chief\Trans\Controllers\TranslationController@update']);
 
     Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
+    Route::get('/settings',['as' => 'admin.settings','uses' => SettingsController::class.'@show']);
+
+    Route::resource('users', 'UserController');
+    Route::resource('roles', 'RoleController');
+    Route::resource('permissions', 'PermissionController');
+
 });
 
 /**

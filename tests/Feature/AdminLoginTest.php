@@ -28,7 +28,9 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
-        $admin = factory(User::class)->create();
+        $admin = factory(User::class)->create([
+            'email' => 'foo@example.com'
+        ]);
 
         $response = $this->post(route('admin.login.store'),[
             'email' => 'foo@example.com',
@@ -43,7 +45,9 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_invalid_login_credentials_keeps_you_out()
     {
-        factory(User::class)->create();
+        factory(User::class)->create([
+            'email' => 'foo@example.com'
+        ]);
 
         // Enter invalid credentials
         $response = $this->post(route('admin.login.store'),[
@@ -70,7 +74,9 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_redirects_authenticated_admin_to_intended_page()
     {
-        $admin = factory(User::class)->create();
+        $admin = factory(User::class)->create([
+            'email' => 'foo@example.com'
+        ]);
 
         $resp = $this->get(route('admin.articles.index'));
         $resp->assertRedirect(route('admin.login'));
@@ -102,13 +108,16 @@ class AdminLoginTest extends TestCase
     }
 
     /** @test */
-    public function it_can_send_a_passord_reset_mail()
+    public function it_can_send_a_password_reset_mail()
     {
         Notification::fake();
 
-        $admin = factory(User::class)->create(['password' => 'IForgotThisPassword']);
+        $admin = factory(User::class)->create([
+            'email'     => 'foo@example.com',
+            'password'  => 'IForgotThisPassword'
+        ]);
 
-        $this->post(route('password.email'),[
+        $response = $this->post(route('password.email'),[
             'email' => 'foo@example.com'
         ]);
 
@@ -121,7 +130,10 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_can_reset_your_password()
     {
-        $admin = factory(User::class)->create(['password' => 'IForgotThisPassword']);
+        $admin = factory(User::class)->create([
+            'email'     => 'foo@example.com',
+            'password'  => 'IForgotThisPassword'
+        ]);
 
         DB::insert('INSERT INTO password_resets (email, token, created_at) VALUES(?, ?, ?)', ["foo@example.com", bcrypt("71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c"), Carbon::now()]);
 
@@ -149,7 +161,9 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
-        $admin = factory(User::class)->create();
+        $admin = factory(User::class)->create([
+            'email'     => 'foo@example.com'
+        ]);
 
         Auth::login($admin);
 
