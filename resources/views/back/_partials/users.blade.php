@@ -35,7 +35,7 @@
 							<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
 						@endcan
 
-						@can('remove_users')
+						@can('delete_users')
 							<form action="{{ route('users.destroy', $user->id) }}" method="POST">
 								<input name="_method" type="hidden" value="DELETE">
 								{!! csrf_field() !!}

@@ -41,7 +41,7 @@
 			<input type="password" class="form-control" name="password_confirmation" value="">
 		</div>
 
-			@can('add_users)
+			@can('add_users')
 				<button type="submit" value="Submit" class="btn btn-primary">Add</button>
 			@endcan
 		</form>

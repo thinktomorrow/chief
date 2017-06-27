@@ -43,7 +43,11 @@ class UserController extends Controller
             'password'  =>  'required|min:6|confirmed'
         ]);
 
-        $user   = User::create($request->only('email', 'name', 'password'));
+        $user   = new User();
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->password = bcrypt($request->get('password'));
+        $user->save();
         $roles  = $request['roles'];
 
         if (isset($roles)) {
@@ -53,7 +57,7 @@ class UserController extends Controller
             }
         }
 
-        return redirect()->route('back.users.index')
+        return redirect()->route('users.index')
             ->with('flash_message',
                 'User successfully added.');
     }
