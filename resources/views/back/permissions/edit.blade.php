@@ -18,7 +18,10 @@
 				<input type="text" name="name" value="{{ $permission->name }}" class="form-control">
 			</div>
 			<br>
-			<button type="submit" value="Submit" class="btn btn-primary">Update</button>
+
+			@can('edit_permissions')
+				<button type="submit" value="Submit" class="btn btn-primary">Update</button>
+			@endcan
 		</form>
 
 	</div>

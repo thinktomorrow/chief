@@ -44,7 +44,9 @@
 
 			{{--</div>--}}
 
-			<button type="submit" value="Submit" class="btn btn-primary">Update</button>
+			@can('edit_users')
+				<button type="submit" value="Submit" class="btn btn-primary">Update</button>
+			@endcan
 		</form>
 
 	</div>

@@ -12,27 +12,29 @@
 		<br>
 
 		<form action="{{ route('permissions.store') }}" method="POST">
-		{!! csrf_field() !!}
+			{!! csrf_field() !!}
 
-		<div class="form-group">
-			<label for="name">Permission Name</label>
-			<input type="text" name="name" value="{{ old('name') }}" class="form-control">
-		</div>
-		<br>
+			<div class="form-group">
+				<label for="name">Permission Name</label>
+				<input type="text" name="name" value="{{ old('name') }}" class="form-control">
+			</div>
+			<br>
 
-		@if(!$roles->isEmpty())
+			@if(!$roles->isEmpty())
 
-			<h4>Assign Permission to Roles</h4>
+				<h4>Assign Permission to Roles</h4>
 
-			@foreach ($roles as $role)
-				<input type="checkbox" value="{{ $role->id }}" name="roles[]">
-				<label for="{{ $role->name }}">{{ ucfirst($role->name) }}</label><br>
-			@endforeach
+				@foreach ($roles as $role)
+					<input type="checkbox" value="{{ $role->id }}" name="roles[]">
+					<label for="{{ $role->name }}">{{ ucfirst($role->name) }}</label><br>
+				@endforeach
 
-		@endif
+			@endif
 
-		<br>
-			<button type="submit" value="Submit" class="btn btn-primary">Add</button>
+			<br>
+			@can('add_permissions')
+				<button type="submit" value="Submit" class="btn btn-primary">Add</button>
+			@endcan
 		</form>
 
 	</div>

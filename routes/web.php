@@ -19,9 +19,29 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
     Route::get('/settings',['as' => 'admin.settings','uses' => SettingsController::class.'@show']);
 
-    Route::resource('users', 'UserController');
-    Route::resource('roles', 'RoleController');
-    Route::resource('permissions', 'PermissionController');
+    Route::get('users', 'UserController@index')->name('users.index')->middleware('permission:view_users');
+    Route::post('users', 'UserController@store')->name('users.store')->middleware('permission:add_users');
+    Route::get('users/create', 'UserController@create')->name('users.create')->middleware('permission:add_users');
+    Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy')->middleware('permission:delete_users');
+    Route::put('users/{user}', 'UserController@update')->name('users.update')->middleware('permission:edit_users');
+    Route::get('users/{user}', 'UserController@show')->name('users.show')->middleware('permission:view_users');
+    Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('permission:edit_users');
+
+    Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:view_roles');
+    Route::post('roles', 'RoleController@store')->name('roles.store')->middleware('permission:add_roles');
+    Route::get('roles/create', 'RoleController@create')->name('roles.create')->middleware('permission:add_roles');
+    Route::delete('roles/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('permission:delete_roles');
+    Route::put('roles/{role}', 'RoleController@update')->name('roles.update')->middleware('permission:edit_roles');
+    Route::get('roles/{role}', 'RoleController@show')->name('roles.show')->middleware('permission:view_roles');
+    Route::get('roles/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('permission:edit_roles');
+
+    Route::get('permissions', 'PermissionController@index')->name('permissions.index')->middleware('permission:view_permissions');
+    Route::post('permissions', 'PermissionController@store')->name('permissions.store')->middleware('permission:add_permissions');
+    Route::get('permissions/create', 'PermissionController@create')->name('permissions.create')->middleware('permission:add_permissions');
+    Route::delete('permissions/{permission}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('permission:delete_permissions');
+    Route::put('permissions/{permission}', 'PermissionController@update')->name('permissions.update')->middleware('permission:edit_permissions');
+    Route::get('permissions/{permission}', 'PermissionController@show')->name('permissions.show')->middleware('permission:view_permissions');
+    Route::get('permissions/{permission}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('permission:edit_permissions');
 
 });
 

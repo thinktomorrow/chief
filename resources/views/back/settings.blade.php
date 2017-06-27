@@ -2,8 +2,8 @@
 
 @section('content')
 
-	@role('Superadmin')
+	@can('view_users')
 		@include('back._partials.users')
-	@endrole
+	@endcan
 
 @stop

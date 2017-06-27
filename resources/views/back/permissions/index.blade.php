@@ -7,8 +7,12 @@
 	<div class="col-lg-10 col-lg-offset-1">
 		<h1><i class="fa fa-key"></i>Available Permissions
 
-			<a href="{{ route('users.index') }}" class="btn btn-default pull-right">Users</a>
-			<a href="{{ route('roles.index') }}" class="btn btn-default pull-right">Roles</a></h1>
+			@can('view_users')
+				<a href="{{ route('users.index') }}" class="btn btn-default pull-right">Users</a>
+			@endcan
+			@can('view_roles')
+				<a href="{{ route('roles.index') }}" class="btn btn-default pull-right">Roles</a></h1>
+			@endcan
 		<hr>
 		<div class="table-responsive">
 			<table class="table table-bordered table-striped">
@@ -24,14 +28,17 @@
 					<tr>
 						<td>{{ $permission->name }}</td>
 						<td>
-							<a href="{{ URL::to('admin/permissions/'.$permission->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+							@can('edit_permissions')
+								<a href="{{ URL::to('admin/permissions/'.$permission->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+							@endcan
 
-							<form action="{{ route('permissions.destroy', $permission->id) }}" method="POST">
-								<input name="_method" type="hidden" value="DELETE">
-								{!! csrf_field() !!}
-								<button type="submit" value="Submit" class="btn btn-danger">Delete</button>
-							</form>
-
+							@can('delete_permissions')
+								<form action="{{ route('permissions.destroy', $permission->id) }}" method="POST">
+									<input name="_method" type="hidden" value="DELETE">
+									{!! csrf_field() !!}
+									<button type="submit" value="Submit" class="btn btn-danger">Delete</button>
+								</form>
+							@endcan
 						</td>
 					</tr>
 				@endforeach
@@ -39,7 +46,9 @@
 			</table>
 		</div>
 
-		<a href="{{ URL::to('admin/permissions/create') }}" class="btn btn-success">Add Permission</a>
+		@can('add_permissions')
+			<a href="{{ URL::to('admin/permissions/create') }}" class="btn btn-success">Add Permission</a>
+		@endcan
 
 	</div>
 
