@@ -31,10 +31,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Default Permissions added.');
 
         // Confirm roles needed
-        if ($this->command->confirm('Create Roles for user, default is admin and user? [y|N]', true)) {
+        if ($this->command->confirm('Create Roles for user, default is superadmin, admin and user? [y|N]', true)) {
 
             // Ask for roles from input
-            $input_roles = $this->command->ask('Enter roles in comma separate format.', 'Admin,User');
+            $input_roles = $this->command->ask('Enter roles in comma separate format.', 'Superadmin,Admin,User');
 
             // Explode roles
             $roles_array = explode(',', $input_roles);
@@ -43,10 +43,10 @@ class DatabaseSeeder extends Seeder
             foreach($roles_array as $role) {
                 $role = Role::firstOrCreate(['name' => trim($role)]);
 
-                if( $role->name == 'Admin' ) {
+                if( $role->name == 'Superadmin' ) {
                     // assign all permissions
                     $role->syncPermissions(Permission::all());
-                    $this->command->info('Admin granted all the permissions');
+                    $this->command->info('Superadmin granted all the permissions');
                 } else {
                     // for others by default only read access
                     $role->syncPermissions(Permission::where('name', 'LIKE', 'view_%')->get());

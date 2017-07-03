@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Role;
 use App\User;
 use Illuminate\Console\Command;
 
@@ -38,13 +39,7 @@ class CreateUser extends Command
      */
     public function handle()
     {
-        $anticipations = [
-            [
-                'firstname' => 'Ben',
-                'lastname' => 'Cavens',
-                'email' => 'ben@thinktomorrow.be',
-            ]
-        ];
+        $anticipations = $this->getAnticipations();
 
         $firstname = $this->anticipate('firstname',array_pluck($anticipations,'firstname'));
         $anticipatedLastname = null;
@@ -76,6 +71,39 @@ class CreateUser extends Command
         $user->password = bcrypt($password);
         $user->save();
 
+        $user->assignRole(Role::findByName('Superadmin'));
+
         $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
+    }
+
+    /**
+     * @return array
+     */
+    private function getAnticipations()
+    {
+        $anticipations = [
+            [
+                'firstname' => 'Ben',
+                'lastname'  => 'Cavens',
+                'email'     => 'ben@thinktomorrow.be',
+            ],
+            [
+                'firstname' => 'Philippe',
+                'lastname'  => 'Damen',
+                'email'     => 'philippe@thinktomorrow.be',
+            ],
+            [
+                'firstname' => 'Johnny',
+                'lastname'  => 'Berkmans',
+                'email'     => 'johnny@thinktomorrow.be',
+            ],
+            [
+                'firstname' => 'Bob',
+                'lastname'  => 'Dries',
+                'email'     => 'bob@thinktomorrow.be',
+            ],
+        ];
+
+        return $anticipations;
     }
 }
