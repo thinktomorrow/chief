@@ -15,6 +15,9 @@
             <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
 
                 <li class="dropdown-footer">
+                    <a href="{{ route('admin.settings') }}">
+                        <span class="fa fa-cog pr5"></span> Settings
+                    </a>
                     <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <span class="fa fa-power-off pr5"></span> Log uit
                     </a>
