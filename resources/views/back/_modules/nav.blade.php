@@ -46,7 +46,30 @@
                     <span class="sidebar-title">Agenda</span>
                 </a>
             </li>
-
+            @can('view_users')
+                <li>
+                    <a href="{{ route('users.index') }}">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        <span class="sidebar-title">User management</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_roles')
+                <li>
+                    <a href="{{ route('roles.index') }}">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        <span class="sidebar-title">Role management</span>
+                    </a>
+                </li>
+            @endcan
+            @can('view_permissions')
+                <li>
+                    <a href="{{ route('permissions.index') }}">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        <span class="sidebar-title">Permission management</span>
+                    </a>
+                </li>
+            @endcan
         </ul>
         <!-- End: Sidebar Menu -->
 

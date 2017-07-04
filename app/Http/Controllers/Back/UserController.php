@@ -5,7 +5,12 @@ namespace App\Http\Controllers\back;
 use App\Http\Controllers\Controller;
 use App\Role;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -40,14 +45,17 @@ class UserController extends Controller
         $this->validate($request, [
             'name'      =>  'required|max:120',
             'email'     =>  'required|email|unique:users',
-            'password'  =>  'required|min:6|confirmed'
         ]);
 
         $user   = new User();
         $user->name = $request->get('name');
         $user->email = $request->get('email');
-        $user->password = bcrypt($request->get('password'));
         $user->save();
+
+        Password::sendResetLink(['email' => $user->email], function (Message $message) {
+            $message->subject($this->getEmailSubject());
+        });
+
         $roles  = $request['roles'];
 
         if (isset($roles)) {

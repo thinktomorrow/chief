@@ -31,15 +31,15 @@
 			@endforeach
 		</div>
 
-		<div class="form-group">
-			<label for="password">Password</label>
-			<input name="password" type="password" value="{{ old('password') }}" class="form-control">
-		</div>
+		{{--<div class="form-group">--}}
+			{{--<label for="password">Password</label>--}}
+			{{--<input name="password" type="password" value="{{ old('password') }}" class="form-control">--}}
+		{{--</div>--}}
 
-		<div class="form-group">
-			<label for="password">Confirm Password</label><br>
-			<input type="password" class="form-control" name="password_confirmation" value="">
-		</div>
+		{{--<div class="form-group">--}}
+			{{--<label for="password">Confirm Password</label><br>--}}
+			{{--<input type="password" class="form-control" name="password_confirmation" value="">--}}
+		{{--</div>--}}
 
 			@can('add_users')
 				<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>

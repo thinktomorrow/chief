@@ -2,8 +2,6 @@
 
 @section('content')
 
-	@can('view_users')
-		@include('back._partials.users')
-	@endcan
+
 
 @stop

@@ -27,9 +27,7 @@
 			@endforeach
 		</div>
 
-			@can('add_roles')
-				<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
-			@endcan
+			<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
 		</form>
 
 	</div>
