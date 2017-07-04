@@ -32,18 +32,23 @@
 
 					<td>
 						@can('edit_users')
-							<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+							<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-left" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						@endcan
 
 						@can('delete_users')
-							<form action="{{ route('users.destroy', $user->id) }}" method="POST">
-								<input name="_method" type="hidden" value="DELETE">
-								{!! csrf_field() !!}
-								<button type="submit" value="Submit" class="btn btn-danger">Delete</button>
-							</form>
+							<a class="btn btn-error" id="remove-user-toggle-{{ $user->id }}" href="#remove-user-modal-{{ $user->id }}"><i class="fa fa-trash"></i></a>
 						@endcan
 					</td>
 				</tr>
+				@include('back.users._deletemodal')
+				@push('custom-scripts')
+				<script>
+					;(function ($) {
+						// Delete modal
+						$("#remove-user-toggle-{{ $user->id }}").magnificPopup();
+					})(jQuery);
+				</script>
+				@endpush
 			@endforeach
 			</tbody>
 
@@ -51,6 +56,6 @@
 	</div>
 
 	@can('add_users')
-		<a href="{{ route('users.create') }}" class="btn btn-success">Add User</a>
+		<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
 	@endcan
 </div>

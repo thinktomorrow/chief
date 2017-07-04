@@ -42,7 +42,7 @@
 		</div>
 
 			@can('add_users')
-				<button type="submit" value="Submit" class="btn btn-primary">Add</button>
+				<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
 			@endcan
 		</form>
 

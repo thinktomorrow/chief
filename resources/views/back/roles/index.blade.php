@@ -30,21 +30,34 @@
 
 						<td>{{ $role->name }}</td>
 
-						<td>{{  $role->permissions()->pluck('name')->implode(', ') }}</td>{{-- Retrieve array of permissions associated to a role and convert to string --}}
+						<td>
+							@foreach($role->getPermissionsForindex() as $model => $permissions)
+								{{ $model }} =>
+											@foreach($permissions as $permission)
+												{{ $permission }},
+											@endforeach
+								<br>
+							@endforeach
+						</td>
 						<td>
 							@can('edit_roles')
-								<a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;">Edit</a>
+								<a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 							@endcan
 
 							@can('delete_roles')
-								<form action="{{ route('roles.destroy', $role->id) }}" method="POST">
-									<input name="_method" type="hidden" value="DELETE">
-									{!! csrf_field() !!}
-									<button type="submit" value="Submit" class="btn btn-danger">Delete</button>
-								</form>
+								<a class="btn btn-error" id="remove-role-toggle-{{ $role->id }}" href="#remove-role-modal-{{ $role->id }}"><i class="fa fa-trash"></i></a>
 							@endcan
 						</td>
 					</tr>
+					@include('back.roles._deletemodal')
+					@push('custom-scripts')
+					<script>
+						;(function ($) {
+							// Delete modal
+							$("#remove-role-toggle-{{ $role->id }}").magnificPopup();
+						})(jQuery);
+					</script>
+					@endpush
 				@endforeach
 				</tbody>
 
@@ -52,7 +65,7 @@
 		</div>
 
 		@can('add_roles')
-			<a href="{{ URL::to('admin/roles/create') }}" class="btn btn-success">Add Role</a>
+			<a href="{{ URL::to('admin/roles/create') }}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
 		@endcan
 	</div>
 
