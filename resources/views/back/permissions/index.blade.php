@@ -33,7 +33,7 @@
 							@endcan
 
 							@can('delete_permissions')
-									<a class="subtle subtle-danger" id="remove-permission-toggle-{{ $permission->id }}" href="#remove-permission-modal-{{ $permission->id }}"><i class="fa fa-2x fa-trash"></i></a>
+									<a class="btn btn-error" id="remove-permission-toggle-{{ $permission->id }}" href="#remove-permission-modal-{{ $permission->id }}"><i class="fa fa-trash"></i></a>
 							@endcan
 						</td>
 					</tr>
