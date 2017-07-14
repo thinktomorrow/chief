@@ -9,6 +9,15 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
 
     // ARTICLES
     Route::get('articles','ArticlesController@index')->name('admin.articles.index');
+    Route::post('articles', 'ArticlesController@store')->name('articles.store');
+    Route::get('articles/create', 'ArticlesController@create')->name('articles.create');
+    Route::delete('articles/{article}', 'ArticlesController@destroy')->name('articles.destroy');
+    Route::put('articles/{article}', 'ArticlesController@update')->name('articles.update');
+    Route::get('articles/{article}', 'ArticlesController@show')->name('articles.show');
+    Route::get('articles/{article}/edit', 'ArticlesController@edit')->name('articles.edit');
+    Route::post('articles/publish','Articles\ArticleController@publish')->name('articles.publish');
+
+
 
     // FOR DEVS ONLY!
 //    Route::get('translations/{slug}/lines/create',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.create','uses' => '\Chief\Trans\Controllers\TranslationLineController@create']);
@@ -63,6 +72,10 @@ Route::group(['prefix' => Locale::set(),'namespace' => 'Front'],function(){
         return view('front.home');
     }]);
 
+});
+
+Route::get("/media", function(){
+    return view('medialibrary');
 });
 
 // SETUP ROUTES

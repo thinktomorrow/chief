@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'europe/brussels',
+    'timezone' => 'Europe/brussels',
 
     /*
     |--------------------------------------------------------------------------
@@ -171,6 +171,7 @@ return [
         \Thinktomorrow\Locale\LocaleServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
+        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -239,7 +240,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Locale' => \Thinktomorrow\Locale\Facades\LocaleFacade::class,
-
     ],
 
 ];
