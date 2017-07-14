@@ -1,4 +1,4 @@
-<!-- Start: Right Sidebar -->
+<!-- Right Sidebar: EDIT IMAGE -->
 <aside id="sidebar_right" class="nano">
 
   <!-- Start: Sidebar Right Content -->

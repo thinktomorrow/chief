@@ -21,6 +21,14 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
       return view('back.media');
     });
 
+    Route::get('media-modal', function(){
+        return view('back.media-modal');
+    });
+
+    Route::get('uploadtest', function(){
+        return view('back.uploadtest');
+    });
+
     // FOR DEVS ONLY!
 //    Route::get('translations/{slug}/lines/create',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.create','uses' => '\Chief\Trans\Controllers\TranslationLineController@create']);
 //    Route::post('translations/{slug}/lines',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.store','uses' => '\Chief\Trans\Controllers\TranslationLineController@store']);
