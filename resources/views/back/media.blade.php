@@ -9,6 +9,6 @@
 @stop
 
 @section('content')
-
+  @include('back/_partials/mediaslidemenu')
 
 @stop
