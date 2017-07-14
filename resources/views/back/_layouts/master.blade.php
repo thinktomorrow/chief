@@ -51,6 +51,7 @@
 
         @include('back._modules.footer')
     </section>
+    @yield('sidebar')
 
 </div>
 

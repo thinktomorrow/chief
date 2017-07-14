@@ -9,31 +9,20 @@
 @stop
 
 @section('content')
-<section id="content" class="table-layout">
 <div class="tray">
   @include('back.media.filter')
   @include('back.media.gallery')
 </div>
-<div class="tray tray-center">
+@section('sidebar')
+  @include('back._partials.mediaslidemenu')
   @include('back.media._partials.upload')
-</div>
-  <!-- @include('back/_partials/mediaslidemenu') -->
-
 @stop
-@section('topbar-right')
-<script>
-$(function() {
-    // give file-upload preview onclick functionality
-    var fileUpload = $('.fileupload-preview');
-    if (fileUpload.length) {
 
-      fileUpload.each(function(i, e) {
-        var fileForm = $(e).parents('.fileupload').find('.btn-file > input');
-        $(e).on('click', function() {
-          fileForm.click();
-        });
+@push('custom-scripts')
+    <script>
+      $(document).ready(function(){
+        $(document.body).removeClass('sb-r-c');
+        $(document.body).addClass('sb-r-o');
       });
-    }
-});
-</script>
-@stop
+    </script>
+@endpush
