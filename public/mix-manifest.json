@@ -1,7 +1,4 @@
 {
-  "/assets/js/app.js": "/assets/js/app.js",
-  "/assets/js/main.js": "/assets/js/main.js",
-  "/assets/css/main.css": "/assets/css/main.css",
-  "/mix.js": "/mix.js",
-  "/assets/css/chief.css": "/assets/css/chief.css"
+    "/back/assets/js/main.js": "/back/assets/js/main.js",
+    "/back/assets/css/main.css": "/back/assets/css/main.css"
 }

@@ -64,8 +64,8 @@ class AdminLoginTest extends TestCase
     public function it_displays_admin_page_for_authenticated()
     {
         $admin = factory(User::class)->create();
-
         $response = $this->actingAs($admin)->get('/admin');
+
         $response->assertStatus(200);
         $this->assertInstanceOf(User::class, Auth::user());
         $this->assertFalse(session()->has('errors'));
