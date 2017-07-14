@@ -32,6 +32,14 @@
           <span class="fa fa-trash"></span>
           Delete files
         </button>
+        <button type="button" class="btn btn-default mr5" id="showUploadPanel">
+          <span class="fa fa-file"></span>
+          Upload new file
+        </button>
+        <button type="button" class="btn btn-default mr5" id="showCropPanel">
+          <span class="fa fa-file"></span>
+          Crop file
+        </button>
       </div>
     </div>
   </div>
