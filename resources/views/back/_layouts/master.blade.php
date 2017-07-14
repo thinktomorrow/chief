@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/admin-tools/admin-forms/css/admin-forms.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/magnific/magnific-popup.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/css/main.css') }}">
-    @yield('custom-styles')
+    @stack('custom-styles')
 
 </head>
 
@@ -55,14 +55,14 @@
 
 </div>
 
+
 <script src="{{ asset('assets/back/theme/vendor/jquery/jquery-1.11.1.min.js') }}"></script>
 <script src="{{ asset('assets/back/theme/vendor/jquery/jquery_ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('assets/back/theme/vendor/plugins/magnific/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/back/theme/js/utility/utility.js') }}"></script>
 <script src="{{ asset('assets/back/theme/js/main.js') }}"></script>
 
-<script src="{{ asset('assets/back/vendor/fileupload.js') }}"></script>
-<script src="{{ asset('assets/back/vendor/sortable.js') }}"></script>
+<script src="{{ asset('assets/back/theme/vendor/plugins/fileupload/fileupload.js') }}"></script>
 <script src="{{ asset('assets/back/js/main.js') }}"></script>
 
 <script type="text/javascript">

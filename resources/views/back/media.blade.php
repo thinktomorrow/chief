@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+  @include('back._partials.mediaslidemenu')
   @include('back.media.filter')
   @include('back.media.gallery')
 @stop

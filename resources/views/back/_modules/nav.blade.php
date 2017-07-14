@@ -70,6 +70,12 @@
                     </a>
                 </li>
             @endcan
+            <li>
+                <a href="/admin/uploadtest">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                    <span class="sidebar-title">Upload test</span>
+                </a>
+            </li>
         </ul>
         <!-- End: Sidebar Menu -->
 
