@@ -35,7 +35,7 @@
           <a href="#sidebar-right-tab1" data-toggle="tab">Info</a>
         </li>
         <li>
-          <a href="#sidebar-right-tab2" data-toggle="tab">Sizes</a>
+          <a href="#sidebar-right-tab2" data-toggle="tab">All Sizes</a>
         </li>
       </ul>
       <div class="tab-content br-n">
