@@ -16,6 +16,6 @@ return [
     /**
      * Client name
      */
-    'client' => 'Think Tomorrow',
+    'client' => 'Chief',
 
 ];
