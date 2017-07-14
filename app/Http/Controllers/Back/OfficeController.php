@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
-use BNP\Offices\Office;
-use BNP\Offices\OfficeImageAsset;
 use Illuminate\Http\Request;
 
 class OfficeController extends Controller
