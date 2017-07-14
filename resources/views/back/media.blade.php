@@ -9,13 +9,13 @@
 @stop
 
 @section('content')
-  @include('back._partials.mediaslidemenu')
   @include('back.media.filter')
   @include('back.media.gallery')
 @stop
 
 @section('sidebar')
   @include('back.media._partials.upload')
+  {{-- @include('back._partials.mediaslidemenu') --}}
 @stop
 
 @push('custom-scripts')
