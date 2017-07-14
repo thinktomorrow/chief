@@ -60,8 +60,8 @@
 <script src="{{ asset('assets/back/theme/js/utility/utility.js') }}"></script>
 <script src="{{ asset('assets/back/theme/js/main.js') }}"></script>
 
-<script src="{{ asset('assets/back/vendor/fileupload/fileupload.js') }}"></script>
-<script src="{{ asset('assets/back/vendor/sortable/sortable.js') }}"></script>
+<script src="{{ asset('assets/back/vendor/fileupload.js') }}"></script>
+<script src="{{ asset('assets/back/vendor/sortable.js') }}"></script>
 <script src="{{ asset('assets/back/js/main.js') }}"></script>
 
 <script type="text/javascript">
