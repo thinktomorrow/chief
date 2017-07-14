@@ -17,7 +17,9 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('articles/{article}/edit', 'ArticlesController@edit')->name('articles.edit');
     Route::post('articles/publish','Articles\ArticleController@publish')->name('articles.publish');
 
-
+    Route::get('media', function(){
+      return view('back.media');
+    });
 
     // FOR DEVS ONLY!
 //    Route::get('translations/{slug}/lines/create',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.create','uses' => '\Chief\Trans\Controllers\TranslationLineController@create']);
@@ -72,10 +74,6 @@ Route::group(['prefix' => Locale::set(),'namespace' => 'Front'],function(){
         return view('front.home');
     }]);
 
-});
-
-Route::get("/media", function(){
-    return view('medialibrary');
 });
 
 // SETUP ROUTES
