@@ -12,6 +12,8 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+use Chief\Models\Article;
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -20,5 +22,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'lastname' => $faker->lastName,
         'email' => $faker->email,
         'password' => $password ?: bcrypt('foobar'),
+    ];
+});
+
+
+$factory->define(Article::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->title,
     ];
 });

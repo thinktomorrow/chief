@@ -4,10 +4,11 @@
     TEST UPLOAD
 @stop
 
-@section('topbar-right')
-
 @section('content')
     @include('back._partials.mediaslidemenu')
+
+    <div>{{ $article->asset()->first()->getFilename() }}</div>
+    <div><img src="{{ $article->asset()->first()->getPath() }}" alt=""></div>
 
     <a data-select-media href="/admin/media-modal">Selecteer uit bibliotheek</a>
 @stop

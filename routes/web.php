@@ -17,17 +17,11 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('articles/{article}/edit', 'ArticlesController@edit')->name('articles.edit');
     Route::post('articles/publish','Articles\ArticleController@publish')->name('articles.publish');
 
-    Route::get('media', function(){
-      return view('back.media');
-    });
-
-    Route::get('media-modal', function(){
-        return view('back.media-modal');
-    });
-
-    Route::get('uploadtest', function(){
-        return view('back.uploadtest');
-    });
+    Route::get('media', 'MediaLibraryController@library')->name('media.library');
+    Route::get('media-modal', 'MediaLibraryController@mediaModal')->name('media.modal');
+    Route::get('uploadtest', 'MediaLibraryController@uploadtest')->name('media.uploadtest');
+    Route::post('media/upload', 'MediaController@upload')->name('media.upload');
+    Route::post('article/{id}/upload', 'ArticlesController@upload')->name('article.upload');
 
     // FOR DEVS ONLY!
 //    Route::get('translations/{slug}/lines/create',['middleware' => 'auth.superadmin', 'as' => 'back.trans.lines.create','uses' => '\Chief\Trans\Controllers\TranslationLineController@create']);

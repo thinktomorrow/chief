@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreateAssetTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table){
+        Schema::create('assets', function(Blueprint $table){
            $table->increments('id');
-           $table->string('title');
+           $table->integer('model_id')->nullable();
+           $table->integer('model_type')->nullable();
            $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        //
     }
 }

@@ -28,23 +28,26 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($articlesMedia as $article)
-                <tr>
-                    <td>
-                        {{ $article->collection_name }}
-                    </td>
-                    <td>
-                        {{ $article->disk }}
-                    </td>
-                    <td>
-                        <img src="{{ $article->getUrl('thumb') }}" alt="">
-                    </td>
-                    <td>
-                        <img src="{{ $article->getUrl('icon') }}" alt="">
-                    </td>
-                </tr>
+            <img src="{{ $articlesMedia->getMedia()[1]->getUrl('thumb') }}" alt="">
+            {{--<div>{{ $articlesMedia->getMedia('images')[0]->getPath('icon') }}</div>--}}
+            {{--<div>{{ $articlesMedia->getMedia('images')[0]->getPath('thumb') }}</div>--}}
+            {{--@foreach($articlesMedia as $article)--}}
+                {{--<tr>--}}
+                    {{--<td>--}}
+                        {{--{{ $article->collection_name }}--}}
+                    {{--</td>--}}
+                    {{--<td>--}}
+                        {{--{{ $article->disk }}--}}
+                    {{--</td>--}}
+                    {{--<td>--}}
+                        {{--<img src="{{ $article->getUrl('thumb') }}" alt="">--}}
+                    {{--</td>--}}
+                    {{--<td>--}}
+                        {{--<img src="{{ $article->getUrl('icon') }}" alt="">--}}
+                    {{--</td>--}}
+                {{--</tr>--}}
 
-            @endforeach
+            {{--@endforeach--}}
             </tbody>
         </table>
     </div>
@@ -54,29 +57,6 @@
 
 @push('custom-scripts')
     <script>
-        jQuery(document).ready(function ($) {
 
-            var $triggers = $('[data-publish-toggle]'),
-                    url = "{{route('articles.publish')}}"
-
-            $triggers.on('click', function () {
-                var $this = $(this);
-
-                $.ajax({
-                    data: {
-                        id: $this.data('publish-toggle'),
-                        checkboxStatus: this.checked,
-                        _token: '{!! csrf_token() !!}'
-                    },
-                    url: url,
-                    type: 'POST',
-                    dataType: 'json',
-                    success: function (data) {
-                        var title =  data.published ? 'online' : 'offline';
-                        $this.parent().find('label').prop('title', title);
-                    }
-                });
-            });
-        });
     </script>
 @endpush

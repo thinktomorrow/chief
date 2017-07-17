@@ -4,27 +4,26 @@ namespace Chief\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Article extends Model implements HasMediaConversions
+class Article extends Model
 {
-    use HasMediaTrait;
+
+    public function asset()
+    {
+        return $this->morphMany(Asset::class, 'model');
+    }
 
     public function registerMediaConversions()
     {
         $this->addMediaConversion('thumb')
-            ->width(368)
-            ->height(232)
-            ->sharpen(10)
-            ->optimize();
+            ->setManipulations(['w' => 150, 'h' => 150, 'sharp'=> 15]);
 
         $this->addMediaConversion('icon')
-            ->width(50)
-            ->height(50)
-            ->sharpen(10)
-            ->optimize();
+            ->setManipulations(['w' => 300, 'h' => 300, 'sharp' => 15]);
     }
 
 }

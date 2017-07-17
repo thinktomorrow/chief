@@ -15,7 +15,7 @@
 
 @section('sidebar')
   @include('back.media._partials.upload')
-  {{-- @include('back._partials.mediaslidemenu') --}}
+   {{--@include('back._partials.mediaslidemenu')--}}
 @stop
 
 @push('custom-scripts')
