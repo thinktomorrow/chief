@@ -6,6 +6,7 @@
 /storage/debugbar
 /vendor
 /report
+/public/media
 /.idea
 Homestead.json
 Homestead.yaml
