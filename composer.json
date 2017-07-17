@@ -11,6 +11,7 @@
         "doctrine/dbal": "^2.5",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "^1.0",
+        "spatie/laravel-image-optimizer": "^1.0",
         "spatie/laravel-medialibrary": "^4.0.0",
         "spatie/laravel-permission": "^2.1",
         "thinktomorrow/locale": "^1.3",

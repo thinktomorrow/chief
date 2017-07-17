@@ -23,7 +23,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_upload_an_image()
@@ -42,7 +41,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_upload_an_image_to_a_model()
@@ -64,7 +62,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_get_all_the_media_files()
@@ -85,7 +82,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_remove_an_image()
@@ -108,7 +104,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_upload_multiple_images()
@@ -123,6 +118,14 @@ class AssetTest extends TestCase
 
         $this->assertEquals($asset[1]->getFilename(), 'image2.png');
         $this->assertEquals($asset[1]->getPath(), '/media/2/image2.png');
+    }
+
+    /**
+    * @test
+    */
+    public function it_can_create_conversions()
+    {
+
     }
 
 //    /**

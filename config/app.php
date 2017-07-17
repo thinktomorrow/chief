@@ -172,6 +172,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Laravel\Tinker\TinkerServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+        Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -240,6 +241,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Locale' => \Thinktomorrow\Locale\Facades\LocaleFacade::class,
+        'ImageOptimizer' => Spatie\LaravelImageOptimizer\ImageOptimizerFacade::class,
     ],
 
 ];

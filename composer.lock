@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f088a50d8debd38dd989cb2bd5c1d1d",
+    "content-hash": "c2ba3accd197b583f32c16eafcc5de10",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -2147,6 +2147,55 @@
             "time": "2017-03-26T20:37:53+00:00"
         },
         {
+            "name": "spatie/image-optimizer",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/image-optimizer.git",
+                "reference": "20cafcb175d3f23e3607991d718c96a44d87400c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/20cafcb175d3f23e3607991d718c96a44d87400c",
+                "reference": "20cafcb175d3f23e3607991d718c96a44d87400c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "psr/log": "^1.0",
+                "symfony/process": "^3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2",
+                "symfony/var-dumper": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ImageOptimizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily optimize images using PHP",
+            "homepage": "https://github.com/spatie/image-optimizer",
+            "keywords": [
+                "image-optimizer",
+                "spatie"
+            ],
+            "time": "2017-07-10T13:06:52+00:00"
+        },
+        {
             "name": "spatie/laravel-glide",
             "version": "3.1.0",
             "source": {
@@ -2188,6 +2237,64 @@
             "description": "Easily convert images with Glide",
             "homepage": "https://github.com/spatie/laravel-glide",
             "time": "2017-01-24T10:51:47+00:00"
+        },
+        {
+            "name": "spatie/laravel-image-optimizer",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-image-optimizer.git",
+                "reference": "b26ec0d544b5364eff62b618e1267622d85d6733"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-image-optimizer/zipball/b26ec0d544b5364eff62b618e1267622d85d6733",
+                "reference": "b26ec0d544b5364eff62b618e1267622d85d6733",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "spatie/image-optimizer": "^1.0.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.4",
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\LaravelImageOptimizer\\LaravelImageOptimizerServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelImageOptimizer": "Spatie\\LaravelImageOptimizer\\LaravelImageOptimizerFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelImageOptimizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Optimize images in your Laravel app",
+            "homepage": "https://github.com/spatie/laravel-image-optimizer",
+            "keywords": [
+                "laravel-image-optimizer",
+                "spatie"
+            ],
+            "time": "2017-07-13T15:37:47+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -4975,55 +5082,6 @@
                 "spatie"
             ],
             "time": "2017-07-11T09:18:47+00:00"
-        },
-        {
-            "name": "spatie/image-optimizer",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/image-optimizer.git",
-                "reference": "20cafcb175d3f23e3607991d718c96a44d87400c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/20cafcb175d3f23e3607991d718c96a44d87400c",
-                "reference": "20cafcb175d3f23e3607991d718c96a44d87400c",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0",
-                "psr/log": "^1.0",
-                "symfony/process": "^3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.2",
-                "symfony/var-dumper": "^3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\ImageOptimizer\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Easily optimize images using PHP",
-            "homepage": "https://github.com/spatie/image-optimizer",
-            "keywords": [
-                "image-optimizer",
-                "spatie"
-            ],
-            "time": "2017-07-10T13:06:52+00:00"
         },
         {
             "name": "spatie/temporary-directory",
