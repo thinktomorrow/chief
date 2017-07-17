@@ -54,7 +54,7 @@ class AssetTest extends TestCase
 
         $this->assertEquals($asset->getFilename(), 'image.png');
         $this->assertEquals($asset->getPath(), '/media/1/image.png');
-        $this->assertEquals($article->asset()->first()§->getFilename(), $asset->getFilename());
+        $this->assertEquals($article->asset()->first()->getFilename(), $asset->getFilename());
 
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
@@ -84,20 +84,20 @@ class AssetTest extends TestCase
         $this->assertEquals(2, Asset::getAllMedia()->count());
     }
 
-    /**
-     * @test
-     */
-    public function it_can_upload_multiple_images()
-    {
-        //upload multiple images
-        Asset::upload($request->file('images'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_crop_an_image()
-    {
-        Asset::upload($request->file('image'))->crop(x,y,w,h);
-    }
+//    /**
+//     * @test
+//     */
+//    public function it_can_upload_multiple_images()
+//    {
+//        //upload multiple images
+//        Asset::upload($request->file('images'));
+//    }
+//
+//    /**
+//     * @test
+//     */
+//    public function it_can_crop_an_image()
+//    {
+//        Asset::upload($request->file('image'))->crop(x,y,w,h);
+//    }
 }
