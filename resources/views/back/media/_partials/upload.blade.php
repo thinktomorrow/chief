@@ -9,18 +9,19 @@
 		<!-- Image Upload Field -->
 		<div class="fileupload fileupload-new admin-form mt20" data-provides="fileupload">
 			<div class="fileupload-preview thumbnail m5 mt20 mb30">
-				<img data-src="holder.js/100%x140" alt="holder">
+				<img src="{{ asset('assets/back/img/placeholder.png')}}" alt="holder">
 			</div>
 			<div class="row">
-				<div class="col-xs-4">
+				<div class="col-xs-12">
 					<form action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data">
 						{{ csrf_field() }}
-		                <span class="button btn-system btn-file btn-block ph5">
-							<span class="fileupload-new">Select image</span>
-							<span class="fileupload-exists">Change File</span>
-							<input type="file" name="image[]">
-		                </span>
-						<button type="submit">Submit</button>
+		         	<span class="btn-file ph5 btn-group">
+								<span class="btn btn-default fileupload-new">Selecteer bestand</span>
+								<span class="btn btn-default fileupload-exists mr15">Wijzig bestand</span>
+								<input type="file" name="image[]" multiple accept="image/*">
+								<button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand</button>
+
+		           </span>
 					</form>
 				</div>
 			</div>

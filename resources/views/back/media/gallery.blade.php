@@ -1,20 +1,20 @@
 <style>
-	.checkbox-delete {
-		visibility: hidden;
-	}
-
-	.media-gallery .media {
-		transition: all 0.15s ease-in-out;
-	}
-
-	.media-gallery .media:hover {
-		box-shadow: 5px 5px 15px 0px #d8d8d8;
-		cursor: pointer;
-	}
-
-	.media-gallery .media:hover .checkbox-delete {
-		visibility: visible !important;
-	}
+.checkbox-delete{
+  visibility: hidden;
+}
+.media-gallery .media{
+  transition: all 0.15s ease-in-out;
+}
+.media-gallery .media:hover{
+  box-shadow: 5px 5px 15px 0px #d8d8d8;
+  cursor: pointer;
+}
+.media-gallery .media:hover .checkbox-delete{
+  visibility: visible!important;
+}
+#checkboxMedia:checked .media{
+  border: 1px solid #000;
+}
 </style>
 <section class="media-gallery mh15 pv15">
 	<div id="mix-container">
