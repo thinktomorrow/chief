@@ -17,5 +17,10 @@ class MediaController extends Controller
         return redirect()->back();
     }
 
+    public function remove(Request $request)
+    {
+        Asset::remove($request->get('imagestoremove'));
 
+        return redirect()->back();
+    }
 }

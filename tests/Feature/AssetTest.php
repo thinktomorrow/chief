@@ -84,6 +84,23 @@ class AssetTest extends TestCase
         $this->assertEquals(2, Asset::getAllMedia()->count());
     }
 
+    /**
+     * @group testing
+     * @test
+     */
+    public function it_can_remove_an_image()
+    {
+        //upload a single image
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
+
+        $this->assertEquals($asset->getFilename(), 'image.png');
+        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+
+        Asset::remove($asset->id);
+
+        $this->assertEquals(0, Asset::getAllMedia()->count());
+    }
+
 //    /**
 //     * @test
 //     */

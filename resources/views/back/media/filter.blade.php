@@ -28,7 +28,7 @@
     </div>
     <div class="col-xs-5 text-right">
       <div class="btn-group">
-        <button type="button" class="btn btn-default mr5">
+        <button type="submit" class="btn btn-default mr5">
           <span class="fa fa-trash"></span>
           Delete files
         </button>

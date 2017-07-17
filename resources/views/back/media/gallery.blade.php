@@ -21,6 +21,7 @@
             </div>
           </div>
         </div>
+          <input type="hidden" name="imagestoremove[]" value="{{ $media->id }}">
       @endforeach
     </div>
   </div>
