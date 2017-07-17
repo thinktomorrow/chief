@@ -1,6 +1,6 @@
 <style>
 .checkbox-delete{
-  visibility: hidden;
+  display: none;
 }
 .media-gallery .media{
   transition: all 0.15s ease-in-out;
@@ -10,10 +10,13 @@
   cursor: pointer;
 }
 .media-gallery .media:hover .checkbox-delete{
-  visibility: visible!important;
+  display: block!important;
 }
-#checkboxMedia:checked .media{
-  border: 1px solid #000;
+.media.selected{
+  border: 5px solid #4a89dc;
+}
+.media.selected h2{
+  color: #4a89dc;
 }
 </style>
 <section class="media-gallery mh15 pv15">
@@ -31,9 +34,11 @@
                 {{ $media->getFilename() }}
               </span>
               <span class="panel-controls">
-                <div class="checkbox-delete pull-right">
-                  <label for="checkboxMedia"><i class="fa fa-trash"></i></label>
-                  <input type="checkbox" id="checkboxMedia" name="imagestoremove[]" value="{{ $media->id }}">
+                <div class="checkbox-delete">
+                  <label for="checkboxMedia-{{ $media->id }}">
+                    <h2 class="text-default pt5 pn mn"><i class="fa fa-check-circle"></i></h2>
+                  </label>
+                  <input class="hidden" type="checkbox" id="checkboxMedia-{{ $media->id }}" name="imagestoremove[]" value="{{ $media->id }}">
                 </div>
               </span>
             </div>

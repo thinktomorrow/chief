@@ -5,13 +5,13 @@
         <div class="btn-group">
           <span class="btn btn-default hidden-xs disabled">Toggle files</span>
           <div class="btn-group">
-            <button type="button" class="btn btn-default to-grid">
+            <button type="button" class="btn btn-default">
               <span class="fa fa-fw fa-image"></span>
             </button>
-            <button type="button" class="btn btn-default to-list">
+            <button type="button" class="btn btn-default">
               <span class="fa fa-fw fa-file-pdf-o"></span>
             </button>
-            <button type="button" class="btn btn-default to-list">
+            <button type="button" class="btn btn-default">
               <span class="fa fa-fw fa-file-excel-o"></span>
             </button>
           </div>
@@ -20,7 +20,7 @@
     </div>
     <div class="col-xs-5 text-right">
       <div class="btn-group">
-        <button type="submit" class="btn btn-default mr5">
+        <button type="submit" class="btn btn-danger mr5 btnDelete hidden">
           <span class="fa fa-trash"></span>
           Delete files
         </button>

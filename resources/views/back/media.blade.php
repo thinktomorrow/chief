@@ -1,7 +1,7 @@
 @extends('back._layouts.master')
 
 @section('page-title')
-    Mediagallerij
+    Mediagalerij
 @stop
 
 @section('topbar-right')
@@ -32,6 +32,20 @@
         });
         $("#showCropPanel").click(function(){
           $(document.body).toggleClass('sb-r-o');
+        });
+
+
+        $('.checkbox-delete > input:checkbox').change(function () {
+        		if ($(this).is(":checked")) {
+        				$(this).closest(".media").addClass('selected');
+        				$(this).closest(".checkbox-delete").addClass('show');
+                $('.btnDelete').removeClass('hidden');
+        		}
+        		else {
+        				$(this).closest(".media").removeClass('selected');
+                $(this).closest(".checkbox-delete").removeClass('show');
+                $('.btnDelete').addClass('hidden');
+        		};
         });
 
         // give file-upload preview onclick functionality
