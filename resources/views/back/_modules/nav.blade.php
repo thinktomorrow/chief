@@ -62,6 +62,9 @@
                     </a>
                 </li>
             @endcan
+
+            <?php
+            /*
             @can('view_permissions')
                 <li>
                     <a href="{{ route('permissions.index') }}">
@@ -70,6 +73,8 @@
                     </a>
                 </li>
             @endcan
+            */
+            ?>
             <li>
                 <a href="/admin/uploadtest">
                     <span class="glyphicon glyphicon-calendar"></span>

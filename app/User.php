@@ -30,6 +30,10 @@ class User extends Authenticatable implements HasMediaConversions
         'password', 'remember_token',
     ];
 
+    public function getShortNameAttribute()
+    {
+      return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.'; 
+    }
 
     public function registerMediaConversions()
     {
