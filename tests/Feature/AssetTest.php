@@ -96,9 +96,15 @@ class AssetTest extends TestCase
         $this->assertEquals($asset->getFilename(), 'image.png');
         $this->assertEquals($asset->getPath(), '/media/1/image.png');
 
+        $asset2 = Asset::upload(UploadedFile::fake()->image('image2.png'));
+
+        $this->assertEquals($asset2->getFilename(), 'image2.png');
+        $this->assertEquals($asset2->getPath(), '/media/2/image2.png');
+
         Asset::remove($asset->id);
 
-        $this->assertEquals(0, Asset::getAllMedia()->count());
+        $this->assertEquals(1, Asset::getAllMedia()->count());
+        $this->assertEquals($asset2->id, Asset::getAllMedia()->first()->id);
     }
 
     /**
@@ -108,7 +114,7 @@ class AssetTest extends TestCase
     public function it_can_upload_multiple_images()
     {
         //upload multiple images
-        $images = collect([UploadedFile::fake()->image('image.png'), UploadedFile::fake()->image('image2.png')]);
+        $images = [UploadedFile::fake()->image('image.png'), UploadedFile::fake()->image('image2.png')];
 
         $asset = Asset::upload($images);
 

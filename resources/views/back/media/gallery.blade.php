@@ -30,7 +30,7 @@
               <span class="panel-controls">
                 <div class="checkbox-delete pull-right">
                   <label for="checkboxMedia"><i class="fa fa-trash"></i></label>
-                  <input type="checkbox" id="checkboxMedia">
+                  <input type="checkbox" id="checkboxMedia" name="imagestoremove[]" value="{{ $media->id }}">
                 </div>
               </span>
             </div>
@@ -44,7 +44,6 @@
           </div>
           </div>
         </div>
-          <input type="hidden" name="imagestoremove[]" value="{{ $media->id }}">
       @endforeach
     </div>
   </div>

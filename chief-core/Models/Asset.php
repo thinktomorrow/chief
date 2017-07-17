@@ -65,7 +65,7 @@ class Asset extends Model implements HasMediaConversions
     {
         if(is_array($image_ids)){
             foreach($image_ids as $id){
-                Asset::find($id)->first()->delete();
+                Asset::where('id', $id)->first()->delete();
             }
         }else{
             Asset::find($image_ids)->first()->delete();
