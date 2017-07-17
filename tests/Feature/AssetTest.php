@@ -23,7 +23,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_upload_an_image()
@@ -42,7 +41,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_upload_an_image_to_a_model()
@@ -64,7 +62,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_get_all_the_media_files()
@@ -85,7 +82,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_remove_an_image()
@@ -96,19 +92,49 @@ class AssetTest extends TestCase
         $this->assertEquals($asset->getFilename(), 'image.png');
         $this->assertEquals($asset->getPath(), '/media/1/image.png');
 
+        $asset2 = Asset::upload(UploadedFile::fake()->image('image2.png'));
+
+        $this->assertEquals($asset2->getFilename(), 'image2.png');
+        $this->assertEquals($asset2->getPath(), '/media/2/image2.png');
+
         Asset::remove($asset->id);
 
-        $this->assertEquals(0, Asset::getAllMedia()->count());
+        $this->assertEquals(1, Asset::getAllMedia()->count());
+        $this->assertEquals($asset2->id, Asset::getAllMedia()->first()->id);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_upload_multiple_images()
+    {
+        //upload multiple images
+        $images = [UploadedFile::fake()->image('image.png'), UploadedFile::fake()->image('image2.png')];
+
+        $asset = Asset::upload($images);
+
+        $this->assertEquals($asset[0]->getFilename(), 'image.png');
+        $this->assertEquals($asset[0]->getPath(), '/media/1/image.png');
+
+        $this->assertEquals($asset[1]->getFilename(), 'image2.png');
+        $this->assertEquals($asset[1]->getPath(), '/media/2/image2.png');
+    }
+
+    /**
+    * @test
+    */
+    public function it_can_create_conversions()
+    {
+
     }
 
 //    /**
-//     * @test
-//     */
-//    public function it_can_upload_multiple_images()
+//    * @test
+//    */
+//    public function it_can_upload_images_for_different_locales()
 //    {
-//        //upload multiple images
-//        Asset::upload($request->file('images'));
 //    }
+
 //
 //    /**
 //     * @test

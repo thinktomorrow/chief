@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasMediaConversions
+class User extends Authenticatable
 {
     use Notifiable, HasRoles, HasMediaTrait;
 
@@ -32,15 +32,6 @@ class User extends Authenticatable implements HasMediaConversions
 
     public function getShortNameAttribute()
     {
-      return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.'; 
-    }
-
-    public function registerMediaConversions()
-    {
-        $this->addMediaConversion('thumb')
-            ->width(368)
-            ->height(232)
-            ->sharpen(10)
-            ->optimize();
+      return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
     }
 }
