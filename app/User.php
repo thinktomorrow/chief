@@ -8,7 +8,7 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasMediaConversions
+class User extends Authenticatable
 {
     use Notifiable, HasRoles, HasMediaTrait;
 
@@ -30,13 +30,4 @@ class User extends Authenticatable implements HasMediaConversions
         'password', 'remember_token',
     ];
 
-
-    public function registerMediaConversions()
-    {
-        $this->addMediaConversion('thumb')
-            ->width(368)
-            ->height(232)
-            ->sharpen(10)
-            ->optimize();
-    }
 }
