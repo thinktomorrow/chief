@@ -9,8 +9,11 @@
 @stop
 
 @section('content')
-  @include('back.media.filter')
-  @include('back.media.gallery')
+  <form action="{{ route('media.remove') }}" method="POST">
+    {{ csrf_field() }}
+    @include('back.media.gallery')
+    @include('back.media.filter')
+  </form>
 @stop
 
 @section('sidebar')

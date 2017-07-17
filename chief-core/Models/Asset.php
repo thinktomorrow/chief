@@ -43,6 +43,17 @@ class Asset extends Model implements HasMediaConversions
         return $this->morphTo();
     }
 
+    public static function remove($image_ids)
+    {
+        if(is_array($image_ids)){
+            foreach($image_ids as $id){
+                Asset::find($id)->first()->delete();
+            }
+        }else{
+            Asset::find($image_ids)->first()->delete();
+        }
+    }
+
     public static function getAllMedia()
     {
         $library = collect([]);

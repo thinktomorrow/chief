@@ -21,6 +21,9 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('media-modal', 'MediaLibraryController@mediaModal')->name('media.modal');
     Route::get('uploadtest', 'MediaLibraryController@uploadtest')->name('media.uploadtest');
     Route::post('media/upload', 'MediaController@upload')->name('media.upload');
+    Route::post('media/remove', 'MediaController@remove')->name('media.remove');
+
+
     Route::post('article/{id}/upload', 'ArticlesController@upload')->name('article.upload');
 
     // FOR DEVS ONLY!
