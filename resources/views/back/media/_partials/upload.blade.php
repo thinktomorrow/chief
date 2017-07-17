@@ -18,7 +18,7 @@
 		                <span class="button btn-system btn-file btn-block ph5">
 							<span class="fileupload-new">Select image</span>
 							<span class="fileupload-exists">Change File</span>
-							<input type="file" name="image" accept="image/*">
+							<input type="file" name="image[]" multiple accept="image/*">
 		                </span>
 						<button type="submit">Submit</button>
 					</form>

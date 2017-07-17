@@ -4,6 +4,8 @@ namespace Chief\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\File;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
@@ -12,14 +14,30 @@ class Asset extends Model implements HasMediaConversions
 
     use HasMediaTrait;
 
-    public static function upload($file)
+    public static function upload($files)
     {
-        $self = new self();
-        $self->save();
+        if(is_array($files)){
+            $list = collect([]);
+            collect($files)->each(function($file) use ($list){
+                $self = new self();
+                $self->save();
 
-        $self->addMedia($file)->toMediaLibrary();
+                $self->addMedia($file)->toMediaLibrary();
 
-        return $self;
+                $list->push($self);
+            });
+
+            return $list;
+        }elseif($files instanceof File || $files instanceof \Illuminate\Http\Testing\File){
+            $self = new self();
+            $self->save();
+
+            $self->addMedia($files)->toMediaLibrary();
+
+            return $self;
+        }
+
+        return null;
     }
 
     public function attachToModel(Model $model)

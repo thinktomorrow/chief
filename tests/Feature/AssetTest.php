@@ -101,14 +101,31 @@ class AssetTest extends TestCase
         $this->assertEquals(0, Asset::getAllMedia()->count());
     }
 
+    /**
+     * @group testing
+     * @test
+     */
+    public function it_can_upload_multiple_images()
+    {
+        //upload multiple images
+        $images = collect([UploadedFile::fake()->image('image.png'), UploadedFile::fake()->image('image2.png')]);
+
+        $asset = Asset::upload($images);
+
+        $this->assertEquals($asset[0]->getFilename(), 'image.png');
+        $this->assertEquals($asset[0]->getPath(), '/media/1/image.png');
+
+        $this->assertEquals($asset[1]->getFilename(), 'image2.png');
+        $this->assertEquals($asset[1]->getPath(), '/media/2/image2.png');
+    }
+
 //    /**
-//     * @test
-//     */
-//    public function it_can_upload_multiple_images()
+//    * @test
+//    */
+//    public function it_can_upload_images_for_different_locales()
 //    {
-//        //upload multiple images
-//        Asset::upload($request->file('images'));
 //    }
+
 //
 //    /**
 //     * @test
