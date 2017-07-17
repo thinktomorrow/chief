@@ -11,8 +11,8 @@
 @section('content')
   <form action="{{ route('media.remove') }}" method="POST">
     {{ csrf_field() }}
-    @include('back.media.gallery')
     @include('back.media.filter')
+    @include('back.media.gallery')
   </form>
 @stop
 

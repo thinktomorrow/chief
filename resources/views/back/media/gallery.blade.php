@@ -12,6 +12,9 @@
 .media-gallery .media:hover .checkbox-delete{
   visibility: visible!important;
 }
+#checkboxMedia:checked .media{
+  border: 1px solid #000;
+}
 </style>
 <section class="media-gallery mh15 pv15">
   <div id="mix-container">
