@@ -21,7 +21,7 @@
       <div class="btn-group">
         <div class="deleteMedia hidden">
           <div class="deleteActions hidden">
-            <span class="btn btn-default disabled">Bestanden verwijderen</span>
+            <span class="btn btn-default">Bestanden verwijderen</span>
             <a class="btn btn-primary noDelete"> Nee </a>
             <button type="submit" class="btn btn-default btnDelete mr5"> Ja </button>
           </div>

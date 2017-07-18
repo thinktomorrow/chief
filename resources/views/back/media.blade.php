@@ -74,19 +74,18 @@ $(document).ready(function(){
 
   // CHECKBOX TO SELECT ALL IMAGES
   $('#selectAllMedia').change(function(){
-
     if ($(this).is(":checked")) {
       getCheckbox.closest(".media").addClass('selected');
       getCheckbox.closest(".checkbox-delete").addClass('show');
       getCheckbox.prop('checked',true);
       $('.selectBtn .fa').removeClass('hidden');
-      countCheckboxes();
     }
     else{
       getCheckbox.closest(".media").removeClass('selected');
       getCheckbox.closest(".checkbox-delete").removeClass('show');
       getCheckbox.prop('checked',false);
     }
+    countCheckboxes();
   });
 
   // give file-upload preview onclick functionality
