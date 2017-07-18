@@ -20,7 +20,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('media', 'MediaLibraryController@library')->name('media.library');
     Route::get('media-modal', 'MediaLibraryController@mediaModal')->name('media.modal');
     Route::get('uploadtest', 'MediaLibraryController@uploadtest')->name('media.uploadtest');
-    Route::post('media/upload', 'MediaController@upload')->name('media.upload')->middleware('optimizeImages');
+    Route::post('media/upload', 'MediaController@upload')->name('media.upload');
     Route::post('media/remove', 'MediaController@remove')->name('media.remove');
 
 
