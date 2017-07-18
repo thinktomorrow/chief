@@ -1,5 +1,5 @@
 <!-- Start: Sidebar Left -->
-<aside id="sidebar_left" class="nano nano-primary affix">
+<aside id="sidebar_left" class="nano nano-primary sidebar-default affix sidebar-light light">
 
     <!-- Start: Sidebar Left Content -->
     <div class="sidebar-left-content nano-content">
@@ -46,8 +46,8 @@
                     <span class="sidebar-title">Agenda</span>
                 </a>
             </li>
-            <li class="sidebar-label pt20">Gebruikers</li>
             @can('view_users')
+            <li class="sidebar-label pt20">Gebruikers</li>
                 <li>
                     <a href="{{ route('users.index') }}">
                         <span class="glyphicon glyphicon-calendar"></span>
