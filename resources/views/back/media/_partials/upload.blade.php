@@ -17,9 +17,9 @@
 						{{ csrf_field() }}
 		         	<span class="btn-file ph5 btn-group">
 								<span class="btn btn-default fileupload-new">Selecteer bestand</span>
-								<span class="btn btn-default fileupload-exists mr15">Wijzig bestand</span>
+								<span class="btn btn-default fileupload-exists mr15">Wijzig</span>
 								<input type="file" name="image[]" multiple accept="image/*">
-								<button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand</button>
+								<button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand <i class="fa fa-upload"></i></button>
 
 		           </span>
 					</form>
