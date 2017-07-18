@@ -19,6 +19,7 @@
   color: #4a89dc;
 }
 </style>
+
 <section class="media-gallery mh15 pv15">
   <div id="mix-container">
     <div class="row">

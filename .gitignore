@@ -2,8 +2,11 @@
 /public/storage
 /public/uploads
 /public/hot
+/public/fonts
+/public/vendor
 /storage/*.key
 /storage/debugbar
+/storage/medialibrary
 /vendor
 /report
 /public/media
@@ -12,3 +15,5 @@ Homestead.json
 Homestead.yaml
 .env
 /docs
+brokenlinksshort.txt
+
