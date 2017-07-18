@@ -6,6 +6,7 @@ namespace Chief\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\File;
 use Illuminate\Support\Collection;
+use Spatie\Image\Image;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\ImageOptimizer\OptimizerChain;
@@ -17,6 +18,7 @@ class Asset extends Model implements HasMediaConversions
 
     public static function upload($files)
     {
+
         if(is_array($files)){
             $list = collect([]);
             collect($files)->each(function($file) use ($list){
@@ -24,7 +26,6 @@ class Asset extends Model implements HasMediaConversions
                 $self->save();
 
                 $self->addMedia($file)->toMediaLibrary();
-                $self->optimize();
 
                 $list->push($self);
             });
@@ -53,9 +54,14 @@ class Asset extends Model implements HasMediaConversions
         return $this->getMedia()[0]->file_name;
     }
 
-    public function getPath($collection = '')
+    public function getPath()
     {
-        return $this->getMedia()[0]->getUrl($collection);
+        return $this->getSize();
+    }
+
+    public function getPathForSize($collection)
+    {
+      return $this->getMedia()[0]->getUrl($collection);
     }
 
     public function assets()
@@ -85,16 +91,6 @@ class Asset extends Model implements HasMediaConversions
         return $library;
     }
 
-    private function optimize()
-    {
-        app(OptimizerChain::class)->optimize($this->getMedia()[0]->getPath());
-        app(OptimizerChain::class)->optimize($this->getMedia()[0]->getPath('thumb'));
-        app(OptimizerChain::class)->optimize($this->getMedia()[0]->getPath('medium'));
-        app(OptimizerChain::class)->optimize($this->getMedia()[0]->getPath('large'));
-        app(OptimizerChain::class)->optimize($this->getMedia()[0]->getPath('full'));
-
-    }
-
     /**
      * Register the conversions that should be performed.
      *
@@ -103,15 +99,35 @@ class Asset extends Model implements HasMediaConversions
     public function registerMediaConversions()
     {
         $this->addMediaConversion('thumb')
-            ->setManipulations(['w' => 150, 'h' => 150, 'sharp' => 15, 'fm' => 'png']);
+                ->width(150)
+                ->height(150)
+                ->sharpen(15)
+                ->format('png')
+                ->optimize();
 
         $this->addMediaConversion('medium')
-            ->setManipulations(['w' => 300, 'h' => 130, 'sharp' => 15, 'fm' => 'png']);
+                ->width(300)
+                ->height(130)
+                ->sharpen(15)
+                ->format('png')
+                ->optimize();
 
         $this->addMediaConversion('large')
-            ->setManipulations(['w' => 1024, 'h' => 353, 'sharp' => 15, 'fm' => 'png']);
+                ->width(1024)
+                ->height(353)
+                ->sharpen(15)
+                ->format('png')
+                ->optimize();
 
         $this->addMediaConversion('full')
-            ->setManipulations(['w' => 1600, 'h' => 553, 'sharp' => 15, 'fm' => 'png']);
+            ->width(1600)
+            ->height(553)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
+
+//        $this->addMediaConversion('thumb')
+//            ->setManipulations(['w' => 368, 'h' => 232])
+//            ->performOnCollections('pdf');
     }
 }

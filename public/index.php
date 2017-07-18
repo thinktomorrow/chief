@@ -7,6 +7,7 @@
  * @author   Taylor Otwell <taylor@laravel.com>
  */
 
+ini_set('memory_limit', '256M');
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
