@@ -34,7 +34,7 @@
       @if(!$library->isEmpty())
       <div class="btn btn-default selectBtn">
         <label for="selectAllMedia" class="mn">
-          Selecteer alle media
+          Selecteer alle bestanden
           <i class="fa fa-check-circle hidden"></i>
         </label>
         <input class="hidden" type="checkbox" id="selectAllMedia">

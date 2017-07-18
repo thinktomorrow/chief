@@ -77,7 +77,7 @@ figure img{
         </div>
       @endforeach
     </div>
-    <div class="row">
+    <div class="row text-center">
       {{ $library->render() }}
     </div>
   </div>

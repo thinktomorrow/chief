@@ -23,7 +23,7 @@
 
 </head>
 
-<body>
+<body class="sb-o">
 
 <div id="main">
 

@@ -17,8 +17,8 @@ Mediagalerij
 @stop
 
 @section('sidebar')
-  @include('back.media._partials.upload')
-   {{--@include('back.media._partials.mediaslidemenu')--}}
+  {{--
+   @include('back.media._partials.media-details')--}}@include('back.media._partials.upload')
 @stop
 
 @push('custom-scripts')
@@ -30,9 +30,7 @@ $(document).ready(function(){
   $("#showUploadPanel").click(function(){
     $(document.body).toggleClass('sb-r-o');
   });
-  $("#showCropPanel").click(function(){
-    $(document.body).toggleClass('sb-r-o');
-  });
+
 
   // SHOW OR HIDE DELETE BUTTON
   $('.showDeleteUptions').click(function(){

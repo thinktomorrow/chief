@@ -66,10 +66,15 @@ class Asset extends Model implements HasMediaConversions
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if ($ext == 'pdf') {
             return "../assets/back/img/pdf.png";
-        } elseif (in_array($ext, ['xls', 'xlsx', 'numbers', 'sheets'])) {
+        }
+        elseif (in_array($ext, ['xls', 'xlsx', 'numbers', 'sheets'])) {
             return "../assets/back/img/xls.png";
-        }else{
-            return $this->getMedia()[0]->getUrl($collection);
+        }
+        elseif (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', '.svg'])) {
+          return $this->getMedia()[0]->getUrl($collection);
+        }
+        else{
+            return "../assets/back/img/other.png";
         }
     }
 
