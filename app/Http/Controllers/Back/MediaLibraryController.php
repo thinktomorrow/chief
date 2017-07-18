@@ -37,15 +37,3 @@ class MediaLibraryController
         return view('back.media-modal', compact('library'))->render();
     }
 }
-
-
-//$page = $page ?: Paginator::resolveCurrentPage($pageName);
-//
-//$total = $this->getCountForPagination($columns);
-//
-//$results = $total ? $this->forPage($page, $perPage)->get($columns) : collect();
-//
-//return new LengthAwarePaginator($results, $total, $perPage, $page, [
-//    'path' => Paginator::resolveCurrentPath(),
-//    'pageName' => $pageName,
-//]);
