@@ -14,6 +14,7 @@ User management
 	border-radius: 0px;
 	margin-right: 2px;
 	margin-bottom: 2px;
+	cursor: help;
 
 }
 
@@ -33,7 +34,43 @@ User management
 	font-size: 1rem;
 }
 
+.panel-control-title{
+	transition: 0.3s ease all;
+}
 
+.panel-control-title:hover{
+	color: #3BAFDA;
+	transition: 0.3s ease all;
+}
+
+.panel-control-remove{
+	transition: 0.3s ease all;
+}
+
+.panel-control-remove:hover{
+	color: #E9573F;
+	transition: 0.3s ease all;
+}
+
+.gridicon{
+	width: 20px;
+	text-align: center;
+}
+
+.responsive-column-1, .repsonsive-column-2{
+	display: inline-block;
+}
+
+@media screen and (max-width: 1300px) {
+	.responsive-column-1{
+		display: none;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.responsive-column-2{
+		display: none;
+	}
+}
 
 </style>
 
@@ -77,7 +114,7 @@ User management
 		</div>
 	</div>
 
-	<div class="row gridview">
+	<div class="row gridview hidden">
 
 
 		@foreach (\App\User::all() as $user)
@@ -99,10 +136,11 @@ User management
 					<img src="{{ asset('assets/img/logo.png') }}" alt="test" class="mw100">
 				</div>
 				<div class="panel-body br-t">
-					<p><i class="fa fa-user mr10"></i> {{ $user->firstname . ' ' . $user->lastname }}</p>
-					<p><i class="fa fa-envelope-o mr10"></i> {{ $user->email }}</p>
-					<p><i class="fa fa-calendar mr10"></i> {{ $user->created_at->format('F d, Y H:i') }}</p>
-					<p><i class="fa fa-key mr10"></i> {{ $user->roles()->pluck('name')->implode(', ') }}</p>
+					<p><i class="fa fa-user mr10 gridicon"></i> {{ $user->firstname . ' ' . $user->lastname }}</p>
+					<p><i class="fa fa-envelope-o mr10 gridicon"></i> {{ $user->email }}</p>
+					<p><i class="fa fa-calendar mr10 gridicon"></i> {{ $user->created_at->format('F d, Y H:i') }}</p>
+					<p><i class="fa fa-eye mr10 gridicon"></i> {{ isset($user->last_login) ? date('F d, Y H:i', strtotime($user->last_login)) : 'Nog niet ingelogd' }}</p>
+					<p><i class="fa fa-key mr10 gridicon"></i> {{ $user->roles()->pluck('name')->implode(', ') }}</p>
 				</div>
 
 				@can('edit_users')
@@ -169,8 +207,8 @@ User management
 						<th>Email</th>
 						<th>Status</th>
 						<th>Rollen</th>
-						<th>Aangemaakt op</th>
-						<th>Laatst gezien</th>
+						<th class="responsive-column-1">Aangemaakt op</th>
+						<th class="responsive-column-2">Laatst gezien</th>
 					</tr>
 				</thead>
 
@@ -235,22 +273,26 @@ User management
 
 								?>
 							</td>
-							<td>{{ $user->created_at->format('F d, Y H:i') }}</td>
+							<td class="responsive-column-1">{{ $user->created_at->format('F d, Y H:i') }}</td>
 							<?php
 								$lastlogin = $user->last_login;
 								if($lastlogin){
-									echo '<td>' . $lastlogin . '</td>';
+									echo '<td class="responsive-column-2">' . $lastlogin . '</td>';
 								} else{
-									echo '<td>Nog niet ingelogd</td>';
+									echo '<td class="responsive-column-2">Nog niet ingelogd</td>';
 								}
 							?>
 							<td>
 								@can('delete_users')
-									<a href="#remove-user-modal-{{ $user->id }}" id="remove-user-toggle-{{ $user->id }}" class="btn btn-error pull-right"><i class="fa fa-times"></i></a>
+									<a href="#remove-user-modal-{{ $user->id }}" id="remove-user-toggle-{{ $user->id }}" class="btn btn-error pull-right" title="delete user"><i class="fa fa-times"></i></a>
 								@endcan
 
 								@can('edit_users')
-									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" style="margin-right: 3px;" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								@endcan
+
+								@can('edit_users')
+									<a href="" class="btn btn-alert pull-right" style="margin-right: 3px;" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
 								@endcan
 							</td>
 						</tr>
@@ -280,6 +322,9 @@ User management
 				if(localStorage.getItem("UsermanagementList") == "yes") {
 					$(".gridview").addClass( "hidden" );
 					$(".listview").removeClass( "hidden" );
+				} else {
+					$(".listview").addClass( "hidden" );
+					$(".gridview").removeClass( "hidden" );
 				}
 
         $("#listview").click(function(){
