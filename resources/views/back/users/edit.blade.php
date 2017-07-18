@@ -14,8 +14,12 @@
 			{!! method_field('put') !!}
 			{!! csrf_field() !!}
 			<div class="form-group">
-				<label for="name">Name</label>
-				<input type="text" name="name" value="{{ $user->name }}" class="form-control">
+				<label for="firstname">Firstname</label>
+				<input type="text" name="firstname" value="{{ $user->firstname }}" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="lastname">Lastname</label>
+				<input type="text" name="lastname" value="{{ $user->lastname }}" class="form-control">
 			</div>
 
 			<div class="form-group">

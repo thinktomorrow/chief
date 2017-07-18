@@ -30,4 +30,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getShortNameAttribute()
+    {
+      return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
+    }
 }
