@@ -20,7 +20,6 @@
 								<span class="btn btn-default fileupload-exists mr15">Wijzig</span>
 								<input type="file" name="image[]" multiple accept="image/*">
 								<button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand <i class="fa fa-upload"></i></button>
-
 		           </span>
 					</form>
 				</div>

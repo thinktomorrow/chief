@@ -29,8 +29,6 @@
             </thead>
             <tbody>
             <img src="{{ $articlesMedia->getMedia()[1]->getUrl('thumb') }}" alt="">
-            {{--<div>{{ $articlesMedia->getMedia('images')[0]->getPath('icon') }}</div>--}}
-            {{--<div>{{ $articlesMedia->getMedia('images')[0]->getPath('thumb') }}</div>--}}
             {{--@foreach($articlesMedia as $article)--}}
                 {{--<tr>--}}
                     {{--<td>--}}

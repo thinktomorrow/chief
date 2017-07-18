@@ -54,9 +54,14 @@ class Asset extends Model implements HasMediaConversions
         return $this->getMedia()[0]->file_name;
     }
 
-    public function getPath($collection = '')
+    public function getPath()
     {
-        return $this->getMedia()[0]->getUrl($collection);
+        return $this->getSize();
+    }
+
+    public function getPathForSize($collection)
+    {
+      return $this->getMedia()[0]->getUrl($collection);
     }
 
     public function assets()
