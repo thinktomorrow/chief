@@ -21,16 +21,17 @@
       <div class="btn-group">
         <div class="deleteMedia hidden">
           <div class="deleteActions hidden">
-            <span class="btn btn-default">Bestanden verwijderen</span>
-            <a class="btn btn-primary noDelete"> Nee </a>
-            <button type="submit" class="btn btn-default btnDelete mr5"> Ja </button>
+            <span class="btn btn-danger disabled">Bestanden verwijderen ?</span>
+            <a class="btn btn-primary noDelete"> <i class="fa fa-times"></i> </a>
+            <button type="submit" class="btn btn-default btnDelete mr5"> <i class="fa fa-check"></i>  </button>
           </div>
-          <div class="btn btn-danger mr5 showDeleteUptions">
+          <div class="btn btn-warning mr5 showDeleteUptions">
             <span class="fa fa-trash"></span>
             Bestanden verwijderen
           </div>
         </div>
       </div>
+      @if(!$library->isEmpty())
       <div class="btn btn-default selectBtn">
         <label for="selectAllMedia" class="mn">
           Selecteer alle media
@@ -38,6 +39,7 @@
         </label>
         <input class="hidden" type="checkbox" id="selectAllMedia">
       </div>
+      @endif
       <button type="button" class="btn btn-default mr5" id="showUploadPanel">
         <span class="fa fa-upload"></span>
         Upload nieuw bestand

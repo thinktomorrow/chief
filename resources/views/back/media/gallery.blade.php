@@ -41,6 +41,11 @@ figure img{
 <section class="media-gallery mh15 pv15">
   <div id="mix-container">
     <div class="row">
+      @if($library->isEmpty())
+      <div class="text-center">
+        <img src="{{ asset('assets/back/img/placeholder.png')}}" alt="holder">
+      </div>
+      @endif
       @foreach($library as $media)
         <!-- image thumb -->
         <div class="mix col-sm-6 col-md-6 col-lg-3">
