@@ -64,7 +64,7 @@ figure img{
             <div class="panel-body pn">
             <figure class="mn">
               <picture>
-                <img src="{{ $media->getPath('full') }}" class="img-responsive" title="{{ $media->getFilename() }}">
+                <img src="{{ $media->getPathForSize('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
               </picture>
             </figure>
           </div>

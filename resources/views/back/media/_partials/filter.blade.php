@@ -36,7 +36,7 @@
           Selecteer alle media
           <i class="fa fa-check-circle hidden"></i>
         </label>
-        <input class="hidden" type="checkbox" id="selectAllMedia" name="imagestoremove[]">
+        <input class="hidden" type="checkbox" id="selectAllMedia">
       </div>
       <button type="button" class="btn btn-default mr5" id="showUploadPanel">
         <span class="fa fa-upload"></span>
