@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::put('users/{user}', 'UserController@update')->name('users.update')->middleware('permission:edit_users');
     Route::get('users/{user}', 'UserController@show')->name('users.show')->middleware('permission:view_users');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('permission:edit_users');
+    Route::post('users/{user}/publish', 'UserController@publish')->name('users.publish')->middleware('permission:edit_users');
 
     Route::get('roles', 'RoleController@index')->name('roles.index')->middleware('permission:view_roles');
     Route::post('roles', 'RoleController@store')->name('roles.store')->middleware('permission:add_roles');

@@ -43,12 +43,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'      =>  'required|max:120',
+            'firstname'      =>  'required|max:120',
+            'lastname'      =>  'required|max:120',
             'email'     =>  'required|email|unique:users',
         ]);
 
         $user   = new User();
-        $user->name = $request->get('name');
+        $user->firstname = $request->get('firstname');
+        $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
         $user->save();
 
@@ -102,11 +104,12 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $this->validate($request, [
-            'name'=>'required|max:120',
+            'firstname'=>'required|max:120',
+            'lastname'=>'required|max:120',
             'email'=>'required|email|unique:users,email,'.$id,
 //            'password'=>'required|min:6|confirmed'
         ]);
-        $input = $request->only(['name', 'email']);
+        $input = $request->only(['firstname', 'lastname', 'email']);
         $roles = $request['roles'];
         $user->fill($input)->save();
         if (isset($roles)) {
@@ -132,5 +135,14 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('flash_message',
                 'User successfully deleted.');
+    }
+
+    public function publish($user, Request $request){
+      $user = User::findOrFail($user);
+      $user->status = ($request->publishAccount == 'on' ? 'Active' : 'Blocked');
+      $user->save();
+
+      return redirect()->back();
+
     }
 }

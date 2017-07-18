@@ -2,7 +2,7 @@
 <div id="remove-user-modal-{{ $user->id }}" class="popup-basic admin-form mfp-with-anim mfp-hide">
     <div class="panel">
         <div class="panel-heading text-center">
-              <span class="panel-title text-danger">Demete this user?</span>
+              <span class="panel-title text-danger">Delete this user?</span>
         </div>
         <div class="panel-body text-center">
             The following user will be permanently deleted:<br>
