@@ -17,8 +17,8 @@ Mediagalerij
 @stop
 
 @section('sidebar')
-  @include('back.media._partials.upload')
-   {{--@include('back.media._partials.mediaslidemenu')--}}
+  {{--
+   @include('back.media._partials.media-details')--}}@include('back.media._partials.upload')
 @stop
 
 @push('custom-scripts')
@@ -30,9 +30,7 @@ $(document).ready(function(){
   $("#showUploadPanel").click(function(){
     $(document.body).toggleClass('sb-r-o');
   });
-  $("#showCropPanel").click(function(){
-    $(document.body).toggleClass('sb-r-o');
-  });
+
 
   // SHOW OR HIDE DELETE BUTTON
   $('.showDeleteUptions').click(function(){
@@ -40,23 +38,34 @@ $(document).ready(function(){
     $('.showDeleteUptions').addClass('hidden');
   });
   $('.noDelete').click(function(){
-    $('.deleteActions').toggle();
-    $('.showDeleteUptions').toggle();
+    $('.deleteActions').addClass('hidden');
+    $('.showDeleteUptions').removeClass('hidden');
   });
 
-  // TOGGLE SELECTED MEDIA WITH THE CHECKBOXES
+  // Get universal class for the checkbox and put it in a variable
   var getCheckbox = $(".checkbox-delete > input:checkbox");
 
+  function countCheckboxes(){
+    // When on or more checkbox is checked, show the deleteButton
+    var selectedCheckbox = $(":checkbox:checked").length;
+    console.log(selectedCheckbox);
+    if (selectedCheckbox > 0){
+      $('.deleteMedia').removeClass('hidden')
+    }
+    else{
+      $('.deleteMedia').addClass('hidden')
+    }
+  };
+
   getCheckbox.change(function () {
+    countCheckboxes();
     if ($(this).is(":checked")) {
       $(this).closest(".media").addClass('selected');
       $(this).closest(".checkbox-delete").addClass('show');
-      $('.deleteMedia').removeClass('hidden');
     }
     else {
       $(this).closest(".media").removeClass('selected');
       $(this).closest(".checkbox-delete").removeClass('show');
-      $('.deleteMedia').addClass('hidden');
       $('#selectAllMedia').prop('checked', false);
     };
   });
@@ -67,16 +76,14 @@ $(document).ready(function(){
       getCheckbox.closest(".media").addClass('selected');
       getCheckbox.closest(".checkbox-delete").addClass('show');
       getCheckbox.prop('checked',true);
-      $('.deleteMedia').removeClass('hidden');
       $('.selectBtn .fa').removeClass('hidden');
     }
     else{
       getCheckbox.closest(".media").removeClass('selected');
       getCheckbox.closest(".checkbox-delete").removeClass('show');
       getCheckbox.prop('checked',false);
-      $('.deleteMedia').addClass('hidden');
-
     }
+    countCheckboxes();
   });
 
   // give file-upload preview onclick functionality

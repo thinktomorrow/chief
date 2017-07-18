@@ -1,31 +1,11 @@
-<!-- Right Sidebar: EDIT IMAGE -->
-<aside id="sidebar_right" class="nano">
+<!-- Right Sidebar: IMAGE DETAIL -->
+<aside id="sidebar_right" class="nano affix">
 
-  <!-- Start: Sidebar Right Content -->
-  <div class="sidebar-right-content nano-content">
-
-    <!-- Start: Aspect Ratio Toggles -->
-    <div class="docs-toggles">
-      <!-- <h3 class="page-header">Toggles:</h3> -->
-      <div class="btn-group btn-group-justified" style="margin-bottom: 0px;">
-        <label class="btn btn-primary active" title="Crop">
-          <span class="fa fa-crop"></span>
-        </label>
-        <label class="btn btn-primary" title="Rotate Left">
-          <span class="fa fa-rotate-left"></span>
-        </label>
-        <label class="btn btn-primary" title="Rotate Right">
-          <span class="fa fa-rotate-right"></span>
-        </label>
-        <label class="btn btn-primary" title="Undo">
-          <span class="fa fa-refresh"></span>
-        </label>
-      </div>
-    </div>
-    <!-- End: Aspect Ratio Toggles -->
+	<!-- Start: Sidebar Right Content -->
+	<div class="sidebar-right-content nano-content pn">
 
     <!-- Start: Image -->
-    <img width="100%" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCKbV24ga18bP0XAVCXwmYaZ6v_BEPauuG8eCcSg4H3cIkMcw5_A">
+    <img width="100%" src="{{ $media->getPathForSize('large') }">
     <!-- End: Image -->
 
     <!-- Start: Tabblock -->

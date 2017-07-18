@@ -19,9 +19,9 @@ class Asset extends Model implements HasMediaConversions
     public static function upload($files)
     {
 
-        if(is_array($files)){
+        if (is_array($files)) {
             $list = collect([]);
-            collect($files)->each(function($file) use ($list){
+            collect($files)->each(function ($file) use ($list) {
                 $self = new self();
                 $self->save();
 
@@ -31,7 +31,7 @@ class Asset extends Model implements HasMediaConversions
             });
 
             return $list;
-        }elseif($files instanceof File || $files instanceof \Illuminate\Http\Testing\File){
+        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File) {
             $self = new self();
             $self->save();
 
@@ -46,6 +46,7 @@ class Asset extends Model implements HasMediaConversions
     public function attachToModel(Model $model)
     {
         $model->asset()->save($this);
+
         return $this;
     }
 
@@ -61,21 +62,34 @@ class Asset extends Model implements HasMediaConversions
 
     public function getPathForSize($collection = '')
     {
-      return $this->getMedia()[0]->getUrl($collection);
+        $url = $this->getMedia()[0]->getUrl();
+        $ext = pathinfo($url, PATHINFO_EXTENSION);
+        if ($ext == 'pdf') {
+            return "../assets/back/img/pdf.png";
+        }
+        elseif (in_array($ext, ['xls', 'xlsx', 'numbers', 'sheets'])) {
+            return "../assets/back/img/xls.png";
+        }
+        elseif (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', '.svg'])) {
+          return $this->getMedia()[0]->getUrl($collection);
+        }
+        else{
+            return "../assets/back/img/other.png";
+        }
     }
 
-    public function assets()
-    {
-        return $this->morphTo();
-    }
+//    public function assets()
+//    {
+//        return $this->morphTo();
+//    }
 
     public static function remove($image_ids)
     {
-        if(is_array($image_ids)){
-            foreach($image_ids as $id){
+        if (is_array($image_ids)) {
+            foreach ($image_ids as $id) {
                 Asset::where('id', $id)->first()->delete();
             }
-        }else{
+        } else {
             Asset::find($image_ids)->first()->delete();
         }
     }
@@ -84,8 +98,8 @@ class Asset extends Model implements HasMediaConversions
     {
         $library = collect([]);
 
-        self::all()->each(function ($asset) use ($library){
-           $library->push($asset);
+        self::all()->each(function ($asset) use ($library) {
+            $library->push($asset);
         });
 
         return $library;
@@ -98,33 +112,13 @@ class Asset extends Model implements HasMediaConversions
      */
     public function registerMediaConversions()
     {
-        $this->addMediaConversion('thumb')
-                ->width(150)
-                ->height(150)
-                ->sharpen(15)
-                ->format('png')
-                ->optimize();
+        $this->addMediaConversion('thumb')->width(150)->height(150)->sharpen(15)->format('png')->optimize();
 
-        $this->addMediaConversion('medium')
-                ->width(300)
-                ->height(130)
-                ->sharpen(15)
-                ->format('png')
-                ->optimize();
+        $this->addMediaConversion('medium')->width(300)->height(130)->sharpen(15)->format('png')->optimize();
 
-        $this->addMediaConversion('large')
-                ->width(1024)
-                ->height(353)
-                ->sharpen(15)
-                ->format('png')
-                ->optimize();
+        $this->addMediaConversion('large')->width(1024)->height(353)->sharpen(15)->format('png')->optimize();
 
-        $this->addMediaConversion('full')
-            ->width(1600)
-            ->height(553)
-            ->sharpen(15)
-            ->format('png')
-            ->optimize();
+        $this->addMediaConversion('full')->width(1600)->height(553)->sharpen(15)->format('png')->optimize();
 
 //        $this->addMediaConversion('thumb')
 //            ->setManipulations(['w' => 368, 'h' => 232])

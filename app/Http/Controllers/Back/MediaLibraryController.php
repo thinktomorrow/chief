@@ -15,9 +15,9 @@ class MediaLibraryController
         $library = Asset::getAllMedia();
 
         $library = new LengthAwarePaginator(
-            $library->forPage(Paginator::resolveCurrentPage(), 5),
+            $library->forPage(Paginator::resolveCurrentPage(), 8),
             count($library),
-            5,
+            8,
             Paginator::resolveCurrentPage(),
             [
                 'path' => Paginator::resolveCurrentPath(),
