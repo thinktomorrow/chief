@@ -1,8 +1,8 @@
-<!-- Right Sidebar: EDIT IMAGE -->
+<!-- Right Sidebar: IMAGE DETAIL -->
 <aside id="sidebar_right" class="nano">
 
-  <!-- Start: Sidebar Right Content -->
-  <div class="sidebar-right-content nano-content">
+	<!-- Start: Sidebar Right Content -->
+	<div class="sidebar-right-content nano-content p15">
 
     <!-- Start: Aspect Ratio Toggles -->
     <div class="docs-toggles">

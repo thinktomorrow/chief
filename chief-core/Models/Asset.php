@@ -65,9 +65,9 @@ class Asset extends Model implements HasMediaConversions
         $url = $this->getMedia()[0]->getUrl();
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if ($ext == 'pdf') {
-            return 'this is a pdf!';
+            return "../assets/back/img/pdf.png";
         } elseif (in_array($ext, ['xls', 'xlsx', 'numbers', 'sheets'])) {
-            return 'this is an excel file.';
+            return "../assets/back/img/xls.png";
         }else{
             return $this->getMedia()[0]->getUrl($collection);
         }
