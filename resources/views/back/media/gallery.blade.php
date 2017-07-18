@@ -37,6 +37,7 @@ figure img{
   top: 50%; left: 50%;
 }
 </style>
+
 <section class="media-gallery mh15 pv15">
   <div id="mix-container">
     <div class="row">

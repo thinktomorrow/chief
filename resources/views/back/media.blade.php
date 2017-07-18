@@ -9,16 +9,16 @@ Mediagalerij
 @stop
 
 @section('content')
-<form action="{{ route('media.remove') }}" method="POST">
-  {{ csrf_field() }}
-  @include('back.media.filter')
-  @include('back.media.gallery')
-</form>
+  <form action="{{ route('media.remove') }}" method="POST">
+    {{ csrf_field() }}
+    @include('back.media._partials.filter')
+    @include('back.media.gallery')
+  </form>
 @stop
 
 @section('sidebar')
-@include('back.media._partials.upload')
-{{--@include('back._partials.mediaslidemenu')--}}
+  @include('back.media._partials.upload')
+   {{--@include('back.media._partials.mediaslidemenu')--}}
 @stop
 
 @push('custom-scripts')
