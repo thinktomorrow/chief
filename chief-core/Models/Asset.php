@@ -19,11 +19,14 @@ class Asset extends Model implements HasMediaConversions
     {
         if(is_array($files)){
             $list = collect([]);
+            var_dump($files);
             collect($files)->each(function($file) use ($list){
                 $self = new self();
                 $self->save();
 
+                var_dump('before:'.$file);
                 $self->addMedia($file)->toMediaLibrary();
+                var_dump('after:'.$file);
                 $self->optimize();
 
                 $list->push($self);
