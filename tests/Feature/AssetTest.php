@@ -43,6 +43,17 @@ class AssetTest extends TestCase
     /**
      * @test
      */
+    public function it_returns_null_when_uploading_an_invalid_file()
+    {
+        //upload a single image
+        $asset = Asset::upload('image');
+
+        $this->assertNull($asset);
+    }
+
+    /**
+     * @test
+     */
     public function it_can_upload_an_image_to_a_model()
     {
         $article = factory(Article::class)->create();
