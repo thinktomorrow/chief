@@ -63,9 +63,6 @@
                     </a>
                 </li>
             @endcan
-
-            <?php
-            /*
             @can('view_permissions')
                 <li>
                     <a href="{{ route('permissions.index') }}">

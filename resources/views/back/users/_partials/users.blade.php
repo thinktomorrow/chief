@@ -1,3 +1,6 @@
+@section('page-title')
+Users
+@stop
 <style>
 .rm-padding-top{
 	padding-top: 0px !important;

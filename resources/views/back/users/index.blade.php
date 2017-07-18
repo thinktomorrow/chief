@@ -4,6 +4,6 @@
 
 @section('content')
 
-	@include('back._partials.users')
+	@include('back.users._partials.users')
 
 @endsection
