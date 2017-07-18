@@ -1,5 +1,5 @@
 <!-- Right Sidebar: UPLOAD IMAGE -->
-<aside id="sidebar_right" class="nano">
+<aside id="sidebar_right" class="nano uploadForm">
 
 	<!-- Start: Sidebar Right Content -->
 	<div class="sidebar-right-content nano-content p15">

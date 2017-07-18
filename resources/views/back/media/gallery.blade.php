@@ -36,6 +36,34 @@ figure img{
   transform: translate(-50%,-50%);
   top: 50%; left: 50%;
 }
+.upload-open #sidebar_right.uploadForm,
+.detail-open #sidebar_right.imageDetail {
+  right: 0;
+}
+.upload-open #content_wrapper,
+.detail-open #content_wrapper {
+  margin-right: 300px;
+}
+/*HOVER IMAGE TO OPEN DETAIL PANEL*/
+#showDetailPanel picture{
+    transition: all 0.2s ease-in-out;
+    overflow: hidden;
+    cursor: pointer;
+}
+#showDetailPanel:hover picture{
+  filter: blur(2px);
+  opacity: 0.5;
+}
+#showDetailPanel:hover:after{
+  font-family: 'fontawesome', sans-serif;
+  content: '\f06e _Bekijk details';
+  display: block;
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
 </style>
 
 <section class="media-gallery mh15 pv15">
@@ -66,7 +94,7 @@ figure img{
                 </div>
               </span>
             </div>
-            <div class="panel-body pn">
+            <div class="panel-body pn" id="showDetailPanel">
             <figure class="mn">
               <picture>
                 <img src="{{ $media->getPathForSize('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">

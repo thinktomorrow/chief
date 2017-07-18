@@ -1,5 +1,5 @@
 <!-- Right Sidebar: IMAGE DETAIL -->
-<aside id="sidebar_right" class="nano affix">
+<aside id="sidebar_right" class="imageDetail nano affix">
 
 	<!-- Start: Sidebar Right Content -->
 	<div class="sidebar-right-content nano-content pn">

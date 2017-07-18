@@ -44,10 +44,6 @@
         <span class="fa fa-upload"></span>
         Upload nieuw bestand
       </button>
-      <button type="button" class="btn btn-default mr5" id="showDetailPanel">
-        <span class="fa fa-image"></span>
-        Show detail
-      </button>
     </div>
   </div>
 </div>
