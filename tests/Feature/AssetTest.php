@@ -125,7 +125,11 @@ class AssetTest extends TestCase
     */
     public function it_can_create_conversions()
     {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
+        $this->assertEquals($asset->getFilename(), 'image.png');
+        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getPathForSize('thumb'), '/media/1/conversions/thumb.png');
     }
 
 //    /**
