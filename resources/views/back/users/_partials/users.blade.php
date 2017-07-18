@@ -1,5 +1,5 @@
 @section('page-title')
-Users
+User management
 @stop
 <style>
 .rm-padding-top{
@@ -29,9 +29,17 @@ Users
 	background-color: #F6BB42;
 }
 
+.list-label{
+	font-size: 1rem;
+}
+
 
 
 </style>
+
+@push('custom-styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/footable/css/footable.core.min.css') }}">
+@endpush
 
 <div class="col-lg-12">
 	<!-- <h1><i class="fa fa-users"></i> User Administration
@@ -148,9 +156,12 @@ Users
 
 	<!-- Panel with: Expanding Rows -->
 <div class="panel listview hidden" id="spy4">
+		<div class="panel-menu">
+			<input id="fooFilter" type="text" class="form-control" placeholder="Enter Table Filter Criteria Here...">
+		</div>
 		<div class="panel-body pn">
 
-			<table class="table footable" data-page-size="20">
+			<table class="table footable"  data-filter="#fooFilter">
 				<thead>
 					<tr>
 						<th>Naam</th>
@@ -170,7 +181,6 @@ Users
 							<td>{{ $user->lastname }}</td>
 							<td>{{ $user->firstname }}</td>
 							<td>{{ $user->email }}</td>
-							@can('edit_users')
 							<td>
 								<div class="form-group">
 										<?php
@@ -193,28 +203,32 @@ Users
 										?>
 										<form action="{{ route('users.publish', $user->id) }}" method="post">
 											{{ csrf_field() }}
+												@can('edit_users')
 												<div class="switch switch-success round switch-xs" style="padding-left: 0px">
 													<input id='publishAccount-{{ $user->id }}' name="publishAccount" type="checkbox" {{$checkedaccount}} onchange="this.form.submit()">
 													<label for="publishAccount-{{ $user->id }}" style="{{ $pendingstyle }}"></label>
 												</div>
-												<label>{{ $label }}</label>
+												@endcan
+												<label class="list-label">{{ $label }}</label>
 										</form>
 								</div>
 							</td>
-							@endcan
 							<td>
 								<?php
 								$roles = $user->roles()->pluck('name');
 								foreach($roles as $item) {
 									switch(strtolower($item)){
 										case 'superadmin':
-											echo '<div class="badge darkblue">S</div>';
+											echo '<div class="badge darkblue" title="superadmin">S</div>';
+											echo '<div class="hidden">superadmin</div>';
 											break;
 										case 'admin':
-											echo '<div class="badge blue">A</div>';
+											echo '<div class="badge blue" title="admin">A</div>';
+											echo '<div class="hidden">admin</div>';
 											break;
 										case 'user':
-											echo '<div class="badge orange">U</div>';
+											echo '<div class="badge orange" title="user">U</div>';
+											echo '<div class="hidden">user</div>';
 											break;
 									}
 								}
@@ -232,11 +246,11 @@ Users
 							?>
 							<td>
 								@can('delete_users')
-									<a href="#remove-user-modal-{{ $user->id }}" id="remove-user-toggle-{{ $user->id }}" class="btn btn-default pull-right"><i class="fa fa-trash"></i></a>
+									<a href="#remove-user-modal-{{ $user->id }}" id="remove-user-toggle-{{ $user->id }}" class="btn btn-error pull-right"><i class="fa fa-times"></i></a>
 								@endcan
 
 								@can('edit_users')
-									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-default pull-right" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 								@endcan
 							</td>
 						</tr>
@@ -256,21 +270,32 @@ Users
 	</div>
 </div>
 @push('custom-scripts')
+		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.all.min.js') }}"></script>
+		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.filter.min.js') }}"></script>
     <script>
       $(document).ready(function(){
-
+				$('.table').footable();
         $(document.body).removeClass('sb-r-c');
 
-        $("#listview").click(function(){
-					$(".listview").removeClass( "hidden" );
+				if(localStorage.getItem("UsermanagementList") == "yes") {
 					$(".gridview").addClass( "hidden" );
+					$(".listview").removeClass( "hidden" );
+				}
+
+        $("#listview").click(function(){
+					$(".gridview").addClass( "hidden" );
+					$(".listview").removeClass( "hidden" );
+					localStorage.setItem("UsermanagementList", "yes");
         });
 
         $("#gridview").click(function(){
 					$(".listview").addClass( "hidden" );
 					$(".gridview").removeClass( "hidden" );
+					localStorage.setItem("UsermanagementList", "no");
         });
       });
+
+
     </script>
 
 
