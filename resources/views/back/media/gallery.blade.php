@@ -73,7 +73,7 @@ figure img{
       @endforeach
     </div>
     <div class="row">
-      Pagination
+      {{ $library->render() }}
     </div>
   </div>
 </section>
