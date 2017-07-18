@@ -1,35 +1,59 @@
 <header class="navbar navbar-fixed-top">
-    <div class="navbar-branding">
-        <a class="navbar-brand" href="{{ route('admin.home') }}">
-            <img src="{{ asset('assets/img/logo.svg') }}" alt="Chief">
-        </a>
-        <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
-    </div>
+  <div class="navbar-branding">
+    <a class="navbar-brand" href="{{ route('admin.home') }}">
+      <img src="{{ asset('assets/img/logo.svg') }}" alt="Chief">
+    </a>
+    <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
+  </div>
 
 
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown"><span class="br64 mr5 glyphicon glyphicon-user"></span> {{ Auth::user()->name }}
-                <span class="caret caret-tp hidden-xs"></span>
-            </a>
-            <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
+  <ul class="nav navbar-nav navbar-right mn">
+    <li>
+      <a class="ph15">
+        Ahéhee, {{ Auth::user()->firstname }}
+      </a>
+    </li>
+    <li class="menu-divider hidden-xs">
+      <i class="fa fa-circle"></i>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle ph15" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-dashboard"></span> Dashboard
+        <span class="caret caret-tp hidden-xs"></span>
+      </a>
+      <ul class="dropdown-menu pv5 animated animated-short fadeIn" role="menu">
 
-                <li class="dropdown-footer">
-                    <a href="{{ route('admin.settings') }}">
-                        <span class="fa fa-cog pr5"></span> Settings
-                    </a>
-                    <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <span class="fa fa-power-off pr5"></span> Log uit
-                    </a>
-
-                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </li>
-
-            </ul>
+        <li>
+          <a href="#">
+            <span class="glyphicon glyphicon-barcode mr5"></span> Catalog
+          </a>
         </li>
-    </ul>
+        <li>
+          <a href="#">
+            <span class="glyphicon glyphicon-shopping-cart mr5"></span> Orders
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="glyphicon glyphicon-heart-empty mr5"></span> Marketing
+          </a>
+        </li>
+
+
+      </ul>
+    </li>
+    <li class="menu-divider hidden-xs">
+      <i class="fa fa-circle"></i>
+    </li>
+    <li>
+      <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <span class="glyphicon glyphicon-log-out pr5"></span> Log uit
+      </a>
+      <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+      </form>
+    </li>
+  </ul>
 
 </header>
 <!-- End: Header -->
