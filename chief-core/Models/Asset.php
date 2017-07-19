@@ -37,8 +37,12 @@ class Asset extends Model implements HasMediaConversions
         } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File) {
             $self = new self();
             $self->save();
-
-            $self->addMedia($files)->toMediaCollection();
+            $dimensions = [];
+            if(self::isImage($files))
+            {
+                $dimensions = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
+            }
+            $self->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection();
 
             return $self;
         }

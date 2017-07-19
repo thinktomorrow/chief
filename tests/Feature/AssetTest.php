@@ -182,6 +182,55 @@ class AssetTest extends TestCase
         $this->assertEquals($asset[1]->getPath(), '/media/2/foobar.xls');
     }
 
+    /**
+    * @test
+    */
+    public function it_can_get_the_image_url()
+    {
+        $files = [UploadedFile::fake()->create('foobar.pdf'), UploadedFile::fake()->create('foobar.xls'), UploadedFile::fake()->image('image.mp4')];
+
+        $asset = Asset::upload($files);
+
+        $this->assertEquals($asset[0]->getFilename(), 'foobar.pdf');
+        $this->assertEquals($asset[0]->getImageUrl(), '../assets/back/img/pdf.png');
+
+        $this->assertEquals($asset[1]->getFilename(), 'foobar.xls');
+        $this->assertEquals($asset[1]->getImageUrl(), '../assets/back/img/xls.png');
+
+        $this->assertEquals($asset[2]->getFilename(), 'image.mp4');
+        $this->assertEquals($asset[2]->getImageUrl(), '../assets/back/img/other.png');
+    }
+
+    /**
+    * @test
+    */
+    public function it_can_get_its_mimetype()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
+
+        $this->assertEquals($asset->getMimeType(), 'image/png');
+    }
+
+    /**
+    * @test
+    */
+    public function it_can_get_its_size()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
+
+        $this->assertEquals($asset->getSize(), '70 B');
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_its_dimensions()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png', 100, 100));
+
+        $this->assertEquals($asset->getDimensions(), '100 x 100');
+    }
+
 //    /**
 //    * @test
 //    */
