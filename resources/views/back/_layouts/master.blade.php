@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="google" content="notranslate" />
     <meta http-equiv="Content-Language" content="en_US" />
-    <title>Chief • Admin</title>
+    <title>Chief • @yield('page-title', 'Admin')</title>
     <meta name="author" content="Chief">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('assets/back/img/favicon.ico')}}" type="image/x-icon">
