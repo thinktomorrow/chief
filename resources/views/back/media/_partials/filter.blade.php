@@ -1,6 +1,6 @@
 <div class="mh15 pv15 br-b br-light gallery-filter">
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-5">
       <div class="mix-controls">
         <div class="btn-group">
           <div class="btn-group">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-8 text-right">
+    <div class="col-xs-7 text-right">
       <div class="btn-group">
         <div class="deleteMedia hidden">
           <div class="deleteActions hidden">

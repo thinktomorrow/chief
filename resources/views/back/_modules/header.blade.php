@@ -22,7 +22,6 @@
         <span class="caret caret-tp hidden-xs"></span>
       </a>
       <ul class="dropdown-menu pv5 animated animated-short fadeIn" role="menu">
-
         <li>
           <a href="#">
             <span class="glyphicon glyphicon-barcode mr5"></span> Catalog

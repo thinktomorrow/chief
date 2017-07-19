@@ -26,7 +26,7 @@
                 </div>
               </span>
             </div>
-            <div class="panel-body pn showDetailPanel" data-sidebar-id="{{ $media->id }}">
+            <div class="panel-body pn showDetail showDetailPanel" id="detailPanel-{{ $media->id }}" data-sidebar-id="{{ $media->id }}">
             <figure class="mn">
               <picture>
                 <img src="{{ $media->getImageUrl('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
