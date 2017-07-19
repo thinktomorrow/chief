@@ -78,7 +78,7 @@ class AdminLoginTest extends TestCase
             'email' => 'foo@example.com'
         ]);
 
-        $resp = $this->get(route('admin.articles.index'));
+        $resp = $this->get(route('articles.index'));
         $resp->assertRedirect(route('admin.login'));
 
         $response = $this->post(route('admin.login.store'),[
@@ -88,7 +88,7 @@ class AdminLoginTest extends TestCase
 
         $this->assertEquals($admin->id, Auth::user()->id);
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('admin.articles.index'));
+        $response->assertRedirect(route('articles.index'));
     }
 
     /** @test */

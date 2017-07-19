@@ -6,11 +6,6 @@
 
 @section('topbar-right')
     <a href="{{ route('articles.create') }}" class="btn btn-success btn-sm btn-rounded"><i class="fa fa-plus"></i> voeg een artikel toe</a>
-    <form action="{{ route('articles.store') }}" method="post" enctype="multipart/form-data">
-        {{ csrf_field() }}
-        <input type="file" name="image">
-        <button type="submit">Upload</button>
-    </form>
 @stop
 
 @section('content')
@@ -28,33 +23,45 @@
             </tr>
             </thead>
             <tbody>
-            <img src="{{ $articlesMedia->getMedia()[1]->getUrl('thumb') }}" alt="">
-            {{--@foreach($articlesMedia as $article)--}}
-                {{--<tr>--}}
-                    {{--<td>--}}
-                        {{--{{ $article->collection_name }}--}}
-                    {{--</td>--}}
-                    {{--<td>--}}
-                        {{--{{ $article->disk }}--}}
-                    {{--</td>--}}
-                    {{--<td>--}}
-                        {{--<img src="{{ $article->getUrl('thumb') }}" alt="">--}}
-                    {{--</td>--}}
-                    {{--<td>--}}
-                        {{--<img src="{{ $article->getUrl('icon') }}" alt="">--}}
-                    {{--</td>--}}
-                {{--</tr>--}}
+            @foreach($articles as $article)
+                <tr>
+                    <td style="width:6%">
+                        @if ($article->hasThumb())
+                            <img class="img-responsive rounded" src="{!! $article->getThumbUrl() !!}" alt="Thumb">
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('back.articles.edit',$article->getKey()) }}">
+                            @foreach($article->getUsedLocales() as $usedLocale)
+                                {{ $article->getTranslationFor('title',$usedLocale) }}
+                            @endforeach
+                        </a>
+                    </td>
+                    <td class="subtle">
+                        {{ teaser($article->content,400,'...') }}
+                    </td>
+                    <td class="subtle">
+                        {{ $article->updated_at->format('d/m/Y H:i') }}
+                    </td>
+                    <td>
+                        <div class="switch switch-success round switch-inline">
+                            {!! Form::checkbox('published',1,$article->isPublished(),['data-publish-toggle'=>$article->id,'id' => "switch{$article->id}"]) !!}
+                            <label title="{{ $article->isPublished()?'Online':'Offline' }}" for="switch{{$article->id}}"></label>
+                        </div>
+                    </td>
 
-            {{--@endforeach--}}
+                    <td style="width:10%;" class="text-right">
+                        <a title="View {{ $article->title }} on site" href="{{ route('articles.show',$article->slug) }}?preview-mode=true" target="_blank" class="btn btn-rounded btn-info btn-xs"><i class="fa fa-eye"></i></a>
+                        <a title="Edit {{ $article->title }}" href="{{ route('back.articles.edit',$article->getKey()) }}" class="btn btn-rounded btn-success btn-xs"><i class="fa fa-edit"></i> </a>
+                    </td>
+                </tr>
+
+            @endforeach
             </tbody>
         </table>
     </div>
 
+    <div class="text-center">
+        {!!  $articles->render() !!}
+    </div>
 @stop
-
-
-@push('custom-scripts')
-    <script>
-
-    </script>
-@endpush

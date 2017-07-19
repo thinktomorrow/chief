@@ -23,6 +23,7 @@ class AssetTest extends TestCase
     }
 
     /**
+     * @group testing
      * @test
      */
     public function it_can_upload_an_image()
@@ -31,13 +32,13 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
 
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image2.png'));
 
         $this->assertEquals($asset->getFilename(), 'image2.png');
-        $this->assertEquals($asset->getPath(), '/media/2/image2.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/2/image2.png');
     }
 
     /**
@@ -64,14 +65,14 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'))->attachToModel($article);
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
         $this->assertEquals($article->asset()->first()->getFilename(), $asset->getFilename());
 
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/2/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/2/image.png');
     }
 
     /**
@@ -83,13 +84,13 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
 
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image2.png'));
 
         $this->assertEquals($asset->getFilename(), 'image2.png');
-        $this->assertEquals($asset->getPath(), '/media/2/image2.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/2/image2.png');
 
         $this->assertEquals(2, Asset::getAllMedia()->count());
     }
@@ -103,12 +104,12 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
 
         $asset2 = Asset::upload(UploadedFile::fake()->image('image2.png'));
 
         $this->assertEquals($asset2->getFilename(), 'image2.png');
-        $this->assertEquals($asset2->getPath(), '/media/2/image2.png');
+        $this->assertEquals($asset2->getImageUrl(), '/media/2/image2.png');
 
         Asset::remove($asset->id);
 
@@ -125,12 +126,12 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
 
         $asset2 = Asset::upload(UploadedFile::fake()->image('image2.png'));
 
         $this->assertEquals($asset2->getFilename(), 'image2.png');
-        $this->assertEquals($asset2->getPath(), '/media/2/image2.png');
+        $this->assertEquals($asset2->getImageUrl(), '/media/2/image2.png');
 
         Asset::remove([$asset->id, $asset2->id]);
 
@@ -148,10 +149,10 @@ class AssetTest extends TestCase
         $asset = Asset::upload($images);
 
         $this->assertEquals($asset[0]->getFilename(), 'image.png');
-        $this->assertEquals($asset[0]->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset[0]->getImageUrl(), '/media/1/image.png');
 
         $this->assertEquals($asset[1]->getFilename(), 'image2.png');
-        $this->assertEquals($asset[1]->getPath(), '/media/2/image2.png');
+        $this->assertEquals($asset[1]->getImageUrl(), '/media/2/image2.png');
     }
 
     /**
@@ -162,14 +163,14 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getPath(), '/media/1/image.png');
+        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
         $this->assertEquals($asset->getPathForSize('thumb'), '/media/1/conversions/thumb.png');
     }
 
     /**
     * @test
     */
-    public function it_can_return_placeholders_per_extension()
+    public function it_can_return_the_url_for_pdf_or_xls()
     {
         $images = [UploadedFile::fake()->create('foobar.pdf'), UploadedFile::fake()->create('foobar.xls')];
 
