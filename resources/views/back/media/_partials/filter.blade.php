@@ -11,7 +11,7 @@
               <span class="fa fa-fw fa-file-pdf-o"></span> Pdf
             </button>
             <button type="button" class="btn btn-default">
-              <span class="fa fa-fw fa-file-excel-o"></span> Excel
+              <span class="fa fa-fw fa-file-excel-o"></span> Spreadsheets
             </button>
           </div>
         </div>

@@ -30,8 +30,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    private $alterEgo = ['Lonely Wolf', 'Raging Bull'];
+
     public function getShortNameAttribute()
     {
       return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
+    }
+
+    public function getAlterEgo()
+    {
+      return collect($this->alterEgo)->random();
     }
 }
