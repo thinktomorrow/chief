@@ -33,13 +33,13 @@
 
     <section id="content_wrapper">
         <header id="topbar">
-            <div class="topbar-left">
-                <h3>
+            <div class="topbar-left col-md-6">
+                <h3 class="mt10">
                     @yield('page-title')
-                    <div class="topbar-inside-right">
-                        @yield('topbar-right')
-                    </div>
                 </h3>
+            </div>
+            <div class="topbar-right">
+                @yield('topbar-right')
             </div>
         </header>
 
