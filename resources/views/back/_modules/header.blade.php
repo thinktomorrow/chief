@@ -10,7 +10,7 @@
   <ul class="nav navbar-nav navbar-right mn">
     <li>
       <a class="ph15">
-        Ahéhee, {{ Auth::user()->firstname }}
+        Welkom, {{ Auth::user()->firstname }}
       </a>
     </li>
     <li class="menu-divider hidden-xs">
