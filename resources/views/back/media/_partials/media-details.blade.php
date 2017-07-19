@@ -3,7 +3,7 @@
 	<!-- Start: Sidebar Right Content -->
 	<div class="sidebar-right-content nano-content pn">
     <!-- Start: Image -->
-    <img width="100%" src="{{ $media->getPathForSize('full') }}">
+    <img width="100%" src="{{ $media->getImageUrl('full') }}">
     <!-- End: Image -->
 
     <!-- Start: Tabblock -->
@@ -51,11 +51,11 @@
           </div>
         </div>
         <div id="sidebar-right-tab2" class="tab-pane">
-          <img width="100%" src="{{ $media->getPathForSize() }}">
-          <img src="{{ $media->getPathForSize('thumb') }}">
-          <img src="{{ $media->getPathForSize('medium') }}">
-          <img src="{{ $media->getPathForSize('large') }}">
-          <img src="{{ $media->getPathForSize('full') }}">
+          <img width="100%" src="{{ $media->getImageUrl() }}">
+          <img src="{{ $media->getImageUrl('thumb') }}">
+          <img src="{{ $media->getImageUrl('medium') }}">
+          <img src="{{ $media->getImageUrl('large') }}">
+          <img src="{{ $media->getImageUrl('full') }}">
         </div>
       </div>
       <!-- end: .tab-content -->

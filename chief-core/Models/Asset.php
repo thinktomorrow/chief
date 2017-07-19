@@ -23,7 +23,11 @@ class Asset extends Model implements HasMediaConversions
             collect($files)->each(function ($file) use ($list) {
                 $self = new self();
                 $self->save();
-                $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
+                $dimensions = [];
+                if(self::isImage($file))
+                {
+                    $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
+                }
                 $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
 
                 $list->push($self);
@@ -40,6 +44,20 @@ class Asset extends Model implements HasMediaConversions
         }
 
         return null;
+    }
+
+    private static function isImage($file)
+    {
+        if (filesize($file) > 11)
+        {
+            return exif_imagetype($file);
+
+        }
+        else
+        {
+            return false;
+
+        }
     }
 
     public function attachToModel(Model $model)
@@ -61,6 +79,11 @@ class Asset extends Model implements HasMediaConversions
 
     public function getPathForSize($collection = '')
     {
+        return $this->getMedia()[0]->getUrl($collection);
+    }
+
+    public function getImageUrl($collection = '')
+    {
         $url = $this->getMedia()[0]->getUrl();
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if ($ext == 'pdf') {
@@ -70,7 +93,7 @@ class Asset extends Model implements HasMediaConversions
             return "../assets/back/img/xls.png";
         }
         elseif (in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) {
-          return $this->getMedia()[0]->getUrl($collection);
+            return $this->getPathForSize($collection);
         }
         else{
             return "../assets/back/img/other.png";

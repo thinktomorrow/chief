@@ -166,6 +166,22 @@ class AssetTest extends TestCase
         $this->assertEquals($asset->getPathForSize('thumb'), '/media/1/conversions/thumb.png');
     }
 
+    /**
+    * @test
+    */
+    public function it_can_return_placeholders_per_extension()
+    {
+        $images = [UploadedFile::fake()->create('foobar.pdf'), UploadedFile::fake()->create('foobar.xls')];
+
+        $asset = Asset::upload($images);
+
+        $this->assertEquals($asset[0]->getFilename(), 'foobar.pdf');
+        $this->assertEquals($asset[0]->getPath(), '/media/1/foobar.pdf');
+
+        $this->assertEquals($asset[1]->getFilename(), 'foobar.xls');
+        $this->assertEquals($asset[1]->getPath(), '/media/2/foobar.xls');
+    }
+
 //    /**
 //    * @test
 //    */

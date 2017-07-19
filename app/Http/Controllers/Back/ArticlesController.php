@@ -10,7 +10,6 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class ArticlesController extends Controller
 {
-
     use HasMediaTrait;
 
     public function index()

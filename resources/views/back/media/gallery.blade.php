@@ -29,7 +29,7 @@
             <div class="panel-body pn showDetailPanel" data-sidebar-id="{{ $media->id }}">
             <figure class="mn">
               <picture>
-                <img src="{{ $media->getPathForSize('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
+                <img src="{{ $media->getImageUrl('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
               </picture>
             </figure>
           </div>
