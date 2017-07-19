@@ -1,6 +1,13 @@
 @section('page-title')
 User management
 @stop
+
+@section('topbar-right')
+	@can('add_users')
+		<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus mr10" aria-hidden="true"></i>User toevoegen</a>
+	@endcan
+@stop
+
 <style>
 .rm-padding-top{
 	padding-top: 0px !important;
@@ -93,9 +100,9 @@ User management
 		@endcan
 	</h1>
 	<hr> -->
-	@can('add_users')
-		<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
-	@endcan
+	<!-- @can('add_users')
+		<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus mr10" aria-hidden="true"></i>User toevoegen</a>
+	@endcan -->
 
 	<div class="mh15 pv15 br-b br-light mb30">
 		<div class="row">
@@ -116,12 +123,67 @@ User management
 
 	<div class="row gridview hidden">
 
+		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-4 rm-padding-top">
+			<div class="panel panel-tile br-a br-grey card-create">
+				<div class="panel-heading br-n pn">
+					<span class="panel-title ml5">Maak een nieuwe gebruiker aan</span>
+				</div>
+				<div class="panel-body text-center ">
+					<img src="{{ asset('assets/img/logo.png') }}" alt="test" class="mw100">
+				</div>
+				<div class="panel-body br-t">
+					<!-- NAAM INPUT -->
+					<div class="input-group mv15">
+						<span class="input-group-addon text-muted">
+              <i class="fa fa-user"></i>
+            </span>
+						<input type="text" name="firstname" class="form-control" placeholder="Voornaam">
+						<input type="text" name="lastname" class="form-control" placeholder="Naam">
+					</div>
+					<!-- EMAIL INPUT -->
+					<div class="input-group mv15">
+						<span class="input-group-addon text-muted">
+              <i class="fa fa-envelope-o"></i>
+            </span>
+						<input type="text" name="email" class="form-control" placeholder="E-mail">
+					</div>
+
+
+
+
+					<div class="section mv15 admin-form">
+	          <div class="option-group field">
+	            <label class="option option-primary">
+	              <input type="checkbox" name="superadmin" value="checked">
+	              <span class="checkbox"></span>Superadmin</label>
+	            <label class="option option-primary">
+	              <input type="checkbox" name="admin" value="disabled">
+	              <span class="checkbox"></span>Admin</label>
+	            <label class="option option-primary">
+	              <input type="checkbox" name="user" value="CH">
+	              <span class="checkbox"></span>User</label>
+	          </div>
+	          <!-- end .option-group section -->
+	        </div>
+				</div>
+
+				<div class="panel-footer br-t">
+					<button type="button" class="btn btn-success btn-block">
+						CREATE ACCOUNT
+					</button>
+				</div>
+
+			</div>
+		</div>
+
+
+
 
 		@foreach (\App\User::all() as $user)
-		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-3 rm-padding-top">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-4 rm-padding-top">
 			<div class="panel panel-tile br-a br-grey">
-				<div class="panel-heading ui-sortable-handle">
-					<span class="panel-title">{{ $user->shortName }}</span>
+				<div class="panel-heading br-n pn">
+					<span class="panel-title ml5">{{ $user->shortName }}</span>
 					<span class="panel-controls">
 						<a href="#" class="panel-control-loader"></a>
 						@can('edit_users')
