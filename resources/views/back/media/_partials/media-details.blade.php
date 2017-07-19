@@ -1,11 +1,9 @@
 <!-- Right Sidebar: IMAGE DETAIL -->
-<aside id="sidebar_right" class="imageDetail nano affix">
-
+<aside id="sidebar_right" class="imageDetail-{{ $media->id }} nano affix">
 	<!-- Start: Sidebar Right Content -->
 	<div class="sidebar-right-content nano-content pn">
-
     <!-- Start: Image -->
-    <img width="100%" src="{{ $media->getPathForSize('large') }">
+    <img width="100%" src="{{ $media->getPathForSize('full') }}">
     <!-- End: Image -->
 
     <!-- Start: Tabblock -->
@@ -23,22 +21,22 @@
 
           <ul class="icon-list">
             <li>
-              <b> Bestandsnaam:</b> benstinkt.jpg
+              <b> Bestandsnaam:</b> {{ $media->getFilename() }}
             </li>
             <li>
-              <b> Soort bestand:</b> image/jpeg
+              <b> Soort bestand:</b> {{ $media->getMimeType() }}
             </li>
             <li>
-              <b> Geüpload up:</b> Juni 26, 2017
+              <b> Geüpload up:</b> {{ $media->created_at }}
             </li>
             <li>
-              <b> Bestandsgrootte:</b> 690kb
+              <b> Bestandsgrootte:</b> {{ $media->getSize() }}
             </li>
             <li>
-              <b> Afmetingen:</b> 690 x 690
+              <b> Afmetingen:</b> {{ $media->getDimensions() }}
             </li>
             <li>
-              <b> Geüpload door:</b> Bob Dries
+              <b> Geüpload door:</b>  /
             </li>
           </ul>
 
@@ -48,12 +46,16 @@
                <span class="panel-title"> Image path</span>
             </div>
             <div class="panel-body" style="word-wrap: break-word;">
-              http://thinktomorrow.be/assets/img/benstinkt.jpg
+              {{ url($media->getPathForSize('medium')) }}
             </div>
           </div>
         </div>
         <div id="sidebar-right-tab2" class="tab-pane">
-
+          <img width="100%" src="{{ $media->getPathForSize() }}">
+          <img src="{{ $media->getPathForSize('thumb') }}">
+          <img src="{{ $media->getPathForSize('medium') }}">
+          <img src="{{ $media->getPathForSize('large') }}">
+          <img src="{{ $media->getPathForSize('full') }}">
         </div>
       </div>
       <!-- end: .tab-content -->

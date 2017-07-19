@@ -17,7 +17,6 @@ Mediagalerij
 @stop
 
 @section('sidebar')
-   @include('back.media._partials.media-details')
    @include('back.media._partials.upload')
 @stop
 
@@ -27,8 +26,8 @@ $(document).ready(function(){
 
   $(document.body).removeClass('sb-r-c');
 
-  $("#showDetailPanel").click(function(){
-    $(document.body).toggleClass('detail-open');
+  $(".showDetailPanel").click(function(){
+    $('.imageDetail-' + this.dataset.sidebarId).toggleClass('detail-open');
   });
 
   $("#showUploadPanel").click(function(){

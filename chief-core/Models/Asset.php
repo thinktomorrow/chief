@@ -18,14 +18,13 @@ class Asset extends Model implements HasMediaConversions
 
     public static function upload($files)
     {
-
         if (is_array($files)) {
             $list = collect([]);
             collect($files)->each(function ($file) use ($list) {
                 $self = new self();
                 $self->save();
-
-                $self->addMedia($file)->toMediaLibrary();
+                $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
+                $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
 
                 $list->push($self);
             });
@@ -35,7 +34,7 @@ class Asset extends Model implements HasMediaConversions
             $self = new self();
             $self->save();
 
-            $self->addMedia($files)->toMediaLibrary();
+            $self->addMedia($files)->toMediaCollection();
 
             return $self;
         }
@@ -70,13 +69,29 @@ class Asset extends Model implements HasMediaConversions
         elseif (in_array($ext, ['xls', 'xlsx', 'numbers', 'sheets'])) {
             return "../assets/back/img/xls.png";
         }
-        elseif (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', '.svg'])) {
+        elseif (in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) {
           return $this->getMedia()[0]->getUrl($collection);
         }
         else{
             return "../assets/back/img/other.png";
         }
     }
+
+    public function getMimeType()
+    {
+        return $this->getMedia()[0]->mime_type;
+    }
+
+    public function getSize()
+    {
+        return $this->getMedia()[0]->human_readable_size;
+    }
+
+    public function getDimensions()
+    {
+        return $this->getMedia()[0]->hasCustomProperty('dimensions') ? $this->getMedia()[0]->getCustomProperty('dimensions') : '/';
+    }
+
 
 //    public function assets()
 //    {
