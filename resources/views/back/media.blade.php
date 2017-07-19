@@ -1,7 +1,7 @@
 @extends('back._layouts.master')
 
 @section('page-title')
-Mediagalerij
+Mediabibliotheek
 @stop
 
 @section('topbar-right')

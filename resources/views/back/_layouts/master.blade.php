@@ -6,9 +6,10 @@
     <meta charset="utf-8">
     <meta name="google" content="notranslate" />
     <meta http-equiv="Content-Language" content="en_US" />
-    <title>Chief admin</title>
-    <meta name="author" content="Think Tomorrow">
+    <title>Chief • Admin</title>
+    <meta name="author" content="Chief">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('assets/back/img/favicon.ico')}}" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -16,9 +17,9 @@
     <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600'>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/css/theme.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/admin-tools/admin-forms/css/admin-forms.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/magnific/magnific-popup.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/css/main.css') }}">
     @stack('custom-styles')
 
 </head>
