@@ -51,7 +51,6 @@ $(document).ready(function(){
   function countCheckboxes(){
     // When on or more checkbox is checked, show the deleteButton
     var selectedCheckbox = $(":checkbox:checked").length;
-    console.log(selectedCheckbox);
     if (selectedCheckbox > 0){
       $('.deleteMedia').removeClass('hidden')
     }
@@ -80,11 +79,14 @@ $(document).ready(function(){
       getCheckbox.closest(".checkbox-delete").addClass('show');
       getCheckbox.prop('checked',true);
       $('.selectBtn .fa').removeClass('hidden');
+      $('.selectBtn label span').text('De-selecteer alle bestanden');
     }
     else{
       getCheckbox.closest(".media").removeClass('selected');
       getCheckbox.closest(".checkbox-delete").removeClass('show');
       getCheckbox.prop('checked',false);
+      $('.selectBtn .fa').addClass('hidden');
+      $('.selectBtn label span').text('Selecteer alle bestanden');
     }
     countCheckboxes();
   });

@@ -127,13 +127,33 @@ class Asset extends Model implements HasMediaConversions
      */
     public function registerMediaConversions()
     {
-        $this->addMediaConversion('thumb')->width(150)->height(150)->sharpen(15)->format('png')->optimize();
+        $this->addMediaConversion('thumb')
+            ->width(150)
+            ->height(150)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
 
-        $this->addMediaConversion('medium')->width(300)->height(130)->sharpen(15)->format('png')->optimize();
+        $this->addMediaConversion('medium')
+            ->width(300)
+            ->height(130)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
 
-        $this->addMediaConversion('large')->width(1024)->height(353)->sharpen(15)->format('png')->optimize();
+        $this->addMediaConversion('large')
+            ->width(1024)
+            ->height(353)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
 
-        $this->addMediaConversion('full')->width(1600)->height(553)->sharpen(15)->format('png')->optimize();
+        $this->addMediaConversion('full')
+            ->width(1600)
+            ->height(553)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
 
 //        $this->addMediaConversion('thumb')
 //            ->setManipulations(['w' => 368, 'h' => 232])
