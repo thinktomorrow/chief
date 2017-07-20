@@ -40,10 +40,6 @@
         <input class="hidden" type="checkbox" id="selectAllMedia">
       </div>
       @endif
-      <button type="button" class="btn btn-default mr5" id="showUploadPanel">
-        <span class="fa fa-upload"></span>
-        Upload nieuw bestand
-      </button>
     </div>
   </div>
 </div>

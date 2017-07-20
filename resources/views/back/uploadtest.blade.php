@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    @include('back._partials.mediaslidemenu')
+    @include('back.media.show')
 
     <div>{{ $article->asset()->first()->getFilename() }}</div>
     <div><img src="{{ $article->asset()->first()->getPath() }}" alt=""></div>

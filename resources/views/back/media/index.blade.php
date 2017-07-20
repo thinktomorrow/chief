@@ -43,5 +43,4 @@
     </div>
   </div>
 </section>
-
 <section class="overlay" style="display: none;"></section>
