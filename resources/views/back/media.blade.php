@@ -28,6 +28,7 @@ $(document).ready(function(){
 
   $(".showDetailPanel").click(function(){
     $('.imageDetail-' + this.dataset.sidebarId).toggleClass('detail-open');
+    $(document.body).toggleClass('sidebar-media-open'); // To implode the content_wrapper
   });
 
   $("#showUploadPanel").click(function(){

@@ -50,10 +50,11 @@ figure img {
 }
 
 #sidebar_right.detail-open{
-  right:0
+  right:0;
+  z-index: 10;
 }
 .upload-open #content_wrapper,
-.detail-open #content_wrapper {
+.sidebar-media-open #content_wrapper {
   margin-right: 300px;
 }
 
@@ -78,4 +79,10 @@ figure img {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+// When an upload image is larger than viewport height
+.fileupload .thumbnail{
+  max-height: 300px;
+  overflow: hidden;
 }
