@@ -28,7 +28,7 @@
 
 
 @section('sidebar')
-   @include('back.users._partials.newuser')
+	 @include('back.users._partials.newuser')
 @stop
 
 @push('custom-scripts')
@@ -65,9 +65,16 @@
 					$("body").addClass( "sb-r-o" );
 					$("body").removeClass( "sb-r-c" );
 					$("#OverlayUser").show();
-					//set focus on first input field
 					$( "#focusField" ).focus();
 				});
+
+				// $("#btnEditUser").click(function(){
+				// 	$("#btnNewUser").addClass("hidden");
+				// 	$("#btnCancelUser").removeClass("hidden");
+				// 	$("body").addClass( "sb-r-o" );
+				// 	$("body").removeClass( "sb-r-c" );
+				// 	$("#OverlayUser").show();
+				// });
 
 				$("#btnCancelUser").click(function(){
 					$("#btnNewUser").removeClass("hidden");
@@ -75,6 +82,8 @@
 					$("#OverlayUser").hide();
 					$("body").removeClass( "sb-r-o" );
 					$("body").addClass( "sb-r-c" );
+					$(".detail-open").removeClass("detail-open");
+					$(document.body).removeClass("sidebar-media-open");
 				});
 
 				$("#OverlayUser").click(function(){
@@ -83,8 +92,20 @@
 					$("#OverlayUser").hide();
 					$("body").removeClass( "sb-r-o" );
 					$("body").addClass( "sb-r-c" );
+					$(".detail-open").removeClass("detail-open");
+					$(document.body).removeClass("sidebar-media-open");
+
 				});
       });
+
+			$(".showEditUser").click(function(){
+				$('.editUser-' + this.dataset.sidebarId).addClass('detail-open');
+				// $('.overlay').show(); // Show overlay when detail is active
+				$(document.body).addClass("sidebar-media-open");
+				$("#btnNewUser").addClass("hidden");
+				$("#btnCancelUser").removeClass("hidden");
+				$("#OverlayUser").show();
+			});
 
 
     </script>

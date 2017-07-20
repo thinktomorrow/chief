@@ -43,6 +43,9 @@
                                 case 'delete':
                                   echo '<span class="red">' . $permission . '</span>';
                                   break;
+                                 default:
+                                  echo '<span class="grey">' . $permission . '</span>';
+                                  break;
                               }
                             ?>
                           </div>
@@ -51,12 +54,11 @@
                 @endforeach
               </td>
               <td>
-                @can('edit_roles')
-                  <a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-right" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                @endcan
-
                 @can('delete_roles')
                   <a class="btn btn-error pull-right" id="remove-role-toggle-{{ $role->id }}" href="#remove-role-modal-{{ $role->id }}"><i class="fa fa-trash"></i></a>
+                @endcan
+                @can('edit_roles')
+                  <a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-right"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 @endcan
               </td>
             </tr>

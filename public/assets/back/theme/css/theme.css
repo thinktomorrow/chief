@@ -2,7 +2,7 @@
 /*===============================================
   Animate.css Helpers
 ================================================= */
-/* used in conjuction with "data-animate" 
+/* used in conjuction with "data-animate"
  * attr to create a delayed page animation
  * read docs for more info on proper use*/
 .animated-delay,
@@ -3768,7 +3768,7 @@ table.dataTable tr.row-label td {
 }
 /*
  * DataTable Modals
- * 
+ *
  */
 .DTE .DTE_Header {
   background-color: #fafafa;
@@ -3991,7 +3991,7 @@ tr.shown td.details-control {
   display: none !important;
 }
 /*===============================================
-  Expose.js 
+  Expose.js
 ================================================= */
 /* overlay */
 .expose-overlay {
@@ -4995,7 +4995,7 @@ previous button's border...
 .nano.affix.nano-dark > .nano-pane > .nano-slider {
   background: #3b3f4f;
 }
-/* ============================================== 
+/* ==============================================
  Colorpicker/Datepicker/DateRangePicker
 ================================================= */
 /*alter picker z-indexes if inside an overlay*/
@@ -6798,9 +6798,9 @@ form.hide-list-label .bootstrap-duallistbox-container label {
 /* ==================================================
     AdminModals
  ==================================================== */
-/* 
+/*
 Styles for the html/body for special modal where we want 3d effects
-Note that we need a container wrapping all content on the page for the 
+Note that we need a container wrapping all content on the page for the
 perspective effects (not including the modals and the overlay).
 */
 .md-perspective,
@@ -7377,7 +7377,7 @@ perspective effects (not including the modals and the overlay).
 }
 /* when preserve grid setting is true and invisible
  * panel is left in an otherwise empty column. This is
- * useful when you want to drag a panel to a column 
+ * useful when you want to drag a panel to a column
  * that would otherwise be empty */
 .preserve-grid {
   padding: 10px;
@@ -10225,7 +10225,7 @@ select[multiple].input-lg {
   }
 }
 /*===============================================
-  Form Groups 
+  Form Groups
 ================================================= */
 .form-bordered .form-group {
   border-bottom: 1px solid #f2f2f2;
@@ -13209,7 +13209,7 @@ button.close {
   Tab Navigation Option - Panel Based Tabs
   -----------------------------------------------
   Panel Tab Navigation must be placed inside
-  ".panel-heading" see Docs for example 
+  ".panel-heading" see Docs for example
 ================================================= */
 .panel-tabs {
   position: absolute;
@@ -13243,7 +13243,7 @@ button.close {
   cursor: default;
   background: #ffffff;
 }
-/* Unlike normal tabs, panel tabs alignment 
+/* Unlike normal tabs, panel tabs alignment
  * to the rightside. This option aligns them left */
 .panel-tabs-left {
   left: 0;
@@ -13281,7 +13281,7 @@ button.close {
   Tab Navigation Option - Right Floating Tabs
   ------
   This settings refers to tabs that float from
-  left to right, not tabs that are to the right 
+  left to right, not tabs that are to the right
   of tab content
 ================================================= */
 .nav-tabs.nav-tabs-right > li {
@@ -13376,7 +13376,7 @@ button.close {
   background: transparent;
 }
 /*===============================================
-  Tab Navigation Option - Tab Merge 
+  Tab Navigation Option - Tab Merge
   Color to Match
   ---------
   Change Active Tab BG Color so that it merges
@@ -13850,7 +13850,7 @@ div.switch.round label:after {
 .iconsweets-5x {
   font-size: 5em;
 }
-/* Buttons with Icons 
+/* Buttons with Icons
 * Cross browser problems were creating problems when
 * an icon was given a larger font size than its sibling
 * text. To fix Line height, vertical align, and top
@@ -13869,9 +13869,9 @@ i.field-icon-right {
   right: 10px;
   top: 8px;
 }
-/* Icon Background and Borders 
+/* Icon Background and Borders
 * properly align icons that have been placed inside of titles
-* Useful for matching icon size to adjacent text 
+* Useful for matching icon size to adjacent text
 * Icon Background Shapes */
 .icon-circle {
   top: 0;
@@ -13962,7 +13962,7 @@ i.field-icon-right {
   vertical-align: middle;
 }
 /* Mildly styles a font awesome based icon group
- * used in occasionaly in panel heading. Look at 
+ * used in occasionaly in panel heading. Look at
  * message widget on index.html for example */
 .mini-action-icons .fa {
   position: relative;
@@ -14577,7 +14577,7 @@ ol.timeline-list li.timeline-item .timeline-date {
   padding: 8px;
 }
 /*===============================================
-   Tag Cloud Widget 
+   Tag Cloud Widget
 =================================================*/
 .tagcloud-widget {
   /* tagcloud widget labels */
@@ -16986,7 +16986,7 @@ on tables, feel free to add more*/
   min-width: 1000px !important;
 }
 /* ================================================
-  A. Table Styling Helpers 
+  A. Table Styling Helpers
 =================================================== */
 /* messaging table styles */
 table tbody tr.message-read td {
@@ -17315,7 +17315,7 @@ body.sb-l-c #topbar.affix {
     margin-left: 0px;
   }
 }
-/* Prevents Demo Bug - if navbar is fixed 
+/* Prevents Demo Bug - if navbar is fixed
  * and also hidden grant proper margin spacing */
 #topbar.affix.hidden + #content {
   margin-top: 0;
@@ -17436,7 +17436,7 @@ body.sidebar-collapsed #sidebar:before {
   margin-right: 5px;
 }
 /*==========================================================
-  Navbar Misc Utility Styles 
+  Navbar Misc Utility Styles
 =========================================================== */
 /* define height for panels with scrollers */
 .scroller-navbar {
@@ -17563,7 +17563,7 @@ body.sidebar-collapsed #sidebar:before {
 /*==========================================================
   Navbar Dropdown Menu Helpers
 =========================================================== */
-/* Both the Menu Merge & the Disable Arrow Settings 
+/* Both the Menu Merge & the Disable Arrow Settings
  * do not use the top margin for dropdowns */
 .navbar .nav > li.dropdown.menu-merge,
 .navbar .nav > li.dropdown.disable-arrow {
@@ -17866,7 +17866,7 @@ body.sb-top #toggle_sidemenu_t {
 }
 /*==========================================================
   Navbar Contextual/Skin Settings
-  - Skins applied by adding a bg class to ".navbar" 
+  - Skins applied by adding a bg class to ".navbar"
   - For example: <div class="navbar bg-primary">
 =========================================================== */
 .navbar.bg-primary {
@@ -18109,7 +18109,7 @@ body.sb-top #toggle_sidemenu_t {
   color: #FFF;
   background-color: #3b3f4f;
 }
-/* If Navbar has a contextual class we need to modify 
+/* If Navbar has a contextual class we need to modify
  * several elements so there are not color conflictions
  */
 .navbar[class*='bg-'] {
@@ -18274,7 +18274,7 @@ body.sb-top #toggle_sidemenu_t {
   }
 }
 /* Force Navbar Dropdowns to float and
- * to occupy 100% width at low resolutions 
+ * to occupy 100% width at low resolutions
  */
 @media (max-width: 599px) {
   .sb-l-m .navbar > .navbar-right,
@@ -18715,10 +18715,10 @@ ul.tray-nav.tray-nav-arrow li:hover a:after {
 /*===============================================
    F. Tray Hover Settings
 
-   At <1000 window width javascript will add a 
+   At <1000 window width javascript will add a
    "tray-rescale" class to the document body. This
    will shift the menu over out of sight and
-   expand it only when the user hovers over the 
+   expand it only when the user hovers over the
    portion that's still visible
 ================================================= */
 body.tray-rescale {
@@ -19062,7 +19062,7 @@ body.tray-rescale .tray-right:hover {
   color: #EEE;
 }
 /*===============================================
-  C. Sidebar "top" - Horizontal Menu 
+  C. Sidebar "top" - Horizontal Menu
      Activated by adding the ".sidebar-top"
      class to the "#sidebar_left" element
 ================================================= */
@@ -19716,7 +19716,7 @@ body.sb-l-m .sidebar-menu > li.active > a > span:nth-child(1) {
 }
 /*=======================================================
   G. Sidebar Light Color Settings
-     Applied via class to "#sidebar" 
+     Applied via class to "#sidebar"
      eg: <aside id="sidebar_left" class="sidebar-light">
 ========================================================= */
 #sidebar_left.sidebar-light {
@@ -20081,6 +20081,7 @@ body.sb-l-m.mobile-view .nano > .nano-pane {
 .sb-r-c #sidebar_right {
   right: -300px;
 }
+
 .sb-r-c #content_wrapper {
   margin-right: 0;
 }
@@ -20100,9 +20101,9 @@ collapsed. As it's not accessible in this mode*/
 /*===============================================
   D. Mobile Menu Modifications
 ================================================= */
-/* At less than 1100px we collapse any open sidebars via 
+/* At less than 1100px we collapse any open sidebars via
 Media Queries. Theme Javscript will also add a a
-".mobile-view" class so that you can do any needed 
+".mobile-view" class so that you can do any needed
 manipulation using an html class aswell */
 @media (max-width: 1100px) {
   /* Sidebar Left Open/Default */
@@ -20439,10 +20440,10 @@ body.sb-l-m #content-footer.affix {
 
  * This file is reserved for changes done on
  * a per-page basis. To create independent
- * page layouts an additional class was added 
+ * page layouts an additional class was added
  * to the pages body. For example ui-animations.html
  * has an extra body class of ".ui-animations-page"
- 
+
  * Note: Pages not listed here were made using
  * 100% reusable styles placed in theme.css
 =================================================
@@ -23028,7 +23029,7 @@ a.list-group-item-dark.active:focus {
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 }
-/* SWITCH CONTEXTUALS 
+/* SWITCH CONTEXTUALS
  */
 div.switch.switch-primary input:checked + label {
   background-color: #4a89dc;
@@ -24364,18 +24365,18 @@ blockquote.blockquote-dark {
 /* ==============================================
    III. DEMO PAGES
 	  - Global Changes
-	  
+
  * This file is reserved for changes required only
  * for the themes demo. These styles may be vital
  * to themes appearance but often times will not
  * be useful in a true production environment.
- 
+
  * For example each slider in sliders.html has a
- * margin of 65px, a large number only needed 
- * because six sliders have been stacked on top 
- * of each other. This would most likely not 
+ * margin of 65px, a large number only needed
+ * because six sliders have been stacked on top
+ * of each other. This would most likely not
  * happen in a real enviroment.
-================================================= 
+=================================================
  A. Global/Shared
 ================================================= */
 .ajax-loading {
@@ -24498,7 +24499,7 @@ body.timeline-page .panel-clone {
   padding-left: 6px;
 }
 /*===============================================
-  Source Code Viewer 
+  Source Code Viewer
 ================================================= */
 .bs-component {
   position: relative;
@@ -24653,10 +24654,10 @@ body.timeline-page .panel-clone {
     RESPONSIVE STYLES
       A. Content
 	  B. Topbar
-	  	  
+
 * These styles control various aspects of the
-* site which benefit from being responsive 
-================================================= 
+* site which benefit from being responsive
+=================================================
   A. Content
 ================================================= */
 #content {

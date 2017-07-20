@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $roles = Role::get();
-        return view('back.users.edit', compact('user', 'roles'));
+        return view('back.users._partials.edituser', compact('user', 'roles'));
     }
     /**
      * Update the specified resource in storage.

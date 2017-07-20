@@ -215,7 +215,7 @@
 								@endcan
 
 								@can('edit_users')
-									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									<button id="btnEditUser" data-sidebar-id="{{$user->id}}" class="btn btn-info pull-right showEditUser" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 								@endcan
 
 								@can('edit_users')
@@ -232,6 +232,7 @@
 							})(jQuery);
 						</script>
 						@endpush
+						@include('back.users._partials.edituser')
 					@endforeach
 				</tbody>
 			</table>
