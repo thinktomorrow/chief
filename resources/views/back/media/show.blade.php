@@ -2,9 +2,8 @@
 <aside id="sidebar_right" class="imageDetail-{{ $media->id }} nano affix">
 	<!-- Start: Sidebar Right Content -->
 	<div class="sidebar-right-content nano-content pn">
-    <!-- Start: Image -->
+		
     <img width="100%" src="{{ $media->getImageUrl('full') }}">
-    <!-- End: Image -->
 
     <!-- Start: Tabblock -->
     <div class="tab-block sidebar-block br-n">

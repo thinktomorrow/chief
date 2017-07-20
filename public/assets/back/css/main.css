@@ -34,13 +34,13 @@
   display: inline-block;
 }
 
-figure {
+.gallery-item {
   height: 250px;
   overflow: hidden;
   position: relative;
 }
 
-figure img {
+.gallery-item img {
   position: absolute;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -90,11 +90,9 @@ figure img {
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   z-index: 9;
   background: rgba(0, 0, 0, 0.3);
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
   right: 0;
