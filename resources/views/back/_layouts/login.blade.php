@@ -1,43 +1,27 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
-    <title>Chief admin</title>
-    <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600'>
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/css/theme.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/admin-tools/admin-forms/css/admin-forms.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/magnific/magnific-popup.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/css/main.css') }}">
-
-    @yield('custom-styles')
-
+    <meta name="_token" content="{!! csrf_token() !!}"/>
+    {!! Html::style('https://cdn.linearicons.com/free/1.0.0/icon-font.min.css')!!}
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    <title>Chief • @yield('title')</title>
 </head>
 <body>
-  @include('back._elements.messages')
-  @include('back._elements.errors')
-    <section id="content">
-        <div class="col-sm-6 center-block">
-          <div class="admin-form theme-default theme-info">
-            <div class="panel heading-border panel-warning bg-light">
-
-            <div class="panel-heading">
-                          <span class="panel-title">
-                            <img src="{{ asset('assets/img/chief.jpg')}}" class="col-sm-3" alt="logo" data-pin-nopin="true">
-                          </span>
-                      </div>
-            @yield('content')
-          </div>
-          </div>
-        </div>
+  <main>
+    <aside>
+      Login
+    </aside>
+    <section class="form">
+      @yield('content')
     </section>
+  </main>
 
-    @stack('custom-scripts')
+
+    <script src="{{ asset('assets/js/jquery.js') }}" type="application/javascript"></script>
+
+    @yield('admin.footerscripts')
 
 </body>
 </html>

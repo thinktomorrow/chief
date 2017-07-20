@@ -1,0 +1,144 @@
+/*
+ |
+ | LOGIN.CSS
+ | ---------
+ | Deze file staat apart omdat het loginscherm los staat van de default layout.
+ | De opmaak toont zich op de pagina hebeco.be/login en is zichtbaar voor zowel
+ |  adminbeheerders als de gebruikers.
+ |
+*/
+::selection{
+  background-color: #fdd030;
+  color: #FFF;
+}
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+body {
+  width: 100%;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-size: 14px;
+}
+a{
+  color: #353535;
+  text-decoration: none;
+}
+a:hover{
+  color: #fdd030;
+}
+main{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+aside{
+  background: #fdd030 url('../back/img/logo.svg') no-repeat center center;
+  width: 60%;
+  display: flex;
+  align-items: flex-end;
+}
+section{
+  padding: 45px;
+  box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
+
+  width: 40%;
+  padding-left: 120px;
+
+  display: flex;
+  justify-content: flex-start;
+  overflow-y: auto;
+  align-items: center;
+  width: 100%;
+}
+.login-page{
+  max-width: 400px;
+}
+.mr5{
+  margin-right: 5px;
+}
+.input-group{
+  position: relative;
+}
+.input-group span.lnr{
+  position: absolute;
+  bottom: 33px;
+}
+.form label{
+  float: left;
+  padding: 0 0 10px 0;
+}
+.form input[type=text]:focus,
+.form input[type=password]:focus {
+  border-bottom: 1px solid #353535;
+}
+.form input[type=text],
+.form input[type=password]  {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #ffffff;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px 30px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-bottom: 1px solid #E4E4DD;
+  transition: 0.3s ease-in-out;
+}
+.form input[type=submit] {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #353535;
+  width: 50%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50px;
+  margin: 15px 0;
+}
+.form input[type=submit]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.form input[type=submit]:hover,.form input[type=submit]:active,.form input[type=submit]:focus {
+  background: #fdd030;
+}
+.form .error {
+  color: #e74c3c;
+}
+.form .succes {
+  color: #97c93c;
+}
+
+.form .message {
+  margin: 15px 0;
+  display: block;
+}
+.form .message a {
+  color: #fdd030;
+  text-decoration: none;
+}
+.form .register-form {
+  display: none;
+}
+
+footer{
+  position: absolute;
+  right: 0;
+  text-align: center;
+  padding: 15px 0;
+}
+/*TOGGLE PWD*/
+.showHideInput{
+  display: none;
+}
+.showHideLabel{
+  position: absolute;
+  right: 55px;
+  margin-top: -50px;
+}
