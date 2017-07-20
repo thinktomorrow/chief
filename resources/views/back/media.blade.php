@@ -5,7 +5,10 @@ Mediabibliotheek
 @stop
 
 @section('topbar-right')
-
+<button type="button" class="btn btn-success mr5" id="showUploadPanel">
+  <i class="fa fa-upload mr10"></i>
+  Upload nieuw bestand
+</button>
 @stop
 
 @section('content')
@@ -121,7 +124,7 @@ $(document).ready(function(){
 // ***************************
 // ** LIGHTBOX OF AN IMAGE **
 // ***************************
-$('#sidebar_right img').magnificPopup({
+$('.image-preview img').magnificPopup({
   type: 'image',
   callbacks: {
     beforeOpen: function(e) {
@@ -151,11 +154,20 @@ $('#sidebar_right img').magnificPopup({
       item.src = item.el.attr('src');
     },
   },
+
   overflowY: 'scroll',
   removalDelay: 200, //delay removal by X to allow out-animation
   prependTo: $('#content_wrapper')
 });
-
+$('.gallery').each(function() { // the containers for all your galleries
+    $(this).magnificPopup({
+        delegate: 'a', // the selector for gallery item
+        type: 'image',
+        gallery: {
+          enabled:true
+        }
+    });
+});
 </script>
 
 

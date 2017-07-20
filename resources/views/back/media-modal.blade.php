@@ -11,5 +11,5 @@
 
 <div id="media-modal" class="modal-default">
     <h3>Test</h3>
-    @include('back.media.gallery')
+    @include('back.media.index')
 </div>
