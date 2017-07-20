@@ -25,7 +25,9 @@ Mediabibliotheek
 $(document).ready(function(){
 
   $(document.body).removeClass('sb-r-c');
-
+// ***********************************
+// ** SHOW DETAIL PANEL OF AN IMAGE **
+// ***********************************
   $(".showDetailPanel").click(function(){
     $('.imageDetail-' + this.dataset.sidebarId).addClass('detail-open');
     $('.overlay').show(); // Show overlay when detail is active
@@ -52,6 +54,9 @@ $(document).ready(function(){
     $('.showDeleteUptions').removeClass('hidden');
   });
 
+// ***********************************
+// ** SELECT IMAGES TO DELETE **
+// ***********************************
   // Get universal class for the checkbox and put it in a variable
   var getCheckbox = $(".checkbox-delete > input:checkbox");
 
@@ -98,6 +103,9 @@ $(document).ready(function(){
     countCheckboxes();
   });
 
+// ***********************************
+// ** FILE UPLOAD **
+// ***********************************
   // give file-upload preview onclick functionality
   var fileUpload = $('.fileupload-preview');
   if (fileUpload.length) {
@@ -109,6 +117,45 @@ $(document).ready(function(){
     });
   }
 });
+
+// ***************************
+// ** LIGHTBOX OF AN IMAGE **
+// ***************************
+$('#sidebar_right img').magnificPopup({
+  type: 'image',
+  callbacks: {
+    beforeOpen: function(e) {
+      // we add a class to body to indicate overlay is active
+      // We can use this to alter any elements such as form popups
+      // that need a higher z-index to properly display in overlays
+      $('body').addClass('mfp-bg-open');
+
+      // Set Magnific Animation
+      this.st.mainClass = 'mfp-zoomIn';
+
+      // Inform content container there is an animation
+      this.contentContainer.addClass('mfp-with-anim');
+    },
+    afterClose: function(e) {
+
+      setTimeout(function() {
+        $('body').removeClass('mfp-bg-open');
+        $(window).trigger('resize');
+      }, 1000)
+
+    },
+    elementParse: function(item) {
+      // Function will fire for each target element
+      // "item.el" is a target DOM element (if present)
+      // "item.src" is a source that you may modify
+      item.src = item.el.attr('src');
+    },
+  },
+  overflowY: 'scroll',
+  removalDelay: 200, //delay removal by X to allow out-animation
+  prependTo: $('#content_wrapper')
+});
+
 </script>
 
 
