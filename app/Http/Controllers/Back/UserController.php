@@ -52,6 +52,7 @@ class UserController extends Controller
         $user->firstname = $request->get('firstname');
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
+        $user->status = 'pending';
         $user->save();
 
         Password::sendResetLink(['email' => $user->email], function (Message $message) {
