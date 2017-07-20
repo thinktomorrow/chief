@@ -10,7 +10,7 @@
 
 	@section('topbar-right')
 		@can('add_users')
-			<button id="btnNewUser" class="btn btn-success hidden">
+			<button id="btnNewUser" class="btn btn-success">
 				<i class="fa fa-plus mr10" aria-hidden="true"></i>
 				User toevoegen
 			</button>
@@ -22,8 +22,9 @@
 	@stop
 
 	@include('back.users._partials.users')
-
+	<section id="OverlayUser" class="overlay" style="display: none;"></section>
 @endsection
+
 
 @section('sidebar')
    @include('back.users._partials.newuser')
@@ -45,20 +46,6 @@
 					$(".gridview").removeClass( "hidden" );
 				}
 
-				if(localStorage.getItem("NewUserPanel") == "yes") {
-					$("#btnNewUser").addClass("hidden");
-					$("#btnCancelUser").removeClass("hidden");
-					$("body").addClass( "sb-r-o" );
-					$("body").removeClass( "sb-r-c" );
-					//set focus on first input field
-					$( "#focusField" ).focus();
-				}else{
-					$("#btnNewUser").removeClass("hidden");
-					$("#btnCancelUser").addClass("hidden");
-					$("body").removeClass( "sb-r-o" );
-					$("body").addClass( "sb-r-c" );
-				}
-
         $("#listview").click(function(){
 					$(".gridview").addClass( "hidden" );
 					$(".listview").removeClass( "hidden" );
@@ -76,9 +63,9 @@
 					$("#btnCancelUser").removeClass("hidden");
 					$("body").addClass( "sb-r-o" );
 					$("body").removeClass( "sb-r-c" );
+					$("#OverlayUser").show();
 					//set focus on first input field
 					$( "#focusField" ).focus();
-					localStorage.setItem("NewUserPanel", "yes");
 				});
 
 				$("#btnCancelUser").click(function(){
@@ -86,7 +73,6 @@
 					$("#btnCancelUser").addClass("hidden");
 					$("body").removeClass( "sb-r-o" );
 					$("body").addClass( "sb-r-c" );
-					localStorage.setItem("NewUserPanel", "no");
 				});
 
 

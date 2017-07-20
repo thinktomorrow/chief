@@ -43,7 +43,7 @@
 	<!-- Begin gridview layout -->
 	<div class="row gridview hidden">
 		@foreach (\App\User::all() as $user)
-		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-4 rm-padding-top">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-3 rm-padding-top">
 			<div class="panel panel-tile br-a br-grey">
 				<div class="panel-heading br-n pn">
 					<span class="panel-title ml5">{{ $user->shortName }}</span>
@@ -123,7 +123,7 @@
 		</div>
 		<div class="panel-body pn">
 
-			<table class="table footable footable-loaded" data-page-navigation=".pagination" data-page-size="10"  data-filter="#fooFilter">
+			<table class="table footable"  data-filter="#fooFilter">
 				<thead>
 					<tr>
 						<th>Naam</th>
