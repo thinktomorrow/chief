@@ -17,7 +17,9 @@
       @yield('content')
     </section>
   </main>
-
+  <footer>
+    <p>&copy; {{ date('Y') }} &bull; <a href="mailto:support@chief.be">support@chief.be</a> </p>
+  </footer>
 
     <script src="{{ asset('assets/js/jquery.js') }}" type="application/javascript"></script>
 

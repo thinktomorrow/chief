@@ -8,7 +8,7 @@
 @section('content')
 <div class="login-page">
   <h1>Inloggen</h1>
-
+  <p>"Don't let yesterday use up too much of today."</p>
     @if($errors and count($errors) > 0)
         <div class="message error">
             @foreach($errors->all() as $error)
@@ -20,12 +20,10 @@
     <form class="login-form" id="valid" role="form" method="POST" action="{{ url('/login') }}">
       {{ csrf_field() }}
       <div class="input-group">
-        {!! Form::label('E-mail:', null, array('')) !!}
         <span class="lnr lnr-user"></span>
         {!! Form::text('email', null, array('class'=>'validate[required]', 'placeholder'=>'E-mail', 'id'=>'identity')) !!}
       </div>
       <div class="input-group">
-        {!! Form::label('Wachtwoord:', null, array('')) !!}
         <span class="lnr lnr-keyboard"></span>
         {!! Form::password('password', array('class'=>'validate[required]', 'placeholder'=>'Wachtwoord', 'id'=>'password')) !!}
       </div>
@@ -33,9 +31,5 @@
 
       <span class="message"><a href="{{ url('/password/reset') }}">Wachtwoord vergeten?</a></span>
     </form>
-
-  <footer>
-        <p>&copy; {{ date('Y') }} &bull; <a href="mailto:support@chief.be">support@chief.be</a> </p>
-  </footer>
 </div>
  @stop

@@ -1,46 +1,40 @@
-@extends('layouts.app')
+<!-- Login form area -->
+@extends('back._layouts.login')
+
+@section('title')
+    Reset wachtwoord
+@endsection
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
+    <!-- GIVE IN YOUR EMAIL ADRESS TO RESET YOUR PWD -->
+    <div class="login-page">
+      <h1>Je wachtwoord vergeten?</h1>
+      <p>Geef e-mailadres in om je wachtwoord te opnieuw in te stellen</p>
+      <div class="form">
+            @if (session('status'))
+              <div class="message succes">
+                  <span class="lnr lnr-checkmark-circle"></span>
+                  {{ session('status') }}
+              </div>
+            @else
+            <form id="valid" role="form" method="POST" action="{{ url('/password/email') }}">
+                {{ csrf_field() }}
+                    <div class="{{ $errors->has('email') ? ' has-error' : '' }}">
+                      @if ($errors->has('email'))
+                        <div class="message error">
+                          <span class="lnr lnr-warning"></span> {{ $errors->first('email') }}
                         </div>
-                    @endif
+                      @endif
+                      <div class="input-group">
+                        <span class="lnr lnr-envelope"></span>
+                        {!! Form::text('email', null, array('class'=>'validate[required]', 'placeholder'=>'Uw e-mail', 'id'=>'identity')) !!}
+                      </div>
+                    </div>
+                    {!! Form::submit('Reset mijn wachtwoord', array('class'=>'checker greyishBtn submitForm'))!!}
+                    <span class="message"><a href="{{ url('/login') }}">Terug naar login</a></span>
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </form>
+            @endif
         </div>
     </div>
-</div>
-@endsection
+@stop

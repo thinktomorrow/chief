@@ -54,6 +54,7 @@ section{
 }
 .login-page{
   max-width: 400px;
+  width: 100%;
 }
 .mr5{
   margin-right: 5px;
@@ -129,9 +130,9 @@ section{
 
 footer{
   position: absolute;
-  right: 0;
+  bottom: 0; right: 0;
   text-align: center;
-  padding: 15px 0;
+  padding: 15px;
 }
 /*TOGGLE PWD*/
 .showHideInput{

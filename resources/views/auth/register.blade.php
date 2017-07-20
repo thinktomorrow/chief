@@ -1,4 +1,9 @@
-@extends('layouts.app')
+<!-- Login form area -->
+@extends('back._layouts.login')
+
+@section('title')
+    Reistreer
+@endsection
 
 @section('content')
 <div class="container">
