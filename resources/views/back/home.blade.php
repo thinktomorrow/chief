@@ -14,7 +14,7 @@ Dashboard
   <div class="panel panel-tile text-center br-a br-grey">
     <div class="panel-body">
       @role('Admin')
-        <img src="{{ asset('assets/back/img/dashboard-user.png')}}" alt="Dashboard">
+        <img src="{{ asset('assets/back/img/dashboard-chief.png')}}" alt="Dashboard">
         <h1 class="fs30 mt5 mbn">Ahéhee {{ Auth::user()->firstname }}</h1>
         <h6 class="text-system">Your new name will be "{{ Auth::user()->getAlterEgo() }}"</h6>
       @endrole

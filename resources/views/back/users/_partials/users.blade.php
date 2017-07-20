@@ -1,91 +1,9 @@
-@section('page-title')
-User management
-@stop
-
-@section('topbar-right')
-	@can('add_users')
-		<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus mr10" aria-hidden="true"></i>User toevoegen</a>
-	@endcan
-@stop
-
-<style>
-.rm-padding-top{
-	padding-top: 0px !important;
-}
-
-.badge{
-	height: 20px;
-	width: 20px;
-	font-size: 1rem;
-	line-height: 14px;
-	border-radius: 0px;
-	margin-right: 2px;
-	margin-bottom: 2px;
-	cursor: help;
-
-}
-
-.darkblue{
-	background-color: #4A89DC;
-}
-
-.blue{
-	background-color: #3BAFDA;
-}
-
-.orange{
-	background-color: #F6BB42;
-}
-
-.list-label{
-	font-size: 1rem;
-}
-
-.panel-control-title{
-	transition: 0.3s ease all;
-}
-
-.panel-control-title:hover{
-	color: #3BAFDA;
-	transition: 0.3s ease all;
-}
-
-.panel-control-remove{
-	transition: 0.3s ease all;
-}
-
-.panel-control-remove:hover{
-	color: #E9573F;
-	transition: 0.3s ease all;
-}
-
-.gridicon{
-	width: 20px;
-	text-align: center;
-}
-
-.responsive-column-1, .repsonsive-column-2{
-	display: inline-block;
-}
-
-@media screen and (max-width: 1300px) {
-	.responsive-column-1{
-		display: none;
-	}
-}
-@media screen and (max-width: 1200px) {
-	.responsive-column-2{
-		display: none;
-	}
-}
-
-</style>
-
 @push('custom-styles')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/footable/css/footable.core.min.css') }}">
 @endpush
 
 <div class="col-lg-12">
+	<?php /*
 	<!-- <h1><i class="fa fa-users"></i> User Administration
 
 		@can('view_roles')
@@ -104,7 +22,8 @@ User management
 		<a href="{{ route('users.create') }}" class="btn btn-success"><i class="fa fa-plus mr10" aria-hidden="true"></i>User toevoegen</a>
 	@endcan -->
 
-	<div class="mh15 pv15 br-b br-light mb30">
+	<!-- Begin Grid List view buttons -->
+	<!-- <div class="mh15 pv15 br-b br-light mb30">
 		<div class="row">
 			<div class="col-xs-7">
 			</div>
@@ -119,68 +38,13 @@ User management
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
+	<!-- End Grid List view buttons -->
 
-	<div class="row gridview hidden">
-
-		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-4 rm-padding-top">
-			<div class="panel panel-tile br-a br-grey card-create">
-				<div class="panel-heading br-n pn">
-					<span class="panel-title ml5">Maak een nieuwe gebruiker aan</span>
-				</div>
-				<div class="panel-body text-center ">
-					<img src="{{ asset('assets/img/logo.png') }}" alt="test" class="mw100">
-				</div>
-				<div class="panel-body br-t">
-					<!-- NAAM INPUT -->
-					<div class="input-group mv15">
-						<span class="input-group-addon text-muted">
-              <i class="fa fa-user"></i>
-            </span>
-						<input type="text" name="firstname" class="form-control" placeholder="Voornaam">
-						<input type="text" name="lastname" class="form-control" placeholder="Naam">
-					</div>
-					<!-- EMAIL INPUT -->
-					<div class="input-group mv15">
-						<span class="input-group-addon text-muted">
-              <i class="fa fa-envelope-o"></i>
-            </span>
-						<input type="text" name="email" class="form-control" placeholder="E-mail">
-					</div>
-
-
-
-
-					<div class="section mv15 admin-form">
-	          <div class="option-group field">
-	            <label class="option option-primary">
-	              <input type="checkbox" name="superadmin" value="checked">
-	              <span class="checkbox"></span>Superadmin</label>
-	            <label class="option option-primary">
-	              <input type="checkbox" name="admin" value="disabled">
-	              <span class="checkbox"></span>Admin</label>
-	            <label class="option option-primary">
-	              <input type="checkbox" name="user" value="CH">
-	              <span class="checkbox"></span>User</label>
-	          </div>
-	          <!-- end .option-group section -->
-	        </div>
-				</div>
-
-				<div class="panel-footer br-t">
-					<button type="button" class="btn btn-success btn-block">
-						CREATE ACCOUNT
-					</button>
-				</div>
-
-			</div>
-		</div>
-
-
-
-
+	<!-- Begin gridview layout -->
+	<!-- <div class="row gridview hidden">
 		@foreach (\App\User::all() as $user)
-		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-4 rm-padding-top">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-3 rm-padding-top">
 			<div class="panel panel-tile br-a br-grey">
 				<div class="panel-heading br-n pn">
 					<span class="panel-title ml5">{{ $user->shortName }}</span>
@@ -250,14 +114,15 @@ User management
 			</div>
 		</div>
 		@endforeach
+	</div> -->
+<!-- End gridview layout -->
+*/ ?>
 
-	</div>
 
-
-	<!-- Panel with: Expanding Rows -->
-<div class="panel listview hidden" id="spy4">
+<!-- Begin listview layout -->
+<div class="panel listview" id="spy4">
 		<div class="panel-menu">
-			<input id="fooFilter" type="text" class="form-control" placeholder="Enter Table Filter Criteria Here...">
+			<input id="fooFilter" type="text" class="form-control" placeholder="Voer zoekfilter hier in">
 		</div>
 		<div class="panel-body pn">
 
@@ -271,11 +136,11 @@ User management
 						<th>Rollen</th>
 						<th class="responsive-column-1">Aangemaakt op</th>
 						<th class="responsive-column-2">Laatst gezien</th>
+						<th>Acties</th>
 					</tr>
 				</thead>
 
 				<tbody>
-
 					@foreach (\App\User::all() as $user)
 						<tr>
 							<td>{{ $user->lastname }}</td>
@@ -350,11 +215,11 @@ User management
 								@endcan
 
 								@can('edit_users')
-									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" style="margin-right: 3px;" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 								@endcan
 
 								@can('edit_users')
-									<a href="" class="btn btn-alert pull-right" style="margin-right: 3px;" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
+									<a href="" class="btn btn-alert pull-right" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
 								@endcan
 							</td>
 						</tr>
@@ -373,37 +238,4 @@ User management
 		</div>
 	</div>
 </div>
-@push('custom-scripts')
-		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.all.min.js') }}"></script>
-		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.filter.min.js') }}"></script>
-    <script>
-      $(document).ready(function(){
-				$('.table').footable();
-        $(document.body).removeClass('sb-r-c');
-
-				if(localStorage.getItem("UsermanagementList") == "yes") {
-					$(".gridview").addClass( "hidden" );
-					$(".listview").removeClass( "hidden" );
-				} else {
-					$(".listview").addClass( "hidden" );
-					$(".gridview").removeClass( "hidden" );
-				}
-
-        $("#listview").click(function(){
-					$(".gridview").addClass( "hidden" );
-					$(".listview").removeClass( "hidden" );
-					localStorage.setItem("UsermanagementList", "yes");
-        });
-
-        $("#gridview").click(function(){
-					$(".listview").addClass( "hidden" );
-					$(".gridview").removeClass( "hidden" );
-					localStorage.setItem("UsermanagementList", "no");
-        });
-      });
-
-
-    </script>
-
-
-@endpush
+<!-- End listview layout -->
