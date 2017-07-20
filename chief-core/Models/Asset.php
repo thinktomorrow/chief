@@ -120,6 +120,9 @@ class Asset extends Model implements HasMediaConversions
 
     public function getFilename()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->file_name;
     }
 
@@ -130,11 +133,17 @@ class Asset extends Model implements HasMediaConversions
 
     public function getPathForSize($collection = '')
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->getUrl($collection);
     }
 
     public function getImageUrl($collection = '')
     {
+        if($this->getMedia()->isEmpty()){
+            return "../assets/back/img/other.png";
+        }
         $url = $this->getMedia()[0]->getUrl();
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if ($ext == 'pdf') {
@@ -153,16 +162,25 @@ class Asset extends Model implements HasMediaConversions
 
     public function getMimeType()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->mime_type;
     }
 
     public function getSize()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->human_readable_size;
     }
 
     public function getDimensions()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->hasCustomProperty('dimensions') ? $this->getMedia()[0]->getCustomProperty('dimensions') : '/';
     }
 

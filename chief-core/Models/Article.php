@@ -56,6 +56,11 @@ class Article extends Model
 
     public function getFileUrl($collection = '')
     {
-        return $this->asset->first()->getMedia($collection)[0]->getUrl();
+        if($this->asset->first())
+        {
+            return $this->asset->first()->getMedia($collection)[0]->getUrl();
+        }else{
+            return 'placeholder';
+        }
     }
 }
