@@ -17,7 +17,7 @@ Mediabibliotheek
 @stop
 
 @section('sidebar')
-   @include('back.media._partials.upload')
+  @include('back.media._partials.upload')
 @stop
 
 @push('custom-scripts')

@@ -5,38 +5,38 @@ namespace Chief\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class Asset extends Model implements HasMediaConversions
 {
-
     use HasMediaTrait;
 
     public static $conversions = [
         'thumb' => [
-            'w'     => 150,
-            'h'    => 150,
+            'width'     => 150,
+            'height'    => 150,
         ],
         'medium' => [
-            'w'     => 300,
-            'h'    => 130,
+            'width'     => 300,
+            'height'    => 130,
         ],
         'large' => [
-            'w'     => 1024,
-            'h'    => 353,
+            'width'     => 1024,
+            'height'    => 353,
         ],
         'full' => [
-            'w'     => 1600,
-            'h'    => 553,
+            'width'     => 1600,
+            'height'    => 553,
         ]
     ];
 
-    public static function upload($files)
+    public static function upload($files, $collection = '')
     {
         if (is_array($files)) {
             $list = collect([]);
-            collect($files)->each(function ($file) use ($list) {
+            collect($files)->each(function ($file) use ($list, $collection) {
                 $self = new self();
                 $self->save();
                 $dimensions = [];
@@ -44,13 +44,14 @@ class Asset extends Model implements HasMediaConversions
                 {
                     $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
                 }
-                $media = $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
+                $media = $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection($collection);
 
                 $list->push($self);
             });
 
             return $list;
-        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File) {
+        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File || $files instanceof UploadedFile) {
+
             $self = new self();
             $self->save();
             $dimensions = [];
@@ -58,9 +59,39 @@ class Asset extends Model implements HasMediaConversions
             {
                 $dimensions = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
             }
-            $media = $self->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection();
+            $media = $self->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection($collection);
 
             return $self;
+        }
+
+        return null;
+    }
+
+    public function uploadToAsset($files, $collection = '')
+    {
+        if (is_array($files)) {
+            $list = collect([]);
+            collect($files)->each(function ($file) use ($list, $collection) {
+                $dimensions = [];
+                if(self::isImage($file))
+                {
+                    $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
+                }
+                $media = $this->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection($collection);
+
+                $list->push($this);
+            });
+
+            return $list;
+        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File || $files instanceof UploadedFile) {
+            $dimensions = [];
+            if(self::isImage($files))
+            {
+                $dimensions = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
+            }
+            $media = $this->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection($collection);
+
+            return $this;
         }
 
         return null;
@@ -160,6 +191,18 @@ class Asset extends Model implements HasMediaConversions
         });
 
         return $library;
+    }
+
+    /**
+     * Generates the hidden field that links the file to a specific collection.
+     *
+     * @param string $collection
+     *
+     * @return string
+     */
+    public static function collectionField($collection = '')
+    {
+        return '<input type="hidden" value="' . $collection . '" name="imageCollection">';
     }
 
     /**
