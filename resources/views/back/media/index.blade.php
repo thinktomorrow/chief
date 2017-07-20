@@ -35,7 +35,7 @@
           </div>
           </div>
         </div>
-        @include('back.media._partials.media-details')
+        @include('back.media.show')
       @endforeach
     </div>
     <div class="row text-center">
@@ -44,3 +44,4 @@
   </div>
 </section>
 
+<section class="overlay" style="display: none;"></section>
