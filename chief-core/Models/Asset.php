@@ -45,9 +45,6 @@ class Asset extends Model implements HasMediaConversions
                     $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
                 }
                 $media = $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
-                //TODO
-//                $media->manipulations = self::$conversions;
-//                $media->save();
 
                 $list->push($self);
             });
@@ -62,9 +59,6 @@ class Asset extends Model implements HasMediaConversions
                 $dimensions = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
             }
             $media = $self->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection();
-            //TODO
-//            $media->manipulations = self::$conversions;
-//            $media->save();
 
             return $self;
         }
@@ -175,6 +169,34 @@ class Asset extends Model implements HasMediaConversions
      */
     public function registerMediaConversions()
     {
+        $this->addMediaConversion('thumb')
+            ->width(150)
+            ->height(150)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
+
+        $this->addMediaConversion('medium')
+            ->width(300)
+            ->height(130)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
+
+        $this->addMediaConversion('large')
+            ->width(1024)
+            ->height(353)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
+
+        $this->addMediaConversion('full')
+            ->width(1600)
+            ->height(553)
+            ->sharpen(15)
+            ->format('png')
+            ->optimize();
+
 //        $this->addMediaConversion('thumb')
 //            ->setManipulations(['w' => 368, 'h' => 232])
 //            ->performOnCollections('pdf');
