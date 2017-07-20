@@ -22,9 +22,9 @@
 	@stop
 
 	@include('back.users._partials.users')
-	<section id="OverlayUser" class="overlay" style="display: none;"></section>
 @endsection
 
+<section id="OverlayUser" class="overlay" style="display: none;"></section>
 
 @section('sidebar')
    @include('back.users._partials.newuser')
