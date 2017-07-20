@@ -1,70 +1,77 @@
-<div class="col-lg-10 col-lg-offset-1">
-  <h1><i class="fa fa-key"></i> Roles
+@push('custom-styles')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/footable/css/footable.core.min.css') }}">
+@endpush
 
-    @can('view_users')
-      <a href="{{ route('users.index') }}" class="btn btn-default pull-right">Users</a>
-    @else
-      <a class="btn btn-default pull-right disabled">Users</a>
-    @endcan
-  </h1>
-  <hr>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped">
-      <thead>
-      <tr>
-        <th>Role</th>
-        <th>Permissions</th>
-        <th>Operation</th>
-      </tr>
-      </thead>
+<div class="col-lg-12">
+  <div class="panel listview" id="spy4">
+  		<div class="panel-menu">
+  			<input id="fooFilter" type="text" class="form-control" placeholder="Voer zoekfilter hier in">
+  		</div>
+  		<div class="panel-body pn">
 
-      <tbody>
-      @foreach ($roles as $role)
-        <tr>
+  			<table class="table footable"  data-filter="#fooFilter">
+  				<thead>
+            <tr>
+              <th>Rol</th>
+              <th>Rechten</th>
+              <th>Acties</th>
+            </tr>
+          </thead>
 
-          <td>{{ $role->name }}</td>
+          <tbody>
+          @foreach ($roles as $role)
+            <tr>
 
-          <td>
-            @foreach($role->getPermissionsForindex() as $model => $permissions)
-              {{ $model }} =>
-                    @foreach($permissions as $permission)
-                      {{ $permission }},
-                    @endforeach
-              <br>
-            @endforeach
-          </td>
-          <td>
-            @can('edit_roles')
-              <a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            @else
-              <a class="btn btn-info pull-left disabled" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-            @endcan
+              <td>{{ $role->name }}</td>
 
-            @can('delete_roles')
-              <a class="btn btn-error" id="remove-role-toggle-{{ $role->id }}" href="#remove-role-modal-{{ $role->id }}"><i class="fa fa-trash"></i></a>
-            @else
-              <a class="btn btn-error disabled" ><i class="fa fa-trash"></i></a>
-            @endcan
-          </td>
-        </tr>
-        @include('back.roles._deletemodal')
-        @push('custom-scripts')
-        <script>
-          ;(function ($) {
-            // Delete modal
-            $("#remove-role-toggle-{{ $role->id }}").magnificPopup();
-          })(jQuery);
-        </script>
-        @endpush
-      @endforeach
-      </tbody>
+              <td>
+                @foreach($role->getPermissionsForindex() as $model => $permissions)
+                  <div class="rolename">{{ $model }}</div>
+                        @foreach($permissions as $permission)
+                          <div class="rolepermission">
+                            <?php
+                              switch ($permission){
+                                case 'view':
+                                  echo '<span class="blue">' . $permission . '</span>';
+                                  break;
+                                case 'edit':
+                                  echo '<span class="orange">' . $permission . '</span>';
+                                  break;
+                                case 'add':
+                                  echo '<span class="darkblue">' . $permission . '</span>';
+                                  break;
+                                case 'delete':
+                                  echo '<span class="red">' . $permission . '</span>';
+                                  break;
+                              }
+                            ?>
+                          </div>
+                        @endforeach
+                  <br>
+                @endforeach
+              </td>
+              <td>
+                @can('edit_roles')
+                  <a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-right" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                @endcan
+
+                @can('delete_roles')
+                  <a class="btn btn-error pull-right" id="remove-role-toggle-{{ $role->id }}" href="#remove-role-modal-{{ $role->id }}"><i class="fa fa-trash"></i></a>
+                @endcan
+              </td>
+            </tr>
+            @include('back.roles._deletemodal')
+            @push('custom-scripts')
+            <script>
+              ;(function ($) {
+                // Delete modal
+                $("#remove-role-toggle-{{ $role->id }}").magnificPopup();
+              })(jQuery);
+            </script>
+            @endpush
+          @endforeach
+          </tbody>
 
     </table>
   </div>
-
-  @can('add_roles')
-    <a href="{{ URL::to('admin/roles/create') }}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
-  @else
-    <a class="btn btn-success disabled"><i class="fa fa-plus" aria-hidden="true"></i></a>
-  @endcan
 </div>

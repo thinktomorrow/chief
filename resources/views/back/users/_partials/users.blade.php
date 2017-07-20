@@ -3,6 +3,7 @@
 @endpush
 
 <div class="col-lg-12">
+	<?php /*
 	<!-- <h1><i class="fa fa-users"></i> User Administration
 
 		@can('view_roles')
@@ -22,7 +23,7 @@
 	@endcan -->
 
 	<!-- Begin Grid List view buttons -->
-	<div class="mh15 pv15 br-b br-light mb30">
+	<!-- <div class="mh15 pv15 br-b br-light mb30">
 		<div class="row">
 			<div class="col-xs-7">
 			</div>
@@ -37,11 +38,11 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- End Grid List view buttons -->
 
 	<!-- Begin gridview layout -->
-	<div class="row gridview hidden">
+	<!-- <div class="row gridview hidden">
 		@foreach (\App\User::all() as $user)
 		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-3 rm-padding-top">
 			<div class="panel panel-tile br-a br-grey">
@@ -113,11 +114,13 @@
 			</div>
 		</div>
 		@endforeach
-	</div>
+	</div> -->
 <!-- End gridview layout -->
+*/ ?>
+
 
 <!-- Begin listview layout -->
-<div class="panel listview hidden" id="spy4">
+<div class="panel listview" id="spy4">
 		<div class="panel-menu">
 			<input id="fooFilter" type="text" class="form-control" placeholder="Voer zoekfilter hier in">
 		</div>
@@ -133,11 +136,11 @@
 						<th>Rollen</th>
 						<th class="responsive-column-1">Aangemaakt op</th>
 						<th class="responsive-column-2">Laatst gezien</th>
+						<th>Acties</th>
 					</tr>
 				</thead>
 
 				<tbody>
-
 					@foreach (\App\User::all() as $user)
 						<tr>
 							<td>{{ $user->lastname }}</td>
@@ -212,11 +215,11 @@
 								@endcan
 
 								@can('edit_users')
-									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" style="margin-right: 3px;" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									<a href="{{ route('users.edit', $user->id) }}" class="btn btn-info pull-right" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 								@endcan
 
 								@can('edit_users')
-									<a href="" class="btn btn-alert pull-right" style="margin-right: 3px;" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
+									<a href="" class="btn btn-alert pull-right" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
 								@endcan
 							</td>
 						</tr>

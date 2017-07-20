@@ -1,0 +1,15 @@
+.rolename, .rolepermission{
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.rolename{
+  width: 150px;
+}
+
+.rolepermission{
+  span{
+    padding: 0 10px;
+    color: white;
+  }
+}

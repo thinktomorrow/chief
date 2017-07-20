@@ -112,6 +112,11 @@
 
 /* --------- BEGIN USERS VIEW ------------ */
 
+.bringtofront {
+  z-index: 999;
+  position: relative;
+}
+
 .rm-padding-top {
   padding-top: 0px !important;
 }
@@ -122,8 +127,8 @@
   font-size: 1rem;
   line-height: 14px;
   border-radius: 0px;
-  margin-right: 2px;
   margin-bottom: 2px;
+  padding: 3px 0px;
   cursor: help;
 }
 
@@ -137,6 +142,10 @@
 
 .orange {
   background-color: #F6BB42;
+}
+
+.red {
+  background-color: #EC6F5A;
 }
 
 .list-label {
@@ -188,6 +197,21 @@
 }
 
 /* --------- END USERS VIEW ------------ */
+
+.rolename,
+.rolepermission {
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.rolename {
+  width: 150px;
+}
+
+.rolepermission span {
+  padding: 0 10px;
+  color: white;
+}
 
 .table > tbody > tr > td {
   vertical-align: top;

@@ -14,17 +14,18 @@
 				<i class="fa fa-plus mr10" aria-hidden="true"></i>
 				User toevoegen
 			</button>
-			<button id="btnCancelUser" class="btn btn-info hidden">
+			<button id="btnCancelUser" class="btn btn-info hidden bringtofront">
 				<i class="fa fa-times mr10" aria-hidden="true"></i>
 				Annuleren
 			</button>
 		@endcan
+		<section id="OverlayUser" class="overlay" style="display: none;"></section>
 	@stop
 
 	@include('back.users._partials.users')
 @endsection
 
-<section id="OverlayUser" class="overlay" style="display: none;"></section>
+
 
 @section('sidebar')
    @include('back.users._partials.newuser')
@@ -38,25 +39,25 @@
 				$('.table').footable();
         $(document.body).removeClass('sb-r-c');
 
-				if(localStorage.getItem("UsermanagementList") == "yes") {
-					$(".gridview").addClass( "hidden" );
-					$(".listview").removeClass( "hidden" );
-				} else {
-					$(".listview").addClass( "hidden" );
-					$(".gridview").removeClass( "hidden" );
-				}
-
-        $("#listview").click(function(){
-					$(".gridview").addClass( "hidden" );
-					$(".listview").removeClass( "hidden" );
-					localStorage.setItem("UsermanagementList", "yes");
-        });
-
-        $("#gridview").click(function(){
-					$(".listview").addClass( "hidden" );
-					$(".gridview").removeClass( "hidden" );
-					localStorage.setItem("UsermanagementList", "no");
-        });
+				// if(localStorage.getItem("UsermanagementList") == "yes") {
+				// 	$(".gridview").addClass( "hidden" );
+				// 	$(".listview").removeClass( "hidden" );
+				// } else {
+				// 	$(".listview").addClass( "hidden" );
+				// 	$(".gridview").removeClass( "hidden" );
+				// }
+				//
+        // $("#listview").click(function(){
+				// 	$(".gridview").addClass( "hidden" );
+				// 	$(".listview").removeClass( "hidden" );
+				// 	localStorage.setItem("UsermanagementList", "yes");
+        // });
+				//
+        // $("#gridview").click(function(){
+				// 	$(".listview").addClass( "hidden" );
+				// 	$(".gridview").removeClass( "hidden" );
+				// 	localStorage.setItem("UsermanagementList", "no");
+        // });
 
 				$("#btnNewUser").click(function(){
 					$("#btnNewUser").addClass("hidden");
@@ -71,11 +72,18 @@
 				$("#btnCancelUser").click(function(){
 					$("#btnNewUser").removeClass("hidden");
 					$("#btnCancelUser").addClass("hidden");
+					$("#OverlayUser").hide();
 					$("body").removeClass( "sb-r-o" );
 					$("body").addClass( "sb-r-c" );
 				});
 
-
+				$("#OverlayUser").click(function(){
+					$("#btnNewUser").removeClass("hidden");
+					$("#btnCancelUser").addClass("hidden");
+					$("#OverlayUser").hide();
+					$("body").removeClass( "sb-r-o" );
+					$("body").addClass( "sb-r-c" );
+				});
       });
 
 
