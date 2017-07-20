@@ -46,6 +46,12 @@
                     <span class="sidebar-title">Agenda</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('articles.index') }}">
+                    <span class="glyphicon glyphicon-file"></span>
+                    <span class="sidebar-title">Artikels</span>
+                </a>
+            </li>
             @can('view_users')
             <li class="sidebar-label pt20">Gebruikers</li>
                 <li>

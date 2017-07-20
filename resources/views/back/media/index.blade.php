@@ -26,16 +26,16 @@
                 </div>
               </span>
             </div>
-            <div class="panel-body pn showDetailPanel" data-sidebar-id="{{ $media->id }}">
+            <div class="panel-body pn showDetail showDetailPanel" id="detailPanel-{{ $media->id }}" data-sidebar-id="{{ $media->id }}">
             <figure class="mn">
               <picture>
-                <img src="{{ $media->getPathForSize('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
+                <img src="{{ $media->getImageUrl('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
               </picture>
             </figure>
           </div>
           </div>
         </div>
-        @include('back.media._partials.media-details')
+        @include('back.media.show')
       @endforeach
     </div>
     <div class="row text-center">
@@ -44,3 +44,4 @@
   </div>
 </section>
 
+<section class="overlay" style="display: none;"></section>

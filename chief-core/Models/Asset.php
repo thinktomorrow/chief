@@ -5,16 +5,32 @@ namespace Chief\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\File;
-use Illuminate\Support\Collection;
-use Spatie\Image\Image;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
-use Spatie\ImageOptimizer\OptimizerChain;
 
 class Asset extends Model implements HasMediaConversions
 {
 
     use HasMediaTrait;
+
+    public static $conversions = [
+        'thumb' => [
+            'w'     => 150,
+            'h'    => 150,
+        ],
+        'medium' => [
+            'w'     => 300,
+            'h'    => 130,
+        ],
+        'large' => [
+            'w'     => 1024,
+            'h'    => 353,
+        ],
+        'full' => [
+            'w'     => 1600,
+            'h'    => 553,
+        ]
+    ];
 
     public static function upload($files)
     {
@@ -23,8 +39,12 @@ class Asset extends Model implements HasMediaConversions
             collect($files)->each(function ($file) use ($list) {
                 $self = new self();
                 $self->save();
-                $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
-                $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
+                $dimensions = [];
+                if(self::isImage($file))
+                {
+                    $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
+                }
+                $media = $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
 
                 $list->push($self);
             });
@@ -33,13 +53,31 @@ class Asset extends Model implements HasMediaConversions
         } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File) {
             $self = new self();
             $self->save();
-
-            $self->addMedia($files)->toMediaCollection();
+            $dimensions = [];
+            if(self::isImage($files))
+            {
+                $dimensions = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
+            }
+            $media = $self->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection();
 
             return $self;
         }
 
         return null;
+    }
+
+    private static function isImage($file)
+    {
+        if (filesize($file) > 11)
+        {
+            return exif_imagetype($file);
+
+        }
+        else
+        {
+            return false;
+
+        }
     }
 
     public function attachToModel(Model $model)
@@ -61,6 +99,11 @@ class Asset extends Model implements HasMediaConversions
 
     public function getPathForSize($collection = '')
     {
+        return $this->getMedia()[0]->getUrl($collection);
+    }
+
+    public function getImageUrl($collection = '')
+    {
         $url = $this->getMedia()[0]->getUrl();
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if ($ext == 'pdf') {
@@ -70,7 +113,7 @@ class Asset extends Model implements HasMediaConversions
             return "../assets/back/img/xls.png";
         }
         elseif (in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp'])) {
-          return $this->getMedia()[0]->getUrl($collection);
+            return $this->getPathForSize($collection);
         }
         else{
             return "../assets/back/img/other.png";
@@ -91,7 +134,6 @@ class Asset extends Model implements HasMediaConversions
     {
         return $this->getMedia()[0]->hasCustomProperty('dimensions') ? $this->getMedia()[0]->getCustomProperty('dimensions') : '/';
     }
-
 
 //    public function assets()
 //    {

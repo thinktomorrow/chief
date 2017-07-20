@@ -10,15 +10,14 @@ use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class ArticlesController extends Controller
 {
-
     use HasMediaTrait;
 
     public function index()
     {
-        $articlesMedia = Article::first();
+        $articles = Article::first();
 
         // TODO: create articles management
-        return view('back.articles.index', compact('articlesMedia'));
+        return view('back.articles.index', compact('articles'));
     }
 
     public function store(Request $request)

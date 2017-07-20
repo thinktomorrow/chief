@@ -12,9 +12,15 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 class Article extends Model
 {
 
-    use AssetTrait;
+    use AssetTrait, Publishable, Featurable;
 
+    public function hasThumb()
+    {
 
+    }
 
+    public function getThumbUrl()
+    {
 
+    }
 }

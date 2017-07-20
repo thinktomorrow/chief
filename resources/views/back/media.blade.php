@@ -12,7 +12,7 @@ Mediabibliotheek
   <form action="{{ route('media.remove') }}" method="POST">
     {{ csrf_field() }}
     @include('back.media._partials.filter')
-    @include('back.media.gallery')
+    @include('back.media.index')
   </form>
 @stop
 
@@ -27,9 +27,16 @@ $(document).ready(function(){
   $(document.body).removeClass('sb-r-c');
 
   $(".showDetailPanel").click(function(){
-    $('.imageDetail-' + this.dataset.sidebarId).toggleClass('detail-open');
+    $('.imageDetail-' + this.dataset.sidebarId).addClass('detail-open');
+    $('.overlay').show(); // Show overlay when detail is active
+    $(document.body).addClass('sidebar-media-open');
   });
 
+  $(".overlay").click(function(){
+    $('#sidebar_right.detail-open').removeClass('detail-open');
+    $('.overlay').hide(); // Show overlay when detail is active
+    $(document.body).removeClass('sidebar-media-open');
+  });
   $("#showUploadPanel").click(function(){
     $(document.body).toggleClass('upload-open');
   });

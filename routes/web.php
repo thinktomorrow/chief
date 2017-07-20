@@ -8,7 +8,7 @@
 Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],function(){
 
     // ARTICLES
-    Route::get('articles','ArticlesController@index')->name('admin.articles.index');
+    Route::get('articles','ArticlesController@index')->name('articles.index');
     Route::post('articles', 'ArticlesController@store')->name('articles.store');
     Route::get('articles/create', 'ArticlesController@create')->name('articles.create');
     Route::delete('articles/{article}', 'ArticlesController@destroy')->name('articles.destroy');
