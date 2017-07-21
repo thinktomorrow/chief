@@ -35,10 +35,14 @@ $(document).ready(function(){
     $(document.body).toggleClass('upload-open');
   });
 
+// Get universal class for the checkbox and put it in a variable
+	var getCheckbox = $(".checkbox-delete > input:checkbox");
+
 
   // SHOW OR HIDE DELETE BUTTON
   $('.showDeleteUptions').click(function(){
     $('.deleteActions').removeClass('hidden');
+    $('.deleteActions span').text($(":checkbox:checked").length + ' bestanden verwijderen?');
     $('.showDeleteUptions').addClass('hidden');
   });
   $('.noDelete').click(function(){
@@ -46,8 +50,6 @@ $(document).ready(function(){
     $('.showDeleteUptions').removeClass('hidden');
   });
 
-  // Get universal class for the checkbox and put it in a variable
-  var getCheckbox = $(".checkbox-delete > input:checkbox");
 
   function countCheckboxes(){
     // When on or more checkbox is checked, show the deleteButton
