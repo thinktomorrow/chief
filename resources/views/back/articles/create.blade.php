@@ -67,7 +67,11 @@
                   </div>
                 </div>
                 <div class="input-group">
-                  Online- offline
+                  Status
+                  <select>
+                    <option>Gepubliceerd</option>
+                    <option>Concept</option>
+                  </select>
                 </div>
               </div>
               <div class="panel-footer">
@@ -75,6 +79,19 @@
                 <div class="text-right">
                     <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Publiceer artikel</button>
                 </div>
+              </div>
+            </div>
+
+            <div class="panel image">
+              <div class="panel-heading">Media toevoegen</div>
+              <div class="panel-body">
+                <a href="#" class="btn text-primary">Voeg afbeelding toe</a>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-heading">Bijlages toevoegen</div>
+              <div class="panel-body">
+                <a href="#" class="btn text-primary">Voeg bijlage toe</a>
               </div>
             </div>
         </aside><!-- end sidebar column -->
