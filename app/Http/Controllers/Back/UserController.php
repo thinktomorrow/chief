@@ -52,6 +52,7 @@ class UserController extends Controller
         $user->firstname = $request->get('firstname');
         $user->lastname = $request->get('lastname');
         $user->email = $request->get('email');
+        $user->status = 'pending';
         $user->save();
 
         Password::sendResetLink(['email' => $user->email], function (Message $message) {
@@ -91,7 +92,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $roles = Role::get();
-        return view('back.users.edit', compact('user', 'roles'));
+        return view('back.users._partials.edituser', compact('user', 'roles'));
     }
     /**
      * Update the specified resource in storage.

@@ -25,9 +25,21 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-
 $factory->define(Article::class, function (Faker\Generator $faker) {
     return [
-        'title' => $faker->title,
+        'published' => false,
+        'featured' => false,
     ];
 });
+
+$factory->define(\Chief\Models\ArticleTranslation::class, function (Faker\Generator $faker) {
+    $article = factory(Article::class)->create();
+    return [
+        'locale'        =>  'nl',
+        'title'         =>  'test',
+        'content'       => $faker->title,
+        'article_id'    => $article->id,
+    ];
+});
+
+

@@ -32,13 +32,13 @@
   display: inline-block;
 }
 
-figure {
+.gallery-item {
   height: 250px;
   overflow: hidden;
   position: relative;
 }
 
-figure img {
+.gallery-item img {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -59,26 +59,59 @@ figure img {
 }
 
 /*HOVER IMAGE TO OPEN DETAIL PANEL*/
+.image-preview{
+  position: relative;
+  &:after{
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+.image-preview img:hover,
 .showDetailPanel picture {
   transition: all 0.2s ease-in-out;
   overflow: hidden;
   cursor: pointer;
 }
-
+.image-preview img:hover,
 .showDetailPanel:hover picture {
   filter: blur(2px);
   opacity: 0.5;
 }
+.image-preview img{
+  z-index: 1;
+  position: relative;
+}
 
+.image-preview:hover:after{
+    content: '\F002';
+    z-index: 0;
+    color: black;
+}
+.showDetailPanel:hover:after {
+  content: '\f06e Meer details';
+  z-index: 999;
+}
+.image-preview:hover:after,
 .showDetailPanel:hover:after {
   font-family: 'fontawesome', sans-serif;
-  content: '\f06e Bekijk details';
-  display: block;
   position: absolute;
-  z-index: 999;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+// When media-detail is active show the overlay panel
+.overlay{
+  position: fixed;
+  z-index: 9;
+  background: rgba(0,0,0,0.3);
+  top: 0; left: 0; right: 0; bottom: 0;
+  color: #FFF;
+  line-height: 100vh;
+  text-align: center;
+  font-size: 2rem;
+  cursor: pointer;
+  display: block;
 }
 
 // When an upload image is larger than viewport height

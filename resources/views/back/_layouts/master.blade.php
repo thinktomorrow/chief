@@ -52,7 +52,7 @@
 
         @include('back._modules.footer')
     </section>
-    @yield('sidebar')
+    @stack('sidebar')
 
 </div>
 

@@ -34,13 +34,13 @@
   display: inline-block;
 }
 
-figure {
+.gallery-item {
   height: 250px;
   overflow: hidden;
   position: relative;
 }
 
-figure img {
+.gallery-item img {
   position: absolute;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
@@ -64,6 +64,17 @@ figure img {
 
 /*HOVER IMAGE TO OPEN DETAIL PANEL*/
 
+.image-preview {
+  position: relative;
+}
+
+.image-preview:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.image-preview img:hover,
 .showDetailPanel picture {
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
@@ -71,27 +82,166 @@ figure img {
   cursor: pointer;
 }
 
+.image-preview img:hover,
 .showDetailPanel:hover picture {
   -webkit-filter: blur(2px);
           filter: blur(2px);
   opacity: 0.5;
 }
 
+.image-preview img {
+  z-index: 1;
+  position: relative;
+}
+
+.image-preview:hover:after {
+  content: '\F002';
+  z-index: 0;
+  color: black;
+}
+
+.showDetailPanel:hover:after {
+  content: '\F06E   Meer details';
+  z-index: 999;
+}
+
+.image-preview:hover:after,
 .showDetailPanel:hover:after {
   font-family: 'fontawesome', sans-serif;
-  content: '\F06E   Bekijk details';
-  display: block;
   position: absolute;
-  z-index: 999;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
 }
 
+.overlay {
+  position: fixed;
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #FFF;
+  line-height: 100vh;
+  text-align: center;
+  font-size: 2rem;
+  cursor: pointer;
+  display: block;
+}
+
 .fileupload .thumbnail {
   max-height: 300px;
   overflow: hidden;
+}
+
+/* --------- BEGIN USERS VIEW ------------ */
+
+.bringtofront {
+  z-index: 999;
+  position: relative;
+}
+
+.rm-padding-top {
+  padding-top: 0px !important;
+}
+
+.badge {
+  height: 20px;
+  width: 20px;
+  font-size: 1rem;
+  line-height: 14px;
+  border-radius: 0px;
+  margin-bottom: 2px;
+  padding: 3px 0px;
+  cursor: help;
+}
+
+.darkblue {
+  background-color: #4A89DC;
+}
+
+.blue {
+  background-color: #3BAFDA;
+}
+
+.orange {
+  background-color: #F6BB42;
+}
+
+.red {
+  background-color: #EC6F5A;
+}
+
+.grey {
+  background-color: #AAA;
+}
+
+.list-label {
+  font-size: 1rem;
+}
+
+.panel-control-title {
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all;
+}
+
+.panel-control-title:hover {
+  color: #3BAFDA;
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all;
+}
+
+.panel-control-remove {
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all;
+}
+
+.panel-control-remove:hover {
+  color: #E9573F;
+  -webkit-transition: 0.3s ease all;
+  transition: 0.3s ease all;
+}
+
+.gridicon {
+  width: 20px;
+  text-align: center;
+}
+
+.responsive-column-1,
+.repsonsive-column-2 {
+  display: inline-block;
+}
+
+@media screen and (max-width: 1300px) {
+  .responsive-column-1 {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .responsive-column-2 {
+    display: none;
+  }
+}
+
+/* --------- END USERS VIEW ------------ */
+
+.rolename,
+.rolepermission {
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-right: -4px;
+}
+
+.rolename {
+  width: 150px;
+}
+
+.rolepermission span {
+  padding: 0 10px;
+  color: white;
 }
 
 .table > tbody > tr > td {

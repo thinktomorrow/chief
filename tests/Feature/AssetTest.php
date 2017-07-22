@@ -31,14 +31,14 @@ class AssetTest extends TestCase
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
-        $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
+        $this->assertEquals('image.png', $asset->getFilename());
+        $this->assertEquals( '/media/1/image.png', $asset->getImageUrl());
 
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image2.png'));
 
-        $this->assertEquals($asset->getFilename(), 'image2.png');
-        $this->assertEquals($asset->getImageUrl(), '/media/2/image2.png');
+        $this->assertEquals( 'image2.png', $asset->getFilename());
+        $this->assertEquals( '/media/2/image2.png', $asset->getImageUrl());
     }
 
     /**
@@ -83,16 +83,21 @@ class AssetTest extends TestCase
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
-        $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
+        $this->assertEquals('image.png', $asset->getFilename());
+        $this->assertEquals('/media/1/image.png', $asset->getImageUrl());
 
         //upload a single image
-        $asset = Asset::upload(UploadedFile::fake()->image('image2.png'));
+        $asset2 = Asset::upload(UploadedFile::fake()->image('image2.png'));
 
-        $this->assertEquals($asset->getFilename(), 'image2.png');
-        $this->assertEquals($asset->getImageUrl(), '/media/2/image2.png');
+        $this->assertEquals('image2.png', $asset2->getFilename());
+        $this->assertEquals('/media/2/image2.png', $asset2->getImageUrl());
 
-        $this->assertEquals(2, Asset::getAllMedia()->count());
+        $asset3 = Asset::upload(UploadedFile::fake()->image('image3.png'));
+
+        $this->assertEquals('image3.png', $asset3->getFilename());
+        $this->assertEquals('/media/3/image3.png', $asset3->getImageUrl());
+
+        $this->assertEquals(3, Asset::getAllMedia()->count());
     }
 
     /**
@@ -232,12 +237,73 @@ class AssetTest extends TestCase
         $this->assertEquals($asset->getDimensions(), '100 x 100');
     }
 
-//    /**
-//    * @test
-//    */
-//    public function it_can_upload_images_for_different_locales()
-//    {
-//    }
+    /**
+    * @test
+    */
+    public function it_can_upload_images_for_different_locales()
+    {
+        $article = factory(Article::class)->create();
+        //upload a single image
+        Asset::upload(UploadedFile::fake()->image('image.png'),'image-nl')->attachToModel($article);
+        $this->assertEquals('image.png', $article->getFilename('image-nl'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_return_a_collection_field_for_uploads()
+    {
+        $this->assertEquals('<input type="hidden" value="foo" name="collection">', Asset::collectionField('foo'));
+        $this->assertEquals('<input type="hidden" value="bar" name="collection">', Asset::collectionField('bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_check_if_it_has_a_file()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png', 100, 100));
+
+        $this->assertTrue($asset->hasFile());
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_an_empty_string_if_there_is_no_media()
+    {
+        $asset = new Asset;
+
+        $this->assertEquals('', $asset->getMimeType());
+        $this->assertEquals('', $asset->getSize());
+        $this->assertEquals('', $asset->getDimensions());
+        $this->assertEquals('../assets/back/img/other.png', $asset->getImageUrl());
+        $this->assertEquals('', $asset->getPathForSize());
+    }
+
+    /**
+     * @group test
+     * @test
+     */
+    public function it_can_replace_a_file()
+    {
+        $article = factory(Article::class)->create();
+        //upload a single image
+        Asset::upload(UploadedFile::fake()->image('foo.png'),'image-nl')->attachToModel($article);
+
+        Asset::upload(UploadedFile::fake()->image('bar.png'),'image-nl')->attachToModel($article, true);
+
+        $this->assertEquals('bar.png', $article->getFilename('image-nl'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_the_filetype()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'),'image-nl');
+        $this->assertEquals('image-nl', $asset->getFileType());
+    }
 
 //
 //    /**

@@ -5,32 +5,43 @@ Mediabibliotheek
 @stop
 
 @section('topbar-right')
-
+<button type="button" class="btn btn-success mr5" id="showUploadPanel">
+  <i class="fa fa-upload mr10"></i>
+  Upload nieuw bestand
+</button>
 @stop
 
 @section('content')
   <form action="{{ route('media.remove') }}" method="POST">
     {{ csrf_field() }}
     @include('back.media._partials.filter')
-    @include('back.media.gallery')
+    @include('back.media.index')
   </form>
 @stop
 
-@section('sidebar')
-   @include('back.media._partials.upload')
-@stop
+@push('sidebar')
+  @include('back.media._partials.upload')
+@endpush
 
 @push('custom-scripts')
 <script>
 $(document).ready(function(){
 
   $(document.body).removeClass('sb-r-c');
-
+// ***********************************
+// ** SHOW DETAIL PANEL OF AN IMAGE **
+// ***********************************
   $(".showDetailPanel").click(function(){
-    $('.imageDetail-' + this.dataset.sidebarId).toggleClass('detail-open');
-    $(document.body).toggleClass('sidebar-media-open'); // To implode the content_wrapper
+    $('.imageDetail-' + this.dataset.sidebarId).addClass('detail-open');
+    $('.overlay').show(); // Show overlay when detail is active
+    $(document.body).addClass('sidebar-media-open');
   });
 
+  $(".overlay").click(function(){
+    $('#sidebar_right.detail-open').removeClass('detail-open');
+    $('.overlay').hide(); // Show overlay when detail is active
+    $(document.body).removeClass('sidebar-media-open');
+  });
   $("#showUploadPanel").click(function(){
     $(document.body).toggleClass('upload-open');
   });
@@ -49,6 +60,10 @@ $(document).ready(function(){
     $('.deleteActions').addClass('hidden');
     $('.showDeleteUptions').removeClass('hidden');
   });
+
+// ***********************************
+// ** SELECT IMAGES TO DELETE **
+// ***********************************
 
 
   function countCheckboxes(){
@@ -94,6 +109,9 @@ $(document).ready(function(){
     countCheckboxes();
   });
 
+// ***********************************
+// ** FILE UPLOAD **
+// ***********************************
   // give file-upload preview onclick functionality
   var fileUpload = $('.fileupload-preview');
   if (fileUpload.length) {
@@ -104,6 +122,54 @@ $(document).ready(function(){
       });
     });
   }
+});
+
+// ***************************
+// ** LIGHTBOX OF AN IMAGE **
+// ***************************
+$('.image-preview img').magnificPopup({
+  type: 'image',
+  callbacks: {
+    beforeOpen: function(e) {
+      // we add a class to body to indicate overlay is active
+      // We can use this to alter any elements such as form popups
+      // that need a higher z-index to properly display in overlays
+      $('body').addClass('mfp-bg-open');
+
+      // Set Magnific Animation
+      this.st.mainClass = 'mfp-zoomIn';
+
+      // Inform content container there is an animation
+      this.contentContainer.addClass('mfp-with-anim');
+    },
+    afterClose: function(e) {
+
+      setTimeout(function() {
+        $('body').removeClass('mfp-bg-open');
+        $(window).trigger('resize');
+      }, 1000)
+
+    },
+    elementParse: function(item) {
+      // Function will fire for each target element
+      // "item.el" is a target DOM element (if present)
+      // "item.src" is a source that you may modify
+      item.src = item.el.attr('src');
+    },
+  },
+
+  overflowY: 'scroll',
+  removalDelay: 200, //delay removal by X to allow out-animation
+  prependTo: $('#content_wrapper')
+});
+$('.gallery').each(function() { // the containers for all your galleries
+    $(this).magnificPopup({
+        delegate: 'a', // the selector for gallery item
+        type: 'image',
+        gallery: {
+          enabled:true
+        }
+    });
 });
 </script>
 

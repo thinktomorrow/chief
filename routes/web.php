@@ -15,7 +15,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::put('articles/{article}', 'ArticlesController@update')->name('articles.update');
     Route::get('articles/{article}', 'ArticlesController@show')->name('articles.show');
     Route::get('articles/{article}/edit', 'ArticlesController@edit')->name('articles.edit');
-    Route::post('articles/publish','Articles\ArticleController@publish')->name('articles.publish');
+    Route::post('articles/publish','ArticlesController@publish')->name('articles.publish');
 
     Route::get('media', 'MediaLibraryController@library')->name('media.library');
     Route::get('media-modal', 'MediaLibraryController@mediaModal')->name('media.modal');

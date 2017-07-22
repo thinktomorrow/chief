@@ -3,9 +3,12 @@
   "scripts": {
     "front": "npm run dev",
     "dev": "npm run development -- --env.mixfile=webpack.front.mix.js",
-    "back": "npm run back",
+    "back": "npm run dev-back",
     "dev-back": "npm run development -- --env.mixfile=webpack.back.mix.js",
+    "watch-back": "npm run development -- --env.mixfile=webpack.back.mix.js --watch",
+    
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+
     "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -22,6 +25,7 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
+    "npmlog": "^4.1.2",
     "yarn": "^0.27.5"
   }
 }

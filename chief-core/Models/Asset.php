@@ -5,62 +5,94 @@ namespace Chief\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class Asset extends Model implements HasMediaConversions
 {
-
     use HasMediaTrait;
 
     public static $conversions = [
         'thumb' => [
-            'w'     => 150,
-            'h'    => 150,
+            'width'     => 150,
+            'height'    => 150,
         ],
         'medium' => [
-            'w'     => 300,
-            'h'    => 130,
+            'width'     => 300,
+            'height'    => 130,
         ],
         'large' => [
-            'w'     => 1024,
-            'h'    => 353,
+            'width'     => 1024,
+            'height'    => 353,
         ],
         'full' => [
-            'w'     => 1600,
-            'h'    => 553,
+            'width'     => 1600,
+            'height'    => 553,
         ]
     ];
 
-    public static function upload($files)
+    public static function upload($files, $collection = '')
     {
+        $list = collect([]);
+
         if (is_array($files)) {
-            $list = collect([]);
-            collect($files)->each(function ($file) use ($list) {
+            collect($files)->each(function($file) use($list, $collection){
                 $self = new self();
                 $self->save();
-                $dimensions = [];
-                if(self::isImage($file))
-                {
-                    $dimensions = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
-                }
-                $media = $self->addMedia($file)->withCustomProperties($dimensions)->toMediaCollection();
-
-                $list->push($self);
+                $list->push($self->uploadToAsset($file, $collection));
             });
-
-            return $list;
-        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File) {
+        }else{
             $self = new self();
             $self->save();
-            $dimensions = [];
+            return $self->uploadToAsset($files, $collection);
+        }
+        return $list;
+    }
+
+    public function uploadToAsset($files, $collection = '', $replace = false)
+    {
+        if (is_array($files)) {
+            //Can't do multiple uploads linked to one asset at this time
+
+            //            $list = collect([]);
+//            collect($files)->each(function ($file) use ($list, $collection) {
+//                $customProps = [];
+//                if(self::isImage($file))
+//                {
+//                    $customProps = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
+//                }
+//                if($collection)
+//                {
+//                    $customProps = ['type' => $collection];
+//                }
+//                $media = $this->addMedia($file)->withCustomProperties($customProps)->toMediaCollection();
+//
+//                $list->push($this);
+//            });
+//
+//            return $list;
+            return $files;
+        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File || $files instanceof UploadedFile) {
+            $customProps = [];
             if(self::isImage($files))
             {
-                $dimensions = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
+                $customProps = ['dimensions' => getimagesize($files)[0] . ' x ' . getimagesize($files)[1] ];
             }
-            $media = $self->addMedia($files)->withCustomProperties($dimensions)->toMediaCollection();
-
-            return $self;
+            if($collection)
+            {
+                $customProps = ['type' => $collection];
+            }
+            if($replace)
+            {
+                $this->getAllMedia()->reject(function ($asset) use($collection){
+                    return $asset->getFileType() != $collection;
+                })->each(function($asset){
+                    $asset->getMedia()[0]->delete();
+                });
+            }
+            $media = $this->addMedia($files)->withCustomProperties($customProps)->toMediaCollection();
+            return $this;
         }
 
         return null;
@@ -80,16 +112,43 @@ class Asset extends Model implements HasMediaConversions
         }
     }
 
-    public function attachToModel(Model $model)
+    public function attachToModel(Model $model, $replace = false)
     {
-        $model->asset()->save($this);
+        if($replace)
+        {
+            $this->getAllMedia()->reject(function ($asset){
+                return $asset->model_id == null;
+            })->each(function($asset){
+                $asset->delete();
+            });
+
+            $model->asset()->save($this);
+        }else{
+            $model->asset()->save($this);
+        }
 
         return $this;
     }
 
-    public function getFilename()
+    public function hasFile($collection = '')
     {
-        return $this->getMedia()[0]->file_name;
+        return !! $this->getFileUrl($collection);
+    }
+
+    public function getFilename($collection = '')
+    {
+        return basename($this->getFileUrl($collection));
+    }
+
+    public function getFileUrl($collection = '')
+    {
+        $filename = '../assets/back/img/other.png';
+        $this->getMedia()->each(function ($media) use($collection, &$filename){
+            if($media->getCustomProperty('type') == $collection){
+                $filename =  $media->getUrl();
+            }
+        });
+        return $filename;
     }
 
     public function getPath()
@@ -99,11 +158,17 @@ class Asset extends Model implements HasMediaConversions
 
     public function getPathForSize($collection = '')
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->getUrl($collection);
     }
 
     public function getImageUrl($collection = '')
     {
+        if($this->getMedia()->isEmpty()){
+            return "../assets/back/img/other.png";
+        }
         $url = $this->getMedia()[0]->getUrl();
         $ext = pathinfo($url, PATHINFO_EXTENSION);
         if ($ext == 'pdf') {
@@ -122,16 +187,25 @@ class Asset extends Model implements HasMediaConversions
 
     public function getMimeType()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->mime_type;
     }
 
     public function getSize()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->human_readable_size;
     }
 
     public function getDimensions()
     {
+        if($this->getMedia()->isEmpty()){
+            return '';
+        }
         return $this->getMedia()[0]->hasCustomProperty('dimensions') ? $this->getMedia()[0]->getCustomProperty('dimensions') : '/';
     }
 
@@ -151,6 +225,8 @@ class Asset extends Model implements HasMediaConversions
         }
     }
 
+
+
     public static function getAllMedia()
     {
         $library = collect([]);
@@ -160,6 +236,23 @@ class Asset extends Model implements HasMediaConversions
         });
 
         return $library;
+    }
+
+    public function getFileType()
+    {
+        return $this->getMedia()[0]->getCustomProperty('type');
+    }
+
+    /**
+     * Generates the hidden field that links the file to a specific collection.
+     *
+     * @param string $collection
+     *
+     * @return string
+     */
+    public static function collectionField($collection = '')
+    {
+        return '<input type="hidden" value="' . $collection . '" name="collection">';
     }
 
     /**

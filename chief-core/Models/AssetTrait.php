@@ -9,19 +9,34 @@ trait AssetTrait
         return $this->morphMany(Asset::class, 'model');
     }
 
-    public function __call($method, $args)
+    public function hasFile($collection = '')
     {
-        if(in_array($method, Asset::$conversions) === true)
+        return !! $this->getFileUrl($collection);
+    }
+
+    public function getFilename($collection = '')
+    {
+        if($this->asset->isEmpty())
         {
-            if(is_array($args[$method]) && count($args) > 0)
-            {
-                if(true === array_key_exists($args[0], $args[$method]))
-                {
-                    return new self($args[$method][$args[0]]);
-                }
-            }
-            return $args[$method];
+            return 'other.png';
+        }else{
+            return basename($this->getFileUrl($collection));
         }
     }
 
+    public function getFileUrl($collection = '')
+    {
+        if($this->asset->isEmpty())
+        {
+            return '../assets/back/img/other.png';
+        }else{
+            $filename = '../assets/back/img/other.png';
+            $this->asset->first()->getMedia()->each(function ($media) use($collection, &$filename){
+                if($media->getCustomProperty('type') == $collection){
+                    $filename =  $media->getUrl();
+                }
+            });
+            return $filename;
+        }
+    }
 }

@@ -27,7 +27,7 @@
               </span>
             </div>
             <div class="panel-body pn showDetail showDetailPanel" id="detailPanel-{{ $media->id }}" data-sidebar-id="{{ $media->id }}">
-            <figure class="mn">
+            <figure class="gallery-item mn">
               <picture>
                 <img src="{{ $media->getImageUrl('large') }}" class="img-responsive" title="{{ $media->getFilename() }}">
               </picture>
@@ -35,7 +35,7 @@
           </div>
           </div>
         </div>
-        @include('back.media._partials.media-details')
+        @include('back.media.show')
       @endforeach
     </div>
     <div class="row text-center">
@@ -43,4 +43,4 @@
     </div>
   </div>
 </section>
-
+<section class="overlay" style="display: none;"></section>

@@ -3,24 +3,52 @@
 namespace Chief\Models;
 
 
+use Chief\Locale\Translatable;
+use Chief\Locale\TranslatableContract;
+use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Article extends Model
+class Article extends Model implements TranslatableContract, HasMedia
 {
+    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, HasMediaTrait;
 
-    use AssetTrait, Publishable, Featurable;
+    protected $table = 'articles';
+    public $timestamps = true;
+    protected $translatedAttributes = ['title','content','short','slug','meta_description'];
 
-    public function hasThumb()
+    protected $dates = ['deleted_at'];
+
+    public function scopeSortedByPublished($query)
     {
-
+        $query->orderBy('published','DESC');
     }
 
-    public function getThumbUrl()
+    public function scopeSortedByRecent($query)
     {
-
+        $query->orderBy('created_at','DESC');
     }
+
+    public static function findBySlug($slug)
+    {
+        return ($trans = ArticleTranslation::findBySlug($slug)) ? $trans->article()->first() : null;
+    }
+
+    public static function findPublishedBySlug($slug)
+    {
+        return ($trans = ArticleTranslation::findBySlug($slug)) ? $trans->article()->published()->first() : null;
+    }
+
+    public static function getAll()
+    {
+        return self::published()->get();
+    }
+
+    public function hasMedia(string $collection = 'default'): bool
+    {
+        return !$this->asset->isEmpty();
+    }
+
 }

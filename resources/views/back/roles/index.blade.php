@@ -1,83 +1,69 @@
 @extends('back._layouts.master')
 
-@section('title', '| Roles')
+@section('title', '| Edit Roles')
+
+@section('page-title')
+	Role management
+@stop
+
+@section('topbar-right')
+	@can('add_users')
+		<button id="btnNewRole" class="btn btn-success">
+			<i class="fa fa-plus mr10" aria-hidden="true"></i>
+			Rol toevoegen
+		</button>
+		<button id="btnCancelRole" class="btn btn-info hidden bringtofront">
+			<i class="fa fa-times mr10" aria-hidden="true"></i>
+			Annuleren
+		</button>
+	@endcan
+	<section id="OverlayRole" class="overlay" style="display: none;"></section>
+@stop
 
 @section('content')
+	@include('back.roles._partials.roles')
+@stop
 
-	<div class="col-lg-10 col-lg-offset-1">
-		<h1><i class="fa fa-key"></i> Roles
+@push('sidebar')
+   @include('back.roles._partials.newrole')
+@endpush
 
-			@can('view_users')
-				<a href="{{ route('users.index') }}" class="btn btn-default pull-right">Users</a>
-			@else
-				<a class="btn btn-default pull-right disabled">Users</a>
-			@endcan
-			@can('view_permissions')
-				<a href="{{ route('permissions.index') }}" class="btn btn-default pull-right">Permissions</a>
-			@else
-				<a class="btn btn-default pull-right disabled">Permissions</a>
-			@endcan
-		</h1>
-		<hr>
-		<div class="table-responsive">
-			<table class="table table-bordered table-striped">
-				<thead>
-				<tr>
-					<th>Role</th>
-					<th>Permissions</th>
-					<th>Operation</th>
-				</tr>
-				</thead>
+@push('custom-scripts')
+		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.all.min.js') }}"></script>
+		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.filter.min.js') }}"></script>
+    <script>
+      $(document).ready(function(){
+				$('.table').footable();
+        $(document.body).removeClass('sb-r-c');
 
-				<tbody>
-				@foreach ($roles as $role)
-					<tr>
+				$("#btnNewRole").click(function(){
+					$("#btnNewRole").addClass("hidden");
+					$("#btnCancelRole").removeClass("hidden");
+					$("body").addClass( "sb-r-o" );
+					$("body").removeClass( "sb-r-c" );
+					$("#OverlayRole").show();
+					//set focus on first input field
+					$( "#OverlayRole" ).focus();
+				});
 
-						<td>{{ $role->name }}</td>
+				$("#btnCancelRole").click(function(){
+					$("#btnNewRole").removeClass("hidden");
+					$("#btnCancelRole").addClass("hidden");
+					$("#OverlayRole").hide();
+					$("body").removeClass( "sb-r-o" );
+					$("body").addClass( "sb-r-c" );
+				});
 
-						<td>
-							@foreach($role->getPermissionsForindex() as $model => $permissions)
-								{{ $model }} =>
-											@foreach($permissions as $permission)
-												{{ $permission }},
-											@endforeach
-								<br>
-							@endforeach
-						</td>
-						<td>
-							@can('edit_roles')
-								<a href="{{ URL::to('admin/roles/'.$role->id.'/edit') }}" class="btn btn-info pull-left" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-							@else
-								<a class="btn btn-info pull-left disabled" style="margin-right: 3px;"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-							@endcan
+				$("#OverlayRole").click(function(){
+					$("#btnNewRole").removeClass("hidden");
+					$("#btnCancelRole").addClass("hidden");
+					$("#OverlayRole").hide();
+					$("body").removeClass( "sb-r-o" );
+					$("body").addClass( "sb-r-c" );
+				});
+      });
 
-							@can('delete_roles')
-								<a class="btn btn-error" id="remove-role-toggle-{{ $role->id }}" href="#remove-role-modal-{{ $role->id }}"><i class="fa fa-trash"></i></a>
-							@else
-								<a class="btn btn-error disabled" ><i class="fa fa-trash"></i></a>
-							@endcan
-						</td>
-					</tr>
-					@include('back.roles._deletemodal')
-					@push('custom-scripts')
-					<script>
-						;(function ($) {
-							// Delete modal
-							$("#remove-role-toggle-{{ $role->id }}").magnificPopup();
-						})(jQuery);
-					</script>
-					@endpush
-				@endforeach
-				</tbody>
 
-			</table>
-		</div>
+    </script>
 
-		@can('add_roles')
-			<a href="{{ URL::to('admin/roles/create') }}" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
-		@else
-			<a class="btn btn-success disabled"><i class="fa fa-plus" aria-hidden="true"></i></a>
-		@endcan
-	</div>
-
-@endsection
+	@endpush
