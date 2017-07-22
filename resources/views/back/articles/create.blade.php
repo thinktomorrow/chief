@@ -52,10 +52,22 @@
 
         <aside class=" col-md-3">
           <div class="panel">
-            <div class="panel-heading">Publiceer</div>
+            <div class="panel-heading">
+              Publiceer
+              <div class="widget-menu pull-right">
+                <a class="subtle"><i class="fa fa-eye"></i> Bekijk artikel</a>
+              </div>
+            </div>
             <div class="panel-body">
-                <div class="well well-sm">
-                  Show url to article
+
+              <div class="bs-component">
+                  Url naar artikel
+                  <div class="well well-sm">
+                    <i class="fa fa-link mr5"></i>{{ url('/articles')}}
+                  </div>
+                </div>
+                <div class="input-group">
+                  Online- offline
                 </div>
               </div>
               <div class="panel-footer">
