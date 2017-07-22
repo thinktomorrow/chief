@@ -50,17 +50,51 @@
 
         @include('back.articles._formtabs')
 
-        <div class="col-md-3">
-
-            <div class="form-group">
-                <div class="bs-component text-center">
-                    <button class="btn btn-success btn-lg" type="submit"><i class="fa fa-check"></i> Creeër artikel</button>
-                </div>
-                <div class="text-center">
-                    <a class="subtle" id="remove-article-toggle" href="{{ URL::previous() }}"> terug</a>
-                </div>
+        <aside class=" col-md-3">
+          <div class="panel">
+            <div class="panel-heading">
+              Publiceer
+              <div class="widget-menu pull-right">
+                <a class="subtle"><i class="fa fa-eye"></i> Bekijk artikel</a>
+              </div>
             </div>
-        </div><!-- end sidebar column -->
+            <div class="panel-body">
+
+              <div class="bs-component">
+                  Url naar artikel
+                  <div class="well well-sm">
+                    <i class="fa fa-link mr5"></i>{{ url('/articles')}}
+                  </div>
+                </div>
+                <div class="input-group">
+                  Status
+                  <select>
+                    <option>Gepubliceerd</option>
+                    <option>Concept</option>
+                  </select>
+                </div>
+              </div>
+              <div class="panel-footer">
+                <a class="subtle pull-left mt10" id="remove-article-toggle" href="{{ URL::previous() }}"><i class="fa fa-long-arrow-left"></i> Terug</a>
+                <div class="text-right">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Publiceer artikel</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel image">
+              <div class="panel-heading">Media toevoegen</div>
+              <div class="panel-body">
+                <a href="#" class="btn text-primary">Voeg afbeelding toe</a>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-heading">Bijlages toevoegen</div>
+              <div class="panel-body">
+                <a href="#" class="btn text-primary">Voeg bijlage toe</a>
+              </div>
+            </div>
+        </aside><!-- end sidebar column -->
     </div>
 
     {!! Form::close() !!}
