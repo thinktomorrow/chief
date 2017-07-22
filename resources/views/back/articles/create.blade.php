@@ -50,17 +50,22 @@
 
         @include('back.articles._formtabs')
 
-        <div class="col-md-3">
-
-            <div class="form-group">
-                <div class="bs-component text-center">
-                    <button class="btn btn-success btn-lg" type="submit"><i class="fa fa-check"></i> Creeër artikel</button>
+        <aside class=" col-md-3">
+          <div class="panel">
+            <div class="panel-heading">Publiceer</div>
+            <div class="panel-body">
+                <div class="well well-sm">
+                  Show url to article
                 </div>
-                <div class="text-center">
-                    <a class="subtle" id="remove-article-toggle" href="{{ URL::previous() }}"> terug</a>
+              </div>
+              <div class="panel-footer">
+                <a class="subtle pull-left mt10" id="remove-article-toggle" href="{{ URL::previous() }}"><i class="fa fa-long-arrow-left"></i> Terug</a>
+                <div class="text-right">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Publiceer artikel</button>
                 </div>
+              </div>
             </div>
-        </div><!-- end sidebar column -->
+        </aside><!-- end sidebar column -->
     </div>
 
     {!! Form::close() !!}

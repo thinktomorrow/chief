@@ -5,7 +5,7 @@
 @stop
 
 @section('topbar-right')
-    <a href="{{ route('articles.create') }}" class="btn btn-success btn-sm btn-rounded"><i class="fa fa-plus"></i> voeg een artikel toe</a>
+    <a href="{{ route('articles.create') }}" class="btn btn-success mr5"><i class="fa fa-plus"></i> Voeg een artikel toe</a>
 @stop
 
 @section('content')
