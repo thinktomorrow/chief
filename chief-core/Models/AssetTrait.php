@@ -2,6 +2,8 @@
 
 namespace Chief\Models;
 
+use Chief\Locale\Locale;
+
 trait AssetTrait
 {
     public function asset()
@@ -9,34 +11,38 @@ trait AssetTrait
         return $this->morphMany(Asset::class, 'model');
     }
 
-    public function hasFile($collection = '')
+    public function hasFile($type = '', $locale = '')
     {
-        return !! $this->getFileUrl($collection);
+        $filename = $this->getFilename($type, $locale);
+        return !!$filename and basename($filename) != 'other.png' ;
     }
 
-    public function getFilename($collection = '')
+    public function getFilename($type = '', $locale = '')
     {
-        if($this->asset->isEmpty())
-        {
-            return 'other.png';
-        }else{
-            return basename($this->getFileUrl($collection));
-        }
+        return basename($this->getFileUrl($type, '', $locale));
     }
 
-    public function getFileUrl($collection = '')
+    public function getFileUrl($type = '', $size = '', $locale = '')
     {
-        if($this->asset->isEmpty())
-        {
-            return '../assets/back/img/other.png';
+        $assets = $this->asset->where('type', $type);
+        if($assets->isEmpty()) return null;
+        return $assets->first()->getFileUrl($size, $locale);
+    }
+
+    /**
+     * Adds a file to this model, accepts a type and locale to be saved with the file
+     *
+     * @param $file
+     * @param $type
+     * @param string $locale
+     */
+    public function addFile($file, $type = '', $locale = '')
+    {
+        if($locale == '') $locale = Locale::getDefault();
+        if($this->hasFile($type, $locale)){
+            $this->asset->where('type', $type)->first()->uploadToAsset($file,$locale);
         }else{
-            $filename = '../assets/back/img/other.png';
-            $this->asset->first()->getMedia()->each(function ($media) use($collection, &$filename){
-                if($media->getCustomProperty('type') == $collection){
-                    $filename =  $media->getUrl();
-                }
-            });
-            return $filename;
+            Asset::upload($file, $type, $locale)->attachToModel($this);
         }
     }
 }

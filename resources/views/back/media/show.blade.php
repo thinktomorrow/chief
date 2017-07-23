@@ -45,7 +45,7 @@
                <span class="panel-title"> Image path</span>
             </div>
             <div class="panel-body" style="word-wrap: break-word;">
-              {{ url($media->getPathForSize('')) }}
+              {{ url($media->getFileUrl('')) }}
             </div>
           </div>
         </div>

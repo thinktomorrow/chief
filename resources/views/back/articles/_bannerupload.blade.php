@@ -18,7 +18,8 @@
                             <span class="btn btn-default fileupload-new">Selecteer banner</span>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
                             <input type="file" name="image" accept="image/*">
-                            {!! \Chief\Models\Asset::collectionField('banner-'. $locale) !!}
+                            {!! \Chief\Models\Asset::typeField('banner') !!}
+                            {!! \Chief\Models\Asset::localeField($locale) !!}
                             <button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload banner <i class="fa fa-upload"></i></button>
 		                </span>
                     </form>

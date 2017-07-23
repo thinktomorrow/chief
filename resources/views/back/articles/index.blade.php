@@ -26,8 +26,8 @@
             @foreach($articles as $article)
                 <tr>
                     <td style="width:6%">
-                        @if ($article->hasFile('thumbnail'))
-                            <img class="img-responsive rounded" src="{!! $article->getFileUrl('thumbnail') !!}" alt="Thumb">
+                        @if ($article->hasFile())
+                            <img class="img-responsive rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
                         @endif
                     </td>
                     <td>

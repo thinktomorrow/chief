@@ -23,7 +23,6 @@ class AssetTest extends TestCase
     }
 
     /**
-     * @group testing
      * @test
      */
     public function it_can_upload_an_image()
@@ -44,6 +43,21 @@ class AssetTest extends TestCase
     /**
      * @test
      */
+    public function it_can_upload_an_image_for_locale()
+    {
+        //upload a single image
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'), '', 'nl');
+        $asset->uploadToAsset(UploadedFile::fake()->image('imageFr.png'),  'fr');
+
+        $this->assertEquals('image.png', $asset->getFilename());
+        $this->assertEquals('/media/1/image.png', $asset->getFileUrl('', 'nl'));
+        $this->assertEquals('/media/2/imageFr.png', $asset->getFileUrl('', 'fr'));
+
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_null_when_uploading_an_invalid_file()
     {
         //upload a single image
@@ -51,8 +65,6 @@ class AssetTest extends TestCase
 
         $this->assertNull($asset);
     }
-
-
 
     /**
      * @test
@@ -65,7 +77,7 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'))->attachToModel($article);
 
         $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
+        $this->assertEquals($asset->getFileUrl(), '/media/1/image.png');
         $this->assertEquals($article->asset()->first()->getFilename(), $asset->getFilename());
 
         //upload a single image
@@ -84,20 +96,23 @@ class AssetTest extends TestCase
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
         $this->assertEquals('image.png', $asset->getFilename());
-        $this->assertEquals('/media/1/image.png', $asset->getImageUrl());
+        $this->assertEquals('/media/1/image.png', $asset->getFileUrl());
+
+        $article = factory(Article::class)->create();
 
         //upload a single image
-        $asset2 = Asset::upload(UploadedFile::fake()->image('image2.png'));
+        $article = Asset::upload(UploadedFile::fake()->image('image2.png'), 'banner', 'nl')->attachToModel($article);
 
-        $this->assertEquals('image2.png', $asset2->getFilename());
-        $this->assertEquals('/media/2/image2.png', $asset2->getImageUrl());
+        $this->assertEquals('image2.png', $article->getFilename('banner', 'nl'));
+        $this->assertEquals('/media/2/image2.png', $article->getFileUrl('banner', '',  'nl'));
 
-        $asset3 = Asset::upload(UploadedFile::fake()->image('image3.png'));
 
-        $this->assertEquals('image3.png', $asset3->getFilename());
-        $this->assertEquals('/media/3/image3.png', $asset3->getImageUrl());
+        $article->addFile(UploadedFile::fake()->image('image3.png'), 'thumbnail', 'fr');
 
-        $this->assertEquals(3, Asset::getAllMedia()->count());
+        $this->assertEquals('image3.png', $article->getFilename('thumbnail',  'fr'));
+        $this->assertEquals('/media/3/image3.png', $article->getFileUrl('thumbnail', '', 'fr'));
+
+        $this->assertEquals(3, Asset::getAllAssets()->count());
     }
 
     /**
@@ -118,8 +133,8 @@ class AssetTest extends TestCase
 
         Asset::remove($asset->id);
 
-        $this->assertEquals(1, Asset::getAllMedia()->count());
-        $this->assertEquals($asset2->id, Asset::getAllMedia()->first()->id);
+        $this->assertEquals(1, Asset::getAllAssets()->count());
+        $this->assertEquals($asset2->id, Asset::getAllAssets()->first()->id);
     }
 
     /**
@@ -140,7 +155,7 @@ class AssetTest extends TestCase
 
         Asset::remove([$asset->id, $asset2->id]);
 
-        $this->assertEquals(0, Asset::getAllMedia()->count());
+        $this->assertEquals(0, Asset::getAllAssets()->count());
     }
 
     /**
@@ -169,7 +184,7 @@ class AssetTest extends TestCase
 
         $this->assertEquals($asset->getFilename(), 'image.png');
         $this->assertEquals($asset->getImageUrl(), '/media/1/image.png');
-        $this->assertEquals($asset->getPathForSize('thumb'), '/media/1/conversions/thumb.png');
+        $this->assertEquals('/media/1/conversions/thumb.png', $asset->getFileUrl('thumb'));
     }
 
     /**
@@ -182,10 +197,10 @@ class AssetTest extends TestCase
         $asset = Asset::upload($images);
 
         $this->assertEquals($asset[0]->getFilename(), 'foobar.pdf');
-        $this->assertEquals($asset[0]->getPath(), '/media/1/foobar.pdf');
+        $this->assertEquals($asset[0]->getFileUrl(), '/media/1/foobar.pdf');
 
         $this->assertEquals($asset[1]->getFilename(), 'foobar.xls');
-        $this->assertEquals($asset[1]->getPath(), '/media/2/foobar.xls');
+        $this->assertEquals($asset[1]->getFileUrl(), '/media/2/foobar.xls');
     }
 
     /**
@@ -242,19 +257,26 @@ class AssetTest extends TestCase
     */
     public function it_can_upload_images_for_different_locales()
     {
-        $article = factory(Article::class)->create();
-        //upload a single image
-        Asset::upload(UploadedFile::fake()->image('image.png'),'image-nl')->attachToModel($article);
-        $this->assertEquals('image.png', $article->getFilename('image-nl'));
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'),'image', 'nl');
+        $this->assertEquals('image.png', $asset->getFilename('','nl'));
     }
 
     /**
      * @test
      */
-    public function it_can_return_a_collection_field_for_uploads()
+    public function it_can_return_a_type_field_for_uploads()
     {
-        $this->assertEquals('<input type="hidden" value="foo" name="collection">', Asset::collectionField('foo'));
-        $this->assertEquals('<input type="hidden" value="bar" name="collection">', Asset::collectionField('bar'));
+        $this->assertEquals('<input type="hidden" value="foo" name="type">', Asset::typeField('foo'));
+        $this->assertEquals('<input type="hidden" value="bar" name="type">', Asset::typeField('bar'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_return_a_locale_field_for_uploads()
+    {
+        $this->assertEquals('<input type="hidden" value="nl" name="locale">', Asset::localeField('nl'));
+        $this->assertEquals('<input type="hidden" value="fr" name="locale">', Asset::localeField('fr'));
     }
 
     /**
@@ -278,22 +300,19 @@ class AssetTest extends TestCase
         $this->assertEquals('', $asset->getSize());
         $this->assertEquals('', $asset->getDimensions());
         $this->assertEquals('../assets/back/img/other.png', $asset->getImageUrl());
-        $this->assertEquals('', $asset->getPathForSize());
+        $this->assertEquals('../assets/back/img/other.png', $asset->getFileUrl());
     }
 
     /**
-     * @group test
      * @test
      */
     public function it_can_replace_a_file()
     {
-        $article = factory(Article::class)->create();
         //upload a single image
-        Asset::upload(UploadedFile::fake()->image('foo.png'),'image-nl')->attachToModel($article);
+        $asset = Asset::upload(UploadedFile::fake()->image('foo.png'),'', 'nl');
+        $asset->uploadToAsset(UploadedFile::fake()->image('bar.png'), 'nl');
 
-        Asset::upload(UploadedFile::fake()->image('bar.png'),'image-nl')->attachToModel($article, true);
-
-        $this->assertEquals('bar.png', $article->getFilename('image-nl'));
+        $this->assertEquals('bar.png', $asset->getFilename());
     }
 
     /**
@@ -301,8 +320,21 @@ class AssetTest extends TestCase
      */
     public function it_can_get_the_filetype()
     {
-        $asset = Asset::upload(UploadedFile::fake()->image('image.png'),'image-nl');
-        $this->assertEquals('image-nl', $asset->getFileType());
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'),'image');
+        $this->assertEquals('image', $asset->getType());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_attach_an_asset_instead_of_a_file()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
+
+        $asset = Asset::upload($asset, 'banner', 'fr');
+
+        $this->assertEquals( 'banner', $asset->getType());
+        $this->assertEquals( '/media/1/image.png', $asset->getFileUrl('', 'fr'));
     }
 
 //

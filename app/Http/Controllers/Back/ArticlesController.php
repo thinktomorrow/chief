@@ -13,19 +13,13 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles = Article::paginate(10);
-
         return view('back.articles.index', compact('articles'));
     }
 
     public function upload($id, Request $request)
     {
         $article = Article::find($id);
-        if($article->hasMedia())
-        {
-            $article->asset->first()->uploadToAsset($request->file('image'), $request->collection, true);
-        }else{
-            Asset::upload($request->file('image'), $request->collection)->attachToModel($article);
-        }
+        $article->addFileTranslation($request->file('image'), $request->type, $request->get('locale'));
 
         return redirect()->back();
     }
@@ -49,6 +43,7 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
+
         $article = (new ArticleRepository())->create($request);
 
         return redirect()->route('articles.index')->with('messages.success', $article->title .' werd aangemaakt');
@@ -63,9 +58,10 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
+        $assets = Asset::getAllAssets();
 
         $article->injectTranslationForForm();
-        return view('back.articles.edit', compact('article'));
+        return view('back.articles.edit', compact('article', 'assets'));
     }
 
     /**
@@ -77,9 +73,9 @@ class ArticlesController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $article = (new ArticleEditController($request,$id))->edit();
+        $article = (new ArticleRepository())->edit($request, $id);
 
-        return redirect()->route('back.article.index')->with('messages.success', '"'.$article->title .'" werd geupdate');
+        return redirect()->route('articles.index')->with('messages.success', '"'.$article->title .'" werd geupdate');
     }
 
     /**

@@ -86,8 +86,10 @@
         @push('sidebar')
             @include('back.articles._imageupload')
         @endpush
+		{{--temporary input to inject uploaded file from gallery--}}
+	    <input id="galleryupload" class="hidden" type="text" name="asset_id" value="">
 
-        <div class="col-md-3">
+	    <div class="col-md-3">
 
             <div class="form-group">
                 <div class="bs-component text-center">

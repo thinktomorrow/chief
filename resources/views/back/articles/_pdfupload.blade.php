@@ -18,7 +18,8 @@
                             <span class="btn btn-default fileupload-new">Selecteer pdf</span>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
                             <input type="file" name="image" accept="application/pdf">
-                            {!! \Chief\Models\Asset::collectionField('pdf-'. $locale ) !!}
+                            {!! \Chief\Models\Asset::typeField('pdf') !!}
+                            {!! \Chief\Models\Asset::localeField($locale ) !!}
                             <button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload pdf <i class="fa fa-upload"></i></button>
 		                </span>
                     </form>

@@ -76,23 +76,6 @@ class ArticleRepository extends Model
         $entity->updateTranslation($available_locale, $attributes);
     }
 
-    private function uploadArticleImages(Article $article)
-    {
-        if(!$this->request->get('image')) return;
-
-        foreach($this->request->get('image') as $locale => $image)
-        {
-            if ($this->isCompletelyEmpty(['thumb_datauri'], $image) && $locale !== Locale::getDefault() )
-            {
-                continue;
-            }
-            $filename = md5(time() . uniqid()) . '.png';
-            $asset = (new ArticleImageAsset($article))->datauri($image['thumb_datauri'],$filename);
-            $article->saveTranslation($locale,'image',$asset->getFilename());
-        }
-    }
-
-
     private function validateRequest()
     {
         $rules = $attributes = $messages = [];
@@ -114,27 +97,25 @@ class ArticleRepository extends Model
         }
 
         $this->validate($this->request, $rules,$messages,$attributes);
-        $this->validateImages();
     }
 
-    private function validateImages()
+    public function edit(Request $request, $id)
     {
-        if(!$this->request->get('image')) return;
+//        $this->validateRequest();
+        $this->request = $request;
+        $asset = null;
 
-        $rules = $attributes = $messages = [];
-        foreach ($this->request->get('image') as $locale => $trans)
-        {
-            if ($this->isCompletelyEmpty(['thumb_datauri'], $trans) && $locale !== Locale::getDefault() )
-            {
-                continue;
-            }
-            $rules['image.' . $locale . '.thumb_datauri']       = ArticleImageAsset::$createRules['file'];
-
-            $attributes['image.' . $locale . '.thumb_datauri']  = strtoupper($locale). ' image';
+        $article = Article::findOrFail($id);
+        ($this->request->has('published')) ? $article->publish() : $article->draft();
+        if($request->asset_id){
+            $asset = Asset::find($request->asset_id);
         }
+        $article->addFile($asset, '', '');
 
-        $messages = ArticleImageAsset::$messages;
+        $article->save();
 
-        $this->validate($this->request, $rules, $messages, $attributes);
+        $this->saveArticleTranslations($article);
+
+        return $article;
     }
 }

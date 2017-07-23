@@ -12,7 +12,7 @@ class MediaLibraryController
 {
     public function library()
     {
-        $library = Asset::getAllMedia();
+        $library = Asset::getAllAssets();
 
         $library = new LengthAwarePaginator(
             $library->forPage(Paginator::resolveCurrentPage(), 8),
@@ -33,7 +33,7 @@ class MediaLibraryController
 
     public function mediaModal()
     {
-        $library = Asset::getAllMedia();
+        $library = Asset::getAllAssets();
         return view('back.media-modal', compact('library'))->render();
     }
 }

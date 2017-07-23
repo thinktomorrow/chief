@@ -50,8 +50,8 @@
 	<div class="panel-heading">File uploads</div>
 	<div class="panel-body form-group">
 		<div>
-			@if($article->hasFile('pdf-'.$locale))
-				<a href="{{ $article->getFileUrl('pdf-'.$locale) }}" target="_blank">{{ $article->getFileName('pdf-'.$locale) }}</a>
+			@if($article->hasFile('pdf', $locale))
+				<a href="{{ $article->getFileUrl('pdf', '', $locale) }}" target="_blank">{{ $article->getFileName('pdf', $locale) }}</a>
 			@endif
 		</div>
 		<button type="button" class="btn btn-default mr5" id="showPdfUploadPanel-{{ $locale }}" data-upload-locale="{{ $locale }}">
@@ -63,8 +63,8 @@
 		@endpush
 
 		<div>
-			@if($article->hasFile('banner-'.$locale))
-				<a href="{{ $article->getFileUrl('banner-'.$locale) }}" target="_blank">{{ $article->getFileName('banner-'.$locale) }}</a>
+			@if($article->hasFile('banner', $locale))
+				<a href="{{ $article->getFileUrl('banner', '', $locale) }}" target="_blank">{{ $article->getFileName('banner', $locale) }}</a>
 			@endif
 		</div>
 		<button type="button" class="btn btn-default mr5" id="showBannerUploadPanel-{{ $locale }}" data-upload-locale="{{ $locale }}">
