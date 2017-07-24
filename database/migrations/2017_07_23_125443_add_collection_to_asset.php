@@ -14,7 +14,7 @@ class AddCollectionToAsset extends Migration
     public function up()
     {
         Schema::table('assets', function (Blueprint $table){
-            $table->text('type')->default('default');
+            $table->text('type')->nullable();
         });
     }
 
