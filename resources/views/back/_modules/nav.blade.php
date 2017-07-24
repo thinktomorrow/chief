@@ -76,12 +76,6 @@
                     <span class="sidebar-title">Galerij</span>
                 </a>
             </li>
-            <li>
-                <a href="/admin/uploadtest">
-                    <span class="glyphicon glyphicon-picture"></span>
-                    <span class="sidebar-title">Upload test</span>
-                </a>
-            </li>
         </ul>
         <!-- End: Sidebar Menu -->
 
