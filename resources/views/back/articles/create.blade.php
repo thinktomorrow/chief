@@ -62,13 +62,6 @@
                     <i class="fa fa-link mr5"></i>{{ url('/articles')}}
                   </div>
                 </div>
-                <div class="input-group">
-                  Status
-                  <select>
-                    <option>Gepubliceerd</option>
-                    <option>Concept</option>
-                  </select>
-                </div>
               </div>
               <div class="panel-footer">
                 <a class="subtle pull-left mt10" id="remove-article-toggle" href="{{ URL::previous() }}"><i class="fa fa-long-arrow-left"></i> Terug</a>

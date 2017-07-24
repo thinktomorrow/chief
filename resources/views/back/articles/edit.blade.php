@@ -66,15 +66,7 @@
 
 @endpush
 
-@section('page-title','Article: '.$article->title)
-
-@section('topbar-right')
-<a type="button" href="{{ route('articles.show',$article->slug) }}?preview-mode=true" target="_blank" class="btn btn-default btn-sm btn-rounded mt10"><i class="fa fa-eye"></i> Bekijk op de site</a>
-<button type="button" class="btn btn-default btn-rounded btn-sm mt10" id="showUploadPanel">
-  <span class="fa fa-upload"></span>
-  Upload nieuwe image
-</button>
-@stop
+@section('page-title','Pas "' .$article->title .'" aan')
 
 @section('content')
 
@@ -101,7 +93,7 @@
         <div class="bs-component">
             Url naar artikel
             <div class="well well-sm">
-              <i class="fa fa-link mr5"></i>{{ url('/artikels/...')}}
+              <i class="fa fa-link mr5"></i>{{ url("/artikels/$article->slug") }}
             </div>
           </div>
 
@@ -112,13 +104,15 @@
             </div>
           </div>
 
-          <div class="form-group text-center">
-            <div>
-              <label class="control-label subtle" for="inputPublished">Zet artikel publiek</label>
+          <div class="form-group">
+            <div class="col-md-8">
+              <label class="control-label" for="inputPublished">Publiceer "{{ $article->title }}"</label>
             </div>
-            <div class="switch switch-success round switch-inline">
-              {!! Form::checkbox('published',1,$article->isPublished(),['id' => "inputPublished"]) !!}
-              <label title="{{ $article->isPublished()?'Online':'Offline' }}" for="inputPublished"></label>
+            <div class="col-md-4">
+              <div class="switch switch-success round switch-inline mt5">
+                {!! Form::checkbox('published',1,$article->isPublished(),['id' => "inputPublished"]) !!}
+                <label title="{{ $article->isPublished()?'Online':'Offline' }}" for="inputPublished"></label>
+              </div>
             </div>
           </div>
         </div>
