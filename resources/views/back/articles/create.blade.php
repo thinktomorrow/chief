@@ -10,12 +10,16 @@
 @stop
 
 
-@section('custom-styles')
-    <link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">
-@stop
+@push('custom-styles')
+    {{--<link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">--}}
+    <link href="{{ asset('assets/back/theme/vendor/plugins/datepicker/css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css">
+@endpush
 
 @push('custom-scripts')
     {{--<script src="{{ asset('assets/back/vendor/redactor/redactor.js') }}"></script>--}}
+    <script src="{{ asset('assets/back/theme/vendor/plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ asset('assets/back/theme/js/utility/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/back/theme/vendor/plugins/datepicker/js/bootstrap-datetimepicker.js') }}"></script>
     <script>
         ;(function ($) {
 
@@ -33,6 +37,7 @@
 	        $("#showUploadPanel").click(function(){
 		        $(document.body).toggleClass('upload-open');
 	        });
+	        $('#datetimepicker').datetimepicker();
         })(jQuery);
 
     </script>
@@ -44,7 +49,23 @@
     {!! Form::model($article,['method' => 'POST', 'route' => ['articles.store'],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}
     <div class="row">
 
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="col-lg-12" for="datetimepicker">Publication date</label>
+                <div class="col-lg-12 bs-component">
+                    <div class="input-group date" id="datetimepicker">
+                        <span class="input-group-addon cursor">
+                            <i class="fa fa-calendar"></i>
+                        </span>
+                        <input type="text" name="publication" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @include('back.articles._formtabs')
+
+
 
         <aside class=" col-md-3">
           <div class="panel">

@@ -9,14 +9,14 @@
     <div class="tab-block sidebar-block br-n">
       <ul class="nav nav-tabs tabs-border nav-justified">
         <li class="active">
-          <a href="#sidebar-right-tab1" data-toggle="tab">Detail</a>
+          <a href="#sidebar-right-tab1-{{ $media->id }}" data-toggle="tab">Detail</a>
         </li>
         <li>
-          <a href="#sidebar-right-tab2" data-toggle="tab">All afmetingen</a>
+          <a href="#sidebar-right-tab2-{{ $media->id }}" data-toggle="tab">All afmetingen</a>
         </li>
       </ul>
       <div class="tab-content br-n">
-        <div id="sidebar-right-tab1" class="tab-pane active">
+        <div id="sidebar-right-tab1-{{ $media->id }}" class="tab-pane active">
 
           <ul class="icon-list">
             <li>
@@ -45,11 +45,11 @@
                <span class="panel-title"> Image path</span>
             </div>
             <div class="panel-body" style="word-wrap: break-word;">
-              {{ url($media->getFileUrl('pdf','','nl')) }}
+              {{ url($media->getFileUrl()) }}
             </div>
           </div>
         </div>
-        <div id="sidebar-right-tab2" class="tab-pane gallery">
+        <div id="sidebar-right-tab2-{{ $media->id }}" class="tab-pane gallery">
 					<div class="list-group list-group-links">
 		          <a href="{{ $media->getImageUrl('thumb') }}" title="Thumbnail" class="list-group-item">
 								Thumbnail {{ $media->getDimensions('thumb') }}
