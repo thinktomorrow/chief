@@ -20,6 +20,7 @@
                             <button class="libraryselect" data-effect="mfp-zoomIn">Selecteer uit bibliotheek</button>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
                             <input type="file" name="image" accept="image/*">
+                            <input id="gallerupload" class="hidden" type="text" name="asset_id" value="">
 							{!! \Chief\Models\Asset::typeField('thumbnail') !!}
 							<button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand <i
 										class="fa fa-upload"></i></button>
