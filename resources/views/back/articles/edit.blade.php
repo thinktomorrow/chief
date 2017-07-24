@@ -2,10 +2,15 @@
 
 @section('custom-styles')
 <link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">
+<link href="{{ asset('assets/back/theme/vendor/plugins/datepicker/css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css">
+
 @stop
 
 @push('custom-scripts')
 <script src="{{ asset('assets/back/vendor/redactor/redactor.js') }}"></script>
+<script src="{{ asset('assets/back/theme/js/utility/bootstrap/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/back/theme/vendor/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('assets/back/theme/vendor/plugins/datepicker/js/bootstrap-datetimepicker.js') }}"></script>
 <script>
 ;(function ($) {
 
@@ -61,6 +66,12 @@
     $(document.body).addClass('sidebar-media-open');
   });
 
+  $('#datetimepicker').datetimepicker({
+      format: "DD-MM-YYYY",
+      pickTime: false,
+      pick12HourFormat: true
+  });
+
 })(jQuery);
 </script>
 
@@ -97,10 +108,14 @@
             </div>
           </div>
 
+
           <div class="bs-component">
-            Laatst geupdate op:
-            <div class="well well-sm">
-              <i class="fa fa-calendar mr5"></i> {{ $article->updated_at->format('d/m/Y H:i') }}
+            <label for="datetimepicker">Gepubliceerd op</label>
+            <div class="input-group date mb20" id="datetimepicker">
+                <span class="input-group-addon cursor">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                <input type="text" name="publication" class="form-control" value="{{ $article->created_at->format('d/m/Y') }}">
             </div>
           </div>
 
@@ -123,6 +138,9 @@
         </div>
       </div>
     </article>
+    <div class="bs-component text-center text-muted subtle">
+      Laatst veranderd op: {{ $article->updated_at->format('d/m/Y H:i') }}
+    </div>
     @stack('article-uploads')
   </div><!-- end sidebar column -->
 </div>
