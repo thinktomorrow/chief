@@ -1,27 +1,27 @@
 @extends('back._layouts.master')
 
-@section('custom-styles')
-<link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">
-@stop
+@push('custom-styles')
+<link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor2/redactor.css') }}">
+@endpush
 
 @push('custom-scripts')
-<script src="{{ asset('assets/back/vendor/redactor/redactor.js') }}"></script>
+<script src="{{ asset('assets/back/vendor/redactor2/redactor.js') }}"></script>
 <script>
 ;(function ($) {
 
-  //$('.redactor-editor').redactor({
-  //focus: true,
-  //pastePlainText: true,
-  //buttons: ['html', 'formatting', 'bold', 'italic',
-  //'unorderedlist', 'orderedlist', 'outdent', 'indent',
-  //'link', 'alignment','image','horizontalrule'],
-  {{--imageUpload: '{{ route('back.articles.fileupload') }}?id={{ $article->id }}&_token={{ csrf_token() }}',--}}
-  {{--image_dir: '{{ $article::getContentImageDirectory() }}',--}}
-  //imageUploadErrorCallback: function(json)
-  //{
-  //$('body').prepend('<div class="alert alert-top alert-danger alert-dismissable"><button type="button" class="cl data-dismiss="alert" aria-hidden="true">&times;</button><div class="container">'+json.message+'</div></div>');--}}
-  //}
-  //});
+  $('.redactor-editor').redactor({
+    focus: true,
+    pastePlainText: true,
+    buttons: ['html', 'formatting', 'bold', 'italic',
+    'unorderedlist', 'orderedlist', 'outdent', 'indent',
+    'link', 'alignment','image','horizontalrule'],
+    {{--imageUpload: '{{ route('article.upload', $article->id) }}&_token={{ csrf_token() }}',--}}
+    {{--image_dir: '{{ $article::getContentImageDirectory() }}',--}}
+    {{--imageUploadErrorCallback: function(json)--}}
+    {{--{--}}
+      {{--$('body').prepend('<div class="alert alert-top alert-danger alert-dismissable"><button type="button" class="cl data-dismiss="alert" aria-hidden="true">&times;</button><div class="container">'+json.message+'</div></div>');--}}
+    {{--}--}}
+  });
 
   //// Delete modal
   //$("#remove-article-toggle").magnificPopup();

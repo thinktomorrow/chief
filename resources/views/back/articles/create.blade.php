@@ -11,25 +11,25 @@
 
 
 @push('custom-styles')
-    {{--<link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">--}}
+    <link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor2/redactor.css') }}">
     <link href="{{ asset('assets/back/theme/vendor/plugins/datepicker/css/bootstrap-datetimepicker.css') }}" rel="stylesheet" type="text/css">
 @endpush
 
 @push('custom-scripts')
-    {{--<script src="{{ asset('assets/back/vendor/redactor/redactor.js') }}"></script>--}}
+    <script src="{{ asset('assets/back/vendor/redactor2/redactor.js') }}"></script>
     <script src="{{ asset('assets/back/theme/vendor/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/back/theme/js/utility/bootstrap/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/back/theme/vendor/plugins/datepicker/js/bootstrap-datetimepicker.js') }}"></script>
     <script>
         ;(function ($) {
 
-//            $('.redactor-editor').redactor({
-//                focus: true,
-//                pastePlainText: true,
-//                buttons: ['html', 'formatting', 'bold', 'italic',
-//                    'unorderedlist', 'orderedlist', 'outdent', 'indent',
-//                    'link', 'alignment','horizontalrule']
-//            });
+            $('.redactor-editor').redactor({
+                focus: true,
+                pastePlainText: true,
+                buttons: ['html', 'formatting', 'bold', 'italic',
+                    'unorderedlist', 'orderedlist', 'outdent', 'indent',
+                    'link', 'alignment','horizontalrule']
+            });
 
             // Initiate our cropper
 //            new Cropper();

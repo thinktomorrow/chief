@@ -89,12 +89,12 @@ class ArticleRepository extends Model
                 continue;
             }
             $rules['trans.' . $locale . '.title']               = 'required|max:200';
-            $rules['trans.' . $locale . '.text']                = 'required|max:1500';
+            $rules['trans.' . $locale . '.content']             = 'required|max:1500';
             $rules['trans.' . $locale . '.short']               = 'required|max:700';
             $rules['trans.' . $locale . '.meta_description']    = 'required';
 
             $attributes['trans.' . $locale . '.title']              = strtoupper($locale). ' titel';
-            $attributes['trans.' . $locale . '.text']               = strtoupper($locale). ' tekst';
+            $attributes['trans.' . $locale . '.content']            = strtoupper($locale). ' tekst';
             $attributes['trans.' . $locale . '.short']              = strtoupper($locale). ' korte omschrijving';
             $attributes['trans.' . $locale . '.meta_description']   = strtoupper($locale). ' SEO omschrijving';
         }
@@ -113,8 +113,8 @@ class ArticleRepository extends Model
         ($this->request->has('published')) ? $article->publish() : $article->draft();
         if($request->asset_id){
             $asset = Asset::find($request->asset_id);
+            $article->addFile($asset, '', '');
         }
-        $article->addFile($asset, '', '');
 
         $article->save();
 
