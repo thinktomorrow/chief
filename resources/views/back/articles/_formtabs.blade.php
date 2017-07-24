@@ -10,7 +10,7 @@
 			@endif
         </ul>
 
-        <div class="tab-content p25">
+        <div class="tab-content pn">
             @foreach($article->getAvailableLocales() as $locale)
                 <div id="tab_{{ $locale }}" class="tab-pane{{ 'nl'==$locale?' active':'' }}">
                     @include('back.articles._form',['locale' => $locale])
