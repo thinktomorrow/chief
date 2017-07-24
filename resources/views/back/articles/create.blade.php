@@ -17,8 +17,8 @@
 
 @push('custom-scripts')
     <script src="{{ asset('assets/back/vendor/redactor2/redactor.js') }}"></script>
-    <script src="{{ asset('assets/back/theme/vendor/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/back/theme/js/utility/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/back/theme/vendor/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/back/theme/vendor/plugins/datepicker/js/bootstrap-datetimepicker.js') }}"></script>
     <script>
         ;(function ($) {
@@ -37,7 +37,11 @@
 	        $("#showUploadPanel").click(function(){
 		        $(document.body).toggleClass('upload-open');
 	        });
-	        $('#datetimepicker').datetimepicker();
+	        $('#datetimepicker').datetimepicker({
+              format: "DD-MM-YYYY",
+              pickTime: false,
+              pick12HourFormat: true
+          });
         })(jQuery);
 
     </script>
@@ -50,22 +54,10 @@
     <div class="row">
 
         <div class="col-md-6">
-            <div class="form-group">
-                <label class="col-lg-12" for="datetimepicker">Publication date</label>
-                <div class="col-lg-12 bs-component">
-                    <div class="input-group date" id="datetimepicker">
-                        <span class="input-group-addon cursor">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                        <input type="text" name="publication" class="form-control">
-                    </div>
-                </div>
-            </div>
+
         </div>
 
         @include('back.articles._formtabs')
-
-
 
         <aside class=" col-md-3">
           <div class="panel">
@@ -81,6 +73,15 @@
                   Url naar artikel
                   <div class="well well-sm">
                     <i class="fa fa-link mr5"></i>{{ url('/articles')}}
+                  </div>
+                </div>
+                <div class="bs-component">
+                  <label for="datetimepicker">Datum</label>
+                  <div class="input-group date" id="datetimepicker">
+                      <span class="input-group-addon cursor">
+                          <i class="fa fa-calendar"></i>
+                      </span>
+                      <input type="text" name="publication" class="form-control">
                   </div>
                 </div>
               </div>
