@@ -46,10 +46,17 @@ class Asset extends Model implements HasMediaConversions
             });
         }elseif($files instanceof Asset)
         {
-            $files->type = $type;
-            $files->media->first()->setCustomProperty('locale', $locale);
-            $files->save();
-            return $files;
+            $clone = $files->replicate();
+            $clone->save();
+            $clone->type = $type;
+            $clone->load('media');
+            $media = $files->media->first()->replicate();
+            $media->model_id = $clone->model_id;
+            $media->save();
+            dd($clone->id, $media);
+            $clone->media->first()->setCustomProperty('locale', $locale);
+            $clone->save();
+            return $clone;
         }else{
             $self = new self();
             $self->type = $type;
@@ -57,6 +64,11 @@ class Asset extends Model implements HasMediaConversions
             return $self->uploadToAsset($files, $locale);
         }
         return $list;
+    }
+
+    public function getModel()
+    {
+        dd($this);
     }
 
     public function uploadToAsset($files, $locale = '')

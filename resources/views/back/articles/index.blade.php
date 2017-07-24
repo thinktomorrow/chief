@@ -26,8 +26,8 @@
             @foreach($articles as $article)
                 <tr>
                     <td style="width:6%">
-                        @if ($article->hasFile())
-                            <img class="img-responsive mw300 rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
+                        @if ($article->hasFile('banner'))
+                            <img class="img-responsive mw300 rounded" src="{!! $article->getFileUrl('banner', 'thumb') !!}" alt="Thumb">
                         @endif
                     </td>
                     <td>

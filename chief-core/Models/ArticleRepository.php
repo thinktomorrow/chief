@@ -113,7 +113,7 @@ class ArticleRepository extends Model
         ($this->request->has('published')) ? $article->publish() : $article->draft();
         if($request->asset_id){
             $asset = Asset::find($request->asset_id);
-            $article->addFile($asset, '', '');
+            $article->addFile($asset, 'banner', '');
         }
 
         $article->save();

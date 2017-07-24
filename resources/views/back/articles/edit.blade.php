@@ -86,7 +86,7 @@
   @include('back.articles._formtabs')
 
   @push('sidebar')
-  @include('back.articles._imageupload')
+    @include('back.articles._imageupload')
   @endpush
   {{--temporary input to inject uploaded file from gallery--}}
   <input id="galleryupload" class="hidden" type="text" name="asset_id" value="">

@@ -14,6 +14,7 @@ class CreateArticleTranslationsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->text('short');
+            $table->text('image');
             $table->string('slug')->unique();
             $table->text('meta_description');
             $table->timestamps();
