@@ -3,7 +3,7 @@
 @section('page-title','Voeg nieuw artikel toe')
 
 @section('topbar-right')
-    <button type="button" class="btn btn-default mr5" id="showUploadPanel">
+    <button type="button" class="btn btn-default btn-rounded btn-sm mt10" id="showUploadPanel">
         <span class="fa fa-upload"></span>
         Upload nieuw bestand
     </button>
@@ -76,20 +76,6 @@
                     <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Publiceer artikel</button>
                 </div>
               </div>
-            </div>
-
-            <div class="panel image">
-              <div class="panel-heading">Media toevoegen</div>
-              <div class="panel-body">
-                <a href="#" class="btn text-primary">Voeg afbeelding toe</a>
-              </div>
-            </div>
-            <div class="panel">
-              <div class="panel-heading">Bijlages toevoegen</div>
-              <div class="panel-body">
-                <a href="#" class="btn text-primary">Voeg bijlage toe</a>
-              </div>
-            </div>
         </aside><!-- end sidebar column -->
     </div>
 

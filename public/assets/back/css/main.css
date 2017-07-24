@@ -471,3 +471,19 @@ hr.xsmall {
   clear: both;
 }
 
+.section-divider {
+  height: 0;
+  border-top: 1px solid #DDD;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.section-divider span {
+  display: inline-block;
+  position: relative;
+  padding: 0 17px;
+  background: #e9e9e9;
+  color: #999;
+  top: -11px;
+}
+
