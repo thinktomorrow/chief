@@ -75,7 +75,7 @@ class ArticlesController extends Controller
     {
         $article = (new ArticleRepository())->edit($request, $id);
 
-        return redirect()->route('articles.index')->with('messages.success', '"'.$article->title .'" werd geupdate');
+        return redirect()->route('articles.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$article->title .'" werd aangepast');
     }
 
     /**

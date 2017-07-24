@@ -54,7 +54,7 @@
 
 #sidebar_right.detail-open {
   right: 0;
-  z-index: 10;
+  z-index: 15;
 }
 
 .upload-open #content_wrapper,
@@ -117,7 +117,7 @@
 
 .overlay {
   position: fixed;
-  z-index: 9;
+  z-index: 14;
   background: rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
@@ -469,5 +469,22 @@ hr.xsmall {
 
 .clearfix:after {
   clear: both;
+}
+
+.section-divider {
+  height: 0;
+  border-top: 1px solid #DDD;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.section-divider span {
+  display: inline-block;
+  position: relative;
+  padding: 0 17px 0 0;
+  background: #FFF;
+  color: #999;
+  top: -11px;
+  font-size: 14px;
 }
 

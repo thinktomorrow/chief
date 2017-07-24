@@ -5,7 +5,7 @@
 @stop
 
 @section('topbar-right')
-    <a href="{{ route('articles.create') }}" class="btn btn-success mr5"><i class="fa fa-plus"></i> Voeg een artikel toe</a>
+    <a href="{{ route('articles.create') }}" class="btn btn-default btn-rounded btn-sm mt10"><i class="fa fa-plus"></i> Voeg een artikel toe</a>
 @stop
 
 @section('content')
@@ -27,7 +27,7 @@
                 <tr>
                     <td style="width:6%">
                         @if ($article->hasFile())
-                            <img class="img-responsive rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
+                            <img class="img-responsive mw300 rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
                         @endif
                     </td>
                     <td>
@@ -43,7 +43,7 @@
                     <td class="subtle">
                         {{ $article->updated_at->format('d/m/Y H:i') }}
                     </td>
-                    <td>
+                    <td width="300px">
                         {{--<div class="switch switch-success round switch-inline">--}}
                             {{--{!! Form::checkbox('published',1,$article->isPublished(),['data-publish-toggle'=>$article->id,'id' => "switch{$article->id}"]) !!}--}}
                             {{--<label title="{{ $article->isPublished()?'Online':'Offline' }}" for="switch{{$article->id}}"></label>--}}

@@ -36,13 +36,12 @@
   height: 250px;
   overflow: hidden;
   position: relative;
-}
-
-.gallery-item img {
+ img {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
+}
 }
 
 .upload-open #sidebar_right.uploadForm{
@@ -51,7 +50,7 @@
 
 #sidebar_right.detail-open{
   right:0;
-  z-index: 10;
+  z-index: 15;
 }
 .upload-open #content_wrapper,
 .sidebar-media-open #content_wrapper {
@@ -103,7 +102,7 @@
 // When media-detail is active show the overlay panel
 .overlay{
   position: fixed;
-  z-index: 9;
+  z-index: 14;
   background: rgba(0,0,0,0.3);
   top: 0; left: 0; right: 0; bottom: 0;
   color: #FFF;
