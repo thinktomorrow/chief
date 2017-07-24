@@ -39,10 +39,6 @@
 
 @endpush
 
-@push('sidebar')
-    @include('back.articles._fileupload')
-@endpush
-
 @section('content')
 
     {!! Form::model($article,['method' => 'POST', 'route' => ['articles.store'],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}

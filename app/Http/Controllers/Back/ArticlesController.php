@@ -19,7 +19,7 @@ class ArticlesController extends Controller
     public function upload($id, Request $request)
     {
         $article = Article::find($id);
-        $article->addFileTranslation($request->file('image'), $request->type, $request->get('locale'));
+        $article->addFile($request->file('image'), $request->type, $request->get('locale'));
 
         return redirect()->back();
     }
