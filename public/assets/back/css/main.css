@@ -138,24 +138,8 @@
 
 /* --------- BEGIN USERS VIEW ------------ */
 
-.bringtofront {
-  z-index: 999;
-  position: relative;
-}
-
 .rm-padding-top {
   padding-top: 0px !important;
-}
-
-.badge {
-  height: 20px;
-  width: 20px;
-  font-size: 1rem;
-  line-height: 14px;
-  border-radius: 0px;
-  margin-bottom: 2px;
-  padding: 3px 0px;
-  cursor: help;
 }
 
 .darkblue {
@@ -175,7 +159,7 @@
 }
 
 .grey {
-  background-color: #AAA;
+  background-color: #AAAAAA;
 }
 
 .list-label {
@@ -239,9 +223,40 @@
   width: 150px;
 }
 
-.rolepermission span {
-  padding: 0 10px;
-  color: white;
+.fancytree-container {
+  border: none !important;
+}
+
+.fancytree-container .fancytree-icon {
+  display: none;
+}
+
+.pagination {
+  margin: 35px 0 50px 0;
+}
+
+.pagination .disabled {
+  display: none;
+}
+
+.pagination > li > a,
+.pagination > li > span {
+  margin-left: 5px;
+  height: 35px;
+  width: 35px;
+  padding: 0px;
+  line-height: 35px;
+  color: #666;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #4A89DC;
+  z-index: 1;
 }
 
 .table > tbody > tr > td {
@@ -350,6 +365,11 @@ a:hover {
 .croppie-container {
   padding: 0;
   padding-bottom: 30px;
+}
+
+.bringtofront {
+  z-index: 999;
+  position: relative;
 }
 
 a {
@@ -486,5 +506,19 @@ hr.xsmall {
   color: #999;
   top: -11px;
   font-size: 14px;
+}
+
+.badge {
+  height: 20px;
+  width: 20px;
+  font-size: 1rem;
+  line-height: 14px;
+  border-radius: 0px;
+  margin-bottom: 2px;
+  padding: 3px 0px;
+  border-radius: 50%;
+  margin-right: 5px;
+  text-transform: uppercase;
+  cursor: help;
 }
 

@@ -1,0 +1,21 @@
+.pagination{
+	margin: 35px 0 50px 0;
+}
+
+.pagination .disabled{
+	display: none;
+}
+
+.pagination > li > a, .pagination > li > span{
+	margin-left: 5px;
+	height: 35px;
+	width: 35px;
+	padding: 0px;
+	line-height: 35px;
+	color: $color-darkgrey;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+	background-color: $color-darkblue;
+	z-index: 1;
+}

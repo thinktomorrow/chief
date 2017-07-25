@@ -120,13 +120,13 @@
 
 
 <!-- Begin listview layout -->
-<div class="panel listview" id="spy4">
+<div class="panel listview" id="spy3">
 		<div class="panel-menu">
 			<input id="fooFilter" type="text" class="form-control" placeholder="Voer zoekfilter hier in">
 		</div>
 		<div class="panel-body pn">
 
-			<table class="table footable"  data-filter="#fooFilter">
+			<table class="table footable"  data-filter="#fooFilter" data-page-navigation=".pagination" data-page-size="10">
 				<thead>
 					<tr>
 						<th>Naam</th>
@@ -211,15 +211,15 @@
 							?>
 							<td>
 								@can('delete_users')
-									<a href="#remove-user-modal-{{ $user->id }}" id="remove-user-toggle-{{ $user->id }}" class="btn btn-error pull-right" title="delete user"><i class="fa fa-times"></i></a>
+									<a href="#remove-user-modal-{{ $user->id }}" id="remove-user-toggle-{{ $user->id }}" class="btn btn-error btn-rounded pull-right ml5" title="delete user"><i class="fa fa-times"></i></a>
 								@endcan
 
 								@can('edit_users')
-									<button id="btnEditUser" data-sidebar-id="{{$user->id}}" class="btn btn-info pull-right showEditUser" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+									<button id="btnEditUser" data-sidebar-id="{{$user->id}}" class="btn btn-info btn-rounded pull-right showEditUser ml5" title="edit user"><i class="fa fa-pencil" aria-hidden="true"></i></button>
 								@endcan
 
 								@can('edit_users')
-									<a href="" class="btn btn-alert pull-right" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
+									<a href="" class="btn btn-alert pull-right btn-rounded ml5" title="reset password"><i class="fa fa-refresh" aria-hidden="true"></i><span></span></a>
 								@endcan
 							</td>
 						</tr>
@@ -238,5 +238,12 @@
 			</table>
 		</div>
 	</div>
+	<tr>
+		<td colspan="12">
+			<nav class="text-center">
+				<ul class="pagination hide-if-no-paging"><li class="footable-page-arrow disabled"><a data-page="first" href="#first">«</a></li><li class="footable-page-arrow disabled"><a data-page="prev" href="#prev">‹</a></li><li class="footable-page active"><a data-page="0" href="#">1</a></li><li class="footable-page"><a data-page="1" href="#">2</a></li><li class="footable-page"><a data-page="2" href="#">3</a></li><li class="footable-page"><a data-page="3" href="#">4</a></li><li class="footable-page-arrow"><a data-page="next" href="#next">›</a></li><li class="footable-page-arrow"><a data-page="last" href="#last">»</a></li></ul>
+			</nav>
+		</td>
+	</tr>
 </div>
 <!-- End listview layout -->

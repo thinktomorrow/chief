@@ -4,11 +4,9 @@
 
 @section('content')
 
-	<div class='col-lg-4 col-lg-offset-4'>
+	<section class='col-lg-4 col-lg-offset-4'>
 		<h1><i class='fa fa-key'></i> Edit Role: {{$role->name}}</h1>
 		<hr>
-		{{-- @include ('errors.list')
-	 --}}
 		<form action="{{ route('roles.update', $role->id) }}" method="POST">
 			{!! method_field('put') !!}
 			{!! csrf_field() !!}
@@ -17,15 +15,24 @@
 				<input type="text" name="name" value="{{ $role->name }}" class="form-control">
 			</div>
 
+
+
 			<h5><b>Assign Permissions</b></h5>
-			@foreach ($permissions as $permission)
-				<input type="checkbox" value="{{ $permission->id }}" name="permissions[]" {{ $role->permissions->contains($permission->id) ? 'checked' : '' }}>
-				<label for="{{ $permission->name }}">{{ ucfirst($permission->name) }}</label><br>
+			<div class="panel">
+				@foreach(\App\Permission::getPermissionsForindex() as $model => $permissions)
+				<div class="panel-heading">{{ $model }}</div>
+				<div class="panel-body">
+					@foreach($permissions as $permission)
+						<input type="checkbox" value="{{ $permission }}" name="permissions[]" {{ $role->permissions->contains($permission->id) ? 'checked' : '' }}>
+						<label for="{{ $permission }}">{{ ucfirst($permission) }}</label><br>
+					@endforeach
+				</div>
 			@endforeach
+			</div>
 			<br>
 
-			<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+			<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Bewaar aanpassingen</button>
 		</form>
-	</div>
+	</section>
 
 @endsection

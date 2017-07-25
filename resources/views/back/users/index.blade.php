@@ -62,6 +62,7 @@
 					$("#btnCancelUser").removeClass("hidden");
 					$("body").addClass( "sb-r-o" );
 					$("body").removeClass( "sb-r-c" );
+					$("body").addClass("sb-l-m");
 					$("#OverlayUser").show();
 					$( "#focusField" ).focus();
 				});
@@ -80,8 +81,10 @@
 					$("#OverlayUser").hide();
 					$("body").removeClass( "sb-r-o" );
 					$("body").addClass( "sb-r-c" );
+					$("body").removeClass("sb-l-m");
 					$(".detail-open").removeClass("detail-open");
-					$(document.body).removeClass("sidebar-media-open");
+					$("body").removeClass("sidebar-media-open");
+					location.reload();
 				});
 
 				$("#OverlayUser").click(function(){
@@ -90,16 +93,18 @@
 					$("#OverlayUser").hide();
 					$("body").removeClass( "sb-r-o" );
 					$("body").addClass( "sb-r-c" );
+					$("body").removeClass("sb-l-m");
 					$(".detail-open").removeClass("detail-open");
-					$(document.body).removeClass("sidebar-media-open");
-
+					$("body").removeClass("sidebar-media-open");
+					location.reload();
 				});
       });
 
 			$(".showEditUser").click(function(){
 				$('.editUser-' + this.dataset.sidebarId).addClass('detail-open');
 				// $('.overlay').show(); // Show overlay when detail is active
-				$(document.body).addClass("sidebar-media-open");
+				$("body").addClass("sidebar-media-open");
+				$("body").addClass("sb-l-m");
 				$("#btnNewUser").addClass("hidden");
 				$("#btnCancelUser").removeClass("hidden");
 				$("#OverlayUser").show();

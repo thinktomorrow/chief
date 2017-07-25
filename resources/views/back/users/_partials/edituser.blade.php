@@ -4,7 +4,7 @@
 
 	<!-- Start: Sidebar Right Content -->
   <div class="sidebar-right-content nano-content p10">
-    <h4 class="tray-title">Edit user</h5>
+    <h4 class="tray-title">Edit user</h4>
       <div class="panel panel-tile card-create">
         <div class="panel-body text-center ">
           <img src="{{ asset('assets/img/logo.png') }}" alt="test" class="mw100">
@@ -12,7 +12,7 @@
         <div class="panel-body">
 
           <!-- STARTING THE FORM -->
-          <form action="{{ route('users.update', $user->id) }}" method="POST">
+          <form action="{{ route('users.update', $user->id) }}" class="formEditUser" method="POST">
           {!! csrf_field() !!}
             <!-- NAAM INPUT -->
             <div class="input-group mv15">
@@ -33,17 +33,18 @@
             <!-- ROLE INPUT -->
             <div class="section mv15 admin-form">
               <div class="option-group">
-								@foreach ($user->roles as $role)
+							  @foreach (\App\Role::all() as $role)
                   <p><label class="block mt15 option option-primary">
                   <input type="checkbox" value="{{ $role->id }}" name="roles[]" {{ $user->roles->contains($role->id) ? 'checked' : '' }}>
                   <span class="checkbox"></span>{{ $role->name }}</label></p>
 								@endforeach
+
               </div>
             </div>
           </div>
 
           <div class="panel-footer">
-            <button type="submit" value="Submit" class="btn btn-success btn-block"><i class="fa fa-plus mr10" aria-hidden="true"></i>WIJZIGINGEN</button>
+            <button type="submit" value="Submit" class="btn btn-warning btn-block"><i class="fa fa-plus mr10" aria-hidden="true"></i>WIJZIGINGEN OPSLAAN</button>
           </div>
         </form>
         <!-- END OF THE FORM -->
