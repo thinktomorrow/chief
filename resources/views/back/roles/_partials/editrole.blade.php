@@ -20,22 +20,26 @@
           <h5 class="title-divider text-muted mt30 mb10">Permissies</h5>
            <?php
              $i = 1;
+             $controle = false;
            ?>
            @foreach(\App\Permission::getPermissionsForIndex() as $model => $permissions)
              <div id="tree{{$role->name}}{{ $i }}" class="treeview-item">
                <ul id="treeData">
-                 <li><input type="checkbox" id="chkSelectAll{{ $i }}" name="chkSelectAll{{ $i }}" onclick="checkAll('tree{{$role->name}}{{ $i }}')" class="mr5">{{ $model }}
+                 <li><input type="checkbox" id="chkSelectAll{{ $i }}" name="chkSelectAll{{ $i }}" onclick="checkAll('tree{{$role->name}}{{ $i }}')" class="mr5"
+                   @foreach($permissions as $id => $permission)
+                        @if($role->permissions->contains($id))
+                          checked
+                        @endif
+                   @endforeach
+                   >{{ $model }}
                    <ul>
                      @foreach($permissions as $id => $permission)
                        {{-- <input type="checkbox" value="{{ $permission }}" name="permissions[]" {{ $role->permissions->contains($permission->id) ? 'checked' : '' }}> --}}
                        <li id="{{ $permission }}"><input type="checkbox" value="{{ $id }}" class="mr5"
-                         <?php
-                          if($role->permissions->contains($id)){
-                            echo 'checked';
-                          }else{
-                            echo '';
-                          }
-                         ?>>{{ ucfirst($permission) }}</li><br>
+                          @if($role->permissions->contains($id))
+                            checked
+                          @endif
+                          >{{ ucfirst($permission) }}</li><br>
                      @endforeach
                    </ul>
                  </li>
@@ -53,16 +57,16 @@
   </div>
 </aside>
 <!-- End: Right Sidebar -->
+
 @push('custom-scripts')
     <script>
-      function checkAll(divid) {
+        function checkAll(divid) {
         if ($('#' + divid + ' input:checkbox:checked').length > 1)
         {
           $('#' + divid + ' :checkbox:enabled').prop('checked', false);
         }else{
           $('#' + divid + ' :checkbox:enabled').prop('checked', true);
         }
-
       }
     </script>
 	@endpush
