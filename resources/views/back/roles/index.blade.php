@@ -25,12 +25,16 @@
 @stop
 
 @push('sidebar')
-   @include('back.roles._partials.newrole')
+	 @include('back.roles._partials.newrole')
 @endpush
 
 @push('custom-scripts')
 		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.all.min.js') }}"></script>
 		<script src="{{ asset('assets/back/theme/vendor/plugins/footable/js/footable.filter.min.js') }}"></script>
+
+		<!-- Fancytree Plugin -->
+		<script src="{{ asset('assets/back/theme/vendor/plugins/fancytree/jquery.fancytree-all.min.js') }}"></script>
+
     <script>
       $(document).ready(function(){
 				$('.table').footable();
@@ -41,6 +45,7 @@
 					$("#btnCancelRole").removeClass("hidden");
 					$("body").addClass( "sb-r-o" );
 					$("body").removeClass( "sb-r-c" );
+					$("body").addClass("sb-l-m");
 					$("#OverlayRole").show();
 					//set focus on first input field
 					$( "#OverlayRole" ).focus();
@@ -51,7 +56,10 @@
 					$("#btnCancelRole").addClass("hidden");
 					$("#OverlayRole").hide();
 					$("body").removeClass( "sb-r-o" );
+					$("body").removeClass("sb-l-m");
 					$("body").addClass( "sb-r-c" );
+					$(".detail-open").removeClass("detail-open");
+					$("body").removeClass("sidebar-media-open");
 				});
 
 				$("#OverlayRole").click(function(){
@@ -59,11 +67,31 @@
 					$("#btnCancelRole").addClass("hidden");
 					$("#OverlayRole").hide();
 					$("body").removeClass( "sb-r-o" );
+					$("body").removeClass("sb-l-m");
 					$("body").addClass( "sb-r-c" );
+					$(".detail-open").removeClass("detail-open");
+					$("body").removeClass("sidebar-media-open");
 				});
+
+				$(".showEditRole").click(function(){
+					$('.editRole-' + this.dataset.sidebarId).addClass('detail-open');
+					// $('.overlay').show(); // Show overlay when detail is active
+					$("body").addClass("sidebar-media-open");
+					$("body").addClass("sb-l-m");
+					$("#btnNewRole").addClass("hidden");
+					$("#btnCancelRole").removeClass("hidden");
+					$("#OverlayRole").show();
+				});
+
+				$('.treeview-item').each(function () {
+						$('#' + this.id).fancytree({
+							autoCollapse: true,
+							checkbox: false, // Show checkboxes.
+							clickFolderMode: 2, // 1:activate, 2:expand, 3:activate and expand, 4:activate (dblclick expands)
+						});
+				});
+
       });
-
-
     </script>
 
 	@endpush
