@@ -5,7 +5,10 @@
 @stop
 
 @section('topbar-right')
-    <a href="{{ route('articles.create') }}" class="btn btn-success mr5"><i class="fa fa-plus"></i> Voeg een artikel toe</a>
+    <a href="{{ route('articles.create') }}" class="btn btn-default btn-rounded btn-sm mt10">
+      <i class="fa fa-plus mr5"></i>
+      Voeg een artikel toe
+    </a>
 @stop
 
 @section('content')
@@ -14,36 +17,36 @@
         <table class="table admin-form">
             <thead>
             <tr class="bg-light">
-                <th></th>
-                <th>Titel</th>
-                <th>Fragment</th>
-                <th>Aangepast</th>
-                <th>Online</th>
-                <th></th>
+                <th style="width:5%"></th>
+                <th style="width:15%">Titel</th>
+                <th style="width:35%">Fragment</th>
+                <th style="width:10%">Aangepast</th>
+                <th style="width:20%">Online</th>
+                <th style="width:10%"></th>
             </tr>
             </thead>
             <tbody>
             @foreach($articles as $article)
                 <tr>
-                    <td style="width:6%">
-                        @if ($article->hasFile())
-                            <img class="img-responsive rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
+                    <td style="width:5%">
+                        @if ($article->hasFile('banner'))
+                            <img class="img-responsive mw300 rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
                         @endif
                     </td>
-                    <td>
+                    <td style="width:15%">
                         <a href="{{ route('articles.edit',$article->getKey()) }}">
                             @foreach($article->getUsedLocales() as $usedLocale)
                                 {{ $article->getTranslationFor('title',$usedLocale) }}
                             @endforeach
                         </a>
                     </td>
-                    <td class="subtle">
-                        {{ teaser($article->content,400,'...') }}
+                    <td class="subtle" style="width:35%">
+                        {{ teaser($article->content,150,'...') }}
                     </td>
-                    <td class="subtle">
+                    <td class="subtle" style="width:10%">
                         {{ $article->updated_at->format('d/m/Y H:i') }}
                     </td>
-                    <td>
+                    <td style="width:20%">
                         {{--<div class="switch switch-success round switch-inline">--}}
                             {{--{!! Form::checkbox('published',1,$article->isPublished(),['data-publish-toggle'=>$article->id,'id' => "switch{$article->id}"]) !!}--}}
                             {{--<label title="{{ $article->isPublished()?'Online':'Offline' }}" for="switch{{$article->id}}"></label>--}}

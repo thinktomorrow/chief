@@ -29,6 +29,7 @@ $factory->define(Article::class, function (Faker\Generator $faker) {
     return [
         'published' => false,
         'featured' => false,
+        'publication' => null,
     ];
 });
 

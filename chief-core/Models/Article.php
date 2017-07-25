@@ -50,5 +50,4 @@ class Article extends Model implements TranslatableContract, HasMedia
     {
         return !$this->asset->isEmpty();
     }
-
 }

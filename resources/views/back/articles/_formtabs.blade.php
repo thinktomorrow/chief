@@ -1,6 +1,6 @@
  <div class="col-md-9">
     <div class="tab-block mb25">
-        <ul class="nav tabs-left tabs-border tabbed-nav">
+        <ul class="nav nav-tabs nav-justified tabs-border">
 	        @if($article->hasMultipleApplicationLocales())
 	            @foreach($article->getAvailableLocales() as $locale)
 	                <li class="{{ 'nl'==$locale?'active':'' }}">
@@ -10,7 +10,7 @@
 			@endif
         </ul>
 
-        <div class="tab-conten">
+        <div class="tab-content pn">
             @foreach($article->getAvailableLocales() as $locale)
                 <div id="tab_{{ $locale }}" class="tab-pane{{ 'nl'==$locale?' active':'' }}">
                     @include('back.articles._form',['locale' => $locale])

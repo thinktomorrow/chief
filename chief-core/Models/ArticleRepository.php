@@ -2,10 +2,13 @@
 
 namespace Chief\Models;
 
+use Carbon\Carbon;
+use Chief\Locale\Locale;
 use Chief\Locale\TranslatableContract;
 use Chief\Locale\TranslatableController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ArticleRepository extends Model
@@ -18,14 +21,13 @@ class ArticleRepository extends Model
 
     public function create(Request $request)
     {
-//        $this->validateRequest();
-
         $this->request = $request;
+        $this->validateRequest();
         $article    = new Article;
+        $article->publication = Carbon::createFromFormat('m/d/Y H:i A', $request->publication);
         $article->save();
 
         $this->saveArticleTranslations($article);
-//        $this->uploadArticleImages($article);
 
         return $article;
     }
@@ -38,7 +40,6 @@ class ArticleRepository extends Model
             $trans['content']           = cleanupHTML($trans['content']);
             $trans['short']             = strip_tags($trans['short']);
             $trans['meta_description']  = strip_tags($trans['meta_description']);
-
 
             return $trans;
         });
@@ -78,6 +79,8 @@ class ArticleRepository extends Model
 
     private function validateRequest()
     {
+
+
         $rules = $attributes = $messages = [];
         foreach ($this->request->get('trans') as $locale => $trans)
         {
@@ -86,31 +89,32 @@ class ArticleRepository extends Model
                 continue;
             }
             $rules['trans.' . $locale . '.title']               = 'required|max:200';
-            $rules['trans.' . $locale . '.text']                = 'required|max:1500';
+            $rules['trans.' . $locale . '.content']             = 'required|max:1500';
             $rules['trans.' . $locale . '.short']               = 'required|max:700';
             $rules['trans.' . $locale . '.meta_description']    = 'required';
 
             $attributes['trans.' . $locale . '.title']              = strtoupper($locale). ' titel';
-            $attributes['trans.' . $locale . '.text']               = strtoupper($locale). ' tekst';
+            $attributes['trans.' . $locale . '.content']            = strtoupper($locale). ' tekst';
             $attributes['trans.' . $locale . '.short']              = strtoupper($locale). ' korte omschrijving';
             $attributes['trans.' . $locale . '.meta_description']   = strtoupper($locale). ' SEO omschrijving';
         }
 
-        $this->validate($this->request, $rules,$messages,$attributes);
+        Validator::make($this->request->all(), $rules, $messages, $attributes)->validate();
+
     }
 
     public function edit(Request $request, $id)
     {
-//        $this->validateRequest();
         $this->request = $request;
+        $this->validateRequest();
         $asset = null;
 
         $article = Article::findOrFail($id);
         ($this->request->has('published')) ? $article->publish() : $article->draft();
         if($request->asset_id){
             $asset = Asset::find($request->asset_id);
+            $article->addFile($asset, 'banner', '');
         }
-        $article->addFile($asset, '', '');
 
         $article->save();
 

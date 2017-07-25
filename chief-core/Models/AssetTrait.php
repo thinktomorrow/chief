@@ -45,4 +45,6 @@ trait AssetTrait
             Asset::upload($file, $type, $locale)->attachToModel($this);
         }
     }
+
+
 }

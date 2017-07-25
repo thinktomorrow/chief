@@ -158,7 +158,6 @@ class AssetTraitTest extends TestCase
     }
 
     /**
-     * @group test
      * @test
      */
     public function it_can_attach_an_asset_if_it_is_given_instead_of_a_file()
@@ -169,5 +168,22 @@ class AssetTraitTest extends TestCase
         $article->addFile($asset);
 
         $this->assertEquals('/media/1/image.png', $article->getFileUrl());
+    }
+
+    /**
+     * @group testing
+    * @test
+    */
+    public function it_can_attach_an_asset_to_multiple_models()
+    {
+        $article    = factory(Article::class)->create();
+        $article2   = factory(Article::class)->create();
+        $asset      = Asset::upload(UploadedFile::fake()->image('image.png', 100, 100));
+        $asset->attachToModel($article);
+
+        $article2->addFile($asset, 'banner');
+
+        $this->assertEquals('/media/1/image.png', $article->getFileUrl('banner'));
+        $this->assertEquals('/media/1/image.png', $article2->getFileUrl('banner'));
     }
 }
