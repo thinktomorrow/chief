@@ -3,7 +3,7 @@
 
     <!-- Start: Sidebar Right Content -->
     <div class="sidebar-right-content nano-content p10">
-      <h4 class="tray-title">Nieuwe gebruiker</h5>
+      <h4 class="tray-title">Nieuwe gebruiker</h4>
         <div class="panel panel-tile card-create">
           <div class="panel-body text-center ">
             <img src="{{ asset('assets/img/logo.png') }}" alt="test" class="mw100">
