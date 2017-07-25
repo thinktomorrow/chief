@@ -60,6 +60,7 @@
 					$("body").addClass( "sb-r-c" );
 					$(".detail-open").removeClass("detail-open");
 					$("body").removeClass("sidebar-media-open");
+					location.reload();
 				});
 
 				$("#OverlayRole").click(function(){
@@ -71,6 +72,7 @@
 					$("body").addClass( "sb-r-c" );
 					$(".detail-open").removeClass("detail-open");
 					$("body").removeClass("sidebar-media-open");
+					location.reload();
 				});
 
 				$(".showEditRole").click(function(){

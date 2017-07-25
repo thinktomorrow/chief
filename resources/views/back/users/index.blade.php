@@ -84,6 +84,7 @@
 					$("body").removeClass("sb-l-m");
 					$(".detail-open").removeClass("detail-open");
 					$("body").removeClass("sidebar-media-open");
+					location.reload();
 				});
 
 				$("#OverlayUser").click(function(){
@@ -95,7 +96,7 @@
 					$("body").removeClass("sb-l-m");
 					$(".detail-open").removeClass("detail-open");
 					$("body").removeClass("sidebar-media-open");
-
+					location.reload();
 				});
       });
 
