@@ -12,7 +12,7 @@
         <div class="panel-body">
 
           <!-- STARTING THE FORM -->
-          <form action="{{ route('users.update', $user->id) }}" method="POST">
+          <form action="{{ route('users.update', $user->id) }}" class="formEditUser" method="POST">
           {!! csrf_field() !!}
             <!-- NAAM INPUT -->
             <div class="input-group mv15">

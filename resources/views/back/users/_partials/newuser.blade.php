@@ -11,7 +11,7 @@
           <div class="panel-body">
 
             <!-- STARTING THE FORM -->
-            <form action="{{ route('users.store') }}" method="POST">
+            <form action="{{ route('users.store') }}" id="formNewUser" method="POST">
             {!! csrf_field() !!}
               <!-- NAAM INPUT -->
               <div class="input-group mv15">
