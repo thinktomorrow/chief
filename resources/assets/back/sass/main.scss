@@ -1,17 +1,13 @@
-// VARIABLES
-$color-black: #464646;
-$color-light-grey:#ececec;
-$color-error:#ED7764;
-$color-info:#6DC4EB;
-$color-primary:#6eb04e;
-
+@import 'partials/colors';
 
 @import 'custom/_mediagallery';
 @import 'custom/_users';
 @import 'custom/_roles';
+@import 'custom/pagination';
 
 @import 'partials/general';
 @import 'partials/typography';
 @import 'partials/nestable';
 @import 'partials/sortable';
 @import 'partials/utils';
+@import 'partials/buttons';

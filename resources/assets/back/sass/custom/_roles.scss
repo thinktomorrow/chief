@@ -8,9 +8,9 @@
   width: 150px;
 }
 
-.rolepermission{
-  span{
-    padding: 0 10px;
-    color: white;
+.fancytree-container{
+  border: none !important;
+  .fancytree-icon{
+    display: none;
   }
 }

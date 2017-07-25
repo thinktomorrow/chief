@@ -104,3 +104,8 @@ a:hover{
   padding:0;
   padding-bottom:30px;
 }
+
+.bringtofront{
+	z-index: 999;
+	position: relative;
+}
