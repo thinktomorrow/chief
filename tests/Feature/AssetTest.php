@@ -6,7 +6,6 @@ use Chief\Models\Article;
 use Chief\Models\Asset;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -29,7 +28,6 @@ class AssetTest extends TestCase
     {
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
-
         $this->assertEquals('image.png', $asset->getFilename());
         $this->assertEquals( '/media/1/image.png', $asset->getImageUrl());
 
@@ -43,25 +41,10 @@ class AssetTest extends TestCase
     /**
      * @test
      */
-    public function it_can_upload_an_image_for_locale()
-    {
-        //upload a single image
-        $asset = Asset::upload(UploadedFile::fake()->image('image.png'), '', 'nl');
-        $asset->uploadToAsset(UploadedFile::fake()->image('imageFr.png'),  'fr');
-
-        $this->assertEquals('image.png', $asset->getFilename());
-        $this->assertEquals('/media/1/image.png', $asset->getFileUrl('', 'nl'));
-        $this->assertEquals('/media/2/imageFr.png', $asset->getFileUrl('', 'fr'));
-
-    }
-
-    /**
-     * @test
-     */
     public function it_returns_null_when_uploading_an_invalid_file()
     {
         //upload a single image
-        $asset = Asset::upload('image');
+        $asset = Asset::upload(5);
 
         $this->assertNull($asset);
     }
@@ -71,20 +54,20 @@ class AssetTest extends TestCase
      */
     public function it_can_upload_an_image_to_a_model()
     {
-        $article = factory(Article::class)->create();
+        $original = factory(Article::class)->create();
 
         //upload a single image
-        $asset = Asset::upload(UploadedFile::fake()->image('image.png'))->attachToModel($article);
+        $article = Asset::upload(UploadedFile::fake()->image('image.png'))->attachToModel($original);
 
-        $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getFileUrl(), '/media/1/image.png');
-        $this->assertEquals($article->asset()->first()->getFilename(), $asset->getFilename());
+        $this->assertEquals( 'image.png', $article->getFilename());
+        $this->assertEquals( '/media/1/image.png', $article->getFileUrl());
+        $this->assertEquals($original->assets()->first()->getFilename(), $article->getFilename());
 
         //upload a single image
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
-        $this->assertEquals($asset->getFilename(), 'image.png');
-        $this->assertEquals($asset->getImageUrl(), '/media/2/image.png');
+        $this->assertEquals( 'image.png', $asset->getFilename());
+        $this->assertEquals( '/media/2/image.png', $asset->getImageUrl());
     }
 
     /**
@@ -101,11 +84,10 @@ class AssetTest extends TestCase
         $article = factory(Article::class)->create();
 
         //upload a single image
-        $article = Asset::upload(UploadedFile::fake()->image('image2.png'), 'banner', 'nl')->attachToModel($article);
+        $article = Asset::upload(UploadedFile::fake()->image('image2.png'))->attachToModel($article, 'banner',  'nl');
 
         $this->assertEquals('image2.png', $article->getFilename('banner', 'nl'));
         $this->assertEquals('/media/2/image2.png', $article->getFileUrl('banner', '',  'nl'));
-
 
         $article->addFile(UploadedFile::fake()->image('image3.png'), 'thumbnail', 'fr');
 
@@ -257,7 +239,7 @@ class AssetTest extends TestCase
     */
     public function it_can_upload_images_for_different_locales()
     {
-        $asset = Asset::upload(UploadedFile::fake()->image('image.png'),'image', 'nl');
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'), 'nl');
         $this->assertEquals('image.png', $asset->getFilename('','nl'));
     }
 
@@ -306,36 +288,29 @@ class AssetTest extends TestCase
     /**
      * @test
      */
-    public function it_can_replace_a_file()
-    {
-        //upload a single image
-        $asset = Asset::upload(UploadedFile::fake()->image('foo.png'),'', 'nl');
-        $asset->uploadToAsset(UploadedFile::fake()->image('bar.png'), 'nl');
-
-        $this->assertEquals('bar.png', $asset->getFilename());
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_get_the_filetype()
-    {
-        $asset = Asset::upload(UploadedFile::fake()->image('image.png'),'image');
-        $this->assertEquals('image', $asset->getType());
-    }
-
-    /**
-     * @test
-     */
     public function it_can_attach_an_asset_instead_of_a_file()
     {
         $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
 
-        $asset = Asset::upload($asset, 'banner', 'fr');
+        $asset2 = Asset::upload($asset);
 
-        $this->assertEquals( 'banner', $asset->getType());
-        $this->assertEquals( '/media/1/image.png', $asset->getFileUrl('', 'fr'));
+        $this->assertEquals( '/media/1/image.png', $asset2->getFileUrl());
     }
+
+    /**
+     * @test
+     */
+    public function it_can_attach_an_asset_to_multiple_models()
+    {
+        $asset = Asset::upload(UploadedFile::fake()->image('image.png'));
+
+        $asset2 = Asset::upload($asset);
+
+        $this->assertEquals( '/media/1/image.png', $asset->getFileUrl());
+        $this->assertEquals( '/media/1/image.png', $asset2->getFileUrl());
+    }
+
+
 
 //
 //    /**

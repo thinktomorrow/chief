@@ -30,7 +30,7 @@
                 <tr>
                     <td style="width:5%">
                         @if ($article->hasFile('banner'))
-                            <img class="img-responsive mw300 rounded" src="{!! $article->getFileUrl('', 'thumb') !!}" alt="Thumb">
+                            <img class="img-responsive mw300 rounded" src="{!! $article->getFileUrl('banner', 'thumb') !!}" alt="Thumb">
                         @endif
                     </td>
                     <td style="width:15%">

@@ -13,6 +13,7 @@ class ArticlesController extends Controller
     public function index()
     {
         $articles = Article::paginate(10);
+
         return view('back.articles.index', compact('articles'));
     }
 
@@ -59,6 +60,7 @@ class ArticlesController extends Controller
     {
         $article = Article::findOrFail($id);
         $assets = Asset::getAllAssets();
+
 
         $article->injectTranslationForForm();
         return view('back.articles.edit', compact('article', 'assets'));

@@ -6,15 +6,16 @@ use Chief\Locale\Locale;
 
 trait AssetTrait
 {
-    public function asset()
+    public function assets()
     {
-        return $this->morphMany(Asset::class, 'model');
+        return $this->morphToMany(Asset::class, 'entity', 'asset_pivots')->withPivot('type', 'locale');
     }
 
     public function hasFile($type = '', $locale = '')
     {
         $filename = $this->getFilename($type, $locale);
-        return !!$filename and basename($filename) != 'other.png' ;
+
+        return !!$filename and basename($filename) != 'other.png';
     }
 
     public function getFilename($type = '', $locale = '')
@@ -22,11 +23,26 @@ trait AssetTrait
         return basename($this->getFileUrl($type, '', $locale));
     }
 
-    public function getFileUrl($type = '', $size = '', $locale = '')
+    public function getFileUrl($type = '', $size = '', $locale = null)
     {
-        $assets = $this->asset->where('type', $type);
-        if($assets->isEmpty()) return null;
-        return $assets->first()->getFileUrl($size, $locale);
+        if ($this->assets->first() == null || $this->assets->first()->pivot == null){
+            return null;
+        }
+
+        if(!$locale){
+            $locale = Locale::getDefault();
+        }
+
+        $assets = $this->assets->where('pivot.type', $type);
+        if($assets->count() > 1){
+            $assets = $assets->where('pivot.locale', $locale);
+        }
+
+        if ($assets->isEmpty()) {
+            return null;
+        }
+
+        return $assets->first()->getFileUrl($size);
     }
 
     /**
@@ -36,14 +52,13 @@ trait AssetTrait
      * @param $type
      * @param string $locale
      */
-    public function addFile($file, $type = '', $locale = '')
+    public function addFile($file, $type = '', $locale = null)
     {
-        if($locale == '') $locale = Locale::getDefault();
-        if($this->hasFile($type, $locale)){
-            $this->asset->where('type', $type)->first()->uploadToAsset($file,$locale);
-        }else{
-            Asset::upload($file, $type, $locale)->attachToModel($this);
+        if ($locale == '' || $locale == null) {
+            $locale = Locale::getDefault();
         }
+
+        Asset::upload($file)->attachToModel($this, $type, $locale);
     }
 
 

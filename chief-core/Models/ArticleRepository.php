@@ -108,12 +108,11 @@ class ArticleRepository extends Model
         $this->request = $request;
         $this->validateRequest();
         $asset = null;
-
         $article = Article::findOrFail($id);
         ($this->request->has('published')) ? $article->publish() : $article->draft();
         if($request->asset_id){
             $asset = Asset::find($request->asset_id);
-            $article->addFile($asset, 'banner', '');
+            $article->addFile($asset, '', '');
         }
 
         $article->save();

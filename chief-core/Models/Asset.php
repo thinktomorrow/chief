@@ -14,109 +14,53 @@ class Asset extends Model implements HasMediaConversions
 {
     use HasMediaTrait;
 
-    public static $conversions = [
-        'thumb' => [
-            'width'     => 150,
-            'height'    => 150,
-        ],
-        'medium' => [
-            'width'     => 300,
-            'height'    => 130,
-        ],
-        'large' => [
-            'width'     => 1024,
-            'height'    => 353,
-        ],
-        'full' => [
-            'width'     => 1600,
-            'height'    => 553,
-        ]
-    ];
-
-    public static function upload($files, $type = '', $locale = '')
+    /**
+     * Uploads the file/files or asset by creating the
+     * asset that is needed to upload the files too
+     *
+     * @param $files
+     * @return Asset|\Illuminate\Support\Collection|null
+     */
+    public static function upload($files)
     {
         $list = collect([]);
 
         if (is_array($files)) {
-            collect($files)->each(function($file) use($list, $type, $locale){
+            collect($files)->each(function($file) use($list){
                 $self = new self();
-                $self->type = $type;
                 $self->save();
-                $list->push($self->uploadToAsset($file, $locale));
+                $list->push($self->uploadToAsset($file));
             });
         }elseif($files instanceof Asset)
         {
-            $clone = $files->replicate();
-            $clone->save();
-            $clone->type = $type;
-            $clone->load('media');
-            $media = $files->media->first()->replicate();
-            $media->model_id = $clone->model_id;
-            $media->save();
-            dd($clone->id, $media);
-            $clone->media->first()->setCustomProperty('locale', $locale);
-            $clone->save();
-            return $clone;
+
+            return $files;
         }else{
             $self = new self();
-            $self->type = $type;
             $self->save();
-            return $self->uploadToAsset($files, $locale);
+            return $self->uploadToAsset($files);
         }
         return $list;
     }
 
-    public function getModel()
+    /**
+     * Uploads the given file to this instance of asset
+     * and sets the dimensions as a custom property
+     *
+     * @param $files
+     * @return $this|null
+     */
+    public function uploadToAsset($files)
     {
-        dd($this);
-    }
-
-    public function uploadToAsset($files, $locale = '')
-    {
-
-        if (is_array($files)) {
-            //Can't do multiple uploads linked to one asset at this time
-
-            //            $list = collect([]);
-//            collect($files)->each(function ($file) use ($list, $collection) {
-//                $customProps = [];
-//                if(self::isImage($file))
-//                {
-//                    $customProps = ['dimensions' => getimagesize($file)[0] . ' x ' . getimagesize($file)[1] ];
-//                }
-//                if($collection)
-//                {
-//                    $customProps = ['type' => $collection];
-//                }
-//                $media = $this->addMedia($file)->withCustomProperties($customProps)->toMediaCollection();
-//
-//                $list->push($this);
-//            });
-//
-//            return $list;
-            return $files;
-        } elseif ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File || $files instanceof UploadedFile) {
-            $this->media->filter(function($media) use($locale){
-                return $media->getCustomProperty('locale') == $locale;
-            })->each(function ($media){
-                return $media->delete();
-            });
+        if ($files instanceof File || $files instanceof \Illuminate\Http\Testing\File || $files instanceof UploadedFile) {
             $customProps = [];
             if(self::isImage($files))
             {
                 $customProps['dimensions'] = getimagesize($files)[0] . ' x ' . getimagesize($files)[1];
             }
-            if($locale)
-            {
-                $customProps['locale'] = $locale;
-            }else{
-                $customProps['locale'] = Locale::getDefault();
-            }
 
             $this->addMedia($files)->withCustomProperties($customProps)->toMediaCollection();
-
-            $this->refresh();
-            return $this;
+            return $this->load('media');
         }
 
         return null;
@@ -136,16 +80,36 @@ class Asset extends Model implements HasMediaConversions
         }
     }
 
-    public function attachToModel(Model $model)
+    /**
+     * Attaches this asset instance to the given model and
+     * sets the type and locale to the given values and
+     * returns the model with the asset relationship
+     *
+     * @param Model $model
+     * @param string $type
+     * @param null $locale
+     * @return Model
+     */
+    public function attachToModel(Model $model, $type = '', $locale = null)
     {
-        $model->asset()->save($this);
+        $asset = $model->assets->where('pivot.type', $type)->where('pivot.locale', $locale);
 
-        return $model->load('asset');
+        if(!$asset->isEmpty()){
+            $model->assets()->detach($asset->first()->id);
+        }
+
+        if(!$locale) {
+            $locale = Locale::getDefault();
+        }
+
+        $model->assets()->attach($this, ['type' => $type, 'locale'=> $locale]);
+
+        return $model->load('assets');
     }
 
     public function hasFile($locale = null)
     {
-        return !! $this->getFileUrl('', $locale);
+        return !! $this->getFileUrl('', $locale, true);
     }
 
     public function getFilename($size = '', $locale = null)
@@ -153,29 +117,24 @@ class Asset extends Model implements HasMediaConversions
         return basename($this->getFileUrl($size, $locale));
     }
 
-    public function getFileUrl($size = '', $locale = null)
+    public function getFileUrl($size = '')
     {
-        if(!$locale){
-            $locale = Locale::getDefault();
-        }
-        $media = $this->getMedia()->filter(function($media) use($locale){
-            return $media->getCustomProperty('locale') == $locale || $media->getCustomProperty('locale') == Locale::getDefault();
-        });
+        $media = $this->getMedia();
 
-        if($media->count() > 1)
-        {
-            $media = $media->filter(function($media) use($locale){
-                return $media->getCustomProperty('locale') == $locale;
-            })->first();
-        }elseif($media->count() == 1){
+        if($media->count() >= 1){
             $media = $media->first();
         }else{
             return '../assets/back/img/other.png';
-
         }
         return $media->getUrl($size);
     }
 
+    /**
+     * Returns the image url or a fallback specific per filetype
+     *
+     * @param string $type
+     * @return string
+     */
     public function getImageUrl($type = '')
     {
         if($this->getMedia()->isEmpty()){
@@ -221,11 +180,10 @@ class Asset extends Model implements HasMediaConversions
         return $this->getMedia()[0]->hasCustomProperty('dimensions') ? $this->getMedia()[0]->getCustomProperty('dimensions') : '/';
     }
 
-//    public function assets()
-//    {
-//        return $this->morphTo();
-//    }
-
+    /**
+     * Removes one or more assets by their ids
+     * @param $image_ids
+     */
     public static function remove($image_ids)
     {
         if (is_array($image_ids)) {
@@ -238,21 +196,13 @@ class Asset extends Model implements HasMediaConversions
     }
 
 
-
+    /**
+     * Returns a collection of all the assets in the library.
+     * @return \Illuminate\Support\Collection
+     */
     public static function getAllAssets()
     {
-        $library = collect([]);
-
-        self::all()->each(function ($asset) use ($library) {
-            $library->push($asset);
-        });
-
-        return $library;
-    }
-
-    public function getType()
-    {
-        return $this->type;
+        return self::all();
     }
 
     /**
@@ -318,4 +268,5 @@ class Asset extends Model implements HasMediaConversions
 //            ->setManipulations(['w' => 368, 'h' => 232])
 //            ->performOnCollections('pdf');
     }
+
 }
