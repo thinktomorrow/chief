@@ -256,6 +256,7 @@
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   background-color: #4A89DC;
+  z-index: 1;
 }
 
 .table > tbody > tr > td {
@@ -490,20 +491,6 @@ hr.xsmall {
   clear: both;
 }
 
-<<<<<<< HEAD
-.badge {
-  height: 20px;
-  width: 20px;
-  font-size: 1rem;
-  line-height: 14px;
-  border-radius: 0px;
-  margin-bottom: 2px;
-  padding: 3px 0px;
-  border-radius: 50%;
-  margin-right: 5px;
-  text-transform: uppercase;
-  cursor: help;
-=======
 .section-divider {
   height: 0;
   border-top: 1px solid #DDD;
@@ -519,6 +506,19 @@ hr.xsmall {
   color: #999;
   top: -11px;
   font-size: 14px;
->>>>>>> 67e5c571be5583c01c431006514d689c8ba8d8fb
+}
+
+.badge {
+  height: 20px;
+  width: 20px;
+  font-size: 1rem;
+  line-height: 14px;
+  border-radius: 0px;
+  margin-bottom: 2px;
+  padding: 3px 0px;
+  border-radius: 50%;
+  margin-right: 5px;
+  text-transform: uppercase;
+  cursor: help;
 }
 
