@@ -55,7 +55,7 @@ $(document).ready(function(){
   // SHOW OR HIDE DELETE BUTTON
   $('.showDeleteUptions').click(function(){
     $('.deleteActions').removeClass('hidden');
-    $('.deleteActions span').text($(":checkbox:checked").length + ' bestanden verwijderen?');
+    $('.deleteActions span').text($(".media-gallery :checkbox:checked").length + ' bestanden verwijderen?');
     $('.showDeleteUptions').addClass('hidden');
   });
   $('.noDelete').click(function(){
