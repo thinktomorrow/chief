@@ -1,10 +1,10 @@
 <!-- Right Sidebar: UPLOAD IMAGE -->
-<aside id="sidebar_right" class="nano pdfUpload-{{ $locale }}">
+<aside id="sidebar_right" class="nano bannerUpload-{{ $locale }}">
 
     <!-- Start: Sidebar Right Content -->
     <div class="sidebar-right-content nano-content p15">
 
-        <h4 class="tray-title"> Upload pdf </h4>
+        <h4 class="tray-title"> Upload Image </h4>
         <!-- Image Upload Field -->
         <div class="fileupload fileupload-new admin-form mt20" data-provides="fileupload">
             <div class="fileupload-preview thumbnail m5 mt20 mb30">
@@ -12,26 +12,32 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <form action="{{ route('article.upload', $article->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('article.upload', $article->id) }}" method="POST"
+                          enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <span class="btn-file ph5 btn-group">
-                            <span class="btn btn-default fileupload-new">Selecteer pdf</span>
+                            <span class="btn btn-default fileupload-new">Selecteer bestand</span>
                             <button class="libraryselect" data-effect="mfp-zoomIn">Selecteer uit bibliotheek</button>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
-                            <input type="file" name="image" accept="application/pdf">
-                            {!! \Chief\Models\Asset::typeField('pdf') !!}
-                            {!! \Chief\Models\Asset::localeField($locale ) !!}
-                            <button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload pdf <i class="fa fa-upload"></i></button>
+                            <input type="file" name="image" accept="image/*">
+                            {!! \Chief\Models\Asset::typeField('banner') !!}
+                            {!! \Chief\Models\Asset::localeField($locale) !!}
+                            <button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand <i
+                                        class="fa fa-upload"></i></button>
 		                </span>
                     </form>
+
                 </div>
             </div>
         </div>
         <hr class="alt short">
         <div class="tray">
             <h5>Toegelaten bestandsformaten</h5>
-            <p>
-                <span class="label label-danger">.pdf</span>
+            <p>Afbeeldingen:
+                <span class="label label-primary">.jpg</span>
+                <span class="label label-primary">.png</span>
+                <span class="label label-primary">.jpeg</span>
+                <span class="label label-primary">.gif</span>
             </p>
         </div>
     </div>
@@ -79,7 +85,7 @@
 		});
 
 		$('.addAsset').on('click', function (){
-			$('#galleryupload-pdf').val($('.selected').data('asset-id'));
+			$('#galleryupload-banner').val($('.selected').data('asset-id'));
 			var magnificPopup = $.magnificPopup.instance;
 
 			magnificPopup.close();

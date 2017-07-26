@@ -156,6 +156,16 @@ class Asset extends Model implements HasMediaConversions
         }
     }
 
+    public function getExtensionForFilter()
+    {
+        $mimetype = $this->getMimeType();
+        if(explode("/", $mimetype, 2)[0] == 'image') return 'image';
+        if(explode("/", $mimetype, 2)[1] == 'pdf') return 'pdf';
+        if(in_array(explode("/", $mimetype, 2)[1], ['xls', 'xlsx', 'numbers', 'sheets'])) return 'excel';
+
+        return '';
+    }
+
     public function getMimeType()
     {
         if($this->getMedia()->isEmpty()){
@@ -209,12 +219,17 @@ class Asset extends Model implements HasMediaConversions
      * Generates the hidden field that links the file to a specific type.
      *
      * @param string $type
+     * @param null $locale
      *
      * @return string
      */
-    public static function typeField($type = '')
+    public static function typeField($type = '', $locale = null)
     {
-        return '<input type="hidden" value="' . $type . '" name="type">';
+        if(!$locale){
+            return '<input type="hidden" value="' . $type . '" name="type">';
+        }else{
+            return '<input type="hidden" value="' . $type . '" name="trans['.$locale.'][files][]">';
+        }
     }
 
     /**

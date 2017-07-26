@@ -89,7 +89,6 @@
     @include('back.articles.sidebar.imageupload')
   @endpush
   {{--temporary input to inject uploaded file from gallery--}}
-  <input id="galleryupload" class="hidden" type="text" name="asset_id" value="">
 
   <div class="col-md-3">
     <article class="panel">

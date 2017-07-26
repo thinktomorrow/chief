@@ -110,10 +110,16 @@ class ArticleRepository extends Model
         $asset = null;
         $article = Article::findOrFail($id);
         ($this->request->has('published')) ? $article->publish() : $article->draft();
-        if($request->asset_id){
-            $asset = Asset::find($request->asset_id);
-            $article->addFile($asset, '', '');
-        }
+        collect($request->trans)->each(function($translation, $locale) use($article){
+            if($trans = $translation['files']){
+                collect($trans)->each(function($asset_id, $type)use($article, $locale){
+                    if($asset_id){
+                        $asset = Asset::find($asset_id);
+                        $article->addFile($asset, $type , $locale);
+                    }
+                });
+            }
+        });
 
         $article->save();
 
