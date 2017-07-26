@@ -60,7 +60,7 @@
 		<input id="galleryupload-banner" class="hidden" type="text" name="trans[{{$locale}}][files][banner]" value="">
 	</div>
 	@push('sidebar')
-	@include('back.articles._bannerupload')
+		@include('back.articles._bannerupload')
 	@endpush
 </article>
 <!-- PDF UPLOADS -->
@@ -81,7 +81,7 @@
 		</button>
 		<input id="galleryupload-pdf" class="hidden" type="text" name="trans[{{$locale}}][files][pdf]" value="">
 		@push('sidebar')
-		@include('back.articles._pdfupload')
+			@include('back.articles._pdfupload')
 		@endpush
 	</div>
 </article>

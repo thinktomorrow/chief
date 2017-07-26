@@ -4,15 +4,20 @@
       <div class="mix-controls">
         <div class="btn-group">
           <div class="btn-group">
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default filter" data-filter="all">
+              <span class="fa fa-fw fa-image"></span> Alles
+            </button>
+            <button type="button" class="btn btn-default filter" data-filter=".image">
               <span class="fa fa-fw fa-image"></span> Afbeeldingen
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default filter" data-filter=".pdf">
               <span class="fa fa-fw fa-file-pdf-o"></span> Pdf
             </button>
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default filter" data-filter=".excel">
               <span class="fa fa-fw fa-file-excel-o"></span> Spreadsheets
             </button>
+            <button type="button" class="sort" data-sort="media-order:asc">Ascending Order</button>
+            <button type="button" class="sort" data-sort="media-order:desc">Descending Order</button>
           </div>
         </div>
       </div>
@@ -43,3 +48,10 @@
     </div>
   </div>
 </div>
+@push('custom-styles')
+<style>
+  #mix-container .mix{
+    display: none;
+  }
+</style>
+@endpush

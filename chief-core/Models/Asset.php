@@ -156,6 +156,16 @@ class Asset extends Model implements HasMediaConversions
         }
     }
 
+    public function getExtensionForFilter()
+    {
+        $mimetype = $this->getMimeType();
+        if(explode("/", $mimetype, 2)[0] == 'image') return 'image';
+        if(explode("/", $mimetype, 2)[1] == 'pdf') return 'pdf';
+        if(in_array(explode("/", $mimetype, 2)[1], ['xls', 'xlsx', 'numbers', 'sheets'])) return 'excel';
+
+        return '';
+    }
+
     public function getMimeType()
     {
         if($this->getMedia()->isEmpty()){

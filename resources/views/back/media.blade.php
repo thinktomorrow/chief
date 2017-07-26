@@ -24,6 +24,8 @@ Mediabibliotheek
 @endpush
 
 @push('custom-scripts')
+<script src="{{ asset('assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
+
 <script>
 $(document).ready(function(){
 
@@ -122,6 +124,15 @@ $(document).ready(function(){
       });
     });
   }
+
+	$('#mix-container').mixItUp({
+		animation: {
+			duration: 400,
+			effects: 'fade translateZ(-360px) stagger(45ms)',
+			easing: 'ease'
+		},
+	});
+  //End of document ready function
 });
 
 // ***************************
@@ -171,6 +182,10 @@ $('.gallery').each(function() { // the containers for all your galleries
         }
     });
 });
+
+
+
+
 </script>
 
 

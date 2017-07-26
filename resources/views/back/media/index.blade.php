@@ -8,7 +8,7 @@
       @endif
       @foreach($library as $media)
         <!-- image thumb -->
-        <div class="mix col-sm-6 col-md-6 col-lg-3">
+        <div class="mix {{ $media->getExtensionForFilter() }} col-sm-6 col-md-6 col-lg-3" data-media-order="{{ $media->created_at }}">
           <div class="panel media pbn">
             <div class="panel-heading">
               <span class="panel-icon pull-left">
