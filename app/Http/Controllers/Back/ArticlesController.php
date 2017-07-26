@@ -98,8 +98,8 @@ class ArticlesController extends Controller
 
     public function publish(Request $request)
     {
-        $article = Article::findOrFail($request->get('id'));
-        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
+        $article    = Article::findOrFail($request->get('id'));
+        $published  = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $article->publish() : $article->draft();
 

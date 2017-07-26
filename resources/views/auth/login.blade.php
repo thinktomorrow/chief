@@ -1,4 +1,3 @@
-<!-- Login form area -->
 @extends('back._layouts.login')
 
 @section('title')
