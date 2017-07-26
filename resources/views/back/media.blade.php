@@ -130,6 +130,9 @@ $(document).ready(function(){
 			effects: 'fade translateZ(-360px) stagger(45ms)',
 			easing: 'ease'
 		},
+        controls: {
+            activeClass: 'on'
+	   }
 	});
   //End of document ready function
 });

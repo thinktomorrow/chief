@@ -1,11 +1,11 @@
 <div class="mh15 pv15 br-b br-light gallery-filter">
   <div class="row">
-    <div class="col-xs-5">
+    <div class="col-xs-8">
       <div class="mix-controls">
         <div class="btn-group">
           <div class="btn-group">
             <button type="button" class="btn btn-default filter" data-filter="all">
-              <span class="fa fa-fw fa-image"></span> Alles
+              <span class="fa fa-fw fa-repeat"></span>
             </button>
             <button type="button" class="btn btn-default filter" data-filter=".image">
               <span class="fa fa-fw fa-image"></span> Afbeeldingen
@@ -16,13 +16,14 @@
             <button type="button" class="btn btn-default filter" data-filter=".excel">
               <span class="fa fa-fw fa-file-excel-o"></span> Spreadsheets
             </button>
-            <button type="button" class="sort" data-sort="media-order:asc">Ascending Order</button>
-            <button type="button" class="sort" data-sort="media-order:desc">Descending Order</button>
+            {{-- <button type="button" class="btn btn-default ml15 disabled" >Sorteer op datum</button> --}}
+            <button type="button" class="sort btn btn-default ml15" data-sort="media-order:desc">Nieuwste eerst</button>
+            <button type="button" class="sort btn btn-default" data-sort="media-order:asc">Oudste eerst</button>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xs-7 text-right">
+    <div class="col-xs-4 text-right">
       <div class="btn-group">
         <div class="deleteMedia hidden">
           <div class="deleteActions hidden">

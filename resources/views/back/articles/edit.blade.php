@@ -85,7 +85,7 @@
 
   @include('back.articles.form.formtabs')
 
- 
+
   {{--temporary input to inject uploaded file from gallery--}}
 
   <div class="col-md-3">
