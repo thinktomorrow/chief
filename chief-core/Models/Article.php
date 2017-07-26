@@ -48,6 +48,6 @@ class Article extends Model implements TranslatableContract, HasMedia
 
     public function hasMedia(string $collection = 'default'): bool
     {
-        return !$this->asset->isEmpty();
+        return !$this->assets->isEmpty();
     }
 }

@@ -16,7 +16,7 @@ class CreateArticleTranslationsTable extends Migration
             $table->text('short');
             $table->text('image');
             $table->string('slug')->unique();
-            $table->text('meta_description');
+            $table->text('meta_description')->nullable();
             $table->timestamps();
             $table->integer('article_id')->unsigned();
 

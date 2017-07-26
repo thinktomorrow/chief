@@ -310,7 +310,33 @@ class AssetTest extends TestCase
         $this->assertEquals( '/media/1/image.png', $asset2->getFileUrl());
     }
 
+    /**
+     * @group testing
+     * @test
+     */
+    public function it_can_get_the_extensions_for_filtering()
+    {
+        //TODO uncomment these when we can supply the mimetype to the uploaded file
+        $asset  =  Asset::upload(UploadedFile::fake()->image('image.png'));
+//        $asset1 =  Asset::upload(UploadedFile::fake()->create('image.pdf'));
+//        $asset2 =  Asset::upload(UploadedFile::fake()->create('image.xls'));
+        $asset3 =  Asset::upload(UploadedFile::fake()->create('image.test'));
 
+
+        $this->assertEquals('image', $asset->getExtensionForFilter());
+//        $this->assertEquals('pdf', $asset1->getExtensionForFilter());
+//        $this->assertEquals('excel', $asset2->getExtensionForFilter());
+        $this->assertEquals('', $asset3->getExtensionForFilter());
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_get_the_typefield_with_locale()
+    {
+        $this->assertEquals('<input type="hidden" value="foo" name="type">', Asset::typeField('foo'));
+        $this->assertEquals('<input type="hidden" value="bar" name="trans[fr][files][]">', Asset::typeField('bar', 'fr'));
+    }
 
 //
 //    /**

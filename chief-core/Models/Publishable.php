@@ -6,7 +6,7 @@ trait Publishable
 {
     public function isPublished()
     {
-        return ($this->published);
+        return (!!$this->published);
     }
 
     public function isDraft()
