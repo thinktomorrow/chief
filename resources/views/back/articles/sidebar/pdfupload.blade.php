@@ -1,5 +1,5 @@
 <!-- Right Sidebar: UPLOAD IMAGE -->
-<aside id="sidebar_right" class="nano pdfUpload-{{ $locale }}">
+<aside id="sidebar_right" class="nano pdfUpload-{{ $locale }} affix">
 
     <!-- Start: Sidebar Right Content -->
     <div class="sidebar-right-content nano-content p15">

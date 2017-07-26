@@ -24,6 +24,7 @@ Mediabibliotheek
 @endpush
 
 @push('custom-scripts')
+{{-- USED FOR THE MEDIA FILTERS --}}
 <script src="{{ asset('assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
 
 <script>
@@ -51,7 +52,6 @@ $(document).ready(function(){
 // Get universal class for the checkbox and put it in a variable
 	var getCheckbox = $(".checkbox-delete > input:checkbox");
 
-
   // SHOW OR HIDE DELETE BUTTON
   $('.showDeleteUptions').click(function(){
     $('.deleteActions').removeClass('hidden');
@@ -66,7 +66,6 @@ $(document).ready(function(){
 // ***********************************
 // ** SELECT IMAGES TO DELETE **
 // ***********************************
-
 
   function countCheckboxes(){
     // When on or more checkbox is checked, show the deleteButton
@@ -182,11 +181,5 @@ $('.gallery').each(function() { // the containers for all your galleries
         }
     });
 });
-
-
-
-
 </script>
-
-
 @endpush
