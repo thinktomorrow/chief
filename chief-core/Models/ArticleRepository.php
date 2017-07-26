@@ -13,9 +13,7 @@ use Illuminate\Support\Str;
 
 class ArticleRepository extends Model
 {
-
     use TranslatableController;
-
 
     private $request;
 
@@ -23,8 +21,9 @@ class ArticleRepository extends Model
     {
         $this->request = $request;
         $this->validateRequest();
-        $article    = new Article;
-        $article->publication = Carbon::createFromFormat('d-m-Y', $request->publication);
+
+        $article                = new Article;
+        $article->publication   = Carbon::createFromFormat('d-m-Y', $request->publication);
         $article->save();
 
         $this->saveArticleTranslations($article);
@@ -79,8 +78,6 @@ class ArticleRepository extends Model
 
     private function validateRequest()
     {
-
-
         $rules = $attributes = $messages = [];
         foreach ($this->request->get('trans') as $locale => $trans)
         {
@@ -100,16 +97,18 @@ class ArticleRepository extends Model
         }
 
         Validator::make($this->request->all(), $rules, $messages, $attributes)->validate();
-
     }
 
     public function edit(Request $request, $id)
     {
         $this->request = $request;
         $this->validateRequest();
-        $asset = null;
-        $article = Article::findOrFail($id);
+
+        $asset      = null;
+        $article    = Article::findOrFail($id);
         ($this->request->has('published')) ? $article->publish() : $article->draft();
+
+        //Loops over the uploaded assets and attaches them to the model
         collect($request->trans)->each(function($translation, $locale) use($article){
             if($trans = $translation['files']){
                 collect($trans)->each(function($asset_id, $type)use($article, $locale){
@@ -122,9 +121,18 @@ class ArticleRepository extends Model
         });
 
         $article->save();
-
         $this->saveArticleTranslations($article);
 
         return $article;
+    }
+
+    public function remove($id)
+    {
+        $article = Article::findOrFail($id);
+
+        $article->delete();
+        $message = 'Het nieuwsartikel werd verwijderd.';
+
+        return $message;
     }
 }
