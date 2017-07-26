@@ -61,7 +61,6 @@ class ArticlesController extends Controller
         $article = Article::findOrFail($id);
         $assets = Asset::getAllAssets();
 
-
         $article->injectTranslationForForm();
         return view('back.articles.edit', compact('article', 'assets'));
     }
@@ -76,6 +75,7 @@ class ArticlesController extends Controller
     public function update(Request $request,$id)
     {
         $article = (new ArticleRepository())->edit($request, $id);
+
 
         return redirect()->route('articles.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$article->title .'" werd aangepast');
     }

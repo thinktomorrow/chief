@@ -209,12 +209,17 @@ class Asset extends Model implements HasMediaConversions
      * Generates the hidden field that links the file to a specific type.
      *
      * @param string $type
+     * @param null $locale
      *
      * @return string
      */
-    public static function typeField($type = '')
+    public static function typeField($type = '', $locale = null)
     {
-        return '<input type="hidden" value="' . $type . '" name="type">';
+        if(!$locale){
+            return '<input type="hidden" value="' . $type . '" name="type">';
+        }else{
+            return '<input type="hidden" value="' . $type . '" name="trans['.$locale.'][files][]">';
+        }
     }
 
     /**

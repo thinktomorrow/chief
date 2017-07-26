@@ -16,6 +16,7 @@
                         {{ csrf_field() }}
                         <span class="btn-file ph5 btn-group">
                             <span class="btn btn-default fileupload-new">Selecteer pdf</span>
+                            <button class="libraryselect" data-effect="mfp-zoomIn">Selecteer uit bibliotheek</button>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
                             <input type="file" name="image" accept="application/pdf">
                             {!! \Chief\Models\Asset::typeField('pdf') !!}
@@ -35,3 +36,56 @@
         </div>
     </div>
 </aside>
+
+<div id="modal-panel" class="popup-basic bg-none mfp-with-anim mfp-hide">
+    <div class="panel">
+        @foreach($assets as $media)
+            <div class="mix col-sm-6 col-md-6 col-lg-3 {{ $loop->first ? 'selected' : '' }}" data-asset-id="{{ $media->id }}">
+                <div class="panel media pbn">
+                    <div class="panel-heading">
+					<span class="panel-icon pull-left">
+						<i class="fa fa-image"></i>
+					</span>
+                        <span class="panel-title overflow-ellipsis">
+                        {{ $media->getFilename() }}
+                    </span>
+                    </div>
+                    <div class="panel-body pn">
+                        <figure class="gallery-item mn">
+                            <picture>
+                                <img src="{{ $media->getImageUrl('large') }}" class="img-responsive"
+                                     title="{{ $media->getFilename() }}">
+                            </picture>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+        <button class="addAsset">Selecteer</button>
+    </div>
+</div>
+@push('custom-scripts')
+
+<script>
+	$(document).ready(function () {
+		$('.libraryselect').on('click', function (e) {
+			e.preventDefault();
+			$.magnificPopup.open({
+				removalDelay: 500, //delay removal by X to allow out-animation,
+				items: {
+					src: $('#modal-panel')
+				}
+			});
+		});
+
+		$('.addAsset').on('click', function (){
+			$('#galleryupload-pdf').val($('.selected').data('asset-id'));
+			var magnificPopup = $.magnificPopup.instance;
+
+			magnificPopup.close();
+		})
+
+	});
+</script>
+
+@endpush
