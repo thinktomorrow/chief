@@ -60,7 +60,7 @@
 		<input id="galleryupload-banner" class="hidden" type="text" name="trans[{{$locale}}][files][banner]" value="">
 	</div>
 	@push('sidebar')
-		@include('back.articles._bannerupload')
+		@include('back.articles.sidebar.bannerupload')
 	@endpush
 </article>
 <!-- PDF UPLOADS -->
