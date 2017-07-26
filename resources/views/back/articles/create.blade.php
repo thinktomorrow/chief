@@ -57,7 +57,7 @@
 
         </div>
 
-        @include('back.articles._formtabs')
+        @include('back.articles.form.formtabs')
 
         <aside class=" col-md-3">
           <div class="panel">

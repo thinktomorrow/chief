@@ -15,8 +15,8 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table){
             $table->increments('id');
-            $table->boolean('published');
-            $table->boolean('featured');
+            $table->boolean('published')->default(false);
+            $table->boolean('featured')->default(false);
             $table->timestamp('publication')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -24,7 +24,7 @@ class ArticleRepository extends Model
         $this->request = $request;
         $this->validateRequest();
         $article    = new Article;
-        $article->publication = Carbon::createFromFormat('m/d/Y H:i A', $request->publication);
+        $article->publication = Carbon::createFromFormat('d-m-Y', $request->publication);
         $article->save();
 
         $this->saveArticleTranslations($article);

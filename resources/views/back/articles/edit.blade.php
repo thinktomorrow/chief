@@ -55,7 +55,7 @@
 
   $(".overlay").click(function(){
     $('#sidebar_right.detail-open').removeClass('detail-open');
-    $('.overlay').hide(); // Show overlay when detail is active
+    $('.overlay').hide(); // Hide overlay when detail is active
     $(document.body).removeClass('sidebar-media-open');
   });
 
@@ -83,10 +83,10 @@
 {!! Form::model($article,['method' => 'PUT', 'route' => ['articles.update',$article->getKey()],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}
 <div class="row">
 
-  @include('back.articles._formtabs')
+  @include('back.articles.form.formtabs')
 
   @push('sidebar')
-    @include('back.articles._imageupload')
+    @include('back.articles.sidebar.imageupload')
   @endpush
   {{--temporary input to inject uploaded file from gallery--}}
   <input id="galleryupload" class="hidden" type="text" name="asset_id" value="">

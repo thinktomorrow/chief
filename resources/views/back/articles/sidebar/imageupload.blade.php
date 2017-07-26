@@ -43,33 +43,8 @@
 	</div>
 </aside>
 
-<div id="modal-panel" class="popup-basic bg-none mfp-with-anim mfp-hide">
-	<div class="panel">
-	@foreach($assets as $media)
-		<div class="mix col-sm-6 col-md-6 col-lg-3 {{ $loop->first ? 'selected' : '' }}" data-asset-id="{{ $media->id }}">
-			<div class="panel media pbn">
-				<div class="panel-heading">
-					<span class="panel-icon pull-left">
-						<i class="fa fa-image"></i>
-					</span>
-					<span class="panel-title overflow-ellipsis">
-                        {{ $media->getFilename() }}
-                    </span>
-				</div>
-				<div class="panel-body pn">
-					<figure class="gallery-item mn">
-						<picture>
-							<img src="{{ $media->getImageUrl('large') }}" class="img-responsive"
-							     title="{{ $media->getFilename() }}">
-						</picture>
-					</figure>
-				</div>
-			</div>
-		</div>
-	@endforeach
-		<button class="addAsset">Selecteer</button>
-	</div>
-</div>
+@include('back.articles.modals.library_modal')
+
 @push('custom-scripts')
 
 <script>

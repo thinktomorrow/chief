@@ -33,7 +33,9 @@ class ArticlesController extends Controller
     public function create()
     {
         $article = new Article();
-        return view('back.articles.create',compact('article'));
+        $assets = Asset::getAllAssets();
+
+        return view('back.articles.create',compact('article', 'assets'));
     }
 
     /**

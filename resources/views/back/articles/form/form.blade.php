@@ -40,7 +40,7 @@
     </div>
   </div>
 </article>
-
+@if($article->id != null)
 <!-- IMAGE UPLOADS -->
 <article class="panel panel-dark pn col-md-6">
   <div class="panel-heading">Afbeeldingen</div>
@@ -59,7 +59,7 @@
     </button>
   </div>
   @push('sidebar')
-    @include('back.articles._bannerupload')
+    @include('back.articles.sidebar.bannerupload')
   @endpush
 </article>
 <!-- PDF UPLOADS -->
@@ -79,7 +79,7 @@
       Upload nieuwe pdf
     </button>
     @push('sidebar')
-      @include('back.articles._pdfupload')
+      @include('back.articles.sidebar.pdfupload')
     @endpush
   </div>
 </article>
@@ -93,3 +93,5 @@
   });
 </script>
 @endpush
+
+@endif
