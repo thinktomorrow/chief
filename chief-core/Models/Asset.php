@@ -212,7 +212,7 @@ class Asset extends Model implements HasMediaConversions
      */
     public static function getAllAssets()
     {
-        return self::all();
+        return self::all()->sortByDesc('created_at');
     }
 
     /**

@@ -7,6 +7,7 @@ use Chief\Models\Article;
 use Chief\Models\ArticleRepository;
 use Chief\Models\Asset;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ArticlesController extends Controller
 {
@@ -90,7 +91,7 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        $message = (new ArticleDeleteController($id))->delete();
+        $message = (new ArticleRepository())->remove($id);
 
         return redirect()->route('back.article.index')->with('messages.warning', $message);
     }

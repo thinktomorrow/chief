@@ -17,7 +17,7 @@
               <span class="fa fa-fw fa-file-excel-o"></span> Spreadsheets
             </button>
             {{-- <button type="button" class="btn btn-default ml15 disabled" >Sorteer op datum</button> --}}
-            <button type="button" class="sort btn btn-default ml15" data-sort="media-order:desc">Nieuwste eerst</button>
+            <button type="button" class="sort btn btn-default ml15 active" data-sort="media-order:desc">Nieuwste eerst</button>
             <button type="button" class="sort btn btn-default" data-sort="media-order:asc">Oudste eerst</button>
           </div>
         </div>
