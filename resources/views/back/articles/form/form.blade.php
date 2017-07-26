@@ -47,8 +47,18 @@
 	<div class="panel-body br-n p15">
 		@if($article->hasFile('banner', $locale))
 			<div class="well wel-sm">
-				<span class="overflow-ellipsis">{{ $article->getFileName('banner', $locale) }}</span>
+				<span class="overflow-ellipsis show-image-name">
+					{{ $article->getFileName('banner', $locale) }}
+				</span>
 				<a href="{{ $article->getFileUrl('banner', '', $locale) }}" class="preview">
+					<span class="pull-right">Preview <i class="fa fa-eye mr5"></i></span>
+				</a>
+			</div>
+		@else
+			<div class="well wel-sm">
+				<span class="overflow-ellipsis show-image-name">
+				</span>
+				<a href="" class="preview">
 					<span class="pull-right">Preview <i class="fa fa-eye mr5"></i></span>
 				</a>
 			</div>
@@ -72,6 +82,14 @@
 				<span class="overflow-ellipsis">{{ $article->getFileName('pdf', $locale) }}</span>
 				<a href="{{ $article->getFileUrl('pdf', '', $locale) }}" target="_blank">
 					<span class="pull-right">Open pdf <i class="fa fa-eye mr5"></i></span>
+				</a>
+			</div>
+		@else
+			<div class="well wel-sm">
+				<span class="overflow-ellipsis show-image-name">
+				</span>
+				<a href="" class="preview">
+					<span class="pull-right">Preview <i class="fa fa-eye mr5"></i></span>
 				</a>
 			</div>
 		@endif

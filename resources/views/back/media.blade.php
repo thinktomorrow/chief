@@ -24,6 +24,7 @@
 @endpush
 
 @push('custom-scripts')
+{{-- USED FOR THE MEDIA FILTERS --}}
 <script src="{{ asset('assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
 
 <script>
@@ -51,33 +52,31 @@
 // Get universal class for the checkbox and put it in a variable
 		var getCheckbox = $(".checkbox-delete > input:checkbox");
 
-
-		// SHOW OR HIDE DELETE BUTTON
-		$('.showDeleteUptions').click(function () {
-			$('.deleteActions').removeClass('hidden');
-			$('.deleteActions span').text($(".media-gallery :checkbox:checked").length + ' bestanden verwijderen?');
-			$('.showDeleteUptions').addClass('hidden');
-		});
-		$('.noDelete').click(function () {
-			$('.deleteActions').addClass('hidden');
-			$('.showDeleteUptions').removeClass('hidden');
-		});
+  // SHOW OR HIDE DELETE BUTTON
+  $('.showDeleteUptions').click(function(){
+    $('.deleteActions').removeClass('hidden');
+    $('.deleteActions span').text($(".media-gallery :checkbox:checked").length + ' bestanden verwijderen?');
+    $('.showDeleteUptions').addClass('hidden');
+  });
+  $('.noDelete').click(function(){
+    $('.deleteActions').addClass('hidden');
+    $('.showDeleteUptions').removeClass('hidden');
+  });
 
 // ***********************************
 // ** SELECT IMAGES TO DELETE **
 // ***********************************
 
-
-		function countCheckboxes() {
-			// When on or more checkbox is checked, show the deleteButton
-			var selectedCheckbox = $(":checkbox:checked").length;
-			if (selectedCheckbox > 0) {
-				$('.deleteMedia').removeClass('hidden')
-			}
-			else {
-				$('.deleteMedia').addClass('hidden')
-			}
-		};
+  function countCheckboxes(){
+    // When on or more checkbox is checked, show the deleteButton
+    var selectedCheckbox = $(":checkbox:checked").length;
+    if (selectedCheckbox > 0){
+      $('.deleteMedia').removeClass('hidden')
+    }
+    else{
+      $('.deleteMedia').addClass('hidden')
+    }
+  };
 
 		getCheckbox.change(function () {
 			countCheckboxes();
@@ -170,22 +169,18 @@
 			},
 		},
 
-		overflowY: 'scroll',
-		removalDelay: 200, //delay removal by X to allow out-animation
-		prependTo: $('#content_wrapper')
-	});
-	$('.gallery').each(function () { // the containers for all your galleries
-		$(this).magnificPopup({
-			delegate: 'a', // the selector for gallery item
-			type: 'image',
-			gallery: {
-				enabled: true
-			}
-		});
-	});
-
-
+  overflowY: 'scroll',
+  removalDelay: 200, //delay removal by X to allow out-animation
+  prependTo: $('#content_wrapper')
+});
+$('.gallery').each(function() { // the containers for all your galleries
+    $(this).magnificPopup({
+        delegate: 'a', // the selector for gallery item
+        type: 'image',
+        gallery: {
+          enabled:true
+        }
+    });
+});
 </script>
-
-
 @endpush

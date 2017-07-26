@@ -3,8 +3,8 @@
 		<div class="panel-heading">Mediagalerij</div>
 		<div class="panel-body">
 			@foreach($assets as $media)
-				<div class="mix col-sm-6 col-md-4 col-lg-2 {{ $loop->first ? 'selected' : '' }}" data-asset-id="{{ $media->id }}">
-					<div class="panel media pbn">
+				<div class="mix col-sm-6 col-md-4 col-lg-2">
+					<div class="panel media pbn" data-asset-id="{{ $media->id }}" data-asset-url="{{ $media->getFileUrl() }}">
 						<div class="panel-heading">
 							<span class="panel-icon pull-left">
 								<i class="fa fa-image"></i>
@@ -13,11 +13,11 @@
 								{{ $media->getFilename() }}
 							</span>
 							<span class="panel-controls">
-								<div class="checkbox-delete">
-									<label class="hidden" for="checkboxMedia-{{ $media->id }}">
+								<div class="selectMedia">
+									<label class="" for="selectMedia-{{ $media->id }}">
 										<h3 class="text-default pt5 pn mn"><i class="fa fa-check-circle"></i></h3>
 									</label>
-									<input class="" type="radio" value="{{ $media->id }}">
+									<input class="hidden" id="selectMedia-{{ $media->id }}" name="selectRadio" type="radio" value="{{ $media->id }}" checked="">
 								</div>
 							</span>
 						</div>
@@ -38,3 +38,17 @@
 		</div>
 	</div>
 </div>
+@push('custom-scripts')
+<script>
+	$(function(){
+		{{-- SELECT NEW FILE FROM MEDIALIBRARY --}}
+		var getRadio = $('.selectMedia > input:radio');
+		getRadio.change(function (){
+			$(".panel").removeClass('selected');
+			if (getRadio.is(":checked")) {
+					$(this).closest(".panel").addClass('selected');
+			}
+		});
+	});
+</script>
+@endpush

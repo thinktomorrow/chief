@@ -85,9 +85,7 @@
 
   @include('back.articles.form.formtabs')
 
-  @push('sidebar')
-    @include('back.articles.sidebar.imageupload')
-  @endpush
+ 
   {{--temporary input to inject uploaded file from gallery--}}
 
   <div class="col-md-3">
