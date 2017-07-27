@@ -174,6 +174,7 @@ return [
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -245,6 +246,7 @@ return [
         'ImageOptimizer'    => Spatie\LaravelImageOptimizer\ImageOptimizerFacade::class,
         'Form'              => Collective\Html\FormFacade::class,
         'Html'              => Collective\Html\HtmlFacade::class,
+        'Charts'            => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 
 ];

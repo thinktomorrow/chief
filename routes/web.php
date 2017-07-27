@@ -35,6 +35,10 @@ Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],
     Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
     Route::get('/settings',['as' => 'admin.settings','uses' => SettingsController::class.'@show']);
 
+    Route::post('notes/publish',['as' => 'notes.publish','uses' => NoteController::class.'@publish']);
+    Route::resource('notes', NoteController::class);
+
+    //USER MANAGEMENT
     Route::get('users', 'UserController@index')->name('users.index')->middleware('permission:view_users');
     Route::post('users', 'UserController@store')->name('users.store')->middleware('permission:add_users');
     Route::get('users/create', 'UserController@create')->name('users.create')->middleware('permission:add_users');

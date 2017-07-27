@@ -76,6 +76,13 @@
                     <span class="sidebar-title">Galerij</span>
                 </a>
             </li>
+            <li class="sidebar-label pt20">Website</li>
+            <li>
+                <a href="{{ route('notes.index') }}">
+                    <span class="fa fa-file-text-o"></span>
+                    <span class="sidebar-title">Notificaties</span>
+                </a>
+            </li>
         </ul>
         <!-- End: Sidebar Menu -->
 

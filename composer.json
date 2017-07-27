@@ -7,6 +7,7 @@
     "require": {
         "php": ">=7.0",
         "bugsnag/bugsnag-laravel": "^2.4",
+        "consoletvs/charts": "4.*",
         "dimsav/laravel-translatable": "^7.0",
         "doctrine/dbal": "^2.5",
         "laravel/framework": "5.4.*",

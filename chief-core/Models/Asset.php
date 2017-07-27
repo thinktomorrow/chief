@@ -71,12 +71,10 @@ class Asset extends Model implements HasMediaConversions
         if (filesize($file) > 11)
         {
             return !!exif_imagetype($file);
-
         }
         else
         {
             return false;
-
         }
     }
 
