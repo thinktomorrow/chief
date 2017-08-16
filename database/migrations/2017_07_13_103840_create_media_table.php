@@ -20,8 +20,8 @@ class CreateMediaTable extends Migration
             $table->string('mime_type')->nullable();
             $table->string('disk');
             $table->unsignedInteger('size');
-            $table->json('manipulations');
-            $table->json('custom_properties');
+            $table->text('manipulations'); // for mysql 5.7 this should be json()
+            $table->text('custom_properties'); // for mysql 5.7 this should be json()
             $table->unsignedInteger('order_column')->nullable();
             $table->nullableTimestamps();
         });
