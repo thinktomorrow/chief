@@ -14,6 +14,7 @@
           <!-- STARTING THE FORM -->
           <form action="{{ route('users.update', $user->id) }}" class="formEditUser" method="POST">
           {!! csrf_field() !!}
+            <input type="hidden" name="_method" value="PUT">
             <!-- NAAM INPUT -->
             <div class="input-group mv15">
               <span class="input-group-addon text-muted">

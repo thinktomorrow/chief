@@ -8,8 +8,10 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -108,10 +110,10 @@ class UserController extends Controller
             'firstname'=>'required|max:120',
             'lastname'=>'required|max:120',
             'email'=>'required|email|unique:users,email,'.$id,
-//            'password'=>'required|min:6|confirmed'
         ]);
         $input = $request->only(['firstname', 'lastname', 'email']);
         $roles = $request['roles'];
+
         $user->fill($input)->save();
         if (isset($roles)) {
             $user->roles()->sync($roles);

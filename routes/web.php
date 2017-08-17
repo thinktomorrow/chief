@@ -5,7 +5,7 @@
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'Back'],function(){
+Route::group(['prefix' => 'admin','middleware' =>'auth' ,'namespace' => 'back'],function(){
 
     // ARTICLES
     Route::get('articles','ArticlesController@index')->name('articles.index');
