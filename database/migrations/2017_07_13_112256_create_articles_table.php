@@ -21,6 +21,20 @@ class CreateArticlesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('article_translations', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('locale');
+            $table->string('title');
+            $table->text('content');
+            $table->text('short');
+            $table->string('slug')->unique();
+            $table->text('meta_description')->nullable();
+            $table->timestamps();
+            $table->integer('article_id')->unsigned();
+
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+        });
     }
 
     /**
@@ -30,6 +44,7 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('article_translations');
         Schema::dropIfExists('articles');
     }
 }

@@ -15,9 +15,15 @@ class CreateAssetTable extends Migration
     {
         Schema::create('assets', function(Blueprint $table){
            $table->increments('id');
-           $table->integer('model_id')->nullable();
-           $table->integer('model_type')->nullable();
            $table->timestamps();
+        });
+
+        Schema::create('asset_pivots', function (Blueprint $table){
+            $table->integer('asset_id');
+            $table->integer('entity_id');
+            $table->string('entity_type');
+            $table->string('type')->nullable();
+            $table->string('locale')->nullable();
         });
     }
 
@@ -28,6 +34,7 @@ class CreateAssetTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('asset_pivots');
+        Schema::dropIfExists('assets');
     }
 }

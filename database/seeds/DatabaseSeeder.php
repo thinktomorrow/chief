@@ -51,36 +51,17 @@ class DatabaseSeeder extends Seeder
                     // for others by default only read access
                     $role->syncPermissions(Permission::where('name', 'LIKE', 'view_%')->get());
                 }
-
-                // create one user for each role
-                $this->createUser($role);
             }
 
             $this->command->info('Roles ' . $input_roles . ' added successfully');
 
         } else {
             Role::firstOrCreate(['name' => 'User']);
-            $this->command->info('Added only default user role.');
+            $this->command->info('Added default user role.');
         }
 
-        // now lets seed some posts for demo
-        $this->command->warn('All done :)');
-    }
-
-    /**
-     * Create a user with given role
-     *
-     * @param $role
-     */
-    private function createUser($role)
-    {
-        $user = factory(User::class)->create();
-        $user->assignRole($role->name);
-
-        if( $role->name == 'Admin' ) {
-            $this->command->info('Here is your admin details to login:');
-            $this->command->warn($user->email);
-            $this->command->warn('Password is "secret"');
+        if ($this->command->confirm('Do you want to create a new admin user ?', true)) {
+            $this->command->call('admin:create');
         }
     }
 }
