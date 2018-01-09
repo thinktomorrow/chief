@@ -11,6 +11,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
 class ArticleTest extends TestCase
 {
@@ -105,20 +106,5 @@ class ArticleTest extends TestCase
 
         $this->assertTrue(Article::sortedByRecent()->first()->created_at->gt(Carbon::now()->subday()));
         $this->assertTrue(Article::sortedByRecent()->get()->last()->created_at->lt(Carbon::now()->subdays(5)));
-    }
-
-    /**
-     * @test
-     */
-    public function it_can_check_if_it_has_media()
-    {
-        $article = factory(Article::class)->create();
-
-        $this->assertFalse($article->hasMedia());
-
-        //upload a single image
-        $article = Asset::upload(UploadedFile::fake()->image('image2.png'))->attachToModel($article, 'banner',  'nl');
-
-        $this->assertTrue($article->hasMedia());
     }
 }

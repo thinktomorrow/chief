@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 
 class Article extends Model implements TranslatableContract, HasMedia
 {
-    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, HasMediaTrait;
+    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable;
 
     protected $table = 'articles';
     public $timestamps = true;
@@ -44,10 +45,5 @@ class Article extends Model implements TranslatableContract, HasMedia
     public static function getAll()
     {
         return self::published()->get();
-    }
-
-    public function hasMedia(string $collection = 'default'): bool
-    {
-        return !$this->assets->isEmpty();
     }
 }

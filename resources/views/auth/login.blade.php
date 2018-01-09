@@ -1,34 +1,54 @@
 @extends('back._layouts.login')
 
 @section('title')
-    Login
+  Login
 @endsection
 
 @section('content')
-<div class="login-page">
-  <h1>Inloggen</h1>
-  <p>"Don't let yesterday use up too much of today."</p>
-    @if($errors and count($errors) > 0)
-        <div class="message error">
-            @foreach($errors->all() as $error)
-                  <span class="lnr lnr-warning mr5"></span>{{ $error }}<br>
-            @endforeach
+  <div class="login-wrapper">
+    <div class="login-block">
+      <h1>Inloggen</h1>
+
+      <form class="form" id="valid" role="form" method="POST" action="{{ url('/login') }}">
+        {{ csrf_field() }}
+        <div class="form-wrapper">
+          @if($errors and count($errors) > 0)
+            <div class="message error squished">
+              @foreach($errors->all() as $error)
+                <span class="lnr lnr-warning lnr-margin"></span>{{ $error }}<br>
+              @endforeach
+            </div>
+          @endif
+          <div class="squished">
+            <div class="input-group-prefix relative">
+              <span class="input-prefix"><span class="lnr lnr-user"></span></span>
+              <input type="email" class="validate[required]" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}" autofocus>
+            </div>
+          </div>
+          <div class="squished">
+            <div class="input-group-prefix relative">
+              <span class="input-prefix"><span class="lnr lnr-lock"></span></span>
+              <input type="password" class="validate[required]" name="password" placeholder="Wachtwoord" id="password">
+            </div>
+          </div>
+          <div class="squished">
+            <label for="rememberCheckbox" class="remember">
+              <input id="rememberCheckbox" {{ old('remember') ? 'checked=checked':null  }} type="checkbox" name="remember">
+              Hou me ingelogd
+            </label>
+          </div>
         </div>
-    @endif
 
-    <form class="login-form" id="valid" role="form" method="POST" action="{{ url('/login') }}">
-      {{ csrf_field() }}
-      <div class="input-group">
-        <span class="lnr lnr-user"></span>
-        {!! Form::text('email', null, array('class'=>'validate[required]', 'placeholder'=>'E-mail', 'id'=>'identity')) !!}
+        <div class="squished">
+          <button type="submit" class="btn btn-block submitForm">Inloggen</button>
+        </div>
+        <div class="squished">
+          <div class="message"><a href="{{ route('password.request') }}">Wachtwoord vergeten?</a></div>
+        </div>
+      </form>
+      <div class="back-btn">
+        <a href="{{ route('home') }}">Keer terug naar de shop</a>
       </div>
-      <div class="input-group">
-        <span class="lnr lnr-keyboard"></span>
-        {!! Form::password('password', array('class'=>'validate[required]', 'placeholder'=>'Wachtwoord', 'id'=>'password')) !!}
-      </div>
-      {!! Form::submit('Inloggen', array('class'=>'checker greyishBtn submitForm'))!!}
-
-      <span class="message"><a href="{{ url('/password/reset') }}">Wachtwoord vergeten?</a></span>
-    </form>
-</div>
- @stop
+    </div>
+  </div>
+@stop

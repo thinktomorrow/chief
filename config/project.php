@@ -11,11 +11,11 @@ return [
     /**
      * Name of the project
      */
-    'name' => 'Chief',
+    'name' => 'Test',
 
     /**
      * Client name
      */
-    'client' => 'Chief',
+    'client' => 'Test',
 
 ];

@@ -173,7 +173,6 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
 
         /*
@@ -243,9 +242,6 @@ return [
         'View'          => Illuminate\Support\Facades\View::class,
 
         'Locale'            => \Thinktomorrow\Locale\Facades\LocaleFacade::class,
-        'ImageOptimizer'    => Spatie\LaravelImageOptimizer\ImageOptimizerFacade::class,
-        'Form'              => Collective\Html\FormFacade::class,
-        'Html'              => Collective\Html\HtmlFacade::class,
         'Charts'            => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 

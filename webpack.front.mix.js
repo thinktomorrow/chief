@@ -1,11 +1,12 @@
 const { mix } = require('laravel-mix');
 
-mix.js('resources/assets/front/js/main.js', 'public/assets/js')
-   .sass('resources/assets/front/sass/main.scss', 'public/assets/css')
+mix.setPublicPath(path.normalize('public/assets/front'))
+	.js('resources/assets/front/js/main.js', 'public/assets/front/js')
+	.sass('resources/assets/front/sass/main.scss', 'public/assets/front/css')
 
-    .version()
+	.version()
 
-    .options({
-        // Webpack setting to ignore sass loader to follow url() paths
-        processCssUrls: false,
-    });
+	.options({
+		// Webpack setting to ignore sass loader to follow url() paths
+		processCssUrls: false,
+	});
