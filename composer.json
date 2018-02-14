@@ -8,15 +8,15 @@
         "php": ">=7.1",
         "bugsnag/bugsnag-laravel": "^2.9",
         "consoletvs/charts": "5.*",
-        "dimsav/laravel-translatable": "^8.0",
+        "dimsav/laravel-translatable": "^9.0",
         "doctrine/dbal": "^2.5",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "spatie/laravel-image-optimizer": "^1.0",
         "spatie/laravel-permission": "^2.5",
-        "thinktomorrow/locale": "^1.4",
-        "thinktomorrow/squanto": "^0.3",
-        "thinktomorrow/assetlibrary": "^0.3"
+        "thinktomorrow/locale": "^1.5",
+        "thinktomorrow/squanto": "^0.4",
+        "thinktomorrow/assetlibrary": "^0.4"
     },
     "require-dev": {
         "filp/whoops": "^2.1",
