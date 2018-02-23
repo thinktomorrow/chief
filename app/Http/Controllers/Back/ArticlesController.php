@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use Chief\Models\Article;
 use Chief\Models\ArticleRepository;
-use Chief\Models\Asset;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Thinktomorrow\AssetLibrary\Models\Asset;
 
 class ArticlesController extends Controller
 {
