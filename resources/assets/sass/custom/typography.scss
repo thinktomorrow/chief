@@ -1,0 +1,16 @@
+.brand-logo{
+    max-width: 200px;
+    max-height: 75px;
+}
+.fill-img{
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  /* fill parent with element */
+  // position:absolute;
+  width:100%;
+  height:100%;
+  // left:0;
+  // top: 0;
+}

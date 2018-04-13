@@ -1,0 +1,56 @@
+// NOTIFICATIONS
+.peekaboo{
+  position: fixed;
+  top: 1rem; right: 1rem;
+  width: auto;
+}
+.alert{
+  display: flex;
+  border-radius: 0;
+
+  & .alert__btn{
+    cursor: pointer;
+    border-radius: 0;
+    transition: $transition;
+  }
+  &:hover{
+    cursor: pointer;
+    @extend .--raised;
+  }
+  &.icon{
+
+  }
+}
+
+
+$alert-name: primary secondary success warning error information;
+$colors: $color-primary $color-secondary $color-success $color-warning $color-error $color-information;
+
+@each $alert in $alert-name{
+  $i: index($alert-name, $alert);
+  // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+  $color: nth($colors, $i);
+  .alert--#{$alert}{
+    background-color: $color;
+    color: $color-white;
+    border: 1px solid darken($color, 10%);
+    .alert__btn{
+      color:  $color-white;
+      &:hover{
+        color: darken($color, 30%);
+      }
+    }
+  }
+  .alert-o--#{$alert}{
+    background-color: $color-white;
+    color: $color;
+    border: 1px solid darken($color, 10%);
+    .alert__btn{
+      color:  $color;
+      &:hover{
+        color: darken($color, 30%);
+      }
+    }
+  }
+
+}

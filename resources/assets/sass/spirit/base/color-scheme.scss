@@ -1,0 +1,24 @@
+// COLOR SCHEME
+.color-scheme{
+  .color-block{
+    color: $color-emphasis;
+    span{
+      display: block;
+    }
+  }
+}
+
+$color-name: primary secondary tertiary dark white black border heading font subtle success warning error information;
+$colors: $color-primary $color-secondary $color-tertiary $color-emphasis $color-white $color-black $color-border $color-heading  $color-font  $color-subtle $color-success $color-warning $color-error $color-information;
+
+@each $block in $color-name{
+  $i: index($color-name, $block);
+  // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .bg-#{$block}{
+      background-color: $color;
+    }
+    .text-#{$block}{
+      color: $color;
+    }
+}

@@ -1,4 +1,41 @@
+##########################################
+# CODING
+##########################################
+_migration/uploads
+/storage/debugbar
+/vendor
+/.idea
+.env
+/report
+
+##########################################
+# BUILDING
+##########################################
 /node_modules
+/npm-debug.log
+/yarn-error.log
+
+##########################################
+# USERLAND
+##########################################
+/public/media
+/public/uploads
+/storage/medialibrary
+/storage/*.key
+
+
+
+
+
+
+
+
+
+
+/node_modules
+npm-debug.log
+yarn-error.log
+
 /public/storage
 /public/uploads
 /public/hot

@@ -1,0 +1,63 @@
+textarea,
+input[type='text'],
+input[type='email'],
+input[type='url'],
+input[type='number'],
+input[type='search'],
+input[type='phone'],
+input[type='password'],
+input[type='file'],
+.custom-file-input{
+    width: 100%;
+    border-radius: $default-border-radius;
+    border: 1px solid $color-border;
+    &:focus{
+        box-shadow: 0 0 5px $color-subtle;
+        border: 1px solid $color-subtle;
+        outline: none;
+    }
+}
+
+// SEARCH
+.search-wrapper{
+    position: relative;
+    &:after{
+        display: block;
+        // Icon
+        font-family: 'linearicons';
+        content: '\e86f';
+        // Position
+        position: absolute;
+        right: $spacy;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+
+// ERRORS AND VALIDS
+.valid{
+    color: $color-success;
+    textarea,
+    input[type='text'],
+    input[type='email'],
+    input[type='url'],
+    input[type='password']{
+        border: 1px solid $color-success;
+        color: $color-success;
+    }
+}
+.error{
+    color: $color-error;
+    textarea,
+    input[type='text'],
+    input[type='email'],
+    input[type='url'],
+    input[type='password']{
+        border: 1px solid $color-error;
+        color: $color-error;
+    }
+    .input-prefix{
+        color: $color-error;
+    }
+}

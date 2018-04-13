@@ -1,0 +1,18 @@
+.formgroup{
+
+    /* override the default gutter margin-bottom */
+    .formgroup-info, .formgroup-input{
+        margin-bottom:0;
+    }
+
+    @extend .stack-l;
+
+    h2{
+        font-size:1em;
+        text-transform: uppercase;
+    }
+}
+
+.redactor-toolbar{
+    z-index:10; // override default 100 z-index
+}

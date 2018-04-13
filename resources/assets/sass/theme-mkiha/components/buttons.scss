@@ -1,0 +1,143 @@
+// BUTTONS
+a.btn{
+    text-decoration: none;
+    line-height: 1;
+}
+button{
+    -webkit-appearance: none;
+    border: inherit;
+    &:focus{
+        outline: 0;
+    }
+}
+.btn{
+    padding: $space-s / 2 $space-s;
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border-radius: $btn-border-radius;
+    text-align: center;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+.btn-rounded{
+    border-radius: 3rem;
+}
+
+.btn-block{
+    display: block;
+    width: 100%;
+}
+
+.btn-link{
+    display: inline-block;
+    position:relative;
+    text-decoration: none;
+    &:after{
+        content:'';
+        display: block;
+        height: 1px;
+        position:absolute;
+        left:0;
+        bottom:0;
+        width: 0;
+        transition: $transition;
+    }
+    &:hover{
+        &:after{
+            width: 100%;
+        }
+    }
+}
+
+.btn-circle{
+    height: calc(#{$circle-diameter} * 2);
+    width: calc(#{$circle-diameter} * 2);
+    padding: 0;
+    text-align: center;
+    border-radius: 50%;
+    line-height: calc(#{$circle-diameter} * 2);
+    & [class^="icon-"]{
+        line-height: calc(#{$circle-diameter} * 2 + 4px);
+    }
+}
+
+.btn-circle-s{
+    @extend .btn-circle;
+    min-height: 2em;
+    min-width: 2em;
+    height: auto;
+    width: auto;
+    line-height: 1;
+    padding: .2em;
+}
+
+.btn-icon{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    & > *:first-child{
+        @extend .inline-s;
+    }
+}
+
+.btn-delete{
+    .btn{
+        @extend .inline;
+        color: $color-font;
+        &:hover{
+            color: $color-error;
+        }
+    }
+}
+
+$button-name: primary secondary tertiary white success error warning information subtle;
+$colors: $color-primary $color-secondary $color-tertiary $color-white $color-success $color-error $color-warning $color-information $color-subtle;
+
+@each $button in $button-name{
+    $i: index($button-name, $button);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .btn-o-#{$button}{
+        background-color: transparent;
+        color: $color;
+        border: 1px solid $color;
+        &:hover, &:focus, &:active, &.active{
+            background-color: $color!important;
+            color: white;
+            border: 1px solid $color;
+            //box-shadow: 0 14px 26px -12px rgba($color, 0.42),
+            //0 4px 23px 0px rgba($color, 0.12),
+            //0 8px 10px -5px rgba($color, 0.2)
+        }
+    }
+    .btn-#{$button}{
+        background-color: $color;
+        color: $color-white;
+        border: 1px solid $color;
+        &:hover, &:focus, &:active, &.active{
+            color: $color-white;
+            background-color: darken($color, 5%);
+            border: 1px solid darken($color, 5%);
+            //box-shadow: 0 14px 26px -12px rgba($color, 0.42),
+            //0 4px 23px 0px rgba($color, 0.12),
+            //0 8px 10px -5px rgba($color, 0.2)
+        }
+        &:disabled{
+            background-color: $color-subtle;
+            border: 1px solid $color-subtle;
+            color: $color-font;
+            box-shadow: none;
+            cursor: default;
+        }
+
+    }
+
+    .btn-link.text-#{$button}{
+        &:after{
+            background-color: $color;
+        }
+    }
+
+}

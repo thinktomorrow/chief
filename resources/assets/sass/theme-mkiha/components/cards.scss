@@ -1,0 +1,78 @@
+.card-group-title {
+  @extend .stack;
+  text-transform: uppercase;
+  &:hover {
+	color: $color-primary;
+	a {
+	  color: $color-font;
+	  &:hover {
+		color: $color-primary;
+		text-decoration: none;
+	  }
+	}
+  }
+}
+
+.card {
+	border: 1px solid $color-border;
+    background-color: hsl($color-primary-hue, 20, 96);
+	.card-header {
+		background-color: $color-white;
+    }
+	.card-body {
+        border-top: 1px solid $color-border;
+		ul{
+            margin-bottom: 0;
+            li{
+                list-style: none;
+                display: inline-block;
+                font-size: 0.9rem;
+                &:not(:last-child){
+                    &::after{
+                        content: ',';
+                        display: inline-block;
+                        margin-right: 0.5rem;
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+	}
+	.icon {
+		height: 100%;
+		margin: 0;
+	}
+	.card-menu {
+		a:hover {
+			text-decoration: none;
+		}
+		a, button {
+			.icon {
+				margin: 0 !important;
+			}
+			.icon-edit, .icon-trash {
+			}
+			.icon-edit:hover {
+				color: $color-primary !important;
+			}
+			.icon-trash:hover {
+				color: $color-error !important;
+			}
+		}
+	}
+	&.--offline {
+		.card-header {
+			.tag-name {
+				color: $color-font;
+			}
+		}
+		.indicator {
+			@extend .--subtle;
+		}
+	}
+	&.--online {
+		.indicator {
+			@extend .--success;
+		}
+	}
+}

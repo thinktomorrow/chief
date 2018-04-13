@@ -1,0 +1,29 @@
+$indicator-array: success info warning error subtle;
+$colors: $color-success $color-information $color-warning $color-error $color-subtle;
+
+.indicator{
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+
+
+  @each $indicator in $indicator-array{
+    $i: index($indicator-array, $indicator);
+    $color: nth($colors, $i);
+
+    &.--#{$indicator}{
+      background: $color;
+      border: 1px solid darken($color,5%);
+      color: $color;
+      //animation: blink 3s infinite;
+    }
+  }
+
+}
+
+@keyframes blink {
+  0%   { box-shadow: 0 0 10px; }
+  50%  { box-shadow: 0 0 30px; }
+  100% { box-shadow: 0 0 10px; }
+}

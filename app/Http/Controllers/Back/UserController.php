@@ -70,7 +70,7 @@ class UserController extends Controller
             }
         }
 
-        return redirect()->route('users.index')
+        return redirect()->route('back.users.index')
             ->with('flash_message',
                 'User successfully added.');
     }
@@ -121,7 +121,7 @@ class UserController extends Controller
         else {
             $user->roles()->detach();
         }
-        return redirect()->route('users.index')
+        return redirect()->route('back.users.index')
             ->with('flash_message',
                 'User successfully edited.');
     }
@@ -135,7 +135,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('users.index')
+        return redirect()->route('back.users.index')
             ->with('flash_message',
                 'User successfully deleted.');
     }

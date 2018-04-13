@@ -1,0 +1,38 @@
+
+// PRIMARY COLOR
+$color-primary-hue: 125; // set our color values separate for more control
+$color-primary-sat: 48;
+$color-primary-light: 50;
+$color-primary: hsl($color-primary-hue, $color-primary-sat, $color-primary-light); // #56c460;
+
+// SECONDARY COLOR
+$color-secondary-hue: 223;
+$color-secondary-sat: 43;
+$color-secondary-light: 46;
+$color-secondary: hsl($color-secondary-hue, $color-secondary-sat, $color-secondary-light); // #4360a8;
+
+$color-tertiary:      #d81b60;
+
+$color-heading:       #202430; // Used for titles
+$color-font:          #9da6b4; // Used for paragraph text
+$color-body:          #fafbfb; // rgba(247,248,249,.56); // Used for body
+$color-border:        #e4e7eb; // Used for borders
+$color-shadow:        #eff3f8; // Used for shadows
+
+$color-tab-body:      #f7f7f7;
+$color-tab-dark:      #4f5164;
+$color-tab-border:    darken($color-tab-body, 10%);
+
+$color-subtle:        #D9D9D9;
+$color-dark:          #4f5164;
+$color-white:         #ffffff;
+$color-black:         #000000;
+
+$color-success:       #52bb52;
+$color-warning:       #ffa726;
+$color-error:         #e03550;
+$color-information:   #008AE5;
+
+// components
+$color-table:         #f7f8f9 !default;
+$color-link:          #212631 !default;

@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AuthenticateSuperadmin;
+use App\Http\Middleware\Honeypot;
 use App\Http\Middleware\OptimizeImages;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -37,6 +39,15 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        'back' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \App\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',
@@ -53,6 +64,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'auth'              => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic'        => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'auth.superadmin'   => AuthenticateSuperadmin::class,
         'bindings'          => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can'               => \Illuminate\Auth\Middleware\Authorize::class,
         'guest'             => \App\Http\Middleware\RedirectIfAuthenticated::class,
@@ -60,5 +72,9 @@ class Kernel extends HttpKernel
         'role'              => \App\Http\Middleware\RoleMiddleware::class,
         'permission'        => \App\Http\Middleware\PermissionMiddleware::class,
         'optimizeImages'    => OptimizeImages::class,
+        'honeypot'          => Honeypot::class,
+
+        // TODO: should be replaced with proper role
+        'squanto.developer' => \Thinktomorrow\Squanto\Manager\Http\Middleware\Developer::class,
     ];
 }
