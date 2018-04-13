@@ -1,10 +1,11 @@
 <?php
 
-namespace Chief\Models;
+namespace Chief\Articles;
 
 
-use Chief\Locale\Translatable;
-use Chief\Locale\TranslatableContract;
+use Chief\Common\Translatable\Translatable;
+use Chief\Common\Translatable\TranslatableContract;
+use Chief\Common\Traits\Publishable;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

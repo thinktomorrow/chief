@@ -48,7 +48,7 @@ class User extends Authenticatable implements HasMedia
 
     public function isSuperAdmin()
     {
-        return $this->hasRole('Superadmin');
+        return $this->hasRole('superadmin');
     }
 
     public function getShortNameAttribute()

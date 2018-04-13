@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
-use Chief\Locale\TranslatableContract;
-use Chief\Locale\TranslatableController;
+use Chief\Common\Translatable\TranslatableContract;
+use Chief\Common\Translatable\TranslatableController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\EventDispatcher\Tests\Service;

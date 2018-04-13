@@ -1,11 +1,12 @@
 <?php
 
-namespace Chief\Models;
+namespace Chief\Articles;
 
+use Chief\Common\Contracts\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
 
-class ArticleTranslation extends Model implements SluggableContract{
-
+class ArticleTranslation extends Model implements SluggableContract
+{
     protected $table = 'article_translations';
     public $timestamps = true;
 

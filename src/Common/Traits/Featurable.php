@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Models;
+namespace Chief\Common\Traits;
 
 trait Featurable
 {

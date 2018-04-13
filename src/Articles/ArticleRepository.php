@@ -1,11 +1,13 @@
 <?php
 
-namespace Chief\Models;
+namespace Chief\Articles;
 
 use Carbon\Carbon;
-use Chief\Locale\Locale;
-use Chief\Locale\TranslatableContract;
-use Chief\Locale\TranslatableController;
+use Chief\Common\Translatable\Locale;
+use Chief\Common\Translatable\TranslatableContract;
+use Chief\Common\Translatable\TranslatableController;
+use Chief\Models\Asset;
+use Chief\Models\UniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

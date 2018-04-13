@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Chief\Models\Publishable;
+use Chief\Common\Traits\Publishable;
 use Illuminate\Database\Eloquent\Model;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -15,7 +15,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class PublishableTraitDummyClass extends Model
 {
-    use Publishable;
+    use Chief\Traits\Publishable;
 
     public $published = false;
 

@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use Carbon\Carbon;
-use Chief\Models\Article;
+use Chief\Articles\Article;
 use Chief\Models\Asset;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;

@@ -2,41 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Chief\Roles\Role;
-use Chief\Users\User;
-use Illuminate\Console\Command;
-
-class CreateUser extends Command
+class CreateAdmin extends BaseCommand
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'admin:create';
+    protected $signature = 'chief:create-admin';
+    protected $description = 'Create a new chief admin user';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Create a new admin user';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         $anticipations = $this->getAnticipations();
@@ -47,36 +17,15 @@ class CreateUser extends Command
 
         $email = $this->ask('email',str_slug($firstname).'@thinktomorrow.be');
 
-        $password = $passwordConfirm = null;
-        $tries = 0;
+        $password = $this->askPassword();
 
-        while(!$password || strlen($password) < 4 || $password != $passwordConfirm)
-        {
-            if($tries > 2)
-            {
-                $this->error('Aborting. Too many attempts to set password');
-                return false;
-            }
-
-            $password = $this->secret('Wachtwoord');
-            $passwordConfirm = $this->secret('Wachtwoord (confirm)');
-
-            $tries++;
-        }
-
-        $user = new User;
-        $user->firstname = $firstname;
-        $user->lastname = $lastname;
-        $user->email = $email;
-        $user->password = bcrypt($password);
-        $user->save();
-
-        $user->assignRole(Role::findByName('Superadmin'));
+        $this->createUser($firstname, $lastname, $email, $password);
 
         $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
     }
 
     /**
+     * We assume we are creating users for ourselves so we make this a bit easier to do
      * @return array
      */
     private function getAnticipations()

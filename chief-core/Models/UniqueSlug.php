@@ -2,6 +2,7 @@
 
 namespace Chief\Models;
 
+use Chief\Common\Contracts\SluggableContract;
 use Illuminate\Support\Str;
 
 class UniqueSlug

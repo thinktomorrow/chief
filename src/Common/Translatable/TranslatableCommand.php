@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Locale;
+namespace Chief\Common\Translatable;
 
 trait TranslatableCommand
 {

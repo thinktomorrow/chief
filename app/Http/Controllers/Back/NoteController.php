@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Chief\Locale\Locale;
-use Chief\Locale\TranslatableController;
+use Chief\Common\Translatable\Locale;
+use Chief\Common\Translatable\TranslatableController;
 use Chief\Models\Notes\FormValues;
 use Chief\Models\Notes\Note;
 use ConsoleTVs\Charts\Facades\Charts;
