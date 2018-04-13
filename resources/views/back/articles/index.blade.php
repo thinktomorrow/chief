@@ -4,12 +4,13 @@
     Artikels
 @stop
 
-@section('topbar-right')
+@component('back._layouts._partials.header')
+    @slot('title', 'artikels')
     <a href="{{ route('back.articles.create') }}" class="btn btn-default btn-rounded btn-sm mt10">
       <i class="fa fa-plus mr5"></i>
       Voeg een artikel toe
     </a>
-@stop
+@endcomponent
 
 @section('content')
 
