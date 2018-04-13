@@ -2,6 +2,34 @@
 
 /**
  * -----------------------------------------------------------------
+ * SPIRIT ROUTES
+ * -----------------------------------------------------------------
+ */
+
+Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => function($section = null, $item = null){
+
+    if($section && $item && view()->exists('spirit.'.$section.'.'.$item)){
+        return view('spirit.'.$section.'.'.$item);
+    }
+
+    return view('spirit.index');
+}]);
+//Route::get('spirit/icons', ['as' => 'spirit.icons', 'uses' => function(){
+//    return view('spirit.icons');
+//}]);
+//
+//Route::get('spirit/{element?}', ['as' => 'spirit.index', 'uses' => function($element = null){
+//
+//    if($element && view()->exists('spirit._partials.'.$element)){
+//        return view('spirit._partials.'.$element);
+//    }
+//
+//    return view('spirit.index');
+//}]);
+
+
+/**
+ * -----------------------------------------------------------------
  * PROTOTYPING ROUTES
  * -----------------------------------------------------------------
  */

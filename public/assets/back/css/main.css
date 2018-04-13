@@ -2265,8 +2265,8 @@ a {
 
 @font-face {
   font-family: 'linearicons';
-  src: url("../fonts/Linearicons-Free.eot?w118d");
-  src: url("../fonts/Linearicons-Free.eot?#iefixw118d") format("embedded-opentype"), url("../fonts/Linearicons-Free.woff2?w118d") format("woff2"), url("../fonts/Linearicons-Free.woff?w118d") format("woff"), url("../fonts/Linearicons-Free.ttf?w118d") format("truetype"), url("../fonts/Linearicons-Free.svg?w118d#Linearicons-Free") format("svg");
+  src: url("/assets/spirit/fonts/Linearicons-Free.eot?w118d");
+  src: url("/assets/spirit/fonts/Linearicons-Free.eot?#iefixw118d") format("embedded-opentype"), url("/assets/spirit/fonts/Linearicons-Free.woff2?w118d") format("woff2"), url("/assets/spirit/fonts/Linearicons-Free.woff?w118d") format("woff"), url("/assets/spirit/fonts/Linearicons-Free.ttf?w118d") format("truetype"), url("/assets/spirit/fonts/Linearicons-Free.svg?w118d#Linearicons-Free") format("svg");
   font-weight: normal;
   font-style: normal;
 }
