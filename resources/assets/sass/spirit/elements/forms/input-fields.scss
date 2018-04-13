@@ -11,6 +11,7 @@ input[type='file'],
     width: 100%;
     border-radius: $default-border-radius;
     border: 1px solid $color-border;
+    font-family: $font-family-secondary;
     &:focus{
         box-shadow: 0 0 5px $color-subtle;
         border: 1px solid $color-subtle;

@@ -2095,12 +2095,14 @@ html, body {
  */
 h1, h2, h3, h4, h5 {
   font-family: "Quicksand";
+  font-weight: 700;
   color: #212631;
 }
 
 body,
 p {
   font-family: "Quicksand";
+  font-weight: 400;
   color: #4f5164;
 }
 
@@ -2143,6 +2145,15 @@ span.sans-serif:after {
 
 .hexCode:after {
   content: #14c8a7;
+}
+
+hr {
+  border-top: 0;
+  border-bottom: 1px solid #f4f6f9;
+}
+
+.relative {
+  position: relative;
 }
 
 a {
@@ -2216,11 +2227,11 @@ a {
 }
 
 .bg-border {
-  background-color: #f4f6f9;
+  background-color: #e1e2e8;
 }
 
 .text-border {
-  color: #f4f6f9;
+  color: #e1e2e8;
 }
 
 .bg-heading {
@@ -3589,12 +3600,12 @@ a.btn {
 ul.listgroup {
   margin: 0;
   padding: 0;
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
 }
 
 ul.listgroup li {
   list-style: none;
-  border-bottom: 1px solid #f4f6f9;
+  border-bottom: 1px solid #e1e2e8;
   padding: 0.5rem 0.75rem;
   -webkit-transition: all 0.15s ease-in-out;
   transition: all 0.15s ease-in-out;
@@ -3613,7 +3624,7 @@ ul.listgroup li:hover {
 .thumbnail {
   display: inline-block;
   background-color: #ffffff;
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
   border-radius: 5px;
   -webkit-transition: 0.3s ease-in-out all;
   transition: 0.3s ease-in-out all;
@@ -3654,7 +3665,7 @@ table thead {
 
 table thead tr {
   background-color: transparent !important;
-  color: #f7f8f9 !important;
+  color: #f4f6f9 !important;
 }
 
 table .table-hover tr:hover {
@@ -4071,7 +4082,7 @@ table .btn ~ .btn {
   float: left;
   min-width: 160px;
   -webkit-background-clip: padding-box;
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
   border-radius: 5px;
   background-color: #ffffff;
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -4134,7 +4145,7 @@ table .btn ~ .btn {
   margin-bottom: -1px;
   display: inline-block;
   border-radius: none;
-  border: 1px solid #dadfe3;
+  border: 1px solid #e1e2e8;
   text-decoration: none;
 }
 
@@ -4143,7 +4154,7 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a:hover {
-  background: #f7f8f9;
+  background: #f4f6f9;
 }
 
 .translation-tabs-nav a:hover .flag {
@@ -4160,9 +4171,9 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a.active, .translation-tabs-nav a.active:hover {
-  background: #f7f8f9;
+  background: #f4f6f9;
   color: #4f5164;
-  border: 1px solid #dadfe3;
+  border: 1px solid #e1e2e8;
 }
 
 .translation-tabs-nav a.active .flag, .translation-tabs-nav a.active:hover .flag {
@@ -4200,7 +4211,7 @@ table .btn ~ .btn {
   left: 0;
   right: 0;
   top: 0;
-  background-color: rgba(103, 121, 138, 0.7);
+  background-color: rgba(84, 112, 154, 0.7);
 }
 
 .modal-header h3 {
@@ -4352,7 +4363,8 @@ input[type='file'],
 .custom-file-input {
   width: 100%;
   border-radius: 5px;
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
+  font-family: "Quicksand";
 }
 
 textarea:focus,
@@ -4476,7 +4488,7 @@ input[type='file'] {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  border: 3px solid #f4f6f9;
+  border: 3px solid #e1e2e8;
   -webkit-transition: 0.3s ease-in-out all;
   transition: 0.3s ease-in-out all;
 }
@@ -4577,7 +4589,7 @@ input[type=checkbox]:checked ~ .custom-checkbox {
 .switch-primary + .switch-btn,
 .switch-secondary + .switch-btn,
 .switch-tertiary + .switch-btn {
-  background: #f7f8f9;
+  background: #f4f6f9;
   border-radius: 2rem;
   padding: 2px;
   -webkit-transition: all .4s ease;
@@ -4608,7 +4620,7 @@ input[type=checkbox]:checked ~ .custom-checkbox {
 select {
   padding: 0.75rem;
   background: transparent;
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
   border-radius: 5px;
   width: 100%;
   -webkit-appearance: none;
@@ -4673,7 +4685,7 @@ select {
 }
 
 .\--border {
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
 }
 
 /* Nice bottom border hover effect; mostly used for navigation */
@@ -4915,9 +4927,9 @@ select {
 
 /* allow topbar to have same bg as body */
 .sticky-bar {
-  background-color: #f7f8f9;
+  background-color: #f4f6f9;
   z-index: 11;
-  border-bottom: 1px solid #e8ebee;
+  border-bottom: 1px solid #e4e9f0;
 }
 
 /* product thumbs and image uploads */
@@ -5258,7 +5270,7 @@ select {
 
 .slim {
   background-color: #ffffff !important;
-  border: 1px solid #f4f6f9;
+  border: 1px solid #e1e2e8;
 }
 
 .slim .slim-area .slim-result img {
@@ -5311,7 +5323,7 @@ select {
 }
 
 .translation-sidemenu .anchor-item:hover {
-  background-color: #f4f6f9;
+  background-color: #e1e2e8;
 }
 
 .translation-sidemenu .anchor-item:hover a {
@@ -5320,7 +5332,7 @@ select {
 
 .translation-sidemenu .anchor-item.active {
   position: relative;
-  background-color: #f4f6f9;
+  background-color: #e1e2e8;
 }
 
 .translation-sidemenu .anchor-item.active a {
@@ -5336,8 +5348,8 @@ select {
   padding: 0.7rem 1rem;
   text-transform: uppercase;
   font-weight: bold;
-  border-bottom: 1px solid #f4f6f9;
-  background-color: #f4f6f9;
+  border-bottom: 1px solid #e1e2e8;
+  background-color: #e1e2e8;
 }
 
 .tab-block .tab-content .section-divider .divider-locale {

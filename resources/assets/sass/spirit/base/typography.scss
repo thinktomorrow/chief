@@ -1,11 +1,13 @@
 // TYPOGRAPHY
 h1,h2,h3,h4,h5{
-  font-family: $font-family-serif;
-  color: $color-heading
+  font-family: $font-family-secondary;
+  font-weight: 700;
+  color: $color-heading;
 }
 body,
 p{
-  font-family: $font-family-sans-serif;
+  font-family: $font-family-primary;
+  font-weight: 400;
   color: $color-font;
 }
 ul, ol{

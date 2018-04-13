@@ -35,7 +35,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.
  * -----------------------------------------------------------------
  */
 Route::get('prototype', function(){
-    return view('prototype.index');
+    return view('prototype.article.create');
 });
 
 /**

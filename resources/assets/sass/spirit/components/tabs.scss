@@ -25,13 +25,13 @@
         margin-bottom: -1px;
         display:inline-block;
         border-radius:none;
-        border: 1px solid $color-tab-border;
+        border: 1px solid $color-border;
         text-decoration:none;
         .flag{
             opacity: 0.3;
         }
         &:hover {
-            background: $color-tab-body;
+            background: $color-body;
             .flag{
                 opacity: 1;
             }
@@ -46,9 +46,9 @@
     }
 
     a.active, a.active:hover {
-        background:$color-tab-body;
-        color:$color-tab-dark;
-        border: 1px solid $color-tab-border;
+        background:$color-body;
+        color:$color-emphasis;
+        border: 1px solid $color-border;
         .flag{
             @extend .inline-s;
             opacity: 1;
