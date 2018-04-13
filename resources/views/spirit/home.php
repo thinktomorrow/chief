@@ -1,6 +1,6 @@
 <?php include(__DIR__.'/_partials/header.php'); ?>
 
-<article class="column-8 stack-xl">
+<article class="stack-xl">
     <h1>What is Spirit?</h1>
     <p>Spirit is a toolkit with several frontend components to build anything your heart desires. It started of as a
         style guide for your project, but it kinda grew into something more... Now it is a guide to bridge the gap

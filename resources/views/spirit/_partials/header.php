@@ -38,6 +38,7 @@
         <?php
 
         $pagetitles = [
+            'home' => 'Spirit design system',
             'icons' => 'Spirit icons',
             'settings' => 'Spirit settings',
             'colors' => 'Spirit colors',
@@ -46,7 +47,7 @@
         ];
 
         $extracted = array_filter(explode("/",parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH)));
-        $current_section = $extracted[2];
+        $current_section = isset($extracted[2]) ? $extracted[2] : 'home';
 //        $current_item = isset($extracted[3]) ? $extracted[3] : null;
 
         ?>
