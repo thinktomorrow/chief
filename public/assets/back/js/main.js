@@ -1643,7 +1643,6 @@ module.exports = {
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	props: {
@@ -36533,8 +36532,6 @@ var render = function() {
       class: _vm.typeclass
     },
     [
-      _c("span", { staticClass: "icon-warning pull-left" }),
-      _vm._v(" "),
       _c("span", {
         staticClass: "alert__copy column-9",
         domProps: { innerHTML: _vm._s(_vm.body) }
@@ -36550,7 +36547,7 @@ var render = function() {
             }
           }
         },
-        [_c("i", { staticClass: "icon-x" })]
+        [_vm._v("Ok, got it")]
       )
     ]
   )
