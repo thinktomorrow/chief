@@ -48921,7 +48921,7 @@ window.Form = __WEBPACK_IMPORTED_MODULE_1__utilities_Form__["a" /* default */];
 Vue.component('tab', __webpack_require__("./resources/assets/js/components/Tab.vue").default);
 Vue.component('tabs', __webpack_require__("./resources/assets/js/components/Tabs.vue").default);
 Vue.component('translation-tabs', __webpack_require__("./resources/assets/js/components/TranslationTabs.vue").default);
-Vue.component('multiselect', __webpack_require__("./resources/assets/js/components/MultiSelect.vue").default);
+Vue.component('chief-multiselect', __webpack_require__("./resources/assets/js/components/MultiSelect.vue").default);
 
 Vue.component('modal', __webpack_require__("./resources/assets/js/components/Modal.vue").default);
 Vue.component('sidebar', __webpack_require__("./resources/assets/js/components/Sidebar.vue").default);

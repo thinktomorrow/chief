@@ -15,7 +15,7 @@ window.Form = Form;
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('translation-tabs', require('./components/TranslationTabs.vue').default);
-Vue.component('multiselect', require('./components/MultiSelect.vue').default);
+Vue.component('chief-multiselect', require('./components/MultiSelect.vue').default);
 
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('sidebar', require('./components/Sidebar.vue').default);
