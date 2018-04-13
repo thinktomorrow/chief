@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Back;
 
 
 use Chief\Models\Article;
-use Chief\Models\Asset;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use Thinktomorrow\AssetLibrary\Models\Asset;
 
 class MediaLibraryController
 {
