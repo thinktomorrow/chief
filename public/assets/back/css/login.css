@@ -1,17 +1,21 @@
-/*
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);/*
  |
  | LOGIN.CSS
  | ---------
  | Deze file staat apart omdat het loginscherm los staat van de default layout.
- | De opmaak toont zich op de pagina hebeco.be/login en is zichtbaar voor zowel
+ | De opmaak toont zich op de pagina thinktomorrow.be/chief en is zichtbaar voor zowel
  |  adminbeheerders als de gebruikers.
  |
 */
-::selection{
+::-moz-selection {
   background-color: #fdd030;
   color: #FFF;
 }
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+::selection {
+  background-color: #fdd030;
+  color: #FFF;
+}
+
 body {
   width: 100%;
   height: 100vh;
@@ -21,61 +25,83 @@ body {
   margin: 0;
   font-size: 14px;
 }
-a{
+
+a {
   color: #353535;
   text-decoration: none;
 }
-a:hover{
+
+a:hover {
   color: #fdd030;
 }
-main{
+
+main {
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
-aside{
-  background: #fdd030 url('../back/img/logo.svg') no-repeat center center;
+
+aside {
+  background: #fdd030 url("../img/logo.svg") no-repeat center center;
   width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
-section{
+
+section {
   padding: 45px;
-  box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
-
-  width: 40%;
+  -webkit-box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
   padding-left: 120px;
-
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   overflow-y: auto;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
 }
-.login-page{
+
+.login-wrapper {
   max-width: 400px;
   width: 100%;
 }
-.mr5{
-  margin-right: 5px;
-}
-.input-group{
+
+.input-group-prefix {
   position: relative;
+  display: inline-block;
+  width: 100%;
 }
-.input-group span.lnr{
+
+.input-group-prefix span.lnr {
   position: absolute;
   bottom: 33px;
 }
-.form label{
+
+.form label {
   float: left;
   padding: 0 0 10px 0;
 }
+
 .form input[type=text]:focus,
+.form input[type=email]:focus,
 .form input[type=password]:focus {
   border-bottom: 1px solid #353535;
 }
+
 .form input[type=text],
-.form input[type=password]  {
+.form input[type=email],
+.form input[type=password] {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #ffffff;
@@ -83,12 +109,15 @@ section{
   border: 0;
   margin: 0 0 15px;
   padding: 15px 30px;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   font-size: 14px;
   border-bottom: 1px solid #E4E4DD;
+  -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
 }
-.form input[type=submit] {
+
+.form button {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #353535;
@@ -102,16 +131,22 @@ section{
   border-radius: 50px;
   margin: 15px 0;
 }
-.form input[type=submit]:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+
+.form button:hover {
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+  -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
-.form input[type=submit]:hover,.form input[type=submit]:active,.form input[type=submit]:focus {
+
+.form button:hover, .form button:active, .form button:focus {
   background: #fdd030;
 }
+
 .form .error {
   color: #e74c3c;
 }
+
 .form .succes {
   color: #97c93c;
 }
@@ -120,25 +155,30 @@ section{
   margin: 15px 0;
   display: block;
 }
+
 .form .message a {
   color: #fdd030;
   text-decoration: none;
 }
+
 .form .register-form {
   display: none;
 }
 
-footer{
+footer {
   position: absolute;
-  bottom: 0; right: 0;
+  bottom: 0;
+  right: 0;
   text-align: center;
   padding: 15px;
 }
+
 /*TOGGLE PWD*/
-.showHideInput{
+.showHideInput {
   display: none;
 }
-.showHideLabel{
+
+.showHideLabel {
   position: absolute;
   right: 55px;
   margin-top: -50px;
