@@ -28,14 +28,14 @@ Route::get('prototype', function(){
  * NON-AUTHENTICATED ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::get('admin/login', 'Back\Auth\LoginController@showLoginForm')->name('back.login');
-Route::post('admin/login', 'Back\Auth\LoginController@login')->name('back.login.store');
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login.store');
 
 // Password Reset Routes...
-Route::get('admin/password/reset', 'Back\Auth\ForgotPasswordController@showLinkRequestForm')->name('back.password.request');
-Route::post('admin/password/email', 'Back\Auth\ForgotPasswordController@sendResetLinkEmail')->name('back.password.email');
-Route::get('admin/password/reset/{token}', 'Back\Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
-Route::post('admin/password/reset', 'Back\Auth\ResetPasswordController@reset')->name('back.password.reset.store');
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.reset.store');
 
 /**
  * -----------------------------------------------------------------
@@ -48,7 +48,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin' ,'namespace' => 'b
     Route::get('logout', 'Auth\LoginController@logout')->name('back.logout');
 
     Route::get('/',function(){
-        return view('back.dashboard');
+        return view('back.home');
     })->name('back.dashboard');
 
 //    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
