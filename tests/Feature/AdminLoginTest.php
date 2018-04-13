@@ -5,21 +5,24 @@ namespace Tests\Feature;
 use App\Notifications\ResetAdminPassword;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-use Tests\DatabaseTransactions;
+use Tests\ChiefDatabaseTransactions;
 use Tests\TestCase;
 
 class AdminLoginTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations, DatabaseTransactions;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        // TODO: fix own transactions!!!
+        //$this->setUpDatabase();
     }
 
     /** @test */

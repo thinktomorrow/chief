@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-trait DatabaseTransactions
+trait ChiefDatabaseTransactions
 {
     protected $connectionsToTransact = ['testing'];
     protected static $migrationsHaveRun = false;
