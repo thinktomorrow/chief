@@ -44,10 +44,10 @@ class AdminLoginTest extends TestCase
             'password'  => 'foobar',
         ]);
 
+        $this->assertTrue(Auth::guard('admin')->check());
         $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
-        $this->assertFalse(Auth::guard('customer')->check());
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
     }
 
     /** @test */
@@ -71,6 +71,8 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_displays_admin_page_for_authenticated()
     {
+        $this->disableExceptionHandling();
+
         $admin = factory(User::class)->create();
         $response = $this->actingAs($admin)->get('/admin');
 
@@ -94,8 +96,8 @@ class AdminLoginTest extends TestCase
             'password' => 'foobar',
         ]);
 
+        $this->assertTrue(Auth::guard('admin')->check());
         $this->assertEquals($admin->id, Auth::user()->id);
-        $this->assertFalse(Auth::guard('customer')->check());
         $this->assertFalse(session()->has('errors'));
         $response->assertRedirect(route('back.articles.index'));
     }
@@ -153,7 +155,7 @@ class AdminLoginTest extends TestCase
             'password_confirmation' => "password",
         ]);
 
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
 
         Auth::logout();
 
@@ -163,7 +165,7 @@ class AdminLoginTest extends TestCase
         ]);
 
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
 
     }
 
@@ -183,7 +185,7 @@ class AdminLoginTest extends TestCase
             'password' => 'foobar',
         ]);
 
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
     }
 
     /** @test */

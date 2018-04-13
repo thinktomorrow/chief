@@ -49,7 +49,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('logout', 'Auth\LoginController@logout')->name('back.logout');
 
     Route::get('/',function(){
-        return view('back.home');
+        return view('back.dashboard');
     })->name('back.dashboard');
 
 //    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);

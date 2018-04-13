@@ -6,16 +6,19 @@ return [
      * Contact email which will recieve all incoming communication
      * This contact will receive e.g. contactform submissions
      */
-    'contact'   => ['email' => env('MAIL_ADMIN_EMAIL','info@thinktomorrow.be'), 'name' => env('MAIL_ADMIN_NAME','Think Tomorrow')],
+    'contact'   => [
+        'email' => env('MAIL_ADMIN_EMAIL','info@thinktomorrow.be'),
+        'name' => env('MAIL_ADMIN_NAME','Think Tomorrow')
+    ],
 
     /**
      * Name of the project
      */
-    'name' => 'Test',
+    'name' => 'Chief',
 
     /**
      * Client name
      */
-    'client' => 'Test',
+    'client' => 'Think Tomorrow',
 
 ];
