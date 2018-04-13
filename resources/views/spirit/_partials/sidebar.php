@@ -38,10 +38,11 @@
         <div class="nav__group stack-s">
             <span class="nav__head">Components</span>
             <ul>
-                <li class="nav__item">Modals</li>
-                <li class="nav__item">Sidebar</li>
-                <li class="nav__item"> <a href="/spirit/components/tabs">Tabs</a></li>
+                <li class="nav__item"><a href="/spirit/components/tabs">Tabs</a></li>
+                <li class="nav__item"><a href="/spirit/components/modal">Modal</a></li>
+                <li class="nav__item"><a href="/spirit/components/sidebar">Sidebar</a></li>
                 <li class= "nav__item"><a href="/spirit/components/notifications">Notifications</a></li>
+                <li class="nav__item"><a href="/spirit/components/multiselect">Multiselect</a></li>
             </ul>
         </div>
     </nav>

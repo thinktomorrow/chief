@@ -1,6 +1,6 @@
 <template>
 
-    <mkiha-tabs>
+    <tabs>
 
         <template slot="tabnav" slot-scope="rows">
             <nav class="translation-tabs-nav inline-group-s stack-s">
@@ -18,6 +18,6 @@
             </nav>
         </template>
         <slot></slot>
-    </mkiha-tabs>
+    </tabs>
 
 </template>

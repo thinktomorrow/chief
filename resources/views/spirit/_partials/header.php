@@ -17,6 +17,7 @@
     <!-- temp links when spirit is still inside chief -->
     <link rel="stylesheet" href="/assets/back/css/main.css">
     <link rel="stylesheet" href="/assets/spirit/css/layout.css">
+    <link rel="stylesheet" href="/assets/back/css/vendors/solarized-dark.css">
 
     <!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -25,6 +26,9 @@
 			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 		})(window,document,'script','dataLayer','GTM-5NGHP2D');</script>
 	<!-- End Google Tag Manager -->
+
+    <script src="/assets/back/js/vendors/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
