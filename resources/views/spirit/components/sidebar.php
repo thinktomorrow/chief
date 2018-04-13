@@ -26,8 +26,21 @@
 
     <p>The modal component can also be used as an offcanvas sidebar. This is ideal for presenting secondary information, context screens or small form fields. Just add an attribute <em>type="sidebar"</em> on the modal element.</p>
     <pre>
-        <code class="html">
-<?= htmlentities('<modal type="sidebar" id="exampleModal"></modal>' ); ?>
+        <code class="html"><?= htmlentities('<modal type="sidebar" id="exampleModal">
+    <div v-cloak>
+        <div class="stack-s">
+            <a class="btn">First link</a><br>
+            <hr>
+            <a class="btn">Secon link</a><br>
+            <hr>
+            <a class="btn">Third link</a>
+        </div>
+
+        <div class="stack-m">
+            <a class="btn btn-secondary" @click="closeModal(\'exampleModal2\')">Oke, Got it</a>
+        </div>
+    </div>
+</modal>' ); ?>
         </code>
     </pre>
 
