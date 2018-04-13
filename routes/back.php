@@ -20,7 +20,7 @@ Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => funct
  * -----------------------------------------------------------------
  */
 Route::get('prototype', function(){
-    return view('prototype.index');
+    return view('prototype.article.create');
 });
 
 /**
