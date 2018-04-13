@@ -1,29 +1,29 @@
-@import "theme/settings";
+@import "spirit/settings";
 
-@import "theme/base/color";
-@import "theme/base/typography";
-@import "theme/base/general";
-@import "theme/base/color-scheme";
-@import "theme/base/icons";
+@import "spirit/base/color";
+@import "spirit/base/typography";
+@import "spirit/base/general";
+@import "spirit/base/color-scheme";
+@import "spirit/base/icons";
 
-@import "theme/elements/buttons";
-@import "theme/elements/labels";
-@import "theme/elements/badges";
-@import "theme/elements/panels";
-@import "theme/elements/listgroups";
-@import "theme/elements/thumbnails";
-@import "theme/elements/tables";
-@import "theme/elements/pagination";
+@import "spirit/elements/buttons";
+@import "spirit/elements/labels";
+@import "spirit/elements/badges";
+@import "spirit/elements/panels";
+@import "spirit/elements/listgroups";
+@import "spirit/elements/thumbnails";
+@import "spirit/elements/tables";
+@import "spirit/elements/pagination";
 
-@import "theme/components/notifications";
-@import "theme/components/navbar";
-@import "theme/components/tabs";
+@import "spirit/components/notifications";
+@import "spirit/components/navbar";
+@import "spirit/components/tabs";
 
-@import "theme/elements/forms/input-fields";
-@import "theme/elements/forms/custom-file";
-@import "theme/elements/forms/toggles";
-@import "theme/elements/forms/select";
+@import "spirit/elements/forms/input-fields";
+@import "spirit/elements/forms/custom-file";
+@import "spirit/elements/forms/toggles";
+@import "spirit/elements/forms/select";
 
 
-@import "theme/mixins/mediaqueries";
-@import "theme/mixins/utilities";
+@import "spirit/mixins/mediaqueries";
+@import "spirit/mixins/utilities";

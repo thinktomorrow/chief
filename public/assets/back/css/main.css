@@ -2094,13 +2094,13 @@ html, body {
  |
  */
 h1, h2, h3, h4, h5 {
-  font-family: "Andada";
+  font-family: "Quicksand";
   color: #212631;
 }
 
 body,
 p {
-  font-family: "Montserrat";
+  font-family: "Quicksand";
   color: #4f5164;
 }
 
@@ -2115,14 +2115,14 @@ ol li {
 
 span.serif:after {
   font-weight: bold;
-  font-family: "Andada";
-  content: "Andada";
+  font-family: "Quicksand";
+  content: "Quicksand";
 }
 
 span.sans-serif:after {
   font-weight: bold;
-  font-family: "Montserrat";
-  content: "Montserrat";
+  font-family: "Quicksand";
+  content: "Quicksand";
 }
 
 .hexCode:after {
