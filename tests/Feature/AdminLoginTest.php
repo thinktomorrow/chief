@@ -15,14 +15,13 @@ use Tests\TestCase;
 
 class AdminLoginTest extends TestCase
 {
-    use DatabaseMigrations, DatabaseTransactions;
+    use ChiefDatabaseTransactions;
 
     public function setUp()
     {
         parent::setUp();
 
-        // TODO: fix own transactions!!!
-        //$this->setUpDatabase();
+        $this->setUpDatabase();
     }
 
     /** @test */
