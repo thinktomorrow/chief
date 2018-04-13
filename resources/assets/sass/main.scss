@@ -1,0 +1,20 @@
+@import 'warpaint';
+@import 'spirit';
+
+// THESE CUSTOM CLASSES SHOULD BE REDUCED TO A MINIMUM. IT SHOULD BELONG TO THE CHIEF-THEME BY DEFAULT
+// CUSTOM FOLDER IS MEANT FOR THE PROJECT SPECIFIC CLASSES FOR THE ADMIN
+@import "custom/typography";
+@import "custom/nav";
+@import "custom/form";
+@import "custom/general";
+@import "custom/thumb";
+@import 'custom/_mediagallery';
+@import 'custom/_users';
+@import 'custom/_roles';
+@import 'custom/_images';
+@import 'custom/_translations';
+
+// STATES & HELPER CLASSES (WARPAINT)
+@import '../../../node_modules/warpaint/src/sass/_space/spaces';
+@import '../../../node_modules/warpaint/src/sass/_space/responsive';
+@import '../../../node_modules/warpaint/src/sass/_base/states';

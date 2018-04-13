@@ -1,0 +1,114 @@
+// NAVIGATION
+.navbar{
+  ul,ol{
+    float: left;
+    li{
+      float: left;
+      list-style: none;
+    }
+  }
+}
+.nav-pills{
+  text-align: center;
+}
+.nav-pills-primary li{
+  background-color: $color-primary;
+  &:hover{
+    background-color: lighten($color-primary, 5%);
+  }
+}
+.nav-pills-secondary li{
+  background-color: $color-secondary;
+  &:hover{
+    background-color: lighten($color-secondary, 5%);
+  }
+}
+
+.nav-pills-primary li,
+.nav-pills-secondary li{
+  border-radius: $navpills-border-radius;
+  transition: $transition;
+  cursor: pointer;
+  a{
+    color: $color-white;
+    text-decoration: none;
+  }
+  &:hover{
+    @extend .--raised;
+  }
+}
+
+.nav-pills .icon {
+  display: block;
+  font-size: $base-icon-size;
+  padding: $spacy 0;
+}
+
+.dropdown{
+  position: relative;
+  z-index: 1;
+  .dropdown-menu{
+    transition: all 150ms linear;
+    margin-top: -20px;
+    opacity: 0;
+    visibility: hidden;
+    display: block;
+    &.open{
+      opacity: 1;
+      visibility: visible;
+      margin-top: 1px;
+    }
+  }
+  &:hover{
+    .dropdown-menu{
+      opacity: 1;
+      visibility: visible;
+      margin-top: 1px;
+    }
+  }
+}
+
+.dropdown-menu{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 2;
+  //display: none;
+  padding-left: 0;
+  float: left;
+  min-width: 160px;
+  -webkit-background-clip: padding-box;
+  border: 1px solid $color-border;
+  border-radius: $dropdown-border-radius;
+  background-color: $color-white;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  li{
+    width: 100%;
+    &.dropdown-header{
+      color: $color-subtle;
+      font-size: 0.750em;
+      padding: 0.75em 2em;
+    }
+    a {
+      display: block;
+      font-size: 0.875em;
+      text-decoration: none;
+      padding: 0.75em 2em;
+      margin: 0 0.25em;
+      line-height: 1.5;
+      color: #333;
+      white-space: nowrap;
+      &:hover{
+        background-color: $color-primary;
+        color: darken($color-primary, 20%);
+        border-radius: $dropdown-border-radius;
+        @extend .--raised;
+      }
+    }
+    &.divider{
+      margin: 5px 0;
+      border-top: 1px dotted $color-subtle;
+      width: 100%;
+    }
+  }
+}

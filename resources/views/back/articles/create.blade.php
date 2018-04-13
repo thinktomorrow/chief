@@ -2,13 +2,13 @@
 
 @section('page-title','Voeg nieuw artikel toe')
 
-@section('topbar-right')
-	<button type="button" class="btn btn-default btn-rounded btn-sm mt10" id="showUploadPanel">
+@component('back._layouts._partials.header')
+    @slot('title', 'artikels')
+    <button type="button" class="btn btn-default btn-rounded btn-sm mt10" id="showUploadPanel">
 		<span class="fa fa-upload"></span>
 		Upload nieuw bestand
 	</button>
-@stop
-
+@endcomponent
 
 @push('custom-styles')
 	<link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor2/redactor.css') }}">
@@ -51,7 +51,7 @@
 
 @section('content')
 
-	{!! Form::model($article,['method' => 'POST', 'route' => ['articles.store'],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}
+	{!! Form::model($article,['method' => 'POST', 'route' => ['back.articles.store'],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}
 	<div class="row">
 
 		<div class="col-md-6">
@@ -101,4 +101,3 @@
 	{!! Form::close() !!}
 
 @stop
-

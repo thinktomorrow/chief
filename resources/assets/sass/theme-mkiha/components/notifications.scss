@@ -1,0 +1,84 @@
+// NOTIFICATIONS
+.alert{
+
+    color: $color-white;
+    a{ color:inherit; }
+
+    // Floated alert
+    position: fixed;
+    z-index: 1;
+    right: 2rem;
+    bottom: 2rem;
+    margin: 0;
+    max-width: 300px;
+
+    @extend .squished;
+    display: inline-flex;
+    align-items: center;
+    border-radius: $notifications-border-radius;
+    width: 100%;
+    & .alert__copy{
+        margin-left: 0.5rem;
+    }
+    & .alert__btn{
+        transition: 0.3s ease-in-out;
+        cursor: pointer;
+        border-radius: $default-border-radius;
+        padding: 0.5rem;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 1rem;
+        color: $color-white;
+    }
+}
+
+$alert-name: primary secondary success warning error information;
+$colors: $color-primary $color-secondary $color-success $color-warning $color-error $color-information;
+
+@each $alert in $alert-name{
+    $i: index($alert-name, $alert);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .alert--#{$alert}{
+        background-color: $color;
+        border: 1px solid lighten($color, 10%);
+        .alert__copy{
+            color: $color-white;
+        }
+        .alert__btn{
+            background-color: none;
+            &:hover{
+                color:  $color;
+                background-color: $color-white;
+                & [class^="icon-"]{
+                    color:  $color;
+                }
+            }
+        }
+        & [class^="icon-"]{
+            color:  $color-white;
+        }
+    }
+    .alert-o--#{$alert}{
+        color: $color;
+        border: 1px solid $color;
+        .alert__copy{
+            color: $color;
+        }
+        .alert__btn{
+            color: $color;
+            background-color: none;
+            &:hover{
+                color: $color-white;
+                background-color: $color;
+                & [class^="icon-"]{
+                    color:  $color-white;
+                }
+            }
+        }
+        & [class^="icon-"]{
+            color:  $color;
+        }
+    }
+}

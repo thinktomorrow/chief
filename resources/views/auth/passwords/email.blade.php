@@ -40,7 +40,7 @@
             @endif
 
             <div class="back-btn">
-                <a href="{{ url('/login') }}">Keer terug naar de login</a>
+                <a href="{{ route('back.login') }}">Keer terug naar de login</a>
             </div>
 
         </div>

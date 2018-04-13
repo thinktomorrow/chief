@@ -33,27 +33,27 @@ class NoteController extends Controller
             return Carbon::now()->between($note->start_at, $note->end_at);
         })->map(function($note)  use($labels){
             $labels->push($note->content);
-            return [$note->start_at, $note->end_at, 'color' => "#b4b4b4", 'link' => route('notes.edit', $note->id)];
+            return [$note->start_at, $note->end_at, 'color' => "#b4b4b4", 'link' => route('back.notes.edit', $note->id)];
         })->toArray();
         $dates = array_merge($active, $notes->reject(function ($note)  use($labels){
             return !Carbon::now()->between($note->start_at, $note->end_at);
         })->map(function($note)  use($labels){
             $labels->push($note->content);
-            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('notes.edit', $note->id)];
+            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('back.notes.edit', $note->id)];
         })->toArray());
 
 
 //        $dates = $general->map(function ($note) use($labels){
 //            $labels->push($note->content);
-//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('admin.notes.edit', $note->id)];
+//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('back.admin.notes.edit', $note->id)];
 //        });
 //        $dates = array_merge($dates->toArray(), $payment->map(function ($note) use($labels){
 //            $labels->push($note->content);
-//            return [$note->start_at, $note->end_at, 'color' => "#ffa500", 'link' => route('admin.notes.edit', $note->id)];
+//            return [$note->start_at, $note->end_at, 'color' => "#ffa500", 'link' => route('back.admin.notes.edit', $note->id)];
 //        })->toArray());
 //
 //        $dates  = $notes->map(function($note){
-//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('admin.notes.edit', $note->id)];
+//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('back.admin.notes.edit', $note->id)];
 //        });
 
         $chart = Charts::create('bar', 'highcharts')
@@ -108,7 +108,7 @@ class NoteController extends Controller
             $note->publish();
         }
 
-        return redirect()->route('notes.index');
+        return redirect()->route('back.notes.index');
     }
 
     /**
@@ -154,7 +154,7 @@ class NoteController extends Controller
 
         $this->saveNoteTranslations($note,$request->get('trans'));
 
-        return redirect()->route('back.notes.index')->with('messages.success','De note is aangepast.');
+        return redirect()->route('back.back.notes.index')->with('messages.success','De note is aangepast.');
     }
 
     public function publish(Request $request)
@@ -192,7 +192,7 @@ class NoteController extends Controller
 
         $note->delete();
 
-        return redirect()->route('back.notes.index')->with('messages.warning','Note ['.$type.'] is verwijderd.');
+        return redirect()->route('back.back.notes.index')->with('messages.warning','Note ['.$type.'] is verwijderd.');
     }
 
     /**

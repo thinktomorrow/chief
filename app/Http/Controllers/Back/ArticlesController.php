@@ -50,7 +50,7 @@ class ArticlesController extends Controller
 
         $article = (new ArticleRepository())->create($request);
 
-        return redirect()->route('articles.index')->with('messages.success', $article->title .' werd aangemaakt');
+        return redirect()->route('back.articles.index')->with('messages.success', $article->title .' werd aangemaakt');
     }
 
     /**
@@ -80,7 +80,7 @@ class ArticlesController extends Controller
         $article = (new ArticleRepository())->edit($request, $id);
 
 
-        return redirect()->route('articles.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$article->title .'" werd aangepast');
+        return redirect()->route('back.articles.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$article->title .'" werd aangepast');
     }
 
     /**

@@ -9,7 +9,7 @@
     <div class="login-block">
       <h1>Inloggen</h1>
 
-      <form class="form" id="valid" role="form" method="POST" action="{{ url('/login') }}">
+      <form class="form" id="valid" role="form" method="POST" action="{{ route('back.login.store') }}">
         {{ csrf_field() }}
         <div class="form-wrapper">
           @if($errors and count($errors) > 0)
@@ -38,10 +38,11 @@
               <a href="{{ route('password.request') }}">Wachtwoord vergeten?</a>
           </div>
         </div>
+        <div class="squished">
+          <div class="message"><a href="{{ route('back.password.request') }}">Wachtwoord vergeten?</a></div>
+        </div>
       </form>
-      <div class="back-btn">
-        <a href="{{ url('/') }}">Keer terug naar de website</a>
-      </div>
+
     </div>
   </div>
 @stop

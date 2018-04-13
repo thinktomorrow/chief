@@ -8,6 +8,6 @@ class HomeController extends Controller
 {
     public function show()
     {
-        return view('back.home');
+        return view('back.dashboard');
     }
 }

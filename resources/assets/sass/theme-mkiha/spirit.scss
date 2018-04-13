@@ -1,0 +1,35 @@
+@import "settings.scss";
+
+@import "base/color.scss";
+@import "base/typography.scss";
+@import "base/general.scss";
+@import "base/layout.scss";
+
+@import "elements/icons.scss";
+@import "elements/utilities.scss";
+@import "elements/flags.scss";
+
+@import "components/buttons.scss";
+@import "components/links.scss";
+@import "components/labels.scss";
+@import "components/badges.scss";
+@import "components/notifications.scss";
+@import "components/panels.scss";
+@import "components/indicator.scss";
+@import "components/cards.scss";
+@import "components/list.scss";
+@import "components/listgroups.scss";
+@import "components/thumbnails.scss";
+@import "components/tabs.scss";
+@import "components/navbar.scss";
+@import "components/dropdown";
+@import "components/pagination.scss";
+@import "components/treeview";
+@import "../spirit/components/modal";
+
+@import "forms/input-fields.scss";
+@import "forms/select.scss";
+@import "forms/toggles.scss";
+@import "components/filter.scss";
+
+@import "elements/color-scheme.scss";

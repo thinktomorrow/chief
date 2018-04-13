@@ -1,0 +1,84 @@
+/*
+ | ----------------------------------------------------------------
+ | Base settings
+ | ----------------------------------------------------------------
+ |
+ | Afhankelijk van de fonts die je kiest kan je hieronder de font-size definiëren.
+ | Zo ben je zeker van een deftige font-rendering.
+ |
+ */
+    html,body{
+      font-size: 14px;
+    }
+ /*
+  | ----------------------------------------------------------------
+  | Typography
+  | ----------------------------------------------------------------
+  |
+  | Met google fonts kan je twee fonts inladen.
+  | Best is dat je een serif en sans-serif font kiest.
+  |
+  */
+    @import url('https://fonts.googleapis.com/css?family=Quicksand:300,700');
+
+    $font-family-serif:        "Quicksand";
+    $font-family-sans-serif:   "Quicksand";
+/*
+ | ----------------------------------------------------------------
+ | Border Radius
+ | ----------------------------------------------------------------
+ |
+ | een border radius van minder dan 15px zal op ieder element mooi gerenderd worden.
+ |
+ */
+    $default-border-radius: 3px;
+
+
+    $input-border-radius: $default-border-radius;
+
+    $panel-border-radius: $default-border-radius;
+    $label-border-radius: $default-border-radius;
+    $badge-border-radius: $default-border-radius;
+
+    $navpills-border-radius: $default-border-radius;
+    $dropdown-border-radius: 0px;
+
+    $panel-border-radius: $default-border-radius;
+
+    $notifications-border-radius: $default-border-radius;
+    $table-border-radius: $default-border-radius;
+    $tab-border-radius: $default-border-radius;
+    $thumbnail-border-radius: $default-border-radius;
+    $pagination-border-radius: $default-border-radius;
+
+
+/*
+ | ----------------------------------------------------------------
+ | Icons
+ | ----------------------------------------------------------------
+ |
+ | Icon setup.
+ |
+ */
+    $base-icon-size: 14px;
+
+/*
+ | ----------------------------------------------------------------
+ | Btn Circular buttons
+ | ----------------------------------------------------------------
+ |
+ | Icon setup.
+ |
+ */
+    $btn-border-radius: $default-border-radius;
+    $circle-diameter: 1.5rem;
+
+/*
+ | ----------------------------------------------------------------
+ | Smoothness
+ | ----------------------------------------------------------------
+ |
+ | Meestal gebruikt voor hover states e.d.
+ |
+ */
+  $transition: 0.3s ease-in-out all;
