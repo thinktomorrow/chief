@@ -8,7 +8,7 @@
                     @else
                         <a class="title-back left inline-s" href="{{ url()->previous() }}"><i class="icon icon-chevron-left"></i></a>
                     @endif
-                    {{ $title }}
+                    {{ $title ?? '' }}
                 </h1>
                 {!! isset($subtitle) ? '<p>'.$subtitle.'</p>' : '' !!}
                 {{ $extra ??  '' }}
