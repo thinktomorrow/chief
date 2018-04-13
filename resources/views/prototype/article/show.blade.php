@@ -9,8 +9,6 @@
 
 @section('content')
 
-
-
-HERE IT COMES
+SHOW EVERY ARTICLE EVER WRITTEN!
 
 @stop
