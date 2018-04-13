@@ -47,7 +47,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('articles.index') }}">
+                <a href="{{ route('back.articles.index') }}">
                     <span class="glyphicon glyphicon-file"></span>
                     <span class="sidebar-title">Artikels</span>
                 </a>

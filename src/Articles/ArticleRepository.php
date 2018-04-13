@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Chief\Common\Translatable\Locale;
 use Chief\Common\Translatable\TranslatableContract;
 use Chief\Common\Translatable\TranslatableController;
-use Chief\Models\Asset;
+use Chief\Assets\Asset;
 use Chief\Models\UniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;

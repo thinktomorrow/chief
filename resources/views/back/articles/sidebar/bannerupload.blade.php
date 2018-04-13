@@ -17,8 +17,8 @@
                             <a class="btn btn-default mt15 libraryselect" data-effect="mfp-zoomIn">Selecteer uit bibliotheek</a>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
                             <input type="file" name="image" accept="image/*">
-                            {!! \Chief\Models\Asset::typeField('banner') !!}
-                            {!! \Chief\Models\Asset::localeField($locale) !!}
+                            {{--{!! \Chief\Assets\Asset::typeField('banner') !!}--}}
+                            {{--{!! \Chief\Assets\Asset::localeField($locale) !!}--}}
                             <button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload bestand
                               <i class="fa fa-upload"></i>
                             </button>

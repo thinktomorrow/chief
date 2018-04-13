@@ -19,8 +19,8 @@
                             <button class="libraryselect" data-effect="mfp-zoomIn">Selecteer uit bibliotheek</button>
                             <span class="btn btn-default fileupload-exists mr15">Wijzig</span>
                             <input type="file" name="image" accept="application/pdf">
-                            {!! \Chief\Models\Asset::typeField('pdf') !!}
-                            {!! \Chief\Models\Asset::localeField($locale ) !!}
+                            {{--{!! \Chief\Assets\Asset::typeField('pdf') !!}--}}
+                            {{--{!! \Chief\Assets\Asset::localeField($locale ) !!}--}}
                             <button type="submit" class="btn btn-primary btn-file fileupload-exists">Upload pdf <i class="fa fa-upload"></i></button>
 		                </span>
                     </form>
