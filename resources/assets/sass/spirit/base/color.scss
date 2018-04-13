@@ -1,6 +1,20 @@
-$color-primary:       #13c6a6;
-$color-secondary:     #4360a8;
-$color-tertiary:      #d81b60;
+// PRIMARY COLOR
+$color-primary-hue: 169; // set our color values separate for more control
+$color-primary-sat: 82;
+$color-primary-light: 43;
+$color-primary: hsl($color-primary-hue, $color-primary-sat, $color-primary-light); // #13c6a6;
+
+// SECONDARY COLOR
+$color-secondary-hue: 223;
+$color-secondary-sat: 43;
+$color-secondary-light: 46;
+$color-secondary: hsl($color-secondary-hue, $color-secondary-sat, $color-secondary-light); // #4360a8;
+
+// TERTIARY COLOR
+$color-tertiary-hue: 338;
+$color-tertiary-sat: 78;
+$color-tertiary-light: 48;
+$color-tertiary: hsl($color-tertiary-hue, $color-tertiary-sat, $color-tertiary-light); // #d81b60;
 
 $color-heading:       #212631; // Used for titles
 $color-font:          #4f5164; // Used for paragraph text

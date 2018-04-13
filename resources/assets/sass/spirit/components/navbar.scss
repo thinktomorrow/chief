@@ -34,7 +34,7 @@
     text-decoration: none;
   }
   &:hover{
-    @extend .raised;
+    @extend .--raised;
   }
 }
 
@@ -102,7 +102,7 @@
         background-color: $color-primary;
         color: darken($color-primary, 20%);
         border-radius: $dropdown-border-radius;
-        @extend .raised;
+        @extend .--raised;
       }
     }
     &.divider{

@@ -6,7 +6,7 @@
     user-select: none;
     color: $color-tertiary;
     z-index: 3;
-    @extend .raised;
+    @extend .--raised;
     .input-filter-label {
         display: block;
         background-color: $color-white;
@@ -19,7 +19,7 @@
         }
     }
     ul{
-        @extend .raised;
+        @extend .--raised;
         position: absolute;
         display: block;
         float: left;

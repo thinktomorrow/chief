@@ -5,7 +5,7 @@
     <h3 id="tabs1">Basic tabs</h3>
 
     <div class="panel stack-l">
-        <div class="inset-l">
+        <div class="inset-l --border">
             <tabs style="min-height:150px;" v-cloak>
                 <tab name="first">
                     <p>
@@ -51,7 +51,7 @@
     <h3 id="tabs2">Custom tab navigation</h3>
 
     <div class="panel stack-l">
-        <div class="inset-l">
+        <div class="inset-l --border">
             <tabs style="min-height:150px;">
                 <template slot="tabnav" slot-scope="rows">
                     <div class="inline-group-s stack-s">
