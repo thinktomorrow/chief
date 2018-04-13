@@ -33,7 +33,7 @@ class ResetPasswordController extends Controller
     {
         $this->middleware('guest:admin');
 
-        $this->redirectTo = route('back.home');
+        $this->redirectTo = route('back.dashboard');
     }
 
     public function showResetForm(Request $request, $token = null)

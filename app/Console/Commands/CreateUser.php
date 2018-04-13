@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Role;
-use App\User;
+use Chief\Roles\Role;
+use Chief\Users\User;
 use Illuminate\Console\Command;
 
 class CreateUser extends Command

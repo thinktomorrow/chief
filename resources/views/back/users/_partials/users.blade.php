@@ -43,7 +43,7 @@
 
 	<!-- Begin gridview layout -->
 	<!-- <div class="row gridview hidden">
-		@foreach (\App\User::all() as $user)
+		@foreach (\Chief\Users\User::all() as $user)
 		<div class="col-xs-12 col-sm-6 col-md-4 col-l-4 col-xl-3 rm-padding-top">
 			<div class="panel panel-tile br-a br-grey">
 				<div class="panel-heading br-n pn">
@@ -141,7 +141,7 @@
 				</thead>
 
 				<tbody>
-					@foreach (\App\User::all() as $user)
+					@foreach (\Chief\Users\User::all() as $user)
 						<tr>
 							<td>{{ $user->lastname }}</td>
 							<td>{{ $user->firstname }}</td>

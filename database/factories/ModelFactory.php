@@ -14,7 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Chief\Models\Article;
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(\Chief\Users\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

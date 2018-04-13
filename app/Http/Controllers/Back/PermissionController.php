@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
-use App\Permission;
-use App\Role;
+use Chief\Roles\Permission;
+use Chief\Roles\Role;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller

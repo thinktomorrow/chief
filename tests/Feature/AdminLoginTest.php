@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Notifications\ResetAdminPassword;
-use App\User;
+use Chief\Users\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -34,6 +34,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
+        $this->disableExceptionHandling();
         $admin = factory(User::class)->create([
             'email' => 'foo@example.com'
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Chief\Roles;
 
 class Permission extends \Spatie\Permission\Models\Permission
 {

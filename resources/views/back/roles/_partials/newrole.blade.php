@@ -22,7 +22,7 @@
              $i = 1;
            ?>
 
-          @foreach(\App\Permission::getPermissionsForIndex() as $model => $permissions)
+          @foreach(\Chief\Roles\Permission::getPermissionsForIndex() as $model => $permissions)
             <div id="tree{{ $i }}" class="treeview-item">
       				<ul id="treeData">
       					<li><input type="checkbox" id="chkSelectAll{{ $i }}" name="chkSelectAll{{ $i }}" onclick="checkAll('tree{{ $i }}')" class="mr5">{{ $model }}

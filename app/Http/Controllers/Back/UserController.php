@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
-use App\Role;
-use App\User;
+use Chief\Roles\Role;
+use Chief\Users\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;

@@ -16,7 +16,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('back.auth.login');
+        return view('auth.login');
     }
 
     public function login(Request $request)
@@ -28,7 +28,7 @@ class LoginController extends Controller
 
         if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember))
         {
-            return redirect()->intended(route('back.home'));
+            return redirect()->intended(route('back.dashboard'));
         }
 
         $failedAttempt = 'Uw email of wachtwoord is onjuist.';

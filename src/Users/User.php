@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace Chief\Users;
 
+use App\Notifications\ResetAdminPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
@@ -31,15 +31,28 @@ class User extends Authenticatable implements HasMedia
         'password', 'remember_token',
     ];
 
-    private $alterEgo = ['Lonely Wolf', 'Raging Bull'];
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetAdminPassword($token));
+    }
+
+    public function getFullnameAttribute()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
+
+    public function isSquantoDeveloper()
+    {
+        return $this->isSuperAdmin();
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('Superadmin');
+    }
 
     public function getShortNameAttribute()
     {
       return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
-    }
-
-    public function getAlterEgo()
-    {
-      return collect($this->alterEgo)->random();
     }
 }

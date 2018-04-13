@@ -1,8 +1,8 @@
 <?php
 
-use App\Permission;
-use App\Role;
-use App\User;
+use Chief\Roles\Permission;
+use Chief\Roles\Role;
+use Chief\Users\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
