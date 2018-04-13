@@ -9,7 +9,7 @@
     <div class="login-block">
       <h1>Inloggen</h1>
 
-      <form class="form" id="valid" role="form" method="POST" action="{{ route('back.login.store') }}">
+      <form class="form" id="valid" role="form" method="POST" action="{{ route('login.store') }}">
         {{ csrf_field() }}
         <div class="form-wrapper">
           @if($errors and count($errors) > 0)
