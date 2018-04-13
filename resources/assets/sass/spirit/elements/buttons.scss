@@ -73,7 +73,7 @@ $colors: $color-primary $color-secondary $color-tertiary $color-white $color-suc
             color: white;
             border: 1px solid $color;
             box-shadow: 0 14px 26px -12px rgba($color, 0.42),
-            0 4px 23px 0px rgba($color-dark, 0.12),
+            0 4px 23px 0px rgba($color-emphasis, 0.12),
             0 8px 10px -5px rgba($color, 0.2)
         }
     }
@@ -85,7 +85,7 @@ $colors: $color-primary $color-secondary $color-tertiary $color-white $color-suc
             background-color: darken($color, 10%);
             border: 1px solid darken($color, 10%);
             box-shadow: 0 14px 26px -12px rgba($color, 0.42),
-            0 4px 23px 0px rgba($color-dark, 0.12),
+            0 4px 23px 0px rgba($color-emphasis, 0.12),
             0 8px 10px -5px rgba($color, 0.2)
         }
     }

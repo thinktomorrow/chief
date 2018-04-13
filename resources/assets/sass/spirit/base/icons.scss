@@ -25,6 +25,12 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
+// Fixed width icon
+.icon-fw{
+	margin-left: $base-icon-size / 2;
+	margin-right: $base-icon-size / 2;
+}
+
 .icon-home:before {
 	content: "\e800";
 }

@@ -75,7 +75,7 @@ $(function() {
     });
 
     // Clone your html into a pre box
-    // !important: You can't skip a number because then the loop stops working.
+    // !important: You can't skip a number because the loop stops working.
     // and all the id's needs to be in the dom to be recognized by the function
     function cloneHtml(){
         $('[id^=clone-]').each(function (i) {

@@ -1,25 +1,25 @@
 // NOTIFICATIONS
+.peekaboo{
+  position: fixed;
+  top: 1rem; right: 1rem;
+  width: auto;
+}
 .alert{
-    padding: $spacy $spacy * 1.5;
-    display: flex;
-    border-radius: $notification-border-radius;
-    position: relative;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  border-radius: 0;
+
+  & .alert__btn{
+    cursor: pointer;
+    border-radius: 0;
+    transition: $transition;
+  }
+  &:hover{
+    cursor: pointer;
     @extend .--raised;
-    & .alert__copy{
-      color: $color-white;
-    }
-    & .alert__btn{
-      cursor: pointer;
-      border-radius: $notification-border-radius;
-      padding: $spacy;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 1rem;
-      transition: $transition;
-    }
+  }
+  &.icon{
+
+  }
 }
 
 
@@ -29,17 +29,28 @@ $colors: $color-primary $color-secondary $color-success $color-warning $color-er
 @each $alert in $alert-name{
   $i: index($alert-name, $alert);
   // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
-    $color: nth($colors, $i);
-    .alert--#{$alert}{
-      background-color: $color;
-      border: 1px solid darken($color, 10%);
-      .alert__btn{
-        color:  $color;
-        background-color: rgba($color-dark, 0.25);
-        &:hover{
-          background-color: rgba($color-white,1);
-        }
+  $color: nth($colors, $i);
+  .alert--#{$alert}{
+    background-color: $color;
+    color: $color-white;
+    border: 1px solid darken($color, 10%);
+    .alert__btn{
+      color:  $color-white;
+      &:hover{
+        color: darken($color, 30%);
       }
     }
+  }
+  .alert-o--#{$alert}{
+    background-color: $color-white;
+    color: $color;
+    border: 1px solid darken($color, 10%);
+    .alert__btn{
+      color:  $color;
+      &:hover{
+        color: darken($color, 30%);
+      }
+    }
+  }
 
 }

@@ -4,12 +4,13 @@
     Artikels
 @stop
 
-@section('topbar-right')
-    <a href="{{ route('articles.create') }}" class="btn btn-default btn-rounded btn-sm mt10">
+@component('back._layouts._partials.header')
+    @slot('title', 'artikels')
+    <a href="{{ route('back.articles.create') }}" class="btn btn-default btn-rounded btn-sm mt10">
       <i class="fa fa-plus mr5"></i>
       Voeg een artikel toe
     </a>
-@stop
+@endcomponent
 
 @section('content')
 
@@ -34,7 +35,7 @@
                         @endif
                     </td>
                     <td style="width:15%">
-                        <a href="{{ route('articles.edit',$article->getKey()) }}">
+                        <a href="{{ route('back.articles.edit',$article->getKey()) }}">
                             @foreach($article->getUsedLocales() as $usedLocale)
                                 {{ $article->getTranslationFor('title',$usedLocale) }}
                             @endforeach
@@ -51,7 +52,7 @@
                             {{--{!! Form::checkbox('published',1,$article->isPublished(),['data-publish-toggle'=>$article->id,'id' => "switch{$article->id}"]) !!}--}}
                             {{--<label title="{{ $article->isPublished()?'Online':'Offline' }}" for="switch{{$article->id}}"></label>--}}
                         {{--</div>--}}
-                        <form action="{{ route('articles.publish') }}" method="POST">
+                        <form action="{{ route('back.articles.publish') }}" method="POST">
                             {{ csrf_field() }}
                             <div class="btn-group">
                                 <div class="publishMedia">
@@ -71,8 +72,8 @@
                     </td>
 
                     <td style="width:10%;" class="text-right">
-                        <a title="View {{ $article->title }} on site" href="{{ route('articles.show',$article->slug) }}?preview-mode=true" target="_blank" class="btn btn-rounded btn-info btn-xs"><i class="fa fa-eye"></i></a>
-                        <a title="Edit {{ $article->title }}" href="{{ route('articles.edit',$article->getKey()) }}" class="btn btn-rounded btn-success btn-xs"><i class="fa fa-edit"></i> </a>
+                        <a title="View {{ $article->title }} on site" href="{{ route('back.articles.show',$article->slug) }}?preview-mode=true" target="_blank" class="btn btn-rounded btn-info btn-xs"><i class="fa fa-eye"></i></a>
+                        <a title="Edit {{ $article->title }}" href="{{ route('back.articles.edit',$article->getKey()) }}" class="btn btn-rounded btn-success btn-xs"><i class="fa fa-edit"></i> </a>
                     </td>
                 </tr>
 

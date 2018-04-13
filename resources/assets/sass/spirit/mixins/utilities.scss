@@ -12,11 +12,42 @@
 
 // GOOGLE MATERIAL EFFECT
 .--raised {
-    box-shadow: 0 16px 38px -12px rgba($color-dark, 0.36),
-                0 4px 25px 0px rgba($color-dark, 0.08),
-                0 8px 10px -5px rgba($color-dark, 0.08);
+    box-shadow: 0 16px 38px -12px rgba($color-subtle, 0.6),
+                0 4px 25px 0px rgba($color-subtle, 0.8),
+                0 8px 10px -5px rgba($color-subtle, 0.8);
 }
 
 .--border{
   border: 1px solid $color-border;
+}
+
+/* Nice bottom border hover effect; mostly used for navigation */
+.--bottomline{
+  text-decoration:none;
+  position:relative;
+  transition: $transition;
+
+  &:after{
+    transition: .26s cubic-bezier(0.69, 0.14, 0.05, 1.31);
+    content:"";
+    display:block;
+    position:absolute;
+    bottom: -1px;
+    height: 0;
+    left: 0;
+    width: 0;
+    transform: translateX(-50%);
+    background-color: $color-primary;
+  }
+
+  &:hover, &.active{
+    color:$color-primary;
+    text-decoration:none;
+
+    &:after{
+      left: 50%;
+      width: 30%;
+      height:2px;
+    }
+  }
 }

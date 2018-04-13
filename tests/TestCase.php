@@ -2,11 +2,13 @@
 
 namespace Tests;
 
+use App\Exceptions\Handler;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Hash;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -20,7 +22,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->protectTestEnvironment();
 
-        $this->registerResponseMacros();
+        //$this->registerResponseMacros();
     }
 
     // Override default createApplication
