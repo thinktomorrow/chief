@@ -14,6 +14,21 @@ Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => funct
     return view('spirit.home');
 }]);
 
+
+/**
+ * -----------------------------------------------------------------
+ * NON-AUTHENTICATED ADMIN ROUTES
+ * -----------------------------------------------------------------
+ */
+Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('back.login');
+Route::post('admin/login', 'Auth\LoginController@login')->name('back.login.store');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('back.password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('back.password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.reset.store');
+
 /**
  * -----------------------------------------------------------------
  * PROTOTYPING ROUTES
@@ -22,20 +37,6 @@ Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => funct
 Route::get('prototype', function(){
     return view('prototype.index');
 });
-
-/**
- * -----------------------------------------------------------------
- * NON-AUTHENTICATED ADMIN ROUTES
- * -----------------------------------------------------------------
- */
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('back.login');
-Route::post('login', 'Auth\LoginController@login')->name('back.login.store');
-
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('back.password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('back.password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.reset.store');
 
 /**
  * -----------------------------------------------------------------
@@ -122,3 +123,4 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('translations',['as' => 'squanto.index','uses' => 'Back\TranslationController@index']);
 
 });
+

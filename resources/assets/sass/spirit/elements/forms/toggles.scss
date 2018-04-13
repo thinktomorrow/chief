@@ -1,13 +1,18 @@
+$toggle-size: 2rem;
+
+.custom-indicators{
+    line-height: $toggle-size;
+}
 .custom-checkbox,
 .custom-radiobutton{
     display: block;
     float: left;
-    width: 1rem;
-    height: 1rem;
+    width: $toggle-size;
+    height: $toggle-size;
     margin-right: $spacy / 2;
     pointer-events: none;
     user-select: none;
-    border: 1px solid $color-border;
+    border: 3px solid $color-border;
     transition: $transition;
     &::after{
         content: '';
@@ -17,7 +22,7 @@
         background: transparent;
         font-size: 0rem;
         text-align: center;
-        line-height: 1rem;
+        line-height: $toggle-size;
         transition: all 0.3s ease-in-out;
 
     }
@@ -42,27 +47,11 @@ input[type=checkbox]{
     cursor: not-allowed;
     opacity: 0.5;
 }
-input[type=radio]:checked ~ .custom-radiobutton{
-    &:after{
-        font-family: 'linearicons';
-        content: "\e87f";
-        color: $color-primary;
-        font-size: 0.5rem;
-    }
-}
-input[type=checkbox]:checked ~ .custom-checkbox{
-    &:after{
-        font-family: 'linearicons';
-        content: "\e813";
-        color: $color-primary;
-        font-size: 0.5rem;
-    }
-}
 
 input[type=radio]:checked ~ .custom-radiobutton,
 input[type=checkbox]:checked ~ .custom-checkbox{
-    background-color: $color-white;
-    border: 1px solid $color-primary;
+    background-color: none;
+    border: 3px solid $color-primary;
 }
 
 
@@ -82,8 +71,8 @@ input[type=checkbox]:checked ~ .custom-checkbox{
     + .switch-btn {
         outline: 0;
         display: block;
-        width: 1.75rem;
-        height: 1rem;
+        width: $toggle-size * 2;
+        height: $toggle-size;
         position: relative;
         cursor: pointer;
         user-select: none;
@@ -117,7 +106,7 @@ input[type=checkbox]:checked ~ .custom-checkbox{
 .switch-tertiary {
     + .switch-btn {
         background: $color-body;
-        border-radius: 2em;
+        border-radius: $toggle-size;
         padding: 2px;
         transition: all .4s ease;
         &:after {
