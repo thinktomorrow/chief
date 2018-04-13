@@ -60,32 +60,16 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./resources/assets/back/js/main.js":
-/***/ (function(module, exports) {
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/back/sass/main.scss":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
+/******/ ([
+/* 0 */,
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__("./resources/assets/back/js/main.js");
-module.exports = __webpack_require__("./resources/assets/back/sass/main.scss");
+(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/bencavens/Code/packages/chief/resources/assets/back/js/catalog.js\""); }());
 
 
 /***/ })
-
-/******/ });
+/******/ ]);

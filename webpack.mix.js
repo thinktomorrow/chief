@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+let mix = require('laravel-mix');
 
 mix.setPublicPath(path.normalize('public/assets/back'))
 	.js('resources/assets/back/js/main.js', 'public/assets/back/js')
@@ -7,32 +7,9 @@ mix.setPublicPath(path.normalize('public/assets/back'))
 
 	.version()
 
-	// .webpackConfig({
-	// 	plugins: [
-	// 		new purgeCss({
-	// 			paths: glob.sync([
-	// 				path.join(__dirname, 'app/**/*.php'),
-	// 				path.join(__dirname, 'resources/views/**/*.blade.php'),
-	// 				path.join(__dirname, 'resources/assets/js/**/*.vue'),
-	// 			]),
-	// 			whitelistPatterns: [/carbon/],
-	// 			extractors: [
-	// 				{
-	// 					extractor: class {
-	// 						static extract(content) {
-	// 							return content.match(/[A-z0-9-:\/]+/g)
-	// 						}
-	// 					},
-	// 					extensions: ['html', 'js', 'php', 'vue'],
-	// 				}
-	// 			]
-	// 		})
-	// 	],
-	// })
-
 	.options({
 		// Webpack setting to ignore sass loader to follow url() paths
-		processCssUrls: false,
+		processCssUrls: false
 	});
 
 /**
