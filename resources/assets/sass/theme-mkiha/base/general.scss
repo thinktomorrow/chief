@@ -1,0 +1,75 @@
+body{
+    background-color: $color-body;
+}
+
+// FOR THE STYLEGUIDE
+span.serif:after{
+    font-weight: bold;
+    font-family: $font-family-serif;
+    content:$font-family-serif;
+}
+span.sans-serif:after{
+    font-weight: bold;
+    font-family: $font-family-sans-serif;
+    content:$font-family-sans-serif;
+}
+.hexCode:after{
+    content: #{$color-primary};
+}
+
+.relative{
+    position: relative;
+}
+
+// LINK COLORS
+a{
+    color: $color-primary;
+    text-decoration: none;
+    & h1, h2, h3, h4{
+        color: $color-primary;
+        text-decoration: none;
+    }
+    &:hover{
+        text-decoration: underline;
+        text-decoration-skip: ink;
+        &[class^="icon-"]{
+            position: relative;
+            transform: translateX(5px);
+        }
+    }
+}
+
+// SELECTION COLORS
+::selection{
+    background-color: $color-primary;
+    color: $color-white;
+}
+
+// Center vertically
+.center-y{
+
+}
+
+hr{
+    background: $color-border;
+    height: 1px;
+    border: none;
+    margin-top: 0px;
+}
+/**
+* Prevents selecting and/or dragging of images.
+*/
+img{
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+header{
+    h1{
+        margin-bottom: 0px !important;
+    }
+}

@@ -1,0 +1,28 @@
+// GOOGLE MATERIAL EFFECT
+.raised,
+.--raised {
+    box-shadow: 0 16px 38px -12px rgba($color-dark, 0.36),
+                0 4px 25px 0px rgba($color-dark, 0.08),
+                0 8px 10px -5px rgba($color-dark, 0.08);
+}
+
+// MEDIA ELEMENTS ALIGNMENT
+.pull-right{
+  float: right;
+}
+.pull-left{
+  float: left;
+}
+
+
+blockquote{
+  padding: 1.2em;
+  background: $color-subtle;
+  border-left: 2px solid lighten($color-secondary, 30%);
+}
+code{
+  display: inline-block;
+  background: $color-subtle;
+  border: 1px solid darken($color-subtle, 0.3);
+  padding: 1rem;
+}

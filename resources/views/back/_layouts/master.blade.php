@@ -1,85 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 
 <head>
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta name="google" content="notranslate" />
-    <meta http-equiv="Content-Language" content="en_US" />
+    <meta http-equiv="Content-Language" content="nl_BE" />
     <title>Chief • @yield('page-title', 'Admin')</title>
-    <meta name="author" content="Chief">
+    <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('assets/back/img/favicon.ico')}}" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600'>
+    <!-- hide vue elements until vue is loaded -->
+    <style type="text/css">[v-cloak]{ display:none; }</style>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/css/theme.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/css/main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/admin-tools/admin-forms/css/admin-forms.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/back/theme/vendor/plugins/magnific/magnific-popup.css') }}">
+    <!--Load redactor -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('assets/back/css/vendors/redactor.css') }}" />
+    <script src="{{ asset('assets/back/js/vendors/redactor.js') }}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ cached_asset('/assets/back/css/main.css','back') }}">
     @stack('custom-styles')
-
 </head>
 
-<body class="sb-o">
+<body>
+@include('back._layouts._partials.nav')
+@include('back._layouts._partials.subnav')
 
-<div id="main">
+<main id="main">
+    @yield('header')
 
-    @include('back._modules.header')
-    @include('back._modules.nav')
-
-    <section id="content_wrapper">
-        <header id="topbar">
-            <div class="topbar-left col-md-6">
-                <h3 class="mt10">
-                    @yield('page-title')
-                </h3>
-            </div>
-            <div class="topbar-right">
-                @yield('topbar-right')
-            </div>
-        </header>
-
+    <section id="content" class="container">
         @include('back._elements.messages')
-        @include('back._elements.errors')
-
-        <section id="content">
-            @yield('content')
-        </section>
-
-        @include('back._modules.footer')
+        @yield('content')
     </section>
+
+    @include('back._modules.footer')
     @stack('sidebar')
+    @stack('custom-components')
 
-</div>
+</main>
 
-
-<script src="{{ asset('assets/back/theme/vendor/jquery/jquery-1.11.1.min.js') }}"></script>
-<script src="{{ asset('assets/back/theme/vendor/jquery/jquery_ui/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('assets/back/theme/vendor/plugins/magnific/jquery.magnific-popup.min.js') }}"></script>
-<script src="{{ asset('assets/back/theme/js/utility/utility.js') }}"></script>
-<script src="{{ asset('assets/back/theme/js/main.js') }}"></script>
-
-<script src="{{ asset('assets/back/theme/vendor/plugins/fileupload/fileupload.js') }}"></script>
-<script src="{{ asset('assets/back/js/main.js') }}"></script>
-
-<script type="text/javascript">
-
-jQuery(document).ready(function() {
-
-        "use strict";
-
-        // Init Theme Core
-        Core.init();
-
-    });
-</script>
-
+<script src="{{ cached_asset('/assets/back/js/main.js','back') }}"></script>
 @stack('custom-scripts')
 
-</body>
+<script>
 
+    /**
+     * Global Eventbus which allows to emit and listen to
+     * events coming from components
+     */
+    window.Eventbus = new Vue();
+
+    /**
+     * Application vue instance. We register the vue instance after our custom
+     * scripts so vue components are loaded properly before the main Vue.
+     */
+    window.App = new Vue({
+        el: "#main",
+        data: {
+            errors: new Errors(),
+        },
+        created: function(){
+            this.errors.record({!! isset($errors) ? json_encode($errors->getMessages()) : json_encode([]) !!});
+
+            Eventbus.$on('clearErrors', (field) => {
+                this.errors.clear(field);
+            });
+        },
+        methods:{
+            showModal: function(id, options){
+                return window.showModal(id, options);
+            },
+            closeModal: function(id){
+                return window.closeModal(id);
+            },
+            selectTab: function(hash){
+                Eventbus.$emit('select-tab',hash);
+            },
+            clear: function(field){
+                Eventbus.$emit('clearErrors', field)
+            }
+        },
+    });
+
+    window.showModal = function(id, options){
+        Eventbus.$emit('open-modal',id, options);
+    };
+
+    window.closeModal = function(id){
+        Eventbus.$emit('close-modal',id);
+    };
+
+    /** Tippy tooltip init */
+    window.tippy('[title]', {
+        arrow: true,
+        animation: 'shift-toward'
+    });
+
+</script>
+
+@stack('custom-scripts-after-vue')
+
+</body>
 </html>

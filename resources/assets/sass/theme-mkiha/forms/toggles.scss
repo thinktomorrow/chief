@@ -1,0 +1,153 @@
+// RADIOS AND CHECKBOXES
+input[type=radio],
+input[type=checkbox]{
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+label.custom-indicators{
+    display: block;
+    position: relative;
+    padding-left:2.5rem; /* 1.5rem of checkbox + 1rem spacing in between */
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+}
+.custom-indicators.disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+input[type=radio]:checked ~ .custom-radiobutton,
+input[type=checkbox]:checked ~ .custom-checkbox{
+    background-color: $color-white;
+    &:before{
+        transform: scale(.76) rotate(-16deg);
+    }
+
+}
+.custom-checkbox,
+.custom-radiobutton{
+    cursor: pointer;
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+    pointer-events: none;
+    user-select: none;
+    border: none;
+    transition: $transition;
+    position: absolute;
+    left:0;
+    top:0;
+    border-radius: 50%;
+    border: 1px solid $color-border;
+    &:before{
+        content: '✔';
+        font-weight:bold;
+        color: transparent;
+        display: inline-block;
+        text-align:center;
+        width: 100%;
+        height: 100%;
+        border-radius:50%;
+        border: none;
+        background: transparent;
+        font-size: 1em;
+        position: absolute;
+        top: 0; left: 0;
+        transform: scale(0) rotate(-16deg);
+        line-height: 1;
+        padding-top: 3px; /* counter small visual offset */
+        transition: $transition;
+    }
+}
+.custom-radiobutton{
+    border-radius: 50%;
+    &:before{
+        border-radius: 50%;
+    }
+}
+
+// SWITCHES
+.switch {
+    display: none;
+    // add default box-sizing for this scope
+    &:after,
+    &:before,
+    & + .switch-btn {
+        box-sizing: border-box;
+        &::selection {
+            background: none;
+        }
+    }
+    + .switch-btn {
+        outline: 0;
+        display: inline-block;
+        width: 2.5rem;
+        height: 1.5rem;
+        margin-right: 1rem;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        &:after,
+        &:before {
+            position: relative;
+            display: block;
+            content: "";
+            width: 50%;
+            height: 100%;
+        }
+
+        &:after {
+            left: 0;
+        }
+
+        &:before {
+            display: none;
+        }
+    }
+
+    &:checked + .switch-btn:after {
+        left: 50%;
+    }
+}
+
+.switch-primary,
+.switch-secondary,
+.switch-tertiary {
+    + .switch-btn {
+        background-color: $color-border;
+        border-radius: 2em;
+        padding: 2px;
+        transition: all .4s ease;
+        border: 1px solid $color-border;
+        &:after {
+            border-radius: 50%;
+            background: $color-white;
+            border: 1px solid $color-border;
+            transition: $transition;
+        }
+    }
+}
+
+$color-name: default primary secondary tertiary;
+$colors: $color-font $color-primary $color-secondary $color-tertiary;
+
+@each $block in $color-name{
+    $i: index($color-name, $block);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+
+    input[type=radio]:checked ~ .custom-radiobutton.--#{$block},
+    input[type=checkbox]:checked ~ .custom-checkbox.--#{$block}{
+        border-color: $color;
+        &:before{
+            color: $color;
+        }
+    }
+
+    .switch-#{$block}:checked + .switch-btn {
+        background: $color;
+    }
+
+}

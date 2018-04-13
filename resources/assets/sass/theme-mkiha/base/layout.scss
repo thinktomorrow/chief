@@ -1,0 +1,51 @@
+.hero h1, .hero p{
+    color: $color-white;
+    padding: 0;
+    margin: 0;
+}
+
+.title{
+    font-size: 2rem;
+    margin-top: 0;
+}
+main{
+    margin-bottom: $space-xl;
+}
+main.main--raised{
+    position: relative;
+    background-color: #FFF;
+    z-index: 1;
+    overflow-y: hidden;
+}
+main.main--raised{
+    margin: -60px 30px 0px;
+    border-radius: 6px;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.box{
+    border: 1px solid #ccc;
+}
+.code-box{
+    border: 1px solid #ccc;
+    background-color: #efefef;
+    overflow: scroll;
+}
+.box .content{
+    border-top: 1px dotted #ccc;
+}
+
+.glyphs li{
+    list-style: none;
+}
+
+// Changed from 'sticky' to fixed
+.fixed{
+    position: fixed!important;
+}
+
+.--remove-padding{
+    padding: 0 !important;
+}

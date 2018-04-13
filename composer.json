@@ -37,6 +37,7 @@
             "Chief\\" : "chief-core/"
         },
         "files": [
+            "src/helpers.php",
             "chief-core/utils/vendors/htmlLawed.php",
             "chief-core/utils/helpers.php"
         ]

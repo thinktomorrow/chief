@@ -1,0 +1,26 @@
+$color-primary:       #13c6a6;
+$color-secondary:     #4360a8;
+$color-tertiary:      #d81b60;
+
+$color-heading:       #212631; // Used for titles
+$color-font:          #4f5164; // Used for paragraph text
+$color-body:          #f7f8f9; // Used for body
+$color-border:        #f4f6f9; // Used for borders
+
+$color-tab-body:      #f7f8f9;
+$color-tab-dark:      #4f5164;
+$color-tab-border:    darken($color-tab-body, 10%);
+
+$color-subtle:        #f4f6f9;
+$color-dark:          #4f5164;
+$color-white:         #ffffff;
+$color-black:         #000000;
+
+$color-success:       #2fca74;
+$color-warning:       #f5b848;
+$color-error:         #ed4d4d;
+$color-information:   #2083fe;
+
+// components
+$color-table:         #f7f8f9 !default;
+$color-link:          #212631 !default;

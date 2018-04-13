@@ -1,9 +1,8 @@
 let mix = require('laravel-mix');
 
 mix.setPublicPath(path.normalize('public/assets/back'))
-	.js('resources/assets/back/js/main.js', 'public/assets/back/js')
-	.js('resources/assets/back/js/catalog.js', 'public/assets/back/js')
-	.sass('resources/assets/back/sass/main.scss', 'public/assets/back/css')
+	.js('resources/assets/js/main.js', 'public/assets/back/js')
+	.sass('resources/assets/sass/main.scss', 'public/assets/back/css')
 
 	.version()
 
@@ -16,5 +15,5 @@ mix.setPublicPath(path.normalize('public/assets/back'))
  * Slim cropper resources.
  * Please note that copied files also get versioned! its a win :)
  */
-mix.copy('resources/assets/back/js/vendors/slim/slim.kickstart.min.js', 'public/assets/back/js');
-mix.copy('resources/assets/back/js/vendors/slim/slim.min.css', 'public/assets/back/css');
+mix.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/assets/back/js/vendors');
+mix.copy('resources/assets/js/vendors/slim/slim.min.css', 'public/assets/back/css/vendors');

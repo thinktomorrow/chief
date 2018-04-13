@@ -1,0 +1,94 @@
+// Tabs
+.tabs {
+    width:100%;
+    display:inline-block;
+}
+.clearfix{
+    &:before,
+    &:after{
+        content: " ";
+        display: table;
+    }
+}
+
+// CLEAR FLOAT AFTER TAB NAVIGATION
+.panel-tabs:after {
+    display:table;
+    clear:both;
+    content:'';
+}
+.panel-tabs{
+    ul{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        & li {
+            float:left;
+            list-style:none;
+            cursor: pointer;
+            margin-bottom: -1px;
+            display:inline-block;
+            border-radius:none;
+            background:$color-tab-dark;
+            border-top: 1px solid $color-tab-border;
+            border-left: 1px solid $color-tab-border;
+            border-right: 1px solid $color-tab-border;
+
+            color:$color-white;
+            transition: $transition;
+            text-decoration:none;
+            &:hover {
+                background:darken($color-tab-dark,10%);
+                color:$color-tab-body;
+            }
+        }
+        & li.active,
+        li.active:hover {
+            background:$color-tab-body;
+            color:$color-tab-dark;
+            border-top: 1px solid $color-tab-border;
+            border-left: 1px solid $color-tab-border;
+            border-right: 1px solid $color-tab-border;
+        }
+    }
+}
+
+.panel-tabs-right{
+    float: right;
+    li:last-child{
+        margin-left:0;
+        margin-right:0;
+    }
+}
+
+.panel-tabs-left{
+    float: left;
+    li:first-child{
+        margin-left:0;
+        margin-right:0;
+    }
+}
+
+.panel-tabs-round{
+    li:first-child{
+        border-top-left-radius: $tab-border-radius;
+    }
+    li:last-child{
+        border-top-right-radius: $tab-border-radius;
+    }
+}
+
+// Content of Tabs
+.tab-content {
+    border-radius: none;
+    background-color: $color-tab-body;
+    border: 1px solid $color-tab-border;
+}
+
+.tab {
+    display:none;
+}
+
+.tab.active {
+    display:block;
+}

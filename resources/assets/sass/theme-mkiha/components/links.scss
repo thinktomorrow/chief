@@ -1,0 +1,37 @@
+.link{
+    position: relative;
+    text-decoration: none;
+    transition: $transition;
+    &:hover{
+        text-decoration: none;
+        &::after{
+            content: "";
+            position: absolute;
+            width: 100%;
+            left: 0;
+            bottom: -0.5rem;
+            height: 1px;
+        }
+    }
+}
+
+a.icon{
+    text-decoration: none;
+}
+
+$link-name: primary secondary tertiary success warning error information border;
+$colors: $color-primary $color-secondary $color-tertiary $color-success $color-warning $color-error $color-information $color-border;
+
+@each $link in $link-name{
+    $i: index($link-name, $link);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .link-#{$link}{
+        color: $color;
+        &:hover{
+            &::after{
+                background-color: $color;
+            }
+        }
+    }
+}
