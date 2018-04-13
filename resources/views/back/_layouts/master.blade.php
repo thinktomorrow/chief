@@ -31,8 +31,7 @@
 </head>
 
 <body>
-@include('back._layouts._partials.nav')
-@include('back._layouts._partials.subnav')
+@include('back._layouts._nav.nav')
 
 <main id="main">
     @yield('header')
