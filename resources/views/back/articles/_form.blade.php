@@ -1,28 +1,9 @@
-@extends('back._layouts.master')
-
-@section('page-title', 'Article Management')
-
-
-@section('content')
-    WORK IN PROGRESS
-    <div class="btn-group relative">
-      <button type="button" class="btn btn-primary squished">Save</button>
-      <button type="button" class="btn btn-primary squished dropdown-toggle" data-toggle="dropdown">
-        <span class="icon icon-chevron-down"></span>
-      </button>
-      <ul class="dropdown-menu" role="menu">
-        <li><a href="#">As draft</a></li>
-        <li><a href="#">In review</a></li>
-      </ul>
-    </div>
-
-{{-- Artikel --}}
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
         <h2 class="formgroup-label">Paginainhoud</h2>
         <p class="caption">Dit is de artikelnaam zoals ze ook wordt weergegeven voor uw bezoekers.</p>
     </div>
-    <div class="formgroup-input column-7">
+    <div class="formgroup-input column-8">
         <label for="seo-title">Titel</label>
         <input id="seo-title" class="input inset-s" placeholder="Titel" type="text" required="">
         <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
@@ -35,7 +16,7 @@
     </div>
 </section>
 <hr>
-{{-- Modules --}}
+
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
         <h2 class="formgroup-label">Modules</h2>
@@ -90,11 +71,8 @@
 
         <div class="stack">
             <label for="publication-date">Zichtbaar vanaf</label>
-             <input type="datetime-local" name="publication-date" class="squished">
+            <input type="datetime-local" name="publication-date" class="squished">
         </div>
     </div>
 </section>
 <hr>
-
-
-@stop

@@ -7,71 +7,18 @@
 
 @push('custom-scripts')
 <script src="{{ asset('assets/back/vendor/redactor2/redactor.js') }}"></script>
-<script src="{{ asset('assets/back/theme/js/utility/bootstrap/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/back/theme/vendor/plugins/moment/moment.min.js') }}"></script>
-<script src="{{ asset('assets/back/theme/vendor/plugins/datepicker/js/bootstrap-datetimepicker.js') }}"></script>
 <script>
-;(function ($) {
+  ;(function ($) {
 
-  $('.redactor-editor').redactor({
-    focus: true,
-    pastePlainText: true,
-    buttons: ['html', 'formatting', 'bold', 'italic',
-    'unorderedlist', 'orderedlist', 'outdent', 'indent',
-    'link', 'alignment','image','horizontalrule'],
-    {{--imageUpload: '{{ route('article.upload', $article->id) }}&_token={{ csrf_token() }}',--}}
-    {{--image_dir: '{{ $article::getContentImageDirectory() }}',--}}
-    {{--imageUploadErrorCallback: function(json)--}}
-    {{--{--}}
-      {{--$('body').prepend('<div class="alert alert-top alert-danger alert-dismissable"><button type="button" class="cl data-dismiss="alert" aria-hidden="true">&times;</button><div class="container">'+json.message+'</div></div>');--}}
-    {{--}--}}
-  });
+    $('.redactor-editor').redactor({
+      focus: true,
+      pastePlainText: true,
+      buttons: ['html', 'formatting', 'bold', 'italic',
+      'unorderedlist', 'orderedlist', 'outdent', 'indent',
+      'link', 'alignment','image','horizontalrule'],
+    });
 
-  //// Delete modal
-  //$("#remove-article-toggle").magnificPopup();
-
-  //// Sortable
-  //var el = document.getElementsByClassName('sortable')[0];
-  //var sortable = Sortable.create(el);
-
-  //// Initiate our cropper
-  //new Cropper();
-
-  $("#showUploadPanel").click(function(){
-    $(document.body).toggleClass('upload-open');
-  });
-
-  $("[id^='showPdfUploadPanel-'], [id*='showPdfUploadPanel-']").click(function(){
-    $('.pdfUpload-' + this.dataset.uploadLocale).addClass('detail-open');
-    $('.overlay').show(); // Show overlay when detail is active
-    $(document.body).addClass('sidebar-media-open');
-  });
-
-  $("[id^='showBannerUploadPanel-'], [id*='showBannerUploadPanel-']").click(function(){
-    $('.bannerUpload-' + this.dataset.uploadLocale).addClass('detail-open');
-    $('.overlay').show(); // Show overlay when detail is active
-    $(document.body).addClass('sidebar-media-open');
-  });
-
-  $(".overlay").click(function(){
-    $('#sidebar_right.detail-open').removeClass('detail-open');
-    $('.overlay').hide(); // Hide overlay when detail is active
-    $(document.body).removeClass('sidebar-media-open');
-  });
-
-  $(".showUploadPanel").click(function(){
-    $('.imageUpload-' + this.dataset.sidebarId).addClass('detail-open');
-    $('.overlay').show(); // Show overlay when detail is active
-    $(document.body).addClass('sidebar-media-open');
-  });
-
-  $('#datetimepicker').datetimepicker({
-      format: "DD-MM-YYYY",
-      pickTime: false,
-      pick12HourFormat: true
-  });
-
-})(jQuery);
+  })(jQuery);
 </script>
 
 @endpush
