@@ -32,7 +32,7 @@
               <!-- ROLE INPUT -->
               <div class="section mv15 admin-form">
                 <div class="option-group">
-                  @foreach (\App\Role::all() as $role)
+                  @foreach (\Chief\Roles\Role::all() as $role)
                     <p><label class="block mt15 option option-primary">
                     <input type="checkbox" name="{{ $role->name }}" value="{{ $role->id }}">
                     <span class="checkbox"></span>{{ $role->name }}</label></p>

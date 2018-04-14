@@ -80,7 +80,7 @@
 
 @section('content')
 
-{!! Form::model($article,['method' => 'PUT', 'route' => ['articles.update',$article->getKey()],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}
+{!! Form::model($article,['method' => 'PUT', 'route' => ['back.articles.update',$article->getKey()],'files' => true,'role' => 'form','class'=>'form-horizontal']) !!}
 <div class="row">
 
   @include('back.articles.form.formtabs')

@@ -3,17 +3,19 @@
 namespace Tests\Feature;
 
 use App\Notifications\ResetAdminPassword;
-use App\User;
+use Chief\Users\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-use Tests\DatabaseTransactions;
+use Tests\ChiefDatabaseTransactions;
 use Tests\TestCase;
 
 class AdminLoginTest extends TestCase
 {
-    use DatabaseTransactions;
+    use ChiefDatabaseTransactions;
 
     public function setUp()
     {
@@ -32,6 +34,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
+        $this->disableExceptionHandling();
         $admin = factory(User::class)->create([
             'email' => 'foo@example.com'
         ]);
@@ -41,10 +44,10 @@ class AdminLoginTest extends TestCase
             'password'  => 'foobar',
         ]);
 
+        $this->assertTrue(Auth::guard('admin')->check());
         $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
-        $this->assertFalse(Auth::guard('customer')->check());
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
     }
 
     /** @test */
@@ -68,6 +71,8 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_displays_admin_page_for_authenticated()
     {
+        $this->disableExceptionHandling();
+
         $admin = factory(User::class)->create();
         $response = $this->actingAs($admin)->get('/admin');
 
@@ -91,8 +96,8 @@ class AdminLoginTest extends TestCase
             'password' => 'foobar',
         ]);
 
+        $this->assertTrue(Auth::guard('admin')->check());
         $this->assertEquals($admin->id, Auth::user()->id);
-        $this->assertFalse(Auth::guard('customer')->check());
         $this->assertFalse(session()->has('errors'));
         $response->assertRedirect(route('back.articles.index'));
     }
@@ -150,7 +155,7 @@ class AdminLoginTest extends TestCase
             'password_confirmation' => "password",
         ]);
 
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
 
         Auth::logout();
 
@@ -160,7 +165,7 @@ class AdminLoginTest extends TestCase
         ]);
 
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
 
     }
 
@@ -180,7 +185,7 @@ class AdminLoginTest extends TestCase
             'password' => 'foobar',
         ]);
 
-        $response->assertRedirect(route('back.home'));
+        $response->assertRedirect(route('back.dashboard'));
     }
 
     /** @test */

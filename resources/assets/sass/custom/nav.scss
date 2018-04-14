@@ -24,6 +24,7 @@
 
 .nav-items{
   display:flex;
+  align-items: center;
   margin:0;
   padding:0;
 }
@@ -36,7 +37,7 @@
   border-bottom:1px solid $color-subtle;
 
   ul{
-    justify-content: center;
+    justify-content: left;
   }
 
   a{

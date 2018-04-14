@@ -41,6 +41,7 @@ class CreateNoteTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('note_translations');
+        Schema::dropIfExists('notes');
     }
 }

@@ -3,8 +3,9 @@
 namespace App\Console;
 
 use App\Console\Chief\ChiefSetupCommand;
-use App\Console\Commands\CreateUser;
+use App\Console\Commands\CreateAdmin;
 use App\Console\Commands\AuthPermissionCommand;
+use App\Console\Commands\RefreshDatabase;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,9 +17,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        ChiefSetupCommand::class,
-        CreateUser::class,
-        AuthPermissionCommand::class,
+//        ChiefSetupCommand::class,
+//        AuthPermissionCommand::class,
+        CreateAdmin::class,
+        RefreshDatabase::class,
     ];
 
     /**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Back;
 
 
 use App\Http\Controllers\Controller;
-use Chief\Models\Asset;
+use Chief\Assets\Asset;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller

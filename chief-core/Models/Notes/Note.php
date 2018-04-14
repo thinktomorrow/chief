@@ -3,16 +3,16 @@
 namespace Chief\Models\Notes;
 
 use Carbon\Carbon;
-use Chief\Models\Publishable;
+use Chief\Common\Traits\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Chief\Locale\Translatable;
-use Chief\Locale\TranslatableContract;
+use Chief\Common\Translatable\Translatable;
+use Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Optiphar\Site\Notes\NoteReminder;
 
 class Note extends Model implements TranslatableContract
 {
-    use BaseTranslatable, Translatable, Publishable;
+    use BaseTranslatable, Translatable, Chief\Traits\Publishable;
 
     public $table = 'notes';
     public $translatedAttributes = ['content'];

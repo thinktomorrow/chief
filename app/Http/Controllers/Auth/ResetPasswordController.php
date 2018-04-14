@@ -25,34 +25,31 @@ class ResetPasswordController extends Controller
 
     /**
      * Where to redirect users after resetting their password.
-     *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:admin');
+
+        $this->redirectTo = route('back.dashboard');
     }
 
-
-    /**
-     * Get the response for a successful password reset.
-     *
-     * @param  string  $response
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    protected function sendResetResponse($response)
+    public function showResetForm(Request $request, $token = null)
     {
-      $user = Auth::user();
-      $user->status = 'active';
-      $user->save();
-        return redirect($this->redirectPath())
-                            ->with('status', trans($response));
+        return view('back.auth.passwords.reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
+    }
+
+    protected function guard()
+    {
+        return Auth::guard('admin');
+    }
+
+    protected function broker()
+    {
+        return Password::broker('admins');
     }
 }

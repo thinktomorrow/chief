@@ -2547,16 +2547,16 @@
         },
         {
             "name": "spatie/image",
-            "version": "1.4.2",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "9b7a027b618943c5fd6136285f0ead28c4f75c1e"
+                "reference": "2ff09d9eafbeccc71f29ee7a9eb6169a856df75e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/9b7a027b618943c5fd6136285f0ead28c4f75c1e",
-                "reference": "9b7a027b618943c5fd6136285f0ead28c4f75c1e",
+                "url": "https://api.github.com/repos/spatie/image/zipball/2ff09d9eafbeccc71f29ee7a9eb6169a856df75e",
+                "reference": "2ff09d9eafbeccc71f29ee7a9eb6169a856df75e",
                 "shasum": ""
             },
             "require": {
@@ -2595,7 +2595,7 @@
                 "image",
                 "spatie"
             ],
-            "time": "2018-04-11T06:51:14+00:00"
+            "time": "2018-04-13T11:53:18+00:00"
         },
         {
             "name": "spatie/image-optimizer",

@@ -1,8 +1,8 @@
 <?php
 namespace App\Console\Commands;
 
-use App\Role;
-use App\Permission;
+use Chief\Roles\Role;
+use Chief\Roles\Permission;
 use Illuminate\Console\Command;
 
 class AuthPermissionCommand extends Command

@@ -23,7 +23,12 @@ class CreateUsersTable extends Migration
             $table->timestamp('last_login')->nullable();
             $table->enum('status',['active', 'pending', 'blocked'])->default('pending');
             $table->timestamps();
+        });
 
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token')->index();
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -35,5 +40,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('password_resets');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 
-use Chief\Models\Article;
+use Chief\Articles\Article;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Thinktomorrow\AssetLibrary\Models\Asset;
