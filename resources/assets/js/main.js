@@ -26,4 +26,5 @@ Vue.component('error', require('./components/Error.vue').default);
 // sticky polyfill init
 Stickyfill.add(document.querySelectorAll('.sticky'));
 
+// Promise polyfill for support of IE9 and below
 require('es6-promise').polyfill();

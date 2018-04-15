@@ -5,7 +5,7 @@
 @component('back._layouts._partials.header')
     @slot('title', 'Nieuw artikel')
     <div class="btn-group relative">
-		<button type="button" class="btn btn-primary squished">Save</button>
+		<button type="button" class="btn btn-primary squished">Bewaar</button>
 		<button type="button" class="btn btn-primary squished dropdown-toggle" data-toggle="dropdown">
 			<span class="icon icon-chevron-down"></span>
 		</button>
@@ -16,31 +16,6 @@
 	</div>
 
 @endcomponent
-
-@push('custom-styles')
-	<link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor2/redactor.css') }}">
-	<link href="{{ asset('assets/back/theme/vendor/plugins/datepicker/css/bootstrap-datetimepicker.css') }}"
-	      rel="stylesheet" type="text/css">
-@endpush
-
-@push('custom-scripts')
-	<script src="{{ asset('assets/back/vendor/redactor2/redactor.js') }}"></script>
-	<script>
-		;(function ($) {
-
-			$('.redactor-editor').redactor({
-				focus: true,
-				pastePlainText: true,
-				buttons: ['html', 'formatting', 'bold', 'italic',
-					'unorderedlist', 'orderedlist', 'outdent', 'indent',
-					'link', 'alignment', 'horizontalrule']
-			});
-
-		})(jQuery);
-
-	</script>
-
-@endpush
 
 @section('content')
 

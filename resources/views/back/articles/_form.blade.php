@@ -9,8 +9,8 @@
         <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
 
         <div class="stack">
-            <label for="seo-description">Inhoud</label>
-            <textarea id="seo-description" cols="30" rows="20" class="input redactor inset-s" placeholder="Beschrijving" type="text" required=""></textarea>
+            <label for="content">Inhoud</label>
+            <textarea name="content" id="content" cols="30" rows="20" class="input redactor inset-s" required=""></textarea>
         </div>
 
     </div>
