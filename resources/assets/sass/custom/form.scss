@@ -13,6 +13,16 @@
     }
 }
 
+/* redactor wysiwyg */
 .redactor-toolbar{
     z-index:10; // override default 100 z-index
+}
+
+.redactor-air li a, .redactor-toolbar li a{
+    height:auto;
+}
+
+.redactor-toolbar li a.re-button-icon {
+    padding: 8px 15px;
+    font-size: 12px;
 }

@@ -10,7 +10,7 @@
 
         <div class="stack">
             <label for="content">Inhoud</label>
-            <textarea name="content" id="content" cols="30" rows="20" class="input redactor inset-s" required=""></textarea>
+            <textarea name="content" id="content" cols="30" rows="20" class="input redactor inset-s" v-cloak></textarea>
         </div>
 
     </div>
