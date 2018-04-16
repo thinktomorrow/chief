@@ -1,7 +1,7 @@
 @extends('back._layouts.master')
 
 @section('page-title')
-Dashboard
+    Dashboard
 @stop
 
 @section('topbar-right')
@@ -9,76 +9,59 @@ Dashboard
 @stop
 
 @section('content')
-<div class="row">
-  <div class="col-md-4">
-  <div class="panel panel-tile text-center br-a br-grey">
-    <div class="panel-body">
-      @role('superadmin')
-        <img src="{{ asset('assets/back/img/dashboard-chief.png')}}" alt="Dashboard">
-        <h1 class="fs30 mt5 mbn">Ahéhee {{ Auth::user()->firstname }}</h1>
-      @endrole
-      @role('Admin')
-        <img src="{{ asset('assets/back/img/dashboard-chief.png')}}" alt="Dashboard">
-        <h1 class="fs30 mt5 mbn">Ahéhee {{ Auth::user()->firstname }}</h1>
-      @endrole
-      @role('User')
-        <img src="{{ asset('assets/back/img/dashboard-user.png')}}" alt="Dashboard">
-        <h1 class="fs30 mt5 mbn">Ahéhee {{ Auth::user()->firstname }}</h1>
-      @endrole
-    </div>
-    <div class="panel-footer br-t p12">
-      <span class="fs11">
-        Ga naar je <b>account</b>
-        <i class="fa fa-arrow-right pr5 text-default"></i>
-      </span>
-    </div>
-  </div>
-</div>
+    <div class="row gutter stack-l">
+        <div class="column-4 stretched-xl">
+            <h1>Welkom op je dashboard, {{ Auth::user()->firstname }}</h1>
+            <p>Don't try to follow trends. Create them</p>
+        </div>
+
+        <div class="gutter column-8 inset right">
 
             <!-- // ORDER COUNTER -->
-            <div class="col-md-4">
-              <div class="panel panel-tile text-center br-a br-grey">
-                <div class="panel-body">
-                  <h1 class="fs30 mt5 mbn">16</h1>
-                  <h6 class="text-success">BESTELLINGEN</h6>
+            <div class="column-6">
+                <div class="panel panel-default --raised">
+                    <div class="panel-body inset">
+                        <div class="btn btn-o-primary btn-circle">
+                            <i class="icon icon-box"></i>
+                        </div>
+                        <div class="stack">
+                            <h1 class="--remove-margin">3</h1>
+                            <p>Producten</p>
+                            <a href="#" class="btn btn-secondary">CTA-button</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-footer br-t p12">
-                  <span class="fs11">
-                    Ga naar je <b>bestellingen</b>
-                    <i class="fa fa-arrow-right pr5 text-success"></i>
-                  </span>
-                </div>
-              </div>
             </div>
             <!-- // PRODUCT COUNTER -->
-            <div class="col-md-4">
-              <div class="panel panel-tile text-center br-a br-grey">
-                <div class="panel-body">
-                  <h1 class="fs30 mt5 mbn">248</h1>
-                  <h6 class="text-warning">PRODUCTEN</h6>
+            <div class="column-6">
+                <div class="panel panel-default --raised">
+                    <div class="panel-body inset">
+                        <div class="btn btn-o-primary btn-circle">
+                            <i class="icon icon-book"></i>
+                        </div>
+                        <div class="stack">
+                            <h1 class="--remove-margin">4</h1>
+                            <p>Diensten</p>
+                            <a href="#" class="btn btn-secondary">CTA-button</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-footer br-t p12">
-                  <span class="fs11">
-                    Ga naar je <b>catalogus</b>
-                    <i class="fa fa-arrow-right pr5 text-warning"></i>
-                  </span>
-                </div>
-              </div>
             </div>
             <!-- // USER COUNTER -->
-            <div class="col-md-4">
-              <div class="panel panel-tile text-center br-a br-grey">
-                <div class="panel-body">
-                  <h1 class="fs30 mt5 mbn">74</h1>
-                  <h6 class="text-danger">KLANTEN</h6>
+            <div class="column-6">
+                <div class="panel panel-default --raised">
+                    <div class="panel-body inset">
+                        <div class="btn btn-o-primary btn-circle">
+                            <i class="icon icon-eye"></i>
+                        </div>
+                        <div class="stack">
+                            <h1 class="--remove-margin">24</h1>
+                            <p>Inzichten</p>
+                            <a href="#" class="btn btn-secondary">CTA-button</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-footer br-t p12">
-                  <span class="fs11">
-                    Ga naar de <b>gebruikers</b>
-                    <i class="fa fa-arrow-right pr5 text-danger"></i>
-                  </span>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
+    </div>
 @stop

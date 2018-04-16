@@ -69,25 +69,25 @@
     <h2>Icon buttons</h2>
     <div class="stack" id="clone-20">
         <a class="btn btn-action btn-circle">
-            <i class="icon icon-pencil"></i>
+            <i class="icon icon-zap"></i>
         </a>
         <a class="btn btn-primary btn-action btn-circle">
             <i class="icon icon-eye"></i>
         </a>
         <a class="btn btn-secondary btn-action btn-circle">
-            <i class="icon icon-pencil"></i>
+            <i class="icon icon-zap"></i>
         </a>
         <a class="btn btn-warning btn-action btn-circle">
             <i class="icon icon-eye"></i>
         </a>
         <a class="btn btn-success btn-action btn-circle">
-            <i class="icon icon-pencil"></i>
+            <i class="icon icon-zap"></i>
         </a>
         <a class="btn btn-error btn-action btn-circle">
             <i class="icon icon-eye"></i>
         </a>
         <a class="btn btn-information btn-action btn-circle">
-            <i class="icon icon-pencil"></i>
+            <i class="icon icon-zap"></i>
         </a>
     </div>
 </section>

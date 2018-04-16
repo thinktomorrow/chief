@@ -3,7 +3,7 @@
         <div class="row">
             <ul id="nav-main" class="nav-items">
                 <li>
-                    <a class="nav-item icon icon-feather text-subtle" href="{{ route('back.dashboard') }}"></a>
+                    <a class="nav-item icon icon-feather" href="{{ route('back.dashboard') }}"></a>
                 </li>
                 <li><a class="nav-item {{ isActiveUrl('admin/articles*') ? 'active' : '' }}" href="{{ route('back.articles.index') }}">Artikels</a></li>
                 <li><a class="nav-item {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a></li>
