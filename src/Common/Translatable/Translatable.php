@@ -99,6 +99,11 @@ trait Translatable
         return $this->getTranslation($locale)->delete();
     }
 
+    public static function getAvailableLocales()
+    {
+        return config('translatable.locales', []);
+    }
+
     /**
      * Get all locales where this entity
      * already has any translations of
@@ -136,11 +141,6 @@ trait Translatable
         {
             return $available ? in_array($v, $current_locales) : !in_array($v, $current_locales);
         }, ARRAY_FILTER_USE_BOTH);
-    }
-
-    public static function getAvailableLocales()
-    {
-        return config('translatable.locales', []);
     }
 
     /**

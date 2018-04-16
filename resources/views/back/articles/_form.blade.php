@@ -4,8 +4,32 @@
         <p class="caption">Dit is de artikelnaam zoals ze ook wordt weergegeven voor uw bezoekers.</p>
     </div>
     <div class="formgroup-input column-8">
-        <label for="seo-title">Titel</label>
-        <input id="seo-title" class="input inset-s" placeholder="Titel" type="text" required="">
+
+        {{ dd($article->availableLocales()) }}
+        <translation-tabs>
+            @foreach($article->availableLocales() as $tab)
+
+                @php $tab = (object)$tab; @endphp
+
+                <mkiha-tab name="{{ $tab->name }}" :options="{ flag: '{{ $tab->flag }}', hasErrors: errors.has('trans.{{ $tab->locale }}.name')}">
+                    <div class="stack-s">
+                        <label for="trans-{{ $tab->locale }}-name">Naam</label>
+                        <input id="trans-{{ $tab->locale }}-name" name="trans[{{ $tab->locale }}][name]" type="text" value="{{ old('trans.'.$tab->locale.'.name',$product->translateForForm($tab->locale,'name')) }}">
+                    </div>
+
+                    <error class="caption text-warning" field="trans.{{ $tab->locale }}.name" :errors="errors.get('trans.{{ $tab->locale }}')"></error>
+
+                    <div>
+                        <label for="trans-{{ $tab->locale }}-description">Omschrijving</label>
+                        <textarea class="redactor" name="trans[{{ $tab->locale }}][description]" id="trans-{{ $tab->locale }}-description" cols="30" rows="10">{{ old('trans.'.$tab->locale.'.description',$product->translateForForm($tab->locale,'description')) }}</textarea>
+                    </div>
+
+                </mkiha-tab>
+            @endforeach
+        </translation-tabs>
+
+        <label for="title">Titel</label>
+        <input type="text" name="title" id="title" class="input inset-s" placeholder="Titel" value="{{ old('trans.nl.title', '') }}">
         <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
 
         <div class="stack">
