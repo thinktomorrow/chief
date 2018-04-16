@@ -16,21 +16,11 @@ class Article extends Model implements TranslatableContract, HasMedia
 {
     use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable;
 
-    protected $table = 'articles';
-    public $timestamps = true;
-    protected $translatedAttributes = ['title','content','short','slug','meta_description'];
+    protected $translatedAttributes = [
+        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
+    ];
 
     protected $dates = ['deleted_at'];
-
-    public function scopeSortedByPublished($query)
-    {
-        $query->orderBy('published','DESC');
-    }
-
-    public function scopeSortedByRecent($query)
-    {
-        $query->orderBy('created_at','DESC');
-    }
 
     public static function findBySlug($slug)
     {
@@ -45,5 +35,15 @@ class Article extends Model implements TranslatableContract, HasMedia
     public static function getAll()
     {
         return self::published()->get();
+    }
+
+    public function scopeSortedByPublished($query)
+    {
+        $query->orderBy('published','DESC');
+    }
+
+    public function scopeSortedByRecent($query)
+    {
+        $query->orderBy('created_at','DESC');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Chief\Tests;
 
 trait ChiefDatabaseTransactions
 {

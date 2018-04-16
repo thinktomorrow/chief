@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Chief\Tests;
 
 use App\Exceptions\Handler;
 use Illuminate\Contracts\Console\Kernel;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication;
+    use CreatesApplication, TestHelpers;
 
     protected $protectTestEnvironment = true;
 

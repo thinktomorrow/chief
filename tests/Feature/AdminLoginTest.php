@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Chief\Tests\Feature;
 
 use App\Notifications\ResetAdminPassword;
 use Chief\Users\User;

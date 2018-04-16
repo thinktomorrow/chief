@@ -24,14 +24,15 @@ class CreateArticlesTable extends Migration
 
         Schema::create('article_translations', function(Blueprint $table) {
             $table->increments('id');
+            $table->integer('article_id')->unsigned();
             $table->string('locale');
+            $table->string('slug')->unique();
             $table->string('title');
             $table->text('content');
-            $table->text('short');
-            $table->string('slug')->unique();
-            $table->text('meta_description')->nullable();
+            $table->text('short')->nullable();
+            $table->string('seo_title')->nullable();
+            $table->text('seo_description')->nullable();
             $table->timestamps();
-            $table->integer('article_id')->unsigned();
 
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
         });

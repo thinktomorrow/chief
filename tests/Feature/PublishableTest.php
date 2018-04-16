@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Chief\Tests\Feature;
 
 use Chief\Common\Traits\Publishable;
 use Illuminate\Database\Eloquent\Model;

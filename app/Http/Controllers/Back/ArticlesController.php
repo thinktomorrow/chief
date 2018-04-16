@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use Chief\Articles\Application\CreateArticle;
 use Chief\Articles\Article;
 use Chief\Articles\ArticleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 
 class ArticlesController extends Controller
@@ -18,14 +20,6 @@ class ArticlesController extends Controller
         return view('back.articles.index', compact('articles'));
     }
 
-    public function upload($id, Request $request)
-    {
-        $article = Article::find($id);
-        $article->addFile($request->file('image'), $request->type, $request->get('locale'));
-
-        return redirect()->back();
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -33,10 +27,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        $article = new Article();
-        $assets = Asset::getAllAssets();
-
-        return view('back.articles.create',compact('article', 'assets'));
+        return view('back.articles.create',['article' => new Article()]);
     }
 
     /**
@@ -47,10 +38,13 @@ class ArticlesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'trans.*.slug' => 'required|unique:article_translations',
+        ]);
 
-        $article = (new ArticleRepository())->create($request);
+        $article = app(CreateArticle::class)->handle($request->trans);
 
-        return redirect()->route('back.articles.index')->with('messages.success', $article->title .' werd aangemaakt');
+        return redirect()->route('back.articles.index')->with('messages.success', $article->title .' is aangemaakt');
     }
 
     /**
@@ -111,4 +105,12 @@ class ArticlesController extends Controller
 //            'id'=> $article->id
 //        ],200);
     }
+
+//    public function upload($id, Request $request)
+//    {
+//        $article = Article::find($id);
+//        $article->addFile($request->file('image'), $request->type, $request->get('locale'));
+//
+//        return redirect()->back();
+//    }
 }

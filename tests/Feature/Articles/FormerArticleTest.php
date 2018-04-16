@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Chief\Tests\Feature\Articles;
 
 use Carbon\Carbon;
 use Chief\Articles\Article;
@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
-class ArticleTest extends TestCase
+class FormerArticleTest extends TestCase
 {
     use DatabaseTransactions, DatabaseMigrations;
 
