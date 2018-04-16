@@ -3,15 +3,13 @@
 namespace Chief\Tests\Feature;
 
 use App\Notifications\ResetAdminPassword;
+use Chief\Tests\ChiefDatabaseTransactions;
+use Chief\Tests\TestCase;
 use Chief\Users\User;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
-use Tests\ChiefDatabaseTransactions;
-use Tests\TestCase;
 
 class AdminLoginTest extends TestCase
 {
@@ -34,9 +32,9 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
-        $this->disableExceptionHandling();
         $admin = factory(User::class)->create([
-            'email' => 'foo@example.com'
+            'email' => 'foo@example.com',
+            'password' => bcrypt('foobar'),
         ]);
 
         $response = $this->post(route('back.login.store'),[
@@ -85,7 +83,8 @@ class AdminLoginTest extends TestCase
     public function it_redirects_authenticated_admin_to_intended_page()
     {
         $admin = factory(User::class)->create([
-            'email' => 'foo@example.com'
+            'email' => 'foo@example.com',
+            'password' => bcrypt('foobar'),
         ]);
 
         $resp = $this->get(route('back.articles.index'));
