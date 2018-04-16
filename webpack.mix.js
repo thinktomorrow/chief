@@ -2,6 +2,7 @@ let mix = require('laravel-mix');
 
 mix.setPublicPath(path.normalize('public/assets/back'))
 	.js('resources/assets/js/main.js', 'public/assets/back/js')
+	.js('resources/assets/js/native.js', 'public/assets/back/js')
 	.sass('resources/assets/sass/main.scss', 'public/assets/back/css')
 
 	.version()

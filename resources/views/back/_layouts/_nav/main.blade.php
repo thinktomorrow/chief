@@ -6,7 +6,7 @@
                     <a class="nav-item icon icon-feather text-subtle" href="{{ route('back.dashboard') }}"></a>
                 </li>
                 <li><a class="nav-item {{ isActiveUrl('admin/articles*') ? 'active' : '' }}" href="{{ route('back.articles.index') }}">Artikels</a></li>
-                <li><a class="nav-item text-subtle" href="#">Site</a></li>
+                <li><a class="nav-item {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a></li>
                 <li><a class="nav-item" target="_blank" href="/spirit">Spirit</a></li>
             </ul>
 

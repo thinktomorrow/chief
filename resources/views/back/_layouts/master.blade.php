@@ -20,12 +20,6 @@
     <link rel="stylesheet" href="{{ asset('assets/back/css/vendors/redactor.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ cached_asset('/assets/back/css/main.css','back') }}">
 
-    <!--Load redactor script and required dependency jquery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-    <script async src="{{ asset('assets/back/js/vendors/redactor.js') }}"></script>
-
     @stack('custom-styles')
 </head>
 
@@ -98,19 +92,14 @@
         Eventbus.$emit('close-modal',id);
     };
 
-    /** Tippy tooltip init */
-    window.tippy('[title]', {
-        arrow: true,
-        animation: 'shift-toward'
-    });
-
-    /** Redactor wysiwyg */
-    $(function()
-    {
-        $('textarea.redactor').redactor();
-    });
-
 </script>
+
+<!--Load redactor script and required dependency jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="{{ asset('assets/back/js/vendors/redactor.js') }}"></script>
+<script src="{{ cached_asset('/assets/back/js/native.js','back') }}"></script>
 
 @stack('custom-scripts-after-vue')
 

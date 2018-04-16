@@ -6,6 +6,7 @@ use Chief\Translations\Translation;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
 use Chief\Users\User;
+use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Page;
 
 class EditTranslationTest extends TestCase
@@ -19,8 +20,11 @@ class EditTranslationTest extends TestCase
         parent::setUp();
 
         $this->setUpDatabase();
-        $this->squantoPage = $this->createSquantoPage();
 
+        // Set locales to nl, fr for our tests
+        app('config')['squanto'] = array_merge(config('squanto'),['locales' => ['nl','fr']]);
+
+        $this->squantoPage = $this->createSquantoPage();
     }
 
     /** @test */
@@ -40,48 +44,28 @@ class EditTranslationTest extends TestCase
     }
 
     /** @test */
-    function creating_a_new_article()
+    function editing_a_new_translation()
     {
         $this->disableExceptionHandling();
 
         $response = $this->actingAs(factory(User::class)->create())
-            ->post(route('back.translations.store'), $this->validParams());
+            ->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('back.translations.index'));
+        $response->assertRedirect(route('squanto.edit', $this->squantoPage->id));
 
-        $this->assertCount(1, Translation::all());
-        $this->assertNewValues(Translation::first());
+        $this->assertCount(1, Page::all());
+        $this->assertNewValues(Page::first());
     }
 
     /** @test */
-    function only_authenticated_admin_can_edit_a_article()
+    function only_authenticated_admin_can_edit_a_translation()
     {
-        $response = $this->post(route('back.translations.store'), $this->validParams());
+        $response = $this->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
         $response->assertRedirect(route('back.login'));
-        $this->assertCount(0, Translation::all());
-    }
-
-    /** @test */
-    function when_creating_article_slug_is_required()
-    {
-        $this->assertValidation(new Translation(), 'trans.nl.slug', $this->validParams(['trans.nl.slug' => '']),
-            route('back.translations.index'),
-            route('back.translations.store')
-        );
-    }
-
-    /** @test */
-    public function slug_must_be_unique()
-    {
-        factory(Translation::class)->create(['slug:nl' => 'existing-slug']);
-
-        $this->assertValidation(new Translation(), 'trans.nl.slug', $this->validParams(['trans.nl.slug' => 'existing-slug']),
-            route('back.translations.index'),
-            route('back.translations.store'),
-            1
-        );
+        $this->assertCount(1, Page::all());
+        $this->assertValuesUnchanged(Page::first());
     }
 
     private function validParams($overrides = [])
@@ -89,18 +73,12 @@ class EditTranslationTest extends TestCase
         $params = [
             'trans' => [
                 'nl' => [
-                    'slug'    => 'new-slug',
-                    'title'           => 'new title',
-                    'content'         => 'new content in <strong>bold</strong>',
-                    'seo_title'       => 'new seo title',
-                    'seo_description' => 'new seo description',
+                    1    => 'new-entry-1',
+                    2    => 'new-entry-2',
                 ],
                 'fr' => [
-                    'slug'  => 'nouveau-slug',
-                    'title'           => 'nouveau title',
-                    'content'         => 'nouveau content in <strong>bold</strong>',
-                    'seo_title'       => 'nouveau seo title',
-                    'seo_description' => 'nouveau seo description',
+                    1    => 'nouveau-entry-1',
+                    2    => 'nouveau-entry-2',
                 ],
             ],
         ];
@@ -112,19 +90,22 @@ class EditTranslationTest extends TestCase
         return $params;
     }
 
-    private function assertNewValues($article)
+    private function assertNewValues(Page $page)
     {
-        $this->assertEquals('new-slug', $article->{'slug:nl'});
-        $this->assertEquals('new title', $article->{'title:nl'});
-        $this->assertEquals('new content in <strong>bold</strong>', $article->{'content:nl'});
-        $this->assertEquals('new seo title', $article->{'seo_title:nl'});
-        $this->assertEquals('new seo description', $article->{'seo_description:nl'});
+        $this->assertEquals('new-entry-1', Line::findByKey('squanto-page.line-1')->getValue('nl'));
+        $this->assertEquals('new-entry-2', Line::findByKey('squanto-page.line-2')->getValue('nl'));
 
-        $this->assertEquals('nouveau-slug', $article->{'slug:fr'});
-        $this->assertEquals('nouveau title', $article->{'title:fr'});
-        $this->assertEquals('nouveau content in <strong>bold</strong>', $article->{'content:fr'});
-        $this->assertEquals('nouveau seo title', $article->{'seo_title:fr'});
-        $this->assertEquals('nouveau seo description', $article->{'seo_description:fr'});
+        $this->assertEquals('nouveau-entry-1', Line::findByKey('squanto-page.line-1')->getValue('fr'));
+        $this->assertEquals('nouveau-entry-2', Line::findByKey('squanto-page.line-2')->getValue('fr'));
+    }
+
+    private function assertValuesUnchanged(Page $page)
+    {
+        $this->assertEquals('', Line::findByKey('squanto-page.line-1')->getValue('nl'));
+        $this->assertEquals('', Line::findByKey('squanto-page.line-2')->getValue('nl'));
+
+        $this->assertEquals('', Line::findByKey('squanto-page.line-1')->getValue('fr'));
+        $this->assertEquals('', Line::findByKey('squanto-page.line-2')->getValue('fr'));
     }
 
     /**
@@ -136,6 +117,9 @@ class EditTranslationTest extends TestCase
         $squantoPage->label = 'squanto page';
         $squantoPage->key = 'squanto-page';
         $squantoPage->save();
+
+        Line::make('squanto-page.line-1');
+        Line::make('squanto-page.line-2');
 
         return $squantoPage;
     }
