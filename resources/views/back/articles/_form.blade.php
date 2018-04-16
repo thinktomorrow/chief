@@ -19,7 +19,7 @@
 
                     <div class="stack">
                         <label for="trans-{{ $locale }}-content">Tekst</label>
-                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="30" rows="10" v-cloak>{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
+                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="30" rows="10">{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
                     </div>
                 </tab>
 
