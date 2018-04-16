@@ -29,14 +29,46 @@
     <pre class="code-box" id="code-25"></pre>
 
 
-    <h2>Large Buttons</h2>
-    <div class="stack" id="clone-24">
-        <a class="btn btn-lg btn-primary">Button primary</a>
-        <a class="btn btn-lg btn-secondary btn-round">Button secondary</a>
-    </div>
-    <div class="stack">
-        <a class="btn btn-lg btn-o-primary btn-round">Button primary</a>
-        <a class="btn btn-lg btn-o-secondary">Button secondary</a>
+    <h2>Split Buttons</h2>
+    <div class="stack inline-group" id="clone-24">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Save</button>
+            <div class="dropdown">
+                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">
+                    <i class="icon icon-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <div><a href="#">As draft</a></div>
+                        <div><a href="#">In review</a></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-o-primary">Save</button>
+            <div class="dropdown">
+                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-o-primary">
+                    <i class="icon icon-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <div><a href="#">As draft</a></div>
+                        <div><a href="#">In review</a></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-tertiary">Save</button>
+            <div class="dropdown">
+                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-tertiary">
+                    <i class="icon icon-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <div><a href="#">As draft</a></div>
+                        <div><a href="#">In review</a></div>
+                    </div>
+                </button>
+            </div>
+        </div>
     </div>
     <pre class="code-box" id="code-24"></pre>
 

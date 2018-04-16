@@ -3390,6 +3390,8 @@ button.btn,
 .btn-group .btn {
   float: left;
   line-height: 1.5;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .btn-group .dropdown {
@@ -3398,6 +3400,10 @@ button.btn,
 
 .btn-group .dropdown .btn {
   border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .label {

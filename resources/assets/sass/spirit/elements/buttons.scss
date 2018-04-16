@@ -109,17 +109,23 @@ $colors: $color-primary $color-secondary $color-tertiary $color-white $color-suc
         }
     }
 }
-
+// SPLIT BUTTONS
 .btn-group{
     display: inline-block;
     .btn{
         float: left;
         line-height: 1.5;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
     .dropdown{
         float: left;
         .btn{
             border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: $default-border-radius;
+            border-bottom-right-radius: $default-border-radius;
         }
     }
 
