@@ -15,7 +15,7 @@
                     </div>
                 </button>
             </div>
-
+        </div>
 @endcomponent
 
 @section('content')
@@ -24,7 +24,6 @@
 		{{ csrf_field() }}
 
 		@include('back.articles._form')
-
 	</form>
 
 @stop

@@ -12,12 +12,3 @@ window.tippy('[title]', {
     animation: 'shift-toward'
 });
 
-/** Redactor wysiwyg */
-$(function()
-{
-    const $editor = $('textarea.redactor');
-    if($editor){
-        $editor.redactor();
-    }
-
-});

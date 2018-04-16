@@ -78,16 +78,8 @@ __webpack_require__("./resources/assets/js/utilities/form-submit.js");
 
 /** Tippy tooltip init */
 window.tippy('[title]', {
-    arrow: true,
-    animation: 'shift-toward'
-});
-
-/** Redactor wysiwyg */
-$(function () {
-    var $editor = $('textarea.redactor');
-    if ($editor) {
-        $editor.redactor();
-    }
+  arrow: true,
+  animation: 'shift-toward'
 });
 
 /***/ }),

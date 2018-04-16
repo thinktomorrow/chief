@@ -5,37 +5,26 @@
     </div>
     <div class="formgroup-input column-8">
 
-        {{ dd($article->availableLocales()) }}
         <translation-tabs>
-            @foreach($article->availableLocales() as $tab)
+            @foreach($article->availableLocales() as $locale)
 
-                @php $tab = (object)$tab; @endphp
-
-                <mkiha-tab name="{{ $tab->name }}" :options="{ flag: '{{ $tab->flag }}', hasErrors: errors.has('trans.{{ $tab->locale }}.name')}">
+                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.name')}">
                     <div class="stack-s">
-                        <label for="trans-{{ $tab->locale }}-name">Naam</label>
-                        <input id="trans-{{ $tab->locale }}-name" name="trans[{{ $tab->locale }}][name]" type="text" value="{{ old('trans.'.$tab->locale.'.name',$product->translateForForm($tab->locale,'name')) }}">
+                        <label for="trans-{{ $locale }}-title">Titel</label>
+                        <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title',$article->translateForForm($locale,'title')) }}">
+                        <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
                     </div>
 
-                    <error class="caption text-warning" field="trans.{{ $tab->locale }}.name" :errors="errors.get('trans.{{ $tab->locale }}')"></error>
+                    <error class="caption text-warning" field="trans.{{ $locale }}.name" :errors="errors.get('trans.{{ $locale }}')"></error>
 
-                    <div>
-                        <label for="trans-{{ $tab->locale }}-description">Omschrijving</label>
-                        <textarea class="redactor" name="trans[{{ $tab->locale }}][description]" id="trans-{{ $tab->locale }}-description" cols="30" rows="10">{{ old('trans.'.$tab->locale.'.description',$product->translateForForm($tab->locale,'description')) }}</textarea>
+                    <div class="stack">
+                        <label for="trans-{{ $locale }}-content">Tekst</label>
+                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="30" rows="10" v-cloak>{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
                     </div>
+                </tab>
 
-                </mkiha-tab>
             @endforeach
         </translation-tabs>
-
-        <label for="title">Titel</label>
-        <input type="text" name="title" id="title" class="input inset-s" placeholder="Titel" value="{{ old('trans.nl.title', '') }}">
-        <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
-
-        <div class="stack">
-            <label for="content">Inhoud</label>
-            <textarea name="content" id="content" cols="30" rows="20" class="input redactor inset-s" v-cloak></textarea>
-        </div>
 
     </div>
 </section>

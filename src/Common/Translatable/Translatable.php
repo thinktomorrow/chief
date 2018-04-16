@@ -99,9 +99,18 @@ trait Translatable
         return $this->getTranslation($locale)->delete();
     }
 
-    public static function getAvailableLocales()
+    public static function availableLocales()
     {
         return config('translatable.locales', []);
+    }
+
+    /**
+     * @deprecated use availableLocales instead
+     * @return \Illuminate\Config\Repository|mixed
+     */
+    public static function getAvailableLocales()
+    {
+        return static::availableLocales();
     }
 
     /**
@@ -134,7 +143,7 @@ trait Translatable
      */
     private function fetchLocales($available = true)
     {
-        $available_locales = self::getAvailableLocales();
+        $available_locales = static::availableLocales();
         $current_locales = $this->translations()->pluck('locale')->toArray();
 
         return array_filter($available_locales, function ($v) use ($current_locales, $available)
@@ -150,7 +159,7 @@ trait Translatable
      */
     private function validateLocale($locale)
     {
-        if (!in_array($locale, self::getAvailableLocales()))
+        if (!in_array($locale, static::availableLocales()))
         {
             throw new InvalidArgumentException('Locale [' . $locale . '] is not available');
         }
@@ -176,7 +185,7 @@ trait Translatable
      */
     public function hasMultipleApplicationLocales()
     {
-        return count(self::getAvailableLocales()) > 1 ?: false;
+        return count(static::availableLocales()) > 1 ?: false;
     }
 
     /**
@@ -192,6 +201,23 @@ trait Translatable
         }
         $this->trans = $trans;
     }
+
+    /**
+     * Retrieve translation value from the injected translations for the form
+     * Note that this is only valid if the injectTranslationForForm() method
+     * is called prior to calling this method.
+     *
+     * @param $locale
+     * @param $key
+     * @return string|null
+     */
+    public function translateForForm($locale, $key)
+    {
+        if(!isset($this->trans) || !isset($this->trans[$locale])) return null;
+
+        return $this->trans[$locale][$key] ?? null;
+    }
+
     /**
      * Update or create translatable fields for a translatable entity
      *
