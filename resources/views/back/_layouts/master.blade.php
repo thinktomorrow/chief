@@ -20,12 +20,6 @@
     <link rel="stylesheet" href="{{ asset('assets/back/css/vendors/redactor.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ cached_asset('/assets/back/css/main.css','back') }}">
 
-    <!--Load redactor script and required dependency jquery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/back/js/vendors/redactor.js') }}"></script>
-
     @stack('custom-styles')
 </head>
 
@@ -46,10 +40,14 @@
 
 </main>
 
+<!--Load redactor script and required dependency jquery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="{{ cached_asset('assets/back/js/vendors/redactor.js', 'back') }}"></script>
 <script src="{{ cached_asset('/assets/back/js/main.js','back') }}"></script>
 
 @stack('custom-scripts')
-
 <script>
 
     /**
@@ -101,16 +99,17 @@
 </script>
 
 <script src="{{ cached_asset('/assets/back/js/native.js','back') }}"></script>
+
 <script>
     /** Redactor wysiwyg */
     $(function()
     {
         var $editor = $('.redactor');
-        $editor.redactor({
-            formatting: ['h4','p'],
-            buttons: ['HTML', 'format', 'bold', 'italic', 'lists', 'link', 'horizontalrule'],
-            plugins: ['video'],
-        });
+        if($editor){
+            $editor.redactor({
+                formatting: ['h4','p'],
+            });
+        }
     });
 
 </script>

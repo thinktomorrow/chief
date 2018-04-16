@@ -5,17 +5,17 @@
     </div>
     <div class="formgroup-input column-8">
 
-        <translation-tabs>
+        <tabs>
             @foreach($article->availableLocales() as $locale)
 
-                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.name')}">
+                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
                     <div class="stack-s">
                         <label for="trans-{{ $locale }}-title">Titel</label>
                         <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title',$article->translateForForm($locale,'title')) }}">
                         <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
                     </div>
 
-                    <error class="caption text-warning" field="trans.{{ $locale }}.name" :errors="errors.get('trans.{{ $locale }}')"></error>
+                    <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>
 
                     <div class="stack">
                         <label for="trans-{{ $locale }}-content">Tekst</label>
@@ -24,7 +24,7 @@
                 </tab>
 
             @endforeach
-        </translation-tabs>
+        </tabs>
 
     </div>
 </section>
@@ -53,12 +53,27 @@
         <p class="caption">Titel en omschrijving van het artikel zoals het in search engines (o.a. google) wordt weergegeven.</p>
     </div>
     <div class="formgroup-input column-7">
-        <label for="seo-title">Titel</label>
-        <input id="seo-title" class="input inset-s" placeholder="Seo titel" type="text" required="">
-        <div class="stack">
-            <label for="seo-description">Beschrijving</label>
-            <textarea id="seo-description" cols="30" rows="5" class="input inset-s" placeholder="Seo beschrijving" type="text" required=""></textarea>
-        </div>
+
+        <tabs>
+            @foreach($article->availableLocales() as $locale)
+
+                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.seo_title')}">
+                    <div class="stack-s">
+                        <label for="trans-{{ $locale }}-seo_title">Seo titel</label>
+                        <input type="text" name="trans[{{ $locale }}][seo_title]" id="trans-{{ $locale }}-seo_title" class="input inset-s" placeholder="Seo titel" value="{{ old('trans.'.$locale.'.seo_title',$article->translateForForm($locale,'seo_title')) }}">
+                        <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
+                    </div>
+
+                    <error class="caption text-warning" field="trans.{{ $locale }}.seo_title" :errors="errors.get('trans.{{ $locale }}')"></error>
+
+                    <div class="stack">
+                        <label for="trans-{{ $locale }}-seo_description">Seo omschrijving</label>
+                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][seo_description]" id="trans-{{ $locale }}-seo_description" cols="30" rows="10">{{ old('trans.'.$locale.'.seo_description',$article->translateForForm($locale,'seo_description')) }}</textarea>
+                    </div>
+                </tab>
+
+            @endforeach
+        </tabs>
 
         <label for="seo-title"><i>Preview</i></label>
         <div class="panel seo-preview --border inset bc-success">
