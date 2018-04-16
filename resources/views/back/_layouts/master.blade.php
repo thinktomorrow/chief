@@ -17,16 +17,15 @@
     <!-- hide vue elements until vue is loaded -->
     <style type="text/css">[v-cloak]{ display:none; }</style>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/back/css/vendors/redactor.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ cached_asset('/assets/back/css/main.css','back') }}">
 
-    <!--Load redactor -->
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
+    <!--Load redactor script and required dependency jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{{ asset('assets/back/css/vendors/redactor.css') }}" />
-    <script src="{{ asset('assets/back/js/vendors/redactor.js') }}"></script>
+    <script async src="{{ asset('assets/back/js/vendors/redactor.js') }}"></script>
 
-    <link rel="stylesheet" type="text/css" href="{{ cached_asset('/assets/back/css/main.css','back') }}">
     @stack('custom-styles')
 </head>
 
@@ -48,6 +47,7 @@
 </main>
 
 <script src="{{ cached_asset('/assets/back/js/main.js','back') }}"></script>
+
 @stack('custom-scripts')
 
 <script>
@@ -102,6 +102,12 @@
     window.tippy('[title]', {
         arrow: true,
         animation: 'shift-toward'
+    });
+
+    /** Redactor wysiwyg */
+    $(function()
+    {
+        $('textarea.redactor').redactor();
     });
 
 </script>
