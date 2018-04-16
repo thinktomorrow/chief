@@ -1,12 +1,13 @@
 @section('header')
-    <header class="container sticky sticky-bar stack">
+    <header class="sticky sticky-bar">
+        <div class="container ">
         <div class="row stack">
-            <div class="column inline-s">
-                <h1 class="inline-s">
+            <div class="column">
+                <h1 class="--remove-margi">
                     @if(isset($back))
-                        <a class="title-back left inline-s" href="{{ $back }}"><i class="icon icon-chevron-left"></i></a>
+                        <a class="btn btn-link text-primary" href="{{ $back }}"><i class="icon icon-chevron-left"></i></a>
                     @else
-                        <a class="title-back left inline-s" href="{{ url()->previous() }}"><i class="icon icon-chevron-left"></i></a>
+                        <a class="btn btn-link text-primary" href="{{ url()->previous() }}"><i class="icon icon-chevron-left"></i></a>
                     @endif
                     {{ $title ?? '' }}
                 </h1>
@@ -17,6 +18,7 @@
                 {{ $actionbuttons ??  '' }}
                 {{ $slot }}
             </div>
+        </div>
         </div>
     </header>
 @endsection
