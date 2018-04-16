@@ -2,15 +2,15 @@
 a.btn{
     text-decoration: none;
 }
+button.btn,
 .btn{
+    -webkit-appearance: none;
     padding: 0.5rem 1rem;
     display: inline-block;
     transition: $transition;
     cursor: pointer;
-    &.btn-lg{
-        padding: 1rem 2rem;
-    }
 }
+
 
 .btn-link{
     display: inline-block;
@@ -64,6 +64,7 @@ $colors: $color-primary $color-secondary $color-tertiary $color-white $color-suc
     $i: index($button-name, $button);
     // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
     $color: nth($colors, $i);
+    .btn-group-#{$button},
     .btn-#{$button}{
         background-color: transparent;
         color: $color;
@@ -95,4 +96,24 @@ $colors: $color-primary $color-secondary $color-tertiary $color-white $color-suc
             background-color: $color;
         }
     }
+    .btn-group-#{$button} .btn-group-btn{
+        &:first-child{
+            border-right: 1px solid $color;
+        }
+    }
+}
+
+.btn-group{
+    display: inline-block;
+    .btn{
+        float: left;
+        line-height: 1.5;
+    }
+    .dropdown{
+        float: left;
+        .btn{
+            border-left: none;
+        }
+    }
+
 }

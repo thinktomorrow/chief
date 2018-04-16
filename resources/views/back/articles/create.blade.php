@@ -4,16 +4,19 @@
 
 @component('back._layouts._partials.header')
     @slot('title', 'Nieuw artikel')
-    <div class="btn-group relative">
-		<button type="button" class="btn btn-primary squished">Save</button>
-		<button type="button" class="btn btn-primary squished dropdown-toggle" data-toggle="dropdown">
-			<span class="icon icon-chevron-down"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu">
-			<li><a href="#">As draft</a></li>
-			<li><a href="#">In review</a></li>
-		</ul>
-	</div>
+        <div class="btn-group right">
+            <button type="button" class="btn btn-primary">Action</button>
+            <div class="dropdown">
+                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">
+                    <i class="icon icon-chevron-down"></i>
+                    <div class="dropdown-menu">
+                        <div><a href="#">Action</a></div>
+                        <div><a href="#">Another action</a></div>
+                        <div><a href="#">Something else here</a></div>
+                        <div><a href="#">Separated link</a></div>
+                    </div>
+                </button>
+            </div>
 
 @endcomponent
 

@@ -53,6 +53,7 @@
     opacity: 0;
     visibility: hidden;
     display: block;
+    text-align: left;
     &.open{
       opacity: 1;
       visibility: visible;
@@ -79,10 +80,10 @@
   min-width: 160px;
   -webkit-background-clip: padding-box;
   border: 1px solid $color-border;
-  border-radius: $dropdown-border-radius;
   background-color: $color-white;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  li{
+
+  div,li{
     width: 100%;
     &.dropdown-header{
       color: $color-subtle;
@@ -94,19 +95,16 @@
       font-size: 0.875em;
       text-decoration: none;
       padding: 0.75em 2em;
-      margin: 0 0.25em;
       line-height: 1.5;
       color: #333;
       white-space: nowrap;
       &:hover{
-        background-color: $color-primary;
-        color: darken($color-primary, 20%);
-        border-radius: $dropdown-border-radius;
-        @extend .--raised;
+        color: $color-primary;
+        background-color: lighten($color-primary, 50%)
       }
     }
     &.divider{
-      margin: 5px 0;
+      margin: 0;
       border-top: 1px dotted $color-subtle;
       width: 100%;
     }
