@@ -1,4 +1,4 @@
-$toggle-size: 2rem;
+$toggle-size: 1.5rem;
 
 .custom-indicators{
     line-height: $toggle-size;
@@ -24,7 +24,6 @@ $toggle-size: 2rem;
         text-align: center;
         line-height: $toggle-size;
         transition: all 0.3s ease-in-out;
-
     }
 }
 .custom-radiobutton{
@@ -50,10 +49,10 @@ input[type=checkbox]{
 
 input[type=radio]:checked ~ .custom-radiobutton,
 input[type=checkbox]:checked ~ .custom-checkbox{
-    background-color: none;
-    border: 3px solid $color-primary;
+    border-radius: 50%;
+    background-color: $color-primary;
+    border-color: $color-primary;
 }
-
 
 // SWITCHES
 

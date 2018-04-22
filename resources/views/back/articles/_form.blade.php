@@ -18,8 +18,12 @@
                     <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>
 
                     <div class="stack">
+                        <label for="trans-{{ $locale }}-content">Korte omschrijving</label>
+                        <textarea class="inset-s" name="trans[{{ $locale }}][description]" id="trans-{{ $locale }}-description" cols="10" rows="5">{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
+                    </div>
+                    <div class="stack">
                         <label for="trans-{{ $locale }}-content">Tekst</label>
-                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="30" rows="10">{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
+                        <textarea class="inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
                     </div>
                 </tab>
 
@@ -29,18 +33,65 @@
     </div>
 </section>
 <hr>
-
+{{-- Featured image --}}
+<section class="row formgroup stack gutter-l">
+    <div class="column-4">
+        <h2 class="formgroup-label">Featured image</h2>
+        <p class="caption">Kies hier de afbeelding die bij het artikel hoort</p>
+    </div>
+    <div class="formgroup-input column-7">
+            <div class="input-group">
+                <label for="file">Upload</label>
+                <label class="custom-file">
+                    <input type="file" id="file">
+                    <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
+                </label>
+            </div>
+    </div>
+</section>
+<hr>
+{{-- Categorie --}}
+<section class="row formgroup stack gutter-l">
+    <div class="column-4">
+        <h2 class="formgroup-label">Categorie</h2>
+        <p class="caption">Kies hier de categorie waar het artikel toe hoort</p>
+    </div>
+    <div class="formgroup-input column-7">
+        <label class="column-4 custom-indicators" for="check-product">
+            <input value="radio" name="categorie" id="check-product" type="radio" checked>
+            <span class="custom-radiobutton"></span>
+            Product
+        </label>
+        <label class="column-4 custom-indicators" for="check-dienst">
+            <input value="radio" name="categorie" id="check-dienst" type="radio">
+            <span class="custom-radiobutton"></span>
+            Dienst
+        </label>
+        <label class="column-4 custom-indicators" for="check-inzicht">
+            <input value="inzicht" name="categorie" id="check-inzicht" type="radio">
+            <span class="custom-radiobutton"></span>
+            Inzicht
+        </label>
+    </div>
+</section>
+<hr>
+{{-- MODULES --}}
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
         <h2 class="formgroup-label">Modules</h2>
-        <p class="caption">Kies hier de modules die jij wil koppelen</p>
+        <p class="caption">Kies hier de artikels die je wil koppelen</p>
     </div>
     <div class="formgroup-input column-7">
-        <label for="seo-title">Modules</label>
-
         <div class="stack">
-            <label for="seo-description">Inhoud</label>
-            <textarea id="seo-description" cols="30" rows="20" class="input redactor inset-s" placeholder="Beschrijving" type="text" required=""></textarea>
+            <chief-multiselect
+                   name="artikels"
+                   :options="[{'label': 'Artikels', 'values': ['Artikel 1','Artikel 2','Artikel 3']}]"
+                   :multiple="true"
+                   grouplabel="label"
+                   groupvalues="values"
+                   >
+               </chief-multiselect>
+
         </div>
 
     </div>
@@ -53,7 +104,6 @@
         <p class="caption">Titel en omschrijving van het artikel zoals het in search engines (o.a. google) wordt weergegeven.</p>
     </div>
     <div class="formgroup-input column-7">
-
         <tabs>
             @foreach($article->availableLocales() as $locale)
 
@@ -87,16 +137,27 @@
 {{-- Zichtbaarheid --}}
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
+        <h2 class="formgroup-label">Homepage</h2>
+        <p class="caption">Lorem ipsum</p>
+    </div>
+    <div class="formgroup-input column-7">
+        <div class="stack">
+            <div class="custom-indicators">
+                <label for="switch-1">Zichtbaar op de homepage</label>
+                <input class="switch switch-primary" id="switch-homepage" type="checkbox"/>
+                <label class="custom-switch switch-btn" for="switch-homepage"></label>
+            </div>
+        </div>
+    </div>
+</section>
+<hr>
+{{-- Zichtbaarheid --}}
+<section class="row formgroup stack gutter-l">
+    <div class="column-4">
         <h2 class="formgroup-label">Publicatie</h2>
         <p class="caption">Lorem ipsum</p>
     </div>
     <div class="formgroup-input column-7">
-        <div class="custom-indicators">
-            <label for="switch-1">Zichtbaar</label>
-            <input class="switch switch-primary" id="switch-1" type="checkbox" checked/>
-            <label class="custom-switch switch-btn" for="switch-1"></label>
-        </div>
-
         <div class="stack">
             <label for="publication-date">Zichtbaar vanaf</label>
             <input type="datetime-local" name="publication-date" class="squished">

@@ -1,9 +1,9 @@
 @section('header')
     <header class="sticky sticky-bar">
         <div class="container ">
-        <div class="row stack">
+        <div class="row stack-s">
             <div class="column">
-                <h1 class="--remove-margi">
+                <h1 class="--remove-margin">
                     @if(isset($back))
                         <a class="btn btn-link text-primary" href="{{ $back }}"><i class="icon icon-chevron-left"></i></a>
                     @else

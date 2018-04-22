@@ -6,8 +6,8 @@
 
 @component('back._layouts._partials.header')
     @slot('title', 'artikels')
-    <a href="{{ route('back.articles.create') }}" class="btn btn-default btn-rounded btn-sm mt10">
-      <i class="fa fa-plus mr5"></i>
+    <a href="{{ route('back.articles.create') }}" class="btn btn-primary">
+      <i class="icon icon-plus"></i>
       Voeg een artikel toe
     </a>
 @endcomponent
