@@ -28,7 +28,6 @@
 
 		@include('back.articles._form')
         @include('back.articles._partials.modal')
-
         {{-- @include('back.articles._partials.sidebar') --}}
 
 	</form>

@@ -54,14 +54,14 @@
                         {{--</div>--}}
                         <form action="{{ route('back.articles.publish') }}" method="POST">
                             {{ csrf_field() }}
-                            <div class="btn-group">
+                            <div class="">
                                 <div class="publishMedia">
                                     <div class="publishActions-{{$article->id}} hidden">
-                                        <span class="btn btn-warning disabled">{{ $article->isPublished() ? 'Draft' : 'Publish' }} article ?</span>
-                                        <a class="btn btn-primary noPublish" data-publish-id="{{$article->id}}"> <i class="fa fa-times"></i> </a>
+                                        {{-- <span class="btn btn-warning disabled">{{ $article->isPublished() ? 'Draft' : 'Publish' }} article ?</span> --}}
+                                        <a class="btn btn-primary noPublish" data-publish-id="{{$article->id}}"> <i class="icon icon-clock"></i> </a>
                                         <input type="hidden" name="checkboxStatus" value="{{ $article->isPublished() }}">
                                         <input type="hidden" name="id" value="{{ $article->id }}">
-                                        <button type="submit" class="btn btn-default mr5"> <i class="fa fa-check"></i>  </button>
+                                        <button type="submit" class="btn btn-default mr5"> <i class="icon icon-check"></i>  </button>
                                     </div>
                                     <div class="btn btn-{{ $article->isPublished() ? 'success' : 'info' }} mr5 showPublishOptions-{{$article->id}}" data-publish-id="{{$article->id}}">
                                         {{ $article->isPublished() ? 'Online' : 'Offline' }}
@@ -72,8 +72,8 @@
                     </td>
 
                     <td style="width:10%;" class="text-right">
-                        <a title="View {{ $article->title }} on site" href="{{ route('back.articles.show',$article->slug) }}?preview-mode=true" target="_blank" class="btn btn-rounded btn-info btn-xs"><i class="fa fa-eye"></i></a>
-                        <a title="Edit {{ $article->title }}" href="{{ route('back.articles.edit',$article->getKey()) }}" class="btn btn-rounded btn-success btn-xs"><i class="fa fa-edit"></i> </a>
+                        <a title="View {{ $article->title }} on site" href="{{ route('back.articles.show',$article->slug) }}?preview-mode=true" target="_blank" class="btn btn-link btn-info btn-xs"><i class="icon icon-eye"></i></a>
+                        <a title="Edit {{ $article->title }}" href="{{ route('back.articles.edit',$article->getKey()) }}" class="btn btn-link btn-xs"><i class="icon icon-edit"></i> </a>
                     </td>
                 </tr>
 

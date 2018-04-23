@@ -23,7 +23,7 @@
                     </div>
                     <div class="stack">
                         <label for="trans-{{ $locale }}-content">Tekst</label>
-                        <textarea class="inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
+                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ old('trans.'.$locale.'.content',$article->translateForForm($locale,'content')) }}</textarea>
                     </div>
                 </tab>
 
@@ -118,7 +118,7 @@
 
                     <div class="stack">
                         <label for="trans-{{ $locale }}-seo_description">Seo omschrijving</label>
-                        <textarea class="redactor inset-s" name="trans[{{ $locale }}][seo_description]" id="trans-{{ $locale }}-seo_description" cols="30" rows="10">{{ old('trans.'.$locale.'.seo_description',$article->translateForForm($locale,'seo_description')) }}</textarea>
+                        <textarea class="inset-s" name="trans[{{ $locale }}][seo_description]" id="trans-{{ $locale }}-seo_description" cols="30" rows="10">{{ old('trans.'.$locale.'.seo_description',$article->translateForForm($locale,'seo_description')) }}</textarea>
                     </div>
                 </tab>
 
