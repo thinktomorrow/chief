@@ -5036,9 +5036,9 @@ select {
 
 /* allow topbar to have same bg as body */
 .sticky-bar {
-  background-color: #f4f6f9;
+  background-color: #ffffff;
   z-index: 11;
-  border-bottom: 1px solid #e4e9f0;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 /* product thumbs and image uploads */

@@ -5,7 +5,7 @@
 @stop
 
 @component('back._layouts._partials.header')
-    @slot('title', 'artikels')
+    @slot('title', 'Jouw artikels')
     <a href="{{ route('back.articles.create') }}" class="btn btn-primary">
       <i class="icon icon-plus"></i>
       Voeg een artikel toe
@@ -13,6 +13,8 @@
 @endcomponent
 
 @section('content')
+    <!-- subnavigation per section -->
+    @include('back.articles._partials.nav_articles')
 
     <div class="panel">
         <table class="table admin-form">
