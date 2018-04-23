@@ -4319,6 +4319,7 @@ table .btn ~ .btn {
   overflow-y: auto;
   max-width: 640px;
   text-align: left;
+  z-index: 1;
 }
 
 .modal-content .panel {
@@ -4381,8 +4382,7 @@ table .btn ~ .btn {
 .sidebar .panel {
   float: right;
   min-height: 100%;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-radius: 0;
 }
 
 .sidebar .modal-close {
@@ -4391,8 +4391,8 @@ table .btn ~ .btn {
 }
 
 /**
- * Automatically applied by vue by the <transition="modal"> wrapper
- */
+* Automatically applied by vue by the <transition="modal"> wrapper
+*/
 .modal-enter, .modal-leave-active {
   opacity: 0;
 }
@@ -4404,8 +4404,8 @@ table .btn ~ .btn {
 }
 
 /**
- * Automatically applied by vue by the <transition="modal"> wrapper
- */
+* Automatically applied by vue by the <transition="modal"> wrapper
+*/
 .sidebar-enter, .sidebar-leave-active {
   opacity: 0;
 }

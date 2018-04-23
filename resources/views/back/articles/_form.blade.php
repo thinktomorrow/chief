@@ -151,17 +151,4 @@
     </div>
 </section>
 <hr>
-{{-- Zichtbaarheid --}}
-<section class="row formgroup stack gutter-l">
-    <div class="column-4">
-        <h2 class="formgroup-label">Publicatie</h2>
-        <p class="caption">Lorem ipsum</p>
-    </div>
-    <div class="formgroup-input column-7">
-        <div class="stack">
-            <label for="publication-date">Zichtbaar vanaf</label>
-            <input type="datetime-local" name="publication-date" class="squished">
-        </div>
-    </div>
-</section>
 <hr>
