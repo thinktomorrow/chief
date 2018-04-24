@@ -1,7 +1,7 @@
 @section('header')
     <header class="sticky sticky-bar">
         <div class="container ">
-        <div class="row stack-s">
+        <div class="row stack">
             <div class="column">
                 <h1 class="--remove-margin">
                     @if(isset($back))

@@ -14,7 +14,7 @@
 
 .top-nav, .header-nav {
 
-  border-bottom:1px solid $color-subtle;
+  border-bottom:1px solid $color-border;
   position:relative;
 
   li {
@@ -34,7 +34,7 @@
  */
 .header-nav{
 
-  border-bottom:1px solid $color-subtle;
+  border-bottom:1px solid $color-border;
 
   ul{
     justify-content: left;
@@ -42,7 +42,7 @@
 
   a{
     @extend .font-s;
-    @extend .inset-s;
+    @extend .stretched;
     &:after{
       background-color: $color-primary;
     }
