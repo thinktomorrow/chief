@@ -89,22 +89,41 @@
         <a href="#modules" class="btn btn-o-primary right">volgende</a>
     </tab>
 
-    <tab name="Modules">
+    <tab name="Relaties">
 
         {{-- MODULES --}}
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
-                <h2 class="formgroup-label">Artikels koppelen</h2>
-                <p class="caption">Kies hier de artikels die je wil koppelen</p>
+                <h2 class="formgroup-label">Gerelateerde onderwerpen</h2>
+                <p class="caption">Bij het artikel kan je enkele gerelateerde onderwerpen koppelen. <br>Deze worden automatisch onderaan de artikel pagina getoond.</p>
             </div>
-            <div class="formgroup-input column-7">
+            <div class="formgroup-input column-8">
                 <div class="stack">
+
+                        <div class="stack-s panel panel-default squished center-y relative">
+                            Prepress (product)
+                            <span class="icon icon-x block" style="margin-left:auto;"></span>
+                        </div>
+                        <div class="stack-s panel panel-default squished center-y relative" style="overflow:visible;">
+                            <span class="icon icon-menu" style="position: absolute; left: -2rem;"></span>
+                            Digitalisatie (product)
+                            <span class="icon icon-x block" style="margin-left:auto;"></span>
+                        </div>
+                        <div class="stack-s panel panel-default squished center-y">
+                            Workflow- en contentmanagement (dienst)
+                            <span class="icon icon-x block" style="margin-left:auto;"></span>
+                        </div>
+                    </div>
+
+
+                    <h4>Voeg een nieuwe relatie toe</h4>
                     <chief-multiselect
                     name="artikels"
-                    :options="[{'label': 'Artikels', 'values': ['Artikel 1','Artikel 2','Artikel 3']}]"
+                    :options="[{'label': 'Artikels', 'values': ['Artikel 1','Artikel 2','Artikel 3']}, {'label': 'Diensten', 'values': ['Dienst 1','Dienst 2','Dienst 3']}]"
                     :multiple="true"
                     grouplabel="label"
                     groupvalues="values"
+                    placeholder="..."
                     >
                     </chief-multiselect>
                 </div>
