@@ -8,6 +8,15 @@
             <a href="#" class="btn btn-o-primary">Preview</a>
             <div class="btn-group">
                 <button @click="showModal('publication-article')" type="button" class="btn btn-primary">Publiceer</button>
+                <dropdown>
+                    <button slot="trigger" slot-scope='{}' class="btn btn-primary">
+                        <i class="icon icon-chevron-down"></i>
+                    </button>
+                    <div>
+                        <div><a href="#">Als draft</a></div>
+                        <div><a @click="showModal('publication-now-article')">Onmiddellijk</a></div>
+                    </div>
+                </dropdown>
                 <div class="dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">
                         <i class="icon icon-chevron-down"></i>

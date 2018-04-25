@@ -8,11 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../../../../public/favicon.ico" type="image/x-icon">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Andada|Montserrat:300">
+    <!-- hide vue elements until vue is loaded -->
+    <style type="text/css">[v-cloak]{ display:none; }</style>
 
-<!--    <link rel="stylesheet" href="assets/css/warpaint.css">-->
-<!--    <link rel="stylesheet" href="assets/css/spirit.css">-->
-<!--    <link rel="stylesheet" href="assets/css/layout.css">-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Andada|Montserrat:300">
 
     <!-- temp links when spirit is still inside chief -->
     <link rel="stylesheet" href="/assets/back/css/main.css">

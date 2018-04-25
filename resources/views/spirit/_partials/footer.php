@@ -1,5 +1,9 @@
         </div>
     </article>
+
+    <!-- This slot content that points to the <portal-target> with name 'destination' will be rendered here -->
+    <portal-target name="dropdowns"></portal-target>
+
 </main>
 
 <script

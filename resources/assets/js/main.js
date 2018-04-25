@@ -5,13 +5,19 @@
  */
 require('./vendors');
 
+import PortalVue from 'portal-vue';
 import Errors from './utilities/Errors';
 import Form from './utilities/Form';
 
 window.Errors = Errors;
 window.Form = Form;
 
+Vue.use(PortalVue);
+
 /** Chief components */
+Vue.component('toggle', require('./components/Toggle.vue').default);
+Vue.component('dropdown', require('./components/Dropdown.vue').default);
+
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('translation-tabs', require('./components/TranslationTabs.vue').default);

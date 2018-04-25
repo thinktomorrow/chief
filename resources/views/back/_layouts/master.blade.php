@@ -38,6 +38,9 @@
     @stack('sidebar')
     @stack('custom-components')
 
+    <!-- This slot content that points to the <portal-target> with name 'destination' will be rendered here -->
+    <portal-target name="dropdowns"></portal-target>
+
 </main>
 
 <!--Load redactor script and required dependency jquery -->
