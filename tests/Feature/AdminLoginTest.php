@@ -147,7 +147,7 @@ class AdminLoginTest extends TestCase
 
         DB::insert('INSERT INTO password_resets (email, token, created_at) VALUES(?, ?, ?)', ["foo@example.com", bcrypt("71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c"), Carbon::now()]);
 
-        $response = $this->post(route('back.password.request'), [
+        $response = $this->post(route('auth.password.request'), [
             'token'                 => "71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c",
             'email'                 => "foo@example.com",
             'password'              => "password",

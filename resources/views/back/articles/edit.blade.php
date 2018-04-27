@@ -31,14 +31,5 @@
     @include('back.articles._form')
 
   </form>
-
-  <script>
-  $(document).keydown(function(event) {
-      if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
-      alert("Ctrl-S pressed");
-      event.preventDefault();
-      return false;
-  });
-  </script>
 @stop
 

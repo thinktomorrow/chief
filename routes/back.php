@@ -24,10 +24,10 @@ Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('back.logi
 Route::post('admin/login', 'Auth\LoginController@login')->name('back.login.store');
 
 // Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('back.password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('back.password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.reset.store');
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('auth.password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('auth.password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('auth.password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.password.reset.store');
 
 /**
  * -----------------------------------------------------------------
@@ -75,7 +75,11 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     Route::post('article/{id}/upload', 'Back\ArticlesController@upload')->name('article.upload');
 
-    Route::get('/settings',['as' => 'back.settings.index','uses' => SettingsController::class.'@show']);
+    // Route::get('/settings',['as' => 'back.settings.index','uses' => SettingsController::class.'@show']);
+    Route::get('/settings', function(){
+        return view('back.settings');
+    })->name('back.settings');
+
 
     Route::post('notes/publish',['as' => 'notes.publish','uses' => NoteController::class.'@publish']);
     Route::resource('notes', NoteController::class);
@@ -124,4 +128,3 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('translations',['as' => 'squanto.index','uses' => 'Back\TranslationController@index']);
 
 });
-

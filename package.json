@@ -23,7 +23,7 @@
     "module": "^1.2.5",
     "vue-template-compiler": "^2.5.16",
     "vue-server-renderer": "^2.5.16"
-},
+  },
   "dependencies": {
     "axios": "^0.18",
     "cross-env": "^5.1",

@@ -35,7 +35,7 @@
             </div>
           <button type="submit" class="submitForm">Inloggen</button>
           <div class="message">
-              <a href="{{ route('back.password.request') }}">Wachtwoord vergeten?</a>
+              <a href="{{ route('auth.password.request') }}">Wachtwoord vergeten?</a>
           </div>
         </div>
       </form>
