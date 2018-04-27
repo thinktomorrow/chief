@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <form class="login-form" role="form" method="POST" action="{{ route('password.request') }}">
+        <form class="login-form" role="form" method="POST" action="{{ route('auth.password.request') }}">
             {{ csrf_field() }}
 
             <input type="hidden" name="token" value="{{ $token }}">
