@@ -6,6 +6,7 @@ use Chief\Articles\Article;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
 use Chief\Users\User;
+use Chief\Articles\Application\CreateArticle;
 
 class CreateArticleTest extends TestCase
 {
@@ -66,6 +67,28 @@ class CreateArticleTest extends TestCase
     }
 
     /** @test */
+    public function when_creating_article_slug_will_be_stripped_of_html()
+    {
+        $response = $this->actingAs(factory(User::class)->create())
+            ->post(route('back.articles.store'), $this->validParams([
+                'trans.nl.slug' => '<b>slug</b>',
+                'trans.fr.slug' => '<b>slugfr</b>',
+                ]));
+
+        $this->assertEquals('slug', Article::first()->{'slug:nl'});
+        $this->assertEquals('slugfr', Article::first()->{'slug:fr'});
+    }
+
+    /** @test */
+    function when_creating_article_title_is_required()
+    {
+        $this->assertValidation(new Article(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
+            route('back.articles.index'),
+            route('back.articles.store')
+        );
+    }
+
+    /** @test */
     public function slug_must_be_unique()
     {
         factory(Article::class)->create(['slug:nl' => 'existing-slug']);
@@ -77,23 +100,35 @@ class CreateArticleTest extends TestCase
         );
     }
 
+    /** @test */
+    public function it_can_remove_an_article()
+    {
+        $response = $this->actingAs(factory(User::class)->create())
+            ->post(route('back.articles.store'), $this->validParams());
+
+        $this->actingAs(factory(User::class)->create())
+            ->delete(route('back.articles.destroy', Article::first()->id), $this->validParams());
+
+        $this->assertCount(0, Article::all());
+    }
+
     private function validParams($overrides = [])
     {
         $params = [
             'trans' => [
                 'nl' => [
-                    'slug'    => 'new-slug',
-                    'title'           => 'new title',
-                    'content'         => 'new content in <strong>bold</strong>',
-                    'seo_title'       => 'new seo title',
-                    'seo_description' => 'new seo description',
+                    'slug'              => 'new-slug',
+                    'title'             => 'new title',
+                    'content'           => 'new content in <strong>bold</strong>',
+                    'seo_title'         => 'new seo title',
+                    'seo_description'   => 'new seo description',
                 ],
                 'fr' => [
-                    'slug'  => 'nouveau-slug',
-                    'title'           => 'nouveau title',
-                    'content'         => 'nouveau content in <strong>bold</strong>',
-                    'seo_title'       => 'nouveau seo title',
-                    'seo_description' => 'nouveau seo description',
+                    'slug'              => 'nouveau-slug',
+                    'title'             => 'nouveau title',
+                    'content'           => 'nouveau content in <strong>bold</strong>',
+                    'seo_title'         => 'nouveau seo title',
+                    'seo_description'   => 'nouveau seo description',
                 ],
             ],
         ];
@@ -104,6 +139,7 @@ class CreateArticleTest extends TestCase
 
         return $params;
     }
+
 
     private function assertNewValues($article)
     {

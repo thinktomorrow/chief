@@ -46,19 +46,3 @@ if(!function_exists('cached_asset'))
 
     }
 }
-
-if(!function_exists('trans_to'))
-{
-    /**
-     * Shortcut to trans when you want to force a specific locale
-     *
-     * @param null $id
-     * @param array $parameters
-     * @param null $locale
-     * @return string
-     */
-    function trans_to($id = null, $parameters = [], $locale = null)
-    {
-        return trans($id, $parameters, 'messages', $locale);
-    }
-}

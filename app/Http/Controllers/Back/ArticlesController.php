@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
+use App\Http\Requests\ArticleCreateRequest;
+use Chief\Articles\Application\UpdateArticle;
 
 class ArticlesController extends Controller
 {
@@ -36,12 +38,8 @@ class ArticlesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ArticleCreateRequest $request)
     {
-        $this->validate($request,[
-            'trans.*.slug' => 'required|unique:article_translations',
-        ]);
-
         $article = app(CreateArticle::class)->handle($request->trans);
 
         return redirect()->route('back.articles.index')->with('messages.success', $article->title .' is aangemaakt');
@@ -55,11 +53,10 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        $article = Article::findOrFail($id);
-        $assets = Asset::getAllAssets();
+        $article    = Article::findOrFail($id);
 
         $article->injectTranslationForForm();
-        return view('back.articles.edit', compact('article', 'assets'));
+        return view('back.articles.edit', compact('article'));
     }
 
     /**
@@ -69,10 +66,9 @@ class ArticlesController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $article = (new ArticleRepository())->edit($request, $id);
-
+        $article = app(UpdateArticle::class)->handle($id, $request->trans);
 
         return redirect()->route('back.articles.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$article->title .'" werd aangepast');
     }
@@ -85,9 +81,12 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        $message = (new ArticleRepository())->remove($id);
+        $article = Article::findOrFail($id);
 
-        return redirect()->route('back.article.index')->with('messages.warning', $message);
+        $article->delete();
+        $message = 'Het item werd verwijderd.';
+
+        return redirect()->route('back.articles.index')->with('messages.warning', $message);
     }
 
     public function publish(Request $request)

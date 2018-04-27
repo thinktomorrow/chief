@@ -4,7 +4,7 @@ namespace Chief\Tests\Feature;
 
 use Chief\Common\Traits\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Tests\TestCase;
+use Chief\Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -15,7 +15,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
  */
 class PublishableTraitDummyClass extends Model
 {
-    use Chief\Traits\Publishable;
+    use Publishable;
 
     public $published = false;
 
@@ -52,7 +52,7 @@ class PublishableTest extends TestCase
 
         $this->assertTrue($result);
     }
-    
+
     /** @test */
     public function it_can_publish_the_model()
     {

@@ -21,6 +21,11 @@ class CreateArticle
 
             $article = Article::create();
 
+            foreach ($translations as $locale => $translation) {
+                $translation['slug'] = strip_tags($translation['slug']);
+                $translations[$locale] = $translation;
+            }
+
             $this->saveTranslations($translations, $article, [
                 'slug', 'title', 'content', 'seo_title', 'seo_description'
             ]);
@@ -33,7 +38,5 @@ class CreateArticle
             DB::rollBack();
             throw $e;
         }
-
-
     }
 }

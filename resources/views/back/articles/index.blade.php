@@ -47,19 +47,7 @@
 
         </tab>
         <tab name="Drafts (3)">
-            <div class="row stretched">
-                <div class="column-12">
-                    <a href="#">
-                        <h2>Werkdocument</h2>
-                    </a>
-                </div>
-                <div class="column-6">
-                    {{ teaser($article->content,150,'...') }}
-                </div><br>
-                <span class="text-subtle">Laatst aangepast op: {{ $article->updated_at->format('d/m/Y') }}</span>
 
-            </div>
-            <hr>
         </tab>
         <tab name="Archief (1)"></tab>
     </tabs>

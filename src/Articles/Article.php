@@ -21,6 +21,7 @@ class Article extends Model implements TranslatableContract, HasMedia
     ];
 
     protected $dates = ['deleted_at'];
+    protected $with = ['translations'];
 
     public static function findBySlug($slug)
     {
