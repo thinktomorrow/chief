@@ -4332,11 +4332,7 @@ table .btn ~ .btn {
 
 .modal-footer {
   background-color: white;
-  border-top: 1px solid #e1e2e8;
-}
-
-.modal-footer a {
-  color: inherit;
+  border-top: none;
 }
 
 .modal-close {
@@ -4567,6 +4563,17 @@ input[type='file'] {
   line-height: 1.5rem;
 }
 
+.custom-checkbox {
+  border-radius: 5px;
+}
+
+.custom-checkbox::before {
+  content: "";
+  color: #ffffff;
+  font-family: 'spirit';
+  line-height: 1;
+}
+
 .custom-checkbox,
 .custom-radiobutton {
   display: block;
@@ -4590,7 +4597,7 @@ input[type='file'] {
   display: block;
   width: 100%;
   height: 100%;
-  background: transparent;
+  background: #ffffff;
   font-size: 0rem;
   text-align: center;
   line-height: 1.5rem;
@@ -4615,14 +4622,26 @@ input[type=checkbox] {
 
 .custom-indicators.disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
-input[type=radio]:checked ~ .custom-radiobutton,
+.custom-indicators.disabled .custom-radiobutton, .custom-indicators.disabled .custom-checkbox {
+  background-color: #e1e2e8;
+}
+
+input[type=radio]:checked ~ .custom-radiobutton {
+  border-color: #14c8a7;
+  border-width: 5px;
+}
+
 input[type=checkbox]:checked ~ .custom-checkbox {
-  border-radius: 50%;
   background-color: #14c8a7;
   border-color: #14c8a7;
+}
+
+input[type=checkbox]:checked ~ .custom-checkbox::before {
+  content: "\E91F";
+  font-family: 'spirit';
 }
 
 .switch {
