@@ -75,7 +75,11 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     Route::post('article/{id}/upload', 'Back\ArticlesController@upload')->name('article.upload');
 
-    Route::get('/settings',['as' => 'back.settings.index','uses' => SettingsController::class.'@show']);
+    // Route::get('/settings',['as' => 'back.settings.index','uses' => SettingsController::class.'@show']);
+    Route::get('/settings', function(){
+        return view('back.settings');
+    })->name('back.settings');
+
 
     Route::post('notes/publish',['as' => 'notes.publish','uses' => NoteController::class.'@publish']);
     Route::resource('notes', NoteController::class);
@@ -124,4 +128,3 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('translations',['as' => 'squanto.index','uses' => 'Back\TranslationController@index']);
 
 });
-
