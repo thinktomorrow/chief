@@ -15,7 +15,7 @@
             :group-label="grouplabel"
             :group-values="groupvalues"
 
-            placeholder="Maak een selectie"
+            :placeholder="placeholder"
             no-result="geen resultaat gevonden"
             deselect-label="╳"
             selected-label="✓"
@@ -61,6 +61,8 @@
             /** Grouped options */
             groupvalues: { default: null, type: String },
             grouplabel: { default: null, type: String },
+
+            placeholder: { default: 'Maak een selectie' },
         },
         data () {
             return {

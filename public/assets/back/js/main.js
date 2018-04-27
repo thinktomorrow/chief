@@ -1882,7 +1882,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         /** Grouped options */
         groupvalues: { default: null, type: String },
-        grouplabel: { default: null, type: String }
+        grouplabel: { default: null, type: String },
+
+        placeholder: { default: 'Maak een selectie' }
     },
     data: function data() {
         return {
@@ -26243,7 +26245,7 @@ var render = function() {
           "track-by": _vm.valuekey,
           "group-label": _vm.grouplabel,
           "group-values": _vm.groupvalues,
-          placeholder: "Maak een selectie",
+          placeholder: _vm.placeholder,
           "no-result": "geen resultaat gevonden",
           "deselect-label": "╳",
           "selected-label": "✓",
