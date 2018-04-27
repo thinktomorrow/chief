@@ -100,4 +100,37 @@ class GenerateRoleCommandTest extends TestCase
         $role = Role::findByName('new role');
         $this->assertCount(2, $role->permissions);
     }
+
+    /** @test */
+    function permissions_can_be_assigned_as_scopes()
+    {
+        Permission::create(['name' => 'view-user']);
+        Permission::create(['name' => 'create-user']);
+        Permission::create(['name' => 'update-user']);
+        Permission::create(['name' => 'delete-user']);
+        Permission::create(['name' => 'view-page']);
+        Permission::create(['name' => 'create-page']);
+        Permission::create(['name' => 'update-page']);
+        Permission::create(['name' => 'delete-page']);
+
+        Permission::create(['name' => 'unknown']);
+
+        $this->artisan('chief:role', [
+            'name' => 'new role',
+            '--permissions' => 'user, page'
+        ]);
+
+        $role = Role::findByName('new role');
+        $this->assertCount(8, $role->permissions);
+
+        $permissionNames = Permission::all()->pluck('name')->toArray();
+        $this->assertContains('view-user', $permissionNames);
+        $this->assertContains('create-user', $permissionNames);
+        $this->assertContains('update-user', $permissionNames);
+        $this->assertContains('delete-user', $permissionNames);
+        $this->assertContains('view-page', $permissionNames);
+        $this->assertContains('create-page', $permissionNames);
+        $this->assertContains('update-page', $permissionNames);
+        $this->assertContains('delete-page', $permissionNames);
+    }
 }

@@ -21,11 +21,11 @@
 @stop
 
 @section('content')
-	@include('back.roles._partials.roles')
+	@include('back.authorization.roles._partials.roles')
 @stop
 
 @push('sidebar')
-	 @include('back.roles._partials.newrole')
+	 @include('back.authorization.roles._partials.newrole')
 @endpush
 
 @push('custom-scripts')

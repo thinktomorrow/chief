@@ -6,7 +6,6 @@ use Chief\Authorization\Permission;
 use Chief\Authorization\Role;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
-use Chief\Users\User;
 
 class GeneratePermissionCommandTest extends TestCase
 {
@@ -28,19 +27,38 @@ class GeneratePermissionCommandTest extends TestCase
     }
 
     /** @test */
+    function single_permission_can_be_generated()
+    {
+        Role::create(['name' => 'admin']);
+
+        $this->artisan('chief:permission', [
+            'name' => 'view-role',
+            '--role' => 'admin'
+        ]);
+
+        $role = Role::findByName('admin');
+        $this->assertCount(1, $role->permissions);
+
+        $this->assertEquals('view-role', Permission::first()->name);
+    }
+
+    /** @test */
     function permissions_can_be_generated()
     {
         $this->artisan('chief:permission', [
-            'name' => 'new permission'
+            'name' => 'permission'
         ]);
 
         $this->assertCount(4, Permission::all());
 
         $permissionNames = Permission::all()->pluck('name')->toArray();
-        $this->assertContains('view-new-permission', $permissionNames);
-        $this->assertContains('create-new-permission', $permissionNames);
-        $this->assertContains('update-new-permission', $permissionNames);
-        $this->assertContains('delete-new-permission', $permissionNames);
+        $this->assertContains('view-permission', $permissionNames);
+        $this->assertContains('create-permission', $permissionNames);
+        $this->assertContains('update-permission', $permissionNames);
+        $this->assertContains('delete-permission', $permissionNames);
+
+        // Assert the proper guard is used
+        $this->assertEquals('admin', Permission::first()->guard_name);
     }
 
     /** @test */
@@ -49,12 +67,15 @@ class GeneratePermissionCommandTest extends TestCase
         Role::create(['name' => 'admin']);
 
         $this->artisan('chief:permission', [
-            'name' => 'new permission',
+            'name' => 'view-role',
             '--role' => 'admin'
         ]);
 
         $role = Role::findByName('admin');
-        $this->assertCount(4, $role->permissions);
+        $this->assertCount(1, $role->permissions);
+
+        $permissionNames = Permission::all()->pluck('name')->toArray();
+        $this->assertContains('view-role', $permissionNames);
     }
 
     /** @test */
@@ -65,7 +86,7 @@ class GeneratePermissionCommandTest extends TestCase
         Role::create(['name' => 'guest']);
 
         $this->artisan('chief:permission', [
-            'name' => 'new permission',
+            'name' => 'permission',
             '--role' => 'admin, author'
         ]);
 

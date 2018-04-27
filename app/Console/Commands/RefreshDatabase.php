@@ -7,6 +7,7 @@ use Chief\Authorization\Permission;
 use Chief\Authorization\Role;
 use Chief\Users\User;
 use Chief\Authorization\AuthorizationDefaults;
+use Illuminate\Support\Facades\Artisan;
 
 class RefreshDatabase extends BaseCommand
 {
@@ -52,23 +53,11 @@ class RefreshDatabase extends BaseCommand
     private function settingPermissionsAndRoles()
     {
         AuthorizationDefaults::permissions()->each(function($permissionName){
-            Permission::firstOrCreate(['name' => $permissionName]);
+            Artisan::call('chief:permission', ['name' => $permissionName]);
         });
-
+dd(Permission::all()->toArray());
         AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
-
-            $role = Role::firstOrCreate(['name' => $roleName]);
-            $defaultPermissions = collect($defaultPermissions);
-
-            if($defaultPermissions->first() == '*'){
-                $role->syncPermissions(Permission::all());
-            } else{
-                $defaultPermissionPattern = $defaultPermissions->map(function($entry){
-                    return str_replace('*', '(.*)', $entry);
-                })->implode('|');
-
-                $role->syncPermissions(Permission::whereRaw('name REGEXP "' . $defaultPermissionPattern.'"')->get());
-            }
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
         });
 
         $this->info('Default permissions and roles');

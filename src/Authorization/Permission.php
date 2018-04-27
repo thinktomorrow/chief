@@ -6,6 +6,15 @@ use Spatie\Permission\Models\Permission as BasePermission;
 
 class Permission extends BasePermission
 {
+    protected $guard_name = 'admin';
+
+    public static function create(array $attributes = [])
+    {
+        $attributes['guard_name'] = $attributes['guard_name'] ?? 'admin';
+
+        return parent::create($attributes);
+    }
+
     public static function generate($scope): array
     {
         $abilities = ['view', 'create', 'update', 'delete'];

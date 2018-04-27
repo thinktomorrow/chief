@@ -13,6 +13,8 @@ class User extends Authenticatable implements HasMedia
 {
     use Notifiable, HasRoles, HasMediaTrait;
 
+    protected $guard_name = 'admin';
+
     /**
      * The attributes that are mass assignable.
      *

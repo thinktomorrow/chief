@@ -15,7 +15,8 @@ class GeneratePermissionCommand extends Command
 
     public function handle()
     {
-        $permissions = Permission::generate($this->getNameArgument());
+        $scope = $this->getNameArgument();
+        $permissions = (false === strpos($scope,'-')) ? Permission::generate($scope) : [$scope];
 
         $this->createPermissions($permissions);
         $this->assignPermissionsToRoles($permissions);
@@ -35,7 +36,7 @@ class GeneratePermissionCommand extends Command
     private function createPermissions($permissions)
     {
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
+            Permission::create(['name' => $permission]);
         }
         $this->info('Permissions ' . implode(', ', $permissions) . ' created.');
     }

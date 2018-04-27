@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers\Back\Authorization;
 
 use App\Http\Controllers\Controller;
 use Chief\Authorization\Permission;
@@ -9,6 +9,24 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    /**
+     * Check if authenticated admin has the proper permissions. If not
+     * a redirect route is given back to direct the user to
+     *
+     * @param $permissions
+     * @return bool|\Illuminate\Http\RedirectResponse
+     */
+    protected function redirectIfCannot($permissions)
+    {
+        if(!$admin = admin()) return redirect()->route('back.dashboard');
+
+        if(admin()->cant($permissions)){
+            return redirect()->route('back.dashboard');
+        }
+
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,16 +37,15 @@ class RoleController extends Controller
         $roles = Role::all();
         return view('back.roles.index')->with('roles', $roles);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
+        if($redirect = $this->redirectIfCannot('create-role')) return $redirect;
+
         $permissions = Permission::all();
-        return view('back.roles.create', ['permissions'=>$permissions]);
+        return view('back.authorization.roles.create', ['permissions'=>$permissions]);
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -53,8 +70,7 @@ class RoleController extends Controller
             $role->givePermissionTo($p);
         }
         return redirect()->route('back.roles.index')
-            ->with('flash_message',
-                'Role'. $role->name.' added!');
+                         ->with('flash_message', 'Role'. $role->name.' added!');
     }
     /**
      * Display the specified resource.

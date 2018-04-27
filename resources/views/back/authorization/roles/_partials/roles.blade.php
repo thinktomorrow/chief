@@ -63,7 +63,7 @@
                 @endcan
               </td>
             </tr>
-            @include('back.roles._deletemodal')
+            @include('back.authorization.roles._deletemodal')
 
             @push('custom-scripts')
             <script>
@@ -73,7 +73,7 @@
               })(jQuery);
             </script>
             @endpush
-            @include('back.roles._partials.editrole')
+            @include('back.authorization.roles._partials.editrole')
           @endforeach
           </tbody>
 

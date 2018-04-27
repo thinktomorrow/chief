@@ -33,20 +33,23 @@ class GenerateRoleCommand extends Command
 
         $permissionNames = explode(',', $this->option('permissions'));
 
+        $cleanPermissionNames = [];
         foreach($permissionNames as $k => $permissionName){
 
-            // Trim the value
-            $permissionNames[$k] = trim($permissionName);
+            $permissionName = trim($permissionName);
 
             // Generate all permissions if only scope is passed
-            if(false === strpos($permissionName, '-')){
-                unset($permissionNames[$k]);
-                $permissionNames = array_merge($permissionNames, Permission::generate($permissionName));
+            if(false === strpos($permissionName, '-')) {
+                $cleanPermissionNames = array_merge($cleanPermissionNames, Permission::generate($permissionName));
+            } else {
+                // Trim the value
+                $cleanPermissionNames[] = $permissionName;
             }
+
         }
 
-        $role->givePermissionTo($permissionNames);
+        $role->givePermissionTo($cleanPermissionNames);
 
-        $this->info('Role ' . $role->name . ' was assigned the permissions: ' . implode(',', $permissionNames));
+        $this->info('Role ' . $role->name . ' was assigned the permissions: ' . implode(',', $cleanPermissionNames));
     }
 }

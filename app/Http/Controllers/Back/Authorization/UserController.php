@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers\Back\Authorization;
 
 use App\Http\Controllers\Controller;
 use Chief\Authorization\Role;
