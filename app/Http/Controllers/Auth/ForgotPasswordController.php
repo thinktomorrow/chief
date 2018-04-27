@@ -33,7 +33,7 @@ class ForgotPasswordController extends Controller
 
     public function showLinkRequestForm()
     {
-        return view('back.auth.passwords.email');
+        return view('auth.passwords.email');
     }
 
     protected function broker()
