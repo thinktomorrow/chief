@@ -34,7 +34,7 @@
             <!-- ROLE INPUT -->
             <div class="section mv15 admin-form">
               <div class="option-group">
-							  @foreach (\Chief\Roles\Role::all() as $role)
+							  @foreach (\Chief\Authorization\Role::all() as $role)
                   <p><label class="block mt15 option option-primary">
                   <input type="checkbox" value="{{ $role->id }}" name="roles[]" {{ $user->roles->contains($role->id) ? 'checked' : '' }}>
                   <span class="checkbox"></span>{{ $role->name }}</label></p>

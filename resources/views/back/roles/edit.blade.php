@@ -19,7 +19,7 @@
 
 			<h5><b>Assign Permissions</b></h5>
 			<div class="panel">
-				@foreach(\Chief\Roles\Permission::getPermissionsForindex() as $model => $permissions)
+				@foreach(\Chief\Authorization\Permission::getPermissionsForindex() as $model => $permissions)
 				<div class="panel-heading">{{ $model }}</div>
 				<div class="panel-body">
 					@foreach($permissions as $permission)
