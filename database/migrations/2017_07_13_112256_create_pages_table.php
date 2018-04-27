@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreatepagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table){
+        Schema::create('pages', function (Blueprint $table){
             $table->increments('id');
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
@@ -22,9 +22,9 @@ class CreateArticlesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('article_translations', function(Blueprint $table) {
+        Schema::create('page_translations', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id')->unsigned();
+            $table->integer('page_id')->unsigned();
             $table->string('locale');
             $table->string('slug')->unique();
             $table->string('title');
@@ -34,7 +34,7 @@ class CreateArticlesTable extends Migration
             $table->text('seo_description')->nullable();
             $table->timestamps();
 
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
         });
     }
 
@@ -45,7 +45,7 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_translations');
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('page_translations');
+        Schema::dropIfExists('pages');
     }
 }

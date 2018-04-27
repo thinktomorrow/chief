@@ -1,16 +1,16 @@
 <?php
 
-namespace Chief\Articles\Application;
+namespace Chief\Pages\Application;
 
-use Chief\Articles\Article;
+use Chief\Pages\Page;
 use Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 
-class CreateArticle
+class CreatePage
 {
     use TranslatableCommand;
 
-    public function handle(array $translations): Article
+    public function handle(array $translations): Page
     {
         DB::transaction(function(){
 
@@ -19,20 +19,20 @@ class CreateArticle
         try{
             DB::beginTransaction();
 
-            $article = Article::create();
+            $page = Page::create();
 
             foreach ($translations as $locale => $translation) {
                 $translation['slug'] = strip_tags($translation['slug']);
                 $translations[$locale] = $translation;
             }
 
-            $this->saveTranslations($translations, $article, [
+            $this->saveTranslations($translations, $page, [
                 'slug', 'title', 'content', 'seo_title', 'seo_description'
             ]);
 
             DB::commit();
 
-            return $article->fresh();
+            return $page->fresh();
 
         } catch(\Throwable $e){
             DB::rollBack();

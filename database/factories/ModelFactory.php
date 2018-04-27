@@ -1,7 +1,7 @@
 <?php
 
-use Chief\Articles\Article;
 use Chief\Users\User;
+use Chief\Pages\Page;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
 
@@ -15,7 +15,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Article::class, function (Faker\Generator $faker) {
+$factory->define(Page::class, function (Faker\Generator $faker) {
     return [
         'published'   => $faker->boolean(),
         'featured'    => $faker->boolean(),
@@ -30,5 +30,3 @@ $factory->define(Article::class, function (Faker\Generator $faker) {
         'content:fr'  => $faker->paragraph(rand(4, 10)),
     ];
 });
-
-

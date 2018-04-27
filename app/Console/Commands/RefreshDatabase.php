@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Chief\Articles\Article;
 use Chief\Roles\Permission;
 use Chief\Roles\Role;
 use Chief\Users\User;
+use Chief\Pages\Page;
 
 class RefreshDatabase extends BaseCommand
 {
@@ -43,7 +43,7 @@ class RefreshDatabase extends BaseCommand
 
         $this->info('Scaffolding some entries...');
         factory(User::class, 10)->create();
-        factory(Article::class, 10)->create();
+        factory(Page::class, 10)->create();
 
         $this->info('Great. We\'re done here. NOW START HACKING!');
     }

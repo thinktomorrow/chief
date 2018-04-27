@@ -36,7 +36,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('auth.
  */
 Route::get('prototype', function(){
     // Just to guide Johnny to the proper page - this route can be removed afterwards
-    return redirect()->route('back.articles.create');
+    return redirect()->route('back.pages.create');
 });
 
 /**
@@ -56,15 +56,15 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 //    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
 
 
-    // ARTICLES
-    Route::get('articles','Back\ArticlesController@index')->name('back.articles.index');
-    Route::post('articles', 'Back\ArticlesController@store')->name('back.articles.store');
-    Route::get('articles/create', 'Back\ArticlesController@create')->name('back.articles.create');
-    Route::delete('articles/{article}', 'Back\ArticlesController@destroy')->name('back.articles.destroy');
-    Route::put('articles/{article}', 'Back\ArticlesController@update')->name('back.articles.update');
-    Route::get('articles/{article}', 'Back\ArticlesController@show')->name('back.articles.show');
-    Route::get('articles/{article}/edit', 'Back\ArticlesController@edit')->name('back.articles.edit');
-    Route::post('articles/publish','Back\ArticlesController@publish')->name('back.articles.publish');
+    // pageS
+    Route::get('pages','Back\PagesController@index')->name('back.pages.index');
+    Route::post('pages', 'Back\PagesController@store')->name('back.pages.store');
+    Route::get('pages/create', 'Back\PagesController@create')->name('back.pages.create');
+    Route::delete('pages/{page}', 'Back\PagesController@destroy')->name('back.pages.destroy');
+    Route::put('pages/{page}', 'Back\PagesController@update')->name('back.pages.update');
+    Route::get('pages/{page}', 'Back\PagesController@show')->name('back.pages.show');
+    Route::get('pages/{page}/edit', 'Back\PagesController@edit')->name('back.pages.edit');
+    Route::post('pages/publish','Back\PagesController@publish')->name('back.pages.publish');
 
     Route::get('media', 'Back\MediaLibraryController@library')->name('media.library');
     Route::get('media-modal', 'Back\MediaLibraryController@mediaModal')->name('media.modal');
@@ -73,7 +73,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::post('media/remove', 'Back\MediaController@remove')->name('media.remove');
 
 
-    Route::post('article/{id}/upload', 'Back\ArticlesController@upload')->name('article.upload');
+    Route::post('page/{id}/upload', 'Back\PagesController@upload')->name('page.upload');
 
     // Route::get('/settings',['as' => 'back.settings.index','uses' => SettingsController::class.'@show']);
     Route::get('/settings', function(){

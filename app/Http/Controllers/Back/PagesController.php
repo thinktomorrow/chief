@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
-use Chief\Articles\Application\CreateArticle;
-use Chief\Articles\Article;
-use Chief\Articles\ArticleRepository;
+use Chief\Pages\Application\CreatePage;
+use Chief\Pages\Page;
+use Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
-use App\Http\Requests\ArticleCreateRequest;
-use Chief\Articles\Application\UpdateArticle;
+use App\Http\Requests\PageCreateRequest;
+use Chief\Pages\Application\UpdatePage;
 
-class ArticlesController extends Controller
+class PagesController extends Controller
 {
     public function index()
     {
-        $published  = Article::where('published', 1)->paginate(10);
-        $drafts     = Article::where('published', 0)->get();
+        $published  = Page::where('published', 1)->paginate(10);
+        $drafts     = Page::where('published', 0)->get();
 
-        return view('back.articles.index', compact('published', 'drafts'));
+        return view('back.pages.index', compact('published', 'drafts'));
     }
 
     /**
@@ -30,7 +30,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('back.articles.create',['article' => new Article()]);
+        return view('back.pages.create',['page' => new Page()]);
     }
 
     /**
@@ -39,11 +39,11 @@ class ArticlesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(ArticleCreateRequest $request)
+    public function store(PageCreateRequest $request)
     {
-        $article = app(CreateArticle::class)->handle($request->trans);
+        $page = app(CreatePage::class)->handle($request->trans);
 
-        return redirect()->route('back.articles.index')->with('messages.success', $article->title .' is aangemaakt');
+        return redirect()->route('back.pages.index')->with('messages.success', $page->title .' is aangemaakt');
     }
 
     /**
@@ -54,10 +54,10 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        $article    = Article::findOrFail($id);
+        $page    = Page::findOrFail($id);
 
-        $article->injectTranslationForForm();
-        return view('back.articles.edit', compact('article'));
+        $page->injectTranslationForForm();
+        return view('back.pages.edit', compact('page'));
     }
 
     /**
@@ -69,9 +69,9 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $article = app(UpdateArticle::class)->handle($id, $request->trans);
+        $page = app(UpdatePage::class)->handle($id, $request->trans);
 
-        return redirect()->route('back.articles.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$article->title .'" werd aangepast');
+        return redirect()->route('back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');
     }
 
     /**
@@ -82,34 +82,34 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        $article = Article::findOrFail($id);
+        $page = Page::findOrFail($id);
 
-        $article->delete();
+        $page->delete();
         $message = 'Het item werd verwijderd.';
 
-        return redirect()->route('back.articles.index')->with('messages.warning', $message);
+        return redirect()->route('back.pages.index')->with('messages.warning', $message);
     }
 
     public function publish(Request $request)
     {
-        $article    = Article::findOrFail($request->get('id'));
+        $page    = Page::findOrFail($request->get('id'));
         $published  = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
-        ($published) ? $article->publish() : $article->draft();
+        ($published) ? $page->publish() : $page->draft();
 
         return redirect()->back();
 
 //        return response()->json([
 //            'message' => $published ? 'nieuwsartikel werd online gezet' : 'nieuwsartikel werd offline gehaald',
 //            'published'=> $published,
-//            'id'=> $article->id
+//            'id'=> $page->id
 //        ],200);
     }
 
 //    public function upload($id, Request $request)
 //    {
-//        $article = Article::find($id);
-//        $article->addFile($request->file('image'), $request->type, $request->get('locale'));
+//        $page = page::find($id);
+//        $page->addFile($request->file('image'), $request->type, $request->get('locale'));
 //
 //        return redirect()->back();
 //    }

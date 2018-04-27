@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Articles;
+namespace Chief\Pages;
 
 
 use Chief\Common\Translatable\Translatable;
@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 
-class Article extends Model implements TranslatableContract, HasMedia
+class Page extends Model implements TranslatableContract, HasMedia
 {
     use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable;
 
@@ -25,12 +25,12 @@ class Article extends Model implements TranslatableContract, HasMedia
 
     public static function findBySlug($slug)
     {
-        return ($trans = ArticleTranslation::findBySlug($slug)) ? $trans->article()->first() : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->first() : null;
     }
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = ArticleTranslation::findBySlug($slug)) ? $trans->article()->published()->first() : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->published()->first() : null;
     }
 
     public static function getAll()

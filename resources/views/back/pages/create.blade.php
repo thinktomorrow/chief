@@ -1,20 +1,19 @@
 @extends('back._layouts.master')
 
-@section('page-title','Pas "' .$article->title .'" aan')
-
+@section('page-title','Voeg nieuw pagina toe')
 
 @component('back._layouts._partials.header')
-    @slot('title', 'Pas "' .$article->title .'" aan')
+    @slot('title', 'Nieuw pagina')
         <div class="center-y right inline-group">
             <a href="#" class="btn btn-o-primary">Preview</a>
             <div class="btn-group">
-                <button @click="showModal('publication-article')" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+                <button @click="showModal('publication-now-page')" type="button" class="btn btn-primary">Opslaan</button>
                 <div class="dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">
                         <i class="icon icon-chevron-down"></i>
                         <div class="dropdown-menu">
-                            <div><a href="#">Haal artikel offline</a></div>
-                            <div><a @click="showModal('delete-article')">Verwijder artikel</a></div>
+                            <div><a>Als draft</a></div>
+                            <div><a @click="showModal('publication-page')">Publiceer</a></div>
                         </div>
                     </button>
                 </div>
@@ -24,12 +23,13 @@
 
 @section('content')
 
-  <form method="POST" action="{{ route('back.articles.update', $article->id) }}" enctype="multipart/form-data" role="form">
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="PUT">
+	<form method="POST" action="{{ route('back.pages.store') }}" enctype="multipart/form-data" role="form">
+		{{ csrf_field() }}
 
-    @include('back.articles._form')
+		@include('back.pages._form')
+        @include('back.pages._partials.modal')
+        @include('back.pages._partials.sidebar')
 
-  </form>
+	</form>
+
 @stop
-

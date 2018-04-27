@@ -1,18 +1,19 @@
 <?php
 
-namespace Chief\Articles;
+namespace Chief\Pages;
 
 use Chief\Common\Contracts\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
+use Chief\Pages\Page;
 
-class ArticleTranslation extends Model implements SluggableContract
+class PageTranslation extends Model implements SluggableContract
 {
-    protected $table = 'article_translations';
+    protected $table = 'page_translations';
     public $timestamps = true;
 
     public function article()
     {
-        return $this->belongsTo(Article::class);
+        return $this->belongsTo(Page::class);
     }
 
     public static function findBySlug($slug)

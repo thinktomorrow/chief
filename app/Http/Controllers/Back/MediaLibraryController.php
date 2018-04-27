@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Back;
 
 
-use Chief\Articles\Article;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Thinktomorrow\AssetLibrary\Models\Asset;
+use Chief\Pages\Page;
 
 class MediaLibraryController
 {
@@ -27,8 +27,8 @@ class MediaLibraryController
 
     public function uploadtest()
     {
-        $article = Article::first();
-        return view('back.uploadtest', compact('article'));
+        $page = Page::first();
+        return view('back.uploadtest', compact('page'));
     }
 
     public function mediaModal()
