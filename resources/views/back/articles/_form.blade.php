@@ -14,7 +14,8 @@
                             <div class="stack-s">
                                 <label for="trans-{{ $locale }}-title">Titel</label>
                                 <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title',$article->translateForForm($locale,'title')) }}">
-                                <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>artikelnaam</b><button>edit</button></span>
+                                <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b><input type="text" name="trans[{{$locale}}][slug]" value="artikelnaam"></b><button>edit</button></span>
+                                <error class="caption text-warning" field="trans.{{ $locale }}.slug" :errors="errors.get('trans.{{ $locale }}')"></error>
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>

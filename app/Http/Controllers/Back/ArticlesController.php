@@ -17,9 +17,10 @@ class ArticlesController extends Controller
 {
     public function index()
     {
-        $articles = Article::paginate(10);
+        $published  = Article::where('published', 1)->paginate(10);
+        $drafts     = Article::where('published', 0)->get();
 
-        return view('back.articles.index', compact('articles'));
+        return view('back.articles.index', compact('published', 'drafts'));
     }
 
     /**

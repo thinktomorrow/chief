@@ -26,7 +26,7 @@ class ArticleCreateRequest extends FormRequest
     {
         return [
             'trans.*.title'     => 'required|unique:article_translations|max:200',
-            'trans.*.slug'      => 'required|unique:article_translations',
+            'trans.*.slug'      => 'required|unique:article_translations|distinct',
             'trans.*.content'   => 'max:1500',
             'trans.*.short'     => 'max:700',
 
