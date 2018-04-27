@@ -15,7 +15,6 @@ window.Form = Form;
 Vue.use(PortalVue);
 
 /** Chief components */
-Vue.component('toggle', require('./components/Toggle.vue').default);
 Vue.component('dropdown', require('./components/Dropdown.vue').default);
 
 Vue.component('tab', require('./components/Tab.vue').default);

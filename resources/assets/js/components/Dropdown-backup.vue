@@ -1,8 +1,19 @@
+<template>
+    <popper trigger="click" :options="{placement: 'top'}">
+        <div class="popper">
+            Popper Content
+          </div>
+
+        <button slot="reference">
+            Reference Element
+          </button>
+    </popper>q
+</template>
 <script>
     import Popper from 'vue-popperjs';
     export default{
-        render(h){
-            return h('button', {'class': 'btn btn-primary'}, 'voorbeeldje');
+        components:{
+            'popper': Popper
         },
         data(){
             return {
@@ -40,5 +51,8 @@
 
             }
         },
+        mounted(){
+
+        }
     }
 </script>
