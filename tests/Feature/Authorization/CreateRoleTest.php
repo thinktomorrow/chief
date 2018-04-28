@@ -2,6 +2,7 @@
 
 namespace Chief\Tests\Feature\Authorization;
 
+use Chief\Authorization\AuthorizationDefaults;
 use Chief\Authorization\Role;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
@@ -17,9 +18,7 @@ class CreateRoleTest extends TestCase
 
         $this->setUpDatabase();
 
-        $this->artisan('chief:permission', ['name' => 'role']);
-        $this->artisan('chief:permission', ['name' => 'permission']);
-        $this->artisan('chief:role', ['name' => 'developer', '--permissions' => 'role,permission']);
+        $this->setUpDefaultAuthorization();
     }
 
     /** @test */
@@ -35,8 +34,6 @@ class CreateRoleTest extends TestCase
     /** @test */
     function regular_admin_cannot_view_the_create_form()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->actingAs(factory(User::class)->create(), 'admin')->get(route('back.roles.create'));
 
         $response->assertStatus(302)
@@ -47,10 +44,7 @@ class CreateRoleTest extends TestCase
     /** @test */
     function storing_a_new_role()
     {
-        $developer = factory(User::class)->create();
-        $developer->assignRole('developer');
-
-        $response = $this->actingAs($developer, 'admin')
+        $response = $this->actingAs($this->developer(), 'admin')
             ->post(route('back.roles.store'), $this->validParams());
 
         $response->assertStatus(302)
@@ -66,7 +60,7 @@ class CreateRoleTest extends TestCase
         $response = $this->post(route('back.roles.store'), $this->validParams());
 
         $response->assertRedirect(route('back.login'));
-        $this->assertCount(1, Role::all()); // Developer role was already present
+        $this->assertCount(AuthorizationDefaults::roles()->count(), Role::all()); // default roles were already present
     }
 
     /** @test */
@@ -75,7 +69,17 @@ class CreateRoleTest extends TestCase
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => '']),
             route('back.roles.index'),
             route('back.roles.store'),
-            1 // Developer role was already present
+            AuthorizationDefaults::roles()->count() // default roles were already present
+        );
+    }
+
+    /** @test */
+    function when_creating_role_name_must_be_unique()
+    {
+        $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']),
+            route('back.roles.index'),
+            route('back.roles.store'),
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 
@@ -85,7 +89,7 @@ class CreateRoleTest extends TestCase
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']),
             route('back.roles.index'),
             route('back.roles.store'),
-            1 // Developer role was already present
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 
@@ -95,7 +99,7 @@ class CreateRoleTest extends TestCase
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']),
             route('back.roles.index'),
             route('back.roles.store'),
-            1 // Developer role was already present
+            AuthorizationDefaults::roles()->count() // default roles were already present
         );
     }
 

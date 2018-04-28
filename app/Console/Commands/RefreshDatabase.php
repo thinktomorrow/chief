@@ -55,7 +55,7 @@ class RefreshDatabase extends BaseCommand
         AuthorizationDefaults::permissions()->each(function($permissionName){
             Artisan::call('chief:permission', ['name' => $permissionName]);
         });
-dd(Permission::all()->toArray());
+
         AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
             Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
         });
