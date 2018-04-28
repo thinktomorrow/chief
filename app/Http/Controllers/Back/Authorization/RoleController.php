@@ -16,12 +16,10 @@ class RoleController extends Controller
      * @param $permissions
      * @return bool|\Illuminate\Http\RedirectResponse
      */
-    protected function redirectIfCannot($permissions)
+    protected function redirectIfCant($permissions)
     {
-        if(!$admin = admin()) return redirect()->route('back.dashboard');
-
-        if(admin()->cant($permissions)){
-            return redirect()->route('back.dashboard');
+        if(admin()->cant($permissions)) {
+            return redirect()->route('back.dashboard')->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
         }
 
         return false;
@@ -40,37 +38,26 @@ class RoleController extends Controller
 
     public function create()
     {
-        if($redirect = $this->redirectIfCannot('create-role')) return $redirect;
+        if($redirect = $this->redirectIfCant('create-role')) return $redirect;
 
         $permissions = Permission::all();
         return view('back.authorization.roles.create', ['permissions'=>$permissions]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        if($redirect = $this->redirectIfCant('create-role')) return $redirect;
+
         $this->validate($request, [
-                'name'          =>'required|unique:roles|max:10',
-                'permissions'   =>'required',
-            ]
-        );
-        $name = $request['name'];
-        $role = new Role();
-        $role->name = $name;
-        $permissions = $request['permissions'];
-        $role->save();
-        foreach ($permissions as $permission) {
-            $p = Permission::where('id', '=', $permission)->firstOrFail();
-            $role = Role::where('name', '=', $name)->first();
-            $role->givePermissionTo($p);
-        }
+            'name'               => 'required|unique:roles',
+            'permission_names'   => 'required|array',
+        ]);
+
+        $role = Role::create($request->only('name'));
+        $role->givePermissionTo($request->permission_names);
+
         return redirect()->route('back.roles.index')
-                         ->with('flash_message', 'Role'. $role->name.' added!');
+                         ->with('messages.success', 'Rol '. $role->name.' is toegevoegd.');
     }
     /**
      * Display the specified resource.

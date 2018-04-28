@@ -2,7 +2,6 @@
 
 namespace Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\Permission;
 use Chief\Authorization\Role;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
@@ -38,33 +37,36 @@ class CreateRoleTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->actingAs(factory(User::class, 'admin')->create())->get(route('back.roles.create'));
+        $response = $this->actingAs(factory(User::class)->create(), 'admin')->get(route('back.roles.create'));
 
-        $response->assertStatus(302)->assertRedirect(route('back.dashboard'))->assertSessionHas('messages.error');
+        $response->assertStatus(302)
+                 ->assertRedirect(route('back.dashboard'))
+                 ->assertSessionHas('messages.error');
     }
 
     /** @test */
-    function creating_a_new_article()
+    function storing_a_new_role()
     {
-        $this->disableExceptionHandling();
+        $developer = factory(User::class)->create();
+        $developer->assignRole('developer');
 
-        $response = $this->actingAs(factory(User::class)->create())
+        $response = $this->actingAs($developer, 'admin')
             ->post(route('back.roles.store'), $this->validParams());
 
-        $response->assertStatus(302);
-        $response->assertRedirect(route('back.roles.index'));
+        $response->assertStatus(302)
+                 ->assertRedirect(route('back.roles.index'))
+                 ->assertSessionHas('messages.success');
 
-        $this->assertCount(1, Role::all());
-        $this->assertNewValues(Role::first());
+        $this->assertNewValues(Role::findByName('new name'));
     }
 
     /** @test */
-    function only_authenticated_developer_can_create_a_article()
+    function only_authenticated_developer_can_store_a_role()
     {
         $response = $this->post(route('back.roles.store'), $this->validParams());
 
-        $response->assertRedirect(route('back'));
-        $this->assertCount(0, Role::all());
+        $response->assertRedirect(route('back.login'));
+        $this->assertCount(1, Role::all()); // Developer role was already present
     }
 
     /** @test */
@@ -72,7 +74,28 @@ class CreateRoleTest extends TestCase
     {
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => '']),
             route('back.roles.index'),
-            route('back.roles.store')
+            route('back.roles.store'),
+            1 // Developer role was already present
+        );
+    }
+
+    /** @test */
+    function when_creating_role_permissions_are_required()
+    {
+        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']),
+            route('back.roles.index'),
+            route('back.roles.store'),
+            1 // Developer role was already present
+        );
+    }
+
+    /** @test */
+    function when_creating_role_permissions_must_be_passed_as_array()
+    {
+        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']),
+            route('back.roles.index'),
+            route('back.roles.store'),
+            1 // Developer role was already present
         );
     }
 
@@ -80,6 +103,7 @@ class CreateRoleTest extends TestCase
     {
         $params = [
             'name' => 'new name',
+            'permission_names' => ['create-role', 'update-role'],
         ];
 
         foreach ($overrides as $key => $value){
@@ -89,8 +113,9 @@ class CreateRoleTest extends TestCase
         return $params;
     }
 
-    private function assertNewValues($role)
+    private function assertNewValues(Role $role)
     {
         $this->assertEquals('new name', $role->name);
+        $this->assertEquals(['create-role', 'update-role'], $role->permissions->pluck('name')->toArray());
     }
 }

@@ -4,6 +4,7 @@
 namespace Chief\Tests;
 
 
+use Chief\Authorization\Role;
 use Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,8 +12,11 @@ trait TestHelpers
 {
     protected function assertValidation(Model $model, $field, array $params, $coming_from_url, $submission_url, $assert_count = 0)
     {
-        $response = $this->actingAs(factory(User::class)
-                         ->create())
+        // We take developer as role because this role has full access
+        $developer = factory(User::class)->create();
+        $developer->assignRole(Role::firstOrCreate(['name' => 'developer']));
+
+        $response = $this->actingAs($developer, 'admin')
                          ->from($coming_from_url)
                          ->post($submission_url, $params);
 
