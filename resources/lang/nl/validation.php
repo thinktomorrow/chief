@@ -92,7 +92,7 @@ return [
     |
     */
 
-    'custom'               => [
+    'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -109,8 +109,10 @@ return [
     |
     */
 
-    'attributes'           => [
-        //
+    'attributes' => [
+        'name'               => 'naam',
+        'permission'         => 'rechten',
+        'permission_names.0' => 'rechten', // array entry validation for entries
     ],
 
 ];

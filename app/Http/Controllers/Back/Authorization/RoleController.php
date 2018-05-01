@@ -11,16 +11,21 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
-        return view('back.roles.index')->with('roles', $roles);
+        $this->authorize('view-role');
+
+        return view('back.authorization.roles.index',[
+            'roles' => Role::all(),
+        ]);
     }
 
     public function create()
     {
         $this->authorize('create-role');
 
-        $permissions = Permission::all();
-        return view('back.authorization.roles.create', ['permissions'=>$permissions]);
+        return view('back.authorization.roles.create', [
+            'role' => new Role(),
+            'permission_names' => Permission::all()->pluck('name')->toArray()
+        ]);
     }
 
     public function store(Request $request)
@@ -30,6 +35,7 @@ class RoleController extends Controller
         $this->validate($request, [
             'name'               => 'required|unique:roles',
             'permission_names'   => 'required|array',
+            'permission_names.*'   => 'required', // Avoid null array entry
         ]);
 
         $role = Role::create($request->only('name'));
@@ -44,9 +50,9 @@ class RoleController extends Controller
         $this->authorize('update-role');
 
         $role = Role::findOrFail($id);
-        $permissions = Permission::all();
+        $permission_names = Permission::all()->pluck('name')->toArray();
 
-        return view('back.authorization.roles.edit', compact('role', 'permissions'));
+        return view('back.authorization.roles.edit', compact('role', 'permission_names'));
     }
 
     public function update(Request $request, $id)
@@ -56,6 +62,7 @@ class RoleController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:roles,name,'.$id,
             'permission_names' =>'required|array',
+            'permission_names.*'   => 'required', // Avoid null array entry
         ]);
 
         $role = Role::findOrFail($id);

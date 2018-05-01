@@ -1,35 +1,22 @@
 @extends('back._layouts.master')
 
-@section('title', 'Nieuwe rol')
+@section('page-title', 'Nieuwe rol toevoegen')
+
+@chiefheader
+@slot('title', 'Nieuwe rol toevoegen')
+	<div class="center-y right inline-group">
+		<button data-submit-form="createForm" type="button" class="btn btn-o-primary">Voeg nieuwe rol toe</button>
+	</div>
+@endchiefheader
 
 @section('content')
 
-	<div class='col-lg-4 col-lg-offset-4'>
+	<form id="createForm" action="{{ route('back.roles.store') }}" method="POST">
+		{!! csrf_field() !!}
 
-		<h1><i class='fa fa-key'></i> Add Role</h1>
-		<hr>
-		{{-- @include ('errors.list') --}}
+		@include('back.authorization.roles._form')
 
-		<form action="{{ route('back.roles.store') }}" method="POST">
-			{!! csrf_field() !!}
-
-			<div class="form-group">
-				<label for="name">Name</label>
-				<input type="text" name="name" value="{{ old('name') }}" class="form-control">
-			</div>
-
-			<h5><b>Assign Permissions</b></h5>
-
-			<div class='form-group'>
-				@foreach ($permissions as $permission)
-					<input type="checkbox" value="{{ $permission->id }}" name="permissions[]">
-					<label for="{{ $permission->name }}">{{ ucfirst($permission->name) }}</label><br>
-				@endforeach
-			</div>
-
-			<button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></button>
-		</form>
-
-	</div>
+		<button type="submit" class="btn btn-primary right">Voeg nieuwe rol toe</button>
+	</form>
 
 @endsection

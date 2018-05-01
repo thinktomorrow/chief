@@ -16,6 +16,11 @@ class Role extends BaseRole implements RoleContract
         return parent::create($attributes);
     }
 
+    public function permissionNames()
+    {
+        return $this->permissions->pluck('name')->toArray();
+    }
+
     public function getPermissionsForIndex()
     {
         $this->permissions->each(function($permission){

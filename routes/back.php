@@ -31,16 +31,6 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.
 
 /**
  * -----------------------------------------------------------------
- * PROTOTYPING ROUTES
- * -----------------------------------------------------------------
- */
-Route::get('prototype', function(){
-    // Just to guide Johnny to the proper page - this route can be removed afterwards
-    return redirect()->route('back.articles.create');
-});
-
-/**
- * -----------------------------------------------------------------
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
@@ -52,9 +42,6 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('/',function(){
         return view('back.dashboard');
     })->name('back.dashboard');
-
-//    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
-
 
     // ARTICLES
     Route::get('articles','Back\ArticlesController@index')->name('back.articles.index');
@@ -75,7 +62,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     Route::post('article/{id}/upload', 'Back\ArticlesController@upload')->name('article.upload');
 
-    Route::get('/settings',['as' => 'back.settings.index','uses' => SettingsController::class.'@show']);
+    Route::get('/settings',['as' => 'back.settings.index','uses' => Back\System\SettingsController::class.'@show']);
 
     Route::post('notes/publish',['as' => 'notes.publish','uses' => NoteController::class.'@publish']);
     Route::resource('notes', NoteController::class);

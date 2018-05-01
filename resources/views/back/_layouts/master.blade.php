@@ -5,7 +5,7 @@
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta name="google" content="notranslate" />
-    <meta http-equiv="Content-Language" content="nl_BE" />
+    <meta http-equiv="Content-Language" content="nl-BE" />
     <title>Chief • @yield('page-title', 'Admin')</title>
     <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
