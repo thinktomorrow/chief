@@ -33,16 +33,6 @@ class Page extends Model implements TranslatableContract, HasMedia
         return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->published()->first() : null;
     }
 
-    public static function getAll()
-    {
-        return self::published()->get();
-    }
-
-    public function scopeSortedByPublished($query)
-    {
-        $query->orderBy('published','DESC');
-    }
-
     public function scopeSortedByRecent($query)
     {
         $query->orderBy('created_at','DESC');

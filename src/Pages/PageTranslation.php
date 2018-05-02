@@ -11,7 +11,7 @@ class PageTranslation extends Model implements SluggableContract
     protected $table = 'page_translations';
     public $timestamps = true;
 
-    public function article()
+    public function page()
     {
         return $this->belongsTo(Page::class);
     }

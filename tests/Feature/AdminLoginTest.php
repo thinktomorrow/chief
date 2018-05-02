@@ -87,7 +87,7 @@ class AdminLoginTest extends TestCase
             'password' => bcrypt('foobar'),
         ]);
 
-        $resp = $this->get(route('back.articles.index'));
+        $resp = $this->get(route('back.pages.index'));
         $resp->assertRedirect(route('back.login'));
 
         $response = $this->post(route('back.login.store'),[
@@ -98,7 +98,7 @@ class AdminLoginTest extends TestCase
         $this->assertTrue(Auth::guard('admin')->check());
         $this->assertEquals($admin->id, Auth::user()->id);
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('back.articles.index'));
+        $response->assertRedirect(route('back.pages.index'));
     }
 
     /** @test */
@@ -127,7 +127,7 @@ class AdminLoginTest extends TestCase
             'password'  => 'IForgotThisPassword'
         ]);
 
-        $response = $this->post(route('back.password.email'),[
+        $response = $this->post(route('auth.password.email'),[
             'email' => 'foo@example.com'
         ]);
 

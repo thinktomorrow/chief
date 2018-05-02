@@ -10,11 +10,17 @@ mix.setPublicPath(path.normalize('public/assets/back'))
 	.options({
 		// Webpack setting to ignore sass loader to follow url() paths
 		processCssUrls: false
-	});
+	})
 
 /**
  * Slim cropper resources.
  * Please note that copied files also get versioned! its a win :)
  */
-mix.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/assets/back/js/vendors');
-mix.copy('resources/assets/js/vendors/slim/slim.min.css', 'public/assets/back/css/vendors');
+	.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/assets/back/js/vendors')
+    .copy('resources/assets/js/vendors/slim/slim.min.css', 'public/assets/back/css/vendors')
+	.js([
+		'resources/assets/js/vendors/redactor/redactor.js',
+		'resources/assets/js/vendors/redactor/plugins/video.js'],
+		'public/assets/back/js/vendors/redactor.js'
+	)
+	.copy('resources/assets/js/vendors/redactor/redactor.css', 'public/assets/back/css/vendors/redactor.css');

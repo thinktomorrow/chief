@@ -1,13 +1,13 @@
 <?php
 
-namespace Chief\Tests\Feature\Articles;
+namespace Chief\Tests\Feature\Pages;
 
-use Chief\Articles\Article;
+use Chief\Pages\Page;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
 use Chief\Users\User;
 
-class UpdateArticleTest extends TestCase
+class UpdatePageTest extends TestCase
 {
     use ChiefDatabaseTransactions;
 
@@ -19,22 +19,22 @@ class UpdateArticleTest extends TestCase
     }
 
     /** @test */
-    public function it_can_edit_an_article()
+    public function it_can_edit_an_Page()
     {
         $this->disableExceptionHandling();
 
-        $article = factory(Article::class)->create(['title:nl' => 'titel nl']);
+        $page = factory(Page::class)->create(['title:nl' => 'titel nl']);
 
         $response = $this->actingAs(factory(User::class)->create())
-            ->put(route('back.articles.update', $article->id), $this->validParams([
+            ->put(route('back.pages.update', $page->id), $this->validParams([
                 'trans.nl.slug'     => '<b>slug</b>',
                 'trans.fr.slug'     => '<b>slugfr</b>',
                 'trans.nl.title'    => 'title',
                 'trans.fr.title'    => 'titlefr',
             ]));
 
-            $this->assertEquals('title', Article::first()->{'title:nl'});
-        $this->assertEquals('titlefr', Article::first()->{'title:fr'});
+        $this->assertEquals('title', Page::first()->{'title:nl'});
+        $this->assertEquals('titlefr', Page::first()->{'title:fr'});
     }
 
     private function validParams($overrides = [])
