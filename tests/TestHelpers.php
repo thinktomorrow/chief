@@ -25,6 +25,11 @@ trait TestHelpers
         $this->assertEquals($assert_count, $model->count());
     }
 
+    protected function asAdmin()
+    {
+        return $this->actingAs(factory(User::class)->make(), 'admin');
+    }
+
     protected function developer()
     {
         $developer = factory(User::class)->create();

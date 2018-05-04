@@ -22,7 +22,7 @@ class CreatePageTest extends TestCase
     /** @test */
     function admin_can_view_the_create_form()
     {
-        $response = $this->actingAs(factory(User::class)->make(), 'admin')->get(route('back.pages.create'));
+        $response = $this->asAdmin()->get(route('back.pages.create'));
         $response->assertStatus(200);
     }
 
@@ -36,7 +36,7 @@ class CreatePageTest extends TestCase
     /** @test */
     function creating_a_new_page()
     {
-        $response = $this->actingAs(factory(User::class)->make(), 'admin')
+        $response = $this->asAdmin()
             ->post(route('back.pages.store'), $this->validParams());
 
         $response->assertStatus(302);
@@ -74,7 +74,7 @@ class CreatePageTest extends TestCase
 
         $this->assertCount(1, Page::all());
 
-        $response = $this->actingAs(factory(User::class)->make(), 'admin')
+        $response = $this->asAdmin()
             ->post(route('back.pages.store'), $this->validParams([
                     'title:nl'  => 'foobarnl',
                     'title:fr'  => 'foobarfr',
@@ -91,7 +91,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function it_can_remove_a_page()
     {
-        $response = $this->actingAs(factory(User::class)->make(), 'admin')
+        $response = $this->asAdmin()
             ->post(route('back.pages.store'), $this->validParams());
 
         $this->assertCount(1, Page::all());
