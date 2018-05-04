@@ -8,7 +8,7 @@
         <div class="center-y right inline-group">
             <a href="#" class="btn btn-o-primary">Preview</a>
             <div class="btn-group">
-                <button @click="showModal('publication-page')" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+                <button @click="showModal('publication-now-page')" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
                 <div class="dropdown">
                     <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">
                         <i class="icon icon-chevron-down"></i>
@@ -28,7 +28,9 @@
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
-    @include('back.pages._form')
+    @include('back.pages._update_form')
+    @include('back.pages._partials.modal')
+    @include('back.pages._partials.sidebar')
 
   </form>
 @stop

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class PageCreateRequest extends FormRequest
+class PageUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class PageCreateRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'trans.*.title'     => 'required|unique:page_translations,title|max:200',
+            'trans.*.title'     => 'required|unique:page_translations,title,'. $this->id . ',page_id|max:200',
+            'trans.*.slug'      => 'required|unique:page_translations,slug,' . $this->id . ',page_id|distinct',
             'trans.*.content'   => 'required|max:1500',
             'trans.*.short'     => 'max:700',
 

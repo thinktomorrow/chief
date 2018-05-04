@@ -1,4 +1,4 @@
-<modal type="sidebar" id="publication-article">
+<modal type="sidebar" id="publication-page">
     <div v-cloak>
         <div class="column-12">
             <h2 class="formgroup-label">Publiceer je artikel.</h2>

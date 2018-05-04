@@ -60,10 +60,10 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('pages','Back\PagesController@index')->name('back.pages.index');
     Route::post('pages', 'Back\PagesController@store')->name('back.pages.store');
     Route::get('pages/create', 'Back\PagesController@create')->name('back.pages.create');
-    Route::delete('pages/{page}', 'Back\PagesController@destroy')->name('back.pages.destroy');
-    Route::put('pages/{page}', 'Back\PagesController@update')->name('back.pages.update');
-    Route::get('pages/{page}', 'Back\PagesController@show')->name('back.pages.show');
-    Route::get('pages/{page}/edit', 'Back\PagesController@edit')->name('back.pages.edit');
+    Route::delete('pages/{id}', 'Back\PagesController@destroy')->name('back.pages.destroy');
+    Route::put('pages/{id}', 'Back\PagesController@update')->name('back.pages.update');
+    Route::get('pages/{id}', 'Back\PagesController@show')->name('back.pages.show');
+    Route::get('pages/{id}/edit', 'Back\PagesController@edit')->name('back.pages.edit');
     Route::post('pages/publish','Back\PagesController@publish')->name('back.pages.publish');
 
     Route::get('media', 'Back\MediaLibraryController@library')->name('media.library');

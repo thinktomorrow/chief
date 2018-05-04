@@ -93,7 +93,6 @@ class PublishableTest extends TestCase
         factory(Page::class)->create(['published' => 0]);
         factory(Page::class)->create(['published' => 1]);
 
-
         $this->assertTrue(Page::sortedByPublished()->first()->isPublished());
         $this->assertFalse(Page::sortedByPublished()->get()->last()->isPublished());
     }

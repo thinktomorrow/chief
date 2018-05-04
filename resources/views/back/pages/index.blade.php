@@ -63,7 +63,9 @@
                 <hr>
             @endforeach
         </tab>
-        <tab name="Ingepland (1)"></tab>
+        <tab name="Ingepland (1)">
+            <p>Not implemented yet.</p>
+        </tab>
         <tab name="Published (12)">
             @foreach($published as $page)
                 <div class="row center-center">
@@ -114,7 +116,9 @@
                 {!! $published->render() !!}
             </div>
         </tab>
-        <tab name="Archief (1)"></tab>
+        <tab name="Archief (1)">
+            <p>Not implemented yet.</p>
+        </tab>
 
     </tabs>
 

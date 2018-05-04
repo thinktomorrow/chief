@@ -5,6 +5,8 @@ namespace Chief\Pages\Application;
 use Chief\Pages\Page;
 use Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
+use Chief\Pages\PageTranslation;
+use Chief\Common\UniqueSlug;
 
 class CreatePage
 {
@@ -22,8 +24,8 @@ class CreatePage
             $page = Page::create();
 
             foreach ($translations as $locale => $translation) {
-                $translation['slug'] = strip_tags($translation['slug']);
-                $translations[$locale] = $translation;
+                $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['title'], $page->getTranslation($locale));
+                $translations[$locale]  = $translation;
             }
 
             $this->saveTranslations($translations, $page, [

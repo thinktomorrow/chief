@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 use App\Http\Requests\PageCreateRequest;
 use Chief\Pages\Application\UpdatePage;
+use App\Http\Requests\PageUpdateRequest;
 
 class PagesController extends Controller
 {
@@ -67,7 +68,7 @@ class PagesController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(PageUpdateRequest $request, $id)
     {
         $page = app(UpdatePage::class)->handle($id, $request->trans);
 

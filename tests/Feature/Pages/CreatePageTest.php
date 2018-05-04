@@ -34,7 +34,7 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    function creating_a_new_Page()
+    function creating_a_new_page()
     {
         $this->disableExceptionHandling();
 
@@ -49,7 +49,7 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_admin_can_create_a_Page()
+    function only_authenticated_admin_can_create_a_page()
     {
         $response = $this->post(route('back.pages.store'), $this->validParams());
 
@@ -58,29 +58,7 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    function when_creating_Page_slug_is_required()
-    {
-        $this->assertValidation(new Page(), 'trans.nl.slug', $this->validParams(['trans.nl.slug' => '']),
-            route('back.pages.index'),
-            route('back.pages.store')
-        );
-    }
-
-    /** @test */
-    public function when_creating_Page_slug_will_be_stripped_of_html()
-    {
-        $response = $this->actingAs(factory(User::class)->make())
-            ->post(route('back.pages.store'), $this->validParams([
-                'trans.nl.slug' => '<b>slug</b>',
-                'trans.fr.slug' => '<b>slugfr</b>',
-                ]));
-
-        $this->assertEquals('slug', Page::first()->{'slug:nl'});
-        $this->assertEquals('slugfr', Page::first()->{'slug:fr'});
-    }
-
-    /** @test */
-    function when_creating_Page_title_is_required()
+    function when_creating_page_title_is_required()
     {
         $this->assertValidation(new Page(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
             route('back.pages.index'),
@@ -91,20 +69,34 @@ class CreatePageTest extends TestCase
     /** @test */
     public function slug_must_be_unique()
     {
-        factory(Page::class)->create(['slug:nl' => 'existing-slug']);
+        $page = factory(Page::class)->create([
+                'title:nl'  => 'titel nl',
+                'slug:nl'   => 'foobarnl'
+            ]);
 
-        $this->assertValidation(new Page(), 'trans.nl.slug', $this->validParams(['trans.nl.slug' => 'existing-slug']),
-            route('back.pages.index'),
-            route('back.pages.store'),
-            1
-        );
+        $this->assertCount(1, Page::all());
+
+        $response = $this->actingAs(factory(User::class)->make())
+            ->post(route('back.pages.store'), $this->validParams([
+                    'title:nl'  => 'foobarnl',
+                    'title:fr'  => 'foobarfr',
+                ])
+            );
+
+        $response->assertStatus(302);
+
+        $pages = Page::all();
+        $this->assertCount(2, $pages);
+        $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
     }
 
     /** @test */
-    public function it_can_remove_an_Page()
+    public function it_can_remove_an_page()
     {
         $response = $this->actingAs(factory(User::class)->make())
             ->post(route('back.pages.store'), $this->validParams());
+
+        $this->assertCount(1, Page::all());
 
         $this->actingAs(factory(User::class)->make())
             ->delete(route('back.pages.destroy', Page::first()->id), $this->validParams());
@@ -141,18 +133,18 @@ class CreatePageTest extends TestCase
     }
 
 
-    private function assertNewValues($Page)
+    private function assertNewValues($page)
     {
-        $this->assertEquals('new-slug', $Page->{'slug:nl'});
-        $this->assertEquals('new title', $Page->{'title:nl'});
-        $this->assertEquals('new content in <strong>bold</strong>', $Page->{'content:nl'});
-        $this->assertEquals('new seo title', $Page->{'seo_title:nl'});
-        $this->assertEquals('new seo description', $Page->{'seo_description:nl'});
+        $this->assertEquals('new-title', $page->{'slug:nl'});
+        $this->assertEquals('new title', $page->{'title:nl'});
+        $this->assertEquals('new content in <strong>bold</strong>', $page->{'content:nl'});
+        $this->assertEquals('new seo title', $page->{'seo_title:nl'});
+        $this->assertEquals('new seo description', $page->{'seo_description:nl'});
 
-        $this->assertEquals('nouveau-slug', $Page->{'slug:fr'});
-        $this->assertEquals('nouveau title', $Page->{'title:fr'});
-        $this->assertEquals('nouveau content in <strong>bold</strong>', $Page->{'content:fr'});
-        $this->assertEquals('nouveau seo title', $Page->{'seo_title:fr'});
-        $this->assertEquals('nouveau seo description', $Page->{'seo_description:fr'});
+        $this->assertEquals('nouveau-title', $page->{'slug:fr'});
+        $this->assertEquals('nouveau title', $page->{'title:fr'});
+        $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:fr'});
+        $this->assertEquals('nouveau seo title', $page->{'seo_title:fr'});
+        $this->assertEquals('nouveau seo description', $page->{'seo_description:fr'});
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Models;
+namespace Chief\Common;
 
 use Chief\Common\Contracts\SluggableContract;
 use Illuminate\Support\Str;
@@ -22,7 +22,7 @@ class UniqueSlug
         return new static($model);
     }
 
-    public function get($title,SluggableContract $entity = null)
+    public function get($title, SluggableContract $entity = null)
     {
         $slug = $originalslug = Str::slug($title);
         $i = 1;
