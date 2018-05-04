@@ -3,9 +3,11 @@
 namespace App\Console\Commands;
 
 use Chief\Articles\Article;
-use Chief\Roles\Permission;
-use Chief\Roles\Role;
+use Chief\Authorization\Permission;
+use Chief\Authorization\Role;
 use Chief\Users\User;
+use Chief\Authorization\AuthorizationDefaults;
+use Illuminate\Support\Facades\Artisan;
 
 class RefreshDatabase extends BaseCommand
 {
@@ -50,25 +52,15 @@ class RefreshDatabase extends BaseCommand
 
     private function settingPermissionsAndRoles()
     {
-        // Seed the default permissions
-        foreach (Permission::defaultPermissions() as $perms) {
-            Permission::firstOrCreate(['name' => $perms]);
-        }
+        AuthorizationDefaults::permissions()->each(function($permissionName){
+            Artisan::call('chief:permission', ['name' => $permissionName]);
+        });
 
-        // add default roles
-        foreach (['superadmin', 'admin', 'user'] as $role) {
-            $role = Role::firstOrCreate(['name' => trim($role)]);
+        AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
+        });
 
-            if ($role->name == 'superadmin') {
-                // assign all permissions
-                $role->syncPermissions(Permission::all());
-            } else {
-                // for others by default only read access
-                $role->syncPermissions(Permission::where('name', 'LIKE', 'view_%')->get());
-            }
-        }
-
-        $this->info('setting permissions and roles');
+        $this->info('Default permissions and roles');
     }
 
     private function settingUsers()
@@ -82,17 +74,17 @@ class RefreshDatabase extends BaseCommand
         $password = $this->askPassword();
 
         $admins = collect([
-            ['Ben', 'Cavens', 'ben@thinktomorrow.be', $password],
             ['Philippe', 'Damen', 'philippe@thinktomorrow.be', $password],
             ['Bob', 'Dries', 'bob@thinktomorrow.be', $password],
+            ['Ben', 'Cavens', 'ben@thinktomorrow.be', $password],
             ['Johnny', 'Berkmans', 'johnny@thinktomorrow.be', $password],
+            ['Json', 'Voorhees', 'json@thinktomorrow.be', $password],
         ]);
 
         $admins->each(function($admin){
-            $this->createUser($admin[0], $admin[1], $admin[2], $admin[3]);
+            $this->createUser($admin[0], $admin[1], $admin[2], $admin[3], 'developer');
+            $this->info('Added '.$admin[0].' as developer role with your provided password.');
         });
-
-        $this->info('Added devteam as admins. All with your provided password.');
     }
 
 }

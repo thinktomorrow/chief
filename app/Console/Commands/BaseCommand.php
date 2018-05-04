@@ -2,19 +2,13 @@
 
 namespace app\Console\Commands;
 
-use Chief\Roles\Role;
+use Chief\Authorization\Role;
 use Chief\Users\User;
 use Illuminate\Console\Command;
 
 abstract class BaseCommand extends Command
 {
-    /**
-     * @param $firstname
-     * @param $lastname
-     * @param $email
-     * @param $password
-     */
-    protected function createUser($firstname, $lastname, $email, $password)
+    protected function createUser(string $firstname, string $lastname, string $email, string $password, $roles = [])
     {
         $user = new User;
         $user->firstname = $firstname;
@@ -23,7 +17,7 @@ abstract class BaseCommand extends Command
         $user->password = bcrypt($password);
         $user->save();
 
-        $user->assignRole(Role::findByName('superadmin'));
+        $user->assignRole((array)$roles);
     }
 
     /**

@@ -43,8 +43,8 @@ class CreateSquantoTables extends Migration
 
     public function down()
     {
-        Schema::drop('squanto_lines');
         Schema::drop('squanto_line_translations');
+        Schema::drop('squanto_lines');
         Schema::drop('squanto_pages');
     }
 }

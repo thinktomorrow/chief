@@ -14,7 +14,7 @@
                 {!! isset($subtitle) ? '<p>'.$subtitle.'</p>' : '' !!}
                 {{ $extra ??  '' }}
             </div>
-            <div class="column text-right">
+            <div class="text-right center-y">
                 {{ $actionbuttons ??  '' }}
                 {{ $slot }}
             </div>
