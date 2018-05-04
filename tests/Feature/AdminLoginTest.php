@@ -61,7 +61,7 @@ class AdminLoginTest extends TestCase
             'password' => 'xxx',
         ]);
 
-        $this->assertNull(Auth::user());
+        $this->assertNull(Auth::guard('admin')->user());
         $this->assertTrue(session()->has('errors'));
         $response->assertRedirect('/');
     }
@@ -72,10 +72,10 @@ class AdminLoginTest extends TestCase
         $this->disableExceptionHandling();
 
         $admin = factory(User::class)->create();
-        $response = $this->actingAs($admin)->get('/admin');
+        $response = $this->actingAs($admin, 'admin')->get('/admin');
 
         $response->assertStatus(200);
-        $this->assertInstanceOf(User::class, Auth::user());
+        $this->assertInstanceOf(User::class, Auth::guard('admin')->user());
         $this->assertFalse(session()->has('errors'));
     }
 
@@ -96,7 +96,7 @@ class AdminLoginTest extends TestCase
         ]);
 
         $this->assertTrue(Auth::guard('admin')->check());
-        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
         $this->assertFalse(session()->has('errors'));
         $response->assertRedirect(route('back.pages.index'));
     }
@@ -106,15 +106,15 @@ class AdminLoginTest extends TestCase
     {
         $admin = factory(User::class)->create();
 
-        Auth::login($admin);
+        Auth::guard('admin')->login($admin);
 
-        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
 
         $response = $this->get(route('back.logout'));
 
         $response->assertRedirect('/');
 
-        $this->assertNull(Auth::user());
+        $this->assertNull(Auth::guard('admin')->user());
     }
 
     /** @test */
@@ -127,7 +127,7 @@ class AdminLoginTest extends TestCase
             'password'  => 'IForgotThisPassword'
         ]);
 
-        $response = $this->post(route('auth.password.email'),[
+        $response = $this->post(route('back.password.email'),[
             'email' => 'foo@example.com'
         ]);
 
@@ -147,7 +147,7 @@ class AdminLoginTest extends TestCase
 
         DB::insert('INSERT INTO password_resets (email, token, created_at) VALUES(?, ?, ?)', ["foo@example.com", bcrypt("71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c"), Carbon::now()]);
 
-        $response = $this->post(route('auth.password.request'), [
+        $response = $this->post(route('back.password.request'), [
             'token'                 => "71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c",
             'email'                 => "foo@example.com",
             'password'              => "password",
@@ -156,7 +156,7 @@ class AdminLoginTest extends TestCase
 
         $response->assertRedirect(route('back.dashboard'));
 
-        Auth::logout();
+        Auth::guard('admin')->logout();
 
         $response = $this->post(route('back.login.store'),[
             'email'     => 'foo@example.com',
@@ -175,9 +175,9 @@ class AdminLoginTest extends TestCase
             'email'     => 'foo@example.com'
         ]);
 
-        Auth::login($admin);
+        Auth::guard('admin')->login($admin);
 
-        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
 
         $response = $this->post(route('back.login.store'),[
             'email' => 'foo@example.com',

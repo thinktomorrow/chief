@@ -12,7 +12,7 @@
 
             <div class="column">
                 <ul class="nav-items right">
-                    <li><a class="nav-item" href="{{ route('back.settings') }}"><i class="icon icon-cog"></i></a></li>
+                    <li><a class="nav-item" href="{{ route('back.settings.index') }}"><i class="icon icon-cog"></i></a></li>
 
                     <li class="dropdown nav-dropdown">
                         <a class="nav-item dropdown-toggle">

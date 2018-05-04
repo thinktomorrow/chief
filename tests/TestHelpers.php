@@ -28,7 +28,7 @@ trait TestHelpers
     protected function developer()
     {
         $developer = factory(User::class)->create();
-        $developer->assignRole(Role::firstOrCreate(['name' => 'developer']));
+        $developer->assignRole(Role::firstOrCreate(['name' => 'developer', 'guard_name' => 'admin']));
 
         return $developer;
     }

@@ -32,7 +32,7 @@ class EditTranslationTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->actingAs(factory(User::class)->create())->get(route('squanto.edit', $this->squantoPage->id));
+        $response = $this->actingAs(factory(User::class)->make(), 'admin')->get(route('squanto.edit', $this->squantoPage->id));
         $response->assertStatus(200);
     }
 
@@ -48,7 +48,7 @@ class EditTranslationTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->actingAs(factory(User::class)->create())
+        $response = $this->actingAs(factory(User::class)->make(), 'admin')
             ->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
         $response->assertStatus(302);

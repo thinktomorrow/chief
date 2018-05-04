@@ -25,7 +25,7 @@ class UpdatePageTest extends TestCase
 
         $page = factory(Page::class)->create(['title:nl' => 'titel nl']);
 
-        $response = $this->actingAs(factory(User::class)->create())
+        $response = $this->actingAs(factory(User::class)->make(), 'admin')
             ->put(route('back.pages.update', $page->id), $this->validParams([
                 'trans.nl.slug'     => '<b>slug</b>',
                 'trans.fr.slug'     => '<b>slugfr</b>',
