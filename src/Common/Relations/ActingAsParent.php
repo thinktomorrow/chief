@@ -2,24 +2,38 @@
 
 namespace Chief\Common\Relations;
 
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
 trait ActingAsParent
 {
+    protected $loadedChildRelations;
+
     public function adoptChild(ActsAsChild $child)
     {
-        $this->children()->attach($child, ['child_type' => get_class($child)]);
+        // Reset cached relation
+        $this->loadedChildRelations = null;
+
+        $this->attachChild($child->getMorphClass(), $child->getKey());
     }
 
     public function children()
     {
-        // Builder $query, Model $parent, $table, $foreignPivotKey,
-        // $relatedPivotKey, $parentKey, $relatedKey, $relationName = null
+        if($this->areChildRelationsLoaded()){
+            return $this->loadedChildRelations;
+        }
+        return $this->loadedChildRelations = Relation::children($this->getMorphClass(), $this->getKey());
+    }
 
-//        return (new BelongsToMany($this->newQuery(), $this, 'relations', 'child_id', 'parent_id', 'id', 'id'))->where('parent_type',get_class($this));
-//
-//        return $this->morphedByMany(get_class($this), 'parent', 'relations', 'child_id', 'parent_id');
-//        return $this->morphedByMany(ActingAsChild::class, 'child', 'relations', 'child_id', 'parent_id');
-        return $this->morphedByMany(ActingAsChild::class, 'child', 'relations', 'child_id', 'parent_id');
+    private function attachChild($child_type, $child_id)
+    {
+        Relation::firstOrCreate([
+            'parent_type' => $this->getMorphClass(),
+            'parent_id'   => $this->getKey(),
+            'child_type'  => $child_type,
+            'child_id'    => $child_id,
+        ]);
+    }
+
+    private function areChildRelationsLoaded(): bool
+    {
+        return !is_null($this->loadedChildRelations);
     }
 }

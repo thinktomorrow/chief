@@ -4,13 +4,37 @@ namespace Chief\Common\Relations;
 
 trait ActingAsChild
 {
-    public function acceptsParent(ActsAsParent $parent)
+    protected $loadedParentRelations;
+
+    public function acceptParent(ActsAsParent $parent)
     {
-        $this->parents()->attach($parent, ['parent_type' => get_class($parent)]);
+        // Reset cached relation
+        $this->loadedParentRelations = null;
+
+        $this->attachParent($parent->getMorphClass(), $parent->getKey());
     }
 
     public function parents()
     {
-        return $this->morphToMany(get_class($this), 'child', 'relations', 'child_id', 'parent_id');
+        if($this->areParentRelationsLoaded()){
+            return $this->loadedParentRelations;
+        }
+
+        return $this->loadedParentRelations = Relation::parents($this->getMorphClass(), $this->getKey());
+    }
+
+    private function attachParent($parent_type, $parent_id)
+    {
+        Relation::firstOrCreate([
+            'parent_type'  => $parent_type,
+            'parent_id'    => $parent_id,
+            'child_type' => $this->getMorphClass(),
+            'child_id'   => $this->getKey(),
+        ]);
+    }
+
+    private function areParentRelationsLoaded(): bool
+    {
+        return !is_null($this->loadedParentRelations);
     }
 }
