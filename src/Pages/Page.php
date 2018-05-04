@@ -3,6 +3,10 @@
 namespace Chief\Pages;
 
 
+use Chief\Common\Relations\ActingAsChild;
+use Chief\Common\Relations\ActingAsParent;
+use Chief\Common\Relations\ActsAsChild;
+use Chief\Common\Relations\ActsAsParent;
 use Chief\Common\Translatable\Translatable;
 use Chief\Common\Translatable\TranslatableContract;
 use Chief\Common\Traits\Publishable;
@@ -13,9 +17,9 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Chief\Common\Traits\Featurable;
 
-class Page extends Model implements TranslatableContract, HasMedia
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
-    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, Featurable;
+    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, Featurable, ActingAsParent, ActingAsChild;
 
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
