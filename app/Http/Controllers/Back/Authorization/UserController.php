@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers\Back\Authorization;
 
 use App\Http\Controllers\Controller;
-use Chief\Roles\Role;
+use Chief\Authorization\Role;
 use Chief\Users\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

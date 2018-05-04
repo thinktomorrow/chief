@@ -20,13 +20,13 @@
 @stop
 
 @section('content')
-	@include('back.users._partials.users')
+	@include('back.authorization.users._partials.users')
 @endsection
 
 
 
 @push('sidebar')
-	 @include('back.users._partials.newuser')
+	 @include('back.authorization.users._partials.newuser')
 @endpush
 
 @push('custom-scripts')

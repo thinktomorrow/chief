@@ -9,7 +9,6 @@ if(!function_exists('admin')){
     }
 }
 
-
 /**
  * Form fields for honeypot protection on form submissions
  */

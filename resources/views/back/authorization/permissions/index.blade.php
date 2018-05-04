@@ -46,7 +46,7 @@
 							@endcan
 						</td>
 					</tr>
-					@include('back.permissions._deletemodal')
+					@include('back.authorization.permissions._deletemodal')
 					@push('custom-scripts')
 					<script>
 						;(function ($) {

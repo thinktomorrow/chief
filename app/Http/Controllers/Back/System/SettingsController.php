@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace App\Http\Controllers\Back\System;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class SettingsController extends Controller
 {
     public function show()
     {
-        return view('back.settings');
+        return view('back.system.settings');
     }
 
 

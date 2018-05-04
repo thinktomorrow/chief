@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers\Back\Authorization;
 
 use App\Http\Controllers\Controller;
-use Chief\Roles\Permission;
-use Chief\Roles\Role;
+use Chief\Authorization\Permission;
+use Chief\Authorization\Role;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller

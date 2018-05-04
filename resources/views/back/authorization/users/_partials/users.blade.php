@@ -223,7 +223,7 @@
 								@endcan
 							</td>
 						</tr>
-						@include('back.users._deletemodal')
+						@include('back.authorization.users._deletemodal')
 						@push('custom-scripts')
 						<script>
 							;(function ($) {
@@ -232,7 +232,7 @@
 							})(jQuery);
 						</script>
 						@endpush
-						@include('back.users._partials.edituser')
+						@include('back.authorization.users._partials.edituser')
 					@endforeach
 				</tbody>
 			</table>

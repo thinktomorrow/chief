@@ -1,7 +1,7 @@
 <?php
 
-use Chief\Roles\Permission;
-use Chief\Roles\Role;
+use Chief\Authorization\Permission;
+use Chief\Authorization\Role;
 use Chief\Users\User;
 use Illuminate\Database\Seeder;
 
