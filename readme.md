@@ -4,55 +4,32 @@
 At Think Tomorrow we make use of a [Project checklist](https://github.com/thinktomorrow/chief-launch-checklist) to ensure all aspects of a project, small or large, are ready for their release.
 
 ## Getting started
-Download the latest version of the Chief application
+In order to develop on the chief CMS package, you should first clone the repo to a local copy:
 ```bash
-git clone https://github.com/thinktomorrow/chief.git --depth=1 <PROJECTNAME>
+git clone https://github.com/thinktomorrow/chief.git
 ```
 
-Remove the local `.git` folder and setup the new git repository
-```bash 
-# inside your <PROJECTNAME> folder
-rm -r .git
-
-# create a fresh git
-git init
-git add .
-git commit -m"First commit"
-git remote add origin git@github.com:thinktomorrow/<PROJECTNAME>.git
-git push -u origin master
-```
+Next, make sure you have a local environment file. Copy the `.env.example` to `.env` and run `php artisan key:generate` to add a cypher key.
 
 Install dependencies
 ```bash
 composer install
 ```
 
-Next, run chief setup. This will set the proper environment files
+For development you can clear and reset the database with the default setup with following command
 ```bash
-php artisan chief:setup
+php artisan chief:db-refresh
 ```
-
-Run migrations and seeders
-```bash
-php artisan migrate --seed
-```
-
-Add yourself as superadmin user
-```bash
-php artisan admin:create
-```
+This command does the following:
+- Flushes and recreates the entire database! **WARNING: This is a destructive command and should only to be used on your local machine. Make sure you are not connected to the production database.**
+- Setup of default roles and permissions.
+- Adds our devteam as admin users with full access.
+- It also asks you for a generic developer password which will be set on each of the dev accounts. This way you can log in easily with any one of these accounts.
 
 Install front end dependencies via `yarn`.
 ```bash
 yarn
 ```
 
-## What's next?
-Save your client logo as `/public/assets/img/<project>logo.png` where `<project>` is the lowercased name of the project.
 
-To activate the media image optimization you will need to install the optimizers on your system (using homebrew on mac):
-- `brew install jpegoptim`
-- `brew install optipng`
-- `brew install pngquant`
-- `brew install svgo`
-- `brew install gifsicle`
+
