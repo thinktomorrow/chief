@@ -38,7 +38,6 @@
     "vue": "^2.5.16",
     "vue-loader": "^14.2.2",
     "vue-multiselect": "^2.0.3",
-    "vue-popperjs": "^1.2.6",
     "warpaint": "https://github.com/thinktomorrow/warpaint.git#0.1"
   }
 }

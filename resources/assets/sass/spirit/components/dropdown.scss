@@ -1,0 +1,14 @@
+.dropdown-target-default{
+  background-color: $color-white;
+  padding: $space-m;
+  margin-top: $space-xs;
+
+  // Taken from panel
+  border: 1px solid transparent;
+  border-radius: $panel-border-radius;
+  overflow: hidden;
+
+  box-shadow: 0 16px 26px -10px rgba($color-black, 0.56),
+  0 4px 25px 0px rgba($color-black, 0.12),
+  0 8px 10px -5px rgba($color-black, 0.2)
+}

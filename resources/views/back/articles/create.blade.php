@@ -17,17 +17,17 @@
                         <a href="#" class="block squished-s" @click="showModal('publication-now-article')">Onmiddellijk</a>
                     </div>
                 </div>
-                {{--<div class="dropdown">--}}
-                    {{--<dropdown>--}}
-                        {{--<span class="block btn btn-primary" slot="trigger" slot-scope='{ toggle }' @click="toggle()">--}}
-                            {{--<i class="icon icon-chevron-down"></i>--}}
-                        {{--</span>--}}
-                        {{--<div v-cloak>--}}
-                            {{--<a href="#" class="block squished-s">Als draft</a>--}}
-                            {{--<a href="#" class="block squished-s" @click="showModal('publication-now-article')">Onmiddellijk</a>--}}
-                        {{--</div>--}}
-                    {{--</dropdown>--}}
-                {{--</div>--}}
+                <div class="dropdown">
+                    <dropdown>
+                        <span class="block btn btn-primary" slot="trigger" slot-scope='{ toggle }' @click="toggle()">
+                            <i class="icon icon-chevron-down"></i>
+                        </span>
+                        <div v-cloak>
+                            <a href="#" class="block squished-s">Als draft</a>
+                            <a href="#" class="block squished-s" @click="showModal('publication-now-article')">Onmiddellijk</a>
+                        </div>
+                    </dropdown>
+                </div>
 
                 {{--<div class="dropdown">--}}
                     {{--<button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">--}}
