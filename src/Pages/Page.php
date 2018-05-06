@@ -7,6 +7,7 @@ use Chief\Common\Relations\ActingAsChild;
 use Chief\Common\Relations\ActingAsParent;
 use Chief\Common\Relations\ActsAsChild;
 use Chief\Common\Relations\ActsAsParent;
+use Chief\Common\Relations\Relation;
 use Chief\Common\Translatable\Translatable;
 use Chief\Common\Translatable\TranslatableContract;
 use Chief\Common\Traits\Publishable;
@@ -41,5 +42,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function scopeSortedByRecent($query)
     {
         $query->orderBy('created_at','DESC');
+    }
+
+    public function presentForParent(ActsAsParent $parent, Relation $relation): string
+    {
+        return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
+    }
+
+    public function presentForChild(ActsAsChild $child, Relation $relation): string
+    {
+        return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
     }
 }
