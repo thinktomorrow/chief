@@ -17,5 +17,7 @@ interface ActsAsParent
 
     public function presentChildren(): StandardCollection;
 
+    public function getCompositeKey(): string;
+
     public function relationWithChild(ActsAsChild $child): Relation;
 }

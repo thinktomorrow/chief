@@ -30,4 +30,9 @@ class ParentFake extends Model implements ActsAsParent
     {
         return '<div>parent '.$this->id.' view for child '.$child->id.'</div>';
     }
+
+    public function getCompositeKey(): string
+    {
+        return $this->getMorphClass().'@'.$this->id;
+    }
 }

@@ -56,9 +56,19 @@ class PagesController extends Controller
     public function edit($id)
     {
         $page    = Page::findOrFail($id);
-
         $page->injectTranslationForForm();
-        return view('back.pages.edit', compact('page'));
+
+        // This should be cached
+        $relations = [
+            [
+                'label' => 'Pagina\'s',
+                'values' => Page::all()->map(function($page){
+                    return ['composite_id' => $page->getMorphClass().'@'.$page->id, 'label' => 'Pagina ' . teaser($page->title, 20, '...')];
+                })->toArray(),
+            ]
+        ];
+
+        return view('back.pages.edit', compact('page', 'relations'));
     }
 
     /**
@@ -70,6 +80,8 @@ class PagesController extends Controller
      */
     public function update(PageUpdateRequest $request, $id)
     {
+        dd($request->all());
+
         $page = app(UpdatePage::class)->handle($id, $request->trans);
 
         return redirect()->route('back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');

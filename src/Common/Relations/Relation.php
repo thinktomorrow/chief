@@ -36,4 +36,33 @@ class Relation extends Model
             return $child;
         });
     }
+
+    public static function availableChildren(ActsAsParent $parent)
+    {
+        // Get from config all available children from parent if specific for this parent
+        // flatten 
+    }
+
+    /**
+     * Compile all relations into a flat list for select form field.
+     * This includes a composite id made up of the type and id
+     *
+     * @return array
+     */
+    public static function flatten(array $relations = []): array
+    {
+        return [
+            [
+                'label' => 'Pagina\'s',
+                'values' => Page::all()->map(function($page){
+                    return ['composite_id' => $page->getMorphClass().'@'.$page->id, 'label' => 'Pagina ' . teaser($page->title, 20, '...')];
+                })->toArray(),
+            ]
+        ];
+    }
+
+    public static function inflate(array $relations = [])
+    {
+
+    }
 }

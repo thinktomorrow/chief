@@ -136,4 +136,29 @@ class RelationsTest extends TestCase
         $this->assertEquals($parent2->id, $child->parents()->first()->id);
         $this->assertEquals($parent->id, $child->parents()->last()->id);
     }
+    
+    /** @test */
+    function a_parent_or_child_can_return_a_composite_key()
+    {
+        $parent = ParentFake::create();
+        $child = ChildFake::create();
+
+        $this->assertEquals($parent->getMorphClass().'@'.$parent->id, $parent->getCompositeKey());
+        $this->assertEquals($child->getMorphClass().'@'.$child->id, $child->getCompositeKey());
+    }
+
+    /** @test */
+    function all_related_children_of_parent_can_be_flattened_as_composite_keys_for_select()
+    {
+        $parent = ParentFake::create();
+        $child = ChildFake::create();
+        $child2 = ChildFake::create();
+        $parent->adoptChild($child, ['sort' => 2]);
+        $parent->adoptChild($child2, ['sort' => 1]);
+
+        dd(Relation::availableChildren($parent));
+        dd(Relation::availableChildren($parent)->flattenForSelect());
+
+        $this->assertInstanceOf(RelationCollection::class, Relation::availableChildren($parent));
+    }
 }

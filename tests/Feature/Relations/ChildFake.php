@@ -31,4 +31,9 @@ class ChildFake extends Model implements ActsAsChild
     {
         return '<div>child '.$this->id.' view for parent '.$parent->id.'</div>';
     }
+
+    public function getCompositeKey(): string
+    {
+        return $this->getMorphClass().'@'.$this->id;
+    }
 }

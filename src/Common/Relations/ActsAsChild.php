@@ -14,5 +14,7 @@ interface ActsAsChild
 
     public function presentForParent(ActsAsParent $parent, Relation $relation): string;
 
+    public function getCompositeKey(): string;
+
     public function relationWithParent(ActsAsParent $parent): Relation;
 }
