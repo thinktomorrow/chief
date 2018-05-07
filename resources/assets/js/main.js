@@ -16,6 +16,7 @@ Vue.use(PortalVue);
 
 /** Chief components */
 Vue.component('dropdown', require('./components/Dropdown.vue').default);
+Vue.component('button-dropdown', require('./components/ButtonDropdown.vue').default);
 
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
