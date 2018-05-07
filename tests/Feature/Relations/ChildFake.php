@@ -29,6 +29,6 @@ class ChildFake extends Model implements ActsAsChild
 
     public function presentForParent(ActsAsParent $parent, Relation $relation): string
     {
-        return '<rendered-view>child '.$this->id.' view for parent '.$parent->id.'</rendered-view>';
+        return '<div>child '.$this->id.' view for parent '.$parent->id.'</div>';
     }
 }

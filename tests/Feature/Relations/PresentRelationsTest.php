@@ -26,7 +26,7 @@ class PresentRelationsTest extends TestCase
         $parent->adoptChild($child);
 
         $render = $child->presentForParent($parent, $child->relationWithParent($parent));
-        $this->assertEquals('<rendered-view>child '.$child->id.' view for parent '.$parent->id.'</rendered-view>', $render);
+        $this->assertEquals('<div>child '.$child->id.' view for parent '.$parent->id.'</div>', $render);
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class PresentRelationsTest extends TestCase
         $parent->adoptChild($child);
 
         $render = $parent->presentForChild($child, $parent->relationWithChild($child));
-        $this->assertEquals('<rendered-view>parent '.$parent->id.' view for child '.$child->id.'</rendered-view>', $render);
+        $this->assertEquals('<div>parent '.$parent->id.' view for child '.$child->id.'</div>', $render);
     }
 
     /** @test */
@@ -51,8 +51,8 @@ class PresentRelationsTest extends TestCase
 
         $render = $parent->presentChildren();
         $this->assertEquals(collect([
-            '<rendered-view>child '.$child->id.' view for parent '.$parent->id.'</rendered-view>',
-             '<rendered-view>child '.$child2->id.' view for parent '.$parent->id.'</rendered-view>'
+            '<div>child '.$child->id.' view for parent '.$parent->id.'</div>',
+             '<div>child '.$child2->id.' view for parent '.$parent->id.'</div>'
         ]), $render );
     }
 }
