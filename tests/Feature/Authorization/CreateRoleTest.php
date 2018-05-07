@@ -34,7 +34,7 @@ class CreateRoleTest extends TestCase
     /** @test */
     function regular_admin_cannot_view_the_create_form()
     {
-        $response = $this->actingAs(factory(User::class)->create(), 'admin')->get(route('back.roles.create'));
+        $response = $this->asAdmin()->get(route('back.roles.create'));
 
         $response->assertStatus(302)
                  ->assertRedirect(route('back.dashboard'))

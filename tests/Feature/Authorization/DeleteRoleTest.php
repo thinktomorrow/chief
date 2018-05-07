@@ -46,7 +46,7 @@ class DeleteRoleTest extends TestCase
     /** @test */
     function only_authenticated_developer_can_delete_a_role()
     {
-        $response = $this->actingAs(factory(User::class)->create(), 'admin')
+        $response = $this->asAdmin()
             ->delete(route('back.roles.destroy', $this->newRole->id));
 
         $response->assertRedirect(route('back.dashboard'));

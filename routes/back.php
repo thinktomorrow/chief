@@ -77,8 +77,8 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     Route::get('/settings',['as' => 'back.settings.index','uses' => Back\System\SettingsController::class.'@show']);
 
-    Route::post('notes/publish',['as' => 'notes.publish','uses' => NoteController::class.'@publish']);
-    Route::resource('notes', NoteController::class);
+    Route::post('notes/publish',['as' => 'notes.publish','uses' => Back\NoteController::class.'@publish']);
+    Route::resource('notes', Back\NoteController::class);
 
     /**
      * -----------------------------------------------------------------
@@ -86,14 +86,14 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
      * -----------------------------------------------------------------
      */
     // USER MANAGEMENT
-    Route::get('users', ' Back\UserController@index')->name('back.users.index');
-    Route::post('users', ' Back\UserController@store')->name('back.users.store');
-    Route::get('users/create', ' Back\UserController@create')->name('back.users.create');
-    Route::delete('users/{user}', ' Back\UserController@destroy')->name('back.users.destroy');
-    Route::put('users/{user}', ' Back\UserController@update')->name('back.users.update');
-    Route::get('users/{user}', ' Back\UserController@show')->name('back.users.show');
-    Route::get('users/{user}/edit', ' Back\UserController@edit')->name('back.users.edit');
-    Route::post('users/{user}/publish', ' Back\UserController@publish')->name('back.users.publish');
+    Route::get('users', 'Back\Authorization\UserController@index')->name('back.users.index');
+    Route::post('users', 'Back\Authorization\UserController@store')->name('back.users.store');
+    Route::get('users/create', 'Back\Authorization\UserController@create')->name('back.users.create');
+    Route::delete('users/{user}', 'Back\Authorization\UserController@destroy')->name('back.users.destroy');
+    Route::put('users/{user}', 'Back\Authorization\UserController@update')->name('back.users.update');
+    Route::get('users/{user}', 'Back\Authorization\UserController@show')->name('back.users.show');
+    Route::get('users/{user}/edit', 'Back\Authorization\UserController@edit')->name('back.users.edit');
+    Route::post('users/{user}/publish', 'Back\Authorization\UserController@publish')->name('back.users.publish');
 
     // ROLE MANAGEMENT
     Route::get('roles', 'Back\Authorization\RoleController@index')->name('back.roles.index');
@@ -131,4 +131,3 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('translations',['as' => 'squanto.index','uses' => 'Back\TranslationController@index']);
 
 });
-

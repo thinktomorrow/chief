@@ -51,7 +51,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_invalid_login_credentials_keeps_you_out()
     {
-        factory(User::class)->create([
+        factory(User::class)->make([
             'email' => 'foo@example.com'
         ]);
 
@@ -71,7 +71,7 @@ class AdminLoginTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $admin = factory(User::class)->create();
+        $admin = factory(User::class)->make();
         $response = $this->actingAs($admin, 'admin')->get('/admin');
 
         $response->assertStatus(200);
@@ -104,7 +104,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_can_log_you_out()
     {
-        $admin = factory(User::class)->create();
+        $admin = factory(User::class)->make();
 
         Auth::guard('admin')->login($admin);
 
@@ -171,7 +171,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
-        $admin = factory(User::class)->create([
+        $admin = factory(User::class)->make([
             'email'     => 'foo@example.com'
         ]);
 
@@ -200,7 +200,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     function it_can_access_admin_via_helper()
     {
-        $admin = factory(User::class)->create([
+        $admin = factory(User::class)->make([
             'email'     => 'foo@example.com'
         ]);
 

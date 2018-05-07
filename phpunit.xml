@@ -22,6 +22,9 @@
             <directory suffix=".php">./app</directory>
             <directory suffix=".php">./chief-core</directory>
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <file>./src/Demo/Http/routes/demoRoutes.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <logging>
