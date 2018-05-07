@@ -63,4 +63,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         return $this->title;
     }
+
+    public function getRelationGroup(): string
+    {
+        return 'pages';
+    }
 }

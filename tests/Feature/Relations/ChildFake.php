@@ -41,4 +41,9 @@ class ChildFake extends Model implements ActsAsChild
     {
        return $this->id;
     }
+
+    public function getRelationGroup(): string
+    {
+        return 'children';
+    }
 }

@@ -40,4 +40,9 @@ class ParentFake extends Model implements ActsAsParent
     {
         return $this->id;
     }
+
+    public function getRelationGroup(): string
+    {
+        return 'parents';
+    }
 }

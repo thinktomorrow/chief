@@ -119,16 +119,16 @@
                         {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
                     {{--</div>--}}
                 {{--</div>--}}
-
                 <h4>Voeg een nieuwe relatie toe</h4>
                 <chief-multiselect
                 name="relations"
                 :options='@json($relations)'
+                selected='@json($page->existingRelationIds->toArray())'
                 :multiple="true"
-                grouplabel="label"
+                grouplabel="group"
                 groupvalues="values"
                 labelkey="label"
-                valuekey="composite_id"
+                valuekey="id"
                 placeholder="..."
                 >
                 </chief-multiselect>

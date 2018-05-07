@@ -31,5 +31,7 @@ interface ActsAsChild
      */
     public function getRelationLabel(): string;
 
+    public function getRelationGroup(): string;
+
     public function relationWithParent(ActsAsParent $parent): Relation;
 }

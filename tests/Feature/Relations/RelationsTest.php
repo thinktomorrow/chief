@@ -180,8 +180,8 @@ class RelationsTest extends TestCase
 
         // Custom select listing for relations
         $this->assertEquals([
-            ['id' => $child->getRelationId(), 'label' => $child->getRelationLabel()],
-            ['id' => $child2->getRelationId(), 'label' => $child2->getRelationLabel()],
+            ['id' => $child->getRelationId(), 'label' => $child->getRelationLabel(), 'group' => $child->getRelationGroup()],
+            ['id' => $child2->getRelationId(), 'label' => $child2->getRelationLabel(), 'group' => $child->getRelationGroup()],
         ], RelatedCollection::availableChildren($parent)->flattenForSelect()->toArray());
     }
 }
