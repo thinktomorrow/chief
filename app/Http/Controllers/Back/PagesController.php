@@ -80,8 +80,6 @@ class PagesController extends Controller
      */
     public function update(PageUpdateRequest $request, $id)
     {
-        dd($request->all());
-
         $page = app(UpdatePage::class)->handle($id, $request->trans);
 
         return redirect()->route('back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');

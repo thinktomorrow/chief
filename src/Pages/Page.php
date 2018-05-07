@@ -53,4 +53,14 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
     }
+
+    public function getRelationId(): string
+    {
+        return $this->getMorphClass().'@'.$this->id;
+    }
+
+    public function getRelationLabel(): string
+    {
+        return $this->title;
+    }
 }

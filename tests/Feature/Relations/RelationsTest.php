@@ -2,6 +2,7 @@
 
 namespace Chief\Tests\Feature\Relations;
 
+use Chief\Common\Relations\RelatedCollection;
 use Chief\Common\Relations\Relation;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
@@ -138,27 +139,49 @@ class RelationsTest extends TestCase
     }
     
     /** @test */
-    function a_parent_or_child_can_return_a_composite_key()
+    function a_parent_or_child_can_return_a_relation_identifier()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
 
-        $this->assertEquals($parent->getMorphClass().'@'.$parent->id, $parent->getCompositeKey());
-        $this->assertEquals($child->getMorphClass().'@'.$child->id, $child->getCompositeKey());
+        $this->assertEquals($parent->getMorphClass().'@'.$parent->id, $parent->getRelationId());
+        $this->assertEquals($child->getMorphClass().'@'.$child->id, $child->getRelationId());
     }
 
     /** @test */
-    function all_related_children_of_parent_can_be_flattened_as_composite_keys_for_select()
+    function available_children_for_a_parent_can_be_listed_as_a_collection()
     {
+        config()->set('thinktomorrow.chief.relations.children',[
+            ChildFake::class,
+        ]);
+
         $parent = ParentFake::create();
         $child = ChildFake::create();
         $child2 = ChildFake::create();
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
-        dd(Relation::availableChildren($parent));
-        dd(Relation::availableChildren($parent)->flattenForSelect());
+        $this->assertInstanceOf(RelatedCollection::class, RelatedCollection::availableChildren($parent));
+        $this->assertEquals([$child->id, $child2->id], RelatedCollection::availableChildren($parent)->pluck('id')->toArray());
+    }
 
-        $this->assertInstanceOf(RelationCollection::class, Relation::availableChildren($parent));
+    /** @test */
+    function available_children_can_be_listed_for_a_select()
+    {
+        config()->set('thinktomorrow.chief.relations.children',[
+            ChildFake::class,
+        ]);
+
+        $parent = ParentFake::create();
+        $child = ChildFake::create();
+        $child2 = ChildFake::create();
+        $parent->adoptChild($child, ['sort' => 2]);
+        $parent->adoptChild($child2, ['sort' => 1]);
+
+        // Custom select listing for relations
+        $this->assertEquals([
+            ['id' => $child->getRelationId(), 'label' => $child->getRelationLabel()],
+            ['id' => $child2->getRelationId(), 'label' => $child2->getRelationLabel()],
+        ], RelatedCollection::availableChildren($parent)->flattenForSelect()->toArray());
     }
 }

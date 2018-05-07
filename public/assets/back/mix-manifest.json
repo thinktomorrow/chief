@@ -1,7 +1,9 @@
 {
-    "/js/main.js": "/js/main.js?id=635d11a0789caae7609f",
-    "/css/main.css": "/css/main.css?id=ab9162d56cad715f09b0",
+    "/js/main.js": "/js/main.js?id=f89bc0450326b14f3da3",
+    "/css/main.css": "/css/main.css?id=968cd2a41f33786b8e50",
+    "/js/vendors/redactor.js": "/js/vendors/redactor.js?id=91c2104fcda57518130f",
     "/js/native.js": "/js/native.js?id=4d6479b4873ab758a6bb",
     "/js/vendors/slim.kickstart.min.js": "/js/vendors/slim.kickstart.min.js?id=e5ef1948c4c668ba1188",
-    "/css/vendors/slim.min.css": "/css/vendors/slim.min.css?id=ef57932806aff4cdcc0c"
+    "/css/vendors/slim.min.css": "/css/vendors/slim.min.css?id=ef57932806aff4cdcc0c",
+    "/css/vendors/redactor.css": "/css/vendors/redactor.css?id=885d6679e2110b2e56bc"
 }

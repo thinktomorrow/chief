@@ -3,6 +3,7 @@
 namespace Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class Relation extends Model
 {
@@ -37,12 +38,6 @@ class Relation extends Model
         });
     }
 
-    public static function availableChildren(ActsAsParent $parent)
-    {
-        // Get from config all available children from parent if specific for this parent
-        // flatten 
-    }
-
     /**
      * Compile all relations into a flat list for select form field.
      * This includes a composite id made up of the type and id
@@ -61,8 +56,5 @@ class Relation extends Model
         ];
     }
 
-    public static function inflate(array $relations = [])
-    {
 
-    }
 }
