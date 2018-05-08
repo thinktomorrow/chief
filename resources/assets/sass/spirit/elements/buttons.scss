@@ -119,15 +119,12 @@ $colors: $color-primary $color-secondary $color-tertiary $color-white $color-suc
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
-    .dropdown{
-        float: left;
-        .btn{
-            border-left: none;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-top-right-radius: $default-border-radius;
-            border-bottom-right-radius: $default-border-radius;
-        }
+    .btn-group-last, .btn-group-last .btn{
+        border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: $default-border-radius;
+        border-bottom-right-radius: $default-border-radius;
     }
 
 }

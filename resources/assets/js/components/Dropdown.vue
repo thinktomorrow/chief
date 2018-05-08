@@ -82,8 +82,16 @@
                         this.triggerEl,
                         this.targetEl,
                         {
+                            modifiers: {
+                                preventOverflow: {
+                                    enabled: true,
+                                    padding: 10,
+                                    boundariesElement: 'viewport'
+                                },
+                            },
                             removeOnDestroy: false, // We need to keep our element
                             placement: 'bottom-start',
+
                         }
                     );
                 });

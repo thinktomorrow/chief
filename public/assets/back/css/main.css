@@ -3398,11 +3398,7 @@ button.btn,
   border-bottom-right-radius: 0;
 }
 
-.btn-group .dropdown {
-  float: left;
-}
-
-.btn-group .dropdown .btn {
+.btn-group .btn-group-last, .btn-group .btn-group-last .btn {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
