@@ -1,7 +1,7 @@
 <template>
     <dropdown>
-        <button :class="btn_class" slot="trigger" slot-scope="{ toggle }" @click="toggle">{{ btn_name }}</button>
-        <div class="dropdown-target-default">
+        <button :class="btn_class" slot="trigger" slot-scope="{ toggle }" @click="toggle" v-html="btn_name"></button>
+        <div class="dropdown-box">
             <slot></slot>
         </div>
     </dropdown>

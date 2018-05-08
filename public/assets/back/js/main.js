@@ -1701,21 +1701,51 @@ module.exports = {
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    created: function created() {
+        var _this = this;
+
+        Eventbus.$on('open-dropdown', function (id) {
+            if (_this.id == id) {
+                _this.toggle();
+            }
+        });
+        Eventbus.$on('close-dropdown', function (id) {
+            if (_this.id == id) {
+                _this.close();
+            }
+        });
+    },
     mounted: function mounted() {
+        var _this2 = this;
 
         // We assume that the component contains 3 child element where the first one
         // is the backdrop, the second trigger element and the last one the dropdown content itself
         this.triggerEl = this.$refs.parent.children[0];
         this.targetEl = this.$refs.parent.children[1];
+
+        // Emit the 'open-dropdown' event in case the dropdown is set to open on pageload
+        if (this.isActive === true) Eventbus.$emit('open-dropdown', this.id);
+
+        // Listen to keydown to close modal on escape
+        document.addEventListener("keydown", function (e) {
+            if (_this2.isActive && e.keyCode == 27) {
+                _this2.toggle();
+            }
+        });
+    },
+
+    props: {
+        active: { default: false, type: Boolean }
     },
     data: function data() {
         return {
             popper: null,
-            isActive: false,
+            isActive: this.active,
             isClosing: false, // Flag to check is dropdown is still in action of closing or not
             triggerEl: null,
             targetEl: null
@@ -1723,44 +1753,42 @@ module.exports = {
     },
 
     methods: {
-        toggle: function toggle() {
-
-            // Keep local state and only sync with our component state when
-            // we know for sure that the toggle action is validated.
-            var isActive = !this.isActive;
-
-            if (isActive) {
-                if (!this.popper && !this.isClosing) {
-                    this.isActive = isActive;
-                    this.createDropdownElement();
-                };
-            } else {
-                if (this.popper && !this.isClosing) {
-                    this.isActive = isActive;
-                    this.destroyDropdownElement();
-                }
+        open: function open() {
+            if (!this.popper && !this.isClosing) {
+                this.isActive = true;
+                this.createDropdownElement();
+            };
+        },
+        close: function close() {
+            if (this.popper && !this.isClosing) {
+                this.isActive = false;
+                this.destroyDropdownElement();
             }
         },
+        toggle: function toggle() {
+
+            !this.isActive ? this.open() : this.close();
+        },
         createDropdownElement: function createDropdownElement() {
-            var _this = this;
+            var _this3 = this;
 
             this.$nextTick(function () {
-                _this.popper = new __WEBPACK_IMPORTED_MODULE_0_popper_js__["a" /* default */](_this.triggerEl, _this.targetEl, {
+                _this3.popper = new __WEBPACK_IMPORTED_MODULE_0_popper_js__["a" /* default */](_this3.triggerEl, _this3.targetEl, {
                     removeOnDestroy: false, // We need to keep our element
                     placement: 'bottom-start'
                 });
             });
         },
         destroyDropdownElement: function destroyDropdownElement() {
-            var _this2 = this;
+            var _this4 = this;
 
             this.isClosing = true;
 
             this.$nextTick(function () {
                 setTimeout(function () {
-                    _this2.popper.destroy();
-                    _this2.popper = null;
-                    _this2.isClosing = false;
+                    _this4.popper.destroy();
+                    _this4.popper = null;
+                    _this4.isClosing = false;
                 }, 500);
             });
         }
@@ -29558,7 +29586,14 @@ var render = function() {
     "div",
     { ref: "parent" },
     [
-      _vm._t("trigger", null, { toggle: _vm.toggle }),
+      _vm.isActive
+        ? _c("div", {
+            staticClass: "dropdown-backdrop",
+            on: { click: _vm.close }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._t("trigger", null, { toggle: _vm.toggle, isActive: _vm.isActive }),
       _vm._v(" "),
       _c("transition", { attrs: { name: "fade" } }, [
         _c(
@@ -29972,23 +30007,16 @@ var render = function() {
           key: "trigger",
           fn: function(ref) {
             var toggle = ref.toggle
-            return _c(
-              "button",
-              { class: _vm.btn_class, on: { click: toggle } },
-              [_vm._v(_vm._s(_vm.btn_name))]
-            )
+            return _c("button", {
+              class: _vm.btn_class,
+              domProps: { innerHTML: _vm._s(_vm.btn_name) },
+              on: { click: toggle }
+            })
           }
         }
       ])
     },
-    [
-      _c(
-        "div",
-        { staticClass: "dropdown-target-default" },
-        [_vm._t("default")],
-        2
-      )
-    ]
+    [_c("div", { staticClass: "dropdown-box" }, [_vm._t("default")], 2)]
   )
 }
 var staticRenderFns = []

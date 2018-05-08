@@ -4,6 +4,7 @@ a.btn{
 }
 button.btn,
 .btn{
+    outline: none;
     padding: .625rem 1.25rem;
     display: inline-block;
     transition: $transition;
