@@ -14,18 +14,26 @@
                 <ul class="nav-items right">
                     <li><a class="nav-item" href="{{ route('back.settings.index') }}"><i class="icon icon-cog"></i></a></li>
 
-                    <li class="dropdown nav-dropdown">
-                        <a class="nav-item dropdown-toggle">
+                    <li class="dropdown ">
+                        <div class="dropdown">
+                            <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle ">
+                                <span>{{ admin()->firstname }}</span>
+                                <div class="dropdown-menu">
+                                    <a href="{{ route('back.logout') }}"><i class="icon-delete squished"></i> Log out</a>
+                                </div>
+                            </button>
+                        </div>
+                        {{-- <a class="nav-item dropdown-toggle">
                             <span>{{ admin()->firstname }}</span>
                         </a>
-                        {{--<div class="dropdown--content inset-s">--}}
-                        {{--<!-- ITEMS -->--}}
-                        {{--<ul>--}}
-                        {{--<li>--}}
-                        {{--<a href="{{ route('back.logout') }}"><i class="icon-delete squished"></i> Log out</a>--}}
-                        {{--</li>--}}
-                        {{--</ul>--}}
-                        {{--</div>--}}
+                        <div class="dropdown-menu">
+                            <!-- ITEMS -->
+                            <ul>
+                                <li>
+                                    <a href="{{ route('back.logout') }}"><i class="icon-delete squished"></i> Log out</a>
+                                </li>
+                            </ul>
+                        </div> --}}
                     </li>
                 </ul>
             </div>

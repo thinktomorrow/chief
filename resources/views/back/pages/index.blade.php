@@ -7,7 +7,7 @@
     <button @click="showModal('delete-page')" class="btn btn-o-tertiary">
       <i class="icon icon-trash"></i>
       Verwijder pagina
-  </button>
+    </button>
     <a href="{{ route('back.pages.create') }}" class="btn btn-primary">
       <i class="icon icon-plus"></i>
       Voeg een pagina toe
