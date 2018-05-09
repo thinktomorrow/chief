@@ -1,7 +1,7 @@
 <section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Site titel</h2>
-        <p class="caption">Titel zoals het in search engines (o.a. google) wordt weergegeven.</p>
+        <p class="caption">Titel van de website.</p>
     </div>
     <div class="formgroup-input column-8">
         <div class="stack-s">
@@ -12,7 +12,7 @@
 <section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Korte omschrijving</h2>
-        <p class="caption">Omschrijving zoals het in search engines (o.a. google) wordt weergegeven.</p>
+        <p class="caption">Omschrijving van de website.</p>
     </div>
     <div class="formgroup-input column-8">
         <div class="stack-s">
