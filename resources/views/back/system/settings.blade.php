@@ -15,19 +15,19 @@
             @include('back.system._partials.company')
         </tab>
         <tab name="Social">
-            // Content of third tabpanel...
+            @include('back.system._partials.social')
         </tab>
         <tab name="Social cards">
-            // Content of third tabpanel...
+            @include('back.system._partials.socialcards')
         </tab>
         <tab name="E-mail">
-            // Content of third tabpanel...
+            @include('back.system._partials.mail')
         </tab>
         <tab name="Analytics">
-            // Content of third tabpanel...
+            @include('back.system._partials.analytics')
         </tab>
         <tab name="SEO">
-            // Content of third tabpanel...
+            @include('back.system._partials.seo')
         </tab>
     </tabs>
 

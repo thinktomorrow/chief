@@ -29,6 +29,10 @@ a{
     }
 }
 
+.clear-margin{
+    margin: 0 !important;
+}
+
 // SELECTION COLORS
 ::selection{
     background-color: $color-secondary;

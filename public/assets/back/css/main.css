@@ -2160,6 +2160,10 @@ a {
   color: #212631;
 }
 
+.clear-margin {
+  margin: 0 !important;
+}
+
 ::-moz-selection {
   background-color: #435fa8;
   color: #ffffff;
@@ -3519,6 +3523,14 @@ a {
   border: 1px solid transparent;
   border-radius: 5px;
   overflow: hidden;
+}
+
+.panel .card-image {
+  height: 250px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .panel-default {

@@ -28,7 +28,7 @@
     <div class="formgroup-input column-7">
         <div class="input-group">
             <label class="custom-file">
-                <input type="file" id="file">
+                <input type="file" id="logo">
                 <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
             </label>
         </div>
@@ -42,7 +42,7 @@
     <div class="formgroup-input column-7">
         <div class="input-group">
             <label class="custom-file">
-                <input type="file" id="file">
+                <input type="file" id="favicon">
                 <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
             </label>
         </div>
@@ -55,14 +55,7 @@
     </div>
     <div class="formgroup-input column-8">
         <div class="stack">
-            <chief-multiselect
-            name="paginas"
-            :options="[{'label': 'paginas', 'values': ['pagina 1','pagina 2','pagina 3']}]"
-            :multiple="true"
-            grouplabel="label"
-            groupvalues="values"
-            placeholder="..."
-            >
+            <chief-multiselect name="startpage" :options="['Home','Diensten', 'Artikels']">
             </chief-multiselect>
         </div>
     </div>

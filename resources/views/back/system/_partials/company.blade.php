@@ -43,7 +43,8 @@
             <div class="row gutter">
                 <div class="column">
                     <label for="company-country">Land</label>
-                    <input type="text" name="company-country" id="company-country" class="input inset-s" placeholder="Land">
+                    <chief-multiselect name="company-country" :options="['België','Nederland', 'Frankrijk','Duitsland']">
+                    </chief-multiselect>
                 </div>
             </div>
         </div>
