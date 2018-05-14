@@ -5,7 +5,7 @@
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta name="google" content="notranslate" />
-    <meta http-equiv="Content-Language" content="nl_BE" />
+    <meta http-equiv="Content-Language" content="nl-BE" />
     <title>Chief • @yield('page-title', 'Admin')</title>
     <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,9 +24,9 @@
 </head>
 
 <body>
-@include('back._layouts._nav.nav')
 
 <main id="main">
+    @include('back._layouts._nav.nav')
     @yield('header')
 
     <section id="content" class="container">
@@ -38,16 +38,13 @@
     @stack('sidebar')
     @stack('custom-components')
 
-    <!-- This slot content that points to the <portal-target> with name 'destination' will be rendered here -->
-    <portal-target name="backdrops"></portal-target>
-
 </main>
 
 <!--Load redactor script and required dependency jquery -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
-<script src="{{ cached_asset('assets/back/js/vendors/redactor.js', 'back') }}"></script>
+<script src="{{ cached_asset('/assets/back/js/vendors/redactor.js', 'back') }}"></script>
 <script src="{{ cached_asset('/assets/back/js/main.js','back') }}"></script>
 
 @stack('custom-scripts')

@@ -15,7 +15,7 @@ span.sans-serif:after{
 
 hr{
     border-top: 0;
-    border-bottom: 1px solid $color-subtle;
+    border-bottom: 1px solid $color-border;
 }
 .relative{
     position: relative;
@@ -24,9 +24,26 @@ hr{
 // LINK COLORS
 a{
     color: $color-link;
-    &:hover{
+    text-decoration: none;
 
+    &:hover{
+        color: darken($color-link, 8%);
     }
+}
+
+.--link-with-bg {
+    white-space: nowrap;
+    border-radius: $default-border-radius;
+    &:hover{
+        color: darken($color-link, 8%);
+        background-color: lighten($color-link, 50%)
+    }
+}
+
+.divider{
+    margin: 0;
+    border-top: 1px dotted $color-subtle;
+    width: 100%;
 }
 
 // SELECTION COLORS

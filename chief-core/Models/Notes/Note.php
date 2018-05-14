@@ -12,7 +12,7 @@ use Optiphar\Site\Notes\NoteReminder;
 
 class Note extends Model implements TranslatableContract
 {
-    use BaseTranslatable, Translatable, Chief\Traits\Publishable;
+    use BaseTranslatable, Translatable, Publishable;
 
     public $table = 'notes';
     public $translatedAttributes = ['content'];

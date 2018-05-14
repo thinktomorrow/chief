@@ -47,11 +47,7 @@
 
 .modal-footer{
     background-color: lighten($color-subtle,14%);
-    border-top: 1px solid $color-subtle;
-
-    a{
-        color: inherit;
-    }
+    border-top: none;
 }
 
 .modal-close {

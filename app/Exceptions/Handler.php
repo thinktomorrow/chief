@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Chief\Authorization\Exceptions\UnauthorizedRequestException;
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
@@ -49,7 +51,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof AuthorizationException){
+            return $this->unauthorized($request, $exception);
+        }
+
         return parent::render($request, $exception);
+    }
+
+    protected function unauthorized($request, AuthorizationException $exception)
+    {
+        return redirect()->route('back.dashboard')
+                         ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
+
     }
 
     /**

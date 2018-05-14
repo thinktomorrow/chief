@@ -51,7 +51,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_invalid_login_credentials_keeps_you_out()
     {
-        factory(User::class)->create([
+        factory(User::class)->make([
             'email' => 'foo@example.com'
         ]);
 
@@ -61,7 +61,7 @@ class AdminLoginTest extends TestCase
             'password' => 'xxx',
         ]);
 
-        $this->assertNull(Auth::user());
+        $this->assertNull(Auth::guard('admin')->user());
         $this->assertTrue(session()->has('errors'));
         $response->assertRedirect('/');
     }
@@ -71,11 +71,11 @@ class AdminLoginTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $admin = factory(User::class)->create();
-        $response = $this->actingAs($admin)->get('/admin');
+        $admin = factory(User::class)->make();
+        $response = $this->actingAs($admin, 'admin')->get('/admin');
 
         $response->assertStatus(200);
-        $this->assertInstanceOf(User::class, Auth::user());
+        $this->assertInstanceOf(User::class, Auth::guard('admin')->user());
         $this->assertFalse(session()->has('errors'));
     }
 
@@ -87,7 +87,7 @@ class AdminLoginTest extends TestCase
             'password' => bcrypt('foobar'),
         ]);
 
-        $resp = $this->get(route('back.articles.index'));
+        $resp = $this->get(route('back.pages.index'));
         $resp->assertRedirect(route('back.login'));
 
         $response = $this->post(route('back.login.store'),[
@@ -96,25 +96,25 @@ class AdminLoginTest extends TestCase
         ]);
 
         $this->assertTrue(Auth::guard('admin')->check());
-        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('back.articles.index'));
+        $response->assertRedirect(route('back.pages.index'));
     }
 
     /** @test */
     public function it_can_log_you_out()
     {
-        $admin = factory(User::class)->create();
+        $admin = factory(User::class)->make();
 
-        Auth::login($admin);
+        Auth::guard('admin')->login($admin);
 
-        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
 
         $response = $this->get(route('back.logout'));
 
         $response->assertRedirect('/');
 
-        $this->assertNull(Auth::user());
+        $this->assertNull(Auth::guard('admin')->user());
     }
 
     /** @test */
@@ -156,7 +156,7 @@ class AdminLoginTest extends TestCase
 
         $response->assertRedirect(route('back.dashboard'));
 
-        Auth::logout();
+        Auth::guard('admin')->logout();
 
         $response = $this->post(route('back.login.store'),[
             'email'     => 'foo@example.com',
@@ -171,13 +171,13 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
-        $admin = factory(User::class)->create([
+        $admin = factory(User::class)->make([
             'email'     => 'foo@example.com'
         ]);
 
-        Auth::login($admin);
+        Auth::guard('admin')->login($admin);
 
-        $this->assertEquals($admin->id, Auth::user()->id);
+        $this->assertEquals($admin->id, Auth::guard('admin')->user()->id);
 
         $response = $this->post(route('back.login.store'),[
             'email' => 'foo@example.com',
@@ -200,7 +200,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     function it_can_access_admin_via_helper()
     {
-        $admin = factory(User::class)->create([
+        $admin = factory(User::class)->make([
             'email'     => 'foo@example.com'
         ]);
 

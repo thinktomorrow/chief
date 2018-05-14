@@ -1,13 +1,5 @@
-@if(count( $_messages = Session::get('messages')) > 0)
-
-    <div class="alerts alert-remove">
-
-        @foreach($_messages as $type => $_message)
-
-            <div class="alert alert-{{$type}} alert-dismissable">{!! $_message !!}</div>
-
-        @endforeach
-
-    </div>
-
+@if(count( $_messages = Session::get('messages', [])) > 0)
+    @foreach($_messages as $type => $_message)
+        <mkiha-alert type="{{$type}}" body='{!! $_message !!}'></mkiha-alert>
+    @endforeach
 @endif

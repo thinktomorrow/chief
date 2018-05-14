@@ -5,14 +5,11 @@
  */
 require('./vendors');
 
-import PortalVue from 'portal-vue';
 import Errors from './utilities/Errors';
 import Form from './utilities/Form';
 
 window.Errors = Errors;
 window.Form = Form;
-
-Vue.use(PortalVue);
 
 /** Chief components */
 Vue.component('dropdown', require('./components/Dropdown.vue').default);

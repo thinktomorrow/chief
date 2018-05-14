@@ -1,8 +1,15 @@
+.top-nav{
+  z-index: $z-index-nav;
+}
+
 /** because of the extend cascading bug, we must declare our padding separate */
-.top-nav .nav-item{ @extend .squished; }
+.top-nav .nav-item{
+  @extend .squished;
+}
 
 .nav-item{
   display:block;
+  cursor:pointer;
   @extend .text-black;
   @extend .--bottomline;
   text-decoration:none;
@@ -14,7 +21,7 @@
 
 .top-nav, .header-nav {
 
-  border-bottom:1px solid $color-subtle;
+  border-bottom:1px solid $color-border;
   position:relative;
 
   li {
@@ -34,7 +41,7 @@
  */
 .header-nav{
 
-  border-bottom:1px solid $color-subtle;
+  border-bottom:1px solid $color-border;
 
   ul{
     justify-content: left;
@@ -42,7 +49,7 @@
 
   a{
     @extend .font-s;
-    @extend .inset-s;
+    @extend .stretched;
     &:after{
       background-color: $color-primary;
     }

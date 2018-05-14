@@ -30,4 +30,14 @@ trait Publishable
         $this->published = 0;
         $this->save();
     }
+
+    public static function getAllPublished()
+    {
+        return self::published()->get();
+    }
+
+    public function scopeSortedByPublished($query)
+    {
+        return $query->orderBy('published', 'DESC');
+    }
 }

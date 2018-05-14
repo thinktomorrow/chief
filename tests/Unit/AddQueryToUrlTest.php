@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use Chief\Tests\TestCase;
 
 class AddQueryToUrlTest extends TestCase
 {

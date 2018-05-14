@@ -3,6 +3,15 @@ $toggle-size: 1.5rem;
 .custom-indicators{
     line-height: $toggle-size;
 }
+.custom-checkbox{
+    border-radius: $default-border-radius;
+    &::before{
+        content: "";
+        color: $color-white;
+        font-family: 'spirit';
+        line-height: 1;
+    }
+}
 .custom-checkbox,
 .custom-radiobutton{
     display: block;
@@ -19,7 +28,7 @@ $toggle-size: 1.5rem;
         display: block;
         width: 100%;
         height: 100%;
-        background: transparent;
+        background: $color-white;
         font-size: 0rem;
         text-align: center;
         line-height: $toggle-size;
@@ -44,16 +53,25 @@ input[type=checkbox]{
 
 .custom-indicators.disabled{
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.6;
+    .custom-radiobutton, .custom-checkbox{
+        background-color: $color-subtle;
+    }
 }
 
-input[type=radio]:checked ~ .custom-radiobutton,
+input[type=radio]:checked ~ .custom-radiobutton{
+    border-color: $color-primary;
+    border-width: 5px;
+}
+
 input[type=checkbox]:checked ~ .custom-checkbox{
-    border-radius: 50%;
     background-color: $color-primary;
     border-color: $color-primary;
+    &::before{
+        content: "\E91F";
+        font-family: 'spirit';
+    }
 }
-
 // SWITCHES
 
 .switch {
