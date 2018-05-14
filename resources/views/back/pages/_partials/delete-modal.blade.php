@@ -1,7 +1,7 @@
 <modal id="delete-article" class="large-modal">
     <div v-cloak>
         <div class="column-12">
-            <h2 class="formgroup-label">Super. <br>Ben je zeker. 👍</h2>
+            <h2 class="formgroup-label">Ok. Tijd om op te ruimen. <br>Ben je zeker. 👍</h2>
         </div>
     </div>
     <div slot="footer">
