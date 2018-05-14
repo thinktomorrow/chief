@@ -1,5 +1,6 @@
 // BUTTONS
 .btn{
+    outline: none;
     padding: $space-s $space-m;
     display: inline-block;
     text-decoration: none;
@@ -110,22 +111,20 @@ $buttonColors: (
 }
 
 // SPLIT BUTTONS
+// Buttons are not floated to allow for flex behaviour but this means that there should be no
+// space between the button elements to avoid an empty space in between.
 .btn-group{
     display: inline-block;
     .btn{
-        float: left;
         line-height: 1.5;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
-    .dropdown{
-        float: left;
-        .btn{
-            border-left: none;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            border-top-right-radius: $default-border-radius;
-            border-bottom-right-radius: $default-border-radius;
-        }
+    .btn-group-last, .btn-group-last .btn{
+        border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: $default-border-radius;
+        border-bottom-right-radius: $default-border-radius;
     }
 }

@@ -10,7 +10,6 @@
                 {{ $extra ??  '' }}
             </div>
             <div class="text-right center-y">
-                {{ $actionbuttons ??  '' }}
                 {{ $slot }}
             </div>
         </div>
