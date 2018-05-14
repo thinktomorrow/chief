@@ -1,9 +1,9 @@
 @extends('back._layouts.master')
 
-@section('page-title', 'paginas')
+@section('page-title', "pagina's")
 
 @component('back._layouts._partials.header')
-    @slot('title', 'Jouw paginas')
+    @slot('title', "Jouw pagina's")
     <button @click="showModal('delete-page')" class="btn btn-o-tertiary">
       <i class="icon icon-trash"></i>
       Verwijder pagina
@@ -36,21 +36,21 @@
                             {{ teaser($page->content,150,'...') }}
                         </div>
                         <div>
-                            <span class="text-subtle">
-                                <a href="{{ route('back.pages.edit',$page->getKey()) }}">Aanpassen</a>
+                            <span class="text-subtle stack">
+                                <a href="{{ route('back.pages.edit',$page->getKey()) }}" class="btn btn-link">Aanpassen</a>
                             </span>
                         </div>
                         <span class="text-subtle">Laatst aangepast op: {{ $page->updated_at->format('d/m/Y') }}</span>
                     </div>
                     <div class="center-y column">
-                        <div class="dropdown">
+                        <div class="inline-group">
                             <form action="{{ route('back.pages.publish') }}" method="POST">
                                 {{ csrf_field() }}
-                                <div class="publishMedia ">
+                                <div class="publishMedia">
                                     <div class="publishActions-{{$page->id}} hidden">
                                         <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
                                         <input type="hidden" name="id" value="{{ $page->id }}">
-                                        <button type="submit" class="btn btn-icon btn-{{ $page->isPublished() ? 'secondary' : 'primary' }}">{{ $page->isPublished() ? 'online' : 'draft' }} <i class="icon icon-{{ $page->isPublished() ? 'clock' : 'check' }}"></i>  </button>
+                                        <button type="submit" class="btn btn-icon btn-subtle">Publiceer </button>
                                     </div>
                                 </div>
                             </form>
@@ -90,7 +90,7 @@
                                 <div class="dropdown-menu">
                                     <div><a href="{{ route('back.pages.edit',$page->getKey()) }}" class="btn text-secondary">Aanpassen</a></div>
                                     <div><a @click="showModal('delete-page')">Archiveer pagina</a></div>
-                                    <div>
+                                    <div >
                                         <form action="{{ route('back.pages.publish') }}" method="POST">
                                             {{ csrf_field() }}
                                             <div class="publishMedia ">
