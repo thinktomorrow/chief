@@ -41,7 +41,7 @@ class ResetAdminPassword extends Notification implements ShouldQueue
         return (new MailMessage)
             ->from(config('thinktomorrow.chief.contact.email'))
             ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', route('auth.password.reset', $this->token))
+            ->action('Reset Password', route('back.password.reset', $this->token))
             ->line('If you did not request a password reset, no further action is required.');
     }
 
