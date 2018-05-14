@@ -10,6 +10,9 @@
         background-size: cover;
         background-position: center;
     }
+    &.panel-card{
+        max-width: 500px;
+    }
 }
 
 $panel-name: default primary secondary success warning error information;

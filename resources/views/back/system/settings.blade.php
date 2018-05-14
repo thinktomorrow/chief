@@ -14,20 +14,20 @@
         <tab name="Bedrijfsgegevens">
             @include('back.system._partials.company')
         </tab>
+        <tab name="E-mail">
+            @include('back.system._partials.mail')
+        </tab>
         <tab name="Social">
             @include('back.system._partials.social')
         </tab>
         <tab name="Social cards">
             @include('back.system._partials.socialcards')
         </tab>
-        <tab name="E-mail">
-            @include('back.system._partials.mail')
+        <tab name="SEO">
+            @include('back.system._partials.seo')
         </tab>
         <tab name="Analytics">
             @include('back.system._partials.analytics')
-        </tab>
-        <tab name="SEO">
-            @include('back.system._partials.seo')
         </tab>
     </tabs>
 

@@ -1,4 +1,4 @@
-<section class="row formgroup gutter">
+<section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">SEO Titel</h2>
     </div>
@@ -6,7 +6,7 @@
         <input type="text" name="seo-title" id="seo-title" class="input inset-s" placeholder="Seo titel">
     </div>
 </section>
-<section class="row formgroup gutter">
+<section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">SEO Omschrijving</h2>
     </div>
@@ -14,7 +14,7 @@
         <textarea name="seo-description" id="seo-description" class="redactor input inset-s" cols="10" rows="5"></textarea>
     </div>
 </section>
-<section class="row formgroup gutter">
+<section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">SEO Sleutelwoorden</h2>
     </div>
@@ -30,7 +30,7 @@
 </div>
 </section>
 
-<section class="row formgroup gutter">
+<section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">SEO Afbeelding</h2>
     </div>

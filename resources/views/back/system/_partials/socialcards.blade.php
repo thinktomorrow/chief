@@ -7,29 +7,35 @@
     </div>
     <div class="formgroup-input column-8 relative">
         <label for="facebook-url">URL</label>
-        <input type="text" name="facebook-url" id="facebook-url" class="input inset-s" placeholder="URL">
-
-        <div class="stack-s">
+        <div class="row">
+            <div class="column-10">
+                <input type="text" name="facebook-url" id="facebook-url" class="input inset-s" placeholder="URL">
+            </div>
+            <div class="column-2 center-y">
+                <a href="#" class="btn text-primary font-s"><span class="icon icon-small icon-refresh-cw inline-xs"></span>Check</a>
+            </div>
+        </div>
+        <div class="stack">
             <label for="facebook-title">Titel</label>
             <input type="text" name="facebook-title" id="facebook-title" class="input inset-s" placeholder="Titel">
         </div>
-        <div class="stack-s relative">
+        <div class="stack relative">
             <label for="facebook-description">Omschrijving</label>
             <textarea class="redactor inset-s" name="facebook-description" id="facebook-description" cols="10" rows="5"></textarea>
         </div>
-        <div class="stack-s">
+        <div class="stack">
             <label for="facebook-type">Type</label>
             <chief-multiselect name="facebook-type" :options="['website', 'article', 'book', 'books.author', 'books.book', 'books.genre', 'business.business', 'fitness.course', 'game.achievement', 'music.album',  'music.playlist', 'music.radio_station', 'music.song', 'place', 'product', 'product.group', 'product.item', 'profile', 'restaurant.menu', 'restaurant.menu_item', 'restaurant.menu_section', 'restaurant.restaurant', 'video.episode', 'video.movie', 'video.other', 'video.tv_show']">
             </chief-multiselect>
         </div>
-        <div class="stack-s">
+        <div class="stack">
             <label>Afbeelding</label>
             <label class="custom-file">
                 <input type="file" id="facebook-image">
                 <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
             </label>
         </div>
-        <div class="panel --border stack-xl inset">
+        <div class="panel panel-card --border stack-xl inset">
             <div class="row gutter-s">
                 <div class="column-1 center-center --border">
                     <span class="icon icon-facebook icon-2x text-information"></span>
@@ -66,28 +72,34 @@
     </div>
     <div class="formgroup-input column-8 relative">
         <label for="facebook-url">URL</label>
-        <input type="text" name="twitter-url" id="twitter-url" class="input inset-s" placeholder="URL">
-
-        <div class="stack-s">
+        <div class="row">
+            <div class="column-10">
+                <input type="text" name="twitter-url" id="twitter-url" class="input inset-s" placeholder="URL">
+            </div>
+            <div class="column-2 center-y">
+                <a href="#" class="btn text-primary font-s"><span class="icon icon-small icon-refresh-cw inline-xs"></span>Check</a>
+            </div>
+        </div>
+        <div class="stack">
             <label for="twitter-title">Titel</label>
             <input type="text" name="twitter-title" id="twitter-title" class="input inset-s" placeholder="Titel">
         </div>
-        <div class="stack-s relative">
+        <div class="stack relative">
             <label for="twitter-description">Omschrijving</label>
             <textarea class="redactor inset-s" name="twitter-description" id="twitter-description" cols="10" rows="5"></textarea>
         </div>
-        <div class="stack-s">
+        <div class="stack">
             <label for="twitter-creator">Gebruikersnaam</label>
             <input type="text" name="twitter-creator" id="twitter-creator" class="input inset-s" placeholder="Gebruikersnaam">
         </div>
-        <div class="stack-s">
+        <div class="stack">
             <label>Afbeelding</label>
             <label class="custom-file">
                 <input type="file" id="twitter-image">
                 <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
             </label>
         </div>
-        <div class="panel --border stack-xl inset">
+        <div class="panel panel-card --border stack-xl inset">
             <div class="row gutter-s">
                 <div class="column-1 center-center --border">
                     <span class="icon icon-twitter icon-2x text-information"></span>

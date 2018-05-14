@@ -2093,6 +2093,11 @@ html, body {
  | Meestal gebruikt voor hover states e.d.
  |
  */
+/*
+ * ----------------------------------------------------------------
+ * Z-index mappings
+ * ----------------------------------------------------------------
+ */
 h1, h2, h3, h4, h5 {
   font-family: "Quicksand";
   font-weight: 700;
@@ -2158,10 +2163,31 @@ hr {
 
 a {
   color: #212631;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #111319;
+}
+
+.\--link-with-bg {
+  white-space: nowrap;
+  border-radius: 5px;
+}
+
+.\--link-with-bg:hover {
+  color: #111319;
+  background-color: #98a2b9;
 }
 
 .clear-margin {
   margin: 0 !important;
+}
+
+.divider {
+  margin: 0;
+  border-top: 1px dotted #b0b0b0;
+  width: 100%;
 }
 
 ::-moz-selection {
@@ -2982,6 +3008,7 @@ a {
 }
 
 .btn {
+  outline: none;
   padding: 0.75rem 1.5rem;
   display: inline-block;
   text-decoration: none;
@@ -3328,17 +3355,12 @@ a {
 }
 
 .btn-group .btn {
-  float: left;
   line-height: 1.5;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.btn-group .dropdown {
-  float: left;
-}
-
-.btn-group .dropdown .btn {
+.btn-group .btn-group-last, .btn-group .btn-group-last .btn {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -3531,6 +3553,10 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.panel.panel-card {
+  max-width: 500px;
 }
 
 .panel-default {
@@ -4088,79 +4114,6 @@ table .btn ~ .btn {
   padding: 0.75rem 0;
 }
 
-.dropdown {
-  position: relative;
-  z-index: 1;
-}
-
-.dropdown .dropdown-menu {
-  -webkit-transition: all 150ms linear;
-  transition: all 150ms linear;
-  margin-top: -20px;
-  opacity: 0;
-  visibility: hidden;
-  display: block;
-  text-align: left;
-}
-
-.dropdown .dropdown-menu.open {
-  opacity: 1;
-  visibility: visible;
-  margin-top: 1px;
-}
-
-.dropdown:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  margin-top: 1px;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 2;
-  padding-left: 0;
-  float: left;
-  min-width: 160px;
-  -webkit-background-clip: padding-box;
-  border: 1px solid #dadada;
-  background-color: #ffffff;
-  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-
-.dropdown-menu div, .dropdown-menu li {
-  width: 100%;
-}
-
-.dropdown-menu div.dropdown-header, .dropdown-menu li.dropdown-header {
-  color: #b0b0b0;
-  font-size: 0.750em;
-  padding: 0.75em 2em;
-}
-
-.dropdown-menu div a, .dropdown-menu li a {
-  display: block;
-  font-size: 0.875em;
-  text-decoration: none;
-  padding: 0.75em 2em;
-  line-height: 1.5;
-  color: #333;
-  white-space: nowrap;
-}
-
-.dropdown-menu div a:hover, .dropdown-menu li a:hover {
-  color: #14c8a7;
-  background-color: #dffcf6;
-}
-
-.dropdown-menu div.divider, .dropdown-menu li.divider {
-  margin: 0;
-  border-top: 1px dotted #b0b0b0;
-  width: 100%;
-}
-
 .tabs-nav {
   border-bottom: 1px solid #dadada;
 }
@@ -4384,6 +4337,27 @@ table .btn ~ .btn {
   margin-left: -11px;
   background-color: #fdfdfd;
   z-index: 1;
+}
+
+.dropdown-box {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  margin-top: 0.375rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  overflow: hidden;
+  text-align: left;
+  -webkit-box-shadow: 0 16px 26px -10px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 16px 26px -10px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-backdrop {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: transparent;
 }
 
 textarea,
@@ -4837,6 +4811,15 @@ select {
   height: 2px;
 }
 
+.fade-enter-active, .fade-leave-active {
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .brand-logo {
   max-width: 200px;
   max-height: 75px;
@@ -4851,9 +4834,14 @@ select {
   height: 100%;
 }
 
+.top-nav {
+  z-index: 12;
+}
+
 /** because of the extend cascading bug, we must declare our padding separate */
 .nav-item {
   display: block;
+  cursor: pointer;
   text-decoration: none;
 }
 

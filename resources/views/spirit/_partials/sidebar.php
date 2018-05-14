@@ -38,6 +38,7 @@
         <div class="nav__group stack-s">
             <span class="nav__head">Components</span>
             <ul>
+                <li class="nav__item"><a href="/spirit/components/dropdown">Dropdown</a></li>
                 <li class="nav__item"><a href="/spirit/components/tabs">Tabs</a></li>
                 <li class="nav__item"><a href="/spirit/components/modal">Modal</a></li>
                 <li class="nav__item"><a href="/spirit/components/sidebar">Sidebar</a></li>

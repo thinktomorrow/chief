@@ -4,16 +4,12 @@
 
 @component('back._layouts._partials.header')
     @slot('title', 'Nieuw pagina')
-        <div class="center-y right inline-group">
-            <div class="btn-group">
-                <button @click="showModal('publication-now-page')" type="button" class="btn btn-primary">Opslaan</button>
-            </div>
-        </div>
+    <button data-submit-form="createForm" type="button" class="btn btn-primary">Opslaan</button>
 @endcomponent
 
 @section('content')
 
-	<form method="POST" action="{{ route('back.pages.store') }}" enctype="multipart/form-data" role="form">
+	<form id="createForm" method="POST" action="{{ route('back.pages.store') }}" enctype="multipart/form-data" role="form">
 		{{ csrf_field() }}
 
 		@include('back.pages._form')

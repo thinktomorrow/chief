@@ -1,29 +1,22 @@
 <section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Site titel</h2>
-        <p class="caption">Titel van de website.</p>
     </div>
     <div class="formgroup-input column-8">
-        <div class="stack-s">
-            <input type="text" name="site-name" id="site-name" class="input inset-s" placeholder="Site naam">
-        </div>
+        <input type="text" name="site-name" id="site-name" class="input inset-s" placeholder="Site titel">
     </div>
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Korte omschrijving</h2>
-        <p class="caption">Omschrijving van de website.</p>
     </div>
     <div class="formgroup-input column-8">
-        <div class="stack-s">
-            <textarea class="redactor inset-s" name="description" id="description" cols="10" rows="5"></textarea>
-        </div>
+        <textarea class="redactor inset-s" name="description" id="description" cols="10" rows="5"></textarea>
     </div>
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Logo</h2>
-        <p class="caption">Upload hier het logo.</p>
     </div>
     <div class="formgroup-input column-7">
         <div class="input-group">
@@ -37,7 +30,6 @@
 <section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Favicon</h2>
-        <p class="caption">Upload hier de favicon.</p>
     </div>
     <div class="formgroup-input column-7">
         <div class="input-group">
@@ -48,15 +40,13 @@
         </div>
     </div>
 </section>
-<section class="row formgroup stack gutter-l">
+<section class="row formgroup gutter-xs">
     <div class="column-4">
         <h2 class="formgroup-label">Startpagina</h2>
-        <p class="caption">Kies hier wat de landingspagina moet zijn van de website.</p>
+        <p class="caption">Kies hier de landingspagina van de website.</p>
     </div>
     <div class="formgroup-input column-8">
-        <div class="stack">
-            <chief-multiselect name="startpage" :options="['Home','Diensten', 'Artikels']">
-            </chief-multiselect>
-        </div>
+        <chief-multiselect name="startpage" :options="['Home', 'Diensten', 'Artikels']">
+        </chief-multiselect>
     </div>
 </section>
