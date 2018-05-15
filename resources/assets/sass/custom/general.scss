@@ -97,5 +97,5 @@
 .sticky-bar{
     background-color: $color-white;
     z-index: $z-index-header; // Allow for proper stickyness above redactor toolbar
-    border-bottom: 1px solid darken($color-white,5%);
+    border-bottom: 1px solid $color-border;
 }

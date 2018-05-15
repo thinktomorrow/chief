@@ -2154,7 +2154,7 @@ span.sans-serif:after {
 
 hr {
   border-top: 0;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 1px dotted #dadada;
 }
 
 .relative {
@@ -5100,7 +5100,7 @@ select {
 .sticky-bar {
   background-color: #ffffff;
   z-index: 11;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid #dadada;
 }
 
 /* product thumbs and image uploads */
