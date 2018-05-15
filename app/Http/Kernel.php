@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\AuthenticateSuperadmin;
 use App\Http\Middleware\Honeypot;
 use App\Http\Middleware\OptimizeImages;
+use App\Http\Middleware\ValidateInvite;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -73,6 +74,7 @@ class Kernel extends HttpKernel
         'permission'        => \App\Http\Middleware\PermissionMiddleware::class,
         'optimizeImages'    => OptimizeImages::class,
         'honeypot'          => Honeypot::class,
+        'validate-invite'   => ValidateInvite::class,
 
         // TODO: should be replaced with proper role
         'squanto.developer' => \Thinktomorrow\Squanto\Manager\Http\Middleware\Developer::class,

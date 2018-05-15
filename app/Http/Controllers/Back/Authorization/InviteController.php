@@ -4,56 +4,32 @@ namespace App\Http\Controllers\Back\Authorization;
 
 use App\Http\Controllers\Controller;
 use Chief\Authorization\Role;
-use Chief\Users\Invites\Application\InviteUser;
+use Chief\Users\Invites\Application\AcceptInvite;
+use Chief\Users\Invites\Invitation;
 use Chief\Users\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class InviteController extends Controller
 {
-    public function index()
+    public function __construct()
     {
-        $users = User::all();
-        return view('back.users.index')->with('users', $users);
+        $this->middleware(['validate-invite']);
     }
 
-    /**
-     * Show the invite form
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function accept(Request $request)
     {
-        $this->authorize('create-user');
+        $invitation = Invitation::findByToken($request->token);
 
-        return view('back.authorization.users.create', [
-            'roles'=>Role::all()
-        ]);
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' =>  'required|email|unique:users',
-            'roles' => 'required|array',
-        ]);
+        app(AcceptInvite::class)->handle($invitation);
 
-        $user = User::create(
-            $request->only(['firstname', 'lastname', 'email'])
-        );
+        if(is_null($invitation->invitee->password)) {
+            return redirect()->route('back.password.edit');
+        }
 
-        $user->assignRole($request->get('roles', []));
+        // Log user into the system and proceed to start page
+        auth()->guard('admin')->login($invitation->invitee);
 
-        app(InviteUser::class)->handle($user, auth()->guard('admin')->user());
-
-        return redirect()->route('back.users.index')
-            ->with('messages.success', 'User successfully added.');
+        return redirect()->route('back.getting-started');
     }
     /**
      * Display the specified resource.
@@ -122,11 +98,11 @@ class UserController extends Controller
     }
 
     public function publish($user, Request $request){
-      $user = User::findOrFail($user);
-      $user->status = ($request->publishAccount == 'on' ? 'Active' : 'Blocked');
-      $user->save();
+        $user = User::findOrFail($user);
+        $user->status = ($request->publishAccount == 'on' ? 'Active' : 'Blocked');
+        $user->save();
 
-      return redirect()->back();
+        return redirect()->back();
 
     }
 }

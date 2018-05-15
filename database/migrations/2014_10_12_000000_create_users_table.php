@@ -19,9 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->string('email')->unique();
             $table->string('password')->nullable();
+            $table->boolean('enabled')->default(0);
             $table->rememberToken();
             $table->timestamp('last_login')->nullable();
-            $table->enum('status',['active', 'pending', 'blocked'])->default('pending');
             $table->timestamps();
         });
 

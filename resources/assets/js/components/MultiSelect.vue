@@ -113,9 +113,10 @@
                 if(this.isObject(selected) && !this.isArray(selected)) return selected;
                 if(this.isPrimitive(selected)) return this.find(this.realValues, selected, this.valuekey);
 
-                // Multiple default selected values
-                if( ! this.isArray(selected) ) return null;
+                //  If by now this is not an array, we consider this to be invalid and set the default value to an empty array
+                if( ! this.isArray(selected) ) return [];
 
+                // Multiple default selected values
                 let result = [];
                 for(let i=0; i<selected.length;i++){
                     if(this.isObject(selected[i])){

@@ -30,11 +30,30 @@ class AdminLoginTest extends TestCase
     }
 
     /** @test */
+    public function entering_valid_login_credentials_for_disabled_user_wont_let_you_pass()
+    {
+        $admin = factory(User::class)->create([
+            'email' => 'foo@example.com',
+            'password' => bcrypt('foobar'),
+            'enabled' => false,
+        ]);
+
+        $response = $this->post(route('back.login.store'),[
+            'email'     => 'foo@example.com',
+            'password'  => 'foobar',
+        ]);
+
+        $this->assertFalse(Auth::guard('admin')->check());
+        $response->assertRedirect('/');
+    }
+
+    /** @test */
     public function entering_valid_login_credentials_lets_you_pass()
     {
         $admin = factory(User::class)->create([
             'email' => 'foo@example.com',
             'password' => bcrypt('foobar'),
+            'enabled' => true,
         ]);
 
         $response = $this->post(route('back.login.store'),[
@@ -85,6 +104,7 @@ class AdminLoginTest extends TestCase
         $admin = factory(User::class)->create([
             'email' => 'foo@example.com',
             'password' => bcrypt('foobar'),
+            'enabled' => true,
         ]);
 
         $resp = $this->get(route('back.pages.index'));
@@ -124,7 +144,8 @@ class AdminLoginTest extends TestCase
 
         $admin = factory(User::class)->create([
             'email'     => 'foo@example.com',
-            'password'  => 'IForgotThisPassword'
+            'password'  => 'IForgotThisPassword',
+            'enabled'   => true,
         ]);
 
         $response = $this->post(route('back.password.email'),[
@@ -142,7 +163,8 @@ class AdminLoginTest extends TestCase
     {
         $admin = factory(User::class)->create([
             'email'     => 'foo@example.com',
-            'password'  => 'IForgotThisPassword'
+            'password'  => 'IForgotThisPassword',
+            'enabled'   => true,
         ]);
 
         DB::insert('INSERT INTO password_resets (email, token, created_at) VALUES(?, ?, ?)', ["foo@example.com", bcrypt("71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c"), Carbon::now()]);

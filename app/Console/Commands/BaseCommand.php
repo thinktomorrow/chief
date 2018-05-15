@@ -15,6 +15,7 @@ abstract class BaseCommand extends Command
         $user->lastname = $lastname;
         $user->email = $email;
         $user->password = bcrypt($password);
+        $user->enabled = true;
         $user->save();
 
         $user->assignRole((array)$roles);

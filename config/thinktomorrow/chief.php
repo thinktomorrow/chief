@@ -3,8 +3,8 @@
 return [
 
     /**
-     * Contact email which will recieve all incoming communication
-     * This contact will receive e.g. contactform submissions
+     * Contact email which will receive all incoming communication
+     * This contact will receive e.g. contact form submissions
      */
     'contact'   => [
         'email' => env('MAIL_ADMIN_EMAIL','info@thinktomorrow.be'),
@@ -12,7 +12,8 @@ return [
     ],
 
     /**
-     * Name of the project
+     * Name of the project.
+     * This is also used in a couple of places such as the mail footer.
      */
     'name' => 'Chief',
 

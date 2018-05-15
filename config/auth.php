@@ -66,7 +66,7 @@ return [
 
     'providers' => [
         'admins' => [
-            'driver' => 'eloquent',
+            'driver' => 'chief-eloquent',
             'model' => \Chief\Users\User::class,
         ],
     ],

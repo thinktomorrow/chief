@@ -26,7 +26,7 @@ class PreviewTest extends TestCase
             'published' => 0
         ]);
 
-        $response = $this->asAdmin()->get(route('demo.pages.show', $originalpage->slug) . '?preview-mode');
+        $response = $this->asDefaultAdmin()->get(route('demo.pages.show', $originalpage->slug) . '?preview-mode');
 
         $response->assertStatus(200);
         $response->assertViewHas('page');

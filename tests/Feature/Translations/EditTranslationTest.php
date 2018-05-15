@@ -32,7 +32,7 @@ class EditTranslationTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->asAdmin()->get(route('squanto.edit', $this->squantoPage->id));
+        $response = $this->asDefaultAdmin()->get(route('squanto.edit', $this->squantoPage->id));
         $response->assertStatus(200);
     }
 
@@ -48,7 +48,7 @@ class EditTranslationTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->asAdmin()
+        $response = $this->asDefaultAdmin()
             ->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
         $response->assertStatus(302);

@@ -1,5 +1,13 @@
 <?php
 
+Route::get('test',function(){
+    return view('back.mails.invitation',[
+        'inviter' => (object)['firstname' => 'frank'],
+        'accept_url' => 'ofobar',
+        'deny_url' => 'dkdkdkd',
+    ]);
+});
+
 /**
  * -----------------------------------------------------------------
  * SPIRIT ROUTES
@@ -29,15 +37,10 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('back.password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.reset.store');
 
-/**
- * -----------------------------------------------------------------
- * PROTOTYPING ROUTES
- * -----------------------------------------------------------------
- */
-Route::get('prototype', function(){
-    // Just to guide Johnny to the proper page - this route can be removed afterwards
-    return redirect()->route('back.pages.create');
-});
+// Invitation routes...
+Route::get('invite/expired', 'Back\Authorization\InviteController@expired')->name('invite.expired');
+Route::get('invite/{token}/accept', 'Back\Authorization\InviteController@accept')->name('invite.accept');
+Route::get('invite/{token}/deny', 'Back\Authorization\InviteController@deny')->name('invite.deny');
 
 /**
  * -----------------------------------------------------------------
@@ -55,8 +58,13 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
 //    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
 
+    Route::get('getting-started','Back\GettingStartedController@show')->name('back.getting-started');
 
-    // pageS
+    // Prompt for a (new) password
+    Route::get('password-prompt','Auth\ChangePasswordController@edit')->name('back.password.edit');
+    Route::put('password-prompt','Auth\ChangePasswordController@update')->name('back.password.update');
+
+    // pages
     Route::get('pages','Back\PagesController@index')->name('back.pages.index');
     Route::post('pages', 'Back\PagesController@store')->name('back.pages.store');
     Route::get('pages/create', 'Back\PagesController@create')->name('back.pages.create');
