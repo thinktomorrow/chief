@@ -1,8 +1,15 @@
+.top-nav{
+  z-index: $z-index-nav;
+}
+
 /** because of the extend cascading bug, we must declare our padding separate */
-.top-nav .nav-item{ @extend .squished; }
+.top-nav .nav-item{
+  @extend .squished;
+}
 
 .nav-item{
   display:block;
+  cursor:pointer;
   @extend .text-black;
   @extend .--bottomline;
   text-decoration:none;

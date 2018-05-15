@@ -176,6 +176,13 @@ return [
      */
     'providers-local' => [
         \Barryvdh\Debugbar\ServiceProvider::class,
+        //Demo app service provider
+        Chief\Demo\DemoServiceProvider::class,
+    ],
+
+    'providers-testing' => [
+        //Demo app service provider
+        Chief\Demo\DemoServiceProvider::class,
     ],
 
     /*
@@ -225,8 +232,8 @@ return [
         'Validator'     => Illuminate\Support\Facades\Validator::class,
         'View'          => Illuminate\Support\Facades\View::class,
 
-        'Locale'            => \Thinktomorrow\Locale\Facades\LocaleFacade::class,
-        'Charts'            => ConsoleTVs\Charts\Facades\Charts::class,
+        'Locale'        => \Thinktomorrow\Locale\Facades\LocaleFacade::class,
+        'Charts'        => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 
 ];

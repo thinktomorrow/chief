@@ -12,6 +12,9 @@ window.Errors = Errors;
 window.Form = Form;
 
 /** Chief components */
+Vue.component('dropdown', require('./components/Dropdown.vue').default);
+Vue.component('button-dropdown', require('./components/ButtonDropdown.vue').default);
+
 Vue.component('tab', require('./components/Tab.vue').default);
 Vue.component('tabs', require('./components/Tabs.vue').default);
 Vue.component('translation-tabs', require('./components/TranslationTabs.vue').default);

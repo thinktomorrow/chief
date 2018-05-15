@@ -16,7 +16,7 @@
                     {{ session('status') }}
                 </div>
             @else
-                <form id="valid" role="form" method="POST" action="{{ route('auth.password.email') }}">
+                <form id="valid" role="form" method="POST" action="{{ route('back.password.email') }}">
                     {{ csrf_field() }}
                     <div class="form-wrapper">
                         <div class="{{ $errors->has('email') ? ' has-error' : '' }}">

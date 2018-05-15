@@ -24,9 +24,9 @@
 </head>
 
 <body>
-@include('back._layouts._nav.nav')
 
 <main id="main">
+    @include('back._layouts._nav.nav')
     @yield('header')
 
     <section id="content" class="container">
@@ -79,6 +79,9 @@
             closeModal: function(id){
                 return window.closeModal(id);
             },
+            closeDropdown: function(id){
+                return window.closeDropdown(id);
+            },
             selectTab: function(hash){
                 Eventbus.$emit('select-tab',hash);
             },
@@ -94,6 +97,11 @@
 
     window.closeModal = function(id){
         Eventbus.$emit('close-modal',id);
+    };
+
+    // Close dropdown outside of the dropdown - used by backdrop
+    window.closeDropdown = function(id){
+        Eventbus.$emit('close-dropdown',id);
     };
 
 </script>

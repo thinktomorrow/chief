@@ -33,9 +33,9 @@ class RefreshDatabase extends BaseCommand
         }
 
         if($this->option('force')){
-            $this->call('migrate:refresh', ['--force' => true]);
+            $this->call('migrate:fresh', ['--force' => true]);
         }else{
-            $this->call('migrate:refresh');
+            $this->call('migrate:fresh');
         }
 
         $this->settingPermissionsAndRoles();

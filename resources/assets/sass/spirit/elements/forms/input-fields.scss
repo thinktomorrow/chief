@@ -17,6 +17,9 @@ input[type='file'],
         border: 1px solid $color-subtle;
         outline: none;
     }
+    &::placeholder{
+        color: $color-subtle;
+    }
 }
 
 // SEARCH

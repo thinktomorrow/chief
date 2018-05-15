@@ -5,21 +5,16 @@
 
 @component('back._layouts._partials.header')
     @slot('title', 'Pas "' .$page->title .'" aan')
-        <div class="center-y right inline-group">
-            <a href="#" class="btn btn-o-primary">Preview</a>
-            <div class="btn-group">
-                <button @click="showModal('publication-now-page')" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-                <div class="dropdown">
-                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-primary">
-                        <i class="icon icon-chevron-down"></i>
-                        <div class="dropdown-menu">
-                            <div><a href="#">Haal pagina offline</a></div>
-                            <div><a @click="showModal('delete-page')">Verwijder pagina</a></div>
-                        </div>
-                    </button>
-                </div>
+    <a href="#" class="btn btn-o-primary inline-s">Preview</a>
+    <div class="btn-group">
+        <button @click="showModal('publication-now-page')" type="button" class="btn btn-primary">Wijzigingen opslaan
+        </button><button-dropdown class="inline-block btn-group-last" btn_name="<i class='icon icon-chevron-down'></i>">
+            <div v-cloak>
+                <a href="#" class="block squished-s --link-with-bg">Haal pagina offline</a>
+                <a href="#" class="block squished-s --link-with-bg" @click="showModal('delete-page')">Verwijder pagina</a>
             </div>
-        </div>
+        </button-dropdown>
+    </div>
 @endcomponent
 
 @section('content')
