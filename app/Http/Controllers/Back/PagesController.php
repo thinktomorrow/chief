@@ -9,8 +9,6 @@ use Chief\Pages\Page;
 use Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
-use Thinktomorrow\AssetLibrary\Models\Asset;
 use App\Http\Requests\PageCreateRequest;
 use Chief\Pages\Application\UpdatePage;
 use App\Http\Requests\PageUpdateRequest;
@@ -32,7 +30,11 @@ class PagesController extends Controller
      */
     public function create()
     {
-        return view('back.pages.create',['page' => new Page()]);
+        $page = new Page();
+        $page->existingRelationIds = collect([]);
+        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
+
+        return view('back.pages.create',['page' => $page, 'relations' => $relations]);
     }
 
     /**
