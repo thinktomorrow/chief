@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Back\Authorization;
+namespace App\Http\Controllers\Back\Users;
 
 use App\Http\Controllers\Controller;
 use Chief\Authorization\Role;
@@ -28,7 +28,8 @@ class UserController extends Controller
         $this->authorize('create-user');
 
         return view('back.users.create', [
-            'roles'=>Role::all()
+            'user' => new User(),
+            'roleNames'=> Role::all()->pluck('name')->toArray()
         ]);
     }
 
@@ -59,10 +60,10 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
-        $user = User::findOrFail($id);
-        $roleNames = Role::all()->pluck('name')->toArray();
-
-        return view('back.users.edit', compact('user', 'roleNames'));
+        return view('back.users.edit',[
+            'user' => User::findOrFail($id),
+            'roleNames'=> Role::all()->pluck('name')->toArray()
+        ]);
     }
 
     public function update(Request $request, $id)

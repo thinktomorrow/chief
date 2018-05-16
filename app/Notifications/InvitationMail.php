@@ -35,12 +35,12 @@ class InvitationMail extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->subject('Uitnodiging tot Chief')
-            ->from(config('project.system.emails.order'))
+            ->from(config('thinktomorrow.chief.contact.email'))
             ->view('back.mails.invitation', [
                 'invitee'    => $this->invitation->invitee,
                 'inviter'    => $this->invitation->inviter,
-                'accept_url' => $this->invitation->accept_url,
-                'deny_url'   => $this->invitation->deny_url,
+                'accept_url' => $this->invitation->acceptUrl(),
+                'deny_url'   => $this->invitation->denyUrl(),
             ]);
     }
 

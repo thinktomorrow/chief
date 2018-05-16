@@ -8,7 +8,7 @@ class InvitationToken
 {
     public static function generate()
     {
-        return hash_hmac('sha256', Str::random(40), static::hashKey());
+        return hash_hmac('sha256', Str::random(20), static::hashKey());
     }
 
     private static function hashKey(): string

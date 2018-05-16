@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Tests\Unit;
+namespace Chief\Tests\Unit\Common;
 
 use Chief\Pages\Page;
 use Chief\Tests\ChiefDatabaseTransactions;

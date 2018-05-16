@@ -125,7 +125,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accept_url_redirects_user_to_completion_page_if_required_fields_are_not_filled_in_yet()
+    function accept_url_redirects_user_to_password_edit_page_if_password_is_not_filled_in_yet()
     {
         Notification::fake();
 
@@ -139,7 +139,7 @@ class AcceptInviteTest extends TestCase
         $response = $this->get($invitee->fresh()->invitation->acceptUrl());
         $response->assertRedirect(route('back.password.edit'));
 
-        // Assert we are not yet logged in
-        $this->assertFalse(auth()->guard('admin')->check());
+        // Assert we are logged in
+        $this->assertTrue(auth()->guard('admin')->check());
     }
 }

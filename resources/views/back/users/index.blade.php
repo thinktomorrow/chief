@@ -12,7 +12,7 @@
         <div class="block stack panel panel-default inset-s">
             <span class="indicator"></span>
             <a href="{{ route('back.users.edit', $user->id) }}">{{ $user->fullname }}</a>
-            <span class="label label-primary">Pending</span>
+            {!! $user->invitationLabel() !!}
         </div>
     @endforeach
 @endsection

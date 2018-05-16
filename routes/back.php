@@ -38,9 +38,9 @@ Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.password.reset.store');
 
 // Invitation routes...
-Route::get('invite/expired', 'Back\Authorization\InviteController@expired')->name('invite.expired');
-Route::get('invite/{token}/accept', 'Back\Authorization\InviteController@accept')->name('invite.accept');
-Route::get('invite/{token}/deny', 'Back\Authorization\InviteController@deny')->name('invite.deny');
+Route::get('invite/expired', 'Back\Users\InviteController@expired')->name('invite.expired');
+Route::get('invite/{token}/accept', 'Back\Users\InviteController@accept')->name('invite.accept');
+Route::get('invite/{token}/deny', 'Back\Users\InviteController@deny')->name('invite.deny');
 
 /**
  * -----------------------------------------------------------------
@@ -94,14 +94,16 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
      * -----------------------------------------------------------------
      */
     // USER MANAGEMENT
-    Route::get('users', 'Back\Authorization\UserController@index')->name('back.users.index');
-    Route::post('users', 'Back\Authorization\UserController@store')->name('back.users.store');
-    Route::get('users/create', 'Back\Authorization\UserController@create')->name('back.users.create');
-    Route::delete('users/{user}', 'Back\Authorization\UserController@destroy')->name('back.users.destroy');
-    Route::put('users/{user}', 'Back\Authorization\UserController@update')->name('back.users.update');
-    Route::get('users/{user}', 'Back\Authorization\UserController@show')->name('back.users.show');
-    Route::get('users/{user}/edit', 'Back\Authorization\UserController@edit')->name('back.users.edit');
-    Route::post('users/{user}/publish', 'Back\Authorization\UserController@publish')->name('back.users.publish');
+    Route::get('users', 'Back\Users\UserController@index')->name('back.users.index');
+    Route::post('users', 'Back\Users\UserController@store')->name('back.users.store');
+    Route::get('users/create', 'Back\Users\UserController@create')->name('back.users.create');
+//    Route::delete('users/{user}', 'Back\Users\UserController@destroy')->name('back.users.destroy');
+    Route::put('users/{user}', 'Back\Users\UserController@update')->name('back.users.update');
+    Route::get('users/{user}', 'Back\Users\UserController@show')->name('back.users.show');
+    Route::get('users/{user}/edit', 'Back\Users\UserController@edit')->name('back.users.edit');
+
+    // INVITE MANAGEMENT
+    Route::get('users/{id}/resend-invite','Back\Users\ResendInviteController@store')->name('back.invites.resend');
 
     // ROLE MANAGEMENT
     Route::get('roles', 'Back\Authorization\RoleController@index')->name('back.roles.index');

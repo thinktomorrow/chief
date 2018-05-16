@@ -19,4 +19,17 @@ class ChiefUserProvider extends EloquentUserProvider implements UserProvider
 
         return ($user->isEnabled()) ? $user : null;
     }
+
+    /**
+     * Retrieve a user by their unique identifier.
+     *
+     * @param  mixed  $identifier
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function retrieveById($identifier)
+    {
+        $user = parent::retrieveById($identifier);
+
+        return ($user->isEnabled()) ? $user : null;
+    }
 }

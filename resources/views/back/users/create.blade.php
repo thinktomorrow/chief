@@ -12,11 +12,7 @@
 	<form id="createForm" action="{{ route('back.users.store') }}" method="POST">
 		{!! csrf_field() !!}
 
-		@chiefformgroup(['field' => 'email'])
-		@slot('label', 'E-mail')
-			@slot('description', 'Dit e-mail adres geldt als login. Hierop ontvangt de nieuwe gebruiker een uitnodiging.')
-			<input class="input inset-s" type="email" name="email" value="{{ old('email','') }}">
-		@endchiefformgroup
+		@include('back.users._form')
 
 		<button type="submit" class="btn btn-primary right">Stuur uitnodiging</button>
 	</form>
