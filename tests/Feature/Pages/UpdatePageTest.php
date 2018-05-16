@@ -25,13 +25,13 @@ class UpdatePageTest extends TestCase
         $response = $this->asAdmin()
             ->put(route('back.pages.update', $page->id), $this->validParams([
                 'trans.nl.slug'     => '<b>slug</b>',
-                'trans.fr.slug'     => '<b>slugfr</b>',
+                'trans.en.slug'     => '<b>slugen</b>',
                 'trans.nl.title'    => 'title',
-                'trans.fr.title'    => 'titlefr',
+                'trans.en.title'    => 'titleen',
             ]));
 
         $this->assertEquals('title', Page::first()->{'title:nl'});
-        $this->assertEquals('titlefr', Page::first()->{'title:fr'});
+        $this->assertEquals('titleen', Page::first()->{'title:en'});
     }
 
     /** @test */
@@ -64,7 +64,7 @@ class UpdatePageTest extends TestCase
                     'seo_title' => 'new seo title',
                     'seo_description' => 'new seo description',
                 ],
-                'fr' => [
+                'en' => [
                     'slug' => 'nouveau-slug',
                     'title' => 'nouveau title',
                     'content' => 'nouveau content in <strong>bold</strong>',

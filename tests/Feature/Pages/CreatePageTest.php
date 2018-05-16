@@ -77,7 +77,7 @@ class CreatePageTest extends TestCase
         $response = $this->asAdmin()
             ->post(route('back.pages.store'), $this->validParams([
                     'title:nl'  => 'foobarnl',
-                    'title:fr'  => 'foobarfr',
+                    'title:en'  => 'foobaren',
                 ])
             );
 
@@ -113,7 +113,7 @@ class CreatePageTest extends TestCase
                     'seo_title'         => 'new seo title',
                     'seo_description'   => 'new seo description',
                 ],
-                'fr' => [
+                'en' => [
                     'slug'              => 'nouveau-slug',
                     'title'             => 'nouveau title',
                     'content'           => 'nouveau content in <strong>bold</strong>',
@@ -139,10 +139,10 @@ class CreatePageTest extends TestCase
         $this->assertEquals('new seo title', $page->{'seo_title:nl'});
         $this->assertEquals('new seo description', $page->{'seo_description:nl'});
 
-        $this->assertEquals('nouveau-title', $page->{'slug:fr'});
-        $this->assertEquals('nouveau title', $page->{'title:fr'});
-        $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:fr'});
-        $this->assertEquals('nouveau seo title', $page->{'seo_title:fr'});
-        $this->assertEquals('nouveau seo description', $page->{'seo_description:fr'});
+        $this->assertEquals('nouveau-title', $page->{'slug:en'});
+        $this->assertEquals('nouveau title', $page->{'title:en'});
+        $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:en'});
+        $this->assertEquals('nouveau seo title', $page->{'seo_title:en'});
+        $this->assertEquals('nouveau seo description', $page->{'seo_description:en'});
     }
 }
