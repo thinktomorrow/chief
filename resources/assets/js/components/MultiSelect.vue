@@ -237,6 +237,10 @@
         padding: 1px 0 0 5px;
     }
 
+    input[type="text"].multiselect__input:focus {
+        box-shadow: none;
+    }
+
 </style>
 
 

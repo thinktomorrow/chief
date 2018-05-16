@@ -2431,7 +2431,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.multiselect__tags input, .multiselect__tags input:focus{\n    border: none;\n}\ninput[type=\"text\"].multiselect__input {\n    padding: 1px 0 0 5px;\n}\n\n", ""]);
+exports.push([module.i, "\n.multiselect__tags input, .multiselect__tags input:focus{\n    border: none;\n}\ninput[type=\"text\"].multiselect__input {\n    padding: 1px 0 0 5px;\n}\ninput[type=\"text\"].multiselect__input:focus {\n    -webkit-box-shadow: none;\n            box-shadow: none;\n}\n\n", ""]);
 
 // exports
 
