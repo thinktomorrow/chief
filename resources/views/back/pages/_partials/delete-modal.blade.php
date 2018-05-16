@@ -5,7 +5,7 @@
         </div>
     </div>
     <div slot="footer">
-        <button class="btn btn-o-tertiary">Verwijder de artikels</button>
+        <button class="btn btn-o-tertiary">Verwijder dit artikel</button>
         <a class="btn btn-link text-secondary" @click="closeModal('delete-article')">annuleer</a>
     </div>
 </modal>

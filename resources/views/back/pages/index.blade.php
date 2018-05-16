@@ -20,7 +20,7 @@
                         <div class="column-8 stretched">
                             <div class="column-12">
                                 <h2>
-                                    <a href="{{ route('back.pages.edit',$page->getKey()) }}">{{ $page->getTranslationFor('title') }}</a>
+                                    {{ $page->getTranslationFor('title') }}
                                     <a title="Bekijk {{ $page->title }}" href="{{ route('demo.pages.show', $page->slug) }}?preview-mode" target="_blank" class="text-subtle font-s">Preview</a>
                                 </h2>
                             </div>
