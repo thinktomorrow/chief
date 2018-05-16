@@ -106,7 +106,7 @@
             {!! $published->render() !!}
         </div>
     </tab>
-    <tab name="Archief (1)" id="archief">
+    <tab name="Archief" id="archief">
         <p>Not implemented yet.</p>
     </tab>
 
