@@ -14,7 +14,10 @@
                             <div class="stack-s">
                                 <label for="trans-{{ $locale }}-title">Titel</label>
                                 <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title', $page->translateForForm($locale,'title')) }}">
-                                <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b><input type="text" name="trans[{{$locale}}][slug]" value="{{ old('trans.'.$locale.'.slug', $page->translateForForm($locale,'slug')) }}"></b></span>
+                                <span class="stack inline-block text-default">
+                                    <b>Permalink:</b> https://crius-group.com/
+                                    <input class="inset-s" type="text" name="trans[{{$locale}}][slug]" value="{{ old('trans.'.$locale.'.slug', $page->translateForForm($locale,'slug')) }}">
+                                </span>
                                 <error class="caption text-warning" field="trans.{{ $locale }}.slug" :errors="errors.get('trans.{{ $locale }}')"></error>
                             </div>
 
@@ -70,7 +73,6 @@
                             <div class="stack-s">
                                 <label for="trans-{{ $locale }}-seo_title">Seo titel</label>
                                 <input type="text" name="trans[{{ $locale }}][seo_title]" id="trans-{{ $locale }}-seo_title" class="input inset-s" placeholder="Seo titel" value="{{ old('trans.'.$locale.'.seo_title',$page->translateForForm($locale,'seo_title')) }}">
-                                <span class="stack text-default"><b>Permalink:</b> https://crius-group.com/<b>paginanaam</b><button>edit</button></span>
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.seo_title" :errors="errors.get('trans.{{ $locale }}')"></error>
@@ -104,21 +106,6 @@
                 <p class="caption">Bij het pagina kan je enkele gerelateerde onderwerpen koppelen. <br>Deze worden automatisch onderaan de pagina pagina getoond.</p>
             </div>
             <div class="formgroup-input column-8">
-                {{--<div class="stack">--}}
-                    {{--<div class="stack-s panel panel-default squished center-y relative">--}}
-                        {{--Prepress (product)--}}
-                        {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
-                    {{--</div>--}}
-                    {{--<div class="stack-s panel panel-default squished center-y relative" style="overflow:visible;">--}}
-                        {{--<span class="icon icon-menu" style="position: absolute; left: -2rem;"></span>--}}
-                        {{--Digitalisatie (product)--}}
-                        {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
-                    {{--</div>--}}
-                    {{--<div class="stack-s panel panel-default squished center-y">--}}
-                        {{--Workflow- en contentmanagement (dienst)--}}
-                        {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
                 <h4>Voeg een nieuwe relatie toe</h4>
                 <chief-multiselect
                 name="relations"
