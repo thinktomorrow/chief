@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use Chief\Common\Relations\RelatedCollection;
 use Chief\Pages\Application\CreatePage;
 use Chief\Pages\Page;
 use Chief\Pages\PageRepository;
@@ -55,10 +56,13 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-        $page    = Page::findOrFail($id);
-
+        $page = Page::findOrFail($id);
         $page->injectTranslationForForm();
-        return view('back.pages.edit', compact('page'));
+
+        $page->existingRelationIds = RelatedCollection::relationIds($page->children());
+        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
+
+        return view('back.pages.edit', compact('page', 'relations'));
     }
 
     /**
@@ -70,7 +74,7 @@ class PagesController extends Controller
      */
     public function update(PageUpdateRequest $request, $id)
     {
-        $page = app(UpdatePage::class)->handle($id, $request->trans);
+        $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
 
         return redirect()->route('back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');
     }

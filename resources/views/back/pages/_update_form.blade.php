@@ -104,35 +104,34 @@
                 <p class="caption">Bij het pagina kan je enkele gerelateerde onderwerpen koppelen. <br>Deze worden automatisch onderaan de pagina pagina getoond.</p>
             </div>
             <div class="formgroup-input column-8">
-                <div class="stack">
-
-                        <div class="stack-s panel panel-default squished center-y relative">
-                            Prepress (product)
-                            <span class="icon icon-x block" style="margin-left:auto;"></span>
-                        </div>
-                        <div class="stack-s panel panel-default squished center-y relative" style="overflow:visible;">
-                            <span class="icon icon-menu" style="position: absolute; left: -2rem;"></span>
-                            Digitalisatie (product)
-                            <span class="icon icon-x block" style="margin-left:auto;"></span>
-                        </div>
-                        <div class="stack-s panel panel-default squished center-y">
-                            Workflow- en contentmanagement (dienst)
-                            <span class="icon icon-x block" style="margin-left:auto;"></span>
-                        </div>
-                    </div>
-
-
-                    <h4>Voeg een nieuwe relatie toe</h4>
-                    <chief-multiselect
-                    name="paginas"
-                    :options="[{'label': 'paginas', 'values': ['pagina 1','pagina 2','pagina 3']}, {'label': 'Diensten', 'values': ['Dienst 1','Dienst 2','Dienst 3']}]"
-                    :multiple="true"
-                    grouplabel="label"
-                    groupvalues="values"
-                    placeholder="..."
-                    >
-                    </chief-multiselect>
-                </div>
+                {{--<div class="stack">--}}
+                    {{--<div class="stack-s panel panel-default squished center-y relative">--}}
+                        {{--Prepress (product)--}}
+                        {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
+                    {{--</div>--}}
+                    {{--<div class="stack-s panel panel-default squished center-y relative" style="overflow:visible;">--}}
+                        {{--<span class="icon icon-menu" style="position: absolute; left: -2rem;"></span>--}}
+                        {{--Digitalisatie (product)--}}
+                        {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
+                    {{--</div>--}}
+                    {{--<div class="stack-s panel panel-default squished center-y">--}}
+                        {{--Workflow- en contentmanagement (dienst)--}}
+                        {{--<span class="icon icon-x block" style="margin-left:auto;"></span>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                <h4>Voeg een nieuwe relatie toe</h4>
+                <chief-multiselect
+                name="relations"
+                :options='@json($relations)'
+                selected='@json($page->existingRelationIds->toArray())'
+                :multiple="true"
+                grouplabel="group"
+                groupvalues="values"
+                labelkey="label"
+                valuekey="id"
+                placeholder="..."
+                >
+                </chief-multiselect>
             </div>
             <div class="column-12 text-right">
                 <a class="btn btn-o-primary">Opslaan als draft</a>

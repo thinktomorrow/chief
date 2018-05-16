@@ -5,7 +5,6 @@ namespace Chief\Tests\Feature\Pages;
 use Chief\Pages\Page;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
-use Chief\Users\User;
 
 class UpdatePageTest extends TestCase
 {
@@ -19,10 +18,8 @@ class UpdatePageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_edit_an_Page()
+    public function it_can_edit_a_page()
     {
-        $this->disableExceptionHandling();
-
         $page = factory(Page::class)->create(['title:nl' => 'titel nl']);
 
         $response = $this->asAdmin()
@@ -35,6 +32,25 @@ class UpdatePageTest extends TestCase
 
         $this->assertEquals('title', Page::first()->{'title:nl'});
         $this->assertEquals('titlefr', Page::first()->{'title:fr'});
+    }
+
+    /** @test */
+    public function it_can_update_the_page_relations()
+    {
+        $this->disableExceptionHandling();
+
+        $page = factory(Page::class)->create();
+        $otherPage = factory(Page::class)->create();
+
+        $this->asAdmin()
+            ->put(route('back.pages.update', $page->id), $this->validParams([
+                'relations' => [
+                    $otherPage->getRelationId()
+                ]
+            ]));
+
+        $this->assertCount(1, $page->children());
+        $this->assertEquals($otherPage->id, $page->children()->first()->id);
     }
 
     private function validParams($overrides = [])
@@ -56,6 +72,7 @@ class UpdatePageTest extends TestCase
                     'seo_description' => 'nouveau seo description',
                 ],
             ],
+            'relations' => [],
         ];
 
         foreach ($overrides as $key => $value) {
