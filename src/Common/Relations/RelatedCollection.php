@@ -55,6 +55,8 @@ class RelatedCollection extends Collection
 
     public static function inflate(array $relateds = []): self
     {
+        if(count($relateds) == 1 && is_null(reset($relateds))) $relateds = [];
+
         return (new static($relateds))->map(function($related){
 
             list($type,$id) = explode('@', $related);
