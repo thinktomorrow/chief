@@ -55,3 +55,8 @@ a{
     background-color: $color-secondary;
     color: $color-white;
 }
+
+.disabled{
+    cursor: not-allowed!important;
+    opacity: 0.35;
+}
