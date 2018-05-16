@@ -19,7 +19,7 @@
 
             <!-- // ORDER COUNTER -->
             <div class="column-6">
-                <div class="panel panel-default --raised">
+                <div class="panel panel-default --raised disabled">
                     <div class="panel-body inset">
                         <div class="btn btn-o-primary btn-circle">
                             <i class="icon icon-box"></i>
@@ -34,7 +34,7 @@
             </div>
             <!-- // PRODUCT COUNTER -->
             <div class="column-6">
-                <div class="panel panel-default --raised">
+                <div class="panel panel-default --raised disabled">
                     <div class="panel-body inset">
                         <div class="btn btn-o-primary btn-circle">
                             <i class="icon icon-book"></i>
@@ -55,9 +55,9 @@
                             <i class="icon icon-eye"></i>
                         </div>
                         <div class="stack">
-                            <h1 class="--remove-margin">24</h1>
-                            <p>Inzichten</p>
-                            <a href="#" class="btn btn-secondary">CTA-button</a>
+                            <h1 class="--remove-margin">5</h1>
+                            <p>Pagina's</p>
+                            <a href="{{ route('back.pages.index') }}" class="btn btn-secondary">Ga naar pagina's</a>
                         </div>
                     </div>
                 </div>

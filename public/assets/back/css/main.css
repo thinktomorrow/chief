@@ -2154,7 +2154,7 @@ span.sans-serif:after {
 
 hr {
   border-top: 0;
-  border-bottom: 1px solid #dadada;
+  border-bottom: 1px dotted #dadada;
 }
 
 .relative {
@@ -2198,6 +2198,11 @@ a:hover {
 ::selection {
   background-color: #435fa8;
   color: #ffffff;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.35;
 }
 
 .color-scheme .color-block {
@@ -3016,6 +3021,8 @@ a:hover {
   border-radius: 5px;
   -webkit-transition: 0.3s ease-in-out all;
   transition: 0.3s ease-in-out all;
+  font-family: "Quicksand";
+  line-height: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: middle;
@@ -3097,6 +3104,8 @@ a:hover {
 }
 
 .btn-o-primary:hover, .btn-o-primary:focus, .btn-o-primary:active, .btn-o-primary.active {
+  background-color: #14c8a7;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(20, 200, 167, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(20, 200, 167, 0.2);
           box-shadow: 0 14px 26px -12px rgba(20, 200, 167, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(20, 200, 167, 0.2);
 }
@@ -3132,6 +3141,8 @@ a:hover {
 }
 
 .btn-o-secondary:hover, .btn-o-secondary:focus, .btn-o-secondary:active, .btn-o-secondary.active {
+  background-color: #435fa8;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(67, 95, 168, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(67, 95, 168, 0.2);
           box-shadow: 0 14px 26px -12px rgba(67, 95, 168, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(67, 95, 168, 0.2);
 }
@@ -3167,6 +3178,8 @@ a:hover {
 }
 
 .btn-o-tertiary:hover, .btn-o-tertiary:focus, .btn-o-tertiary:active, .btn-o-tertiary.active {
+  background-color: #da1b61;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(218, 27, 97, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(218, 27, 97, 0.2);
           box-shadow: 0 14px 26px -12px rgba(218, 27, 97, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(218, 27, 97, 0.2);
 }
@@ -3178,7 +3191,7 @@ a:hover {
 .btn-group-white,
 .btn-white {
   background-color: #ffffff;
-  color: #ffffff;
+  color: #000000;
   border: 1px solid #ffffff;
   -webkit-box-shadow: 0 5px 10px 0 rgba(255, 255, 255, 0.09);
           box-shadow: 0 5px 10px 0 rgba(255, 255, 255, 0.09);
@@ -3202,12 +3215,51 @@ a:hover {
 }
 
 .btn-o-white:hover, .btn-o-white:focus, .btn-o-white:active, .btn-o-white.active {
+  background-color: #ffffff;
+  color: #000000;
   -webkit-box-shadow: 0 14px 26px -12px rgba(255, 255, 255, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(255, 255, 255, 0.2);
           box-shadow: 0 14px 26px -12px rgba(255, 255, 255, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(255, 255, 255, 0.2);
 }
 
 .btn-group-white .btn-group-btn:first-child {
   border-right: 1px solid #ffffff;
+}
+
+.btn-group-subtle,
+.btn-subtle {
+  background-color: #4f5164;
+  color: #ffffff;
+  border: 1px solid #4f5164;
+  -webkit-box-shadow: 0 5px 10px 0 rgba(79, 81, 100, 0.09);
+          box-shadow: 0 5px 10px 0 rgba(79, 81, 100, 0.09);
+}
+
+.btn-group-subtle:hover, .btn-group-subtle:focus, .btn-group-subtle:active, .btn-group-subtle.active,
+.btn-subtle:hover,
+.btn-subtle:focus,
+.btn-subtle:active,
+.btn-subtle.active {
+  background-color: #56586d;
+  border: 1px solid #56586d;
+  -webkit-box-shadow: 0 14px 26px -12px rgba(79, 81, 100, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(79, 81, 100, 0.2);
+          box-shadow: 0 14px 26px -12px rgba(79, 81, 100, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(79, 81, 100, 0.2);
+}
+
+.btn-o-subtle {
+  background-color: transparent;
+  color: #4f5164;
+  border: 1px solid #4f5164;
+}
+
+.btn-o-subtle:hover, .btn-o-subtle:focus, .btn-o-subtle:active, .btn-o-subtle.active {
+  background-color: #4f5164;
+  color: #ffffff;
+  -webkit-box-shadow: 0 14px 26px -12px rgba(79, 81, 100, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(79, 81, 100, 0.2);
+          box-shadow: 0 14px 26px -12px rgba(79, 81, 100, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(79, 81, 100, 0.2);
+}
+
+.btn-group-subtle .btn-group-btn:first-child {
+  border-right: 1px solid #4f5164;
 }
 
 .btn-group-success,
@@ -3237,6 +3289,8 @@ a:hover {
 }
 
 .btn-o-success:hover, .btn-o-success:focus, .btn-o-success:active, .btn-o-success.active {
+  background-color: #2fca74;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(47, 202, 116, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(47, 202, 116, 0.2);
           box-shadow: 0 14px 26px -12px rgba(47, 202, 116, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(47, 202, 116, 0.2);
 }
@@ -3272,6 +3326,8 @@ a:hover {
 }
 
 .btn-o-error:hover, .btn-o-error:focus, .btn-o-error:active, .btn-o-error.active {
+  background-color: #ed4d4d;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(237, 77, 77, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(237, 77, 77, 0.2);
           box-shadow: 0 14px 26px -12px rgba(237, 77, 77, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(237, 77, 77, 0.2);
 }
@@ -3307,6 +3363,8 @@ a:hover {
 }
 
 .btn-o-warning:hover, .btn-o-warning:focus, .btn-o-warning:active, .btn-o-warning.active {
+  background-color: #f5b848;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(245, 184, 72, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(245, 184, 72, 0.2);
           box-shadow: 0 14px 26px -12px rgba(245, 184, 72, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(245, 184, 72, 0.2);
 }
@@ -3342,6 +3400,8 @@ a:hover {
 }
 
 .btn-o-information:hover, .btn-o-information:focus, .btn-o-information:active, .btn-o-information.active {
+  background-color: #2083fe;
+  color: #ffffff;
   -webkit-box-shadow: 0 14px 26px -12px rgba(32, 131, 254, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(32, 131, 254, 0.2);
           box-shadow: 0 14px 26px -12px rgba(32, 131, 254, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(32, 131, 254, 0.2);
 }
@@ -5040,7 +5100,7 @@ select {
 .sticky-bar {
   background-color: #ffffff;
   z-index: 11;
-  border-bottom: 1px solid #f2f2f2;
+  border-bottom: 1px solid #dadada;
 }
 
 /* product thumbs and image uploads */
