@@ -8,10 +8,10 @@
     @slot('label', 'Rechten')
     @slot('description', 'Met welke rechten heeft deze rol toegang tot de admin')
     <chief-multiselect
-            name="permission_names"
-            :options=@json($permission_names)
-                    selected='@json(old('permission_names', $role->permissionNames()))'
-            :multiple="true"
+        name="permission_names"
+        :options=@json($permission_names)
+        selected='@json(old('permission_names', $role->permissionNames()))'
+        :multiple="true"
     >
     </chief-multiselect>
     @if($errors->has('permission_names.0'))

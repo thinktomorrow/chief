@@ -21,7 +21,7 @@
                 @if($errors and count($errors) > 0)
                     <div class="message error">
                         @foreach($errors->all() as $error)
-                            <span class="lnr lnr-warning mr5"></span>{{ $error }}<br>
+                            <span class="lnr lnr-warning mr5"></span> {{ $error }}<br>
                         @endforeach
                     </div>
                 @endif

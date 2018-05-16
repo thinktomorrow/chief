@@ -12,6 +12,8 @@ class UserController extends Controller
 {
     public function index()
     {
+        $this->authorize('view-user');
+
         $users = User::all();
         return view('back.users.index')->with('users', $users);
     }
@@ -25,18 +27,15 @@ class UserController extends Controller
     {
         $this->authorize('create-user');
 
-        return view('back.authorization.users.create', [
+        return view('back.users.create', [
             'roles'=>Role::all()
         ]);
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
+        $this->authorize('create-user');
+
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
@@ -55,56 +54,35 @@ class UserController extends Controller
         return redirect()->route('back.users.index')
             ->with('messages.success', 'User successfully added.');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return redirect('users');
-    }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
+        $this->authorize('update-user');
+
         $user = User::findOrFail($id);
-        $roles = Role::get();
-        return view('back.users._partials.edituser', compact('user', 'roles'));
+        $roleNames = Role::all()->pluck('name')->toArray();
+
+        return view('back.users.edit', compact('user', 'roleNames'));
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        $this->validate($request, [
-            'firstname'=>'required|max:120',
-            'lastname'=>'required|max:120',
-            'email'=>'required|email|unique:users,email,'.$id,
-        ]);
-        $input = $request->only(['firstname', 'lastname', 'email']);
-        $roles = $request['roles'];
+        $this->authorize('update-user');
 
-        $user->fill($input)->save();
-        if (isset($roles)) {
-            $user->roles()->sync($roles);
-        }
-        else {
-            $user->roles()->detach();
-        }
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' =>  'required|email|unique:users,email,'.$id,
+            'roles' => 'required|array',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($request->only(['firstname', 'lastname', 'email']));
+
+        $user->syncRoles($request->get('roles', []));
+
         return redirect()->route('back.users.index')
-            ->with('flash_message',
-                'User successfully edited.');
+            ->with('messages.success', 'Gegevens van de gebruiker zijn aangepast.');
     }
     /**
      * Remove the specified resource from storage.

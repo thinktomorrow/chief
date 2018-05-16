@@ -2,7 +2,6 @@
 
 namespace Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\AuthorizationDefaults;
 use Chief\Authorization\Role;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;

@@ -84,9 +84,38 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
+    function regular_author_cannot_invite_an_user()
+    {
+        $response = $this->asAuthor()->post(route('back.users.store'), $this->validParams());
+
+        $response->assertRedirect(route('back.dashboard'));
+        $this->assertCount(1, User::all()); // Existing author
+    }
+
+    /** @test */
     function when_creating_user_firstname_is_required()
     {
         $this->assertValidation(new User(), 'firstname', $this->validParams(['firstname' => '']),
+            route('back.users.index'),
+            route('back.users.store'),
+            1 // creating account (developer) already exists
+        );
+    }
+
+    /** @test */
+    function when_creating_user_lastname_is_required()
+    {
+        $this->assertValidation(new User(), 'lastname', $this->validParams(['lastname' => '']),
+            route('back.users.index'),
+            route('back.users.store'),
+            1 // creating account (developer) already exists
+        );
+    }
+
+    /** @test */
+    function when_creating_user_role_is_required()
+    {
+        $this->assertValidation(new User(), 'roles', $this->validParams(['roles' => []]),
             route('back.users.index'),
             route('back.users.store'),
             1 // creating account (developer) already exists

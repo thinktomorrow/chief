@@ -38,6 +38,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Invitation::class, 'invitee_id');
     }
 
+    public function roleNames()
+    {
+        return $this->roles->pluck('name')->toArray();
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetAdminPassword($token));
