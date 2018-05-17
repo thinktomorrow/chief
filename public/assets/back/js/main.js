@@ -2023,9 +2023,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         /** Grouped options */
         groupvalues: { default: null, type: String },
-        grouplabel: { default: null, type: String },
-
-        placeholder: { default: 'Maak een selectie' }
+        grouplabel: { default: null, type: String }
     },
     data: function data() {
         return {
@@ -2033,7 +2031,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
             // Active selected option
-            value: null
+            //                value: this.multiple ? [] : null
+            value: []
         };
     },
 
@@ -2061,25 +2060,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return this.values;
         }
     },
-    mounted: function mounted() {
-        this.value = this.defaultValue();
+    created: function created() {
+        var _this = this;
+
+        this.resetValue();
+
+        /**
+         * Only allow to reset value triggered by any parent components
+         */
+        Eventbus.$on('resetMultiSelectValue', function (parentId) {
+
+            if (_this.$parent._uid == parentId) {
+                _this.resetValue();
+            };
+        });
     },
 
+    watch: {
+
+        // When selected property has changed after component is mounted
+        // We'll make sure we'll update the selected values. Note that
+        // This will remove any current selected values.
+        selected: function selected(newValue, oldValue) {
+
+            if (this.isObject(oldValue) && JSON.stringify(oldValue) === JSON.stringify(newValue)) return;
+            if (!this.isObject(oldValue) && newValue == oldValue) return;
+
+            this.value = this.defaultValue();
+        },
+        value: function value(newValue, oldValue) {
+
+            if (newValue == oldValue) return;
+
+            this.notifyChange();
+        }
+    },
     methods: {
+        resetValue: function resetValue() {
+            this.value = this.defaultValue();
+        },
         clearErrors: function clearErrors() {
             if (this.name) Eventbus.$emit('clearErrors', this.name);
+        },
+        notifyChange: function notifyChange() {
+            Eventbus.$emit('updated-select', this.name, Object.keys(this.valuesAsSelectedOptions), this.value);
         },
         defaultValue: function defaultValue() {
 
             var selected = this.isJson(this.selected) ? JSON.parse(this.selected) : this.selected;
 
-            // Single default selected value
-            if (this.isObject(selected) && !this.isArray(selected)) return selected;
-            if (this.isPrimitive(selected)) return this.find(this.realValues, selected, this.valuekey);
+            // If value is a primitive, we'll need to fetch the corresponding value object|string first
+            if (this.isPrimitive(selected)) {
+                selected = this.find(this.realValues, selected, this.valuekey);
+            }
+
+            // If selected value is a single object, we'll use this a the appropriate value
+            if (this.isObject(selected) && !this.isArray(selected)) {
+                return this.multiple ? [selected] : selected;
+            }
+
+            //  If by now this is not an array, we consider this to be invalid and set the default value to an empty array
+            if (!this.isArray(selected)) return this.multiple ? [] : null;
 
             // Multiple default selected values
-            if (!this.isArray(selected)) return null;
-
             var result = [];
             for (var i = 0; i < selected.length; i++) {
                 if (this.isObject(selected[i])) {
@@ -2112,7 +2155,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         // Pluck specific value from objects by key
         pluck: function pluck(values, key, value) {
-            var _this = this;
+            var _this2 = this;
 
             if (!values || this.isPrimitive(values)) {
                 return values;
@@ -2124,7 +2167,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 var result = {};
                 values.forEach(function (val) {
 
-                    if (_this.isPrimitive(val)) {
+                    if (_this2.isPrimitive(val)) {
                         result[val] = val;
                     } else {
 
@@ -2145,15 +2188,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         // This assumes a group setup
         flattenGroupedValues: function flattenGroupedValues(values, key) {
-            var _this2 = this;
+            var _this3 = this;
 
             var result = [];
 
             values.forEach(function (val) {
 
-                if (_this2.isPrimitive(val)) {
+                if (_this3.isPrimitive(val)) {
                     result.push(val);
-                } else if (_this2.isArray(val[key])) {
+                } else if (_this3.isArray(val[key])) {
                     result = result.concat(val[key]);
                 } else {
                     result.push(val[key]);
@@ -2171,7 +2214,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return true;
         },
         isPrimitive: function isPrimitive(value) {
-            return !this.isObject(value) && !this.isArray(value);
+            return value !== null && !this.isObject(value) && !this.isArray(value);
         },
         isObject: function isObject(value) {
             return value !== null && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) === "object";
@@ -2431,7 +2474,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.multiselect__tags input, .multiselect__tags input:focus{\n    border: none;\n}\ninput[type=\"text\"].multiselect__input {\n    padding: 1px 0 0 5px;\n}\ninput[type=\"text\"].multiselect__input:focus {\n    -webkit-box-shadow: none;\n            box-shadow: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.multiselect__tag{\n    background-color: hsla(125, 48%, 40%, 1);\n}\n.multiselect__tags input, .multiselect__tags input:focus{\n    border: none;\n}\ninput[type=\"text\"].multiselect__input {\n    padding: 1px 0 0 5px;\n}\n\n", ""]);
 
 // exports
 
@@ -28915,7 +28958,7 @@ var render = function() {
           "track-by": _vm.valuekey,
           "group-label": _vm.grouplabel,
           "group-values": _vm.groupvalues,
-          placeholder: _vm.placeholder,
+          placeholder: "Maak een selectie",
           "no-result": "geen resultaat gevonden",
           "deselect-label": "╳",
           "selected-label": "✓",
