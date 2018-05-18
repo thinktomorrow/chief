@@ -8,17 +8,35 @@
   }
 }
 
-$color-name: primary secondary tertiary dark white black border heading font subtle success warning error information;
-$colors: $color-primary $color-secondary $color-tertiary $color-emphasis $color-white $color-black $color-border $color-heading  $color-font  $color-subtle $color-success $color-warning $color-error $color-information;
+$textColors: (
+    primary: ($color-primary, $color-primary),
+    secondary: ($color-secondary, $color-secondary),
+    tertiary: ($color-tertiary, $color-tertiary),
 
-@each $block in $color-name{
-  $i: index($color-name, $block);
-  // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
-    $color: nth($colors, $i);
-    .bg-#{$block}{
-      background-color: $color;
-    }
-    .text-#{$block}{
-      color: $color;
-    }
+    dark: ($color-emphasis, $color-emphasis),
+    white: ($color-white, $color-white),
+    black: ($color-black, $color-black),
+    border: ($color-border, $color-border),
+    heading: ($color-heading, $color-heading),
+    font: ($color-font, $color-font),
+    subtle: ($color-subtle, $color-subtle),
+
+    success: ($color-success, $color-success),
+    error: ($color-error, $color-error),
+    warning: ($color-warning, $color-warning),
+    information: ($color-information, $color-information),
+);
+
+@each $name, $colors in $textColors {
+
+  $bgcolor: nth($colors, 1);
+  $fontcolor: nth($colors, 2);
+
+  .bg-#{$name}{
+    background-color: $bgcolor;
+  }
+
+  .text-#{$name}{
+    color: $fontcolor;
+  }
 }

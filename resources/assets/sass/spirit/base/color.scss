@@ -21,8 +21,7 @@ $color-font:          #4f5164; // Used for paragraph text
 $color-body:          #f4f6f9; // Used for body
 $color-border:        #dadada; // Used for borders
 
-
-$color-subtle:        #b0b0b0;
+$color-subtle:        #e1e2e8;
 $color-emphasis:      #4f5164;
 $color-white:         #ffffff;
 $color-black:         #000000;
@@ -34,4 +33,4 @@ $color-information:   #2083fe;
 
 // components
 $color-table:         #f7f8f9 !default;
-$color-link:          #212631 !default;
+$color-link:          $color-primary !default;

@@ -43,7 +43,7 @@ class RefreshDatabase extends BaseCommand
 
         $this->info('Scaffolding some entries...');
         factory(User::class, 10)->create();
-        factory(Page::class, 10)->create();
+        factory(Page::class, 5)->create();
 
         $this->info('Great. We\'re done here. NOW START HACKING!');
     }

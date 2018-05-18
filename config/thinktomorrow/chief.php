@@ -22,4 +22,20 @@ return [
      */
     'client' => 'Think Tomorrow',
 
+    /**
+     * Here we define which models are allowed to be set as children or parents
+     * After changing this value, make sure you flush the cached relations.
+     * This has no effect on already created relations, only new ones.
+     */
+    'relations' => [
+
+        'children' => [
+            \Chief\Pages\Page::class,
+        ],
+
+        'parents' => [
+            \Chief\Pages\Page::class,
+        ],
+    ],
+
 ];

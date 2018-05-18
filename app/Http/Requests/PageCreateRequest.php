@@ -28,7 +28,6 @@ class PageCreateRequest extends FormRequest
             'trans.*.title'     => 'required|unique:page_translations,title|max:200',
             'trans.*.content'   => 'required|max:1500',
             'trans.*.short'     => 'max:700',
-
         ];
     }
 

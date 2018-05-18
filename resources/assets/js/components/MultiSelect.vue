@@ -70,7 +70,7 @@
                 values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
                 // Active selected option
-                value: null
+                value: [],
             }
         },
         computed: {
@@ -84,7 +84,6 @@
 
                 return this.pluck(this.value, this.valuekey, this.labelkey);
             },
-
             realValues(){
 
                 /**
@@ -96,25 +95,69 @@
                 }
 
                 return this.values;
-            }
+            },
         },
-        mounted(){
-            this.value = this.defaultValue();
+        created(){
+            this.resetValue();
+
+            /**
+             * Only allow to reset value triggered by any parent components
+             */
+            Eventbus.$on('resetMultiSelectValue', (parentId) => {
+
+                if(this.$parent._uid == parentId){
+                    this.resetValue();
+                };
+
+            });
+        },
+        watch:{
+
+            // When selected property has changed after component is mounted
+            // We'll make sure we'll update the selected values. Note that
+            // This will remove any current selected values.
+            selected(newValue, oldValue){
+
+                if(this.isObject(oldValue) && JSON.stringify(oldValue) === JSON.stringify(newValue)) return;
+                if(!this.isObject(oldValue) && newValue == oldValue) return;
+
+                this.value = this.defaultValue();
+            },
+
+            value(newValue, oldValue){
+
+                if(newValue == oldValue) return;
+
+                this.notifyChange();
+            }
+
         },
         methods: {
+            resetValue(){
+                this.value = this.defaultValue();
+            },
             clearErrors(){
                 if(this.name) Eventbus.$emit('clearErrors', this.name)
+            },
+            notifyChange(){
+                Eventbus.$emit('updated-select', this.name, Object.keys(this.valuesAsSelectedOptions), this.value);
             },
             defaultValue(){
 
                 let selected = this.isJson(this.selected) ? JSON.parse(this.selected) : this.selected;
 
-                // Single default selected value
-                if(this.isObject(selected) && !this.isArray(selected)) return selected;
-                if(this.isPrimitive(selected)) return this.find(this.realValues, selected, this.valuekey);
+                // If value is a primitive, we'll need to fetch the corresponding value object|string first
+                if(this.isPrimitive(selected)) {
+                    selected = this.find(this.realValues, selected, this.valuekey);
+                }
+
+                // If selected value is a single object, we'll use this a the appropriate value
+                if(this.isObject(selected) && !this.isArray(selected)) {
+                    return this.multiple ? [selected] : selected;
+                }
 
                 //  If by now this is not an array, we consider this to be invalid and set the default value to an empty array
-                if( ! this.isArray(selected) ) return [];
+                if( ! this.isArray(selected) ) return this.multiple ? [] : null;
 
                 // Multiple default selected values
                 let result = [];
@@ -208,7 +251,7 @@
             },
             isPrimitive(value)
             {
-                return !this.isObject(value) && ! this.isArray(value);
+                return value !== null && !this.isObject(value) && ! this.isArray(value);
             },
             isObject(value)
             {
@@ -219,8 +262,8 @@
                 return Array.isArray(value);
             },
             isEmpty(value) {
-                if (value === 0) return false
-                if (Array.isArray(value) && value.length === 0) return true
+                if (value === 0) return false;
+                if (Array.isArray(value) && value.length === 0) return true;
                 return !value;
             },
         },
@@ -230,8 +273,16 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style type="text/css">
 
+    .multiselect__tag{
+        background-color: hsla(125, 48%, 40%, 1);
+    }
+
     .multiselect__tags input, .multiselect__tags input:focus{
         border: none;
+    }
+
+    input[type="text"].multiselect__input:focus {
+        box-shadow: none;
     }
 
     input[type="text"].multiselect__input {
@@ -239,5 +290,3 @@
     }
 
 </style>
-
-

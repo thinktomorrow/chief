@@ -21,12 +21,12 @@ $factory->define(Page::class, function (Faker\Generator $faker) {
         'featured'    => $faker->boolean(),
         'publication' => null,
         'title:nl'    => $faker->words(rand(2, 4), true),
-        'title:fr'    => $faker->words(rand(2, 4), true),
+        'title:en'    => $faker->words(rand(2, 4), true),
         'short:nl'    => $faker->words(rand(10, 14), true),
-        'short:fr'    => $faker->words(rand(10, 14), true),
+        'short:en'    => $faker->words(rand(10, 14), true),
         'slug:nl'     => $faker->unique()->slug,
-        'slug:fr'     => $faker->unique()->slug,
+        'slug:en'     => $faker->unique()->slug,
         'content:nl'  => $faker->paragraph(rand(6, 12)),
-        'content:fr'  => $faker->paragraph(rand(4, 10)),
+        'content:en'  => $faker->paragraph(rand(4, 10)),
     ];
 });

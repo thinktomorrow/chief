@@ -15,7 +15,7 @@ span.sans-serif:after{
 
 hr{
     border-top: 0;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px dotted $color-border;
 }
 .relative{
     position: relative;
@@ -54,4 +54,9 @@ a{
 ::selection{
     background-color: $color-secondary;
     color: $color-white;
+}
+
+.disabled{
+    cursor: not-allowed!important;
+    opacity: 0.35;
 }

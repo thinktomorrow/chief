@@ -2,6 +2,7 @@
 
 namespace Chief\Pages\Application;
 
+use Chief\Common\Relations\RelatedCollection;
 use Chief\Pages\Page;
 use Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
@@ -11,12 +12,8 @@ class UpdatePage
 {
     use TranslatableCommand;
 
-    public function handle($id, array $translations): Page
+    public function handle($id, array $translations, array $relations): Page
     {
-        DB::transaction(function(){
-
-        }, 2);
-
         try{
             DB::beginTransaction();
 
@@ -36,8 +33,11 @@ class UpdatePage
 
             $this->savePageTranslations($page, $translations);
 
+            $this->syncRelations($page, $relations);
+
             DB::commit();
             return $page->fresh();
+
         } catch(\Throwable $e){
             DB::rollBack();
             throw $e;
@@ -55,5 +55,17 @@ class UpdatePage
         $this->saveTranslations($translations, $page, [
             'slug', 'title', 'content', 'seo_title', 'seo_description'
         ]);
+    }
+
+    private function syncRelations($page, $relateds)
+    {
+        // First remove all existing children
+        foreach($page->children() as $child){
+            $page->rejectChild($child);
+        }
+
+        foreach(RelatedCollection::inflate($relateds) as $i => $related){
+            $page->adoptChild($related, ['sort' => $i]);
+        }
     }
 }
