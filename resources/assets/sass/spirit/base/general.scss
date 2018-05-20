@@ -21,6 +21,10 @@ hr{
     position: relative;
 }
 
+a, .icon, button{
+    cursor: pointer;
+}
+
 // LINK COLORS
 a{
     color: $color-link;

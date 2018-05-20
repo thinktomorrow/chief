@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Back\Users;
 
-use App\Http\Controllers\Controller;
-use Chief\Authorization\Role;
-use Chief\Users\Invites\Application\AcceptInvite;
-use Chief\Users\Invites\Application\InviteUser;
-use Chief\Users\Invites\Invitation;
 use Chief\Users\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Chief\Users\Invites\Application\InviteUser;
 
 class ResendInviteController extends Controller
 {

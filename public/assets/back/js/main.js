@@ -1643,11 +1643,14 @@ module.exports = {
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	props: {
-		'type': { default: 'success' },
-		'body': { required: true }
+		'type': { default: 'success' }
 	},
 	data: function data() {
 		return {
@@ -1777,7 +1780,7 @@ module.exports = {
                     modifiers: {
                         preventOverflow: {
                             enabled: true,
-                            padding: 10,
+                            padding: 5,
                             boundariesElement: 'viewport'
                         }
                     },
@@ -2023,7 +2026,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         /** Grouped options */
         groupvalues: { default: null, type: String },
-        grouplabel: { default: null, type: String }
+        grouplabel: { default: null, type: String },
+
+        placeholder: { default: 'Maak een selectie' }
     },
     data: function data() {
         return {
@@ -2031,7 +2036,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
             // Active selected option
-            //                value: this.multiple ? [] : null
             value: []
         };
     },
@@ -2227,6 +2231,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (Array.isArray(value) && value.length === 0) return true;
             return !value;
         }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/OptionsDropdown.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    props: {
+        btn_class: { default: 'icon icon-more-vertical' },
+        btn_name: { default: '' }
     }
 });
 
@@ -28861,36 +28887,39 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.isVisible,
-          expression: "isVisible"
-        }
-      ],
-      staticClass: "alert --raised",
-      class: _vm.typeclass
-    },
+    "transition",
+    { attrs: { name: "modal", mode: "in-out", appear: "" } },
     [
-      _c("span", {
-        staticClass: "alert__copy column-9",
-        domProps: { innerHTML: _vm._s(_vm.body) }
-      }),
-      _vm._v(" "),
       _c(
-        "span",
+        "div",
         {
-          staticClass: "alert__btn",
-          on: {
-            click: function($event) {
-              _vm.isVisible = false
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.isVisible,
+              expression: "isVisible"
             }
-          }
+          ],
+          class: _vm.typeclass
         },
-        [_vm._v("Ok, got it")]
+        [
+          _c(
+            "div",
+            { staticClass: "alert__copy inline" },
+            [_vm._t("default")],
+            2
+          ),
+          _vm._v(" "),
+          _c("span", {
+            staticClass: "alert__btn icon icon-x",
+            on: {
+              click: function($event) {
+                _vm.isVisible = false
+              }
+            }
+          })
+        ]
       )
     ]
   )
@@ -28958,7 +28987,7 @@ var render = function() {
           "track-by": _vm.valuekey,
           "group-label": _vm.grouplabel,
           "group-values": _vm.groupvalues,
-          placeholder: "Maak een selectie",
+          placeholder: _vm.placeholder,
           "no-result": "geen resultaat gevonden",
           "deselect-label": "╳",
           "selected-label": "✓",
@@ -29048,7 +29077,8 @@ var render = function() {
                 value: _vm.isActive,
                 expression: "isActive"
               }
-            ]
+            ],
+            staticStyle: { "z-index": "1" }
           },
           [_vm._t("default", null, { toggle: _vm.toggle })],
           2
@@ -29387,6 +29417,48 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-971a3596", { render: render, staticRenderFns: staticRenderFns })
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-be168730\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/OptionsDropdown.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "dropdown",
+    {
+      scopedSlots: _vm._u([
+        {
+          key: "trigger",
+          fn: function(ref) {
+            var toggle = ref.toggle
+            return _c("span", {
+              class: _vm.btn_class,
+              domProps: { innerHTML: _vm._s(_vm.btn_name) },
+              on: { click: toggle }
+            })
+          }
+        }
+      ])
+    },
+    [_c("div", { staticClass: "dropdown-box" }, [_vm._t("default")], 2)]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-be168730", { render: render, staticRenderFns: staticRenderFns })
   }
 }
 
@@ -41170,6 +41242,62 @@ if (false) {(function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/OptionsDropdown.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_plugins_transform_object_rest_spread_transform_runtime_polyfill_false_helpers_false_node_modules_vue_loader_lib_selector_type_script_index_0_OptionsDropdown_vue__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/OptionsDropdown.vue");
+/* empty harmony namespace reexport */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_be168730_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_OptionsDropdown_vue__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-be168730\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/OptionsDropdown.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__("./node_modules/vue-loader/lib/runtime/component-normalizer.js");
+var disposed = false
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+
+var Component = Object(__WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__["a" /* default */])(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_plugins_transform_object_rest_spread_transform_runtime_polyfill_false_helpers_false_node_modules_vue_loader_lib_selector_type_script_index_0_OptionsDropdown_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_be168730_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_OptionsDropdown_vue__["a" /* render */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_be168730_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_OptionsDropdown_vue__["b" /* staticRenderFns */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/OptionsDropdown.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-be168730", Component.options)
+  } else {
+    hotAPI.reload("data-v-be168730", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/RemoveButton.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -41470,6 +41598,7 @@ window.Form = __WEBPACK_IMPORTED_MODULE_1__utilities_Form__["a" /* default */];
 /** Chief components */
 Vue.component('dropdown', __webpack_require__("./resources/assets/js/components/Dropdown.vue").default);
 Vue.component('button-dropdown', __webpack_require__("./resources/assets/js/components/ButtonDropdown.vue").default);
+Vue.component('options-dropdown', __webpack_require__("./resources/assets/js/components/OptionsDropdown.vue").default);
 
 Vue.component('tab', __webpack_require__("./resources/assets/js/components/Tab.vue").default);
 Vue.component('tabs', __webpack_require__("./resources/assets/js/components/Tabs.vue").default);

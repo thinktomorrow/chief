@@ -3,7 +3,7 @@
         <div v-if="isActive" class="dropdown-backdrop" @click="close"></div>
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
         <transition name="fade">
-            <div v-show="isActive">
+            <div v-show="isActive" style="z-index: 1;">
                 <slot :toggle="toggle"></slot>
             </div>
         </transition>
@@ -85,7 +85,7 @@
                             modifiers: {
                                 preventOverflow: {
                                     enabled: true,
-                                    padding: 10,
+                                    padding: 5,
                                     boundariesElement: 'viewport'
                                 },
                             },

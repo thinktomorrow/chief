@@ -3,11 +3,9 @@
 namespace App\Providers;
 
 use Chief\Users\Application\EnableUser;
-use Chief\Users\Invites\Application\AcceptInvite;
 use Chief\Users\Invites\Application\SendInvite;
 use Chief\Users\Invites\Events\InviteAccepted;
 use Chief\Users\Invites\Events\UserInvited;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider

@@ -3,7 +3,7 @@
     <section class="stack-l notifications" id="notifications">
         <h1>Notifications</h1>
         <hr>
-        <small>The class "peekaboo" makes it appear on the top right of your screen</small>
+        <small>The class "fixed--bottom-right" makes it appear on the top right of your screen</small>
         <div id="clone-16">
             <div class="alert squished alert--success --raised stack-s">
                 <span class="icon icon-cart icon-fw"></span>

@@ -70,4 +70,9 @@ class Invitation extends Model implements StatefulContract
         $this->state = $state;
         $this->save();
     }
+
+    public function present()
+    {
+        return new InvitationPresenter($this);
+    }
 }

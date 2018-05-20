@@ -1,12 +1,9 @@
 // NOTIFICATIONS
-.peekaboo{
-  position: fixed;
-  top: 1rem; right: 1rem;
-  width: auto;
-}
 .alert{
   display: flex;
   border-radius: 0;
+  border: none;
+  z-index: $z-index-alert;
 
   & .alert__btn{
     cursor: pointer;
@@ -16,9 +13,6 @@
   &:hover{
     cursor: pointer;
     @extend .--raised;
-  }
-  &.icon{
-
   }
 }
 
@@ -33,7 +27,6 @@ $colors: $color-primary $color-secondary $color-success $color-warning $color-er
   .alert--#{$alert}{
     background-color: $color;
     color: $color-white;
-    border: 1px solid darken($color, 10%);
     .alert__btn{
       color:  $color-white;
       &:hover{

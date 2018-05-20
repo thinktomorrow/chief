@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back\Users;
 use App\Http\Controllers\Controller;
 use Chief\Authorization\Role;
 use Chief\Users\Invites\Application\AcceptInvite;
+use Chief\Users\Invites\Application\DenyInvite;
 use Chief\Users\Invites\Application\InviteUser;
 use Chief\Users\Invites\Invitation;
 use Chief\Users\User;
@@ -37,6 +38,15 @@ class InviteController extends Controller
         }
 
         return redirect()->route('back.getting-started');
+    }
+
+    public function deny(Request $request)
+    {
+        $invitation = Invitation::findByToken($request->token);
+
+        app(DenyInvite::class)->handle($invitation);
+
+        return view('back.users.invite-denied');
     }
 
 }

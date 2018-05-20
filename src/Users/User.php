@@ -39,36 +39,14 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Invitation::class, 'invitee_id');
     }
 
-    public function invitationLabel(): string
-    {
-        if(!$this->invitation) {
-            return $this->isEnabled()
-                        ? '<span class="label label--primary">actief</span>'
-                        : '<span class="label label--error">uitgeschakeld</span><a class="" href="'.route('back.invites.resend', $this->id).'">Stuur nieuwe uitnodiging</a>';
-        }
-
-        $flair = 'label--primary';
-
-        switch($this->invitation->state()) {
-            case InvitationState::REVOKED:
-                $flair = 'label--error';
-            break;
-            case InvitationState::DENIED:
-            case InvitationState::EXPIRED:
-                $flair = 'label--warning';
-            break;
-            case InvitationState::PENDING:
-            case InvitationState::NONE:
-                $flair = 'label-o--primary';
-            break;
-        }
-
-        return '<span class="label '.$flair.'">'.$this->invitation->state().'</span>';
-    }
-
     public function roleNames()
     {
         return $this->roles->pluck('name')->toArray();
+    }
+
+    public function present()
+    {
+        return new UserPresenter($this);
     }
 
     public function sendPasswordResetNotification($token)
