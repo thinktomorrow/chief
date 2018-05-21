@@ -23,18 +23,6 @@
                         <span class="label label-o--primary">{{ $roleName }}</span>
                     @endforeach
                 </div>
-
-                <options-dropdown class="inline-block">
-                    <div v-cloak>
-                        <div>
-                            <a class="block inset-s" href="{{ route('back.invites.resend', $user->id) }}">Stuur nieuwe uitnodiging</a>
-                        </div>
-                        <hr>
-                        <div class="inset-s font-s">
-                           <p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je hem <a class="text-error">blokkeren</a>.</p>
-                        </div>
-                    </div>
-                </options-dropdown>
             </div>
         </div>
     @endforeach

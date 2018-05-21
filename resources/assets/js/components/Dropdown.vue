@@ -82,15 +82,15 @@
                         this.triggerEl,
                         this.targetEl,
                         {
-                            modifiers: {
-                                preventOverflow: {
-                                    enabled: true,
-                                    padding: 5,
-                                    boundariesElement: 'viewport'
-                                },
-                            },
+//                            modifiers: {
+//                                preventOverflow: {
+//                                    enabled: true,
+//                                    padding: 5,
+//                                    boundariesElement: 'viewport'
+//                                },
+//                            },
                             removeOnDestroy: false, // We need to keep our element
-                            placement: 'bottom-start',
+//                            placement: 'bottom-start',
 
                         }
                     );

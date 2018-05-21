@@ -4,7 +4,20 @@
 
 @chiefheader
 	@slot('title', $user->fullname)
-	<button data-submit-form="updateForm" type="button" class="btn btn-o-primary">Bewaar</button>
+	<div class="inline-group">
+		<button data-submit-form="updateForm" type="button" class="btn btn-o-primary">Bewaar</button>
+		<options-dropdown class="inline-block">
+			<div v-cloak>
+				<div>
+					<a class="block inset-s" href="{{ route('back.invites.resend', $user->id) }}">Stuur nieuwe uitnodiging</a>
+				</div>
+				<hr>
+				<div class="inset-s font-s">
+					<p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <a class="text-error">blokkeren</a>.</p>
+				</div>
+			</div>
+		</options-dropdown>
+	</div>
 @endchiefheader
 
 @section('content')
