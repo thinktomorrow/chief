@@ -12,7 +12,7 @@ class EnableUserController extends Controller
 {
     public function store(Request $request, $id)
     {
-        $this->authorize('create-user');
+        $this->authorize('disable-user');
 
         $user = User::findOrFail($id);
 
