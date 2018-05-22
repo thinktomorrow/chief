@@ -37,7 +37,7 @@ class InviteController extends Controller
             return redirect()->route('back.password.edit');
         }
 
-        return redirect()->route('back.getting-started');
+        return redirect()->route('back.dashboard.getting-started');
     }
 
     public function deny(Request $request)

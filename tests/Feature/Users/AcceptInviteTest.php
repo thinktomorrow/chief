@@ -118,7 +118,7 @@ class AcceptInviteTest extends TestCase
 
         $response = $this->get($this->invitation->acceptUrl());
 
-        $response->assertRedirect(route('back.getting-started'));
+        $response->assertRedirect(route('back.dashboard.getting-started'));
 
         // Assert we are logged in
         $this->assertEquals($this->invitee->id, auth()->guard('admin')->id());

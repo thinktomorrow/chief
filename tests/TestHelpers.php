@@ -61,6 +61,22 @@ trait TestHelpers
         return $developer;
     }
 
+    protected function admin()
+    {
+        $admin = factory(User::class)->create();
+        $admin->assignRole(Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'admin']));
+
+        return $admin;
+    }
+
+    protected function author()
+    {
+        $author = factory(User::class)->create();
+        $author->assignRole(Role::firstOrCreate(['name' => 'author', 'guard_name' => 'admin']));
+
+        return $author;
+    }
+
     protected function setUpDefaultAuthorization()
     {
         AuthorizationDefaults::permissions()->each(function($permissionName){

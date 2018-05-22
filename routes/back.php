@@ -52,13 +52,8 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     Route::get('logout', 'Auth\LoginController@logout')->name('back.logout');
 
-    Route::get('/',function(){
-        return view('back.dashboard');
-    })->name('back.dashboard');
-
-//    Route::get('/',['as' => 'admin.home','uses' => HomeController::class.'@show']);
-
-    Route::get('getting-started','Back\GettingStartedController@show')->name('back.getting-started');
+    Route::get('/','Back\DashboardController@show')->name('back.dashboard');
+    Route::get('getting-started','Back\DashboardController@gettingStarted')->name('back.dashboard.getting-started');
 
     // Prompt for a (new) password
     Route::get('password-prompt','Auth\ChangePasswordController@edit')->name('back.password.edit');
@@ -103,6 +98,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('users/{user}/edit', 'Back\Users\UserController@edit')->name('back.users.edit');
 
     // INVITE MANAGEMENT
+    Route::post('users/{id}/disable','Back\Users\DisableUserController@store')->name('back.users.disable');
     Route::get('users/{id}/resend-invite','Back\Users\ResendInviteController@store')->name('back.invites.resend');
 
     // ROLE MANAGEMENT
