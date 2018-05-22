@@ -1777,17 +1777,20 @@ module.exports = {
 
             this.$nextTick(function () {
                 _this3.popper = new __WEBPACK_IMPORTED_MODULE_0_popper_js__["a" /* default */](_this3.triggerEl, _this3.targetEl, {
-                    //                            modifiers: {
-                    //                                preventOverflow: {
-                    //                                    enabled: true,
-                    //                                    padding: 5,
-                    //                                    boundariesElement: 'viewport'
-                    //                                },
-                    //                            },
+                    modifiers: {
+                        preventOverflow: {
+                            enabled: true,
+                            padding: 5,
+                            boundariesElement: 'viewport'
+                        }
+                    },
                     removeOnDestroy: false // We need to keep our element
                     //                            placement: 'bottom-start',
 
                 });
+
+                // Force update to let preventOverflow kick in
+                _this3.popper.scheduleUpdate();
             });
         },
         destroyDropdownElement: function destroyDropdownElement() {

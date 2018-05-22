@@ -13,7 +13,7 @@
 				</div>
 				<hr>
 				<div class="inset-s font-s">
-					<p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <a class="text-error">blokkeren</a>.</p>
+					<p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <a href="{{ route('back.users.disable', $user->id) }}" class="text-error">blokkeren</a>.</p>
 				</div>
 			</div>
 		</options-dropdown>
