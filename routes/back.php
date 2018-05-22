@@ -99,6 +99,7 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     // INVITE MANAGEMENT
     Route::post('users/{id}/disable','Back\Users\DisableUserController@store')->name('back.users.disable');
+    Route::post('users/{id}/enable','Back\Users\EnableUserController@store')->name('back.users.enable');
     Route::get('users/{id}/resend-invite','Back\Users\ResendInviteController@store')->name('back.invites.resend');
 
     // ROLE MANAGEMENT

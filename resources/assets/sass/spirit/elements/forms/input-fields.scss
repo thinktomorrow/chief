@@ -1,3 +1,11 @@
+// Reset input submit
+input[type="submit"]{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
 textarea,
 input[type='text'],
 input[type='email'],

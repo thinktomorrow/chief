@@ -67,7 +67,7 @@ class DisableUserTest extends TestCase
     /** @test */
     function disabled_user_cannot_use_invite_link()
     {
-
+        $this->markTestIncomplete();
     }
 
 

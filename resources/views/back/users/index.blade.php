@@ -11,11 +11,11 @@
     @foreach($users as $user)
         <div class="block stack panel panel-default inset-s center-y">
             <div>
-                <a class="block" href="{{ route('back.users.edit', $user->id) }}">{{ $user->fullname }}</a>
+                <a href="{{ route('back.users.edit', $user->id) }}">{{ $user->fullname }}</a>
+                {!! $user->present()->enabledAsLabel() !!}
             </div>
 
             <div style="margin-left:auto;">
-                {!! $user->present()->enabledAsLabel() !!}
                 {!! optional($user->invitation, function($invitation){ return $invitation->present()->stateAsLabel(); }) !!}
 
                 <div class="inline-block">
@@ -25,5 +25,6 @@
                 </div>
             </div>
         </div>
+        <hr>
     @endforeach
 @endsection

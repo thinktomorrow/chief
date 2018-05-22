@@ -21,6 +21,6 @@ class UserPresenter
 
         return $this->user->isEnabled()
             ? ''
-            : '<span class="label label--error">geblokkeerd</span><a class="" href="'.route('back.invites.resend', $this->user->id).'">Stuur nieuwe uitnodiging</a>';
+            : '<span class="label label--error">Gebruiker is geblokkeerd.</span>';
     }
 }

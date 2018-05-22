@@ -5,7 +5,10 @@
 @chiefheader
 	@slot('title', $user->fullname)
 	<div class="inline-group">
-		<button data-submit-form="updateForm" type="button" class="btn btn-o-primary">Bewaar</button>
+		{!! $user->present()->enabledAsLabel() !!}
+		@if($user->isEnabled())
+			<button data-submit-form="updateForm" type="button" class="btn btn-o-primary">Bewaar</button>
+		@endif
 		<options-dropdown class="inline-block">
 			<div v-cloak>
 				<div>
@@ -13,7 +16,17 @@
 				</div>
 				<hr>
 				<div class="inset-s font-s">
-					<p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <a href="{{ route('back.users.disable', $user->id) }}" class="text-error">blokkeren</a>.</p>
+					@if($user->isEnabled())
+						<form method="POST" action="{{ route('back.users.disable', $user->id) }}">
+							{{ csrf_field() }}
+							<p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <input type="submit" class="text-error" value="blokkeren">.</p>
+						</form>
+					@else
+						<form method="POST" action="{{ route('back.users.enable', $user->id) }}">
+							{{ csrf_field() }}
+							<p>{{ $user->firstname }} is momenteel geblokkeerd. <br> <input type="submit" class="text-primary" value="Verleen opnieuw toegang">.</p>
+						</form>
+					@endif
 				</div>
 			</div>
 		</options-dropdown>
