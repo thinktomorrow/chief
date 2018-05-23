@@ -3154,6 +3154,7 @@ a.text-information:hover {
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary.active {
+  color: #ffffff;
   background-color: #15d5b2;
   border: 1px solid #15d5b2;
   -webkit-box-shadow: 0 14px 26px -12px rgba(20, 200, 167, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(20, 200, 167, 0.2);
@@ -3191,6 +3192,7 @@ a.text-information:hover {
 .btn-secondary:focus,
 .btn-secondary:active,
 .btn-secondary.active {
+  color: #ffffff;
   background-color: #4766b3;
   border: 1px solid #4766b3;
   -webkit-box-shadow: 0 14px 26px -12px rgba(67, 95, 168, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(67, 95, 168, 0.2);
@@ -3228,6 +3230,7 @@ a.text-information:hover {
 .btn-tertiary:focus,
 .btn-tertiary:active,
 .btn-tertiary.active {
+  color: #ffffff;
   background-color: #e42168;
   border: 1px solid #e42168;
   -webkit-box-shadow: 0 14px 26px -12px rgba(218, 27, 97, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(218, 27, 97, 0.2);
@@ -3265,6 +3268,7 @@ a.text-information:hover {
 .btn-white:focus,
 .btn-white:active,
 .btn-white.active {
+  color: #000000;
   background-color: white;
   border: 1px solid white;
   -webkit-box-shadow: 0 14px 26px -12px rgba(255, 255, 255, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(255, 255, 255, 0.2);
@@ -3302,6 +3306,7 @@ a.text-information:hover {
 .btn-subtle:focus,
 .btn-subtle:active,
 .btn-subtle.active {
+  color: #ffffff;
   background-color: #56586d;
   border: 1px solid #56586d;
   -webkit-box-shadow: 0 14px 26px -12px rgba(79, 81, 100, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(79, 81, 100, 0.2);
@@ -3339,6 +3344,7 @@ a.text-information:hover {
 .btn-success:focus,
 .btn-success:active,
 .btn-success.active {
+  color: #ffffff;
   background-color: #38d17c;
   border: 1px solid #38d17c;
   -webkit-box-shadow: 0 14px 26px -12px rgba(47, 202, 116, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(47, 202, 116, 0.2);
@@ -3376,6 +3382,7 @@ a.text-information:hover {
 .btn-error:focus,
 .btn-error:active,
 .btn-error.active {
+  color: #ffffff;
   background-color: #ee5b5b;
   border: 1px solid #ee5b5b;
   -webkit-box-shadow: 0 14px 26px -12px rgba(237, 77, 77, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(237, 77, 77, 0.2);
@@ -3413,6 +3420,7 @@ a.text-information:hover {
 .btn-warning:focus,
 .btn-warning:active,
 .btn-warning.active {
+  color: #ffffff;
   background-color: #f6be57;
   border: 1px solid #f6be57;
   -webkit-box-shadow: 0 14px 26px -12px rgba(245, 184, 72, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(245, 184, 72, 0.2);
@@ -3450,6 +3458,7 @@ a.text-information:hover {
 .btn-information:focus,
 .btn-information:active,
 .btn-information.active {
+  color: #ffffff;
   background-color: #2f8bfe;
   border: 1px solid #2f8bfe;
   -webkit-box-shadow: 0 14px 26px -12px rgba(32, 131, 254, 0), 0 4px 23px 0px rgba(79, 81, 100, 0.12), 0 8px 10px -5px rgba(32, 131, 254, 0.2);
@@ -4495,9 +4504,9 @@ input[type='phone']:focus,
 input[type='password']:focus,
 input[type='file']:focus,
 .custom-file-input:focus {
-  -webkit-box-shadow: 0 0 5px #f9f9f9;
-          box-shadow: 0 0 5px #f9f9f9;
-  border: 1px solid #f9f9f9;
+  -webkit-box-shadow: 0 1px 5px -1px #dadada;
+          box-shadow: 0 1px 5px -1px #dadada;
+  border: 1px solid #dadada;
   outline: none;
 }
 
@@ -4511,7 +4520,7 @@ input[type='phone']::-webkit-input-placeholder,
 input[type='password']::-webkit-input-placeholder,
 input[type='file']::-webkit-input-placeholder,
 .custom-file-input::-webkit-input-placeholder {
-  color: #f9f9f9;
+  color: #dadada;
 }
 
 textarea:-ms-input-placeholder,
@@ -4524,7 +4533,7 @@ input[type='phone']:-ms-input-placeholder,
 input[type='password']:-ms-input-placeholder,
 input[type='file']:-ms-input-placeholder,
 .custom-file-input:-ms-input-placeholder {
-  color: #f9f9f9;
+  color: #dadada;
 }
 
 textarea::-ms-input-placeholder,
@@ -4537,7 +4546,7 @@ input[type='phone']::-ms-input-placeholder,
 input[type='password']::-ms-input-placeholder,
 input[type='file']::-ms-input-placeholder,
 .custom-file-input::-ms-input-placeholder {
-  color: #f9f9f9;
+  color: #dadada;
 }
 
 textarea::placeholder,
@@ -4550,7 +4559,7 @@ input[type='phone']::placeholder,
 input[type='password']::placeholder,
 input[type='file']::placeholder,
 .custom-file-input::placeholder {
-  color: #f9f9f9;
+  color: #dadada;
 }
 
 .search-wrapper {

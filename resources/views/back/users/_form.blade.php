@@ -1,26 +1,33 @@
+
+@chiefformgroup(['field' => ['firstname', 'lastname']])
+    @slot('label', 'Naam')
+    <div class="row gutter">
+        <div class="column-5">
+            <label for="firstName">Voornaam</label>
+            <input id="firstName" class="input inset-s" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
+        </div>
+        <div class="column-7">
+            <label for="lastName">Achternaam</label>
+            <input id="lastName" class="input inset-s" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
+        </div>
+    </div>
+@endchiefformgroup
+
 @chiefformgroup(['field' => 'email'])
     @slot('label', 'E-mail')
-    @slot('description', 'Opgelet dit e-mail adres geldt tevens als login. Bij wijziging moet de gebruiker een nieuwe bevestiging via mail goedkeuren.')
-    <input class="input inset-s" type="email" name="email" value="{{ old('email',$user->email) }}">
-@endchiefformgroup
-
-@chiefformgroup(['field' => 'firstname'])
-    @slot('label', 'Voornaam')
-    <input class="input inset-s" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
-@endchiefformgroup
-
-@chiefformgroup(['field' => 'lastname'])
-    @slot('label', 'Achternaam')
-    <input class="input inset-s" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
+    @slot('description', 'Dit e-mail adres geldt tevens als login. Bij wijziging ontvangt de gebruiker een bevestiging via mail.')
+    <label for="email">E-mail</label>
+    <input id="email" class="input inset-s" type="email" name="email" value="{{ old('email',$user->email) }}">
 @endchiefformgroup
 
 @chiefformgroup(['field' => 'roles'])
     @slot('label', 'Rechten')
-    @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.')
-    <chief-multiselect
+    @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft. <a href="'.route('back.roles.index').'">Meer uitleg</a>.')
+        <label for="roles">Rechten</label>
+        <chief-multiselect
             name="roles"
             :options=@json($roleNames)
-                    selected='@json(old('roles', $user->roleNames()))'
+            selected='@json(old('roles', $user->roleNames()))'
             :multiple="true"
     >
     </chief-multiselect>

@@ -13,11 +13,10 @@
             <div>
                 <a href="{{ route('back.users.edit', $user->id) }}">{{ $user->fullname }}</a>
                 {!! $user->present()->enabledAsLabel() !!}
+                {!! optional($user->invitation, function($invitation){ return $invitation->present()->stateAsLabel(); }) !!}
             </div>
 
             <div style="margin-left:auto;">
-                {!! optional($user->invitation, function($invitation){ return $invitation->present()->stateAsLabel(); }) !!}
-
                 <div class="inline-block">
                     @foreach($user->roleNames() as $roleName)
                         <span class="label label-o--primary">{{ $roleName }}</span>

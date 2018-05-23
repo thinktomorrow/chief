@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Back\Users;
 
-use App\Http\Controllers\Controller;
-use Chief\Authorization\Role;
-use Chief\Users\Invites\Application\InviteUser;
 use Chief\Users\User;
 use Illuminate\Http\Request;
+use Chief\Authorization\Role;
+use App\Http\Controllers\Controller;
+use Chief\Users\Invites\Application\InviteUser;
 
 class UserController extends Controller
 {
