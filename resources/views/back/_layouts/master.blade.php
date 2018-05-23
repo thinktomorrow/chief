@@ -3,7 +3,7 @@
 <body>
 
 <main id="main">
-    @include('back._layouts._nav.nav')
+    @include('back._layouts._partials.nav')
     @yield('header')
 
     <section id="content" class="container">

@@ -83,6 +83,10 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::post('notes/publish',['as' => 'notes.publish','uses' => Back\NoteController::class.'@publish']);
     Route::resource('notes', Back\NoteController::class);
 
+    // YOUR PROFILE MANAGEMENT
+    Route::get('you', 'Back\Users\YouController@edit')->name('back.you.edit');
+    Route::put('you', 'Back\Users\YouController@update')->name('back.you.update');
+
     /**
      * -----------------------------------------------------------------
      * AUTHORIZATION MANAGEMENT

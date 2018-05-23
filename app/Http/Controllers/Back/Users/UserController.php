@@ -53,7 +53,7 @@ class UserController extends Controller
         app(InviteUser::class)->handle($user, auth()->guard('admin')->user());
 
         return redirect()->route('back.users.index')
-            ->with('messages.success', 'User successfully added.');
+            ->with('messages.success', 'De nieuwe gebruiker is uitgenodigd en zal zodra een bevestiging ontvangen via mail.');
     }
 
     public function edit($id)
@@ -78,34 +78,11 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        $user->update($request->only(['firstname', 'lastname', 'email']));
 
+        $user->update($request->only(['firstname', 'lastname', 'email']));
         $user->syncRoles($request->get('roles', []));
 
         return redirect()->route('back.users.index')
             ->with('messages.success', 'Gegevens van de gebruiker zijn aangepast.');
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return redirect()->route('back.users.index')
-            ->with('flash_message',
-                'User successfully deleted.');
-    }
-
-    public function publish($user, Request $request){
-      $user = User::findOrFail($user);
-      $user->status = ($request->publishAccount == 'on' ? 'Active' : 'Blocked');
-      $user->save();
-
-      return redirect()->back();
-
     }
 }

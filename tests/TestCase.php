@@ -22,7 +22,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->protectTestEnvironment();
 
-        //$this->registerResponseMacros();
+        $this->registerResponseMacros();
     }
 
     // Override default createApplication

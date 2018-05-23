@@ -8,12 +8,29 @@ use Chief\Authorization\AuthorizationDefaults;
 use Chief\Authorization\Role;
 use Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Artisan;
+use PHPUnit\Framework\Assert;
 
 trait TestHelpers
 {
+    public function registerResponseMacros()
+    {
+        TestResponse::macro('assertViewIsPassed', function ($value) {
+            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
+        });
+
+        TestResponse::macro('assertContains', function ($value) {
+            Assert::assertRegExp("/$value/mi", $this->getContent());
+        });
+
+        TestResponse::macro('assertNotContains', function ($value) {
+            Assert::assertNotRegExp("/$value/mi", $this->getContent());
+        });
+    }
+
     protected function assertValidation(Model $model, $field, array $params, $coming_from_url, $submission_url, $assert_count = 0, $method = 'post')
     {
         $response = $this->actingAs($this->developer(), 'admin')
