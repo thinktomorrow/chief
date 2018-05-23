@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class OfficeController extends Controller

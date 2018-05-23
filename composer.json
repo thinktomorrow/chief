@@ -1,7 +1,7 @@
 {
     "name": "thinktomorrow/chief",
-    "description": "Chief skeleton application",
-    "keywords": ["framework", "laravel", "thinktomorrow"],
+    "description": "Chief cms application",
+    "keywords": ["cms", "laravel", "thinktomorrow"],
     "license": "none",
     "type": "project",
     "require": {
@@ -28,13 +28,9 @@
         "nunomaduro/collision": "^2.0"
     },
     "autoload": {
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "psr-4": {
-            "App\\": "app/",
-            "Chief\\" : "src/"
+            "Thinktomorrow\\Chief\\App\\" : "app/",
+            "Thinktomorrow\\Chief\\" : "src/"
         },
         "files": [
             "src/helpers.php",
@@ -44,22 +40,17 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Chief\\Tests\\": "tests/"
+            "Thinktomorrow\\Chief\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
+            "providers": [
+                "Thinktomorrow\\Chief\\App\\Providers\\ChiefServiceProvider"
             ]
         }
     },
     "scripts": {
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate"
-        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover"

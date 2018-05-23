@@ -2,7 +2,7 @@
 
 namespace Chief\Tests\Feature;
 
-use App\Notifications\ResetAdminPassword;
+use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
 use Chief\Users\User;

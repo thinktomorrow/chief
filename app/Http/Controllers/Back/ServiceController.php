@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Chief\Common\Translatable\TranslatableContract;
 use Chief\Common\Translatable\TranslatableController;
 use Illuminate\Http\Request;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Chief\Common\Translatable\Locale;
 use Chief\Common\Translatable\TranslatableController;

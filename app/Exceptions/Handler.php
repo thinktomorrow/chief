@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace Thinktomorrow\Chief\App\Exceptions;
 
 use Chief\Authorization\Exceptions\UnauthorizedRequestException;
 use Exception;

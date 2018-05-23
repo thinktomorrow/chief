@@ -2,7 +2,7 @@
 
 namespace Chief\Demo\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Chief\Pages\Application\CreatePage;
 use Chief\Pages\Page;
 use Chief\Pages\PageRepository;
@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
-use App\Http\Requests\PageCreateRequest;
+use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
 use Chief\Pages\Application\UpdatePage;
-use App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 use Chief\Common\Traits\CheckPreviewTrait;
 
 class DemoPageController extends Controller

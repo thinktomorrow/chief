@@ -2,7 +2,7 @@
 
 namespace Chief\Tests;
 
-use App\Exceptions\Handler;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Cookie\Middleware\EncryptCookies;

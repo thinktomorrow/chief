@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Back\Users;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Chief\Users\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Chief\Users\Application\DisableUser;
 
 class DisableUserController extends Controller

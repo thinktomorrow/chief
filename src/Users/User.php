@@ -2,7 +2,7 @@
 
 namespace Chief\Users;
 
-use App\Notifications\ResetAdminPassword;
+use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 use Chief\Common\Traits\Enablable;
 use Chief\Users\Invites\Invitation;
 use Chief\Users\Invites\InvitationState;

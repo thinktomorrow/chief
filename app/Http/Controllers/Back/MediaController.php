@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Chief\Assets\Asset;
 use Illuminate\Http\Request;
 

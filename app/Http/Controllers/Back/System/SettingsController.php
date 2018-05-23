@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Back\System;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Routing\Controller;
 

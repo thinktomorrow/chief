@@ -2,7 +2,7 @@
 
 namespace Chief\Tests\Feature\Users;
 
-use App\Notifications\InvitationMail;
+use Thinktomorrow\Chief\App\Notifications\InvitationMail;
 use Chief\Tests\ChiefDatabaseTransactions;
 use Chief\Tests\TestCase;
 use Chief\Users\Invites\Invitation;

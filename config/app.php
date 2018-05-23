@@ -160,15 +160,10 @@ return [
         Spatie\LaravelImageOptimizer\ImageOptimizerServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
 
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-
+        \Thinktomorrow\Chief\App\Providers\ChiefServiceProvider::class,
     ],
+
+
 
     /**
      * Environment specific providers are loaded in that environment.

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Back\Users;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Chief\Authorization\Role;
 use Chief\Users\Invites\Application\AcceptInvite;
 use Chief\Users\Invites\Application\DenyInvite;

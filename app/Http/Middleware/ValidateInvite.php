@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Chief\Users\Invites\Invitation;
 use Chief\Users\Invites\InvitationState;

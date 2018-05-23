@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Thinktomorrow\Chief\App\Providers;
 
 use Chief\Users\Application\EnableUser;
 use Chief\Users\Invites\Application\SendInvite;
@@ -17,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Illuminate\Auth\Events\Login' => [
-            'App\Listeners\LogSuccessfulLogin',
+            'Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin',
         ],
 
         UserInvited::class => [

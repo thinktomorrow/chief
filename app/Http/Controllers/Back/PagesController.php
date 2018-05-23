@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Chief\Common\Relations\RelatedCollection;
 use Chief\Pages\Application\CreatePage;
 use Chief\Pages\Page;
 use Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\PageCreateRequest;
+use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
 use Chief\Pages\Application\UpdatePage;
-use App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 
 class PagesController extends Controller
 {

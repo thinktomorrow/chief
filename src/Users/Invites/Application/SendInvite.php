@@ -2,7 +2,7 @@
 
 namespace Chief\Users\Invites\Application;
 
-use App\Notifications\InvitationMail;
+use Thinktomorrow\Chief\App\Notifications\InvitationMail;
 use Chief\Users\Invites\Events\UserInvited;
 use Chief\Users\Invites\Invitation;
 use Illuminate\Support\Facades\Notification;

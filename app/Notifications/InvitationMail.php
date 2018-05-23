@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace Thinktomorrow\Chief\App\Notifications;
 
 use Chief\Users\Invites\Invitation;
 use Illuminate\Bus\Queueable;
