@@ -17,6 +17,7 @@ class CreatepagesTable extends Migration
             $table->increments('id');
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
+            $table->timestamp('archived_at')->default(null)->nullable();
             $table->timestamp('publication')->nullable();
             $table->timestamps();
             $table->softDeletes();

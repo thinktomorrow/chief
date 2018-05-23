@@ -11,7 +11,7 @@
         </button><button-dropdown class="inline-block btn-group-last" btn_name="<i class='icon icon-chevron-down'></i>">
             <div v-cloak>
                 <a href="#" class="block squished-s --link-with-bg">Haal pagina offline</a>
-                <a href="#" class="block squished-s --link-with-bg" @click="showModal('delete-page')">Verwijder pagina</a>
+                <a href="#" class="block squished-s --link-with-bg" @click="showModal('delete-page-{{$page->id}}')">Verwijder pagina</a>
             </div>
         </button-dropdown>
     </div>
@@ -25,6 +25,7 @@
 
     @include('back.pages._update_form')
     @include('back.pages._partials.modal')
+    @include('back.pages._partials.delete-modal')
     @include('back.pages._partials.sidebar')
 
   </form>

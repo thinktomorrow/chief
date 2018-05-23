@@ -62,7 +62,6 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
     Route::get('pages/create', 'Back\PagesController@create')->name('back.pages.create');
     Route::delete('pages/{id}', 'Back\PagesController@destroy')->name('back.pages.destroy');
     Route::put('pages/{id}', 'Back\PagesController@update')->name('back.pages.update');
-    Route::get('pages/{id}', 'Back\PagesController@show')->name('back.pages.show');
     Route::get('pages/{id}/edit', 'Back\PagesController@edit')->name('back.pages.edit');
     Route::post('pages/publish','Back\PagesController@publish')->name('back.pages.publish');
 

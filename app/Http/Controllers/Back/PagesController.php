@@ -17,10 +17,11 @@ class PagesController extends Controller
 {
     public function index()
     {
-        $published  = Page::where('published', 1)->paginate(10);
-        $drafts     = Page::where('published', 0)->get();
+        $published  = Page::unarchived()->published()->paginate(10);
+        $drafts     = Page::unarchived()->where('published', 0)->paginate(10);
+        $archived   = Page::archived()->paginate(10);
 
-        return view('back.pages.index', compact('published', 'drafts'));
+        return view('back.pages.index', compact('published', 'drafts', 'archived'));
     }
 
     /**
@@ -90,8 +91,11 @@ class PagesController extends Controller
     public function destroy($id)
     {
         $page = Page::findOrFail($id);
+        if(request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) return redirect()->back()->with('messages.warning', 'fout');
 
-        $page->delete();
+        if($page->isDraft() || $page->isArchived()) $page->delete();
+        if($page->isPublished()) $page->archive();
+
         $message = 'Het item werd verwijderd.';
 
         return redirect()->route('back.pages.index')->with('messages.warning', $message);
