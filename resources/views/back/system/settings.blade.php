@@ -17,10 +17,10 @@
         <tab name="E-mail">
             @include('back.system._partials.mail')
         </tab>
-        <tab name="Social">
+        <tab name="Social Profiles">
             @include('back.system._partials.social')
         </tab>
-        <tab name="Sharing">
+        <tab name="Social Cards">
             @include('back.system._partials.socialcards')
         </tab>
         {{-- <tab name="Analytics">
