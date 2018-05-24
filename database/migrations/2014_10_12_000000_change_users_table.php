@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('chief_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('firstname');
             $table->string('lastname');
@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('chief_password_resets', function (Blueprint $table) {
             $table->string('email')->index();
             $table->string('token')->index();
             $table->timestamp('created_at')->nullable();
@@ -39,7 +39,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('chief_users');
+        Schema::dropIfExists('chief_password_resets');
     }
 }

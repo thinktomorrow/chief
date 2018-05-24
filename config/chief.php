@@ -30,11 +30,11 @@ return [
     'relations' => [
 
         'children' => [
-            \Chief\Pages\Page::class,
+            \Thinktomorrow\Chief\Pages\Page::class,
         ],
 
         'parents' => [
-            \Chief\Pages\Page::class,
+            \Thinktomorrow\Chief\Pages\Page::class,
         ],
     ],
 

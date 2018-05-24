@@ -40,7 +40,7 @@ class UserController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' =>  'required|email|unique:users',
+            'email' =>  'required|email|unique:'.(new User())->getTable(),
             'roles' => 'required|array',
         ]);
 
@@ -73,7 +73,7 @@ class UserController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' =>  'required|email|unique:users,email,'.$id,
+            'email' =>  'required|email|unique:'.(new User())->getTable().',email,'.$id,
             'roles' => 'required|array',
         ]);
 

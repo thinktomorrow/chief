@@ -24,7 +24,7 @@ class YouController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' =>  'required|email|unique:users,email,'.$user->id,
+            'email' =>  'required|email|unique:'.(new User())->getTable().',email,'.$user->id,
         ]);
 
         $user->update($request->only(['firstname', 'lastname', 'email']));
