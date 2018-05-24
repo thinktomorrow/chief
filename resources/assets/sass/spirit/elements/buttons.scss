@@ -7,7 +7,7 @@
     cursor: pointer;
     border-radius: $default-border-radius;
     transition: $transition;
-
+    line-height: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
     vertical-align: middle;
@@ -93,6 +93,8 @@ $buttonColors: (
         color: $bgcolor;
         border: 1px solid $bgcolor;
         &:hover, &:focus, &:active, &.active{
+            color: $bgcolor;
+            background-color: lighten($bgcolor, 45%);
             box-shadow: 0 14px 26px -12px rgba($bgcolor, 0),
             0 4px 23px 0px rgba($color-emphasis, 0.12),
             0 8px 10px -5px rgba($bgcolor, 0.2)

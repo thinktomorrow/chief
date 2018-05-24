@@ -20,15 +20,12 @@
         <tab name="Social">
             @include('back.system._partials.social')
         </tab>
-        <tab name="Social cards">
+        <tab name="Sharing">
             @include('back.system._partials.socialcards')
         </tab>
-        <tab name="SEO">
-            @include('back.system._partials.seo')
-        </tab>
-        <tab name="Analytics">
+        {{-- <tab name="Analytics">
             @include('back.system._partials.analytics')
-        </tab>
+        </tab> --}}
     </tabs>
 
 @stop

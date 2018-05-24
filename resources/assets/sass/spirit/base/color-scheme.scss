@@ -21,4 +21,8 @@ $colors: $color-primary $color-secondary $color-tertiary $color-emphasis $color-
     .text-#{$block}{
       color: $color;
     }
+
+    .border-#{$block}{
+        border: 1px solid $color;
+    }
 }
