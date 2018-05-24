@@ -13,6 +13,8 @@ class EnableUserTest extends TestCase
     {
         parent::setUp();
 
+        $this->setUpDefaultAuthorization();
+
         $this->user = $this->author();
 
         // Fake password so we can login with a known value

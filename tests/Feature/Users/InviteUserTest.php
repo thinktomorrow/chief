@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Notification;
 
 class InviteUserTest extends TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->setUpDefaultAuthorization();
+    }
+
     /** @test */
     function only_admin_can_view_the_invite_form()
     {

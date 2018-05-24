@@ -20,6 +20,8 @@ class AcceptInviteTest extends TestCase
     {
         parent::setUp();
 
+        $this->setUpDefaultAuthorization();
+
         $this->invitee = $this->developer();
         $this->inviter = $this->developer();
 

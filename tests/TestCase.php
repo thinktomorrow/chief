@@ -61,7 +61,6 @@ abstract class TestCase extends OrchestraTestCase
 
         // Load database before overriding the config values but after the basic app setup
         $this->setUpDatabase();
-        $this->setUpDefaultAuthorization();
     }
 
     protected function resolveApplicationHttpKernel($app)

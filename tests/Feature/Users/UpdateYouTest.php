@@ -13,6 +13,8 @@ class UpdateYouTest extends TestCase
     {
         parent::setUp();
 
+        $this->setUpDefaultAuthorization();
+
         $this->newUser = new User();
         $this->newUser->email = 'new@example.com';
         $this->newUser->firstname = 'new firstname';

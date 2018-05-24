@@ -13,6 +13,8 @@ class ManageUsersTest extends TestCase
     {
         parent::setUp();
 
+        $this->setUpDefaultAuthorization();
+
         $this->newUser = new User();
         $this->newUser->email = 'email';
         $this->newUser->firstname = 'firstname';

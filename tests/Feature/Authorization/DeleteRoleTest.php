@@ -13,6 +13,8 @@ class DeleteRoleTest extends TestCase
     {
         parent::setUp();
 
+        $this->setUpDefaultAuthorization();
+
         // Create a new role first
         $role = Role::create(['name' => 'new name']);
         $role->givePermissionTo(['create-role', 'update-role']);

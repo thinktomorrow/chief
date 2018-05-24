@@ -8,6 +8,13 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreatePageTest extends TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->setUpDefaultAuthorization();
+    }
+
     /** @test */
     function admin_can_view_the_create_form()
     {

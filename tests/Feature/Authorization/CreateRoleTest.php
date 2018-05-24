@@ -9,6 +9,13 @@ use Thinktomorrow\Chief\Users\User;
 
 class CreateRoleTest extends TestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->setUpDefaultAuthorization();
+    }
+
     /** @test */
     function only_developer_can_view_the_create_form()
     {

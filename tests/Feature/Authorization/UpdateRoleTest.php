@@ -14,6 +14,8 @@ class UpdateRoleTest extends TestCase
     {
         parent::setUp();
 
+        $this->setUpDefaultAuthorization();
+
         // Create a new role first
         $role = Role::create(['name' => array_get($this->validParams(),'name')]);
         $role->givePermissionTo(array_get($this->validParams(),'permission_names'));

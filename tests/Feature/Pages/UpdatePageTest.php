@@ -8,13 +8,11 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdatePageTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        $this->setUpDefaultAuthorization();
     }
 
     /** @test */
