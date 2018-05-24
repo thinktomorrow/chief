@@ -1,9 +1,52 @@
+# Concept
+
+Chief is a package based cms built on top of the laravel framework.
+Chief is solely the back-end(or admin panel) of a project. You will need to create the front-end yourself.
+
 # Install Chief
 
-First create chief-skeleton project or a blank laravel project
-```php 
+To install chief we need to install it into another project.
+This can be either an existing one or a new Laravel 5.6 project.
+
+We require the package using composer.
+```php
 composer require thinktomorrow/chief
-``` 
+```
+
+Next we need the laravel exception handler to extend the chief exception handler like so:
+
+App\Exceptions\Handler
+```php
+use ThinkTomorrow\Chief\Exceptions\Handler as ChiefExceptionHandler
+
+class Handler extends ChiefExceptionHandler
+{
+```
+
+# Local development
+
+For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.
+To set up the chief package for local development we link our local chief folder as a repository in the composer.json file.
+
+```php
+“repositories”:[
+       {
+           “url”:“/Users/bencavens/Code/packages/chief”,
+           “type”:“path”,
+           “options”:{
+               “symlinks”:true
+           }
+       }
+   ],
+```
+
+The url property needs to be the full path to the local version of the chief package.
+To let composer know we want chief to link to the local version we need to run a ```composer update``` or ```composer dumpautoload```
+
+# Database tables
+
+Chief uses a fair amount of database tables. To make it easier in use and since nothing would work without it, running ```php artisan migrate```
+will export all the necessary migrations automaticaly.
 
 # Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
@@ -37,5 +80,3 @@ public function boot()
     - translatable for providing the model translations
     - locale for allowing frontend translation
 - Schema::defaultStringLength(191);
-
-    
