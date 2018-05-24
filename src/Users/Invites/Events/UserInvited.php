@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Users\Invites\Events;
+namespace Thinktomorrow\Chief\Users\Invites\Events;
 
 class UserInvited
 {

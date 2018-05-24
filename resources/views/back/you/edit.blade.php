@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title', $user->fullname)
 
@@ -11,11 +11,11 @@
 
 @section('content')
 
-    <form id="updateForm" action="{{ route('back.you.update',$user->id) }}" method="POST">
+    <form id="updateForm" action="{{ route('chief.back.you.update',$user->id) }}" method="POST">
         {!! csrf_field() !!}
         <input type="hidden" name="_method" value="PUT">
 
-        @include('back.you._form')
+        @include('chief::back.you._form')
 
         <button type="submit" class="btn btn-primary right">Bewaar</button>
     </form>

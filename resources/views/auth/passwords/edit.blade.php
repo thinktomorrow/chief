@@ -1,4 +1,4 @@
-@extends('back._layouts.solo')
+@extends('chief::back._layouts.solo')
 
 @section('title')
     Wijzig jouw wachtwoord
@@ -23,7 +23,7 @@
                 </div>
             @endif
 
-            <form class="block login-form stack" role="form" method="POST" action="{{ route('back.password.update') }}">
+            <form class="block login-form stack" role="form" method="POST" action="{{ route('chief.back.password.update') }}">
                 {{ csrf_field() }}
                 <input type="hidden" name="_method" value="PUT">
 

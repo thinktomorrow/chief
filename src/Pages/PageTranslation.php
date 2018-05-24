@@ -1,10 +1,10 @@
 <?php
 
-namespace Chief\Pages;
+namespace Thinktomorrow\Chief\Pages;
 
-use Chief\Common\Contracts\SluggableContract;
+use Thinktomorrow\Chief\Common\Contracts\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
-use Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Page;
 
 class PageTranslation extends Model implements SluggableContract
 {

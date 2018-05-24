@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Chief\Users\Application\EnableUser;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Users\Application\EnableUser;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Users\Application\DisableUser;
+use Thinktomorrow\Chief\Users\Application\DisableUser;
 
 class EnableUserController extends Controller
 {
@@ -18,7 +18,7 @@ class EnableUserController extends Controller
 
         app(EnableUser::class)->handle($user);
 
-        return redirect()->route('back.users.index')
+        return redirect()->route('chief.back.users.index')
             ->with('messages.success', 'De gebruikersaccount is opnieuw toegang verleend.');
     }
 }

@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Assets\Asset;
+use Thinktomorrow\Chief\Assets\Asset;
 use Illuminate\Http\Request;
 
 class MediaController extends Controller

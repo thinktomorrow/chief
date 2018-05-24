@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Users\Invites;
+namespace Thinktomorrow\Chief\Users\Invites;
 
 use Illuminate\Support\Str;
 

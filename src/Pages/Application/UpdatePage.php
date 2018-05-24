@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Pages\Application;
+namespace Thinktomorrow\Chief\Pages\Application;
 
-use Chief\Common\Relations\RelatedCollection;
-use Chief\Pages\Page;
-use Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
-use Chief\Models\UniqueSlug;
+use Thinktomorrow\Chief\Models\UniqueSlug;
 
 class UpdatePage
 {

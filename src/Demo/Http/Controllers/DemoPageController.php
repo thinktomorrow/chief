@@ -1,19 +1,19 @@
 <?php
 
-namespace Chief\Demo\Http\Controllers;
+namespace Thinktomorrow\Chief\Demo\Http\Controllers;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Pages\Application\CreatePage;
-use Chief\Pages\Page;
-use Chief\Pages\PageRepository;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
-use Chief\Pages\Application\UpdatePage;
+use Thinktomorrow\Chief\Pages\Application\UpdatePage;
 use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
-use Chief\Common\Traits\CheckPreviewTrait;
+use Thinktomorrow\Chief\Common\Traits\CheckPreviewTrait;
 
 class DemoPageController extends Controller
 {

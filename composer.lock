@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8204c3e63d2c24e3906b94c283546637",
+    "content-hash": "da6528698389022394201452d796fe30",
     "packages": [
         {
             "name": "bugsnag/bugsnag",
@@ -4583,6 +4583,122 @@
                 "symfony"
             ],
             "time": "2018-03-21T20:11:24+00:00"
+        },
+        {
+            "name": "orchestra/testbench",
+            "version": "v3.6.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchestral/testbench.git",
+                "reference": "242cc47d2e5d86ababe36d22519e2b948eff8f73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/242cc47d2e5d86ababe36d22519e2b948eff8f73",
+                "reference": "242cc47d2e5d86ababe36d22519e2b948eff8f73",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.6.13",
+                "orchestra/testbench-core": "~3.6.5",
+                "php": ">=7.1",
+                "phpunit/phpunit": "~7.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.6-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "Laravel Testing Helper for Packages Development",
+            "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "laravel",
+                "orchestra-platform",
+                "orchestral",
+                "testing"
+            ],
+            "time": "2018-03-27T09:27:00+00:00"
+        },
+        {
+            "name": "orchestra/testbench-core",
+            "version": "v3.6.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/orchestral/testbench-core.git",
+                "reference": "d089f0fd32a81764fbd98044148a193db828dd52"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/orchestral/testbench-core/zipball/d089f0fd32a81764fbd98044148a193db828dd52",
+                "reference": "d089f0fd32a81764fbd98044148a193db828dd52",
+                "shasum": ""
+            },
+            "require": {
+                "fzaninotto/faker": "~1.4",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "laravel/framework": "~5.6.13",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~7.0"
+            },
+            "suggest": {
+                "laravel/framework": "Required for testing (~5.6.13).",
+                "mockery/mockery": "Allow to use Mockery for testing (~1.0).",
+                "orchestra/testbench-browser-kit": "Allow to use legacy Laravel BrowserKit for testing (~3.6).",
+                "orchestra/testbench-dusk": "Allow to use Laravel Dusk for testing (~3.6).",
+                "phpunit/phpunit": "Allow to use PHPUnit for testing (~7.0)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Orchestra\\Testbench\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mior Muhammad Zaki",
+                    "email": "crynobone@gmail.com",
+                    "homepage": "https://github.com/crynobone"
+                }
+            ],
+            "description": "Testing Helper for Laravel Development",
+            "homepage": "http://orchestraplatform.com/docs/latest/components/testbench/",
+            "keywords": [
+                "BDD",
+                "TDD",
+                "laravel",
+                "orchestra-platform",
+                "orchestral",
+                "testing"
+            ],
+            "time": "2018-03-27T08:00:28+00:00"
         },
         {
             "name": "phar-io/manifest",

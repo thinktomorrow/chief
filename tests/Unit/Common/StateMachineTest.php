@@ -1,11 +1,11 @@
 <?php
 
-namespace Chief\Tests\Unit\Common;
+namespace Thinktomorrow\Chief\Tests\Unit\Common;
 
-use Chief\Common\State\StateException;
-use Chief\Common\State\StatefulContract;
-use Chief\Common\State\StateMachine;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Common\State\StateException;
+use Thinktomorrow\Chief\Common\State\StatefulContract;
+use Thinktomorrow\Chief\Common\State\StateMachine;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class StateMachineTest extends TestCase
 {

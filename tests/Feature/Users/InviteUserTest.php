@@ -1,13 +1,13 @@
 <?php
 
-namespace Chief\Tests\Feature\Users;
+namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
 use Thinktomorrow\Chief\App\Notifications\InvitationMail;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\Invites\InvitationState;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Support\Facades\Notification;
 
@@ -27,17 +27,17 @@ class InviteUserTest extends TestCase
     /** @test */
     function only_admin_can_view_the_invite_form()
     {
-        $response = $this->asAdmin()->get(route('back.users.create'));
+        $response = $this->asAdmin()->get(route('chief.back.users.create'));
         $response->assertStatus(200);
     }
 
     /** @test */
     function regular_author_cannot_view_the_invite_form()
     {
-        $response = $this->asAuthor()->get(route('back.users.create'));
+        $response = $this->asAuthor()->get(route('chief.back.users.create'));
 
         $response->assertStatus(302)
-            ->assertRedirect(route('back.dashboard'))
+            ->assertRedirect(route('chief.back.dashboard'))
             ->assertSessionHas('messages.error');
     }
 
@@ -49,10 +49,10 @@ class InviteUserTest extends TestCase
         $this->disableExceptionHandling();
 
         $response = $this->asAdmin()
-                         ->post(route('back.users.store'), $this->validParams());
+                         ->post(route('chief.back.users.store'), $this->validParams());
 
         $response->assertStatus(302)
-            ->assertRedirect(route('back.users.index'))
+            ->assertRedirect(route('chief.back.users.index'))
             ->assertSessionHas('messages.success');
 
         $newUser = User::findByEmail('new@example.com');
@@ -77,18 +77,18 @@ class InviteUserTest extends TestCase
     /** @test */
     function only_authenticated_admin_can_invite_an_user()
     {
-        $response = $this->post(route('back.users.store'), $this->validParams());
+        $response = $this->post(route('chief.back.users.store'), $this->validParams());
 
-        $response->assertRedirect(route('back.login'));
+        $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, User::all());
     }
 
     /** @test */
     function regular_author_cannot_invite_an_user()
     {
-        $response = $this->asAuthor()->post(route('back.users.store'), $this->validParams());
+        $response = $this->asAuthor()->post(route('chief.back.users.store'), $this->validParams());
 
-        $response->assertRedirect(route('back.dashboard'));
+        $response->assertRedirect(route('chief.back.dashboard'));
         $this->assertCount(1, User::all()); // Existing author
     }
 
@@ -96,8 +96,8 @@ class InviteUserTest extends TestCase
     function when_creating_user_firstname_is_required()
     {
         $this->assertValidation(new User(), 'firstname', $this->validParams(['firstname' => '']),
-            route('back.users.index'),
-            route('back.users.store'),
+            route('chief.back.users.index'),
+            route('chief.back.users.store'),
             1 // creating account (developer) already exists
         );
     }
@@ -106,8 +106,8 @@ class InviteUserTest extends TestCase
     function when_creating_user_lastname_is_required()
     {
         $this->assertValidation(new User(), 'lastname', $this->validParams(['lastname' => '']),
-            route('back.users.index'),
-            route('back.users.store'),
+            route('chief.back.users.index'),
+            route('chief.back.users.store'),
             1 // creating account (developer) already exists
         );
     }
@@ -116,8 +116,8 @@ class InviteUserTest extends TestCase
     function when_creating_user_role_is_required()
     {
         $this->assertValidation(new User(), 'roles', $this->validParams(['roles' => []]),
-            route('back.users.index'),
-            route('back.users.store'),
+            route('chief.back.users.index'),
+            route('chief.back.users.store'),
             1 // creating account (developer) already exists
         );
     }

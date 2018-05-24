@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Chief\Users\User;
-use Chief\Pages\Page;
-use Chief\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 use Illuminate\Support\Facades\Artisan;
 
 class RefreshDatabase extends BaseCommand

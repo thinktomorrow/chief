@@ -1,11 +1,11 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title', "Pagina's")
 
-@component('back._layouts._partials.header')
+@component('chief.back._layouts._partials.header')
     @slot('title', "Jouw pagina's")
         <div class="inline-group-s">
-            <a href="{{ route('back.pages.create') }}" class="btn btn-primary">
+            <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">
                 <i class="icon icon-plus"></i>
                 Voeg een pagina toe
             </a>
@@ -30,8 +30,8 @@
                             <span class="text-subtle">Laatst aangepast op: {{ $page->updated_at->format('d/m/Y') }}</span>
                         </div>
                         <div class="center-y column">
-                            <a href="{{ route('back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
-                            <form action="{{ route('back.pages.publish') }}" method="POST">
+                            <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
+                            <form action="{{ route('chief.back.pages.publish') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="publishActions-{{$page->id}} hidden">
                                     <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="column-12">
-                            <a href="{{ route('back.pages.create') }}" class="btn btn-primary">
+                            <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">
                                 <i class="icon icon-zap icon-fw"></i> Tijd om aan de slag te gaan
                             </a>
                         </div>
@@ -65,7 +65,7 @@
                             <div class="column-12">
                                 <h2>
                                     {{ $page->getTranslationFor('title') }}
-                                    <a title="Bekijk {{ $page->title }}" href="{{ route('back.pages.show',$page->slug) }}?preview-mode=true" target="_blank" class="text-subtle font-s">Preview</a>
+                                    <a title="Bekijk {{ $page->title }}" href="{{ route('chief.back.pages.show',$page->slug) }}?preview-mode=true" target="_blank" class="text-subtle font-s">Preview</a>
                                 </h2>
                             </div>
                             <div class="column-12">
@@ -74,8 +74,8 @@
                             <span class="text-subtle">Laatst aangepast op: {{ $page->updated_at->format('d/m/Y') }}</span>
                         </div>
                         <div class="center-y column">
-                            <a href="{{ route('back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
-                            <form action="{{ route('back.pages.publish') }}" method="POST">
+                            <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
+                            <form action="{{ route('chief.back.pages.publish') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="publishActions-{{$page->id}} hidden">
                                     <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="column-12">
-                    <a href="{{ route('back.pages.create') }}" class="btn btn-primary">
+                    <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">
                         <i class="icon icon-zap icon-fw"></i> Tijd om aan de slag te gaan
                     </a>
                 </div>
@@ -113,7 +113,7 @@
 </tabs>
 
 
-@include('back.pages._partials.delete-modal')
+@include('chief::back.pages._partials.delete-modal')
 
 @stop
 

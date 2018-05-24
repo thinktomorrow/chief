@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Relations;
+namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as StandardCollection;

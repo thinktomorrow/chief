@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Tests\Feature;
+namespace Thinktomorrow\Chief\Tests\Feature;
 
-use Chief\Tests\TestCase;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Auth;
-use Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Page;
 
 class PreviewTest extends TestCase
 {

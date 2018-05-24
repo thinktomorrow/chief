@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Translatable;
+namespace Thinktomorrow\Chief\Common\Translatable;
 
 interface TranslatableContract
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Chief\Tests\Feature\Users;
+namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
 class EnableUserTest extends TestCase
@@ -35,7 +35,7 @@ class EnableUserTest extends TestCase
     {
         $this->assertFalse($this->user->isEnabled());
 
-        $this->asAdmin()->post(route('back.users.enable', $this->user->id));
+        $this->asAdmin()->post(route('chief.back.users.enable', $this->user->id));
 
         $this->assertTrue($this->user->fresh()->isEnabled());
     }
@@ -45,7 +45,7 @@ class EnableUserTest extends TestCase
     {
         $this->assertFalse($this->user->isEnabled());
 
-        $this->asAuthor()->post(route('back.users.disable', $this->user->id));
+        $this->asAuthor()->post(route('chief.back.users.disable', $this->user->id));
 
         $this->assertFalse($this->user->fresh()->isEnabled());
     }

@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Chief\Tests;
+namespace Thinktomorrow\Chief\Tests;
 
 
-use Chief\Authorization\AuthorizationDefaults;
-use Chief\Authorization\Role;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -33,7 +33,7 @@ trait TestHelpers
 
     protected function assertValidation(Model $model, $field, array $params, $coming_from_url, $submission_url, $assert_count = 0, $method = 'post')
     {
-        $response = $this->actingAs($this->developer(), 'admin')
+        $response = $this->actingAs($this->developer(), 'chief')
                          ->from($coming_from_url)
                          ->{$method}($submission_url, $params);
 
@@ -46,12 +46,12 @@ trait TestHelpers
 
     protected function asDefaultAdmin()
     {
-        return $this->actingAs(factory(User::class)->make(), 'admin');
+        return $this->actingAs(factory(User::class)->make(), 'chief');
     }
 
     protected function asDeveloper()
     {
-        return $this->actingAs($this->developer(), 'admin');
+        return $this->actingAs($this->developer(), 'chief');
     }
 
     protected function asAdmin()
@@ -59,7 +59,7 @@ trait TestHelpers
         $admin = factory(User::class)->create();
         $admin->assignRole(Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'admin']));
 
-        return $this->actingAs($admin, 'admin');
+        return $this->actingAs($admin, 'chief');
     }
 
     protected function asAuthor()
@@ -67,7 +67,7 @@ trait TestHelpers
         $author = factory(User::class)->create();
         $author->assignRole(Role::firstOrCreate(['name' => 'author', 'guard_name' => 'admin']));
 
-        return $this->actingAs($author, 'admin');
+        return $this->actingAs($author, 'chief');
     }
 
     protected function developer()

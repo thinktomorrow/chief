@@ -1,18 +1,18 @@
 <?php
 
-namespace Chief\Tests\Unit\Common;
+namespace Thinktomorrow\Chief\Tests\Unit\Common;
 
-use Chief\Pages\Page;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
-use Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Illuminate\Database\Eloquent\Model;
-use Chief\Common\Traits\Featurable;
+use Thinktomorrow\Chief\Common\Traits\Featurable;
 
 /**
  * Class ValidationTraitDummyClass
- * @package Chief\Models
+ * @package Thinktomorrow\Chief\Models
  */
 class FeaturableTraitDummyClass extends Model
 {

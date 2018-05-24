@@ -1,4 +1,4 @@
-@extends('back._layouts.solo')
+@extends('chief::back._layouts.solo')
 
 @section('page-title', 'Uitnodiging niet langer geldig')
 
@@ -17,7 +17,7 @@
 
             <div class="stack">
                 <a class="btn btn-o-primary" href="mailto:{{ config('thinktomorrow.chief.contact.email') }}">Contacteer jouw beheerder</a>
-                <a class="btn btn-link" href="{{ route('back.login') }}">Ga naar login pagina</a>
+                <a class="btn btn-link" href="{{ route('chief.back.login') }}">Ga naar login pagina</a>
             </div>
 
         </div>

@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Tests\Feature\Pages;
+namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Chief\Pages\Page;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
-use Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
 
 class CreatePageTest extends TestCase
 {
@@ -22,25 +22,25 @@ class CreatePageTest extends TestCase
     /** @test */
     function admin_can_view_the_create_form()
     {
-        $response = $this->asDefaultAdmin()->get(route('back.pages.create'));
+        $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create'));
         $response->assertStatus(200);
     }
 
     /** @test */
     function guests_cannot_view_the_create_form()
     {
-        $response = $this->get(route('back.pages.create'));
-        $response->assertStatus(302)->assertRedirect(route('back.login'));
+        $response = $this->get(route('chief.back.pages.create'));
+        $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
     function creating_a_new_page()
     {
         $response = $this->asDefaultAdmin()
-            ->post(route('back.pages.store'), $this->validParams());
+            ->post(route('chief.back.pages.store'), $this->validParams());
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('back.pages.index'));
+        $response->assertRedirect(route('chief.back.pages.index'));
 
         $this->assertCount(1, Page::all());
         $this->assertNewValues(Page::first());
@@ -49,9 +49,9 @@ class CreatePageTest extends TestCase
     /** @test */
     function only_authenticated_admin_can_create_a_page()
     {
-        $response = $this->post(route('back.pages.store'), $this->validParams());
+        $response = $this->post(route('chief.back.pages.store'), $this->validParams());
 
-        $response->assertRedirect(route('back.login'));
+        $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Page::all());
     }
 
@@ -59,8 +59,8 @@ class CreatePageTest extends TestCase
     function when_creating_page_title_is_required()
     {
         $this->assertValidation(new Page(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
-            route('back.pages.index'),
-            route('back.pages.store')
+            route('chief.back.pages.index'),
+            route('chief.back.pages.store')
         );
     }
 
@@ -75,7 +75,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asDefaultAdmin()
-            ->post(route('back.pages.store'), $this->validParams([
+            ->post(route('chief.back.pages.store'), $this->validParams([
                     'title:nl'  => 'foobarnl',
                     'title:en'  => 'foobaren',
                 ])
@@ -92,12 +92,12 @@ class CreatePageTest extends TestCase
     public function it_can_remove_a_page()
     {
         $response = $this->asDefaultAdmin()
-            ->post(route('back.pages.store'), $this->validParams());
+            ->post(route('chief.back.pages.store'), $this->validParams());
 
         $this->assertCount(1, Page::all());
 
         $this->actingAs(factory(User::class)->make())
-            ->delete(route('back.pages.destroy', Page::first()->id), $this->validParams());
+            ->delete(route('chief.back.pages.destroy', Page::first()->id), $this->validParams());
 
         $this->assertCount(0, Page::all());
     }

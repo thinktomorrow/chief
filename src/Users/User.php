@@ -1,11 +1,11 @@
 <?php
 
-namespace Chief\Users;
+namespace Thinktomorrow\Chief\Users;
 
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
-use Chief\Common\Traits\Enablable;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Common\Traits\Enablable;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;

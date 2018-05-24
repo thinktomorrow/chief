@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Tests\Feature\Authorization;
+namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\Permission;
-use Chief\Authorization\Role;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 
 class PermissionTest extends TestCase
 {

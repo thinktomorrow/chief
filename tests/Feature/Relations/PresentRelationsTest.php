@@ -1,9 +1,9 @@
 <?php
 
-namespace Chief\Tests\Feature\Relations;
+namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class PresentRelationsTest extends TestCase
 {

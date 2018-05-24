@@ -14,7 +14,7 @@ class PageUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::guard('admin')->user();
+        return Auth::guard('chief')->user();
     }
 
     /**

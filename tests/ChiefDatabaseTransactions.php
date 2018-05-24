@@ -1,26 +1,42 @@
 <?php
 
-namespace Chief\Tests;
+namespace Thinktomorrow\Chief\Tests;
+
+use Illuminate\Filesystem\Filesystem;
 
 trait ChiefDatabaseTransactions
 {
     protected $connectionsToTransact = ['testing'];
     protected static $migrationsHaveRun = false;
 
+    protected $testDatabasePath = __DIR__.'/../database/testing.sqlite';
+
     protected function setUpDatabase()
     {
         if( ! self::$migrationsHaveRun)
         {
-            if(!file_exists(database_path('testing.sqlite')))
-            {
-                touch(database_path('testing.sqlite'));
+            $this->removeTestDatabase();
+
+            touch($this->testDatabasePath);
+
+            $migrations = app(Filesystem::class)->allFiles(realpath(__DIR__.'/../database/migrations'));
+
+            foreach($migrations as $migration){
+                include_once $migration->getPathName();
+
+                $class = $this->guessClassNameFromFile($migration->getPathName());
+                (new $class)->up();
             }
 
-            $this->artisan('migrate:fresh');
             self::$migrationsHaveRun = true;
         }
 
         $this->beginDatabaseTransaction();
+    }
+
+    protected function removeTestDatabase()
+    {
+        if(file_exists($this->testDatabasePath)) unlink($this->testDatabasePath);
     }
 
     /**
@@ -58,6 +74,48 @@ trait ChiefDatabaseTransactions
     {
         return property_exists($this, 'connectionsToTransact')
             ? $this->connectionsToTransact : [null];
+    }
+
+    /**
+     * @ref https://stackoverflow.com/questions/7153000/get-class-name-from-file
+     * @param $file
+     * @return string
+     */
+    private function guessClassNameFromFile($file){
+        $fp = fopen($file, 'r');
+        $class = $namespace = $buffer = '';
+        $i = 0;
+        while (!$class) {
+            if (feof($fp)) break;
+
+            $buffer .= fread($fp, 512);
+            $tokens = token_get_all($buffer);
+
+            if (strpos($buffer, '{') === false) continue;
+
+            for (;$i<count($tokens);$i++) {
+                if ($tokens[$i][0] === T_NAMESPACE) {
+                    for ($j=$i+1;$j<count($tokens); $j++) {
+                        if ($tokens[$j][0] === T_STRING) {
+                            $namespace .= '\\'.$tokens[$j][1];
+                        } else if ($tokens[$j] === '{' || $tokens[$j] === ';') {
+                            break;
+                        }
+                    }
+                }
+
+                if ($tokens[$i][0] === T_CLASS) {
+                    for ($j=$i+1;$j<count($tokens);$j++) {
+                        if ($tokens[$j] === '{') {
+                            $class = $tokens[$i+2][1];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $class;
     }
 
 }

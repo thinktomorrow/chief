@@ -8,7 +8,7 @@ class SettingsController extends Controller
 {
     public function show()
     {
-        return view('back.system.settings');
+        return view('chief::back.system.settings');
     }
 
 

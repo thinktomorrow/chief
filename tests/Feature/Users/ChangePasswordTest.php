@@ -1,10 +1,10 @@
 <?php
 
-namespace Chief\Tests\Feature\Users;
+namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordTest extends TestCase
@@ -31,10 +31,10 @@ class ChangePasswordTest extends TestCase
     /** @test */
     function only_logged_in_user_can_update_password()
     {
-        $this->assertFalse(auth()->guard('admin')->check());
+        $this->assertFalse(auth()->guard('chief')->check());
 
-        $response = $this->put(route('back.password.update'), ['password' => 'new password', 'password_confirm' => 'new password']);
-        $response->assertRedirect(route('back.login'));
+        $response = $this->put(route('chief.back.password.update'), ['password' => 'new password', 'password_confirm' => 'new password']);
+        $response->assertRedirect(route('chief.back.login'));
 
         // Assert password remains the same
         $this->assertTrue(Hash::check('password', $this->user->fresh()->password));
@@ -43,10 +43,10 @@ class ChangePasswordTest extends TestCase
     /** @test */
     function when_user_fills_in_password_prompt_password_gets_updated()
     {
-        $response = $this->actingAs($this->user, 'admin')
-                         ->put(route('back.password.update'), ['password' => 'new password', 'password_confirmation' => 'new password']);
+        $response = $this->actingAs($this->user, 'chief')
+                         ->put(route('chief.back.password.update'), ['password' => 'new password', 'password_confirmation' => 'new password']);
 
-        $response->assertRedirect(route('back.dashboard'));
+        $response->assertRedirect(route('chief.back.dashboard'));
 
         // Assert password is changed
         $this->assertTrue(Hash::check('new password', $this->user->fresh()->password));

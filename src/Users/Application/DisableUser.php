@@ -1,8 +1,8 @@
 <?php
 
-namespace Chief\Users\Application;
+namespace Thinktomorrow\Chief\Users\Application;
 
-use Chief\Users\User;
+use Thinktomorrow\Chief\Users\User;
 
 class DisableUser
 {

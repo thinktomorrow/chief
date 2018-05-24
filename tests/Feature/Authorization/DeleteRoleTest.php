@@ -1,13 +1,13 @@
 <?php
 
-namespace Chief\Tests\Feature\Authorization;
+namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\AuthorizationDefaults;
-use Chief\Authorization\Permission;
-use Chief\Authorization\Role;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 
 class DeleteRoleTest extends TestCase
 {
@@ -32,11 +32,11 @@ class DeleteRoleTest extends TestCase
     /** @test */
     function deleting_a_new_role()
     {
-        $response = $this->actingAs($this->developer(), 'admin')
-            ->delete(route('back.roles.destroy', $this->newRole->id));
+        $response = $this->actingAs($this->developer(), 'chief')
+            ->delete(route('chief.back.roles.destroy', $this->newRole->id));
 
         $response->assertStatus(302)
-            ->assertRedirect(route('back.roles.index'))
+            ->assertRedirect(route('chief.back.roles.index'))
             ->assertSessionHas('messages.success');
 
         $this->assertNull(Role::whereName('new name')->first());
@@ -47,9 +47,9 @@ class DeleteRoleTest extends TestCase
     function only_authenticated_developer_can_delete_a_role()
     {
         $response = $this->asDefaultAdmin()
-            ->delete(route('back.roles.destroy', $this->newRole->id));
+            ->delete(route('chief.back.roles.destroy', $this->newRole->id));
 
-        $response->assertRedirect(route('back.dashboard'));
+        $response->assertRedirect(route('chief.back.dashboard'));
 
         $this->assertNotNull(Role::whereName('new name')->first());
     }
@@ -62,8 +62,8 @@ class DeleteRoleTest extends TestCase
 
         $this->assertNotNull($developer->roles()->whereName('new name')->first());
 
-        $this->actingAs($this->developer(), 'admin')
-            ->delete(route('back.roles.destroy', $this->newRole->id));
+        $this->actingAs($this->developer(), 'chief')
+            ->delete(route('chief.back.roles.destroy', $this->newRole->id));
 
         $this->assertNull($developer->roles()->whereName('new name')->first());
     }

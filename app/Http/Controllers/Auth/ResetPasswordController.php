@@ -31,25 +31,25 @@ class ResetPasswordController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:chief');
 
-        $this->redirectTo = route('back.dashboard');
+        $this->redirectTo = route('chief.back.dashboard');
     }
 
     public function showResetForm(Request $request, $token = null)
     {
-        return view('auth.passwords.reset')->with(
+        return view('chief::auth.passwords.reset')->with(
             ['token' => $token, 'email' => $request->email]
         );
     }
 
     protected function guard()
     {
-        return Auth::guard('admin');
+        return Auth::guard('chief');
     }
 
     protected function broker()
     {
-        return Password::broker('admins');
+        return Password::broker('chief');
     }
 }

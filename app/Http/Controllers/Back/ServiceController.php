@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Common\Translatable\TranslatableContract;
-use Chief\Common\Translatable\TranslatableController;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\EventDispatcher\Tests\Service;
@@ -17,14 +17,14 @@ class ServiceController extends Controller
     {
         $services = Service::sequence()->get();
 
-        return view('back.services.index',compact('services'));
+        return view('chief::back.services.index',compact('services'));
     }
 
     public function create()
     {
         $service = new Service;
 
-        return view('back.services.create',compact('service'));
+        return view('chief::back.services.create',compact('service'));
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class ServiceController extends Controller
 
         $this->saveServiceTranslations($service,$request->get('trans'));
 
-        return redirect()->route('back.services.index')->with('messages.success', $service->title .' has been created');
+        return redirect()->route('chief.back.services.index')->with('messages.success', $service->title .' has been created');
     }
 
     public function edit($id)
@@ -50,7 +50,7 @@ class ServiceController extends Controller
         }
         $service->trans = $trans;
 
-        return view('back.services.edit', compact('service'));
+        return view('chief::back.services.edit', compact('service'));
     }
 
     public function update(Request $request, $id)
@@ -63,7 +63,7 @@ class ServiceController extends Controller
 
         Service::reorderAgainstSiblings($request->get('sequence'));
 
-        return redirect()->route('back.services.index')->with('messages.success', $service->title .' has been updated');
+        return redirect()->route('chief.back.services.index')->with('messages.success', $service->title .' has been updated');
     }
 
     private function saveServiceTranslations(Service $service, array $translations)
@@ -118,7 +118,7 @@ class ServiceController extends Controller
         $service->delete();
         $message = 'Page has been deleted.';
 
-        return redirect()->route('back.services.index')->with('messages.warning', $message);
+        return redirect()->route('chief.back.services.index')->with('messages.warning', $message);
     }
 
     /**

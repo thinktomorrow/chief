@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Pages\Application;
+namespace Thinktomorrow\Chief\Pages\Application;
 
-use Chief\Pages\Page;
-use Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
-use Chief\Pages\PageTranslation;
-use Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Pages\PageTranslation;
+use Thinktomorrow\Chief\Common\UniqueSlug;
 
 class CreatePage
 {

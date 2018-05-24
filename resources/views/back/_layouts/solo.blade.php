@@ -1,4 +1,4 @@
-@include('back._layouts._partials.head')
+@include('chief::back._layouts._partials.head')
 
 <body>
 
@@ -8,12 +8,12 @@
 
         <div>
             <div class="stack text-center">
-                <a href="{{ route('back.login') }}">
+                <a href="{{ route('chief.back.login') }}">
                     <img alt="Logo" src="{{ asset('/assets/back/img/logo.svg') }}" width="140" height="53">
                 </a>
             </div>
 
-            @include('back._elements.messages')
+            @include('chief::back._elements.messages')
             @yield('content')
         </div>
 
@@ -23,4 +23,4 @@
 
 </main>
 
-@include('back._layouts._partials.foot')
+@include('chief::back._layouts._partials.foot')

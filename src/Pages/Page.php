@@ -1,22 +1,22 @@
 <?php
 
-namespace Chief\Pages;
+namespace Thinktomorrow\Chief\Pages;
 
 
-use Chief\Common\Relations\ActingAsChild;
-use Chief\Common\Relations\ActingAsParent;
-use Chief\Common\Relations\ActsAsChild;
-use Chief\Common\Relations\ActsAsParent;
-use Chief\Common\Relations\Relation;
-use Chief\Common\Translatable\Translatable;
-use Chief\Common\Translatable\TranslatableContract;
-use Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
+use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Common\Translatable\Translatable;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
-use Chief\Common\Traits\Featurable;
+use Thinktomorrow\Chief\Common\Traits\Featurable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {

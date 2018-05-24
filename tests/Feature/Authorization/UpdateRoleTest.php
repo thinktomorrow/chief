@@ -1,11 +1,11 @@
 <?php
 
-namespace Chief\Tests\Feature\Authorization;
+namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\Role;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 
 class UpdateRoleTest extends TestCase
 {
@@ -30,17 +30,17 @@ class UpdateRoleTest extends TestCase
     /** @test */
     function only_developer_can_view_the_update_form()
     {
-        $response = $this->actingAs($this->developer(), 'admin')->get(route('back.roles.edit', Role::first()->id));
+        $response = $this->actingAs($this->developer(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
         $response->assertStatus(200);
     }
 
     /** @test */
     function regular_admin_cannot_view_the_update_form()
     {
-        $response = $this->actingAs(factory(User::class)->create(), 'admin')->get(route('back.roles.edit', Role::first()->id));
+        $response = $this->actingAs(factory(User::class)->create(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
 
         $response->assertStatus(302)
-            ->assertRedirect(route('back.dashboard'))
+            ->assertRedirect(route('chief.back.dashboard'))
             ->assertSessionHas('messages.error');
     }
 
@@ -48,11 +48,11 @@ class UpdateRoleTest extends TestCase
     function updating_a_role()
     {
         // Now update it
-        $response = $this->actingAs($this->developer(), 'admin')
-            ->put(route('back.roles.update', $this->newRole->id), $this->validUpdateParams());
+        $response = $this->actingAs($this->developer(), 'chief')
+            ->put(route('chief.back.roles.update', $this->newRole->id), $this->validUpdateParams());
 
         $response->assertStatus(302)
-            ->assertRedirect(route('back.roles.index'))
+            ->assertRedirect(route('chief.back.roles.index'))
             ->assertSessionHas('messages.success');
 
         $this->assertUpdatedValues($this->newRole->fresh());
@@ -61,9 +61,9 @@ class UpdateRoleTest extends TestCase
     /** @test */
     function only_authenticated_developer_can_update_a_role()
     {
-        $response = $this->put(route('back.roles.update', $this->newRole->id), $this->validUpdateParams());
+        $response = $this->put(route('chief.back.roles.update', $this->newRole->id), $this->validUpdateParams());
 
-        $response->assertRedirect(route('back.login'));
+        $response->assertRedirect(route('chief.back.login'));
 
         // Assert nothing was updated
         $this->assertNewValues($this->newRole->fresh());
@@ -75,8 +75,8 @@ class UpdateRoleTest extends TestCase
         //$this->disableExceptionHandling();
 
         $this->assertValidation(new Role(), 'name', $this->validUpdateParams(['name' => '']),
-            route('back.roles.index'),
-            route('back.roles.update', $this->newRole->id),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.update', $this->newRole->id),
             Role::count(),
             'put'
         );
@@ -86,8 +86,8 @@ class UpdateRoleTest extends TestCase
     function when_updating_role_permissions_are_required()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']),
-            route('back.roles.index'),
-            route('back.roles.update', $this->newRole->id),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.update', $this->newRole->id),
             Role::count(),
             'put'
         );
@@ -97,8 +97,8 @@ class UpdateRoleTest extends TestCase
     function when_updating_role_name_must_be_unique()
     {
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']),
-            route('back.roles.index'),
-            route('back.roles.update', $this->newRole->id),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.update', $this->newRole->id),
             Role::count(),
             'put'
         );
@@ -108,8 +108,8 @@ class UpdateRoleTest extends TestCase
     function when_updating_role_permissions_must_be_passed_as_array()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']),
-            route('back.roles.index'),
-            route('back.roles.update', $this->newRole->id),
+            route('chief.back.roles.index'),
+            route('chief.back.roles.update', $this->newRole->id),
             Role::count(),
             'put'
         );

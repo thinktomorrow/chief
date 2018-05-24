@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Chief\Users\User;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Http\Request;
-use Chief\Authorization\Role;
+use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
 
 class UserController extends Controller
 {
@@ -15,7 +15,7 @@ class UserController extends Controller
         $this->authorize('view-user');
 
         $users = User::all();
-        return view('back.users.index')->with('users', $users);
+        return view('chief::back.users.index')->with('users', $users);
     }
 
     /**
@@ -27,7 +27,7 @@ class UserController extends Controller
     {
         $this->authorize('create-user');
 
-        return view('back.users.create', [
+        return view('chief::back.users.create', [
             'user' => new User(),
             'roleNames'=> Role::all()->pluck('name')->toArray()
         ]);
@@ -50,9 +50,9 @@ class UserController extends Controller
 
         $user->assignRole($request->get('roles', []));
 
-        app(InviteUser::class)->handle($user, auth()->guard('admin')->user());
+        app(InviteUser::class)->handle($user, auth()->guard('chief')->user());
 
-        return redirect()->route('back.users.index')
+        return redirect()->route('chief.back.users.index')
             ->with('messages.success', 'De nieuwe gebruiker is uitgenodigd en zal zodra een bevestiging ontvangen via mail.');
     }
 
@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
-        return view('back.users.edit',[
+        return view('chief::back.users.edit',[
             'user' => User::findOrFail($id),
             'roleNames'=> Role::all()->pluck('name')->toArray()
         ]);
@@ -82,7 +82,7 @@ class UserController extends Controller
         $user->update($request->only(['firstname', 'lastname', 'email']));
         $user->syncRoles($request->get('roles', []));
 
-        return redirect()->route('back.users.index')
+        return redirect()->route('chief.back.users.index')
             ->with('messages.success', 'Gegevens van de gebruiker zijn aangepast.');
     }
 }

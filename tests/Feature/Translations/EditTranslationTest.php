@@ -1,11 +1,11 @@
 <?php
 
-namespace Chief\Tests\Feature\Translations;
+namespace Thinktomorrow\Chief\Tests\Feature\Translations;
 
-use Chief\Translations\Translation;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Translations\Translation;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Page;
 
@@ -40,7 +40,7 @@ class EditTranslationTest extends TestCase
     function guests_cannot_view_the_edit_form()
     {
         $response = $this->get(route('squanto.edit', $this->squantoPage->id));
-        $response->assertStatus(302)->assertRedirect(route('back.login'));
+        $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
@@ -63,7 +63,7 @@ class EditTranslationTest extends TestCase
     {
         $response = $this->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
-        $response->assertRedirect(route('back.login'));
+        $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(1, Page::all());
         $this->assertValuesUnchanged(Page::first());
     }

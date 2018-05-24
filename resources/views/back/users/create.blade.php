@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title', 'Nieuwe gebruiker uitnodigen')
 
@@ -9,10 +9,10 @@
 
 @section('content')
 
-	<form id="createForm" action="{{ route('back.users.store') }}" method="POST">
+	<form id="createForm" action="{{ route('chief.back.users.store') }}" method="POST">
 		{!! csrf_field() !!}
 
-		@include('back.users._form')
+		@include('chief::back.users._form')
 
 		<button type="submit" class="btn btn-primary right">Stuur uitnodiging</button>
 	</form>

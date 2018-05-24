@@ -1,4 +1,4 @@
-@extends('back._layouts.mail')
+@extends('chief::back._layouts.mail')
 
 @section('preheader')
     Uitnodiging tot het beheer van {{ config('thinktomorrow.chief.name') }}.
@@ -16,7 +16,7 @@
             </p>
 
             <p style="margin: 40px 0 20px 0;">
-                @include('back.mails._button',[
+                @include('chief::back.mails._button',[
                 'url' => $accept_url,
                 'label' => 'Aanvaard uitnodiging',
             ])

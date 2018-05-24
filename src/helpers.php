@@ -5,7 +5,7 @@
  */
 if(!function_exists('admin')){
     function admin(){
-        return \Illuminate\Support\Facades\Auth::guard('admin')->user();
+        return \Illuminate\Support\Facades\Auth::guard('chief')->user();
     }
 }
 

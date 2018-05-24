@@ -1,11 +1,11 @@
 <?php
 
-namespace Chief\Tests\Feature\Users;
+namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Chief\Authorization\Role;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 
 class UpdateYouTest extends TestCase
 {
@@ -34,7 +34,7 @@ class UpdateYouTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->asAdmin()->get(route('back.you.edit'));
+        $response = $this->asAdmin()->get(route('chief.back.you.edit'));
 
         $this->assertNotEquals($this->newUser->id, $response->getOriginalContent()->getData()['user']->id);
     }
@@ -42,8 +42,8 @@ class UpdateYouTest extends TestCase
     /** @test */
     function updating_your_data()
     {
-        $response = $this->actingAs($this->newUser, 'admin')
-            ->put(route('back.you.update'), $this->validUpdateParams());
+        $response = $this->actingAs($this->newUser, 'chief')
+            ->put(route('chief.back.you.update'), $this->validUpdateParams());
 
         $response->assertStatus(302)
             ->assertSessionHas('messages.success');
@@ -54,9 +54,9 @@ class UpdateYouTest extends TestCase
     /** @test */
     function only_authenticated_admin_can_update_their_profile()
     {
-        $response = $this->put(route('back.you.update'), $this->validUpdateParams());
+        $response = $this->put(route('chief.back.you.update'), $this->validUpdateParams());
 
-        $response->assertRedirect(route('back.login'));
+        $response->assertRedirect(route('chief.back.login'));
 
         // Assert nothing was updated
         $this->assertNewValues($this->newUser->fresh());
@@ -72,8 +72,8 @@ class UpdateYouTest extends TestCase
     function when_updating_user_firstname_is_required()
     {
         $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']),
-            route('back.dashboard'),
-            route('back.you.update'),
+            route('chief.back.dashboard'),
+            route('chief.back.you.update'),
             2, // Admin self and existing one
             'put'
         );
@@ -83,8 +83,8 @@ class UpdateYouTest extends TestCase
     function when_updating_user_lastname_is_required()
     {
         $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']),
-            route('back.dashboard'),
-            route('back.you.update'),
+            route('chief.back.dashboard'),
+            route('chief.back.you.update'),
             2, // Admin self and existing one
             'put'
         );

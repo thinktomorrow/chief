@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\State;
+namespace Thinktomorrow\Chief\Common\State;
 
 interface StatefulContract
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Users\Invites\Application;
+namespace Thinktomorrow\Chief\Users\Invites\Application;
 
 use Illuminate\Support\Facades\DB;
-use Chief\Users\Invites\Invitation;
-use Chief\Common\State\StateException;
-use Chief\Users\Invites\InvitationState;
-use Chief\Users\Invites\Events\InviteAccepted;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Common\State\StateException;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Users\Invites\Events\InviteAccepted;
 
 class AcceptInvite
 {

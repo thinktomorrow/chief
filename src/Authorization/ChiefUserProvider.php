@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Authorization;
+namespace Thinktomorrow\Chief\Authorization;
 
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\UserProvider;

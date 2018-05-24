@@ -1,8 +1,8 @@
 <?php
 
-namespace Chief\Common;
+namespace Thinktomorrow\Chief\Common;
 
-use Chief\Common\Contracts\SluggableContract;
+use Thinktomorrow\Chief\Common\Contracts\SluggableContract;
 use Illuminate\Support\Str;
 
 class UniqueSlug

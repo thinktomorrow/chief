@@ -2,17 +2,17 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Chief\Users\User;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Http\Request;
-use Chief\Authorization\Role;
+use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
 
 class YouController extends Controller
 {
     public function edit()
     {
-        return view('back.you.edit',[
+        return view('chief::back.you.edit',[
             'user' => admin(),
         ]);
     }

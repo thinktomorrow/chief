@@ -8,11 +8,11 @@ class DashboardController extends Controller
 {
     public function show()
     {
-        return view('back.dashboard');
+        return view('chief::back.dashboard');
     }
 
     public function gettingStarted()
     {
-        return view('back.dashboard');
+        return view('chief::back.dashboard');
     }
 }

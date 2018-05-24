@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Chief\Users\User;
+use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
 
 class ResendInviteController extends Controller
 {
@@ -14,9 +14,9 @@ class ResendInviteController extends Controller
 
         $user = User::findOrFail($id);
 
-        app(InviteUser::class)->handle($user, auth()->guard('admin')->user());
+        app(InviteUser::class)->handle($user, auth()->guard('chief')->user());
 
-        return redirect()->route('back.users.index')
+        return redirect()->route('chief.back.users.index')
             ->with('messages.success', $user->fullname. ' is opnieuw een uitnodiging verstuurd.');
     }
 

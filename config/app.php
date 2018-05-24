@@ -172,12 +172,12 @@ return [
     'providers-local' => [
         \Barryvdh\Debugbar\ServiceProvider::class,
         //Demo app service provider
-        Chief\Demo\DemoServiceProvider::class,
+        Thinktomorrow\Chief\Demo\DemoServiceProvider::class,
     ],
 
     'providers-testing' => [
         //Demo app service provider
-        Chief\Demo\DemoServiceProvider::class,
+        Thinktomorrow\Chief\Demo\DemoServiceProvider::class,
     ],
 
     /*

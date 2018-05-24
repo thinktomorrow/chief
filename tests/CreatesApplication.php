@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Tests;
+namespace Thinktomorrow\Chief\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 

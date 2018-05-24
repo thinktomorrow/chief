@@ -1,10 +1,10 @@
 <?php
 
-namespace Chief\Users\Application;
+namespace Thinktomorrow\Chief\Users\Application;
 
-use Chief\Users\Invites\Events\InviteAccepted;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Users\Invites\Events\InviteAccepted;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\User;
 
 class EnableUser
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Chief\Tests\Feature\Relations;
+namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Chief\Pages\Page;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageRelationsTest extends TestCase
 {

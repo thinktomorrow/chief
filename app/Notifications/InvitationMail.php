@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Notifications;
 
-use Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,7 +36,7 @@ class InvitationMail extends Notification implements ShouldQueue
         return (new MailMessage())
             ->subject('Uitnodiging tot Chief')
             ->from(config('thinktomorrow.chief.contact.email'))
-            ->view('back.mails.invitation', [
+            ->view('chief::back.mails.invitation', [
                 'invitee'    => $this->invitation->invitee,
                 'inviter'    => $this->invitation->inviter,
                 'accept_url' => $this->invitation->acceptUrl(),

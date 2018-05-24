@@ -1,8 +1,8 @@
 <?php
 
-namespace Chief\Users\Invites;
+namespace Thinktomorrow\Chief\Users\Invites;
 
-use Chief\Common\State\StateMachine;
+use Thinktomorrow\Chief\Common\State\StateMachine;
 
 class InvitationState extends StateMachine
 {

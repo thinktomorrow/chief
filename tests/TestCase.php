@@ -1,40 +1,70 @@
 <?php
 
-namespace Chief\Tests;
+namespace Thinktomorrow\Chief\Tests;
 
-use Thinktomorrow\Chief\App\Exceptions\Handler;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends OrchestraTestCase
 {
-    use CreatesApplication, TestHelpers;
+    use TestHelpers;
 
     protected $protectTestEnvironment = true;
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            BugsnagServiceProvider::class,
+            ChiefServiceProvider::class
+        ];
+    }
 
     protected function setUp()
     {
         parent::setUp();
+        // Load database before overriding the config values but after the basic app setup
+        $this->setUpDatabase();
+
+        // Path is relative to root of phpunit execution.
+        $this->withFactories(realpath(dirname(__DIR__).'/database/factories'));
 
         $this->protectTestEnvironment();
 
         $this->registerResponseMacros();
     }
 
-    // Override default createApplication
-    public function createApplication()
+    protected function getEnvironmentSetUp($app)
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app['path.base'] = realpath(__DIR__ . '/../');
 
-        $app->make(Kernel::class)->bootstrap();
+        $app['config']->set('permission.table_names', [
+            'roles' => 'roles',
+            'permissions' => 'permissions',
+            'model_has_permissions' => 'model_has_permissions',
+            'model_has_roles' => 'model_has_roles',
+            'role_has_permissions' => 'role_has_permissions',
+        ]);
 
-        Hash::setRounds(4);
+        // Setup default database to use sqlite :memory:
+        $app['config']->set('auth.defaults', [
+            'guard' => 'xxx',
+            'passwords' => 'chief',
+        ]);
 
-        return $app;
+        // Connection is defined in the phpunit config xml
+        $app['config']->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
+            'prefix' => '',
+        ]);
+
+        // Start session by default
+        $app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
     }
 
     protected function disableExceptionHandling()

@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Tests\Feature\Users;
+namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\Invites\Application\InviteUser;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
@@ -80,17 +80,17 @@ class AcceptInviteTest extends TestCase
 
         $this->assertTrue($this->invitee->fresh()->isEnabled());
 
-        $response = $this->post(route('back.login.store'), [
+        $response = $this->post(route('chief.back.login.store'), [
             'email'    => $this->invitee->email,
             'password' => 'password',
         ]);
-        $response->assertRedirect(route('back.dashboard'));
+        $response->assertRedirect(route('chief.back.dashboard'));
     }
 
     /** @test */
     function non_enabled_invitee_cannot_log_in()
     {
-        $response = $this->post(route('back.login.store'), [
+        $response = $this->post(route('chief.back.login.store'), [
             'email'    => $this->invitee->email,
             'password' => 'password',
         ]);
@@ -114,14 +114,14 @@ class AcceptInviteTest extends TestCase
     function accept_url_logs_user_in_and_redirects_to_getting_started_page()
     {
         // Assert we are not yet logged in
-        $this->assertFalse(auth()->guard('admin')->check());
+        $this->assertFalse(auth()->guard('chief')->check());
 
         $response = $this->get($this->invitation->acceptUrl());
 
-        $response->assertRedirect(route('back.dashboard.getting-started'));
+        $response->assertRedirect(route('chief.back.dashboard.getting-started'));
 
         // Assert we are logged in
-        $this->assertEquals($this->invitee->id, auth()->guard('admin')->id());
+        $this->assertEquals($this->invitee->id, auth()->guard('chief')->id());
     }
 
     /** @test */
@@ -137,9 +137,9 @@ class AcceptInviteTest extends TestCase
 
         app(InviteUser::class)->handle($invitee, $this->inviter);
         $response = $this->get($invitee->fresh()->invitation->acceptUrl());
-        $response->assertRedirect(route('back.password.edit'));
+        $response->assertRedirect(route('chief.back.password.edit'));
 
         // Assert we are logged in
-        $this->assertTrue(auth()->guard('admin')->check());
+        $this->assertTrue(auth()->guard('chief')->check());
     }
 }

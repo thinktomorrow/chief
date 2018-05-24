@@ -1,9 +1,9 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title','Pas "' .$page->title .'" aan')
 
 
-@component('back._layouts._partials.header')
+@component('chief.back._layouts._partials.header')
     @slot('title', 'Pas "' .$page->title .'" aan')
     <a href="#" class="btn btn-o-primary inline-s">Preview</a>
     <div class="btn-group">
@@ -19,13 +19,13 @@
 
 @section('content')
 
-  <form method="POST" action="{{ route('back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
+  <form method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
-    @include('back.pages._update_form')
-    @include('back.pages._partials.modal')
-    @include('back.pages._partials.sidebar')
+    @include('chief::back.pages._update_form')
+    @include('chief::back.pages._partials.modal')
+    @include('chief::back.pages._partials.sidebar')
 
   </form>
 @stop

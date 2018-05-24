@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Authorization;
+namespace Thinktomorrow\Chief\Authorization;
 
 use Spatie\Permission\Models\Permission as BasePermission;
 

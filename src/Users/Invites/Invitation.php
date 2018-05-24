@@ -1,9 +1,9 @@
 <?php
 
-namespace Chief\Users\Invites;
+namespace Thinktomorrow\Chief\Users\Invites;
 
-use Chief\Common\State\StatefulContract;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Common\State\StatefulContract;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
 

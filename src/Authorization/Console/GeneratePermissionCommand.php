@@ -1,8 +1,8 @@
 <?php
-namespace Chief\Authorization\Console;
+namespace Thinktomorrow\Chief\Authorization\Console;
 
-use Chief\Authorization\Role;
-use Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Authorization\Permission;
 use Illuminate\Console\Command;
 
 class GeneratePermissionCommand extends Command

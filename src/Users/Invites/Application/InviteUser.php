@@ -1,13 +1,13 @@
 <?php
 
-namespace Chief\Users\Invites\Application;
+namespace Thinktomorrow\Chief\Users\Invites\Application;
 
-use Chief\Users\Invites\Events\UserInvited;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\User;
-use Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Users\Invites\Events\UserInvited;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Illuminate\Support\Facades\DB;
-use Chief\Common\State\StateException;
+use Thinktomorrow\Chief\Common\State\StateException;
 
 class InviteUser
 {

@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
-use Chief\Users\Invites\Invitation;
-use Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Closure;
 use Illuminate\Http\Request;
 

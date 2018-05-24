@@ -1,7 +1,7 @@
 <?php
 
-use Chief\Users\User;
-use Chief\Pages\Page;
+use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Pages\Page;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
 

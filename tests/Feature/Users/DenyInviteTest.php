@@ -1,13 +1,13 @@
 <?php
 
-namespace Chief\Tests\Feature\Users;
+namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\Invites\Application\InviteUser;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\Invites\InvitationState;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
@@ -91,7 +91,7 @@ class DenyInviteTest extends TestCase
         $this->disableExceptionHandling();
         $response = $this->get($this->invitation->denyUrl());
 
-        $response->assertViewIs('back.users.invite-denied');
+        $response->assertViewIs('chief.back.users.invite-denied');
 
         $this->assertEquals(InvitationState::DENIED, $this->invitation->fresh()->state());
         $this->assertFalse($this->invitee->fresh()->isEnabled());

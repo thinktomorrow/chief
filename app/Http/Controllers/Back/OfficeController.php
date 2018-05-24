@@ -11,14 +11,14 @@ class OfficeController extends Controller
     {
         $offices = Office::sequence()->get();
 
-        return view('back.offices.index',compact('offices'));
+        return view('chief::back.offices.index',compact('offices'));
     }
 
     public function create()
     {
         $office = new Office;
 
-        return view('back.offices.create',compact('office'));
+        return view('chief::back.offices.create',compact('office'));
     }
 
     public function store(Request $request)
@@ -31,14 +31,14 @@ class OfficeController extends Controller
 
         $this->saveOffice($office,$request);
 
-        return redirect()->route('back.offices.index')->with('messages.success', 'Office of '.$office->title .' has been added.');
+        return redirect()->route('chief.back.offices.index')->with('messages.success', 'Office of '.$office->title .' has been added.');
     }
 
     public function edit($id)
     {
         $office = Office::findOrFail($id);
 
-        return view('back.offices.edit', compact('office'));
+        return view('chief::back.offices.edit', compact('office'));
     }
 
     public function update(Request $request, $id)
@@ -51,7 +51,7 @@ class OfficeController extends Controller
         Office::reorderAgainstSiblings($request->get('sequence'));
         $this->saveOfficeImage($office,$request);
 
-        return redirect()->route('back.offices.index')->with('messages.success', 'Office of '.$office->title .' has been updated');
+        return redirect()->route('chief.back.offices.index')->with('messages.success', 'Office of '.$office->title .' has been updated');
     }
 
     private function saveOffice(Office $office, Request $request)
@@ -81,7 +81,7 @@ class OfficeController extends Controller
         $office->delete();
         $message = 'Office of '.$office->title .' has been deleted.';
 
-        return redirect()->route('back.offices.index')->with('messages.warning', $message);
+        return redirect()->route('chief.back.offices.index')->with('messages.warning', $message);
     }
 
     /**

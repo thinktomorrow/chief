@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title','Melding bewerken')
 
@@ -22,7 +22,7 @@
 				<div class="panel-body">
 					<div class="admin-form">
 
-						@include('back.note._form')
+						@include('chief::back.note._form')
 
 					</div>
 				</div>

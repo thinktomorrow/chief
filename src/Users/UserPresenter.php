@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Users;
+namespace Thinktomorrow\Chief\Users;
 
 class UserPresenter
 {

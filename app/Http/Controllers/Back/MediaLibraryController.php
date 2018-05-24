@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Thinktomorrow\AssetLibrary\Models\Asset;
-use Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Page;
 
 class MediaLibraryController
 {
@@ -22,18 +22,18 @@ class MediaLibraryController
             [
                 'path' => Paginator::resolveCurrentPath(),
             ]);
-        return view('back.media', compact('library'));
+        return view('chief::back.media', compact('library'));
     }
 
     public function uploadtest()
     {
         $page = Page::first();
-        return view('back.uploadtest', compact('page'));
+        return view('chief::back.uploadtest', compact('page'));
     }
 
     public function mediaModal()
     {
         $library = Asset::getAllAssets();
-        return view('back.media-modal', compact('library'))->render();
+        return view('chief::back.media-modal', compact('library'))->render();
     }
 }

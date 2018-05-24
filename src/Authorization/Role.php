@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Authorization;
+namespace Thinktomorrow\Chief\Authorization;
 
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Models\Role as BaseRole;

@@ -3,14 +3,14 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Common\Relations\RelatedCollection;
-use Chief\Pages\Application\CreatePage;
-use Chief\Pages\Page;
-use Chief\Pages\PageRepository;
+use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
-use Chief\Pages\Application\UpdatePage;
+use Thinktomorrow\Chief\Pages\Application\UpdatePage;
 use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 
 class PagesController extends Controller
@@ -20,7 +20,7 @@ class PagesController extends Controller
         $published  = Page::where('published', 1)->paginate(10);
         $drafts     = Page::where('published', 0)->get();
 
-        return view('back.pages.index', compact('published', 'drafts'));
+        return view('chief::back.pages.index', compact('published', 'drafts'));
     }
 
     /**
@@ -34,7 +34,7 @@ class PagesController extends Controller
         $page->existingRelationIds = collect([]);
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('back.pages.create',['page' => $page, 'relations' => $relations]);
+        return view('chief::back.pages.create',['page' => $page, 'relations' => $relations]);
     }
 
     /**
@@ -47,7 +47,7 @@ class PagesController extends Controller
     {
         $page = app(CreatePage::class)->handle($request->trans);
 
-        return redirect()->route('back.pages.index')->with('messages.success', $page->title .' is aangemaakt');
+        return redirect()->route('chief.back.pages.index')->with('messages.success', $page->title .' is aangemaakt');
     }
 
     /**
@@ -64,7 +64,7 @@ class PagesController extends Controller
         $page->existingRelationIds = RelatedCollection::relationIds($page->children());
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('back.pages.edit', compact('page', 'relations'));
+        return view('chief::back.pages.edit', compact('page', 'relations'));
     }
 
     /**
@@ -78,7 +78,7 @@ class PagesController extends Controller
     {
         $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
 
-        return redirect()->route('back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');
+        return redirect()->route('chief.back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');
     }
 
     /**
@@ -94,7 +94,7 @@ class PagesController extends Controller
         $page->delete();
         $message = 'Het item werd verwijderd.';
 
-        return redirect()->route('back.pages.index')->with('messages.warning', $message);
+        return redirect()->route('chief.back.pages.index')->with('messages.warning', $message);
     }
 
     public function publish(Request $request)

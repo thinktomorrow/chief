@@ -35,7 +35,7 @@
           </div>
           </div>
         </div>
-        @include('back.media.show')
+        @include('chief::back.media.show')
       @endforeach
     </div>
     <div class="row text-center">

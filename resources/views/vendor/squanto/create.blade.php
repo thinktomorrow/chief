@@ -1,8 +1,8 @@
-@extends(config('squanto.template','back._layouts.master'))
+@extends(config('squanto.template','chief.back._layouts.master'))
 
 @section('page-title','Add new translation key')
 
-@component('back._layouts._partials.header')
+@component('chief.back._layouts._partials.header')
     @slot('title', 'Nieuwe vertaling toevoegen')
 @endcomponent
 

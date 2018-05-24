@@ -1,10 +1,10 @@
 <?php
 
-namespace Chief\Users\Invites\Application;
+namespace Thinktomorrow\Chief\Users\Invites\Application;
 
 use Thinktomorrow\Chief\App\Notifications\InvitationMail;
-use Chief\Users\Invites\Events\UserInvited;
-use Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\Events\UserInvited;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Illuminate\Support\Facades\Notification;
 
 class SendInvite

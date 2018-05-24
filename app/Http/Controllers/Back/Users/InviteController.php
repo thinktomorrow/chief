@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Chief\Authorization\Role;
-use Chief\Users\Invites\Application\AcceptInvite;
-use Chief\Users\Invites\Application\DenyInvite;
-use Chief\Users\Invites\Application\InviteUser;
-use Chief\Users\Invites\Invitation;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Users\Invites\Application\AcceptInvite;
+use Thinktomorrow\Chief\Users\Invites\Application\DenyInvite;
+use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Http\Request;
 
 class InviteController extends Controller
@@ -20,7 +20,7 @@ class InviteController extends Controller
 
     public function expired()
     {
-        return view('back.users.invite-expired');
+        return view('chief::back.users.invite-expired');
     }
 
     public function accept(Request $request)
@@ -30,14 +30,14 @@ class InviteController extends Controller
         app(AcceptInvite::class)->handle($invitation);
 
         // Log user into the system and proceed to start page
-        auth()->guard('admin')->login($invitation->invitee);
+        auth()->guard('chief')->login($invitation->invitee);
 
         if (is_null($invitation->invitee->password))
         {
-            return redirect()->route('back.password.edit');
+            return redirect()->route('chief.back.password.edit');
         }
 
-        return redirect()->route('back.dashboard.getting-started');
+        return redirect()->route('chief.back.dashboard.getting-started');
     }
 
     public function deny(Request $request)
@@ -46,7 +46,7 @@ class InviteController extends Controller
 
         app(DenyInvite::class)->handle($invitation);
 
-        return view('back.users.invite-denied');
+        return view('chief::back.users.invite-denied');
     }
 
 }

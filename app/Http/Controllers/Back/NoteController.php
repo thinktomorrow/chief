@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Carbon\Carbon;
-use Chief\Common\Translatable\Locale;
-use Chief\Common\Translatable\TranslatableController;
-use Chief\Models\Notes\FormValues;
-use Chief\Models\Notes\Note;
+use Thinktomorrow\Chief\Common\Translatable\Locale;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableController;
+use Thinktomorrow\Chief\Models\Notes\FormValues;
+use Thinktomorrow\Chief\Models\Notes\Note;
 use ConsoleTVs\Charts\Facades\Charts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -33,31 +33,31 @@ class NoteController extends Controller
             return Carbon::now()->between($note->start_at, $note->end_at);
         })->map(function($note)  use($labels){
             $labels->push($note->content);
-            return [$note->start_at, $note->end_at, 'color' => "#b4b4b4", 'link' => route('back.notes.edit', $note->id)];
+            return [$note->start_at, $note->end_at, 'color' => "#b4b4b4", 'link' => route('chief.back.notes.edit', $note->id)];
         })->toArray();
         $dates = array_merge($active, $notes->reject(function ($note)  use($labels){
             return !Carbon::now()->between($note->start_at, $note->end_at);
         })->map(function($note)  use($labels){
             $labels->push($note->content);
-            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('back.notes.edit', $note->id)];
+            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('chief.back.notes.edit', $note->id)];
         })->toArray());
 
 
 //        $dates = $general->map(function ($note) use($labels){
 //            $labels->push($note->content);
-//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('back.admin.notes.edit', $note->id)];
+//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('chief.back.admin.notes.edit', $note->id)];
 //        });
 //        $dates = array_merge($dates->toArray(), $payment->map(function ($note) use($labels){
 //            $labels->push($note->content);
-//            return [$note->start_at, $note->end_at, 'color' => "#ffa500", 'link' => route('back.admin.notes.edit', $note->id)];
+//            return [$note->start_at, $note->end_at, 'color' => "#ffa500", 'link' => route('chief.back.admin.notes.edit', $note->id)];
 //        })->toArray());
 //
 //        $dates  = $notes->map(function($note){
-//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('back.admin.notes.edit', $note->id)];
+//            return [$note->start_at, $note->end_at, 'color' => "#6eaf4e", 'link' => route('chief.back.admin.notes.edit', $note->id)];
 //        });
 
         $chart = Charts::create('bar', 'highcharts')
-            ->view('back.charts.highcharts.rangebar')
+            ->view('chief::back.charts.highcharts.rangebar')
             ->title("Note overview")
             ->elementLabel("")
             ->dimensions(0, 400) // Width x Height
@@ -66,7 +66,7 @@ class NoteController extends Controller
             ->labels($labels);
         $data = compact("chart", "notes");
 
-        return view('back.note.index', $data);
+        return view('chief::back.note.index', $data);
     }
 
     /**
@@ -81,7 +81,7 @@ class NoteController extends Controller
         $note->start_at = Carbon::now()->startOfDay();
         $note->end_at = Carbon::now()->addDay(1)->startOfDay();
 
-        return view('back.note.create', [
+        return view('chief::back.note.create', [
             'note' => $note,
             'formValues' => new FormValues($note)
         ]);
@@ -108,7 +108,7 @@ class NoteController extends Controller
             $note->publish();
         }
 
-        return redirect()->route('back.notes.index');
+        return redirect()->route('chief.back.notes.index');
     }
 
     /**
@@ -127,7 +127,7 @@ class NoteController extends Controller
         }
         $note->trans = (object)$trans;
 
-        return view('back.note.edit', [
+        return view('chief::back.note.edit', [
             'note' => $note,
             'formValues' => new FormValues($note)
         ]);
@@ -154,7 +154,7 @@ class NoteController extends Controller
 
         $this->saveNoteTranslations($note,$request->get('trans'));
 
-        return redirect()->route('back.back.notes.index')->with('messages.success','De note is aangepast.');
+        return redirect()->route('chief.back.back.notes.index')->with('messages.success','De note is aangepast.');
     }
 
     public function publish(Request $request)
@@ -192,7 +192,7 @@ class NoteController extends Controller
 
         $note->delete();
 
-        return redirect()->route('back.back.notes.index')->with('messages.warning','Note ['.$type.'] is verwijderd.');
+        return redirect()->route('chief.back.back.notes.index')->with('messages.warning','Note ['.$type.'] is verwijderd.');
     }
 
     /**

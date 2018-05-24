@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Models\Notes;
+namespace Thinktomorrow\Chief\Models\Notes;
 
 use Carbon\Carbon;
-use Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Chief\Common\Translatable\Translatable;
-use Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Common\Translatable\Translatable;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Optiphar\Site\Notes\NoteReminder;
 

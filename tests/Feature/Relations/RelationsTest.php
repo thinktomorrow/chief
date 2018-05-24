@@ -1,11 +1,11 @@
 <?php
 
-namespace Chief\Tests\Feature\Relations;
+namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Chief\Common\Relations\RelatedCollection;
-use Chief\Common\Relations\Relation;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class RelationsTest extends TestCase
 {
