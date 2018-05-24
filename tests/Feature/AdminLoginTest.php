@@ -198,7 +198,7 @@ class AdminLoginTest extends TestCase
     public function it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
         $admin = factory(User::class)->make([
-            'email'     => 'foo@example.com'
+            'email' => 'foo@example.com'
         ]);
 
         Auth::guard('chief')->login($admin);

@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Notification;
 
 class AcceptInviteTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     private $invitee;
     private $inviter;
     private $invitation;
@@ -21,10 +19,6 @@ class AcceptInviteTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
-
-        $this->setUpDefaultAuthorization();
 
         $this->invitee = $this->developer();
         $this->inviter = $this->developer();

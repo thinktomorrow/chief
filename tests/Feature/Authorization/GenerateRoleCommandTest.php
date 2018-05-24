@@ -4,19 +4,16 @@ namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
 use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
 class GenerateRoleCommandTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        $this->withoutDefaultAuthorization();
     }
 
     /** @test */
@@ -37,7 +34,7 @@ class GenerateRoleCommandTest extends TestCase
         $this->assertCount(1, Role::all());
 
         // Assert the proper guard is used
-        $this->assertEquals('admin', Role::first()->guard_name);
+        $this->assertEquals('chief', Role::first()->guard_name);
     }
 
     /** @test */

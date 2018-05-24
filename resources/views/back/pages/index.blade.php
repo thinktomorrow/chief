@@ -2,7 +2,7 @@
 
 @section('page-title', "Pagina's")
 
-@component('chief.back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', "Jouw pagina's")
         <div class="inline-group-s">
             <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">

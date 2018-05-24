@@ -1,4 +1,4 @@
-@extends(config('squanto.template','chief.back._layouts.master'))
+@extends(config('squanto.template','chief::back._layouts.master'))
 
 @section('custom-styles')
     <link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">
@@ -23,7 +23,7 @@
 
 @section('page-title','Edit line')
 
-@component('chief.back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', $line->label. ' bewerken')
 @endcomponent
 

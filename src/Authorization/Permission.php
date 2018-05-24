@@ -6,11 +6,11 @@ use Spatie\Permission\Models\Permission as BasePermission;
 
 class Permission extends BasePermission
 {
-    protected $guard_name = 'admin';
+    protected $guard_name = 'chief';
 
     public static function create(array $attributes = [])
     {
-        $attributes['guard_name'] = $attributes['guard_name'] ?? 'admin';
+        $attributes['guard_name'] = $attributes['guard_name'] ?? 'chief';
 
         return parent::create($attributes);
     }

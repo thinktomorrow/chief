@@ -3,25 +3,15 @@
 namespace Thinktomorrow\Chief\Tests\Feature;
 
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Users\User;
-use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Pages\Page;
 
 class PreviewTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-    }
-
     /** @test */
     public function an_admin_can_view_previews_of_draft_pages()
     {
+        $this->markTestIncomplete();
+
         $originalpage = factory(Page::class)->create([
             'published' => 0
         ]);
@@ -40,6 +30,8 @@ class PreviewTest extends TestCase
     /** @test */
     public function a_user_can_not_view_previews_of_draft_pages()
     {
+        $this->markTestIncomplete();
+
         $originalpage = factory(Page::class)->create([
             'published' => 0
         ]);

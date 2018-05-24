@@ -4,21 +4,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
 use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\User;
 
 class PermissionTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-    }
-
     /** @test */
     function an_user_can_be_checked_for_permission()
     {

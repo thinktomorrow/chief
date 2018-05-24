@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Http;
 
+use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateSuperadmin;
 use Thinktomorrow\Chief\App\Http\Middleware\Honeypot;
 use Thinktomorrow\Chief\App\Http\Middleware\OptimizeImages;
@@ -34,19 +35,14 @@ class Kernel extends HttpKernel
             \Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+//             \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Thinktomorrow\Chief\App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
-        'back' => [
-            \Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \Thinktomorrow\Chief\App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'web-chief' => [
+            AuthenticateChiefSession::class,
         ],
 
         'api' => [

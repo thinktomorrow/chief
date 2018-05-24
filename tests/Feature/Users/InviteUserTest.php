@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
 use Thinktomorrow\Chief\App\Notifications\InvitationMail;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
@@ -13,17 +12,6 @@ use Illuminate\Support\Facades\Notification;
 
 class InviteUserTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-
-        $this->setUpDefaultAuthorization();
-    }
-
     /** @test */
     function only_admin_can_view_the_invite_form()
     {

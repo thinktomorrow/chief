@@ -2,23 +2,16 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\User;
 
 class ManageUsersTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     private $newUser;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
-
-        $this->setUpDefaultAuthorization();
 
         $this->newUser = new User();
         $this->newUser->email = 'email';

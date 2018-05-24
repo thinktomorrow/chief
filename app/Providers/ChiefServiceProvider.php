@@ -16,12 +16,6 @@ class ChiefServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        // Register the Chief Exception handler
-        $this->app->singleton(
-            ExceptionHandler::class,
-            Handler::class
-        );
-
         $this->registerChiefGuard();
 
         (new AuthServiceProvider($this->app))->boot();
@@ -40,8 +34,8 @@ class ChiefServiceProvider extends ServiceProvider
             ]);
         }
 
-        Blade::component('chief.back._layouts._partials.header', 'chiefheader');
-        Blade::component('chief.back._elements.formgroup', 'chiefformgroup');
+        Blade::component('chief::back._layouts._partials.header', 'chiefheader');
+        Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
     }
 
     public function register()

@@ -5,20 +5,9 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Users\User;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
 
 class CreatePageTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-    }
-
     /** @test */
     function admin_can_view_the_create_form()
     {
@@ -91,13 +80,15 @@ class CreatePageTest extends TestCase
     /** @test */
     public function it_can_remove_a_page()
     {
-        $response = $this->asDefaultAdmin()
+        $this->markTestIncomplete();
+
+        $response = $this->asAdmin()
             ->post(route('chief.back.pages.store'), $this->validParams());
 
         $this->assertCount(1, Page::all());
 
-        $this->actingAs(factory(User::class)->make())
-            ->delete(route('chief.back.pages.destroy', Page::first()->id), $this->validParams());
+        $this->asAdmin()
+             ->delete(route('chief.back.pages.destroy', Page::first()->id), $this->validParams());
 
         $this->assertCount(0, Page::all());
     }

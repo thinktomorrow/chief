@@ -4,18 +4,15 @@ namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
 use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class GeneratePermissionCommandTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        $this->withoutDefaultAuthorization();
     }
 
     /** @test */
@@ -29,36 +26,36 @@ class GeneratePermissionCommandTest extends TestCase
     /** @test */
     function single_permission_can_be_generated()
     {
-        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'new admin']);
 
         $this->artisan('chief:permission', [
-            'name' => 'view-role',
-            '--role' => 'admin'
+            'name' => 'view-ability',
+            '--role' => 'new admin'
         ]);
 
-        $role = Role::findByName('admin');
+        $role = Role::findByName('new admin');
         $this->assertCount(1, $role->permissions);
 
-        $this->assertEquals('view-role', Permission::first()->name);
+        $this->assertEquals('view-ability', $role->permissions->first()->name);
     }
 
     /** @test */
     function permissions_can_be_generated()
     {
         $this->artisan('chief:permission', [
-            'name' => 'permission'
+            'name' => 'ability'
         ]);
 
         $this->assertCount(4, Permission::all());
 
         $permissionNames = Permission::all()->pluck('name')->toArray();
-        $this->assertContains('view-permission', $permissionNames);
-        $this->assertContains('create-permission', $permissionNames);
-        $this->assertContains('update-permission', $permissionNames);
-        $this->assertContains('delete-permission', $permissionNames);
+        $this->assertContains('view-ability', $permissionNames);
+        $this->assertContains('create-ability', $permissionNames);
+        $this->assertContains('update-ability', $permissionNames);
+        $this->assertContains('delete-ability', $permissionNames);
 
         // Assert the proper guard is used
-        $this->assertEquals('admin', Permission::first()->guard_name);
+        $this->assertEquals('chief', Permission::first()->guard_name);
     }
 
     /** @test */

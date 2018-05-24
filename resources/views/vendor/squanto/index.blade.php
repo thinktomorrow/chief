@@ -4,7 +4,7 @@
     Teksten
 @stop
 
-@component('chief.back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title','Teksten')
     @if(admin()->isSquantoDeveloper())
         <a href="{{ route('squanto.lines.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> add new line</a>

@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests;
 
 
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
@@ -57,7 +58,7 @@ trait TestHelpers
     protected function asAdmin()
     {
         $admin = factory(User::class)->create();
-        $admin->assignRole(Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'admin']));
+        $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 
         return $this->actingAs($admin, 'chief');
     }
@@ -65,7 +66,7 @@ trait TestHelpers
     protected function asAuthor()
     {
         $author = factory(User::class)->create();
-        $author->assignRole(Role::firstOrCreate(['name' => 'author', 'guard_name' => 'admin']));
+        $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $this->actingAs($author, 'chief');
     }
@@ -73,7 +74,7 @@ trait TestHelpers
     protected function developer()
     {
         $developer = factory(User::class)->create();
-        $developer->assignRole(Role::firstOrCreate(['name' => 'developer', 'guard_name' => 'admin']));
+        $developer->assignRole(Role::firstOrCreate(['name' => 'developer']));
 
         return $developer;
     }
@@ -81,7 +82,7 @@ trait TestHelpers
     protected function admin()
     {
         $admin = factory(User::class)->create();
-        $admin->assignRole(Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'admin']));
+        $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 
         return $admin;
     }
@@ -89,7 +90,7 @@ trait TestHelpers
     protected function author()
     {
         $author = factory(User::class)->create();
-        $author->assignRole(Role::firstOrCreate(['name' => 'author', 'guard_name' => 'admin']));
+        $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $author;
     }
@@ -103,6 +104,12 @@ trait TestHelpers
         AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
             Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
         });
+    }
+
+    protected function withoutDefaultAuthorization()
+    {
+        Permission::all()->each->delete();
+        Role::all()->each->delete();
     }
 
     protected function verifyMailRender(MailMessage $mailMessage): void

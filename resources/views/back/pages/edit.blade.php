@@ -3,7 +3,7 @@
 @section('page-title','Pas "' .$page->title .'" aan')
 
 
-@component('chief.back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', 'Pas "' .$page->title .'" aan')
     <a href="#" class="btn btn-o-primary inline-s">Preview</a>
     <div class="btn-group">

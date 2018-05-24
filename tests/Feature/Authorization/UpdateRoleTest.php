@@ -3,23 +3,16 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
 use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\User;
 
 class UpdateRoleTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     private $newRole;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
-
-        $this->setUpDefaultAuthorization();
 
         // Create a new role first
         $role = Role::create(['name' => array_get($this->validParams(),'name')]);

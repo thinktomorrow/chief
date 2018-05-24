@@ -2,7 +2,7 @@
 
 @section('page-title', 'settings')
 
-@component('chief.back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', 'Settings')
 @endcomponent
 

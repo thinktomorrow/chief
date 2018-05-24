@@ -36,7 +36,7 @@ return [
      * This is relative to the default viewpath.
      * @var string
      */
-    'template' => 'chief.back._layouts.master',
+    'template' => 'chief::back._layouts.master',
 
     /**
      * Path where the laravel language files are stored

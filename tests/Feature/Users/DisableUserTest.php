@@ -2,23 +2,16 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
 class DisableUserTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     private $user;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
-
-        $this->setUpDefaultAuthorization();
 
         $this->user = $this->author();
 

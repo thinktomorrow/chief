@@ -3,16 +3,25 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
+use Dimsav\Translatable\TranslatableServiceProvider;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\PermissionServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Thinktomorrow\Chief\App\Http\Kernel;
+use Thinktomorrow\Chief\App\Http\Middleware\RedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
+use Thinktomorrow\Locale\LocaleServiceProvider;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Squanto\SquantoServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    use TestHelpers;
+    use ChiefDatabaseTransactions,
+        TestHelpers;
 
     protected $protectTestEnvironment = true;
 
@@ -20,22 +29,44 @@ abstract class TestCase extends OrchestraTestCase
     {
         return [
             BugsnagServiceProvider::class,
-            ChiefServiceProvider::class
+            PermissionServiceProvider::class,
+
+            LocaleServiceProvider::class,
+            TranslatableServiceProvider::class,
+            SquantoServiceProvider::class,
+            SquantoManagerServiceProvider::class,
+
+            ChiefServiceProvider::class,
+
+            // Demo is used for our preview testing: todo: can we do without?
+            //DemoServiceProvider::class,
         ];
     }
 
     protected function setUp()
     {
         parent::setUp();
-        // Load database before overriding the config values but after the basic app setup
-        $this->setUpDatabase();
+
+        $this->protectTestEnvironment();
+        $this->registerResponseMacros();
+
+        // Register the Chief Exception handler
+        $this->app->singleton(
+            ExceptionHandler::class,
+            Handler::class
+        );
 
         // Path is relative to root of phpunit execution.
         $this->withFactories(realpath(dirname(__DIR__).'/database/factories'));
 
-        $this->protectTestEnvironment();
+        // Load database before overriding the config values but after the basic app setup
+        $this->setUpDatabase();
+        $this->setUpDefaultAuthorization();
+    }
 
-        $this->registerResponseMacros();
+    protected function resolveApplicationHttpKernel($app)
+    {
+        $app->singleton('Illuminate\Contracts\Http\Kernel', Kernel::class);
     }
 
     protected function getEnvironmentSetUp($app)
@@ -63,8 +94,12 @@ abstract class TestCase extends OrchestraTestCase
             'prefix' => '',
         ]);
 
-        // Start session by default
-        $app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
+        // For our tests is it required to have 2 languages: nl and en.
+        $app['config']->set('translatable.locales', ['nl', 'en']);
+        $app['config']->set('squanto.template', 'chief::back._layouts.master');
+
+        // Override the guest middleware since this is overloaded by Orchestra testbench itself
+        $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, RedirectIfAuthenticated::class);
     }
 
     protected function disableExceptionHandling()

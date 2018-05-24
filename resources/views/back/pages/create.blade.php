@@ -2,7 +2,7 @@
 
 @section('page-title','Voeg nieuw pagina toe')
 
-@component('chief.back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', 'Nieuw pagina')
     <button data-submit-form="createForm" type="button" class="btn btn-primary">Opslaan</button>
 @endcomponent

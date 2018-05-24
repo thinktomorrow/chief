@@ -4,23 +4,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\User;
 
 class CreateRoleTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-
-        $this->setUpDefaultAuthorization();
-    }
-
     /** @test */
     function only_developer_can_view_the_create_form()
     {

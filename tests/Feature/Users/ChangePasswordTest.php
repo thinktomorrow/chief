@@ -9,15 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class ChangePasswordTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     private $user;
 
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
 
         $this->user = new User();
         $this->user->email = 'email';
