@@ -9,9 +9,7 @@
     
     
     TODO: 
-    - remove all setup from tests as it is included in main testcase file
     - check met fille de CreatePage -> delete test?
     - preview testing
     - demo app + testings
-    - remove setupDefaultyROles on testing where not applicable
     

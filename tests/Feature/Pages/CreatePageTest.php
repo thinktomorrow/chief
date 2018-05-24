@@ -87,15 +87,11 @@ class CreatePageTest extends TestCase
     /** @test */
     public function it_can_remove_a_page()
     {
-        $this->markTestIncomplete();
-
-        $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store'), $this->validParams());
-
+        factory(Page::class)->create();
         $this->assertCount(1, Page::all());
 
         $this->asAdmin()
-             ->delete(route('chief.back.pages.destroy', Page::first()->id), $this->validParams());
+             ->delete(route('chief.back.pages.destroy', Page::first()->id));
 
         $this->assertCount(0, Page::all());
     }

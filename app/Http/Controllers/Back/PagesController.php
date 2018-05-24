@@ -90,7 +90,6 @@ class PagesController extends Controller
     public function destroy($id)
     {
         $page = Page::findOrFail($id);
-
         $page->delete();
         $message = 'Het item werd verwijderd.';
 
