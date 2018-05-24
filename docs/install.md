@@ -4,12 +4,5 @@
 - publish all the config files:
     - translatable for providing the model translations
     - locale for allowing frontend translation
-    
-    
-    
-    
-    TODO: 
-    - check met fille de CreatePage -> delete test?
-    - preview testing
-    - demo app + testings
+- Schema::defaultStringLength(191);
     

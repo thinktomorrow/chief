@@ -10,7 +10,7 @@ class PreviewTest extends TestCase
     /** @test */
     public function an_admin_can_view_previews_of_draft_pages()
     {
-        $this->markTestIncomplete();
+        $this->disableExceptionHandling();
 
         $originalpage = factory(Page::class)->create([
             'published' => 0
@@ -23,15 +23,13 @@ class PreviewTest extends TestCase
 
         $page = $response->original->getData()['page'];
 
-        $this->assertInstanceOf('Chief\Pages\Page', $page);
+        $this->assertInstanceOf('Thinktomorrow\Chief\Pages\Page', $page);
         $this->assertEquals($originalpage->slug, $page->slug);
     }
 
     /** @test */
     public function a_user_can_not_view_previews_of_draft_pages()
     {
-        $this->markTestIncomplete();
-
         $originalpage = factory(Page::class)->create([
             'published' => 0
         ]);

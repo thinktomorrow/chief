@@ -23,7 +23,7 @@ class DemoServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        $this->loadRoutesFrom(__DIR__ . '/Http/routes/demoRoutes.php');
-        $this->loadViewsFrom(__DIR__ . '/views', 'demo');
+        $this->loadRoutesFrom(__DIR__ . '/../../src/Demo/Http/routes/demoRoutes.php');
+        $this->loadViewsFrom(__DIR__ . '/../../src/Demo/views', 'demo');
     }
 }

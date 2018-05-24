@@ -38,8 +38,8 @@ abstract class TestCase extends OrchestraTestCase
 
             ChiefServiceProvider::class,
 
-            // Demo is used for our preview testing: todo: can we do without?
-            //DemoServiceProvider::class,
+            // Demo is used for our preview testing
+            DemoServiceProvider::class,
         ];
     }
 
