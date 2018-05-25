@@ -9,7 +9,7 @@
         <div>
             <div class="stack text-center">
                 <a href="{{ route('chief.back.login') }}">
-                    <img alt="Logo" src="{{ asset('/assets/back/img/logo.svg') }}" width="140" height="53">
+                    <img alt="Logo" src="{{ asset('/chief-assets/back/img/logo.svg') }}" width="140" height="53">
                 </a>
             </div>
 

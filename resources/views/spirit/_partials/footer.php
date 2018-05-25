@@ -8,7 +8,7 @@
         crossorigin="anonymous"></script>
 
 
-<script src="/assets/back/js/main.js"></script>
+<script src="/chief-assets/back/js/main.js"></script>
 <script>
 
     /**

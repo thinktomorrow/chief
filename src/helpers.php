@@ -27,7 +27,7 @@ if(!function_exists('cached_asset'))
 {
     function cached_asset($filepath, $type = null)
     {
-        $manifestPath = $type == 'back' ? '/assets/back' : '/assets';
+        $manifestPath = $type == 'back' ? '/chief-assets/back' : '/assets';
 
         // Manifest expects each entry to start with a leading slash - we make sure to deduplicate the manifest path.
         $entry = str_replace($manifestPath,'', '/'.ltrim($filepath,'/') );

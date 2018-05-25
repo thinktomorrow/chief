@@ -25,7 +25,7 @@
 
 @push('custom-scripts')
 {{-- USED FOR THE MEDIA FILTERS --}}
-<script src="{{ asset('assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
+<script src="{{ asset('chief-assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
 
 <script>
 	$(document).ready(function () {

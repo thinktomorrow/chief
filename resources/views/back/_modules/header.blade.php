@@ -1,7 +1,7 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-branding">
     <a class="navbar-brand" href="{{ route('chief.back.dashboard') }}">
-      <img src="{{ asset('assets/img/logo.svg') }}" alt="Chief">
+      <img src="{{ asset('chief-assets/img/logo.svg') }}" alt="Chief">
     </a>
     <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
   </div>

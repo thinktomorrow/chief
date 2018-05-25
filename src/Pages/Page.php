@@ -20,7 +20,14 @@ use Thinktomorrow\Chief\Common\Traits\Featurable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
-    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, Featurable, ActingAsParent, ActingAsChild;
+    use AssetTrait,
+        Translatable,
+        BaseTranslatable,
+        SoftDeletes,
+        Publishable,
+        Featurable,
+        ActingAsParent,
+        ActingAsChild;
 
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
@@ -67,5 +74,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function getRelationGroup(): string
     {
         return 'pages';
+    }
+
+    public function previewUrl()
+    {
+        return route('front.pages.show', $this->slug).'?preview-mode';
     }
 }
