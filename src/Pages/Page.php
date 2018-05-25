@@ -48,7 +48,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->published()->first() : null;
     }
 
-    public function scopeSortedByRecent($query)
+    public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at','DESC');
     }
