@@ -29,6 +29,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ActingAsParent,
         ActingAsChild;
 
+    // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
+    protected $translationModel = PageTranslation::class;
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
@@ -78,6 +80,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function previewUrl()
     {
-        return route('front.pages.show', $this->slug).'?preview-mode';
+        return route('pages.show', $this->slug).'?preview-mode';
     }
 }
