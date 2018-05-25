@@ -27,11 +27,11 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
-        ], 'config');
+        ], 'chief-config');
 
         $this->publishes([
             __DIR__.'/../../public/chief-assets' => public_path('/chief-assets'),
-        ], 'public');
+        ], 'chief-assets');
 
         // Register commands
         if ($this->app->runningInConsole()) {
