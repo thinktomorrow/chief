@@ -2,7 +2,11 @@
 
 
 # Work with pages
-Each page model should basically require: routes and corresponding controllers and views.
+Each page model should basically require:
+- routes
+- corresponding controllers
+- views.
+
 We recommend creating a PageController to manage the different page endpoints. Here's an example:
 ```php
 namespace App\Http\Controllers;
@@ -27,13 +31,14 @@ class PageController extends Controller
         ]);
     }
 }
-``` 
+```
 
 Create the necessary routes for each endpoint. By default, we assume the page routing has the following naming convention:
 `pages.index`, `pages.show` (TODO: elaborate)
 
 ## Page API
 #### Page::all()
+Retrieves all the pages
 
 #### Page::findBySlug($slug)
 Retrieve a page by its unique slug value.
@@ -43,12 +48,48 @@ Sort the results by last created pages.
 
 ## Publishable API
 
+#### Page::getAllPublished()
+Retrieves all the published pages.
+
 #### Page::findPublishedBySlug($slug)
 Retrieve a published page by its unique slug value.
 If the page is not published, no page will be returned.
 
 #### Page::sortedByPublished()->all()
 Sort the results by last created pages.
+
+#### $page->isPublished()
+Returns true of false based on the published status
+See isDraft() for the inverse.
+
+#### $page->isDraft()
+Return true or false based on the draft status
+See isPublished() for the inverse.
+
+#### $page->publish()
+Changes the page to published
+See draft() for the inverse
+
+#### $page->draft()
+Changes the page to draft
+See publish() for the inverse
+
+## Featurable API
+
+#### $page->isFeatured()
+Returns true of false based on the featured status
+See isDraft() for the inverse.
+
+#### $page->feature()
+Changes the page to featured
+See unfeature() for the inverse
+
+#### $page->unfeature()
+Changes the page to not featured
+See feature() for the inverse
+
+#### Page::featured()->all()
+Scope the query by the featured pages.
 
 ## Create custom page
 
