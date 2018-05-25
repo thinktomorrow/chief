@@ -79,6 +79,10 @@ At the following files you should change the locales to your desired setup:
 - Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.  
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
 
+
+
+
+
 # Changing Chief model behaviour
 
 To change the model behaviour for chief models you can extend the models in your application.
