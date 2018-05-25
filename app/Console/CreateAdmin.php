@@ -2,6 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
+use Illuminate\Support\Facades\Artisan;
+use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
+
 class CreateAdmin extends BaseCommand
 {
     protected $signature = 'chief:create-admin';
@@ -9,6 +12,8 @@ class CreateAdmin extends BaseCommand
 
     public function handle()
     {
+        $this->settingPermissionsAndRoles();
+
         $anticipations = $this->getAnticipations();
 
         $firstname = $this->anticipate('firstname',array_pluck($anticipations,'firstname'));
@@ -19,9 +24,22 @@ class CreateAdmin extends BaseCommand
 
         $password = $this->askPassword();
 
-        $this->createUser($firstname, $lastname, $email, $password);
+        $this->createUser($firstname, $lastname, $email, $password, ['admin']);
 
         $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
+    }
+
+    private function settingPermissionsAndRoles()
+    {
+        AuthorizationDefaults::permissions()->each(function($permissionName){
+            Artisan::call('chief:permission', ['name' => $permissionName]);
+        });
+
+        AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
+        });
+
+        $this->info('Default permissions and roles');
     }
 
     /**

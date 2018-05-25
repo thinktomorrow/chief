@@ -33,12 +33,13 @@ if(!function_exists('cached_asset'))
         $entry = str_replace($manifestPath,'', '/'.ltrim($filepath,'/') );
 
         try{
+
             // Paths should be given relative to the manifestpath so make sure to remove the basepath
-            return asset( mix($entry, $manifestPath) );
+            return asset( mix($entry.'/test', $manifestPath) );
         }
         catch(\Exception $e)
         {
-            app('bugsnag')->notifyException($e);
+            \Illuminate\Support\Facades\Log::error($e);
 
             return $manifestPath.$entry;
         }

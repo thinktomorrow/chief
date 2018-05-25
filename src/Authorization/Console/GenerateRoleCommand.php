@@ -17,7 +17,7 @@ class GenerateRoleCommand extends Command
     {
         $roleName = $this->getNameArgument();
 
-        $role = Role::create(['name' => $roleName]);
+        $role = Role::findOrCreate($roleName, 'chief');
 
         $this->assignPermissionsToRole($role);
     }
@@ -48,7 +48,10 @@ class GenerateRoleCommand extends Command
 
         }
 
-        $role->givePermissionTo($cleanPermissionNames);
+        foreach($cleanPermissionNames as $cleanPermissionName){
+            if($role->hasPermissionTo($cleanPermissionName)) continue;
+            $role->givePermissionTo($cleanPermissionNames);
+        }
 
         $this->info('Role ' . $role->name . ' was assigned the permissions: ' . implode(',', $cleanPermissionNames));
     }

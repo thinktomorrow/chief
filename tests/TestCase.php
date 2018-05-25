@@ -28,7 +28,6 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            BugsnagServiceProvider::class,
             PermissionServiceProvider::class,
 
             LocaleServiceProvider::class,
