@@ -58,22 +58,26 @@ If you want to overwrite existing files you can add the `--force` flag here.
 php artisan vendor:publish --tag=chief-assets
 ```
 
-# Multilingual
-
-We need to remove the subarray in the Config/translatable.php file and the locales array.
-The remaining locales will be the available locales fo the app.
-
+Publish the chief config to `config/thinktomorrow/chief` as this will require you to set some application defaults such as 
+contact email and application name.
 ```php
-    'locales' => [
-        'nl',
-        'en'
-    ],
+php artisan vendor:publish --tag=chief-config
 ```
 
-The locale that has been defined in the config/app.php file(which is the default locale) needs to match one of the locales in the translatable locales array.
+The following vendor assets should also be published to your application:
+```php
+// The dimsav translatable package
+php artisan vendor:publish --tag=translatable
+```
 
-Next in the config/thinktomorrow/locale.php the locales define the possible locale values for the front end.
+# Multilingual
 
+There are a couple of places where you need to configure the localisation of your application.
+At the following files you should change the locales to your desired setup:
+
+- Set the available locales of the application in the `config/translatable.php` file. The values in the `locales` array will be available for the admin to manage.  
+- Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.  
+- Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
 
 # Changing Chief model behaviour
 
