@@ -50,7 +50,7 @@ class GenerateRoleCommand extends Command
 
         foreach($cleanPermissionNames as $cleanPermissionName){
             if($role->hasPermissionTo($cleanPermissionName)) continue;
-            $role->givePermissionTo($cleanPermissionNames);
+            $role->givePermissionTo($cleanPermissionName);
         }
 
         $this->info('Role ' . $role->name . ' was assigned the permissions: ' . implode(',', $cleanPermissionNames));

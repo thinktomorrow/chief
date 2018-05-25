@@ -23,6 +23,19 @@ use Thinktomorrow\Chief\App\Exceptions\Handler as ChiefExceptionHandler;
 class Handler extends ChiefExceptionHandler
 ```
 
+Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file. This handles the 
+login sessions of the chief user.
+
+```php
+protected $middlewareGroups = [
+    ...
+    'web-chief' => [
+            AuthenticateChiefSession::class,
+    ],
+    ...
+]
+```
+
 Create a database for your application and perform the migrate artisan command. This will automatically run the chief migrations as well.
 Note that Chief has separate tables for the chief admin users, `chief-users` and `chief_password_resets`. This way there
 is no interference with your application user logic.
@@ -38,27 +51,11 @@ This command will create the basic roles and permissions and allows to setup the
 php artisan chief:create-admin
 ```
 
-To get access to the back-end assets we publish the chief-assets to our public folder.
+Next we need to publish the chief-assets to our public folder.
+If you want to overwrite existing files you can add the `--force` flag here.
 
 ```php
 php artisan vendor:publish --tag=chief-assets
-```
-
-If you want to overwrite existing files you can add the --force flag here.
-
-Add the following middleware group to the Http\Kernel file:
-
-```php
-protected $middlewareGroups = [
-    //...
-    'web-chief' => [
-                AuthenticateChiefSession::class,
-    ],
-    //...
-]
-```
-
-
 ```
 
 # Multilingual
