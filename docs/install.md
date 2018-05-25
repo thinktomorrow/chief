@@ -23,6 +23,57 @@ class Handler extends ChiefExceptionHandler
 {
 ```
 
+To get access to the back-end assets we publish the chief-assets to our public folder.
+
+```php
+php artisan vendor:publish --tag=chief-assets
+```
+
+If you want to overwrite existing files you can add the --force flag here.
+
+Add the following middleware group to the Http\Kernel file:
+
+```php
+protected $middlewareGroups = [
+    //...
+    'web-chief' => [
+                AuthenticateChiefSession::class,
+    ],
+    //...
+]
+```
+
+Add the bugsnag service provider to your app.php service providers:
+
+```php
+'providers' => [
+    // ...
+    Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+    // ...
+],
+```
+
+# Multilingual
+
+We need to remove the subarray in the Config/translatable.php file and the locales array.
+The remaining locales will be the available locales fo the app.
+
+```php
+    'locales' => [
+        'nl',
+        'en'
+    ],
+```
+
+The locale that has been defined in the config/app.php file(which is the default locale) needs to match one of the locales in the translatable locales array.
+
+Next in the config/thinktomorrow/locale.php the locales define the possible locale values for the front end.
+
+
+# Changing Chief model behaviour
+
+To change the model behaviour for chief models you can extend the models in your application.
+
 # Local development
 
 For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.
@@ -79,4 +130,5 @@ public function boot()
 - publish all the config files:
     - translatable for providing the model translations
     - locale for allowing frontend translation
+    - chief-assets (php artisan vendor:publish --tag=chief-assets)
 - Schema::defaultStringLength(191);
