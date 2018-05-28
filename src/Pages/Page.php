@@ -17,10 +17,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
+use Thinktomorrow\Chief\Common\Traits\Archivable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
-    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, Featurable, ActingAsParent, ActingAsChild;
+    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, Featurable, ActingAsParent, ActingAsChild, Archivable;
 
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
