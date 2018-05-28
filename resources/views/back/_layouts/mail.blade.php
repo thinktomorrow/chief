@@ -60,7 +60,7 @@
                 <tr>
                     <td align="center" valign="top" style="padding: 40px 10px 10px 10px;">
                         <a href="{{ URL('') }}" target="_blank">
-                            <img alt="Logo" src="{{ asset('/assets/back/img/logo.svg') }}" width="140" height="53" style="display: block; width: 140px; max-width: 140px; min-width: 140px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">
+                            <img alt="Logo" src="{{ asset('/chief-assets/back/img/logo.svg') }}" width="140" height="53" style="display: block; width: 140px; max-width: 140px; min-width: 140px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">
                         </a>
                     </td>
                 </tr>

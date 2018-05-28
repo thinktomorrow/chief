@@ -21,8 +21,18 @@ use Thinktomorrow\Chief\Common\Traits\Archivable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
-    use AssetTrait, Translatable, BaseTranslatable, SoftDeletes, Publishable, Featurable, ActingAsParent, ActingAsChild, Archivable;
+    use AssetTrait,
+        Translatable,
+        BaseTranslatable,
+        SoftDeletes,
+        Publishable,
+        Featurable,
+        Archivable,
+        ActingAsParent,
+        ActingAsChild;
 
+    // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
+    protected $translationModel = PageTranslation::class;
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
@@ -40,7 +50,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->published()->first() : null;
     }
 
-    public function scopeSortedByRecent($query)
+    public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at','DESC');
     }
@@ -68,5 +78,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function getRelationGroup(): string
     {
         return 'pages';
+    }
+
+    public function previewUrl()
+    {
+        // return route('pages.show', $this->slug).'?preview-mode';
     }
 }

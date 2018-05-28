@@ -101,7 +101,7 @@ trait Translatable
 
     public static function availableLocales()
     {
-        return config('translatable.locales', []);
+        return (new self())->getLocales();
     }
 
     /**

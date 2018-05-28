@@ -8,7 +8,7 @@
 		<!-- Image Upload Field -->
 		<div class="fileupload fileupload-new admin-form mt20" data-provides="fileupload">
 			<div class="fileupload-preview thumbnail m5 mt20 mb30">
-				<img src="{{ asset('assets/back/img/placeholder.png')}}" alt="holder">
+				<img src="{{ asset('chief-assets/back/img/placeholder.png')}}" alt="holder">
 			</div>
 			<div class="row">
 				<div class="col-xs-12">

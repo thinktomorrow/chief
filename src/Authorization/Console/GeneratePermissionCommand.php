@@ -36,8 +36,9 @@ class GeneratePermissionCommand extends Command
     private function createPermissions($permissions)
     {
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::findOrCreate($permission, 'chief');
         }
+
         $this->info('Permissions ' . implode(', ', $permissions) . ' created.');
     }
 

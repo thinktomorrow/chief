@@ -1,5 +1,5 @@
 <modal id="delete-page-{{$page->id}}" class="large-modal">
-    <form action="{{route('back.pages.destroy', $page->id)}}" method="POST">
+    <form action="{{route('chief.back.pages.destroy', $page->id)}}" method="POST">
         @method('DELETE')
         @csrf
         <div v-cloak>

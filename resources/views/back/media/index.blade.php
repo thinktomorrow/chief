@@ -3,7 +3,7 @@
     <div class="row">
       @if($library->isEmpty())
       <div class="text-center">
-        <img src="{{ asset('assets/back/img/placeholder.png')}}" alt="holder">
+        <img src="{{ asset('chief-assets/back/img/placeholder.png')}}" alt="holder">
       </div>
       @endif
       @foreach($library as $media)

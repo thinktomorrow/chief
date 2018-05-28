@@ -21,7 +21,7 @@
                             <div class="column-12">
                                 <h2>
                                     {{ $page->getTranslationFor('title') }}
-                                    <a title="Bekijk {{ $page->title }}" href="{{ route('demo.pages.show', $page->slug) }}?preview-mode" target="_blank" class="text-subtle font-s">Preview</a>
+                                    <a title="Bekijk {{ $page->title }}" href="{{ $page->previewUrl() }}" target="_blank" class="text-subtle font-s">Preview</a>
                                 </h2>
                             </div>
                             <div class="column-12">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <hr>
-                @include('back.pages._partials.delete-modal')
+                    @include('chief::back.pages._partials.delete-modal')
                 @endforeach
                 @if($drafts->isEmpty())
                     <div class="row">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <hr>
-            @include('back.pages._partials.delete-modal')
+                @include('chief::back.pages._partials.delete-modal')
             @endforeach
             @if($published->isEmpty())
                 <div class="row left">
@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="column-12">
-                        <a href="{{ route('back.pages.create') }}" class="btn btn-primary">
+                        <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">
                             <i class="icon icon-zap icon-fw"></i> Tijd om aan de slag te gaan
                         </a>
                     </div>
@@ -115,7 +115,7 @@
                             <div class="column-12">
                                 <h2>
                                     {{ $page->getTranslationFor('title') }}
-                                    <a title="Bekijk {{ $page->title }}" href="{{ route('demo.pages.show',$page->slug) }}?preview-mode=true" target="_blank" class="text-subtle font-s">Preview</a>
+                                    <a title="Bekijk {{ $page->title }}" href="{{ route('chief.back.pages.show',$page->slug) }}?preview-mode=true" target="_blank" class="text-subtle font-s">Preview</a>
                                 </h2>
                             </div>
                             <div class="column-12">
@@ -124,8 +124,8 @@
                             <span class="text-subtle">Laatst aangepast op: {{ $page->updated_at->format('d/m/Y') }}</span>
                         </div>
                         <div class="center-y column">
-                            <a href="{{ route('back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
-                            <form action="{{ route('back.pages.publish') }}" method="POST">
+                            <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
+                            <form action="{{ route('chief.back.pages.publish') }}" method="POST">
                                 {{ csrf_field() }}
                                 <div class="publishActions-{{$page->id}} hidden">
                                     <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <hr>
-            @include('back.pages._partials.delete-modal')
+                @include('chief::back.pages._partials.delete-modal')
             @endforeach
             @if($archived->isEmpty())
                 <div class="row left">

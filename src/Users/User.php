@@ -16,6 +16,7 @@ class User extends Authenticatable implements HasMedia
 {
     use Notifiable, HasRoles, HasMediaTrait, Enablable;
 
+    public $table = 'chief_users';
     protected $guard_name = 'chief';
 
     protected $guarded = [];

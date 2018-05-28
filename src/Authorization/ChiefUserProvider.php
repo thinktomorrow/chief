@@ -17,7 +17,7 @@ class ChiefUserProvider extends EloquentUserProvider implements UserProvider
     {
         $user = parent::retrieveByCredentials($credentials);
 
-        return ($user->isEnabled()) ? $user : null;
+        return ($user && $user->isEnabled()) ? $user : null;
     }
 
     /**
@@ -30,6 +30,6 @@ class ChiefUserProvider extends EloquentUserProvider implements UserProvider
     {
         $user = parent::retrieveById($identifier);
 
-        return ($user->isEnabled()) ? $user : null;
+        return ($user && $user->isEnabled()) ? $user : null;
     }
 }

@@ -1,6 +1,6 @@
 <aside class="column-2">
     <div class="header-logo squished-l">
-        <a href="/spirit"><img src="/assets/spirit/svg/logo.svg" alt="Spirit"></a>
+        <a href="/spirit"><img src="/chief-assets/spirit/svg/logo.svg" alt="Spirit"></a>
     </div>
     <!-- PAGES -->
     <nav class="squished-l">

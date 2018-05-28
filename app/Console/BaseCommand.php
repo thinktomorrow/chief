@@ -35,7 +35,7 @@ abstract class BaseCommand extends Command
                 throw new \Exception('Aborting. Too many failed attempts to set password');
             }
 
-            $password = $this->secret('Password');
+            $password = $this->secret('Password (min. 5 chars)');
             $passwordConfirm = $this->secret('Password (confirm)');
 
             $tries++;

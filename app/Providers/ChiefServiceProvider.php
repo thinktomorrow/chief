@@ -23,6 +23,15 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+
+        $this->publishes([
+            __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
+        ], 'chief-config');
+
+        $this->publishes([
+            __DIR__.'/../../public/chief-assets' => public_path('/chief-assets'),
+        ], 'chief-assets');
 
         // Register commands
         if ($this->app->runningInConsole()) {
@@ -40,6 +49,9 @@ class ChiefServiceProvider extends ServiceProvider
 
     public function register()
     {
+        // TODO: test this logic...
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php' , 'thinktomorrow.chief');
+
         $this->setupEnvironmentProviders();
 
         (new AuthServiceProvider($this->app))->register();
@@ -77,7 +89,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->app['config']["auth.passwords.chief"] = [
             'provider' => 'chief',
-            'table'    => 'password_resets',
+            'table'    => 'chief_password_resets',
             'expire'   => 60,
         ];
     }
