@@ -30,5 +30,4 @@
             @include('chief::back.system._partials.analytics')
         </tab>
     </tabs>
-
 @stop
