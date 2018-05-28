@@ -23,9 +23,6 @@
         <tab name="Social cards">
             @include('chief::back.system._partials.socialcards')
         </tab>
-        <tab name="SEO">
-            @include('chief::back.system._partials.seo')
-        </tab>
         <tab name="Analytics">
             @include('chief::back.system._partials.analytics')
         </tab>
