@@ -3,6 +3,7 @@
 ##########################################
 _migration/uploads
 /storage/debugbar
+/storage
 /vendor
 /.idea
 .env
