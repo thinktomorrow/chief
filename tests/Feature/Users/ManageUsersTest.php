@@ -25,7 +25,6 @@ class ManageUsersTest extends TestCase
     /** @test */
     function full_admin_can_view_the_users_overview()
     {
-        $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.users.index'));
         $response->assertStatus(200);
     }

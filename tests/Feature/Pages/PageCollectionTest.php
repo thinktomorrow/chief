@@ -12,6 +12,20 @@ class PageCollectionTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'statics' => Page::class,
+            'articles' => ArticleFake::class,
+            'others'   => OtherCollectionFake::class,
+        ]);
+    }
+
+    /** @test */
+    public function a_page_requires_a_collection()
+    {
+        $this->expectException(\PDOException::class);
+
+        factory(Page::class)->create(['collection' => null]);
     }
 
     /** @test */
@@ -35,9 +49,9 @@ class PageCollectionTest extends TestCase
     }
 
     /** @test */
-    public function a_page_without_collection_is_considered_as_the_default_static_pages_collection()
+    public function default_page_has_the_default_statics_collection()
     {
-        factory(Page::class)->create(['collection' => null]);
+        factory(Page::class)->create(['collection' => 'statics']);
 
         $this->assertNotNull(Page::first());
         $this->assertNull(ArticleFake::first());
@@ -51,16 +65,37 @@ class PageCollectionTest extends TestCase
 
         $this->assertNotNull(Page::ignoreCollection()->first());
     }
+
+    /** @test */
+    public function collection_scope_can_be_set_on_runtime()
+    {
+        factory(Page::class)->create(['collection' => 'articles']);
+
+        $this->assertNotNull(Page::collection('articles')->first());
+        $this->assertNull(Page::collection('others')->first());
+        $this->assertNull(Page::collection('statics')->first());
+        $this->assertNull(Page::collection(null)->first());
+    }
+
+    /** @test */
+    public function collection_scope_is_default_statics()
+    {
+        factory(Page::class)->create();
+        $this->assertNotNull(Page::collection('statics')->first());
+    }
+
+    /** @test */
+    function it_can_retrieve_all_available_collections()
+    {
+        factory(Page::class)->create(['collection' => 'articles']);
+        factory(Page::class)->create(['collection' => 'others']);
+        factory(Page::class)->create();
+
+        $this->assertEquals(['statics', 'articles', 'others'], Page::freshAvailableCollections()->keys()->toArray());
+    }
+
 }
 
-class ArticleFake extends Page
-{
-    public $collection = 'articles';
-    public $table = 'pages';
-}
+class ArticleFake extends Page{}
 
-class OtherCollectionFake extends Page
-{
-    public $collection = 'others';
-    public $table = 'pages';
-}
+class OtherCollectionFake extends Page{}

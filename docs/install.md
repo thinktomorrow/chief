@@ -23,14 +23,15 @@ use Thinktomorrow\Chief\App\Exceptions\Handler as ChiefExceptionHandler;
 class Handler extends ChiefExceptionHandler
 ```
 
-Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file. This handles the
-login sessions of the chief user.
+Add the `AuthenticateChiefSession::class` and `SetDefaultCollection::class` middlewares to your `App\Http\Kernel` file. 
+You should place these in a `web-chief` middleware group like so:
 
 ```php
 protected $middlewareGroups = [
     ...
     'web-chief' => [
             AuthenticateChiefSession::class,
+            SetDefaultCollection::class,
     ],
     ...
 ]
@@ -118,7 +119,7 @@ public function boot()
 ### FAQ
 
 Q: I get the "Route [login] not defined" error. Help!
-A: Extend our ChiefExceptionHandler in the app/handler.php file.
+A: Extend our ChiefExceptionHandler in the app/handler.php file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.
 
 Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!
 A: /

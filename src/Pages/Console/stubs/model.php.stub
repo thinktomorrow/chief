@@ -3,8 +3,8 @@
 namespace ##NAMESPACE##;
 
 ##IMPORTS##
-class ##CLASSNAME## extends Model
+class ##CLASSNAME## extends Page
 {
     ##TRAITS##
-    public $table = '##TABLENAME##';
+    ##PROPERTIES##
 }

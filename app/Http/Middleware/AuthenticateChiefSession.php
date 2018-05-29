@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticateChiefSession

@@ -3,7 +3,7 @@
 @section('page-title','Voeg nieuw pagina toe')
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Nieuw pagina')
+    @slot('title', 'Nieuwe ' . $page->collectionDetails('singular'))
     <button data-submit-form="createForm" type="button" class="btn btn-primary">Opslaan</button>
 @endcomponent
 

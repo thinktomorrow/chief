@@ -15,7 +15,7 @@ class CreatepagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table){
             $table->increments('id');
-            $table->string('collection',32)->index()->nullable();
+            $table->string('collection',32)->index()->default('statics');
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
             $table->timestamp('archived_at')->default(null)->nullable();

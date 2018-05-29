@@ -36,11 +36,11 @@ class GeneratePage extends BaseCommand
 
         // Set required paths
         $this->dirs = ['base' => $this->settings['base_path'] ?? base_path()];
-        $this->dirs['model'] = $this->settings['model_path'] ?? $this->dirs['base'].'/src';
-        $this->dirs['views'] = $this->settings['views_path'] ?? $this->dirs['base'].'/resources/views';
-        $this->dirs['controller'] = $this->settings['controller_path'] ?? $this->dirs['base'].'/app/Http/Controllers';
+        $this->dirs['model'] = $this->settings['model_path'] ?? $this->dirs['base'] . '/src';
+        $this->dirs['views'] = $this->settings['views_path'] ?? $this->dirs['base'] . '/resources/views';
+        $this->dirs['controller'] = $this->settings['controller_path'] ?? $this->dirs['base'] . '/app/Http/Controllers';
 
-        $this->files['routes'] = $this->settings['routes_file'] ?? $this->dirs['base'].'/routes/web.php';
+        $this->files['routes'] = $this->settings['routes_file'] ?? $this->dirs['base'] . '/routes/web.php';
     }
 
     public function handle()
@@ -55,6 +55,8 @@ class GeneratePage extends BaseCommand
 
         $this->publishModel();
 //        $this->publishController();
+
+        // TODO: add mapping to config: "public static \$collection = '".strtolower($this->plural)."';",
     }
 
     private function publishModel()
@@ -84,14 +86,16 @@ class GeneratePage extends BaseCommand
     {
         $choice = null;
 
-        while (!in_array($choice, ['q'])) {
+        while (!in_array($choice, ['q']))
+        {
             $choice = $this->choice(
                 "Which model options would you like to set up?",
                 $choices = $this->modelTraits(),
                 'q' // Default is to just continue without traits
             );
 
-            if (!in_array($choice, ['q'])) {
+            if (!in_array($choice, ['q']))
+            {
                 $this->chooseTrait($choices[$choice]);
             }
         }
@@ -99,7 +103,8 @@ class GeneratePage extends BaseCommand
 
     protected function chooseTrait(string $trait)
     {
-        if (in_array($trait, $this->chosenTraits)) {
+        if (in_array($trait, $this->chosenTraits))
+        {
             return;
         }
 
@@ -109,8 +114,8 @@ class GeneratePage extends BaseCommand
     private function modelTraits()
     {
         return [
-            Publishable::class,
-            Sortable::class,
+            '\\' . Publishable::class,
+            '\\' . Sortable::class,
             'q' => 'Proceed.',
         ];
     }
@@ -124,8 +129,10 @@ class GeneratePage extends BaseCommand
      */
     protected function publishFile($from, $to, $type)
     {
-        if ($this->filesystem->exists($to) && !$this->option('force')) {
-            if (!$this->confirm('File [' . $to . '] already exists? Overwrite this file?')) {
+        if ($this->filesystem->exists($to) && !$this->option('force'))
+        {
+            if (!$this->confirm('File [' . $to . '] already exists? Overwrite this file?'))
+            {
                 return;
             }
         }
@@ -145,7 +152,8 @@ class GeneratePage extends BaseCommand
      */
     protected function createParentDirectory($directory)
     {
-        if (!$this->filesystem->isDirectory($directory)) {
+        if (!$this->filesystem->isDirectory($directory))
+        {
             $this->filesystem->makeDirectory($directory, 0755, true);
         }
     }
@@ -170,11 +178,11 @@ class GeneratePage extends BaseCommand
     protected function replacePlaceholders($content)
     {
         $replacements = [
-            '##NAMESPACE##' => $this->guessNamespace(), // TODO: how to determine proper namespace?
-            '##CLASSNAME##' => ucfirst($this->singular),
-            '##TABLENAME##' => strtolower($this->plural),
-            '##IMPORTS##'   => $this->generateImportStatements(),
-            '##TRAITS##'    => $this->generateTraitStatements(),
+            '##NAMESPACE##'  => $this->guessNamespace(), // TODO: how to determine proper namespace?
+            '##CLASSNAME##'  => ucfirst($this->singular),
+            '##IMPORTS##'    => $this->generateImportStatements(),
+            '##TRAITS##'     => $this->generateTraitStatements(),
+            '##PROPERTIES##' => $this->generateModelProperties(),
         ];
 
         return str_replace(array_keys($replacements), array_values($replacements), $content);
@@ -182,8 +190,9 @@ class GeneratePage extends BaseCommand
 
     private function generateImportStatements(): string
     {
-        return collect(['Illuminate\Database\Eloquent\Model'])
-            ->map(function ($statement) {
+        return collect(['\\Thinktomorrow\\Chief\\Pages\\Page'])
+            ->map(function ($statement)
+            {
                 return 'use ' . $statement . ";\n    ";
             })->implode('');
     }
@@ -191,17 +200,28 @@ class GeneratePage extends BaseCommand
     private function generateTraitStatements(): string
     {
         return collect($this->chosenTraits)
-            ->map(function ($statement) {
+            ->map(function ($statement)
+            {
                 return 'use ' . $statement . ";\n    ";
             })->implode('');
     }
 
+    private function generateModelProperties(): string
+    {
+        return implode("\n    ", [
+            //
+        ]);
+    }
+
     private function guessNamespace()
     {
-        if(isset($this->settings['namespace'])) return $this->settings['namespace'];
+        if (isset($this->settings['namespace']))
+        {
+            return $this->settings['namespace'];
+        }
 
         // We make an estimated guess based on the project name. At Think Tomorrow, we
         // have a src folder which is PSR-4 namespaced by the project name itself.
-        return ucfirst(config('thinktomorrow.chief.name','App')).'\\'. ucfirst($this->plural);
+        return ucfirst(config('thinktomorrow.chief.name', 'App')) . '\\' . ucfirst($this->plural);
     }
 }

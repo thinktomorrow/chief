@@ -21,7 +21,8 @@ use Thinktomorrow\Chief\Common\Traits\Archivable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
-    use AssetTrait,
+    use HasCollection,
+        AssetTrait,
         Translatable,
         BaseTranslatable,
         SoftDeletes,
@@ -38,24 +39,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
 
+    public $table = "pages";
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(new PageCollectionScope());
-    }
-
-    /**
-     * Ignore the collection scope.
-     * This will fetch all page results, regardless of the collection scope.
-     */
-    public static function ignoreCollection()
-    {
-        return self::withoutGlobalScope(PageCollectionScope::class);
-    }
 
     public static function findBySlug($slug)
     {
@@ -100,5 +86,26 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function previewUrl()
     {
         // return route('pages.show', $this->slug).'?preview-mode';
+    }
+
+    /**
+     * Details of the collection such as naming, key and class.
+     * Used in several dynamic parts of the admin application.
+     *
+     * @param null $key
+     * @return object
+     */
+    public static function collectionDetails($key = null)
+    {
+        $collectionKey = static::collectionKey();
+
+        $names = (object) [
+            'key'      => $collectionKey,
+            'class'    => static::class,
+            'singular' => $collectionKey == 'statics' ? 'Pagina' : ucfirst(str_singular($collectionKey)),
+            'plural'   => $collectionKey == 'statics' ? 'Pagina\'s' : ucfirst(str_plural($collectionKey)),
+        ];
+
+        return $key ? $names->$key : $names;
     }
 }

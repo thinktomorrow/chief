@@ -12,6 +12,6 @@ class PageCollectionScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('collection', '=', $model->collection);
+        $builder->where('collection', '=', $model->collectionKey());
     }
 }

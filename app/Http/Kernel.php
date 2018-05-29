@@ -6,6 +6,7 @@ use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateSuperadmin;
 use Thinktomorrow\Chief\App\Http\Middleware\Honeypot;
 use Thinktomorrow\Chief\App\Http\Middleware\OptimizeImages;
+use Thinktomorrow\Chief\App\Http\Middleware\SetDefaultCollection;
 use Thinktomorrow\Chief\App\Http\Middleware\ValidateInvite;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -43,6 +44,7 @@ class Kernel extends HttpKernel
 
         'web-chief' => [
             AuthenticateChiefSession::class,
+            SetDefaultCollection::class,
         ],
 
         'api' => [

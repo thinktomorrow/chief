@@ -16,7 +16,7 @@ return [
      *
      * This is used in a couple of places such as the generator tools and the mail footer.
      */
-    'name' => 'Chief',
+    'name' => 'Crius',
 
     /**
      * Client name
@@ -37,6 +37,15 @@ return [
         'parents' => [
             \Thinktomorrow\Chief\Pages\Page::class,
         ],
+    ],
+
+    /**
+     * Here you should provide the mapping of page and component collections. This
+     * is required for the class mapping from database to their respective classes.
+     */
+    'collections' => [
+        'statics' => \Thinktomorrow\Chief\Pages\Page::class,
+        'products' => \Crius\Products\Product::class,
     ],
 
 ];

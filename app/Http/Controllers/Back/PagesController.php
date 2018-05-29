@@ -15,13 +15,16 @@ use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 
 class PagesController extends Controller
 {
-    public function index()
+    public function index($collection = null)
     {
-        $published  = Page::unarchived()->published()->paginate(10);
-        $drafts     = Page::unarchived()->where('published', 0)->paginate(10);
-        $archived   = Page::archived()->paginate(10);
+        $model = Page::fromCollectionKey($collection);
 
-        return view('chief::back.pages.index', compact('published', 'drafts', 'archived'));
+        return view('chief::back.pages.index', [
+            'collectionDetails' => $model->collectionDetails(),
+            'published'       => $model->unarchived()->published()->paginate(10),
+            'drafts'          => $model->unarchived()->where('published', 0)->paginate(10),
+            'archived'        => $model->archived()->paginate(10),
+        ]);
     }
 
     /**
@@ -29,13 +32,16 @@ class PagesController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($collection = null)
     {
         $page = new Page();
         $page->existingRelationIds = collect([]);
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('chief::back.pages.create',['page' => $page, 'relations' => $relations]);
+        return view('chief::back.pages.create', [
+            'page'            => $page,
+            'relations'       => $relations
+        ]);
     }
 
     /**
@@ -48,13 +54,13 @@ class PagesController extends Controller
     {
         $page = app(CreatePage::class)->handle($request->trans);
 
-        return redirect()->route('chief.back.pages.index')->with('messages.success', $page->title .' is aangemaakt');
+        return redirect()->route('chief.back.pages.index')->with('messages.success', $page->title . ' is aangemaakt');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
@@ -65,7 +71,10 @@ class PagesController extends Controller
         $page->existingRelationIds = RelatedCollection::relationIds($page->children());
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('chief::back.pages.edit', compact('page', 'relations'));
+        return view('chief::back.pages.edit', [
+            'page'            => $page,
+            'relations'       => $relations
+        ]);
     }
 
     /**
@@ -79,22 +88,31 @@ class PagesController extends Controller
     {
         $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
 
-        return redirect()->route('chief.back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');
+        return redirect()->route('chief.back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function destroy($id)
     {
         $page = Page::findOrFail($id);
-        if(request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) return redirect()->back()->with('messages.warning', 'fout');
+        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
+        {
+            return redirect()->back()->with('messages.warning', 'fout');
+        }
 
-        if($page->isDraft() || $page->isArchived()) $page->delete();
-        if($page->isPublished()) $page->archive();
+        if ($page->isDraft() || $page->isArchived())
+        {
+            $page->delete();
+        }
+        if ($page->isPublished())
+        {
+            $page->archive();
+        }
 
         $message = 'Het item werd verwijderd.';
 
@@ -103,25 +121,12 @@ class PagesController extends Controller
 
     public function publish(Request $request)
     {
-        $page    = Page::findOrFail($request->get('id'));
-        $published  = true === !$request->checkboxStatus; // string comp. since bool is passed as string
+        $page = Page::findOrFail($request->get('id'));
+        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
 
         return redirect()->back();
 
-//        return response()->json([
-//            'message' => $published ? 'nieuwsartikel werd online gezet' : 'nieuwsartikel werd offline gehaald',
-//            'published'=> $published,
-//            'id'=> $page->id
-//        ],200);
     }
-
-//    public function upload($id, Request $request)
-//    {
-//        $page = page::find($id);
-//        $page->addFile($request->file('image'), $request->type, $request->get('locale'));
-//
-//        return redirect()->back();
-//    }
 }

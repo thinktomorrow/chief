@@ -17,14 +17,14 @@ class CreatePageTest extends TestCase
     /** @test */
     function admin_can_view_the_create_form()
     {
-        $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create'));
+        $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(200);
     }
 
     /** @test */
     function guests_cannot_view_the_create_form()
     {
-        $response = $this->get(route('chief.back.pages.create'));
+        $response = $this->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
@@ -54,7 +54,7 @@ class CreatePageTest extends TestCase
     function when_creating_page_title_is_required()
     {
         $this->assertValidation(new Page(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
-            route('chief.back.pages.index'),
+            route('chief.back.pages.index', 'statics'),
             route('chief.back.pages.store')
         );
     }
