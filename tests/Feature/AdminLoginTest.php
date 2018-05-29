@@ -40,7 +40,7 @@ class AdminLoginTest extends TestCase
             'enabled' => false,
         ]);
 
-        $response = $this->post(route('chief.back.login.store'),[
+        $response = $this->post(route('chief.back.login.store'), [
             'email'     => 'foo@example.com',
             'password'  => 'foobar',
         ]);
@@ -58,7 +58,7 @@ class AdminLoginTest extends TestCase
             'enabled' => true,
         ]);
 
-        $response = $this->post(route('chief.back.login.store'),[
+        $response = $this->post(route('chief.back.login.store'), [
             'email'     => 'foo@example.com',
             'password'  => 'foobar',
         ]);
@@ -77,7 +77,7 @@ class AdminLoginTest extends TestCase
         ]);
 
         // Enter invalid credentials
-        $response = $this->post(route('chief.back.login.store'),[
+        $response = $this->post(route('chief.back.login.store'), [
             'email' => 'foo@example.com',
             'password' => 'xxx',
         ]);
@@ -112,7 +112,7 @@ class AdminLoginTest extends TestCase
         $resp = $this->get(route('chief.back.pages.index'));
         $resp->assertRedirect(route('chief.back.login'));
 
-        $response = $this->post(route('chief.back.login.store'),[
+        $response = $this->post(route('chief.back.login.store'), [
             'email' => 'foo@example.com',
             'password' => 'foobar',
         ]);
@@ -152,7 +152,7 @@ class AdminLoginTest extends TestCase
             'enabled'   => true,
         ]);
 
-        $response = $this->post(route('chief.back.password.email'),[
+        $response = $this->post(route('chief.back.password.email'), [
             'email' => 'foo@example.com'
         ]);
 
@@ -184,14 +184,13 @@ class AdminLoginTest extends TestCase
 
         Auth::guard('chief')->logout();
 
-        $response = $this->post(route('chief.back.login.store'),[
+        $response = $this->post(route('chief.back.login.store'), [
             'email'     => 'foo@example.com',
             'password'  => 'password',
         ]);
 
         $this->assertFalse(session()->has('errors'));
         $response->assertRedirect(route('chief.back.dashboard'));
-
     }
 
     /** @test */
@@ -205,7 +204,7 @@ class AdminLoginTest extends TestCase
 
         $this->assertEquals($admin->id, Auth::guard('chief')->user()->id);
 
-        $response = $this->post(route('chief.back.login.store'),[
+        $response = $this->post(route('chief.back.login.store'), [
             'email' => 'foo@example.com',
             'password' => 'foobar',
         ]);
@@ -224,7 +223,7 @@ class AdminLoginTest extends TestCase
     }
 
     /** @test */
-    function it_can_access_admin_via_helper()
+    public function it_can_access_admin_via_helper()
     {
         $admin = factory(User::class)->make([
             'email'     => 'foo@example.com'

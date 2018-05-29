@@ -13,7 +13,7 @@ class RoleController extends Controller
     {
         $this->authorize('view-role');
 
-        return view('chief::back.authorization.roles.index',[
+        return view('chief::back.authorization.roles.index', [
             'roles' => Role::all(),
         ]);
     }

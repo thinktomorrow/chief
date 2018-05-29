@@ -13,7 +13,7 @@ class CreatepagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table){
+        Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
@@ -23,7 +23,7 @@ class CreatepagesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('page_translations', function(Blueprint $table) {
+        Schema::create('page_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('page_id')->unsigned();
             $table->string('locale');

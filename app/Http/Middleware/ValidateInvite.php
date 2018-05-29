@@ -23,11 +23,11 @@ class ValidateInvite
             return redirect()->route('invite.expired');
         }
 
-        if(! $invitation = Invitation::findByToken($request->token)) {
+        if (! $invitation = Invitation::findByToken($request->token)) {
             return redirect()->route('invite.expired');
         }
 
-        if($invitation->state() == InvitationState::REVOKED) {
+        if ($invitation->state() == InvitationState::REVOKED) {
             return redirect()->route('invite.expired');
         }
 

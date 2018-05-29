@@ -13,15 +13,14 @@ trait ChiefDatabaseTransactions
 
     protected function setUpDatabase()
     {
-        if( ! self::$migrationsHaveRun)
-        {
+        if (! self::$migrationsHaveRun) {
             $this->removeTestDatabase();
 
             touch($this->testDatabasePath);
 
             $migrations = app(Filesystem::class)->allFiles(realpath(__DIR__.'/../database/migrations'));
 
-            foreach($migrations as $migration){
+            foreach ($migrations as $migration) {
                 include_once $migration->getPathName();
 
                 $class = $this->guessClassNameFromFile($migration->getPathName());
@@ -36,7 +35,9 @@ trait ChiefDatabaseTransactions
 
     protected function removeTestDatabase()
     {
-        if(file_exists($this->testDatabasePath)) unlink($this->testDatabasePath);
+        if (file_exists($this->testDatabasePath)) {
+            unlink($this->testDatabasePath);
+        }
     }
 
     /**
@@ -81,24 +82,29 @@ trait ChiefDatabaseTransactions
      * @param $file
      * @return string
      */
-    private function guessClassNameFromFile($file){
+    private function guessClassNameFromFile($file)
+    {
         $fp = fopen($file, 'r');
         $class = $namespace = $buffer = '';
         $i = 0;
         while (!$class) {
-            if (feof($fp)) break;
+            if (feof($fp)) {
+                break;
+            }
 
             $buffer .= fread($fp, 512);
             $tokens = token_get_all($buffer);
 
-            if (strpos($buffer, '{') === false) continue;
+            if (strpos($buffer, '{') === false) {
+                continue;
+            }
 
             for (;$i<count($tokens);$i++) {
                 if ($tokens[$i][0] === T_NAMESPACE) {
                     for ($j=$i+1;$j<count($tokens); $j++) {
                         if ($tokens[$j][0] === T_STRING) {
                             $namespace .= '\\'.$tokens[$j][1];
-                        } else if ($tokens[$j] === '{' || $tokens[$j] === ';') {
+                        } elseif ($tokens[$j] === '{' || $tokens[$j] === ';') {
                             break;
                         }
                     }
@@ -117,5 +123,4 @@ trait ChiefDatabaseTransactions
 
         return $class;
     }
-
 }

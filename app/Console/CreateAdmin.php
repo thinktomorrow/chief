@@ -16,11 +16,11 @@ class CreateAdmin extends BaseCommand
 
         $anticipations = $this->getAnticipations();
 
-        $firstname = $this->anticipate('firstname',array_pluck($anticipations,'firstname'));
+        $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
         $anticipatedLastname = null;
-        $lastname = $this->anticipate('lastname',array_pluck($anticipations,'lastname'),$anticipatedLastname);
+        $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
 
-        $email = $this->ask('email',str_slug($firstname).'@thinktomorrow.be');
+        $email = $this->ask('email', str_slug($firstname).'@thinktomorrow.be');
 
         $password = $this->askPassword();
 
@@ -31,12 +31,12 @@ class CreateAdmin extends BaseCommand
 
     private function settingPermissionsAndRoles()
     {
-        AuthorizationDefaults::permissions()->each(function($permissionName){
+        AuthorizationDefaults::permissions()->each(function ($permissionName) {
             Artisan::call('chief:permission', ['name' => $permissionName]);
         });
 
-        AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
-            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
+        AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
         });
 
         $this->info('Default permissions and roles');
