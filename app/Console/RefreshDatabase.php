@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
+use Illuminate\Database\Eloquent\Factory as ModelFactory;
 use Illuminate\Support\Facades\Artisan;
 
 class RefreshDatabase extends BaseCommand
@@ -38,11 +38,13 @@ class RefreshDatabase extends BaseCommand
             $this->call('migrate:fresh');
         }
 
+        // Include Our Chief factories for this command
+        app(ModelFactory::class)->load(realpath(dirname(__DIR__).'/../database/factories'));
+
         $this->settingPermissionsAndRoles();
         $this->settingUsers();
 
         $this->info('Scaffolding some entries...');
-        factory(User::class, 10)->create();
         factory(Page::class, 5)->create();
 
         $this->info('Great. We\'re done here. NOW START HACKING!');
