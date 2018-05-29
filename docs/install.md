@@ -92,11 +92,6 @@ At the following files you should change the locales to your desired setup:
 
 To change the model behaviour for chief models you can extend the models in your application.
 
-# Database tables
-
-Chief uses a fair amount of database tables. To make it easier in use and since nothing would work without it, running ```php artisan migrate```
-will export all the necessary migrations automaticaly.
-
 # Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
 
@@ -105,6 +100,7 @@ Add following snippet in the AppServiceProvider of your project if you use MySQL
 ref: https://laravel.com/docs/master/migrations#creating-indexes
 `Schema::defaultStringLength(191)`
 
+```File: App\Providers\AppServiceProvider.php```
 ```php
 use Illuminate\Support\Facades\Schema;
 
@@ -129,8 +125,3 @@ A: /
 
 Q: I get the "Class web-chief does not exist" error. Help!  
 A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel.php` file.
-
-## Required setup steps of your project after installment
-- include ChiefServiceProvider
-
-- Schema::defaultStringLength(191);
