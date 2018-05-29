@@ -9,11 +9,10 @@ trait CheckPreviewTrait
 {
     public function isPreviewAllowed()
     {
-        if(request()->has('preview-mode') && Auth::guard('chief')->check())
-        {
+        if (request()->has('preview-mode') && Auth::guard('chief')->check()) {
             Session::now('note.default', 'U bekijkt een preview.');
             return true;
-        }else{
+        } else {
             return false;
         }
     }

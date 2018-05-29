@@ -34,7 +34,7 @@
                 <h3 id="setup">Setup</h3>
 
                 <p>The multiselect component is a vue component which provides you with a better selection experience. It allows for single and multiple selections, supports autocomplete, grouped options and object rendering. </p>
-                <p>The best thing is that as far as the form is concerned, it behaves exactly the same as a regular <?= htmlspecialchars( '<select>' ); ?> element</p>
+                <p>The best thing is that as far as the form is concerned, it behaves exactly the same as a regular <?= htmlspecialchars('<select>'); ?> element</p>
 
                 <h4 id="element">Element</h4>
                 <p>First, define the element on the location you wish to inject the select input.
@@ -95,7 +95,7 @@
                 <p>If you want to accept multiple selections, do not add square brackets, e.g. tagid[], yourself. For multiple selections,
                     the name value will automatically be set as an array and the square brackets are added via the component.</p>
                 <p>
-                    Example: <code><?= htmlspecialchars( '<chief-multiselect name="tagid"></chief-multiselect>' ); ?></code>
+                    Example: <code><?= htmlspecialchars('<chief-multiselect name="tagid"></chief-multiselect>'); ?></code>
                 </p>
             </section>
 
@@ -104,12 +104,12 @@
                 <p>
                     Property that sets the available list of options. The options array can be either:
                 <ul>
-                    <li>a list of primitive values. e.g. <code><?= htmlspecialchars( '[\'first\',\'second\',\'third\']' ); ?></code></li>
-                    <li>a list of object values. e.g. <code><?= htmlspecialchars( '[{\'id\': 1, \'label\': \'first\'}, {id: 2, label: \'second\'}]' ); ?></code>. If you pass objects, you should also set the <code>valuekey</code> and <code>labelkey</code> properties.</li>
+                    <li>a list of primitive values. e.g. <code><?= htmlspecialchars('[\'first\',\'second\',\'third\']'); ?></code></li>
+                    <li>a list of object values. e.g. <code><?= htmlspecialchars('[{\'id\': 1, \'label\': \'first\'}, {id: 2, label: \'second\'}]'); ?></code>. If you pass objects, you should also set the <code>valuekey</code> and <code>labelkey</code> properties.</li>
                 </ul>
                 </p>
                 <p>
-                    Example: <code><?= htmlspecialchars( '<chief-multiselect :options="[\'first\',\'second\',\'third\']"></chief-multiselect>' ); ?></code>
+                    Example: <code><?= htmlspecialchars('<chief-multiselect :options="[\'first\',\'second\',\'third\']"></chief-multiselect>'); ?></code>
                 </p>
             </section>
             <section class="stack-l">
@@ -118,14 +118,14 @@
                     If you pass object values as the available options set, you need to set the valuekey to identify which object value should be used as the option value.
                 <p>
                     Example:
-                <pre><code><?= htmlspecialchars( '<chief-multiselect
+                <pre><code><?= htmlspecialchars('<chief-multiselect
                         name="basicExample"
                         :options="[{\'id\': 1, \'label\': \'first\'}, {id: 2, label: \'second\'}, {id: 3, label: \'third\'}]"
                         :multiple="true"
                         valuekey="id"
                         labelkey="label"
                 >
-    </chief-multiselect>' ); ?></code></pre>
+    </chief-multiselect>'); ?></code></pre>
                 </p>
             </section>
             <section class="stack-l">
@@ -134,14 +134,14 @@
                     Mostly used together with the valuekey, if you pass object values as the available options set, the labelkey identifies which object value should be used as the displayed option label.
                 <p>
                     Example:
-                <pre><code><?= htmlspecialchars( '<chief-multiselect
+                <pre><code><?= htmlspecialchars('<chief-multiselect
                         name="basicExample"
                         :options="[{\'id\': 1, \'label\': \'first\'}, {id: 2, label: \'second\'}, {id: 3, label: \'third\'}]"
                         :multiple="true"
                         valuekey="id"
                         labelkey="label"
                 >
-    </chief-multiselect>' ); ?></code></pre>
+    </chief-multiselect>'); ?></code></pre>
                 </p>
             </section>
             <section class="stack-l">
@@ -151,7 +151,7 @@
                     For multiple selections, the selected options are presented as pills instead of plain text. Pills can be removed by either the backspace or by clicking the x on the right side of each pill.
                 </p>
                 <p>
-                    Example: <code><?= htmlspecialchars( ':multiple="true"' ); ?></code>
+                    Example: <code><?= htmlspecialchars(':multiple="true"'); ?></code>
                 </p>
             </section>
 

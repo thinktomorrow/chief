@@ -11,7 +11,7 @@ trait Featurable
 
     public function scopeFeatured($query)
     {
-        $query->where('featured',1);
+        $query->where('featured', 1);
     }
 
     public function feature()

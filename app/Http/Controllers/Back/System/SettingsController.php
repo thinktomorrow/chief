@@ -10,6 +10,4 @@ class SettingsController extends Controller
     {
         return view('chief::back.system.settings');
     }
-
-
 }

@@ -22,13 +22,13 @@ class EditTranslationTest extends TestCase
         $this->setUpDatabase();
 
         // Set locales to nl, fr for our tests
-        app('config')['squanto'] = array_merge(config('squanto'),['locales' => ['nl','fr']]);
+        app('config')['squanto'] = array_merge(config('squanto'), ['locales' => ['nl','fr']]);
 
         $this->squantoPage = $this->createSquantoPage();
     }
 
     /** @test */
-    function admin_can_view_the_edit_form()
+    public function admin_can_view_the_edit_form()
     {
         $this->disableExceptionHandling();
 
@@ -37,14 +37,14 @@ class EditTranslationTest extends TestCase
     }
 
     /** @test */
-    function guests_cannot_view_the_edit_form()
+    public function guests_cannot_view_the_edit_form()
     {
         $response = $this->get(route('squanto.edit', $this->squantoPage->id));
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
-    function editing_a_new_translation()
+    public function editing_a_new_translation()
     {
         $this->disableExceptionHandling();
 
@@ -59,7 +59,7 @@ class EditTranslationTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_admin_can_edit_a_translation()
+    public function only_authenticated_admin_can_edit_a_translation()
     {
         $response = $this->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
@@ -83,8 +83,8 @@ class EditTranslationTest extends TestCase
             ],
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;

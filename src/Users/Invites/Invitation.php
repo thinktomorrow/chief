@@ -33,7 +33,7 @@ class Invitation extends Model implements StatefulContract
 
     public static function findByToken(string $token)
     {
-        return self::where('token',$token)->first();
+        return self::where('token', $token)->first();
     }
 
     public function invitee()

@@ -22,7 +22,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function a_parent_can_attach_a_child()
+    public function a_parent_can_attach_a_child()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -37,7 +37,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function a_parent_can_attach_multiple_children()
+    public function a_parent_can_attach_multiple_children()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -47,11 +47,11 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child2);
 
         $this->assertCount(2, $parent->children());
-        $this->assertInstanceOf(ChildFake::class,$parent->children()->first());
+        $this->assertInstanceOf(ChildFake::class, $parent->children()->first());
     }
 
     /** @test */
-    function a_child_can_attach_multiple_parents()
+    public function a_child_can_attach_multiple_parents()
     {
         $parent = ParentFake::create();
         $parent2 = ParentFake::create();
@@ -61,11 +61,11 @@ class RelationsTest extends TestCase
         $child->acceptParent($parent2);
 
         $this->assertCount(2, $child->parents());
-        $this->assertInstanceOf(ParentFake::class,$child->parents()->first());
+        $this->assertInstanceOf(ParentFake::class, $child->parents()->first());
     }
 
     /** @test */
-    function a_parent_can_detach_a_child()
+    public function a_parent_can_detach_a_child()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -83,7 +83,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function a_child_can_detach_its_parent()
+    public function a_child_can_detach_its_parent()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -100,7 +100,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function a_parent_or_child_can_get_relation_model()
+    public function a_parent_or_child_can_get_relation_model()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -111,7 +111,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function child_relations_are_sorted()
+    public function child_relations_are_sorted()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -125,7 +125,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function parent_relations_are_sorted()
+    public function parent_relations_are_sorted()
     {
         $parent = ParentFake::create();
         $parent2 = ParentFake::create();
@@ -139,7 +139,7 @@ class RelationsTest extends TestCase
     }
     
     /** @test */
-    function a_parent_or_child_can_return_a_relation_identifier()
+    public function a_parent_or_child_can_return_a_relation_identifier()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -149,9 +149,9 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function available_children_for_a_parent_can_be_listed_as_a_collection()
+    public function available_children_for_a_parent_can_be_listed_as_a_collection()
     {
-        config()->set('thinktomorrow.chief.relations.children',[
+        config()->set('thinktomorrow.chief.relations.children', [
             ChildFake::class,
         ]);
 
@@ -166,9 +166,9 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    function available_children_can_be_listed_for_a_select()
+    public function available_children_can_be_listed_for_a_select()
     {
-        config()->set('thinktomorrow.chief.relations.children',[
+        config()->set('thinktomorrow.chief.relations.children', [
             ChildFake::class,
         ]);
 

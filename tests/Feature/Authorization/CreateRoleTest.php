@@ -17,7 +17,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function only_developer_can_view_the_create_form()
+    public function only_developer_can_view_the_create_form()
     {
         $developer = factory(User::class)->create();
         $developer->assignRole('developer');
@@ -27,7 +27,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function regular_admin_cannot_view_the_create_form()
+    public function regular_admin_cannot_view_the_create_form()
     {
         $response = $this->asDefaultAdmin()->get(route('chief.back.roles.create'));
 
@@ -37,7 +37,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function storing_a_new_role()
+    public function storing_a_new_role()
     {
         $response = $this->actingAs($this->developer(), 'chief')
             ->post(route('chief.back.roles.store'), $this->validParams());
@@ -50,7 +50,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_developer_can_store_a_role()
+    public function only_authenticated_developer_can_store_a_role()
     {
         $response = $this->post(route('chief.back.roles.store'), $this->validParams());
 
@@ -59,7 +59,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_creating_role_name_is_required()
+    public function when_creating_role_name_is_required()
     {
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => '']),
             route('chief.back.roles.index'),
@@ -69,7 +69,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_creating_role_name_must_be_unique()
+    public function when_creating_role_name_must_be_unique()
     {
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']),
             route('chief.back.roles.index'),
@@ -79,7 +79,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_creating_role_permissions_are_required()
+    public function when_creating_role_permissions_are_required()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']),
             route('chief.back.roles.index'),
@@ -89,7 +89,7 @@ class CreateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_creating_role_permissions_must_be_passed_as_array()
+    public function when_creating_role_permissions_must_be_passed_as_array()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']),
             route('chief.back.roles.index'),
@@ -105,8 +105,8 @@ class CreateRoleTest extends TestCase
             'permission_names' => ['create-role', 'update-role'],
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;
