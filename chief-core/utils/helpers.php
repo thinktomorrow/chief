@@ -5,8 +5,7 @@
  * Helper: Teaser
  * --------------------------------------------------------------------------
  */
-if(!function_exists('teaser'))
-{
+if (!function_exists('teaser')) {
     /**
      * @param $text
      * @param null $max
@@ -16,12 +15,13 @@ if(!function_exists('teaser'))
      */
     function teaser($text, $max = null, $ending = null, $clean = '')
     {
-        if(is_null($max) or is_string($max)) return $text;
-        if(!is_null($clean))
-        {
-            $text = cleanupHTML($text,$clean);
+        if (is_null($max) or is_string($max)) {
+            return $text;
         }
-        $teaser = substr($text,0,$max);
+        if (!is_null($clean)) {
+            $text = cleanupHTML($text, $clean);
+        }
+        $teaser = substr($text, 0, $max);
         return strlen($text) <= $max ? $teaser : $teaser . $ending;
     }
 }
@@ -37,9 +37,8 @@ if(!function_exists('teaser'))
  * @param 	string 	$value
  * @return 	string
  */
-if(!function_exists('cleanupString'))
-{
-    function cleanupString( $value )
+if (!function_exists('cleanupString')) {
+    function cleanupString($value)
     {
         $value = strip_tags($value);
 
@@ -58,24 +57,24 @@ if(!function_exists('cleanupString'))
  * @param 	string 	$whitelist - if false no tagstripping will occur - other than htmLawed
  * @return 	string
  */
-if(!function_exists('cleanupHTML'))
-{
-    function cleanupHTML( $value, $whitelist = null )
+if (!function_exists('cleanupHTML')) {
+    function cleanupHTML($value, $whitelist = null)
     {
-        if(!function_exists('cleanupHTML')) {
+        if (!function_exists('cleanupHTML')) {
             require_once __DIR__ . '/vendors/htmlLawed.php';
         }
-        if(is_null($whitelist))
-        {
+        if (is_null($whitelist)) {
             $whitelist = '<code><span><div><label><a><br><p><b><i><del><strike><u><img><video><audio><iframe><object><embed><param><blockquote><mark><cite><small><ul><ol><li><hr><dl><dt><dd><sup><sub><big><pre><code><figure><figcaption><strong><em><table><tr><td><th><tbody><thead><tfoot><h1><h2><h3><h4><h5><h6>';
         }
         // Strip entire blocks of malicious code
         $value = preg_replace(array(
             '@<script[^>]*?>.*?</script>@si',
             '@onclick=[^ ].*? @si'
-        ),'',$value);
+        ), '', $value);
         // strip unwanted tags via whitelist...
-        if(false !== $whitelist) $value = strip_tags($value, $whitelist);
+        if (false !== $whitelist) {
+            $value = strip_tags($value, $whitelist);
+        }
         // cleanup HTML and any unwanted attributes
         $value = htmLawed($value);
         return $value;
@@ -91,8 +90,7 @@ if(!function_exists('cleanupHTML'))
  */
 function isActiveUrl($name, $parameters = [])
 {
-    if(\Illuminate\Support\Facades\Route::currentRouteNamed($name))
-    {
+    if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
         $flag = true;
         $current = \Illuminate\Support\Facades\Route::current();
 
@@ -100,16 +98,13 @@ function isActiveUrl($name, $parameters = [])
          * If a single parameter is passed as string, we will convert this to
          * the proper array keyed by the first uri parameter
          */
-        if(!is_array($parameters))
-        {
+        if (!is_array($parameters)) {
             $names = $current->parameterNames();
             $parameters = [reset($names) => $parameters];
         }
 
-        foreach($parameters as $key => $parameter)
-        {
-            if($current->parameter($key,false) != $parameter)
-            {
+        foreach ($parameters as $key => $parameter) {
+            if ($current->parameter($key, false) != $parameter) {
                 $flag = false;
             }
         }
@@ -117,12 +112,11 @@ function isActiveUrl($name, $parameters = [])
         return $flag;
     }
 
-    $name = ltrim($name,'/');
+    $name = ltrim($name, '/');
 
-    if(false !== strpos($name, '*'))
-    {
-        $pattern = str_replace('\*','(.*)',preg_quote($name,'#'));
-        return !!preg_match("#$pattern#",request()->path());
+    if (false !== strpos($name, '*')) {
+        $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
+        return !!preg_match("#$pattern#", request()->path());
     }
 
     return ($name == request()->path());
@@ -156,8 +150,7 @@ if (! function_exists('revasset')) {
 }
 
 
-if (!function_exists('addQueryToUrl'))
-{
+if (!function_exists('addQueryToUrl')) {
     /**
      * Inject a query parameter into an url
      * If the query key already exists, it will be overwritten with the new value
@@ -184,21 +177,18 @@ if (!function_exists('addQueryToUrl'))
 
         $_query = explode('&', $parsed_url['query']);
 
-        array_map(function ($v) use (&$current_query)
-        {
-            if (!$v)
-            {
+        array_map(function ($v) use (&$current_query) {
+            if (!$v) {
                 return;
             }
             $split = explode('=', $v);
-            if(count($split) == 2) $current_query[$split[0]] = $split[1];
-
+            if (count($split) == 2) {
+                $current_query[$split[0]] = $split[1];
+            }
         }, $_query);
 
-        foreach ($query_params as $key => $value)
-        {
-            if (isset($current_query[$key]))
-            {
+        foreach ($query_params as $key => $value) {
+            if (isset($current_query[$key])) {
                 unset($current_query[$key]);
             }
         }
@@ -212,8 +202,9 @@ if (!function_exists('addQueryToUrl'))
 /**
  * Form fields for honeypot protection on form submissions
  */
-if(!function_exists('honeypot_fields')){
-    function honeypot_fields(){
+if (!function_exists('honeypot_fields')) {
+    function honeypot_fields()
+    {
         return '<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>';
     }
 }

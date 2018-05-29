@@ -22,7 +22,6 @@ class AcceptInvite
             DB::commit();
 
             return;
-
         } catch (StateException $e) {
             // exception is thrown if state transfer is already done
         } catch (\Exception $e) {

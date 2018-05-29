@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 
-
 class ArchivableTest extends TestCase
 {
     use ChiefDatabaseTransactions;
@@ -85,7 +84,7 @@ class ArchivableTraitDummyClass extends Model
 
     public static function migrateUp()
     {
-        Schema::create('dummy', function(Blueprint $table){
+        Schema::create('dummy', function (Blueprint $table) {
             $table->timestamp('archived_at')->default(null)->nullable();
             $table->timestamps();
         });

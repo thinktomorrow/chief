@@ -10,7 +10,7 @@ trait ActingAsParent
 
     public function children(): Collection
     {
-        if($this->areChildRelationsLoaded()){
+        if ($this->areChildRelationsLoaded()) {
             return $this->loadedChildRelations;
         }
         return $this->loadedChildRelations = Relation::children($this->getMorphClass(), $this->getKey());
@@ -34,7 +34,7 @@ trait ActingAsParent
 
     public function presentChildren(): \Illuminate\Support\Collection
     {
-        return $this->children()->map(function($child){
+        return $this->children()->map(function ($child) {
             return $child->presentForParent($this, $child->relation);
         });
     }

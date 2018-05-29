@@ -26,7 +26,7 @@ class EnableUserTest extends TestCase
     }
 
     /** @test */
-    function user_can_be_enabled_by_admin()
+    public function user_can_be_enabled_by_admin()
     {
         $this->assertFalse($this->user->isEnabled());
 
@@ -36,7 +36,7 @@ class EnableUserTest extends TestCase
     }
 
     /** @test */
-    function user_cannot_be_enabled_by_regular_author()
+    public function user_cannot_be_enabled_by_regular_author()
     {
         $this->assertFalse($this->user->isEnabled());
 
@@ -46,9 +46,8 @@ class EnableUserTest extends TestCase
     }
 
     /** @test */
-    function pending_invited_user_cannot_be_enabled()
+    public function pending_invited_user_cannot_be_enabled()
     {
         $this->markTestIncomplete();
     }
-
 }

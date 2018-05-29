@@ -23,7 +23,7 @@ class ManageUsersTest extends TestCase
     }
 
     /** @test */
-    function full_admin_can_view_the_users_overview()
+    public function full_admin_can_view_the_users_overview()
     {
         $this->disableExceptionHandling();
         $response = $this->asAdmin()->get(route('chief.back.users.index'));
@@ -31,7 +31,7 @@ class ManageUsersTest extends TestCase
     }
 
     /** @test */
-    function regular_author_cannot_view_the_users_overview()
+    public function regular_author_cannot_view_the_users_overview()
     {
         $response = $this->asAuthor()->get(route('chief.back.users.index'));
 

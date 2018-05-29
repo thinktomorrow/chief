@@ -20,14 +20,14 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function only_admin_can_view_the_invite_form()
+    public function only_admin_can_view_the_invite_form()
     {
         $response = $this->asAdmin()->get(route('chief.back.users.create'));
         $response->assertStatus(200);
     }
 
     /** @test */
-    function regular_author_cannot_view_the_invite_form()
+    public function regular_author_cannot_view_the_invite_form()
     {
         $response = $this->asAuthor()->get(route('chief.back.users.create'));
 
@@ -37,7 +37,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function inviting_a_new_user()
+    public function inviting_a_new_user()
     {
         Notification::fake();
 
@@ -59,7 +59,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function it_can_render_the_invitation_mail()
+    public function it_can_render_the_invitation_mail()
     {
         $invitee = factory(User::class)->create();
         $inviter = $this->developer();
@@ -70,7 +70,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_admin_can_invite_an_user()
+    public function only_authenticated_admin_can_invite_an_user()
     {
         $response = $this->post(route('chief.back.users.store'), $this->validParams());
 
@@ -79,7 +79,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function regular_author_cannot_invite_an_user()
+    public function regular_author_cannot_invite_an_user()
     {
         $response = $this->asAuthor()->post(route('chief.back.users.store'), $this->validParams());
 
@@ -88,7 +88,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function when_creating_user_firstname_is_required()
+    public function when_creating_user_firstname_is_required()
     {
         $this->assertValidation(new User(), 'firstname', $this->validParams(['firstname' => '']),
             route('chief.back.users.index'),
@@ -98,7 +98,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function when_creating_user_lastname_is_required()
+    public function when_creating_user_lastname_is_required()
     {
         $this->assertValidation(new User(), 'lastname', $this->validParams(['lastname' => '']),
             route('chief.back.users.index'),
@@ -108,7 +108,7 @@ class InviteUserTest extends TestCase
     }
 
     /** @test */
-    function when_creating_user_role_is_required()
+    public function when_creating_user_role_is_required()
     {
         $this->assertValidation(new User(), 'roles', $this->validParams(['roles' => []]),
             route('chief.back.users.index'),
@@ -126,8 +126,8 @@ class InviteUserTest extends TestCase
             'roles' => ['author'],
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;

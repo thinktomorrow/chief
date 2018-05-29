@@ -38,14 +38,14 @@
     <p>You can trigger the modal by triggering the 'showModal' click event. This function is passed the id of the modal element. Put the trigger on a button like so:</p>
     <pre>
         <code class="html">
-<?= htmlentities('<button @click="showModal(\'exampleModal\')">Open modal</button>' ); ?>
+<?= htmlentities('<button @click="showModal(\'exampleModal\')">Open modal</button>'); ?>
         </code>
     </pre>
 
     <p>If you would like to activate the modal upon pageload and let it display immediately, you can add the <em>:active</em> attribute.</p>
     <pre>
         <code class="html">
-<?= htmlentities('<modal :active="true" id="exampleModal"> ... </modal>' ); ?>
+<?= htmlentities('<modal :active="true" id="exampleModal"> ... </modal>'); ?>
         </code>
     </pre>
 

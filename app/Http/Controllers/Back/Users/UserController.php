@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
-        return view('chief::back.users.edit',[
+        return view('chief::back.users.edit', [
             'user' => User::findOrFail($id),
             'roleNames'=> Role::all()->pluck('name')->toArray()
         ]);
