@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
-
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
@@ -97,12 +96,12 @@ trait TestHelpers
 
     protected function setUpDefaultAuthorization()
     {
-        AuthorizationDefaults::permissions()->each(function($permissionName){
+        AuthorizationDefaults::permissions()->each(function ($permissionName) {
             Artisan::call('chief:permission', ['name' => $permissionName]);
         });
 
-        AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
-            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
+        AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
         });
     }
 
@@ -116,8 +115,7 @@ trait TestHelpers
     {
         $flag = false;
 
-        view($mailMessage->view, $mailMessage->viewData)->render(function () use (&$flag)
-        {
+        view($mailMessage->view, $mailMessage->viewData)->render(function () use (&$flag) {
             $flag = true;
         });
 

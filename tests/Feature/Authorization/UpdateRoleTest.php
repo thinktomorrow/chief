@@ -17,20 +17,20 @@ class UpdateRoleTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         // Create a new role first
-        $role = Role::create(['name' => array_get($this->validParams(),'name')]);
-        $role->givePermissionTo(array_get($this->validParams(),'permission_names'));
+        $role = Role::create(['name' => array_get($this->validParams(), 'name')]);
+        $role->givePermissionTo(array_get($this->validParams(), 'permission_names'));
         $this->newRole = $role;
     }
 
     /** @test */
-    function only_developer_can_view_the_update_form()
+    public function only_developer_can_view_the_update_form()
     {
         $response = $this->actingAs($this->developer(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
         $response->assertStatus(200);
     }
 
     /** @test */
-    function regular_admin_cannot_view_the_update_form()
+    public function regular_admin_cannot_view_the_update_form()
     {
         $response = $this->actingAs(factory(User::class)->create(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
 
@@ -40,7 +40,7 @@ class UpdateRoleTest extends TestCase
     }
 
     /** @test */
-    function updating_a_role()
+    public function updating_a_role()
     {
         // Now update it
         $response = $this->actingAs($this->developer(), 'chief')
@@ -54,7 +54,7 @@ class UpdateRoleTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_developer_can_update_a_role()
+    public function only_authenticated_developer_can_update_a_role()
     {
         $response = $this->put(route('chief.back.roles.update', $this->newRole->id), $this->validUpdateParams());
 
@@ -65,7 +65,7 @@ class UpdateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_updating_role_name_is_required()
+    public function when_updating_role_name_is_required()
     {
         //$this->disableExceptionHandling();
 
@@ -78,7 +78,7 @@ class UpdateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_updating_role_permissions_are_required()
+    public function when_updating_role_permissions_are_required()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']),
             route('chief.back.roles.index'),
@@ -89,7 +89,7 @@ class UpdateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_updating_role_name_must_be_unique()
+    public function when_updating_role_name_must_be_unique()
     {
         $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']),
             route('chief.back.roles.index'),
@@ -100,7 +100,7 @@ class UpdateRoleTest extends TestCase
     }
 
     /** @test */
-    function when_updating_role_permissions_must_be_passed_as_array()
+    public function when_updating_role_permissions_must_be_passed_as_array()
     {
         $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']),
             route('chief.back.roles.index'),
@@ -117,8 +117,8 @@ class UpdateRoleTest extends TestCase
             'permission_names' => ['create-role', 'update-role'],
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;
@@ -129,7 +129,7 @@ class UpdateRoleTest extends TestCase
         return $this->validParams(array_merge([
             'name' => 'updated name',
             'permission_names' => ['view-role']
-        ],$overrides));
+        ], $overrides));
     }
 
     private function assertNewValues(Role $role)

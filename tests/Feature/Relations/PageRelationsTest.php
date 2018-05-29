@@ -18,7 +18,7 @@ class PageRelationsTest extends TestCase
     }
 
     /** @test */
-    function a_page_can_have_a_relation_with_another_page()
+    public function a_page_can_have_a_relation_with_another_page()
     {
         $parent = Page::create();
         $child = Page::create();
@@ -35,7 +35,7 @@ class PageRelationsTest extends TestCase
     }
 
     /** @test */
-    function a_page_can_have_a_relation_with_a_module()
+    public function a_page_can_have_a_relation_with_a_module()
     {
         ParentFake::migrate();
         ChildFake::migrate();

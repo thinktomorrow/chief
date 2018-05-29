@@ -102,10 +102,17 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends Handler{
-            public function __construct(){}
-            public function report(\Exception $e){}
-            public function render($request, \Exception $e){ throw $e; }
+        $this->app->instance(ExceptionHandler::class, new class extends Handler {
+            public function __construct()
+            {
+            }
+            public function report(\Exception $e)
+            {
+            }
+            public function render($request, \Exception $e)
+            {
+                throw $e;
+            }
         });
     }
 
@@ -113,7 +120,9 @@ abstract class TestCase extends OrchestraTestCase
     {
         $this->app->resolving(EncryptCookies::class,
             function ($object) use ($cookies) {
-                foreach($cookies as $cookie) $object->disableFor($cookie);
+                foreach ($cookies as $cookie) {
+                    $object->disableFor($cookie);
+                }
             });
 
         return $this;
@@ -121,17 +130,16 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function protectTestEnvironment()
     {
-        if( ! $this->protectTestEnvironment) return;
+        if (! $this->protectTestEnvironment) {
+            return;
+        }
 
-        if("testing" !== $this->app->environment())
-        {
+        if ("testing" !== $this->app->environment()) {
             throw new \Exception('Make sure your testing environment is properly set. You are now running tests in the ['.$this->app->environment().'] environment');
         }
 
-        if(DB::getName() != "testing" && DB::getName() != "setup")
-        {
+        if (DB::getName() != "testing" && DB::getName() != "setup") {
             throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using ['.DB::getName().']. Are you crazy?');
         }
     }
-
 }

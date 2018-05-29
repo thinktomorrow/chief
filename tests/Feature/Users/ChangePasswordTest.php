@@ -25,7 +25,7 @@ class ChangePasswordTest extends TestCase
 
 
     /** @test */
-    function only_logged_in_user_can_update_password()
+    public function only_logged_in_user_can_update_password()
     {
         $this->assertFalse(auth()->guard('chief')->check());
 
@@ -37,7 +37,7 @@ class ChangePasswordTest extends TestCase
     }
 
     /** @test */
-    function when_user_fills_in_password_prompt_password_gets_updated()
+    public function when_user_fills_in_password_prompt_password_gets_updated()
     {
         $response = $this->actingAs($this->user, 'chief')
                          ->put(route('chief.back.password.update'), ['password' => 'new password', 'password_confirmation' => 'new password']);

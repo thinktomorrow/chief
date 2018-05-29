@@ -35,7 +35,7 @@ class PagesController extends Controller
         $page->existingRelationIds = collect([]);
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('chief::back.pages.create',['page' => $page, 'relations' => $relations]);
+        return view('chief::back.pages.create', ['page' => $page, 'relations' => $relations]);
     }
 
     /**
@@ -91,10 +91,16 @@ class PagesController extends Controller
     public function destroy($id)
     {
         $page = Page::findOrFail($id);
-        if(request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) return redirect()->back()->with('messages.warning', 'fout');
+        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) {
+            return redirect()->back()->with('messages.warning', 'fout');
+        }
 
-        if($page->isDraft() || $page->isArchived()) $page->delete();
-        if($page->isPublished()) $page->archive();
+        if ($page->isDraft() || $page->isArchived()) {
+            $page->delete();
+        }
+        if ($page->isPublished()) {
+            $page->archive();
+        }
 
         $message = 'Het item werd verwijderd.';
 
