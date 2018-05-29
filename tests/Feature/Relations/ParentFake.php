@@ -20,7 +20,7 @@ class ParentFake extends Model implements ActsAsParent
 
     public static function migrate()
     {
-        Schema::create('fake_parents', function (Blueprint $table){
+        Schema::create('fake_parents', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
         });

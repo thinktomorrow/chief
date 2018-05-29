@@ -24,7 +24,6 @@ class PageUpdateRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'trans.*.title'     => 'required|unique:page_translations,title,'. $this->id . ',page_id|max:200',
             'trans.*.slug'      => 'required|unique:page_translations,slug,' . $this->id . ',page_id|distinct',

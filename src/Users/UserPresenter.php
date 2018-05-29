@@ -17,7 +17,9 @@ class UserPresenter
     public function enabledAsLabel(): string
     {
         // Avoid showing enabled state if there is an invitation pending
-        if($this->user->invitation) return '';
+        if ($this->user->invitation) {
+            return '';
+        }
 
         return $this->user->isEnabled()
             ? ''

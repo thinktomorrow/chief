@@ -10,9 +10,9 @@ class AddQueryToUrlTest extends TestCase
      * @test
      * @dataProvider queryProvider
      */
-    public function addQueryToUrl_adds_query_to_url($url,$query_params,$expected,$overrides = [])
+    public function addQueryToUrl_adds_query_to_url($url, $query_params, $expected, $overrides = [])
     {
-        $this->assertEquals($expected,addQueryToUrl($url,$query_params,$overrides));
+        $this->assertEquals($expected, addQueryToUrl($url, $query_params, $overrides));
     }
 
     public function queryProvider()

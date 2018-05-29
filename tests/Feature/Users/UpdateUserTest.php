@@ -24,18 +24,18 @@ class UpdateUserTest extends TestCase
     }
 
     /** @test */
-    function full_admin_can_see_the_edit_view()
+    public function full_admin_can_see_the_edit_view()
     {
         $this->disableExceptionHandling();
 
-        $response = $this->asAdmin()->get(route('chief.back.users.edit',$this->newUser->id));
+        $response = $this->asAdmin()->get(route('chief.back.users.edit', $this->newUser->id));
         $response->assertStatus(200);
     }
 
     /** @test */
-    function regular_author_cannot_view_the_edit_view()
+    public function regular_author_cannot_view_the_edit_view()
     {
-        $response = $this->asAuthor()->get(route('chief.back.users.edit',$this->newUser->id));
+        $response = $this->asAuthor()->get(route('chief.back.users.edit', $this->newUser->id));
 
         $response->assertStatus(302)
             ->assertRedirect(route('chief.back.dashboard'))
@@ -43,7 +43,7 @@ class UpdateUserTest extends TestCase
     }
 
     /** @test */
-    function updating_user_data()
+    public function updating_user_data()
     {
         // Now update it
         $response = $this->asAdmin()
@@ -57,7 +57,7 @@ class UpdateUserTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_admin_can_update_a_user()
+    public function only_authenticated_admin_can_update_a_user()
     {
         $response = $this->put(route('chief.back.users.update', $this->newUser->id), $this->validUpdateParams());
 
@@ -68,7 +68,7 @@ class UpdateUserTest extends TestCase
     }
 
     /** @test */
-    function regular_author_cannot_update_any_user()
+    public function regular_author_cannot_update_any_user()
     {
         $response = $this->asAuthor()->put(route('chief.back.users.update', $this->newUser->id), $this->validUpdateParams());
 
@@ -79,13 +79,13 @@ class UpdateUserTest extends TestCase
     }
 
     /** @test */
-    function when_email_is_changed_a_notification_is_sent_to_the_new_and_old_email()
+    public function when_email_is_changed_a_notification_is_sent_to_the_new_and_old_email()
     {
         $this->markTestIncomplete();
     }
 
     /** @test */
-    function when_updating_user_firstname_is_required()
+    public function when_updating_user_firstname_is_required()
     {
         $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']),
             route('chief.back.users.index'),
@@ -96,7 +96,7 @@ class UpdateUserTest extends TestCase
     }
 
     /** @test */
-    function when_updating_user_lastname_is_required()
+    public function when_updating_user_lastname_is_required()
     {
         $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']),
             route('chief.back.users.index'),
@@ -115,8 +115,8 @@ class UpdateUserTest extends TestCase
             'roles' => ['author'],
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;
@@ -129,7 +129,7 @@ class UpdateUserTest extends TestCase
             'lastname' => 'updated lastname',
             'email' => 'updated@example.com',
             'roles' => ['author', 'admin'],
-        ],$overrides));
+        ], $overrides));
     }
 
     private function assertNewValues(User $user)

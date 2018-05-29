@@ -198,10 +198,12 @@ class GeneratePage extends BaseCommand
 
     private function guessNamespace()
     {
-        if(isset($this->settings['namespace'])) return $this->settings['namespace'];
+        if (isset($this->settings['namespace'])) {
+            return $this->settings['namespace'];
+        }
 
         // We make an estimated guess based on the project name. At Think Tomorrow, we
         // have a src folder which is PSR-4 namespaced by the project name itself.
-        return ucfirst(config('thinktomorrow.chief.name','App')).'\\'. ucfirst($this->plural);
+        return ucfirst(config('thinktomorrow.chief.name', 'App')).'\\'. ucfirst($this->plural);
     }
 }
