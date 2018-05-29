@@ -48,7 +48,7 @@ Ok so now you need at least one main admin user to login and start managing the 
 This command will create the basic roles and permissions and allows to setup the first admin account:
 
 ```php
-php artisan chief:create-admin
+php artisan chief:admin
 ```
 
 Next we need to publish the chief-assets to our public folder.
@@ -63,12 +63,16 @@ contact email and application name.
 ```php
 php artisan vendor:publish --tag=chief-config
 ```
-Make sure to set at least the `name` value to your project name as it is used in some of the generator commands.
+Make sure to set at least the `name` value to your project name as it is used in some of the generator commands. Ideally this should match
+the namespace of your `src` folder, if you have any.
 
 The following vendor assets should also be published to your application:
 ```php
 // The dimsav translatable package
 php artisan vendor:publish --tag=translatable
+
+// The thinktomorrow locale package
+php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvider"
 ```
 
 # Multilingual
@@ -79,10 +83,6 @@ At the following files you should change the locales to your desired setup:
 - Set the available locales of the application in the `config/translatable.php` file. The values in the `locales` array will be available for the admin to manage.
 - Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
-
-
-
-
 
 # Changing Chief model behaviour
 

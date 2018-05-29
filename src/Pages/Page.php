@@ -33,12 +33,29 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = PageTranslation::class;
+    protected $translationForeignKey = 'page_id';
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
 
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new PageCollectionScope());
+    }
+
+    /**
+     * Ignore the collection scope.
+     * This will fetch all page results, regardless of the collection scope.
+     */
+    public static function ignoreCollection()
+    {
+        return self::withoutGlobalScope(PageCollectionScope::class);
+    }
 
     public static function findBySlug($slug)
     {

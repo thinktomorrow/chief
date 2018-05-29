@@ -35,6 +35,8 @@ class GeneratePageCommandTest extends TestCase
     /** @test */
     function a_model_can_be_generated()
     {
+        $this->markTestIncomplete();
+
         $this->command->shouldReceive('choice')
                       ->once()
                       ->andReturn(0);
