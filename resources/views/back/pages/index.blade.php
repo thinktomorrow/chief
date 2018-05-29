@@ -39,10 +39,11 @@
                                     <button type="submit" class="btn btn-subtle">Publiceer</button>
                                 </div>
                             </form>
-                            <a @click="showModal('delete-article')" class="btn btn-link"><i class="icon icon-trash icon-fw"></i></a>
+                            <a @click="showModal('delete-page-{{$page->id}}')" class="btn btn-link"><i class="icon icon-trash icon-fw"></i></a>
                         </div>
                     </div>
                     <hr>
+                    @include('chief::back.pages._partials.delete-modal')
                 @endforeach
                 @if($drafts->isEmpty())
                     <div class="row">
@@ -83,38 +84,79 @@
                                     <button type="submit" class="btn btn-icon btn-subtle">Plaats in draft</button>
                                 </div>
                             </form>
-                            <a @click="showModal('delete-article')" class="btn btn-link"><i class="icon icon-trash icon-fw"></i></a>
+                            <a @click="showModal('delete-page-{{$page->id}}')" class="btn btn-link"><i class="icon icon-trash icon-fw"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <hr>
-        @endforeach
-        @if($published->isEmpty())
-            <div class="row left">
-                <div class="column-12 stack">
-                    Er staan géén pagina's online.</p>
+                <hr>
+                @include('chief::back.pages._partials.delete-modal')
+            @endforeach
+            @if($published->isEmpty())
+                <div class="row left">
+                    <div class="column-12 stack">
+                        Er staan géén pagina's online.</p>
+                    </div>
+
+                    <div class="column-12">
+                        <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">
+                            <i class="icon icon-zap icon-fw"></i> Tijd om aan de slag te gaan
+                        </a>
+                    </div>
                 </div>
+            @endif
+            <div class="text-center">
+                {!! $published->render() !!}
+            </div>
+        </tab>
+        <tab name="Archief ({{ $archived->count() }})" id="archief">
+            @foreach($archived as $page)
+                    <div class="row">
+                        <div class="column-8 stretched">
+                            <div class="column-12">
+                                <h2>
+                                    {{ $page->getTranslationFor('title') }}
+                                    <a title="Bekijk {{ $page->title }}" href="{{ route('chief.back.pages.show',$page->slug) }}?preview-mode=true" target="_blank" class="text-subtle font-s">Preview</a>
+                                </h2>
+                            </div>
+                            <div class="column-12">
+                                {{ teaser($page->content,150,'...') }}
+                            </div>
+                            <span class="text-subtle">Laatst aangepast op: {{ $page->updated_at->format('d/m/Y') }}</span>
+                        </div>
+                        <div class="center-y column">
+                            <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
+                            <form action="{{ route('chief.back.pages.publish') }}" method="POST">
+                                {{ csrf_field() }}
+                                <div class="publishActions-{{$page->id}} hidden">
+                                    <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
+                                    <input type="hidden" name="id" value="{{ $page->id }}">
+                                    <button type="submit" class="btn btn-icon btn-subtle">Plaats in draft</button>
+                                </div>
+                            </form>
+                            <a @click="showModal('delete-page-{{$page->id}}')" class="btn btn-link"><i class="icon icon-trash icon-fw"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                @include('chief::back.pages._partials.delete-modal')
+            @endforeach
+            @if($archived->isEmpty())
+                <div class="row left">
+                    <div class="column-12 stack">
+                        Er staan géén pagina's in het archief.</p>
+                    </div>
 
                 <div class="column-12">
                     <a href="{{ route('chief.back.pages.create') }}" class="btn btn-primary">
                         <i class="icon icon-zap icon-fw"></i> Tijd om aan de slag te gaan
                     </a>
                 </div>
+            @endif
+            <div class="text-center">
+                {!! $archived->render() !!}
             </div>
-        @endif
-        <div class="text-center">
-            {!! $published->render() !!}
-        </div>
-    </tab>
-    <tab name="Archief" id="archief">
-        <p>Not implemented yet.</p>
-    </tab>
-
-</tabs>
-
-
-@include('chief::back.pages._partials.delete-modal')
-
+        </tab>
+    </tabs>
 @stop
 
 @push('custom-scripts')

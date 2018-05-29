@@ -59,7 +59,7 @@ class PageTest extends TestCase
             'created_at'    => Carbon::now()->subDays(1)
         ]);
 
-        $pages = Page::sortedByRecent()->get();
+        $pages = Page::sortedByCreated()->get();
 
         $this->assertTrue($pages->first()->created_at->gt($pages->last()->created_at));
     }

@@ -18,7 +18,7 @@ Paste the following snippet in your composer.json file. This can be placed right
 The url property needs to be the full path to the local version of the chief package.
 
 Next install the local version of Chief:
-```php 
+```php
 composer require thinktomorrow/chief
 ``` 
 Make sure your minimum stability of the application is set to `dev`.

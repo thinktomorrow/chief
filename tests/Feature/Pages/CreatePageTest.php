@@ -91,7 +91,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $this->asAdmin()
-             ->delete(route('chief.back.pages.destroy', Page::first()->id));
+             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
 
         $this->assertCount(0, Page::all());
     }

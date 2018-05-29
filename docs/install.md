@@ -7,7 +7,7 @@ This can be either an existing one or a new Laravel 5.6 project.
 
 ## Installment
 
-Chief can be installed via composer. 
+Chief can be installed via composer.
 ```php
 composer require thinktomorrow/chief
 ```
@@ -23,7 +23,7 @@ use Thinktomorrow\Chief\App\Exceptions\Handler as ChiefExceptionHandler;
 class Handler extends ChiefExceptionHandler
 ```
 
-Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file. This handles the 
+Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file. This handles the
 login sessions of the chief user.
 
 ```php
@@ -58,7 +58,7 @@ If you want to overwrite existing files you can add the `--force` flag here.
 php artisan vendor:publish --tag=chief-assets
 ```
 
-Publish the chief config to `config/thinktomorrow/chief` as this will require you to set some application defaults such as 
+Publish the chief config to `config/thinktomorrow/chief` as this will require you to set some application defaults such as
 contact email and application name.
 ```php
 php artisan vendor:publish --tag=chief-config
@@ -76,8 +76,8 @@ php artisan vendor:publish --tag=translatable
 There are a couple of places where you need to configure the localisation of your application.
 At the following files you should change the locales to your desired setup:
 
-- Set the available locales of the application in the `config/translatable.php` file. The values in the `locales` array will be available for the admin to manage.  
-- Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.  
+- Set the available locales of the application in the `config/translatable.php` file. The values in the `locales` array will be available for the admin to manage.
+- Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
 
 
@@ -114,6 +114,17 @@ public function boot()
     Schema::defaultStringLength(191);
 }
 ```
+
+### FAQ
+
+Q: I get the "Route [login] not defined" error. Help!
+A: Extend our ChiefExceptionHandler in the app/handler.php file.
+
+Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!
+A: /
+
+Q: I get the "Class web-chief does not exist" error. Help!
+A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file.
 
 ## Required setup steps of your project after installment
 - include ChiefServiceProvider

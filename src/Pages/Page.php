@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
+use Thinktomorrow\Chief\Common\Traits\Archivable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
@@ -26,6 +27,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         SoftDeletes,
         Publishable,
         Featurable,
+        Archivable,
         ActingAsParent,
         ActingAsChild;
 
@@ -80,6 +82,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function previewUrl()
     {
-        return route('pages.show', $this->slug).'?preview-mode';
+        // return route('pages.show', $this->slug).'?preview-mode';
     }
 }
