@@ -86,7 +86,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function it_can_remove_a_page()
     {
-        factory(Page::class)->create();
+        factory(Page::class)->create(['published' => false]);
         $this->assertCount(1, Page::all());
 
         $this->asAdmin()
