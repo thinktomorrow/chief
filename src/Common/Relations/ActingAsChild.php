@@ -10,7 +10,7 @@ trait ActingAsChild
 
     public function parents(): Collection
     {
-        if($this->areParentRelationsLoaded()){
+        if ($this->areParentRelationsLoaded()) {
             return $this->loadedParentRelations;
         }
 
@@ -50,7 +50,7 @@ trait ActingAsChild
             'parent_id'    => $parent_id,
             'child_type' => $this->getMorphClass(),
             'child_id'   => $this->getKey(),
-        ],$attributes);
+        ], $attributes);
     }
 
     private function detachParent($parent_type, $parent_id)

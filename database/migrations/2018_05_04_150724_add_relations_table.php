@@ -13,7 +13,7 @@ class AddRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('relations', function (Blueprint $table){
+        Schema::create('relations', function (Blueprint $table) {
             $table->string("parent_type");
             $table->unsignedBigInteger("parent_id");
             $table->string("child_type");

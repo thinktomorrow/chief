@@ -32,7 +32,7 @@ class User extends Authenticatable implements HasMedia
 
     public static function findByEmail(string $email)
     {
-        return self::where('email',$email)->first();
+        return self::where('email', $email)->first();
     }
 
     public function invitation()
@@ -75,6 +75,6 @@ class User extends Authenticatable implements HasMedia
 
     public function getShortNameAttribute()
     {
-      return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
+        return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
     }
 }

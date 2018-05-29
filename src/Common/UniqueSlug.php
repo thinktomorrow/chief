@@ -27,8 +27,7 @@ class UniqueSlug
         $slug = $originalslug = Str::slug($title);
         $i = 1;
 
-        while(!$this->isSlugUnique($slug,$entity))
-        {
+        while (!$this->isSlugUnique($slug, $entity)) {
             $slug = $originalslug.'-'.$i;
             $i++;
         }
@@ -42,11 +41,13 @@ class UniqueSlug
      * @param SluggableContract $entity
      * @return bool
      */
-    private function isSlugUnique($slug,SluggableContract $entity = null)
+    private function isSlugUnique($slug, SluggableContract $entity = null)
     {
         $model = $this->model->findBySlug($slug);
 
-        if(!$model || ($entity && $entity->id && $model->id == $entity->id)) return true;
+        if (!$model || ($entity && $entity->id && $model->id == $entity->id)) {
+            return true;
+        }
 
         return false;
     }

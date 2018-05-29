@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
-
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -52,7 +51,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function scopeSortedByCreated($query)
     {
-        $query->orderBy('created_at','DESC');
+        $query->orderBy('created_at', 'DESC');
     }
 
     public function presentForParent(ActsAsParent $parent, Relation $relation): string

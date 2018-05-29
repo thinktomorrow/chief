@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof AuthorizationException){
+        if ($exception instanceof AuthorizationException) {
             return $this->unauthorized($request, $exception);
         }
 
@@ -62,7 +62,6 @@ class Handler extends ExceptionHandler
     {
         return redirect()->route('chief.back.dashboard')
                          ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
-
     }
 
     /**
