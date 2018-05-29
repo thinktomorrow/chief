@@ -12,6 +12,8 @@ use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Squanto\SquantoServiceProvider;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -19,8 +21,13 @@ class ChiefServiceProvider extends ServiceProvider
     {
         $this->registerChiefGuard();
 
+        $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
+
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
+        (new SquantoServiceProvider($this->app))->boot();
+        (new SquantoManagerServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -73,6 +80,8 @@ class ChiefServiceProvider extends ServiceProvider
 
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
+        (new SquantoServiceProvider($this->app))->register();
+        (new SquantoManagerServiceProvider($this->app))->register();
     }
 
     /**
