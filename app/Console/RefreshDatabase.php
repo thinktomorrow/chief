@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class RefreshDatabase extends BaseCommand
 {
-    protected $signature = 'chief:db-refresh {--force}';
+    protected $signature = 'chief:refresh {--force}';
     protected $description = 'This will clear the entire database and reseed with development defaults';
 
     public function handle()
@@ -26,7 +26,7 @@ class RefreshDatabase extends BaseCommand
                 return;
             }
 
-            if (!$this->confirm('ARE YOU REALLY SURE?')) {
+            if (!$this->confirm('ARE YOU REALLY SURE? THIS DELETES EVERYTHING!!!!!')) {
                 $this->info('pfew.');
                 return;
             }

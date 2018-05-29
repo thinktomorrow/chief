@@ -63,6 +63,7 @@ contact email and application name.
 ```php
 php artisan vendor:publish --tag=chief-config
 ```
+Make sure to set at least the `name` value to your project name as it is used in some of the generator commands.
 
 The following vendor assets should also be published to your application:
 ```php

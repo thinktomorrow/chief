@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 
 class CreateAdmin extends BaseCommand
 {
-    protected $signature = 'chief:create-admin';
+    protected $signature = 'chief:admin';
     protected $description = 'Create a new chief admin user';
 
     public function handle()

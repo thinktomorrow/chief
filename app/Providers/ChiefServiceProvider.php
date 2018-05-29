@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
+use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
@@ -36,11 +37,27 @@ class ChiefServiceProvider extends ServiceProvider
         // Register commands
         if ($this->app->runningInConsole()) {
             $this->commands([
-                GeneratePermissionCommand::class,
-                GenerateRoleCommand::class,
-                CreateAdmin::class,
-                RefreshDatabase::class,
+                // Local development
+                'command.chief:refresh',
+
+                // Project setup tools
+                'command.chief:permission',
+                'command.chief:role',
+                'command.chief:admin',
+                'command.chief:page',
             ]);
+
+            // Bind our commands to the container
+            $this->app->bind('command.chief:refresh', RefreshDatabase::class);
+            $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
+            $this->app->bind('command.chief:role', GenerateRoleCommand::class);
+            $this->app->bind('command.chief:admin', CreateAdmin::class);
+            $this->app->bind('command.chief:page', function($app){
+                return new GeneratePage($app['files'], [
+                    'base_path' => base_path()
+                ]);
+            });
+
         }
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');

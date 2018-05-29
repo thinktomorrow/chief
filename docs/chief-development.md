@@ -5,12 +5,12 @@ To set up the chief package for local development we link our local chief folder
 
 Paste the following snippet in your composer.json file. This can be placed right above the 'require' section.
 ```php
-“repositories”:[
+"repositories":[
        {
-           “url”:“/full/path/to/chief”,
-           “type”:“path”,
-           “options”:{
-               “symlinks”:true
+           "url":"/full/path/to/chief",
+           "type":"path",
+           "options":{
+               "symlinks":true
            }
        }
    ],
@@ -21,6 +21,7 @@ Next install the local version of Chief:
 ```php 
 composer require thinktomorrow/chief
 ``` 
+Make sure your minimum stability of the application is set to `dev`.
 
 To migrate and scaffold some entries you can run:
 ```php

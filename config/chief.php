@@ -13,7 +13,8 @@ return [
 
     /**
      * Name of the project.
-     * This is also used in a couple of places such as the mail footer.
+     *
+     * This is used in a couple of places such as the generator tools and the mail footer.
      */
     'name' => 'Chief',
 
