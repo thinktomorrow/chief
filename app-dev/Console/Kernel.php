@@ -11,7 +11,6 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-
     protected $daysBeforeDeletion = 15;
     /**
      * The Artisan commands provided by your application.
@@ -34,7 +33,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function(){
+        $schedule->call(function () {
             Page::onlyTrashed()->where('deleted_at', '<', Carbon::today()->subDays($this->daysBeforeDeletion))->forceDelete();
         })->dailyAt('03:00');
     }

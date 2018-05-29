@@ -24,7 +24,7 @@ class UpdateYouTest extends TestCase
     }
 
     /** @test */
-    function only_you_can_see_the_edit_view()
+    public function only_you_can_see_the_edit_view()
     {
         $this->disableExceptionHandling();
 
@@ -34,7 +34,7 @@ class UpdateYouTest extends TestCase
     }
 
     /** @test */
-    function updating_your_data()
+    public function updating_your_data()
     {
         $response = $this->actingAs($this->newUser, 'chief')
             ->put(route('chief.back.you.update'), $this->validUpdateParams());
@@ -46,7 +46,7 @@ class UpdateYouTest extends TestCase
     }
 
     /** @test */
-    function only_authenticated_admin_can_update_their_profile()
+    public function only_authenticated_admin_can_update_their_profile()
     {
         $response = $this->put(route('chief.back.you.update'), $this->validUpdateParams());
 
@@ -57,13 +57,13 @@ class UpdateYouTest extends TestCase
     }
 
     /** @test */
-    function when_email_is_changed_a_notification_is_sent_to_the_new_and_old_email()
+    public function when_email_is_changed_a_notification_is_sent_to_the_new_and_old_email()
     {
         $this->markTestIncomplete();
     }
 
     /** @test */
-    function when_updating_user_firstname_is_required()
+    public function when_updating_user_firstname_is_required()
     {
         $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']),
             route('chief.back.dashboard'),
@@ -74,7 +74,7 @@ class UpdateYouTest extends TestCase
     }
 
     /** @test */
-    function when_updating_user_lastname_is_required()
+    public function when_updating_user_lastname_is_required()
     {
         $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']),
             route('chief.back.dashboard'),
@@ -92,8 +92,8 @@ class UpdateYouTest extends TestCase
             'email' => 'new@example.com',
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;
@@ -105,7 +105,7 @@ class UpdateYouTest extends TestCase
             'firstname' => 'updated firstname',
             'lastname' => 'updated lastname',
             'email' => 'updated@example.com',
-        ],$overrides));
+        ], $overrides));
     }
 
     private function assertNewValues(User $user)

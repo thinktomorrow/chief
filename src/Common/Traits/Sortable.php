@@ -8,7 +8,7 @@ trait Sortable
 
     public function scopeSequence($query)
     {
-        return $query->orderBy($this->sortableattribute,'ASC');
+        return $query->orderBy($this->sortableattribute, 'ASC');
     }
 
     /**
@@ -19,7 +19,7 @@ trait Sortable
      */
     public static function reorderAgainstSiblings(array $sequence)
     {
-        array_walk($sequence,function($id,$i){
+        array_walk($sequence, function ($id, $i) {
             self::findOrFail($id)->reorder($i);
         });
     }

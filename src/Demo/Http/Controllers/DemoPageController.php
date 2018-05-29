@@ -21,10 +21,9 @@ class DemoPageController extends Controller
 
     public function index()
     {
-        if($this->isPreviewAllowed())
-        {
+        if ($this->isPreviewAllowed()) {
             $pages = Page::all();
-        }else{
+        } else {
             $pages = Page::getAllPublished();
         }
 
@@ -39,7 +38,9 @@ class DemoPageController extends Controller
             $page = Page::findPublishedBySlug($request->slug);
         }
 
-        if(!$page) return redirect()->route('demo.pages.index')->with('note.default', 'Geen resultaten gevonden.');
+        if (!$page) {
+            return redirect()->route('demo.pages.index')->with('note.default', 'Geen resultaten gevonden.');
+        }
 
         return view('demo::pagedetail', compact('page'));
     }

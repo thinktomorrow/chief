@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Common\Translatable;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
-
 /**
  * Trait Translatable
  * @author Ben Cavens
@@ -18,8 +17,7 @@ trait Translatable
 {
     public function getDefaultTranslation($attribute)
     {
-        if (!($translation = $this->getTranslation(config('app.fallback_locale'))))
-        {
+        if (!($translation = $this->getTranslation(config('app.fallback_locale')))) {
             return null;
         }
 
@@ -34,8 +32,7 @@ trait Translatable
      */
     public function updateTranslation($locale, array $values)
     {
-        foreach ($values as $attribute => $value)
-        {
+        foreach ($values as $attribute => $value) {
             $this->setTranslation($locale, $attribute, $value);
         }
 
@@ -64,12 +61,16 @@ trait Translatable
      * @param bool $strict false = use fallback locale, true = no result if locale not present
      * @return null
      */
-    public function getTranslationFor($attribute,$locale = null, $strict = true)
+    public function getTranslationFor($attribute, $locale = null, $strict = true)
     {
         // No locale given means we take the current defaulted locale (handled automagically)
-        if(!$locale) return $this->getAttribute($attribute);
+        if (!$locale) {
+            return $this->getAttribute($attribute);
+        }
 
-        if (!$this->hasTranslation($locale) && $strict) return null;
+        if (!$this->hasTranslation($locale) && $strict) {
+            return null;
+        }
 
         return $this->getTranslation($locale)->{$attribute};
     }
@@ -91,8 +92,7 @@ trait Translatable
 
     public function removeTranslation($locale)
     {
-        if (!$this->hasTranslation($locale))
-        {
+        if (!$this->hasTranslation($locale)) {
             return;
         }
 
@@ -146,8 +146,7 @@ trait Translatable
         $available_locales = static::availableLocales();
         $current_locales = $this->translations()->pluck('locale')->toArray();
 
-        return array_filter($available_locales, function ($v) use ($current_locales, $available)
-        {
+        return array_filter($available_locales, function ($v) use ($current_locales, $available) {
             return $available ? in_array($v, $current_locales) : !in_array($v, $current_locales);
         }, ARRAY_FILTER_USE_BOTH);
     }
@@ -159,8 +158,7 @@ trait Translatable
      */
     private function validateLocale($locale)
     {
-        if (!in_array($locale, static::availableLocales()))
-        {
+        if (!in_array($locale, static::availableLocales())) {
             throw new InvalidArgumentException('Locale [' . $locale . '] is not available');
         }
     }
@@ -213,7 +211,9 @@ trait Translatable
      */
     public function translateForForm($locale, $key)
     {
-        if(!isset($this->trans) || !isset($this->trans[$locale])) return null;
+        if (!isset($this->trans) || !isset($this->trans[$locale])) {
+            return null;
+        }
 
         return $this->trans[$locale][$key] ?? null;
     }
@@ -227,12 +227,10 @@ trait Translatable
      */
     protected function persistTranslations($translations, TranslatableContract $entity, array $keys)
     {
-        foreach ($entity->getAvailableLocales() as $available_locale)
-        {
+        foreach ($entity->getAvailableLocales() as $available_locale) {
             // Remove the product translation if any already exists
             // Translation is also removed if all fields of a translation are left empty
-            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation))
-            {
+            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation)) {
                 $entity->removeTranslation($available_locale);
                 continue;
             }
@@ -249,11 +247,11 @@ trait Translatable
     protected function isCompletelyEmpty(array $keys, array $translation)
     {
         $is_completely_empty = true;
-        foreach ($keys as $key)
-        {
-            if(!isset($translation[$key])) continue;
-            if (trim($translation[$key]))
-            {
+        foreach ($keys as $key) {
+            if (!isset($translation[$key])) {
+                continue;
+            }
+            if (trim($translation[$key])) {
                 $is_completely_empty = false;
             }
         }
@@ -268,10 +266,8 @@ trait Translatable
     protected function persistTranslation(TranslatableContract $entity, array $keys, array $translation, $available_locale)
     {
         $attributes = [];
-        foreach ($keys as $key)
-        {
-            if(isset($translation[$key]))
-            {
+        foreach ($keys as $key) {
+            if (isset($translation[$key])) {
                 $attributes[$key] = $translation[$key];
             }
         }

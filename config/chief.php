@@ -7,8 +7,8 @@ return [
      * This contact will receive e.g. contact form submissions
      */
     'contact'   => [
-        'email' => env('MAIL_ADMIN_EMAIL','info@thinktomorrow.be'),
-        'name' => env('MAIL_ADMIN_NAME','Think Tomorrow')
+        'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
+        'name' => env('MAIL_ADMIN_NAME', 'Think Tomorrow')
     ],
 
     /**

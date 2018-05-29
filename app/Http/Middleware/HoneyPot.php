@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class Honeypot
+class HoneyPot
 {
     /**
      * Handle an incoming request.
@@ -33,9 +33,8 @@ class Honeypot
      */
     private function honeypot(Request $request)
     {
-        if(!$request->exists('your_name') or $request->has('your_name'))
-        {
-            abort('403','Request blocked due to assumed spam attempt. Honeypot field was filled in.');
+        if (!$request->exists('your_name') or $request->has('your_name')) {
+            abort('403', 'Request blocked due to assumed spam attempt. Honeypot field was filled in.');
         }
     }
 
@@ -49,9 +48,8 @@ class Honeypot
      */
     private function timer(Request $request)
     {
-        if(!$request->exists('_timer') or (time()-2) <= $request->get('_timer'))
-        {
-            abort('403','Request blocked due to assumed spam attempt. Submission happened too fast.');
+        if (!$request->exists('_timer') or (time()-2) <= $request->get('_timer')) {
+            abort('403', 'Request blocked due to assumed spam attempt. Submission happened too fast.');
         }
     }
 }
