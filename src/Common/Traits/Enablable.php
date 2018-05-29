@@ -28,7 +28,7 @@ trait Enablable
 
     private function getEnabledField()
     {
-        if(property_exists($this, 'enablable_field')){
+        if (property_exists($this, 'enablable_field')) {
             return $this->enablable_field;
         }
 
@@ -38,7 +38,7 @@ trait Enablable
 
     private function getEnabledValue()
     {
-        if(property_exists($this, 'enablable_enabled')){
+        if (property_exists($this, 'enablable_enabled')) {
             return $this->enablable_enabled;
         }
 
@@ -47,7 +47,7 @@ trait Enablable
 
     private function getDisabledValue()
     {
-        if(property_exists($this, 'enablable_disabled')){
+        if (property_exists($this, 'enablable_disabled')) {
             return $this->enablable_disabled;
         }
 

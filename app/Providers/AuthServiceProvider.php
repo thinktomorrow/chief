@@ -17,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Auth::provider('chief-eloquent',function($app, array $config){
+        Auth::provider('chief-eloquent', function ($app, array $config) {
             return new ChiefUserProvider($app['hash'], $config['model']);
         });
     }

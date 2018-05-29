@@ -16,7 +16,7 @@ trait Publishable
 
     public function scopePublished($query)
     {
-        $query->where('published',1);
+        $query->where('published', 1);
     }
 
     public function publish()

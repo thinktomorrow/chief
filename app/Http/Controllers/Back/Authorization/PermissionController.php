@@ -37,7 +37,6 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'name'=>'required|max:40',
         ]);

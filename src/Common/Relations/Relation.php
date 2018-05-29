@@ -49,12 +49,10 @@ class Relation extends Model
         return [
             [
                 'label' => 'Pagina\'s',
-                'values' => Page::all()->map(function($page){
+                'values' => Page::all()->map(function ($page) {
                     return ['composite_id' => $page->getMorphClass().'@'.$page->id, 'label' => 'Pagina ' . teaser($page->title, 20, '...')];
                 })->toArray(),
             ]
         ];
     }
-
-
 }

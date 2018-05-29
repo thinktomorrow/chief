@@ -29,14 +29,18 @@ class FormValues
 
     public function startAt()
     {
-        if($startAt = $this->model->start_at) return $startAt->format('Y-m-d');
+        if ($startAt = $this->model->start_at) {
+            return $startAt->format('Y-m-d');
+        }
 
         return null;
     }
 
     public function endAt()
     {
-        if($endAt = $this->model->end_at) return $endAt->format('Y-m-d');
+        if ($endAt = $this->model->end_at) {
+            return $endAt->format('Y-m-d');
+        }
 
         return null;
     }
@@ -48,6 +52,8 @@ class FormValues
 
     public function __get($key)
     {
-        if(method_exists($this, $key)) return $this->{$key}();
+        if (method_exists($this, $key)) {
+            return $this->{$key}();
+        }
     }
 }

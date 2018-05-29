@@ -25,14 +25,13 @@ class LoginController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        if(Auth::guard('chief')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember))
-        {
+        if (Auth::guard('chief')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
             return redirect()->intended(route('chief.back.dashboard'));
         }
 
         $failedAttempt = 'Uw gegevens zijn onjuist of uw account is nog niet actief.';
 
-        return redirect()->back()->withInput($request->only('email','remember'))->withErrors($failedAttempt);
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors($failedAttempt);
     }
 
     /**

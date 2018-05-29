@@ -14,11 +14,10 @@ class CreatePage
 
     public function handle(array $translations): Page
     {
-        DB::transaction(function(){
-
+        DB::transaction(function () {
         }, 2);
 
-        try{
+        try {
             DB::beginTransaction();
 
             $page = Page::create();
@@ -35,8 +34,7 @@ class CreatePage
             DB::commit();
 
             return $page->fresh();
-
-        } catch(\Throwable $e){
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }
