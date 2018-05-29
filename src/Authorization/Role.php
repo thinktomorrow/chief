@@ -23,8 +23,7 @@ class Role extends BaseRole implements RoleContract
 
     public function getPermissionsForIndex()
     {
-        $this->permissions->each(function($permission){
-
+        $this->permissions->each(function ($permission) {
             $model = explode("_", $permission->name, 2)[1];
             $temp = $this->permission;
             $temp[$model][] = explode("_", $permission->name, 2)[0];

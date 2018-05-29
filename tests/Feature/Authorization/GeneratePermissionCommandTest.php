@@ -16,7 +16,7 @@ class GeneratePermissionCommandTest extends TestCase
     }
 
     /** @test */
-    function it_requires_a_name_parameter()
+    public function it_requires_a_name_parameter()
     {
         $this->expectException(\RuntimeException::class);
 
@@ -24,7 +24,7 @@ class GeneratePermissionCommandTest extends TestCase
     }
 
     /** @test */
-    function single_permission_can_be_generated()
+    public function single_permission_can_be_generated()
     {
         Role::create(['name' => 'new admin']);
 
@@ -40,7 +40,7 @@ class GeneratePermissionCommandTest extends TestCase
     }
 
     /** @test */
-    function permissions_can_be_generated()
+    public function permissions_can_be_generated()
     {
         $this->artisan('chief:permission', [
             'name' => 'ability'
@@ -59,7 +59,7 @@ class GeneratePermissionCommandTest extends TestCase
     }
 
     /** @test */
-    function permissions_can_be_assigned_to_a_role()
+    public function permissions_can_be_assigned_to_a_role()
     {
         Role::create(['name' => 'admin']);
 
@@ -76,7 +76,7 @@ class GeneratePermissionCommandTest extends TestCase
     }
 
     /** @test */
-    function permissions_can_be_assigned_to_multiple_roles()
+    public function permissions_can_be_assigned_to_multiple_roles()
     {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'author']);

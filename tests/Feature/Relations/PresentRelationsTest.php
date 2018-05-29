@@ -19,7 +19,7 @@ class PresentRelationsTest extends TestCase
     }
 
     /** @test */
-    function a_child_can_be_presented_in_regards_to_its_parent()
+    public function a_child_can_be_presented_in_regards_to_its_parent()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -30,7 +30,7 @@ class PresentRelationsTest extends TestCase
     }
 
     /** @test */
-    function a_parent_can_be_presented_in_regards_to_its_child()
+    public function a_parent_can_be_presented_in_regards_to_its_child()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -41,7 +41,7 @@ class PresentRelationsTest extends TestCase
     }
 
     /** @test */
-    function a_parent_has_a_convenience_method_for_presenting_all_children()
+    public function a_parent_has_a_convenience_method_for_presenting_all_children()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -53,6 +53,6 @@ class PresentRelationsTest extends TestCase
         $this->assertEquals(collect([
             '<div>child '.$child->id.' view for parent '.$parent->id.'</div>',
              '<div>child '.$child2->id.' view for parent '.$parent->id.'</div>'
-        ]), $render );
+        ]), $render);
     }
 }

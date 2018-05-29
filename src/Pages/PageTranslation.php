@@ -18,6 +18,6 @@ class PageTranslation extends Model implements SluggableContract
 
     public static function findBySlug($slug)
     {
-        return self::where('slug',$slug)->first();
+        return self::where('slug', $slug)->first();
     }
 }

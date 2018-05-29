@@ -18,7 +18,7 @@ class InvitationPresenter
     {
         $flair = 'label--primary';
 
-        switch($this->invitation->state()) {
+        switch ($this->invitation->state()) {
             case InvitationState::REVOKED:
                 $flair = 'label--error';
                 break;

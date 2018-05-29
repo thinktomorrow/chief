@@ -49,7 +49,7 @@
             'components' => 'Spirit componenten',
         ];
 
-        $extracted = array_filter(explode("/",parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH)));
+        $extracted = array_filter(explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
         $current_section = isset($extracted[2]) ? $extracted[2] : 'home';
 //        $current_item = isset($extracted[3]) ? $extracted[3] : null;
 

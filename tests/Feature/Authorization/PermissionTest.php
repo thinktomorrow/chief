@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Users\User;
 class PermissionTest extends TestCase
 {
     /** @test */
-    function an_user_can_be_checked_for_permission()
+    public function an_user_can_be_checked_for_permission()
     {
         $admin = factory(User::class)->create();
 
@@ -25,7 +25,7 @@ class PermissionTest extends TestCase
     }
 
     /** @test */
-    function an_unknown_permission_does_not_authorize()
+    public function an_unknown_permission_does_not_authorize()
     {
         $admin = factory(User::class)->create();
 
@@ -33,7 +33,7 @@ class PermissionTest extends TestCase
     }
 
     /** @test */
-    function an_user_can_have_multiple_roles()
+    public function an_user_can_have_multiple_roles()
     {
         $admin = factory(User::class)->create();
 
@@ -52,6 +52,5 @@ class PermissionTest extends TestCase
 
         // If admin has all of the roles
         $this->assertFalse($admin->hasAllRoles(['editor', 'unknown']));
-
     }
 }

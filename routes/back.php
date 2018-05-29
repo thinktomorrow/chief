@@ -5,9 +5,8 @@
  * SPIRIT ROUTES
  * -----------------------------------------------------------------
  */
-Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => function($section = null, $item = null){
-
-    if($section && $item && view()->exists('spirit.'.$section.'.'.$item)){
+Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => function ($section = null, $item = null) {
+    if ($section && $item && view()->exists('spirit.'.$section.'.'.$item)) {
         return view('spirit.'.$section.'.'.$item);
     }
 
@@ -34,7 +33,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('back.
  * PROTOTYPING ROUTES
  * -----------------------------------------------------------------
  */
-Route::get('prototype', function(){
+Route::get('prototype', function () {
     // Just to guide Johnny to the proper page - this route can be removed afterwards
     return redirect()->route('back.pages.create');
 });
@@ -44,12 +43,10 @@ Route::get('prototype', function(){
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
-{
-
+Route::group(['prefix' => 'admin','middleware' =>'auth:admin'], function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('back.logout');
 
-    Route::get('/',function(){
+    Route::get('/', function () {
         return view('back.dashboard');
     })->name('back.dashboard');
 
@@ -57,13 +54,13 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
 
     // pageS
-    Route::get('pages','Back\PagesController@index')->name('back.pages.index');
+    Route::get('pages', 'Back\PagesController@index')->name('back.pages.index');
     Route::post('pages', 'Back\PagesController@store')->name('back.pages.store');
     Route::get('pages/create', 'Back\PagesController@create')->name('back.pages.create');
     Route::delete('pages/{id}', 'Back\PagesController@destroy')->name('back.pages.destroy');
     Route::put('pages/{id}', 'Back\PagesController@update')->name('back.pages.update');
     Route::get('pages/{id}/edit', 'Back\PagesController@edit')->name('back.pages.edit');
-    Route::post('pages/publish','Back\PagesController@publish')->name('back.pages.publish');
+    Route::post('pages/publish', 'Back\PagesController@publish')->name('back.pages.publish');
 
     Route::get('media', 'Back\MediaLibraryController@library')->name('media.library');
     Route::get('media-modal', 'Back\MediaLibraryController@mediaModal')->name('media.modal');
@@ -74,9 +71,9 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
 
     Route::post('page/{id}/upload', 'Back\PagesController@upload')->name('page.upload');
 
-    Route::get('/settings',['as' => 'back.settings.index','uses' => Back\System\SettingsController::class.'@show']);
+    Route::get('/settings', ['as' => 'back.settings.index','uses' => Back\System\SettingsController::class.'@show']);
 
-    Route::post('notes/publish',['as' => 'notes.publish','uses' => Back\NoteController::class.'@publish']);
+    Route::post('notes/publish', ['as' => 'notes.publish','uses' => Back\NoteController::class.'@publish']);
     Route::resource('notes', Back\NoteController::class);
 
     /**
@@ -118,15 +115,14 @@ Route::group(['prefix' => 'admin','middleware' =>'auth:admin'],function()
      * -----------------------------------------------------------------
      */
     // Developer access
-    Route::get('translations/lines/create',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.create','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@create']);
-    Route::delete('translations/lines/{id}',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.destroy','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@destroy']);
-    Route::get('translations/lines/{id}/edit',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@edit']);
-    Route::put('translations/lines/{id}',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@update']);
-    Route::post('translations/lines',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.store','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@store']);
+    Route::get('translations/lines/create', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.create','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@create']);
+    Route::delete('translations/lines/{id}', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.destroy','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@destroy']);
+    Route::get('translations/lines/{id}/edit', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@edit']);
+    Route::put('translations/lines/{id}', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@update']);
+    Route::post('translations/lines', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.store','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@store']);
 
     // Client access
-    Route::get('translations/{id}/edit',['as' => 'squanto.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@edit']);
-    Route::put('translations/{id}',['as' => 'squanto.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@update']);
-    Route::get('translations',['as' => 'squanto.index','uses' => 'Back\TranslationController@index']);
-
+    Route::get('translations/{id}/edit', ['as' => 'squanto.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@edit']);
+    Route::put('translations/{id}', ['as' => 'squanto.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@update']);
+    Route::get('translations', ['as' => 'squanto.index','uses' => 'Back\TranslationController@index']);
 });
