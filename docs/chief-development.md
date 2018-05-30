@@ -28,7 +28,7 @@ Make sure your minimum stability of the application is set to `dev`.
 
 To migrate and scaffold some entries you can run:
 ```php
-php artisan chief:db-refresh
+php artisan chief:refresh
 ```
 **Note that this will remove your existing database entries!**
 

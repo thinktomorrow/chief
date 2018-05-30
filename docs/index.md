@@ -51,7 +51,9 @@ protected $middlewareGroups = [
 
 ### Database
 
-Create a database for your application and perform the migrate artisan command. This will automatically run the chief migrations as well.
+Connect a database with your application and make sure you have set the proper database credentials in your `.env` file. 
+
+Next perform the migrate artisan command. This will automatically run the chief migrations as well.
 Note that Chief has separate tables for the chief admin users, `chief-users` and `chief_password_resets`. This way there
 is no interference with your application user logic.
 
@@ -81,7 +83,7 @@ contact email and application name.
 php artisan vendor:publish --tag=chief-config
 ```
 Make sure to set at least the `name` value to your project name as it is used in some of the generator commands. Ideally this should match
-the namespace of your `src` folder, if you have any.
+the namespace of your `src` folder, if you have any. Make sure to namespace the src folder in your composer.json to match this name.
 
 The following vendor assets should also be published to your application:
 ```php

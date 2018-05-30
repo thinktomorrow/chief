@@ -6,29 +6,41 @@ return [
      * Contact email which will receive all incoming communication
      * This contact will receive e.g. contact form submissions
      */
-    'contact'   => [
+    'contact'     => [
         'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
-        'name' => env('MAIL_ADMIN_NAME', 'Think Tomorrow')
+        'name'  => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
     ],
 
     /**
      * Name of the project.
      *
-     * This is used in a couple of places such as the generator tools and the mail footer.
+     * This is used in a couple of places such as the mail footer.
      */
-    'name' => 'Chief',
+    'name'        => 'Chief',
 
     /**
      * Client name
      */
-    'client' => 'Think Tomorrow',
+    'client'      => 'Think Tomorrow',
+
+    /**
+     * Domain settings.
+     *
+     * Here you should set your primary location for your models
+     * This is used in a couple of places such as the generator tools. Make
+     * sure to set in your composer.json as a PSR-4 autoloaded namespace.
+     */
+    'domain'      => [
+        'namespace' => 'Chief\\',
+        'path'      => 'src/',
+    ],
 
     /**
      * Here we define which models are allowed to be set as children or parents
      * After changing this value, make sure you flush the cached relations.
      * This has no effect on already created relations, only new ones.
      */
-    'relations' => [
+    'relations'   => [
 
         'children' => [
             \Thinktomorrow\Chief\Pages\Page::class,

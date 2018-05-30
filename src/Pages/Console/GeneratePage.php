@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Thinktomorrow\Chief\Common\Traits\Sortable;
+use Thinktomorrow\Chief\Pages\Page;
 
 class GeneratePage extends BaseCommand
 {
@@ -36,10 +37,9 @@ class GeneratePage extends BaseCommand
 
         // Set required paths
         $this->dirs = ['base' => $this->settings['base_path'] ?? base_path()];
-        $this->dirs['model'] = $this->settings['model_path'] ?? $this->dirs['base'] . '/src';
+        $this->dirs['model'] = $this->settings['model_path'] ?? $this->dirs['base'] .'/'. config('thinktomorrow.chief.domain.path' , 'src');
         $this->dirs['views'] = $this->settings['views_path'] ?? $this->dirs['base'] . '/resources/views';
         $this->dirs['controller'] = $this->settings['controller_path'] ?? $this->dirs['base'] . '/app/Http/Controllers';
-
         $this->files['routes'] = $this->settings['routes_file'] ?? $this->dirs['base'] . '/routes/web.php';
     }
 
@@ -66,6 +66,8 @@ class GeneratePage extends BaseCommand
             $to = $this->dirs['model'] . '/' . ucfirst($this->plural) . '/' . ucfirst($this->singular) . '.php',
             'model'
         );
+
+        $this->addToConfig('collections', [$this->plural => $this->guessNamespace().'\\'.ucfirst($this->singular)]);
     }
 
     private function publishController()
@@ -172,7 +174,7 @@ class GeneratePage extends BaseCommand
     protected function replacePlaceholders($content)
     {
         $replacements = [
-            '##NAMESPACE##' => $this->guessNamespace(), // TODO: how to determine proper namespace?
+            '##NAMESPACE##' => $this->guessNamespace(),
             '##CLASSNAME##' => ucfirst($this->singular),
             '##TABLENAME##' => strtolower($this->plural),
             '##IMPORTS##'   => $this->generateImportStatements(),
@@ -184,7 +186,7 @@ class GeneratePage extends BaseCommand
 
     private function generateImportStatements(): string
     {
-        return collect(['Illuminate\Database\Eloquent\Model'])
+        return collect(['\\'.Page::class])
             ->map(function ($statement) {
                 return 'use ' . $statement . ";\n    ";
             })->implode('');
@@ -213,6 +215,26 @@ class GeneratePage extends BaseCommand
 
         // We make an estimated guess based on the project name. At Think Tomorrow, we
         // have a src folder which is PSR-4 namespaced by the project name itself.
-        return ucfirst(config('thinktomorrow.chief.name', 'App')).'\\'. ucfirst($this->plural);
+        return str_replace('\\\\','\\', ucfirst(config('thinktomorrow.chief.domain.namespace', 'App')).'\\'. ucfirst($this->plural));
+    }
+
+    private function addToConfig($configKey, $value)
+    {
+        $current_values = config('thinktomorrow.chief.'.$configKey);
+
+        if(is_array($current_values)) $value = array_merge($current_values, $value);
+
+        $this->changeValueInArrayFile(config_path('thinktomorrow/chief.php'), $configKey, $value);
+    }
+
+    private function changeValueInArrayFile($file, $key, $value)
+    {
+         $content = file_get_contents($file);
+
+         // Find value - note: this regex does not work for nested arrays!
+        // Also creates array with the non-short syntax.
+         $content = preg_replace('/[\'|"]'.$key.'[\'|"] ?=> ?(\[[^\]]*\]|[\'|"].*[\'|"])/', var_export($value, true), $content);
+
+         file_put_contents($file, $content);
     }
 }

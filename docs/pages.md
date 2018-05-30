@@ -1,5 +1,7 @@
 # Pages
 
+## required
+Make sure to set your namespace in the config `config/thinktomorrow/chief.php`.  
 
 # Work with pages
 Each page model should basically require:
