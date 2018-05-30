@@ -1,5 +1,5 @@
 <!-- Login form area -->
-@extends('back._layouts.login')
+@extends('chief::back._layouts.login')
 
 @section('title')
     Reset wachtwoord
@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <form class="login-form" role="form" method="POST" action="{{ route('back.password.request') }}">
+        <form class="login-form" role="form" method="POST" action="{{ route('chief.back.password.request') }}">
             {{ csrf_field() }}
 
             <input type="hidden" name="token" value="{{ $token }}">

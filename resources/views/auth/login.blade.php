@@ -1,4 +1,4 @@
-@extends('back._layouts.login')
+@extends('chief::back._layouts.login')
 
 @section('title')
   Login
@@ -9,7 +9,7 @@
     <div class="login-block">
       <h1>Inloggen</h1>
 
-      <form class="form" id="valid" role="form" method="POST" action="{{ route('back.login.store') }}">
+      <form class="form" id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
         {{ csrf_field() }}
         <div class="form-wrapper">
           @if($errors and count($errors) > 0)
@@ -35,7 +35,7 @@
             </div>
           <button type="submit" class="submitForm">Inloggen</button>
           <div class="message">
-              <a href="{{ route('back.password.request') }}">Wachtwoord vergeten?</a>
+              <a href="{{ route('chief.back.password.request') }}">Wachtwoord vergeten?</a>
           </div>
         </div>
       </form>

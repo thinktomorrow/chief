@@ -1,11 +1,11 @@
-@extends(config('squanto.template','back._layouts.master'))
+@extends(config('squanto.template','chief::back._layouts.master'))
 
 @section('custom-styles')
-    <link rel="stylesheet" href="{{ asset('assets/back/vendor/redactor/redactor.css') }}">
+    <link rel="stylesheet" href="{{ asset('chief-assets/back/vendor/redactor/redactor.css') }}">
 @stop
 
 @push('custom-scripts')
-<script src="{{ asset('assets/back/vendor/redactor/redactor.js') }}"></script>
+<script src="{{ asset('chief-assets/back/vendor/redactor/redactor.js') }}"></script>
 <script>
     ;(function ($) {
 
@@ -23,7 +23,7 @@
 
 @section('page-title','Edit line')
 
-@component('back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title', $line->label. ' bewerken')
 @endcomponent
 

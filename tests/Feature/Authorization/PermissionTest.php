@@ -1,26 +1,16 @@
 <?php
 
-namespace Chief\Tests\Feature\Authorization;
+namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\Permission;
-use Chief\Authorization\Role;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
-use Chief\Users\User;
+use Thinktomorrow\Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Users\User;
 
 class PermissionTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-    }
-
     /** @test */
-    function an_user_can_be_checked_for_permission()
+    public function an_user_can_be_checked_for_permission()
     {
         $admin = factory(User::class)->create();
 
@@ -35,7 +25,7 @@ class PermissionTest extends TestCase
     }
 
     /** @test */
-    function an_unknown_permission_does_not_authorize()
+    public function an_unknown_permission_does_not_authorize()
     {
         $admin = factory(User::class)->create();
 
@@ -43,7 +33,7 @@ class PermissionTest extends TestCase
     }
 
     /** @test */
-    function an_user_can_have_multiple_roles()
+    public function an_user_can_have_multiple_roles()
     {
         $admin = factory(User::class)->create();
 
@@ -62,6 +52,5 @@ class PermissionTest extends TestCase
 
         // If admin has all of the roles
         $this->assertFalse($admin->hasAllRoles(['editor', 'unknown']));
-
     }
 }

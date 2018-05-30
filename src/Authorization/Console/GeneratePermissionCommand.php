@@ -1,8 +1,8 @@
 <?php
-namespace Chief\Authorization\Console;
+namespace Thinktomorrow\Chief\Authorization\Console;
 
-use Chief\Authorization\Role;
-use Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Authorization\Permission;
 use Illuminate\Console\Command;
 
 class GeneratePermissionCommand extends Command
@@ -16,7 +16,7 @@ class GeneratePermissionCommand extends Command
     public function handle()
     {
         $scope = $this->getNameArgument();
-        $permissions = (false === strpos($scope,'-')) ? Permission::generate($scope) : [$scope];
+        $permissions = (false === strpos($scope, '-')) ? Permission::generate($scope) : [$scope];
 
         $this->createPermissions($permissions);
         $this->assignPermissionsToRoles($permissions);
@@ -36,8 +36,9 @@ class GeneratePermissionCommand extends Command
     private function createPermissions($permissions)
     {
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::findOrCreate($permission, 'chief');
         }
+
         $this->info('Permissions ' . implode(', ', $permissions) . ' created.');
     }
 
@@ -46,7 +47,9 @@ class GeneratePermissionCommand extends Command
      */
     private function assignPermissionsToRoles($permissions)
     {
-        if(!$this->option('role')) return;
+        if (!$this->option('role')) {
+            return;
+        }
 
         $roleNames = explode(',', $this->option('role'));
 

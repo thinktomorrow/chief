@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title', 'Note')
 
@@ -52,7 +52,7 @@
 							<a data-action-delete href="#remove-note-modal-{{$note->id}}">Remove</a>
 						</td>
 					</tr>
-					@include('back.note._partials._deletemodal', $note)
+					@include('chief::back.note._partials._deletemodal', $note)
 				@endforeach
 				</tbody>
 			</table>

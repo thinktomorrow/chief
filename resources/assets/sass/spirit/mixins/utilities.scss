@@ -8,6 +8,13 @@
 .pull-left{ float: left; }
 .fixed{ position: fixed; }
 
+// Fixate something in the bottom: e.g. alert notification box
+.fixed--bottom-right{
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: auto;
+}
+
 .--remove-padding{ padding: 0; }
 .--remove-margin{ margin: 0; }
 

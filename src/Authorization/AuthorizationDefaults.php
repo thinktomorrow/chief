@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Authorization;
+namespace Thinktomorrow\Chief\Authorization;
 
 use Illuminate\Support\Collection;
 
@@ -11,10 +11,10 @@ class AuthorizationDefaults
         return collect([
 
             // full access, even to application logic stuff
-            'developer' => ['role', 'permission', 'user', 'page'],
+            'developer' => ['role', 'permission', 'user', 'page', 'disable-user'],
 
             // Manages everything, including users
-            'admin' => ['user', 'page'],
+            'admin' => ['user', 'page', 'disable-user'],
 
             // Writes and edits content
             'author' => ['page'],
@@ -38,6 +38,7 @@ class AuthorizationDefaults
             'create-user',
             'update-user',
             'delete-user',
+            'disable-user',
 
             'view-page',
             'create-page',

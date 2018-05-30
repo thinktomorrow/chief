@@ -1,5 +1,5 @@
 <!-- Login form area -->
-@extends('back._layouts.login')
+@extends('chief::back._layouts.login')
 
 @section('title')
     Registreer

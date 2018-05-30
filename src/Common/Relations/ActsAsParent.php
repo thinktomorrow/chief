@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Relations;
+namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as StandardCollection;
@@ -34,6 +34,12 @@ interface ActsAsParent
      */
     public function getRelationLabel(): string;
 
+    /**
+     * Label that identifies the relation group. This
+     * is used in the interface of the admin panel to group relations together.
+     *
+     * @return string
+     */
     public function getRelationGroup(): string;
 
     public function relationWithChild(ActsAsChild $child): Relation;

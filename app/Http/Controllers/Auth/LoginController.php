@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,12 +10,12 @@ class LoginController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:admin', ['except' => 'logout']);
+        $this->middleware('guest:chief', ['except' => 'logout']);
     }
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('chief::auth.login');
     }
 
     public function login(Request $request)
@@ -26,14 +25,13 @@ class LoginController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember))
-        {
-            return redirect()->intended(route('back.dashboard'));
+        if (Auth::guard('chief')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+            return redirect()->intended(route('chief.back.dashboard'));
         }
 
-        $failedAttempt = 'Uw email of wachtwoord is onjuist.';
+        $failedAttempt = 'Uw gegevens zijn onjuist of uw account is nog niet actief.';
 
-        return redirect()->back()->withInput($request->only('email','remember'))->withErrors($failedAttempt);
+        return redirect()->back()->withInput($request->only('email', 'remember'))->withErrors($failedAttempt);
     }
 
     /**
@@ -44,7 +42,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
+        Auth::guard('chief')->logout();
 
         $request->session()->invalidate();
 

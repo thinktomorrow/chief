@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Back\Authorization;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization;
 
-use App\Http\Controllers\Controller;
-use Chief\Authorization\Permission;
-use Chief\Authorization\Role;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
 use Illuminate\Http\Request;
 
 class PermissionController extends Controller
@@ -17,7 +17,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-        return view('back.permissions.index')->with('permissions', $permissions);
+        return view('chief::back.permissions.index')->with('permissions', $permissions);
     }
     /**
      * Show the form for creating a new resource.
@@ -27,7 +27,7 @@ class PermissionController extends Controller
     public function create()
     {
         $roles = Role::get();
-        return view('back.permissions.create')->with('roles', $roles);
+        return view('chief::back.permissions.create')->with('roles', $roles);
     }
     /**
      * Store a newly created resource in storage.
@@ -37,7 +37,6 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'name'=>'required|max:40',
         ]);
@@ -54,7 +53,7 @@ class PermissionController extends Controller
                 $r->givePermissionTo($permission);
             }
         }
-        return redirect()->route('back.permissions.index')
+        return redirect()->route('chief.back.permissions.index')
             ->with('flash_message',
                 'Permission'. $permission->name.' added!');
     }
@@ -78,7 +77,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
 
-        return view('back.permissions.edit', compact('permission'));
+        return view('chief::back.permissions.edit', compact('permission'));
     }
     /**
      * Update the specified resource in storage.
@@ -96,7 +95,7 @@ class PermissionController extends Controller
 
         $input = $request->all();
         $permission->fill($input)->save();
-        return redirect()->route('back.permissions.index')
+        return redirect()->route('chief.back.permissions.index')
             ->with('flash_message',
                 'Permission'. $permission->name.' updated!');
     }
@@ -111,13 +110,13 @@ class PermissionController extends Controller
         $permission = Permission::findOrFail($id);
 
         if ($permission->name == "Administer roles & permissions") {
-            return redirect()->route('back.permissions.index')
+            return redirect()->route('chief.back.permissions.index')
                 ->with('flash_message',
                     'Cannot delete this Permission!');
         }
 
         $permission->delete();
-        return redirect()->route('back.permissions.index')
+        return redirect()->route('chief.back.permissions.index')
             ->with('flash_message',
                 'Permission deleted!');
     }

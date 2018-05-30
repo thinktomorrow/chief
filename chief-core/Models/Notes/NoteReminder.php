@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Models\Notes;
+namespace Thinktomorrow\Chief\Models\Notes;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
@@ -19,7 +19,9 @@ class NoteReminder
     {
         $cookie = Cookie::get('optiphar-note');
 
-        if( ! isset($cookie[$note->id])) return false;
+        if (! isset($cookie[$note->id])) {
+            return false;
+        }
 
         return ! self::shouldWatchAgain($note, $cookie[$note->id], $locale);
     }
@@ -38,14 +40,16 @@ class NoteReminder
      */
     private static function shouldWatchAgain(Note $note, array $cookieData, $locale)
     {
-        if(!isset($cookieData['locale']) || !isset($cookieData['updated_at']))
-        {
+        if (!isset($cookieData['locale']) || !isset($cookieData['updated_at'])) {
             throw new \LogicException('Cookie contains corrupted data. Locale or updated value missing for cookie ['.$note->id.'].');
         }
 
-        if($cookieData['locale'] != $locale) return true;
+        if ($cookieData['locale'] != $locale) {
+            return true;
+        }
 
-        if($cookieData['updated_at'] != $note->updated_at) return true;
+        if ($cookieData['updated_at'] != $note->updated_at) {
+            return true;
+        }
     }
-
 }

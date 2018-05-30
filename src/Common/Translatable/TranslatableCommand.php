@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Translatable;
+namespace Thinktomorrow\Chief\Common\Translatable;
 
 trait TranslatableCommand
 {
@@ -13,12 +13,10 @@ trait TranslatableCommand
      */
     protected function saveTranslations($translations, TranslatableContract $entity, array $keys)
     {
-        foreach ($entity->getAvailableLocales() as $available_locale)
-        {
+        foreach ($entity->getAvailableLocales() as $available_locale) {
             // Remove the product translation if any already exists
             // Translation is also removed if all fields of a translation are left empty
-            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation))
-            {
+            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation)) {
                 $entity->removeTranslation($available_locale);
                 continue;
             }
@@ -37,10 +35,8 @@ trait TranslatableCommand
     {
         $attributes = [];
 
-        foreach ($keys as $key)
-        {
-            if(isset($translation[$key]))
-            {
+        foreach ($keys as $key) {
+            if (isset($translation[$key])) {
                 $attributes[$key] = $translation[$key];
             }
         }
@@ -59,12 +55,12 @@ trait TranslatableCommand
     {
         $is_completely_empty = true;
 
-        foreach ($keys as $key)
-        {
-            if(!isset($translation[$key])) continue;
+        foreach ($keys as $key) {
+            if (!isset($translation[$key])) {
+                continue;
+            }
 
-            if (trim($translation[$key]))
-            {
+            if (trim($translation[$key])) {
                 $is_completely_empty = false;
             }
         }

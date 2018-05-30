@@ -1,7 +1,7 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-branding">
-    <a class="navbar-brand" href="{{ route('back.dashboard') }}">
-      <img src="{{ asset('assets/img/logo.svg') }}" alt="Chief">
+    <a class="navbar-brand" href="{{ route('chief.back.dashboard') }}">
+      <img src="{{ asset('chief-assets/img/logo.svg') }}" alt="Chief">
     </a>
     <span id="toggle_sidemenu_l" class="ad ad-lines"></span>
   </div>
@@ -49,7 +49,7 @@
       <a href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
         <span class="glyphicon glyphicon-log-out pr5"></span> Log uit
       </a>
-      <form id="logout-form" action="{{ route('back.logout') }}" method="POST" style="display: none;">
+      <form id="logout-form" action="{{ route('chief.back.logout') }}" method="POST" style="display: none;">
         {{ csrf_field() }}
       </form>
     </li>

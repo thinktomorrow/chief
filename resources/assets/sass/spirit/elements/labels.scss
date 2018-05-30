@@ -3,7 +3,7 @@ $dot-size: 5px;
 
 
 .label{
-    padding: $spacy / 2 $spacy;
+    padding: $space-xs / 2 $space-xs;
     display: inline-block;
     font-size: smaller;
     position: relative;
@@ -46,10 +46,6 @@ $dot-size: 5px;
     right: -($dot-size - 1px);
   }
 }
-.label ~ .label{
-  margin-left: $spacy;
-}
-
 
 $label-name: primary secondary success warning error information;
 $colors: $color-primary $color-secondary $color-success $color-warning $color-error $color-information;;

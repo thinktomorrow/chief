@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('title', '| Permissions')
 
@@ -46,7 +46,7 @@
 							@endcan
 						</td>
 					</tr>
-					@include('back.authorization.permissions._deletemodal')
+					@include('chief::back.authorization.permissions._deletemodal')
 					@push('custom-scripts')
 					<script>
 						;(function ($) {

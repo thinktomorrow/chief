@@ -1,16 +1,16 @@
 <?php
 
-namespace Chief\Authorization;
+namespace Thinktomorrow\Chief\Authorization;
 
 use Spatie\Permission\Models\Permission as BasePermission;
 
 class Permission extends BasePermission
 {
-    protected $guard_name = 'admin';
+    protected $guard_name = 'chief';
 
     public static function create(array $attributes = [])
     {
-        $attributes['guard_name'] = $attributes['guard_name'] ?? 'admin';
+        $attributes['guard_name'] = $attributes['guard_name'] ?? 'chief';
 
         return parent::create($attributes);
     }
@@ -19,7 +19,7 @@ class Permission extends BasePermission
     {
         $abilities = ['view', 'create', 'update', 'delete'];
 
-        return array_map(function($val) use ($scope) {
+        return array_map(function ($val) use ($scope) {
             return $val . '-'. $scope;
         }, $abilities);
     }
@@ -27,12 +27,11 @@ class Permission extends BasePermission
     public static function getPermissionsForIndex()
     {
         $permissions = $temp = [];
-        self::all()->each(function($permission) use(&$permissions, &$temp){
+        self::all()->each(function ($permission) use (&$permissions, &$temp) {
             $model = explode("_", $permission->name, 2)[1];
             $temp[$model][$permission->id] = explode("_", $permission->name, 2)[0];
             $permissions = $temp;
         });
         return $permissions;
     }
-
 }

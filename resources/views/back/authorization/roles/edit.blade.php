@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title', $role->name)
 
@@ -11,11 +11,11 @@
 
 @section('content')
 
-		<form id="editForm" action="{{ route('back.roles.update', $role->id) }}" method="POST">
+		<form id="editForm" action="{{ route('chief.back.roles.update', $role->id) }}" method="POST">
 			{!! method_field('put') !!}
 			{!! csrf_field() !!}
 
-			@include('back.authorization.roles._form')
+			@include('chief::back.authorization.roles._form')
 
 			<button type="submit" class="btn btn-primary right">Bewaar</button>
 		</form>

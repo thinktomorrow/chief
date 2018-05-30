@@ -1,25 +1,25 @@
 <template>
     <div>
         <multiselect
-                v-on:input="clearErrors"
-                :options="values"
-                v-model="value"
+            v-on:input="clearErrors"
+            :options="values"
+            v-model="value"
 
-                :multiple="multiple"
-                :hide-selected="multiple"
-                :close-on-select="!multiple"
+            :multiple="multiple"
+            :hide-selected="multiple"
+            :close-on-select="!multiple"
 
-                :label="labelkey"
-                :track-by="valuekey"
+            :label="labelkey"
+            :track-by="valuekey"
 
-                :group-label="grouplabel"
-                :group-values="groupvalues"
+            :group-label="grouplabel"
+            :group-values="groupvalues"
 
-                placeholder="Maak een selectie"
-                no-result="geen resultaat gevonden"
-                deselect-label="╳"
-                selected-label="✓"
-                select-label="✓"
+            :placeholder="placeholder"
+            no-result="geen resultaat gevonden"
+            deselect-label="╳"
+            selected-label="✓"
+            select-label="✓"
         >
         </multiselect>
         <select v-if="name" style="display:none;" :name="(multiple) ? name + '[]' : name" :multiple="multiple">
@@ -61,6 +61,8 @@
             /** Grouped options */
             groupvalues: { default: null, type: String },
             grouplabel: { default: null, type: String },
+
+            placeholder: { default: 'Maak een selectie' },
         },
         data () {
             return {
@@ -68,7 +70,6 @@
                 values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
                 // Active selected option
-//                value: this.multiple ? [] : null
                 value: [],
             }
         },

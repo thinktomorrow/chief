@@ -1,4 +1,4 @@
-@extends('back._layouts.master')
+@extends('chief::back._layouts.master')
 
 @section('page-title')
 	Mediabibliotheek
@@ -14,18 +14,18 @@
 @section('content')
 	<form action="{{ route('media.remove') }}" method="POST">
 		{{ csrf_field() }}
-		@include('back.media._partials.filter')
-		@include('back.media.index')
+		@include('chief::back.media._partials.filter')
+		@include('chief::back.media.index')
 	</form>
 @stop
 
 @push('sidebar')
-@include('back.media._partials.upload')
+@include('chief::back.media._partials.upload')
 @endpush
 
 @push('custom-scripts')
 {{-- USED FOR THE MEDIA FILTERS --}}
-<script src="{{ asset('assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
+<script src="{{ asset('chief-assets/back/theme/vendor/plugins/mixitup/jquery.mixitup.js') }}"></script>
 
 <script>
 	$(document).ready(function () {

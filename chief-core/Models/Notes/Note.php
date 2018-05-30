@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Models\Notes;
+namespace Thinktomorrow\Chief\Models\Notes;
 
 use Carbon\Carbon;
-use Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Chief\Common\Translatable\Translatable;
-use Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Common\Translatable\Translatable;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Optiphar\Site\Notes\NoteReminder;
 
@@ -36,20 +36,17 @@ class Note extends Model implements TranslatableContract
 
     public static function render($type)
     {
-        if($type != 'general')
-        {
-            if($note = self::getActiveNote($type))
-            {
+        if ($type != 'general') {
+            if ($note = self::getActiveNote($type)) {
                 return '<div class="note note-' . $note->level . '"><span><i class="fa fa-fw fa-' . $note->level . '"></i>'.
                     $note->content
                     .'</span></div>';
             }
-        }else{
-            if($note = self::getActiveNote($type)) {
-                if(NoteReminder::hasWatched($note, app()->getLocale()))
-                {
+        } else {
+            if ($note = self::getActiveNote($type)) {
+                if (NoteReminder::hasWatched($note, app()->getLocale())) {
                     return null;
-                }else{
+                } else {
                     NoteReminder::watch($note->id, $note->updated_at, app()->getLocale());
 
                     return '<div id="note" class="note-' . $note->level . '">' . $note->content . '<a class="close-note" aria-label="Close"><i class="fa fa-inverse fa-times-circle"></i></a></div>';
@@ -86,7 +83,7 @@ class Note extends Model implements TranslatableContract
         $note->cookies  = $cookies;
         $note->save();
 
-        $note->saveTranslation('nl','content',  $content);
+        $note->saveTranslation('nl', 'content', $content);
         return $note;
     }
 
@@ -101,16 +98,15 @@ class Note extends Model implements TranslatableContract
     {
         $notes = self::findByType($type);
 
-        $notes = $notes->reject(function ($note){
+        $notes = $notes->reject(function ($note) {
             return !Carbon::now()->between($note->start_at, $note->end_at);
         });
 
-        if($notes->count() > 1)
-        {
-            $note = $notes->sortBy(function($note){
+        if ($notes->count() > 1) {
+            $note = $notes->sortBy(function ($note) {
                 return implode(' ', [$note->start_at, $note->created_at]);
             })->last();
-        }else{
+        } else {
             $note = $notes->first();
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ class PageUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::guard('admin')->user();
+        return Auth::guard('chief')->user();
     }
 
     /**
@@ -24,7 +24,6 @@ class PageUpdateRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
             'trans.*.title'     => 'required|unique:page_translations,title,'. $this->id . ',page_id|max:200',
             'trans.*.slug'      => 'required|unique:page_translations,slug,' . $this->id . ',page_id|distinct',

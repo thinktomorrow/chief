@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
 use Spatie\ImageOptimizer\OptimizerChain;
@@ -13,11 +13,11 @@ class OptimizeImages
         $optimizerChain = app(OptimizerChain::class);
 
         collect($request->allFiles())->each(function ($file) use ($optimizerChain) {
-            if(is_array($file)){
-                collect($file)->each(function ($media)  use ($optimizerChain) {
+            if (is_array($file)) {
+                collect($file)->each(function ($media) use ($optimizerChain) {
                     $optimizerChain->optimize($media->getPathname());
                 });
-            }else{
+            } else {
                 $optimizerChain->optimize($file->getPathname());
             }
         });

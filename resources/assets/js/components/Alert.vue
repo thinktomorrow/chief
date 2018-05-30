@@ -1,14 +1,17 @@
 <template>
-    <div v-show="isVisible" class="alert --raised" :class="typeclass">
-        <span class="alert__copy column-9" v-html="body"></span>
-        <span class="alert__btn" @click="isVisible = false">Ok, got it</span>
-    </div>
+    <transition name="modal" mode="in-out" appear>
+        <div v-show="isVisible" :class="typeclass">
+            <div class="alert__copy inline">
+                <slot></slot>
+            </div>
+            <span class="alert__btn icon icon-x" @click="isVisible = false"></span>
+        </div>
+    </transition>
 </template>
 <script>
     export default {
 	    props: {
 		    'type': {default: 'success'},
-		    'body': {required: true },
 	    },
 	    data() {
 		    return {

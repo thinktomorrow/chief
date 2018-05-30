@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Relations;
+namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Support\Collection;
 
@@ -12,7 +12,7 @@ class RelatedCollection extends Collection
 
         $collection = new static();
 
-        foreach($available_children_types as $type) {
+        foreach ($available_children_types as $type) {
             $collection = $collection->merge((new $type)->all());
         }
 
@@ -21,14 +21,14 @@ class RelatedCollection extends Collection
     
     public static function relationIds(Collection $collection): Collection
     {
-        return $collection->map(function($entry){
+        return $collection->map(function ($entry) {
             return $entry->getRelationId();
-        });    
+        });
     }
 
     public function flattenForSelect()
     {
-        return $this->map(function(ActsAsChild $child){
+        return $this->map(function (ActsAsChild $child) {
             return [
                 'id'    => $child->getRelationId(),
                 'label' => $child->getRelationLabel(),
@@ -41,10 +41,10 @@ class RelatedCollection extends Collection
     {
         $grouped = [];
 
-        $this->flattenForSelect()->each(function($entry) use(&$grouped){
-            if(isset($grouped[$entry['group']])){
+        $this->flattenForSelect()->each(function ($entry) use (&$grouped) {
+            if (isset($grouped[$entry['group']])) {
                 $grouped[$entry['group']]['values'][] = $entry;
-            } else{
+            } else {
                 $grouped[$entry['group']] = ['group' => $entry['group'], 'values' => [$entry]];
             }
         });
@@ -55,13 +55,13 @@ class RelatedCollection extends Collection
 
     public static function inflate(array $relateds = []): self
     {
-        if(count($relateds) == 1 && is_null(reset($relateds))) $relateds = [];
+        if (count($relateds) == 1 && is_null(reset($relateds))) {
+            $relateds = [];
+        }
 
-        return (new static($relateds))->map(function($related){
-
-            list($type,$id) = explode('@', $related);
+        return (new static($relateds))->map(function ($related) {
+            list($type, $id) = explode('@', $related);
             return (new $type)->find($id);
-
         });
     }
 }

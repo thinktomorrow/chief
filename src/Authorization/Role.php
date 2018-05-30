@@ -1,17 +1,17 @@
 <?php
 
-namespace Chief\Authorization;
+namespace Thinktomorrow\Chief\Authorization;
 
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Spatie\Permission\Models\Role as BaseRole;
 
 class Role extends BaseRole implements RoleContract
 {
-    protected $guard_name = 'admin';
+    protected $guard_name = 'chief';
 
     public static function create(array $attributes = [])
     {
-        $attributes['guard_name'] = $attributes['guard_name'] ?? 'admin';
+        $attributes['guard_name'] = $attributes['guard_name'] ?? 'chief';
 
         return parent::create($attributes);
     }
@@ -23,8 +23,7 @@ class Role extends BaseRole implements RoleContract
 
     public function getPermissionsForIndex()
     {
-        $this->permissions->each(function($permission){
-
+        $this->permissions->each(function ($permission) {
             $model = explode("_", $permission->name, 2)[1];
             $temp = $this->permission;
             $temp[$model][] = explode("_", $permission->name, 2)[0];

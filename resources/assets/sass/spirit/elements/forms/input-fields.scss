@@ -1,3 +1,11 @@
+// Reset input submit
+input[type="submit"]{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+
 textarea,
 input[type='text'],
 input[type='email'],
@@ -13,12 +21,12 @@ input[type='file'],
     border: 1px solid $color-border;
     font-family: $font-family-secondary;
     &:focus{
-        box-shadow: 0 0 5px $color-subtle;
-        border: 1px solid $color-subtle;
+        box-shadow: 0 1px 5px -1px $color-border;
+        border: 1px solid $color-border;
         outline: none;
     }
     &::placeholder{
-        color: $color-subtle;
+        color: $color-border;
     }
 }
 

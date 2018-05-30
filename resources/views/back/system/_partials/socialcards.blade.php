@@ -1,24 +1,14 @@
 <section class="row formgroup gutter-l">
-    <div class="column-4">
+    <div class="column-5">
         <h2 class="formgroup-label">Facebook</h2>
         <p>
-            Als je de opgegeven URL deelt op Facebook dan wordt deze weergegeven als een card. De gegevens die je hier invult, zorgen voor de structuur van de Facebook card.
+            Als je de Facebook URL deelt die je hebt ingegeven in het tabblad "Social" dan wordt deze weergegeven als een card. De gegevens die je hier invult, zorgen voor de structuur van de Facebook card.
         </p>
     </div>
-    <div class="formgroup-input column-8 relative">
-        <label for="facebook-url">URL</label>
-        <div class="row">
-            <div class="column-10">
-                <input type="text" name="facebook-url" id="facebook-url" class="input inset-s" placeholder="URL">
-            </div>
-            <div class="column-2 center-y">
-                <a href="#" class="btn text-primary font-s"><span class="icon icon-small icon-refresh-cw inline-xs"></span>Check</a>
-            </div>
-        </div>
-        <div class="stack">
-            <label for="facebook-title">Titel</label>
-            <input type="text" name="facebook-title" id="facebook-title" class="input inset-s" placeholder="Titel">
-        </div>
+    <div class="formgroup-input column-7 relative">
+        <label for="facebook-title">Titel</label>
+        <input type="text" name="facebook-title" id="facebook-title" class="input inset-s" placeholder="Titel">
+
         <div class="stack relative">
             <label for="facebook-description">Omschrijving</label>
             <textarea class="redactor inset-s" name="facebook-description" id="facebook-description" cols="10" rows="5"></textarea>
@@ -64,26 +54,16 @@
 </section>
 
 <section class="row formgroup gutter-l">
-    <div class="column-4">
+    <div class="column-5">
         <h2 class="formgroup-label">Twitter</h2>
         <p>
-            Als je de opgegeven URL deelt op Twitter dan wordt deze weergegeven als een card. De gegevens die je hier invult, zorgen voor de structuur van de Twitter card.
+            Als je de Twitter URL deelt die je hebt ingegeven in het tabblad "Social" dan wordt deze weergegeven als een card. De gegevens die je hier invult, zorgen voor de structuur van de Twitter card.
         </p>
     </div>
-    <div class="formgroup-input column-8 relative">
-        <label for="facebook-url">URL</label>
-        <div class="row">
-            <div class="column-10">
-                <input type="text" name="twitter-url" id="twitter-url" class="input inset-s" placeholder="URL">
-            </div>
-            <div class="column-2 center-y">
-                <a href="#" class="btn text-primary font-s"><span class="icon icon-small icon-refresh-cw inline-xs"></span>Check</a>
-            </div>
-        </div>
-        <div class="stack">
-            <label for="twitter-title">Titel</label>
-            <input type="text" name="twitter-title" id="twitter-title" class="input inset-s" placeholder="Titel">
-        </div>
+    <div class="formgroup-input column-7 relative">
+        <label for="twitter-title">Titel</label>
+        <input type="text" name="twitter-title" id="twitter-title" class="input inset-s" placeholder="Titel">
+
         <div class="stack relative">
             <label for="twitter-description">Omschrijving</label>
             <textarea class="redactor inset-s" name="twitter-description" id="twitter-description" cols="10" rows="5"></textarea>

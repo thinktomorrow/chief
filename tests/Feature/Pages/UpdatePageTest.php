@@ -1,20 +1,18 @@
 <?php
 
-namespace Chief\Tests\Feature\Pages;
+namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Chief\Pages\Page;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdatePageTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        $this->setUpDefaultAuthorization();
     }
 
     /** @test */
@@ -22,8 +20,8 @@ class UpdatePageTest extends TestCase
     {
         $page = factory(Page::class)->create(['title:nl' => 'titel nl']);
 
-        $response = $this->asAdmin()
-            ->put(route('back.pages.update', $page->id), $this->validParams([
+        $response = $this->asDefaultAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validParams([
                 'trans.nl.slug'     => '<b>slug</b>',
                 'trans.en.slug'     => '<b>slugen</b>',
                 'trans.nl.title'    => 'title',
@@ -43,7 +41,7 @@ class UpdatePageTest extends TestCase
         $otherPage = factory(Page::class)->create();
 
         $this->asAdmin()
-            ->put(route('back.pages.update', $page->id), $this->validParams([
+            ->put(route('chief.back.pages.update', $page->id), $this->validParams([
                 'relations' => [
                     $otherPage->getRelationId()
                 ]

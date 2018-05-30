@@ -1,8 +1,8 @@
 <?php
-namespace Chief\Authorization\Console;
+namespace Thinktomorrow\Chief\Authorization\Console;
 
-use Chief\Authorization\Role;
-use Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Authorization\Permission;
 use Illuminate\Console\Command;
 
 class GenerateRoleCommand extends Command
@@ -17,7 +17,7 @@ class GenerateRoleCommand extends Command
     {
         $roleName = $this->getNameArgument();
 
-        $role = Role::create(['name' => $roleName]);
+        $role = Role::findOrCreate($roleName, 'chief');
 
         $this->assignPermissionsToRole($role);
     }
@@ -29,26 +29,31 @@ class GenerateRoleCommand extends Command
 
     private function assignPermissionsToRole(Role $role)
     {
-        if(!$this->option('permissions')) return;
+        if (!$this->option('permissions')) {
+            return;
+        }
 
         $permissionNames = explode(',', $this->option('permissions'));
 
         $cleanPermissionNames = [];
-        foreach($permissionNames as $k => $permissionName){
-
+        foreach ($permissionNames as $k => $permissionName) {
             $permissionName = trim($permissionName);
 
             // Generate all permissions if only scope is passed
-            if(false === strpos($permissionName, '-')) {
+            if (false === strpos($permissionName, '-')) {
                 $cleanPermissionNames = array_merge($cleanPermissionNames, Permission::generate($permissionName));
             } else {
                 // Trim the value
                 $cleanPermissionNames[] = $permissionName;
             }
-
         }
 
-        $role->givePermissionTo($cleanPermissionNames);
+        foreach ($cleanPermissionNames as $cleanPermissionName) {
+            if ($role->hasPermissionTo($cleanPermissionName)) {
+                continue;
+            }
+            $role->givePermissionTo($cleanPermissionName);
+        }
 
         $this->info('Role ' . $role->name . ' was assigned the permissions: ' . implode(',', $cleanPermissionNames));
     }

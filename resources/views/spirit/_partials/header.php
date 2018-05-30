@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Andada|Montserrat:300">
 
     <!-- temp links when spirit is still inside chief -->
-    <link rel="stylesheet" href="/assets/back/css/main.css">
-    <link rel="stylesheet" href="/assets/spirit/css/layout.css">
-    <link rel="stylesheet" href="/assets/back/css/vendors/solarized-dark.css">
+    <link rel="stylesheet" href="/chief-assets/back/css/main.css">
+    <link rel="stylesheet" href="/chief-assets/spirit/css/layout.css">
+    <link rel="stylesheet" href="/chief-assets/back/css/vendors/solarized-dark.css">
 
     <!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -26,7 +26,7 @@
 		})(window,document,'script','dataLayer','GTM-5NGHP2D');</script>
 	<!-- End Google Tag Manager -->
 
-    <script src="/assets/back/js/vendors/highlight.pack.js"></script>
+    <script src="/chief-assets/back/js/vendors/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
@@ -49,7 +49,7 @@
             'components' => 'Spirit componenten',
         ];
 
-        $extracted = array_filter(explode("/",parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH)));
+        $extracted = array_filter(explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)));
         $current_section = isset($extracted[2]) ? $extracted[2] : 'home';
 //        $current_item = isset($extracted[3]) ? $extracted[3] : null;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Exceptions;
+namespace Thinktomorrow\Chief\App\Exceptions;
 
-use Chief\Authorization\Exceptions\UnauthorizedRequestException;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Thinktomorrow\Chief\Authorization\Exceptions\UnauthorizedRequestException;
 
 class Handler extends ExceptionHandler
 {
@@ -51,7 +51,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof AuthorizationException){
+        if ($exception instanceof AuthorizationException) {
             return $this->unauthorized($request, $exception);
         }
 
@@ -60,9 +60,8 @@ class Handler extends ExceptionHandler
 
     protected function unauthorized($request, AuthorizationException $exception)
     {
-        return redirect()->route('back.dashboard')
+        return redirect()->route('chief.back.dashboard')
                          ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');
-
     }
 
     /**
@@ -78,6 +77,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest(route('back.login'));
+        return redirect()->guest(route('chief.back.login'));
     }
 }

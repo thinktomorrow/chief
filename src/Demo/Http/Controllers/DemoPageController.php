@@ -1,19 +1,19 @@
 <?php
 
-namespace Chief\Demo\Http\Controllers;
+namespace Thinktomorrow\Chief\Demo\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Chief\Pages\Application\CreatePage;
-use Chief\Pages\Page;
-use Chief\Pages\PageRepository;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use Thinktomorrow\AssetLibrary\Models\Asset;
-use App\Http\Requests\PageCreateRequest;
-use Chief\Pages\Application\UpdatePage;
-use App\Http\Requests\PageUpdateRequest;
-use Chief\Common\Traits\CheckPreviewTrait;
+use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
+use Thinktomorrow\Chief\Pages\Application\UpdatePage;
+use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\Common\Traits\CheckPreviewTrait;
 
 class DemoPageController extends Controller
 {
@@ -21,10 +21,9 @@ class DemoPageController extends Controller
 
     public function index()
     {
-        if($this->isPreviewAllowed())
-        {
+        if ($this->isPreviewAllowed()) {
             $pages = Page::all();
-        }else{
+        } else {
             $pages = Page::getAllPublished();
         }
 
@@ -39,7 +38,9 @@ class DemoPageController extends Controller
             $page = Page::findPublishedBySlug($request->slug);
         }
 
-        if(!$page) return redirect()->route('demo.pages.index')->with('note.default', 'Geen resultaten gevonden.');
+        if (!$page) {
+            return redirect()->route('demo.pages.index')->with('note.default', 'Geen resultaten gevonden.');
+        }
 
         return view('demo::pagedetail', compact('page'));
     }

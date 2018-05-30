@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
 
@@ -28,16 +28,16 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:chief');
     }
 
     public function showLinkRequestForm()
     {
-        return view('auth.passwords.email');
+        return view('chief::auth.passwords.email');
     }
 
     protected function broker()
     {
-        return Password::broker('admins');
+        return Password::broker('chief');
     }
 }

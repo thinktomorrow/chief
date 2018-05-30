@@ -1,10 +1,10 @@
 <?php
 
-namespace Chief\Pages;
+namespace Thinktomorrow\Chief\Pages;
 
-use Chief\Common\Contracts\SluggableContract;
+use Thinktomorrow\Chief\Common\Contracts\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
-use Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Page;
 
 class PageTranslation extends Model implements SluggableContract
 {
@@ -18,6 +18,6 @@ class PageTranslation extends Model implements SluggableContract
 
     public static function findBySlug($slug)
     {
-        return self::where('slug',$slug)->first();
+        return self::where('slug', $slug)->first();
     }
 }

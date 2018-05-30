@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Pages\Application;
+namespace Thinktomorrow\Chief\Pages\Application;
 
-use Chief\Common\Relations\RelatedCollection;
-use Chief\Pages\Page;
-use Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
-use Chief\Models\UniqueSlug;
+use Thinktomorrow\Chief\Models\UniqueSlug;
 
 class UpdatePage
 {
@@ -14,10 +14,10 @@ class UpdatePage
 
     public function handle($id, array $translations, array $relations): Page
     {
-        try{
+        try {
             DB::beginTransaction();
 
-            $page = Page::findOrFail($id);
+            $page = Page::ignoreCollection()->findOrFail($id);
 
             //Loops over the uploaded assets and attaches them to the model
             // collect($translations)->each(function ($translation, $locale) use ($page) {
@@ -37,8 +37,7 @@ class UpdatePage
 
             DB::commit();
             return $page->fresh();
-
-        } catch(\Throwable $e){
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }
@@ -60,11 +59,11 @@ class UpdatePage
     private function syncRelations($page, $relateds)
     {
         // First remove all existing children
-        foreach($page->children() as $child){
+        foreach ($page->children() as $child) {
             $page->rejectChild($child);
         }
 
-        foreach(RelatedCollection::inflate($relateds) as $i => $related){
+        foreach (RelatedCollection::inflate($relateds) as $i => $related) {
             $page->adoptChild($related, ['sort' => $i]);
         }
     }

@@ -1,26 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
-use Chief\Common\Relations\RelatedCollection;
-use Chief\Pages\Application\CreatePage;
-use Chief\Pages\Page;
-use Chief\Pages\PageRepository;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\PageCreateRequest;
-use Chief\Pages\Application\UpdatePage;
-use App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
+use Thinktomorrow\Chief\Pages\Application\UpdatePage;
+use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 
 class PagesController extends Controller
 {
-    public function index()
+    public function index($collection)
     {
-        $published  = Page::where('published', 1)->paginate(10);
-        $drafts     = Page::where('published', 0)->get();
+        $model = Page::fromCollectionKey($collection);
 
-        return view('back.pages.index', compact('published', 'drafts'));
+        return view('chief::back.pages.index', [
+            'collectionDetails' => $model->collectionDetails(),
+            'published'       => $model->unarchived()->published()->paginate(10),
+            'drafts'          => $model->unarchived()->where('published', 0)->paginate(10),
+            'archived'        => $model->archived()->paginate(10),
+        ]);
     }
 
     /**
@@ -28,13 +32,16 @@ class PagesController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($collection)
     {
-        $page = new Page();
+        $page = Page::fromCollectionKey($collection);
         $page->existingRelationIds = collect([]);
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('back.pages.create',['page' => $page, 'relations' => $relations]);
+        return view('chief::back.pages.create', [
+            'page'            => $page,
+            'relations'       => $relations
+        ]);
     }
 
     /**
@@ -43,28 +50,31 @@ class PagesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(PageCreateRequest $request)
+    public function store(PageCreateRequest $request, $collection)
     {
-        $page = app(CreatePage::class)->handle($request->trans);
+        $page = app(CreatePage::class)->handle($collection, $request->trans);
 
-        return redirect()->route('back.pages.index')->with('messages.success', $page->title .' is aangemaakt');
+        return redirect()->route('chief.back.pages.index',$page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
-        $page = Page::findOrFail($id);
+        $page = Page::ignoreCollection()->findOrFail($id);
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = RelatedCollection::relationIds($page->children());
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
-        return view('back.pages.edit', compact('page', 'relations'));
+        return view('chief::back.pages.edit', [
+            'page'            => $page,
+            'relations'       => $relations
+        ]);
     }
 
     /**
@@ -78,46 +88,43 @@ class PagesController extends Controller
     {
         $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
 
-        return redirect()->route('back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "'.$page->title .'" werd aangepast');
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return Response
      */
     public function destroy($id)
     {
-        $page = Page::findOrFail($id);
+        $page = Page::ignoreCollection()->findOrFail($id);
+        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
+        {
+            return redirect()->back()->with('messages.warning', 'fout');
+        }
 
-        $page->delete();
+        if ($page->isDraft() || $page->isArchived()) {
+            $page->delete();
+        }
+        if ($page->isPublished()) {
+            $page->archive();
+        }
+
         $message = 'Het item werd verwijderd.';
 
-        return redirect()->route('back.pages.index')->with('messages.warning', $message);
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
     }
 
     public function publish(Request $request)
     {
-        $page    = Page::findOrFail($request->get('id'));
-        $published  = true === !$request->checkboxStatus; // string comp. since bool is passed as string
+        $page = Page::ignoreCollection()->findOrFail($request->get('id'));
+        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
 
         return redirect()->back();
 
-//        return response()->json([
-//            'message' => $published ? 'nieuwsartikel werd online gezet' : 'nieuwsartikel werd offline gehaald',
-//            'published'=> $published,
-//            'id'=> $page->id
-//        ],200);
     }
-
-//    public function upload($id, Request $request)
-//    {
-//        $page = page::find($id);
-//        $page->addFile($request->file('image'), $request->type, $request->get('locale'));
-//
-//        return redirect()->back();
-//    }
 }

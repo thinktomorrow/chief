@@ -1,10 +1,10 @@
-@extends(config('squanto.template'))
+@extends('chief::back._layouts.master')
 
 @section('page-title')
     Teksten
 @stop
 
-@component('back._layouts._partials.header')
+@component('chief::back._layouts._partials.header')
     @slot('title','Teksten')
     @if(admin()->isSquantoDeveloper())
         <a href="{{ route('squanto.lines.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> add new line</a>
@@ -12,7 +12,6 @@
 @endcomponent
 
 @section('content')
-
     <div class="card-group-title"><span class="inline-xs">Pages</span></div>
     <div class="row gutter card-group left">
         @foreach($pages->filter(function($page){ return in_array($page->key,[]); }) as $page)

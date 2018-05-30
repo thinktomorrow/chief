@@ -1,12 +1,12 @@
 <?php
 
-namespace Chief\Tests\Feature\Relations;
+namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Chief\Common\Relations\ActingAsChild;
-use Chief\Common\Relations\ActingAsParent;
-use Chief\Common\Relations\ActsAsChild;
-use Chief\Common\Relations\ActsAsParent;
-use Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
+use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +21,7 @@ class ChildFake extends Model implements ActsAsChild
 
     public static function migrate()
     {
-        Schema::create('fake_children', function (Blueprint $table){
+        Schema::create('fake_children', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
         });
@@ -39,7 +39,7 @@ class ChildFake extends Model implements ActsAsChild
 
     public function getRelationLabel(): string
     {
-       return $this->id;
+        return $this->id;
     }
 
     public function getRelationGroup(): string

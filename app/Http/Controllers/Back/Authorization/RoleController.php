@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Back\Authorization;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization;
 
-use App\Http\Controllers\Controller;
-use Chief\Authorization\Permission;
-use Chief\Authorization\Role;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -13,7 +13,7 @@ class RoleController extends Controller
     {
         $this->authorize('view-role');
 
-        return view('back.authorization.roles.index',[
+        return view('chief::back.authorization.roles.index', [
             'roles' => Role::all(),
         ]);
     }
@@ -22,7 +22,7 @@ class RoleController extends Controller
     {
         $this->authorize('create-role');
 
-        return view('back.authorization.roles.create', [
+        return view('chief::back.authorization.roles.create', [
             'role' => new Role(),
             'permission_names' => Permission::all()->pluck('name')->toArray()
         ]);
@@ -41,7 +41,7 @@ class RoleController extends Controller
         $role = Role::create($request->only('name'));
         $role->givePermissionTo($request->permission_names);
 
-        return redirect()->route('back.roles.index')
+        return redirect()->route('chief.back.roles.index')
                          ->with('messages.success', 'Rol '. $role->name.' is toegevoegd.');
     }
 
@@ -52,7 +52,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $permission_names = Permission::all()->pluck('name')->toArray();
 
-        return view('back.authorization.roles.edit', compact('role', 'permission_names'));
+        return view('chief::back.authorization.roles.edit', compact('role', 'permission_names'));
     }
 
     public function update(Request $request, $id)
@@ -70,7 +70,7 @@ class RoleController extends Controller
         $role->save();
         $role->syncPermissions($request->permission_names);
 
-        return redirect()->route('back.roles.index')
+        return redirect()->route('chief.back.roles.index')
             ->with('messages.success', 'Rol '. $role->name.' is aangepast.');
     }
 
@@ -81,7 +81,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
 
-        return redirect()->route('back.roles.index')
+        return redirect()->route('chief.back.roles.index')
             ->with('messages.success', 'Rol '. $role->name.' is verwijderd.');
     }
 }

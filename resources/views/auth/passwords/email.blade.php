@@ -1,5 +1,5 @@
 <!-- Login form area -->
-@extends('back._layouts.login')
+@extends('chief::back._layouts.login')
 
 @section('title')
     Reset wachtwoord
@@ -16,7 +16,7 @@
                     {{ session('status') }}
                 </div>
             @else
-                <form id="valid" role="form" method="POST" action="{{ route('back.password.email') }}">
+                <form id="valid" role="form" method="POST" action="{{ route('chief.back.password.email') }}">
                     {{ csrf_field() }}
                     <div class="form-wrapper">
                         <div class="{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -40,7 +40,7 @@
             @endif
 
             <div class="back-btn">
-                <a href="{{ route('back.login') }}">Keer terug naar de login</a>
+                <a href="{{ route('chief.back.login') }}">Keer terug naar de login</a>
             </div>
 
         </div>

@@ -39,4 +39,8 @@ $textColors: (
   .text-#{$name}{
     color: $fontcolor;
   }
+
+  a.text-#{$name}:hover{
+    color: darken($fontcolor, 8%);
+  }
 }

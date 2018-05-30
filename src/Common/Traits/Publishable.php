@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Traits;
+namespace Thinktomorrow\Chief\Common\Traits;
 
 trait Publishable
 {
@@ -16,7 +16,7 @@ trait Publishable
 
     public function scopePublished($query)
     {
-        $query->where('published',1);
+        $query->where('published', 1);
     }
 
     public function publish()

@@ -113,6 +113,7 @@ return [
         'name'               => 'naam',
         'permission'         => 'rechten',
         'permission_names.0' => 'rechten', // array entry validation for entries
+        'password'           => 'wachtwoord',
     ],
 
 ];

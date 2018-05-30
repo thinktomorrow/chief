@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Models\Notes;
+namespace Thinktomorrow\Chief\Models\Notes;
 
 use Illuminate\Database\Eloquent\Model;
 

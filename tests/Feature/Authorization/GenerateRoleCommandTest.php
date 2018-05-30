@@ -1,26 +1,23 @@
 <?php
 
-namespace Chief\Tests\Feature\Authorization;
+namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Chief\Authorization\Permission;
-use Chief\Authorization\Role;
-use Chief\Tests\ChiefDatabaseTransactions;
-use Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Authorization\Permission;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
 class GenerateRoleCommandTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        $this->withoutDefaultAuthorization();
     }
 
     /** @test */
-    function it_requires_a_name_parameter()
+    public function it_requires_a_name_parameter()
     {
         $this->expectException(\RuntimeException::class);
 
@@ -28,7 +25,7 @@ class GenerateRoleCommandTest extends TestCase
     }
 
     /** @test */
-    function a_role_can_be_generated()
+    public function a_role_can_be_generated()
     {
         $this->artisan('chief:role', [
             'name' => 'new role'
@@ -37,11 +34,11 @@ class GenerateRoleCommandTest extends TestCase
         $this->assertCount(1, Role::all());
 
         // Assert the proper guard is used
-        $this->assertEquals('admin', Role::first()->guard_name);
+        $this->assertEquals('chief', Role::first()->guard_name);
     }
 
     /** @test */
-    function a_role_can_be_given_permissions()
+    public function a_role_can_be_given_permissions()
     {
         Permission::create(['name' => 'view-user']);
 
@@ -55,7 +52,7 @@ class GenerateRoleCommandTest extends TestCase
     }
 
     /** @test */
-    function a_role_can_be_given_permissions_by_scope()
+    public function a_role_can_be_given_permissions_by_scope()
     {
         Permission::create(['name' => 'view-user']);
         Permission::create(['name' => 'create-user']);
@@ -72,7 +69,7 @@ class GenerateRoleCommandTest extends TestCase
     }
 
     /** @test */
-    function when_assigning_permission_scope_all_permissions_must_be_existing()
+    public function when_assigning_permission_scope_all_permissions_must_be_existing()
     {
         $this->expectException(PermissionDoesNotExist::class);
 
@@ -85,7 +82,7 @@ class GenerateRoleCommandTest extends TestCase
     }
 
     /** @test */
-    function permissions_can_be_assigned_to_multiple_roles()
+    public function permissions_can_be_assigned_to_multiple_roles()
     {
         Permission::create(['name' => 'view-user']);
         Permission::create(['name' => 'create-user']);
@@ -102,7 +99,7 @@ class GenerateRoleCommandTest extends TestCase
     }
 
     /** @test */
-    function permissions_can_be_assigned_as_scopes()
+    public function permissions_can_be_assigned_as_scopes()
     {
         Permission::create(['name' => 'view-user']);
         Permission::create(['name' => 'create-user']);

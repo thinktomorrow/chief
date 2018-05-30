@@ -1,48 +1,118 @@
 <?php
 
-namespace Chief\Tests;
+namespace Thinktomorrow\Chief\Tests;
 
-use App\Exceptions\Handler;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
+use Dimsav\Translatable\TranslatableServiceProvider;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\PermissionServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Thinktomorrow\Chief\App\Http\Kernel;
+use Thinktomorrow\Chief\App\Http\Middleware\RedirectIfAuthenticated;
+use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
+use Thinktomorrow\Locale\LocaleServiceProvider;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Squanto\SquantoServiceProvider;
 
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends OrchestraTestCase
 {
-    use CreatesApplication, TestHelpers;
+    use ChiefDatabaseTransactions,
+        TestHelpers;
 
     protected $protectTestEnvironment = true;
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            PermissionServiceProvider::class,
+
+            LocaleServiceProvider::class,
+            TranslatableServiceProvider::class,
+            SquantoServiceProvider::class,
+            SquantoManagerServiceProvider::class,
+
+            ChiefServiceProvider::class,
+
+            // Demo is used for our preview testing
+            DemoServiceProvider::class,
+        ];
+    }
 
     protected function setUp()
     {
         parent::setUp();
 
         $this->protectTestEnvironment();
+        $this->registerResponseMacros();
 
-        //$this->registerResponseMacros();
+        // Register the Chief Exception handler
+        $this->app->singleton(
+            ExceptionHandler::class,
+            Handler::class
+        );
+
+        // Path is relative to root of phpunit execution.
+        $this->withFactories(realpath(dirname(__DIR__).'/database/factories'));
+
+        // Load database before overriding the config values but after the basic app setup
+        $this->setUpDatabase();
     }
 
-    // Override default createApplication
-    public function createApplication()
+    protected function resolveApplicationHttpKernel($app)
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app->singleton('Illuminate\Contracts\Http\Kernel', Kernel::class);
+    }
 
-        $app->make(Kernel::class)->bootstrap();
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['path.base'] = realpath(__DIR__ . '/../');
 
-        Hash::setRounds(4);
+        $app['config']->set('permission.table_names', [
+            'roles' => 'roles',
+            'permissions' => 'permissions',
+            'model_has_permissions' => 'model_has_permissions',
+            'model_has_roles' => 'model_has_roles',
+            'role_has_permissions' => 'role_has_permissions',
+        ]);
 
-        return $app;
+        // Setup default database to use sqlite :memory:
+        $app['config']->set('auth.defaults', [
+            'guard' => 'xxx',
+            'passwords' => 'chief',
+        ]);
+
+        // Connection is defined in the phpunit config xml
+        $app['config']->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
+            'prefix' => '',
+        ]);
+
+        // For our tests is it required to have 2 languages: nl and en.
+        $app['config']->set('translatable.locales', ['nl', 'en']);
+        $app['config']->set('squanto.template', 'chief::back._layouts.master');
+
+        // Override the guest middleware since this is overloaded by Orchestra testbench itself
+        $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, RedirectIfAuthenticated::class);
     }
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends Handler{
-            public function __construct(){}
-            public function report(\Exception $e){}
-            public function render($request, \Exception $e){ throw $e; }
+        $this->app->instance(ExceptionHandler::class, new class extends Handler {
+            public function __construct()
+            {
+            }
+            public function report(\Exception $e)
+            {
+            }
+            public function render($request, \Exception $e)
+            {
+                throw $e;
+            }
         });
     }
 
@@ -50,7 +120,9 @@ abstract class TestCase extends BaseTestCase
     {
         $this->app->resolving(EncryptCookies::class,
             function ($object) use ($cookies) {
-                foreach($cookies as $cookie) $object->disableFor($cookie);
+                foreach ($cookies as $cookie) {
+                    $object->disableFor($cookie);
+                }
             });
 
         return $this;
@@ -58,17 +130,16 @@ abstract class TestCase extends BaseTestCase
 
     protected function protectTestEnvironment()
     {
-        if( ! $this->protectTestEnvironment) return;
+        if (! $this->protectTestEnvironment) {
+            return;
+        }
 
-        if("testing" !== $this->app->environment())
-        {
+        if ("testing" !== $this->app->environment()) {
             throw new \Exception('Make sure your testing environment is properly set. You are now running tests in the ['.$this->app->environment().'] environment');
         }
 
-        if(DB::getName() != "testing" && DB::getName() != "setup")
-        {
+        if (DB::getName() != "testing" && DB::getName() != "setup") {
             throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using ['.DB::getName().']. Are you crazy?');
         }
     }
-
 }

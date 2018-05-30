@@ -1,6 +1,6 @@
 <?php
 
-namespace Chief\Common\Translatable;
+namespace Thinktomorrow\Chief\Common\Translatable;
 
 use Illuminate\Http\Request;
 
@@ -17,29 +17,24 @@ trait TranslatableController
         $translationattributes = [];
         $translationmessages = [];
 
-        foreach ($request->get('trans') as $locale => $trans)
-        {
-            if ($this->isCompletelyEmpty($rules, $trans))
-            {
+        foreach ($request->get('trans') as $locale => $trans) {
+            if ($this->isCompletelyEmpty($rules, $trans)) {
                 continue;
             }
 
-            foreach($rules as $key => $rule)
-            {
+            foreach ($rules as $key => $rule) {
                 $translationrules['trans.' . $locale . '.'.$key] = $rule;
             }
 
-            foreach($attributes as $key => $attribute)
-            {
+            foreach ($attributes as $key => $attribute) {
                 $translationattributes['trans.' . $locale . '.'.$key] = $attribute;
             }
 
-            foreach($messages as $key => $message)
-            {
+            foreach ($messages as $key => $message) {
                 $translationmessages['trans.' . $locale . '.'.$key] = $message;
             }
         }
 
-        $this->validate($request, $translationrules,$translationattributes,$translationmessages);
+        $this->validate($request, $translationrules, $translationattributes, $translationmessages);
     }
 }

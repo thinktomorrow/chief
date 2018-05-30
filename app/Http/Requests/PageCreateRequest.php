@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +14,7 @@ class PageCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::guard('admin')->user();
+        return Auth::guard('chief')->user();
     }
 
     /**
