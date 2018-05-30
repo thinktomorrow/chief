@@ -1,9 +1,1 @@
 theme: jekyll-theme-cayman
-
-plugins:
-  - jekyll-sitemap
-  - jekyll-toc
-
-toc:
-  min_level:  2
-  max_level:  4
