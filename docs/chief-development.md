@@ -1,10 +1,8 @@
 ---
 title: Local Development
-description: For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.
-To set up the chief package for local development we link our local chief folder as a repository in the composer.json file.
+description: chief is a package based cms built on top of the laravel framework.
 group: docs
 toc: true
-
 ---
 # Local Chief development
 
