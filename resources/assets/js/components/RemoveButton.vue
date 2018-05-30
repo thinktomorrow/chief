@@ -13,7 +13,7 @@
             </slot>
         </button>
 
-        <mkiha-modal :id="modalId" :title="title">
+        <modal :id="modalId" :title="title">
             <slot name="message">Bent u zeker dat u dit wilt verwijderen?
             </slot>
 
@@ -23,7 +23,7 @@
                 </button>
                 <a @click="close(modalId)" class="btn btn-link"><slot name='modal-close-btn'>Annuleer</slot></a>
             </div>
-        </mkiha-modal>
+        </modal>
     </span>
 </template>
 

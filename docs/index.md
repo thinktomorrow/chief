@@ -56,6 +56,17 @@ protected $middlewareGroups = [
 ]
 ```
 
+Next in the same file we should add an entry to the $routeMiddleware array.
+
+```File: App\Http\Kernel.php```
+```php
+protected $routeMiddleware = [
+        ...
+        'auth.superadmin' => AuthenticateSuperadmin::class,
+        ...
+    ];
+```
+
 ### Database
 
 Connect a database with your application and make sure you have set the proper database credentials in your `.env` file. 

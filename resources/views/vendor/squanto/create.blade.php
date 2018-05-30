@@ -1,4 +1,4 @@
-@extends(config('squanto.template','chief::back._layouts.master'))
+@extends('chief::back._layouts.master')
 
 @section('page-title','Add new translation key')
 
@@ -54,4 +54,3 @@
     </form>
 
 @stop
-

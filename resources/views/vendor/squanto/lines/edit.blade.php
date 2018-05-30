@@ -1,4 +1,4 @@
-@extends(config('squanto.template','chief::back._layouts.master'))
+@extends('chief::back._layouts.master')
 
 @section('custom-styles')
     <link rel="stylesheet" href="{{ asset('chief-assets/back/vendor/redactor/redactor.css') }}">
@@ -128,7 +128,7 @@
         </section>
 
         <div class="text-right inline-group-s">
-            <mkiha-delete url="{{ route('squanto.lines.destroy',$line->id) }}" :modal="true" title="Vertaling permanent verwijderen">
+            <delete url="{{ route('squanto.lines.destroy',$line->id) }}" :modal="true" title="Vertaling permanent verwijderen">
                 <span slot="modalBtn" class="btn btn-o-subtle">
                     <span class="icon icon-trash"></span>
                     Permanent verwijderen
@@ -136,11 +136,10 @@
                 <p slot="message">
                     Hou er rekening mee dat alle toegepaste vertalingen van de site zullen verdwijnen.
                 </p>
-            </mkiha-delete>
+            </delete>
             <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Bewaar aanpassingen</button>
         </div>
 
     </form>
 
 @stop
-

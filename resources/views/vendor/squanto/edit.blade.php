@@ -1,4 +1,4 @@
-@extends(config('squanto.template','chief::back._layouts.master'))
+@extends('chief::back._layouts.master')
 
 @section('page-title')
     {{ $page->label }}
@@ -6,14 +6,13 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', $page->label)
-    @if(admin()->isSquantoDeveloper())
+    @can('update-squanto')
         <a href="{{ route('squanto.lines.create', $page->id) }}" class="btn btn-default"><i class="fa fa-plus"></i> add new line</a>
-    @endif
+    @endcan
     <button data-submit-form="translationForm" class="btn btn-success"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
 @endcomponent
 
 @section('content')
-
     <form id="translationForm" method="POST" action="{{ route('squanto.update',$page->id) }}" role="form" class="form-horizontal">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="PUT">

@@ -17,6 +17,7 @@
                 </li>
                 <li><a class="nav-item {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a></li>
                 <li><a class="nav-item" target="_blank" href="/spirit">Spirit</a></li>
+                <li><a class="nav-item {{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Users</a></li>
             </ul>
 
             <div class="column">

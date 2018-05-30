@@ -3,12 +3,18 @@
     <div class="loading" v-show="false">
         loading...
     </div>
-
+    @php
+        $locales = config('thinktomorrow.locale.available_locales');
+        foreach($locales as $locale){
+            $tabs[] = [
+                'locale'   => $locale,
+                'name'     => $locale,
+                'flag'     => 'flag-'.$locale
+            ];
+        }
+    @endphp
     <tabs v-cloak>
-        @foreach([
-            ['locale' => 'nl', 'name' => 'Nederlands', 'flag' => 'flag-be'],
-            ['locale' => 'fr', 'name' => 'Frans', 'flag' => 'flag-fr'],
-        ] as $tab)
+        @foreach($tabs as $tab)
 
             @php $tab = (object)$tab; @endphp
 

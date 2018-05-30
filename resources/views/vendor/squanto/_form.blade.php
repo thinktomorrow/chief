@@ -2,9 +2,9 @@
     <label class="col-lg-3 control-label" for="{{$locale.'-'.$line->id}}-inputValue">
         {{ $line->label }}
 
-        @if(Auth::user()->isSquantoDeveloper())
+        @can('update-squanto')
             <a href="{{ route('squanto.lines.edit',$line->id) }}" class="subtle">{{ $line->key }}</a>
-        @endif
+        @endcan
 
     </label>
     <div class="col-lg-9 bs-component">

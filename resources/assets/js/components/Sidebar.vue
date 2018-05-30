@@ -1,6 +1,6 @@
 <template>
     <div>
-        <mkiha-modal :id="id" type="sidebar"></mkiha-modal>
+        <modal :id="id" type="sidebar"></modal>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
 
     export default {
         components: {
-            'mkiha-modal' : Modal,
+            'modal' : Modal,
         },
         props: {
             id: { required: true },
