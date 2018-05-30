@@ -1,7 +1,14 @@
 ---
-title: Document Center
+layout: docs
+title: Install
+description: hief is a package based cms built on top of the laravel framework.
+group: docs
+redirect_from:
+  - /docs/
+  - /docs/install
+  - /docs/getting-started
+toc: true
 ---
-[Local development](chief-development.md)
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.
