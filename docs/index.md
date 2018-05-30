@@ -9,6 +9,11 @@ Chief is solely the back-end(admin panel). You will need to create the front-end
 To install chief we need to install it into another project.
 This can be either an existing one or a fresh Laravel 5.6+ project.
 
+Start a new Think Tomorrow project skeleton with the following command
+```bash
+composer create-project thinktomorrow/project-skeleton <projectname>
+```
+
 ## Installment
 
 Chief can be installed via composer.
@@ -38,7 +43,7 @@ You should place these in a `web-chief` middleware group like so:
 protected $middlewareGroups = [
     ...
     'web-chief' => [
-            AuthenticateChiefSession::class,
+            \Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession::class,
     ],
     ...
 ]
