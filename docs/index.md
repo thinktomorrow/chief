@@ -1,6 +1,7 @@
 ---
 title: Document Center
 ---
+[Local development](chief-development.md)
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.
