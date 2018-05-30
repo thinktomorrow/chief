@@ -1,5 +1,4 @@
 ---
-layout: docs
 title: Install
 description: hief is a package based cms built on top of the laravel framework.
 group: docs
