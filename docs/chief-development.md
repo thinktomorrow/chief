@@ -1,9 +1,3 @@
----
-title: Local Development
-description: chief is a package based cms built on top of the laravel framework.
-group: docs
-toc: true
----
 # Local Chief development
 
 For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.
