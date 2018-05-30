@@ -1,3 +1,6 @@
+---
+title: Document Center
+---
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.
