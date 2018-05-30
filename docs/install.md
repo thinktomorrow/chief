@@ -23,7 +23,7 @@ use Thinktomorrow\Chief\App\Exceptions\Handler as ChiefExceptionHandler;
 class Handler extends ChiefExceptionHandler
 ```
 
-Add the `AuthenticateChiefSession::class` and `SetDefaultCollection::class` middlewares to your `App\Http\Kernel` file. 
+Add the `AuthenticateChiefSession::class` middleware to your `App\Http\Kernel` file. 
 You should place these in a `web-chief` middleware group like so:
 
 ```php
@@ -31,7 +31,6 @@ protected $middlewareGroups = [
     ...
     'web-chief' => [
             AuthenticateChiefSession::class,
-            SetDefaultCollection::class,
     ],
     ...
 ]

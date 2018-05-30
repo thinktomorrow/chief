@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 
 class PagesController extends Controller
 {
-    public function index($collection = null)
+    public function index($collection)
     {
         $model = Page::fromCollectionKey($collection);
 
@@ -32,9 +32,9 @@ class PagesController extends Controller
      *
      * @return Response
      */
-    public function create($collection = null)
+    public function create($collection)
     {
-        $page = new Page();
+        $page = Page::fromCollectionKey($collection);
         $page->existingRelationIds = collect([]);
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
@@ -50,11 +50,11 @@ class PagesController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(PageCreateRequest $request)
+    public function store(PageCreateRequest $request, $collection)
     {
-        $page = app(CreatePage::class)->handle($request->trans);
+        $page = app(CreatePage::class)->handle($collection, $request->trans);
 
-        return redirect()->route('chief.back.pages.index')->with('messages.success', $page->title . ' is aangemaakt');
+        return redirect()->route('chief.back.pages.index',$page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
     }
 
     /**
@@ -65,7 +65,7 @@ class PagesController extends Controller
      */
     public function edit($id)
     {
-        $page = Page::findOrFail($id);
+        $page = Page::ignoreCollection()->findOrFail($id);
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = RelatedCollection::relationIds($page->children());
@@ -88,7 +88,7 @@ class PagesController extends Controller
     {
         $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
 
-        return redirect()->route('chief.back.pages.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
     }
 
     /**
@@ -99,7 +99,7 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        $page = Page::findOrFail($id);
+        $page = Page::ignoreCollection()->findOrFail($id);
         if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
         {
             return redirect()->back()->with('messages.warning', 'fout');
@@ -116,7 +116,7 @@ class PagesController extends Controller
 
         $message = 'Het item werd verwijderd.';
 
-        return redirect()->route('chief.back.pages.index')->with('messages.warning', $message);
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
     }
 
     public function publish(Request $request)

@@ -13,8 +13,11 @@ trait HasCollection
         static::addGlobalScope(new PageCollectionScope());
     }
 
-    public static function collectionKey()
+    public function collectionKey()
     {
+        // Collection key is stored at db - if not we map it from our config
+        if($this->collection) return $this->collection;
+
         $mapping = config('thinktomorrow.chief.collections',[]);
 
         return false != ($key = array_search(static::class, $mapping)) ? $key : null;
@@ -40,7 +43,7 @@ trait HasCollection
      */
     public static function collectionDetails($key = null)
     {
-        $collectionKey = static::collectionKey();
+        $collectionKey = (new static)->collectionKey();
 
         $names = (object) [
             'key'      => $collectionKey,

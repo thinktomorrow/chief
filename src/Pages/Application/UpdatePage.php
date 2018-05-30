@@ -17,7 +17,7 @@ class UpdatePage
         try{
             DB::beginTransaction();
 
-            $page = Page::findOrFail($id);
+            $page = Page::ignoreCollection()->findOrFail($id);
 
             //Loops over the uploaded assets and attaches them to the model
             // collect($translations)->each(function ($translation, $locale) use ($page) {

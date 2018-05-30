@@ -12,21 +12,14 @@ class CreatePage
 {
     use TranslatableCommand;
 
-    public function handle(array $translations): Page
+    public function handle(string $collection, array $translations): Page
     {
-        DB::transaction(function(){
-
-        }, 2);
-
         try{
             DB::beginTransaction();
 
-            $page = Page::create();
+            $page = Page::create(['collection' => $collection]);
 
-            foreach ($translations as $locale => $translation) {
-                $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['title'], $page->getTranslation($locale));
-                $translations[$locale]  = $translation;
-            }
+            $translations = $this->enforceUniqueSlug($translations, $page);
 
             $this->saveTranslations($translations, $page, [
                 'slug', 'title', 'content', 'seo_title', 'seo_description'
@@ -40,5 +33,20 @@ class CreatePage
             DB::rollBack();
             throw $e;
         }
+    }
+
+    /**
+     * @param array $translations
+     * @param $page
+     * @return array
+     */
+    private function enforceUniqueSlug(array $translations, $page): array
+    {
+        foreach ($translations as $locale => $translation) {
+            $translation['slug'] = UniqueSlug::make(new PageTranslation)->get($translation['title'], $page->getTranslation($locale));
+            $translations[$locale] = $translation;
+        }
+
+        return $translations;
     }
 }

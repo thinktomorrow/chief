@@ -40,6 +40,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     ];
 
     public $table = "pages";
+    protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
@@ -97,13 +98,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      */
     public static function collectionDetails($key = null)
     {
-        $collectionKey = static::collectionKey();
+        $collectionKey = (new static)->collectionKey();
 
         $names = (object) [
             'key'      => $collectionKey,
             'class'    => static::class,
-            'singular' => $collectionKey == 'statics' ? 'Pagina' : ucfirst(str_singular($collectionKey)),
-            'plural'   => $collectionKey == 'statics' ? 'Pagina\'s' : ucfirst(str_plural($collectionKey)),
+            'singular' => $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
+            'plural'   => $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
         ];
 
         return $key ? $names->$key : $names;

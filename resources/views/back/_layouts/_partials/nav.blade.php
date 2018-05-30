@@ -7,7 +7,7 @@
                 </li>
                 <li>
                     <dropdown>
-                        <span class="nav-item {{ isActiveUrl('admin/pages*') ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Pagina's</span>
+                        <span class="center-y nav-item {{ isActiveUrl('admin/pages*') ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle"><span class="inline-s">Pagina's</span><span class="icon icon-chevron-down"></span></span>
                         <div v-cloak class="dropdown-box inset-s">
                             @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections() as $key => $collection)
                                 <a class="block squished --link-with-bg {{ isActiveUrl('admin/pages/'.$key.'*') ? 'active' : '' }}" href="{{ route('chief.back.pages.index',['collection' => $key]) }}">{{ $collection->plural }}</a>

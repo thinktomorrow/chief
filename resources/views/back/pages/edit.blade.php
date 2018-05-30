@@ -25,8 +25,10 @@
 
     @include('chief::back.pages._update_form')
     @include('chief::back.pages._partials.modal')
-    @include('chief::back.pages._partials.delete-modal')
     @include('chief::back.pages._partials.sidebar')
 
   </form>
+
+  @include('chief::back.pages._partials.delete-modal')
+
 @stop
