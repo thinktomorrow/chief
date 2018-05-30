@@ -1,3 +1,6 @@
+---
+title: Local development
+---
 # Local Chief development
 
 For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.
