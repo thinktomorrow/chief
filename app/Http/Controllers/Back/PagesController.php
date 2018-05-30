@@ -105,12 +105,10 @@ class PagesController extends Controller
             return redirect()->back()->with('messages.warning', 'fout');
         }
 
-        if ($page->isDraft() || $page->isArchived())
-        {
+        if ($page->isDraft() || $page->isArchived()) {
             $page->delete();
         }
-        if ($page->isPublished())
-        {
+        if ($page->isPublished()) {
             $page->archive();
         }
 
@@ -121,7 +119,7 @@ class PagesController extends Controller
 
     public function publish(Request $request)
     {
-        $page = Page::findOrFail($request->get('id'));
+        $page = Page::ignoreCollection()->findOrFail($request->get('id'));
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();

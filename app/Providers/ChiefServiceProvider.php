@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Squanto\SquantoServiceProvider;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -21,8 +23,13 @@ class ChiefServiceProvider extends ServiceProvider
     {
         $this->registerChiefGuard();
 
+        $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
+
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
+        (new SquantoServiceProvider($this->app))->boot();
+        (new SquantoManagerServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -54,12 +61,11 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
-            $this->app->bind('command.chief:page', function($app){
+            $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()
                 ]);
             });
-
         }
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
@@ -69,12 +75,14 @@ class ChiefServiceProvider extends ServiceProvider
     public function register()
     {
         // TODO: test this logic...
-        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php' , 'thinktomorrow.chief');
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'thinktomorrow.chief');
 
         $this->setupEnvironmentProviders();
 
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
+        (new SquantoServiceProvider($this->app))->register();
+        (new SquantoManagerServiceProvider($this->app))->register();
     }
 
     /**
@@ -85,10 +93,8 @@ class ChiefServiceProvider extends ServiceProvider
      */
     private function setupEnvironmentProviders()
     {
-        if (!$this->app->environment('production') && $services = config('app.providers-'.app()->environment(),false))
-        {
-            foreach($services as $service)
-            {
+        if (!$this->app->environment('production') && $services = config('app.providers-'.app()->environment(), false)) {
+            foreach ($services as $service) {
                 $this->app->register($service);
             }
         }

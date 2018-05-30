@@ -23,11 +23,10 @@ class DisableUserTest extends TestCase
 
         // We start with an enabled user
         $this->user->enable();
-
     }
 
     /** @test */
-    function user_can_be_disabled_by_admin()
+    public function user_can_be_disabled_by_admin()
     {
         $this->assertTrue($this->user->isEnabled());
 
@@ -37,7 +36,7 @@ class DisableUserTest extends TestCase
     }
 
     /** @test */
-    function user_cannot_be_disabled_by_regular_author()
+    public function user_cannot_be_disabled_by_regular_author()
     {
         $this->assertTrue($this->user->isEnabled());
 
@@ -47,7 +46,7 @@ class DisableUserTest extends TestCase
     }
 
     /** @test */
-    function disabled_user_cannot_log_in()
+    public function disabled_user_cannot_log_in()
     {
         $this->user->disable();
 
@@ -60,10 +59,8 @@ class DisableUserTest extends TestCase
     }
 
     /** @test */
-    function disabled_user_cannot_use_invite_link()
+    public function disabled_user_cannot_use_invite_link()
     {
         $this->markTestIncomplete();
     }
-
-
 }

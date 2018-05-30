@@ -34,7 +34,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function signature_of_accept_url_is_validated()
+    public function signature_of_accept_url_is_validated()
     {
         // Manipulate the signature to mimic false request
         $parts = parse_url($this->invitation->acceptUrl());
@@ -46,7 +46,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accept_url_with_invalid_token_is_declined()
+    public function accept_url_with_invalid_token_is_declined()
     {
         // Manipulate the token but with valid signature
         $this->invitation->token = 'fake-token';
@@ -58,7 +58,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accept_url_is_only_valid_when_used_before_expiration()
+    public function accept_url_is_only_valid_when_used_before_expiration()
     {
         $this->invitation->expires_at = now()->subDays(4);
         $url = $this->invitation->acceptUrl();
@@ -69,7 +69,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accepting_invite_enables_user_account()
+    public function accepting_invite_enables_user_account()
     {
         $this->assertFalse($this->invitee->isEnabled());
         $this->get($this->invitation->acceptUrl());
@@ -84,7 +84,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function non_enabled_invitee_cannot_log_in()
+    public function non_enabled_invitee_cannot_log_in()
     {
         $response = $this->post(route('chief.back.login.store'), [
             'email'    => $this->invitee->email,
@@ -95,7 +95,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accept_url_should_not_be_processed_when_invitation_is_revoked()
+    public function accept_url_should_not_be_processed_when_invitation_is_revoked()
     {
         // Force invitation state on revoked
         $this->invitation->changeState('revoked');
@@ -107,7 +107,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accept_url_logs_user_in_and_redirects_to_getting_started_page()
+    public function accept_url_logs_user_in_and_redirects_to_getting_started_page()
     {
         // Assert we are not yet logged in
         $this->assertFalse(auth()->guard('chief')->check());
@@ -121,7 +121,7 @@ class AcceptInviteTest extends TestCase
     }
 
     /** @test */
-    function accept_url_redirects_user_to_password_edit_page_if_password_is_not_filled_in_yet()
+    public function accept_url_redirects_user_to_password_edit_page_if_password_is_not_filled_in_yet()
     {
         Notification::fake();
 

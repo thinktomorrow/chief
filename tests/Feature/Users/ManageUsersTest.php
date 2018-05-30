@@ -23,14 +23,14 @@ class ManageUsersTest extends TestCase
     }
 
     /** @test */
-    function full_admin_can_view_the_users_overview()
+    public function full_admin_can_view_the_users_overview()
     {
         $response = $this->asAdmin()->get(route('chief.back.users.index'));
         $response->assertStatus(200);
     }
 
     /** @test */
-    function regular_author_cannot_view_the_users_overview()
+    public function regular_author_cannot_view_the_users_overview()
     {
         $response = $this->asAuthor()->get(route('chief.back.users.index'));
 

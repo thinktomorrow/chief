@@ -13,7 +13,7 @@
             <div>
                 <a href="{{ route('chief.back.users.edit', $user->id) }}">{{ $user->fullname }}</a>
                 {!! $user->present()->enabledAsLabel() !!}
-                {!! optional($user->invitation)->present()->stateAsLabel() !!}
+                {!! optional(optional($user->invitation)->present())->stateAsLabel() !!}
             </div>
 
             <div style="margin-left:auto;">

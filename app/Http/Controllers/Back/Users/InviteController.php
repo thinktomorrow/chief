@@ -32,8 +32,7 @@ class InviteController extends Controller
         // Log user into the system and proceed to start page
         auth()->guard('chief')->login($invitation->invitee);
 
-        if (is_null($invitation->invitee->password))
-        {
+        if (is_null($invitation->invitee->password)) {
             return redirect()->route('chief.back.password.edit');
         }
 
@@ -48,5 +47,4 @@ class InviteController extends Controller
 
         return view('chief::back.users.invite-denied');
     }
-
 }

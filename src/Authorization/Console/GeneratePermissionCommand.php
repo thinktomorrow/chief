@@ -16,7 +16,7 @@ class GeneratePermissionCommand extends Command
     public function handle()
     {
         $scope = $this->getNameArgument();
-        $permissions = (false === strpos($scope,'-')) ? Permission::generate($scope) : [$scope];
+        $permissions = (false === strpos($scope, '-')) ? Permission::generate($scope) : [$scope];
 
         $this->createPermissions($permissions);
         $this->assignPermissionsToRoles($permissions);
@@ -47,7 +47,9 @@ class GeneratePermissionCommand extends Command
      */
     private function assignPermissionsToRoles($permissions)
     {
-        if(!$this->option('role')) return;
+        if (!$this->option('role')) {
+            return;
+        }
 
         $roleNames = explode(',', $this->option('role'));
 

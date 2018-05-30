@@ -21,7 +21,7 @@ class ChildFake extends Model implements ActsAsChild
 
     public static function migrate()
     {
-        Schema::create('fake_children', function (Blueprint $table){
+        Schema::create('fake_children', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
         });
@@ -39,7 +39,7 @@ class ChildFake extends Model implements ActsAsChild
 
     public function getRelationLabel(): string
     {
-       return $this->id;
+        return $this->id;
     }
 
     public function getRelationGroup(): string

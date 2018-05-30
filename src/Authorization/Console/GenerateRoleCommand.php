@@ -29,27 +29,29 @@ class GenerateRoleCommand extends Command
 
     private function assignPermissionsToRole(Role $role)
     {
-        if(!$this->option('permissions')) return;
+        if (!$this->option('permissions')) {
+            return;
+        }
 
         $permissionNames = explode(',', $this->option('permissions'));
 
         $cleanPermissionNames = [];
-        foreach($permissionNames as $k => $permissionName){
-
+        foreach ($permissionNames as $k => $permissionName) {
             $permissionName = trim($permissionName);
 
             // Generate all permissions if only scope is passed
-            if(false === strpos($permissionName, '-')) {
+            if (false === strpos($permissionName, '-')) {
                 $cleanPermissionNames = array_merge($cleanPermissionNames, Permission::generate($permissionName));
             } else {
                 // Trim the value
                 $cleanPermissionNames[] = $permissionName;
             }
-
         }
 
-        foreach($cleanPermissionNames as $cleanPermissionName){
-            if($role->hasPermissionTo($cleanPermissionName)) continue;
+        foreach ($cleanPermissionNames as $cleanPermissionName) {
+            if ($role->hasPermissionTo($cleanPermissionName)) {
+                continue;
+            }
             $role->givePermissionTo($cleanPermissionName);
         }
 

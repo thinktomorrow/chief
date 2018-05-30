@@ -7,8 +7,8 @@ return [
      * This contact will receive e.g. contact form submissions
      */
     'contact'   => [
-        'email' => env('MAIL_ADMIN_EMAIL','info@thinktomorrow.be'),
-        'name' => env('MAIL_ADMIN_NAME','Think Tomorrow')
+        'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
+        'name' => env('MAIL_ADMIN_NAME', 'Think Tomorrow')
     ],
 
     /**
@@ -16,7 +16,7 @@ return [
      *
      * This is used in a couple of places such as the generator tools and the mail footer.
      */
-    'name' => 'Crius',
+    'name' => 'Chief',
 
     /**
      * Client name
@@ -45,7 +45,6 @@ return [
      */
     'collections' => [
         'statics' => \Thinktomorrow\Chief\Pages\Page::class,
-        'products' => \Crius\Products\Product::class,
     ],
 
 ];

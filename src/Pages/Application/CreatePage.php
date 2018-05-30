@@ -28,8 +28,7 @@ class CreatePage
             DB::commit();
 
             return $page->fresh();
-
-        } catch(\Throwable $e){
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }

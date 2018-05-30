@@ -25,7 +25,7 @@ class GeneratePageCommandTest extends TestCase
     }
 
     /** @test */
-    function it_requires_a_name_parameter()
+    public function it_requires_a_name_parameter()
     {
         $this->expectException(\RuntimeException::class);
 
@@ -33,7 +33,7 @@ class GeneratePageCommandTest extends TestCase
     }
 
     /** @test */
-    function a_model_can_be_generated()
+    public function a_model_can_be_generated()
     {
         $this->markTestIncomplete();
 

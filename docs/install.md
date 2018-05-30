@@ -1,9 +1,9 @@
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.
-Chief is solely the back-end(or admin panel) of a project. You will need to create the front-end yourself.
+Chief is solely the back-end(admin panel). You will need to create the front-end yourself.
 To install chief we need to install it into another project.
-This can be either an existing one or a new Laravel 5.6 project.
+This can be either an existing one or a fresh Laravel 5.6+ project.
 
 ## Installment
 
@@ -17,7 +17,10 @@ Next edit the application exception handler to extend the chief exception handle
 The Chief Exception handler takes care of the admin authentication and authorization.
 In the `App\Exceptions\Handler` file extend the class as such:
 
+
+```File: App\Exceptions\Handler.php```
 ```php
+
 use Thinktomorrow\Chief\App\Exceptions\Handler as ChiefExceptionHandler;
 
 class Handler extends ChiefExceptionHandler
@@ -26,6 +29,7 @@ class Handler extends ChiefExceptionHandler
 Add the `AuthenticateChiefSession::class` middleware to your `App\Http\Kernel` file. 
 You should place these in a `web-chief` middleware group like so:
 
+```File: App\Http\Kernel.php```
 ```php
 protected $middlewareGroups = [
     ...
@@ -36,6 +40,8 @@ protected $middlewareGroups = [
 ]
 ```
 
+### Database
+
 Create a database for your application and perform the migrate artisan command. This will automatically run the chief migrations as well.
 Note that Chief has separate tables for the chief admin users, `chief-users` and `chief_password_resets`. This way there
 is no interference with your application user logic.
@@ -44,14 +50,16 @@ is no interference with your application user logic.
 php artisan migrate
 ```
 
-Ok so now you need at least one main admin user to login and start managing the admin.
+Next we need at least one main admin user to login and start managing the admin panel.
 This command will create the basic roles and permissions and allows to setup the first admin account:
 
 ```php
 php artisan chief:admin
 ```
 
-Next we need to publish the chief-assets to our public folder.
+### Config & Assets
+
+The next step is to publish the chief-assets to our public folder.
 If you want to overwrite existing files you can add the `--force` flag here.
 
 ```php
@@ -88,11 +96,6 @@ At the following files you should change the locales to your desired setup:
 
 To change the model behaviour for chief models you can extend the models in your application.
 
-# Database tables
-
-Chief uses a fair amount of database tables. To make it easier in use and since nothing would work without it, running ```php artisan migrate```
-will export all the necessary migrations automaticaly.
-
 # Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
 
@@ -101,6 +104,7 @@ Add following snippet in the AppServiceProvider of your project if you use MySQL
 ref: https://laravel.com/docs/master/migrations#creating-indexes
 `Schema::defaultStringLength(191)`
 
+```File: App\Providers\AppServiceProvider.php```
 ```php
 use Illuminate\Support\Facades\Schema;
 
@@ -117,23 +121,11 @@ public function boot()
 
 ### FAQ
 
-Q: I get the "Route [login] not defined" error. Help!
-A: Extend our ChiefExceptionHandler in the app/handler.php file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.
+Q: I get the "Route [login] not defined" error. Help!  
+A: Extend our ChiefExceptionHandler in the `app/handler.php` file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.
 
-Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!
+Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!  
 A: /
 
-Q: I get the "Class web-chief does not exist" error. Help!
-A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file.
-
-## Required setup steps of your project after installment
-- include ChiefServiceProvider
-
-
-- Extend in your project the Chief Exception handler.
-- extend the Http kernel of chief
-- publish all the config files:
-    - translatable for providing the model translations
-    - locale for allowing frontend translation
-    - chief-assets (php artisan vendor:publish --tag=chief-assets)
-- Schema::defaultStringLength(191);
+Q: I get the "Class web-chief does not exist" error. Help!  
+A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel.php` file.

@@ -40,7 +40,7 @@
             <a class="btn btn-secondary" @click="closeModal(\'exampleModal2\')">Oke, Got it</a>
         </div>
     </div>
-</modal>' ); ?>
+</modal>'); ?>
         </code>
     </pre>
 

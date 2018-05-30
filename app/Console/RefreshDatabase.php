@@ -14,13 +14,11 @@ class RefreshDatabase extends BaseCommand
 
     public function handle()
     {
-        if(app()->environment() != 'local' && !$this->option('force'))
-        {
+        if (app()->environment() != 'local' && !$this->option('force')) {
             throw new \Exception('Aborting. This command is dangerous and only meant for your local environment.');
         }
 
-        if(app()->environment() != 'local' && $this->option('force'))
-        {
+        if (app()->environment() != 'local' && $this->option('force')) {
             if (!$this->confirm('You are about to force refresh the database in the '.app()->environment().' environment! ARE YOU SURE?')) {
                 $this->info('aborting.');
                 return;
@@ -32,9 +30,9 @@ class RefreshDatabase extends BaseCommand
             }
         }
 
-        if($this->option('force')){
+        if ($this->option('force')) {
             $this->call('migrate:fresh', ['--force' => true]);
-        }else{
+        } else {
             $this->call('migrate:fresh');
         }
 
@@ -52,12 +50,12 @@ class RefreshDatabase extends BaseCommand
 
     private function settingPermissionsAndRoles()
     {
-        AuthorizationDefaults::permissions()->each(function($permissionName){
+        AuthorizationDefaults::permissions()->each(function ($permissionName) {
             Artisan::call('chief:permission', ['name' => $permissionName]);
         });
 
-        AuthorizationDefaults::roles()->each(function($defaultPermissions, $roleName){
-            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',',$defaultPermissions)]);
+        AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
+            Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
         });
 
         $this->info('Default permissions and roles');
@@ -81,10 +79,9 @@ class RefreshDatabase extends BaseCommand
             ['Json', 'Voorhees', 'json@thinktomorrow.be', $password],
         ]);
 
-        $admins->each(function($admin){
+        $admins->each(function ($admin) {
             $this->createUser($admin[0], $admin[1], $admin[2], $admin[3], 'developer');
             $this->info('Added '.$admin[0].' as developer role with your provided password.');
         });
     }
-
 }

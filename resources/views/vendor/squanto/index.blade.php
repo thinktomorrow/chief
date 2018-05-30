@@ -1,4 +1,4 @@
-@extends(config('squanto.template'))
+@extends('chief::back._layouts.master')
 
 @section('page-title')
     Teksten
@@ -12,7 +12,6 @@
 @endcomponent
 
 @section('content')
-
     <div class="card-group-title"><span class="inline-xs">Pages</span></div>
     <div class="row gutter card-group left">
         @foreach($pages->filter(function($page){ return in_array($page->key,[]); }) as $page)

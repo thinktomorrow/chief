@@ -15,47 +15,47 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    function admin_can_view_the_create_form()
+    public function admin_can_view_the_create_form()
     {
         $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(200);
     }
 
     /** @test */
-    function guests_cannot_view_the_create_form()
+    public function guests_cannot_view_the_create_form()
     {
         $response = $this->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
-    function creating_a_new_page()
+    public function creating_a_new_page()
     {
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store'), $this->validParams());
+            ->post(route('chief.back.pages.store', 'statics'), $this->validParams());
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.pages.index'));
+        $response->assertRedirect(route('chief.back.pages.index', 'statics'));
 
         $this->assertCount(1, Page::all());
         $this->assertNewValues(Page::first());
     }
 
     /** @test */
-    function only_authenticated_admin_can_create_a_page()
+    public function only_authenticated_admin_can_create_a_page()
     {
-        $response = $this->post(route('chief.back.pages.store'), $this->validParams());
+        $response = $this->post(route('chief.back.pages.store', 'statics'), $this->validParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Page::all());
     }
 
     /** @test */
-    function when_creating_page_title_is_required()
+    public function when_creating_page_title_is_required()
     {
         $this->assertValidation(new Page(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
             route('chief.back.pages.index', 'statics'),
-            route('chief.back.pages.store')
+            route('chief.back.pages.store', 'statics')
         );
     }
 
@@ -70,7 +70,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store'), $this->validParams([
+            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
                     'title:nl'  => 'foobarnl',
                     'title:en'  => 'foobaren',
                 ])
@@ -116,8 +116,8 @@ class CreatePageTest extends TestCase
             ],
         ];
 
-        foreach ($overrides as $key => $value){
-            array_set($params,  $key, $value);
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
         }
 
         return $params;

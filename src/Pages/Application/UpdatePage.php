@@ -14,7 +14,7 @@ class UpdatePage
 
     public function handle($id, array $translations, array $relations): Page
     {
-        try{
+        try {
             DB::beginTransaction();
 
             $page = Page::ignoreCollection()->findOrFail($id);
@@ -37,8 +37,7 @@ class UpdatePage
 
             DB::commit();
             return $page->fresh();
-
-        } catch(\Throwable $e){
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }
@@ -60,11 +59,11 @@ class UpdatePage
     private function syncRelations($page, $relateds)
     {
         // First remove all existing children
-        foreach($page->children() as $child){
+        foreach ($page->children() as $child) {
             $page->rejectChild($child);
         }
 
-        foreach(RelatedCollection::inflate($relateds) as $i => $related){
+        foreach (RelatedCollection::inflate($relateds) as $i => $related) {
             $page->adoptChild($related, ['sort' => $i]);
         }
     }

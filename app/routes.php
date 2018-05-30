@@ -5,9 +5,8 @@
  * SPIRIT ROUTES
  * -----------------------------------------------------------------
  */
-Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => function($section = null, $item = null){
-
-    if($section && $item && view()->exists('chief::spirit.'.$section.'.'.$item)){
+Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => function ($section = null, $item = null) {
+    if ($section && $item && view()->exists('chief::spirit.'.$section.'.'.$item)) {
         return view('chief::spirit.'.$section.'.'.$item);
     }
 
@@ -39,17 +38,15 @@ Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chief']],function()
-{
-
+Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chief']], function () {
     Route::get('logout', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@logout')->name('chief.back.logout');
 
-    Route::get('/','Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
-    Route::get('getting-started','Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@gettingStarted')->name('chief.back.dashboard.getting-started');
+    Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
+    Route::get('getting-started', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@gettingStarted')->name('chief.back.dashboard.getting-started');
 
     // Prompt for a (new) password
-    Route::get('password-prompt','Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@edit')->name('chief.back.password.edit');
-    Route::put('password-prompt','Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
+    Route::get('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@edit')->name('chief.back.password.edit');
+    Route::put('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
 
     // Pages
     Route::get('pages/{collection}','Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
@@ -72,9 +69,9 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     Route::post('page/{id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@upload')->name('page.upload');
 
-    Route::get('/settings',['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
+    Route::get('/settings', ['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
 
-    Route::post('notes/publish',['as' => 'notes.publish','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\NoteController::class.'@publish']);
+    Route::post('notes/publish', ['as' => 'notes.publish','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\NoteController::class.'@publish']);
     Route::resource('notes', Thinktomorrow\Chief\App\Http\Controllers\Back\NoteController::class);
 
     // YOUR PROFILE MANAGEMENT
@@ -96,9 +93,9 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::get('users/{user}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@edit')->name('chief.back.users.edit');
 
     // INVITE MANAGEMENT
-    Route::post('users/{id}/disable','Thinktomorrow\Chief\App\Http\Controllers\Back\Users\DisableUserController@store')->name('chief.back.users.disable');
-    Route::post('users/{id}/enable','Thinktomorrow\Chief\App\Http\Controllers\Back\Users\EnableUserController@store')->name('chief.back.users.enable');
-    Route::get('users/{id}/resend-invite','Thinktomorrow\Chief\App\Http\Controllers\Back\Users\ResendInviteController@store')->name('chief.back.invites.resend');
+    Route::post('users/{id}/disable', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\DisableUserController@store')->name('chief.back.users.disable');
+    Route::post('users/{id}/enable', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\EnableUserController@store')->name('chief.back.users.enable');
+    Route::get('users/{id}/resend-invite', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\ResendInviteController@store')->name('chief.back.invites.resend');
 
     // ROLE MANAGEMENT
     Route::get('roles', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization\RoleController@index')->name('chief.back.roles.index');
@@ -124,15 +121,14 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * -----------------------------------------------------------------
      */
     // Developer access
-    Route::get('translations/lines/create',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.create','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@create']);
-    Route::delete('translations/lines/{id}',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.destroy','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@destroy']);
-    Route::get('translations/lines/{id}/edit',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@edit']);
-    Route::put('translations/lines/{id}',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@update']);
-    Route::post('translations/lines',['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.store','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@store']);
+    Route::get('translations/lines/create', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.create','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@create']);
+    Route::delete('translations/lines/{id}', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.destroy','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@destroy']);
+    Route::get('translations/lines/{id}/edit', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@edit']);
+    Route::put('translations/lines/{id}', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@update']);
+    Route::post('translations/lines', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.store','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@store']);
 
     // Client access
-    Route::get('translations/{id}/edit',['as' => 'squanto.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@edit']);
-    Route::put('translations/{id}',['as' => 'squanto.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@update']);
-    Route::get('translations',['as' => 'squanto.index','uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController@index']);
-
+    Route::get('translations/{id}/edit', ['as' => 'squanto.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@edit']);
+    Route::put('translations/{id}', ['as' => 'squanto.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@update']);
+    Route::get('translations', ['as' => 'squanto.index','uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController@index']);
 });
