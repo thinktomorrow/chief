@@ -1,6 +1,5 @@
 ---
 title: Document Center
-test: pages
 ---
 # Chief
 
