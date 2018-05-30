@@ -1,8 +1,6 @@
 ---
 title: Install
 description: chief is a package based cms built on top of the laravel framework.
-group: docs
-toc: true
 ---
 
 # Chief
