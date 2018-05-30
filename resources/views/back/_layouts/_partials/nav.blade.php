@@ -15,7 +15,7 @@
                         </div>
                     </dropdown>
                 </li>
-                <li><a class="nav-item disabled {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a></li>
+                <li><a class="nav-item {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a></li>
                 <li><a class="nav-item" target="_blank" href="/spirit">Spirit</a></li>
             </ul>
 

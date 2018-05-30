@@ -1,3 +1,10 @@
+[Install](index.md)
+[Local development](chief-development.md)
+[Overriding chief](overriding-chief.md)
+[Pages](pages.md)
+[Server](server.md)
+[Changelog](CHANGELOG.md)
+[Guidelines](GUIDELINES.md)
 # Standard deployment scripts
 
 ## PRODUCTION
@@ -28,4 +35,3 @@ cp public/robots-staging.txt public/robots.txt
 # clear cache
 php artisan cache:clear
 ```
-
