@@ -1,13 +1,10 @@
 ---
 title: Install
-description: hief is a package based cms built on top of the laravel framework.
+description: chief is a package based cms built on top of the laravel framework.
 group: docs
-redirect_from:
-  - /docs/
-  - /docs/install
-  - /docs/getting-started
 toc: true
 ---
+
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.
