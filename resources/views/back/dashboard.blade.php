@@ -57,7 +57,7 @@
                         <div class="stack">
                             <h1 class="--remove-margin">5</h1>
                             <p>Pagina's</p>
-                            <a href="{{ route('chief.back.pages.index') }}" class="btn btn-secondary">Ga naar pagina's</a>
+                            <a href="{{ route('chief.back.pages.index', 'statics') }}" class="btn btn-secondary">Ga naar pagina's</a>
                         </div>
                     </div>
                 </div>

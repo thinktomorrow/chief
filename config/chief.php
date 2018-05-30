@@ -39,4 +39,12 @@ return [
         ],
     ],
 
+    /**
+     * Here you should provide the mapping of page and component collections. This
+     * is required for the class mapping from database to their respective classes.
+     */
+    'collections' => [
+        'statics' => \Thinktomorrow\Chief\Pages\Page::class,
+    ],
+
 ];

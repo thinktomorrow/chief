@@ -36,11 +36,11 @@ class GeneratePage extends BaseCommand
 
         // Set required paths
         $this->dirs = ['base' => $this->settings['base_path'] ?? base_path()];
-        $this->dirs['model'] = $this->settings['model_path'] ?? $this->dirs['base'].'/src';
-        $this->dirs['views'] = $this->settings['views_path'] ?? $this->dirs['base'].'/resources/views';
-        $this->dirs['controller'] = $this->settings['controller_path'] ?? $this->dirs['base'].'/app/Http/Controllers';
+        $this->dirs['model'] = $this->settings['model_path'] ?? $this->dirs['base'] . '/src';
+        $this->dirs['views'] = $this->settings['views_path'] ?? $this->dirs['base'] . '/resources/views';
+        $this->dirs['controller'] = $this->settings['controller_path'] ?? $this->dirs['base'] . '/app/Http/Controllers';
 
-        $this->files['routes'] = $this->settings['routes_file'] ?? $this->dirs['base'].'/routes/web.php';
+        $this->files['routes'] = $this->settings['routes_file'] ?? $this->dirs['base'] . '/routes/web.php';
     }
 
     public function handle()
@@ -55,6 +55,8 @@ class GeneratePage extends BaseCommand
 
         $this->publishModel();
 //        $this->publishController();
+
+        // TODO: add mapping to config: "public static \$collection = '".strtolower($this->plural)."';",
     }
 
     private function publishModel()
@@ -109,8 +111,8 @@ class GeneratePage extends BaseCommand
     private function modelTraits()
     {
         return [
-            Publishable::class,
-            Sortable::class,
+            '\\' . Publishable::class,
+            '\\' . Sortable::class,
             'q' => 'Proceed.',
         ];
     }
@@ -194,6 +196,13 @@ class GeneratePage extends BaseCommand
             ->map(function ($statement) {
                 return 'use ' . $statement . ";\n    ";
             })->implode('');
+    }
+
+    private function generateModelProperties(): string
+    {
+        return implode("\n    ", [
+            //
+        ]);
     }
 
     private function guessNamespace()

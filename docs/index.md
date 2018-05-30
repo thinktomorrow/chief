@@ -30,8 +30,8 @@ use Thinktomorrow\Chief\App\Exceptions\Handler as ChiefExceptionHandler;
 class Handler extends ChiefExceptionHandler
 ```
 
-Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel` file. This handles the
-login sessions of the chief user.
+Add the `AuthenticateChiefSession::class` middleware to your `App\Http\Kernel` file. 
+You should place these in a `web-chief` middleware group like so:
 
 ```File: App\Http\Kernel.php```
 ```php
@@ -75,12 +75,16 @@ contact email and application name.
 ```php
 php artisan vendor:publish --tag=chief-config
 ```
-Make sure to set at least the `name` value to your project name as it is used in some of the generator commands.
+Make sure to set at least the `name` value to your project name as it is used in some of the generator commands. Ideally this should match
+the namespace of your `src` folder, if you have any.
 
 The following vendor assets should also be published to your application:
 ```php
 // The dimsav translatable package
 php artisan vendor:publish --tag=translatable
+
+// The thinktomorrow locale package
+php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvider"
 ```
 
 # Multilingual
@@ -122,7 +126,7 @@ public function boot()
 ### FAQ
 
 Q: I get the "Route [login] not defined" error. Help!  
-A: Extend our ChiefExceptionHandler in the `app/handler.php` file.
+A: Extend our ChiefExceptionHandler in the `app/handler.php` file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.
 
 Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!  
 A: /

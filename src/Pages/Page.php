@@ -20,7 +20,8 @@ use Thinktomorrow\Chief\Common\Traits\Archivable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
-    use AssetTrait,
+    use HasCollection,
+        AssetTrait,
         Translatable,
         BaseTranslatable,
         SoftDeletes,
@@ -32,10 +33,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = PageTranslation::class;
+    protected $translationForeignKey = 'page_id';
     protected $translatedAttributes = [
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
 
+    public $table = "pages";
+    protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
@@ -82,5 +86,26 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function previewUrl()
     {
         // return route('pages.show', $this->slug).'?preview-mode';
+    }
+
+    /**
+     * Details of the collection such as naming, key and class.
+     * Used in several dynamic parts of the admin application.
+     *
+     * @param null $key
+     * @return object
+     */
+    public static function collectionDetails($key = null)
+    {
+        $collectionKey = (new static)->collectionKey();
+
+        $names = (object) [
+            'key'      => $collectionKey,
+            'class'    => static::class,
+            'singular' => $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
+            'plural'   => $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
+        ];
+
+        return $key ? $names->$key : $names;
     }
 }
