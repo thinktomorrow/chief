@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7d51c991406a81a752db5f86a25b6b6",
+    "content-hash": "00e333fbb64b75d104f2c0423c121149",
     "packages": [
         {
             "name": "dimsav/laravel-translatable",
@@ -3487,6 +3487,43 @@
                 "thinktomorrow"
             ],
             "time": "2018-03-26T14:21:23+00:00"
+        },
+        {
+            "name": "thinktomorrow/vine",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thinktomorrow/vine.git",
+                "reference": "bfbe8c04d233b952d371d79d27bb4083280b8ab8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/bfbe8c04d233b952d371d79d27bb4083280b8ab8",
+                "reference": "bfbe8c04d233b952d371d79d27bb4083280b8ab8",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1",
+                "scrutinizer/ocular": "^1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Cavens",
+                    "email": "cavensben@gmail.com"
+                }
+            ],
+            "description": "Render a datatree structure",
+            "time": "2017-06-08T14:34:04+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",

@@ -16,7 +16,8 @@
         "spatie/laravel-permission": "^2.12",
         "thinktomorrow/assetlibrary": "^0.4",
         "thinktomorrow/locale": "^1.5",
-        "thinktomorrow/squanto": "^0.4"
+        "thinktomorrow/squanto": "^0.4",
+        "thinktomorrow/vine": "^0.1.0"
     },
     "require-dev": {
         "filp/whoops": "^2.1",
