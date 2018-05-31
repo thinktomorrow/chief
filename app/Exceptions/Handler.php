@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Thinktomorrow\Chief\Authorization\Exceptions\UnauthorizedRequestException;
 
 class Handler extends ExceptionHandler
 {
