@@ -16,6 +16,8 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Menu\Tree\MenuTreeRepository;
+use Illuminate\Database\DatabaseManager;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -83,6 +85,14 @@ class ChiefServiceProvider extends ServiceProvider
         (new EventServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new SquantoManagerServiceProvider($this->app))->register();
+
+        $this->app->singleton('menu_tree_repository', function () {
+            return new MenuTreeRepository(app(DatabaseManager::class));
+        });
+        
+        $this->app->bind('Thinktomorrow\Chief\Menu\Tree\MenuTreeRepositoryContract', function ($app) {
+            return $app['menu_tree_repository'];
+        });
     }
 
     /**

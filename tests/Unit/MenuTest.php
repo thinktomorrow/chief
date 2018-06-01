@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
+use Thinktomorrow\Chief\Pages\Page;
 
 class MenuTest extends TestCase
 {
@@ -22,31 +23,62 @@ class MenuTest extends TestCase
     /** @test */
     function it_can_nest_a_menu_item()
     {
-        $first = MenuItem::create(['label:nl' => 'first item']);
+        $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
 
-        $this->assertInstanceof(NodeCollection::class, (new ChiefMenu([$first, $second]))->items());
-//        $this->assertCount(2, (new ChiefMenu)->items()->flatten());
+        $tree = (new ChiefMenu([$first, $second]))->items();
+        $this->assertInstanceof(NodeCollection::class, $tree);
+        $this->assertCount(2, $tree);
     }
 
     /** @test */
     function it_can_reference_an_internal_page()
     {
-        // test it out
+        $page   = factory(Page::class)->create([
+            'slug'      => 'foobar',
+            'published' => 1
+        ]);
+        
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id]);
 
+        $tree = (new ChiefMenu([$first, $second]))->items();
 
+        $this->assertNotNull($tree->find('page_id', $page->id));
     }
 
     /** @test */
     function it_can_reference_a_collection_of_pages()
     {
-        // test it out
+        $this->markTestIncomplete();
+        $page   = factory(Page::class, 3)->create([
+            'collection'    => 'article',
+            'published'     => 1
+        ]);
+        
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'collection', 'collection_type' => 'article', 'parent_id' => $first->id]);
+
+        $tree = (new ChiefMenu([$first, $second]))->items();
+
+        $this->assertNotNull($tree->find('collection_type', 'article'));
+        //Should the tree contain a menuitem for each item in the collection or do we handle this is the presenters?
     }
 
     /** @test */
     function it_can_be_a_custom_link()
     {
-        // test it out
+        $page   = factory(Page::class, 3)->create([
+            'collection'    => 'article',
+            'published'     => 1
+        ]);
+        
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'custom', 'url' => 'https://google.com', 'parent_id' => $first->id]);
+
+        $tree = (new ChiefMenu([$first, $second]))->items();
+
+        $this->assertNotNull($tree->find('url', 'https://google.com'));
     }
     
     /** @test */
