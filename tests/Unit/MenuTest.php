@@ -86,17 +86,26 @@ class MenuTest extends TestCase
     }
     
     /** @test */
+    function menu_item_without_parent_is_considered_top_level()
+    {
+        $first  = MenuItem::create(['label:nl' => 'first item']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
+        $third = MenuItem::create(['label:nl' => 'lastt item']);
+
+        $collection = ChiefMenu::fromArray([$first, $second, $third])->items();
+
+        $this->assertInstanceof(NodeCollection::class, $collection);
+        $this->assertEquals(2, $collection->count());
+        $this->assertEquals(3, $collection->total());
+    }
+    
+    /** @test */
     function it_can_have_a_custom_value()
     {
         // test it out
         // Column icon toegevoegd per project -> wordt automatisch meegepakt
     }
     
-    /** @test */
-    function menu_item_without_parent_is_considered_top_level()
-    {
-        // test it out
-    }
     
     /** @test */
     function first_menu_item_is_the_toggle()
