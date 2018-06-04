@@ -4,19 +4,32 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Menu;
 
 use Vine\NodeCollection;
-use Thinktomorrow\Chief\Menu\Tree\MenuTreeRepositoryContract;
 
 class ChiefMenu
 {
-    private $items;
+    private $collection;
 
-    public function __construct(array $items)
+    public function __construct(NodeCollection $collection)
     {
-        $this->items = app(MenuTreeRepositoryContract::class)->get();
+        $this->collection = $collection;
+    }
+
+    public static function fromMenuItems()
+    {
+        $collection = NodeCollection::fromSource(new MenuItem());
+
+        return new static($collection);
+    }
+
+    public static function fromArray(array $items)
+    {
+        $collection = NodeCollection::fromArray($items);
+
+        return new static($collection);
     }
 
     public function items(): NodeCollection
     {
-        return $this->items;
+        return $this->collection;
     }
 }

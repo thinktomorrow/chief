@@ -18,6 +18,11 @@ class MenuTest extends TestCase
         parent::setUp();
 
         $this->setUpDatabase();
+
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'statics' => Page::class,
+            'articles' => ArticleFake::class,
+        ]);
     }
 
     /** @test */
@@ -26,9 +31,11 @@ class MenuTest extends TestCase
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
 
-        $tree = (new ChiefMenu([$first, $second]))->items();
-        $this->assertInstanceof(NodeCollection::class, $tree);
-        $this->assertCount(2, $tree);
+        $collection = ChiefMenu::fromArray([$first, $second])->items();
+
+        $this->assertInstanceof(NodeCollection::class, $collection);
+        $this->assertEquals(1, $collection->count());
+        $this->assertEquals(2, $collection->total());
     }
 
     /** @test */
@@ -42,27 +49,8 @@ class MenuTest extends TestCase
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
         $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id]);
 
-        $tree = (new ChiefMenu([$first, $second]))->items();
-
-        $this->assertNotNull($tree->find('page_id', $page->id));
-    }
-
-    /** @test */
-    function it_can_reference_a_collection_of_pages()
-    {
-        $this->markTestIncomplete();
-        $page   = factory(Page::class, 3)->create([
-            'collection'    => 'article',
-            'published'     => 1
-        ]);
-        
-        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
-        $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'collection', 'collection_type' => 'article', 'parent_id' => $first->id]);
-
-        $tree = (new ChiefMenu([$first, $second]))->items();
-
-        $this->assertNotNull($tree->find('collection_type', 'article'));
-        //Should the tree contain a menuitem for each item in the collection or do we handle this is the presenters?
+        $collection = ChiefMenu::fromMenuItems()->items();
+        $this->assertEquals($second->id, $collection->find('page_id', $page->id)->id);
     }
 
     /** @test */
@@ -76,9 +64,25 @@ class MenuTest extends TestCase
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
         $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'custom', 'url' => 'https://google.com', 'parent_id' => $first->id]);
 
-        $tree = (new ChiefMenu([$first, $second]))->items();
+        $tree = ChiefMenu::fromArray([$first, $second])->items();
 
         $this->assertNotNull($tree->find('url', 'https://google.com'));
+    }
+
+    /** @test */
+    function it_can_reference_a_collection_of_pages()
+    {
+        factory(Page::class, 3)->create([
+            'collection'    => 'articles',
+            'published'     => 1
+        ]);
+
+        MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles']);
+
+        $collection = ChiefMenu::fromMenuItems()->items();
+
+        $this->assertEquals(4, $collection->total());
+        $this->assertEquals(3, $collection->first()->children()->count());
     }
     
     /** @test */
@@ -119,3 +123,5 @@ class MenuTest extends TestCase
     }
 
 }
+
+class ArticleFake extends Page{}

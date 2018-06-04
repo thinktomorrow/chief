@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "00e333fbb64b75d104f2c0423c121149",
+    "content-hash": "08cf2fe605f3ab946d4c79ca16b11198",
     "packages": [
         {
             "name": "dimsav/laravel-translatable",
@@ -3490,16 +3490,16 @@
         },
         {
             "name": "thinktomorrow/vine",
-            "version": "0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/vine.git",
-                "reference": "bfbe8c04d233b952d371d79d27bb4083280b8ab8"
+                "reference": "1483b4c816420df28df778f6cc1a0651d451bdf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/bfbe8c04d233b952d371d79d27bb4083280b8ab8",
-                "reference": "bfbe8c04d233b952d371d79d27bb4083280b8ab8",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/1483b4c816420df28df778f6cc1a0651d451bdf3",
+                "reference": "1483b4c816420df28df778f6cc1a0651d451bdf3",
                 "shasum": ""
             },
             "require-dev": {
@@ -3523,7 +3523,7 @@
                 }
             ],
             "description": "Render a datatree structure",
-            "time": "2017-06-08T14:34:04+00:00"
+            "time": "2018-06-04T11:09:18+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -5613,7 +5613,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "thinktomorrow/vine": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

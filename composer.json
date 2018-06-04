@@ -17,7 +17,7 @@
         "thinktomorrow/assetlibrary": "^0.4",
         "thinktomorrow/locale": "^1.5",
         "thinktomorrow/squanto": "^0.4",
-        "thinktomorrow/vine": "^0.1.0"
+        "thinktomorrow/vine": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.1",
