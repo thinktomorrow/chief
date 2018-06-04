@@ -102,7 +102,7 @@ class PagesController extends Controller
         $page = Page::ignoreCollection()->findOrFail($id);
         if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
         {
-            return redirect()->back()->with('messages.warning', 'fout');
+            return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
 
         if ($page->isDraft() || $page->isArchived()) {

@@ -1,20 +1,24 @@
-<modal id="delete-page-{{$page->id}}" class="large-modal">
-    <form action="{{route('chief.back.pages.destroy', $page->id)}}" method="POST">
+<modal id="delete-page-{{$page->id}}" class="large-modal" title=''>
+    <form action="{{route('chief.back.pages.destroy', $page->id)}}" method="POST" id="delete-form-{{$page->id}}" slot>
         @method('DELETE')
         @csrf
         <div v-cloak>
             <div class="column-12">
-                <h2 class="formgroup-label">Ok. Tijd om op te ruimen. <br>Ben je zeker?  👍</h2>
-                <p>Vul dan hier {{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }} in om te verwijderen.</p>
-                @if($page->isDraft() || $page->isArchived())
-                    <div id="clone-12" class="input-group column">
-                        <input name="deleteconfirmation" id="text" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s">
+                @if( ! $page->isPublished())
+                    <h2 class="formgroup-label" slot="modal-header">Ok. Tijd om op te ruimen. <br>Ben je zeker?</h2>
+                    <p>Type {{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }} om dit item te verwijderen.</p>
+                    <div class="input-group column-12">
+                        <input name="deleteconfirmation" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s">
                     </div>
+                @else
+                    <h2 class="formgroup-label">Opgelet! Een item dat online staat kan je niet zomaar verwijderen.</h2>
+                    <p>Je kan het wel archiveren, zo kan je ze in de toekomst snel terug online plaatsen.</p>
                 @endif
             </div>
         </div>
-        <div slot="footer">
-            <button type="submit" class="btn btn-o-tertiary">{{ $page->isDraft() || $page->isArchived() ? 'Verwijder' : 'Archiveer' }} dit artikel</button>
-        </div>
     </form>
+
+    <div slot="modal-action-buttons">
+        <button type="submit" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$page->id}}">{{ $page->isDraft() || $page->isArchived() ? 'Verwijder' : 'Archiveer' }} dit artikel</button>
+    </div>
 </modal>
