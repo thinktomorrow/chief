@@ -19,6 +19,11 @@ trait Publishable
         $query->where('published', 1);
     }
 
+    public function scopeDrafted($query)
+    {
+        $query->where('published', 0);
+    }
+
     public function publish()
     {
         $this->published = 1;

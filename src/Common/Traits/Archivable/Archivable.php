@@ -1,9 +1,14 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Traits;
+namespace Thinktomorrow\Chief\Common\Traits\Archivable;
 
 trait Archivable
 {
+    protected static function bootArchivable()
+    {
+        static::addGlobalScope(new ArchiveScope());
+    }
+
     public function isArchived()
     {
         return !is_null($this->{$this->getArchivedAtColumn()});
@@ -11,12 +16,21 @@ trait Archivable
 
     public function scopeArchived($query)
     {
-        $query->whereNotNull($this->getQualifiedArchivedAtColumn());
+        $query->withoutGlobalScope(ArchiveScope::class)->whereNotNull(
+            $this->getArchivedAtColumn()
+        );
     }
 
     public function scopeUnarchived($query)
     {
-        $query->whereNull($this->getQualifiedArchivedAtColumn());
+        $query->withoutGlobalScope(ArchiveScope::class)->whereNull(
+            $this->getArchivedAtColumn()
+        );
+    }
+
+    public function scopeWithArchived($query)
+    {
+        $query->withoutGlobalScope(ArchiveScope::class);
     }
 
     public function archive()
