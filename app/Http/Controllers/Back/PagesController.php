@@ -54,7 +54,7 @@ class PagesController extends Controller
     {
         $page = app(CreatePage::class)->handle($collection, $request->trans);
 
-        return redirect()->route('chief.back.pages.index',$page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
     }
 
     /**
@@ -100,8 +100,7 @@ class PagesController extends Controller
     public function destroy($id)
     {
         $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
-        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
-        {
+        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) {
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
 
@@ -125,6 +124,5 @@ class PagesController extends Controller
         ($published) ? $page->publish() : $page->draft();
 
         return redirect()->back();
-
     }
 }
