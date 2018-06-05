@@ -114,13 +114,6 @@ class MenuTest extends TestCase
     }
     
     /** @test */
-    function it_can_have_a_custom_value()
-    {
-        // test it out
-        // Column icon toegevoegd per project -> wordt automatisch meegepakt
-    }
-    
-    /** @test */
     function if_a_page_is_hidden_it_is_not_shown_in_menu()
     {
         app()->setLocale('nl');
@@ -134,6 +127,13 @@ class MenuTest extends TestCase
         $this->assertEquals(2, $collection->total());
     }
     
+    /** @test */
+    function it_can_have_a_custom_value()
+    {
+        // test it out
+        // Column icon toegevoegd per project -> wordt automatisch meegepakt
+    }
+
     /** @test */
     function first_menu_item_is_the_toggle()
     {

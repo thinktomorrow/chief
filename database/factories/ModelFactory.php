@@ -2,6 +2,7 @@
 
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
@@ -27,5 +28,11 @@ $factory->define(Page::class, function (Faker\Generator $faker) {
         'slug:en'     => $faker->unique()->slug,
         'content:nl'  => $faker->paragraph(rand(6, 12)),
         'content:en'  => $faker->paragraph(rand(4, 10)),
+    ];
+});
+
+$factory->define(MenuItem::class, function(Faker\Generator $faker) {
+    return [
+        
     ];
 });

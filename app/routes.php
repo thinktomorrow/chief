@@ -66,6 +66,12 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
     Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
 
+    Route::get('menu', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@index')->name('chief.back.menu.index');
+    Route::post('menu', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@store')->name('chief.back.menu.store');    
+    Route::get('menu/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@create')->name('chief.back.menu.create');
+    Route::get('menu/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@update')->name('chief.back.menu.update');
+    Route::get('menu/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@show')->name('chief.back.menu.show');
+    Route::get('menu/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@edit')->name('chief.back.menu.edit');
 
     Route::post('page/{id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@upload')->name('page.upload');
 
