@@ -116,8 +116,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /*
     Redactor
-    Version 3.0.10
-    Updated: May 29, 2018
+    Version 3.0.11
+    Updated: June 3, 2018
 
     http://imperavi.com/redactor/
 
@@ -1181,7 +1181,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     // Globals
-    $R.version = '3.0.10';
+    $R.version = '3.0.11';
     $R.options = {};
     $R.modules = {};
     $R.services = {};
@@ -3102,13 +3102,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 return true;
             }
 
-            //
             if (isEditor) {
                 var $editor = this.editor.getElement();
-                var output = this.cleaner.output($editor.html());
-                output = output.replace(/<p><\/p>$/i, '');
-
-                var htmlLen = this.getHtml().length;
+                var output = $editor.html().replace(/<p><\/p>$/i, '');
+                var htmlLen = this.getHtml(false).length;
                 var outputLen = output.length;
 
                 if (htmlLen !== outputLen) {
@@ -5760,7 +5757,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.app = app;
         },
         get: function get(el, trimmed) {
-            var offset = { start: 0, end: 0 };
+            var offset = { start: 0, end: 0, newline: false };
             var node = this.utils.getNode(el);
             if (!node) return false;
 
@@ -5778,8 +5775,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 clonedRange.selectNodeContents(node);
                 clonedRange.setEnd(range.startContainer, range.startOffset);
 
+                var selection = this._getString(range, trimmed);
+
+                offset.newline = selection.search(/^\n/) !== -1 && selection.trim() === '';
                 offset.start = this._getString(clonedRange, trimmed).length - fix;
-                offset.end = offset.start + this._getString(range, trimmed).length + fix;
+                offset.end = offset.start + selection.length + fix;
             }
 
             return offset;
@@ -5795,6 +5795,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var charIndex = 0,
                 range = document.createRange();
 
+            offset.newline = typeof offset.newline === 'undefined' ? false : offset.newline;
             offset.end = offset.end > size ? size : offset.end;
 
             range.setStart(node, 0);
@@ -5806,8 +5807,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             while (!stop && (node = nodeStack.pop())) {
                 if (node.nodeType == 3) {
                     var nextCharIndex = charIndex + node.length;
+                    var isNewLineStr = node.nodeValue.search(/^\n/) !== -1 && node.nodeValue.trim() === '';
 
-                    if (!foundStart && !this._isFigcaptionNext(node) && offset.start >= charIndex && offset.start <= nextCharIndex) {
+                    if (!foundStart && !this._isFigcaptionNext(node) && offset.newline === false && !isNewLineStr && offset.start >= charIndex && offset.start <= nextCharIndex) {
                         range.setStart(node, offset.start - charIndex);
                         foundStart = true;
                     }
@@ -6973,7 +6975,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
                     return nodes;
                 }
-                // td/th format
+                // td/th format uncollapsed
                 else if (!this.selection.isCollapsed() && block && (block.tagName === 'TD' || block.tagName === 'TH')) {
                         replacedTag = this._getReplacedTag('set');
                         $wrapper = this._wrapInsideTable(replacedTag);
@@ -6982,6 +6984,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
                         return this._sendNodes([$wrapper.get()]);
                     }
+                    // td/th format collapsed
+                    else if (this.selection.isCollapsed() && block && (block.tagName === 'TD' || block.tagName === 'TH')) {
+                            var textnodes = this._getChildTextNodes(block);
+
+                            replacedTag = this._getReplacedTag('set');
+                            var $wrapper = $R.dom('<' + replacedTag + '>');
+
+                            $R.dom(textnodes.first).before($wrapper);
+
+                            for (var i = 0; i < textnodes.nodes.length; i++) {
+                                $wrapper.append(textnodes.nodes[i]);
+                            }
+
+                            var nextBr = $wrapper.get().nextSibling;
+                            if (nextBr && nextBr.tagName === 'BR') {
+                                $R.dom(nextBr).remove();
+                            }
+
+                            return this._sendNodes([$wrapper.get()]);
+                        }
+
+            return nodes;
         },
         _wrapInsideTable: function _wrapInsideTable(replacedTag) {
             var data = this._getTextNodesData();
@@ -7032,6 +7056,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var replacedTag = type === 'toggle' ? this.opts.markup : this.tag;
 
             return this.opts.breakline && replacedTag === 'p' ? 'div' : replacedTag;
+        },
+        _getChildTextNodes: function _getChildTextNodes(el) {
+            var nodes = el.childNodes;
+            var firstNode = nodes[0];
+            var finalNodes = [];
+            for (var i = 0; i <= nodes.length; i++) {
+                var node = nodes[i];
+                if (node && node.nodeType !== 3 && this.inspector.isBlockTag(node.tagName)) {
+                    break;
+                }
+
+                finalNodes.push(node);
+            }
+
+            return {
+                nodes: finalNodes,
+                first: firstNode
+            };
         },
         _getTextNodesData: function _getTextNodesData() {
             var nodes = this.selection.getNodes({ textnodes: true, keepbr: true });
@@ -8676,6 +8718,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.opts = app.opts;
             this.$doc = app.$doc;
             this.uuid = app.uuid;
+            this.source = app.source;
             this.editor = app.editor;
             this.cleaner = app.cleaner;
             this.container = app.container;
@@ -8868,7 +8911,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
         },
         keyup: function keyup(e) {
-            this.app.broadcast('observe', e);
             this.app.broadcast('keyup', e);
         },
         mouseup: function mouseup(e) {
@@ -8902,6 +8944,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
                 $editor[func](event, this[method].bind(this));
             }
+        },
+        _passAllToClipboard: function _passAllToClipboard(e) {
+            var clipboard = e.clipboardData;
+            var content = this.source.getCode();
+
+            clipboard.setData('text/html', content);
+            clipboard.setData('text/plain', content.toString().replace(/\n$/, ""));
         },
         _passSelectionToClipboard: function _passSelectionToClipboard(e, data, remove) {
             var clipboard = e.clipboardData;
@@ -9381,12 +9430,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         _build: function _build(el) {
             var self = this;
             return new MutationObserver(function (mutations) {
-                mutations.forEach(function (mutation) {
-                    self._iterate(mutation, el);
-                });
+                self._observe(mutations[mutations.length - 1], el);
             });
         },
-        _iterate: function _iterate(mutation, el) {
+        _observe: function _observe(mutation, el) {
             if (this.app.isReadOnly() || mutation.type === 'attributes' && mutation.target === el) {
                 return;
             }
@@ -11402,9 +11449,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var keys = [this.keycodes.ENTER, this.keycodes.SPACE, this.keycodes.BACKSPACE, this.keycodes.DELETE];
             var isKeys = keys.indexOf(key) !== -1;
             var isXKey = (e.ctrlKey || e.metaKey) && key === 88; // x
+            var isAlphaKeys = !e.ctrlKey && !e.metaKey && (key >= 48 && key <= 57 || key >= 65 && key <= 90);
 
             if (this.selection.isAll() && (isXKey || !e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey)) {
-                if (isKeys || isXKey) e.preventDefault();
+                if (isXKey) {
+                    this.editor.disableNonEditables();
+                    this.app.broadcast('empty');
+                    return;
+                }
+
+                if (this._isArrowKey(key)) return true;
+                if (isKeys) e.preventDefault();
 
                 if (this.element.isType('inline')) {
                     var $editor = this.editor.getElement();
@@ -11415,7 +11470,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     this.insertion.set(this.opts.emptyHtml);
                 }
 
-                if (isKeys || isXKey) return;else this.app.broadcast('empty');
+                if (isKeys) return;else this.app.broadcast('empty');
             }
 
             // autoparse
@@ -11424,7 +11479,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             // a-z, 0-9 - non editable
-            if (!e.ctrlKey && !e.metaKey && (key >= 48 && key <= 57 || key >= 65 && key <= 90)) {
+            if (isAlphaKeys) {
                 // has non-editable
                 if (this.selection.hasNonEditable()) {
                     e.preventDefault();
@@ -12872,8 +12927,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             data = this._buildData(name, files, data);
             data = this.utils.extendData(data, this.p.data);
 
-            this.app.broadcast('upload.start', e, data);
-            this._sendData(data, files, e);
+            var stop = this.app.broadcast('upload.start', e, data, files);
+            if (stop !== false) {
+                this._sendData(data, files, e);
+            }
         },
         _sendData: function _sendData(data, files, e) {
             this.progress.show();
@@ -14364,8 +14421,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 nodes = [$list.get()];
             }
 
-            // =TMP
-            //nodes = this.block.format('div');
+            if (block && (block.tagName === 'TD' || block.tagName === 'TH')) {
+                nodes = this.block.format('div');
+            }
 
             nodes = nodes.length !== 0 && this._isUnformat(type, nodes) ? this._unformat(type, nodes) : this._format(type, nodes);
 

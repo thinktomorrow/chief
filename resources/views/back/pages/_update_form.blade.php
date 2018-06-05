@@ -20,14 +20,14 @@
 
                             <div class="stack">
                                 <label for="trans-{{ $locale }}-description">Korte omschrijving</label>
-                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][description]" id="trans-{{ $locale }}-description" cols="10" rows="5">{{ prepareForRedactor(old('trans.'.$locale.'.description',$page->translateForForm($locale,'description'))) }}</textarea>
+                                {{--<textarea data-editor class="inset-s" name="trans[{{ $locale }}][description]" id="trans-{{ $locale }}-description" cols="10" rows="5">{{ old('trans.'.$locale.'.description',$page->translateForForm($locale,'description')) }}</textarea>--}}
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.description" :errors="errors.get('trans.{{ $locale }}')"></error>
 
                             <div class="stack">
                                 <label for="trans-{{ $locale }}-content">Tekst</label>
-                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ prepareForRedactor(old('trans.'.$locale.'.content',$page->translateForForm($locale,'content'))) }}</textarea>
+                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ old('trans.'.$locale.'.content',$page->translateForForm($locale,'content')) }}</textarea>
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.content" :errors="errors.get('trans.{{ $locale }}')"></error>

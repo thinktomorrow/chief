@@ -62,20 +62,19 @@
 
 <script src="{{ cached_asset('/chief-assets/back/js/native.js','back') }}"></script>
 
-<script src="/chief-assets/back/js/redactor-columns.js"></script>
-<script src="/chief-assets/back/js/imagemanager.js"></script>
+<script src="/chief-assets/back/js/redactor-plugins/redactor-columns.js"></script>
+<script src="/chief-assets/back/js/redactor-plugins/imagemanager.js"></script>
+<script src="/chief-assets/back/js/redactor-plugins/alignment.js"></script>
 @stack('custom-scripts-after-vue')
 <script>
     $R('[data-editor]', {
-        plugins: ['redactorColumns', 'imagemanager'],
+        plugins: ['redactorColumns', 'imagemanager', 'alignment'],
         @if(admin()->hasRole('developer'))
             buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
         @else
             buttons: ['format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
         @endif
         formatting: ['p', 'h2', 'h3'],
-        imageUpload: '/your-upload-script/',
-        imageManagerJson: '/your-folder/images.json',
         formattingAdd: {
             "rood": {
                 title: 'Rode tekst',
@@ -85,7 +84,43 @@
                     'class': 'text-primary'
                 }
             },
-        }
+        },
+        imageResizable: true,
+        imagePosition: true,
+        //        imageManagerJson: '/your-folder/images.json',
+//        imageUpload: function(formData, files, event)
+//        {
+            // ... your process for uploading an image ...
+            //  in the end, you must return JSON or a string with the image URL
+            // return json;
+            // or
+            // return '/images/my-image.jpg';
+//        }
+        {{--callbacks: {--}}
+            {{--upload: {--}}
+                {{--beforeSend: function(xhr)--}}
+                {{--{--}}
+                    {{--console.log(xhr);--}}
+                {{--}--}}
+            {{--},--}}
+        {{--},--}}
+        imageUpload: '{{ $page->getMediaUploadUrl() }}',
+        {{--imageUpload: function(data, files, e, upload)--}}
+        {{--{--}}
+            {{--const url = '{{ route('media.upload') }}';--}}
+
+            {{--data.append('file', files[0]);--}}
+            {{--data.append('model_type', '{{ addslashes(get_class($page)) }}');--}}
+            {{--data.append('model_id', '{{ $page->id }}');--}}
+
+            {{--return axios.post(url, data, {})--}}
+                {{--.then(function(response){--}}
+                    {{--upload.complete(response);--}}
+                {{--})--}}
+                {{--.catch(function(error){--}}
+                    {{--upload.complete(error);--}}
+                {{--});--}}
+        {{--}--}}
     });
 </script>
 </body>

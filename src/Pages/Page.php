@@ -108,4 +108,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         return $key ? $names->$key : $names;
     }
+
+    public function getMediaUploadUrl()
+    {
+        return route('media.upload',['owner_type' => 'page', 'owner_id' => $this->id]);
+    }
 }

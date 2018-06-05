@@ -44,19 +44,3 @@ if (!function_exists('cached_asset')) {
         }
     }
 }
-
-if(!function_exists('prepareForRedactor')){
-    function prepareForRedactor($value) {
-
-        /**
-         * For support of columns in the wysiwyg, we'll need to make sure that only the
-         * column body is editable. Nice effect of contenteditable is that the hard
-         * enter is treated as soft enter inside the column as well as that the
-         * tab brings the cursor to the next column in line.
-         */
-        $value = str_replace('<div class="row', '<div contenteditable="false" class="row', $value);
-        $value = str_replace('<div class="column', '<div contenteditable="true" class="column', $value);
-
-        return $value;
-    }
-}
