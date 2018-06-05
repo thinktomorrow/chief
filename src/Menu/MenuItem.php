@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
 use Vine\Source as VineSource;
+use Vine\Node;
 
 class MenuItem extends Model implements TranslatableContract, VineSource
 {
@@ -24,6 +25,8 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     protected $translatedAttributes = [
         'label', 'url'
     ];
+
+    public $sortChildrenBy = 'order';
 
     public $timestamps = false;
     public $guarded = [];
@@ -53,9 +56,9 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
                 $pages->each(function($page) use(&$collectionItems, $item){
                     $collectionItems->push(MenuItem::make([
-                        'id' => 'collection-'.$page->id,
-                        'label' => $page->title,
-                        'url' => $page->slug, // TODO: get url for page...
+                        'id'        => 'collection-'.$page->id,
+                        'label'     => $page->title,
+                        'url'       => $page->slug, // TODO: get url for page...
                         'parent_id' => $item->id,
                     ]));
                 });
@@ -83,5 +86,17 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function nodeParentKeyIdentifier(): string
     {
         return 'parent_id';
+    }
+
+    public function entry(Node $node)
+    {
+        return [
+            'id'                => $node->id,
+            'label'             => $node->label,
+            'order'             => $node->order,
+            'page_id'           => $node->page_id,
+            'parent_id'         => $node->parent_id,
+            'hidden_in_menu'    => $node->hidden_in_menu
+        ];
     }
 }

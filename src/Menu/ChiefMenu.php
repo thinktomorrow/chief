@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Menu;
 
 use Vine\NodeCollection;
+use Vine\Node;
 
 class ChiefMenu
 {
@@ -30,6 +31,8 @@ class ChiefMenu
 
     public function items(): NodeCollection
     {
-        return $this->collection;
+        return $this->collection->prune(function(Node $node){
+            return $node->hidden_in_menu == false;
+        });
     }
 }

@@ -90,7 +90,7 @@ class MenuTest extends TestCase
     {
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
-        $third = MenuItem::create(['label:nl' => 'lastt item']);
+        $third = MenuItem::create(['label:nl' => 'last item']);
 
         $collection = ChiefMenu::fromArray([$first, $second, $third])->items();
 
@@ -100,27 +100,42 @@ class MenuTest extends TestCase
     }
     
     /** @test */
+    function it_can_be_sorted()
+    {
+        app()->setLocale('nl');
+        $first  = MenuItem::create(['label:nl' => 'first item']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
+        $third  = MenuItem::create(['label:nl' => 'last item', 'parent_id' => $first->id, 'order' => 1]);
+        
+        $collection = ChiefMenu::fromMenuItems()->items();
+        
+        $this->assertInstanceof(NodeCollection::class, $collection);
+        $this->assertEquals('last item', $collection->first()->children()->first()->label);
+    }
+    
+    /** @test */
     function it_can_have_a_custom_value()
     {
         // test it out
         // Column icon toegevoegd per project -> wordt automatisch meegepakt
     }
     
+    /** @test */
+    function if_a_page_is_hidden_it_is_not_shown_in_menu()
+    {
+        app()->setLocale('nl');
+        $first  = MenuItem::create(['label:nl' => 'first item']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
+        $third  = MenuItem::create(['label:nl' => 'last item', 'parent_id' => $first->id, 'order' => 1, 'hidden_in_menu' => 1]);
+        
+        $collection = ChiefMenu::fromMenuItems()->items();
+        
+        $this->assertInstanceof(NodeCollection::class, $collection);
+        $this->assertEquals(2, $collection->total());
+    }
     
     /** @test */
     function first_menu_item_is_the_toggle()
-    {
-        // test it out
-    }
-
-    /** @test */
-    function it_can_be_sorted()
-    {
-        // test it out
-    }
-
-    /** @test */
-    function if_a_page_is_hidden_it_is_not_shown_in_menu()
     {
         // test it out
     }
