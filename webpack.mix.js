@@ -19,9 +19,3 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
  */
 	.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/chief-assets/back/js/vendors')
     .copy('resources/assets/js/vendors/slim/slim.min.css', 'public/chief-assets/back/css/vendors')
-	.js([
-		'resources/assets/js/vendors/redactor/redactor.js',
-		'resources/assets/js/vendors/redactor/plugins/video.js'],
-		'public/chief-assets/back/js/vendors/redactor.js'
-	)
-	.copy('resources/assets/js/vendors/redactor/redactor.css', 'public/chief-assets/back/css/vendors/redactor.css');

@@ -3,8 +3,15 @@
  * loaded after the Vue instantiation
  */
 
-/** Chief utilities */
 require('./utilities/form-submit');
+
+/**
+ * Redactor wysiwyg
+ * The editor will be set on all [data-editor] instances
+ */
+require('./vendors/redactor/redactor.js');
+
+//$R('[data-editor]');
 
 /** Tippy tooltip init */
 window.tippy('[title]', {

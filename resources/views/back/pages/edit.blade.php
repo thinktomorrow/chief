@@ -4,7 +4,7 @@
 
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Pas "' .$page->title .'" aan')
+    @slot('title', $page->title )
     <a href="#" class="btn btn-o-primary inline-s">Preview</a>
     <div class="btn-group">
         <button @click="showModal('publication-now-page')" type="button" class="btn btn-primary">Wijzigingen opslaan

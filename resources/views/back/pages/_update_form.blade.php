@@ -1,12 +1,7 @@
 <tabs>
     <tab name="Inhoud">
         <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Paginainhoud</h2>
-                <p class="caption">Dit is de paginanaam zoals ze ook wordt weergegeven voor uw bezoekers.</p>
-            </div>
-            <div class="formgroup-input column-8">
-
+            <div class="formgroup-input column-12">
                 <tabs>
                     @foreach($page->availableLocales() as $locale)
 
@@ -25,14 +20,14 @@
 
                             <div class="stack">
                                 <label for="trans-{{ $locale }}-description">Korte omschrijving</label>
-                                <textarea class="redactor inset-s" name="trans[{{ $locale }}][description]" id="trans-{{ $locale }}-description" cols="10" rows="5">{{ old('trans.'.$locale.'.description',$page->translateForForm($locale,'description')) }}</textarea>
+                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][description]" id="trans-{{ $locale }}-description" cols="10" rows="5">{{ prepareForRedactor(old('trans.'.$locale.'.description',$page->translateForForm($locale,'description'))) }}</textarea>
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.description" :errors="errors.get('trans.{{ $locale }}')"></error>
 
                             <div class="stack">
                                 <label for="trans-{{ $locale }}-content">Tekst</label>
-                                <textarea class="redactor inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ old('trans.'.$locale.'.content',$page->translateForForm($locale,'content')) }}</textarea>
+                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ prepareForRedactor(old('trans.'.$locale.'.content',$page->translateForForm($locale,'content'))) }}</textarea>
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.content" :errors="errors.get('trans.{{ $locale }}')"></error>

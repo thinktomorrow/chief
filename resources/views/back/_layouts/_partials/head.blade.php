@@ -17,7 +17,6 @@
     <!-- hide vue elements until vue is loaded -->
     <style type="text/css">[v-cloak]{ display:none; }</style>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="{{ cached_asset('chief-assets/back/css/vendors/redactor.css', 'back') }}" />
     <link rel="stylesheet" type="text/css" href="{{ cached_asset('/chief-assets/back/css/main.css','back') }}">
 
     @stack('custom-styles')

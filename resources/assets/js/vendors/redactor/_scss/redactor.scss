@@ -1,16 +1,28 @@
 /*
-	Redactor II
+    Redactor 3
 
-	http://imperavi.com/redactor/
+    http://imperavi.com/redactor/
 
-	Copyright (c) 2009-2017, Imperavi Oy.
-	License: http://imperavi.com/redactor/license/
+    Copyright (c) 2009-2018, Imperavi LLC.
+    License: http://imperavi.com/redactor/license/
 */
 
-@import "variables";
-@import "mixins";
-@import "icons";
-@import "ui";
-@import "dropdown";
-@import "modal";
-@import "content";
+@import "variables.scss";
+@import "mixins.scss";
+@import "animation.scss";
+@import "icons.scss";
+@import "base.scss";
+@import "source.scss";
+@import "placeholder.scss";
+@import "statusbar.scss";
+@import "toolbar.scss";
+@import "toolbar-air.scss";
+@import "accessibility.scss";
+@import "context.scss";
+@import "dropdown.scss";
+@import "modal.scss";
+@import "styles.scss";
+@import "upload.scss";
+@import "structure.scss";
+@import "progress.scss";
+@import "fullscreen.scss";

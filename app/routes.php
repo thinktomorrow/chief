@@ -66,7 +66,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
     Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
 
-
     Route::post('page/{id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@upload')->name('page.upload');
 
     Route::get('/settings', ['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
@@ -77,6 +76,13 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     // YOUR PROFILE MANAGEMENT
     Route::get('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@edit')->name('chief.back.you.edit');
     Route::put('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@update')->name('chief.back.you.update');
+
+    /**
+     * -----------------------------------------------------------------
+     * MEDIA MANAGEMENT
+     * -----------------------------------------------------------------
+     */
+    Route::post('media-upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadMediaController@store')->name('media.upload');
 
     /**
      * -----------------------------------------------------------------

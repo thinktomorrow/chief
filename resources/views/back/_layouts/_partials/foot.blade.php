@@ -1,9 +1,4 @@
 
-<!--Load redactor script and required dependency jquery -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
-<script src="{{ cached_asset('/chief-assets/back/js/vendors/redactor.js', 'back') }}"></script>
 <script src="{{ cached_asset('/chief-assets/back/js/main.js','back') }}"></script>
 
 @stack('custom-scripts')
@@ -67,21 +62,31 @@
 
 <script src="{{ cached_asset('/chief-assets/back/js/native.js','back') }}"></script>
 
+<script src="/chief-assets/back/js/redactor-columns.js"></script>
+<script src="/chief-assets/back/js/imagemanager.js"></script>
+@stack('custom-scripts-after-vue')
 <script>
-    /** Redactor wysiwyg */
-    $(function()
-    {
-        var $editor = $('.redactor');
-        if($editor){
-            $editor.redactor({
-                formatting: ['h4','p'],
-            });
+    $R('[data-editor]', {
+        plugins: ['redactorColumns', 'imagemanager'],
+        @if(admin()->hasRole('developer'))
+            buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
+        @else
+            buttons: ['format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
+        @endif
+        formatting: ['p', 'h2', 'h3'],
+        imageUpload: '/your-upload-script/',
+        imageManagerJson: '/your-folder/images.json',
+        formattingAdd: {
+            "rood": {
+                title: 'Rode tekst',
+                api: 'module.block.format',
+                args: {
+                    'tag': 'p',
+                    'class': 'text-primary'
+                }
+            },
         }
     });
-
 </script>
-
-@stack('custom-scripts-after-vue')
-
 </body>
 </html>
