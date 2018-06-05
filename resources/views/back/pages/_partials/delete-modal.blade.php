@@ -4,11 +4,11 @@
         @csrf
         <div v-cloak>
             <div class="column-12">
-                @if( ! $page->isPublished())
+                @if( ! $page->isPublished() || $page->isArchived())
                     <h2 class="formgroup-label" slot="modal-header">Ok. Tijd om op te ruimen. <br>Ben je zeker?</h2>
                     <p>Type {{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }} om dit item te verwijderen.</p>
                     <div class="input-group column-12">
-                        <input name="deleteconfirmation" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s">
+                        <input name="deleteconfirmation" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s" autocomplete="off">
                     </div>
                 @else
                     <h2 class="formgroup-label">Opgelet! Een item dat online staat kan je niet zomaar verwijderen.</h2>

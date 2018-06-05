@@ -21,8 +21,8 @@ class PagesController extends Controller
 
         return view('chief::back.pages.index', [
             'collectionDetails' => $model->collectionDetails(),
-            'published'       => $model->unarchived()->published()->paginate(10),
-            'drafts'          => $model->unarchived()->where('published', 0)->paginate(10),
+            'published'       => $model->published()->paginate(10),
+            'drafts'          => $model->drafted()->paginate(10),
             'archived'        => $model->archived()->paginate(10),
         ]);
     }
@@ -99,7 +99,7 @@ class PagesController extends Controller
      */
     public function destroy($id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
         if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
         {
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
@@ -117,9 +117,9 @@ class PagesController extends Controller
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
     }
 
-    public function publish(Request $request)
+    public function publish(Request $request, $id)
     {
-        $page = Page::ignoreCollection()->findOrFail($request->get('id'));
+        $page = Page::ignoreCollection()->findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();

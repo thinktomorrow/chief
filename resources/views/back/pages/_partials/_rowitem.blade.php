@@ -14,11 +14,10 @@
     @if(! $page->isPublished())
         <div class="column center center-y">
             <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
-            <form action="{{ route('chief.back.pages.publish') }}" method="POST">
+                    <form action="{{ route('chief.back.pages.publish', $page->id) }}" method="POST">
                 {{ csrf_field() }}
                 <div class="publishActions-{{$page->id}} hidden">
                     <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
-                    <input type="hidden" name="id" value="{{ $page->id }}">
                     <button type="submit" class="btn btn-icon btn-subtle">
                             Plaats online
                     </button>
@@ -29,11 +28,10 @@
     @else
         <div class="column center center-y">
             <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="btn btn-link text-font">Aanpassen</a>
-            <form action="{{ route('chief.back.pages.publish') }}" method="POST">
+            <form action="{{ route('chief.back.pages.publish', $page->id) }}" method="POST">
                 {{ csrf_field() }}
                 <div class="publishActions-{{$page->id}} hidden">
                     <input type="hidden" name="checkboxStatus" value="{{ $page->isPublished() }}">
-                    <input type="hidden" name="id" value="{{ $page->id }}">
                     <button type="submit" class="btn btn-subtle">Plaats in draft</button>
                 </div>
             </form>
