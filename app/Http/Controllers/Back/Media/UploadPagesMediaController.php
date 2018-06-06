@@ -43,6 +43,6 @@ class UploadPagesMediaController extends Controller
             ];
         }
 
-        return response()->json($responseContent, 200);
+        return response()->json($responseContent, 201);
     }
 }

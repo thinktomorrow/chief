@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -42,6 +43,19 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
+
+    /**
+     * Set a custom morph class for the morph relations because we
+     * mostly want the Page as morph relationship instead of the
+     * child class.
+     */
+    public function getMorphClass(){
+        return self::class;
+    }
+
+    public function getOwnMorphClass(){
+        return parent::getMorphClass();
+    }
 
     public static function findBySlug($slug)
     {

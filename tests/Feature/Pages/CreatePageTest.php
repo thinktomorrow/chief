@@ -17,6 +17,8 @@ class CreatePageTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
+        $this->disableExceptionHandling();
+
         $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(200);
     }

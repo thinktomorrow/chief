@@ -1,8 +1,9 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Pages;
+namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -47,22 +48,22 @@ class MediaTest extends TestCase
 
         $article = ArticleFake::create(['collection' => 'articles']);
 
-        $response = $this->asAdmin()->post(route('media.upload'),[
-            'model_type' => ArticleFake::class,
-            'model_id' => $article->id,
+        $response = $this->asAdmin()->post(route('pages.media.upload', $article->id),[
             'file' => [
                 UploadedFile::fake()->image('image.png')
             ],
         ]);
 
         $this->assertTrue($article->hasFile(MediaType::CONTENT));
-        $this->assertCount(1, $article->getAllFiles(MediaType::CONTENT));
+
+        $assets = $article->getAllFiles(MediaType::CONTENT);
+        $this->assertCount(1, $assets);
 
         $response->assertStatus(201)
                  ->assertJson([
-                        "file" => [
+                        "file-".$assets->first()->id => [
                             "url" => $article->getFileUrl(MediaType::CONTENT),
-                            "id" => $article->getAllFiles(MediaType::CONTENT)->first()->id,
+                            "id" => $assets->first()->id,
                         ]
                  ]);
     }
