@@ -14,7 +14,7 @@ class CreatePage
 
     public function handle(string $collection, array $translations): Page
     {
-        try{
+        try {
             DB::beginTransaction();
 
             $page = Page::create(['collection' => $collection]);

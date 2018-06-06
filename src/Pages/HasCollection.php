@@ -16,18 +16,20 @@ trait HasCollection
     public function collectionKey()
     {
         // Collection key is stored at db - if not we map it from our config
-        if($this->collection) return $this->collection;
+        if ($this->collection) {
+            return $this->collection;
+        }
 
-        $mapping = config('thinktomorrow.chief.collections',[]);
+        $mapping = config('thinktomorrow.chief.collections', []);
 
         return false != ($key = array_search(static::class, $mapping)) ? $key : null;
     }
 
     public static function fromCollectionKey(string $key = null)
     {
-        $mapping = config('thinktomorrow.chief.collections',[]);
+        $mapping = config('thinktomorrow.chief.collections', []);
 
-        if(!isset($mapping[$key])){
+        if (!isset($mapping[$key])) {
             throw new \DomainException('No corresponding class found for the collection key ['.$key.']. Make sure to add this to the [thinktomorrow.chief.collections] config array.');
         }
 
@@ -72,11 +74,13 @@ trait HasCollection
 
     public static function availableCollections(): Collection
     {
-        if(static::$availableCollections) return static::$availableCollections;
+        if (static::$availableCollections) {
+            return static::$availableCollections;
+        }
 
-        $mapping = config('thinktomorrow.chief.collections',[]);
+        $mapping = config('thinktomorrow.chief.collections', []);
 
-        $availableCollections = collect($mapping)->map(function($className){
+        $availableCollections = collect($mapping)->map(function ($className) {
             return $className::collectionDetails();
         });
 

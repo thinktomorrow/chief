@@ -49,16 +49,15 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
 
     // Pages
-    Route::get('pages/{collection}','Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
+    Route::get('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
     Route::post('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@store')->name('chief.back.pages.store');
     Route::get('pages/{collection}/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@create')->name('chief.back.pages.create');
     Route::put('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@update')->name('chief.back.pages.update');
-    Route::get('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@show')->name('chief.back.pages.show')->where('id','[0-9]+');
+    Route::get('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@show')->name('chief.back.pages.show')->where('id', '[0-9]+');
     Route::get('pages/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@edit')->name('chief.back.pages.edit');
     Route::delete('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@destroy')->name('chief.back.pages.destroy');
+    Route::post('pages/{id}/publish', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@publish')->name('chief.back.pages.publish');
 
-    // TODO: publish routing - below route does not work yet...
-    Route::post('pages/publish','Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@publish')->name('chief.back.pages.publish');
 
     Route::post('page/{id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@upload')->name('page.upload');
 

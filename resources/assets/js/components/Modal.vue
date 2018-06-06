@@ -14,10 +14,10 @@
                         </div>
                     </div>
 
-                    <div v-if="showFooter" class="modal-footer squished-l center-y">
+                    <div v-if="showFooter" class="modal-footer squished-l center-y inline-group">
                         <slot name="footer">
+                            <a @click="close" class="btn btn-o-primary"><slot name='modal-close-btn'>Annuleer</slot></a>
                             <slot name='modal-action-buttons'></slot>
-                            <a @click="close" class="btn btn-primary"><slot name='modal-close-btn'>Annuleer</slot></a>
                         </slot>
                     </div>
 

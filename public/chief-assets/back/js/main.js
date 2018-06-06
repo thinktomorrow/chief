@@ -29299,20 +29299,23 @@ var render = function() {
               _vm.showFooter
                 ? _c(
                     "div",
-                    { staticClass: "modal-footer squished-l center-y" },
+                    {
+                      staticClass:
+                        "modal-footer squished-l center-y inline-group"
+                    },
                     [
                       _vm._t("footer", [
-                        _vm._t("modal-action-buttons"),
-                        _vm._v(" "),
                         _c(
                           "a",
                           {
-                            staticClass: "btn btn-primary",
+                            staticClass: "btn btn-o-primary",
                             on: { click: _vm.close }
                           },
                           [_vm._t("modal-close-btn", [_vm._v("Annuleer")])],
                           2
-                        )
+                        ),
+                        _vm._v(" "),
+                        _vm._t("modal-action-buttons")
                       ])
                     ],
                     2

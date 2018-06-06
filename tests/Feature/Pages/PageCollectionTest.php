@@ -85,7 +85,7 @@ class PageCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_can_retrieve_all_available_collections()
+    public function it_can_retrieve_all_available_collections()
     {
         factory(Page::class)->create(['collection' => 'articles']);
         factory(Page::class)->create(['collection' => 'others']);
@@ -93,9 +93,12 @@ class PageCollectionTest extends TestCase
 
         $this->assertEquals(['statics', 'articles', 'others'], Page::freshAvailableCollections()->keys()->toArray());
     }
-
 }
 
-class ArticleFake extends Page{}
+class ArticleFake extends Page
+{
+}
 
-class OtherCollectionFake extends Page{}
+class OtherCollectionFake extends Page
+{
+}
