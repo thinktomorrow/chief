@@ -113,9 +113,9 @@ class UpdateMedia
      */
     private function removeFiles(array $files)
     {
-        if (isset($files['delete']) && is_array($files['delete']) && !empty($files['delete']))
+        if (isset($files['remove']) && is_array($files['remove']) && !empty($files['remove']))
         {
-            Asset::remove($files['delete']);
+            Asset::remove($files['remove']);
         }
     }
 }

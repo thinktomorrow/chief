@@ -86,7 +86,14 @@ class PagesController extends Controller
      */
     public function update(PageUpdateRequest $request, $id)
     {
-        $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
+        dd($request->all());
+        $page = app(UpdatePage::class)->handle(
+            $id,
+            $request->trans,
+            $request->relations,
+            $request->get('files', []),
+            $request->get('filesOrder') ? explode(',', $request->get('filesOrder')) : []
+        );
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
     }
