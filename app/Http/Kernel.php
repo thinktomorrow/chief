@@ -64,7 +64,6 @@ class Kernel extends HttpKernel
         'auth.superadmin'   => AuthenticateSuperadmin::class,
         'bindings'          => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can'               => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest'             => \Thinktomorrow\Chief\App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle'          => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'role'              => \Thinktomorrow\Chief\App\Http\Middleware\RoleMiddleware::class,
         'permission'        => \Thinktomorrow\Chief\App\Http\Middleware\PermissionMiddleware::class,
@@ -75,6 +74,7 @@ class Kernel extends HttpKernel
         'squanto.developer' => \Thinktomorrow\Squanto\Manager\Http\Middleware\Developer::class,
 
         // Required chief middleware
+        'chief-guest'             => \Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated::class,
         'chief-validate-invite'   => ChiefValidateInvite::class,
     ];
 }

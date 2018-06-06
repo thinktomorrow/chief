@@ -62,7 +62,8 @@ Next in the same file we should add the following entries to the $routeMiddlewar
 ```php
 protected $routeMiddleware = [
         'auth.superadmin' => AuthenticateSuperadmin::class,
-        'chief-validate-invite' => '\Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite'
+        'chief-guest' => \Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated::class,
+        'chief-validate-invite' => \Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite::class,
         ...
     ];
 ```

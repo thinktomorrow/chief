@@ -28,7 +28,7 @@ class ForgotPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:chief');
+        $this->middleware('chief-guest');
     }
 
     public function showLinkRequestForm()
