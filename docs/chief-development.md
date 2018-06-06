@@ -24,9 +24,9 @@ Paste the following snippet in your composer.json file. This can be placed right
 ```
 The url property needs to be the full path to the local version of the chief package.
 
-Next install the local version of Chief:
+Next install the local version of Chief. If you already had an installed chief in your vendor folder, make sure to remove it first, otherwise composer will not force the local symlink.
 ```php
-composer require thinktomorrow/chief
+composer require thinktomorrow/chief:"@dev"
 ``` 
 Make sure your minimum stability of the application is set to `dev`.
 

@@ -12,28 +12,18 @@ class UpdatePage
 {
     use TranslatableCommand;
 
-    public function handle($id, array $translations, array $relations): Page
+    public function handle($id, array $translations, array $relations, array $files, array $files_order): Page
     {
         try {
             DB::beginTransaction();
 
             $page = Page::ignoreCollection()->findOrFail($id);
 
-            //Loops over the uploaded assets and attaches them to the model
-            // collect($translations)->each(function ($translation, $locale) use ($page) {
-            //     if ($trans = $translation['files']) {
-            //         collect($trans)->each(function ($asset_id, $type) use ($page, $locale) {
-            //             if ($asset_id) {
-            //                 $asset = Asset::find($asset_id);
-            //                 $page->addFile($asset, $type, $locale);
-            //             }
-            //         });
-            //     }
-            // });
-
             $this->savePageTranslations($page, $translations);
 
             $this->syncRelations($page, $relations);
+
+
 
             DB::commit();
             return $page->fresh();

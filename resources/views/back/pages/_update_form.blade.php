@@ -37,6 +37,9 @@
                 </tabs>
             </div>
         </section>
+
+        @include('chief::back._elements.filegroup')
+
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
                 <h2 class="formgroup-label">Featured image</h2>
