@@ -1,10 +1,5 @@
 <?php
 
-// Test
-Route::get('test', function(){
-    return view('chief::test');
-})->middleware('web');
-
 /**
  * -----------------------------------------------------------------
  * SPIRIT ROUTES

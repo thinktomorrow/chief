@@ -35,9 +35,9 @@
                 </div>
 
                 @if($new_password)
-                    <input class="btn btn-primary" type="submit" value="Maak wachtwoord aan">
+                    <input class="btn btn-primary squished" type="submit" value="Maak wachtwoord aan">
                 @else
-                    <input class="btn btn-primary inline-s" type="submit" value="Wijzig wachtwoord">
+                    <input class="btn btn-primary squished inline-s" type="submit" value="Wijzig wachtwoord">
                     <a href="{{ url()->previous() }}">Annuleer</a>
                 @endif
 

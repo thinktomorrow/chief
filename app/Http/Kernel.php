@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateSuperadmin;
 use Thinktomorrow\Chief\App\Http\Middleware\Honeypot;
 use Thinktomorrow\Chief\App\Http\Middleware\OptimizeImages;
-use Thinktomorrow\Chief\App\Http\Middleware\ValidateInvite;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -70,9 +70,11 @@ class Kernel extends HttpKernel
         'permission'        => \Thinktomorrow\Chief\App\Http\Middleware\PermissionMiddleware::class,
         'optimizeImages'    => OptimizeImages::class,
         'honeypot'          => Honeypot::class,
-        'validate-invite'   => ValidateInvite::class,
 
         // TODO: should be replaced with proper role
         'squanto.developer' => \Thinktomorrow\Squanto\Manager\Http\Middleware\Developer::class,
+
+        // Required chief middleware
+        'chief-validate-invite'   => ChiefValidateInvite::class,
     ];
 }

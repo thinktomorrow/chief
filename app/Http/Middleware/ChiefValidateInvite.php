@@ -2,12 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
+use Closure;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
-use Closure;
-use Illuminate\Http\Request;
 
-class ValidateInvite
+class ChiefValidateInvite
 {
     /**
      * Handle an incoming request.

@@ -15,7 +15,7 @@ class InviteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['validate-invite'])->except('expired');
+        $this->middleware(['chief-validate-invite'])->except('expired');
     }
 
     public function expired()

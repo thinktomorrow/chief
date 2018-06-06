@@ -56,13 +56,13 @@ protected $middlewareGroups = [
 ]
 ```
 
-Next in the same file we should add an entry to the $routeMiddleware array.
+Next in the same file we should add the following entries to the $routeMiddleware array.
 
 ```File: App\Http\Kernel.php```
 ```php
 protected $routeMiddleware = [
-        ...
         'auth.superadmin' => AuthenticateSuperadmin::class,
+        'chief-validate-invite' => '\Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite'
         ...
     ];
 ```
