@@ -1,5 +1,10 @@
 <?php
 
+// Test
+Route::get('test', function(){
+    return view('chief::test');
+})->middleware('web');
+
 /**
  * -----------------------------------------------------------------
  * SPIRIT ROUTES
@@ -77,7 +82,7 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * -----------------------------------------------------------------
      */
 //    Route::post('media-upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadMediaController@store')->name('media.upload');
-    Route::post('media/{owner_type}/{owner_id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadMediaController@store')->name('media.upload');
+    Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
 
 
 //    Route::get('media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@library')->name('media.library');

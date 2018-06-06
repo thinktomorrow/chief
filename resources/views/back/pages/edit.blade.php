@@ -32,3 +32,7 @@
   @include('chief::back.pages._partials.delete-modal')
 
 @stop
+
+@push('custom-scripts-after-vue')
+    @include('chief::back._layouts._partials.editor-script')
+@endpush
