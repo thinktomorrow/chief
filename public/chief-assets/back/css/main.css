@@ -1288,8 +1288,7 @@ p:first-child {
 
 h1:not(:last-child),
 h2:not(:last-child),
-h3:not(:last-child),
-p:last-child {
+h3:not(:last-child) {
   margin-bottom: 1.5rem;
 }
 
@@ -1297,6 +1296,10 @@ h4:not(:last-child),
 h5:not(:last-child),
 h6:not(:last-child) {
   margin-bottom: 0.75rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 /**
@@ -2190,7 +2193,7 @@ a:hover {
 
 .divider {
   margin: 0;
-  border-top: 1px dotted #f9f9f9;
+  border-top: 1px dotted #dadada;
   width: 100%;
 }
 
@@ -2207,6 +2210,11 @@ a:hover {
 .disabled {
   cursor: not-allowed !important;
   opacity: 0.35;
+  pointer-events: none;
+}
+
+.selected {
+  border: 1px solid #14c8a7;
 }
 
 .color-scheme .color-block {
@@ -3997,6 +4005,30 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.treeview .row {
+  border-bottom: 1px dotted #dadada;
+}
+
+.treeview .indent {
+  padding-left: 3rem;
+}
+
+.treeview .indent-l {
+  padding-left: 5.5rem;
+}
+
+.treeview .tree-parent {
+  position: relative;
+}
+
+.treeview .tree-parent:after {
+  font-family: "spirit";
+  content: '\E920';
+  display: inline-block;
+  position: absolute;
+  margin-left: -40px;
+}
+
 .alert {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -4650,6 +4682,10 @@ input[type='file'] {
 
 .custom-indicators {
   line-height: 1.5rem;
+}
+
+.custom-indicators .label-content {
+  margin-left: 3rem;
 }
 
 .custom-checkbox {

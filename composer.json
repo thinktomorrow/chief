@@ -30,7 +30,7 @@
     },
     "repositories": [
         {
-            "url": "/Users/philippedamen/Code/vine",
+            "url": "/Users/bobdries/Projects/vine",
             "type": "path",
             "options": {
                 "symlinks": true

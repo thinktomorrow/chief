@@ -2,6 +2,9 @@ $toggle-size: 1.5rem;
 
 .custom-indicators{
     line-height: $toggle-size;
+    .label-content{
+        margin-left: $space-l;
+    }
 }
 .custom-checkbox{
     border-radius: $default-border-radius;
