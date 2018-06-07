@@ -84,7 +84,7 @@ if(!isset($group)) $group = 'images';
 
             this.options.didRemove = this.markForDeletion;
             this.options.didLoad = this.onLoad;
-console.log(this.$el);
+
             this.instance = new Slim(this.$el.childNodes[0], this.options);
 
             // If a file instance is passed, we want to directly load the file into our cropper

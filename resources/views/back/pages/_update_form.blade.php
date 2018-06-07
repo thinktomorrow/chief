@@ -38,7 +38,8 @@
             </div>
         </section>
 
-        @include('chief::back._elements.filegroup')
+        @include('chief::back._elements.filegroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::HERO])
+        @include('chief::back._elements.filegroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::THUMB])
 
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
