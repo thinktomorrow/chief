@@ -8,23 +8,20 @@ use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
 class UploadMedia
 {
-    public function fromUploadComponent(HasMedia $model, array $files, array $files_order)
+    public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order)
     {
-        $this->addFiles($model, $files, $files_order);
+        foreach($files_by_type as $type => $files) {
+            $this->addFiles($model, $type, $files, $files_order);
 
-        $this->replaceFiles($model, $files);
+            $this->replaceFiles($model, $files);
 
-        $this->removeFiles($files);
+            $this->removeFiles($model, $files);
 
-        $model->sortFiles('files', $files_order);
+            $model->sortFiles($type, $files_order);
+        }
     }
 
-    /**
-     * @param HasMedia $model
-     * @param array $files
-     * @return array
-     */
-    private function addFiles(HasMedia $model, array $files, array &$files_order): array
+    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order)
     {
         if (isset($files['new']) && is_array($files['new']) && !empty($files['new']))
         {
@@ -36,21 +33,15 @@ class UploadMedia
                     continue;
                 }
 
-                $this->addFile($model, $files_order, $file);
+                $this->addFile($model, $type, $files_order, $file);
             }
         }
     }
 
-    /**
-     * @param HasMedia $model
-     * @param array $files_order
-     * @param $file
-     * @return array
-     */
-    private function addFile(HasMedia $model, array &$files_order, $file): array
+    private function addFile(HasMedia $model, string $type, array &$files_order, $file)
     {
         $image_name = json_decode($file)->output->name;
-        $asset = $this->addAsset(json_decode($file)->output->image, 'files', null, $image_name, $model);
+        $asset = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
 
         // New files are passed with their filename (instead of their id)
         // For new files we will replace the filename with the id.
@@ -58,6 +49,7 @@ class UploadMedia
         {
             $files_order[$key] = $asset->id;
         }
+
     }
 
     /**
@@ -86,7 +78,7 @@ class UploadMedia
      * @param array $files
      * @return array
      */
-    private function replaceFiles(HasMedia $model, array $files): array
+    private function replaceFiles(HasMedia $model, array $files)
     {
         if (isset($files['replace']) && is_array($files['replace']) && !empty($files['replace']))
         {
@@ -101,21 +93,14 @@ class UploadMedia
                 $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
                 $model->replaceAsset($id, $asset->id);
             }
-
-            return $files;
         }
-
-        return $files;
     }
 
-    /**
-     * @param array $files
-     */
-    private function removeFiles(array $files)
+    private function removeFiles(HasMedia $model, array $files)
     {
         if (isset($files['remove']) && is_array($files['remove']) && !empty($files['remove']))
         {
-            Asset::remove($files['remove']);
+            $model->assets()->whereIn('id', $files['remove'])->delete();
         }
     }
 }

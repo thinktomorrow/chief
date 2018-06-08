@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
+use Spatie\MediaLibrary\Media;
+use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\FormParams;
@@ -25,7 +27,7 @@ class UploadMediaTest extends TestCase
         $page = Page::create(['collection' => 'statics']);
 
         // Upload asset
-        $response = $this->asAdmin()
+        $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validPageParams([
                 'files' => [
                     MediaType::HERO => [
@@ -41,8 +43,10 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function a_new_asset_can_be_uploaded_as_base64()
+    function a_new_asset_can_be_uploaded_as_regular_file()
     {
+        $this->markTestIncomplete();
+
         $page = Page::create(['collection' => 'statics']);
 
         // Upload asset
@@ -54,12 +58,28 @@ class UploadMediaTest extends TestCase
     /** @test */
     function an_asset_can_be_replaced()
     {
+        $this->disableExceptionHandling();
+
         $page = Page::create(['collection' => 'statics']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
-        // Replace asset
+        $existing_asset = $page->getAllFiles(MediaType::HERO)->first();
 
-        // Assert
+        // Replace asset
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validPageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'replace' => [
+                            $existing_asset->id => $this->dummySlimImagePayload(),
+                        ]
+                    ]
+                ]
+            ]));
+
+        // Assert replacement took place
+        $this->assertCount(1, $page->fresh()->getAllFiles(MediaType::HERO));
+        $this->assertContains('tt-favicon.png', $page->fresh()->getFileUrl(MediaType::HERO));
     }
 
     /** @test */
@@ -73,10 +93,20 @@ class UploadMediaTest extends TestCase
         $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
 
         // Remove asset
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validPageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'remove' => [
+                            $page->getAllFiles(MediaType::HERO)->first()->id,
+                        ]
+                    ]
+                ]
+            ]));
 
         // Assert Image is no longer there
-        $this->assertFalse($page->hasFile(MediaType::HERO));
-        $this->assertCount(0, $page->getAllFiles());
+        $this->assertFalse($page->fresh()->hasFile(MediaType::HERO));
+        $this->assertCount(0, $page->fresh()->getAllFiles());
     }
 
     private function dummySlimImagePayload()

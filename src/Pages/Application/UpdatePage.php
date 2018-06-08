@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
+use Thinktomorrow\Chief\Common\Media\UploadMedia;
 use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
@@ -23,7 +24,7 @@ class UpdatePage
 
             $this->syncRelations($page, $relations);
 
-
+            app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
 
             DB::commit();
             return $page->fresh();
