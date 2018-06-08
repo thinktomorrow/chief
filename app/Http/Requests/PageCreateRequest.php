@@ -35,7 +35,7 @@ class PageCreateRequest extends FormRequest
             }
 
             $rules['trans.' . $locale . '.title']   = 'required|unique:page_translations,title|max:200';
-            $rules['trans.' . $locale . '.text']    = 'required|max:1500';
+            $rules['trans.' . $locale . '.content']    = 'required|max:1500';
             $rules['trans.' . $locale . '.short']   = 'max:700';
         }
 
@@ -52,7 +52,7 @@ class PageCreateRequest extends FormRequest
             }
 
             $attributes['trans.' . $locale . '.title']   = 'Title';
-            $attributes['trans.' . $locale . '.text']    = 'Content';
+            $attributes['trans.' . $locale . '.content']    = 'Content';
             $attributes['trans.' . $locale . '.short']   = 'Short';
         }
 
