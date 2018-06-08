@@ -5,6 +5,9 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Pages\PageTranslation;
+use Thinktomorrow\Chief\Pages\Page;
 
 class PageCreateRequest extends FormRequest
 {
@@ -27,16 +30,19 @@ class PageCreateRequest extends FormRequest
      */
     public function rules()
     {
-        foreach ($this->request->get('trans') as $locale => $trans)
+        $translations = $this->enforceUniqueSlug($this->request->get('trans'));            
+
+        foreach ($translations as $locale => $trans)
         {
             if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale())
             {
                 continue;
             }
 
-            $rules['trans.' . $locale . '.title']   = 'required|unique:page_translations,title|max:200';
-            $rules['trans.' . $locale . '.content']    = 'required|max:1500';
+            $rules['trans.' . $locale . '.title']   = 'required|max:200';
+            $rules['trans.' . $locale . '.slug']    = 'required|unique:page_translations,slug|max:200';
             $rules['trans.' . $locale . '.short']   = 'max:700';
+            $rules['trans.' . $locale . '.content'] = 'required|max:1500';
         }
 
         return $rules;
@@ -51,12 +57,28 @@ class PageCreateRequest extends FormRequest
                 continue;
             }
 
-            $attributes['trans.' . $locale . '.title']   = 'Title';
-            $attributes['trans.' . $locale . '.content']    = 'Content';
-            $attributes['trans.' . $locale . '.short']   = 'Short';
+            $attributes['trans.' . $locale . '.title']      = 'Titel';
+            $attributes['trans.' . $locale . '.slug']       = 'Permalink';
+            $attributes['trans.' . $locale . '.content']    = 'Inhoud';
+            $attributes['trans.' . $locale . '.short']      = 'Korte omschrijving';
         }
 
         return $attributes;
+    }
+
+    /**
+     * @param array $translations
+     * @param $page
+     * @return array
+     */
+    private function enforceUniqueSlug(array $translations): array
+    {
+        foreach ($translations as $locale => $translation) {
+            $translation['slug']    = UniqueSlug::make(new PageTranslation())->get($translation['title'], (new Page())->getTranslation($locale));
+            $translations[$locale]  = $translation;
+        }
+
+        return $translations;
     }
 
 }
