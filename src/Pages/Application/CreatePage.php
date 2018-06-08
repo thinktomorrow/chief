@@ -19,7 +19,6 @@ class CreatePage
 
             $page = Page::create(['collection' => $collection]);
 
-            $translations = $this->enforceUniqueSlug($translations, $page);
 
             $this->saveTranslations($translations, $page, [
                 'slug', 'title', 'content', 'seo_title', 'seo_description'

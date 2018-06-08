@@ -17,7 +17,9 @@
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>
+                            <error class="caption text-warning" field="trans.{{ $locale }}.slug" :errors="errors.get('trans.{{ $locale }}')"></error>
 
+                
                             <div class="stack">
                                 <label for="trans-{{ $locale }}-short">Korte omschrijving</label>
                                 <textarea class="inset-s" name="trans[{{ $locale }}][short]" id="trans-{{ $locale }}-short" cols="10" rows="5">{{ old('trans.'.$locale.'.short',$page->translateForForm($locale,'short')) }}</textarea>
