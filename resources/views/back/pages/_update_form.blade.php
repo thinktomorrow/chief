@@ -38,13 +38,13 @@
             </div>
         </section>
 
-        @include('chief::back._elements.filegroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::HERO])
-        @include('chief::back._elements.filegroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::THUMB])
+        @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::HERO])
+        @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::THUMB])
 
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
                 <h2 class="formgroup-label">Featured image</h2>
-                <p class="caption">Kies hier de afbeelding die bij het pagina hoort</p>
+                <p class="caption">Kies hier de afbeelding die bij de pagina hoort</p>
             </div>
             <div class="formgroup-input column-7">
                 <div class="input-group">
