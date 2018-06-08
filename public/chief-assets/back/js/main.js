@@ -2353,7 +2353,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     components: {
-        'mkiha-modal': __WEBPACK_IMPORTED_MODULE_0__Modal_vue__["default"]
+        'modal': __WEBPACK_IMPORTED_MODULE_0__Modal_vue__["default"]
     },
     props: {
         id: { required: true }
@@ -28949,11 +28949,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [_c("mkiha-modal", { attrs: { id: _vm.id, type: "sidebar" } })],
-    1
-  )
+  return _c("div", [_c("modal", { attrs: { id: _vm.id, type: "sidebar" } })], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -29162,7 +29158,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c(
-        "mkiha-modal",
+        "modal",
         { attrs: { id: _vm.modalId, title: _vm.title } },
         [
           _vm._t("message", [
@@ -29303,20 +29299,23 @@ var render = function() {
               _vm.showFooter
                 ? _c(
                     "div",
-                    { staticClass: "modal-footer squished-l center-y" },
+                    {
+                      staticClass:
+                        "modal-footer squished-l center-y inline-group"
+                    },
                     [
                       _vm._t("footer", [
-                        _vm._t("modal-action-buttons"),
-                        _vm._v(" "),
                         _c(
                           "a",
                           {
-                            staticClass: "btn btn-primary",
+                            staticClass: "btn btn-o-primary",
                             on: { click: _vm.close }
                           },
                           [_vm._t("modal-close-btn", [_vm._v("Annuleer")])],
                           2
-                        )
+                        ),
+                        _vm._v(" "),
+                        _vm._t("modal-action-buttons")
                       ])
                     ],
                     2
