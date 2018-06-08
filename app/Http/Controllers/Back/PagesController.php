@@ -86,7 +86,6 @@ class PagesController extends Controller
      */
     public function update(PageUpdateRequest $request, $id)
     {
-        dd($request->all());
         $page = app(UpdatePage::class)->handle(
             $id,
             $request->trans,

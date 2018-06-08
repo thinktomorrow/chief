@@ -6,7 +6,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
-class UpdateMedia
+class UploadMedia
 {
     public function fromUploadComponent(HasMedia $model, array $files, array $files_order)
     {

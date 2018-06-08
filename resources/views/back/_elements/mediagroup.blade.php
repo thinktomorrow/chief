@@ -8,8 +8,8 @@ if(!isset($group)) $group = 'images';
 <section class="formgroup">
     <div class="row gutter-xl">
         <div class="formgroup-info column-4">
-            <h2 class="formgroup-label">Afbeeldingen</h2>
-            <p></p>
+            <h2 class="formgroup-label">{{ $label ?? 'Media' }}</h2>
+            <p>{{ $description ?? '' }}</p>
         </div>
         <div class="column-8">
             <filesupload group="{{ $group }}" v-cloak preselected="{{ isset($files) ? json_encode($files) : '[]'  }}" inline-template>

@@ -3,10 +3,13 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\FormParams;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreatePageTest extends TestCase
 {
+    use FormParams;
+
     protected function setUp()
     {
         parent::setUp();
@@ -34,7 +37,7 @@ class CreatePageTest extends TestCase
     public function creating_a_new_page()
     {
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validParams());
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.pages.index', 'statics'));
@@ -46,7 +49,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_page()
     {
-        $response = $this->post(route('chief.back.pages.store', 'statics'), $this->validParams());
+        $response = $this->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Page::all());
@@ -55,7 +58,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function when_creating_page_title_is_required()
     {
-        $this->assertValidation(new Page(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
+        $this->assertValidation(new Page(), 'trans.nl.title', $this->validPageParams(['trans.nl.title' => '']),
             route('chief.back.pages.index', 'statics'),
             route('chief.back.pages.store', 'statics')
         );
@@ -72,7 +75,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
                     'title:nl'  => 'foobarnl',
                     'title:en'  => 'foobaren',
                 ])
@@ -95,34 +98,6 @@ class CreatePageTest extends TestCase
              ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
 
         $this->assertCount(0, Page::all());
-    }
-
-    private function validParams($overrides = [])
-    {
-        $params = [
-            'trans' => [
-                'nl' => [
-                    'slug'              => 'new-slug',
-                    'title'             => 'new title',
-                    'content'           => 'new content in <strong>bold</strong>',
-                    'seo_title'         => 'new seo title',
-                    'seo_description'   => 'new seo description',
-                ],
-                'en' => [
-                    'slug'              => 'nouveau-slug',
-                    'title'             => 'nouveau title',
-                    'content'           => 'nouveau content in <strong>bold</strong>',
-                    'seo_title'         => 'nouveau seo title',
-                    'seo_description'   => 'nouveau seo description',
-                ],
-            ],
-        ];
-
-        foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
-        }
-
-        return $params;
     }
 
 
