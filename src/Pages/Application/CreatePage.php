@@ -19,10 +19,11 @@ class CreatePage
 
             $page = Page::create(['collection' => $collection]);
 
-
-            $this->saveTranslations($translations, $page, [
-                'slug', 'title', 'content', 'seo_title', 'seo_description'
-            ]);
+            foreach($translations as $locale => $value){
+                $value = $this->enforceUniqueSlug($value, $page, $locale);
+                
+                $page->updateTranslation($locale, $value);
+            }
 
             DB::commit();
 
@@ -38,13 +39,11 @@ class CreatePage
      * @param $page
      * @return array
      */
-    private function enforceUniqueSlug(array $translations, $page): array
+    private function enforceUniqueSlug(array $translation, $page, $locale): array
     {
-        foreach ($translations as $locale => $translation) {
-            $translation['slug'] = UniqueSlug::make(new PageTranslation)->get($translation['title'], $page->getTranslation($locale));
-            $translations[$locale] = $translation;
-        }
+        $translation['slug']    = $translation['slug'] ?? $translation['title']; 
+        $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
 
-        return $translations;
+        return $translation;
     }
 }

@@ -30,17 +30,17 @@ class PageCreateRequest extends FormRequest
      */
     public function rules()
     {
-        $translations = $this->enforceUniqueSlug($this->request->get('trans'));            
-
+        $translations = $this->request->get('trans');
         foreach ($translations as $locale => $trans)
         {
             if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale())
             {
+                unset($translations[$locale]);
+                $this->request->set('trans', $translations);
                 continue;
             }
 
             $rules['trans.' . $locale . '.title']   = 'required|max:200';
-            $rules['trans.' . $locale . '.slug']    = 'required|unique:page_translations,slug|max:200';
             $rules['trans.' . $locale . '.short']   = 'max:700';
             $rules['trans.' . $locale . '.content'] = 'required|max:1500';
         }
@@ -58,27 +58,11 @@ class PageCreateRequest extends FormRequest
             }
 
             $attributes['trans.' . $locale . '.title']      = 'Title';
-            $attributes['trans.' . $locale . '.slug']       = 'Slug';
-            $attributes['trans.' . $locale . '.content']    = 'Text';
+            $attributes['trans.' . $locale . '.content']    = 'Content';
             $attributes['trans.' . $locale . '.short']      = 'Short';
         }
 
         return $attributes;
-    }
-
-    /**
-     * @param array $translations
-     * @param $page
-     * @return array
-     */
-    private function enforceUniqueSlug(array $translations): array
-    {
-        foreach ($translations as $locale => $translation) {
-            $translation['slug']    = UniqueSlug::make(new PageTranslation())->get($translation['title'], (new Page())->getTranslation($locale));
-            $translations[$locale]  = $translation;
-        }
-
-        return $translations;
     }
 
 }
