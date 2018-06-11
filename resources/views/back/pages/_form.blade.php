@@ -41,7 +41,7 @@
             </div>
         </section>
 
-        @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::HERO])
+        @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::HERO, 'files' => $images])
         @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::THUMB])
 
         <section class="row formgroup stack gutter-l">

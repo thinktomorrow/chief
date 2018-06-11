@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageRepository;
@@ -71,9 +72,19 @@ class PagesController extends Controller
         $page->existingRelationIds = RelatedCollection::relationIds($page->children());
         $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
+        $images = [];
+        foreach ($page->getAllFiles(MediaType::HERO) as $asset)
+        {
+            $images[] = (object) [
+                'id'  => $asset->id, 'filename' => $asset->getFilename(),
+                'url' => $asset->getFileUrl()
+            ];
+        }
+
         return view('chief::back.pages.edit', [
             'page'            => $page,
-            'relations'       => $relations
+            'relations'       => $relations,
+            'images'          => $images,
         ]);
     }
 
