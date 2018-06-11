@@ -57,9 +57,10 @@ class PageCreateRequest extends FormRequest
                 continue;
             }
 
-            $attributes['trans.' . $locale . '.title']      = 'Title';
-            $attributes['trans.' . $locale . '.content']    = 'Content';
-            $attributes['trans.' . $locale . '.short']      = 'Short';
+            $attributes['trans.' . $locale . '.title']      = 'Titel';
+            $attributes['trans.' . $locale . '.slug']       = 'Permalink';
+            $attributes['trans.' . $locale . '.content']    = 'Inhoud';
+            $attributes['trans.' . $locale . '.short']      = 'Korte omschrijving';
         }
 
         return $attributes;

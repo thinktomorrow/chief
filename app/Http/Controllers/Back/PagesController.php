@@ -6,7 +6,6 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
