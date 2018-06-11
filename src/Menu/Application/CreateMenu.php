@@ -7,12 +7,14 @@ use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\App\Http\Requests\MenuCreateRequest;
+use Thinktomorrow\Chief\Menu\MenuItem;
 
 class CreateMenu
 {
     use TranslatableCommand;
 
-    public function handle(Request $request): Page
+    public function handle(MenuCreateRequest $request): Page
     {
         try{
             DB::beginTransaction();
