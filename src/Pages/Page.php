@@ -59,12 +59,12 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->first() : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->pageWithoutCollectionScope()->first() : null;
     }
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->published()->first() : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->pageWithoutCollectionScope()->published()->first() : null;
     }
 
     public function scopeSortedByCreated($query)

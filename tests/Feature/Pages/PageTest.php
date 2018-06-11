@@ -1,12 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit;
+namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Users\User;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Illuminate\Support\Carbon;
 
 class PageTest extends TestCase
