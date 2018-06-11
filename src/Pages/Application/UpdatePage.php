@@ -43,7 +43,7 @@ class UpdatePage
         });
 
         $this->saveTranslations($translations, $page, [
-            'slug', 'title', 'content', 'seo_title', 'seo_description'
+            'slug', 'title', 'short', 'content', 'seo_title', 'seo_description'
         ]);
     }
 

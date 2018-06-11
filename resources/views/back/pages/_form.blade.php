@@ -43,8 +43,14 @@
             </div>
         </section>
 
-        @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::HERO, 'files' => $images])
-        @include('chief::back._elements.mediagroup', ['group' => \Thinktomorrow\Chief\Media\MediaType::THUMB])
+        @foreach($page->availableMediaTypes() as $mediaType)
+            @include('chief::back._elements.mediagroup', [
+                'group' => $mediaType['type'],
+                'files' => $images[$mediaType['type']],
+                'label' => $mediaType['label'],
+                'description' => $mediaType['description'],
+            ])
+        @endforeach
 
         <section class="row formgroup stack gutter-l">
             <div class="column-4">

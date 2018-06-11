@@ -1,10 +1,3 @@
-<?php
-
-/** Files are grouped by their type */
-if(!isset($group)) $group = 'images';
-
-?>
-
 <section class="formgroup">
     <div class="row gutter-xl">
         <div class="formgroup-info column-4">

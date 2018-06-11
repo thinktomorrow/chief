@@ -20,9 +20,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
-
-        $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create', 'statics'));
+        $response = $this->asAdmin()->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(200);
     }
 
@@ -36,14 +34,14 @@ class CreatePageTest extends TestCase
     /** @test */
     public function creating_a_new_page()
     {
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.pages.index', 'statics'));
 
         $this->assertCount(1, Page::all());
-        $this->assertNewValues(Page::first());
+        $this->assertNewPageValues(Page::first());
     }
 
     /** @test */
@@ -74,7 +72,7 @@ class CreatePageTest extends TestCase
 
         $this->assertCount(1, Page::all());
 
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
                     'title:nl'  => 'foobarnl',
                     'title:en'  => 'foobaren',
@@ -100,19 +98,4 @@ class CreatePageTest extends TestCase
         $this->assertCount(0, Page::all());
     }
 
-
-    private function assertNewValues($page)
-    {
-        $this->assertEquals('new-title', $page->{'slug:nl'});
-        $this->assertEquals('new title', $page->{'title:nl'});
-        $this->assertEquals('new content in <strong>bold</strong>', $page->{'content:nl'});
-        $this->assertEquals('new seo title', $page->{'seo_title:nl'});
-        $this->assertEquals('new seo description', $page->{'seo_description:nl'});
-
-        $this->assertEquals('nouveau-title', $page->{'slug:en'});
-        $this->assertEquals('nouveau title', $page->{'title:en'});
-        $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:en'});
-        $this->assertEquals('nouveau seo title', $page->{'seo_title:en'});
-        $this->assertEquals('nouveau seo description', $page->{'seo_description:en'});
-    }
 }

@@ -13,9 +13,20 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 		processCssUrls: false
 	})
 
-/**
- * Slim cropper resources.
- * Please note that copied files also get versioned! its a win :)
- */
+    /**
+	 * Redactor wysiswyg
+     * The editor will be set on all [data-editor] instances
+     */
+	.scripts([
+		'resources/assets/js/vendors/redactor/redactor.js',
+		'resources/assets/js/vendors/redactor/plugins/alignment.js',
+		'resources/assets/js/vendors/redactor/plugins/imagemanager.js',
+		'resources/assets/js/vendors/redactor/plugins/redactor-columns.js',
+	], 'public/chief-assets/back/js/vendors/redactor.js')
+
+	/**
+	 * Slim cropper resources.
+	 * Please note that copied files also get versioned! its a win :)
+	 */
 	.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/chief-assets/back/js/vendors')
     .copy('resources/assets/js/vendors/slim/slim.min.css', 'public/chief-assets/back/css/vendors');
