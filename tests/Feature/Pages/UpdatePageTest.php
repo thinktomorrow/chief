@@ -4,12 +4,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\FormParams;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdatePageTest extends TestCase
 {
-    use FormParams;
+    use PageFormParams;
 
     private $page;
 
@@ -19,7 +18,7 @@ class UpdatePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->page = app(CreatePage::class)->handle('custom-collection', $this->validPageParams());
+        $this->page = app(CreatePage::class)->handle('custom-collection', $this->validPageParams()['trans'], [], [], []);
     }
 
     /** @test */
@@ -44,9 +43,9 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function it_can_edit_a_page()
     {
-        $page = factory(Page::class)->create(['title:nl' => 'titel nl']);
+        $page = factory(Page::class)->create();
 
-        $this->asDefaultAdmin()
+        $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams());
 
         $this->assertUpdatedPageValues($page->fresh());
@@ -82,16 +81,16 @@ class UpdatePageTest extends TestCase
     public function slug_must_be_unique()
     {
         $otherPage = factory(Page::class)->create([
-            'title:nl'  => 'titel nl',
-            'slug:nl'   => 'foobarnl'
+            'trans.nl.title'  => 'titel nl',
+            'trans.nl.slug'   => 'foobarnl'
         ]);
 
         $this->assertCount(1, Page::all());
 
         $response = $this->asDefaultAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
-                'title:nl'  => 'foobarnl',
-                'title:en'  => 'foobaren',
+                'trans.nl.title'  => 'foobarnl',
+                'trans.en.title'  => 'foobaren',
             ])
             );
 

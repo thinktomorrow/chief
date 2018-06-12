@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Thinktomorrow\Chief\Tests;
+namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 
-trait FormParams
+trait PageFormParams
 {
     protected function validPageParams($overrides = [])
     {

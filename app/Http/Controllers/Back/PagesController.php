@@ -58,7 +58,13 @@ class PagesController extends Controller
     {
         $this->authorize('create-page');
 
-        $page = app(CreatePage::class)->handle($collection, $request->trans);
+        $page = app(CreatePage::class)->handle(
+            $collection,
+            $request->trans,
+            $request->relations,
+            $request->get('files', []),
+            $request->get('filesOrder') ? explode(',', $request->get('filesOrder')) : []
+        );
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
     }
@@ -102,7 +108,7 @@ class PagesController extends Controller
             $request->trans,
             $request->relations,
             $request->get('files', []),
-            $request->get('filesOrder') ? explode(',', $request->get('filesOrder')) : []
+            $request->get('filesOrder', [])
         );
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');

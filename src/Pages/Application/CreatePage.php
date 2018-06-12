@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
+use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
@@ -12,17 +14,22 @@ class CreatePage
 {
     use TranslatableCommand;
 
-    public function handle(string $collection, array $translations): Page
+    public function handle(string $collection, array $translations, array $relations, array $files, array $files_order): Page
     {
         try {
             DB::beginTransaction();
 
             $page = Page::create(['collection' => $collection]);
 
+            foreach($translations as $locale => $value){
+                $value = $this->enforceUniqueSlug($value, $page, $locale);
 
-            $this->saveTranslations($translations, $page, [
-                'slug', 'title', 'short', 'content', 'seo_title', 'seo_description'
-            ]);
+                $page->updateTranslation($locale, $value);
+            }
+
+            $this->syncRelations($page, $relations);
+
+            app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
 
             DB::commit();
 
@@ -38,13 +45,23 @@ class CreatePage
      * @param $page
      * @return array
      */
-    private function enforceUniqueSlug(array $translations, $page): array
+    private function enforceUniqueSlug(array $translation, $page, $locale): array
     {
-        foreach ($translations as $locale => $translation) {
-            $translation['slug'] = UniqueSlug::make(new PageTranslation)->get($translation['title'], $page->getTranslation($locale));
-            $translations[$locale] = $translation;
+        $translation['slug']    = $translation['slug'] ?? $translation['title'];
+        $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
+
+        return $translation;
+    }
+
+    private function syncRelations($page, $relateds)
+    {
+        // First remove all existing children
+        foreach ($page->children() as $child) {
+            $page->rejectChild($child);
         }
 
-        return $translations;
+        foreach (RelatedCollection::inflate($relateds) as $i => $related) {
+            $page->adoptChild($related, ['sort' => $i]);
+        }
     }
 }

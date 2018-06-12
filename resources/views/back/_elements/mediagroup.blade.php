@@ -29,7 +29,7 @@
                             <!-- allow to click for upload -->
                             <input v-if="checkSupport" type="file" @change="handleFileSelect" multiple/>
                             <!-- if not supported, a file can still be passed along -->
-                            <input v-else type="file" name="files[]" multiple/>
+                            <input v-else type="file" name="files[{{ $group }}][]" multiple/>
                             <span class="icon icon-plus"></span>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                 <a class="btn btn-subtle" @click.prevent="toggleReorder">
                     @{{ reorder ? 'Gedaan met herschikken' : 'Herschik afbeeldingen' }}
                 </a>
-                <input type="hidden" name="filesOrder" :value="filesOrder">
+                <input type="hidden" name="filesOrder[{{ $group }}]" :value="filesOrder">
         </div>
         </filesupload>
         </div>

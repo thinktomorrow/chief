@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Media;
+namespace Thinktomorrow\Chief\Media;
 
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Models\Asset;
@@ -8,13 +8,23 @@ use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
 class UploadMedia
 {
-    public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order)
+    public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
     {
+        // When no files are uploaded, we still would like to sort our assets duh
+        if(empty($files_by_type)) {
+            foreach($files_order_by_type as $type => $files_order) {
+                $model->sortFiles($type, explode(',', $files_order));
+            }
+
+            return;
+        }
+
         foreach($files_by_type as $type => $files) {
+
+            $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
+
             $this->addFiles($model, $type, $files, $files_order);
-
             $this->replaceFiles($model, $files);
-
             $this->removeFiles($model, $files);
 
             $model->sortFiles($type, $files_order);

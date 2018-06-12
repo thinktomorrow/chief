@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Support\Collection;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
@@ -122,6 +123,16 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ];
 
         return $key ? $names->$key : $names;
+    }
+
+    public function mediaUrls($type = null): Collection
+    {
+        return $this->getAllFiles($type)->map->getFileUrl();
+    }
+
+    public function mediaUrl($type = null): string
+    {
+        return $this->mediaUrls($type)->first();
     }
 
     public static function availableMediaTypes($key = null)

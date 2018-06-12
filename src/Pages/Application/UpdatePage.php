@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
-use Thinktomorrow\Chief\Common\Media\UploadMedia;
+use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;

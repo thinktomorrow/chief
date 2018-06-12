@@ -3,12 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\FormParams;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreatePageTest extends TestCase
 {
-    use FormParams;
+    use PageFormParams;
 
     protected function setUp()
     {
@@ -34,6 +33,8 @@ class CreatePageTest extends TestCase
     /** @test */
     public function creating_a_new_page()
     {
+        $this->disableExceptionHandling();
+
         $response = $this->asAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
@@ -74,8 +75,8 @@ class CreatePageTest extends TestCase
 
         $response = $this->asAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
-                    'title:nl'  => 'foobarnl',
-                    'title:en'  => 'foobaren',
+                    'trans.nl.title'  => 'foobarnl',
+                    'trans.en.title'  => 'foobaren',
                 ])
             );
 
@@ -84,6 +85,47 @@ class CreatePageTest extends TestCase
         $pages = Page::all();
         $this->assertCount(2, $pages);
         $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
+    }
+
+    /** @test */
+    public function slug_must_be_unique_even_with_translations()
+    {
+        $page = factory(Page::class)->create([
+                'title:nl'  => 'titel nl',
+                'slug:nl'   => 'foobar'
+            ]);
+
+        $this->assertCount(1, Page::all());
+
+        $response = $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+                    'trans.nl.slug'  => 'foobar',
+                    'trans.en.slug'  => 'foobar',
+                ])
+            );
+        $response->assertStatus(302);
+
+        $pages = Page::all();
+        $this->assertCount(2, $pages);
+        $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
+    }
+
+    /** @test */
+    public function uses_title_as_slug_if_slug_is_empty()
+    {
+        $response = $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+                    'trans.nl.title'    => 'foobar',
+                    'trans.nl.slug'     => '',
+                    'trans.en.title'    => 'foobar',
+                    'trans.en.slug'     => '',
+                ])
+            );
+        $response->assertStatus(302);
+
+        $pages = Page::all();
+        $this->assertCount(1, $pages);
+        $this->assertNotNull($pages->first()->slug);
     }
 
     /** @test */
@@ -96,6 +138,26 @@ class CreatePageTest extends TestCase
              ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
 
         $this->assertCount(0, Page::all());
+    }
+
+    /** @test */
+    public function it_can_update_the_page_relations()
+    {
+        $otherPage = factory(Page::class)->create();
+
+        $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+                'relations' => [
+                    $otherPage->getRelationId()
+                ]
+            ]));
+
+        $pages = Page::all();
+        $this->assertCount(2, $pages);
+
+        $newPage = $pages->last();
+        $this->assertCount(1, $newPage->children());
+        $this->assertEquals($otherPage->id, $newPage->children()->first()->id);
     }
 
 }
