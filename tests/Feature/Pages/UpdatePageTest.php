@@ -2,9 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Auth;
-use Thinktomorrow\Chief\Authorization\Permission;
-use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\FormParams;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -21,12 +19,7 @@ class UpdatePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        // Create page and log out
-        $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'custom-collection'), $this->validPageParams());
-        Auth::guard('chief')->logout();
-
-        $this->page = Page::collection('custom-collection')->first();
+        $this->page = app(CreatePage::class)->handle('custom-collection', $this->validPageParams());
     }
 
     /** @test */
