@@ -7,42 +7,38 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Models\UniqueSlug;
+use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\App\Http\Requests\MenuUpdateRequest;
 
 class UpdateMenu
 {
     use TranslatableCommand;
 
-    public function handle($id, array $translations, array $relations): Page
+    public function handle($id, MenuUpdateRequest $request): MenuItem
     {
-        try {
+        try{
             DB::beginTransaction();
 
-            $page = Page::ignoreCollection()->findOrFail($id);
+            $menu = MenuItem::find($id);
+            if($menu->type == 'custom'){
+                $menu->url = $request->get('url');
+            }elseif($menu->type == 'internal'){
+                $menu->page_id = $this->getPage($request->get('page_id'))->id;
+            }
 
-            $this->savePageTranslations($page, $translations);
-
-            $this->syncRelations($page, $relations);
+            $menu->save();
 
             DB::commit();
-            return $page->fresh();
+
+            return $menu->fresh();
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }
     }
 
-    private function savePageTranslations(Page $page, $translations)
+    private function getPage($page_id)
     {
-        $translations = collect($translations)->map(function ($trans, $locale) {
-            $trans['slug'] = strip_tags($trans['slug']);
-
-            return $trans;
-        });
-
-        $this->saveTranslations($translations, $page, [
-            'slug', 'title', 'content', 'seo_title', 'seo_description'
-        ]);
+        return Page::inflate($page_id);
     }
-
-    
 }

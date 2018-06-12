@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
+use Thinktomorrow\Chief\App\Http\Requests\MenuUpdateRequest;
 
 class MenuController extends Controller
 {
@@ -70,11 +71,11 @@ class MenuController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function update(PageUpdateRequest $request, $id)
+    public function update(MenuUpdateRequest $request, $id)
     {
-        $page = app(UpdateMenu::class)->handle($id, $request->trans);
+        $menu = app(UpdateMenu::class)->handle($id, $request);
 
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
+        return redirect()->route('chief.back.menu.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $menu->title . '" werd aangepast');
     }
 
     /**
@@ -100,6 +101,6 @@ class MenuController extends Controller
 
         $message = 'Het item werd verwijderd.';
 
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
+        return redirect()->route('chief.back.menu.index', $page->collectionKey())->with('messages.warning', $message);
     }
 }

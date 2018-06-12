@@ -32,12 +32,6 @@ class CreateMenu
 
             $translations = $request->get('trans');
 
-            // foreach($translations as $locale => $value){
-            //     $value = $this->enforceUniqueSlug($value, $menu, $locale);
-                
-            //     $menu->updateTranslation($locale, $value);
-            // }
-
             $this->saveTranslations($translations, $menu, [
                 'label', 'url'
             ]);
