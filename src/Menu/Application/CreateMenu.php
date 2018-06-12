@@ -9,23 +9,40 @@ use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Common\UniqueSlug;
 use Thinktomorrow\Chief\App\Http\Requests\MenuCreateRequest;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\MenuItemTranslation;
 
 class CreateMenu
 {
     use TranslatableCommand;
 
-    public function handle(MenuCreateRequest $request): Page
+    public function handle(MenuCreateRequest $request): MenuItem
     {
         try{
             DB::beginTransaction();
 
-            $menu = MenuItem::create(['label:nl' => 'first item']);
+            $menu = MenuItem::create();
 
-            $translations = $this->enforceUniqueSlug($translations, $menu);
+            if(($type = $request->get('type')) == 'custom'){
+                $menu->url = $request->get('url');
+            }elseif($type == 'internal'){
+                $menu->page_id = $this->getPage($request->get('page_id'))->id;
+            }
+
+            $menu->type = $type;
+
+            $translations = $request->get('trans');
+
+            // foreach($translations as $locale => $value){
+            //     $value = $this->enforceUniqueSlug($value, $menu, $locale);
+                
+            //     $menu->updateTranslation($locale, $value);
+            // }
 
             $this->saveTranslations($translations, $menu, [
-                'slug', 'title', 'content', 'seo_title', 'seo_description'
+                'label', 'url'
             ]);
+
+            $menu->save();
 
             DB::commit();
 
@@ -36,18 +53,8 @@ class CreateMenu
         }
     }
 
-    /**
-     * @param array $translations
-     * @param $menu
-     * @return array
-     */
-    private function enforceUniqueSlug(array $translations, $menu): array
+    private function getPage($page_id)
     {
-        foreach ($translations as $locale => $translation) {
-            $translation['slug'] = UniqueSlug::make(new PageTranslation)->get($translation['title'], $menu->getTranslation($locale));
-            $translations[$locale] = $translation;
-        }
-
-        return $translations;
+        return Page::inflate($page_id);
     }
 }

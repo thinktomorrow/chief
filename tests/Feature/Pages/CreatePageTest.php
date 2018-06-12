@@ -71,8 +71,8 @@ class CreatePageTest extends TestCase
 
         $response = $this->asDefaultAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
-                    'title:nl'  => 'foobarnl',
-                    'title:en'  => 'foobaren',
+                    'trans.nl.title'  => 'foobarnl',
+                    'trans.en.title'  => 'foobaren',
                 ])
             );
 
@@ -81,6 +81,47 @@ class CreatePageTest extends TestCase
         $pages = Page::all();
         $this->assertCount(2, $pages);
         $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
+    }
+
+    /** @test */
+    public function slug_must_be_unique_even_with_translations()
+    {
+        $page = factory(Page::class)->create([
+                'title:nl'  => 'titel nl',
+                'slug:nl'   => 'foobar'
+            ]);
+
+        $this->assertCount(1, Page::all());
+
+        $response = $this->asDefaultAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
+                    'trans.nl.slug'  => 'foobar',
+                    'trans.en.slug'  => 'foobar',
+                ])
+            );
+        $response->assertStatus(302);
+
+        $pages = Page::all();
+        $this->assertCount(2, $pages);
+        $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
+    }
+
+    /** @test */
+    public function uses_title_as_slug_if_slug_is_empty()
+    {
+        $response = $this->asDefaultAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
+                    'trans.nl.title'    => 'foobar',
+                    'trans.en.title'    => 'foobar',
+                    'trans.en.slug'     => '',
+                    'trans.en.slug'     => '',
+                ])
+            );
+        $response->assertStatus(302);
+
+        $pages = Page::all();
+        $this->assertCount(1, $pages);
+        $this->assertNotNull($pages->first()->slug);
     }
 
     /** @test */
@@ -115,24 +156,22 @@ class CreatePageTest extends TestCase
                 ],
             ],
         ];
-
         foreach ($overrides as $key => $value) {
             array_set($params, $key, $value);
         }
-
         return $params;
     }
 
 
     private function assertNewValues($page)
     {
-        $this->assertEquals('new-title', $page->{'slug:nl'});
+        $this->assertEquals('new-slug', $page->{'slug:nl'});
         $this->assertEquals('new title', $page->{'title:nl'});
         $this->assertEquals('new content in <strong>bold</strong>', $page->{'content:nl'});
         $this->assertEquals('new seo title', $page->{'seo_title:nl'});
         $this->assertEquals('new seo description', $page->{'seo_description:nl'});
 
-        $this->assertEquals('nouveau-title', $page->{'slug:en'});
+        $this->assertEquals('nouveau-slug', $page->{'slug:en'});
         $this->assertEquals('nouveau title', $page->{'title:en'});
         $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:en'});
         $this->assertEquals('nouveau seo title', $page->{'seo_title:en'});

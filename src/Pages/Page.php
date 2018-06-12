@@ -16,7 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
-use Thinktomorrow\Chief\Common\Traits\Archivable;
+use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
+use Illuminate\Support\Collection;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
@@ -45,12 +46,12 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->first() : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->pageWithoutCollectionScope()->first() : null;
     }
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->page()->published()->first() : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? $trans->pageWithoutCollectionScope()->published()->first() : null;
     }
 
     public function scopeSortedByCreated($query)
@@ -107,5 +108,47 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ];
 
         return $key ? $names->$key : $names;
+    }
+
+    public static function flattenForSelect()
+    {
+        return self::all()->map(function (Page $page) {
+            return [
+                'id'    => $page->getRelationId(),
+                'label' => $page->getRelationLabel(),
+                'group' => $page->getRelationGroup(),
+            ];
+        });
+    }
+
+    public static function flattenForGroupedSelect(): Collection
+    {
+        $grouped = [];
+
+        self::flattenForSelect()->each(function ($entry) use (&$grouped) {
+            if (isset($grouped[$entry['group']])) {
+                $grouped[$entry['group']]['values'][] = $entry;
+            } else {
+                $grouped[$entry['group']] = ['group' => $entry['group'], 'values' => [$entry]];
+            }
+        });
+
+        // We remove the group key as we need to have non-assoc array for the multiselect options.
+        return collect(array_values($grouped));
+    }
+
+    public static function inflate($relateds = []): self
+    {
+        if(!is_array($relateds)) $relateds = [$relateds];
+
+        if (count($relateds) == 1 && is_null(reset($relateds))) {
+            $relateds = [];
+        }
+
+        return (collect($relateds))->map(function ($related) {
+            list($type, $id) = explode('@', $related);
+
+            return (new $type)->find($id);
+        })->first();
     }
 }

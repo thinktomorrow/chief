@@ -9,16 +9,13 @@ use Thinktomorrow\Chief\App\Http\Requests\MenuCreateRequest;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 
 class MenuController extends Controller
 {
     public function index()
     {
-        //Demo menu items
-        // $first  = MenuItem::create(['label:en' => 'first item']);
-        // $second = MenuItem::create(['label:en' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
-        // $third  = MenuItem::create(['label:en' => 'last item', 'parent_id' => $first->id, 'order' => 1, 'hidden_in_menu' => 1]);
-        
         $menu = ChiefMenu::fromMenuItems()->items();
 
         return view('chief::back.menu.index', compact('menu'));
@@ -31,7 +28,10 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('chief::back.menu.create');
+        $menuitem = new MenuItem;
+        $pages = Page::flattenForGroupedSelect()->toArray();
+        
+        return view('chief::back.menu.create', compact('pages', 'menuitem'));
     }
 
     /**
@@ -44,7 +44,7 @@ class MenuController extends Controller
     {
         $menu = app(CreateMenu::class)->handle($request);
 
-        return redirect()->route('chief.back.pages.index')->with('messages.success', $menu->title . ' is aangemaakt');
+        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->title . ' is aangemaakt');
     }
 
     /**
@@ -55,15 +55,11 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
-        $page->injectTranslationForForm();
+        $menuitem = MenuItem::findOrFail($id);
+        $menuitem->injectTranslationForForm();
 
-        $page->existingRelationIds = RelatedCollection::relationIds($page->children());
-        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
-
-        return view('chief::back.pages.edit', [
-            'page'            => $page,
-            'relations'       => $relations
+        return view('chief::back.menu.edit', [
+            'menu'            => $menuitem,
         ]);
     }
 
@@ -76,7 +72,7 @@ class MenuController extends Controller
      */
     public function update(PageUpdateRequest $request, $id)
     {
-        $page = app(UpdatePage::class)->handle($id, $request->trans, $request->relations);
+        $page = app(UpdateMenu::class)->handle($id, $request->trans);
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
     }

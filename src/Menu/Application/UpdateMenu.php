@@ -44,15 +44,5 @@ class UpdateMenu
         ]);
     }
 
-    private function syncRelations($page, $relateds)
-    {
-        // First remove all existing children
-        foreach ($page->children() as $child) {
-            $page->rejectChild($child);
-        }
-
-        foreach (RelatedCollection::inflate($relateds) as $i => $related) {
-            $page->adoptChild($related, ['sort' => $i]);
-        }
-    }
+    
 }

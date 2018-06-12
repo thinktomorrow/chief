@@ -38,102 +38,60 @@
                 <strong>Type</strong>
             </div>
         </div>
-        <div class="row">
-            <div class="column-4 center-y">
-                <i class="icon icon-menu inline text-border tree-parent"></i>
-                <a href="#">Diensten</a>
+        @foreach($menu as $menuitem)
+            <div class="row">
+                <div class="column-4 center-y">
+                    <i class="icon icon-menu inline text-border tree-parent"></i>
+                    <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}">{{ $menuitem->label }}</a>
+                </div>
+                <div class="column-3 center-y">
+                    <a href="#">/diensten</a>
+                </div>
+                <div class="column-2 center-y">
+                    <div class="font-s">Collection</div>
+                </div>
+                <div class="column-3 text-right">
+                    <a href="#" class="btn btn-link text-font">Aanpassen</a>
+                    <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
+                </div>
             </div>
-            <div class="column-3 center-y">
-                <a href="#">/diensten</a>
-            </div>
-            <div class="column-2 center-y">
-                <div class="font-s">Collection</div>
-            </div>
-            <div class="column-3 text-right">
-                <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column-4 center-y indent">
-                <i class="icon icon-menu inline text-border tree-parent"></i>
-                <a href="#">Hoofddienst 1</a>
-            </div>
-            <div class="column-3 center-y">
-                <a href="#">/hoofddienst-1</a>
-            </div>
-            <div class="column-2 center-y">
-                <div class="font-s">Collection-item</div>
-            </div>
-            <div class="column-3 text-right">
-                <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column-4 center-y indent-l">
-                <i class="icon icon-menu inline text-border"></i>
-                <a href="#">Subdienst 1</a>
-            </div>
-            <div class="column-3 center-y">
-                <a href="#">/subdienst-1</a>
-            </div>
-            <div class="column-2 center-y">
-                <div class="font-s">Collection-item</div>
-            </div>
-            <div class="column-3 text-right">
-                <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column-4 center-y">
-                <i class="icon icon-menu inline text-border tree-parent"></i>
-                <a href="#">Team</a>
-            </div>
-            <div class="column-3 center-y">
-                <a href="#">/team</a>
-            </div>
-            <div class="column-2 center-y">
-                <div class="font-s">Internal link</div>
-            </div>
-            <div class="column-3 text-right">
-                <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column-4 center-y indent">
-                <i class="icon icon-menu inline text-border"></i>
-                <a href="#">Teamlid 1</a>
-            </div>
-            <div class="column-3 center-y">
-                <a href="#">/teamlid-1</a>
-            </div>
-            <div class="column-2 center-y">
-                <div class="font-s">Custom link</div>
-            </div>
-            <div class="column-3 text-right">
-                <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column-4 center-y indent">
-                <i class="icon icon-menu inline text-border"></i>
-                <a href="#">Teamlid 2</a>
-            </div>
-            <div class="column-3 center-y">
-                <a href="#">/teamlid-2</a>
-            </div>
-            <div class="column-2 center-y">
-                <div class="font-s">Custom link</div>
-            </div>
-            <div class="column-3 text-right">
-                <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-            </div>
-        </div>
+            @foreach($menuitem->children as $child)
+                <div class="row">
+                    <div class="column-4 center-y indent">
+                        <i class="icon icon-menu inline text-border tree-parent"></i>
+                        <a href="{{ route('chief.back.menu.edit', $child->id) }}">{{ $child->label }}</a>
+                    </div>
+                    <div class="column-3 center-y">
+                        <a href="#">/diensten</a>
+                    </div>
+                    <div class="column-2 center-y">
+                        <div class="font-s">Collection</div>
+                    </div>
+                    <div class="column-3 text-right">
+                        <a href="#" class="btn btn-link text-font">Aanpassen</a>
+                        <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
+                    </div>
+                </div>
+                @foreach($child->children as $subchild)
+                    <div class="row">
+                        <div class="column-4 center-y indent-l">
+                            <i class="icon icon-menu inline text-border tree-parent"></i>
+                            <a href="{{ route('chief.back.menu.edit', $subchild->id) }}">{{ $subchild->label }}</a>
+                        </div>
+                        <div class="column-3 center-y">
+                            <a href="#">/diensten</a>
+                        </div>
+                        <div class="column-2 center-y">
+                            <div class="font-s">Collection</div>
+                        </div>
+                        <div class="column-3 text-right">
+                            <a href="#" class="btn btn-link text-font">Aanpassen</a>
+                            <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
+                        </div>
+                    </div>
+                @endforeach
+            @endforeach
+        @endforeach
     </div>
 
 @stop
