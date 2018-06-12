@@ -1,5 +1,7 @@
 <?php
 
+use Thinktomorrow\Chief\Media\MediaType;
+
 return [
 
     /**
@@ -52,11 +54,29 @@ return [
     ],
 
     /**
-     * Here you should provide the mapping of page and component collections. This
+     * Here you should provide the mapping of page and module collections. This
      * is required for the class mapping from database to their respective classes.
      */
     'collections' => [
         'statics' => \Thinktomorrow\Chief\Pages\Page::class,
     ],
+
+    /**
+     * Set of mediatypes used for each collection.
+     * Default set of mediatypes that is available for every collection
+     */
+    'mediatypes' => [
+
+        'default' => [
+            (object) [
+                'type' => MediaType::HERO,
+                'limit' => 1,
+            ],
+            (object) [
+                'type' => MediaType::THUMB,
+                'limit' => 1,
+            ]
+        ],
+    ]
 
 ];

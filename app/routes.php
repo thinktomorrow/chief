@@ -59,13 +59,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::post('pages/{id}/publish', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@publish')->name('chief.back.pages.publish');
 
 
-    Route::get('media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@library')->name('media.library');
-    Route::get('media-modal', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@mediaModal')->name('media.modal');
-    Route::get('uploadtest', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@uploadtest')->name('media.uploadtest');
-    Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
-    Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
-
-
     Route::post('page/{id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@upload')->name('page.upload');
 
     Route::get('/settings', ['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
@@ -76,6 +69,21 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     // YOUR PROFILE MANAGEMENT
     Route::get('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@edit')->name('chief.back.you.edit');
     Route::put('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@update')->name('chief.back.you.update');
+
+    /**
+     * -----------------------------------------------------------------
+     * MEDIA MANAGEMENT
+     * -----------------------------------------------------------------
+     */
+//    Route::post('media-upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadMediaController@store')->name('media.upload');
+    Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
+
+
+//    Route::get('media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@library')->name('media.library');
+//    Route::get('media-modal', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@mediaModal')->name('media.modal');
+//    Route::get('uploadtest', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@uploadtest')->name('media.uploadtest');
+//    Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
+//    Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
 
     /**
      * -----------------------------------------------------------------

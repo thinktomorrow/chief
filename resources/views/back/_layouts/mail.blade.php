@@ -38,7 +38,6 @@
         /* ANDROID CENTER FIX */
         div[style*="margin: 16px 0;"] { margin: 0 !important; }
 
-        /* */
         .button{ border:1px solid #e8e8e8; background-color: #13c6a6; color: #FFFFFF; transition: 0.15s all ease-in-out;}
         .button:hover{ border:1px solid #15997A; background-color: #15997A; color: #FFFFFF; }
         ::selection{ background-color: #13c6a6; color: #FFFFFF; }

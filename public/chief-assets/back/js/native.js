@@ -73,8 +73,9 @@
  * loaded after the Vue instantiation
  */
 
-/** Chief utilities */
 __webpack_require__("./resources/assets/js/utilities/form-submit.js");
+
+//$R('[data-editor]');
 
 /** Tippy tooltip init */
 window.tippy('[title]', {

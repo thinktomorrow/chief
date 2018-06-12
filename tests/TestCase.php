@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Http\Kernel;
-use Thinktomorrow\Chief\App\Http\Middleware\RedirectIfAuthenticated;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
 use Thinktomorrow\Locale\LocaleServiceProvider;
@@ -97,7 +97,7 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('squanto.template', 'chief::back._layouts.master');
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
-        $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, RedirectIfAuthenticated::class);
+        $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);
     }
 
     protected function disableExceptionHandling()

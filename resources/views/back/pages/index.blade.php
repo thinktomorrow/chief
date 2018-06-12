@@ -14,22 +14,27 @@
 
     @section('content')
 
+        @if($drafts->isEmpty() && $published->isEmpty())
+            <div class="center-center stack-xl">
+                <a href="{{ route('chief.back.pages.create', $collectionDetails->key) }}" class="btn btn-primary squished-l">
+                    <i class="icon icon-zap icon-fw"></i> Tijd om een {{ $collectionDetails->singular }} toe te voegen
+                </a>
+            </div>
+        @endif
+
+        @if(!$drafts->isEmpty() || !$published->isEmpty() || !$archived->isEmpty())
         <tabs v-cloak>
-            <tab name="Drafts ({{$drafts->count()}})" id="drafts">
-                @if( ! $drafts->isEmpty())
-                    @foreach($drafts as $page)
-                        @include('chief::back.pages._partials._rowitem')
-                        @include('chief::back.pages._partials.delete-modal')
-                    @endforeach
-                    <div class="text-center">
-                        {!! $drafts->render() !!}
-                    </div>
-                @else
-                    <a href="{{ route('chief.back.pages.create', $collectionDetails->key) }}" class="btn btn-primary">
-                        <i class="icon icon-zap icon-fw"></i> Tijd om aan de slag te gaan
-                    </a>
-                @endif
-            </tab>
+            @if( ! $drafts->isEmpty())
+                <tab name="Drafts ({{$drafts->count()}})" id="drafts">
+                        @foreach($drafts as $page)
+                            @include('chief::back.pages._partials._rowitem')
+                            @include('chief::back.pages._partials.delete-modal')
+                        @endforeach
+                        <div class="text-center">
+                            {!! $drafts->render() !!}
+                        </div>
+                </tab>
+            @endif
 
             @if( ! $published->isEmpty())
                 <tab name="Published ({{ $published->count() }})" id="published">
@@ -54,6 +59,7 @@
                 </tab>
             @endif
         </tabs>
+    @endif
 @stop
 
 @push('custom-scripts')

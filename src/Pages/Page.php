@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Support\Collection;
+use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -17,6 +19,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
+use Thinktomorrow\Chief\Media\MediaType;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
@@ -42,6 +45,19 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
+
+    /**
+     * Set a custom morph class for the morph relations because we
+     * mostly want the Page as morph relationship instead of the
+     * child class.
+     */
+    public function getMorphClass(){
+        return self::class;
+    }
+
+    public function getOwnMorphClass(){
+        return parent::getMorphClass();
+    }
 
     public static function findBySlug($slug)
     {
@@ -107,5 +123,35 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ];
 
         return $key ? $names->$key : $names;
+    }
+
+    public function mediaUrls($type = null): Collection
+    {
+        return $this->getAllFiles($type)->map->getFileUrl();
+    }
+
+    public function mediaUrl($type = null): string
+    {
+        return $this->mediaUrls($type)->first();
+    }
+
+    public static function availableMediaTypes($key = null)
+    {
+        $types = [
+            MediaType::HERO => [
+                'type' => MediaType::HERO,
+                'label' => 'Hoofdafbeelding',
+                'description' => '',
+//                'limit' => 1,
+            ],
+            MediaType::THUMB => [
+                'type' => MediaType::THUMB,
+//                'limit' => 1,
+                'label' => 'Thumbnails',
+                'description' => '',
+            ],
+        ];
+
+        return $key ? array_pluck($types, $key) : $types;
     }
 }

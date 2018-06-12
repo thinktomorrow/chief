@@ -29,8 +29,7 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="./report"
-             lowUpperBound="50" highLowerBound="80" />
+        <log type="coverage-html" target="./report" lowUpperBound="50" highLowerBound="80" />
     </logging>
     <php>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>

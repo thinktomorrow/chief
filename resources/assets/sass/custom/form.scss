@@ -26,3 +26,17 @@
     padding: 8px 15px;
     font-size: 12px;
 }
+
+.redactor-in .row , .redactor-in [class*="column-"]{
+  border:1px dashed lightgrey;
+}
+
+.redactor-dropdown-format{
+    .redactor-dropdown-item-p,
+    .redactor-dropdown-item-h2,
+    .redactor-dropdown-item-h3 {
+        font-size: 1rem;
+        font-weight: normal;
+        line-height: 1;
+    }
+}

@@ -1,16 +1,28 @@
 /*
-	Redactor II
+    Redactor 3
 
-	http://imperavi.com/redactor/
+    http://imperavi.com/redactor/
 
-	Copyright (c) 2009-2017, Imperavi Oy.
-	License: http://imperavi.com/redactor/license/
+    Copyright (c) 2009-2018, Imperavi LLC.
+    License: http://imperavi.com/redactor/license/
 */
 
 @import "variables";
 @import "mixins";
+@import "animation";
 @import "icons";
-@import "ui";
+@import "base";
+@import "source";
+@import "placeholder";
+@import "statusbar";
+@import "toolbar";
+@import "toolbar-air";
+@import "accessibility";
+@import "context";
 @import "dropdown";
 @import "modal";
-@import "content";
+@import "styles";
+@import "upload";
+@import "structure";
+@import "progress";
+@import "fullscreen";

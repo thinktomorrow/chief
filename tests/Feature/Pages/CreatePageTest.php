@@ -7,6 +7,8 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreatePageTest extends TestCase
 {
+    use PageFormParams;
+
     protected function setUp()
     {
         parent::setUp();
@@ -17,7 +19,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $response = $this->asDefaultAdmin()->get(route('chief.back.pages.create', 'statics'));
+        $response = $this->asAdmin()->get(route('chief.back.pages.create', 'statics'));
         $response->assertStatus(200);
     }
 
@@ -31,20 +33,22 @@ class CreatePageTest extends TestCase
     /** @test */
     public function creating_a_new_page()
     {
-        $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validParams());
+        $this->disableExceptionHandling();
+
+        $response = $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.pages.index', 'statics'));
 
         $this->assertCount(1, Page::all());
-        $this->assertNewValues(Page::first());
+        $this->assertNewPageValues(Page::first());
     }
 
     /** @test */
     public function only_authenticated_admin_can_create_a_page()
     {
-        $response = $this->post(route('chief.back.pages.store', 'statics'), $this->validParams());
+        $response = $this->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Page::all());
@@ -53,7 +57,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function when_creating_page_title_is_required()
     {
-        $this->assertValidation(new Page(), 'trans.nl.title', $this->validParams(['trans.nl.title' => '']),
+        $this->assertValidation(new Page(), 'trans.nl.title', $this->validPageParams(['trans.nl.title' => '']),
             route('chief.back.pages.index', 'statics'),
             route('chief.back.pages.store', 'statics')
         );
@@ -69,8 +73,8 @@ class CreatePageTest extends TestCase
 
         $this->assertCount(1, Page::all());
 
-        $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
+        $response = $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
                     'trans.nl.title'  => 'foobarnl',
                     'trans.en.title'  => 'foobaren',
                 ])
@@ -93,8 +97,8 @@ class CreatePageTest extends TestCase
 
         $this->assertCount(1, Page::all());
 
-        $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
+        $response = $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
                     'trans.nl.slug'  => 'foobar',
                     'trans.en.slug'  => 'foobar',
                 ])
@@ -109,11 +113,11 @@ class CreatePageTest extends TestCase
     /** @test */
     public function uses_title_as_slug_if_slug_is_empty()
     {
-        $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validParams([
+        $response = $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
                     'trans.nl.title'    => 'foobar',
+                    'trans.nl.slug'     => '',
                     'trans.en.title'    => 'foobar',
-                    'trans.en.slug'     => '',
                     'trans.en.slug'     => '',
                 ])
             );
@@ -136,45 +140,24 @@ class CreatePageTest extends TestCase
         $this->assertCount(0, Page::all());
     }
 
-    private function validParams($overrides = [])
+    /** @test */
+    public function it_can_update_the_page_relations()
     {
-        $params = [
-            'trans' => [
-                'nl' => [
-                    'slug'              => 'new-slug',
-                    'title'             => 'new title',
-                    'content'           => 'new content in <strong>bold</strong>',
-                    'seo_title'         => 'new seo title',
-                    'seo_description'   => 'new seo description',
-                ],
-                'en' => [
-                    'slug'              => 'nouveau-slug',
-                    'title'             => 'nouveau title',
-                    'content'           => 'nouveau content in <strong>bold</strong>',
-                    'seo_title'         => 'nouveau seo title',
-                    'seo_description'   => 'nouveau seo description',
-                ],
-            ],
-        ];
-        foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
-        }
-        return $params;
+        $otherPage = factory(Page::class)->create();
+
+        $this->asAdmin()
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+                'relations' => [
+                    $otherPage->getRelationId()
+                ]
+            ]));
+
+        $pages = Page::all();
+        $this->assertCount(2, $pages);
+
+        $newPage = $pages->last();
+        $this->assertCount(1, $newPage->children());
+        $this->assertEquals($otherPage->id, $newPage->children()->first()->id);
     }
 
-
-    private function assertNewValues($page)
-    {
-        $this->assertEquals('new-slug', $page->{'slug:nl'});
-        $this->assertEquals('new title', $page->{'title:nl'});
-        $this->assertEquals('new content in <strong>bold</strong>', $page->{'content:nl'});
-        $this->assertEquals('new seo title', $page->{'seo_title:nl'});
-        $this->assertEquals('new seo description', $page->{'seo_description:nl'});
-
-        $this->assertEquals('nouveau-slug', $page->{'slug:en'});
-        $this->assertEquals('nouveau title', $page->{'title:en'});
-        $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:en'});
-        $this->assertEquals('nouveau seo title', $page->{'seo_title:en'});
-        $this->assertEquals('nouveau seo description', $page->{'seo_description:en'});
-    }
 }

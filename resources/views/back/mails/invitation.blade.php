@@ -12,7 +12,8 @@
     <tr>
         <td bgcolor="#ffffff" align="left" style="padding: 0px 50px 25px 50px; color: #808080; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
             <p style="margin: 0; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 21px;">
-                Je bent uitgenodigd door jouw collega {{ $inviter->firstname }}. Hierbij krijg je toegang tot het beheer van {{ config('thinktomorrow.chief.name') }}. Opgelet deze uitnodiging is slechts 3 dagen geldig.<br><br> Klik op volgende link op de uitnodiging te aanvaarden: <a href="{{ $accept_url }}">{{ $accept_url }}</a>
+                Je bent uitgenodigd door jouw collega {{ $inviter->firstname }}. Hierbij krijg je toegang tot het beheer van {{ config('thinktomorrow.chief.name') }}. Opgelet deze uitnodiging is slechts 3 dagen geldig.<br><br>
+                Klik op volgende link op de uitnodiging te aanvaarden:
             </p>
 
             <p style="margin: 40px 0 20px 0;">
