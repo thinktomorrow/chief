@@ -18,6 +18,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
+use Thinktomorrow\Chief\Media\MediaType;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
@@ -121,5 +122,25 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ];
 
         return $key ? $names->$key : $names;
+    }
+
+    public static function availableMediaTypes($key = null)
+    {
+        $types = [
+            MediaType::HERO => [
+                'type' => MediaType::HERO,
+                'label' => 'Hoofdafbeelding',
+                'description' => '',
+//                'limit' => 1,
+            ],
+            MediaType::THUMB => [
+                'type' => MediaType::THUMB,
+//                'limit' => 1,
+                'label' => 'Thumbnails',
+                'description' => '',
+            ],
+        ];
+
+        return $key ? array_pluck($types, $key) : $types;
     }
 }

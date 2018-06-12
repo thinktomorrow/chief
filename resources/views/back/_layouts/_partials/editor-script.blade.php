@@ -1,7 +1,4 @@
-
-<script src="/chief-assets/back/js/redactor-plugins/redactor-columns.js"></script>
-<script src="/chief-assets/back/js/redactor-plugins/imagemanager.js"></script>
-<script src="/chief-assets/back/js/redactor-plugins/alignment.js"></script>
+<script src="/chief-assets/back/js/vendors/redactor.js"></script>
 <script>
     $R('[data-editor]', {
         plugins: ['redactorColumns', 'imagemanager', 'alignment'],
@@ -11,16 +8,6 @@
         buttons: ['format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
         @endif
         formatting: ['p', 'h2', 'h3'],
-        formattingAdd: {
-            "rood": {
-                title: 'Rode tekst',
-                api: 'module.block.format',
-                args: {
-                    'tag': 'p',
-                    'class': 'text-primary'
-                }
-            },
-        },
         imageResizable: true,
         imagePosition: true,
         callbacks: {
