@@ -1,7 +1,7 @@
 // BUTTONS
 .btn{
     outline: none;
-    padding: $space-s $space-m;
+    padding: $space-xs $space-s ; // squished-s equivalent
     display: inline-block;
     text-decoration: none;
     cursor: pointer;

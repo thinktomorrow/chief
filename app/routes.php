@@ -85,6 +85,21 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     /**
      * -----------------------------------------------------------------
+     * MEDIA MANAGEMENT
+     * -----------------------------------------------------------------
+     */
+//    Route::post('media-upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadMediaController@store')->name('media.upload');
+    Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
+
+
+//    Route::get('media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@library')->name('media.library');
+//    Route::get('media-modal', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@mediaModal')->name('media.modal');
+//    Route::get('uploadtest', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@uploadtest')->name('media.uploadtest');
+//    Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
+//    Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
+
+    /**
+     * -----------------------------------------------------------------
      * AUTHORIZATION MANAGEMENT
      * -----------------------------------------------------------------
      */

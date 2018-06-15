@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
+use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
@@ -12,28 +13,18 @@ class UpdatePage
 {
     use TranslatableCommand;
 
-    public function handle($id, array $translations, array $relations): Page
+    public function handle($id, array $translations, array $relations, array $files, array $files_order): Page
     {
         try {
             DB::beginTransaction();
 
             $page = Page::ignoreCollection()->findOrFail($id);
 
-            //Loops over the uploaded assets and attaches them to the model
-            // collect($translations)->each(function ($translation, $locale) use ($page) {
-            //     if ($trans = $translation['files']) {
-            //         collect($trans)->each(function ($asset_id, $type) use ($page, $locale) {
-            //             if ($asset_id) {
-            //                 $asset = Asset::find($asset_id);
-            //                 $page->addFile($asset, $type, $locale);
-            //             }
-            //         });
-            //     }
-            // });
-
             $this->savePageTranslations($page, $translations);
 
             $this->syncRelations($page, $relations);
+
+            app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
 
             DB::commit();
             return $page->fresh();
@@ -52,7 +43,7 @@ class UpdatePage
         });
 
         $this->saveTranslations($translations, $page, [
-            'slug', 'title', 'content', 'seo_title', 'seo_description'
+            'slug', 'title', 'short', 'content', 'seo_title', 'seo_description'
         ]);
     }
 

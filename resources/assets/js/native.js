@@ -3,8 +3,9 @@
  * loaded after the Vue instantiation
  */
 
-/** Chief utilities */
 require('./utilities/form-submit');
+
+//$R('[data-editor]');
 
 /** Tippy tooltip init */
 window.tippy('[title]', {

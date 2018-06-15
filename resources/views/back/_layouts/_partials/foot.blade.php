@@ -1,9 +1,4 @@
 
-<!--Load redactor script and required dependency jquery -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous"></script>
-<script src="{{ cached_asset('/chief-assets/back/js/vendors/redactor.js', 'back') }}"></script>
 <script src="{{ cached_asset('/chief-assets/back/js/main.js','back') }}"></script>
 
 @stack('custom-scripts')
@@ -66,21 +61,6 @@
 </script>
 
 <script src="{{ cached_asset('/chief-assets/back/js/native.js','back') }}"></script>
-
-<script>
-    /** Redactor wysiwyg */
-    $(function()
-    {
-        var $editor = $('.redactor');
-        if($editor){
-            $editor.redactor({
-                formatting: ['h4','p'],
-            });
-        }
-    });
-
-</script>
-
 @stack('custom-scripts-after-vue')
 
 </body>
