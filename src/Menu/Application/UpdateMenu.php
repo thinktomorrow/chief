@@ -28,6 +28,10 @@ class UpdateMenu
 
             $menu->save();
 
+            $this->saveTranslations($request->get('trans'), $menu, [
+                'label'
+            ]);
+
             DB::commit();
 
             return $menu->fresh();

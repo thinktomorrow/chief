@@ -13,6 +13,7 @@ class CreateMenuItemTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+        app()->setLocale('nl');
     }
 
     /** @test */
@@ -33,19 +34,19 @@ class CreateMenuItemTest extends TestCase
     public function creating_a_new_menuItem()
     {
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.menu.store'), $this->validParams());
+            ->post(route('chief.back.menu.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
 
         $this->assertCount(1, MenuItem::all());
-        $this->assertNewValues(MenuItem::first());
+        $this->assertNewValues(MenuItem::first(), ['trans.nl.url' => 'https://thinktomorrow.be']);
     }
 
     /** @test */
     public function only_authenticated_admin_can_create_a_menuItem()
     {
-        $response = $this->post(route('chief.back.menu.store'), $this->validParams());
+        $response = $this->post(route('chief.back.menu.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, MenuItem::all());
@@ -68,15 +69,25 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function creating_a_new_custom_menuItem()
     {
-        $this->disableExceptionHandling();
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.menu.store'), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
-        
-        $response->assertStatus(302);
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                    'type'              => 'custom',
+                    'trans.nl.label'    => 'nieuw label',
+                    'trans.nl.url'      => 'https://thinktomorrow.be',
+                    'trans.en.label'    => 'new label',                    
+                    'trans.en.url'      => 'https://thinktomorrow.com'
+                ]));
+
+                $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
 
         $this->assertCount(1, MenuItem::all());
-        $this->assertNewValues(MenuItem::first(), ['type' => 'custom']);
+        $this->assertNewValues(MenuItem::first(), [
+            'type'              => 'custom',
+            'trans.nl.url'      => 'https://thinktomorrow.be',
+            'trans.en.label'    => 'new label',                    
+            'trans.en.url'      => 'https://thinktomorrow.com'
+        ]);
     }
 
     /** @test */
@@ -140,12 +151,7 @@ class CreateMenuItemTest extends TestCase
             'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',
-                    'url'   => 'https://thinktomorrow.be',
-                ],
-                'en' => [
-                    'label' => 'new label',
-                    'url'   => 'https://thinktomorrow.be',
-                ],
+                ]
             ],
         ];
 
@@ -162,9 +168,9 @@ class CreateMenuItemTest extends TestCase
         $this->assertEquals($overrides['type'] ?? 'custom', $menuItem->{'type'});
 
         $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
-        $this->assertEquals($overrides['trans.nl.url'] ?? 'https://thinktomorrow.be', $menuItem->{'url:nl'});
+        $this->assertEquals($overrides['trans.nl.url'] ?? '', $menuItem->{'url:nl'});
 
-        $this->assertEquals($overrides['trans.en.label'] ?? 'new label', $menuItem->{'label:en'});
-        $this->assertEquals($overrides['trans.en.url'] ?? 'https://thinktomorrow.be', $menuItem->{'url:en'});
+        $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
+        $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});
     }
 }

@@ -21,19 +21,21 @@ class CreateMenu
             DB::beginTransaction();
 
             $menu = MenuItem::create();
+            $translations = $request->get('trans');
 
             if(($type = $request->get('type')) == 'custom'){
-                $menu->url = $request->get('url');
+                $this->saveTranslations($translations, $menu, [
+                    'url'
+                ]);
             }elseif($type == 'internal'){
                 $menu->page_id = $this->getPage($request->get('page_id'))->id;
             }
 
             $menu->type = $type;
 
-            $translations = $request->get('trans');
 
             $this->saveTranslations($translations, $menu, [
-                'label', 'url'
+                'label'
             ]);
 
             $menu->save();

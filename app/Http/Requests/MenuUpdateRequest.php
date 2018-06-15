@@ -30,7 +30,7 @@ class MenuUpdateRequest extends FormRequest
     {
         $translations = $this->request->get('trans', []);
 
-        $rules['type']      = 'in:custom,internal';
+        //TODO figure out how to check type 
         $rules['page_id']   = 'required_if:type,internal';
         $rules['id']        = 'required_with:page_id|exists:pages,id';
         

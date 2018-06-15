@@ -38,7 +38,7 @@ class CreateAdmin extends BaseCommand
         AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
             Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
         });
-
+        
         $this->info('Default permissions and roles');
     }
 

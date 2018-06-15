@@ -36,7 +36,5 @@ $factory->define(MenuItem::class, function(Faker\Generator $faker) {
         'type'  => 'custom',
         'label:nl' => 'nieuw label',
         'url:nl'   => 'https://thinktomorrow.be',
-        'label:en' => 'new label',
-        'url:en'   => 'https://thinktomorrow.be',
     ];
 });
