@@ -81,7 +81,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function getRelationGroup(): string
     {
-        return 'pages';
+        return $this->collection;
     }
 
     public function previewUrl()
@@ -112,7 +112,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function flattenForSelect()
     {
-        return self::all()->map(function (Page $page) {
+        return self::ignoreCollection()->get()->map(function (Page $page) {
             return [
                 'id'    => $page->getRelationId(),
                 'label' => $page->getRelationLabel(),

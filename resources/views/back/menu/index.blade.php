@@ -34,9 +34,6 @@
             <div class="column-3 center-y">
                 <strong>URL</strong>
             </div>
-            <div class="column-2 center-y">
-                <strong>Type</strong>
-            </div>
         </div>
         @foreach($menu as $menuitem)
             <div class="row">
@@ -63,9 +60,6 @@
                     </div>
                     <div class="column-3 center-y">
                         <a href="#">/diensten</a>
-                    </div>
-                    <div class="column-2 center-y">
-                        <div class="font-s">Collection</div>
                     </div>
                     <div class="column-3 text-right">
                         <a href="#" class="btn btn-link text-font">Aanpassen</a>
