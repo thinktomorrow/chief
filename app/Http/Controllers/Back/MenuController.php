@@ -87,8 +87,7 @@ class MenuController extends Controller
     public function destroy($id)
     {
         $page = Page::ignoreCollection()->findOrFail($id);
-        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
-        {
+        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) {
             return redirect()->back()->with('messages.warning', 'fout');
         }
 
