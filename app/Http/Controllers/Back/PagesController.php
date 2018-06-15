@@ -159,10 +159,8 @@ class PagesController extends Controller
     {
         $images = array_fill_keys($page->availableMediaTypes('type'), []);
 
-        foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType)
-        {
-            foreach ($assetsByType as $asset)
-            {
+        foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
+            foreach ($assetsByType as $asset) {
                 $images[$type][] = (object) [
                     'id'  => $asset->id, 'filename' => $asset->getFilename(),
                     'url' => $asset->getFileUrl()

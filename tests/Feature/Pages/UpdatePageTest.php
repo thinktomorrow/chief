@@ -99,5 +99,4 @@ class UpdatePageTest extends TestCase
         $this->assertNotNull($otherPage->{'slug:nl'});
         $this->assertNotEquals($this->page->{'slug:nl'}, $otherPage->{'slug:nl'});
     }
-
 }
