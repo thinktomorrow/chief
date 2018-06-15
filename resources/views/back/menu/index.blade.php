@@ -48,7 +48,7 @@
                     <a href="#">/diensten</a>
                 </div>
                 <div class="column-2 center-y">
-                    <div class="font-s">Collection</div>
+                <div class="font-s"></div>
                 </div>
                 <div class="column-3 text-right">
                     <a href="#" class="btn btn-link text-font">Aanpassen</a>

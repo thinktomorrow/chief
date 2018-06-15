@@ -21,7 +21,9 @@ class UpdateMenu
 
             $menu = MenuItem::find($id);
             if($menu->type == 'custom'){
-                $menu->url = $request->get('url');
+                $this->saveTranslations($request->get('trans'), $menu, [
+                    'url'
+                ]);
             }elseif($menu->type == 'internal'){
                 $menu->page_id = $this->getPage($request->get('page_id'))->id;
             }

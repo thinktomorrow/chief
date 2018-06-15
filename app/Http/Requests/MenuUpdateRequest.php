@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Pages\Page;
 class MenuUpdateRequest extends FormRequest
 {
     use TranslatableCommand;
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -30,10 +30,9 @@ class MenuUpdateRequest extends FormRequest
     {
         $translations = $this->request->get('trans', []);
 
-        //TODO figure out how to check type 
         $rules['page_id']   = 'required_if:type,internal';
         $rules['id']        = 'required_with:page_id|exists:pages,id';
-        
+
         foreach ($translations as $locale => $trans)
         {
             if ($this->isCompletelyEmpty(['url', 'label'], $trans) && $locale !== app()->getLocale())
@@ -46,7 +45,7 @@ class MenuUpdateRequest extends FormRequest
             $rules['trans.' . $locale . '.label']   = 'required';
             $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
         }
-        
+
         return $rules;
     }
 
@@ -66,8 +65,7 @@ class MenuUpdateRequest extends FormRequest
 
         // get the input
         $input = $this->all();
-
-        if($this->get('type') == 'internal' && ($page_id = $this->get('page_id'))){
+        if(($page_id = $this->get('page_id'))){
             $input['id'] = substr($page_id, strrpos($page_id, '@') + 1);
         }
 
