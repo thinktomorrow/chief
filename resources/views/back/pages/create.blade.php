@@ -18,3 +18,9 @@
 	</form>
 
 @stop
+
+
+{{-- TODO: this is disabled because we do cannot manage media in create mode. Better is to direct to edit as soon as possible. --}}
+{{--@push('custom-scripts-after-vue')--}}
+	{{--@include('chief::back._layouts._partials.editor-script')--}}
+{{--@endpush--}}

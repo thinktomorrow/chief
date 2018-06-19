@@ -2,7 +2,7 @@
     <tab name="Inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
-                <h2 class="formgroup-label">Inhoud</h2>
+                <h2 class="formgroup-label">Titel</h2>
             </div>
             <div class="formgroup-input column-8">
                 <tabs>
@@ -16,26 +16,11 @@
                                     <b>Permalink:</b> https://crius-group.com/
                                     <input class="inset-s" type="text" name="trans[{{$locale}}][slug]" value="{{ old('trans.'.$locale.'.slug', $page->translateForForm($locale,'slug')) }}">
                                 </span>
-                                <error class="caption text-warning" field="trans.{{ $locale }}.slug" :errors="errors.get('trans.{{ $locale }}')"></error>
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>
                             <error class="caption text-warning" field="trans.{{ $locale }}.slug" :errors="errors.get('trans.{{ $locale }}')"></error>
 
-                
-                            <div class="stack">
-                                <label for="trans-{{ $locale }}-description">Korte omschrijving</label>
-                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][description]" id="trans-{{ $locale }}-description" cols="10" rows="5">{{ old('trans.'.$locale.'.description',$page->translateForForm($locale,'description')) }}</textarea>
-                            </div>
-
-                            <error class="caption text-warning" field="trans.{{ $locale }}.description" :errors="errors.get('trans.{{ $locale }}')"></error>
-
-                            <div class="stack">
-                                <label for="trans-{{ $locale }}-content">Tekst</label>
-                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][content]" id="trans-{{ $locale }}-content" cols="10" rows="20">{{ old('trans.'.$locale.'.content',$page->translateForForm($locale,'content')) }}</textarea>
-                            </div>
-
-                            <error class="caption text-warning" field="trans.{{ $locale }}.content" :errors="errors.get('trans.{{ $locale }}')"></error>
                         </tab>
 
                     @endforeach
@@ -43,7 +28,18 @@
             </div>
         </section>
 
-        @foreach($page->availableMediaTypes() as $mediaType)
+        <section class="row formgroup stack gutter-l">
+            <div class="column-4">
+                <h2 class="formgroup-label">Inhoud</h2>
+            </div>
+            <div class="formgroup-input column-8">
+                @include('chief::back._elements.translatable_fieldgroups', [
+                    'model' => $page,
+                ])
+            </div>
+        </section>
+
+        @foreach($page->mediaFields() as $mediaType)
             @include('chief::back._elements.mediagroup', [
                 'group' => $mediaType['type'],
                 'files' => $images[$mediaType['type']],

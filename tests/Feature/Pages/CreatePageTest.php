@@ -33,8 +33,6 @@ class CreatePageTest extends TestCase
     /** @test */
     public function creating_a_new_page()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
