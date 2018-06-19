@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdatePageTest extends TestCase
@@ -18,7 +19,12 @@ class UpdatePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->page = app(CreatePage::class)->handle('custom-collection', $this->validPageParams()['trans'], [], [], []);
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'statics' => Page::class,
+            'articles' => ArticleFake::class,
+        ]);
+
+        $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
     }
 
     /** @test */
