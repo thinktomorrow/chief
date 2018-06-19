@@ -1,10 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit;
+namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
 use Thinktomorrow\Chief\Pages\Page;
@@ -57,7 +58,7 @@ class MenuTest extends TestCase
     function it_can_be_a_custom_link()
     {
         $page   = factory(Page::class, 3)->create([
-            'collection'    => 'article',
+            'collection'    => 'articles',
             'published'     => 1
         ]);
         
@@ -147,5 +148,3 @@ class MenuTest extends TestCase
     }
 
 }
-
-class ArticleFake extends Page{}
