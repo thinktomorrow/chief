@@ -11,34 +11,40 @@ use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Common\UniqueSlug;
 use Thinktomorrow\Chief\Common\Audit\Audit;
 
-class CreatePage
+class DeletePage
 {
     use TranslatableCommand;
 
-    public function handle(string $collection, array $translations, array $relations, array $files, array $files_order): Page
+    public function handle($id)
     {
         try {
             DB::beginTransaction();
 
-            $page = Page::create(['collection' => $collection]);
+            $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
 
-            foreach($translations as $locale => $value){
-                $value = $this->enforceUniqueSlug($value, $page, $locale);
-
-                $page->updateTranslation($locale, $value);
+            if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) {
+                return false;
             }
 
-            $this->syncRelations($page, $relations);
+            if ($page->isDraft() || $page->isArchived()) {
+                $page->delete();
 
-            app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
+                Audit::activity()
+                    ->performedOn($page)
+                    ->log('deleted');
+            }
+            
+            if ($page->isPublished()) {
+                $page->archive();
 
-            Audit::activity()
-                ->performedOn($page)
-                ->log('created');
-                
+                Audit::activity()
+                    ->performedOn($page)
+                    ->log('archived');
+            }
+
             DB::commit();
 
-            return $page->fresh();
+            return $page;
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;

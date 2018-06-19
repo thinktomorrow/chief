@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
 use Thinktomorrow\Locale\LocaleServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
+use Spatie\Activitylog\ActivitylogServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -34,6 +35,7 @@ abstract class TestCase extends OrchestraTestCase
             TranslatableServiceProvider::class,
             SquantoServiceProvider::class,
             SquantoManagerServiceProvider::class,
+            ActivitylogServiceProvider::class,
 
             ChiefServiceProvider::class,
 
@@ -95,6 +97,10 @@ abstract class TestCase extends OrchestraTestCase
         // For our tests is it required to have 2 languages: nl and en.
         $app['config']->set('translatable.locales', ['nl', 'en']);
         $app['config']->set('squanto.template', 'chief::back._layouts.master');
+
+        $app['config']->set('activitylog.default_log_name', 'default');
+        $app['config']->set('activitylog.default_auth_driver', 'chief');
+        $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Common\Audit\Audit::class);
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
         $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);

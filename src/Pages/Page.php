@@ -20,6 +20,8 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Media\MediaType;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
 {
@@ -31,6 +33,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         Publishable,
         Featurable,
         Archivable,
+        AuditTrait,
         ActingAsParent,
         ActingAsChild;
 
@@ -45,7 +48,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
-
+    
     /**
      * Set a custom morph class for the morph relations because we
      * mostly want the Page as morph relationship instead of the

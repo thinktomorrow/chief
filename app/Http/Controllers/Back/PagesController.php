@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
 use Thinktomorrow\Chief\Pages\Application\UpdatePage;
 use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class PagesController extends Controller
 {
@@ -124,21 +125,14 @@ class PagesController extends Controller
     {
         $this->authorize('delete-page');
 
-        $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
-        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) {
+        $page = app(DeletePage::class)->handle($id);
+
+        if($page){
+            $message = 'Het item werd verwijderd.';
+            return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
+        }else{
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
-
-        if ($page->isDraft() || $page->isArchived()) {
-            $page->delete();
-        }
-        if ($page->isPublished()) {
-            $page->archive();
-        }
-
-        $message = 'Het item werd verwijderd.';
-
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
     }
 
     public function publish(Request $request, $id)

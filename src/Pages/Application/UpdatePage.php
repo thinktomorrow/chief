@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Models\UniqueSlug;
+use Thinktomorrow\Chief\Common\Audit\Audit;
 
 class UpdatePage
 {
@@ -25,8 +26,12 @@ class UpdatePage
             $this->syncRelations($page, $relations);
 
             app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
+            
+            Audit::activity()
+                ->performedOn($page)
+                ->log('edited');
 
-            DB::commit();
+                DB::commit();
             return $page->fresh();
         } catch (\Throwable $e) {
             DB::rollBack();
