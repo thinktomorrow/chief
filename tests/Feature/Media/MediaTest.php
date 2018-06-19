@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class MediaTest extends TestCase
@@ -68,5 +68,3 @@ class MediaTest extends TestCase
                  ]);
     }
 }
-
-class ArticleFake extends Page{}

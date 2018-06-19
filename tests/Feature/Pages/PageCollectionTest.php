@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageCollectionTest extends TestCase
@@ -115,10 +116,38 @@ class PageCollectionTest extends TestCase
         $this->assertNotNull(ArticleFake::findPublishedBySlug('foobar'));
         $this->assertNull(ArticleFake::findPublishedBySlug('barfoo'));
     }
-}
 
-class ArticleFake extends Page
-{
+    /** @test */
+    public function it_returns_the_right_collection_with_the_eloquent_find_methods()
+    {
+        $article = ArticleFake::create([
+            'collection' => 'articles',
+            'title:nl' => 'title',
+            'content:nl' => 'content',
+            'slug:nl' => 'foobar',
+            'published' => 1
+        ]);
+
+        $this->assertInstanceOf(ArticleFake::class, Page::ignoreCollection()->find($article->id));
+        $this->assertInstanceOf(ArticleFake::class, Page::ignoreCollection()->findOrFail($article->id));
+    }
+
+    /** @test */
+    public function it_returns_the_right_collection_model_by_slug()
+    {
+        $this->disableExceptionHandling();
+
+        ArticleFake::create([
+            'collection' => 'articles',
+            'title:nl' => 'title',
+            'content:nl' => 'content',
+            'slug:nl' => 'foobar',
+            'published' => 1
+        ]);
+
+        $this->assertInstanceOf(ArticleFake::class, Page::findBySlug('foobar'));
+        $this->assertInstanceOf(ArticleFake::class, Page::findPublishedBySlug('foobar'));
+    }
 }
 
 class OtherCollectionFake extends Page

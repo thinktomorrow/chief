@@ -41,9 +41,13 @@ class PageController extends Controller
     }
 }
 ```
-
+p
 Create the necessary routes for each endpoint. By default, we assume the page routing has the following naming convention:
 `pages.index`, `pages.show` (TODO: elaborate)
+
+## Setting custom fields
+We can use squanto fields to include a way to manage static content. Squanto is the package that deals with static text management of the site.
+The way you can aim these translations to a specific
 
 ## Page API
 #### Page::all()
