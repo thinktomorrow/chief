@@ -63,7 +63,7 @@ class PagesController extends Controller
             $request->trans,
             $request->relations,
             $request->get('files', []),
-            $request->get('filesOrder') ? explode(',', $request->get('filesOrder')) : []
+            $request->get('filesOrder', [])
         );
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
