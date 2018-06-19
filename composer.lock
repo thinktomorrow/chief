@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a6c60253232dc78983b6fa91f14fd58",
+    "content-hash": "decc0016e416bc07b7c8b244283efadc",
     "packages": [
         {
             "name": "dimsav/laravel-translatable",
@@ -5539,7 +5539,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "thinktomorrow/squanto": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 trait HasCollection
@@ -11,6 +12,39 @@ trait HasCollection
     protected static function bootHasCollection()
     {
         static::addGlobalScope(new PageCollectionScope());
+    }
+
+    /**
+     * Clone the model into its expected collection class
+     * @ref \Illuminate\Database\Eloquent\Model::replicate()
+     *
+     * @param  array|null  $except
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function convertToCollectionInstance(Model $model, string $collectionKey)
+    {
+        // Here we load up the proper collection model instead of the generic Page class.
+        return tap(static::fromCollectionKey($collectionKey), function ($instance) use ($model) {
+            $instance->setRawAttributes($model->attributes);
+            $instance->setRelations($model->relations);
+            $instance->exists = $model->exists;
+        });
+    }
+
+    /**
+     * Custom build for new Collections where we convert any models to the correct collection types.
+     *
+     * @ref \Illuminate\Database\Eloquent\Model::newCollection()
+     */
+    public function newCollection(array $models = [])
+    {
+        foreach($models as $k => $model) {
+            if($collectionKey = $model->collectionKey()) {
+                $models[$k] = $this->convertToCollectionInstance($model, $collectionKey);
+            }
+        }
+
+        return parent::newCollection($models);
     }
 
     public function collectionKey()
@@ -25,7 +59,7 @@ trait HasCollection
         return false != ($key = array_search(static::class, $mapping)) ? $key : null;
     }
 
-    public static function fromCollectionKey(string $key = null)
+    public static function fromCollectionKey(string $key = null, $attributes = [])
     {
         $mapping = config('thinktomorrow.chief.collections', []);
 
@@ -33,7 +67,7 @@ trait HasCollection
             throw new \DomainException('No corresponding class found for the collection key ['.$key.']. Make sure to add this to the [thinktomorrow.chief.collections] config array.');
         }
 
-        return new $mapping[$key];
+        return new $mapping[$key]($attributes);
     }
 
     /**
