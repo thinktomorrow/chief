@@ -62,8 +62,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /**
-     * The custom addition of fields for a page model. To add a field, you should:
+     * The custom addition of fields for a page model.
      *
+     * To add a field, you should:
      * 1. override this method with your own and return the comprised list of fields.
      * 2. Setup the proper migrations and add the new field to the translatable values of the collection.
      *
@@ -75,12 +76,17 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /**
-     * The default set of fields for a page model. If you wish to remove any of these fields, you should:
+     * The default set of fields for a page model.
      *
+     * If you wish to remove any of these fields, you should:
      * 1. override this method with your own and return the comprised list of fields.
      * 2. Provide a migration to remove the column from database and remove the fields from the translatable values of the model.
      *
-     * Note that title and slug are always present and cannot be removed.
+     * Note that the following translated fields are always present and cannot be removed:
+     * - title
+     * - slug
+     * - seo_title
+     * - seo_description
      *
      * @return array
      */
