@@ -125,7 +125,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $this->getAllFiles($type)->map->getFileUrl();
     }
 
-    public function mediaUrl($type = null): string
+    public function mediaUrl($type = null): ?string
     {
         return $this->mediaUrls($type)->first();
     }
