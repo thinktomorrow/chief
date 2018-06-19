@@ -5,6 +5,11 @@
 
                 @foreach($model->translatableFields() as $key => $field)
 
+                    @php
+                        // Title value is in the form presented in another section
+                    if($key == 'title') continue;
+                    @endphp
+
                     <div class="stack">
                         @if($field->label)
                             <label for="trans-{{ $locale }}-{{ $key }}">{{ $field->label }}</label>
