@@ -29,7 +29,7 @@ class MenuCreateRequest extends FormRequest
     public function rules()
     {
         $translations = $this->request->get('trans', []);
-
+        
         $rules['type']      = 'in:custom,internal';
         $rules['page_id']   = 'required_if:type,internal';
         $rules['id']        = 'required_with:page_id|exists:pages,id';
@@ -44,9 +44,10 @@ class MenuCreateRequest extends FormRequest
             }
 
             $rules['trans.' . $locale . '.label']   = 'required';
+            //TODO add conditional url validation
             $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
         }
-        
+
         return $rules;
     }
 
