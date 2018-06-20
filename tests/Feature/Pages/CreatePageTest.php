@@ -127,15 +127,33 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_remove_a_page()
+    public function it_can_delete_pages()
     {
-        factory(Page::class)->create(['published' => false]);
-        $this->assertCount(1, Page::all());
+        $user = $this->developer();
+        $this->actingAs($user, 'chief')
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams(['published' => false]));
+        
+        $this->assertCount(1, Page::get());
 
-        $this->asAdmin()
-             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
+        $page = Page::first();
+        $this->actingAs($user, 'chief')
+             ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
 
-        $this->assertCount(0, Page::all());
+        $this->assertCount(0, Page::get());
+    }
+    /** @test */
+    public function it_can_archive_pages()
+    {
+        $user = $this->developer();
+        $page = factory(Page::class)->create(['published' => true]);
+
+        $this->assertCount(1, Page::get());
+        
+        $this->actingAs($user, 'chief')
+             ->delete(route('chief.back.pages.destroy', Page::first()->id));
+
+        $this->assertCount(0, Page::get());
+        $this->assertCount(1, Page::withArchived()->get());
     }
 
     /** @test */

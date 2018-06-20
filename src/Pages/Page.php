@@ -162,8 +162,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         return (collect($relateds))->map(function ($related) {
             list($type, $id) = explode('@', $related);
-
-            return (new $type)->find($id);
+            
+            return (new $type)->ignoreCollection()->find($id);
         })->first();
     }
 

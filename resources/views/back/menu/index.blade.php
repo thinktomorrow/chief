@@ -48,8 +48,12 @@
                 <div class="font-s"></div>
                 </div>
                 <div class="column-3 text-right">
-                    <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                    <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
+                    <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}" class="btn btn-link text-font">Aanpassen</a>
+                    <form action="{{route('chief.back.menu.destroy', $menuitem->id)}}" method="POST">
+                        {{ method_field('DELETE') }}
+                        {{ csrf_field() }}
+                        <button type="submit"><i class="icon icon-trash icon-fw text-tertiary"></i></button>
+                    </form>
                 </div>
             </div>
             @foreach($menuitem->children as $child)
@@ -62,8 +66,12 @@
                         <a href="#">/diensten</a>
                     </div>
                     <div class="column-3 text-right">
-                        <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                        <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
+                        <a href="{{ route('chief.back.menu.edit', $child->id) }}" class="btn btn-link text-font">Aanpassen</a>
+                        <form action="{{route('chief.back.menu.destroy', $child->id)}}" method="POST">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <button type="submit"><i class="icon icon-trash icon-fw text-tertiary"></i></button>
+                        </form>
                     </div>
                 </div>
                 @foreach($child->children as $subchild)
@@ -79,8 +87,12 @@
                             <div class="font-s">Collection</div>
                         </div>
                         <div class="column-3 text-right">
-                            <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                            <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
+                            <a href="{{ route('chief.back.menu.edit', $subchild->id) }}" class="btn btn-link text-font">Aanpassen</a>
+                            <form action="{{route('chief.back.menu.destroy', $subchild->id)}}" method="POST">
+                                {{ method_field('DELETE') }}
+                                {{ csrf_field() }}
+                                <button type="submit"><i class="icon icon-trash icon-fw text-tertiary"></i></button>
+                            </form>
                         </div>
                     </div>
                 @endforeach

@@ -126,7 +126,6 @@ class PagesController extends Controller
         $this->authorize('delete-page');
 
         $page = app(DeletePage::class)->handle($id);
-
         if($page){
             $message = 'Het item werd verwijderd.';
             return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);

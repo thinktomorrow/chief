@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 use Thinktomorrow\Chief\App\Http\Requests\MenuUpdateRequest;
+use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
 class MenuController extends Controller
 {
@@ -86,21 +87,14 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
-        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived()))
-        {
-            return redirect()->back()->with('messages.warning', 'fout');
+        $menu = app(DeleteMenu::class)->handle($id);
+
+        if($menu){
+            $message = 'Het item werd verwijderd.';
+        return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
+        }else{
+            return redirect()->back()->with('messages.warning', 'Je menu item is niet verwijderd. Probeer opnieuw');
         }
 
-        if ($page->isDraft() || $page->isArchived()) {
-            $page->delete();
-        }
-        if ($page->isPublished()) {
-            $page->archive();
-        }
-
-        $message = 'Het item werd verwijderd.';
-
-        return redirect()->route('chief.back.menu.index', $page->collectionKey())->with('messages.warning', $message);
     }
 }
