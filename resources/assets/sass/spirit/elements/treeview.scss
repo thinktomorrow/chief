@@ -1,0 +1,21 @@
+.treeview{
+    .row{
+        border-bottom: 1px dotted $color-border;
+    }
+    .indent{
+        padding-left: 3rem;
+    }
+    .indent-l{
+        padding-left: 5.5rem;
+    }
+    .tree-parent{
+        position: relative;
+        &:after{
+            font-family: "spirit";
+            content: '\e920';
+            display: inline-block;
+            position: absolute;
+            margin-left: -40px;
+        }
+    }
+}

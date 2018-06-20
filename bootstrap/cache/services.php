@@ -1,6 +1,6 @@
-<?php return array(
-  'providers' =>
-  array(
+<?php return array (
+  'providers' => 
+  array (
     0 => 'Illuminate\\Auth\\AuthServiceProvider',
     1 => 'Illuminate\\Broadcasting\\BroadcastServiceProvider',
     2 => 'Illuminate\\Bus\\BusServiceProvider',
@@ -23,34 +23,38 @@
     19 => 'Illuminate\\Translation\\TranslationServiceProvider',
     20 => 'Illuminate\\Validation\\ValidationServiceProvider',
     21 => 'Illuminate\\View\\ViewServiceProvider',
-    22 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    22 => 'Jenssegers\\Date\\DateServiceProvider',
     23 => 'Intervention\\Image\\ImageServiceProvider',
     24 => 'ConsoleTVs\\Support\\SupportServiceProvider',
     25 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
-    26 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
-    27 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
-    28 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    29 => 'Collective\\Html\\HtmlServiceProvider',
+    26 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    27 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    28 => 'Collective\\Html\\HtmlServiceProvider',
+    29 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
     30 => 'Spatie\\Permission\\PermissionServiceProvider',
     31 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     32 => 'Thinktomorrow\\AssetLibrary\\AssetLibraryServiceProvider',
-    33 => 'Barryvdh\\Debugbar\\ServiceProvider',
-    34 => 'Jenssegers\\Date\\DateServiceProvider',
-    35 => 'Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider',
-    36 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
-    37 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
-    38 => 'Spatie\\Permission\\PermissionServiceProvider',
-    39 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    40 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
-    41 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
-    42 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
-    43 => 'App\\Providers\\AppServiceProvider',
-    44 => 'App\\Providers\\AuthServiceProvider',
-    45 => 'App\\Providers\\EventServiceProvider',
-    46 => 'App\\Providers\\RouteServiceProvider',
+    33 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+    34 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    35 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    36 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    37 => 'Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider',
+    38 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    39 => 'Thinktomorrow\\Squanto\\SquantoServiceProvider',
+    40 => 'Thinktomorrow\\Squanto\\SquantoManagerServiceProvider',
+    41 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+    42 => 'Spatie\\Permission\\PermissionServiceProvider',
+    43 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    44 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
+    45 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
+    46 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
+    47 => 'App\\Providers\\AppServiceProvider',
+    48 => 'App\\Providers\\AuthServiceProvider',
+    49 => 'App\\Providers\\EventServiceProvider',
+    50 => 'App\\Providers\\RouteServiceProvider',
   ),
-  'eager' =>
-  array(
+  'eager' => 
+  array (
     0 => 'Illuminate\\Auth\\AuthServiceProvider',
     1 => 'Illuminate\\Cookie\\CookieServiceProvider',
     2 => 'Illuminate\\Database\\DatabaseServiceProvider',
@@ -61,31 +65,33 @@
     7 => 'Illuminate\\Pagination\\PaginationServiceProvider',
     8 => 'Illuminate\\Session\\SessionServiceProvider',
     9 => 'Illuminate\\View\\ViewServiceProvider',
-    10 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    10 => 'Jenssegers\\Date\\DateServiceProvider',
     11 => 'Intervention\\Image\\ImageServiceProvider',
     12 => 'ConsoleTVs\\Support\\SupportServiceProvider',
     13 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
-    14 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
-    15 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+    14 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
+    15 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
     16 => 'Spatie\\Permission\\PermissionServiceProvider',
     17 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
     18 => 'Thinktomorrow\\AssetLibrary\\AssetLibraryServiceProvider',
-    19 => 'Barryvdh\\Debugbar\\ServiceProvider',
-    20 => 'Jenssegers\\Date\\DateServiceProvider',
-    21 => 'Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider',
-    22 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
-    23 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
-    24 => 'Spatie\\Permission\\PermissionServiceProvider',
-    25 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
-    26 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
-    27 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
-    28 => 'App\\Providers\\AppServiceProvider',
-    29 => 'App\\Providers\\AuthServiceProvider',
-    30 => 'App\\Providers\\EventServiceProvider',
-    31 => 'App\\Providers\\RouteServiceProvider',
+    19 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+    20 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    21 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    22 => 'Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider',
+    23 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    24 => 'Thinktomorrow\\Squanto\\SquantoManagerServiceProvider',
+    25 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+    26 => 'Spatie\\Permission\\PermissionServiceProvider',
+    27 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
+    28 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
+    29 => 'ConsoleTVs\\Charts\\ChartsServiceProvider',
+    30 => 'App\\Providers\\AppServiceProvider',
+    31 => 'App\\Providers\\AuthServiceProvider',
+    32 => 'App\\Providers\\EventServiceProvider',
+    33 => 'App\\Providers\\RouteServiceProvider',
   ),
-  'deferred' =>
-  array(
+  'deferred' => 
+  array (
     'Illuminate\\Broadcasting\\BroadcastManager' => 'Illuminate\\Broadcasting\\BroadcastServiceProvider',
     'Illuminate\\Contracts\\Broadcasting\\Factory' => 'Illuminate\\Broadcasting\\BroadcastServiceProvider',
     'Illuminate\\Contracts\\Broadcasting\\Broadcaster' => 'Illuminate\\Broadcasting\\BroadcastServiceProvider',
@@ -128,6 +134,7 @@
     'Illuminate\\Console\\Scheduling\\ScheduleRunCommand' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.storage.link' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.up' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
+    'command.view.cache' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.view.clear' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.app.name' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
     'command.auth.make' => 'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider',
@@ -179,8 +186,8 @@
     'redis.connection' => 'Illuminate\\Redis\\RedisServiceProvider',
     'auth.password' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
     'auth.password.broker' => 'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider',
-    'translator' => 'Illuminate\\Translation\\TranslationServiceProvider',
-    'translation.loader' => 'Illuminate\\Translation\\TranslationServiceProvider',
+    'translator' => 'Thinktomorrow\\Squanto\\SquantoServiceProvider',
+    'translation.loader' => 'Thinktomorrow\\Squanto\\SquantoServiceProvider',
     'validator' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
@@ -188,50 +195,60 @@
     'form' => 'Collective\\Html\\HtmlServiceProvider',
     'Collective\\Html\\HtmlBuilder' => 'Collective\\Html\\HtmlServiceProvider',
     'Collective\\Html\\FormBuilder' => 'Collective\\Html\\HtmlServiceProvider',
+    'NunoMaduro\\Collision\\Contracts\\Provider' => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    'Thinktomorrow\\Squanto\\Handlers\\ClearCacheTranslations' => 'Thinktomorrow\\Squanto\\SquantoServiceProvider',
+    'Thinktomorrow\\Squanto\\Handlers\\WriteTranslationLineToDisk' => 'Thinktomorrow\\Squanto\\SquantoServiceProvider',
+    'Thinktomorrow\\Squanto\\Services\\LaravelTranslationsReader' => 'Thinktomorrow\\Squanto\\SquantoServiceProvider',
   ),
-  'when' =>
-  array(
-    'Illuminate\\Broadcasting\\BroadcastServiceProvider' =>
-    array(
+  'when' => 
+  array (
+    'Illuminate\\Broadcasting\\BroadcastServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Bus\\BusServiceProvider' =>
-    array(
+    'Illuminate\\Bus\\BusServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Cache\\CacheServiceProvider' =>
-    array(
+    'Illuminate\\Cache\\CacheServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider' =>
-    array(
+    'Illuminate\\Foundation\\Providers\\ConsoleSupportServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Hashing\\HashServiceProvider' =>
-    array(
+    'Illuminate\\Hashing\\HashServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Mail\\MailServiceProvider' =>
-    array(
+    'Illuminate\\Mail\\MailServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Pipeline\\PipelineServiceProvider' =>
-    array(
+    'Illuminate\\Pipeline\\PipelineServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Queue\\QueueServiceProvider' =>
-    array(
+    'Illuminate\\Queue\\QueueServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Redis\\RedisServiceProvider' =>
-    array(
+    'Illuminate\\Redis\\RedisServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider' =>
-    array(
+    'Illuminate\\Auth\\Passwords\\PasswordResetServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Translation\\TranslationServiceProvider' =>
-    array(
+    'Illuminate\\Translation\\TranslationServiceProvider' => 
+    array (
     ),
-    'Illuminate\\Validation\\ValidationServiceProvider' =>
-    array(
+    'Illuminate\\Validation\\ValidationServiceProvider' => 
+    array (
     ),
-    'Laravel\\Tinker\\TinkerServiceProvider' =>
-    array(
+    'Laravel\\Tinker\\TinkerServiceProvider' => 
+    array (
     ),
-    'Collective\\Html\\HtmlServiceProvider' =>
-    array(
+    'Collective\\Html\\HtmlServiceProvider' => 
+    array (
+    ),
+    'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => 
+    array (
+    ),
+    'Thinktomorrow\\Squanto\\SquantoServiceProvider' => 
+    array (
     ),
   ),
 );

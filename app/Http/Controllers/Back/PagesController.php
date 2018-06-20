@@ -23,9 +23,9 @@ class PagesController extends Controller
 
         return view('chief::back.pages.index', [
             'collectionDetails' => $model->collectionDetails(),
-            'published'       => $model->published()->paginate(10),
-            'drafts'          => $model->drafted()->paginate(10),
-            'archived'        => $model->archived()->paginate(10),
+            'published'         => $model->published()->paginate(10),
+            'drafts'            => $model->drafted()->paginate(10),
+            'archived'          => $model->archived()->paginate(10),
         ]);
     }
 
@@ -58,13 +58,13 @@ class PagesController extends Controller
     public function store(PageCreateRequest $request, $collection)
     {
         $this->authorize('create-page');
-
+        
         $page = app(CreatePage::class)->handle(
             $collection,
             $request->trans,
             $request->relations,
             $request->get('files', []),
-            $request->get('filesOrder', [])
+            $request->get('filesOrder') ? explode(',', $request->get('filesOrder')) : []
         );
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
@@ -151,7 +151,7 @@ class PagesController extends Controller
      */
     private function populateMedia($page): array
     {
-        $images = array_fill_keys($page->mediaFields('type'), []);
+        $images = array_fill_keys($page->availableMediaTypes('type'), []);
 
         foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType)
         {

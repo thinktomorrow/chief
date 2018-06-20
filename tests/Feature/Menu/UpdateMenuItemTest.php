@@ -1,0 +1,193 @@
+<?php
+
+namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
+
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Pages\Page;
+
+class UpdateMenuItemTest extends TestCase
+{
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->setUpDefaultAuthorization();
+
+        app()->setLocale('nl');
+    }
+
+    /** @test */
+    public function admin_can_view_the_update_form()
+    {
+        $menuitem = factory(MenuItem::class)->create();
+
+        $response = $this->asDefaultAdmin()->get(route('chief.back.menu.edit', $menuitem->id));
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function guests_cannot_view_the_update_form()
+    {
+        $menuitem = factory(MenuItem::class)->create();
+
+        $response = $this->get(route('chief.back.menu.edit', $menuitem->id));
+        $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
+    }
+
+    /** @test */
+    public function editing_a_new_menuItem()
+    {
+        $menuitem = factory(MenuItem::class)->create();
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(1, MenuItem::all());
+        $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']);
+    }
+
+    /** @test */
+    public function only_authenticated_admin_can_update_a_menuItem()
+    {
+        $menuitem = factory(MenuItem::class)->create();
+
+        $response = $this->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar']));
+
+        $response->assertRedirect(route('chief.back.login'));
+        $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'nieuw label']);
+    }
+
+    /** @test */
+    public function editing_an_internal_menuItem()
+    {
+        $page       = factory(Page::class)->create();
+        $newpage    = factory(Page::class)->create();
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
+
+        $response = $this->asDefaultAdmin()
+            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'page_id' => $newpage->getRelationId()]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(1, MenuItem::all());
+        $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.label' => 'foobar', 'page_id' => $newpage->id]);
+    }
+
+    /** @test */
+    public function editing_a_custom_menuItem()
+    {
+        $this->disableExceptionHandling();
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
+
+        $response = $this->asDefaultAdmin()
+            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(1, MenuItem::all());
+        $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']);
+    }
+
+    /** @test */
+    public function type_custom_makes_url_required()
+    {
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
+
+        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => '']),
+            route('chief.back.menu.index'),
+            route('chief.back.menu.update', $menuitem->id),
+            1,
+            'put'
+        );
+    }
+
+    /** @test */
+    public function url_field_should_be_valid_url()
+    {
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
+
+        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => 'test']),
+            route('chief.back.menu.index'),
+            route('chief.back.menu.update', $menuitem->id),
+            1,
+            'put'
+        );
+    }
+
+    /** @test */
+    public function label_is_required()
+    {
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
+
+        $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '', 'url:nl' => 'http://google.com']),
+            route('chief.back.menu.index'),
+            route('chief.back.menu.update', $menuitem->id),
+            1,
+            'put'
+        );
+    }
+
+    /** @test */
+    public function type_internal_makes_pageid_required()
+    {
+        $page       = factory(Page::class)->create();
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
+
+        $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
+            route('chief.back.menu.index'),
+            route('chief.back.menu.update', $menuitem->id),
+            1,
+            'put'
+        );
+    }
+
+    /** @test */
+    public function pageid_should_exists_in_db()
+    {
+        $page       = factory(Page::class)->create();
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
+
+        $this->assertValidation(new MenuItem(), 'id', $this->validParams(['type' => 'internal', 'page_id' => Page::class.'@9999']),
+            route('chief.back.menu.index'),
+            route('chief.back.menu.update', $menuitem->id),
+            1,
+            'put'
+        );
+    }
+
+    private function validParams($overrides = [])
+    {
+        $params = [
+            'trans' => [
+                'nl' => [
+                    'label' => 'nieuw label',
+                ]
+            ],
+        ];
+
+        foreach ($overrides as $key => $value) {
+            array_set($params, $key, $value);
+        }
+
+        return $params;
+    }
+
+
+    private function assertNewValues($menuItem, $overrides = [])
+    {
+        $this->assertEquals($overrides['type'] ?? 'custom', $menuItem->{'type'});
+        $this->assertEquals($overrides['page_id'] ?? '', $menuItem->{'page_id'});
+
+        $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
+        $this->assertEquals($overrides['trans.nl.url'] ?? '', $menuItem->{'url:nl'});
+
+        $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
+        $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});
+    }
+}

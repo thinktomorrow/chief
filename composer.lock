@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "4b18c443b83118e65b654a070effe5b9",
+=======
+    "content-hash": "84ad246b2efb584b363278824ef3f533",
+>>>>>>> ft/menu
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -1695,6 +1699,7 @@
                 "random"
             ],
             "time": "2018-06-08T15:26:40+00:00"
+<<<<<<< HEAD
         },
         {
             "name": "patchwork/utf8",
@@ -1754,6 +1759,8 @@
                 "utf8"
             ],
             "time": "2016-05-18T13:57:10+00:00"
+=======
+>>>>>>> ft/menu
         },
         {
             "name": "psr/container",
@@ -3730,6 +3737,43 @@
                 "thinktomorrow"
             ],
             "time": "2018-05-29T11:46:02+00:00"
+        },
+        {
+            "name": "thinktomorrow/vine",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thinktomorrow/vine.git",
+                "reference": "744979ea77e3ae7f191d049c69559fadfc52c698"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thinktomorrow/vine/zipball/744979ea77e3ae7f191d049c69559fadfc52c698",
+                "reference": "744979ea77e3ae7f191d049c69559fadfc52c698",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1",
+                "scrutinizer/ocular": "^1.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Vine\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Cavens",
+                    "email": "cavensben@gmail.com"
+                }
+            ],
+            "description": "Render a datatree structure",
+            "time": "2018-06-17T11:49:33+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -5771,7 +5815,13 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
+<<<<<<< HEAD
     "stability-flags": [],
+=======
+    "stability-flags": {
+        "thinktomorrow/vine": 20
+    },
+>>>>>>> ft/menu
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

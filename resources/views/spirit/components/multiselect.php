@@ -103,13 +103,17 @@
                 <h4 id="api-options">options <span class="label">array</span></h4>
                 <p>
                     Property that sets the available list of options. The options array can be either:
-                <ul>
-                    <li>a list of primitive values. e.g. <code><?= htmlspecialchars('[\'first\',\'second\',\'third\']'); ?></code></li>
-                    <li>a list of object values. e.g. <code><?= htmlspecialchars('[{\'id\': 1, \'label\': \'first\'}, {id: 2, label: \'second\'}]'); ?></code>. If you pass objects, you should also set the <code>valuekey</code> and <code>labelkey</code> properties.</li>
-                </ul>
+                    <ul>
+                        <li>a list of primitive values. e.g. <code><?= htmlspecialchars('[\'first\',\'second\',\'third\']'); ?></code></li>
+                        <li>a list of object values. e.g. <code><?= htmlspecialchars('[{\'id\': 1, \'label\': \'first\'}, {id: 2, label: \'second\'}]'); ?></code>. If you pass objects, you should also set the <code>valuekey</code> and <code>labelkey</code> properties.</li>
+                    </ul>
                 </p>
                 <p>
                     Example: <code><?= htmlspecialchars('<chief-multiselect :options="[\'first\',\'second\',\'third\']"></chief-multiselect>'); ?></code>
+                </p>
+                <p>When injecting json-encoded arrays from back-end the options array needs to be contained in single quotes:</p>
+                <p>
+                    Example: <code><?= htmlspecialchars("<chief-multiselect :options='@json(\$options)'></chief-multiselect>"); ?></code>
                 </p>
             </section>
             <section class="stack-l">

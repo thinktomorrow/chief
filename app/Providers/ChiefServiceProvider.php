@@ -14,6 +14,8 @@ use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Menu\Tree\MenuTreeRepository;
+use Illuminate\Database\DatabaseManager;
 
 class ChiefServiceProvider extends ServiceProvider
 {
