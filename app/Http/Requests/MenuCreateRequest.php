@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Validation\Rule;
 
 class MenuCreateRequest extends FormRequest
 {
@@ -45,7 +46,7 @@ class MenuCreateRequest extends FormRequest
 
             $rules['trans.' . $locale . '.label']   = 'required';
             //TODO add conditional url validation
-            $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
+            $rules['trans.' . $locale . '.url']     = 'required_if:type,custom'. $this->request->get('type') == 'custom' ? '|url' : '';
         }
 
         return $rules;
