@@ -151,7 +151,7 @@ class PagesController extends Controller
      */
     private function populateMedia($page): array
     {
-        $images = array_fill_keys($page->availableMediaTypes('type'), []);
+        $images = array_fill_keys($page->mediaFields('type'), []);
 
         foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType)
         {
