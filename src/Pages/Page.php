@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Common\Collections\HasCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -46,6 +47,12 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
+
+    /**
+     * The collection scope for the specific class.
+     * @var string
+     */
+    protected static $collectionScopeClass = PageCollectionScope::class;
 
     /**
      * Each page model can expose the managed translatable fields. These should be included as attributes just like the regular

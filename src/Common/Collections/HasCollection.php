@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Pages;
+namespace Thinktomorrow\Chief\Common\Collections;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -11,19 +11,24 @@ trait HasCollection
 
     protected static function bootHasCollection()
     {
-        static::addGlobalScope(new PageCollectionScope());
+        if(!isset(static::$collectionScopeClass)) {
+            throw new \DomainException('Class with HasCollection trait require a static property [collectionScopeClass]. This should refer to a global scope class.');
+        }
+
+        static::addGlobalScope(new static::$collectionScopeClass());
     }
 
     /**
      * Clone the model into its expected collection class
      * @ref \Illuminate\Database\Eloquent\Model::replicate()
      *
-     * @param  array|null  $except
-     * @return \Illuminate\Database\Eloquent\Model
+     * @param Model $model
+     * @param string $collectionKey
+     * @return Model
      */
-    public function convertToCollectionInstance(Model $model, string $collectionKey)
+    public function convertToCollectionInstance(Model $model, string $collectionKey): Model
     {
-        // Here we load up the proper collection model instead of the generic Page class.
+        // Here we load up the proper collection model instead of the generic base class.
         return tap(static::fromCollectionKey($collectionKey), function ($instance) use ($model) {
             $instance->setRawAttributes($model->attributes);
             $instance->setRelations($model->relations);
@@ -33,8 +38,10 @@ trait HasCollection
 
     /**
      * Custom build for new Collections where we convert any models to the correct collection types.
-     *
      * @ref \Illuminate\Database\Eloquent\Model::newCollection()
+     *
+     * @param array $models
+     * @return
      */
     public function newCollection(array $models = [])
     {
@@ -93,17 +100,17 @@ trait HasCollection
 
     public function scopeCollection($query, string $collection = null)
     {
-        return $query->withoutGlobalScope(PageCollectionScope::class)
+        return $query->withoutGlobalScope(static::$collectionScopeClass)
                      ->where('collection', '=', $collection);
     }
 
     /**
      * Ignore the collection scope.
-     * This will fetch all page results, regardless of the collection scope.
+     * This will fetch all results, regardless of the collection scope.
      */
     public static function ignoreCollection()
     {
-        return self::withoutGlobalScope(PageCollectionScope::class);
+        return self::withoutGlobalScope(static::$collectionScopeClass);
     }
 
     public static function availableCollections(): Collection
