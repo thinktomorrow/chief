@@ -21,8 +21,9 @@ use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
 {
     use HasCollection,
         AssetTrait,
@@ -257,6 +258,16 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function previewUrl()
     {
-        // return route('pages.show', $this->slug).'?preview-mode';
+        return route('pages.show', $this->slug).'?preview-mode';
+    }
+
+    public function menuUrl(): string
+    {
+        return route('pages.show', $this->slug);
+    }
+
+    public function menuLabel(): string
+    {
+        return $this->title;
     }
 }

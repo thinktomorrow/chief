@@ -33,6 +33,6 @@ class ChiefMenu
     {
         return $this->collection->prune(function(Node $node){
             return $node->hidden_in_menu == false;
-        });
+        })->sort('order');
     }
 }

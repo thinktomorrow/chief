@@ -26,14 +26,17 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         'label', 'url'
     ];
 
-    public $sortChildrenBy = 'order';
-
     public $timestamps = false;
     public $guarded = [];
 
     public function ofType($type): bool
     {
         return $this->type == $type;
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id');
     }
 
     /**
@@ -48,20 +51,27 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
-        foreach($items as $item) {
+        foreach($items as $k => $item) {
+
+            // Fetch the collection items
             if($item->ofType(static::TYPE_COLLECTION)) {
 
-                // Get collection of pages
                 $pages = Page::fromCollectionKey($item->collection_type)->all();
 
-                $pages->each(function($page) use(&$collectionItems, $item){
+                $pages->each(function(ActsAsMenuItem $page) use(&$collectionItems, $item){
                     $collectionItems->push(MenuItem::make([
                         'id'        => 'collection-'.$page->id,
-                        'label'     => $page->title,
-                        'url'       => $page->slug, // TODO: get url for page...
+                        'label'     => $page->menuLabel(),
+                        'url'       => $page->menuUrl(),
                         'parent_id' => $item->id,
                     ]));
                 });
+            }
+
+            // Fetch the urls of the internal links
+            if($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
+                $item->url = $page->menuUrl();
+                $items[$k] = $item;
             }
         }
 
@@ -88,11 +98,19 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         return 'parent_id';
     }
 
+    /**
+     * Convert entire models to condensed data arrays
+     *
+     * @param Node $node
+     * @return array
+     */
     public function entry(Node $node)
     {
-        return [
+        return (object)[
             'id'                => $node->id,
+            'type'              => $node->type,
             'label'             => $node->label,
+            'url'               => $node->url,
             'order'             => $node->order,
             'page_id'           => $node->page_id,
             'parent_id'         => $node->parent_id,

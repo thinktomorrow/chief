@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\Pages\Page;
 
 class DeleteMenuItemTest extends TestCase
 {
