@@ -45,8 +45,10 @@ class MenuCreateRequest extends FormRequest
             }
 
             $rules['trans.' . $locale . '.label']   = 'required';
-            //TODO add conditional url validation
-            $rules['trans.' . $locale . '.url']     = 'required_if:type,custom'. $this->request->get('type') == 'custom' ? '|url' : '';
+            if($this->request->get('type') == 'custom')
+            {
+                $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
+            }
         }
 
         return $rules;

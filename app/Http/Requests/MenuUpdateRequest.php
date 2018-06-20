@@ -43,7 +43,10 @@ class MenuUpdateRequest extends FormRequest
             }
 
             $rules['trans.' . $locale . '.label']   = 'required';
-            $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
+            if($this->request->get('type') == 'custom')
+            {
+                $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
+            }
         }
 
         return $rules;
