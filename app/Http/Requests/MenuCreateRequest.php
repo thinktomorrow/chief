@@ -35,18 +35,15 @@ class MenuCreateRequest extends FormRequest
         $rules['page_id']   = 'required_if:type,internal';
         $rules['id']        = 'required_with:page_id|exists:pages,id';
         
-        foreach ($translations as $locale => $trans)
-        {
-            if ($this->isCompletelyEmpty(['url', 'label'], $trans) && $locale !== app()->getLocale())
-            {
+        foreach ($translations as $locale => $trans) {
+            if ($this->isCompletelyEmpty(['url', 'label'], $trans) && $locale !== app()->getLocale()) {
                 unset($translations[$locale]);
                 $this->request->set('trans', $translations);
                 continue;
             }
 
             $rules['trans.' . $locale . '.label']   = 'required';
-            if($this->request->get('type') == 'custom')
-            {
+            if ($this->request->get('type') == 'custom') {
                 $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
             }
         }
@@ -66,12 +63,13 @@ class MenuCreateRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation() {
+    protected function prepareForValidation()
+    {
 
         // get the input
         $input = $this->all();
 
-        if($this->get('type') == 'internal' && ($page_id = $this->get('page_id'))){
+        if ($this->get('type') == 'internal' && ($page_id = $this->get('page_id'))) {
             $input['id'] = substr($page_id, strrpos($page_id, '@') + 1);
         }
 

@@ -8,6 +8,4 @@ class HtmlField
     {
         return Field::make(new FieldType(FieldType::HTML));
     }
-
-
 }

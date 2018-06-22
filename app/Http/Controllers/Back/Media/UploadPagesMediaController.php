@@ -20,15 +20,17 @@ class UploadPagesMediaController extends Controller
         $uploads = $request->file('file');
         $model = Page::ignoreCollection()->findOrFail($id);
 
-        if(empty($uploads)) return response()->json([
+        if (empty($uploads)) {
+            return response()->json([
             'error' => true,
             'messages' => 'Geen afbeelding opgeladen.',
         ], 500);
+        }
 
         $responseContent = [];
 
-        foreach($uploads as $upload) {
-            if( ! $asset = AssetUploader::upload($upload)) {
+        foreach ($uploads as $upload) {
+            if (! $asset = AssetUploader::upload($upload)) {
                 return response()->json([
                     'error' => true,
                     'messages' => 'Afbeelding kan niet worden opgeladen.',

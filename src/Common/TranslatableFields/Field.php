@@ -25,7 +25,7 @@ class Field
 
     public function __get($key)
     {
-        if(!isset($this->values[$key])) {
+        if (!isset($this->values[$key])) {
             return null;
         }
 
@@ -34,7 +34,7 @@ class Field
 
     public function __call($name, $arguments)
     {
-        if(!in_array($name, ['label', 'description'])) {
+        if (!in_array($name, ['label', 'description'])) {
             throw new \InvalidArgumentException('Cannot set value by ['. $name .'].');
         }
 
@@ -42,6 +42,4 @@ class Field
 
         return $this;
     }
-
-
 }
