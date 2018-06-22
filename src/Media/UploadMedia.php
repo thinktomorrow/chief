@@ -11,16 +11,15 @@ class UploadMedia
     public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
     {
         // When no files are uploaded, we still would like to sort our assets duh
-        if(empty($files_by_type)) {
-            foreach($files_order_by_type as $type => $files_order) {
+        if (empty($files_by_type)) {
+            foreach ($files_order_by_type as $type => $files_order) {
                 $model->sortFiles($type, explode(',', $files_order));
             }
 
             return;
         }
 
-        foreach($files_by_type as $type => $files) {
-
+        foreach ($files_by_type as $type => $files) {
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
 
             $this->addFiles($model, $type, $files, $files_order);
@@ -33,13 +32,10 @@ class UploadMedia
 
     private function addFiles(HasMedia $model, string $type, array $files, array &$files_order)
     {
-        if (isset($files['new']) && is_array($files['new']) && !empty($files['new']))
-        {
-            foreach ($files['new'] as $file)
-            {
+        if (isset($files['new']) && is_array($files['new']) && !empty($files['new'])) {
+            foreach ($files['new'] as $file) {
                 // new but removed files are passed as null, just leave them alone!
-                if (!$file)
-                {
+                if (!$file) {
                     continue;
                 }
 
@@ -55,11 +51,9 @@ class UploadMedia
 
         // New files are passed with their filename (instead of their id)
         // For new files we will replace the filename with the id.
-        if (false !== ($key = array_search($image_name, $files_order)))
-        {
+        if (false !== ($key = array_search($image_name, $files_order))) {
             $files_order[$key] = $asset->id;
         }
-
     }
 
     /**
@@ -69,14 +63,13 @@ class UploadMedia
      */
     private function addAsset($file, $type = '', $locale = null, $filename = null, HasMedia $model)
     {
-        if(is_string($file))
-        {
+        if (is_string($file)) {
             $asset = AssetUploader::uploadFromBase64($file, $filename);
-        }else{
+        } else {
             $asset = AssetUploader::upload($file, $filename);
         }
 
-        if($asset instanceof Asset){
+        if ($asset instanceof Asset) {
             $asset->attachToModel($model, $type, $locale);
         }
 
@@ -90,13 +83,10 @@ class UploadMedia
      */
     private function replaceFiles(HasMedia $model, array $files)
     {
-        if (isset($files['replace']) && is_array($files['replace']) && !empty($files['replace']))
-        {
-            foreach ($files['replace'] as $id => $file)
-            {
+        if (isset($files['replace']) && is_array($files['replace']) && !empty($files['replace'])) {
+            foreach ($files['replace'] as $id => $file) {
                 // Existing files are passed as null, just leave them alone!
-                if (!$file)
-                {
+                if (!$file) {
                     continue;
                 }
 
@@ -108,8 +98,7 @@ class UploadMedia
 
     private function removeFiles(HasMedia $model, array $files)
     {
-        if (isset($files['remove']) && is_array($files['remove']) && !empty($files['remove']))
-        {
+        if (isset($files['remove']) && is_array($files['remove']) && !empty($files['remove'])) {
             $model->assets()->whereIn('id', $files['remove'])->delete();
         }
     }

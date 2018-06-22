@@ -51,14 +51,13 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
-        foreach($items as $k => $item) {
+        foreach ($items as $k => $item) {
 
             // Fetch the collection items
-            if($item->ofType(static::TYPE_COLLECTION)) {
-
+            if ($item->ofType(static::TYPE_COLLECTION)) {
                 $pages = Page::fromCollectionKey($item->collection_type)->all();
 
-                $pages->each(function(ActsAsMenuItem $page) use(&$collectionItems, $item){
+                $pages->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
                     $collectionItems->push(MenuItem::make([
                         'id'        => 'collection-'.$page->id,
                         'label'     => $page->menuLabel(),
@@ -69,7 +68,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             }
 
             // Fetch the urls of the internal links
-            if($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
+            if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
                 $item->url = $page->menuUrl();
                 $items[$k] = $item;
             }

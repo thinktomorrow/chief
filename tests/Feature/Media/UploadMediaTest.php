@@ -22,7 +22,7 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function a_new_asset_can_be_uploaded()
+    public function a_new_asset_can_be_uploaded()
     {
         $page = Page::create(['collection' => 'statics']);
 
@@ -43,7 +43,7 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function a_new_asset_can_be_uploaded_as_regular_file()
+    public function a_new_asset_can_be_uploaded_as_regular_file()
     {
         $this->markTestIncomplete();
 
@@ -56,7 +56,7 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function an_asset_can_be_replaced()
+    public function an_asset_can_be_replaced()
     {
         $page = Page::create(['collection' => 'statics']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
@@ -81,7 +81,7 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function an_asset_can_be_removed()
+    public function an_asset_can_be_removed()
     {
         $page = Page::create(['collection' => 'statics']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
@@ -108,7 +108,7 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function an_asset_can_be_sorted()
+    public function an_asset_can_be_sorted()
     {
         $page = Page::create(['collection' => 'statics']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
@@ -127,7 +127,7 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    function it_can_upload_image_with_uppercased_extension()
+    public function it_can_upload_image_with_uppercased_extension()
     {
         // Currently uploaded a xxx.JPEG fails retrieval as the source by Slim
         // TODO: this is something that should be provided by Assetlibrary

@@ -1,5 +1,6 @@
 <?php
 namespace Thinktomorrow\Chief\Pages\Application;
+
 use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Page;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Common\UniqueSlug;
 use Thinktomorrow\Chief\Common\Audit\Audit;
+
 class DeletePage
 {
     use TranslatableCommand;

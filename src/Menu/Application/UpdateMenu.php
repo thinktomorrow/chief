@@ -16,15 +16,15 @@ class UpdateMenu
 
     public function handle($id, MenuUpdateRequest $request): MenuItem
     {
-        try{
+        try {
             DB::beginTransaction();
 
             $menu = MenuItem::find($id);
-            if($menu->type == 'custom'){
+            if ($menu->type == 'custom') {
                 $this->saveTranslations($request->get('trans'), $menu, [
                     'url'
                 ]);
-            }elseif($menu->type == 'internal'){
+            } elseif ($menu->type == 'internal') {
                 $menu->page_id = $this->getPage($request->get('page_id'))->id;
             }
 
