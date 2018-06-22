@@ -25,8 +25,5 @@ before_script:
 
 script:
 #  - vendor/bin/phpcs --standard=psr2 src/
-#  - vendor/bin/phpunit --no-coverage
-  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
-
-after_script:
-  - php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+  - vendor/bin/phpunit --no-coverage
+#  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
