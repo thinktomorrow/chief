@@ -61,7 +61,7 @@ class MenuController extends Controller
         $menuitem->injectTranslationForForm();
 
         return view('chief::back.menu.edit', [
-            'menu'            => $menuitem,
+            'menuitem' => $menuitem,
         ]);
     }
 

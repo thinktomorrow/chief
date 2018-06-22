@@ -4,29 +4,36 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu item bewerken.')
+        <form action="{{route('chief.back.menu.destroy', $menuitem->id)}}" method="POST">
+            {{ method_field('DELETE') }}
+            {{ csrf_field() }}
+            <span class="btn btn-link inline-block inline-s" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
+                verwijderen
+            </span>
+        </form>
         <button data-submit-form="updateForm" type="button" class="btn btn-primary">Opslaan</button>
     @endcomponent
 
     @section('content')
 
-        <form id="updateForm" method="POST" action="{{ route('chief.back.menu.update', $menu->id) }}" enctype="multipart/form-data" role="form">
+        <form id="updateForm" method="POST" action="{{ route('chief.back.menu.update', $menuitem->id) }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <tabs v-cloak>
-                    @foreach($menu->availableLocales() as $locale)
+                    @foreach($menuitem->availableLocales() as $locale)
                         <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.label')}">
                             <div class="column-4">
                                 <label>Menu label</label>
                             </div>
                             <div class="column-8">
-                                <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menu->label) }}" class="input inset-s">                    
+                                <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->label) }}" class="input inset-s">
                             </div>
 
                             <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
                         </tab>
                     @endforeach
                 </tabs>
-            @if($menu->type == 'collection')
+            @if($menuitem->type == 'collection')
                 <div class="row stack gutter-l inset">
                     <div class="column-4">
                         <label for="check-1" class="custom-indicators">
@@ -45,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-            @elseif($menu->type == 'internal')
+            @elseif($menuitem->type == 'internal')
                 <div class="row stack gutter-l inset ">
                     <div class="column-4">
                         <label for="check-2" class="custom-indicators">
@@ -64,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-            @elseif($menu->type == 'custom')
+            @elseif($menuitem->type == 'custom')
                 <div class="row stack gutter-l inset ">
                     <div class="column-4">
                         <label for="check-3" class="custom-indicators">
@@ -79,7 +86,7 @@
                     <div class="column-8 ">
                         <div class="stack">
                             <label>Custom link naar</label>
-                            <input type="text" name="url" id="url" placeholder="Voer een URL in" value="{{ $menu->url }}" class="input inset-s">
+                            <input type="text" name="url" id="url" placeholder="Voer een URL in" value="{{ $menuitem->url }}" class="input inset-s">
                         </div>
                     </div>
                 </div>
@@ -87,3 +94,7 @@
         </form>
 
     @stop
+
+@push('custom-components')
+    @include('chief::back.menu._partials.delete-modal')
+@endpush

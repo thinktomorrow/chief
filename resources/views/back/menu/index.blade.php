@@ -14,18 +14,6 @@
 @endcomponent
 
 @section('content')
-    {{-- <ul>
-        @foreach($menu as $menuitem)
-            <li>{{ $menuitem->label }}
-                <ul>
-                    @foreach($menuitem->children as $child)
-                        <li>{{ $child->label }}
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-        @endforeach
-    </ul> --}}
     <div class="treeview stack-l">
         <div class="row">
             <div class="column-4 center-y">
@@ -49,11 +37,6 @@
                 </div>
                 <div class="column-3 text-right">
                     <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}" class="btn btn-link text-font">Aanpassen</a>
-                    <form action="{{route('chief.back.menu.destroy', $menuitem->id)}}" method="POST">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-                        <button type="submit"><i class="icon icon-trash icon-fw text-tertiary"></i></button>
-                    </form>
                 </div>
             </div>
             @foreach($menuitem->children as $child)
