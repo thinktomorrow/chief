@@ -17,17 +17,17 @@ class CreateMenu
 
     public function handle(MenuCreateRequest $request): MenuItem
     {
-        try{
+        try {
             DB::beginTransaction();
 
             $menu = MenuItem::create();
             $translations = $request->get('trans');
 
-            if(($type = $request->get('type')) == 'custom'){
+            if (($type = $request->get('type')) == 'custom') {
                 $this->saveTranslations($translations, $menu, [
                     'url'
                 ]);
-            }elseif($type == 'internal'){
+            } elseif ($type == 'internal') {
                 $menu->page_id = $this->getPage($request->get('page_id'))->id;
             }
 

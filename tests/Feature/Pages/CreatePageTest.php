@@ -175,5 +175,4 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, $newPage->children());
         $this->assertEquals($otherPage->id, $newPage->children()->first()->id);
     }
-
 }

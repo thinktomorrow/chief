@@ -74,18 +74,18 @@ class CreateMenuItemTest extends TestCase
                     'type'              => 'custom',
                     'trans.nl.label'    => 'nieuw label',
                     'trans.nl.url'      => 'https://thinktomorrow.be',
-                    'trans.en.label'    => 'new label',                    
+                    'trans.en.label'    => 'new label',
                     'trans.en.url'      => 'https://thinktomorrow.com'
                 ]));
 
-                $response->assertStatus(302);
+        $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), [
             'type'              => 'custom',
             'trans.nl.url'      => 'https://thinktomorrow.be',
-            'trans.en.label'    => 'new label',                    
+            'trans.en.label'    => 'new label',
             'trans.en.url'      => 'https://thinktomorrow.com'
         ]);
     }
@@ -95,7 +95,7 @@ class CreateMenuItemTest extends TestCase
     {
         $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => '']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.store')  
+            route('chief.back.menu.store')
         );
     }
 
@@ -104,7 +104,7 @@ class CreateMenuItemTest extends TestCase
     {
         $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => 'test']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.store')  
+            route('chief.back.menu.store')
         );
     }
 
@@ -113,7 +113,7 @@ class CreateMenuItemTest extends TestCase
     {
         $this->assertValidation(new MenuItem(), 'type', $this->validParams(['type' => 'foobar']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.store')  
+            route('chief.back.menu.store')
         );
     }
 
@@ -122,7 +122,7 @@ class CreateMenuItemTest extends TestCase
     {
         $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.store')  
+            route('chief.back.menu.store')
         );
     }
 
@@ -131,7 +131,7 @@ class CreateMenuItemTest extends TestCase
     {
         $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.store')  
+            route('chief.back.menu.store')
         );
     }
 
@@ -140,7 +140,7 @@ class CreateMenuItemTest extends TestCase
     {
         $this->assertValidation(new MenuItem(), 'id', $this->validParams(['type' => 'internal', 'page_id' => Page::class.'@1']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.store')  
+            route('chief.back.menu.store')
         );
     }
 

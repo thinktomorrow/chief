@@ -17,7 +17,7 @@ class DeleteMenu
 
     public function handle($id): MenuItem
     {
-        try{
+        try {
             DB::beginTransaction();
 
             $menuitem = MenuItem::find($id);

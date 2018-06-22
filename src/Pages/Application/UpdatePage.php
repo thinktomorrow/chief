@@ -44,7 +44,7 @@ class UpdatePage
 
         $this->saveTranslations($translations, $page, array_merge([
             'slug', 'seo_title', 'seo_description'
-        ], array_keys($page::translatableFields()) ));
+        ], array_keys($page::translatableFields())));
     }
 
     private function syncRelations($page, $relateds)

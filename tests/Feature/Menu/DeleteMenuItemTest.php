@@ -40,5 +40,4 @@ class DeleteMenuItemTest extends TestCase
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(1, MenuItem::all());
     }
-
 }

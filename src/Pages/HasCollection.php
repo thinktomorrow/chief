@@ -38,8 +38,8 @@ trait HasCollection
      */
     public function newCollection(array $models = [])
     {
-        foreach($models as $k => $model) {
-            if($collectionKey = $model->collectionKey()) {
+        foreach ($models as $k => $model) {
+            if ($collectionKey = $model->collectionKey()) {
                 $models[$k] = $this->convertToCollectionInstance($model, $collectionKey);
             }
         }

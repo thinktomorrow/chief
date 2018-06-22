@@ -89,12 +89,11 @@ class MenuController extends Controller
     {
         $menu = app(DeleteMenu::class)->handle($id);
 
-        if($menu){
+        if ($menu) {
             $message = 'Het item werd verwijderd.';
-        return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
-        }else{
+            return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
+        } else {
             return redirect()->back()->with('messages.warning', 'Je menu item is niet verwijderd. Probeer opnieuw');
         }
-
     }
 }
