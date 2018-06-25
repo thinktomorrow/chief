@@ -222,7 +222,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->find($id)) && $page->isPublished())
+        return (($page = self::ignoreCollection()->published()->find($id)))
             ? $page
             : null;
     }
