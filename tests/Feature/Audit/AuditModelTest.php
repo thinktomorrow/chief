@@ -107,15 +107,10 @@ class AuditTest extends TestCase
         $user = $this->developer();
         Auth::guard('chief')->login($user);
 
-        $article = ArticleFake::create([
-            'collection'    => 'articles',
-            'title:nl'      => 'title',
-            'content:nl'    => 'content',
-            'slug:nl'       => 'foobar',
-            'published'     => 1
-        ]);
-
-        $activity = $article->activity->first();
+        $this->actingAs($user, 'chief')
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+        
+        $activity = Page::ignoreCollection()->first();
 
         $this->assertCount(1, $article->activity);
         $this->assertEquals('created', $activity->description);

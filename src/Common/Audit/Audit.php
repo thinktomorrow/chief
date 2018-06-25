@@ -29,6 +29,6 @@ class Audit extends Activity
 
     public static function getActivity()
     {
-        return self::all();
+        return self::all()->sortByDesc('created_at');
     }
 }
