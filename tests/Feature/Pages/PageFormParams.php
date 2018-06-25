@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-
 trait PageFormParams
 {
     protected function validPageParams($overrides = [])

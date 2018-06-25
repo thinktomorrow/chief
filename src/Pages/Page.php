@@ -160,11 +160,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * mostly want the Page as morph relationship instead of the
      * child class.
      */
-    public function getMorphClass(){
+    public function getMorphClass()
+    {
         return self::class;
     }
 
-    public function getOwnMorphClass(){
+    public function getOwnMorphClass()
+    {
         return parent::getMorphClass();
     }
 
