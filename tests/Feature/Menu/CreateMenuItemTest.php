@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 
-use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
@@ -54,6 +53,23 @@ class CreateMenuItemTest extends TestCase
     }
 
     /** @test */
+    public function an_menuitem_can_be_nested()
+    {
+        $this->disableExceptionHandling();
+        $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
+
+        $response = $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams(['parent_id' => $parent->id]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(2, MenuItem::all());
+        $this->assertCount(1, $parent->fresh()->children);
+        $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
+    }
+
+    /** @test */
     public function creating_a_new_internal_menuItem()
     {
         $page = factory(Page::class)->create();
@@ -64,7 +80,7 @@ class CreateMenuItemTest extends TestCase
         $response->assertRedirect(route('chief.back.menu.index'));
 
         $this->assertCount(1, MenuItem::all());
-        $this->assertNewValues(MenuItem::first(), ['type' => 'internal']);
+        $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.url' => null]);
     }
 
     /** @test */
@@ -158,9 +174,11 @@ class CreateMenuItemTest extends TestCase
     {
         $params = [
             'type'  => 'custom',
+            'parent_id' => null,
             'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',
+                    'url' => 'http://google.com',
                 ]
             ],
         ];
@@ -176,9 +194,10 @@ class CreateMenuItemTest extends TestCase
     private function assertNewValues($menuItem, $overrides = [])
     {
         $this->assertEquals($overrides['type'] ?? 'custom', $menuItem->{'type'});
+        $this->assertEquals($overrides['parent_id'] ?? null, $menuItem->parent_id);
 
         $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
-        $this->assertEquals($overrides['trans.nl.url'] ?? '', $menuItem->{'url:nl'});
+        $this->assertEquals($overrides['trans.nl.url'] ?? 'http://google.com', $menuItem->{'url:nl'});
 
         $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
         $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});

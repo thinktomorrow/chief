@@ -35,6 +35,7 @@ class MenuController extends Controller
             'pages'            => Page::flattenForGroupedSelect()->toArray(),
             'menuitem'         => $menuitem,
             'internal_page_id' => null,
+            'parents'          => MenuItem::onlyGrandParents()->get(),
         ]);
     }
 
@@ -74,6 +75,7 @@ class MenuController extends Controller
             'menuitem'         => $menuitem,
             'pages'            => $pages = Page::flattenForGroupedSelect()->toArray(),
             'internal_page_id' => $internal_page_id,
+            'parents'          => MenuItem::onlyGrandParents()->get(),
         ]);
     }
 

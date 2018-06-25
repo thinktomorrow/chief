@@ -16,70 +16,32 @@
 @section('content')
     <div class="treeview stack-l">
         <div class="row">
-            <div class="column-4 center-y">
+            <div class="column center-y">
                 <strong>Label</strong>
             </div>
-            <div class="column-3 center-y">
+            <div class="column-4 center-y">
                 <strong>Link</strong>
+            </div>
+            <div class="column-2">
+
             </div>
         </div>
         @foreach($menu as $menuitem)
-            <div class="row">
-                <div class="column-4 center-y">
-                    <i class="icon icon-menu inline text-border tree-parent"></i>
-                    <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}">{{ $menuitem->label }}</a>
-                </div>
-                <div class="column center-y">
-                    @if($menuitem->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_INTERNAL)
-                        <a class="label label--primary squished-xs" href="{{ $menuitem->url }}" target="_blank">{{ $menuitem->page_label }}</a>
-                    @else
-                        <a href="{{ $menuitem->url }}" target="_blank">{{ $menuitem->url }}</a>
-                    @endif
-                </div>
-                <div class="column-3 text-right">
-                    <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}" class="btn btn-link text-font">Aanpassen</a>
-                </div>
-            </div>
+
+            <hr class="separator">
+
+            @include('chief::back.menu._partials._rowitem')
+
             @foreach($menuitem->children as $child)
-                <div class="row">
-                    <div class="column-4 center-y indent">
-                        <i class="icon icon-menu inline text-border tree-parent"></i>
-                        <a href="{{ route('chief.back.menu.edit', $child->id) }}">{{ $child->label }}</a>
-                    </div>
-                    <div class="column-3 center-y">
-                        <a href="#">/diensten</a>
-                    </div>
-                    <div class="column-3 text-right">
-                        <a href="{{ route('chief.back.menu.edit', $child->id) }}" class="btn btn-link text-font">Aanpassen</a>
-                        <form action="{{route('chief.back.menu.destroy', $child->id)}}" method="POST">
-                            {{ method_field('DELETE') }}
-                            {{ csrf_field() }}
-                            <button type="submit"><i class="icon icon-trash icon-fw text-tertiary"></i></button>
-                        </form>
-                    </div>
-                </div>
+
+                @include('chief::back.menu._partials._rowitem', ['level' => 1])
+
                 @foreach($child->children as $subchild)
-                    <div class="row">
-                        <div class="column-4 center-y indent-l">
-                            <i class="icon icon-menu inline text-border tree-parent"></i>
-                            <a href="{{ route('chief.back.menu.edit', $subchild->id) }}">{{ $subchild->label }}</a>
-                        </div>
-                        <div class="column-3 center-y">
-                            <a href="#">/diensten</a>
-                        </div>
-                        <div class="column-2 center-y">
-                            <div class="font-s">Collection</div>
-                        </div>
-                        <div class="column-3 text-right">
-                            <a href="{{ route('chief.back.menu.edit', $subchild->id) }}" class="btn btn-link text-font">Aanpassen</a>
-                            <form action="{{route('chief.back.menu.destroy', $subchild->id)}}" method="POST">
-                                {{ method_field('DELETE') }}
-                                {{ csrf_field() }}
-                                <button type="submit"><i class="icon icon-trash icon-fw text-tertiary"></i></button>
-                            </form>
-                        </div>
-                    </div>
+                    @include('chief::back.menu._partials._rowitem', ['level' => 2])
                 @endforeach
+
+                <div class="stack"></div>
+
             @endforeach
         @endforeach
     </div>

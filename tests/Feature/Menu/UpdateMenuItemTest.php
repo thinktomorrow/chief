@@ -58,7 +58,7 @@ class UpdateMenuItemTest extends TestCase
         $response = $this->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar']));
 
         $response->assertRedirect(route('chief.back.login'));
-        $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'nieuw label']);
+        $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'nieuw label', 'trans.nl.url' => null]);
     }
 
     /** @test */
@@ -96,6 +96,23 @@ class UpdateMenuItemTest extends TestCase
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']);
+    }
+
+    /** @test */
+    public function an_menuitem_can_be_nested()
+    {
+        $this->disableExceptionHandling();
+        $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
+        $child = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
+
+        $response = $this->asDefaultAdmin()
+            ->put(route('chief.back.menu.update', $child->id), $this->validParams(['parent_id' => $parent->id]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(1, $parent->fresh()->children);
+        $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
     }
 
     /** @test */
@@ -168,16 +185,18 @@ class UpdateMenuItemTest extends TestCase
             ]));
 
         // Assert our values are still the same
-        $this->assertNewValues($menuitem->fresh(), ['type' => 'internal', 'page_id' => $page->id]);
+        $this->assertNewValues($menuitem->fresh(), ['type' => 'internal', 'page_id' => $page->id, 'trans.nl.url' => null]);
     }
 
     private function validParams($overrides = [])
     {
         $params = [
             'type' => 'custom',
+            'parent_id' => null,
             'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',
+                    'url' => 'http://google.com',
                 ]
             ],
         ];
@@ -196,7 +215,7 @@ class UpdateMenuItemTest extends TestCase
         $this->assertEquals($overrides['page_id'] ?? '', $menuItem->{'page_id'});
 
         $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
-        $this->assertEquals($overrides['trans.nl.url'] ?? '', $menuItem->{'url:nl'});
+        $this->assertEquals(array_key_exists('trans.nl.url', $overrides) ? $overrides['trans.nl.url'] :  'http://google.com', $menuItem->{'url:nl'});
 
         $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
         $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});

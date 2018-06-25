@@ -42,6 +42,21 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             ->withoutGlobalScope(PageCollectionScope::class);
     }
 
+    public function parent()
+    {
+        return $this->belongsTo(MenuItem::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(MenuItem::class, 'parent_id');
+    }
+
+    public function scopeOnlyGrandParents($query)
+    {
+        return $query->whereNull('parent_id');
+    }
+
     public function url()
     {
         if ($this->ofType(static::TYPE_INTERNAL) && $page = $this->page) {

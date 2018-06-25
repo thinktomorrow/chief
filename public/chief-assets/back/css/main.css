@@ -5493,15 +5493,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
-.treeview .row {
-  border-bottom: 1px dotted #dadada;
-}
-
-.treeview .indent {
+.treeview .indent-1 {
   padding-left: 3rem;
 }
 
-.treeview .indent-l {
+.treeview .indent-2 {
   padding-left: 5.5rem;
 }
 
@@ -5509,12 +5505,8 @@ table .btn ~ .btn {
   position: relative;
 }
 
-.treeview .tree-parent:after {
-  font-family: "spirit";
-  content: '\E920';
-  display: inline-block;
-  position: absolute;
-  margin-left: -40px;
+.separator {
+  border-bottom: 1px dotted #dadada;
 }
 
 .alert {
