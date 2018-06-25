@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Traits;
+namespace Thinktomorrow\Chief\Common\Publish;
 
 trait Publishable
 {
