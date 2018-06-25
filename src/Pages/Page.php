@@ -269,11 +269,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function previewUrl()
     {
+        // TODO: how we allow for these default routes to be set up in every new project?
+//        return '';
         return route('pages.show', $this->slug).'?preview-mode';
     }
 
     public function menuUrl(): string
     {
+        // TODO: how we allow for these default routes to be set up in every new project?
+//        return '';
         return route('pages.show', $this->slug);
     }
 

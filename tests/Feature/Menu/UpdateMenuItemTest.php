@@ -69,7 +69,11 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
 
         $response = $this->asDefaultAdmin()
-            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'page_id' => $newpage->getRelationId()]));
+            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
+                'type' => 'internal',
+                'page_id' => $newpage->getRelationId(),
+                'trans.nl.label' => 'foobar',
+            ]));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
@@ -112,12 +116,13 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => 'test']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.update', $menuitem->id),
-            1,
-            'put'
-        );
+        $this->asDefaultAdmin()
+            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
+                'trans.nl.label'      => 'new label',
+                'trans.nl.url'      => 'thinktomorrow.be',
+            ]));
+
+        $this->assertEquals('http://thinktomorrow.be',$menuitem->fresh()->url);
     }
 
     /** @test */
@@ -151,19 +156,25 @@ class UpdateMenuItemTest extends TestCase
     public function pageid_should_exists_in_db()
     {
         $page       = factory(Page::class)->create();
-        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->id, 'label:nl' => 'nieuw label']);
 
-        $this->assertValidation(new MenuItem(), 'id', $this->validParams(['type' => 'internal', 'page_id' => Page::class.'@9999']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.update', $menuitem->id),
-            1,
-            'put'
-        );
+        // Inside our logic the page should be existing. If not, the creation is aborted but we do not
+        // show this response to the interface since this is rather a hack then expected behaviour.
+        $this->asDefaultAdmin()
+            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
+                'type' => 'internal',
+                'trans.nl.label' => 'updated label',
+                'page_id' => Page::class.'@999' // Fake page reference
+            ]));
+
+        // Assert our values are still the same
+        $this->assertNewValues($menuitem->fresh(), ['type' => 'internal', 'page_id' => $page->id]);
     }
 
     private function validParams($overrides = [])
     {
         $params = [
+            'type' => 'custom',
             'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',

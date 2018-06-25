@@ -3,15 +3,13 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Thinktomorrow\Chief\App\Http\Requests\MenuCreateRequest;
+use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
-use Thinktomorrow\Chief\App\Http\Requests\MenuUpdateRequest;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
 class MenuController extends Controller
@@ -31,22 +29,26 @@ class MenuController extends Controller
     public function create()
     {
         $menuitem = new MenuItem;
-        $pages = Page::flattenForGroupedSelect()->toArray();
-        
-        return view('chief::back.menu.create', compact('pages', 'menuitem'));
+        $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
+
+        return view('chief::back.menu.create', [
+            'pages'            => Page::flattenForGroupedSelect()->toArray(),
+            'menuitem'         => $menuitem,
+            'internal_page_id' => null,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param MenuRequest $request
      * @return Response
      */
-    public function store(MenuCreateRequest $request)
+    public function store(MenuRequest $request)
     {
         $menu = app(CreateMenu::class)->handle($request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->title . ' is aangemaakt');
+        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
     /**
@@ -60,19 +62,29 @@ class MenuController extends Controller
         $menuitem = MenuItem::findOrFail($id);
         $menuitem->injectTranslationForForm();
 
+        // Transpose selected page_id to the format <class>@<id>
+        // as expected by the select field.
+        $internal_page_id = null;
+        if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
+            $page = Page::ignoreCollection()->find($menuitem->page_id);
+            $internal_page_id = $page->getRelationId();
+        }
+
         return view('chief::back.menu.edit', [
-            'menuitem' => $menuitem,
+            'menuitem'         => $menuitem,
+            'pages'            => $pages = Page::flattenForGroupedSelect()->toArray(),
+            'internal_page_id' => $internal_page_id,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param MenuRequest $request
      * @param  int $id
      * @return Response
      */
-    public function update(MenuUpdateRequest $request, $id)
+    public function update(MenuRequest $request, $id)
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
@@ -91,6 +103,7 @@ class MenuController extends Controller
 
         if ($menu) {
             $message = 'Het item werd verwijderd.';
+
             return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
         } else {
             return redirect()->back()->with('messages.warning', 'Je menu item is niet verwijderd. Probeer opnieuw');

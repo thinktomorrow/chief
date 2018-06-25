@@ -2,14 +2,10 @@
 
 namespace Thinktomorrow\Chief\Menu\Application;
 
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Pages\PageTranslation;
-use Thinktomorrow\Chief\Common\UniqueSlug;
-use Thinktomorrow\Chief\App\Http\Requests\MenuCreateRequest;
+use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\Menu\MenuItemTranslation;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 
 class DeleteMenu
 {
@@ -31,10 +27,5 @@ class DeleteMenu
             DB::rollBack();
             throw $e;
         }
-    }
-
-    private function getPage($page_id)
-    {
-        return Page::inflate($page_id);
     }
 }

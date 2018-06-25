@@ -4,13 +4,13 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Common\Helpers\Root;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
-use Thinktomorrow\Chief\Pages\Page;
 
-class MenuUpdateRequest extends FormRequest
+class MenuRequest extends FormRequest
 {
     use TranslatableCommand;
-
+    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -21,6 +21,15 @@ class MenuUpdateRequest extends FormRequest
         return Auth::guard('chief')->user();
     }
 
+    protected function validationData()
+    {
+        $data = parent::validationData();
+
+        $data = $this->sanitizeUrl($data);
+
+        return $data;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -29,13 +38,12 @@ class MenuUpdateRequest extends FormRequest
     public function rules()
     {
         $translations = $this->request->get('trans', []);
-
+        
+        $rules['type']      = 'in:custom,internal';
         $rules['page_id']   = 'required_if:type,internal';
-        $rules['id']        = 'required_with:page_id|exists:pages,id';
 
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['url', 'label'], $trans) && $locale !== app()->getLocale()) {
-                unset($translations[$locale]);
                 $this->request->set('trans', $translations);
                 continue;
             }
@@ -51,26 +59,41 @@ class MenuUpdateRequest extends FormRequest
 
     public function attributes()
     {
+        $attributes = [];
+
+        foreach ($this->request->get('trans', []) as $locale => $trans) {
+
+            $attributes['trans.' . $locale . '.label']   = $locale . ' label';
+            $attributes['trans.' . $locale . '.url']     = $locale . ' link';
+        }
+
+        return $attributes;
+    }
+
+    public function messages()
+    {
         return [
-           'id' => 'page id'
+            'required_if' => 'Gelieve nog een :attribute in te vullen, aub.',
+            'url' => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
         ];
     }
 
     /**
-     * Modify the input values
-     *
-     * @return void
+     * @param $data
+     * @return mixed
      */
-    protected function prepareForValidation()
+    protected function sanitizeUrl($data)
     {
+        foreach ($data['trans'] as $locale => $trans) {
 
-        // get the input
-        $input = $this->all();
-        if (($page_id = $this->get('page_id'))) {
-            $input['id'] = substr($page_id, strrpos($page_id, '@') + 1);
+            if (empty($trans['url'])) {
+                continue;
+            }
+
+            $data['trans'][$locale]['url'] = Root::fromString($trans['url'])->get();
+            $this->request->set('trans', $data['trans']);
         }
 
-        // replace old input with new input
-        $this->replace($input);
+        return $data;
     }
 }

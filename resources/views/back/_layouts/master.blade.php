@@ -2,7 +2,7 @@
 
 <body>
 
-<main id="main">
+<main id="main" class="bg-grey-lightest">
     @include('chief::back._layouts._partials.nav')
     @yield('header')
 

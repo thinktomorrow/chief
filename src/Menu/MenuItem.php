@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
 
@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageCollectionScope;
 use Vine\Source as VineSource;
 use Vine\Node;
 
@@ -23,7 +24,8 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     protected $translationModel = MenuItemTranslation::class;
     protected $translationForeignKey = 'menu_item_id';
     protected $translatedAttributes = [
-        'label', 'url'
+        'label',
+        'url',
     ];
 
     public $timestamps = false;
@@ -36,7 +38,17 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
     public function page()
     {
-        return $this->belongsTo(Page::class, 'page_id');
+        return $this->belongsTo(Page::class, 'page_id')
+            ->withoutGlobalScope(PageCollectionScope::class);
+    }
+
+    public function url()
+    {
+        if ($this->ofType(static::TYPE_INTERNAL) && $page = $this->page) {
+            return $page->menuUrl();
+        }
+
+        return $this->url;
     }
 
     /**
@@ -59,10 +71,10 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
                 $pages->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
                     $collectionItems->push(MenuItem::make([
-                        'id'        => 'collection-'.$page->id,
-                        'label'     => $page->menuLabel(),
-                        'url'       => $page->menuUrl(),
-                        'parent_id' => $item->id,
+                        'id'         => 'collection-' . $page->id,
+                        'label'      => $page->menuLabel(),
+                        'url'        => $page->menuUrl(),
+                        'parent_id'  => $item->id,
                     ]));
                 });
             }
@@ -70,6 +82,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
                 $item->url = $page->menuUrl();
+                $item->page_label = $page->menuLabel();
                 $items[$k] = $item;
             }
         }
@@ -106,14 +119,15 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function entry(Node $node)
     {
         return (object)[
-            'id'                => $node->id,
-            'type'              => $node->type,
-            'label'             => $node->label,
-            'url'               => $node->url,
-            'order'             => $node->order,
-            'page_id'           => $node->page_id,
-            'parent_id'         => $node->parent_id,
-            'hidden_in_menu'    => $node->hidden_in_menu
+            'id'             => $node->id,
+            'type'           => $node->type,
+            'label'          => $node->label,
+            'page_label'     => $node->page_label, // Extra info when dealing with internal links
+            'url'            => $node->url,
+            'order'          => $node->order,
+            'page_id'        => $node->page_id,
+            'parent_id'      => $node->parent_id,
+            'hidden_in_menu' => $node->hidden_in_menu,
         ];
     }
 }

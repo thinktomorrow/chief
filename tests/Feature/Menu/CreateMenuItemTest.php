@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 
+use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
@@ -100,12 +101,16 @@ class CreateMenuItemTest extends TestCase
     }
 
     /** @test */
-    public function url_field_should_be_valid_url()
+    public function url_field_is_sanitized_if_scheme_is_missing()
     {
-        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => 'test']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
-        );
+        $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                'type'              => 'custom',
+                'trans.nl.label'    => 'nieuw label',
+                'trans.nl.url'      => 'thinktomorrow.be',
+            ]));
+
+        $this->assertEquals('http://thinktomorrow.be',MenuItem::first()->url);
     }
 
     /** @test */
@@ -138,10 +143,15 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function pageid_should_exists_in_db()
     {
-        $this->assertValidation(new MenuItem(), 'id', $this->validParams(['type' => 'internal', 'page_id' => Page::class.'@1']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
-        );
+        // Inside our logic the page should be existing. If not, the creation is aborted but we do not
+        // show this response to the interface since this is rather a hack then expected behaviour.
+        $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                'type' => 'internal',
+                'page_id' => Page::class.'@999' // Fake page reference
+            ]));
+
+        $this->assertEquals(0, MenuItem::count());
     }
 
     private function validParams($overrides = [])

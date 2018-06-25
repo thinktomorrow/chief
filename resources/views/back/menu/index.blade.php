@@ -17,10 +17,10 @@
     <div class="treeview stack-l">
         <div class="row">
             <div class="column-4 center-y">
-                <strong>Menu titel</strong>
+                <strong>Label</strong>
             </div>
             <div class="column-3 center-y">
-                <strong>URL</strong>
+                <strong>Link</strong>
             </div>
         </div>
         @foreach($menu as $menuitem)
@@ -29,11 +29,12 @@
                     <i class="icon icon-menu inline text-border tree-parent"></i>
                     <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}">{{ $menuitem->label }}</a>
                 </div>
-                <div class="column-3 center-y">
-                    <a href="#">/diensten</a>
-                </div>
-                <div class="column-2 center-y">
-                <div class="font-s"></div>
+                <div class="column center-y">
+                    @if($menuitem->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_INTERNAL)
+                        <a class="label label--primary squished-xs" href="{{ $menuitem->url }}" target="_blank">{{ $menuitem->page_label }}</a>
+                    @else
+                        <a href="{{ $menuitem->url }}" target="_blank">{{ $menuitem->url }}</a>
+                    @endif
                 </div>
                 <div class="column-3 text-right">
                     <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}" class="btn btn-link text-font">Aanpassen</a>
