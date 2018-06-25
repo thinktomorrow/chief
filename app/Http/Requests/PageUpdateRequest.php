@@ -4,9 +4,12 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 
 class PageUpdateRequest extends FormRequest
 {
+    use TranslatableCommand;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -24,13 +27,22 @@ class PageUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'trans.*.title'     => 'required|unique:page_translations,title,'. $this->id . ',page_id|max:200',
-            'trans.*.slug'      => 'required|unique:page_translations,slug,' . $this->id . ',page_id|distinct',
-            'trans.*.content'   => 'required|max:1500',
-            'trans.*.short'     => 'max:700',
+        $translations = $this->request->get('trans');
+        foreach ($translations as $locale => $trans)
+        {
+            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale())
+            {
+                unset($translations[$locale]);
+                $this->request->set('trans', $translations);
+                continue;
+            }
 
-        ];
+            $rules['trans.' . $locale . '.title']   = 'required|max:200';
+            $rules['trans.' . $locale . '.short']   = 'max:700';
+            $rules['trans.' . $locale . '.content'] = 'required|max:1500';
+        }
+
+        return $rules;
     }
 
     public function attributes()

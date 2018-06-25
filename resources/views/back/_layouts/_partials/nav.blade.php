@@ -19,6 +19,7 @@
                 <li><a class="nav-item" target="_blank" href="/spirit">Spirit</a></li>
                 <li><a class="nav-item {{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Users</a></li>
                 <li><a class="nav-item {{ isActiveUrl('admin/menu*') ? 'active' : '' }}" href="{{ route('chief.back.menu.index') }}">Menu</a></li>
+                <li><a class="nav-item {{ isActiveUrl('admin/audit*') ? 'active' : '' }}" href="{{ route('chief.back.audit.index') }}">Audit</a></li>
             </ul>
 
             <div class="column">

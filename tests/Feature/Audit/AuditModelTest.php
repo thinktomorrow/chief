@@ -123,7 +123,51 @@ class AuditTest extends TestCase
         $this->assertEquals(get_class($article), $activity->subject_type);
     }
 
-    
+    /** @test */
+    public function it_show_events()
+    {
+        $user = $this->developer();
+
+        $this->actingAs($user, 'chief')
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+
+        $response = $this->actingAs($user, 'chief')
+            ->get(route('chief.back.audit.index'));
+
+        $activity = $this->getResponseData($response, 'activity');
+
+        $this->assertCount(1, $activity);
+    }
+
+    /** @test */
+    public function it_shows_events_sorted_by_timestamp()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /** @test */
+    public function it_can_show_events_per_user()
+    {
+        $user = $this->developer();
+
+        $this->actingAs($user, 'chief')
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+
+        $response = $this->actingAs($user, 'chief')
+            ->get(route('chief.back.audit.show', $user->id));
+
+        $activity   = $this->getResponseData($response, 'activity');
+        $causer     = $this->getResponseData($response, 'causer');
+
+        $response->assertViewHas('activity');
+        $this->assertEquals($user->name, $causer->name);
+    }
+
+    /** @test */
+    public function it_can_show_events_per_model()
+    {
+        $this->markTestIncomplete();
+    }
 }
 
 class ArticleFake extends Page

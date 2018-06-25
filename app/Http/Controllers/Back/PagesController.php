@@ -58,13 +58,13 @@ class PagesController extends Controller
     public function store(PageCreateRequest $request, $collection)
     {
         $this->authorize('create-page');
-        
+
         $page = app(CreatePage::class)->handle(
             $collection,
             $request->trans,
             $request->relations,
             $request->get('files', []),
-            $request->get('filesOrder') ? explode(',', $request->get('filesOrder')) : []
+            $request->get('filesOrder') ? $request->get('filesOrder') : []
         );
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');

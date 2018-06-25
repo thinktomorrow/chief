@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "4b18c443b83118e65b654a070effe5b9",
-=======
-    "content-hash": "84ad246b2efb584b363278824ef3f533",
->>>>>>> ft/menu
+    "content-hash": "d5c88c24c4f9a7d54e6f18ff59505640",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -1056,16 +1052,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.6.25",
+            "version": "v5.6.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a15efe4fbcd6b38ea76edc5c8939ffde4f4c7b7f"
+                "reference": "7047df295e77cecb6a2f84736a732af66cc6789c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a15efe4fbcd6b38ea76edc5c8939ffde4f4c7b7f",
-                "reference": "a15efe4fbcd6b38ea76edc5c8939ffde4f4c7b7f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/7047df295e77cecb6a2f84736a732af66cc6789c",
+                "reference": "7047df295e77cecb6a2f84736a732af66cc6789c",
                 "shasum": ""
             },
             "require": {
@@ -1191,7 +1187,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-06-12T14:39:24+00:00"
+            "time": "2018-06-20T14:21:11+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1653,23 +1649,24 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.15",
+            "version": "v2.99.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "10bcb46e8f3d365170f6de9d05245aa066b81f09"
+                "reference": "35469243ebbb9be5086cff57538cac6da2c36852"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/10bcb46e8f3d365170f6de9d05245aa066b81f09",
-                "reference": "10bcb46e8f3d365170f6de9d05245aa066b81f09",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/35469243ebbb9be5086cff57538cac6da2c36852",
+                "reference": "35469243ebbb9be5086cff57538cac6da2c36852",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.0"
+                "php": "^7"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*|5.*"
+                "phpunit/phpunit": "4.*|5.*",
+                "vimeo/psalm": "^1"
             },
             "suggest": {
                 "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
@@ -1698,8 +1695,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2018-06-08T15:26:40+00:00"
-<<<<<<< HEAD
+            "time": "2018-06-06T05:12:00+00:00"
         },
         {
             "name": "patchwork/utf8",
@@ -1759,8 +1755,6 @@
                 "utf8"
             ],
             "time": "2016-05-18T13:57:10+00:00"
-=======
->>>>>>> ft/menu
         },
         {
             "name": "psr/container",
@@ -5077,16 +5071,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.2.4",
+            "version": "7.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "00bc0b93f0ff4f557e9ea766557fde96da9a03dd"
+                "reference": "400a3836ee549ae6f665323ac3f21e27eac7155f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/00bc0b93f0ff4f557e9ea766557fde96da9a03dd",
-                "reference": "00bc0b93f0ff4f557e9ea766557fde96da9a03dd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/400a3836ee549ae6f665323ac3f21e27eac7155f",
+                "reference": "400a3836ee549ae6f665323ac3f21e27eac7155f",
                 "shasum": ""
             },
             "require": {
@@ -5102,7 +5096,7 @@
                 "php": "^7.1",
                 "phpspec/prophecy": "^1.7",
                 "phpunit/php-code-coverage": "^6.0.7",
-                "phpunit/php-file-iterator": "^2.0",
+                "phpunit/php-file-iterator": "^2.0.1",
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-timer": "^2.0",
                 "sebastian/comparator": "^3.0",
@@ -5157,7 +5151,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-06-05T03:40:05+00:00"
+            "time": "2018-06-21T13:13:39+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -5815,13 +5809,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-<<<<<<< HEAD
-    "stability-flags": [],
-=======
     "stability-flags": {
         "thinktomorrow/vine": 20
     },
->>>>>>> ft/menu
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
