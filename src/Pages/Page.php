@@ -210,15 +210,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * mostly want the Page as morph relationship instead of the
      * child class.
      */
-    public function getMorphClass()
-    {
-        return self::class;
-    }
+//    public function getMorphClass()
+//    {
+//        return self::class;
+//    }
 
-    public function getOwnMorphClass()
-    {
-        return parent::getMorphClass();
-    }
+//    public function getOwnMorphClass()
+//    {
+//        return parent::getMorphClass();
+//    }
 
     public static function findPublished($id)
     {
@@ -264,7 +264,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function getRelationGroup(): string
     {
-        return 'pages';
+        return static::collectionDetails('plural');
     }
 
     public function previewUrl()
