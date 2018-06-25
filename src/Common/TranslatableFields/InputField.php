@@ -8,6 +8,4 @@ class InputField
     {
         return Field::make(new FieldType(FieldType::INPUT));
     }
-
-
 }

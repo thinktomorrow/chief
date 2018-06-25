@@ -11,7 +11,7 @@ trait HasCollection
 
     protected static function bootHasCollection()
     {
-        if(!isset(static::$collectionScopeClass)) {
+        if (!isset(static::$collectionScopeClass)) {
             throw new \DomainException('Class with HasCollection trait require a static property [collectionScopeClass]. This should refer to a global scope class.');
         }
 
@@ -45,8 +45,8 @@ trait HasCollection
      */
     public function newCollection(array $models = [])
     {
-        foreach($models as $k => $model) {
-            if($collectionKey = $model->collectionKey()) {
+        foreach ($models as $k => $model) {
+            if ($collectionKey = $model->collectionKey()) {
                 $models[$k] = $this->convertToCollectionInstance($model, $collectionKey);
             }
         }
