@@ -14,7 +14,7 @@ class CreatePage
 {
     use TranslatableCommand;
 
-    public function handle(string $collection, array $translations, array $relations, array $files, array $files_order): Page
+    public function handle(string $collection, array $translations): Page
     {
         try {
             DB::beginTransaction();
@@ -23,13 +23,8 @@ class CreatePage
 
             foreach ($translations as $locale => $value) {
                 $value = $this->enforceUniqueSlug($value, $page, $locale);
-
                 $page->updateTranslation($locale, $value);
             }
-
-            $this->syncRelations($page, $relations);
-
-            app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
 
             DB::commit();
 
@@ -51,17 +46,5 @@ class CreatePage
         $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
 
         return $translation;
-    }
-
-    private function syncRelations($page, $relateds)
-    {
-        // First remove all existing children
-        foreach ($page->children() as $child) {
-            $page->rejectChild($child);
-        }
-
-        foreach (RelatedCollection::inflate($relateds) as $i => $related) {
-            $page->adoptChild($related, ['sort' => $i]);
-        }
     }
 }

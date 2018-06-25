@@ -88,7 +88,7 @@
         <div>
             <label class="block stack-xs custom-indicators" for="withoutParentId">
                 <input v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
-                       name="withParentId"
+                       name="allow_parent"
                        value="0"
                        id="withoutParentId"
                        type="radio">
@@ -97,7 +97,7 @@
             </label>
             <label class="block stack-xs custom-indicators" for="parentId">
                 <input v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
-                       name="withParentId"
+                       name="allow_parent"
                        value="1"
                        id="parentId"
                        type="radio">

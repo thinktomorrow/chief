@@ -59,7 +59,10 @@ class CreateMenuItemTest extends TestCase
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.menu.store'), $this->validParams(['parent_id' => $parent->id]));
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                'allow_parent' => true,
+                'parent_id' => $parent->id
+            ]));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
@@ -174,6 +177,7 @@ class CreateMenuItemTest extends TestCase
     {
         $params = [
             'type'  => 'custom',
+            'allow_parent' => false, // flag to allow nesting or not
             'parent_id' => null,
             'trans' => [
                 'nl' => [

@@ -20,7 +20,7 @@ class UpdateMenu
 
             $menu = MenuItem::find($id);
             $menu->type = $request->get('type', null);
-            $menu->parent_id = ($request->get('withParentId') && $request->get('parent_id')) ? $request->get('parent_id') : null;
+            $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
             $menu->page_id = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
             $menu->save();
 
