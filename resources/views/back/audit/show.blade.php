@@ -3,7 +3,7 @@
 @section('page-title','Audit')
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Events for '. $causer->name)
+    @slot('title', 'Events for "'. $causer->fullname . '"')
 @endcomponent
 
 @section('content')

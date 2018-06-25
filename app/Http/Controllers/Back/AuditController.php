@@ -12,6 +12,8 @@ class AuditController extends Controller
 {
     public function index()
     {
+        $this->authorize('view-audit');
+
         $activity = Audit::getActivity();
 
         return view('chief::back.audit.index', compact('activity'));
@@ -19,6 +21,8 @@ class AuditController extends Controller
 
     public function show($id)
     {
+        $this->authorize('view-audit');
+
         $causer     = User::findOrFail($id);
         $activity   = Audit::getActivityBy($causer);
 

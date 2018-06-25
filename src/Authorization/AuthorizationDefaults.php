@@ -11,10 +11,10 @@ class AuthorizationDefaults
         return collect([
 
             // full access, even to application logic stuff
-            'developer' => ['role', 'permission', 'user', 'page', 'disable-user', 'squanto'],
+            'developer' => ['role', 'permission', 'user', 'page', 'disable-user', 'squanto', 'audit'],
 
             // Manages everything, including users
-            'admin' => ['user', 'page', 'disable-user', 'view-squanto'],
+            'admin' => ['user', 'page', 'disable-user', 'view-squanto', 'audit'],
 
             // Writes and edits content
             'author' => ['page', 'view-squanto'],
@@ -48,7 +48,13 @@ class AuthorizationDefaults
             'view-squanto',
             'create-squanto',
             'update-squanto',
-            'delete-squanto'
+            'delete-squanto',
+
+            'view-audit',
+            // these don't do anything but the command fails if they don't exist (NEEDS FIXING)
+            'create-audit',
+            'update-audit',
+            'delete-audit',
         ]);
     }
 }
