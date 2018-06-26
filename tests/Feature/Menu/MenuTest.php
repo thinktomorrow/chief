@@ -21,7 +21,7 @@ class MenuTest extends TestCase
 
         $this->setUpDatabase();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
+        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
             'statics' => Page::class,
             'articles' => ArticleFake::class,
         ]);

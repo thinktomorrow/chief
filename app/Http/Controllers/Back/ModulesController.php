@@ -1,0 +1,125 @@
+<?php
+
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
+
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Modules\Application\CreateModule;
+use Thinktomorrow\Chief\Modules\Module;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Thinktomorrow\Chief\App\Http\Requests\ModuleCreateRequest;
+use Thinktomorrow\Chief\Modules\Application\UpdateModule;
+use Thinktomorrow\Chief\App\Http\Requests\ModuleUpdateRequest;
+use Thinktomorrow\Chief\Modules\Application\DeleteModule;
+
+class ModulesController extends Controller
+{
+    public function index()
+    {
+        $this->authorize('view-page');
+
+        return view('chief::back.modules.index', [
+            'modules' => Module::ignoreCollection()->get(),
+            'collections' => Module::collectionDetails(),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function store(ModuleCreateRequest $request)
+    {
+        $this->authorize('create-page');
+
+        $module = app(CreateModule::class)->handle(
+            $request->get('collection'),
+            $request->get('slug'),
+            $request->trans
+        );
+
+        return redirect()->route('chief.back.modules.edit', $module->getKey())->with('messages.success', $module->title. ' is toegevoegd. Happy editing!');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        $this->authorize('update-page');
+
+        $module = Module::ignoreCollection()->findOrFail($id);
+        $module->injectTranslationForForm();
+
+        return view('chief::back.modules.edit', [
+            'module'            => $module,
+            'images'          => $this->populateMedia($module),
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param  int $id
+     * @return Response
+     */
+    public function update(ModuleUpdateRequest $request, $id)
+    {
+        $this->authorize('update-page');
+
+        $module = app(UpdateModule::class)->handle(
+            $id,
+            $request->slug,
+            $request->trans,
+            $request->get('files', []),
+            $request->get('filesOrder', [])
+        );
+
+        return redirect()->route('chief.back.modules.index', $module->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $module->title . '" werd aangepast');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        $this->authorize('delete-page');
+
+        if (request()->get('deleteconfirmation') !== 'DELETE') {
+            return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
+        }
+
+        app(DeleteModule::class)->handle($id);
+
+        return redirect()->route('chief.back.modules.index')->with('messages.warning', 'De module werd verwijderd.');
+    }
+
+    /**
+     * @param $module
+     * @return array
+     */
+    private function populateMedia($module): array
+    {
+        $images = array_fill_keys($module->mediaFields('type'), []);
+
+        foreach ($module->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
+            foreach ($assetsByType as $asset) {
+                $images[$type][] = (object) [
+                    'id'  => $asset->id, 'filename' => $asset->getFilename(),
+                    'url' => $asset->getFileUrl()
+                ];
+            }
+        }
+
+        return $images;
+    }
+}
