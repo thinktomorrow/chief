@@ -30,8 +30,14 @@ class PageCreateRequest extends FormRequest
         $translations = $this->request->get('trans');
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['title'], $trans) && $locale !== config('app.locale')) {
+
+                /*
+                 * Here we remove the translations from the request if they are
+                 * completely empty and if they are not the default locale 
+                 */
                 unset($translations[$locale]);
                 $this->request->set('trans', $translations);
+
                 continue;
             }
 
