@@ -106,7 +106,7 @@ class UpdateMenuItemTest extends TestCase
         $child = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $response = $this->asDefaultAdmin()
-            ->put(route('chief.back.menu.update', $child->id), $this->validParams(['parent_id' => $parent->id]));
+            ->put(route('chief.back.menu.update', $child->id), $this->validParams(['parent_id' => $parent->id, 'withParentId' => true]));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));

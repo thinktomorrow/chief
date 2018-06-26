@@ -28,7 +28,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $menuitem = new MenuItem;
+        $menuitem       = new MenuItem;
         $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
 
         return view('chief::back.menu.create', [

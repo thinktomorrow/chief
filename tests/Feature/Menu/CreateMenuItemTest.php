@@ -59,7 +59,7 @@ class CreateMenuItemTest extends TestCase
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.menu.store'), $this->validParams(['parent_id' => $parent->id]));
+            ->post(route('chief.back.menu.store'), $this->validParams(['parent_id' => $parent->id, 'withParentId' => true]));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
