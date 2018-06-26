@@ -62,7 +62,6 @@ class MenuRequest extends FormRequest
         $attributes = [];
 
         foreach ($this->request->get('trans', []) as $locale => $trans) {
-
             $attributes['trans.' . $locale . '.label']   = $locale . ' label';
             $attributes['trans.' . $locale . '.url']     = $locale . ' link';
         }
@@ -85,7 +84,6 @@ class MenuRequest extends FormRequest
     protected function sanitizeUrl($data)
     {
         foreach ($data['trans'] as $locale => $trans) {
-
             if (empty($trans['url'])) {
                 continue;
             }

@@ -14,10 +14,9 @@ class RelatedCollection extends Collection
         $collection = new static();
 
         foreach ($available_children_types as $type) {
-
             $model = new $type();
 
-            if($collection_key = array_search($type, $available_collections)) {
+            if ($collection_key = array_search($type, $available_collections)) {
                 $model->collection = $collection_key;
             }
 

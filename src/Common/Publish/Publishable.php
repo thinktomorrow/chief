@@ -17,7 +17,9 @@ trait Publishable
     public function scopePublished($query)
     {
         // Here we widen up the results in case of preview mode and ignore the published scope
-        if(PreviewMode::fromRequest()->check()) return;
+        if (PreviewMode::fromRequest()->check()) {
+            return;
+        }
 
         $query->where('published', 1);
     }
