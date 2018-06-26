@@ -33,7 +33,7 @@ class PageCreateRequest extends FormRequest
 
                 /*
                  * Here we remove the translations from the request if they are
-                 * completely empty and if they are not the default locale 
+                 * completely empty and if they are not the default locale
                  */
                 unset($translations[$locale]);
                 $this->request->set('trans', $translations);
