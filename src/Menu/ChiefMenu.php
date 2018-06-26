@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Vine\NodeCollection;
 use Vine\Node;
+use Thinktomorrow\Chief\Pages\Page;
 
 class ChiefMenu
 {
@@ -31,8 +32,6 @@ class ChiefMenu
 
     public function items(): NodeCollection
     {
-        return $this->collection->prune(function (Node $node) {
-            return $node->hidden_in_menu == false;
-        })->sort('order');
+        return $this->collection->sort('order');
     }
 }
