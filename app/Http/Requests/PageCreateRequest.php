@@ -31,10 +31,8 @@ class PageCreateRequest extends FormRequest
     public function rules()
     {
         $translations = $this->request->get('trans');
-        foreach ($translations as $locale => $trans)
-        {
-            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale())
-            {
+        foreach ($translations as $locale => $trans) {
+            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale()) {
                 unset($translations[$locale]);
                 $this->request->set('trans', $translations);
                 continue;
@@ -50,10 +48,8 @@ class PageCreateRequest extends FormRequest
 
     public function attributes()
     {
-        foreach ($this->request->get('trans') as $locale => $trans)
-        {
-            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale())
-            {
+        foreach ($this->request->get('trans') as $locale => $trans) {
+            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale()) {
                 continue;
             }
 
@@ -65,5 +61,4 @@ class PageCreateRequest extends FormRequest
 
         return $attributes;
     }
-
 }

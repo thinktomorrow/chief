@@ -157,7 +157,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function inflate($relateds = []): self
     {
-        if(!is_array($relateds)) $relateds = [$relateds];
+        if (!is_array($relateds)) {
+            $relateds = [$relateds];
+        }
 
         if (count($relateds) == 1 && is_null(reset($relateds))) {
             $relateds = [];
@@ -203,11 +205,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * mostly want the Page as morph relationship instead of the
      * child class.
      */
-    public function getMorphClass(){
+    public function getMorphClass()
+    {
         return self::class;
     }
 
-    public function getOwnMorphClass(){
+    public function getOwnMorphClass()
+    {
         return parent::getMorphClass();
     }
 

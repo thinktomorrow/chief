@@ -21,7 +21,7 @@ class MediaTest extends TestCase
     }
     
     /** @test */
-    function it_can_have_an_image()
+    public function it_can_have_an_image()
     {
         $fake = ArticleFake::create([]);
 
@@ -31,7 +31,7 @@ class MediaTest extends TestCase
     }
 
     /** @test */
-    function a_page_can_have_an_image_for_hero()
+    public function a_page_can_have_an_image_for_hero()
     {
         $page = Page::create(['collection' => 'statics']);
 
@@ -42,13 +42,13 @@ class MediaTest extends TestCase
     }
 
     /** @test */
-    function it_can_add_image_via_wysiwyg_editor()
+    public function it_can_add_image_via_wysiwyg_editor()
     {
         $this->setUpDefaultAuthorization();
 
         $article = ArticleFake::create(['collection' => 'articles']);
 
-        $response = $this->asAdmin()->post(route('pages.media.upload', $article->id),[
+        $response = $this->asAdmin()->post(route('pages.media.upload', $article->id), [
             'file' => [
                 UploadedFile::fake()->image('image.png')
             ],

@@ -31,7 +31,7 @@ class ChiefMenu
 
     public function items(): NodeCollection
     {
-        return $this->collection->prune(function(Node $node){
+        return $this->collection->prune(function (Node $node) {
             return $node->hidden_in_menu == false;
         });
     }

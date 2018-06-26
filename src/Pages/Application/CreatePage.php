@@ -22,7 +22,7 @@ class CreatePage
 
             $page = Page::create(['collection' => $collection]);
 
-            foreach($translations as $locale => $value){
+            foreach ($translations as $locale => $value) {
                 $value = $this->enforceUniqueSlug($value, $page, $locale);
 
                 $page->updateTranslation($locale, $value);

@@ -48,13 +48,13 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
-        foreach($items as $item) {
-            if($item->ofType(static::TYPE_COLLECTION)) {
+        foreach ($items as $item) {
+            if ($item->ofType(static::TYPE_COLLECTION)) {
 
                 // Get collection of pages
                 $pages = Page::fromCollectionKey($item->collection_type)->all();
 
-                $pages->each(function($page) use(&$collectionItems, $item){
+                $pages->each(function ($page) use (&$collectionItems, $item) {
                     $collectionItems->push(MenuItem::make([
                         'id'        => 'collection-'.$page->id,
                         'label'     => $page->title,
