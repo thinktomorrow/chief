@@ -1,4 +1,4 @@
-<nav class="top-nav bc-white">
+<nav class="top-nav bg-white">
     <div class="container">
         <div class="row">
             <ul id="nav-main" class="nav-items">

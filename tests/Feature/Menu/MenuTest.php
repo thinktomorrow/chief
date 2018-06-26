@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
@@ -24,6 +25,15 @@ class MenuTest extends TestCase
             'statics' => Page::class,
             'articles' => ArticleFake::class,
         ]);
+
+        // We expect to have frontend routes for the pages and articles
+        Route::get('statics/{slug}', function () {
+        })->name('pages.show');
+        Route::get('articles/{slug}', function () {
+        })->name('articles.show');
+
+        // Make sure we get the proper translations based on the locale
+        app()->setLocale('nl');
     }
 
     /** @test */
@@ -78,12 +88,59 @@ class MenuTest extends TestCase
             'published'     => 1
         ]);
 
-        MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles']);
+        // Sanity check
+        $this->assertCount(3, ArticleFake::all());
+
+        // Create main collection menu item - this will hold the collection as children
+        $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
+
+        // Retrieve the menu
+        $main = ChiefMenu::fromMenuItems()->items()->first();
+
+        $this->assertEquals(4, ChiefMenu::fromMenuItems()->items()->total());
+        $this->assertEquals(3, $main->children()->count());
+
+        // Make sure our labels and urls match
+        $this->assertEquals($mainMenuItem->label, $main->label);
+        $this->assertEquals($mainMenuItem->url, $main->url);
+
+        foreach (ArticleFake::all() as $k => $page) {
+            $item = $main->children()[$k];
+
+            $this->assertEquals($page->menuLabel(), $item->label);
+            $this->assertEquals($page->menuUrl(), $item->url);
+        }
+    }
+
+    /** @test */
+    public function it_can_be_rendered_with_a_generic_api()
+    {
+        $page = factory(Page::class)->create([
+            'collection' => 'statics',
+            'slug'      => 'foobar',
+            'published' => 1
+        ]);
+
+        factory(Page::class, 3)->create([
+            'collection'    => 'articles',
+            'published'     => 1
+        ]);
+
+        MenuItem::create(['type' => 'internal', 'label:nl' => 'first item', 'page_id' => $page->id]);
+        MenuItem::create(['type' => 'custom', 'label:nl' => 'second item', 'url:nl' => 'https://google.com']);
+        MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com/article-index']);
 
         $collection = ChiefMenu::fromMenuItems()->items();
 
-        $this->assertEquals(4, $collection->total());
-        $this->assertEquals(3, $collection->first()->children()->count());
+        $this->assertCount(3, $collection);
+        $check = 0;
+        $collection->each(function ($node) use (&$check) {
+            $this->assertNotNull($node->label);
+            $this->assertNotNull($node->url);
+            $check++;
+        });
+        
+        $this->assertEquals(3, $check);
     }
     
     /** @test */
@@ -117,13 +174,13 @@ class MenuTest extends TestCase
     /** @test */
     public function if_a_page_is_hidden_it_is_not_shown_in_menu()
     {
+        $page = factory(Page::class)->create(['hidden_in_menu' => 1]);
         app()->setLocale('nl');
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
-        $third  = MenuItem::create(['label:nl' => 'last item', 'parent_id' => $first->id, 'order' => 1, 'hidden_in_menu' => 1]);
-        
+        $third  = MenuItem::create(['label:nl' => 'last item', 'type' => 'internal', 'page_id' =>  $page->id, 'parent_id' => $first->id, 'order' => 1]);
+
         $collection = ChiefMenu::fromMenuItems()->items();
-        
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals(2, $collection->total());
     }

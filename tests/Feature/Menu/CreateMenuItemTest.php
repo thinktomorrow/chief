@@ -53,6 +53,26 @@ class CreateMenuItemTest extends TestCase
     }
 
     /** @test */
+    public function an_menuitem_can_be_nested()
+    {
+        $this->disableExceptionHandling();
+        $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
+
+        $response = $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                'allow_parent' => true,
+                'parent_id' => $parent->id
+            ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(2, MenuItem::all());
+        $this->assertCount(1, $parent->fresh()->children);
+        $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
+    }
+
+    /** @test */
     public function creating_a_new_internal_menuItem()
     {
         $page = factory(Page::class)->create();
@@ -63,7 +83,7 @@ class CreateMenuItemTest extends TestCase
         $response->assertRedirect(route('chief.back.menu.index'));
 
         $this->assertCount(1, MenuItem::all());
-        $this->assertNewValues(MenuItem::first(), ['type' => 'internal']);
+        $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.url' => null]);
     }
 
     /** @test */
@@ -100,12 +120,16 @@ class CreateMenuItemTest extends TestCase
     }
 
     /** @test */
-    public function url_field_should_be_valid_url()
+    public function url_field_is_sanitized_if_scheme_is_missing()
     {
-        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => 'test']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
-        );
+        $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                'type'              => 'custom',
+                'trans.nl.label'    => 'nieuw label',
+                'trans.nl.url'      => 'thinktomorrow.be',
+            ]));
+
+        $this->assertEquals('http://thinktomorrow.be', MenuItem::first()->url);
     }
 
     /** @test */
@@ -138,19 +162,27 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function pageid_should_exists_in_db()
     {
-        $this->assertValidation(new MenuItem(), 'id', $this->validParams(['type' => 'internal', 'page_id' => Page::class.'@1']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
-        );
+        // Inside our logic the page should be existing. If not, the creation is aborted but we do not
+        // show this response to the interface since this is rather a hack then expected behaviour.
+        $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                'type' => 'internal',
+                'page_id' => Page::class.'@999' // Fake page reference
+            ]));
+
+        $this->assertEquals(0, MenuItem::count());
     }
 
     private function validParams($overrides = [])
     {
         $params = [
             'type'  => 'custom',
+            'allow_parent' => false, // flag to allow nesting or not
+            'parent_id' => null,
             'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',
+                    'url' => 'http://google.com',
                 ]
             ],
         ];
@@ -166,9 +198,10 @@ class CreateMenuItemTest extends TestCase
     private function assertNewValues($menuItem, $overrides = [])
     {
         $this->assertEquals($overrides['type'] ?? 'custom', $menuItem->{'type'});
+        $this->assertEquals($overrides['parent_id'] ?? null, $menuItem->parent_id);
 
         $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
-        $this->assertEquals($overrides['trans.nl.url'] ?? '', $menuItem->{'url:nl'});
+        $this->assertEquals($overrides['trans.nl.url'] ?? 'http://google.com', $menuItem->{'url:nl'});
 
         $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
         $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});

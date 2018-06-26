@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Common\Collections\HasCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -10,7 +11,6 @@ use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,10 +21,11 @@ use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
+use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
+use Thinktomorrow\Chief\Common\Publish\Publishable;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
 {
     use HasCollection,
         AssetTrait,
@@ -50,6 +51,12 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
     
+    /**
+     * The collection scope for the specific class.
+     * @var string
+     */
+    protected static $collectionScopeClass = PageCollectionScope::class;
+
     /**
      * Each page model can expose the managed translatable fields. These should be included as attributes just like the regular
      * translatable attributes. This method allows for easy installation of the form fields in chief.
@@ -155,7 +162,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return collect(array_values($grouped));
     }
 
-    public static function inflate($relateds = []): self
+    public static function inflate($relateds = [])
     {
         if (!is_array($relateds)) {
             $relateds = [$relateds];
@@ -165,10 +172,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             $relateds = [];
         }
 
-        return (collect($relateds))->map(function ($related) {
+        return collect($relateds)->map(function ($related) {
             list($type, $id) = explode('@', $related);
-
-            return (new $type)->find($id);
+            
+            return (new $type)->ignoreCollection()->find($id);
         })->first();
     }
 
@@ -217,7 +224,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->find($id)) && $page->isPublished())
+        return (($page = self::ignoreCollection()->published()->find($id)))
             ? $page
             : null;
     }
@@ -259,11 +266,25 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function getRelationGroup(): string
     {
-        return 'pages';
+        return static::collectionDetails('plural');
     }
 
     public function previewUrl()
     {
-        // return route('pages.show', $this->slug).'?preview-mode';
+        // TODO: how we allow for these default routes to be set up in every new project?
+//        return '';
+        return route('pages.show', $this->slug).'?preview-mode';
+    }
+
+    public function menuUrl(): string
+    {
+        // TODO: how we allow for these default routes to be set up in every new project?
+//        return '';
+        return route('pages.show', $this->slug);
+    }
+
+    public function menuLabel(): string
+    {
+        return $this->title;
     }
 }

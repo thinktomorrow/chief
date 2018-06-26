@@ -14,76 +14,34 @@
 @endcomponent
 
 @section('content')
-    {{-- <ul>
-        @foreach($menu as $menuitem)
-            <li>{{ $menuitem->label }}
-                <ul>
-                    @foreach($menuitem->children as $child)
-                        <li>{{ $child->label }}
-                        </li>
-                    @endforeach
-                </ul>
-            </li>
-        @endforeach
-    </ul> --}}
     <div class="treeview stack-l">
         <div class="row">
-            <div class="column-4 center-y">
-                <strong>Menu titel</strong>
+            <div class="column center-y">
+                <strong>Label</strong>
             </div>
-            <div class="column-3 center-y">
-                <strong>URL</strong>
+            <div class="column-4 center-y">
+                <strong>Link</strong>
+            </div>
+            <div class="column-2">
+
             </div>
         </div>
         @foreach($menu as $menuitem)
-            <div class="row">
-                <div class="column-4 center-y">
-                    <i class="icon icon-menu inline text-border tree-parent"></i>
-                    <a href="{{ route('chief.back.menu.edit', $menuitem->id) }}">{{ $menuitem->label }}</a>
-                </div>
-                <div class="column-3 center-y">
-                    <a href="#">/diensten</a>
-                </div>
-                <div class="column-2 center-y">
-                <div class="font-s"></div>
-                </div>
-                <div class="column-3 text-right">
-                    <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                    <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-                </div>
-            </div>
+
+            <hr class="separator">
+
+            @include('chief::back.menu._partials._rowitem')
+
             @foreach($menuitem->children as $child)
-                <div class="row">
-                    <div class="column-4 center-y indent">
-                        <i class="icon icon-menu inline text-border tree-parent"></i>
-                        <a href="{{ route('chief.back.menu.edit', $child->id) }}">{{ $child->label }}</a>
-                    </div>
-                    <div class="column-3 center-y">
-                        <a href="#">/diensten</a>
-                    </div>
-                    <div class="column-3 text-right">
-                        <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                        <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-                    </div>
-                </div>
+
+                @include('chief::back.menu._partials._rowitem', ['level' => 1])
+
                 @foreach($child->children as $subchild)
-                    <div class="row">
-                        <div class="column-4 center-y indent-l">
-                            <i class="icon icon-menu inline text-border tree-parent"></i>
-                            <a href="{{ route('chief.back.menu.edit', $subchild->id) }}">{{ $subchild->label }}</a>
-                        </div>
-                        <div class="column-3 center-y">
-                            <a href="#">/diensten</a>
-                        </div>
-                        <div class="column-2 center-y">
-                            <div class="font-s">Collection</div>
-                        </div>
-                        <div class="column-3 text-right">
-                            <a href="#" class="btn btn-link text-font">Aanpassen</a>
-                            <a href="#"><i class="icon icon-trash icon-fw text-tertiary"></i></a>
-                        </div>
-                    </div>
+                    @include('chief::back.menu._partials._rowitem', ['level' => 2])
                 @endforeach
+
+                <div class="stack"></div>
+
             @endforeach
         @endforeach
     </div>

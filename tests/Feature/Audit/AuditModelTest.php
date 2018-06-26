@@ -27,9 +27,9 @@ class AuditTest extends TestCase
     {
         $user = $this->developer();
 
-        $this->actingAs($user, 'chief')
+        $response = $this->actingAs($user, 'chief')
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
-        
+            
         $page       = Page::first();
         $activity   = Audit::getActivityFor($page);
 
@@ -70,7 +70,7 @@ class AuditTest extends TestCase
         
         $page = Page::first();
 
-        $this->actingAs($user, 'chief')
+        $response = $this->actingAs($user, 'chief')
              ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getActivityFor($page);

@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
 
@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageCollectionScope;
 use Vine\Source as VineSource;
 use Vine\Node;
 
@@ -23,10 +24,9 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     protected $translationModel = MenuItemTranslation::class;
     protected $translationForeignKey = 'menu_item_id';
     protected $translatedAttributes = [
-        'label', 'url'
+        'label',
+        'url',
     ];
-
-    public $sortChildrenBy = 'order';
 
     public $timestamps = false;
     public $guarded = [];
@@ -34,6 +34,36 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function ofType($type): bool
     {
         return $this->type == $type;
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id')
+            ->withoutGlobalScope(PageCollectionScope::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(MenuItem::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(MenuItem::class, 'parent_id');
+    }
+
+    public function scopeOnlyGrandParents($query)
+    {
+        return $query->whereNull('parent_id');
+    }
+
+    public function url()
+    {
+        if ($this->ofType(static::TYPE_INTERNAL) && $page = $this->page) {
+            return $page->menuUrl();
+        }
+
+        return $this->url;
     }
 
     /**
@@ -48,23 +78,35 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
-        foreach ($items as $item) {
-            if ($item->ofType(static::TYPE_COLLECTION)) {
+        foreach ($items as $k => $item) {
 
-                // Get collection of pages
+            // Fetch the collection items
+            if ($item->ofType(static::TYPE_COLLECTION)) {
                 $pages = Page::fromCollectionKey($item->collection_type)->all();
 
-                $pages->each(function ($page) use (&$collectionItems, $item) {
+                $pages->reject(function ($page) {
+                    return $page->hidden_in_menu == true;
+                })->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
                     $collectionItems->push(MenuItem::make([
-                        'id'        => 'collection-'.$page->id,
-                        'label'     => $page->title,
-                        'url'       => $page->slug, // TODO: get url for page...
-                        'parent_id' => $item->id,
+                        'id'         => 'collection-' . $page->id,
+                        'label'      => $page->menuLabel(),
+                        'url'        => $page->menuUrl(),
+                        'parent_id'  => $item->id,
                     ]));
                 });
             }
-        }
 
+            // Fetch the urls of the internal links
+            if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
+                if ($page->hidden_in_menu == true) {
+                    unset($items[$k]);
+                } else {
+                    $item->url = $page->menuUrl();
+                    $item->page_label = $page->menuLabel();
+                    $items[$k] = $item;
+                }
+            }
+        }
         return array_merge($items->all(), $collectionItems->all());
     }
 
@@ -88,15 +130,23 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         return 'parent_id';
     }
 
+    /**
+     * Convert entire models to condensed data arrays
+     *
+     * @param Node $node
+     * @return array
+     */
     public function entry(Node $node)
     {
-        return [
-            'id'                => $node->id,
-            'label'             => $node->label,
-            'order'             => $node->order,
-            'page_id'           => $node->page_id,
-            'parent_id'         => $node->parent_id,
-            'hidden_in_menu'    => $node->hidden_in_menu
+        return (object)[
+            'id'             => $node->id,
+            'type'           => $node->type,
+            'label'          => $node->label,
+            'page_label'     => $node->page_label, // Extra info when dealing with internal links
+            'url'            => $node->url,
+            'order'          => $node->order,
+            'page_id'        => $node->page_id,
+            'parent_id'      => $node->parent_id,
         ];
     }
 }

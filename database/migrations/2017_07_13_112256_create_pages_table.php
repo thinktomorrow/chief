@@ -19,6 +19,7 @@ class CreatepagesTable extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
             $table->timestamp('archived_at')->default(null)->nullable();
+            $table->boolean('hidden_in_menu')->default(false);
             $table->timestamp('publication')->nullable();
             $table->timestamps();
             $table->softDeletes();
@@ -30,7 +31,7 @@ class CreatepagesTable extends Migration
             $table->string('locale');
             $table->string('slug')->unique();
             $table->string('title');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->text('short')->nullable();
             $table->string('seo_title')->nullable();
             $table->text('seo_description')->nullable();

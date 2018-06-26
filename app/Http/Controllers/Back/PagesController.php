@@ -22,6 +22,7 @@ class PagesController extends Controller
         $model = Page::fromCollectionKey($collection);
 
         return view('chief::back.pages.index', [
+            'page'              => $model,
             'collectionDetails' => $model->collectionDetails(),
             'published'         => $model->published()->paginate(10),
             'drafts'            => $model->drafted()->paginate(10),
@@ -67,7 +68,7 @@ class PagesController extends Controller
             $request->get('filesOrder') ? $request->get('filesOrder') : []
         );
 
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
+        return redirect()->route('chief.back.pages.edit', $page->getKey())->with('messages.success', $page->title. ' is toegevoegd in draft. Happy editing!');
     }
 
     /**
@@ -126,7 +127,6 @@ class PagesController extends Controller
         $this->authorize('delete-page');
 
         $page = app(DeletePage::class)->handle($id);
-
         if ($page) {
             $message = 'Het item werd verwijderd.';
             return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
@@ -136,6 +136,16 @@ class PagesController extends Controller
     }
 
     public function publish(Request $request, $id)
+    {
+        $page = Page::ignoreCollection()->findOrFail($id);
+        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
+
+        ($published) ? $page->publish() : $page->draft();
+
+        return redirect()->back();
+    }
+
+    public function unpublish(Request $request, $id)
     {
         $page = Page::ignoreCollection()->findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string

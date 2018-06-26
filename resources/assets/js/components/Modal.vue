@@ -4,7 +4,7 @@
             <div class="modal-backdrop" @click="close"></div>
             <div class="modal-content">
                 <div class="panel panel-default">
-                    <div class="inset-l">
+                    <div class="inset">
                         <div class="modal-header">
                             <h3>{{ title }}</h3>
                         </div>
@@ -14,7 +14,7 @@
                         </div>
                     </div>
 
-                    <div v-if="showFooter" class="modal-footer squished-l center-y inline-group">
+                    <div v-if="showFooter" class="modal-footer inset center-y inline-group bg-grey-lightest">
                         <slot name="footer">
                             <a @click="close" class="btn btn-o-primary"><slot name='modal-close-btn'>Annuleer</slot></a>
                             <slot name='modal-action-buttons'></slot>

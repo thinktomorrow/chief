@@ -5,7 +5,7 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', $collectionDetails->plural)
         <div class="inline-group-s">
-            <a href="{{ route('chief.back.pages.create', $collectionDetails->key) }}" class="btn btn-primary">
+            <a @click="showModal('create-page')" class="btn btn-primary">
                 <i class="icon icon-plus"></i>
                 Voeg een {{ $collectionDetails->singular }} toe
             </a>
@@ -16,7 +16,7 @@
 
         @if($drafts->isEmpty() && $published->isEmpty())
             <div class="center-center stack-xl">
-                <a href="{{ route('chief.back.pages.create', $collectionDetails->key) }}" class="btn btn-primary squished-l">
+                <a @click="showModal('create-page')" class="btn btn-primary squished-l">
                     <i class="icon icon-zap icon-fw"></i> Tijd om een {{ $collectionDetails->singular }} toe te voegen
                 </a>
             </div>
@@ -60,6 +60,8 @@
             @endif
         </tabs>
     @endif
+
+    @include('chief::back.pages._partials.create-modal')
 @stop
 
 @push('custom-scripts')

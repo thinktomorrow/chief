@@ -11,7 +11,7 @@
                         <input name="deleteconfirmation" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s" autocomplete="off">
                     </div>
                 @else
-                    <h2 class="formgroup-label">Opgelet! Een item dat online staat kan je niet zomaar verwijderen.</h2>
+                    <h2 class="formgroup-label">Een item dat online staat kan je niet zomaar verwijderen.</h2>
                     <p>Je kan het wel archiveren, zo kan je ze in de toekomst snel terug online plaatsen.</p>
                 @endif
             </div>

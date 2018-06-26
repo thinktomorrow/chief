@@ -20,6 +20,7 @@ $textColors: (
     heading: ($color-heading, $color-heading),
     font: ($color-font, $color-font),
     subtle: ($color-subtle, $color-subtle),
+    grey-lightest: ($color-grey-lightest, $color-grey-lightest),
 
     success: ($color-success, $color-success),
     error: ($color-error, $color-error),
@@ -38,6 +39,12 @@ $textColors: (
 
   .text-#{$name}{
     color: $fontcolor;
+
+    &.--link-with-bg:hover {
+        color: darken($fontcolor, 8%);
+        background-color: lighten($fontcolor, 35%)
+    }
+
   }
 
   a.text-#{$name}:hover{
