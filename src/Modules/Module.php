@@ -106,8 +106,8 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         $names = (object) [
             'key'      => $collectionKey,
             'class'    => static::class,
-            'singular' => ucfirst(str_singular($collectionKey)),
-            'plural'   => ucfirst(str_plural($collectionKey)),
+            'singular' => $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
+            'plural'   => $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
         ];
 
         return $key ? $names->$key : $names;

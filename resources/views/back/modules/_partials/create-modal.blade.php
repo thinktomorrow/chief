@@ -24,7 +24,7 @@
 
         <div class="stack-s">
             <label for="trans-{{ $defaultLocale }}-title">Titel</label>
-            <input type="text" name="trans[{{ $defaultLocale }}][title]" id="trans-{{ $defaultLocale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$defaultLocale.'.title', $module->translateForForm($defaultLocale,'title')) }}">
+            <input type="text" name="trans[{{ $defaultLocale }}][title]" id="trans-{{ $defaultLocale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$defaultLocale.'.title') }}">
         </div>
 
         <error class="caption text-warning" field="trans.{{ $defaultLocale }}.title" :errors="errors.get('trans.{{ $defaultLocale }}')"></error>
