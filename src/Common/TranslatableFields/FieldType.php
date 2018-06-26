@@ -17,7 +17,7 @@ class FieldType
 
     public function __construct(string $type)
     {
-        if(!in_array($type, [static::INPUT, static::TEXT, static::HTML])) {
+        if (!in_array($type, [static::INPUT, static::TEXT, static::HTML])) {
             throw new \Exception('Invalid type identifier given ['.$type.'].');
         }
 

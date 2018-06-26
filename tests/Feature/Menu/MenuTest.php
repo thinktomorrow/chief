@@ -27,7 +27,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    function it_can_nest_a_menu_item()
+    public function it_can_nest_a_menu_item()
     {
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
@@ -40,7 +40,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    function it_can_reference_an_internal_page()
+    public function it_can_reference_an_internal_page()
     {
         $page   = factory(Page::class)->create([
             'slug'      => 'foobar',
@@ -55,7 +55,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    function it_can_be_a_custom_link()
+    public function it_can_be_a_custom_link()
     {
         $page   = factory(Page::class, 3)->create([
             'collection'    => 'articles',
@@ -71,7 +71,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    function it_can_reference_a_collection_of_pages()
+    public function it_can_reference_a_collection_of_pages()
     {
         factory(Page::class, 3)->create([
             'collection'    => 'articles',
@@ -87,7 +87,7 @@ class MenuTest extends TestCase
     }
     
     /** @test */
-    function menu_item_without_parent_is_considered_top_level()
+    public function menu_item_without_parent_is_considered_top_level()
     {
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
@@ -101,7 +101,7 @@ class MenuTest extends TestCase
     }
     
     /** @test */
-    function it_can_be_sorted()
+    public function it_can_be_sorted()
     {
         app()->setLocale('nl');
         $first  = MenuItem::create(['label:nl' => 'first item']);
@@ -115,7 +115,7 @@ class MenuTest extends TestCase
     }
     
     /** @test */
-    function if_a_page_is_hidden_it_is_not_shown_in_menu()
+    public function if_a_page_is_hidden_it_is_not_shown_in_menu()
     {
         app()->setLocale('nl');
         $first  = MenuItem::create(['label:nl' => 'first item']);
@@ -129,22 +129,21 @@ class MenuTest extends TestCase
     }
     
     /** @test */
-    function it_can_have_a_custom_value()
+    public function it_can_have_a_custom_value()
     {
         // test it out
         // Column icon toegevoegd per project -> wordt automatisch meegepakt
     }
 
     /** @test */
-    function first_menu_item_is_the_toggle()
+    public function first_menu_item_is_the_toggle()
     {
         // test it out
     }
 
     /** @test */
-    function if_url_is_external_the_link_will_contain_target_blank()
+    public function if_url_is_external_the_link_will_contain_target_blank()
     {
         // test it out
     }
-
 }

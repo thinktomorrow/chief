@@ -31,7 +31,7 @@ class UpdatePage
                 ->performedOn($page)
                 ->log('edited');
 
-                DB::commit();
+            DB::commit();
             return $page->fresh();
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -49,7 +49,7 @@ class UpdatePage
 
         $this->saveTranslations($translations, $page, array_merge([
             'slug', 'seo_title', 'seo_description'
-        ], array_keys($page::translatableFields()) ));
+        ], array_keys($page::translatableFields())));
     }
 
     private function syncRelations($page, $relateds)

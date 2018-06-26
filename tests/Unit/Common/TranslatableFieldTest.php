@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 class TranslatableFieldTest extends TestCase
 {
     /** @test */
-    function it_can_make_a_field_for_input_text()
+    public function it_can_make_a_field_for_input_text()
     {
         $field = InputField::make();
 
@@ -20,16 +20,16 @@ class TranslatableFieldTest extends TestCase
     }
 
     /** @test */
-    function it_can_add_optional_label_and_description()
+    public function it_can_add_optional_label_and_description()
     {
         $field = InputField::make()->label('label')->description('description');
 
-        $this->assertEquals('label',  $field->label);
-        $this->assertEquals('description',  $field->description);
+        $this->assertEquals('label', $field->label);
+        $this->assertEquals('description', $field->description);
     }
 
     /** @test */
-    function non_given_label_and_description_are_by_default_null()
+    public function non_given_label_and_description_are_by_default_null()
     {
         $field = InputField::make();
 
@@ -38,7 +38,7 @@ class TranslatableFieldTest extends TestCase
     }
 
     /** @test */
-    function it_can_make_a_field_for_html_text()
+    public function it_can_make_a_field_for_html_text()
     {
         $field = HtmlField::make();
 

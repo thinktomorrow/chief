@@ -127,10 +127,10 @@ class PagesController extends Controller
 
         $page = app(DeletePage::class)->handle($id);
 
-        if($page){
+        if ($page) {
             $message = 'Het item werd verwijderd.';
             return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
-        }else{
+        } else {
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
     }
@@ -153,10 +153,8 @@ class PagesController extends Controller
     {
         $images = array_fill_keys($page->mediaFields('type'), []);
 
-        foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType)
-        {
-            foreach ($assetsByType as $asset)
-            {
+        foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
+            foreach ($assetsByType as $asset) {
                 $images[$type][] = (object) [
                     'id'  => $asset->id, 'filename' => $asset->getFilename(),
                     'url' => $asset->getFileUrl()
