@@ -14,7 +14,7 @@ class PublishPageController extends Controller
 
         $page = Page::ignoreCollection()->findOrFail($id);
 
-        if( ! $page->isPublished()) {
+        if (! $page->isPublished()) {
             $page->publish();
         }
 
@@ -27,7 +27,7 @@ class PublishPageController extends Controller
 
         $page = Page::ignoreCollection()->findOrFail($id);
 
-        if( ! $page->isDraft()) {
+        if (! $page->isDraft()) {
             $page->draft();
         }
 

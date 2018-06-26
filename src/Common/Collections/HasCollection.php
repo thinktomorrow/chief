@@ -11,7 +11,7 @@ trait HasCollection
 
     protected static function bootHasCollection()
     {
-        if(!isset(static::$collectionScopeClass)) {
+        if (!isset(static::$collectionScopeClass)) {
             throw new \DomainException('Class with HasCollection trait require a static property [collectionScopeClass]. This should refer to a global scope class.');
         }
 
