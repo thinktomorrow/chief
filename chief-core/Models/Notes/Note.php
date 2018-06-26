@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Models\Notes;
 
 use Carbon\Carbon;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
@@ -12,7 +12,7 @@ use Optiphar\Site\Notes\NoteReminder;
 
 class Note extends Model implements TranslatableContract
 {
-    use BaseTranslatable, Translatable, Publishable;
+    use BaseTranslatable, Translatable, Thinktomorrow\Chief\Common\Publish\Publishable;
 
     public $table = 'notes';
     public $translatedAttributes = ['content'];

@@ -29332,7 +29332,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "modal-content" }, [
             _c("div", { staticClass: "panel panel-default" }, [
-              _c("div", { staticClass: "inset-l" }, [
+              _c("div", { staticClass: "inset" }, [
                 _c("div", { staticClass: "modal-header" }, [
                   _c("h3", [_vm._v(_vm._s(_vm.title))])
                 ]),
@@ -29344,7 +29344,8 @@ var render = function() {
                 ? _c(
                     "div",
                     {
-                      staticClass: "modal-footer inset-l center-y inline-group"
+                      staticClass:
+                        "modal-footer inset center-y inline-group bg-grey-lightest"
                     },
                     [
                       _vm._t("footer", [

@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +22,7 @@ use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
+use Thinktomorrow\Chief\Common\Publish\Publishable;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
 {
@@ -210,19 +210,19 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * mostly want the Page as morph relationship instead of the
      * child class.
      */
-    public function getMorphClass()
-    {
-        return self::class;
-    }
+//    public function getMorphClass()
+//    {
+//        return self::class;
+//    }
 
-    public function getOwnMorphClass()
-    {
-        return parent::getMorphClass();
-    }
+//    public function getOwnMorphClass()
+//    {
+//        return parent::getMorphClass();
+//    }
 
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->find($id)) && $page->isPublished())
+        return (($page = self::ignoreCollection()->published()->find($id)))
             ? $page
             : null;
     }
@@ -264,7 +264,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function getRelationGroup(): string
     {
-        return 'pages';
+        return static::collectionDetails('plural');
     }
 
     public function previewUrl()

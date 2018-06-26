@@ -10,23 +10,14 @@ trait PageFormParams
         $params = [
             'trans' => [
                 'nl' => [
-                    'slug' => 'new-slug',
                     'title' => 'new title',
-                    'content' => 'new content in <strong>bold</strong>',
-                    'short' => 'new intro in <strong>bold</strong>',
-                    'seo_title' => 'new seo title',
-                    'seo_description' => 'new seo description',
+                    'slug' => 'new-slug',
                 ],
                 'en' => [
-                    'slug' => 'nouveau-slug',
                     'title' => 'nouveau title',
-                    'content' => 'nouveau content in <strong>bold</strong>',
-                    'short' => 'nouveau intro in <strong>bold</strong>',
-                    'seo_title' => 'nouveau seo title',
-                    'seo_description' => 'nouveau seo description',
+                    'slug' => 'nouveau-slug',
                 ],
             ],
-            'relations' => [],
         ];
 
         foreach ($overrides as $key => $value) {
@@ -71,17 +62,18 @@ trait PageFormParams
     {
         $this->assertEquals('new-slug', $page->{'slug:nl'});
         $this->assertEquals('new title', $page->{'title:nl'});
-        $this->assertEquals('new intro in <strong>bold</strong>', $page->{'short:nl'});
-        $this->assertEquals('new content in <strong>bold</strong>', $page->{'content:nl'});
-        $this->assertEquals('new seo title', $page->{'seo_title:nl'});
-        $this->assertEquals('new seo description', $page->{'seo_description:nl'});
+
+        $this->assertNull($page->{'short:nl'});
+        $this->assertNull($page->{'content:nl'});
+        $this->assertNull($page->{'seo_title:nl'});
+        $this->assertNull($page->{'seo_description:nl'});
 
         $this->assertEquals('nouveau-slug', $page->{'slug:en'});
         $this->assertEquals('nouveau title', $page->{'title:en'});
-        $this->assertEquals('nouveau intro in <strong>bold</strong>', $page->{'short:en'});
-        $this->assertEquals('nouveau content in <strong>bold</strong>', $page->{'content:en'});
-        $this->assertEquals('nouveau seo title', $page->{'seo_title:en'});
-        $this->assertEquals('nouveau seo description', $page->{'seo_description:en'});
+        $this->assertNull($page->{'short:en'});
+        $this->assertNull($page->{'content:en'});
+        $this->assertNull($page->{'seo_title:en'});
+        $this->assertNull($page->{'seo_description:en'});
     }
 
     protected function assertUpdatedPageValues($page)

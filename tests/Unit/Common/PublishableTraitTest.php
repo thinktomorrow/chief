@@ -5,10 +5,8 @@ namespace Thinktomorrow\Chief\Tests\Unit\Common;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Users\User;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Publish\Publishable;
 
 /**
  * Class ValidationTraitDummyClass

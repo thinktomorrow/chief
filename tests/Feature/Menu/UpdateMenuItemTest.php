@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Users\User;
 
 class UpdateMenuItemTest extends TestCase
 {
@@ -101,18 +102,32 @@ class UpdateMenuItemTest extends TestCase
     /** @test */
     public function an_menuitem_can_be_nested()
     {
-        $this->disableExceptionHandling();
+        // Reference here cause we need it twice
+        $defaultAdmin = factory(User::class)->make();
+
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
         $child = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
-        $response = $this->asDefaultAdmin()
-            ->put(route('chief.back.menu.update', $child->id), $this->validParams(['parent_id' => $parent->id, 'withParentId' => true]));
+        $response = $this->actingAs($defaultAdmin, 'chief')
+            ->put(route('chief.back.menu.update', $child->id), $this->validParams([
+                'allow_parent' => true,
+                'parent_id' => $parent->id
+            ]));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
 
         $this->assertCount(1, $parent->fresh()->children);
         $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
+
+        // If item can be set to top level again
+        $this->actingAs($defaultAdmin, 'chief')
+            ->put(route('chief.back.menu.update', $child->id), $this->validParams([
+                'allow_parent' => false,
+            ]));
+
+        $this->assertCount(0, $parent->fresh()->children);
+        $this->assertNull(MenuItem::find(2)->parent_id); // Hardcoded assumption that newly created has id of 2
     }
 
     /** @test */
@@ -192,6 +207,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $params = [
             'type' => 'custom',
+            'allow_parent' => false, // flag to allow nesting or not
             'parent_id' => null,
             'trans' => [
                 'nl' => [

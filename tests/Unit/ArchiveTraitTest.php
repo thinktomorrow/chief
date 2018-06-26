@@ -3,17 +3,14 @@
 namespace Thinktomorrow\Chief\Tests\Unit;
 
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Users\User;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
+use Thinktomorrow\Chief\Common\Publish\Publishable;
 
 class ArchivableTest extends TestCase
 {

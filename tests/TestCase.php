@@ -93,6 +93,7 @@ abstract class TestCase extends OrchestraTestCase
         ]);
 
         // For our tests is it required to have 2 languages: nl and en.
+        $app['config']->set('app.locale', 'nl'); // Default locale is considered nl
         $app['config']->set('translatable.locales', ['nl', 'en']);
         $app['config']->set('squanto.template', 'chief::back._layouts.master');
 
