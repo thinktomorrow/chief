@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Carbon;
 
 class MenuTest extends TestCase
 {
@@ -202,5 +203,29 @@ class MenuTest extends TestCase
     public function if_url_is_external_the_link_will_contain_target_blank()
     {
         // test it out
+    }
+
+    /** @test */
+    public function it_can_show_create_menu()
+    {
+        $this->setUpDefaultAuthorization();
+
+        factory(Page::class)->create([
+            'published'     => 0,
+            'created_at'    => Carbon::now()->subDays(3)
+        ]);
+        factory(Page::class)->create([
+            'published'     => 1,
+            'created_at'    => Carbon::now()->subDays(1)
+        ]);
+
+        $response = $this->asAdmin()
+            ->get(route('chief.back.menu.create', 'statics'));
+
+        $response->assertStatus(200);
+
+        $pages = $this->getResponseData($response, 'pages');
+
+        $this->assertCount(1, $pages);
     }
 }

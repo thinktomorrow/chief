@@ -143,4 +143,9 @@ abstract class TestCase extends OrchestraTestCase
             throw new \Exception('Make sure to use a dedicated testing database connection. Currently you are using ['.DB::getName().']. Are you crazy?');
         }
     }
+
+    protected function getResponseData($response, $key)
+    {
+        return $response->getOriginalContent()->getData()[$key];
+    }
 }
