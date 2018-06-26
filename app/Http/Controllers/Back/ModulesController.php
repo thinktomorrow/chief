@@ -94,10 +94,6 @@ class ModulesController extends Controller
     {
         $this->authorize('delete-page');
 
-        if (request()->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
-        }
-
         app(DeleteModule::class)->handle($id);
 
         return redirect()->route('chief.back.modules.index')->with('messages.warning', 'De module werd verwijderd.');

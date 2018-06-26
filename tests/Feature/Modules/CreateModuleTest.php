@@ -80,21 +80,4 @@ class CreateModuleTest extends TestCase
         $modules = Module::ignoreCollection()->get();
         $this->assertCount(1, $modules);
     }
-
-    /** @test */
-    public function it_can_delete_modules()
-    {
-        $user = $this->developer();
-        $this->actingAs($user, 'chief')
-            ->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams());
-
-        $this->assertCount(1, Module::ignoreCollection()->get());
-
-        $module = Module::ignoreCollection()->first();
-
-        $this->actingAs($user, 'chief')
-            ->delete(route('chief.back.modules.destroy', $module->id), ['deleteconfirmation' => 'DELETE']);
-
-        $this->assertCount(0, Module::ignoreCollection()->get());
-    }
 }
