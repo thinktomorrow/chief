@@ -14,10 +14,6 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-branches:
-  only:
-  - master
-
 env:
   matrix:
     - COMPOSER_FLAGS="--prefer-lowest"
