@@ -65,7 +65,7 @@ class PagesController extends Controller
             $request->trans
         );
 
-        return redirect()->route('chief.back.pages.edit',$page->getKey())->with('messages.success', $page->title. ' is toegevoegd in draft. Happy editing!');
+        return redirect()->route('chief.back.pages.edit', $page->getKey())->with('messages.success', $page->title. ' is toegevoegd in draft. Happy editing!');
     }
 
     /**

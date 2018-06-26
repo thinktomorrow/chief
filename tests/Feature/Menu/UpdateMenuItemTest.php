@@ -154,7 +154,7 @@ class UpdateMenuItemTest extends TestCase
                 'trans.nl.url'      => 'thinktomorrow.be',
             ]));
 
-        $this->assertEquals('http://thinktomorrow.be',$menuitem->fresh()->url);
+        $this->assertEquals('http://thinktomorrow.be', $menuitem->fresh()->url);
     }
 
     /** @test */
