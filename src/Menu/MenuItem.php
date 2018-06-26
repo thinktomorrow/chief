@@ -84,7 +84,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             if ($item->ofType(static::TYPE_COLLECTION)) {
                 $pages = Page::fromCollectionKey($item->collection_type)->all();
 
-                $pages->reject(function($page){
+                $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;
                 })->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
                     $collectionItems->push(MenuItem::make([
@@ -98,16 +98,14 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
-                if($page->hidden_in_menu == true){
+                if ($page->hidden_in_menu == true) {
                     unset($items[$k]);
-                }else{
+                } else {
                     $item->url = $page->menuUrl();
                     $item->page_label = $page->menuLabel();
                     $items[$k] = $item;
                 }
             }
-
-            
         }
         return array_merge($items->all(), $collectionItems->all());
     }
