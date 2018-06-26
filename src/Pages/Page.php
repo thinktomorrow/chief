@@ -160,7 +160,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return collect(array_values($grouped));
     }
 
-    public static function inflate($relateds = []): self
+    public static function inflate($relateds = [])
     {
         if (!is_array($relateds)) {
             $relateds = [$relateds];
@@ -170,7 +170,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             $relateds = [];
         }
 
-        return (collect($relateds))->map(function ($related) {
+        return collect($relateds)->map(function ($related) {
             list($type, $id) = explode('@', $related);
             
             return (new $type)->ignoreCollection()->find($id);

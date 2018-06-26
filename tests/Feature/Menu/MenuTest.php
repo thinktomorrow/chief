@@ -113,7 +113,7 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    public function it_can_be_rendered_with_an_generic_api()
+    public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
             'collection' => 'statics',
@@ -174,13 +174,13 @@ class MenuTest extends TestCase
     /** @test */
     public function if_a_page_is_hidden_it_is_not_shown_in_menu()
     {
+        $page = factory(Page::class)->create(['hidden_in_menu' => 1]);
         app()->setLocale('nl');
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
-        $third  = MenuItem::create(['label:nl' => 'last item', 'parent_id' => $first->id, 'order' => 1, 'hidden_in_menu' => 1]);
-        
+        $third  = MenuItem::create(['label:nl' => 'last item', 'type' => 'internal', 'page_id' =>  $page->id, 'parent_id' => $first->id, 'order' => 1]);
+
         $collection = ChiefMenu::fromMenuItems()->items();
-        
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals(2, $collection->total());
     }

@@ -19,6 +19,7 @@ class CreatepagesTable extends Migration
             $table->boolean('published')->default(false);
             $table->boolean('featured')->default(false);
             $table->timestamp('archived_at')->default(null)->nullable();
+            $table->boolean('hidden_in_menu')->default(false);
             $table->timestamp('publication')->nullable();
             $table->timestamps();
             $table->softDeletes();
