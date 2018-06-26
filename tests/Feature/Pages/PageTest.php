@@ -61,6 +61,4 @@ class PageTest extends TestCase
 
         $this->assertTrue($pages->first()->created_at->gt($pages->last()->created_at));
     }
-
-    
 }
