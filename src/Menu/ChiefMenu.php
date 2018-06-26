@@ -34,11 +34,9 @@ class ChiefMenu
     {
         return $this->collection->prune(function (Node $node) {
             $page = Page::ignoreCollection()->find($node->page_id);
-            if(!$page)
-            {
+            if (!$page) {
                 return true;
-            } 
-            else{
+            } else {
                 return $page->hidden_in_menu == false;
             }
         })->sort('order');
