@@ -1,7 +1,7 @@
 <?php
     $defaultLocale = config('app.locale');
 ?>
-<modal id="create-module" class="large-modal" title='' :active="{{ $errors->has('trans.'.$defaultLocale.'.title') ? 'true' : 'false' }}">
+<modal id="create-module" class="large-modal" title='' :active="{{ $errors->any() ? 'true' : 'false' }}">
     <form v-cloak id="createForm" method="POST" action="{{ route('chief.back.modules.store') }}" role="form">
         {{ csrf_field() }}
 
@@ -12,8 +12,8 @@
                     name="collection"
                     :options='@json($collections)'
                     selected='@json(old('collection'))'
-                    labelkey="label"
-                    valuekey="id"
+                    labelkey="singular"
+                    valuekey="key"
                     placeholder="..."
             >
             </chief-multiselect>
@@ -23,11 +23,11 @@
         </div>
 
         <div class="stack-s">
-            <label for="trans-{{ $defaultLocale }}-title">Titel</label>
-            <input type="text" name="trans[{{ $defaultLocale }}][title]" id="trans-{{ $defaultLocale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$defaultLocale.'.title') }}">
+            <label for="slugField">Interne titel</label>
+            <input type="text" name="slug" id="slugField" class="input inset-s" placeholder="e.g. nieuwsbrief, contacteer-ons, homepage-banner" value="{{ old('slug') }}">
         </div>
 
-        <error class="caption text-warning" field="trans.{{ $defaultLocale }}.title" :errors="errors.get('trans.{{ $defaultLocale }}')"></error>
+        <error class="caption text-warning" field="slug" :errors="errors.all()"></error>
 
     </form>
 

@@ -25,7 +25,7 @@ class UpdateModuleTest extends TestCase
             'others' => OtherModuleFake::class,
         ]);
 
-        $this->module = app(CreateModule::class)->handle('newsletter', 'new-slug', $this->validModuleParams()['trans']);
+        $this->module = app(CreateModule::class)->handle('newsletter', 'new-slug');
     }
 
     /** @test */
@@ -59,9 +59,9 @@ class UpdateModuleTest extends TestCase
     }
 
     /** @test */
-    public function when_updating_module_title_is_required()
+    public function when_updating_module_slug_is_required()
     {
-        $this->assertValidation(new Module(), 'trans.nl.title', $this->validModuleParams(['trans.nl.title' => '']),
+        $this->assertValidation(new Module(), 'slug', $this->validModuleParams(['slug' => '']),
             route('chief.back.modules.index'),
             route('chief.back.modules.update', $this->module->id),
             null, 'PUT'

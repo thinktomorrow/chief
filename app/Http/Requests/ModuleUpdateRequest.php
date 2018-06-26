@@ -26,14 +26,12 @@ class ModuleUpdateRequest extends FormRequest
     {
         return [
             'slug' => 'required|unique:modules,slug,' . $this->id . ',id',
-            'trans.*.title' => 'required|max:200',
         ];
     }
 
     public function attributes()
     {
         return [
-            'trans.*.title' => 'Titel',
             'slug'    => 'Interne link',
         ];
     }

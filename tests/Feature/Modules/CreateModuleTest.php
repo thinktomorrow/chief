@@ -50,9 +50,9 @@ class CreateModuleTest extends TestCase
     }
 
     /** @test */
-    public function when_creating_module_title_is_required()
+    public function when_creating_module_slug_is_required()
     {
-        $this->assertValidation(new Module(), 'trans.nl.title', $this->validModuleParams(['trans.nl.title' => '']),
+        $this->assertValidation(new Module(), 'slug', $this->validModuleParams(['slug' => '']),
             route('chief.back.modules.index', 'newsletter'),
             route('chief.back.modules.store', 'newsletter')
         );

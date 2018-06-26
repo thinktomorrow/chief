@@ -2,14 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class IndexModuleTest extends TestCase
 {
     use ModuleFormParams;
-
-    private $module;
 
     protected function setUp()
     {
@@ -20,6 +19,8 @@ class IndexModuleTest extends TestCase
         $this->app['config']->set('thinktomorrow.chief.collections.modules', [
             'newsletter' => NewsletterModuleFake::class,
         ]);
+
+        Module::create(['collection' => 'newsletter', 'slug' => 'new-slug']);
     }
 
     /** @test */

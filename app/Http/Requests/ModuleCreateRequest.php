@@ -22,31 +22,21 @@ class ModuleCreateRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules()
     {
-        $rules['slug'] = 'required|unique:modules,slug';
-
-        $translations = $this->request->get('trans');
-        foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['title'], $trans) && $locale !== config('app.locale')) {
-                continue;
-            }
-
-            $rules['trans.' . $locale . '.title']   = 'required|max:200';
-        }
-
-        return $rules;
+        return [
+            'collection' => 'required',
+            'slug' => 'required|unique:modules,slug',
+        ];
     }
 
     public function attributes()
     {
-        foreach ($this->request->get('trans') as $locale => $trans) {
-            $attributes['trans.' . $locale . '.title']      = 'Titel';
-        }
-
-        return $attributes;
+        return [
+            'collection' => 'type',
+            'slug' => 'interne link',
+        ];
     }
 }

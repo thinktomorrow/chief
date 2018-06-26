@@ -1,22 +1,13 @@
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
-        <h2 class="formgroup-label">Titel</h2>
+        <h2 class="formgroup-label">Interne titel</h2>
     </div>
     <div class="formgroup-input column-8">
-        <tabs>
-            @foreach($module->availableLocales() as $locale)
 
-                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
-                    <div class="stack-s">
-                        <label for="trans-{{ $locale }}-title">Titel</label>
-                        <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title', $module->translateForForm($locale,'title')) }}">
-                    </div>
+        <input type="text" name="slug" id="slugField" class="input inset-s" placeholder="Interne titel" value="{{ old('slug', $module->slug) }}">
 
-                    <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>
-                </tab>
+        <error class="caption text-warning" field="slug" :errors="errors.all()"></error>
 
-            @endforeach
-        </tabs>
     </div>
 </section>
 

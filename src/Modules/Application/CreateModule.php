@@ -10,20 +10,16 @@ class CreateModule
 {
     use TranslatableCommand;
 
-    public function handle(string $collection, string $slug, array $translations): Module
+    public function handle(string $collection, string $slug): Module
     {
         try {
             DB::beginTransaction();
 
-            $page = Module::create(['collection' => $collection, 'slug' => $slug]);
-
-            foreach ($translations as $locale => $value) {
-                $page->updateTranslation($locale, $value);
-            }
+            $module = Module::create(['collection' => $collection, 'slug' => $slug]);
 
             DB::commit();
 
-            return $page->fresh();
+            return $module->fresh();
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;

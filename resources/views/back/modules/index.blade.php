@@ -16,14 +16,18 @@
 
         @if($modules->isEmpty())
             <div class="center-center stack-xl">
-                <a @click="showModal('create-module')" class="btn btn-primary squished-l">
-                    <i class="icon icon-zap icon-fw"></i> Tijd om een eerste module toe te voegen
-                </a>
+                <div>
+                    <a @click="showModal('create-module')" class="btn btn-primary squished">
+                        <i class="icon icon-zap icon-fw"></i> Voeg jouw eerste module toe.
+                    </a>
+                    <p class="stack">
+                        <strong>Wat zijn modules nu eigenlijk?</strong><br>
+                        Een module is een blokelement dat je kan toevoegen aan een of meerdere pagina's. <br>Bijvoorbeeld een blokje 'contacteer ons' of 'nieuwsbrief inschrijving'.
+                        <br>
+                        Gewoon even proberen, je doet niets fout :)
+                    </p>
+                </div>
 
-                <p>
-                    <strong>Wat zijn modules nu eigenlijk?</strong><br>
-                    Een module is een blokelement dat je kan toevoegen aan een of meerdere pagina's.
-                </p>
             </div>
         @endif
 
@@ -32,9 +36,6 @@
                 @include('chief::back.modules._partials._rowitem')
                 @include('chief::back.modules._partials.delete-modal')
             @endforeach
-            <div class="text-center">
-                {!! $modules->render() !!}
-            </div>
         @endif
 
     @include('chief::back.modules._partials.create-modal')

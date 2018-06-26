@@ -20,7 +20,7 @@ class ModulesController extends Controller
 
         return view('chief::back.modules.index', [
             'modules' => Module::ignoreCollection()->get(),
-            'collections' => Module::collectionDetails(),
+            'collections' => Module::freshAvailableCollections()->values()->toArray(),
         ]);
     }
 
@@ -36,11 +36,10 @@ class ModulesController extends Controller
 
         $module = app(CreateModule::class)->handle(
             $request->get('collection'),
-            $request->get('slug'),
-            $request->trans
+            $request->get('slug')
         );
 
-        return redirect()->route('chief.back.modules.edit', $module->getKey())->with('messages.success', $module->title. ' is toegevoegd. Happy editing!');
+        return redirect()->route('chief.back.modules.edit', $module->getKey())->with('messages.success', $module->slug. ' is toegevoegd. Happy editing!');
     }
 
     /**
@@ -81,7 +80,7 @@ class ModulesController extends Controller
             $request->get('filesOrder', [])
         );
 
-        return redirect()->route('chief.back.modules.index', $module->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $module->title . '" werd aangepast');
+        return redirect()->route('chief.back.modules.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i> '.$module->slug.' werd aangepast');
     }
 
     /**
