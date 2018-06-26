@@ -50,7 +50,7 @@ a{
 
 .divider{
     margin: 0;
-    border-top: 1px dotted $color-subtle;
+    border-top: 1px dotted $color-border;
     width: 100%;
 }
 
@@ -63,4 +63,9 @@ a{
 .disabled{
     cursor: not-allowed!important;
     opacity: 0.35;
+    pointer-events: none;
+}
+
+.selected{
+    border: 1px solid $color-primary;
 }

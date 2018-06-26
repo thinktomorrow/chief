@@ -30,7 +30,7 @@ class CreatepagesTable extends Migration
             $table->string('locale');
             $table->string('slug')->unique();
             $table->string('title');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->text('short')->nullable();
             $table->string('seo_title')->nullable();
             $table->text('seo_description')->nullable();

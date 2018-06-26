@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Common\Traits\Publishable;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,8 +21,10 @@ use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
+use Thinktomorrow\Chief\Common\Publish\Publishable;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
 {
     use HasCollection,
         AssetTrait,
@@ -127,6 +128,55 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $key ? $names->$key : $names;
     }
 
+    /**
+     * TODO: these flatten and inflate methods should be out of this class into their own environment...
+     * They are also used for the relation select fields.
+     * @return mixed
+     */
+    public static function flattenForSelect()
+    {
+        return self::ignoreCollection()->get()->map(function (Page $page) {
+            return [
+                'id'    => $page->getRelationId(),
+                'label' => $page->getRelationLabel(),
+                'group' => $page->getRelationGroup(),
+            ];
+        });
+    }
+
+    public static function flattenForGroupedSelect(): Collection
+    {
+        $grouped = [];
+
+        self::flattenForSelect()->each(function ($entry) use (&$grouped) {
+            if (isset($grouped[$entry['group']])) {
+                $grouped[$entry['group']]['values'][] = $entry;
+            } else {
+                $grouped[$entry['group']] = ['group' => $entry['group'], 'values' => [$entry]];
+            }
+        });
+
+        // We remove the group key as we need to have non-assoc array for the multiselect options.
+        return collect(array_values($grouped));
+    }
+
+    public static function inflate($relateds = []): self
+    {
+        if (!is_array($relateds)) {
+            $relateds = [$relateds];
+        }
+
+        if (count($relateds) == 1 && is_null(reset($relateds))) {
+            $relateds = [];
+        }
+
+        return (collect($relateds))->map(function ($related) {
+            list($type, $id) = explode('@', $related);
+            
+            return (new $type)->ignoreCollection()->find($id);
+        })->first();
+    }
+
     public function mediaUrls($type = null): Collection
     {
         return $this->getAllFiles($type)->map->getFileUrl();
@@ -160,19 +210,19 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * mostly want the Page as morph relationship instead of the
      * child class.
      */
-    public function getMorphClass()
-    {
-        return self::class;
-    }
+//    public function getMorphClass()
+//    {
+//        return self::class;
+//    }
 
-    public function getOwnMorphClass()
-    {
-        return parent::getMorphClass();
-    }
+//    public function getOwnMorphClass()
+//    {
+//        return parent::getMorphClass();
+//    }
 
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->find($id)) && $page->isPublished())
+        return (($page = self::ignoreCollection()->published()->find($id)))
             ? $page
             : null;
     }
@@ -214,11 +264,25 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function getRelationGroup(): string
     {
-        return 'pages';
+        return static::collectionDetails('plural');
     }
 
     public function previewUrl()
     {
-        // return route('pages.show', $this->slug).'?preview-mode';
+        // TODO: how we allow for these default routes to be set up in every new project?
+//        return '';
+        return route('pages.show', $this->slug).'?preview-mode';
+    }
+
+    public function menuUrl(): string
+    {
+        // TODO: how we allow for these default routes to be set up in every new project?
+//        return '';
+        return route('pages.show', $this->slug);
+    }
+
+    public function menuLabel(): string
+    {
+        return $this->title;
     }
 }

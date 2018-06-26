@@ -1,9 +1,13 @@
 <?php return array(
-  'dimsav/laravel-translatable' =>
+  'jenssegers/date' =>
   array(
     'providers' =>
     array(
-      0 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+      0 => 'Jenssegers\\Date\\DateServiceProvider',
+    ),
+    'aliases' =>
+    array(
+      'Date' => 'Jenssegers\\Date\\Date',
     ),
   ),
   'intervention/image' =>
@@ -35,22 +39,11 @@
       'Charts' => 'ConsoleTVs\\Charts\\Facades\\Charts',
     ),
   ),
-  'spatie/laravel-image-optimizer' =>
+  'fideloper/proxy' =>
   array(
     'providers' =>
     array(
-      0 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
-    ),
-    'aliases' =>
-    array(
-      'ImageOptimizer' => 'Spatie\\LaravelImageOptimizer\\Facades\\ImageOptimizer',
-    ),
-  ),
-  'thinktomorrow/locale' =>
-  array(
-    'providers' =>
-    array(
-      0 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+      0 => 'Fideloper\\Proxy\\TrustedProxyServiceProvider',
     ),
   ),
   'laravel/tinker' =>
@@ -70,6 +63,17 @@
     array(
       'Form' => 'Collective\\Html\\FormFacade',
       'Html' => 'Collective\\Html\\HtmlFacade',
+    ),
+  ),
+  'spatie/laravel-image-optimizer' =>
+  array(
+    'providers' =>
+    array(
+      0 => 'Spatie\\LaravelImageOptimizer\\ImageOptimizerServiceProvider',
+    ),
+    'aliases' =>
+    array(
+      'ImageOptimizer' => 'Spatie\\LaravelImageOptimizer\\Facades\\ImageOptimizer',
     ),
   ),
   'spatie/laravel-permission' =>
@@ -93,6 +97,20 @@
       0 => 'Thinktomorrow\\AssetLibrary\\AssetLibraryServiceProvider',
     ),
   ),
+  'thinktomorrow/locale' =>
+  array(
+    'providers' =>
+    array(
+      0 => 'Thinktomorrow\\Locale\\LocaleServiceProvider',
+    ),
+  ),
+  'dimsav/laravel-translatable' =>
+  array(
+    'providers' =>
+    array(
+      0 => 'Dimsav\\Translatable\\TranslatableServiceProvider',
+    ),
+  ),
   'barryvdh/laravel-debugbar' =>
   array(
     'providers' =>
@@ -104,15 +122,11 @@
       'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
     ),
   ),
-  'jenssegers/date' =>
+  'nunomaduro/collision' =>
   array(
     'providers' =>
     array(
-      0 => 'Jenssegers\\Date\\DateServiceProvider',
-    ),
-    'aliases' =>
-    array(
-      'Date' => 'Jenssegers\\Date\\Date',
+      0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
 );

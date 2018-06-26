@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
 use Thinktomorrow\Chief\Pages\Application\UpdatePage;
 use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class PagesController extends Controller
 {
@@ -21,10 +22,11 @@ class PagesController extends Controller
         $model = Page::fromCollectionKey($collection);
 
         return view('chief::back.pages.index', [
+            'page'              => $model,
             'collectionDetails' => $model->collectionDetails(),
-            'published'       => $model->published()->paginate(10),
-            'drafts'          => $model->drafted()->paginate(10),
-            'archived'        => $model->archived()->paginate(10),
+            'published'         => $model->published()->paginate(10),
+            'drafts'            => $model->drafted()->paginate(10),
+            'archived'          => $model->archived()->paginate(10),
         ]);
     }
 
@@ -57,16 +59,13 @@ class PagesController extends Controller
     public function store(PageCreateRequest $request, $collection)
     {
         $this->authorize('create-page');
-
+        
         $page = app(CreatePage::class)->handle(
             $collection,
-            $request->trans,
-            $request->relations,
-            $request->get('files', []),
-            $request->get('filesOrder', [])
+            $request->trans
         );
 
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', $page->title . ' is aangemaakt');
+        return redirect()->route('chief.back.pages.edit', $page->getKey())->with('messages.success', $page->title. ' is toegevoegd in draft. Happy editing!');
     }
 
     /**
@@ -124,24 +123,26 @@ class PagesController extends Controller
     {
         $this->authorize('delete-page');
 
-        $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
-        if (request()->get('deleteconfirmation') !== 'DELETE' && (!$page->isPublished() || $page->isArchived())) {
+        $page = app(DeletePage::class)->handle($id);
+        if ($page) {
+            $message = 'Het item werd verwijderd.';
+            return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
+        } else {
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
-
-        if ($page->isDraft() || $page->isArchived()) {
-            $page->delete();
-        }
-        if ($page->isPublished()) {
-            $page->archive();
-        }
-
-        $message = 'Het item werd verwijderd.';
-
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
     }
 
     public function publish(Request $request, $id)
+    {
+        $page = Page::ignoreCollection()->findOrFail($id);
+        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
+
+        ($published) ? $page->publish() : $page->draft();
+
+        return redirect()->back();
+    }
+
+    public function unpublish(Request $request, $id)
     {
         $page = Page::ignoreCollection()->findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string

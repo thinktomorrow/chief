@@ -17,27 +17,13 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    public function admin_can_view_the_create_form()
-    {
-        $response = $this->asAdmin()->get(route('chief.back.pages.create', 'statics'));
-        $response->assertStatus(200);
-    }
-
-    /** @test */
-    public function guests_cannot_view_the_create_form()
-    {
-        $response = $this->get(route('chief.back.pages.create', 'statics'));
-        $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
-    }
-
-    /** @test */
     public function creating_a_new_page()
     {
         $response = $this->asAdmin()
             ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.pages.index', 'statics'));
+        $response->assertRedirect(route('chief.back.pages.edit', Page::first()->getKey()));
 
         $this->assertCount(1, Page::all());
         $this->assertNewPageValues(Page::first());
@@ -127,34 +113,32 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_remove_a_page()
+    public function it_can_delete_pages()
     {
-        factory(Page::class)->create(['published' => false]);
-        $this->assertCount(1, Page::all());
+        $user = $this->developer();
+        $this->actingAs($user, 'chief')
+            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams(['published' => false]));
+        
+        $this->assertCount(1, Page::get());
 
-        $this->asAdmin()
-             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
+        $page = Page::first();
+        $this->actingAs($user, 'chief')
+             ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
 
-        $this->assertCount(0, Page::all());
+        $this->assertCount(0, Page::get());
     }
-
     /** @test */
-    public function it_can_update_the_page_relations()
+    public function it_can_archive_pages()
     {
-        $otherPage = factory(Page::class)->create();
+        $user = $this->developer();
+        $page = factory(Page::class)->create(['published' => true]);
 
-        $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
-                'relations' => [
-                    $otherPage->getRelationId()
-                ]
-            ]));
+        $this->assertCount(1, Page::get());
+        
+        $this->actingAs($user, 'chief')
+             ->delete(route('chief.back.pages.destroy', Page::first()->id));
 
-        $pages = Page::all();
-        $this->assertCount(2, $pages);
-
-        $newPage = $pages->last();
-        $this->assertCount(1, $newPage->children());
-        $this->assertEquals($otherPage->id, $newPage->children()->first()->id);
+        $this->assertCount(0, Page::get());
+        $this->assertCount(1, Page::withArchived()->get());
     }
 }

@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
@@ -65,7 +63,7 @@ class UploadMediaTest extends TestCase
 
         // Replace asset
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validPageParams([
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'replace' => [
@@ -92,7 +90,7 @@ class UploadMediaTest extends TestCase
 
         // Remove asset
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validPageParams([
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'remove' => [

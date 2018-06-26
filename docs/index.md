@@ -113,6 +113,10 @@ php artisan vendor:publish --tag=translatable
 php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvider"
 ```
 
+# Default routes
+There is one project related route that is expected by chief and that is: `pages.show`. This
+is the route for the detail of a static page. Make sure to add this one. 
+
 # Multilingual
 
 There are a couple of places where you need to configure the localisation of your application.
