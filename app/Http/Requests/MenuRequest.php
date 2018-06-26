@@ -39,7 +39,7 @@ class MenuRequest extends FormRequest
     {
         $translations = $this->request->get('trans', []);
         
-        $rules['type']      = 'in:custom,internal';
+        $rules['type']      = 'required|in:custom,internal';
         $rules['page_id']   = 'required_if:type,internal';
 
         foreach ($translations as $locale => $trans) {
