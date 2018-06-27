@@ -48,7 +48,9 @@ class GenerateRoleCommand extends Command
         }
 
         foreach ($cleanPermissionNames as $cleanPermissionName) {
-            if($cleanPermissionName=='create-audit') dd($cleanPermissionNames);
+            if ($cleanPermissionName=='create-audit') {
+                dd($cleanPermissionNames);
+            }
             if ($role->hasPermissionTo($cleanPermissionName)) {
                 continue;
             }
