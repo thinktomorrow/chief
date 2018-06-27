@@ -49,7 +49,7 @@ class DeletePageTest extends TestCase
         $this->page->publish();
 
         $this->asAdmin()
-            ->delete(route('chief.back.pages.destroy', Page::ignoreCollection()->first()->id),[
+            ->delete(route('chief.back.pages.destroy', Page::ignoreCollection()->first()->id), [
                 'deleteconfirmation' => 'DELETE'
             ]);
 
