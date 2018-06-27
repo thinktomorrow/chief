@@ -61,14 +61,14 @@ trait HasCollection
             return $this->collection;
         }
 
-        $mapping = config('thinktomorrow.chief.collections', []);
+        $mapping = static::mapping();
 
         return false != ($key = array_search(static::class, $mapping)) ? $key : null;
     }
 
     public static function fromCollectionKey(string $key = null, $attributes = [])
     {
-        $mapping = config('thinktomorrow.chief.collections', []);
+        $mapping = static::mapping();
 
         if (!isset($mapping[$key])) {
             throw new \DomainException('No corresponding class found for the collection key ['.$key.']. Make sure to add this to the [thinktomorrow.chief.collections] config array.');
@@ -119,9 +119,7 @@ trait HasCollection
             return static::$availableCollections;
         }
 
-        $mapping = config('thinktomorrow.chief.collections', []);
-
-        $availableCollections = collect($mapping)->map(function ($className) {
+        $availableCollections = collect(static::mapping())->map(function ($className) {
             return $className::collectionDetails();
         });
 
@@ -133,5 +131,16 @@ trait HasCollection
         self::$availableCollections = null;
 
         return static::availableCollections();
+    }
+
+    private static function mapping()
+    {
+        /**
+         * Hacky way to determine the collections per type. This
+         * is currently either 'pages' or 'modules'.
+         */
+        $collection = (new static)->getTable();
+
+        return config('thinktomorrow.chief.collections.'.$collection, []);
     }
 }

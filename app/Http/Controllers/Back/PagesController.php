@@ -123,13 +123,13 @@ class PagesController extends Controller
     {
         $this->authorize('delete-page');
 
-        $page = app(DeletePage::class)->handle($id);
-        if ($page) {
-            $message = 'Het item werd verwijderd.';
-            return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', $message);
-        } else {
+        if (request()->get('deleteconfirmation') !== 'DELETE') {
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
+
+        $page = app(DeletePage::class)->handle($id);
+
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', 'De pagina is verwijderd.');
     }
 
     public function publish(Request $request, $id)

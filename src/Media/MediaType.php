@@ -8,5 +8,6 @@ class MediaType
 {
     const HERO = 'images-hero';
     const THUMB = 'images-thumb';
+    const BACKGROUND = 'images-background';
     const CONTENT = 'images';
 }
