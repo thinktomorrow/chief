@@ -62,10 +62,7 @@ class PagesController extends Controller
 
         $page = app(CreatePage::class)->handle(
             $collection,
-            $request->trans,
-            $request->relations,
-            $request->get('files', []),
-            $request->get('filesOrder') ? $request->get('filesOrder') : []
+            $request->trans
         );
 
         return redirect()->route('chief.back.pages.edit', $page->getKey())->with('messages.success', $page->title. ' is toegevoegd in draft. Happy editing!');

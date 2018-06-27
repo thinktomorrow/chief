@@ -27,11 +27,11 @@ class PageUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [];
+
         $translations = $this->request->get('trans');
         foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== app()->getLocale()) {
-                unset($translations[$locale]);
-                $this->request->set('trans', $translations);
+            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== config('app.locale')) {
                 continue;
             }
 

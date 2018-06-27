@@ -207,21 +207,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $key ? array_pluck($types, $key) : $types;
     }
 
-    /**
-     * Set a custom morph class for the morph relations because we
-     * mostly want the Page as morph relationship instead of the
-     * child class.
-     */
-    public function getMorphClass()
-    {
-        return self::class;
-    }
-
-    public function getOwnMorphClass()
-    {
-        return parent::getMorphClass();
-    }
-
     public static function findPublished($id)
     {
         return (($page = self::ignoreCollection()->published()->find($id)))
