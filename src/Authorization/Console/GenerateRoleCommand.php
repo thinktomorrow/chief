@@ -38,7 +38,6 @@ class GenerateRoleCommand extends Command
         $cleanPermissionNames = [];
         foreach ($permissionNames as $k => $permissionName) {
             $permissionName = trim($permissionName);
-
             // Generate all permissions if only scope is passed
             if (false === strpos($permissionName, '-')) {
                 $cleanPermissionNames = array_merge($cleanPermissionNames, Permission::generate($permissionName));
@@ -49,6 +48,7 @@ class GenerateRoleCommand extends Command
         }
 
         foreach ($cleanPermissionNames as $cleanPermissionName) {
+            if($cleanPermissionName=='create-audit') dd($cleanPermissionNames);
             if ($role->hasPermissionTo($cleanPermissionName)) {
                 continue;
             }
