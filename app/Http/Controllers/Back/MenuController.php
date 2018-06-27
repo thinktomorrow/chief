@@ -71,11 +71,15 @@ class MenuController extends Controller
             $internal_page_id = $page->getRelationId();
         }
 
+        $menuitems = MenuItem::onlyGrandParents()->get()->reject(function($item) use ($id){
+            return $item->id == $id;
+        });
+
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => $pages = Page::flattenForGroupedSelect()->toArray(),
             'internal_page_id' => $internal_page_id,
-            'parents'          => MenuItem::onlyGrandParents()->get(),
+            'parents'          => $menuitems,
         ]);
     }
 

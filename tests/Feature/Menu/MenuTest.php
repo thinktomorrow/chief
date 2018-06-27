@@ -149,7 +149,7 @@ class MenuTest extends TestCase
     {
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
-        $third = MenuItem::create(['label:nl' => 'last item']);
+        $third  = MenuItem::create(['label:nl' => 'last item']);
 
         $collection = ChiefMenu::fromArray([$first, $second, $third])->items();
 
@@ -191,12 +191,6 @@ class MenuTest extends TestCase
     {
         // test it out
         // Column icon toegevoegd per project -> wordt automatisch meegepakt
-    }
-
-    /** @test */
-    public function first_menu_item_is_the_toggle()
-    {
-        // test it out
     }
 
     /** @test */
