@@ -9,7 +9,10 @@ class RelatedCollection extends Collection
     public static function availableChildren(ActsAsParent $parent): self
     {
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
-        $available_collections = config('thinktomorrow.chief.collections', []);
+        $available_collections = array_merge(
+            config('thinktomorrow.chief.collections.pages', []),
+            config('thinktomorrow.chief.collections.modules', [])
+        );
 
         $collection = new static();
 

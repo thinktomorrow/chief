@@ -15,6 +15,7 @@
                         </div>
                     </dropdown>
                 </li>
+                <li><a class="nav-item {{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Modules</a></li>
                 <dropdown>
                     <span class="center-y nav-item {{ (isActiveUrl('admin/translations*') || isActiveUrl('admin/menu*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Site</span>
                     <div v-cloak class="dropdown-box inset-s">

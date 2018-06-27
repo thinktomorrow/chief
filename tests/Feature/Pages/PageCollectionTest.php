@@ -12,9 +12,7 @@ class PageCollectionTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDefaultAuthorization();
-
-        $this->app['config']->set('thinktomorrow.chief.collections', [
+        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
             'statics' => Page::class,
             'articles' => ArticleFake::class,
             'others'   => OtherCollectionFake::class,
@@ -37,6 +35,7 @@ class PageCollectionTest extends TestCase
         $this->assertCount(1, ArticleFake::all());
         $this->assertCount(0, OtherCollectionFake::all());
         $this->assertCount(0, Page::all());
+        $this->assertCount(1, Page::ignoreCollection()->get());
     }
 
     /** @test */
