@@ -21,6 +21,7 @@ use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 
@@ -34,6 +35,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         Publishable,
         Featurable,
         Archivable,
+        AuditTrait,
         ActingAsParent,
         ActingAsChild;
 
@@ -48,7 +50,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
-
+    
     /**
      * The collection scope for the specific class.
      * @var string
@@ -204,21 +206,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         return $key ? array_pluck($types, $key) : $types;
     }
-
-    /**
-     * Set a custom morph class for the morph relations because we
-     * mostly want the Page as morph relationship instead of the
-     * child class.
-     */
-//    public function getMorphClass()
-//    {
-//        return self::class;
-//    }
-
-//    public function getOwnMorphClass()
-//    {
-//        return parent::getMorphClass();
-//    }
 
     public static function findPublished($id)
     {

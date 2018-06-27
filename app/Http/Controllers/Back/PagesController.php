@@ -59,7 +59,7 @@ class PagesController extends Controller
     public function store(PageCreateRequest $request, $collection)
     {
         $this->authorize('create-page');
-        
+
         $page = app(CreatePage::class)->handle(
             $collection,
             $request->trans

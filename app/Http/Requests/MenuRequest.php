@@ -43,12 +43,12 @@ class MenuRequest extends FormRequest
         $rules['page_id']   = 'required_if:type,internal';
 
         foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['url', 'label'], $trans) && $locale !== app()->getLocale()) {
-                $this->request->set('trans', $translations);
+            if ($this->isCompletelyEmpty(['url', 'label'], $trans) && $locale !== config('app.locale')) {
                 continue;
             }
 
             $rules['trans.' . $locale . '.label']   = 'required';
+
             if ($this->request->get('type') == 'custom') {
                 $rules['trans.' . $locale . '.url']     = 'required_if:type,custom|url';
             }
