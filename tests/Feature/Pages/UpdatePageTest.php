@@ -105,4 +105,20 @@ class UpdatePageTest extends TestCase
         $this->assertNotNull($otherPage->{'slug:nl'});
         $this->assertNotEquals($this->page->{'slug:nl'}, $otherPage->{'slug:nl'});
     }
+
+    /** @test */
+    public function only_nl_is_required()
+    {
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
+                'trans.en'  => [
+                    'title' => '',
+                    'slug' => '',
+                ],
+            ])
+        );
+        $response->assertStatus(302);
+
+        $this->assertNull($this->page->fresh()->getTranslation('en'));
+    }
 }

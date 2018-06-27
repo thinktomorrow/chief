@@ -113,24 +113,6 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
-    public function only_nl_is_required()
-    {
-        $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
-                    'trans.nl.title'    => 'foobar',
-                    'trans.nl.slug'     => '',
-                    'trans.en.title'    => '',
-                    'trans.en.slug'     => '',
-                ])
-            );
-        $response->assertStatus(302);
-
-        $pages = Page::all();
-        $this->assertCount(1, $pages);
-        $this->assertNotNull($pages->first()->slug);
-    }
-
-    /** @test */
     public function it_can_delete_pages()
     {
         $user = $this->developer();
@@ -154,7 +136,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::get());
 
         $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.pages.destroy', Page::first()->id));
+             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
 
         $this->assertCount(0, Page::get());
         $this->assertCount(1, Page::withArchived()->get());

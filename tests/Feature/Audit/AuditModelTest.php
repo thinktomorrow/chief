@@ -90,7 +90,7 @@ class AuditTest extends TestCase
         $page = factory(Page::class)->create(['published' => true]);
 
         $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.pages.destroy', Page::first()->id));
+             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getActivityFor($page);
 
