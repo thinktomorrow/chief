@@ -20,6 +20,6 @@
                 }
             }
         },
-        imageUpload: '{{ route('pages.media.upload', $page->id) }}',
+        imageUpload: '{{ $imageUploadUrl }}',
     });
 </script>

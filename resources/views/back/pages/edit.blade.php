@@ -25,5 +25,5 @@
 @stop
 
 @push('custom-scripts-after-vue')
-    @include('chief::back._layouts._partials.editor-script')
+    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('pages.media.upload', $page->id)]))
 @endpush
