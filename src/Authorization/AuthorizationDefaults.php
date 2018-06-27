@@ -57,7 +57,7 @@ class AuthorizationDefaults
             'update-squanto',
             'delete-squanto',
 
-            'view-audit',            
+            'view-audit',
         ]);
     }
 }
