@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionItems;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class PagesController extends Controller
 
         $page = Page::fromCollectionKey($collection);
         $page->existingRelationIds = collect([]);
-        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
+        $relations = CollectionItems::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
         return view('chief::back.pages.create', [
             'page'            => $page,
@@ -81,8 +81,8 @@ class PagesController extends Controller
         $page = Page::ignoreCollection()->findOrFail($id);
         $page->injectTranslationForForm();
 
-        $page->existingRelationIds = RelatedCollection::relationIds($page->children());
-        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
+        $page->existingRelationIds = CollectionItems::relationIds($page->children());
+        $relations = CollectionItems::availableChildren($page)->flattenForGroupedSelect()->toArray();
 
         return view('chief::back.pages.edit', [
             'page'            => $page,

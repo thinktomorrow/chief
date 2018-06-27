@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionItems;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -161,8 +161,8 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
-        $this->assertInstanceOf(RelatedCollection::class, RelatedCollection::availableChildren($parent));
-        $this->assertEquals([$child->id, $child2->id], RelatedCollection::availableChildren($parent)->pluck('id')->toArray());
+        $this->assertInstanceOf(CollectionItems::class, CollectionItems::availableChildren($parent));
+        $this->assertEquals([$child->id, $child2->id], CollectionItems::availableChildren($parent)->pluck('id')->toArray());
     }
 
     /** @test */
@@ -182,6 +182,6 @@ class RelationsTest extends TestCase
         $this->assertEquals([
             ['id' => $child->getRelationId(), 'label' => $child->getRelationLabel(), 'group' => $child->getRelationGroup()],
             ['id' => $child2->getRelationId(), 'label' => $child2->getRelationLabel(), 'group' => $child->getRelationGroup()],
-        ], RelatedCollection::availableChildren($parent)->flattenForSelect()->toArray());
+        ], CollectionItems::availableChildren($parent)->flattenForSelect()->toArray());
     }
 }
