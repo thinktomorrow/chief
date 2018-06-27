@@ -30,12 +30,28 @@ class MenuController extends Controller
     {
         $menuitem       = new MenuItem;
         $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
+        
+        $menu = ChiefMenu::fromMenuItems()->items()->mapRecursive(function($node){
+            $entry = $node->entry();
+            $label = $entry->label;
+            $entry->label = $node->depth() != 0 ? (str_repeat('⏤', $node->depth())) . '>' : '';
+            $entry->label .= $label;
+            return $node->replaceEntry($entry);
+        });
+
+        $menuitems = collect();
+        $menu->flatten()->each(function($node) use($menuitems){
+            $menuitems[]  = [
+                'label' => $node->label,
+                'id'    => $node->id
+            ];
+        });
 
         return view('chief::back.menu.create', [
             'pages'            => Page::flattenForGroupedSelect()->toArray(),
             'menuitem'         => $menuitem,
             'internal_page_id' => null,
-            'parents'          => MenuItem::onlyGrandParents()->get(),
+            'parents'          => $menuitems,
         ]);
     }
 
@@ -64,16 +80,37 @@ class MenuController extends Controller
         $menuitem->injectTranslationForForm();
 
         // Transpose selected page_id to the format <class>@<id>
-        // as expected by the select field.
+        // as expected by t9he select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
             $page = Page::ignoreCollection()->find($menuitem->page_id);
             $internal_page_id = $page->getRelationId();
         }
 
-        $menuitems = MenuItem::onlyGrandParents()->get()->reject(function($item) use ($id){
-            return $item->id == $id;
+        // $menuitems = MenuItem::onlyGrandParents()->get()->reject(function($item) use ($id){
+        //     return $item->id == $id;
+        // });
+
+        $menu = ChiefMenu::fromMenuItems()->items()->mapRecursive(function($node){
+            $entry = $node->entry();
+            $label = $entry->label;
+            $entry->label = $node->depth() != 0 ? (str_repeat('⏤', $node->depth())) . '>' : '';
+            $entry->label .= $label;
+            return $node->replaceEntry($entry);
         });
+
+        $menuitems = collect();
+        $menu->flatten()->each(function($node) use($menuitems){
+            $menuitems[]  = [
+                'label' => $node->label,
+                'id'    => $node->id
+            ];
+        });
+
+        $menuitems = $menuitems->reject(function($item) use($id){
+            return $item['id'] == $id;
+        })->values();
+
 
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
