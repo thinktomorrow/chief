@@ -135,8 +135,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      */
     public static function flattenForSelect()
     {
-        //->published()
-        return self::ignoreCollection()->get()->map(function (Page $page) {
+        return self::ignoreCollection()->published()->get()->map(function (Page $page) {
             return [
                 'id'    => $page->getRelationId(),
                 'label' => $page->getRelationLabel(),
