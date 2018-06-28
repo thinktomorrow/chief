@@ -31,21 +31,7 @@ class MenuController extends Controller
         $menuitem       = new MenuItem;
         $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
         
-        $menu = ChiefMenu::fromMenuItems()->items()->mapRecursive(function($node){
-            $entry = $node->entry();
-            $label = $entry->label;
-            $entry->label = $node->depth() != 0 ? (str_repeat('⏤', $node->depth())) . '>' : '';
-            $entry->label .= $label;
-            return $node->replaceEntry($entry);
-        });
-
-        $menuitems = collect();
-        $menu->flatten()->each(function($node) use($menuitems){
-            $menuitems[]  = [
-                'label' => $node->label,
-                'id'    => $node->id
-            ];
-        });
+        $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
 
         return view('chief::back.menu.create', [
             'pages'            => Page::flattenForGroupedSelect()->toArray(),
@@ -87,30 +73,7 @@ class MenuController extends Controller
             $internal_page_id = $page->getRelationId();
         }
 
-        // $menuitems = MenuItem::onlyGrandParents()->get()->reject(function($item) use ($id){
-        //     return $item->id == $id;
-        // });
-
-        $menu = ChiefMenu::fromMenuItems()->items()->mapRecursive(function($node){
-            $entry = $node->entry();
-            $label = $entry->label;
-            $entry->label = $node->depth() != 0 ? (str_repeat('⏤', $node->depth())) . '>' : '';
-            $entry->label .= $label;
-            return $node->replaceEntry($entry);
-        });
-
-        $menuitems = collect();
-        $menu->flatten()->each(function($node) use($menuitems){
-            $menuitems[]  = [
-                'label' => $node->label,
-                'id'    => $node->id
-            ];
-        });
-
-        $menuitems = $menuitems->reject(function($item) use($id){
-            return $item['id'] == $id;
-        })->values();
-
+        $menuitems = ChiefMenu::fromMenuItems()->getForSelect($id);
 
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
