@@ -23,7 +23,7 @@
                     <p class="stack">
                         <strong>Wat zijn modules nu eigenlijk?</strong><br>
                         Een module is een blokelement dat je kan toevoegen aan een of meerdere pagina's. <br>Bijvoorbeeld een blokje 'contacteer ons' of 'nieuwsbrief inschrijving'.
-                        <br>
+                        <br><br>
                         Gewoon even proberen, je doet niets fout :)
                     </p>
                 </div>
