@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
@@ -66,7 +67,7 @@ class UpdatePageTest extends TestCase
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'relations' => [
-                    $otherPage->getRelationId()
+                    $otherPage->flatReference()->get()
                 ]
             ]));
 

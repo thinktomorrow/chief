@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Thinktomorrow\Chief\Common\Collections\CollectionItems;
+use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -144,8 +146,8 @@ class RelationsTest extends TestCase
         $parent = ParentFake::create();
         $child = ChildFake::create();
 
-        $this->assertEquals($parent->getMorphClass().'@'.$parent->id, $parent->getRelationId());
-        $this->assertEquals($child->getMorphClass().'@'.$child->id, $child->getRelationId());
+        $this->assertEquals($parent->getMorphClass().'@'.$parent->id, $parent->flatReference()->get());
+        $this->assertEquals($child->getMorphClass().'@'.$child->id, $child->flatReference()->get());
     }
 
     /** @test */
@@ -161,8 +163,11 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
-        $this->assertInstanceOf(CollectionItems::class, CollectionItems::availableChildren($parent));
-        $this->assertEquals([$child->id, $child2->id], CollectionItems::availableChildren($parent)->pluck('id')->toArray());
+        $relations = Relation::availableChildren($parent);
+
+
+        $this->assertInstanceOf(Collection::class, $relations);
+        $this->assertEquals([$child->id, $child2->id], $relations->pluck('id')->toArray());
     }
 
     /** @test */
@@ -178,10 +183,20 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
+        $relations = FlatReferencePresenter::toSelectValues(Relation::availableChildren($parent))->toArray();
+
         // Custom select listing for relations
         $this->assertEquals([
-            ['id' => $child->getRelationId(), 'label' => $child->getRelationLabel(), 'group' => $child->getRelationGroup()],
-            ['id' => $child2->getRelationId(), 'label' => $child2->getRelationLabel(), 'group' => $child->getRelationGroup()],
-        ], CollectionItems::availableChildren($parent)->flattenForSelect()->toArray());
+            [
+                'id' => $child->flatReference()->get(),
+                'label' => $child->flatReferenceLabel(),
+                'group' => $child->flatReferenceGroup()
+            ],
+            [
+                'id' => $child2->flatReference()->get(),
+                'label' => $child2->flatReferenceLabel(),
+                'group' => $child->flatReferenceGroup()
+            ],
+        ], $relations);
     }
 }

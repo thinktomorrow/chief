@@ -26,6 +26,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
         $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
 
+        (new MacrosServiceProvider($this->app))->boot();
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
@@ -83,6 +84,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->setupEnvironmentProviders();
 
+        (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();

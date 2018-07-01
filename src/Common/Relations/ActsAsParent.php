@@ -13,34 +13,11 @@ interface ActsAsParent
 
     public function rejectChild(ActsAsChild $child);
 
+    // TODO: still need to verify is this is actually usable / being used?
+    // TODO: Because mostly children will be rendered in a parent and not the other way around...
     public function presentForChild(ActsAsChild $child, Relation $relation): string;
 
     public function presentChildren(): StandardCollection;
-
-//    /**
-//     * Composite key consisting of the type of class combined with the
-//     * model id. Both are joined with an @ symbol. This is used as
-//     * identifier of the relation mostly as form values.
-//     *
-//     * @return string
-//     */
-//    public function getRelationId(): string;
-//
-//    /**
-//     * Label that identifies the relation class for an user. This
-//     * is mostly used in the interface of the admin panel.
-//     *
-//     * @return string
-//     */
-//    public function getRelationLabel(): string;
-//
-//    /**
-//     * Label that identifies the relation group. This
-//     * is used in the interface of the admin panel to group relations together.
-//     *
-//     * @return string
-//     */
-//    public function getRelationGroup(): string;
 
     public function relationWithChild(ActsAsChild $child): Relation;
 }

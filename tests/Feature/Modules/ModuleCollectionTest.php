@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Fakes\OtherModuleFake;
@@ -57,6 +58,17 @@ class ModuleCollectionTest extends TestCase
     }
 
     /** @test */
+    function it_can_create_instance_from_collection_id()
+    {
+        $module = Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+
+        $instance = $module->flatReference()->instance();
+
+        $this->assertInstanceOf(NewsletterModuleFake::class, $instance);
+        $this->assertEquals($module->id, $instance->id);
+    }
+
+    /** @test */
     public function collection_scope_can_be_set_on_runtime()
     {
         Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
@@ -74,7 +86,7 @@ class ModuleCollectionTest extends TestCase
         Module::create(['collection' => 'others', 'slug' => 'foobar-2']);
         Module::create(['collection' => 'newsletter', 'slug' => 'foobar-3']);
 
-        $this->assertEquals(['newsletter', 'others'], Module::freshAvailableCollections()->keys()->toArray());
+        $this->assertEquals(['newsletter', 'others'], Module::availableCollections(true)->keys()->toArray());
     }
 
     /** @test */

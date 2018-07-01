@@ -3,7 +3,11 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\HasCollection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
+use Thinktomorrow\Chief\Common\FlatReferences\ActsAsFlatReference;
+use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
+use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -24,9 +28,9 @@ use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
-    use HasCollection,
+    use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
@@ -111,70 +115,33 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * Details of the collection such as naming, key and class.
      * Used in several dynamic parts of the admin application.
      *
-     * @param null $key
-     * @return object
      */
-    public static function collectionDetails($key = null)
+    public function collectionDetails(): CollectionDetails
     {
-        $collectionKey = (new static)->collectionKey();
+        $collectionKey = $this->collectionKey();
 
-        $names = (object) [
-            'key'      => $collectionKey,
-            'class'    => static::class,
-            'singular' => $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
-            'plural'   => $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
-        ];
-
-        return $key ? $names->$key : $names;
+        return new CollectionDetails(
+            $collectionKey,
+            static::class,
+            $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
+            $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
+            $this->flatReferenceLabel()
+        );
     }
 
-    /**
-     * TODO: these flatten and inflate methods should be out of this class into their own environment...
-     * They are also used for the relation select fields.
-     * @return mixed
-     */
-    public static function flattenForSelect()
+    public function flatReference(): ActsAsFlatReference
     {
-        return self::ignoreCollection()->get()->map(function (Page $page) {
-            return [
-                'id'    => $page->getRelationId(),
-                'label' => $page->getRelationLabel(),
-                'group' => $page->getRelationGroup(),
-            ];
-        });
+        return new CollectionFlatReference(static::class, $this->id);
     }
 
-    public static function flattenForGroupedSelect(): Collection
+    public function flatReferenceLabel(): string
     {
-        $grouped = [];
-
-        self::flattenForSelect()->each(function ($entry) use (&$grouped) {
-            if (isset($grouped[$entry['group']])) {
-                $grouped[$entry['group']]['values'][] = $entry;
-            } else {
-                $grouped[$entry['group']] = ['group' => $entry['group'], 'values' => [$entry]];
-            }
-        });
-
-        // We remove the group key as we need to have non-assoc array for the multiselect options.
-        return collect(array_values($grouped));
+        return $this->title ?? '';
     }
 
-    public static function inflate($relateds = []): self
+    public function flatReferenceGroup(): string
     {
-        if (!is_array($relateds)) {
-            $relateds = [$relateds];
-        }
-
-        if (count($relateds) == 1 && is_null(reset($relateds))) {
-            $relateds = [];
-        }
-
-        return (collect($relateds))->map(function ($related) {
-            list($type, $id) = explode('@', $related);
-            
-            return (new $type)->ignoreCollection()->find($id);
-        })->first();
+        return $this->collectionKey()->singular;
     }
 
     public function mediaUrls($type = null): Collection
@@ -204,21 +171,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         return $key ? array_pluck($types, $key) : $types;
     }
-
-    /**
-     * Set a custom morph class for the morph relations because we
-     * mostly want the Page as morph relationship instead of the
-     * child class.
-     */
-//    public function getMorphClass()
-//    {
-//        return self::class;
-//    }
-
-//    public function getOwnMorphClass()
-//    {
-//        return parent::getMorphClass();
-//    }
 
     public static function findPublished($id)
     {
@@ -250,21 +202,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function presentForChild(ActsAsChild $child, Relation $relation): string
     {
         return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
-    }
-
-    public function getRelationId(): string
-    {
-        return $this->getMorphClass().'@'.$this->id;
-    }
-
-    public function getRelationLabel(): string
-    {
-        return $this->title ?? '';
-    }
-
-    public function getRelationGroup(): string
-    {
-        return static::collectionDetails('plural');
     }
 
     public function previewUrl()

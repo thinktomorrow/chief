@@ -3,8 +3,9 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
+use Thinktomorrow\Chief\Common\FlatReferences\ProvidesFlatReference;
 
-interface ActsAsChild
+interface ActsAsChild extends ProvidesFlatReference
 {
     public function parents(): Collection;
 

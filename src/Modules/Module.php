@@ -3,7 +3,9 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\HasCollection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
@@ -19,9 +21,9 @@ use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
 
-class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild
+class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection
 {
-    use HasCollection,
+    use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
@@ -45,7 +47,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
      * @var string
      */
     protected static $collectionScopeClass = ModuleCollectionScope::class;
-
 
     /**
      * Each module model can expose the managed translatable fields. These should be included as attributes just like the regular
@@ -95,22 +96,18 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     /**
      * Details of the collection such as naming, key and class.
      * Used in several dynamic parts of the admin application.
-     *
-     * @param null $key
-     * @return object
      */
-    public static function collectionDetails($key = null)
+    public function collectionDetails($key = null): CollectionDetails
     {
-        $collectionKey = (new static)->collectionKey();
+        $collectionKey = $this->collectionKey();
 
-        $names = (object) [
-            'key'      => $collectionKey,
-            'class'    => static::class,
-            'singular' => $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
-            'plural'   => $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
-        ];
-
-        return $key ? $names->$key : $names;
+        return new CollectionDetails(
+            $collectionKey,
+            static::class,
+            $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
+            $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
+            $this->flatReferenceLabel()
+        );
     }
 
     public function mediaUrls($type = null): Collection
@@ -146,18 +143,13 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
     }
 
-    public function getRelationId(): string
-    {
-        return $this->getMorphClass().'@'.$this->id;
-    }
-
-    public function getRelationLabel(): string
+    public function flatReferenceLabel(): string
     {
         return $this->title ?? '';
     }
 
-    public function getRelationGroup(): string
+    public function flatReferenceGroup(): string
     {
-        return static::collectionDetails('plural');
+        return $this->collectionDetails()->singular;
     }
 }

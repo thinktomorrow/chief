@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Collections\CollectionItems;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +54,7 @@ class UpdatePage
             $page->rejectChild($child);
         }
 
-        foreach (CollectionItems::inflate($relateds) as $i => $related) {
+        foreach (FlatReferenceCollection::fromFlatReferences($relateds) as $i => $related) {
             $page->adoptChild($related, ['sort' => $i]);
         }
     }

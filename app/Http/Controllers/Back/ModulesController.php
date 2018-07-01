@@ -20,7 +20,7 @@ class ModulesController extends Controller
 
         return view('chief::back.modules.index', [
             'modules' => Module::ignoreCollection()->get(),
-            'collections' => Module::freshAvailableCollections()->values()->toArray(),
+            'collections' => Module::availableCollections()->values()->toArray(),
         ]);
     }
 

@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Pages\Application;
 
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Collections\CollectionItems;
+use Thinktomorrow\Chief\Common\Collections\Collections;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;

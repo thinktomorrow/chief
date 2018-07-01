@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
+use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
@@ -32,7 +34,7 @@ class MenuController extends Controller
         $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
 
         return view('chief::back.menu.create', [
-            'pages'            => Page::flattenForGroupedSelect()->toArray(),
+            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::ignoreCollection()->get())->toArray(),
             'menuitem'         => $menuitem,
             'internal_page_id' => null,
             'parents'          => MenuItem::onlyGrandParents()->get(),
@@ -68,12 +70,12 @@ class MenuController extends Controller
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
             $page = Page::ignoreCollection()->find($menuitem->page_id);
-            $internal_page_id = $page->getRelationId();
+            $internal_page_id = $page->flatReference()->get();
         }
 
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
-            'pages'            => $pages = Page::flattenForGroupedSelect()->toArray(),
+            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::ignoreCollection()->get())->toArray(),
             'internal_page_id' => $internal_page_id,
             'parents'          => MenuItem::onlyGrandParents()->get(),
         ]);

@@ -67,12 +67,12 @@ class UpdateMenuItemTest extends TestCase
     {
         $page       = factory(Page::class)->create();
         $newpage    = factory(Page::class)->create();
-        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->flatReference()->get()]);
 
         $response = $this->asDefaultAdmin()
             ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
                 'type' => 'internal',
-                'page_id' => $newpage->getRelationId(),
+                'page_id' => $newpage->flatReference()->get(),
                 'trans.nl.label' => 'foobar',
             ]));
 
@@ -174,7 +174,7 @@ class UpdateMenuItemTest extends TestCase
     public function type_internal_makes_pageid_required()
     {
         $page       = factory(Page::class)->create();
-        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->getRelationId()]);
+        $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->flatReference()->get()]);
 
         $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
             route('chief.back.menu.index'),
