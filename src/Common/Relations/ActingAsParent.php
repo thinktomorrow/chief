@@ -32,6 +32,11 @@ trait ActingAsParent
         $this->detachChild($child->getMorphClass(), $child->getKey());
     }
 
+    public function renderChildren(): string
+    {
+        return $this->presentChildren()->implode('');
+    }
+
     public function presentChildren(): \Illuminate\Support\Collection
     {
         return $this->children()->map(function ($child) {
