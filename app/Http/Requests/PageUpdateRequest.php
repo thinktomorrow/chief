@@ -37,7 +37,7 @@ class PageUpdateRequest extends FormRequest
 
             $rules['trans.' . $locale . '.title']   = 'required|max:200';
             $rules['trans.' . $locale . '.short']   = 'max:700';
-            $rules['trans.' . $locale . '.content'] = 'required|max:1500';
+            $rules['trans.' . $locale . '.content'] = 'required|max:10000';
         }
 
         return $rules;
