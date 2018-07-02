@@ -23,8 +23,9 @@ class CreatePage
             $page = Page::create(['collection' => $collection]);
 
             foreach ($translations as $locale => $value) {
-
-                if($this->isCompletelyEmpty(['title'], $value)) continue;
+                if ($this->isCompletelyEmpty(['title'], $value)) {
+                    continue;
+                }
 
                 $value = $this->enforceUniqueSlug($value, $page, $locale);
                 $page->updateTranslation($locale, $value);
