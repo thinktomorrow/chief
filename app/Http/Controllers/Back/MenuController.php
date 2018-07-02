@@ -30,12 +30,14 @@ class MenuController extends Controller
     {
         $menuitem       = new MenuItem;
         $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
+        
+        $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
 
         return view('chief::back.menu.create', [
             'pages'            => Page::flattenForGroupedSelect()->toArray(),
             'menuitem'         => $menuitem,
             'internal_page_id' => null,
-            'parents'          => MenuItem::onlyGrandParents()->get(),
+            'parents'          => $menuitems,
         ]);
     }
 
@@ -64,18 +66,20 @@ class MenuController extends Controller
         $menuitem->injectTranslationForForm();
 
         // Transpose selected page_id to the format <class>@<id>
-        // as expected by the select field.
+        // as expected by t9he select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
             $page = Page::ignoreCollection()->find($menuitem->page_id);
             $internal_page_id = $page->getRelationId();
         }
 
+        $menuitems = ChiefMenu::fromMenuItems()->getForSelect($id);
+
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => $pages = Page::flattenForGroupedSelect()->toArray(),
             'internal_page_id' => $internal_page_id,
-            'parents'          => MenuItem::onlyGrandParents()->get(),
+            'parents'          => $menuitems,
         ]);
     }
 

@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Carbon;
 
 class MenuTest extends TestCase
 {
@@ -148,7 +149,7 @@ class MenuTest extends TestCase
     {
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id]);
-        $third = MenuItem::create(['label:nl' => 'last item']);
+        $third  = MenuItem::create(['label:nl' => 'last item']);
 
         $collection = ChiefMenu::fromArray([$first, $second, $third])->items();
 
@@ -193,14 +194,32 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    public function first_menu_item_is_the_toggle()
+    public function if_url_is_external_the_link_will_contain_target_blank()
     {
         // test it out
     }
 
     /** @test */
-    public function if_url_is_external_the_link_will_contain_target_blank()
+    public function it_can_show_create_menu()
     {
-        // test it out
+        $this->setUpDefaultAuthorization();
+
+        factory(Page::class)->create([
+            'published'     => 0,
+            'created_at'    => Carbon::now()->subDays(3)
+        ]);
+        factory(Page::class)->create([
+            'published'     => 1,
+            'created_at'    => Carbon::now()->subDays(1)
+        ]);
+
+        $response = $this->asAdmin()
+            ->get(route('chief.back.menu.create', 'statics'));
+
+        $response->assertStatus(200);
+
+        $pages = $this->getResponseData($response, 'pages');
+
+        $this->assertCount(1, $pages);
     }
 }

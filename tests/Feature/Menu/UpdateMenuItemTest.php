@@ -100,7 +100,7 @@ class UpdateMenuItemTest extends TestCase
     }
 
     /** @test */
-    public function an_menuitem_can_be_nested()
+    public function a_menuitem_can_be_nested()
     {
         // Reference here cause we need it twice
         $defaultAdmin = factory(User::class)->make();
@@ -128,19 +128,6 @@ class UpdateMenuItemTest extends TestCase
 
         $this->assertCount(0, $parent->fresh()->children);
         $this->assertNull(MenuItem::find(2)->parent_id); // Hardcoded assumption that newly created has id of 2
-    }
-
-    /** @test */
-    public function type_custom_makes_url_required()
-    {
-        $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
-
-        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => '']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.update', $menuitem->id),
-            1,
-            'put'
-        );
     }
 
     /** @test */
