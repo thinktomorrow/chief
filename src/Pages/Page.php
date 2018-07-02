@@ -54,12 +54,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $with = ['translations'];
 
     /**
-     * The collection scope for the specific class.
-     * @var string
-     */
-    protected static $collectionScopeClass = PageCollectionScope::class;
-
-    /**
      * Each page model can expose the managed translatable fields. These should be included as attributes just like the regular
      * translatable attributes. This method allows for easy installation of the form fields in chief.
      *
@@ -141,7 +135,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceGroup(): string
     {
-        return $this->collectionKey()->singular;
+        return $this->collectionDetails()->singular;
     }
 
     public function mediaUrls($type = null): Collection

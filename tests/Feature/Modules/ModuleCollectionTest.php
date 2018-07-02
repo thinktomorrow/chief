@@ -35,7 +35,9 @@ class ModuleCollectionTest extends TestCase
 
         $this->assertCount(1, NewsletterModuleFake::all());
         $this->assertCount(0, OtherModuleFake::all());
-        $this->assertCount(0, Module::all());
+
+        $this->assertCount(0, Module::collection(null)->get());
+        $this->assertCount(1, Module::all()); // Base class ignores collection (because no collection key ignores scope)
         $this->assertCount(1, Module::ignoreCollection()->get());
     }
 
@@ -46,7 +48,9 @@ class ModuleCollectionTest extends TestCase
 
         $this->assertNotNull(NewsletterModuleFake::first());
         $this->assertNull(OtherModuleFake::first());
-        $this->assertNull(Module::first());
+
+        $this->assertNotNull(Module::first());
+        $this->assertNull(Module::collection(null)->first());
     }
 
     /** @test */

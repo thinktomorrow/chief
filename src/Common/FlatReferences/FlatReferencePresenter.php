@@ -10,7 +10,7 @@ class FlatReferencePresenter
     {
         return $collection->map(function (ProvidesFlatReference $item) {
             return [
-                'id'    => $item->flatReference(),
+                'id'    => $item->flatReference()->get(),
                 'label' => $item->flatReferenceLabel(),
                 'group' => $item->flatReferenceGroup(),
             ];

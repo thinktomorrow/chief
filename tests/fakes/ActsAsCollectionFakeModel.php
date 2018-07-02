@@ -23,6 +23,7 @@ class ActsAsCollectionFakeModel extends Model implements ActsAsCollection
         Schema::create('has_collection_fakes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('label')->nullable();
+            $table->string('collection')->default('has_collection_fakes');
             $table->string('group')->nullable();
             $table->timestamps();
         });

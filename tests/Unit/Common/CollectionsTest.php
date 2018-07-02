@@ -4,13 +4,10 @@ namespace Thinktomorrow\Chief\Tests\Unit\Common;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
-use Thinktomorrow\Chief\Common\Collections\Collections;
 use Thinktomorrow\Chief\Tests\Fakes\ActsAsCollectionFake;
 use Thinktomorrow\Chief\Tests\Fakes\ActsAsCollectionFakeModel;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -49,12 +46,7 @@ class CollectionsTest extends TestCase
     /** @test */
     function it_can_create_collection_id_from_string()
     {
-        $this->setUpDatabase();
-        ActsAsCollectionFakeModel::migrateUp();
-
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'has_collection_fakes' => ActsAsCollectionFakeModel::class,
-        ]);
+        $this->setUpCollectionFakeWorld();
 
         $acts_as_collection = ActsAsCollectionFakeModel::create(['label' => 'new label']);
 
@@ -67,10 +59,9 @@ class CollectionsTest extends TestCase
     /** @test */
     function it_can_create_instance_from_collection_id()
     {
-        $this->setUpDatabase();
-        ActsAsCollectionFakeModel::migrateUp();
+        $this->setUpCollectionFakeWorld();
 
-        $first = ActsAsCollectionFakeModel::create();
+        $first = ActsAsCollectionFakeModel::create(['collection' => 'has_collection_fakes']);
         $instance = $first->flatReference()->instance();
 
         $this->assertInstanceOf(ActsAsCollectionFakeModel::class, $instance);
@@ -80,8 +71,7 @@ class CollectionsTest extends TestCase
     /** @test */
     function it_can_instantiate_multiple_collection_ids()
     {
-        $this->setUpDatabase();
-        ActsAsCollectionFakeModel::migrateUp();
+        $this->setUpCollectionFakeWorld();
 
         $first = ActsAsCollectionFakeModel::create();
         $second = ActsAsCollectionFakeModel::create();
@@ -96,5 +86,15 @@ class CollectionsTest extends TestCase
         foreach($instances as $instance){
             $this->assertInstanceOf(Model::class, $instance);
         }
+    }
+
+    protected function setUpCollectionFakeWorld()
+    {
+        $this->setUpDatabase();
+        ActsAsCollectionFakeModel::migrateUp();
+
+        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+            'has_collection_fakes' => ActsAsCollectionFakeModel::class,
+        ]);
     }
 }

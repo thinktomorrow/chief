@@ -43,12 +43,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $with = ['translations'];
 
     /**
-     * The collection scope for the specific class.
-     * @var string
-     */
-    protected static $collectionScopeClass = ModuleCollectionScope::class;
-
-    /**
      * Each module model can expose the managed translatable fields. These should be included as attributes just like the regular
      * translatable attributes. This method allows for easy installation of the form fields in chief.
      *

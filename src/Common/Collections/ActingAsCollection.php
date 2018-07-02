@@ -78,7 +78,7 @@ trait ActingAsCollection
         });
     }
 
-    public function collectionKey(): ?string
+    public function collectionKey(): string
     {
         // Collection key is stored at db - if not we map it from our config
         if ($this->collection) {
@@ -87,7 +87,11 @@ trait ActingAsCollection
 
         $mapping = static::mapping();
 
-        return false != ($key = array_search(static::class, $mapping)) ? $key : null;
+        if(false == ($key = array_search(static::class, $mapping))) {
+            throw new NotFoundCollectionKey('Collection key expected but none found for ' . static::class.'. Please provide a collection key in the chief config file and on your model as model::collection property.');
+        }
+
+        return $key;
     }
 
     public static function fromCollectionKey(string $key = null, $attributes = [])
@@ -95,7 +99,7 @@ trait ActingAsCollection
         $mapping = static::mapping();
 
         if (!isset($mapping[$key])) {
-            throw new \DomainException('No corresponding class found for the collection key ['.$key.']. Make sure to add this to the [thinktomorrow.chief.collections] config array.');
+            throw new NotFoundCollectionKey('No corresponding class found for the collection key ['.$key.']. Make sure to add this to the [thinktomorrow.chief.collections] config array.');
         }
 
         return new $mapping[$key]($attributes);
@@ -137,11 +141,16 @@ trait ActingAsCollection
     {
         /**
          * Hacky way to determine the collections per type. This
-         * is currently either 'pages' or 'modules'.
+         * is currently either 'pages' or 'modules'. If anything
+         * else, we will resort to the default pages.
          */
-        $collection = (new static)->getTable();
+        $type = (new static)->getTable();
 
-        return config('thinktomorrow.chief.collections.'.$collection, []);
+        if(!in_array($type, ['pages', 'modules'])) {
+            $type = 'pages';
+        }
+
+        return config('thinktomorrow.chief.collections.'.$type, []);
     }
 
     private static function globalCollectionScope()

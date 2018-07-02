@@ -12,6 +12,16 @@ class GlobalCollectionScope implements Scope
 {
     public function apply(Builder $builder, Model $model)
     {
-        $builder->where('collection', '=', $model->collectionKey());
+        try {
+            $builder->where('collection', '=', $model->collectionKey());
+        }
+        /**
+         * If query is performed on a model that has no collection key,
+         * it is fine to ignore the collection scope altogether.
+         */
+        catch(NotFoundCollectionKey $e) {
+
+        }
+
     }
 }

@@ -19,9 +19,9 @@ interface ActsAsCollection extends ProvidesFlatReference
      * Unique identifier of the collection this item belongs to. This refers to
      * the key as set in the config chief > collections > pages / modules
      *
-     * @return string|null
+     * @return string
      */
-    public function collectionKey(): ?string;
+    public function collectionKey(): string;
 
     /**
      * Make an instance based on the passed collection key. The class is
