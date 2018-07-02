@@ -30,14 +30,14 @@
 
             <hr class="separator">
 
-            @include('chief::back.menu._partials._rowitem')
+            @include('chief::back.menu._partials._rowitem', ['item' => $menuitem])
 
             @foreach($menuitem->children as $child)
 
-                @include('chief::back.menu._partials._rowitem', ['level' => 1])
+                @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 
                 @foreach($child->children as $subchild)
-                    @include('chief::back.menu._partials._rowitem', ['level' => 2])
+                    @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
                 @endforeach
 
                 <div class="stack"></div>

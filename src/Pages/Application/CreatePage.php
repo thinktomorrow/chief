@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Common\Audit\Audit;
 
 class CreatePage
 {
@@ -22,10 +23,17 @@ class CreatePage
             $page = Page::create(['collection' => $collection]);
 
             foreach ($translations as $locale => $value) {
+
+                if($this->isCompletelyEmpty(['title'], $value)) continue;
+
                 $value = $this->enforceUniqueSlug($value, $page, $locale);
                 $page->updateTranslation($locale, $value);
             }
 
+            Audit::activity()
+                ->performedOn($page)
+                ->log('created');
+                
             DB::commit();
 
             return $page->fresh();

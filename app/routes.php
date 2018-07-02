@@ -75,6 +75,11 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     // Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
     // Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
 
+    // AUDIT
+
+    Route::get('audit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@index')->name('chief.back.audit.index');
+    Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@show')->name('chief.back.audit.show');
+
     // Menu
     Route::get('menu', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@index')->name('chief.back.menu.index');
     Route::post('menu', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@store')->name('chief.back.menu.store');
