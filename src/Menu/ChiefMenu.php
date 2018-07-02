@@ -39,13 +39,13 @@ class ChiefMenu
     {
         $this->collection = $this->items();
         
-        if($id){
-            $this->collection = $this->collection->prune(function($node) use($id){
+        if ($id) {
+            $this->collection = $this->collection->prune(function ($node) use ($id) {
                 return !in_array($id, $node->pluckAncestors('id'));
             });
         }
 
-        $menu = $this->collection->mapRecursive(function($node){
+        $menu = $this->collection->mapRecursive(function ($node) {
             $entry = $node->entry();
             $label = $entry->label;
             $entry->label = $node->depth() != 0 ? (str_repeat('-', $node->depth())) . '>' : '';
@@ -54,7 +54,7 @@ class ChiefMenu
         });
 
         $menuitems = collect();
-        $menu->flatten()->each(function($node) use($menuitems){
+        $menu->flatten()->each(function ($node) use ($menuitems) {
             $menuitems[]  = [
                 'label' => $node->label,
                 'id'    => $node->id
