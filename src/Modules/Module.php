@@ -129,7 +129,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public static function findBySlug($slug)
     {
-        return self::ignoreCollection()->where('slug', $slug)->first();
+        return static::where('slug', $slug)->first();
     }
 
     public function presentForParent(ActsAsParent $parent, Relation $relation): string

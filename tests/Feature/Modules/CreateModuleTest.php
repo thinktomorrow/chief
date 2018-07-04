@@ -31,12 +31,12 @@ class CreateModuleTest extends TestCase
         $response = $this->asAdmin()
             ->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams());
 
-        $module = Module::ignoreCollection()->first();
+        $module = Module::first();
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.modules.edit', $module->getKey()));
 
-        $this->assertCount(1, Module::ignoreCollection()->get());
+        $this->assertCount(1, Module::all());
         $this->assertNewModuleValues($module);
     }
 
@@ -46,7 +46,7 @@ class CreateModuleTest extends TestCase
         $response = $this->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams());
 
         $response->assertRedirect(route('chief.back.login'));
-        $this->assertCount(0, Module::ignoreCollection()->get());
+        $this->assertCount(0, Module::all());
     }
 
     /** @test */
@@ -66,7 +66,7 @@ class CreateModuleTest extends TestCase
             'slug'   => 'foobar'
         ]);
 
-        $this->assertCount(1, Module::ignoreCollection()->get());
+        $this->assertCount(1, Module::all());
 
         $response = $this->asAdmin()
             ->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams([
@@ -77,7 +77,7 @@ class CreateModuleTest extends TestCase
 
         $response->assertStatus(302);
 
-        $modules = Module::ignoreCollection()->get();
+        $modules = Module::all();
         $this->assertCount(1, $modules);
     }
 }

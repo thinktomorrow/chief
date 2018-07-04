@@ -195,19 +195,19 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->published()->find($id)))
+        return (($page = self::published()->find($id)))
             ? $page
             : null;
     }
 
     public static function findBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? self::ignoreCollection()->find($trans->page_id) : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? static::find($trans->page_id) : null;
     }
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? self::findPublished($trans->page_id) : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)

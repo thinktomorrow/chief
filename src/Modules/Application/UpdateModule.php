@@ -17,7 +17,7 @@ class UpdateModule
         try {
             DB::beginTransaction();
 
-            $module = Module::ignoreCollection()->findOrFail($id);
+            $module = Module::findOrFail($id);
             $module->slug = $slug;
             $module->save();
 

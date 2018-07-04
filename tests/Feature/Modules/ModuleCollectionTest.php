@@ -38,7 +38,7 @@ class ModuleCollectionTest extends TestCase
 
         $this->assertCount(0, Module::collection(null)->get());
         $this->assertCount(1, Module::all()); // Base class ignores collection (because no collection key ignores scope)
-        $this->assertCount(1, Module::ignoreCollection()->get());
+        $this->assertCount(1, Module::all());
     }
 
     /** @test */
@@ -58,7 +58,7 @@ class ModuleCollectionTest extends TestCase
     {
         Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
 
-        $this->assertNotNull(Module::ignoreCollection()->first());
+        $this->assertNotNull(Module::first());
     }
 
     /** @test */
@@ -101,8 +101,8 @@ class ModuleCollectionTest extends TestCase
             'slug' => 'foobar',
         ]);
 
-        $this->assertInstanceOf(NewsletterModuleFake::class, Module::ignoreCollection()->find($module->id));
-        $this->assertInstanceOf(NewsletterModuleFake::class, Module::ignoreCollection()->findOrFail($module->id));
+        $this->assertInstanceOf(NewsletterModuleFake::class, Module::find($module->id));
+        $this->assertInstanceOf(NewsletterModuleFake::class, Module::findOrFail($module->id));
     }
 
     /** @test */

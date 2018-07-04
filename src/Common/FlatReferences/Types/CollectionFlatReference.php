@@ -24,6 +24,6 @@ class CollectionFlatReference implements ActsAsFlatReference
      */
     public function instance(): Model
     {
-        return (new $this->className)->ignoreCollection()->findOrFail($this->id);
+        return (new $this->className)->findOrFail($this->id);
     }
 }

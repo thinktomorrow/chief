@@ -116,7 +116,7 @@ class AuditTest extends TestCase
         $this->actingAs($user, 'chief')
             ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
         
-        $activity = Page::ignoreCollection()->first();
+        $activity = Page::first();
 
         $this->assertCount(1, $article->activity);
         $this->assertEquals('created', $activity->description);
