@@ -107,7 +107,7 @@ class AdminLoginTest extends TestCase
             'enabled' => true,
         ]);
 
-        $resp = $this->get(route('chief.back.pages.index', 'statics'));
+        $resp = $this->get(route('chief.back.pages.index', 'singles'));
         $resp->assertRedirect(route('chief.back.login'));
 
         $response = $this->post(route('chief.back.login.store'), [
@@ -118,7 +118,7 @@ class AdminLoginTest extends TestCase
         $this->assertTrue(Auth::guard('chief')->check());
         $this->assertEquals($admin->id, Auth::guard('chief')->user()->id);
         $this->assertFalse(session()->has('errors'));
-        $response->assertRedirect(route('chief.back.pages.index', 'statics'));
+        $response->assertRedirect(route('chief.back.pages.index', 'singles'));
     }
 
     /** @test */

@@ -5,7 +5,8 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
+use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class MediaTest extends TestCase
@@ -15,15 +16,15 @@ class MediaTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'statics' => Page::class,
-            'articles' => ArticleFake::class,
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
         ]);
     }
     
     /** @test */
     public function it_can_have_an_image()
     {
-        $fake = ArticleFake::create([]);
+        $fake = ArticlePageFake::create([]);
 
         $fake->addFile(UploadedFile::fake()->image('image.png'), 'images');
 
@@ -33,7 +34,7 @@ class MediaTest extends TestCase
     /** @test */
     public function a_page_can_have_an_image_for_hero()
     {
-        $page = Page::create(['collection' => 'statics']);
+        $page = Page::create(['collection' => 'singles']);
 
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
@@ -46,7 +47,7 @@ class MediaTest extends TestCase
     {
         $this->setUpDefaultAuthorization();
 
-        $article = ArticleFake::create(['collection' => 'articles']);
+        $article = ArticlePageFake::create(['collection' => 'articles']);
 
         $response = $this->asAdmin()->post(route('pages.media.upload', $article->id), [
             'file' => [

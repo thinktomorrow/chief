@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
+use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
@@ -18,7 +20,7 @@ class UpdatePage
         try {
             DB::beginTransaction();
 
-            $page = Page::ignoreCollection()->findOrFail($id);
+            $page = Page::findOrFail($id);
 
             $this->savePageTranslations($page, $translations);
 

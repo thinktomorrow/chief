@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
@@ -196,7 +197,7 @@ class UpdateMenuItemTest extends TestCase
             ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
                 'type' => 'internal',
                 'trans.nl.label' => 'updated label',
-                'page_id' => Page::class.'@999' // Fake page reference
+                'page_id' => Single::class.'@999' // Fake page reference
             ]));
 
         // Assert our values are still the same

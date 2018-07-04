@@ -1,6 +1,6 @@
 <?php
 
-$page = \Thinktomorrow\Chief\Pages\Page::ignoreCollection()->first();
+$page = \Thinktomorrow\Chief\Pages\Page::first();
 
 ?>
 

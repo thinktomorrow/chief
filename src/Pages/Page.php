@@ -117,8 +117,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return new CollectionDetails(
             $collectionKey,
             static::class,
-            $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
-            $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
+            ucfirst(str_singular($collectionKey)),
+            ucfirst(str_plural($collectionKey)),
             $this->flatReferenceLabel()
         );
     }

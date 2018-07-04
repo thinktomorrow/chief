@@ -12,7 +12,7 @@ class PublishPageController extends Controller
     {
         $this->authorize('update-page');
 
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
 
         if (! $page->isPublished()) {
             $page->publish();
@@ -25,7 +25,7 @@ class PublishPageController extends Controller
     {
         $this->authorize('update-page');
 
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
 
         if (! $page->isDraft()) {
             $page->draft();

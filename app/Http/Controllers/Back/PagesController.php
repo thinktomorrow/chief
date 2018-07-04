@@ -81,7 +81,7 @@ class PagesController extends Controller
     {
         $this->authorize('update-page');
 
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
@@ -137,7 +137,7 @@ class PagesController extends Controller
 
     public function publish(Request $request, $id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
@@ -147,7 +147,7 @@ class PagesController extends Controller
 
     public function unpublish(Request $request, $id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();

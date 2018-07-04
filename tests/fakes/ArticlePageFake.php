@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Thinktomorrow\Chief\Pages\Page;
 
-class ArticleFake extends Page
+class ArticlePageFake extends Page
 {
     public function menuUrl(): string
     {

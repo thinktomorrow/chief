@@ -78,6 +78,35 @@ trait ActingAsCollection
         });
     }
 
+    /**
+     * Create a new instance of the given model.
+     *
+     * @param  array  $attributes
+     * @param  bool  $exists
+     * @return static
+     */
+    public function newInstance($attributes = [], $exists = false)
+    {
+        if(!isset($attributes['collection'])) {
+            return parent::newInstance($attributes, $exists);
+        }
+
+        $class = static::fromCollectionKey($attributes['collection']);
+
+        // This method just provides a convenient way for us to generate fresh model
+        // instances of this current model. It is particularly useful during the
+        // hydration of new objects via the Eloquent query builder instances.
+        $model = new $class((array) $attributes);
+
+        $model->exists = $exists;
+
+        $model->setConnection(
+            $this->getConnectionName()
+        );
+
+        return $model;
+    }
+
     public function collectionKey(): string
     {
         // Collection key is stored at db - if not we map it from our config

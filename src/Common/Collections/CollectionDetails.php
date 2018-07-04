@@ -59,4 +59,9 @@ class CollectionDetails
     {
         return (string)$this->get('key');
     }
+
+    public function toArray()
+    {
+        return $this->all();
+    }
 }

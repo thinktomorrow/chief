@@ -34,7 +34,7 @@ class MenuController extends Controller
         $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
 
         return view('chief::back.menu.create', [
-            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::ignoreCollection()->get())->toArray(),
+            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
             'menuitem'         => $menuitem,
             'internal_page_id' => null,
             'parents'          => MenuItem::onlyGrandParents()->get(),
@@ -69,13 +69,13 @@ class MenuController extends Controller
         // as expected by the select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
-            $page = Page::ignoreCollection()->find($menuitem->page_id);
+            $page = Page::find($menuitem->page_id);
             $internal_page_id = $page->flatReference()->get();
         }
 
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
-            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::ignoreCollection()->get())->toArray(),
+            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
             'internal_page_id' => $internal_page_id,
             'parents'          => MenuItem::onlyGrandParents()->get(),
         ]);

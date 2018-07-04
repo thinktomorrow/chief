@@ -91,7 +91,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
      * Details of the collection such as naming, key and class.
      * Used in several dynamic parts of the admin application.
      */
-    public function collectionDetails($key = null): CollectionDetails
+    public function collectionDetails(): CollectionDetails
     {
         $collectionKey = $this->collectionKey();
 
@@ -139,7 +139,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public function flatReferenceLabel(): string
     {
-        return $this->title ?? '';
+        return $this->slug ?? '';
     }
 
     public function flatReferenceGroup(): string
