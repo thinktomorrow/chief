@@ -134,7 +134,21 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public function presentForParent(ActsAsParent $parent, Relation $relation): string
     {
-        return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
+        $guessedParentViewName = $parent->collectionKey();
+        $guessedViewName = strtolower((new \ReflectionClass($this))->getShortName());
+        $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
+
+        foreach($viewPaths as $viewPath) {
+            if( ! view()->exists($viewPath)) continue;
+
+            return view($viewPath, [
+                'banner' => $this,
+                'parent' => $parent,
+                'relation' => $relation,
+            ])->render();
+        }
+
+        return '';
     }
 
     public function flatReferenceLabel(): string

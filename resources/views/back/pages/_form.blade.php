@@ -47,22 +47,7 @@
                 'description' => $mediaType['description'],
             ])
         @endforeach
-
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Featured image</h2>
-                <p class="caption">Kies hier de afbeelding die bij de pagina hoort</p>
-            </div>
-            <div class="formgroup-input column-7">
-                <div class="input-group">
-                    <label for="file">Upload</label>
-                    <label class="custom-file">
-                        <input type="file" id="file">
-                        <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
-                    </label>
-                </div>
-            </div>
-        </section>
+        
         <a href="#seo" class="btn btn-o-primary right">volgende</a>
     </tab>
     <tab name="Seo">

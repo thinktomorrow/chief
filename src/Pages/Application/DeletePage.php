@@ -3,6 +3,7 @@ namespace Thinktomorrow\Chief\Pages\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Audit\Audit;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 
 class DeletePage
@@ -17,10 +18,18 @@ class DeletePage
 
             if ($page->isDraft() || $page->isArchived()) {
                 $page->delete();
+
+                Audit::activity()
+                    ->performedOn($page)
+                    ->log('deleted');
             }
             
             if ($page->isPublished()) {
                 $page->archive();
+
+                Audit::activity()
+                    ->performedOn($page)
+                    ->log('archived');
             }
 
             DB::commit();

@@ -113,4 +113,34 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, $pages);
         $this->assertNotNull($pages->first()->slug);
     }
+
+    /** @test */
+    public function it_can_delete_pages()
+    {
+        $user = $this->developer();
+        $response  =$this->actingAs($user, 'chief')
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams(['published' => false]));
+
+        $this->assertCount(1, Page::all());
+
+        $page = Page::first();
+        $this->actingAs($user, 'chief')
+             ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
+
+        $this->assertCount(0, Page::all());
+    }
+    /** @test */
+    public function it_can_archive_pages()
+    {
+        $user = $this->developer();
+        $page = factory(Page::class)->create(['published' => true]);
+
+        $this->assertCount(1, Page::all());
+
+        $this->actingAs($user, 'chief')
+             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
+
+        $this->assertCount(0, Page::all());
+        $this->assertCount(1, Page::withArchived()->get());
+    }
 }

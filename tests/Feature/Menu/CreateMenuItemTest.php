@@ -110,12 +110,23 @@ class CreateMenuItemTest extends TestCase
     }
 
     /** @test */
-    public function type_custom_makes_url_required()
+    public function create_custom_without_link()
     {
-        $this->assertValidation(new MenuItem(), 'trans.nl.url', $this->validParams(['type' => 'custom', 'trans.nl.url' => '']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
-        );
+        $response = $this->asDefaultAdmin()
+            ->post(route('chief.back.menu.store'), $this->validParams([
+                    'type'              => 'custom',
+                    'trans.nl.label'    => 'nieuw label',
+                    'trans.en.label'    => 'new label',
+                ]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.menu.index'));
+
+        $this->assertCount(1, MenuItem::all());
+        $this->assertNewValues(MenuItem::first(), [
+            'type'              => 'custom',
+            'trans.en.label'    => 'new label',
+        ]);
     }
 
     /** @test */

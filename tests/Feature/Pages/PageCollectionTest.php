@@ -106,14 +106,12 @@ class PageCollectionTest extends TestCase
         ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'foobar',
             'published' => 1
         ]);
         ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'barfoo',
             'published' => 0
         ]);
@@ -128,7 +126,6 @@ class PageCollectionTest extends TestCase
         $article = ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'foobar',
             'published' => 1
         ]);
@@ -145,7 +142,6 @@ class PageCollectionTest extends TestCase
         ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'foobar',
             'published' => 1
         ]);

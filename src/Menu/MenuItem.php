@@ -84,7 +84,9 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             if ($item->ofType(static::TYPE_COLLECTION)) {
                 $pages = Page::fromCollectionKey($item->collection_type)->all();
 
-                $pages->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
+                $pages->reject(function ($page) {
+                    return $page->hidden_in_menu == true;
+                })->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
                     $collectionItems->push(MenuItem::make([
                         'id'         => 'collection-' . $page->id,
                         'label'      => $page->menuLabel(),
@@ -96,12 +98,15 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
-                $item->url = $page->menuUrl();
-                $item->page_label = $page->menuLabel();
-                $items[$k] = $item;
+                if ($page->hidden_in_menu == true) {
+                    unset($items[$k]);
+                } else {
+                    $item->url = $page->menuUrl();
+                    $item->page_label = $page->menuLabel();
+                    $items[$k] = $item;
+                }
             }
         }
-
         return array_merge($items->all(), $collectionItems->all());
     }
 
@@ -142,7 +147,6 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             'order'          => $node->order,
             'page_id'        => $node->page_id,
             'parent_id'      => $node->parent_id,
-            'hidden_in_menu' => $node->hidden_in_menu,
         ];
     }
 }

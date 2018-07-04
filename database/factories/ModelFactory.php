@@ -17,17 +17,14 @@ $factory->define(User::class, function (Faker\Generator $faker) {
 
 $factory->define(Page::class, function (Faker\Generator $faker) {
     return [
+        'collection' => 'singles',
         'published'   => $faker->boolean(),
         'featured'    => $faker->boolean(),
         'publication' => null,
         'title:nl'    => $faker->words(rand(2, 4), true),
         'title:en'    => $faker->words(rand(2, 4), true),
-        'short:nl'    => $faker->words(rand(10, 14), true),
-        'short:en'    => $faker->words(rand(10, 14), true),
         'slug:nl'     => $faker->unique()->slug,
         'slug:en'     => $faker->unique()->slug,
-        'content:nl'  => $faker->paragraph(rand(6, 12)),
-        'content:en'  => $faker->paragraph(rand(4, 10)),
     ];
 });
 

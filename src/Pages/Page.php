@@ -23,8 +23,7 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
-use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 
@@ -38,6 +37,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         Publishable,
         Featurable,
         Archivable,
+        AuditTrait,
         ActingAsParent,
         ActingAsChild;
 
@@ -45,7 +45,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $translationModel = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
     protected $translatedAttributes = [
-        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description',
+        'slug', 'title', 'seo_title', 'seo_description'
     ];
 
     public $table = "pages";
@@ -99,9 +99,54 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
             'short' => HtmlField::make()->label('Korte samenvatting')->description('Wordt gebruikt voor overzichtspagina\'s.'),
             'content' => HtmlField::make()->label('Inhoud'),
+        ];
+    }
+
+    /**
+     * Each page model can expose the managed media fields.
+     * This method allows for easy installation of the form fields in chief.
+     *
+     * @param null $key
+     * @return array
+     */
+    final public static function mediaFields($key = null)
+    {
+        $mediaFields = array_merge(static::defaultMediaFields(), static::customMediaFields());
+
+        return $key ? array_pluck($mediaFields, $key) : $mediaFields;
+    }
+
+    /**
+     * The custom addition of media fields for a page model.
+     *
+     * To add a field, you should:
+     * 1. override this method with your own and return the comprised list of fields.
+     *
+     * @return array
+     */
+    public static function customMediaFields(): array
+    {
+        return [];
+    }
+
+    /**
+     * The default set of media fields for a page model.
+     *
+     * If you wish to remove any of these fields, you should:
+     * 1. override this method with your own and return the comprised list of fields.
+     *
+     * @return array
+     */
+    public static function defaultMediaFields(): array
+    {
+        return [
+            // MediaType::HERO => [
+            //     'type' => MediaType::HERO,
+            //     'label' => 'Hoofdafbeelding',
+            //     'description' => '',
+            // ],
         ];
     }
 
@@ -146,24 +191,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function mediaUrl($type = null): ?string
     {
         return $this->mediaUrls($type)->first();
-    }
-
-    public static function mediaFields($key = null)
-    {
-        $types = [
-            MediaType::HERO => [
-                'type' => MediaType::HERO,
-                'label' => 'Hoofdafbeelding',
-                'description' => '',
-            ],
-            MediaType::THUMB => [
-                'type' => MediaType::THUMB,
-                'label' => 'Thumbnails',
-                'description' => '',
-            ],
-        ];
-
-        return $key ? array_pluck($types, $key) : $types;
     }
 
     public static function findPublished($id)

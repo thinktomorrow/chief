@@ -7,7 +7,7 @@
                 </li>
                 <li>
                     <dropdown>
-                        <span class="center-y nav-item {{ isActiveUrl('admin/pages*') ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle"><span class="inline-s">Pagina's</span><span class="icon icon-chevron-down"></span></span>
+                        <span class="center-y nav-item {{ isActiveUrl('admin/pages*') ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Pagina's</span>
                         <div v-cloak class="dropdown-box inset-s">
                             @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections() as $key => $collection)
                                 <a class="block squished --link-with-bg {{ isActiveUrl('admin/pages/'.$key.'*') ? 'active' : '' }}" href="{{ route('chief.back.pages.index',['collection' => $key]) }}">{{ $collection->plural }}</a>
@@ -16,15 +16,32 @@
                     </dropdown>
                 </li>
                 <li><a class="nav-item {{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Modules</a></li>
-                <li><a class="nav-item {{ isActiveUrl('admin/menu*') ? 'active' : '' }}" href="{{ route('chief.back.menu.index') }}">Menu</a></li>
-                <li><a class="nav-item {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a></li>
-                <li><a class="nav-item {{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Users</a></li>
-                <li><a class="nav-item" target="_blank" href="/spirit">Spirit</a></li>
+                <dropdown>
+                    <span class="center-y nav-item {{ (isActiveUrl('admin/translations*') || isActiveUrl('admin/menu*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Site</span>
+                    <div v-cloak class="dropdown-box inset-s">
+                        <a class="block squished --link-with-bg {{ isActiveUrl('admin/menu*') ? 'active' : '' }}" href="{{ route('chief.back.menu.index') }}">Menu</a>
+                        <a class="block squished --link-with-bg {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>
+                    </div>
+                </dropdown>
             </ul>
 
             <div class="column">
                 <ul class="nav-items right">
-                    <li><a class="nav-item" href="{{ route('chief.back.settings.index') }}"><i class="icon icon-cog"></i></a></li>
+                    @role('developer')
+                        <li><a class="label label--primary squished-xs" target="_blank" href="/spirit">Spirit</a></li>
+                    @endrole
+                    <dropdown>
+                        <span class="center-y nav-item {{ (isActiveUrl('admin/users*') || isActiveUrl('admin/settings*') || isActiveUrl('admin/audit*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle"><span class="icon icon-cog"></span></span>
+                        <div v-cloak class="dropdown-box inset-s">
+                            @can('view-user')
+                                <a class="block squished --link-with-bg {{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Users</a>
+                            @endcan
+                            <a class="block squished --link-with-bg {{ isActiveUrl('admin/settings*') ? 'active' : '' }}" href="{{ route('chief.back.settings.index') }}">Settings</a>
+                            @can('view-audit')
+                                <a class="block squished --link-with-bg {{ isActiveUrl('admin/audit*') ? 'active' : '' }}" href="{{ route('chief.back.audit.index') }}">Audit</a>
+                            @endcan
+                        </div>
+                    </dropdown>
 
                     <li>
                         <dropdown>
