@@ -44,3 +44,16 @@ if (!function_exists('cached_asset')) {
         }
     }
 }
+
+if (!function_exists('setting')) {
+    function setting($key = null, $default = null) {
+
+        $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
+
+        if(is_null($key)) {
+            return $manager;
+        }
+
+        return $manager->get($key, $default);
+    }
+}

@@ -155,6 +155,21 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     /**
      * -----------------------------------------------------------------
+     * SETTINGS MANAGEMENT
+     * -----------------------------------------------------------------
+     */
+    Route::get('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@index')->name('chief.back.settings.index');
+    Route::post('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@store')->name('chief.back.settings.store');
+    Route::get('settings/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@create')->name('chief.back.settings.create');
+    Route::put('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@update')->name('chief.back.settings.update');
+    Route::get('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@show')->name('chief.back.settings.show');
+    Route::delete('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@destroy')->name('chief.back.settings.destroy');
+    Route::get('settings/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@edit')->name('chief.back.settings.edit');
+
+
+
+    /**
+     * -----------------------------------------------------------------
      * SQUANTO TRANSLATION ROUTES
      * -----------------------------------------------------------------
      */
