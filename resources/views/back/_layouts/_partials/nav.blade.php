@@ -27,8 +27,9 @@
 
             <div class="column">
                 <ul class="nav-items right">
-                    <li><a class="label label--primary squished-xs" target="_blank" href="/spirit">Spirit</a></li>
-
+                    @role('developer')
+                        <li><a class="label label--primary squished-xs" target="_blank" href="/spirit">Spirit</a></li>
+                    @endrole
                     <dropdown>
                         <span class="center-y nav-item {{ (isActiveUrl('admin/users*') || isActiveUrl('admin/settings*') || isActiveUrl('admin/audit*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle"><span class="icon icon-cog"></span></span>
                         <div v-cloak class="dropdown-box inset-s">
