@@ -32,7 +32,15 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function it_can_store_new_settings_value()
+    function it_can_retrieve_a_setting_from_config()
+    {
+        setting()->set('foo', 'bar');
+
+        $this->assertEquals('bar', setting('foo'));
+    }
+
+    /** @test */
+    function a_setting_from_database_has_priority()
     {
         $setting = Setting::create(['key' => 'foo', 'value' => 'bar']);
 
@@ -43,6 +51,5 @@ class SettingsTest extends TestCase
 
         $this->assertEquals('baz', setting()->fresh()->get('foo'));
     }
-
    
 }
