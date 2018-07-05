@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\Tests\Unit\Common;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
-use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
 use Thinktomorrow\Chief\Tests\Fakes\ActsAsCollectionFake;
 use Thinktomorrow\Chief\Tests\Fakes\ActsAsCollectionFakeModel;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -50,7 +50,7 @@ class CollectionsTest extends TestCase
 
         $acts_as_collection = ActsAsCollectionFakeModel::create(['label' => 'new label']);
 
-        $this->assertInstanceOf(CollectionFlatReference::class, $acts_as_collection->flatReference());
+        $this->assertInstanceOf(FlatReference::class, $acts_as_collection->flatReference());
 
         $id = FlatReferenceFactory::fromString(ActsAsCollectionFakeModel::class.'@'.$acts_as_collection->id);
         $this->assertTrue($id->equals($acts_as_collection->flatReference()));

@@ -4,8 +4,9 @@ namespace Thinktomorrow\Chief\Common\Collections;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\FlatReferences\ActsAsFlatReference;
-use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Pages\Page;
 
 trait ActingAsCollection
 {
@@ -16,9 +17,9 @@ trait ActingAsCollection
         static::addGlobalScope(static::globalCollectionScope());
     }
 
-    public function flatReference(): ActsAsFlatReference
+    public function flatReference(): FlatReference
     {
-        return new CollectionFlatReference(static::class, $this->id);
+        return new FlatReference(static::class, $this->id);
     }
 
     /**
@@ -36,8 +37,6 @@ trait ActingAsCollection
             ucfirst(str_plural($collectionKey)),
             $this->flatReferenceLabel()
         );
-
-        return $key ? $names->$key : $names;
     }
 
     /**
@@ -168,15 +167,22 @@ trait ActingAsCollection
 
     private static function mapping()
     {
+        $mappings = [
+            'pages' => Page::class,
+            'modules' => Module::class,
+        ];
+
+        $type = 'pages';
+
         /**
          * Hacky way to determine the collections per type. This
          * is currently either 'pages' or 'modules'. If anything
          * else, we will resort to the default pages.
          */
-        $type = (new static)->getTable();
-
-        if(!in_array($type, ['pages', 'modules'])) {
-            $type = 'pages';
+        foreach($mappings as $_type => $class) {
+            if(new static instanceof $class) {
+                $type = $_type;
+            }
         }
 
         return config('thinktomorrow.chief.collections.'.$type, []);

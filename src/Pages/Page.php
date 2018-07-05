@@ -5,8 +5,6 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
-use Thinktomorrow\Chief\Common\FlatReferences\ActsAsFlatReference;
-use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
@@ -166,11 +164,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             ucfirst(str_plural($collectionKey)),
             $this->flatReferenceLabel()
         );
-    }
-
-    public function flatReference(): ActsAsFlatReference
-    {
-        return new CollectionFlatReference(static::class, $this->id);
     }
 
     public function flatReferenceLabel(): string

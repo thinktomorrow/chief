@@ -7,8 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
-use Thinktomorrow\Chief\Common\FlatReferences\ActsAsFlatReference;
-use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 
 class ActsAsCollectionFakeModel extends Model implements ActsAsCollection
@@ -29,9 +28,9 @@ class ActsAsCollectionFakeModel extends Model implements ActsAsCollection
         });
     }
 
-    public function flatReference(): ActsAsFlatReference
+    public function flatReference(): FlatReference
     {
-        return new CollectionFlatReference(get_class($this), $this->id);
+        return new FlatReference(get_class($this), $this->id);
     }
 
     public function flatReferenceLabel(): string

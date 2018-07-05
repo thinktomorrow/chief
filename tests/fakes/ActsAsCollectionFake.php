@@ -4,9 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
-use Thinktomorrow\Chief\Common\FlatReferences\ActsAsFlatReference;
-use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 
 class ActsAsCollectionFake implements ActsAsCollection
 {
@@ -23,9 +22,9 @@ class ActsAsCollectionFake implements ActsAsCollection
         $this->group = $group;
     }
 
-    public function flatReference(): ActsAsFlatReference
+    public function flatReference(): FlatReference
     {
-        return new CollectionFlatReference(get_class($this), $this->id);
+        return new FlatReference(get_class($this), $this->id);
     }
 
     public function collectionDetails($key = null): CollectionDetails

@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Common\FlatReferences;
 
 class FlatReferenceFactory
 {
-    public static function fromString(string $reference): ActsAsFlatReference
+    public static function fromString(string $reference): FlatReference
     {
         if(false == strpos($reference, '@')) {
             throw new \InvalidArgumentException('Invalid collection id. Composite key should honour schema <class>@<id>. [' . $reference . '] was passed instead.');

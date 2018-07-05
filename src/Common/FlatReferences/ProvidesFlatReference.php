@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\Common\FlatReferences;
 
 interface ProvidesFlatReference
@@ -10,7 +9,7 @@ interface ProvidesFlatReference
      * model id. Both are joined with an @ symbol. This is used as
      * identifier of the instance mostly in selections.
      */
-    public function flatReference(): ActsAsFlatReference;
+    public function flatReference(): FlatReference;
 
     /**
      * Label that identifies the flat reference with a human readable string.

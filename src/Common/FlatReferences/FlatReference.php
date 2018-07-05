@@ -1,10 +1,12 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\FlatReferences\Types;
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\Common\FlatReferences;
 
 use Illuminate\Database\Eloquent\Model;
 
-trait CommonFlatReferenceBehaviour
+class FlatReference
 {
     /** @var string */
     protected $className;
@@ -16,8 +18,6 @@ trait CommonFlatReferenceBehaviour
         $this->className = $className;
         $this->id = $id;
     }
-
-
 
     /**
      * Recreate the model instance that is referred to by this collection id

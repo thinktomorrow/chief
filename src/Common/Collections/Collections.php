@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Common\Collections;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\FlatReferences\Types\CollectionFlatReference;
 
 class Collections extends Collection
 {

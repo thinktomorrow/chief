@@ -4,6 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Common\Collections;
 
+/**
+ * Class CollectionDetails
+ * @property $key
+ * @property $className
+ * @property $singular
+ * @property $plural
+ * @property $internal_label
+ */
 class CollectionDetails
 {
     /** @var string */
