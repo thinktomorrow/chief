@@ -51,6 +51,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+
+        parent::__construct($attributes);
+    }
+
     /**
      * Each page model can expose the managed translatable fields. These should be included as attributes just like the regular
      * translatable attributes. This method allows for easy installation of the form fields in chief.

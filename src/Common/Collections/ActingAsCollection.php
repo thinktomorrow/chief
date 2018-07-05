@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageTranslation;
 
 trait ActingAsCollection
 {
@@ -71,10 +72,44 @@ trait ActingAsCollection
     {
         // Here we load up the proper collection model instead of the generic base class.
         return tap(static::fromCollectionKey($collectionKey), function ($instance) use ($model) {
+
             $instance->setRawAttributes($model->attributes);
             $instance->setRelations($model->relations);
             $instance->exists = $model->exists;
+
+            $this->loadCustomTranslations($instance);
         });
+    }
+
+    /**
+     * When eager loading the translations via the with attribute, they are loaded every time.
+     * Here we eager load the proper translations if they are set on a different model than the original one.
+     * The current loaded translations are empty because of they tried matching with the original table.
+     *
+     * @param $instance
+     * @param $this
+     */
+    private function loadCustomTranslations($instance)
+    {
+        if ($this->requiresCustomTranslation($instance))
+        {
+            if (!is_array($instance->with) || !in_array('translations', $instance->with))
+            {
+                $instance->unsetRelation('translations');
+            } else
+            {
+                $instance->load('translations');
+            }
+        }
+    }
+
+    /**
+     * @param $instance
+     * @return bool
+     */
+    private function requiresCustomTranslation(Model $instance): bool
+    {
+        return $instance->relationLoaded('translations') && $instance->translations->isEmpty() && $instance->translationModel != PageTranslation::class;
     }
 
     /**
