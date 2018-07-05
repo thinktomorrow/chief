@@ -6,7 +6,7 @@ class FlatReferenceFactory
 {
     public static function fromString(string $reference): ActsAsFlatReference
     {
-        if(false == strpos($reference, '@')) {
+        if (false == strpos($reference, '@')) {
             throw new \InvalidArgumentException('Invalid collection id. Composite key should honour schema <class>@<id>. [' . $reference . '] was passed instead.');
         }
 
@@ -15,11 +15,10 @@ class FlatReferenceFactory
         $instance = new $className();
         $instance->{$instance->getKeyName()} = $id;
 
-        if(! method_exists($instance, 'flatReference')) {
+        if (! method_exists($instance, 'flatReference')) {
             throw new \InvalidArgumentException('Instance created from model reference [' . $reference . '] was expected to have a method of flatReference() but is has not.');
         }
 
         return $instance->flatReference();
     }
-
 }

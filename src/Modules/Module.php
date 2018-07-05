@@ -138,8 +138,10 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         $guessedViewName = strtolower((new \ReflectionClass($this))->getShortName());
         $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
 
-        foreach($viewPaths as $viewPath) {
-            if( ! view()->exists($viewPath)) continue;
+        foreach ($viewPaths as $viewPath) {
+            if (! view()->exists($viewPath)) {
+                continue;
+            }
 
             return view($viewPath, [
                 'banner' => $this,

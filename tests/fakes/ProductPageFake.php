@@ -8,5 +8,4 @@ use Thinktomorrow\Chief\Pages\Page;
 
 class ProductPageFake extends Page
 {
-
 }

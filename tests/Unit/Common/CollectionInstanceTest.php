@@ -25,7 +25,7 @@ class CollectionInstanceTest extends TestCase
     }
 
     /** @test */
-    function it_returns_expected_instance_on_create()
+    public function it_returns_expected_instance_on_create()
     {
         $instance = Page::create(['collection' => 'articles']);
         $this->assertInstanceOf(ArticlePageFake::class, $instance);
@@ -38,7 +38,7 @@ class CollectionInstanceTest extends TestCase
     }
 
     /** @test */
-    function it_returns_expected_instance_on_find()
+    public function it_returns_expected_instance_on_find()
     {
         $page = Page::create(['collection' => 'articles']);
 
@@ -56,7 +56,7 @@ class CollectionInstanceTest extends TestCase
     }
 
     /** @test */
-    function it_creates_single_collection_by_default()
+    public function it_creates_single_collection_by_default()
     {
         $page = Page::create();
 
@@ -65,7 +65,7 @@ class CollectionInstanceTest extends TestCase
     }
 
     /** @test */
-    function it_returns_expected_instance_on_relations()
+    public function it_returns_expected_instance_on_relations()
     {
         Page::create([
             'collection' => 'articles',
