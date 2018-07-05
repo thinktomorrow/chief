@@ -19,9 +19,7 @@ class GlobalCollectionScope implements Scope
          * If query is performed on a model that has no collection key,
          * it is fine to ignore the collection scope altogether.
          */
-        catch(NotFoundCollectionKey $e) {
-
+        catch (NotFoundCollectionKey $e) {
         }
-
     }
 }

@@ -86,7 +86,7 @@ trait ActingAsCollection
      */
     public function newInstance($attributes = [], $exists = false)
     {
-        if(!isset($attributes['collection'])) {
+        if (!isset($attributes['collection'])) {
             return parent::newInstance($attributes, $exists);
         }
 
@@ -115,7 +115,7 @@ trait ActingAsCollection
 
         $mapping = static::mapping();
 
-        if(false == ($key = array_search(static::class, $mapping))) {
+        if (false == ($key = array_search(static::class, $mapping))) {
             throw new NotFoundCollectionKey('Collection key expected but none found for ' . static::class.'. Please provide a collection key in the chief config file and on your model as model::collection property.');
         }
 
@@ -150,7 +150,7 @@ trait ActingAsCollection
 
     public static function availableCollections($refresh = false): Collection
     {
-        if($refresh) {
+        if ($refresh) {
             static::$availableCollections = null;
         }
 

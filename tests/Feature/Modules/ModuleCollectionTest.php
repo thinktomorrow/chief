@@ -62,7 +62,7 @@ class ModuleCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_instance_from_collection_id()
+    public function it_can_create_instance_from_collection_id()
     {
         $module = Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
 
