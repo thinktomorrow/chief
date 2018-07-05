@@ -19,8 +19,8 @@ class ModulesController extends Controller
         $this->authorize('view-page');
 
         return view('chief::back.modules.index', [
-            'modules' => Module::ignoreCollection()->get(),
-            'collections' => Module::freshAvailableCollections()->values()->toArray(),
+            'modules' => Module::all(),
+            'collections' => Module::availableCollections()->values()->map->toArray()->toArray(),
         ]);
     }
 
@@ -52,7 +52,7 @@ class ModulesController extends Controller
     {
         $this->authorize('update-page');
 
-        $module = Module::ignoreCollection()->findOrFail($id);
+        $module = Module::findOrFail($id);
         $module->injectTranslationForForm();
 
         return view('chief::back.modules.edit', [

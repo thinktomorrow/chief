@@ -3,7 +3,8 @@
 namespace Thinktomorrow\Chief\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
@@ -37,8 +38,8 @@ class UpdateMenu
         }
     }
 
-    private function getPage($page_id)
+    private function getPage($collection_id)
     {
-        return Page::inflate($page_id);
+        return FlatReferenceCollection::fromFlatReferences([$collection_id])->first();
     }
 }

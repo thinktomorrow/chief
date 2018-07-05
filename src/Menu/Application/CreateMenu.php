@@ -3,7 +3,8 @@
 namespace Thinktomorrow\Chief\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
@@ -36,8 +37,8 @@ class CreateMenu
         }
     }
 
-    private function getPage($page_id)
+    private function getPage($flat_reference)
     {
-        return Page::inflate($page_id);
+        return FlatReferenceCollection::fromFlatReferences([$flat_reference])->first();
     }
 }

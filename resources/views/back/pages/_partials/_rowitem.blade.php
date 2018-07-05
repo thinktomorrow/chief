@@ -35,7 +35,7 @@
                 <hr class="stack-s">
 
                 <a @click="showModal('delete-page-{{$page->id}}')" class="block squished-s text-error --link-with-bg">
-                    Gooi {{ $page->collectionDetails('singular') }} weg
+                    Gooi {{ $page->collectionDetails()->singular }} weg
                 </a>
             </div>
         </options-dropdown>

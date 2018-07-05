@@ -5,7 +5,7 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title')
-        {{ $module->slug }} <span class="text-subtle">{{ $module->collectionDetails('singular') }}</span>
+        {{ $module->slug }} <span class="text-subtle">{{ $module->collectionDetails()->singular }}</span>
     @endslot
     <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
 @endcomponent

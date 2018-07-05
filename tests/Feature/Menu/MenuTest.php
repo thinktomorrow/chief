@@ -5,8 +5,9 @@ namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
 use Thinktomorrow\Chief\Pages\Page;
@@ -23,8 +24,8 @@ class MenuTest extends TestCase
         $this->setUpDatabase();
 
         $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'statics' => Page::class,
-            'articles' => ArticleFake::class,
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
         ]);
 
         // We expect to have frontend routes for the pages and articles
@@ -90,7 +91,7 @@ class MenuTest extends TestCase
         ]);
 
         // Sanity check
-        $this->assertCount(3, ArticleFake::all());
+        $this->assertCount(3, ArticlePageFake::all());
 
         // Create main collection menu item - this will hold the collection as children
         $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
@@ -105,7 +106,7 @@ class MenuTest extends TestCase
         $this->assertEquals($mainMenuItem->label, $main->label);
         $this->assertEquals($mainMenuItem->url, $main->url);
 
-        foreach (ArticleFake::all() as $k => $page) {
+        foreach (ArticlePageFake::all() as $k => $page) {
             $item = $main->children()[$k];
 
             $this->assertEquals($page->menuLabel(), $item->label);
@@ -117,7 +118,7 @@ class MenuTest extends TestCase
     public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
-            'collection' => 'statics',
+            'collection' => 'singles',
             'slug'      => 'foobar',
             'published' => 1
         ]);
@@ -214,7 +215,7 @@ class MenuTest extends TestCase
         ]);
 
         $response = $this->asAdmin()
-            ->get(route('chief.back.menu.create', 'statics'));
+            ->get(route('chief.back.menu.create'));
 
         $response->assertStatus(200);
 

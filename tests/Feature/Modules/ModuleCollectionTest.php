@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Fakes\OtherModuleFake;
@@ -34,8 +35,10 @@ class ModuleCollectionTest extends TestCase
 
         $this->assertCount(1, NewsletterModuleFake::all());
         $this->assertCount(0, OtherModuleFake::all());
-        $this->assertCount(0, Module::all());
-        $this->assertCount(1, Module::ignoreCollection()->get());
+
+        $this->assertCount(0, Module::collection(null)->get());
+        $this->assertCount(1, Module::all()); // Base class ignores collection (because no collection key ignores scope)
+        $this->assertCount(1, Module::all());
     }
 
     /** @test */
@@ -45,7 +48,9 @@ class ModuleCollectionTest extends TestCase
 
         $this->assertNotNull(NewsletterModuleFake::first());
         $this->assertNull(OtherModuleFake::first());
-        $this->assertNull(Module::first());
+
+        $this->assertNotNull(Module::first());
+        $this->assertNull(Module::collection(null)->first());
     }
 
     /** @test */
@@ -53,7 +58,18 @@ class ModuleCollectionTest extends TestCase
     {
         Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
 
-        $this->assertNotNull(Module::ignoreCollection()->first());
+        $this->assertNotNull(Module::first());
+    }
+
+    /** @test */
+    public function it_can_create_instance_from_collection_id()
+    {
+        $module = Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+
+        $instance = $module->flatReference()->instance();
+
+        $this->assertInstanceOf(NewsletterModuleFake::class, $instance);
+        $this->assertEquals($module->id, $instance->id);
     }
 
     /** @test */
@@ -74,7 +90,7 @@ class ModuleCollectionTest extends TestCase
         Module::create(['collection' => 'others', 'slug' => 'foobar-2']);
         Module::create(['collection' => 'newsletter', 'slug' => 'foobar-3']);
 
-        $this->assertEquals(['newsletter', 'others'], Module::freshAvailableCollections()->keys()->toArray());
+        $this->assertEquals(['newsletter', 'others'], Module::availableCollections(true)->keys()->toArray());
     }
 
     /** @test */
@@ -85,8 +101,8 @@ class ModuleCollectionTest extends TestCase
             'slug' => 'foobar',
         ]);
 
-        $this->assertInstanceOf(NewsletterModuleFake::class, Module::ignoreCollection()->find($module->id));
-        $this->assertInstanceOf(NewsletterModuleFake::class, Module::ignoreCollection()->findOrFail($module->id));
+        $this->assertInstanceOf(NewsletterModuleFake::class, Module::find($module->id));
+        $this->assertInstanceOf(NewsletterModuleFake::class, Module::findOrFail($module->id));
     }
 
     /** @test */

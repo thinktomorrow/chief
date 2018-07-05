@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Support\Carbon;
@@ -20,15 +21,20 @@ class AuditTest extends TestCase
 
         $this->setUpDatabase();
         $this->setUpDefaultAuthorization();
+
+        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+            'singles' => Single::class,
+        ]);
     }
 
     /** @test */
     public function it_logs_create_events_on_pages()
     {
+        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
 
         $page       = Page::first();
         $activity   = Audit::getAllActivityFor($page);
@@ -36,7 +42,7 @@ class AuditTest extends TestCase
         $this->assertCount(1, $activity);
         $this->assertEquals('created', $activity->first()->description);
         $this->assertEquals($user->id, $activity->first()->causer_id);
-        $this->assertEquals(get_class($page), $activity->first()->subject_type);
+        $this->assertEquals(Single::class, $activity->first()->subject_type);
     }
 
     /** @test */
@@ -46,7 +52,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
         
         $page = Page::first();
 
@@ -67,7 +73,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams(['published' => false]));
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams(['published' => false]));
         
         $page = Page::first();
 
@@ -87,17 +93,17 @@ class AuditTest extends TestCase
     {
         $user = $this->developer();
 
-        $page = factory(Page::class)->create(['published' => true]);
+        $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
+             ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getAllActivityFor($page);
 
         $this->assertCount(1, $activity);
         $this->assertEquals('archived', $activity->last()->description);
         $this->assertEquals($user->id, $activity->last()->causer_id);
-        $this->assertEquals(get_class($page), $activity->last()->subject_type);
+        $this->assertEquals(Single::class, $activity->last()->subject_type);
     }
 
     /** @test */
@@ -108,9 +114,9 @@ class AuditTest extends TestCase
         Auth::guard('chief')->login($user);
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
         
-        $activity = Page::ignoreCollection()->first();
+        $activity = Page::first();
 
         $this->assertCount(1, $article->activity);
         $this->assertEquals('created', $activity->description);
@@ -124,7 +130,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.index'));
@@ -146,7 +152,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.show', $user->id));

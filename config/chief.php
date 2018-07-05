@@ -59,7 +59,7 @@ return [
      */
     'collections' => [
         'pages' => [
-            'statics' => \Thinktomorrow\Chief\Pages\Page::class,
+            'singles' => \Thinktomorrow\Chief\Pages\Single::class,
         ],
         'modules' => [
             //

@@ -2,8 +2,10 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
+use Thinktomorrow\AssetLibrary\Models\Asset;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +21,7 @@ class UpdatePage
         try {
             DB::beginTransaction();
 
-            $page = Page::ignoreCollection()->findOrFail($id);
+            $page = Page::findOrFail($id);
 
             $this->savePageTranslations($page, $translations);
 
@@ -59,7 +61,7 @@ class UpdatePage
             $page->rejectChild($child);
         }
 
-        foreach (RelatedCollection::inflate($relateds) as $i => $related) {
+        foreach (FlatReferenceCollection::fromFlatReferences($relateds) as $i => $related) {
             $page->adoptChild($related, ['sort' => $i]);
         }
     }

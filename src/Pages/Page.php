@@ -3,7 +3,9 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\HasCollection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
+use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -19,15 +21,13 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
-use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
-    use HasCollection,
+    use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
@@ -50,18 +50,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
-    
-    /**
-     * The collection scope for the specific class.
-     * @var string
-     */
-    protected static $collectionScopeClass = PageCollectionScope::class;
-
-    public function __construct(array $attributes = [])
-    {
-        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
-        parent::__construct($attributes);
-    }
 
     /**
      * Each page model can expose the managed translatable fields. These should be included as attributes just like the regular
@@ -115,7 +103,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /**
-     * Each page model can expose the managed media fields. 
+     * Each page model can expose the managed media fields.
      * This method allows for easy installation of the form fields in chief.
      *
      * @param null $key
@@ -164,70 +152,28 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      * Details of the collection such as naming, key and class.
      * Used in several dynamic parts of the admin application.
      *
-     * @param null $key
-     * @return object
      */
-    public static function collectionDetails($key = null)
+    public function collectionDetails(): CollectionDetails
     {
-        $collectionKey = (new static)->collectionKey();
+        $collectionKey = $this->collectionKey();
 
-        $names = (object) [
-            'key'      => $collectionKey,
-            'class'    => static::class,
-            'singular' => $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
-            'plural'   => $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
-        ];
-
-        return $key ? $names->$key : $names;
+        return new CollectionDetails(
+            $collectionKey,
+            static::class,
+            ucfirst(str_singular($collectionKey)),
+            ucfirst(str_plural($collectionKey)),
+            $this->flatReferenceLabel()
+        );
     }
 
-    /**
-     * TODO: these flatten and inflate methods should be out of this class into their own environment...
-     * They are also used for the relation select fields.
-     * @return mixed
-     */
-    public static function flattenForSelect()
+    public function flatReferenceLabel(): string
     {
-        return self::ignoreCollection()->published()->get()->map(function (Page $page) {
-            return [
-                'id'    => $page->getRelationId(),
-                'label' => $page->getRelationLabel(),
-                'group' => $page->getRelationGroup(),
-            ];
-        });
+        return $this->title ?? '';
     }
 
-    public static function flattenForGroupedSelect(): Collection
+    public function flatReferenceGroup(): string
     {
-        $grouped = [];
-
-        self::flattenForSelect()->each(function ($entry) use (&$grouped) {
-            if (isset($grouped[$entry['group']])) {
-                $grouped[$entry['group']]['values'][] = $entry;
-            } else {
-                $grouped[$entry['group']] = ['group' => $entry['group'], 'values' => [$entry]];
-            }
-        });
-
-        // We remove the group key as we need to have non-assoc array for the multiselect options.
-        return collect(array_values($grouped));
-    }
-
-    public static function inflate($relateds = [])
-    {
-        if (!is_array($relateds)) {
-            $relateds = [$relateds];
-        }
-
-        if (count($relateds) == 1 && is_null(reset($relateds))) {
-            $relateds = [];
-        }
-
-        return collect($relateds)->map(function ($related) {
-            list($type, $id) = explode('@', $related);
-            
-            return (new $type)->ignoreCollection()->find($id);
-        })->first();
+        return $this->collectionDetails()->singular;
     }
 
     public function mediaUrls($type = null): Collection
@@ -242,19 +188,19 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->published()->find($id)))
+        return (($page = self::published()->find($id)))
             ? $page
             : null;
     }
 
     public static function findBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? self::ignoreCollection()->find($trans->page_id) : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? static::find($trans->page_id) : null;
     }
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? self::findPublished($trans->page_id) : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)
@@ -270,21 +216,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function presentForChild(ActsAsChild $child, Relation $relation): string
     {
         return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
-    }
-
-    public function getRelationId(): string
-    {
-        return $this->getMorphClass().'@'.$this->id;
-    }
-
-    public function getRelationLabel(): string
-    {
-        return $this->title ?? '';
-    }
-
-    public function getRelationGroup(): string
-    {
-        return static::collectionDetails('plural');
     }
 
     public function previewUrl()

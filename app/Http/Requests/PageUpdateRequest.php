@@ -31,13 +31,11 @@ class PageUpdateRequest extends FormRequest
 
         $translations = $this->request->get('trans');
         foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== config('app.locale')) {
+            if ($this->isCompletelyEmpty(['title'], $trans) && $locale !== config('app.locale')) {
                 continue;
             }
 
             $rules['trans.' . $locale . '.title']   = 'required|max:200';
-            $rules['trans.' . $locale . '.short']   = 'max:700';
-            $rules['trans.' . $locale . '.content'] = 'required|max:10000';
         }
 
         return $rules;
@@ -48,8 +46,6 @@ class PageUpdateRequest extends FormRequest
         return [
             'trans.*.title'     => 'Title',
             'trans.*.slug'      => 'Permalink',
-            'trans.*.content'   => 'Content',
-            'trans.*.short'     => 'Short',
         ];
     }
 }

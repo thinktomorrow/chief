@@ -3,7 +3,10 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Http\Request;
@@ -41,7 +44,7 @@ class PagesController extends Controller
 
         $page = Page::fromCollectionKey($collection);
         $page->existingRelationIds = collect([]);
-        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
+        $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
 
         return view('chief::back.pages.create', [
             'page'            => $page,
@@ -78,11 +81,11 @@ class PagesController extends Controller
     {
         $this->authorize('update-page');
 
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
         $page->injectTranslationForForm();
 
-        $page->existingRelationIds = RelatedCollection::relationIds($page->children());
-        $relations = RelatedCollection::availableChildren($page)->flattenForGroupedSelect()->toArray();
+        $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
+        $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
 
         return view('chief::back.pages.edit', [
             'page'            => $page,
@@ -134,7 +137,7 @@ class PagesController extends Controller
 
     public function publish(Request $request, $id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
@@ -144,7 +147,7 @@ class PagesController extends Controller
 
     public function unpublish(Request $request, $id)
     {
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();

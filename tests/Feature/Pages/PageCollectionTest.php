@@ -3,7 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
+use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageCollectionTest extends TestCase
@@ -13,8 +14,8 @@ class PageCollectionTest extends TestCase
         parent::setUp();
 
         $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'statics' => Page::class,
-            'articles' => ArticleFake::class,
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
             'others'   => OtherCollectionFake::class,
         ]);
     }
@@ -32,10 +33,13 @@ class PageCollectionTest extends TestCase
     {
         factory(Page::class)->create(['collection' => 'articles']);
 
-        $this->assertCount(1, ArticleFake::all());
+        $this->assertCount(1, ArticlePageFake::all());
         $this->assertCount(0, OtherCollectionFake::all());
-        $this->assertCount(0, Page::all());
-        $this->assertCount(1, Page::ignoreCollection()->get());
+        $this->assertCount(0, Single::all());
+
+        // All queries from Page are ignoring collection
+        $this->assertCount(1, Page::all());
+        $this->assertCount(1, Page::all());
     }
 
     /** @test */
@@ -43,18 +47,20 @@ class PageCollectionTest extends TestCase
     {
         factory(Page::class)->create(['collection' => 'articles']);
 
-        $this->assertNotNull(ArticleFake::first());
+        $this->assertNotNull(ArticlePageFake::first());
         $this->assertNull(OtherCollectionFake::first());
-        $this->assertNull(Page::first());
+        $this->assertNull(Single::first());
+
+        $this->assertNotNull(Page::first());
     }
 
     /** @test */
     public function default_page_has_the_default_statics_collection()
     {
-        factory(Page::class)->create(['collection' => 'statics']);
+        factory(Page::class)->create(['collection' => 'singles']);
 
         $this->assertNotNull(Page::first());
-        $this->assertNull(ArticleFake::first());
+        $this->assertNull(ArticlePageFake::first());
         $this->assertNull(OtherCollectionFake::first());
     }
 
@@ -63,7 +69,7 @@ class PageCollectionTest extends TestCase
     {
         factory(Page::class)->create(['collection' => 'articles']);
 
-        $this->assertNotNull(Page::ignoreCollection()->first());
+        $this->assertNotNull(Page::first());
     }
 
     /** @test */
@@ -73,7 +79,7 @@ class PageCollectionTest extends TestCase
 
         $this->assertNotNull(Page::collection('articles')->first());
         $this->assertNull(Page::collection('others')->first());
-        $this->assertNull(Page::collection('statics')->first());
+        $this->assertNull(Page::collection('singles')->first());
         $this->assertNull(Page::collection(null)->first());
     }
 
@@ -81,7 +87,7 @@ class PageCollectionTest extends TestCase
     public function collection_scope_is_default_statics()
     {
         factory(Page::class)->create();
-        $this->assertNotNull(Page::collection('statics')->first());
+        $this->assertNotNull(Page::collection('singles')->first());
     }
 
     /** @test */
@@ -91,44 +97,41 @@ class PageCollectionTest extends TestCase
         factory(Page::class)->create(['collection' => 'others']);
         factory(Page::class)->create();
 
-        $this->assertEquals(['statics', 'articles', 'others'], Page::freshAvailableCollections()->keys()->toArray());
+        $this->assertEquals(['singles', 'articles', 'others'], Page::availableCollections(true)->keys()->toArray());
     }
 
     /** @test */
     public function it_can_find_collection_published_by_slug()
     {
-        ArticleFake::create([
+        ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'foobar',
             'published' => 1
         ]);
-        ArticleFake::create([
+        ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'barfoo',
             'published' => 0
         ]);
 
-        $this->assertNotNull(ArticleFake::findPublishedBySlug('foobar'));
-        $this->assertNull(ArticleFake::findPublishedBySlug('barfoo'));
+        $this->assertNotNull(ArticlePageFake::findPublishedBySlug('foobar'));
+        $this->assertNull(ArticlePageFake::findPublishedBySlug('barfoo'));
     }
 
     /** @test */
     public function it_returns_the_right_collection_with_the_eloquent_find_methods()
     {
-        $article = ArticleFake::create([
+        $article = ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'foobar',
             'published' => 1
         ]);
 
-        $this->assertInstanceOf(ArticleFake::class, Page::ignoreCollection()->find($article->id));
-        $this->assertInstanceOf(ArticleFake::class, Page::ignoreCollection()->findOrFail($article->id));
+        $this->assertInstanceOf(ArticlePageFake::class, Page::find($article->id));
+        $this->assertInstanceOf(ArticlePageFake::class, Page::findOrFail($article->id));
     }
 
     /** @test */
@@ -136,16 +139,15 @@ class PageCollectionTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        ArticleFake::create([
+        ArticlePageFake::create([
             'collection' => 'articles',
             'title:nl' => 'title',
-            'content:nl' => 'content',
             'slug:nl' => 'foobar',
             'published' => 1
         ]);
 
-        $this->assertInstanceOf(ArticleFake::class, Page::findBySlug('foobar'));
-        $this->assertInstanceOf(ArticleFake::class, Page::findPublishedBySlug('foobar'));
+        $this->assertInstanceOf(ArticlePageFake::class, Page::findBySlug('foobar'));
+        $this->assertInstanceOf(ArticlePageFake::class, Page::findPublishedBySlug('foobar'));
     }
 }
 

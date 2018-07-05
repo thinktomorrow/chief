@@ -3,7 +3,7 @@
 @section('page-title','Voeg nieuw module toe')
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Een ' . $module->collectionDetails('singular').' toevoegen.')
+    @slot('title', 'Een ' . $module->collectionDetails()->singular.' toevoegen.')
     <button data-submit-form="createForm" type="button" class="btn btn-primary">Toevoegen</button>
 @endcomponent
 

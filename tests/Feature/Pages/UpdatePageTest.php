@@ -2,9 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
+use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdatePageTest extends TestCase
@@ -20,8 +22,8 @@ class UpdatePageTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'statics' => Page::class,
-            'articles' => ArticleFake::class,
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
         ]);
 
         $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
@@ -66,20 +68,21 @@ class UpdatePageTest extends TestCase
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'relations' => [
-                    $otherPage->getRelationId()
+                    $otherPage->flatReference()->get()
                 ]
             ]));
 
-        $this->assertCount(1, $page->children());
-        $this->assertEquals($otherPage->id, $page->children()->first()->id);
+        $this->assertCount(1, $page->fresh()->children());
+        $this->assertEquals($otherPage->id, $page->fresh()->children()->first()->id);
     }
 
     /** @test */
     public function when_updating_page_title_is_required()
     {
-        $this->assertValidation(new Page(), 'trans.nl.title', $this->validPageParams(['trans.nl.title' => '']),
-            route('chief.back.pages.index', 'statics'),
-            route('chief.back.pages.update', $this->page->id)
+        $this->assertValidation(new Page(), 'trans.nl.title', $this->validUpdatePageParams(['trans.nl.title' => '']),
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.update', $this->page->id),
+            1, 'put'
         );
     }
 
@@ -91,7 +94,7 @@ class UpdatePageTest extends TestCase
             'trans.nl.slug'   => 'foobarnl'
         ]);
 
-        $this->assertCount(1, Page::all());
+        $this->assertCount(2, Page::all());
 
         $response = $this->asDefaultAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([

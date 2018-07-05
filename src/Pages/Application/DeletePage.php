@@ -14,7 +14,7 @@ class DeletePage
         try {
             DB::beginTransaction();
 
-            $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
+            $page = Page::withArchived()->findOrFail($id);
 
             if ($page->isDraft() || $page->isArchived()) {
                 $page->delete();

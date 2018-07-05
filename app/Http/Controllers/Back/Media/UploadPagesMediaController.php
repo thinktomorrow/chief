@@ -18,7 +18,7 @@ class UploadPagesMediaController extends Controller
     public function store(Request $request, $id)
     {
         $uploads = $request->file('file');
-        $model = Page::ignoreCollection()->findOrFail($id);
+        $model = Page::findOrFail($id);
 
         if (empty($uploads)) {
             return response()->json([

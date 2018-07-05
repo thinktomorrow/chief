@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Common\Collections\Collections;
 
 class Relation extends Model
 {
@@ -39,6 +40,34 @@ class Relation extends Model
     }
 
     /**
+     * Fetch all available children instances
+     *
+     * @param ActsAsParent $parent
+     * @return Collection
+     */
+    public static function availableChildren(ActsAsParent $parent): Collection
+    {
+        $available_children_types = config('thinktomorrow.chief.relations.children', []);
+        $available_collections = Collections::available();
+
+        $collection = collect([]);
+
+        foreach ($available_children_types as $type) {
+            $model = new $type();
+
+            if ($collection_key = array_search($type, $available_collections)) {
+                $model->collection = $collection_key;
+            }
+
+            $collection = $collection->merge($model->all());
+        }
+
+        return $collection;
+    }
+
+    /**
+     * TODO: move this to Collections helper class.
+     *
      * Compile all relations into a flat list for select form field.
      * This includes a composite id made up of the type and id
      *
