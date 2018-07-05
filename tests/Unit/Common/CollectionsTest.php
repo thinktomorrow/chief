@@ -12,11 +12,10 @@ use Thinktomorrow\Chief\Tests\Fakes\ActsAsCollectionFake;
 use Thinktomorrow\Chief\Tests\Fakes\ActsAsCollectionFakeModel;
 use Thinktomorrow\Chief\Tests\TestCase;
 
-
 class CollectionsTest extends TestCase
 {
     /** @test */
-    function it_can_create_a_collection_from_flat_references()
+    public function it_can_create_a_collection_from_flat_references()
     {
         $first = new ActsAsCollectionFake(1, 'first', 'group');
         $second = new ActsAsCollectionFake(2, 'second', 'group');
@@ -29,7 +28,7 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    function it_can_provide_collection_details()
+    public function it_can_provide_collection_details()
     {
         $first = new ActsAsCollectionFake(1, 'first', 'group');
 
@@ -44,7 +43,7 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_collection_id_from_string()
+    public function it_can_create_collection_id_from_string()
     {
         $this->setUpCollectionFakeWorld();
 
@@ -57,7 +56,7 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    function it_can_create_instance_from_collection_id()
+    public function it_can_create_instance_from_collection_id()
     {
         $this->setUpCollectionFakeWorld();
 
@@ -69,7 +68,7 @@ class CollectionsTest extends TestCase
     }
 
     /** @test */
-    function it_can_instantiate_multiple_collection_ids()
+    public function it_can_instantiate_multiple_collection_ids()
     {
         $this->setUpCollectionFakeWorld();
 
@@ -83,7 +82,7 @@ class CollectionsTest extends TestCase
 
         $this->assertCount(2, $instances);
 
-        foreach($instances as $instance){
+        foreach ($instances as $instance) {
             $this->assertInstanceOf(Model::class, $instance);
         }
     }
