@@ -202,25 +202,7 @@ trait ActingAsCollection
 
     private static function mapping()
     {
-        $mappings = [
-            'pages' => Page::class,
-            'modules' => Module::class,
-        ];
-
-        $type = 'pages';
-
-        /**
-         * Hacky way to determine the collections per type. This
-         * is currently either 'pages' or 'modules'. If anything
-         * else, we will resort to the default pages.
-         */
-        foreach($mappings as $_type => $class) {
-            if(new static instanceof $class) {
-                $type = $_type;
-            }
-        }
-
-        return config('thinktomorrow.chief.collections.'.$type, []);
+        return config('thinktomorrow.chief.collections');
     }
 
     private static function globalCollectionScope()
