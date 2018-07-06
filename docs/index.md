@@ -4,7 +4,6 @@ description: chief is a package based cms built on top of the laravel framework.
 ---
 [Install](index.md)
 [Local development](chief-development.md)
-[Overriding chief](overriding-chief.md)
 [Pages](pages/index.md)
 [Server](server.md)
 [Changelog](CHANGELOG.md)
