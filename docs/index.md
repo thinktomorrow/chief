@@ -21,7 +21,7 @@ Start a new Think Tomorrow project skeleton with the following command
 composer create-project thinktomorrow/project-skeleton <projectname>
 ```
 
-## Installment
+## Install in existing project
 
 Chief can be installed via composer.
 ```php
@@ -116,6 +116,65 @@ php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvide
 # Default routes
 There is one project related route that is expected by chief and that is: `pages.show`. This
 is the route for the detail of a static page. Make sure to add this one. 
+
+Also add a controller for this front end route.
+This one is an example:
+
+```php
+<?php
+namespace App\Http\Controllers;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\Pages\Page;
+
+class PagesController extends Controller
+{
+    public function show($slug)
+    {
+        if(!$page = Page::findPublishedBySlug($slug)) {
+            throw new NotFoundHttpException('No published page found by slug ['.$slug.']');
+        }
+        return view('front.pages.show', [
+            'page' => $page,
+        ]);
+    }
+}
+```
+
+To get this route to work it's a good idea to add a view file where we can show a page.
+
+An example of this view file is the following:
+
+```html
+@extends('front._layouts.master')
+
+@section('content')
+
+    <!-- hero -->
+    <div class="row" style="background: url({{ $page->mediaUrl(\Thinktomorrow\Chief\Media\MediaType::HERO) }}) top right no-repeat;">
+        <div class="container">
+            <div class="column-7">
+                <h1>{{ $page->title }}</h1>
+                <div class="editor-content">
+                    {!! trans('pages.statics.hero.description') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="container editor-content">
+        {!! $page->content !!}
+    </section>
+
+    {!! $page->presentChildren() !!}
+
+    <section class="container editor-content">
+        {!! $page->hero_title !!}
+        {!! $page->hero_description !!}
+    </section>
+
+@stop
+```
 
 # Multilingual
 
