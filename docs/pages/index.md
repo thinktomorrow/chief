@@ -1,11 +1,20 @@
 [Install](index.md)
 [Local development](chief-development.md)
 [Overriding chief](overriding-chief.md)
-[Pages](pages.md)
+[Pages](pages/index.md)
 [Server](server.md)
 [Changelog](CHANGELOG.md)
 [Guidelines](GUIDELINES.md)
 # Pages
+
+## TODO
+- what is a page?
+- Single page
+- adding a new page (+ what's needs to be created)
+- customizing a page model
+    - fields
+    - media
+- detached page
 
 ## required
 Make sure to set your namespace in the config `config/thinktomorrow/chief.php`.  
