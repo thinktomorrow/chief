@@ -29,4 +29,9 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 	 * Please note that copied files also get versioned! its a win :)
 	 */
 	.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/chief-assets/back/js/vendors')
-    .copy('resources/assets/js/vendors/slim/slim.min.css', 'public/chief-assets/back/css/vendors');
+    .copy('resources/assets/js/vendors/slim/slim.min.css', 'public/chief-assets/back/css/vendors')
+
+	/**
+	 * Copy fonts
+	 */
+	.copy('resources/assets/fonts', 'public/chief-assets/back/fonts');
