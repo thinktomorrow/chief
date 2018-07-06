@@ -226,3 +226,6 @@ A: /
 
 Q: I get the "Class web-chief does not exist" error. Help!  
 A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel.php` file.
+
+Q: I get the 'Expected response code 250 but got code “530”, with message “530 5.7.1 Authentication required ”' error. Help! 
+A: Please make sure your mail settings in your .env file are correct.
