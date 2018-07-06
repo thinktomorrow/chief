@@ -117,9 +117,16 @@ php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvide
 There is one project related route that is expected by chief and that is: `pages.show`. This
 is the route for the detail of a static page. Make sure to add this one. 
 
-Also add a controller for this front end route.
+
+```File: routes\front.php```
+```php
+Route::get('page/{slug}', PagesController::class.'@show')->name('pages.show');
+```
+
+Also add a controller file for this front end route.
 This one is an example:
 
+```File: App\Http\Controller```
 ```php
 <?php
 namespace App\Http\Controllers;
@@ -145,6 +152,7 @@ To get this route to work it's a good idea to add a view file where we can show 
 
 An example of this view file is the following:
 
+```File: resources\views\front\pages\show.blade.php```
 ```html
 @extends('front._layouts.master')
 
@@ -184,10 +192,6 @@ At the following files you should change the locales to your desired setup:
 - Set the available locales of the application in the `config/translatable.php` file. The values in the `locales` array will be available for the admin to manage.
 - Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
-
-# Changing Chief model behaviour
-
-To change the model behaviour for chief models you can extend the models in your application.
 
 # Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
