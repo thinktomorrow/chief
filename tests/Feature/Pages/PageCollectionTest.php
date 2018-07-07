@@ -97,7 +97,7 @@ class PageCollectionTest extends TestCase
         factory(Page::class)->create(['collection' => 'others']);
         factory(Page::class)->create();
 
-        $this->assertEquals(['singles', 'articles', 'others'], Page::availableCollections(true)->keys()->toArray());
+        $this->assertEquals(['singles', 'articles', 'others'], Page::availableCollections()->keys()->toArray());
     }
 
     /** @test */

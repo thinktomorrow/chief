@@ -187,7 +187,7 @@ trait ActingAsCollection
         return $scopeClass;
     }
 
-    public static function availableCollections($refresh = false): Collection
+    public static function availableCollections(): Collection
     {
         return CollectionKeys::fromConfig()
                             ->filterByType(static::collectionType())

@@ -53,8 +53,7 @@ interface ActsAsCollection extends ProvidesFlatReference
      * Listing of all available collections for this model type.
      * This will retrieve the values from the chief config.
      *
-     * @param bool $refresh results are only fetched from source once but you can force a fresh retrieval if you like.
      * @return Collection
      */
-    public static function availableCollections($refresh = false): Collection;
+    public static function availableCollections(): Collection;
 }
