@@ -92,7 +92,7 @@ class CollectionsTest extends TestCase
         $this->setUpDatabase();
         ActsAsCollectionFakeModel::migrateUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'has_collection_fakes' => ActsAsCollectionFakeModel::class,
         ]);
     }

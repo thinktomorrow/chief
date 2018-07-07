@@ -17,7 +17,7 @@ class CollectionInstanceTest extends TestCase
 
         $this->setUpDatabase();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'articles' => ArticlePageFake::class,
             'products' => ProductPageFake::class,
             'singles'  => Single::class,

@@ -14,7 +14,7 @@ class ModuleCollectionTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.modules', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'newsletter' => NewsletterModuleFake::class,
             'others' => OtherModuleFake::class,
         ]);
