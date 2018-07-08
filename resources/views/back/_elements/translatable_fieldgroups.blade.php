@@ -1,4 +1,4 @@
-@if(count($page->availableLocales()) > 1) 
+@if(count($model->availableLocales()) > 1)
     <tabs>
         @foreach($model->availableLocales() as $locale)
             <tab id="{{ $locale }}-translatable-fields" name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">

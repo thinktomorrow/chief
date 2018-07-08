@@ -9,7 +9,7 @@
                     <tabs v-cloak>
                         @foreach($page->availableLocales() as $locale)
                             <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
-                                @include('chief::back._pages._partials.title-form')
+                                @include('chief::back.pages._partials.title-form')
                             </tab>
                         @endforeach
                     </tabs>
