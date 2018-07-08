@@ -1,9 +1,9 @@
-[Install](index.md)
-[Local development](chief-development.md)
+[Install](/index.md)
+[Local development](/chief-development.md)
 [Pages](pages/index.md)
-[Server](server.md)
-[Changelog](CHANGELOG.md)
-[Guidelines](GUIDELINES.md)
+[Server](/server.md)
+[Changelog](/CHANGELOG.md)
+[Guidelines](/GUIDELINES.md)
 # Local Chief development
 
 For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.
