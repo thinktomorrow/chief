@@ -135,7 +135,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public function presentForParent(ActsAsParent $parent, Relation $relation): string
     {
         $guessedParentViewName = $parent->collectionKey();
-        $guessedViewName = strtolower((new \ReflectionClass($this))->getShortName());
+        $guessedViewName = $this->collectionKey();
         $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
 
         foreach ($viewPaths as $viewPath) {
