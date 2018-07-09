@@ -14,7 +14,7 @@ class ModuleCollectionTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.modules', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'newsletter' => NewsletterModuleFake::class,
             'others' => OtherModuleFake::class,
         ]);
@@ -90,7 +90,7 @@ class ModuleCollectionTest extends TestCase
         Module::create(['collection' => 'others', 'slug' => 'foobar-2']);
         Module::create(['collection' => 'newsletter', 'slug' => 'foobar-3']);
 
-        $this->assertEquals(['newsletter', 'others'], Module::availableCollections(true)->keys()->toArray());
+        $this->assertEquals(['newsletter', 'others'], Module::availableCollections()->keys()->toArray());
     }
 
     /** @test */

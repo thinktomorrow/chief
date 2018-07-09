@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;

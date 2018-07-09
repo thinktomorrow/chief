@@ -17,7 +17,7 @@ class CreateModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.modules', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'newsletter' => NewsletterModuleFake::class,
             'others' => OtherModuleFake::class,
         ]);

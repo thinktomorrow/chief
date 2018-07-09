@@ -14,7 +14,7 @@ class DetachedPageTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'detached_pages' => DetachedPageFake::class,
         ]);
 

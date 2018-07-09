@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;

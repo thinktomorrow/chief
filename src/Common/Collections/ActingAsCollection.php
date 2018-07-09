@@ -11,8 +11,6 @@ use Thinktomorrow\Chief\Pages\PageTranslation;
 
 trait ActingAsCollection
 {
-    private static $availableCollections;
-
     protected static function bootActingAsCollection()
     {
         static::addGlobalScope(static::globalCollectionScope());
@@ -87,7 +85,6 @@ trait ActingAsCollection
      * The current loaded translations are empty because of they tried matching with the original table.
      *
      * @param $instance
-     * @param $this
      */
     private function loadCustomTranslations($instance)
     {
@@ -148,24 +145,19 @@ trait ActingAsCollection
             return $this->collection;
         }
 
-        $mapping = static::mapping();
-
-        if (false == ($key = array_search(static::class, $mapping))) {
-            throw new NotFoundCollectionKey('Collection key expected but none found for ' . static::class.'. Please provide a collection key in the chief config file and on your model as model::collection property.');
-        }
-
-        return $key;
+        return CollectionKeys::fromConfig()
+            ->filterByClass(static::class)
+            ->toKey();
     }
 
     public static function fromCollectionKey(string $key = null, $attributes = [])
     {
-        $mapping = static::mapping();
+        $class = CollectionKeys::fromConfig()
+                                ->filterByKey($key)
+                                ->toCollectionDetail()
+                                ->className;
 
-        if (!isset($mapping[$key])) {
-            throw new NotFoundCollectionKey('No corresponding class found for the collection key ['.$key.']. Make sure to add this to the [thinktomorrow.chief.collections] config array.');
-        }
-
-        return new $mapping[$key]($attributes);
+        return new $class($attributes);
     }
 
     public function scopeCollection($query, string $collection = null)
@@ -183,46 +175,6 @@ trait ActingAsCollection
         return self::withoutGlobalScope(static::globalCollectionScope());
     }
 
-    public static function availableCollections($refresh = false): Collection
-    {
-        if ($refresh) {
-            static::$availableCollections = null;
-        }
-
-        if (static::$availableCollections) {
-            return static::$availableCollections;
-        }
-
-        $availableCollections = collect(static::mapping())->map(function ($className) {
-            return (new $className)->collectionDetails();
-        });
-
-        return static::$availableCollections = $availableCollections;
-    }
-
-    private static function mapping()
-    {
-        $mappings = [
-            'pages' => Page::class,
-            'modules' => Module::class,
-        ];
-
-        $type = 'pages';
-
-        /**
-         * Hacky way to determine the collections per type. This
-         * is currently either 'pages' or 'modules'. If anything
-         * else, we will resort to the default pages.
-         */
-        foreach($mappings as $_type => $class) {
-            if(new static instanceof $class) {
-                $type = $_type;
-            }
-        }
-
-        return config('thinktomorrow.chief.collections.'.$type, []);
-    }
-
     private static function globalCollectionScope()
     {
         $scopeClass = new GlobalCollectionScope();
@@ -233,5 +185,20 @@ trait ActingAsCollection
         }
 
         return $scopeClass;
+    }
+
+    public static function availableCollections(): Collection
+    {
+        return CollectionKeys::fromConfig()
+                            ->filterByType(static::collectionType())
+                            ->toCollectionDetails();
+    }
+
+    private static function collectionType(): string
+    {
+        if(new static() instanceof Page) return 'pages';
+        if(new static() instanceof Module) return 'modules';
+
+        throw new \DomainException('No collection type, either pages or modules, could be determined for ' . static::class);
     }
 }

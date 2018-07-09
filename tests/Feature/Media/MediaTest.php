@@ -15,7 +15,7 @@ class MediaTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'singles' => Single::class,
             'articles' => ArticlePageFake::class,
         ]);

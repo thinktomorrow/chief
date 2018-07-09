@@ -22,7 +22,7 @@ class AuditTest extends TestCase
         $this->setUpDatabase();
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'singles' => Single::class,
         ]);
     }

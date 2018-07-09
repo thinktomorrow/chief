@@ -14,7 +14,7 @@ class ModuleTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.modules', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'module-collection' => Module::class,
         ]);
     }

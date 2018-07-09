@@ -46,11 +46,11 @@ class ActsAsCollectionFakeModel extends Model implements ActsAsCollection
     public function collectionDetails(): CollectionDetails
     {
         return new CollectionDetails(
-            $this->id,
+            'has_collection_fakes',
             get_class($this),
-            $this->label,
-            $this->label,
-            $this->label
+            "fakes",
+            "fakes",
+            "fakes"
         );
     }
 }

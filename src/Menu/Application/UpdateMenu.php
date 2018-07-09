@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Common\Collections\Collections;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Models\UniqueSlug;
