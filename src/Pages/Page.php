@@ -262,4 +262,71 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         throw new NotFoundHomepage('No homepage could be guessed. Make sure to provide a published page and set its id in the thinktomorrow.chief-settings.homepage_id config parameter.');
     }
+
+    public function view()
+    {
+        $viewPaths = [
+            'front.pages.'.$this->collectionKey().'.show',
+            'front.pages.show'
+        ];
+
+        foreach ($viewPaths as $viewPath) {
+            if (! view()->exists($viewPath)) {
+                continue;
+            }
+
+            return view($viewPath, [
+                'page' => $this,
+            ]);
+        }
+
+        throw new NotFoundView('Frontend view could not be determined for page. Make sure to at least provide a front.pages.show viewfile.');
+    }
+
+    /**
+     * PUBLISHABLE OVERRIDES BECAUSE OF ARCHIVED STATE IS SET ELSEWHERE.
+     * IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
+     */
+    public function isPublished()
+    {
+        return (!!$this->published && is_null($this->archived_at));
+    }
+
+    public function isDraft()
+    {
+        return (!$this->published && is_null($this->archived_at));
+    }
+
+    public function publish()
+    {
+        $this->published = 1;
+        $this->archived_at = null;
+
+        $this->save();
+    }
+
+    public function draft()
+    {
+        $this->published = 0;
+        $this->archived_at = null;
+
+        $this->save();
+    }
+
+    public function statusAsLabel()
+    {
+        if($this->isPublished()) {
+            return '<span><em>online</em></span>';
+        }
+
+        if($this->isDraft()) {
+            return '<span><em>offline</em></span>';
+        }
+
+        if($this->isArchived()) {
+            return '<span><em>gearchiveerd</em></span>';
+        }
+
+        return '-';
+    }
 }

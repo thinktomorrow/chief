@@ -91,22 +91,38 @@ class UpdatePageTest extends TestCase
     {
         $otherPage = factory(Page::class)->create([
             'trans.nl.title'  => 'titel nl',
-            'trans.nl.slug'   => 'foobarnl'
+            'trans.nl.slug'   => 'slug-nl'
         ]);
 
-        $this->assertCount(2, Page::all());
+        $this->assertValidation(new Page(), 'trans.nl.slug', $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']),
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.update', $this->page->id),
+            2, 'put'
+        );
 
-        $response = $this->asDefaultAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
-                'trans.nl.title'  => 'foobarnl',
-                'trans.en.title'  => 'foobaren',
-            ])
-            );
+        // Assert nothing has been updated
+        $this->assertNewPageValues($this->page);
+    }
 
-        $response->assertStatus(302);
+    /** @test */
+    public function slugcheck_takes_archived_into_account_as_well()
+    {
+        $otherPage = factory(Page::class)->create([
+            'trans.nl.title'  => 'titel nl',
+            'trans.nl.slug'   => 'slug-nl'
+        ]);
 
-        $this->assertNotNull($otherPage->{'slug:nl'});
-        $this->assertNotEquals($this->page->{'slug:nl'}, $otherPage->{'slug:nl'});
+        $otherPage->archive();
+
+        $this->assertValidation(new Page(), 'trans.nl.slug', $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']),
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.update', $this->page->id),
+            1, // Archived one is not counted
+            'put'
+        );
+
+        // Assert nothing has been updated
+        $this->assertNewPageValues($this->page);
     }
 
     /** @test */

@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Audit\Audit;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 
-class DeletePage
+class ArchivePage
 {
     use TranslatableCommand;
     public function handle($id)
@@ -14,19 +14,14 @@ class DeletePage
         try {
             DB::beginTransaction();
 
-            $page = Page::withArchived()->findOrFail($id);
+            if(!$page = Page::find($id)) return;
 
-            // Can only delete a draft of archived page
-            if (!$page->isDraft() && !$page->isArchived()) {
-                return;
-            }
-
-            $page->delete();
+            $page->archive();
 
             Audit::activity()
                 ->performedOn($page)
-                ->log('deleted');
-            
+                ->log('archived');
+
             DB::commit();
 
         } catch (\Throwable $e) {

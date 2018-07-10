@@ -44,7 +44,7 @@ class DeletePageTest extends TestCase
     }
 
     /** @test */
-    public function a_published_page_is_archived()
+    public function a_published_page_cannot_be_deleted()
     {
         $this->page->publish();
 
@@ -53,7 +53,6 @@ class DeletePageTest extends TestCase
                 'deleteconfirmation' => 'DELETE'
             ]);
 
-        $this->assertCount(0, Page::all());
-        $this->assertCount(1, Page::withArchived()->get());
+        $this->assertCount(1, Page::all());
     }
 }

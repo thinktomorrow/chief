@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
+use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
@@ -14,8 +15,6 @@ use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
-use Thinktomorrow\Chief\Menu\Tree\MenuTreeRepository;
-use Illuminate\Database\DatabaseManager;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -54,6 +53,7 @@ class ChiefServiceProvider extends ServiceProvider
             $this->commands([
                 // Local development
                 'command.chief:refresh',
+                'command.chief:seed',
 
                 // Project setup tools
                 'command.chief:permission',
@@ -64,6 +64,7 @@ class ChiefServiceProvider extends ServiceProvider
 
             // Bind our commands to the container
             $this->app->bind('command.chief:refresh', RefreshDatabase::class);
+            $this->app->bind('command.chief:seed', Seed::class);
             $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);

@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Http\Request;
@@ -122,6 +123,23 @@ class PagesController extends Controller
      * @param  int $id
      * @return Response
      */
+    public function archive($id)
+    {
+        $this->authorize('delete-page');
+
+        $page = Page::find($id);
+
+        app(ArchivePage::class)->handle($page->id);
+
+        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', 'De pagina is gearchiveerd.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
     public function destroy($id)
     {
         $this->authorize('delete-page');
@@ -130,7 +148,9 @@ class PagesController extends Controller
             return redirect()->back()->with('messages.warning', 'Je artikel is niet verwijderd. Probeer opnieuw');
         }
 
-        $page = app(DeletePage::class)->handle($id);
+        $page = Page::withArchived()->find($id);
+
+        app(DeletePage::class)->handle($page->id);
 
         return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.warning', 'De pagina is verwijderd.');
     }

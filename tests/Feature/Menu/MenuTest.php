@@ -83,6 +83,16 @@ class MenuTest extends TestCase
     }
 
     /** @test */
+    public function it_does_not_require_a_link()
+    {
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'nolink']);
+
+        $tree = ChiefMenu::fromArray([$first])->items();
+
+        $this->assertNull($tree->first()->url);
+    }
+
+    /** @test */
     public function it_can_reference_a_collection_of_pages()
     {
         factory(Page::class, 3)->create([

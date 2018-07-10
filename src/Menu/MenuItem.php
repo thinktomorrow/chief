@@ -17,6 +17,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     const TYPE_COLLECTION = 'collection';
     const TYPE_INTERNAL = 'internal';
     const TYPE_CUSTOM = 'custom';
+    const TYPE_NOLINK = 'nolink';
 
     use Translatable,
         BaseTranslatable;

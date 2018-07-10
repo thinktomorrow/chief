@@ -5531,6 +5531,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.alert--primary a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .alert--primary .alert__btn {
   color: #ffffff;
 }
@@ -5556,6 +5561,11 @@ table .btn ~ .btn {
 .alert--secondary {
   background-color: #435fa8;
   color: #ffffff;
+}
+
+.alert--secondary a {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .alert--secondary .alert__btn {
@@ -5585,6 +5595,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.alert--success a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .alert--success .alert__btn {
   color: #ffffff;
 }
@@ -5610,6 +5625,11 @@ table .btn ~ .btn {
 .alert--warning {
   background-color: #f5b848;
   color: #ffffff;
+}
+
+.alert--warning a {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .alert--warning .alert__btn {
@@ -5639,6 +5659,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.alert--error a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .alert--error .alert__btn {
   color: #ffffff;
 }
@@ -5664,6 +5689,11 @@ table .btn ~ .btn {
 .alert--information {
   background-color: #2083fe;
   color: #ffffff;
+}
+
+.alert--information a {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .alert--information .alert__btn {
@@ -6461,6 +6491,59 @@ select {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+/**
+ * Animations taken from animate.css
+ * @ref: https://daneden.github.io/animate.css/
+ */
+.animated {
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+.animation-delayed, .animation-delayed-2 {
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+
+.animation-delayed-3 {
+  -webkit-animation-delay: 3s;
+          animation-delay: 3s;
+}
+
+.animation-delayed-4 {
+  -webkit-animation-delay: 4s;
+          animation-delay: 4s;
+}
+
+@-webkit-keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+  }
+}
+
+.fadeOutDown {
+  -webkit-animation-name: fadeOutDown;
+          animation-name: fadeOutDown;
 }
 
 .brand-logo {

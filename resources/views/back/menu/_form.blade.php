@@ -25,6 +25,7 @@
 
             <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
                 <div>
+
                     <!-- internal type -->
                     <label class="block stack-xs custom-indicators" for="typeInternal">
                         <input v-on:click="changeType('internal')" {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"':'' }}
@@ -73,6 +74,17 @@
                                 @endforeach
                             </tabs>
                         </div>
+                    </label>
+
+                    <!-- no link -->
+                    <label class="block stack-xs custom-indicators" for="typeNolink">
+                        <input v-on:click="changeType('nolink')" {{ (old('type', $menuitem->type) == 'nolink') ? 'checked="checked"':'' }}
+                        name="type"
+                               value="nolink"
+                               id="typeNolink"
+                               type="radio">
+                        <span class="custom-radiobutton --primary"></span>
+                        <strong>Geen link toevoegen aan dit menuitem. </strong>
                     </label>
                 </div>
             </radio-options>

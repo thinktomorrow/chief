@@ -5,7 +5,14 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', $page->title )
-    <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+
+    <div class="inline-group-s">
+        {!! $page->statusAsLabel() !!}
+
+        <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+        @include('chief::back.pages._partials.context-menu')
+    </div>
+
 @endcomponent
 
 @section('content')
