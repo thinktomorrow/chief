@@ -10,8 +10,6 @@
         /** Called when redactor instance is enabled */
         start: function(){
 
-            console.log();
-
             /**
              * For support of columns in the wysiwyg, we'll need to make sure that only the
              * column body is editable. Nice effect of contenteditable is that the hard

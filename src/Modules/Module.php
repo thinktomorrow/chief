@@ -144,7 +144,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
             }
 
             return view($viewPath, [
-                'banner' => $this,
+                'module' => $this,
                 'parent' => $parent,
                 'relation' => $relation,
             ])->render();
