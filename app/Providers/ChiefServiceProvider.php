@@ -42,6 +42,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
+            __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
         ], 'chief-config');
 
         $this->publishes([
@@ -81,6 +82,7 @@ class ChiefServiceProvider extends ServiceProvider
     {
         // TODO: test this logic...
         $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'thinktomorrow.chief');
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
 
         $this->setupEnvironmentProviders();
 

@@ -243,4 +243,24 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         return $this->title;
     }
+
+    public static function guessHomepage(): self
+    {
+        $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
+
+        // Homepage id is explicitly set
+        if($homepage_id && $page = static::findPublished($homepage_id)) {
+            return $page;
+        }
+
+        if($page = static::collection('singles')->published()->first()) {
+            return $page;
+        }
+
+        if($page = static::published()->first()) {
+            return $page;
+        }
+
+        throw new NotFoundHomepage('No homepage could be guessed. Make sure to provide a published page and set its id in the thinktomorrow.chief-settings.homepage_id config parameter.');
+    }
 }
