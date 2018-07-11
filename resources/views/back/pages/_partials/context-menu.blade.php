@@ -1,8 +1,11 @@
 <options-dropdown class="inline-block">
     <div class="inset-s" v-cloak>
 
-        @if(\Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.pages.edit')
-            <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="block squished-s --link-with-bg">Aanpassen</a>
+
+        @if(!$page->isArchived())
+            @if(\Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.pages.edit')
+                <a href="{{ route('chief.back.pages.edit',$page->getKey()) }}" class="block squished-s --link-with-bg">Aanpassen</a>
+            @endif
         @endif
 
         @if($page->isPublished())
