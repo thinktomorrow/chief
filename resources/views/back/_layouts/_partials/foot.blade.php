@@ -62,6 +62,7 @@
 
 <script src="{{ cached_asset('/chief-assets/back/js/native.js','back') }}"></script>
 @stack('custom-scripts-after-vue')
+@include('chief::back._layouts._partials.project-footer')
 
 </body>
 </html>
