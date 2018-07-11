@@ -132,6 +132,16 @@
     </radio-options>
 @endchiefformgroup
 
+@chiefformgroup(['field' => 'order'])
+    @slot('label', 'Sorteering')
+    @slot('description', 'Sorteering van dit menu item binnen bovenliggend item.')
+    <div class="row">
+        <div class="column-4">
+            <input type="text" name="order" id="order" placeholder="Menu order" value="{{ old('order', $menuitem->order) }}"
+                class="input inset-s">
+        </div>
+    </div>
+@endchiefformgroup
 
 @push('custom-scripts')
 

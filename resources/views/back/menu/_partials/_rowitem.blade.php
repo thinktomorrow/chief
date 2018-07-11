@@ -17,6 +17,10 @@
         @endif
     </div>
 
+    <div class="column center-y">
+        {{ $item->order }}
+    </div>
+
     <div class="column-2 text-right">
         <a href="{{ route('chief.back.menu.edit', $item->id) }}" class="btn btn-link text-font">Aanpassen</a>
     </div>

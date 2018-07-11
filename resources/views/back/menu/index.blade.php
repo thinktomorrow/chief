@@ -22,6 +22,9 @@
             <div class="column-4 center-y">
                 <strong>Link</strong>
             </div>
+            <div class="column center-y">
+                <strong>Sortering</strong>
+            </div>
             <div class="column-2">
 
             </div>
