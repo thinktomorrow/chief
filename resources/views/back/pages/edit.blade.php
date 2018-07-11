@@ -34,3 +34,8 @@
 @push('custom-scripts-after-vue')
     @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('pages.media.upload', $page->id)]))
 @endpush
+
+@include('chief::back._elements.file-component')
+@include('chief::back._elements.slimcropper-component')
+@include('chief::back._elements.fileupload-component')
+

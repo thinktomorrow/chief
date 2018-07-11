@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
@@ -27,6 +27,9 @@ class UpdatePageTest extends TestCase
         ]);
 
         $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
+
+        // For our project context we expect the page detail route to be known
+        Route::get('pages/{slug}', function(){})->name('pages.show');
     }
 
     /** @test */

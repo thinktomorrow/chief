@@ -233,6 +233,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $this->title;
     }
 
+    public function isHomepage(): bool
+    {
+        $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
+
+        return $this->id == $homepage_id;
+    }
+
     public static function guessHomepage(): self
     {
         $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
