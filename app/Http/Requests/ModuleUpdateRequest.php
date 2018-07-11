@@ -25,7 +25,7 @@ class ModuleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'slug' => 'required|unique:modules,slug,' . $this->id . ',id',
+            'slug' => 'required|unique:module,slug,' . $this->id . ',id',
         ];
     }
 
