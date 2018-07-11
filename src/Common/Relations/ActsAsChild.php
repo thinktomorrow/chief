@@ -13,7 +13,5 @@ interface ActsAsChild extends ProvidesFlatReference
 
     public function rejectParent(ActsAsParent $parent);
 
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string;
-
     public function relationWithParent(ActsAsParent $parent): Relation;
 }

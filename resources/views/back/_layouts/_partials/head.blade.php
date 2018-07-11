@@ -20,4 +20,5 @@
     <link rel="stylesheet" type="text/css" href="{{ cached_asset('/chief-assets/back/css/main.css','back') }}">
 
     @stack('custom-styles')
+    @include('chief::back._layouts._partials.project-head')
 </head>

@@ -110,7 +110,7 @@ class PagesController extends Controller
             $id,
             $request->trans,
             $request->relations,
-            $request->get('files', []),
+            array_merge($request->get('files', []), $request->file('files', [])), // Images are passed as base64 strings, not as file, Documents are passed via the file segment
             $request->get('filesOrder', [])
         );
 

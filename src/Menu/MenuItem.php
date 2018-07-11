@@ -27,6 +27,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     protected $translatedAttributes = [
         'label',
         'url',
+        'query',
     ];
 
     public $timestamps = false;
@@ -91,7 +92,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
                     $collectionItems->push(MenuItem::make([
                         'id'         => 'collection-' . $page->id,
                         'label'      => $page->menuLabel(),
-                        'url'        => $page->menuUrl(),
+                        'url'        => $this->composePageUrl($item, $page),
                         'parent_id'  => $item->id,
                     ]));
                 });
@@ -102,13 +103,18 @@ class MenuItem extends Model implements TranslatableContract, VineSource
                 if ($page->hidden_in_menu == true) {
                     unset($items[$k]);
                 } else {
-                    $item->url = $page->menuUrl();
+                    $item->url = $this->composePageUrl($item, $page);
                     $item->page_label = $page->menuLabel();
                     $items[$k] = $item;
                 }
             }
         }
         return array_merge($items->all(), $collectionItems->all());
+    }
+
+    private function composePageUrl(MenuItem $item, Page $page)
+    {
+        return $item->query ? $page->menuUrl() . $item->query : $page->menuUrl();
     }
 
     /**

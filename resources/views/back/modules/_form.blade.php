@@ -22,11 +22,20 @@
     </div>
 </section>
 
-@foreach($module->mediaFields() as $mediaType)
-    @include('chief::back._elements.mediagroup', [
-        'group' => $mediaType['type'],
-        'files' => $images[$mediaType['type']],
-        'label' => $mediaType['label'],
-        'description' => $mediaType['description'],
+@foreach($module->mediaFields() as $media)
+
+    <?php
+
+    $viewPath = (isset($media['is_document']) && $media['is_document'])
+        ? 'chief::back._elements.mediagroup-documents'
+        : 'chief::back._elements.mediagroup-images';
+
+    ?>
+
+    @include($viewPath, [
+        'group' => $media['type'],
+        'files' => $images[$media['type']],
+        'label' => $media['label'],
+        'description' => $media['description'],
     ])
 @endforeach

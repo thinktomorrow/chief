@@ -8,6 +8,10 @@ use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
 class UploadMedia
 {
+    /**
+     * Upload from base64encoded files, usually
+     * coming from slim upload component
+     */
     public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
     {
         // When no files are uploaded, we still would like to sort our assets duh
@@ -46,8 +50,13 @@ class UploadMedia
 
     private function addFile(HasMedia $model, string $type, array &$files_order, $file)
     {
-        $image_name = json_decode($file)->output->name;
-        $asset = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
+        if(is_string($file)) {
+            $image_name = json_decode($file)->output->name;
+            $asset = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
+        } else {
+            $image_name = $file->getClientOriginalName();
+            $asset = $this->addAsset($file, $type, null, $image_name, $model);
+        }
 
         // New files are passed with their filename (instead of their id)
         // For new files we will replace the filename with the id.

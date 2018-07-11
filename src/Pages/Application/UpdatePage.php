@@ -28,7 +28,7 @@ class UpdatePage
             $this->syncRelations($page, $relations);
 
             app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
-            
+
             Audit::activity()
                 ->performedOn($page)
                 ->log('edited');

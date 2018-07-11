@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -148,6 +147,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return [
             // MediaType::HERO => [
             //     'type' => MediaType::HERO,
+            //     'is_document' => false,
             //     'label' => 'Hoofdafbeelding',
             //     'description' => '',
             // ],
@@ -214,16 +214,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $query->orderBy('created_at', 'DESC');
     }
 
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
-    }
-
-    public function presentForChild(ActsAsChild $child, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
-    }
-
     public function previewUrl()
     {
         // TODO: how we allow for these default routes to be set up in every new project?
@@ -241,6 +231,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function menuLabel(): string
     {
         return $this->title;
+    }
+
+    public function isHomepage(): bool
+    {
+        $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
+
+        return $this->id == $homepage_id;
     }
 
     public static function guessHomepage(): self
