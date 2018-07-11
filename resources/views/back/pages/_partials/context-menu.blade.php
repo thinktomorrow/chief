@@ -1,6 +1,11 @@
 <options-dropdown class="inline-block">
     <div class="inset-s" v-cloak>
 
+        @if($page->isPublished())
+            <a href="{{ $page->menuUrl() }}" target="_blank" class="block squished-s">Bekijk online</a>
+        @elseif($page->isDraft())
+            <a href="{{ $page->previewUrl() }}" target="_blank" class="block squished-s">Bekijk preview</a>
+        @endif
 
         @if(!$page->isArchived())
             @if(\Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.pages.edit')
@@ -18,7 +23,7 @@
 
             <hr class="stack-s">
 
-            <a data-submit-form="archiveForm-{{$page->id}}" class="block squished-s text-error --link-with-bg">Archiveer '{{ $page->title }}'</a>
+            <a data-submit-form="archiveForm-{{$page->id}}" class="block squished-s text-error --link-with-bg">Archiveer '{{ teaser($page->title,15,'...') }}'</a>
 
             <form class="--hidden" id="archiveForm-{{$page->id}}" action="{{ route('chief.back.pages.archive', $page->id) }}" method="POST">
                 {{ csrf_field() }}
@@ -36,7 +41,7 @@
 
             <hr class="stack-s">
 
-            <a @click="showModal('delete-page-{{$page->id}}')" class="block squished-s text-error --link-with-bg">
+            <a v-cloak @click="showModal('delete-page-{{$page->id}}')" class="block squished-s text-error --link-with-bg">
             Verwijderen
             </a>
 
@@ -50,7 +55,7 @@
 
             <hr class="stack-s">
 
-            <a @click="showModal('delete-page-{{$page->id}}')" class="block squished-s text-error --link-with-bg">
+            <a v-cloak @click="showModal('delete-page-{{$page->id}}')" class="block squished-s text-error --link-with-bg">
             Verwijderen
             </a>
         @endif

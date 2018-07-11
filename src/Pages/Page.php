@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -148,6 +147,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return [
             // MediaType::HERO => [
             //     'type' => MediaType::HERO,
+            //     'is_document' => false,
             //     'label' => 'Hoofdafbeelding',
             //     'description' => '',
             // ],
@@ -212,16 +212,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at', 'DESC');
-    }
-
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
-    }
-
-    public function presentForChild(ActsAsChild $child, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
     }
 
     public function previewUrl()

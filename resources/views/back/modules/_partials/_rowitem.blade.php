@@ -15,7 +15,7 @@
                 <hr class="stack-s">
 
                 <a @click="showModal('delete-module-{{$module->id}}')" class="block squished-s text-error --link-with-bg">
-                    Gooi {{ $module->collectionDetails()->singular }} weg
+                    Verwijder {{ $module->collectionDetails()->singular }}
                 </a>
             </div>
         </options-dropdown>

@@ -1,5 +1,5 @@
 <modal id="delete-module-{{$module->id}}" class="large-modal" title=''>
-    <form action="{{route('chief.back.modules.destroy', $module->id)}}" method="POST" id="delete-form-{{$module->id}}" slot>
+    <form v-cloak action="{{route('chief.back.modules.destroy', $module->id)}}" method="POST" id="delete-form-{{$module->id}}" slot>
         @method('DELETE')
         @csrf
         <div v-cloak>
@@ -11,7 +11,7 @@
         </div>
     </form>
 
-    <div slot="modal-action-buttons">
+    <div v-cloak slot="modal-action-buttons">
         <button type="submit" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$module->id}}">Verwijder deze module</button>
     </div>
 </modal>

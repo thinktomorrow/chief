@@ -30,17 +30,6 @@ class PresentRelationsTest extends TestCase
     }
 
     /** @test */
-    public function a_parent_can_be_presented_in_regards_to_its_child()
-    {
-        $parent = ParentFake::create();
-        $child = ChildFake::create();
-        $parent->adoptChild($child);
-
-        $render = $parent->presentForChild($child, $parent->relationWithChild($child));
-        $this->assertEquals('<div>parent '.$parent->id.' view for child '.$child->id.'</div>', $render);
-    }
-
-    /** @test */
     public function a_parent_has_a_convenience_method_for_presenting_all_children()
     {
         $parent = ParentFake::create();

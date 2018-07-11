@@ -2,7 +2,7 @@
     <tab name="Inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
-                <h2 class="formgroup-label">Titel</h2>
+                <h2 class="formgroup-label">Titel van de {{ $page->collectionDetails()->singular }}</h2>
             </div>
             <div class="formgroup-input column-8">
                 @if(count($page->availableLocales()) > 1) 
@@ -32,12 +32,21 @@
             </div>
         </section>
 
-        @foreach($page->mediaFields() as $mediaType)
-            @include('chief::back._elements.mediagroup', [
-                'group' => $mediaType['type'],
-                'files' => $images[$mediaType['type']],
-                'label' => $mediaType['label'],
-                'description' => $mediaType['description'],
+        @foreach($page->mediaFields() as $media)
+
+            <?php
+
+                $viewPath = (isset($media['is_document']) && $media['is_document'])
+                        ? 'chief::back._elements.mediagroup-documents'
+                        : 'chief::back._elements.mediagroup-images';
+
+            ?>
+
+            @include($viewPath, [
+                'group' => $media['type'],
+                'files' => $images[$media['type']],
+                'label' => $media['label'],
+                'description' => $media['description'],
             ])
         @endforeach
         
