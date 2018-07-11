@@ -6,7 +6,7 @@
             </div>
             <div class="formgroup-input column-8">
                 @if(count($page->availableLocales()) > 1) 
-                    <tabs v-cloak>
+                    <tabs>
                         @foreach($page->availableLocales() as $locale)
                             <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
                                 @include('chief::back.pages._partials.title-form')
@@ -104,3 +104,29 @@
         </section>
     </tab>
 </tabs>
+
+
+@push('custom-scripts')
+<script>
+    Vue.component('chief-permalink', {
+        props: ['root', 'defaultPath'],
+        data: function(){
+            return {
+                path: this.defaultPath || '',
+                editMode: false,
+            };
+        },
+        computed: {
+            fullUrl: function(){
+                return this.root + '/' + this.path;
+            }
+        },
+        render: function(){
+            return this.$scopedSlots.default({
+                data: this.$data,
+                fullUrl: this.fullUrl
+            });
+        }
+    });
+</script>
+@endpush

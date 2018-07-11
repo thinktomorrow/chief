@@ -4,7 +4,7 @@
             <h2 class="formgroup-label">{{ $label ?? 'Media' }}</h2>
             <p>{{ $description ?? '' }}</p>
         </div>
-        <div class="column-8">
+        <div class="column-8" v-cloak>
             <filesupload group="{{ $group }}" v-cloak preselected="{{ isset($files) ? json_encode($files) : '[]'  }}" inline-template>
                 <div id="filegroup-{{ $group }}" :class="{'sorting-mode' : reorder}">
                     <div class="row gutter-s">
