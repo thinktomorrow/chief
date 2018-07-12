@@ -113,3 +113,29 @@
         </section>
     </tab>
 </tabs>
+
+
+@push('custom-scripts')
+<script>
+    Vue.component('chief-permalink', {
+        props: ['root', 'defaultPath'],
+        data: function(){
+            return {
+                path: this.defaultPath || '',
+                editMode: false,
+            };
+        },
+        computed: {
+            fullUrl: function(){
+                return this.root + '/' + this.path;
+            }
+        },
+        render: function(){
+            return this.$scopedSlots.default({
+                data: this.$data,
+                fullUrl: this.fullUrl
+            });
+        }
+    });
+</script>
+@endpush

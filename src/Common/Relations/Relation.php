@@ -31,8 +31,14 @@ class Relation extends Model
             ->orderBy('sort', 'ASC')
             ->get();
 
-        return $relations->map(function ($relation) {
+        return $relations->map(function ($relation) use($parent_type, $parent_id) {
             $child = (new $relation->child_type)->find($relation->child_id);
+
+            if(!$child) {
+                // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
+                throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
+            }
+
             $child->relation = $relation;
             return $child;
         });

@@ -27,7 +27,6 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     protected $translatedAttributes = [
         'label',
         'url',
-        'query',
     ];
 
     public $timestamps = false;
@@ -114,7 +113,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
     private function composePageUrl(MenuItem $item, Page $page)
     {
-        return $item->query ? $page->menuUrl() . $item->query : $page->menuUrl();
+        return $page->menuUrl();
     }
 
     /**
