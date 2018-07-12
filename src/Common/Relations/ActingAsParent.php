@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Pages\CollectedPages;
 use Thinktomorrow\Chief\Pages\Page;
 
@@ -45,9 +46,9 @@ trait ActingAsParent
         $children = $this->children();
 
         // Pages are presented in one module file with the collection of all pages combined
-        foreach($children as $child) {
+        foreach($children as $i => $child) {
 
-            $key = $child->collectionKey();
+            $key = ($child instanceof ActsAsCollection) ? $child->collectionKey() : $i;
 
             if($child instanceof Page) {
 
