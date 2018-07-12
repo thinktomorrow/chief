@@ -5,7 +5,7 @@
                 <h2 class="formgroup-label">Titel van de {{ $page->collectionDetails()->singular }}</h2>
             </div>
             <div class="formgroup-input column-8">
-                @if(count($page->availableLocales()) > 1) 
+                @if(count($page->availableLocales()) > 1)
                     <tabs v-cloak>
                         @foreach($page->availableLocales() as $locale)
                             <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
@@ -49,7 +49,7 @@
                 'description' => $media['description'],
             ])
         @endforeach
-        
+
         <a href="#seo" class="btn btn-o-primary right">volgende</a>
     </tab>
     <tab name="Seo">
@@ -59,7 +59,7 @@
                 <p class="caption">Titel en omschrijving van het pagina zoals het in search engines (o.a. google) wordt weergegeven.</p>
             </div>
             <div class="formgroup-input column-7">
-                @if(count($page->availableLocales()) > 1) 
+                @if(count($page->availableLocales()) > 1)
                     <tabs v-cloak>
                         @foreach($page->availableLocales() as $locale)
                             <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.seo_title')}">

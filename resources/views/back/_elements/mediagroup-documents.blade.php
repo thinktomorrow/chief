@@ -2,7 +2,7 @@
     <div class="row gutter-xl">
         <div class="formgroup-info column-4">
             <h2 class="formgroup-label">{{ $label ?? 'Media' }}</h2>
-            <p>{{ $description ?? '' }}</p>
+            <p>{!! $description ?? '' !!}</p>
         </div>
         <div class="column-8">
 
