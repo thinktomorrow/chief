@@ -2,7 +2,7 @@
     <tab name="Inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
-                <h2 class="formgroup-label">Titel van de {{ $page->collectionDetails()->singular }}</h2>
+                <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
             </div>
             <div class="formgroup-input column-8">
                 @if(count($page->availableLocales()) > 1)
@@ -107,8 +107,7 @@
                 </chief-multiselect>
             </div>
             <div class="column-12 text-right">
-                <a class="btn btn-o-primary">Opslaan als draft</a>
-                <a @click="showModal('publication-page')" class="btn btn-o-secondary">Plan je pagina in</a>
+                <a class="btn btn-o-primary">Opslaan</a>
             </div>
         </section>
     </tab>

@@ -154,24 +154,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ];
     }
 
-    /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
-     *
-     */
-    public function collectionDetails(): CollectionDetails
-    {
-        $collectionKey = $this->collectionKey();
-
-        return new CollectionDetails(
-            $collectionKey,
-            static::class,
-            ucfirst(str_singular($collectionKey)),
-            ucfirst(str_plural($collectionKey)),
-            $this->flatReferenceLabel()
-        );
-    }
-
     public function flatReferenceLabel(): string
     {
         return $this->title ?? '';
@@ -316,11 +298,11 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function statusAsLabel()
     {
         if($this->isPublished()) {
-            return '<span><em>online</em></span>';
+            return '<a href="'.$this->menuUrl().'" target="_blank"><em>online</em></a>';
         }
 
         if($this->isDraft()) {
-            return '<span><em>offline</em></span>';
+            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
         if($this->isArchived()) {

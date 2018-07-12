@@ -114,7 +114,7 @@ class PagesController extends Controller
             $request->get('filesOrder', [])
         );
 
-        return redirect()->route('chief.back.pages.index', $page->collectionKey())->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
+        return redirect()->route('chief.back.pages.edit', $page->id)->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');
     }
 
     /**

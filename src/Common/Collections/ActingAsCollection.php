@@ -32,8 +32,8 @@ trait ActingAsCollection
         return new CollectionDetails(
             $collectionKey,
             static::class,
-            ucfirst(str_singular($collectionKey)),
-            ucfirst(str_plural($collectionKey)),
+            str_singular($collectionKey),
+            str_plural($collectionKey),
             $this->flatReferenceLabel()
         );
     }

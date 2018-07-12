@@ -4,7 +4,10 @@
 
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', $page->title )
+    @slot('title', $page->title)
+    @slot('subtitle')
+        <a class="center-y" href="{{ route('chief.back.pages.index',$page->collectionKey()) }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $page->collectionDetails()->plural }}</a>
+    @endslot
 
     <div class="inline-group-s">
         {!! $page->statusAsLabel() !!}
