@@ -206,7 +206,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
+        $translationModel = (new static)->translationModel;
+
+        return ($trans =  $translationModel::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)
@@ -263,6 +265,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function view()
     {
         $viewPaths = [
+            'front.'.$this->collectionKey().'.show',
             'front.pages.'.$this->collectionKey().'.show',
             'front.pages.show'
         ];

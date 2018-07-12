@@ -21,8 +21,8 @@
             var dropdown = {};
             var $button = this.toolbar.addButton('column', { title: 'Columns' });
 
-            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.set', args: [6,6] };
-            dropdown.three = { title: '<strong>3</strong> columns', api: 'plugin.redactorColumns.set', args: [4,4,4] };
+            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
+            dropdown.three = { title: '<strong>3</strong> columns', api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
 
             $button.setIcon('<i class="icon icon-grid"></i>');
             $button.setDropdown(dropdown);
@@ -37,6 +37,17 @@
             });
 
             this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
+        },
+
+        setAsTable: function(sections){
+
+            var columns = [];
+
+            sections.forEach(function(section){
+                columns.push('<td class="column-'+ section +'"></td>');
+            });
+
+            this.app.insertion.insertHtml('<br><table><tr class="row gutter">' + columns.join('') + '</tr></table><br>');
         },
 
         restrictColumnEditability: function()
