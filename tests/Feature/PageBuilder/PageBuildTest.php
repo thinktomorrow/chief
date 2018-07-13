@@ -48,6 +48,23 @@ class PageBuildTest extends TestCase
     }
 
     /** @test */
+    function it_can_fetch_all_sections()
+    {
+        $module = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $otherPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug']);
+        $module2 = TextModule::create(['collection' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+
+        $this->page->adoptChild($module, ['sort' => 0]);
+        $this->page->adoptChild($otherPage, ['sort' => 1]);
+        $this->page->adoptChild($module2, ['sort' => 2]);
+
+        $this->assertCount(3, $this->page->children());
+        $this->assertCount(3, $this->page->presentChildren());
+
+        $this->assertEquals('eerste text article text tweede text' , $this->page->renderChildren());
+    }
+
+    /** @test */
     function it_can_add_a_text_module()
     {
         $this->asAdmin()
