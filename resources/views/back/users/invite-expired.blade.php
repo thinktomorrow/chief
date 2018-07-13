@@ -10,6 +10,7 @@
 
             <p>Deze link is jammer genoeg ongeldig. Mogelijk is de reden een van de volgende: </p>
             <ul>
+                <li>de uitnodiging is reeds aanvaard.</li>
                 <li>de uitnodiging is vervallen. Binnen 3 dagen van ontvangst dient een uitnodiging te worden aanvaard.</li>
                 <li>Zorg ervoor dat de volledige uitnodigingslink wordt gebruikt. Van zodra een deeltje ontbreekt, is deze niet geldig.</li>
                 <li>de uitnodiging is teruggetrokken door de beheerder.</li>
