@@ -16,7 +16,14 @@ trait ActingAsParent
         if ($this->areChildRelationsLoaded()) {
             return $this->loadedChildRelations;
         }
-        return $this->loadedChildRelations = Relation::children($this->getMorphClass(), $this->getKey());
+        return $this->loadedChildRelations = $this->freshChildren();
+    }
+
+    public function freshChildren()
+    {
+        $this->loadedChildRelations = null;
+
+        return Relation::children($this->getMorphClass(), $this->getKey());
     }
 
     public function adoptChild(ActsAsChild $child, array $attributes = [])

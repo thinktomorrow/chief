@@ -23,6 +23,39 @@
 
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
+                <h2 class="formgroup-label">PAGEBUILDER</h2>
+            </div>
+            <div class="formgroup-input column-8">
+
+                <section class="stack block inset-s" style="border-left:2px solid lightgreen">
+                    <tabs>
+                        @foreach($page->availableLocales() as $key => $locale)
+                            <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
+                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][{{ $key }}]" id="trans-{{ $locale }}-{{ $key }}" cols="10" rows="5">{{ old('trans.'.$locale.'.'. $key,$page->translateForForm($locale,$key)) }}</textarea>
+                            </tab>
+                        @endforeach
+                    </tabs>
+                </section>
+
+
+                <section class="stack-s block inset-s" style="border-left:2px solid lightgreen">
+                    MODULE SELECTIE....
+                </section>
+
+                <section class="stack-s block inset-s" style="border-left:2px solid lightgreen">
+                    <tabs>
+                        @foreach($page->availableLocales() as $key => $locale)
+                            <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
+                                <textarea data-editor class="inset-s" name="trans[{{ $locale }}][{{ $key }}]" id="trans-{{ $locale }}-{{ $key }}" cols="10" rows="5">{{ old('trans.'.$locale.'.'. $key,$page->translateForForm($locale,$key)) }}</textarea>
+                            </tab>
+                        @endforeach
+                    </tabs>
+                </section>
+            </div>
+        </section>
+
+        <section class="row formgroup stack gutter-l">
+            <div class="column-4">
                 <h2 class="formgroup-label">Inhoud</h2>
             </div>
             <div class="formgroup-input column-8">

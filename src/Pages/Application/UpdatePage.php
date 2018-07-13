@@ -6,6 +6,7 @@ use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\PageBuilder\UpdateSections;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ class UpdatePage
 {
     use TranslatableCommand;
 
-    public function handle($id, array $translations, array $relations, array $files, array $files_order): Page
+    public function handle($id, array $sections, array $translations, array $relations, array $files, array $files_order): Page
     {
         try {
             DB::beginTransaction();
@@ -25,7 +26,10 @@ class UpdatePage
 
             $this->savePageTranslations($page, $translations);
 
-            $this->syncRelations($page, $relations);
+            $this->saveSections($page, $sections);
+
+            // Relations - non-section way
+//            $this->syncRelations($page, $relations);
 
             app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
 
@@ -64,5 +68,15 @@ class UpdatePage
         foreach (FlatReferenceCollection::fromFlatReferences($relateds) as $i => $related) {
             $page->adoptChild($related, ['sort' => $i]);
         }
+    }
+
+    private function saveSections($page, $sections)
+    {
+        UpdateSections::forPage($page, $sections['modules'], $sections['text'], $sections['order'])
+                        ->addModules()
+                        ->removeModules()
+                        ->addTextModules()
+                        ->replaceTextModules()
+                        ->removeTextModules();
     }
 }

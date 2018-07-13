@@ -108,8 +108,9 @@ class PagesController extends Controller
 
         $page = app(UpdatePage::class)->handle(
             $id,
-            $request->trans,
-            $request->relations,
+            $request->get('sections',[]),
+            $request->get('trans', []),
+            $request->get('relations', []),
             array_merge($request->get('files', []), $request->file('files', [])), // Images are passed as base64 strings, not as file, Documents are passed via the file segment
             $request->get('filesOrder', [])
         );

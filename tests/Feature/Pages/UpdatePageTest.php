@@ -35,8 +35,6 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->disableExceptionHandling();
-
         $this->asAdmin()->get(route('chief.back.pages.edit', $this->page->id))
                                ->assertStatus(200);
     }
