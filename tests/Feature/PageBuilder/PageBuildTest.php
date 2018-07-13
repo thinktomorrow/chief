@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
@@ -48,27 +49,40 @@ class PageBuildTest extends TestCase
     }
 
     /** @test */
-    function it_can_fetch_all_sections()
+    function it_can_fetch_all_sections_in_order()
     {
         $module = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
         $otherPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug']);
         $module2 = TextModule::create(['collection' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $module3 = NewsletterModuleFake::create(['collection' => 'newsletter', 'slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
         $this->page->adoptChild($module, ['sort' => 0]);
-        $this->page->adoptChild($otherPage, ['sort' => 1]);
         $this->page->adoptChild($module2, ['sort' => 2]);
+        $this->page->adoptChild($otherPage, ['sort' => 1]);
+        $this->page->adoptChild($module3, ['sort' => 5]);
 
-        $this->assertCount(3, $this->page->children());
-        $this->assertCount(3, $this->page->presentChildren());
+        $this->assertCount(4, $this->page->children());
+        $this->assertCount(4, $this->page->presentChildren());
 
-        $this->assertEquals('eerste text article text tweede text' , $this->page->renderChildren());
+        $this->assertEquals('eerste textarticle texttweede textnieuwsbrief' , $this->page->renderChildren());
     }
 
     /** @test */
     function it_can_add_a_text_module()
     {
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams());
+            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+                'sections.text.new' => [
+                    [
+                        'slug' => 'text-1',
+                        'trans' => [
+                            'nl' => [
+                                'content' => 'new content',
+                            ]
+                        ]
+                    ]
+                ]
+            ]));
 
         $this->assertCount(1, $this->page->children());
         $this->assertInstanceOf(Module::class, $this->page->children()->first());
@@ -171,7 +185,6 @@ class PageBuildTest extends TestCase
     /** @test */
     function it_can_add_pages_as_module()
     {
-        $this->disableExceptionHandling();
         $article = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'tweede artikel', 'slug:nl' => 'tweede-slug']);
 
         // Replace text module content
@@ -212,5 +225,61 @@ class PageBuildTest extends TestCase
             ]));
 
         $this->assertCount(0, $this->page->children());
+    }
+
+    /** @test */
+    function it_can_set_the_order()
+    {
+        $text_module = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $otherPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug']);
+        $newsletter = NewsletterModuleFake::create(['collection' => 'newsletter', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+
+        $this->page->adoptChild($text_module, ['sort' => 0]);
+
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+                'sections.text.new'     => [
+                    [
+                        'slug' => 'text-1',
+                        'trans' => [
+                            'nl' => [
+                                'content' => 'new text',
+                            ]
+                        ]
+                    ],
+                ],
+                'sections.text.replace' => [
+                    [
+                        'id' => $text_module->flatReference()->get(),
+                        'trans' => [
+                            'nl' => [
+                                'content' => 'replaced module',
+                            ]
+                        ]
+                    ],
+                ],
+                'sections.text.remove'  => [],
+                'sections.modules'      => [
+                    'new' => [
+                        $otherPage->flatReference()->get(),
+                        $newsletter->flatReference()->get(),
+                    ],
+                ],
+                'sections.order' => [
+                    $otherPage->flatReference()->get(),
+                    $newsletter->flatReference()->get(),
+                    'text-1',
+                    $text_module->flatReference()->get(),
+                ]
+            ]));
+
+        $this->assertCount(4, $this->page->children());
+
+        $this->assertEquals([
+            $otherPage->flatReference()->get(),
+            $newsletter->flatReference()->get(),
+            TextModule::findBySlug('text-1')->flatReference()->get(),
+            $text_module->flatReference()->get()],
+            (new FlatReferenceCollection($this->page->children()->all()))->toFlatReferences()->all());
     }
 }

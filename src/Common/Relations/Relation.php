@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Common\Relations;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -9,6 +10,25 @@ class Relation extends Model
 {
     public $timestamps = false;
     public $guarded = [];
+
+    /**
+     * Set the keys for a save update query.
+     * We override the default save setup since we do not have a primary key in relation table.
+     * There should however always be the parent and child references so we can use
+     * those to target the record in database.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    protected function setKeysForSaveQuery(Builder $query)
+    {
+        $query->where('parent_type', $this->getMorphClass())
+                ->where('parent_id', $this->getKey())
+                ->where('child_type', $this->child_type)
+                ->where('child_id', $this->child_id);
+
+        return $query;
+    }
 
     public static function parents($child_type, $child_id)
     {
@@ -60,25 +80,5 @@ class Relation extends Model
         }
 
         return $collection;
-    }
-
-    /**
-     * TODO: move this to Collections helper class.
-     *
-     * Compile all relations into a flat list for select form field.
-     * This includes a composite id made up of the type and id
-     *
-     * @return array
-     */
-    public static function flatten(array $relations = []): array
-    {
-        return [
-            [
-                'label' => 'Pagina\'s',
-                'values' => Page::all()->map(function ($page) {
-                    return ['composite_id' => $page->getOwnMorphClass().'@'.$page->id, 'label' => 'Pagina ' . teaser($page->title, 20, '...')];
-                })->toArray(),
-            ]
-        ];
     }
 }

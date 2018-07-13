@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Pages\CollectedPages;
 use Thinktomorrow\Chief\Pages\Page;
 
@@ -52,13 +51,14 @@ trait ActingAsParent
         $grouped_children = [];
         $children = $this->children();
 
-        // Pages are presented in one module file with the collection of all pages combined
         foreach($children as $i => $child) {
 
-            $key = ($child instanceof ActsAsCollection) ? $child->collectionKey() : $i;
+            $key = $i;
 
             if($child instanceof Page) {
 
+                // Pages are presented in one module file with the collection of all pages combined
+                // Only if they are sorted right after each other
                 if(!isset($grouped_children[$key])) {
                     $grouped_children[$key] = new CollectedPages();
                 }
@@ -77,17 +77,28 @@ trait ActingAsParent
 
     public function relationWithChild(ActsAsChild $child): Relation
     {
-        return Relation::first([
-            'child_type'  => $child->getMorphClass(),
-            'child_id'    => $child->getKey(),
-            'parent_type' => $this->getMorphClass(),
-            'parent_id'   => $this->getKey(),
-        ]);
+        return Relation::query()
+            ->where('parent_type', $this->getMorphClass())
+            ->where('parent_id', $this->getKey())
+            ->where('child_type', $child->getMorphClass())
+            ->where('child_id', $child->getKey())
+            ->first();
+    }
+
+    public function sortChild(ActsAsChild $child, $sort = 0)
+    {
+        $this->loadedChildRelations = null;
+
+        Relation::query()
+            ->where('parent_type', $this->getMorphClass())
+            ->where('parent_id', $this->getKey())
+            ->where('child_type', $child->getMorphClass())
+            ->where('child_id', $child->getKey())
+            ->update(['sort' => $sort]);
     }
 
     private function attachChild($child_type, $child_id, array $attributes = [])
     {
-        // TODO: update sort when relation is found is not triggered...
         Relation::firstOrCreate([
             'parent_type' => $this->getMorphClass(),
             'parent_id'   => $this->getKey(),

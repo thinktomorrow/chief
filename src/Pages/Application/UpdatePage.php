@@ -2,9 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
-use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\PageBuilder\UpdateSections;
 use Thinktomorrow\Chief\Pages\Page;
@@ -77,6 +75,7 @@ class UpdatePage
                         ->removeModules()
                         ->addTextModules()
                         ->replaceTextModules()
-                        ->removeTextModules();
+                        ->removeTextModules()
+                        ->sort();
     }
 }

@@ -2,19 +2,18 @@
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
-use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\Page;
 
 class UpdateSections
 {
     /** @var array */
-    private $order;
+    private $sorting;
 
     /** @var Page */
     private $page;
@@ -25,29 +24,24 @@ class UpdateSections
     /** @var array */
     private $text_modules;
 
-    private function __construct(Page $page, array $relation_references, array $text_modules, array $order)
+    private function __construct(Page $page, array $relation_references, array $text_modules, array $sorting)
     {
         $this->page = $page;
         $this->relation_references = $relation_references;
         $this->text_modules = $text_modules;
-        $this->order = $order;
+        $this->sorting = $sorting;
     }
 
     public static function forPage(Page $page, array $relation_references, array $text_modules, array $order)
     {
         return new static($page, $relation_references, $text_modules, $order);
         // Add newly created text modules on the fly
-
         // Replace value of existing text modules
-
         // Remove any text modules
-
         // Attach existing modules
-
         // Detach removed modules
 
         // Sort all modules, now that we have all ids...
-
         // When no content has changed, we still like to sort
     }
 
@@ -90,6 +84,10 @@ class UpdateSections
 
             // Add content
             app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
+
+            // Change slug representation in sorting to proper flat reference
+            $index = (false !== $key = array_search($module->slug, $this->sorting)) ? $key : null;
+            $this->sorting[$index] = $module->flatReference()->get();
         }
 
         return $this;
@@ -123,6 +121,24 @@ class UpdateSections
             if(!$module) continue;
 
             $this->page->rejectChild($module);
+        }
+
+        return $this;
+    }
+
+    public function sort()
+    {
+        $children = $this->page->children();
+
+        foreach($this->sorting as $sorting => $reference) {
+
+            $child = $children->first(function($c) use($reference){
+                return $c->flatReference()->get() == $reference;
+            });
+
+            if(!$child) continue;
+
+            $this->page->sortChild($child, $sorting);
         }
 
         return $this;

@@ -31,7 +31,11 @@ class CollectedPages extends Collection implements PresentForParent
             ])->render();
         }
 
-        return '';
+        // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
+        // if no content value is present. We consider the 'content' attribute to be a default for module and page copy.
+        return $this->map(function($page){
+            return $page->content ?? '';
+        })->implode('');
     }
 
     private function collectionKey()
