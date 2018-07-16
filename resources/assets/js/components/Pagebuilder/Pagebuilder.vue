@@ -1,26 +1,37 @@
 <template>
     <div>
 
-        <span @click="addNewTextSection(0)">+ nieuwe text toevoegen</span>
-        <span @click="addModuleSection(0)">+ nieuwe module toevoegen</span>
+        <span @click="addNewTextSectionAfter(-1)">+ nieuwe text toevoegen</span>
+        <span @click="addModuleSectionAfter(-1)">+ nieuwe module toevoegen</span>
 
-        <template v-for="(section,key) in sections">
+        <template v-for="section in sortedSections">
 
-            <text-section v-if="section.type == 'text'"
+            <text-section v-if="section.collection == 'text'"
+                  v-bind:key="section.slug"
                 v-bind:section="section"
                 v-bind:locales="locales"
                 class="stack"></text-section>
 
-            <module-section v-if="section.type == 'module'"
-                  v-bind:section="section"
+            <module-section v-if="section.collection != 'text'"
+                    v-bind:key="section.id"
+                    v-bind:section="section"
+                    v-bind:modules="modules"
                   class="stack"></module-section>
 
-            <span @click="addNewTextSection(key+1)">+ nieuwe text toevoegen</span>
-            <span @click="addModuleSection(key+1)">+ nieuwe module toevoegen</span>
+            <span @click="addNewTextSectionAfter(section.sort)">+ nieuwe text toevoegen</span>
+            <span @click="addModuleSectionAfter(section.sort)">+ nieuwe module toevoegen</span>
+
+
 
         </template>
 
-        <!--<select type="hidden" name="sections[text][remove]"></select>-->
+        <select name="sections[order][]" multiple style="display:none;">
+            <template v-for="section in sortedSections">
+                <option selected v-if="section.collection == 'text' && !section.id" :value="section.slug"></option>
+                <option selected v-else :value="section.id"></option>
+            </template>
+        </select>
+
         <!--<select type="hidden" name="sections[modules][new]"></select>-->
         <!--<select type="hidden" name="sections[modules][replace]"></select>-->
         <!--<select type="hidden" name="sections[modules][remove]"></select>-->
@@ -43,86 +54,89 @@
             'module-section': ModuleSection,
         },
         props: {
-            'locales': { default: function(){ return {} }, type: Object}
+            'defaultSections': { default: function(){ return [] }, type: Array},
+            'locales': { default: function(){ return {} }, type: Object},
+            'modules' : { default: function(){ return [] }, type: Array},
         },
         data(){
             return {
-                sections: [
-                    {
-                        type: 'module',
-                        id: 'foobar@1',
-                        label: 'Foobar 1',
-                        group: 'product'
-                    },
-                    {
-                        type: 'text',
-                        id: 1,
-                        slug: 'dudu',
-                        trans: {
-                            nl: {
-                                content: 'this is de content yall',
-                            },
-                            fr: {
-                                content: 'ceci c\'est une pipe',
-                            }
-                        }
-                    },
-                    {
-                        type: 'module',
-                        id: 'foobar@2',
-                        label: 'Foobar 2',
-                        group: 'product'
-                    },
-                    {
-                        type: 'text',
-                        id: 2,
-                        slug: 'dudu',
-                        trans: {
-                            nl: {
-                                content: 'this is de <strong>content</strong> yall',
-                            },
-                        }
-                    }
-                ],
+                sections: this.defaultSections
+//                sections: [
+//                    {
+//                        sort: 2,
+//                        collection: 'text',
+//                        id: 1,
+//                        slug: 'dudu',
+//                        trans: {
+//                            nl: {
+//                                content: 'this is de content yall',
+//                            },
+//                            fr: {
+//                                content: 'ceci c\'est une pipe',
+//                            }
+//                        }
+//                    },
+//                    {
+//                        sort: 3,
+//                        collection: 'module',
+//                        id: 'foobar@2',
+//                        label: 'Foobar 2',
+//                        group: 'product'
+//                    },
+//                    {
+//                        sort: 1,
+//                        collection: 'module',
+//                        id: 'foobar@1',
+//                        label: 'Foobar 1',
+//                        group: 'product'
+//                    },
+//                    {
+//                        sort:5,
+//                        collection: 'text',
+//                        id: 2,
+//                        slug: 'dudu',
+//                        trans: {
+//                            nl: {
+//                                content: 'this is de <strong>content</strong> yall',
+//                            },
+//                        }
+//                    }
+//                ],
+            }
+        },
+        created() {
+
+        },
+        computed: {
+            sortedSections() {
+                return this.sections.sort((a, b) => a.sort > b.sort );
             }
         },
         methods: {
-            addNewTextSection(index){
-                console.log(this.sections);
-                console.log(index);
-                this.sections.splice(index, 0, {
-                    type: 'text',
-                    is_new: true,
+            addNewTextSectionAfter(section_sort){
+
+                let index = section_sort + 1;
+                this._resortSectionsAfter(section_sort);
+
+                this.sections.push({
+                    sort: index,
+                    collection: 'text',
                     id: null,
                     slug: this._randomHash(),
-                    trans: {
-                        nl: {
-                            content: 'this is de content yalldfqsdf qsdfdqsfqsdfdsqfqdf',
-                        },
-                        fr: {
-                            content: 'ceci c\'est une pipedf qsdf qsdfk dqsjflksqjdflmkqsjdfmlkjsd',
-                        },
-                        en: {
-                            content: 'ceci c\'est une pipedf qsdf qsdfk dqsjflksqjdflmkqsjdfmlkjsd',
-                        }
-                    }
+                    trans: []
                 });
-                console.log(this.sections);
-
             },
-            addModuleSection(index){
-                console.log(this.sections);
-                console.log(index);
-                this.sections.splice(index, 0, {
-                    type: 'module',
-                    is_new: true,
+            addModuleSectionAfter(section_sort){
+
+                let index = section_sort + 1;
+                this._resortSectionsAfter(section_sort);
+console.log('hoeveel dees');
+                this.sections.push({
+                    sort: index,
+                    collection: 'module',
                     id: 'dkjfkldqjfdkmj@1',
-                    label: 'Foobar',
-                    group: 'product'
+                    label: 'Module',
                 });
-
-                console.log(this.sections);
-
             },
             removeSection(){
 
@@ -132,6 +146,14 @@
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
                 return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             },
+            _resortSectionsAfter(index){
+                for(let k in this.sections) {
+                    if( ! this.sections.hasOwnProperty(k)) continue;
+
+                    if(this.sections[k].sort <= index) continue;
+                    this.sections[k].sort++;
+                }
+            }
         }
     }
 </script>

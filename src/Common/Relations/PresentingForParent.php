@@ -25,6 +25,6 @@ trait PresentingForParent
 
         // If no view has been created for this module, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We consider the 'content' attribute to be a default for module and page copy.
-        return $this->content;
+        return $this->content ?? '';
     }
 }

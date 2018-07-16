@@ -32,17 +32,9 @@ class UpdateSections
         $this->sorting = $sorting;
     }
 
-    public static function forPage(Page $page, array $relation_references, array $text_modules, array $order)
+    public static function forPage(Page $page, array $relation_references, array $text_modules, array $sorting)
     {
-        return new static($page, $relation_references, $text_modules, $order);
-        // Add newly created text modules on the fly
-        // Replace value of existing text modules
-        // Remove any text modules
-        // Attach existing modules
-        // Detach removed modules
-
-        // Sort all modules, now that we have all ids...
-        // When no content has changed, we still like to sort
+        return new static($page, $relation_references, $text_modules, $sorting);
     }
 
     public function addModules()

@@ -2271,19 +2271,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     props: {
         'section': { type: Object },
-        'is_new': { default: false, type: Boolean }
+        'modules': { default: function _default() {
+                return [];
+            }, type: Array }
     },
     data: function data() {
-        return {
-            new_or_replace_key: this.is_new ? 'new' : 'replace'
-        };
+        return {};
     },
     mounted: function mounted() {
-        //
+        console.log('duddu');
+
+        Eventbus.$on('updated-select', function (name, values) {
+
+            // Currently only one entry selection
+            if (values[0]) {
+                console.log(values[0]);
+                //this.section.id = values[0];
+            }
+
+            return true;
+        });
     },
 
     methods: {
@@ -2299,6 +2326,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TextSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/TextSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/ModuleSection.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2344,88 +2382,110 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'module-section': __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__["a" /* default */]
     },
     props: {
+        'defaultSections': { default: function _default() {
+                return [];
+            }, type: Array },
         'locales': { default: function _default() {
                 return {};
-            }, type: Object }
+            }, type: Object },
+        'modules': { default: function _default() {
+                return [];
+            }, type: Array }
     },
     data: function data() {
         return {
-            sections: [{
-                type: 'module',
-                id: 'foobar@1',
-                label: 'Foobar 1',
-                group: 'product'
-            }, {
-                type: 'text',
-                id: 1,
-                slug: 'dudu',
-                trans: {
-                    nl: {
-                        content: 'this is de content yall'
-                    },
-                    fr: {
-                        content: 'ceci c\'est une pipe'
-                    }
-                }
-            }, {
-                type: 'module',
-                id: 'foobar@2',
-                label: 'Foobar 2',
-                group: 'product'
-            }, {
-                type: 'text',
-                id: 2,
-                slug: 'dudu',
-                trans: {
-                    nl: {
-                        content: 'this is de <strong>content</strong> yall'
-                    }
-                }
-            }]
+            sections: this.defaultSections
+            //                sections: [
+            //                    {
+            //                        sort: 2,
+            //                        collection: 'text',
+            //                        id: 1,
+            //                        slug: 'dudu',
+            //                        trans: {
+            //                            nl: {
+            //                                content: 'this is de content yall',
+            //                            },
+            //                            fr: {
+            //                                content: 'ceci c\'est une pipe',
+            //                            }
+            //                        }
+            //                    },
+            //                    {
+            //                        sort: 3,
+            //                        collection: 'module',
+            //                        id: 'foobar@2',
+            //                        label: 'Foobar 2',
+            //                        group: 'product'
+            //                    },
+            //                    {
+            //                        sort: 1,
+            //                        collection: 'module',
+            //                        id: 'foobar@1',
+            //                        label: 'Foobar 1',
+            //                        group: 'product'
+            //                    },
+            //                    {
+            //                        sort:5,
+            //                        collection: 'text',
+            //                        id: 2,
+            //                        slug: 'dudu',
+            //                        trans: {
+            //                            nl: {
+            //                                content: 'this is de <strong>content</strong> yall',
+            //                            },
+            //                        }
+            //                    }
+            //                ],
         };
     },
+    created: function created() {},
 
+    computed: {
+        sortedSections: function sortedSections() {
+            return this.sections.sort(function (a, b) {
+                return a.sort > b.sort;
+            });
+        }
+    },
     methods: {
-        addNewTextSection: function addNewTextSection(index) {
-            console.log(this.sections);
-            console.log(index);
-            this.sections.splice(index, 0, {
-                type: 'text',
-                is_new: true,
+        addNewTextSectionAfter: function addNewTextSectionAfter(section_sort) {
+
+            var index = section_sort + 1;
+            this._resortSectionsAfter(section_sort);
+
+            this.sections.push({
+                sort: index,
+                collection: 'text',
                 id: null,
                 slug: this._randomHash(),
-                trans: {
-                    nl: {
-                        content: 'this is de content yalldfqsdf qsdfdqsfqsdfdsqfqdf'
-                    },
-                    fr: {
-                        content: 'ceci c\'est une pipedf qsdf qsdfk dqsjflksqjdflmkqsjdfmlkjsd'
-                    },
-                    en: {
-                        content: 'ceci c\'est une pipedf qsdf qsdfk dqsjflksqjdflmkqsjdfmlkjsd'
-                    }
-                }
+                trans: []
             });
-            console.log(this.sections);
         },
-        addModuleSection: function addModuleSection(index) {
-            console.log(this.sections);
-            console.log(index);
-            this.sections.splice(index, 0, {
-                type: 'module',
-                is_new: true,
-                id: 'dkjfkldqjfdkmj@1',
-                label: 'Foobar',
-                group: 'product'
-            });
+        addModuleSectionAfter: function addModuleSectionAfter(section_sort) {
 
-            console.log(this.sections);
+            var index = section_sort + 1;
+            this._resortSectionsAfter(section_sort);
+            console.log('hoeveel dees');
+            this.sections.push({
+                sort: index,
+                collection: 'module',
+                id: 'dkjfkldqjfdkmj@1',
+                label: 'Module'
+            });
         },
         removeSection: function removeSection() {},
         _randomHash: function _randomHash() {
 
             // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
             return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        },
+        _resortSectionsAfter: function _resortSectionsAfter(index) {
+            for (var k in this.sections) {
+                if (!this.sections.hasOwnProperty(k)) continue;
+
+                if (this.sections[k].sort <= index) continue;
+                this.sections[k].sort++;
+            }
         }
     }
 });
@@ -2461,14 +2521,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["a"] = ({
     props: {
         'section': { type: Object },
-        'is_new': { default: false, type: Boolean },
         'locales': { default: function _default() {
                 return {};
             }, type: Object }
     },
     data: function data() {
         return {
-            new_or_replace_key: this.is_new ? 'new' : 'replace'
+            new_or_replace_key: this.section.id ? 'replace' : 'new'
         };
     },
     mounted: function mounted() {
@@ -29506,20 +29565,30 @@ var render = function() {
       staticStyle: { "border-left": "2px solid lightgreen" }
     },
     [
-      _c("input", {
-        attrs: {
-          type: "hidden",
-          name:
-            "sections[modules][" +
-            _vm.new_or_replace_key +
-            "][" +
-            _vm._uid +
-            "][id]"
-        },
-        domProps: { value: _vm.section.id }
+      _c("span", {
+        domProps: {
+          innerHTML: _vm._s(_vm.section.label + ": " + _vm.section.sort)
+        }
       }),
       _vm._v(" "),
-      _c("span", { domProps: { innerHTML: _vm._s(_vm.section.label) } })
+      _c(
+        "div",
+        [
+          _c("chief-multiselect", {
+            attrs: {
+              name: "sections[modules][new][" + _vm._uid + "]",
+              options: _vm.modules,
+              multiple: false,
+              grouplabel: "group",
+              groupvalues: "values",
+              labelkey: "label",
+              valuekey: "id",
+              placeholder: "..."
+            }
+          })
+        ],
+        1
+      )
     ]
   )
 }
@@ -29739,7 +29808,7 @@ var render = function() {
         {
           on: {
             click: function($event) {
-              _vm.addNewTextSection(0)
+              _vm.addNewTextSectionAfter(-1)
             }
           }
         },
@@ -29751,26 +29820,28 @@ var render = function() {
         {
           on: {
             click: function($event) {
-              _vm.addModuleSection(0)
+              _vm.addModuleSectionAfter(-1)
             }
           }
         },
         [_vm._v("+ nieuwe module toevoegen")]
       ),
       _vm._v(" "),
-      _vm._l(_vm.sections, function(section, key) {
+      _vm._l(_vm.sortedSections, function(section) {
         return [
-          section.type == "text"
+          section.collection == "text"
             ? _c("text-section", {
+                key: section.slug,
                 staticClass: "stack",
                 attrs: { section: section, locales: _vm.locales }
               })
             : _vm._e(),
           _vm._v(" "),
-          section.type == "module"
+          section.collection != "text"
             ? _c("module-section", {
+                key: section.id,
                 staticClass: "stack",
-                attrs: { section: section }
+                attrs: { section: section, modules: _vm.modules }
               })
             : _vm._e(),
           _vm._v(" "),
@@ -29779,7 +29850,7 @@ var render = function() {
             {
               on: {
                 click: function($event) {
-                  _vm.addNewTextSection(key + 1)
+                  _vm.addNewTextSectionAfter(section.sort)
                 }
               }
             },
@@ -29791,14 +29862,38 @@ var render = function() {
             {
               on: {
                 click: function($event) {
-                  _vm.addModuleSection(key + 1)
+                  _vm.addModuleSectionAfter(section.sort)
                 }
               }
             },
             [_vm._v("+ nieuwe module toevoegen")]
           )
         ]
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticStyle: { display: "none" },
+          attrs: { name: "sections[order][]", multiple: "" }
+        },
+        [
+          _vm._l(_vm.sortedSections, function(section) {
+            return [
+              section.collection == "text" && !section.id
+                ? _c("option", {
+                    attrs: { selected: "" },
+                    domProps: { value: section.slug }
+                  })
+                : _c("option", {
+                    attrs: { selected: "" },
+                    domProps: { value: section.id }
+                  })
+            ]
+          })
+        ],
+        2
+      )
     ],
     2
   )

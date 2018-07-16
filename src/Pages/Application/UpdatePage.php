@@ -70,7 +70,11 @@ class UpdatePage
 
     private function saveSections($page, $sections)
     {
-        UpdateSections::forPage($page, $sections['modules'], $sections['text'], $sections['order'])
+        $modules = $sections['modules'] ?? [];
+        $text = $sections['text'] ?? [];
+        $order = $sections['order'] ?? [];
+
+        UpdateSections::forPage($page, $modules, $text, $order)
                         ->addModules()
                         ->removeModules()
                         ->addTextModules()

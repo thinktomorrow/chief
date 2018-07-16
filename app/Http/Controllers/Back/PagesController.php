@@ -88,8 +88,18 @@ class PagesController extends Controller
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
         $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
 
+        // Current sections
+        $sections = $page->children();
+
+        $sections = $sections->map(function($section, $index){
+            $section->injectTranslationForForm();
+            $section->sort = $index;
+            return $section;
+        })->toArray();
+
         return view('chief::back.pages.edit', [
             'page'            => $page,
+            'sections'        => $sections,
             'relations'       => $relations,
             'images'          => $this->populateMedia($page),
         ]);
@@ -105,7 +115,7 @@ class PagesController extends Controller
     public function update(PageUpdateRequest $request, $id)
     {
         $this->authorize('update-page');
-dd($request->all());
+
         $page = app(UpdatePage::class)->handle(
             $id,
             $request->get('sections',[]),

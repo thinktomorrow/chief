@@ -23,12 +23,11 @@
     export default{
         props: {
             'section': { type: Object },
-            'is_new': {default: false, type: Boolean},
             'locales': { default: function(){ return {} }, type: Object}
         },
         data(){
             return {
-                new_or_replace_key: this.is_new ? 'new' : 'replace'
+                new_or_replace_key: this.section.id ? 'replace' : 'new'
             }
         },
         mounted(){
