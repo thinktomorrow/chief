@@ -27,6 +27,10 @@
             </div>
             <div class="formgroup-input column-8">
 
+                <page-builder :locales="{ 'nl': 'nl', 'fr': 'fr' }">
+                    testje
+                </page-builder>
+
                 <section class="stack block inset-s" style="border-left:2px solid lightgreen">
                     <tabs>
                         @foreach($page->availableLocales() as $key => $locale)

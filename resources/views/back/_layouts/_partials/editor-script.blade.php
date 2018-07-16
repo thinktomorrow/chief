@@ -1,5 +1,3 @@
-<script src="/chief-assets/back/js/vendors/redactor.js"></script>
-
 <script>
     $R('[data-editor]', {
         plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes'],
