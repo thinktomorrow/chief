@@ -70,6 +70,8 @@ class PageBuildTest extends TestCase
     /** @test */
     function it_can_add_a_text_module()
     {
+        $this->disableExceptionHandling();
+
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
                 'sections.text.new' => [
@@ -147,9 +149,7 @@ class PageBuildTest extends TestCase
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
                 'sections.modules'      => [
-                    'new' => [
-                        $module->flatReference()->get()
-                    ],
+                    $module->flatReference()->get()
                 ],
             ]));
 
@@ -171,9 +171,7 @@ class PageBuildTest extends TestCase
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
                 'sections.modules'      => [
-                    'new' => [
-                        $module->flatReference()->get()
-                    ],
+                    $module->flatReference()->get()
                 ],
             ]));
 
@@ -194,9 +192,7 @@ class PageBuildTest extends TestCase
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
                 'sections.modules'      => [
-                    'new' => [
-                        $article->flatReference()->get()
-                    ],
+                    $article->flatReference()->get()
                 ],
             ]));
 
@@ -218,9 +214,7 @@ class PageBuildTest extends TestCase
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
                 'sections.modules'      => [
-                    'remove' => [
-                        $module->flatReference()->get()
-                    ],
+                    // Removing module by not including them in the listing
                 ],
             ]));
 
@@ -260,10 +254,8 @@ class PageBuildTest extends TestCase
                 ],
                 'sections.text.remove'  => [],
                 'sections.modules'      => [
-                    'new' => [
-                        $otherPage->flatReference()->get(),
-                        $newsletter->flatReference()->get(),
-                    ],
+                    $otherPage->flatReference()->get(),
+                    $newsletter->flatReference()->get(),
                 ],
                 'sections.order' => [
                     $otherPage->flatReference()->get(),

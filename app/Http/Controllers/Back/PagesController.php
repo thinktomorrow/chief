@@ -94,6 +94,7 @@ class PagesController extends Controller
         $sections = $sections->map(function($section, $index){
             $section->injectTranslationForForm();
             $section->sort = $index;
+            $section->key = $section->flatReference()->get();
             return $section;
         })->toArray();
 

@@ -2,9 +2,7 @@
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -37,11 +35,14 @@ class UpdateSections
         return new static($page, $relation_references, $text_modules, $sorting);
     }
 
-    public function addModules()
+    public function updateModules()
     {
-        if(!isset($this->relation_references['new']) || empty($this->relation_references['new'])) return $this;
+        // Remove existing relations expect the text ones
+        $this->removeExistingModules();
 
-        $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references['new']);
+        if(empty($this->relation_references)) return $this;
+
+        $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references);
 
         foreach($referred_instances as $instance) {
             $this->page->adoptChild($instance, ['sort' => 0]);
@@ -50,17 +51,12 @@ class UpdateSections
         return $this;
     }
 
-    public function removeModules()
+    private function removeExistingModules()
     {
-        if(!isset($this->relation_references['remove']) || empty($this->relation_references['remove'])) return $this;
-
-        $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references['remove']);
-
-        foreach($referred_instances as $instance) {
+        foreach($this->page->children() as $instance) {
+            if($instance instanceof TextModule) continue;
             $this->page->rejectChild($instance);
         }
-
-        return $this;
     }
 
     public function addTextModules()

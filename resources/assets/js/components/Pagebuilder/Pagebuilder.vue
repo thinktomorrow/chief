@@ -7,13 +7,13 @@
         <template v-for="section in sortedSections">
 
             <text-section v-if="section.collection == 'text'"
-                  v-bind:key="section.slug"
+                  v-bind:key="section.key"
                 v-bind:section="section"
                 v-bind:locales="locales"
                 class="stack"></text-section>
 
             <module-section v-if="section.collection != 'text'"
-                    v-bind:key="section.id"
+                    v-bind:key="section.key"
                     v-bind:section="section"
                     v-bind:modules="modules"
                   class="stack"></module-section>
@@ -104,9 +104,6 @@
 //                ],
             }
         },
-        created() {
-
-        },
         computed: {
             sortedSections() {
                 return this.sections.sort((a, b) => a.sort > b.sort );
@@ -119,6 +116,7 @@
                 this._resortSectionsAfter(section_sort);
 
                 this.sections.push({
+                    key: this._randomHash(),
                     sort: index,
                     collection: 'text',
                     id: null,
@@ -130,8 +128,9 @@
 
                 let index = section_sort + 1;
                 this._resortSectionsAfter(section_sort);
-console.log('hoeveel dees');
+
                 this.sections.push({
+                    key: this._randomHash(),
                     sort: index,
                     collection: 'module',
                     id: 'dkjfkldqjfdkmj@1',

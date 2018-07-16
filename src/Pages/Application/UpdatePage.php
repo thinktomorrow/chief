@@ -75,8 +75,7 @@ class UpdatePage
         $order = $sections['order'] ?? [];
 
         UpdateSections::forPage($page, $modules, $text, $order)
-                        ->addModules()
-                        ->removeModules()
+                        ->updateModules()
                         ->addTextModules()
                         ->replaceTextModules()
                         ->removeTextModules()

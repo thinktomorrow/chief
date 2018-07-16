@@ -2286,7 +2286,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     props: {
@@ -2299,14 +2298,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return {};
     },
     mounted: function mounted() {
-        console.log('duddu');
+        var _this = this;
 
         Eventbus.$on('updated-select', function (name, values) {
 
-            // Currently only one entry selection
+            // Single module allows for one selection
             if (values[0]) {
-                console.log(values[0]);
-                //this.section.id = values[0];
+                _this.section.id = values[0];
             }
 
             return true;
@@ -2438,7 +2436,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             //                ],
         };
     },
-    created: function created() {},
 
     computed: {
         sortedSections: function sortedSections() {
@@ -2454,6 +2451,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             this._resortSectionsAfter(section_sort);
 
             this.sections.push({
+                key: this._randomHash(),
                 sort: index,
                 collection: 'text',
                 id: null,
@@ -2465,8 +2463,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             var index = section_sort + 1;
             this._resortSectionsAfter(section_sort);
-            console.log('hoeveel dees');
+
             this.sections.push({
+                key: this._randomHash(),
                 sort: index,
                 collection: 'module',
                 id: 'dkjfkldqjfdkmj@1',
@@ -29576,14 +29575,14 @@ var render = function() {
         [
           _c("chief-multiselect", {
             attrs: {
-              name: "sections[modules][new][" + _vm._uid + "]",
+              name: "sections[modules][" + _vm._uid + "]",
               options: _vm.modules,
               multiple: false,
               grouplabel: "group",
               groupvalues: "values",
               labelkey: "label",
               valuekey: "id",
-              placeholder: "..."
+              placeholder: "Selecteer een module."
             }
           })
         ],
@@ -29831,7 +29830,7 @@ var render = function() {
         return [
           section.collection == "text"
             ? _c("text-section", {
-                key: section.slug,
+                key: section.key,
                 staticClass: "stack",
                 attrs: { section: section, locales: _vm.locales }
               })
@@ -29839,7 +29838,7 @@ var render = function() {
           _vm._v(" "),
           section.collection != "text"
             ? _c("module-section", {
-                key: section.id,
+                key: section.key,
                 staticClass: "stack",
                 attrs: { section: section, modules: _vm.modules }
               })

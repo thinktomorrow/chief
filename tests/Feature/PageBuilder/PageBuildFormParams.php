@@ -10,12 +10,7 @@ trait PageBuildFormParams
         $params = [
             'sections' => [
                 'modules' => [
-                    'new' => [
-                        //
-                    ],
-                    'remove' => [
-                        //
-                    ],
+                   //
                 ],
                 'text' => [
                     'new' => [
