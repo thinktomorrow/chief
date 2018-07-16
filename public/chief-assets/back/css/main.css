@@ -6681,7 +6681,6 @@ select {
 }
 
 .\--hidden {
-  visibility: hidden;
   display: none;
 }
 
@@ -7228,6 +7227,23 @@ select {
 .tab-block .tab-content .form-group {
   background-color: #ffffff;
   padding: 0.7rem 1rem;
+}
+
+.pagebuilder-menu {
+  position: absolute;
+  bottom: -33px;
+  left: -15.3px;
+  font-size: 2rem;
+  z-index: 1;
+}
+
+.pagebuilder-menu .icon {
+  font-size: inherit;
+}
+
+.pagebuilder-menu-items {
+  float: right;
+  margin-left: 0.6rem;
 }
 
 /**

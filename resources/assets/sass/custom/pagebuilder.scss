@@ -1,0 +1,20 @@
+// Show next hidden item on hover
+//.show-next-on-hover:hover + .--hidden { display: block; }
+
+.pagebuilder-menu{
+  position: absolute;
+  bottom: -33px;
+  left: -15.3px;
+  font-size: 2rem;
+  z-index: 1;
+
+  .icon{
+    font-size:inherit;
+  }
+
+}
+
+.pagebuilder-menu-items{
+  float: right;
+  margin-left: 0.6rem;
+}

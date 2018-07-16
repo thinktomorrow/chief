@@ -1,33 +1,36 @@
 <template>
     <div>
 
-        <span @click="addNewTextSectionAfter(-1)">+ nieuwe text toevoegen</span>
-        <span @click="addModuleSectionAfter(-1)">+ nieuwe module toevoegen</span>
+        <!-- top menu -->
+        <div class="relative stack inset-s" style="border-left:3px solid transparent;">
+            <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
+        </div>
 
         <template v-for="section in sortedSections">
 
-            <text-section v-if="section.collection == 'text'"
+            <text-section v-if="section.type == 'text'"
                   v-bind:key="section.key"
                 v-bind:section="section"
                 v-bind:locales="locales"
                 class="stack"></text-section>
 
-            <module-section v-if="section.collection != 'text'"
-                    v-bind:key="section.key"
-                    v-bind:section="section"
-                    v-bind:modules="modules"
-                  class="stack"></module-section>
+            <module-section v-if="section.type == 'module'"
+                            v-bind:key="section.key"
+                            v-bind:section="section"
+                            v-bind:modules="modules"
+                            class="stack"></module-section>
 
-            <span @click="addNewTextSectionAfter(section.sort)">+ nieuwe text toevoegen</span>
-            <span @click="addModuleSectionAfter(section.sort)">+ nieuwe module toevoegen</span>
-
-
+            <!--<pages-section v-if="section.type == 'pages'"-->
+                    <!--v-bind:key="section.key"-->
+                    <!--v-bind:section="section"-->
+                    <!--v-bind:modules="modules"-->
+                  <!--class="stack"></pages-section>-->
 
         </template>
 
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
-                <option selected v-if="section.collection == 'text' && !section.id" :value="section.slug"></option>
+                <option selected v-if="section.type == 'text' && !section.id" :value="section.slug"></option>
                 <option selected v-else :value="section.id"></option>
             </template>
         </select>
@@ -41,6 +44,8 @@
 <script>
     import TextSection from './TextSection.vue';
     import ModuleSection from './ModuleSection.vue';
+    import PageModuleSection from './PageModuleSection.vue';
+    import PagebuilderMenu from './PagebuilderMenu.vue';
     // For modules we show module name
     // For pages we try to combine them into one section
     // Text modules are shown the content
@@ -52,6 +57,8 @@
         components: {
             'text-section': TextSection,
             'module-section': ModuleSection,
+            'pages-section' : PageModuleSection,
+            'pagebuilder-menu': PagebuilderMenu
         },
         props: {
             'defaultSections': { default: function(){ return [] }, type: Array},
@@ -61,53 +68,21 @@
         data(){
             return {
                 sections: this.defaultSections
-//                sections: [
-//                    {
-//                        sort: 2,
-//                        collection: 'text',
-//                        id: 1,
-//                        slug: 'dudu',
-//                        trans: {
-//                            nl: {
-//                                content: 'this is de content yall',
-//                            },
-//                            fr: {
-//                                content: 'ceci c\'est une pipe',
-//                            }
-//                        }
-//                    },
-//                    {
-//                        sort: 3,
-//                        collection: 'module',
-//                        id: 'foobar@2',
-//                        label: 'Foobar 2',
-//                        group: 'product'
-//                    },
-//                    {
-//                        sort: 1,
-//                        collection: 'module',
-//                        id: 'foobar@1',
-//                        label: 'Foobar 1',
-//                        group: 'product'
-//                    },
-//                    {
-//                        sort:5,
-//                        collection: 'text',
-//                        id: 2,
-//                        slug: 'dudu',
-//                        trans: {
-//                            nl: {
-//                                content: 'this is de <strong>content</strong> yall',
-//                            },
-//                        }
-//                    }
-//                ],
             }
         },
         computed: {
             sortedSections() {
                 return this.sections.sort((a, b) => a.sort > b.sort );
             }
+        },
+        created(){
+            Eventbus.$on('addingNewTextSectionAfter',(position, component) => {
+                this.addNewTextSectionAfter(position);
+            });
+
+            Eventbus.$on('addingModuleSectionAfter',(position, component) => {
+                this.addModuleSectionAfter(position);
+            });
         },
         methods: {
             addNewTextSectionAfter(section_sort){
@@ -116,10 +91,10 @@
                 this._resortSectionsAfter(section_sort);
 
                 this.sections.push({
+                    id: null,
                     key: this._randomHash(),
                     sort: index,
-                    collection: 'text',
-                    id: null,
+                    type: 'text',
                     slug: this._randomHash(),
                     trans: []
                 });
@@ -130,11 +105,10 @@
                 this._resortSectionsAfter(section_sort);
 
                 this.sections.push({
+                    id: null,
                     key: this._randomHash(),
                     sort: index,
-                    collection: 'module',
-                    id: 'dkjfkldqjfdkmj@1',
-                    label: 'Module',
+                    type: 'module',
                 });
             },
             removeSection(){

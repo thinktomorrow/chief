@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
@@ -48,9 +49,9 @@ class PagesController extends Controller
         $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
 
         return view('chief::back.pages.create', [
-            'page'            => $page,
-            'relations'       => $relations,
-            'images'          => $this->populateMedia($page),
+            'page'      => $page,
+            'relations' => $relations,
+            'images'    => $this->populateMedia($page),
         ]);
     }
 
@@ -69,7 +70,7 @@ class PagesController extends Controller
             $request->trans
         );
 
-        return redirect()->route('chief.back.pages.edit', $page->getKey())->with('messages.success', $page->title. ' is toegevoegd in draft. Happy editing!');
+        return redirect()->route('chief.back.pages.edit', $page->getKey())->with('messages.success', $page->title . ' is toegevoegd in draft. Happy editing!');
     }
 
     /**
@@ -89,20 +90,34 @@ class PagesController extends Controller
         $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
 
         // Current sections
-        $sections = $page->children();
-
-        $sections = $sections->map(function($section, $index){
+        $sections = $page->children()->map(function ($section, $index) {
             $section->injectTranslationForForm();
-            $section->sort = $index;
-            $section->key = $section->flatReference()->get();
-            return $section;
+
+            return [
+                // Module reference is by id.
+                'id'         => $section->flatReference()->get(),
+
+                // Key is a separate value to assign each individual module.
+                // This is separate from id to avoid vue key binding conflicts.
+                'key'        => $section->flatReference()->get(),
+
+                // Assign type of section: text, module or pages
+                'type'       => $section->collectionKey() == 'text'
+                                    ? 'text'
+                                    : 'module',
+                                      // Currently not yet support for page specific display
+                                      // : (($section instanceof Page) ? 'pages' : 'module'),
+                'slug'       => $section->slug,
+                'sort'       => $index,
+                'trans'      => $section->trans,
+            ];
         })->toArray();
 
         return view('chief::back.pages.edit', [
-            'page'            => $page,
-            'sections'        => $sections,
-            'relations'       => $relations,
-            'images'          => $this->populateMedia($page),
+            'page'      => $page,
+            'sections'  => $sections,
+            'relations' => $relations,
+            'images'    => $this->populateMedia($page),
         ]);
     }
 
@@ -119,7 +134,7 @@ class PagesController extends Controller
 
         $page = app(UpdatePage::class)->handle(
             $id,
-            $request->get('sections',[]),
+            $request->get('sections', []),
             $request->get('trans', []),
             $request->get('relations', []),
             array_merge($request->get('files', []), $request->file('files', [])), // Images are passed as base64 strings, not as file, Documents are passed via the file segment
@@ -197,9 +212,10 @@ class PagesController extends Controller
 
         foreach ($page->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
             foreach ($assetsByType as $asset) {
-                $images[$type][] = (object) [
-                    'id'  => $asset->id, 'filename' => $asset->getFilename(),
-                    'url' => $asset->getFileUrl()
+                $images[$type][] = (object)[
+                    'id'       => $asset->id,
+                    'filename' => $asset->getFilename(),
+                    'url'      => $asset->getFileUrl(),
                 ];
             }
         }

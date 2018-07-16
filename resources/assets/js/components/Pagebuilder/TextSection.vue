@@ -1,5 +1,5 @@
 <template>
-    <section class="stack block inset-s" style="border-left:2px solid lightgreen">
+    <section class="stack block inset relative" style="border-left:3px solid #14c8a7">
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
         <tabs>
@@ -16,18 +16,26 @@
                     v-html="renderInitialContent(locale)"></textarea>
             </tab>
         </tabs>
+
+        <pagebuilder-menu :section="section"></pagebuilder-menu>
     </section>
 </template>
 <script>
 
+    import PagebuilderMenu from './PagebuilderMenu.vue';
+
     export default{
+        components: {
+            'pagebuilder-menu': PagebuilderMenu
+        },
         props: {
             'section': { type: Object },
             'locales': { default: function(){ return {} }, type: Object}
         },
         data(){
             return {
-                new_or_replace_key: this.section.id ? 'replace' : 'new'
+                new_or_replace_key: this.section.id ? 'replace' : 'new',
+                show_menu: false,
             }
         },
         mounted(){

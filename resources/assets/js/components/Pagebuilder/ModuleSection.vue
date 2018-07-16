@@ -1,42 +1,71 @@
 <template>
-    <section class="stack block inset-s" style="border-left:2px solid lightgreen">
-
-        <span v-html="section.label + ': ' + section.sort"></span>
-
-        <div>
-            <chief-multiselect
-                    :name="'sections[modules]['+_uid+']'"
-                    :options='modules'
-                    :multiple="false"
-                    grouplabel="group"
-                    groupvalues="values"
-                    labelkey="label"
-                    valuekey="id"
-                    placeholder="Selecteer een module."
-            >
-            </chief-multiselect>
+    <section class="stack block inset relative" style="border-left:3px solid rgba(21, 200, 167, 1); background-color:rgba(21, 200, 167, 0.05)">
+        <div class="row">
+            <div class="column-6">
+                <chief-multiselect
+                        :name="'sections[modules]['+_uid+']'"
+                        :options='modules'
+                        :multiple="false"
+                        :selected="section.id"
+                        grouplabel="group"
+                        groupvalues="values"
+                        labelkey="label"
+                        valuekey="id"
+                        placeholder="Selecteer een module."
+                >
+                </chief-multiselect>
+            </div>
         </div>
+
+        <pagebuilder-menu :section="section"></pagebuilder-menu>
+
+
+
+        <!--<div class="pagebuilder-menu">-->
+            <!--<span v-show="!show_menu" @click="show_menu = true" class="icon icon-plus-circle"></span>-->
+            <!--<span v-show="show_menu" @click="show_menu = false" class="icon icon-minus-circle"></span>-->
+            <!--<div v-show="show_menu" class="pagebuilder-menu-items">-->
+                <!--<span @click="$parent.addNewTextSectionAfter(section.sort)">-->
+                    <!--<span title="tekst / afbeelding toevoegen" class="icon icon-align-left"></span>-->
+                <!--</span>-->
+                <!--<span @click="$parent.addModuleSectionAfter(section.sort)">-->
+                    <!--<span title="vast blok selecteren" class="icon icon-clipboard"></span>-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
 
     </section>
 </template>
 <script>
+
+    import MultiSelect from './../MultiSelect.vue';
+    import PagebuilderMenu from './PagebuilderMenu.vue';
+
     export default{
+        components: {
+            'chief-multiselect': MultiSelect,
+            'pagebuilder-menu': PagebuilderMenu
+        },
         props: {
             'section': { type: Object },
             'modules' : { default: function(){ return [] }, type: Array}
         },
         data(){
             return {
-
+                show_menu: false,
             }
         },
         mounted(){
 
-            Eventbus.$on('updated-select', (name, values) => {
+            Eventbus.$on('updated-select', (name, valuesForSelect, values, component) => {
+
+                // Only trigger event coming from own child component
+                if(component.$parent._uid != this._uid) return true;
 
                 // Single module allows for one selection
-                if(values[0]) {
-                    this.section.id = values[0];
+                if(valuesForSelect[0]) {
+                    console.log(valuesForSelect[0]);
+                    this.section.id = valuesForSelect[0];
                 }
 
                 return true;
