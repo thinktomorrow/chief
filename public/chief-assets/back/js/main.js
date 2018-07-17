@@ -2664,7 +2664,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         for (var key in this.locales) {
             if (!this.locales.hasOwnProperty(key)) continue;
 
-            window.$R('#editor-' + this.locales[key] + '-' + this._uid);
+            window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                clickToEdit: true
+            });
         }
     },
 
@@ -29374,7 +29376,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "pagebuilder-menu" }, [
+  return _c("div", { staticClass: "pagebuilder-menu show-on-hover" }, [
     _c("span", {
       directives: [
         {
@@ -29384,7 +29386,7 @@ var render = function() {
           expression: "!active"
         }
       ],
-      staticClass: "icon icon-plus-circle",
+      staticClass: "block icon icon-plus-circle menu-trigger",
       on: {
         click: function($event) {
           _vm.active = true
@@ -29401,7 +29403,7 @@ var render = function() {
           expression: "active"
         }
       ],
-      staticClass: "icon icon-minus-circle",
+      staticClass: "block icon icon-minus-circle menu-trigger",
       on: {
         click: function($event) {
           _vm.active = false

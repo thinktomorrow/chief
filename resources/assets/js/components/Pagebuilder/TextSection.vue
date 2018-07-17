@@ -43,7 +43,9 @@
             for(var key in this.locales) {
                 if( ! this.locales.hasOwnProperty(key)) continue;
 
-                window.$R('#editor-' + this.locales[key] + '-' + this._uid);
+                window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                    clickToEdit: true,
+                });
             }
 
         },

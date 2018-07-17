@@ -1,7 +1,7 @@
 <template>
-    <div class="pagebuilder-menu">
-        <span v-show="!active" @click="active = true" class="icon icon-plus-circle"></span>
-        <span v-show="active" @click="active = false" class="icon icon-minus-circle"></span>
+    <div class="pagebuilder-menu show-on-hover">
+        <span v-show="!active" @click="active = true" class="block icon icon-plus-circle menu-trigger"></span>
+        <span v-show="active" @click="active = false" class="block icon icon-minus-circle menu-trigger"></span>
         <div v-show="active" class="pagebuilder-menu-items">
             <span @click="addingNewTextSectionAfter(section.sort)">
                 <span title="tekst / afbeelding toevoegen" class="icon icon-align-left"></span>

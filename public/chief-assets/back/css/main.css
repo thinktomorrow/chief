@@ -6663,6 +6663,10 @@ select {
   height: auto;
 }
 
+.redactor-toolbar a {
+  margin-right: 0;
+}
+
 .redactor-toolbar li a.re-button-icon {
   padding: 8px 15px;
   font-size: 12px;
@@ -7229,11 +7233,30 @@ select {
   padding: 0.7rem 1rem;
 }
 
+.show-on-hover .menu-trigger {
+  visibility: hidden;
+}
+
+.show-on-hover:hover .menu-trigger {
+  visibility: visible;
+}
+
 .pagebuilder-menu {
   position: absolute;
-  bottom: -33px;
-  left: -15.3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  bottom: -24px;
+  left: -15px;
   font-size: 2rem;
+  height: 2rem;
   z-index: 1;
 }
 
