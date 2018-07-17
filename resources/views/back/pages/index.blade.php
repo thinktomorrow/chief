@@ -63,19 +63,3 @@
 
     @include('chief::back.pages._partials.create-modal')
 @stop
-
-@push('custom-scripts')
-    <script>
-    // SHOW OR HIDE PUBLISH BUTTON
-    $("[class^='showPublishOptions-'], [class*='showPublishOptions-']").click(function(){
-        var id = this.dataset.publishId;
-        $('.publishActions-'+id).removeClass('--hidden');
-        $('.showPublishOptions-'+id).addClass('--hidden');
-    });
-    $('.noPublish').click(function(){
-        var id = this.dataset.publishId;
-        $('.publishActions-'+id).addClass('--hidden');
-        $('.showPublishOptions-'+id).removeClass('--hidden');
-    });
-</script>
-@endpush
