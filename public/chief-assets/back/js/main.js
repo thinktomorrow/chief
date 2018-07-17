@@ -2447,6 +2447,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30076,6 +30083,36 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm.sections.length < 1
+        ? _c(
+            "div",
+            {
+              staticClass: "relative stack",
+              staticStyle: { "border-left": "3px solid transparent" }
+            },
+            [
+              _c(
+                "span",
+                {
+                  staticClass: "btn btn-primary squished",
+                  on: {
+                    click: function($event) {
+                      _vm.addNewTextSectionAfter(-1)
+                    }
+                  }
+                },
+                [
+                  _c("span", { staticClass: "icon icon-zap icon-fw" }),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v("Tijd om een eerste stuk tekst toe te voegen")
+                  ])
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         {

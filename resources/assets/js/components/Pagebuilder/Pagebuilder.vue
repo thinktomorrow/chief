@@ -1,6 +1,13 @@
 <template>
     <div>
 
+        <div v-if="sections.length < 1" class="relative stack" style="border-left:3px solid transparent;">
+            <span class="btn btn-primary squished" @click="addNewTextSectionAfter(-1)">
+                <span class="icon icon-zap icon-fw"></span>
+                <span>Tijd om een eerste stuk tekst toe te voegen</span>
+            </span>
+        </div>
+
         <!-- top menu -->
         <div class="relative stack inset-s" style="border-left:3px solid transparent;">
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
