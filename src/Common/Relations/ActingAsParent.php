@@ -18,11 +18,11 @@ trait ActingAsParent
         return $this->loadedChildRelations = $this->freshChildren();
     }
 
-    public function freshChildren()
+    public function freshChildren(): Collection
     {
         $this->loadedChildRelations = null;
 
-        return Relation::children($this->getMorphClass(), $this->getKey());
+        return new Collection(Relation::children($this->getMorphClass(), $this->getKey())->all());
     }
 
     public function adoptChild(ActsAsChild $child, array $attributes = [])

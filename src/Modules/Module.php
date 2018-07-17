@@ -46,6 +46,17 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $with = ['translations'];
 
     /**
+     * The page specific ones are the text modules
+     * which are added via the page builder
+     *
+     * @param $query
+     */
+    public function scopeWithoutPageSpecific($query)
+    {
+        $query->where('collection','<>','text');
+    }
+
+    /**
      * Each module model can expose the managed translatable fields. These should be included as attributes just like the regular
      * translatable attributes. This method allows for easy installation of the form fields in chief.
      *

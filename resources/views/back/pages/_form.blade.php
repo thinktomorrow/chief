@@ -1,10 +1,9 @@
 <tabs>
     <tab name="Inhoud">
         <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
-            </div>
             <div class="formgroup-input column-8">
+                <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
+
                 @if(count($page->availableLocales()) > 1)
                     <tabs v-cloak>
                         @foreach($page->availableLocales() as $locale)
@@ -20,9 +19,7 @@
                 @endif
             </div>
         </section>
-
         <section class="formgroup stack">
-            <h2 class="formgroup-label">PAGEBUILDER</h2>
             <page-builder
                     :locales="{ 'nl': 'nl', 'fr': 'fr' }"
                     :default-sections='@json($sections)'
@@ -30,24 +27,30 @@
             </page-builder>
         </section>
 
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Inhoud</h2>
-            </div>
-            <div class="formgroup-input column-8">
-                @include('chief::back._elements.translatable_fieldgroups', [
-                    'model' => $page,
-                ])
-            </div>
-        </section>
+        <a href="#custom-fields" class="btn btn-o-primary right">volgende</a>
+    </tab>
+    <tab name="Afbeeldingen & gegevens" id="custom-fields">
+
+        @if(count($page->translatableFields()) > 0)
+            <section class="row formgroup stack gutter-l">
+                <div class="column-4">
+                    <h2 class="formgroup-label">Inhoud</h2>
+                </div>
+                <div class="formgroup-input column-8">
+                    @include('chief::back._elements.translatable_fieldgroups', [
+                        'model' => $page,
+                    ])
+                </div>
+            </section>
+        @endif
 
         @foreach($page->mediaFields() as $media)
 
             <?php
 
-                $viewPath = (isset($media['is_document']) && $media['is_document'])
-                        ? 'chief::back._elements.mediagroup-documents'
-                        : 'chief::back._elements.mediagroup-images';
+            $viewPath = (isset($media['is_document']) && $media['is_document'])
+                ? 'chief::back._elements.mediagroup-documents'
+                : 'chief::back._elements.mediagroup-images';
 
             ?>
 
@@ -58,7 +61,6 @@
                 'description' => $media['description'],
             ])
         @endforeach
-
         <a href="#seo" class="btn btn-o-primary right">volgende</a>
     </tab>
     <tab name="Seo">
@@ -89,36 +91,7 @@
                 </div>
             </div>
         </section>
-        <a href="#modules" class="btn btn-o-primary right">volgende</a>
-    </tab>
-
-    <tab name="Relaties">
-
-        {{-- MODULES --}}
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Gerelateerde onderwerpen</h2>
-                <p class="caption">Bij het pagina kan je enkele gerelateerde onderwerpen koppelen. <br>Deze worden automatisch onderaan de pagina pagina getoond.</p>
-            </div>
-            <div class="formgroup-input column-8">
-                <h4>Voeg een nieuwe relatie toe</h4>
-                <chief-multiselect
-                name="relations"
-                :options='@json($relations)'
-                selected='@json($page->existingRelationIds->toArray())'
-                :multiple="true"
-                grouplabel="group"
-                groupvalues="values"
-                labelkey="label"
-                valuekey="id"
-                placeholder="..."
-                >
-                </chief-multiselect>
-            </div>
-            <div class="column-12 text-right">
-                <a class="btn btn-o-primary">Opslaan</a>
-            </div>
-        </section>
+        <button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
     </tab>
 </tabs>
 

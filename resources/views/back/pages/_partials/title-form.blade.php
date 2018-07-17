@@ -1,5 +1,4 @@
-<div class="stack-s" v-cloak>
-    <label for="trans-{{ $locale }}-title">Titel</label>
+<div class="" v-cloak>
     <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title', $page->translateForForm($locale,'title')) }}">
         <chief-permalink root="{{ url('/') }}" default-path="{{ old('trans.'.$locale.'.slug', $page->translateForForm($locale,'slug')) }}">
             <div class="stack-xs" slot-scope="{ data, fullUrl }">

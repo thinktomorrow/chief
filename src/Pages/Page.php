@@ -103,7 +103,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public static function defaultTranslatableFields(): array
     {
         return [
-            'content' => HtmlField::make()->label('Inhoud'),
+
         ];
     }
 

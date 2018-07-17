@@ -55,13 +55,25 @@ class Relation extends Model
             $child = (new $relation->child_type)->find($relation->child_id);
 
             if(!$child) {
-                // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
-                throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
+
+                // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
+                if( ! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
+                    // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
+                    throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
+                }
+
+                return null;
             }
 
             $child->relation = $relation;
+
             return $child;
-        });
+
+        })
+
+        // In case of soft-deleted entries, this will be null and should be ignored. We make sure that keys are reset in case of removed child
+        ->reject(function($child){ return is_null($child); })
+        ->values();
     }
 
     /**

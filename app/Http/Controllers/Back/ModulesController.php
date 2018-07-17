@@ -19,7 +19,7 @@ class ModulesController extends Controller
         $this->authorize('view-page');
 
         return view('chief::back.modules.index', [
-            'modules' => Module::all(),
+            'modules' => Module::withoutPageSpecific()->get(),
             'collections' => Module::availableCollections()->values()->map->toArray()->toArray(),
         ]);
     }
