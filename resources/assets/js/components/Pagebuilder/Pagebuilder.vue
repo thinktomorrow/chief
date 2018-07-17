@@ -9,16 +9,16 @@
         <template v-for="section in sortedSections">
 
             <text-section v-if="section.type == 'text'"
-                  v-bind:key="section.key"
+                v-bind:key="section.key"
                 v-bind:section="section"
                 v-bind:locales="locales"
                 class="stack"></text-section>
 
             <module-section v-if="section.type == 'module'"
-                            v-bind:key="section.key"
-                            v-bind:section="section"
-                            v-bind:modules="modules"
-                            class="stack"></module-section>
+                v-bind:key="section.key"
+                v-bind:section="section"
+                v-bind:modules="modules"
+                class="stack"></module-section>
 
             <!--<pages-section v-if="section.type == 'pages'"-->
                     <!--v-bind:key="section.key"-->
@@ -34,10 +34,6 @@
                 <option selected v-else :value="section.id"></option>
             </template>
         </select>
-
-        <!--<select type="hidden" name="sections[modules][new]"></select>-->
-        <!--<select type="hidden" name="sections[modules][replace]"></select>-->
-        <!--<select type="hidden" name="sections[modules][remove]"></select>-->
 
     </div>
 </template>

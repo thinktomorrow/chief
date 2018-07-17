@@ -2290,21 +2290,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2336,7 +2321,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             // Single module allows for one selection
             if (valuesForSelect[0]) {
-                console.log(valuesForSelect[0]);
                 _this.section.id = valuesForSelect[0];
             }
 
@@ -2424,10 +2408,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/ModuleSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PageModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
-//
-//
-//
-//
 //
 //
 //

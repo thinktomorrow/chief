@@ -28,6 +28,11 @@ class FlatReference
         return (new $this->className)->findOrFail($this->id);
     }
 
+    public function id()
+    {
+        return $this->id;
+    }
+
     public function get(): string
     {
         return $this->className.'@'.$this->id;

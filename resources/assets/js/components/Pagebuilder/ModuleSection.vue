@@ -19,21 +19,6 @@
 
         <pagebuilder-menu :section="section"></pagebuilder-menu>
 
-
-
-        <!--<div class="pagebuilder-menu">-->
-            <!--<span v-show="!show_menu" @click="show_menu = true" class="icon icon-plus-circle"></span>-->
-            <!--<span v-show="show_menu" @click="show_menu = false" class="icon icon-minus-circle"></span>-->
-            <!--<div v-show="show_menu" class="pagebuilder-menu-items">-->
-                <!--<span @click="$parent.addNewTextSectionAfter(section.sort)">-->
-                    <!--<span title="tekst / afbeelding toevoegen" class="icon icon-align-left"></span>-->
-                <!--</span>-->
-                <!--<span @click="$parent.addModuleSectionAfter(section.sort)">-->
-                    <!--<span title="vast blok selecteren" class="icon icon-clipboard"></span>-->
-                <!--</span>-->
-            <!--</div>-->
-        <!--</div>-->
-
     </section>
 </template>
 <script>
@@ -64,7 +49,6 @@
 
                 // Single module allows for one selection
                 if(valuesForSelect[0]) {
-                    console.log(valuesForSelect[0]);
                     this.section.id = valuesForSelect[0];
                 }
 

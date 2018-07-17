@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\PageBuilder;
 
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -87,7 +88,8 @@ class UpdateSections
 
         foreach($this->text_modules['replace'] as $text_module) {
 
-            $module = $this->page->children()->firstWhere('id', $text_module['id']);
+            $flatReference = FlatReferenceFactory::fromString($text_module['id']);
+            $module = $this->page->children()->firstWhere('id', $flatReference->id());
 
             if(!$module) continue;
 
