@@ -32,6 +32,15 @@ class CollectionKeys
         return new static([$key => $this->pairs[$key]]);
     }
 
+    public function rejectByKey(string $key): self
+    {
+        if (isset($this->pairs[$key])) {
+            unset($this->pairs[$key]);
+        }
+
+        return new static($this->pairs);
+    }
+
     public function filterByClass(string $class): self
     {
         if (false == ($key = array_search($class, $this->pairs))) {

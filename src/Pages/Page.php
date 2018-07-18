@@ -156,7 +156,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceLabel(): string
     {
-        return $this->title ?? '';
+        $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+
+        return $this->title ? $this->title . $status : '';
     }
 
     public function flatReferenceGroup(): string
@@ -307,6 +309,23 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         if($this->isArchived()) {
             return '<span><em>gearchiveerd</em></span>';
+        }
+
+        return '-';
+    }
+
+    public function statusAsPlainLabel()
+    {
+        if($this->isPublished()) {
+            return 'online';
+        }
+
+        if($this->isDraft()) {
+            return 'offline';
+        }
+
+        if($this->isArchived()) {
+            return 'gearchiveerd';
         }
 
         return '-';

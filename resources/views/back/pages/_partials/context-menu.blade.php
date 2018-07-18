@@ -13,8 +13,11 @@
             @endif
         @endif
 
+        <hr class="stack-s">
+
         @if($page->isPublished())
-            <a data-submit-form="draftForm-{{$page->id}}" class="block squished-s --link-with-bg">Haal offline</a>
+
+            <a data-submit-form="draftForm-{{$page->id}}" class="block squished-s text-warning --link-with-bg">Haal offline</a>
 
             <form class="--hidden" id="draftForm-{{$page->id}}" action="{{ route('chief.back.pages.draft', $page->id) }}" method="POST">
                 {{ csrf_field() }}

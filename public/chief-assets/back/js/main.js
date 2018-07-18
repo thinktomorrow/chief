@@ -2323,6 +2323,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (valuesForSelect[0]) {
                 _this.section.id = valuesForSelect[0];
             }
+            // Deselect a module
+            else if (typeof valuesForSelect[0] == "undefined") {
+                    _this.section.id = null;
+                }
 
             return true;
         });

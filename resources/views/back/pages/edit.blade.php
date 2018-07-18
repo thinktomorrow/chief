@@ -20,17 +20,17 @@
 
 @section('content')
 
-  <form id="updateForm" method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="PUT">
+    <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
+    @include('chief::back.pages._partials.delete-modal')
 
-    @include('chief::back.pages._form')
-    @include('chief::back.pages._partials.modal')
-    @include('chief::back.pages._partials.sidebar')
+    <form id="updateForm" method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
+        {{ csrf_field() }}
+        <input type="hidden" name="_method" value="PUT">
 
-  </form>
-
-  @include('chief::back.pages._partials.delete-modal')
+        @include('chief::back.pages._form')
+        @include('chief::back.pages._partials.modal')
+        @include('chief::back.pages._partials.sidebar')
+    </form>
 
 @stop
 

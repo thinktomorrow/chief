@@ -51,6 +51,10 @@
                 if(valuesForSelect[0]) {
                     this.section.id = valuesForSelect[0];
                 }
+                // Deselect a module
+                else if( typeof valuesForSelect[0] == "undefined"){
+                    this.section.id = null;
+                }
 
                 return true;
             });

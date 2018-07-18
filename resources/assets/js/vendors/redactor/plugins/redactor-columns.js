@@ -16,7 +16,7 @@
              * enter is treated as soft enter inside the column as well as that the
              * tab brings the cursor to the next column in line.
              */
-            this.restrictColumnEditability();
+            //this.restrictColumnEditability();
 
             var dropdown = {};
             var $button = this.toolbar.addButton('column', { title: 'Columns' });
@@ -28,17 +28,6 @@
             $button.setDropdown(dropdown);
         },
 
-        set: function(sections){
-
-            var columns = [];
-
-            sections.forEach(function(section){
-                columns.push('<div class="column-'+ section +'" contenteditable="true"></div>');
-            });
-
-            this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
-        },
-
         setAsTable: function(sections){
 
             var columns = [];
@@ -47,18 +36,29 @@
                 columns.push('<td class="column-'+ section +'"></td>');
             });
 
-            this.app.insertion.insertHtml('<br><table><tr class="row gutter">' + columns.join('') + '</tr></table><br>');
+            this.app.insertion.insertHtml('<br><table class="block"><tbody class="block"><tr class="row gutter">' + columns.join('') + '</tr></tbody></table><br><br>');
         },
 
-        restrictColumnEditability: function()
-        {
-            var html = this.app.source.getCode();
-
-            html = html.replace('<div class="row', '<div contenteditable="false" class="row');
-            html = html.replace('<div class="column', '<div contenteditable="true" class="column');
-
-            this.app.source.setCode(html);
-        },
+        // set: function(sections){
+        //
+        //     var columns = [];
+        //
+        //     sections.forEach(function(section){
+        //         columns.push('<div class="column-'+ section +'" contenteditable="true"></div>');
+        //     });
+        //
+        //     this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
+        // },
+        //
+        // restrictColumnEditability: function()
+        // {
+        //     var html = this.app.source.getCode();
+        //
+        //     html = html.replace('<div class="row', '<div contenteditable="false" class="row');
+        //     html = html.replace('<div class="column', '<div contenteditable="true" class="column');
+        //
+        //     this.app.source.setCode(html);
+        // },
     });
 
 })(Redactor);

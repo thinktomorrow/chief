@@ -6897,6 +6897,10 @@ select {
   border: 2px solid #4f5164;
 }
 
+.slim-result .out {
+  opacity: 0.2 !important;
+}
+
 .checkbox-delete {
   display: none;
 }

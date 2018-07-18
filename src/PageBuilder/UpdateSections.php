@@ -117,6 +117,10 @@ class UpdateSections
 
         foreach($this->sorting as $sorting => $reference) {
 
+            // Reference can be null in case that the module has been removed (empty selection). This will avoid
+            // in case of duplicate module references that the removed module will be used for the sorting instead.
+            if(!$reference) continue;
+
             $child = $children->first(function($c) use($reference){
                 return $c->flatReference()->get() == $reference;
             });

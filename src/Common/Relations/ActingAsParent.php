@@ -51,21 +51,34 @@ trait ActingAsParent
         $grouped_children = [];
         $children = $this->children();
 
+        // Pages are presented in one module file with the collection of all pages combined
+        // But only if they are sorted right after each other
+        $collected_pages_key = null;
+        $collected_pages_type = null;
+
         foreach($children as $i => $child) {
 
             $key = $i;
 
             if($child instanceof Page) {
 
-                // Pages are presented in one module file with the collection of all pages combined
-                // Only if they are sorted right after each other
-                if(!isset($grouped_children[$key])) {
-                    $grouped_children[$key] = new CollectedPages();
+                // Set the current pages collection to the current collection type
+                if($collected_pages_type == null || $collected_pages_type != $child->collectionKey()) {
+                    $collected_pages_type = $child->collectionKey();
+                    $collected_pages_key = $key;
                 }
 
-                $grouped_children[$key]->push($child);
+                if(!isset($grouped_children[$collected_pages_key])) {
+                    $grouped_children[$collected_pages_key] = new CollectedPages();
+                }
+
+                $grouped_children[$collected_pages_key]->push($child);
+
                 continue;
             }
+
+            // Reset the grouped_collection if other than page type
+            $collected_pages_key = null;
 
             $grouped_children[$key] = $child;
         }
