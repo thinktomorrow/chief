@@ -2,7 +2,9 @@
     <section class="stack block inset relative" style="border-left:3px solid #14c8a7">
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
-        <tabs>
+
+        <!-- show multiple locales in tab -->
+        <tabs v-if="locales.length > 1">
             <tab
                 v-for="(locale, key) in locales"
                 :key="key"
@@ -13,9 +15,21 @@
                     :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
                     :id="'editor-'+locale+'-'+_uid"
                     class="inset-s" cols="30" rows="10"
-                    v-html="renderInitialContent(locale)"></textarea>
+                    v-html="renderInitialContent(locale)">
+                </textarea>
             </tab>
         </tabs>
+
+        <!-- show single locale not in tabbed format -->
+        <template v-if="locales.length == 1">
+            <textarea
+                    :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
+                    :id="'editor-'+locales[0]+'-'+_uid"
+                    class="inset-s" cols="30" rows="10"
+                    v-html="renderInitialContent(locales[0])">
+            </textarea>
+        </template>
+
 
         <pagebuilder-menu :section="section"></pagebuilder-menu>
     </section>

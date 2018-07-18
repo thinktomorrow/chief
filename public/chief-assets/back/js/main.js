@@ -2626,6 +2626,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -29923,40 +29937,66 @@ var render = function() {
         domProps: { value: _vm.section.slug }
       }),
       _vm._v(" "),
-      _c(
-        "tabs",
-        _vm._l(_vm.locales, function(locale, key) {
-          return _c(
-            "tab",
-            { key: key, attrs: { id: locale + "-text", name: locale } },
-            [
-              _c("textarea", {
-                staticClass: "inset-s",
-                attrs: {
-                  name:
-                    "sections[text][" +
-                    _vm.new_or_replace_key +
-                    "][" +
-                    _vm._uid +
-                    "][trans][" +
-                    locale +
-                    "][content]",
-                  id: "editor-" + locale + "-" + _vm._uid,
-                  cols: "30",
-                  rows: "10"
-                },
-                domProps: {
-                  innerHTML: _vm._s(_vm.renderInitialContent(locale))
-                }
-              })
-            ]
+      _vm.locales.length > 1
+        ? _c(
+            "tabs",
+            _vm._l(_vm.locales, function(locale, key) {
+              return _c(
+                "tab",
+                { key: key, attrs: { id: locale + "-text", name: locale } },
+                [
+                  _c("textarea", {
+                    staticClass: "inset-s",
+                    attrs: {
+                      name:
+                        "sections[text][" +
+                        _vm.new_or_replace_key +
+                        "][" +
+                        _vm._uid +
+                        "][trans][" +
+                        locale +
+                        "][content]",
+                      id: "editor-" + locale + "-" + _vm._uid,
+                      cols: "30",
+                      rows: "10"
+                    },
+                    domProps: {
+                      innerHTML: _vm._s(_vm.renderInitialContent(locale))
+                    }
+                  })
+                ]
+              )
+            })
           )
-        })
-      ),
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.locales.length == 1
+        ? [
+            _c("textarea", {
+              staticClass: "inset-s",
+              attrs: {
+                name:
+                  "sections[text][" +
+                  _vm.new_or_replace_key +
+                  "][" +
+                  _vm._uid +
+                  "][trans][" +
+                  _vm.locales[0] +
+                  "][content]",
+                id: "editor-" + _vm.locales[0] + "-" + _vm._uid,
+                cols: "30",
+                rows: "10"
+              },
+              domProps: {
+                innerHTML: _vm._s(_vm.renderInitialContent(_vm.locales[0]))
+              }
+            })
+          ]
+        : _vm._e(),
       _vm._v(" "),
       _c("pagebuilder-menu", { attrs: { section: _vm.section } })
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
