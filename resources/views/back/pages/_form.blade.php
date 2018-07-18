@@ -28,54 +28,49 @@
         </section>
 
         <div class="stack clearfix">
-            @if(count($page->translatableFields()) > 0 || count($page->mediaFields()) > 0)
-                <a href="#custom-fields" class="btn btn-o-primary right">volgende</a>
-            @else
-                <a href="#seo" class="btn btn-o-primary right">volgende</a>
-            @endif
+                <a href="#modules" class="btn btn-o-primary right">volgende</a>
         </div>
     </tab>
 
-@if(count($page->translatableFields()) > 0 || count($page->mediaFields()) > 0)
+    <tab name="Eigen modules" id="modules">
 
-        <tab name="Afbeeldingen & gegevens" id="custom-fields">
+        @include('chief::back.pages._partials.modules')
 
-            @if(count($page->translatableFields()) > 0)
-                <section class="row formgroup stack gutter-l">
-                    <div class="column-4">
-                        <h2 class="formgroup-label">Inhoud</h2>
-                    </div>
-                    <div class="formgroup-input column-8">
-                        @include('chief::back._elements.translatable_fieldgroups', [
-                            'model' => $page,
-                        ])
-                    </div>
-                </section>
-            @endif
+        @if(count($page->translatableFields()) > 0)
+            <section class="row formgroup stack gutter-l">
+                <div class="column-4">
+                    <h2 class="formgroup-label">Inhoud</h2>
+                </div>
+                <div class="formgroup-input column-8">
+                    @include('chief::back._elements.translatable_fieldgroups', [
+                        'model' => $page,
+                    ])
+                </div>
+            </section>
+        @endif
 
-            @foreach($page->mediaFields() as $media)
+        @foreach($page->mediaFields() as $media)
 
-                <?php
+            <?php
 
-                $viewPath = (isset($media['is_document']) && $media['is_document'])
-                    ? 'chief::back._elements.mediagroup-documents'
-                    : 'chief::back._elements.mediagroup-images';
+            $viewPath = (isset($media['is_document']) && $media['is_document'])
+                ? 'chief::back._elements.mediagroup-documents'
+                : 'chief::back._elements.mediagroup-images';
 
-                ?>
+            ?>
 
-                @include($viewPath, [
-                    'group' => $media['type'],
-                    'files' => $images[$media['type']],
-                    'label' => $media['label'],
-                    'description' => $media['description'],
-                ])
-            @endforeach
+            @include($viewPath, [
+                'group' => $media['type'],
+                'files' => $images[$media['type']],
+                'label' => $media['label'],
+                'description' => $media['description'],
+            ])
+        @endforeach
 
-            <div class="stack clearfix">
-                <a href="#seo" class="btn btn-o-primary right">volgende</a>
-            </div>
-        </tab>
-@endif
+        <div class="stack clearfix">
+            <a href="#seo" class="btn btn-o-primary right">volgende</a>
+        </div>
+    </tab>
 
 <tab name="Seo">
     <section class="row formgroup stack gutter-l">

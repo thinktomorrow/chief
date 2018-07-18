@@ -17,6 +17,6 @@
     </form>
 
     <div slot="modal-action-buttons">
-        <button type="submit" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$page->id}}">{{ $page->isDraft() || $page->isArchived() ? 'Verwijder' : 'Archiveer' }} dit artikel</button>
+        <button type="button" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$page->id}}">{{ $page->isDraft() || $page->isArchived() ? 'Verwijder' : 'Archiveer' }} dit artikel</button>
     </div>
 </modal>

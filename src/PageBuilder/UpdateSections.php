@@ -65,8 +65,13 @@ class UpdateSections
         if(!isset($this->text_modules['new']) || empty($this->text_modules['new'])) return $this;
 
         foreach($this->text_modules['new'] as $text_module) {
-            // Create text module
-            $module = app(CreateModule::class)->handle((new TextModule)->collectionDetails()->key, $text_module['slug']);
+
+            // Create page specific text module
+            $module = app(CreateModule::class)->handle(
+                (new TextModule)->collectionDetails()->key,
+                $text_module['slug'],
+                $this->page->id
+            );
 
             // Connect to page - sorting will be set later on...
             $this->page->adoptChild($module, ['sort' => 0]);

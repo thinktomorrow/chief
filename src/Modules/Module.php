@@ -8,10 +8,8 @@ use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Common\Relations\PresentingForParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -22,6 +20,7 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Pages\Page;
 
 class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
 {
@@ -45,6 +44,11 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id');
+    }
+
     /**
      * The page specific ones are the text modules
      * which are added via the page builder
@@ -53,7 +57,12 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
      */
     public function scopeWithoutPageSpecific($query)
     {
-        $query->where('collection','<>','text');
+        $query->whereNull('page_id');
+    }
+
+    public function isPageSpecific(): bool
+    {
+        return !is_null($this->page_id);
     }
 
     /**

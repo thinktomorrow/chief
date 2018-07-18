@@ -20,17 +20,32 @@
 
 @section('content')
 
-    <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
-    @include('chief::back.pages._partials.delete-modal')
+    <div v-cloak class="v-loader inset-xl text-center">loading...</div>
+    <div v-cloak>
 
-    <form id="updateForm" method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
-        {{ csrf_field() }}
-        <input type="hidden" name="_method" value="PUT">
+        <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
+        @include('chief::back.pages._partials.delete-modal')
 
-        @include('chief::back.pages._form')
-        @include('chief::back.pages._partials.modal')
-        @include('chief::back.pages._partials.sidebar')
-    </form>
+        <form id="updateForm" method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
+            {{ csrf_field() }}
+
+            <input type="hidden" name="_method" value="PUT">
+
+            @include('chief::back.pages._form')
+
+        </form>
+
+        @include('chief::back.modules._partials.create-modal', [
+           'collections' => $module_collections,
+           'page_id' => $page->id,
+       ])
+
+        @foreach($page->modules as $module)
+            @include('chief::back.modules._partials.delete-modal', [
+                'module' => $module
+            ])
+        @endforeach
+    </div>
 
 @stop
 
