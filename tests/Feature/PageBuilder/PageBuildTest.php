@@ -70,8 +70,6 @@ class PageBuildTest extends TestCase
     /** @test */
     function it_can_add_a_text_module()
     {
-        $this->disableExceptionHandling();
-
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
                 'sections.text.new' => [
@@ -105,7 +103,7 @@ class PageBuildTest extends TestCase
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
-                        'id'    => $module->id,
+                        'id'    => $module->flatReference()->get(),
                         'trans' => [
                             'nl' => [
                                 'content' => 'replaced content',
@@ -120,21 +118,85 @@ class PageBuildTest extends TestCase
     }
 
     /** @test */
-    function it_can_remove_a_text_module()
+    function it_removes_a_text_module_when_its_completely_empty()
     {
         // Add first text module
         $module = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
-        // Replace text module content
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
                 'sections.text.new'     => [],
-                'sections.text.replace' => [],
-                'sections.text.remove'  => [$module->id],
+                'sections.text.replace' => [
+                    [
+                        'id'    => $module->flatReference()->get(),
+                        'trans' => [
+                            'nl' => [
+                                'content' => '  ',
+                            ]
+                        ]
+                    ]
+                ],
             ]));
 
         $this->assertCount(0, $this->page->children());
+
+        // Module is also deleted
+        $this->assertNull(Module::find($module->id));
+        $this->assertEquals($module->id, Module::withTrashed()->find($module->id)->id);
+    }
+
+    /** @test */
+    function it_removes_a_text_module_when_it_only_contains_empty_paragraph_tag()
+    {
+        // Add first text module
+        $module = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text']);
+        $this->page->adoptChild($module, ['sort' => 0]);
+
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+                'sections.text.new'     => [],
+                'sections.text.replace' => [
+                    [
+                        'id'    => $module->flatReference()->get(),
+                        'trans' => [
+                            'nl' => [
+                                'content' => '<p><br></p>',
+                            ]
+                        ]
+                    ]
+                ],
+            ]));
+
+        $this->assertCount(0, $this->page->children());
+    }
+
+    /** @test */
+    function it_does_not_remove_a_text_module_when_its_not_completely_empty()
+    {
+        // Add first text module
+        $module = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text']);
+        $this->page->adoptChild($module, ['sort' => 0]);
+
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+                'sections.text.new'     => [],
+                'sections.text.replace' => [
+                    [
+                        'id'    => $module->flatReference()->get(),
+                        'trans' => [
+                            'nl' => [
+                                'content' => '',
+                            ],
+                            'fr' => [
+                                'content' => 'hi'
+                            ],
+                        ]
+                    ]
+                ],
+            ]));
+
+        $this->assertCount(1, $this->page->children());
     }
 
     /** @test */

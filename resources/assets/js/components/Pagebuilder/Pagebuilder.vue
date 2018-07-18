@@ -65,7 +65,7 @@
         },
         props: {
             'defaultSections': { default: function(){ return [] }, type: Array},
-            'locales': { default: function(){ return {} }, type: Object},
+            'locales': { default: function(){ return [] }, type: Array},
             'modules' : { default: function(){ return [] }, type: Array},
         },
         data(){

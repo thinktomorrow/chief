@@ -26,8 +26,10 @@ class UpdatePage
 
             $this->saveSections($page, $sections);
 
-            // Relations - non-section way
-//            $this->syncRelations($page, $relations);
+            // Explicit relations - these are the related modules/pages passed outside the pagebuilder
+            // This is currently not being used as the pagebuilder already takes care of this.
+            // This is disabled because the nature of sync will remove all none present children.
+            // $this->syncRelations($page, $relations);
 
             app(UploadMedia::class)->fromUploadComponent($page, $files, $files_order);
 
@@ -77,8 +79,7 @@ class UpdatePage
         UpdateSections::forPage($page, $modules, $text, $order)
                         ->updateModules()
                         ->addTextModules()
-                        ->replaceTextModules()
-                        ->removeTextModules()
+                        ->updateTextModules()
                         ->sort();
     }
 }

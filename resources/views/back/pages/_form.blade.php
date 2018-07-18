@@ -21,7 +21,7 @@
         </section>
         <section class="formgroup stack">
             <page-builder
-                    :locales="{ 'nl': 'nl', 'fr': 'fr' }"
+                    :locales='@json($page->availableLocales())'
                     :default-sections='@json($sections)'
                     :modules='@json($relations)'>
             </page-builder>

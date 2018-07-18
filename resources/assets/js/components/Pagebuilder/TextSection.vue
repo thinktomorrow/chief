@@ -4,12 +4,12 @@
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
         <tabs>
             <tab
-                    v-for="(locale, key) in locales"
-                    :key="key"
-                    :id="locale+'-translatable-fields'"
-                    :name="locale"
-                    v-cloak>
-            <textarea
+                v-for="(locale, key) in locales"
+                :key="key"
+                :id="locale+'-text'"
+                :name="locale"
+                v-cloak>
+                <textarea
                     :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
                     :id="'editor-'+locale+'-'+_uid"
                     class="inset-s" cols="30" rows="10"
@@ -30,7 +30,7 @@
         },
         props: {
             'section': { type: Object },
-            'locales': { default: function(){ return {} }, type: Object}
+            'locales': { default: function(){ return [] }, type: Array}
         },
         data(){
             return {
@@ -44,7 +44,7 @@
                 if( ! this.locales.hasOwnProperty(key)) continue;
 
                 window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
-                    clickToEdit: true,
+                    // options
                 });
             }
 
@@ -60,13 +60,6 @@
 
                 return content;
             },
-
-            addSection(){
-
-            },
-            removeSection(){
-
-            }
         }
     }
 </script>

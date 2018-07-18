@@ -19,9 +19,6 @@ trait PageBuildFormParams
                     'replace' => [
                        //
                     ],
-                    'remove' => [
-                        //
-                    ],
                 ],
                 'order' => [
                     //

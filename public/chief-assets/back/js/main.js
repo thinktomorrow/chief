@@ -2478,8 +2478,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return [];
             }, type: Array },
         'locales': { default: function _default() {
-                return {};
-            }, type: Object },
+                return [];
+            }, type: Array },
         'modules': { default: function _default() {
                 return [];
             }, type: Array }
@@ -2637,8 +2637,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     props: {
         'section': { type: Object },
         'locales': { default: function _default() {
-                return {};
-            }, type: Object }
+                return [];
+            }, type: Array }
     },
     data: function data() {
         return {
@@ -2652,7 +2652,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (!this.locales.hasOwnProperty(key)) continue;
 
             window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
-                clickToEdit: true
+                // options
             });
         }
     },
@@ -2667,9 +2667,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (!content) return '';
 
             return content;
-        },
-        addSection: function addSection() {},
-        removeSection: function removeSection() {}
+        }
     }
 });
 
@@ -29930,10 +29928,7 @@ var render = function() {
         _vm._l(_vm.locales, function(locale, key) {
           return _c(
             "tab",
-            {
-              key: key,
-              attrs: { id: locale + "-translatable-fields", name: locale }
-            },
+            { key: key, attrs: { id: locale + "-text", name: locale } },
             [
               _c("textarea", {
                 staticClass: "inset-s",

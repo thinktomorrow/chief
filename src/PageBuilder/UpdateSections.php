@@ -82,16 +82,19 @@ class UpdateSections
         return $this;
     }
 
-    public function replaceTextModules()
+    public function updateTextModules()
     {
         if(!isset($this->text_modules['replace']) || empty($this->text_modules['replace'])) return $this;
 
         foreach($this->text_modules['replace'] as $text_module) {
 
-            $flatReference = FlatReferenceFactory::fromString($text_module['id']);
-            $module = $this->page->children()->firstWhere('id', $flatReference->id());
+            if(! $module = FlatReferenceFactory::fromString($text_module['id'])->instance() ) continue;
 
-            if(!$module) continue;
+            // Do not update if content of text is completely empty. We will remove this module instead
+            if($this->isTextCompletelyEmpty($text_module['trans'])) {
+                $this->removeTextModule($module);
+                continue;
+            }
 
             // Replace content
             app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
@@ -100,20 +103,12 @@ class UpdateSections
         return $this;
     }
 
-    public function removeTextModules()
+    private function removeTextModule(TextModule $module)
     {
-        if(!isset($this->text_modules['remove']) || empty($this->text_modules['remove'])) return $this;
+        $this->page->rejectChild($module);
 
-        foreach($this->text_modules['remove'] as $text_module_id) {
-
-            $module = $this->page->children()->firstWhere('id', $text_module_id);
-
-            if(!$module) continue;
-
-            $this->page->rejectChild($module);
-        }
-
-        return $this;
+        // In case of text module, we also delete the module itself
+        $module->delete();
     }
 
     public function sort()
@@ -132,5 +127,50 @@ class UpdateSections
         }
 
         return $this;
+    }
+
+    /**
+     * Do we consider the translation payload to be 'empty'. This means
+     * that each line of the translation only contains spaces or empty tags.
+     *
+     * @param $trans
+     * @return bool
+     */
+    private function isTextCompletelyEmpty($trans): bool
+    {
+        $is_completely_empty = true;
+
+        foreach ($trans as $locale => $lines) {
+
+            foreach($lines as $key => $line) {
+
+                $stripped_line = $this->stripTagsBlacklist($line,['p', 'br']);
+                $stripped_line = trim($stripped_line);
+
+                if($stripped_line) {
+                    $is_completely_empty = false;
+                    break;
+                }
+            }
+        }
+
+        return $is_completely_empty;
+    }
+
+    /**
+     * Pass a list of not allowed tags as they will be stripped out from the value.
+     * e.g. ['p', 'br' ]
+     *
+     * @param $value
+     * @param array $blacklist
+     * @return mixed
+     */
+    private function stripTagsBlacklist($value, $blacklist = [])
+    {
+        foreach ($blacklist as $tag) {
+            $value = preg_replace('/<\/?' . $tag . '(.|\s)*?>/', '', $value);
+        }
+
+        return $value;
     }
 }
