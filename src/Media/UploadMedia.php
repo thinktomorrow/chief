@@ -23,6 +23,9 @@ class UploadMedia
             return;
         }
 
+        // We allow for more memory consumption because the gd decoding can require a lot of memory when parsing large images.
+        ini_set('memory_limit', '256M');
+
         foreach ($files_by_type as $type => $files) {
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
 

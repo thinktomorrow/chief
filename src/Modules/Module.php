@@ -118,14 +118,14 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         );
     }
 
-    public function mediaUrls($type = null): Collection
+    public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        return $this->getAllFiles($type)->map->getFileUrl();
+        return $this->getAllFiles($type)->map->getFileUrl($size);
     }
 
-    public function mediaUrl($type = null): ?string
+    public function mediaUrl($type = null, $size = 'full'): ?string
     {
-        return $this->mediaUrls($type)->first();
+        return $this->mediaUrls($type, $size)->first();
     }
 
     public static function mediaFields($key = null)
