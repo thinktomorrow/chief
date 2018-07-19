@@ -6,6 +6,6 @@ class InputField
 {
     public static function make()
     {
-        return Field::make(new FieldType(FieldType::INPUT));
+        return Field::make(FieldType::fromString(FieldType::INPUT));
     }
 }

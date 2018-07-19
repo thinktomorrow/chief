@@ -15,13 +15,18 @@ class FieldType
      */
     private $type;
 
-    public function __construct(string $type)
+    private function __construct(string $type)
     {
         if (!in_array($type, [static::INPUT, static::TEXT, static::HTML])) {
             throw new \Exception('Invalid type identifier given ['.$type.'].');
         }
 
         $this->type = $type;
+    }
+
+    public static function fromString(string $type)
+    {
+        return new static($type);
     }
 
     public function get()

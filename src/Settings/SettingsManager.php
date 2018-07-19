@@ -6,11 +6,6 @@ class SettingsManager
 {
     private $values;
 
-    public function __construct()
-    {
-        //
-    }
-
     public function get($key, $default = null)
     {
         $this->fetch();
@@ -29,7 +24,10 @@ class SettingsManager
     {
         if($this->values) return;
 
-        $this->values = Setting::all()->pluck('value','key')->toArray();
+        $config_values = config('thinktomorrow.chief-settings');
+        $database_values = Setting::all()->pluck('value','key')->toArray();
+
+        $this->values = array_merge($config_values, $database_values);
     }
 
     public function fresh()

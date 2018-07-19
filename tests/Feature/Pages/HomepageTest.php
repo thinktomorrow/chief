@@ -4,11 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\NotFoundHomepage;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFake;
-use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFakeTranslation;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 

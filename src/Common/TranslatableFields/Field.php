@@ -1,12 +1,12 @@
 <?php
+
 declare(strict_types = 1);
+
 namespace Thinktomorrow\Chief\Common\TranslatableFields;
 
 class Field
 {
-    /**
-     * @var FieldType
-     */
+    /** @var FieldType */
     private $fieldType;
 
     protected $values = [];

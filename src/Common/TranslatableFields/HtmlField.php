@@ -6,6 +6,6 @@ class HtmlField
 {
     public static function make()
     {
-        return Field::make(new FieldType(FieldType::HTML));
+        return Field::make(FieldType::fromString(FieldType::HTML));
     }
 }
