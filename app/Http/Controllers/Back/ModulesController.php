@@ -40,12 +40,6 @@ class ModulesController extends Controller
             $request->get('page_id')
         );
 
-        // Page specific if redirect to the page
-        if($request->get('page_id')) {
-            $route = route('chief.back.pages.edit', $request->get('page_id'));
-            return redirect()->to($route.'#modules')->with('messages.success', $module->slug. ' is toegevoegd. Happy editing!');
-        }
-
         return redirect()->route('chief.back.modules.edit', $module->getKey())->with('messages.success', $module->slug. ' is toegevoegd. Happy editing!');
     }
 
