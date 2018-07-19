@@ -138,4 +138,56 @@ class AcceptInviteTest extends TestCase
         // Assert we are logged in
         $this->assertTrue(auth()->guard('chief')->check());
     }
+
+    /** @test */
+    public function after_invite_accepted_invite_cannot_be_used()
+    {
+        Notification::fake();
+
+        $invitee = new User();
+        $invitee->email = 'email';
+        $invitee->firstname = 'firstname';
+        $invitee->lastname = 'lastname';
+        $invitee->save();
+
+        app(InviteUser::class)->handle($invitee, $this->inviter);
+        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response->assertRedirect(route('chief.back.password.edit'));
+
+        // Log out so we access link again as 'other' user
+        auth()->guard('chief')->logout();
+
+        // Click invite link again
+        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response->assertRedirect(route('invite.expired'));
+
+        // Assert we are not logged in
+        $this->assertFalse(auth()->guard('chief')->check());
+    }
+
+    /** @test */
+    public function after_invite_accepted_invite_can_only_be_reused_by_same_user_if_he_is_logged()
+    {
+        Notification::fake();
+
+        $invitee = new User();
+        $invitee->email = 'email';
+        $invitee->firstname = 'firstname';
+        $invitee->lastname = 'lastname';
+        $invitee->save();
+
+        app(InviteUser::class)->handle($invitee, $this->inviter);
+        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response->assertRedirect(route('chief.back.password.edit'));
+
+        // Assert we are logged in
+        $this->assertTrue(auth()->guard('chief')->check());
+
+        // Click invite link again
+        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response->assertRedirect(route('chief.back.password.edit'));
+
+        // Assert we are still logged in
+        $this->assertTrue(auth()->guard('chief')->check());
+    }
 }

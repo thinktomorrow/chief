@@ -3,7 +3,8 @@
 namespace Thinktomorrow\Chief\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
@@ -22,6 +23,7 @@ class UpdateMenu
             $menu->type = $request->get('type', null);
             $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
             $menu->page_id = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
+            $menu->collection_type = $request->get('collection_type', null);
             $menu->save();
 
             $this->saveTranslations($request->get('trans'), $menu, [
@@ -37,8 +39,8 @@ class UpdateMenu
         }
     }
 
-    private function getPage($page_id)
+    private function getPage($collection_id)
     {
-        return Page::inflate($page_id);
+        return FlatReferenceCollection::fromFlatReferences([$collection_id])->first();
     }
 }

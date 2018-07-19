@@ -58,12 +58,10 @@ return [
      * is required for the class mapping from database to their respective classes.
      */
     'collections' => [
-        'pages' => [
-            'statics' => \Thinktomorrow\Chief\Pages\Page::class,
-        ],
-        'modules' => [
-            //
-        ],
+        // Pages
+        'singles' => \Thinktomorrow\Chief\Pages\Single::class,
+
+        // Modules
     ],
 
     /**

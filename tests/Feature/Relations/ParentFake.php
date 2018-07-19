@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
@@ -26,23 +27,23 @@ class ParentFake extends Model implements ActsAsParent
         });
     }
 
-    public function presentForChild(ActsAsChild $child, Relation $relation): string
+    /**
+     * Composite key consisting of the type of class combined with the
+     * model id. Both are joined with an @ symbol. This is used as
+     * identifier of the relation mostly as form values.
+     */
+    public function flatReference(): FlatReference
     {
-        return '<div>parent '.$this->id.' view for child '.$child->id.'</div>';
+        return new FlatReference(get_class($this), 1);
     }
 
-    public function getRelationId(): string
+    public function flatReferenceLabel(): string
     {
-        return $this->getMorphClass().'@'.$this->id;
+        return (string) $this->name;
     }
 
-    public function getRelationLabel(): string
+    public function flatReferenceGroup(): string
     {
-        return $this->id;
-    }
-
-    public function getRelationGroup(): string
-    {
-        return 'parents';
+        return (string) $this->name;
     }
 }

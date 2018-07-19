@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
@@ -22,7 +23,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded()
     {
-        $page = Page::create(['collection' => 'statics']);
+        $page = Page::create(['collection' => 'singles']);
 
         // Upload asset
         $this->asAdmin()
@@ -43,20 +44,28 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
-        $this->markTestIncomplete();
+        $this->disableExceptionHandling();
+        $page = Page::create(['collection' => 'singles']);
 
-        $page = Page::create(['collection' => 'statics']);
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::DOCUMENT => [
+                        'new' => [
+                            UploadedFile::fake()->create('fake.pdf')
+                        ]
+                    ]
+                ]
+            ]));
 
-        // Upload asset
-
-        $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertTrue($page->hasFile(MediaType::DOCUMENT));
+        $this->assertCount(1, $page->getAllFiles(MediaType::DOCUMENT));
     }
 
     /** @test */
     public function an_asset_can_be_replaced()
     {
-        $page = Page::create(['collection' => 'statics']);
+        $page = Page::create(['collection' => 'singles']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
         $existing_asset = $page->getAllFiles(MediaType::HERO)->first();
@@ -81,7 +90,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function an_asset_can_be_removed()
     {
-        $page = Page::create(['collection' => 'statics']);
+        $page = Page::create(['collection' => 'singles']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
         // Assert Image is there
@@ -108,7 +117,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function an_asset_can_be_sorted()
     {
-        $page = Page::create(['collection' => 'statics']);
+        $page = Page::create(['collection' => 'singles']);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
         $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO);
 
@@ -131,7 +140,7 @@ class UploadMediaTest extends TestCase
         // TODO: this is something that should be provided by Assetlibrary
         $this->markTestIncomplete();
 
-        $page = Page::create(['collection' => 'statics']);
+        $page = Page::create(['collection' => 'singles']);
 
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([

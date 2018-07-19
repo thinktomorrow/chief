@@ -17806,7 +17806,7 @@ $R.add('module', 'list', {
         removeEmptyFigures: function()
         {
             var html = this.app.source.getCode();
-console.log(html);
+
             // html = html.replace('<div class="row', '<div contenteditable="false" class="row');
             // html = html.replace('<div class="column', '<div contenteditable="true" class="column');
 
@@ -17826,46 +17826,210 @@ console.log(html);
         /** Called when redactor instance is enabled */
         start: function(){
 
-            console.log();
-
             /**
              * For support of columns in the wysiwyg, we'll need to make sure that only the
              * column body is editable. Nice effect of contenteditable is that the hard
              * enter is treated as soft enter inside the column as well as that the
              * tab brings the cursor to the next column in line.
              */
-            this.restrictColumnEditability();
+            //this.restrictColumnEditability();
 
             var dropdown = {};
             var $button = this.toolbar.addButton('column', { title: 'Columns' });
 
-            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.set', args: [6,6] };
-            dropdown.three = { title: '<strong>3</strong> columns', api: 'plugin.redactorColumns.set', args: [4,4,4] };
+            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
+            dropdown.three = { title: '<strong>3</strong> columns', api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
 
             $button.setIcon('<i class="icon icon-grid"></i>');
             $button.setDropdown(dropdown);
         },
 
-        set: function(sections){
+        setAsTable: function(sections){
 
             var columns = [];
 
             sections.forEach(function(section){
-                columns.push('<div class="column-'+ section +'" contenteditable="true"></div>');
+                columns.push('<td class="column-'+ section +'"></td>');
             });
 
-            this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
+            this.app.insertion.insertHtml('<br><table class="block"><tbody class="block"><tr class="row gutter">' + columns.join('') + '</tr></tbody></table><br><br>');
         },
 
-        restrictColumnEditability: function()
-        {
-            var html = this.app.source.getCode();
-
-            html = html.replace('<div class="row', '<div contenteditable="false" class="row');
-            html = html.replace('<div class="column', '<div contenteditable="true" class="column');
-
-            this.app.source.setCode(html);
-        },
+        // set: function(sections){
+        //
+        //     var columns = [];
+        //
+        //     sections.forEach(function(section){
+        //         columns.push('<div class="column-'+ section +'" contenteditable="true"></div>');
+        //     });
+        //
+        //     this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
+        // },
+        //
+        // restrictColumnEditability: function()
+        // {
+        //     var html = this.app.source.getCode();
+        //
+        //     html = html.replace('<div class="row', '<div contenteditable="false" class="row');
+        //     html = html.replace('<div class="column', '<div contenteditable="true" class="column');
+        //
+        //     this.app.source.setCode(html);
+        // },
     });
 
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'rich-links', {
+        init: function(app)
+        {
+            this.app = app;
+            this.opts = app.opts;
+            this.component = app.component;
+
+            this.links = [];
+        },
+        // messages
+        onmodal: {
+            link: {
+                open: function($modal, $form)
+                {
+                    if (!this.opts.definedlinks) return;
+
+                    this.$modal = $modal;
+                    this.$form = $form;
+
+                    this._load();
+                }
+            }
+        },
+
+        // private
+        _load: function()
+        {
+            if (typeof this.opts.definedlinks === 'object')
+            {
+                this._build(this.opts.definedlinks);
+            }
+            else
+            {
+                $R.ajax.get({
+                    url: this.opts.definedlinks,
+                    success: this._build.bind(this)
+                });
+            }
+        },
+        _build: function(data)
+        {
+            var $selector = this.$modal.find('#redactor-defined-links');
+            if ($selector.length === 0)
+            {
+                var $body = this.$modal.getBody();
+                var $item = $R.dom('<div class="form-item" />');
+                var $selector = $R.dom('<select id="redactor-defined-links" />');
+
+                $item.append($selector);
+                $body.prepend($item);
+            }
+
+            this.links = [];
+
+            $selector.html('');
+            $selector.off('change');
+
+            for (var key in data)
+            {
+                if (!data.hasOwnProperty(key) || typeof data[key] !== 'object')
+                {
+                    continue;
+                }
+
+                this.links[key] = data[key];
+
+                var $option = $R.dom('<option>');
+                $option.val(key);
+                $option.html(data[key].name);
+
+                $selector.append($option);
+            }
+
+            $selector.on('change', this._select.bind(this));
+        },
+        _select: function(e)
+        {
+            var formData = this.$form.getData();
+            var key = $R.dom(e.target).val();
+            var data = { text: '', url: '' };
+
+            if (key !== '0')
+            {
+                data.text = this.links[key].name;
+                data.url = this.links[key].url;
+            }
+
+            if (formData.text !== '')
+            {
+                data = { url: data.url };
+            }
+
+            this.$form.setData(data);
+        }
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'custom-classes', {
+        init: function(app)
+        {
+            this.app = app;
+            this.toolbar = app.toolbar;
+            this.opts = app.opts;
+            this.selection = app.selection;
+        },
+        /** Called when redactor instance is enabled */
+        start: function(){
+
+            var dropdown = {};
+            for (var key in this.opts.customClasses)
+            {
+                var custom_tag = this.opts.customClasses[key];
+
+                dropdown[key] = {
+                    title: custom_tag.title,
+                    api: 'plugin.custom-classes.toggle',
+                    args: custom_tag
+                };
+            }
+
+            var $button = this.toolbar.addButtonAfter('link', 'toggle-button', { title: 'Wijzig link opmaak' });
+
+            $button.setIcon('<i class="icon icon-droplet"></i>');
+            $button.setDropdown(dropdown);
+        },
+        toggle: function(custom_tag) {
+
+            var currentEl = this.selection.getParent();
+
+            // If nothing is selected or the current element does not match our tag whitelist, we abort
+            if(!currentEl || custom_tag.tags.indexOf(currentEl.tagName.toLowerCase()) == -1){
+                return;
+            }
+
+            // Remove existing classes first
+            var current_classes = currentEl.classList;
+            while(current_classes.length > 0) {
+                current_classes.remove(current_classes.item(0));
+            }
+
+            // Add our requested classes
+            var classes = custom_tag.class.split(' ');
+            for(var i in classes) {
+
+                // Avoid empty execution
+                if( ! classes[i]) continue;
+
+                currentEl.classList.add(classes[i]);
+            }
+        }
+    });
 })(Redactor);

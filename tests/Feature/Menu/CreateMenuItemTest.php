@@ -55,7 +55,6 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function an_menuitem_can_be_nested()
     {
-        $this->disableExceptionHandling();
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $response = $this->asDefaultAdmin()
@@ -77,7 +76,7 @@ class CreateMenuItemTest extends TestCase
     {
         $page = factory(Page::class)->create();
         $response = $this->asDefaultAdmin()
-            ->post(route('chief.back.menu.store'), $this->validParams(['type' => 'internal', 'page_id' => $page->getRelationId()]));
+            ->post(route('chief.back.menu.store'), $this->validParams(['type' => 'internal', 'page_id' => $page->flatReference()->get()]));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));

@@ -5,10 +5,11 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Common\Collections\GlobalCollectionScope;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageCollectionScope;
 use Vine\Source as VineSource;
 use Vine\Node;
 
@@ -17,6 +18,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     const TYPE_COLLECTION = 'collection';
     const TYPE_INTERNAL = 'internal';
     const TYPE_CUSTOM = 'custom';
+    const TYPE_NOLINK = 'nolink';
 
     use Translatable,
         BaseTranslatable;
@@ -39,7 +41,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id')
-            ->withoutGlobalScope(PageCollectionScope::class);
+            ->withoutGlobalScope(GlobalCollectionScope::class);
     }
 
     public function parent()
@@ -82,7 +84,8 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->ofType(static::TYPE_COLLECTION)) {
-                $pages = Page::fromCollectionKey($item->collection_type)->all();
+
+                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;
@@ -90,7 +93,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
                     $collectionItems->push(MenuItem::make([
                         'id'         => 'collection-' . $page->id,
                         'label'      => $page->menuLabel(),
-                        'url'        => $page->menuUrl(),
+                        'url'        => $this->composePageUrl($item, $page),
                         'parent_id'  => $item->id,
                     ]));
                 });
@@ -101,13 +104,18 @@ class MenuItem extends Model implements TranslatableContract, VineSource
                 if ($page->hidden_in_menu == true) {
                     unset($items[$k]);
                 } else {
-                    $item->url = $page->menuUrl();
+                    $item->url = $this->composePageUrl($item, $page);
                     $item->page_label = $page->menuLabel();
                     $items[$k] = $item;
                 }
             }
         }
         return array_merge($items->all(), $collectionItems->all());
+    }
+
+    private function composePageUrl(MenuItem $item, Page $page)
+    {
+        return $page->menuUrl();
     }
 
     /**

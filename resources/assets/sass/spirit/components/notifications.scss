@@ -27,6 +27,12 @@ $colors: $color-primary $color-secondary $color-success $color-warning $color-er
   .alert--#{$alert}{
     background-color: $color;
     color: $color-white;
+
+    a{
+      color: $color-white;
+      text-decoration: underline;
+    }
+
     .alert__btn{
       color:  $color-white;
       &:hover{

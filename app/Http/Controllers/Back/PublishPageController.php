@@ -12,22 +12,22 @@ class PublishPageController extends Controller
     {
         $this->authorize('update-page');
 
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::findOrFail($id);
 
         if (! $page->isPublished()) {
             $page->publish();
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('messages.success', $page->title.' is gepubliceerd. <a href="'.$page->menuUrl().'" target="_blank">Bekijk de pagina online</a>.');
     }
 
     public function draft(Request $request, $id)
     {
         $this->authorize('update-page');
 
-        $page = Page::ignoreCollection()->findOrFail($id);
+        $page = Page::withArchived()->findOrFail($id);
 
-        if (! $page->isDraft()) {
+        if (!$page->isDraft()) {
             $page->draft();
         }
 

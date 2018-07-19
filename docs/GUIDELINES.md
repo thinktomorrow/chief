@@ -1,10 +1,9 @@
-[Install](index.md)
-[Local development](chief-development.md)
-[Overriding chief](overriding-chief.md)
-[Pages](pages.md)
-[Server](server.md)
-[Changelog](CHANGELOG.md)
-[Guidelines](GUIDELINES.md)
+[Install](/index.md)
+[Local development](/chief-development.md)
+[Pages](pages/index.md)
+[Server](/server.md)
+[Changelog](/CHANGELOG.md)
+[Guidelines](/GUIDELINES.md)
 ## Frontend Guidelines
 
 Note: for the server management, please view the SERVER.md documentation.

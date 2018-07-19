@@ -25,8 +25,9 @@
 
             <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
                 <div>
+
                     <!-- internal type -->
-                    <label class="block stack-xs custom-indicators" for="typeInternal">
+                    <label class="block stack custom-indicators" for="typeInternal">
                         <input v-on:click="changeType('internal')" {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"':'' }}
                         name="type"
                                value="internal"
@@ -52,6 +53,32 @@
                         </div>
                     </label>
 
+                    <!-- collection type -->
+                    <label class="block stack custom-indicators" for="typeCollection">
+                        <input v-on:click="changeType('collection')" {{ (old('type', $menuitem->type) == 'collection') ? 'checked="checked"':'' }}
+                        name="type"
+                               value="collection"
+                               id="typeCollection"
+                               type="radio">
+                        <span class="custom-radiobutton --primary"></span>
+                        <strong>Paginagroep</strong> - automatische ophaling en weergave van online pagina's.
+
+                        <div v-if="type == 'collection'" class="stack-xs input-group-prefix relative">
+                            <chief-multiselect
+                                    name="collection_type"
+                                    :options='@json($collections)'
+                                    selected='@json(old('collection_type', $menuitem->collection_type))'
+                                    labelkey="plural"
+                                    valuekey="key"
+                                    placeholder="kies een paginagroep"
+                            >
+                            </chief-multiselect>
+
+                            <error class="caption text-warning" field="collection_type" :errors="errors.all()"></error>
+
+                        </div>
+                    </label>
+
                     <!-- custom type -->
                     <label class="block stack custom-indicators" for="typeCustom">
                         <input v-on:click="changeType('custom')" {{ (old('type', $menuitem->type) == 'custom') ? 'checked="checked"':'' }}
@@ -73,6 +100,17 @@
                                 @endforeach
                             </tabs>
                         </div>
+                    </label>
+
+                    <!-- no link -->
+                    <label class="block stack-xs custom-indicators" for="typeNolink">
+                        <input v-on:click="changeType('nolink')" {{ (old('type', $menuitem->type) == 'nolink') ? 'checked="checked"':'' }}
+                        name="type"
+                               value="nolink"
+                               id="typeNolink"
+                               type="radio">
+                        <span class="custom-radiobutton --primary"></span>
+                        <strong>Geen link toevoegen aan dit menuitem. </strong>
                     </label>
                 </div>
             </radio-options>

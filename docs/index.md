@@ -2,13 +2,12 @@
 title: Install
 description: chief is a package based cms built on top of the laravel framework.
 ---
-[Install](index.md)
-[Local development](chief-development.md)
-[Overriding chief](overriding-chief.md)
-[Pages](pages.md)
-[Server](server.md)
-[Changelog](CHANGELOG.md)
-[Guidelines](GUIDELINES.md)
+[Install](/index.md)
+[Local development](/chief-development.md)
+[Pages](pages/index.md)
+[Server](/server.md)
+[Changelog](/CHANGELOG.md)
+[Guidelines](/GUIDELINES.md)
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.
@@ -21,7 +20,7 @@ Start a new Think Tomorrow project skeleton with the following command
 composer create-project thinktomorrow/project-skeleton <projectname>
 ```
 
-## Installment
+## Install in existing project
 
 Chief can be installed via composer.
 ```php
@@ -117,6 +116,73 @@ php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvide
 There is one project related route that is expected by chief and that is: `pages.show`. This
 is the route for the detail of a static page. Make sure to add this one. 
 
+
+```File: routes\front.php```
+```php
+Route::get('page/{slug}', PagesController::class.'@show')->name('pages.show');
+```
+
+Also add a controller file for this front end route.
+This one is an example:
+
+```File: App\Http\Controller```
+```php
+<?php
+namespace App\Http\Controllers;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\Pages\Page;
+
+class PagesController extends Controller
+{
+    public function show($slug)
+    {
+        if(!$page = Page::findPublishedBySlug($slug)) {
+            throw new NotFoundHttpException('No published page found by slug ['.$slug.']');
+        }
+        return view('front.pages.show', [
+            'page' => $page,
+        ]);
+    }
+}
+```
+
+To get this route to work it's a good idea to add a view file where we can show a page.
+
+An example of this view file is the following:
+
+```File: resources\views\front\pages\show.blade.php```
+```html
+@extends('front._layouts.master')
+
+@section('content')
+
+    <!-- hero -->
+    <div class="row" style="background: url({{ $page->mediaUrl(\Thinktomorrow\Chief\Media\MediaType::HERO) }}) top right no-repeat;">
+        <div class="container">
+            <div class="column-7">
+                <h1>{{ $page->title }}</h1>
+                <div class="editor-content">
+                    {!! trans('pages.statics.hero.description') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="container editor-content">
+        {!! $page->content !!}
+    </section>
+
+    {!! $page->presentChildren() !!}
+
+    <section class="container editor-content">
+        {!! $page->hero_title !!}
+        {!! $page->hero_description !!}
+    </section>
+
+@stop
+```
+
 # Multilingual
 
 There are a couple of places where you need to configure the localisation of your application.
@@ -125,10 +191,6 @@ At the following files you should change the locales to your desired setup:
 - Set the available locales of the application in the `config/translatable.php` file. The values in the `locales` array will be available for the admin to manage.
 - Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
-
-# Changing Chief model behaviour
-
-To change the model behaviour for chief models you can extend the models in your application.
 
 # Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
@@ -163,3 +225,6 @@ A: /
 
 Q: I get the "Class web-chief does not exist" error. Help!  
 A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel.php` file.
+
+Q: I get the 'Expected response code 250 but got code “530”, with message “530 5.7.1 Authentication required ”' error. Help! 
+A: Please make sure your mail settings in your .env file are correct.

@@ -36,7 +36,7 @@ if (!function_exists('cached_asset')) {
         try {
 
             // Paths should be given relative to the manifestpath so make sure to remove the basepath
-            return asset(mix($entry.'/test', $manifestPath));
+            return asset(mix($entry, $manifestPath));
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
 

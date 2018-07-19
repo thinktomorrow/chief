@@ -14,27 +14,21 @@ class DeletePage
         try {
             DB::beginTransaction();
 
-            $page = Page::ignoreCollection()->withArchived()->findOrFail($id);
+            $page = Page::withArchived()->findOrFail($id);
 
-            if ($page->isDraft() || $page->isArchived()) {
-                $page->delete();
-
-                Audit::activity()
-                    ->performedOn($page)
-                    ->log('deleted');
+            // Can only delete a draft of archived page
+            if (!$page->isDraft() && !$page->isArchived()) {
+                return;
             }
+
+            $page->delete();
+
+            Audit::activity()
+                ->performedOn($page)
+                ->log('deleted');
             
-            if ($page->isPublished()) {
-                $page->archive();
-
-                Audit::activity()
-                    ->performedOn($page)
-                    ->log('archived');
-            }
-
             DB::commit();
 
-            return $page;
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;

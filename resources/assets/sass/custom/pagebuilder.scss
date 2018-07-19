@@ -1,0 +1,28 @@
+.show-on-hover{
+  .menu-trigger{
+    visibility:hidden;
+  }
+  &:hover .menu-trigger { visibility: visible; }
+}
+
+.pagebuilder-menu{
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width:100%;
+  bottom: -24px;
+  left: -15px;
+  font-size: 2rem;
+  height:2rem; // Maintain position with floating items
+  z-index: 1;
+
+  .icon{
+    font-size:inherit;
+  }
+}
+
+.pagebuilder-menu-items{
+  float: right;
+  margin-left: 0.6rem;
+}

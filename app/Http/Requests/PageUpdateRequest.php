@@ -29,15 +29,14 @@ class PageUpdateRequest extends FormRequest
     {
         $rules = [];
 
-        $translations = $this->request->get('trans');
+        $translations = $this->request->get('trans', []);
         foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['title', 'content', 'short'], $trans) && $locale !== config('app.locale')) {
+            if ($this->isCompletelyEmpty(['title', 'slug'], $trans) && $locale !== config('app.locale')) {
                 continue;
             }
 
             $rules['trans.' . $locale . '.title']   = 'required|max:200';
-            $rules['trans.' . $locale . '.short']   = 'max:700';
-            $rules['trans.' . $locale . '.content'] = 'required|max:10000';
+            $rules['trans.' . $locale . '.slug']   = 'unique:page_translations,slug,' . $this->id . ',page_id';
         }
 
         return $rules;
@@ -48,8 +47,6 @@ class PageUpdateRequest extends FormRequest
         return [
             'trans.*.title'     => 'Title',
             'trans.*.slug'      => 'Permalink',
-            'trans.*.content'   => 'Content',
-            'trans.*.short'     => 'Short',
         ];
     }
 }

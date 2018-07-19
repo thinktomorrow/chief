@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -14,8 +16,9 @@ class ModuleTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.modules', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'module-collection' => Module::class,
+            'singles' => Single::class,
         ]);
     }
 
@@ -26,4 +29,5 @@ class ModuleTest extends TestCase
 
         $this->assertEquals($module->id, Module::findBySlug('foobar')->id);
     }
+
 }

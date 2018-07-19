@@ -22,9 +22,20 @@ class Audit extends Activity
         return self::forSubject($subject)->get();
     }
 
+    public static function getAllActivityFor(Model $subject)
+    {
+        return self::allActivityFor($subject)->get();
+    }
+
+    public static function ScopeAllActivityFor(Builder $query, Model $subject): Builder
+    {
+        return $query
+            ->where('subject_type', $subject->getMorphClass());
+    }
+
     public static function getActivityBy(User $causer)
     {
-        return self::causedBy($causer)->get();
+        return self::causedBy($causer)->get()->sortByDesc('created_at');
     }
 
     public static function getActivity()

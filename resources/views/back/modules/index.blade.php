@@ -3,7 +3,7 @@
 @section('page-title', "Modules")
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Modules')
+    @slot('title', 'Vaste modules')
         <div class="inline-group-s">
             <a @click="showModal('create-module')" class="btn btn-primary">
                 <i class="icon icon-plus"></i>

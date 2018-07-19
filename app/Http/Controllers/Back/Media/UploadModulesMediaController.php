@@ -17,7 +17,7 @@ class UploadModulesMediaController extends Controller
     public function store(Request $request, $id)
     {
         $uploads = $request->file('file');
-        $model = Module::ignoreCollection()->findOrFail($id);
+        $model = Module::findOrFail($id);
 
         if (empty($uploads)) {
             return response()->json([

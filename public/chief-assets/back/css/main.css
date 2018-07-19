@@ -3883,8 +3883,8 @@ a.text-information:hover {
 
 @font-face {
   font-family: 'spirit';
-  src: url("/chief-assets/spirit/fonts/spirit/spirit.eot?w118d");
-  src: url("/chief-assets/spirit/fonts/spirit/spirit.eot?#iefixw118d") format("embedded-opentype"), url("/chief-assets/spirit/fonts/spirit/spirit.woff2?w118d") format("woff2"), url("/chief-assets/spirit/fonts/spirit/spirit.woff?w118d") format("woff"), url("/chief-assets/spirit/fonts/spirit/spirit.ttf?w118d") format("truetype"), url("/chief-assets/spirit/fonts/spirit/spirit.svg?w118d#Linearicons-Free") format("svg");
+  src: url("/chief-assets/back/fonts/spirit/spirit.eot?w118d");
+  src: url("/chief-assets/back/fonts/spirit/spirit.eot?#iefixw118d") format("embedded-opentype"), url("/chief-assets/back/fonts/spirit/spirit.woff?w118d") format("woff"), url("/chief-assets/back/fonts/spirit/spirit.ttf?w118d") format("truetype"), url("/chief-assets/back/fonts/spirit/spirit.svg?w118d#Linearicons-Free") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -5534,6 +5534,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.alert--primary a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .alert--primary .alert__btn {
   color: #ffffff;
 }
@@ -5559,6 +5564,11 @@ table .btn ~ .btn {
 .alert--secondary {
   background-color: #435fa8;
   color: #ffffff;
+}
+
+.alert--secondary a {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .alert--secondary .alert__btn {
@@ -5588,6 +5598,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.alert--success a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .alert--success .alert__btn {
   color: #ffffff;
 }
@@ -5613,6 +5628,11 @@ table .btn ~ .btn {
 .alert--warning {
   background-color: #f5b848;
   color: #ffffff;
+}
+
+.alert--warning a {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .alert--warning .alert__btn {
@@ -5642,6 +5662,11 @@ table .btn ~ .btn {
   color: #ffffff;
 }
 
+.alert--error a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .alert--error .alert__btn {
   color: #ffffff;
 }
@@ -5667,6 +5692,11 @@ table .btn ~ .btn {
 .alert--information {
   background-color: #2083fe;
   color: #ffffff;
+}
+
+.alert--information a {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
 .alert--information .alert__btn {
@@ -6457,6 +6487,10 @@ select {
   height: 2px;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .fade-enter-active, .fade-leave-active {
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
@@ -6464,6 +6498,59 @@ select {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+/**
+ * Animations taken from animate.css
+ * @ref: https://daneden.github.io/animate.css/
+ */
+.animated {
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+.animation-delayed, .animation-delayed-2 {
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+
+.animation-delayed-3 {
+  -webkit-animation-delay: 3s;
+          animation-delay: 3s;
+}
+
+.animation-delayed-4 {
+  -webkit-animation-delay: 4s;
+          animation-delay: 4s;
+}
+
+@-webkit-keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+  }
+}
+
+.fadeOutDown {
+  -webkit-animation-name: fadeOutDown;
+          animation-name: fadeOutDown;
 }
 
 .brand-logo {
@@ -6576,6 +6663,10 @@ select {
   height: auto;
 }
 
+.redactor-toolbar a {
+  margin-right: 0;
+}
+
 .redactor-toolbar li a.re-button-icon {
   padding: 8px 15px;
   font-size: 12px;
@@ -6594,7 +6685,6 @@ select {
 }
 
 .\--hidden {
-  visibility: hidden;
   display: none;
 }
 
@@ -6808,6 +6898,10 @@ select {
 /* Indicate thumb as default image */
 .thumb-default {
   border: 2px solid #4f5164;
+}
+
+.slim-result .out {
+  opacity: 0.2 !important;
 }
 
 .checkbox-delete {
@@ -7141,6 +7235,42 @@ select {
 .tab-block .tab-content .form-group {
   background-color: #ffffff;
   padding: 0.7rem 1rem;
+}
+
+.show-on-hover .menu-trigger {
+  visibility: hidden;
+}
+
+.show-on-hover:hover .menu-trigger {
+  visibility: visible;
+}
+
+.pagebuilder-menu {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  bottom: -24px;
+  left: -15px;
+  font-size: 2rem;
+  height: 2rem;
+  z-index: 1;
+}
+
+.pagebuilder-menu .icon {
+  font-size: inherit;
+}
+
+.pagebuilder-menu-items {
+  float: right;
+  margin-left: 0.6rem;
 }
 
 /**
