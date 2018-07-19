@@ -31,6 +31,8 @@ class CollectedPages extends Collection implements PresentForParent
             ])->render();
         }
 
+        // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
+        // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
         return '';
     }
 

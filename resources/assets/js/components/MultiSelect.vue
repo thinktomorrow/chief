@@ -140,7 +140,7 @@
                 if(this.name) Eventbus.$emit('clearErrors', this.name)
             },
             notifyChange(){
-                Eventbus.$emit('updated-select', this.name, Object.keys(this.valuesAsSelectedOptions), this.value);
+                Eventbus.$emit('updated-select', this.name, Object.keys(this.valuesAsSelectedOptions), this.value, this);
             },
             defaultValue(){
 
@@ -272,6 +272,10 @@
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style type="text/css">
+
+    .multiselect--active {
+        z-index: 11; /* Place above other components, such as redactor toolbar */
+    }
 
     .multiselect__tag{
         background-color: hsla(125, 48%, 40%, 1);

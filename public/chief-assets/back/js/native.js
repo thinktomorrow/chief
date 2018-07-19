@@ -75,8 +75,6 @@
 
 __webpack_require__("./resources/assets/js/utilities/form-submit.js");
 
-//$R('[data-editor]');
-
 /** Tippy tooltip init */
 window.tippy('[title]', {
   arrow: true,

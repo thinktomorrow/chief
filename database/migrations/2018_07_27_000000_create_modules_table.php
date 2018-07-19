@@ -15,10 +15,13 @@ class CreateModulesTable extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('page_id')->nullable();
             $table->string('collection', 32)->index();
             $table->string('slug')->unique(); // Internal system identifier
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
         });
 
         Schema::create('module_translations', function (Blueprint $table) {

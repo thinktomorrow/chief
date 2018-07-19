@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Common\Collections;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Class CollectionDetails
  * @property $key
@@ -12,7 +14,7 @@ namespace Thinktomorrow\Chief\Common\Collections;
  * @property $plural
  * @property $internal_label
  */
-class CollectionDetails
+class CollectionDetails implements Arrayable
 {
     /** @var string */
     private $key;

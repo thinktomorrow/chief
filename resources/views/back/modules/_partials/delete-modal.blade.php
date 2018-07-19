@@ -12,6 +12,6 @@
     </form>
 
     <div v-cloak slot="modal-action-buttons">
-        <button type="submit" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$module->id}}">Verwijder deze module</button>
+        <button type="button" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$module->id}}">Verwijder deze module</button>
     </div>
 </modal>

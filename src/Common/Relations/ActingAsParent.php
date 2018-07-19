@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Pages\CollectedPages;
 use Thinktomorrow\Chief\Pages\Page;
 
@@ -16,7 +15,14 @@ trait ActingAsParent
         if ($this->areChildRelationsLoaded()) {
             return $this->loadedChildRelations;
         }
-        return $this->loadedChildRelations = Relation::children($this->getMorphClass(), $this->getKey());
+        return $this->loadedChildRelations = $this->freshChildren();
+    }
+
+    public function freshChildren(): Collection
+    {
+        $this->loadedChildRelations = null;
+
+        return new Collection(Relation::children($this->getMorphClass(), $this->getKey())->all());
     }
 
     public function adoptChild(ActsAsChild $child, array $attributes = [])
@@ -46,19 +52,33 @@ trait ActingAsParent
         $children = $this->children();
 
         // Pages are presented in one module file with the collection of all pages combined
+        // But only if they are sorted right after each other
+        $collected_pages_key = null;
+        $collected_pages_type = null;
+
         foreach($children as $i => $child) {
 
-            $key = ($child instanceof ActsAsCollection) ? $child->collectionKey() : $i;
+            $key = $i;
 
             if($child instanceof Page) {
 
-                if(!isset($grouped_children[$key])) {
-                    $grouped_children[$key] = new CollectedPages();
+                // Set the current pages collection to the current collection type
+                if($collected_pages_type == null || $collected_pages_type != $child->collectionKey()) {
+                    $collected_pages_type = $child->collectionKey();
+                    $collected_pages_key = $key;
                 }
 
-                $grouped_children[$key]->push($child);
+                if(!isset($grouped_children[$collected_pages_key])) {
+                    $grouped_children[$collected_pages_key] = new CollectedPages();
+                }
+
+                $grouped_children[$collected_pages_key]->push($child);
+
                 continue;
             }
+
+            // Reset the grouped_collection if other than page type
+            $collected_pages_key = null;
 
             $grouped_children[$key] = $child;
         }
@@ -70,17 +90,28 @@ trait ActingAsParent
 
     public function relationWithChild(ActsAsChild $child): Relation
     {
-        return Relation::first([
-            'child_type'  => $child->getMorphClass(),
-            'child_id'    => $child->getKey(),
-            'parent_type' => $this->getMorphClass(),
-            'parent_id'   => $this->getKey(),
-        ]);
+        return Relation::query()
+            ->where('parent_type', $this->getMorphClass())
+            ->where('parent_id', $this->getKey())
+            ->where('child_type', $child->getMorphClass())
+            ->where('child_id', $child->getKey())
+            ->first();
+    }
+
+    public function sortChild(ActsAsChild $child, $sort = 0)
+    {
+        $this->loadedChildRelations = null;
+
+        Relation::query()
+            ->where('parent_type', $this->getMorphClass())
+            ->where('parent_id', $this->getKey())
+            ->where('child_type', $child->getMorphClass())
+            ->where('child_id', $child->getKey())
+            ->update(['sort' => $sort]);
     }
 
     private function attachChild($child_type, $child_id, array $attributes = [])
     {
-        // TODO: update sort when relation is found is not triggered...
         Relation::firstOrCreate([
             'parent_type' => $this->getMorphClass(),
             'parent_id'   => $this->getKey(),

@@ -6660,6 +6660,10 @@ select {
   height: auto;
 }
 
+.redactor-toolbar a {
+  margin-right: 0;
+}
+
 .redactor-toolbar li a.re-button-icon {
   padding: 8px 15px;
   font-size: 12px;
@@ -6678,7 +6682,6 @@ select {
 }
 
 .\--hidden {
-  visibility: hidden;
   display: none;
 }
 
@@ -6892,6 +6895,10 @@ select {
 /* Indicate thumb as default image */
 .thumb-default {
   border: 2px solid #4f5164;
+}
+
+.slim-result .out {
+  opacity: 0.2 !important;
 }
 
 .checkbox-delete {
@@ -7225,6 +7232,42 @@ select {
 .tab-block .tab-content .form-group {
   background-color: #ffffff;
   padding: 0.7rem 1rem;
+}
+
+.show-on-hover .menu-trigger {
+  visibility: hidden;
+}
+
+.show-on-hover:hover .menu-trigger {
+  visibility: visible;
+}
+
+.pagebuilder-menu {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  bottom: -24px;
+  left: -15px;
+  font-size: 2rem;
+  height: 2rem;
+  z-index: 1;
+}
+
+.pagebuilder-menu .icon {
+  font-size: inherit;
+}
+
+.pagebuilder-menu-items {
+  float: right;
+  margin-left: 0.6rem;
 }
 
 /**

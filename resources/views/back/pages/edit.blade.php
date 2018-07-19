@@ -20,22 +20,42 @@
 
 @section('content')
 
-  <form id="updateForm" method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
-    {{ csrf_field() }}
-    <input type="hidden" name="_method" value="PUT">
+    <div v-cloak class="v-loader inset-xl text-center">loading...</div>
+    <div v-cloak>
 
-    @include('chief::back.pages._form')
-    @include('chief::back.pages._partials.modal')
-    @include('chief::back.pages._partials.sidebar')
+        <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
+        @include('chief::back.pages._partials.delete-modal')
 
-  </form>
+        <form id="updateForm" method="POST" action="{{ route('chief.back.pages.update', $page->id) }}" enctype="multipart/form-data" role="form">
+            {{ csrf_field() }}
 
-  @include('chief::back.pages._partials.delete-modal')
+            <input type="hidden" name="_method" value="PUT">
+
+            @include('chief::back.pages._form')
+
+        </form>
+
+        @include('chief::back.modules._partials.create-modal', [
+           'collections' => $module_collections,
+           'page_id' => $page->id,
+       ])
+
+        @foreach($page->modules as $module)
+            @include('chief::back.modules._partials.delete-modal', [
+                'module' => $module
+            ])
+        @endforeach
+    </div>
 
 @stop
 
+@push('custom-styles')
+    <!-- make redactor available for any components. -->
+    <script src="/chief-assets/back/js/vendors/redactor.js"></script>
+@endpush
+
 @push('custom-scripts-after-vue')
-    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('pages.media.upload', $page->id)]))
+    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('pages.media.upload', $page->id)])
 @endpush
 
 @include('chief::back._elements.file-component')

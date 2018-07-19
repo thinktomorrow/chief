@@ -1,3 +1,8 @@
+<!-- project specific includes -->
+@include('chief::back._layouts._partials.project-footer')
+
+<!-- place to add custom vue components, right before the global Vue instance is created -->
+@stack('custom-components')
 
 <script src="{{ cached_asset('/chief-assets/back/js/main.js','back') }}"></script>
 
@@ -62,7 +67,6 @@
 
 <script src="{{ cached_asset('/chief-assets/back/js/native.js','back') }}"></script>
 @stack('custom-scripts-after-vue')
-@include('chief::back._layouts._partials.project-footer')
 
 </body>
 </html>

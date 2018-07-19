@@ -32,8 +32,8 @@ trait ActingAsCollection
         return new CollectionDetails(
             $collectionKey,
             static::class,
-            str_singular($collectionKey),
-            str_plural($collectionKey),
+            property_exists($this,'labelSingular') ? $this->labelSingular : str_singular($collectionKey),
+            property_exists($this,'labelPlural') ? $this->labelPlural : str_plural($collectionKey),
             $this->flatReferenceLabel()
         );
     }

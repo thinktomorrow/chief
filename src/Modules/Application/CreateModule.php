@@ -10,12 +10,12 @@ class CreateModule
 {
     use TranslatableCommand;
 
-    public function handle(string $collection, string $slug): Module
+    public function handle(string $collection, string $slug, $page_id = null): Module
     {
         try {
             DB::beginTransaction();
 
-            $module = Module::create(['collection' => $collection, 'slug' => $slug]);
+            $module = Module::create(['collection' => $collection, 'slug' => $slug, 'page_id' => $page_id]);
 
             DB::commit();
 

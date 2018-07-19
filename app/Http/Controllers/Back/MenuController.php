@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
+use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
@@ -35,9 +36,12 @@ class MenuController extends Controller
         
         $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
 
+        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->values()->toArray();
+
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
             'menuitem'         => $menuitem,
+            'collections'      => $collections,
             'internal_page_id' => null,
             'parents'          => $menuitems,
         ]);
@@ -77,9 +81,12 @@ class MenuController extends Controller
 
         $menuitems = ChiefMenu::fromMenuItems()->getForSelect($id);
 
+        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->toArray();
+
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
+            'collections'      => $collections,
             'internal_page_id' => $internal_page_id,
             'parents'          => $menuitems,
         ]);

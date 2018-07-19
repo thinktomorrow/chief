@@ -15,6 +15,6 @@
     </form>
 
     <div slot="modal-action-buttons" v-cloak>
-        <button type="submit" class="btn btn-primary" data-submit-form="createForm">Voeg toe</button>
+        <button type="button" class="btn btn-primary" data-submit-form="createForm">Voeg toe</button>
     </div>
 </modal>

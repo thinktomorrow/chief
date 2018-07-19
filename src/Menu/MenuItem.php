@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Common\Collections\GlobalCollectionScope;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
@@ -83,7 +84,8 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->ofType(static::TYPE_COLLECTION)) {
-                $pages = Page::fromCollectionKey($item->collection_type)->all();
+
+                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;

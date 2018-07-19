@@ -8,10 +8,8 @@ use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Common\Relations\PresentingForParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -22,6 +20,7 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Pages\Page;
 
 class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
 {
@@ -44,6 +43,27 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $guarded = [];
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id');
+    }
+
+    /**
+     * The page specific ones are the text modules
+     * which are added via the page builder
+     *
+     * @param $query
+     */
+    public function scopeWithoutPageSpecific($query)
+    {
+        $query->whereNull('page_id');
+    }
+
+    public function isPageSpecific(): bool
+    {
+        return !is_null($this->page_id);
+    }
 
     /**
      * Each module model can expose the managed translatable fields. These should be included as attributes just like the regular
@@ -107,14 +127,14 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         );
     }
 
-    public function mediaUrls($type = null): Collection
+    public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        return $this->getAllFiles($type)->map->getFileUrl();
+        return $this->getAllFiles($type)->map->getFileUrl($size);
     }
 
-    public function mediaUrl($type = null): ?string
+    public function mediaUrl($type = null, $size = 'full'): ?string
     {
-        return $this->mediaUrls($type)->first();
+        return $this->mediaUrls($type, $size)->first();
     }
 
     public static function mediaFields($key = null)

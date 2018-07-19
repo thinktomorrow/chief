@@ -23,6 +23,9 @@ class UploadMedia
             return;
         }
 
+        // We allow for more memory consumption because the gd decoding can require a lot of memory when parsing large images.
+        ini_set('memory_limit', '256M');
+
         foreach ($files_by_type as $type => $files) {
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
 
@@ -72,6 +75,8 @@ class UploadMedia
      */
     private function addAsset($file, $type = '', $locale = null, $filename = null, HasMedia $model)
     {
+        $filename = $this->sluggifyFilename($filename);
+
         if (is_string($file)) {
             $asset = AssetUploader::uploadFromBase64($file, $filename);
         } else {
@@ -110,5 +115,18 @@ class UploadMedia
         if (isset($files['remove']) && is_array($files['remove']) && !empty($files['remove'])) {
             $model->assets()->whereIn('id', $files['remove'])->delete();
         }
+    }
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    private function sluggifyFilename($filename): string
+    {
+        $extension = substr($filename, strrpos($filename, '.') + 1);
+        $filename = substr($filename, 0, strrpos($filename, '.'));
+        $filename = str_slug($filename) . '.' . $extension;
+
+        return $filename;
     }
 }

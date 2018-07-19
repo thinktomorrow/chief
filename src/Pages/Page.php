@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
@@ -23,6 +22,7 @@ use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
+use Thinktomorrow\Chief\Modules\Module;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
@@ -55,6 +55,17 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * page specific modules. We exclude text modules since they are modules in pure
+     * technical terms and not so much as behaviour element for the admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'page_id')->where('collection','<>','text');
     }
 
     /**
@@ -103,7 +114,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public static function defaultTranslatableFields(): array
     {
         return [
-            'content' => HtmlField::make()->label('Inhoud'),
+
         ];
     }
 
@@ -156,7 +167,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceLabel(): string
     {
-        return $this->title ?? '';
+        $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+
+        return $this->title ? $this->title . $status : '';
     }
 
     public function flatReferenceGroup(): string
@@ -307,6 +320,23 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         if($this->isArchived()) {
             return '<span><em>gearchiveerd</em></span>';
+        }
+
+        return '-';
+    }
+
+    public function statusAsPlainLabel()
+    {
+        if($this->isPublished()) {
+            return 'online';
+        }
+
+        if($this->isDraft()) {
+            return 'offline';
+        }
+
+        if($this->isArchived()) {
+            return 'gearchiveerd';
         }
 
         return '-';
