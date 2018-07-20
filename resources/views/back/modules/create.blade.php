@@ -14,7 +14,6 @@
 
 		@include('chief::back.modules._form')
         @include('chief::back.modules._partials.modal')
-
 	</form>
 
 @stop
