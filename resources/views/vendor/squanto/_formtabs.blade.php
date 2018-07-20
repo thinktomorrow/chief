@@ -4,12 +4,11 @@
         loading...
     </div>
     @php
-        $locales = config('thinktomorrow.locale.available_locales');
+        $locales = config('translatable.locales');
         foreach($locales as $locale){
             $tabs[] = [
                 'locale'   => $locale,
                 'name'     => $locale,
-                'flag'     => 'flag-'.$locale
             ];
         }
     @endphp
@@ -28,13 +27,12 @@
                            class="inline-block squished-s"
                            :class="{'active': tab.isActive }"
                         >
-                            <span class="flag" :class="tab.options.flag"></span>
-                            <span class="tabs-name" v-if="tab.isActive" v-text="tab.name"></span>
+                            <span class="tabs-name" v-text="tab.name"></span>
                         </a>
                     </nav>
             </template>
 
-            <tab class="row clearfix gutter" name="{{ $tab->name }}" :options="{ flag: '{{ $tab->flag }}'}">
+            <tab class="row clearfix gutter" name="{{ $tab->name }}">
 
                 <div class="column translation-sidemenu">
                     @if(count($groupedLines) > 2)

@@ -24,7 +24,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create();
 
-        $response = $this->asDefaultAdmin()->get(route('chief.back.menu.edit', $menuitem->id));
+        $response = $this->asAdminWithoutRole()->get(route('chief.back.menu.edit', $menuitem->id));
         $response->assertStatus(200);
     }
 
@@ -70,7 +70,7 @@ class UpdateMenuItemTest extends TestCase
         $newpage    = factory(Page::class)->create();
         $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->flatReference()->get()]);
 
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
                 'type' => 'internal',
                 'page_id' => $newpage->flatReference()->get(),
@@ -90,7 +90,7 @@ class UpdateMenuItemTest extends TestCase
         $this->disableExceptionHandling();
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
@@ -136,7 +136,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $this->asDefaultAdmin()
+        $this->asAdminWithoutRole()
             ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
                 'trans.nl.label'      => 'new label',
                 'trans.nl.url'      => 'thinktomorrow.be',
@@ -180,7 +180,7 @@ class UpdateMenuItemTest extends TestCase
 
         // Inside our logic the page should be existing. If not, the creation is aborted but we do not
         // show this response to the interface since this is rather a hack then expected behaviour.
-        $this->asDefaultAdmin()
+        $this->asAdminWithoutRole()
             ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
                 'type' => 'internal',
                 'trans.nl.label' => 'updated label',

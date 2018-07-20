@@ -37,7 +37,7 @@
             }
         }
         .tabs-name{
-            display: none;
+            color: $color-subtle;
         }
         &.tab-error{
             border: 1px solid $color-error;
@@ -54,7 +54,7 @@
             opacity: 1;
         }
         .tabs-name{
-            display: inline;
+            color: inherit;
         }
     }
 }

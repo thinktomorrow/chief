@@ -19,7 +19,7 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $response = $this->asDefaultAdmin()->get(route('chief.back.menu.create'));
+        $response = $this->asAdminWithoutRole()->get(route('chief.back.menu.create'));
         $response->assertStatus(200);
     }
 
@@ -33,7 +33,7 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function creating_a_new_menuItem()
     {
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
@@ -57,7 +57,7 @@ class CreateMenuItemTest extends TestCase
     {
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams([
                 'allow_parent' => true,
                 'parent_id' => $parent->id
@@ -75,7 +75,7 @@ class CreateMenuItemTest extends TestCase
     public function creating_a_new_internal_menuItem()
     {
         $page = factory(Page::class)->create();
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams(['type' => 'internal', 'page_id' => $page->flatReference()->get()]));
 
         $response->assertStatus(302);
@@ -88,7 +88,7 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function creating_a_new_custom_menuItem()
     {
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams([
                     'type'              => 'custom',
                     'trans.nl.label'    => 'nieuw label',
@@ -112,7 +112,7 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function create_custom_without_link()
     {
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams([
                     'type'              => 'custom',
                     'trans.nl.label'    => 'nieuw label',
@@ -132,7 +132,7 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function url_field_is_sanitized_if_scheme_is_missing()
     {
-        $this->asDefaultAdmin()
+        $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams([
                 'type'              => 'custom',
                 'trans.nl.label'    => 'nieuw label',
@@ -174,7 +174,7 @@ class CreateMenuItemTest extends TestCase
     {
         // Inside our logic the page should be existing. If not, the creation is aborted but we do not
         // show this response to the interface since this is rather a hack then expected behaviour.
-        $this->asDefaultAdmin()
+        $this->asAdminWithoutRole()
             ->post(route('chief.back.menu.store'), $this->validParams([
                 'type' => 'internal',
                 'page_id' => Page::class.'@999' // Fake page reference

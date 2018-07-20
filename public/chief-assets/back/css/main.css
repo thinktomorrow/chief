@@ -5810,7 +5810,7 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a .tabs-name {
-  display: none;
+  color: #dadada;
 }
 
 .translation-tabs-nav a.tab-error {
@@ -5829,7 +5829,7 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a.active .tabs-name, .translation-tabs-nav a.active:hover .tabs-name {
-  display: inline;
+  color: inherit;
 }
 
 .modal {
@@ -6489,6 +6489,10 @@ select {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .fade-enter-active, .fade-leave-active {
