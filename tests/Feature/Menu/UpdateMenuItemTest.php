@@ -132,6 +132,28 @@ class UpdateMenuItemTest extends TestCase
     }
 
     /** @test */
+    public function a_menuitem_can_be_sorted()
+    {
+        // Reference here cause we need it twice
+        $defaultAdmin = factory(User::class)->make();
+
+        $secondItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 2]);
+        $firstItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 1]);
+        $thirdItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 3]);
+
+        $response = $this->actingAs($defaultAdmin, 'chief')
+            ->put(route('chief.back.menu.update', $secondItem->id), $this->validParams([
+                'order' => 1,
+            ]));
+
+        $items = MenuItem::all();
+        $this->assertCount(3, $items);
+        $this->assertEquals($secondItem->id, $items[0]->id);
+        $this->assertEquals($firstItem->id, $items[1]->id);
+        $this->assertEquals($thirdItem->id, $items[2]->id);
+    }
+
+    /** @test */
     public function url_field_should_be_valid_url()
     {
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
