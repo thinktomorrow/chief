@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
@@ -27,13 +27,14 @@ class UpdatePageTest extends TestCase
         ]);
 
         $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
+
+        // For our project context we expect the page detail route to be known
+        Route::get('pages/{slug}', function(){})->name('pages.show');
     }
 
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->disableExceptionHandling();
-
         $this->asAdmin()->get(route('chief.back.pages.edit', $this->page->id))
                                ->assertStatus(200);
     }
@@ -62,6 +63,8 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function it_can_update_the_page_relations()
     {
+        $this->markTestSkipped('Relations update is disabled in preference of the pagebuilder module logic.');
+
         $page = factory(Page::class)->create();
         $otherPage = factory(Page::class)->create();
 

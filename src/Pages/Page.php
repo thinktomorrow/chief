@@ -4,13 +4,11 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -24,6 +22,7 @@ use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
+use Thinktomorrow\Chief\Modules\Module;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
@@ -56,6 +55,17 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * page specific modules. We exclude text modules since they are modules in pure
+     * technical terms and not so much as behaviour element for the admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'page_id')->where('collection','<>','text');
     }
 
     /**
@@ -104,7 +114,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public static function defaultTranslatableFields(): array
     {
         return [
-            'content' => HtmlField::make()->label('Inhoud'),
+
         ];
     }
 
@@ -148,33 +158,18 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return [
             // MediaType::HERO => [
             //     'type' => MediaType::HERO,
+            //     'is_document' => false,
             //     'label' => 'Hoofdafbeelding',
             //     'description' => '',
             // ],
         ];
     }
 
-    /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
-     *
-     */
-    public function collectionDetails(): CollectionDetails
-    {
-        $collectionKey = $this->collectionKey();
-
-        return new CollectionDetails(
-            $collectionKey,
-            static::class,
-            ucfirst(str_singular($collectionKey)),
-            ucfirst(str_plural($collectionKey)),
-            $this->flatReferenceLabel()
-        );
-    }
-
     public function flatReferenceLabel(): string
     {
-        return $this->title ?? '';
+        $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+
+        return $this->title ? $this->title . $status : '';
     }
 
     public function flatReferenceGroup(): string
@@ -206,22 +201,14 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
+        $translationModel = (new static)->translationModel;
+
+        return ($trans =  $translationModel::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at', 'DESC');
-    }
-
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
-    }
-
-    public function presentForChild(ActsAsChild $child, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
     }
 
     public function previewUrl()
@@ -241,6 +228,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function menuLabel(): string
     {
         return $this->title;
+    }
+
+    public function isHomepage(): bool
+    {
+        $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
+
+        return $this->id == $homepage_id;
     }
 
     public static function guessHomepage(): self
@@ -266,6 +260,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function view()
     {
         $viewPaths = [
+            'front.'.$this->collectionKey().'.show',
             'front.pages.'.$this->collectionKey().'.show',
             'front.pages.show'
         ];
@@ -316,15 +311,32 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function statusAsLabel()
     {
         if($this->isPublished()) {
-            return '<span><em>online</em></span>';
+            return '<a href="'.$this->menuUrl().'" target="_blank"><em>online</em></a>';
         }
 
         if($this->isDraft()) {
-            return '<span><em>offline</em></span>';
+            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
         if($this->isArchived()) {
             return '<span><em>gearchiveerd</em></span>';
+        }
+
+        return '-';
+    }
+
+    public function statusAsPlainLabel()
+    {
+        if($this->isPublished()) {
+            return 'online';
+        }
+
+        if($this->isDraft()) {
+            return 'offline';
+        }
+
+        if($this->isArchived()) {
+            return 'gearchiveerd';
         }
 
         return '-';

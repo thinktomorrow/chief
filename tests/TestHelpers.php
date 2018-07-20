@@ -44,7 +44,7 @@ trait TestHelpers
         $this->assertEquals($assert_count, $model->count());
     }
 
-    protected function asDefaultAdmin()
+    protected function asAdminWithoutRole()
     {
         return $this->actingAs(factory(User::class)->make(), 'chief');
     }

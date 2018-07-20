@@ -27,11 +27,6 @@ class ParentFake extends Model implements ActsAsParent
         });
     }
 
-    public function presentForChild(ActsAsChild $child, Relation $relation): string
-    {
-        return '<div>parent '.$this->id.' view for child '.$child->id.'</div>';
-    }
-
     /**
      * Composite key consisting of the type of class combined with the
      * model id. Both are joined with an @ symbol. This is used as

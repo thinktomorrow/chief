@@ -15,9 +15,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- hide vue elements until vue is loaded -->
-    <style type="text/css">[v-cloak]{ display:none; }</style>
+    <style type="text/css">
+        .v-loader{display:none !important;}
+        [v-cloak].v-loader{display:block !important;}
+
+        [v-cloak]{ display:none; }
+    </style>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ cached_asset('/chief-assets/back/css/main.css','back') }}">
 
     @stack('custom-styles')
+    @include('chief::back._layouts._partials.project-head')
 </head>

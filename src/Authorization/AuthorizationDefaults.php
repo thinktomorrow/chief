@@ -21,10 +21,10 @@ class AuthorizationDefaults
             'developer' => ['role', 'permission', 'user', 'page', 'disable-user', 'squanto', 'view-audit'],
 
             // Manages everything, including users
-            'admin' => ['user', 'page', 'disable-user', 'view-squanto', 'view-audit'],
+            'admin' => ['user', 'page', 'disable-user', 'view-squanto', 'update-squanto', 'view-audit'],
 
             // Writes and edits content
-            'author' => ['page', 'view-squanto'],
+            'author' => ['page', 'view-squanto', 'update-squanto'],
         ]);
     }
 

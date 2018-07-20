@@ -19,7 +19,7 @@ class ModulesController extends Controller
         $this->authorize('view-page');
 
         return view('chief::back.modules.index', [
-            'modules' => Module::all(),
+            'modules' => Module::withoutPageSpecific()->get(),
             'collections' => Module::availableCollections()->values()->map->toArray()->toArray(),
         ]);
     }
@@ -36,7 +36,8 @@ class ModulesController extends Controller
 
         $module = app(CreateModule::class)->handle(
             $request->get('collection'),
-            $request->get('slug')
+            $request->get('slug'),
+            $request->get('page_id')
         );
 
         return redirect()->route('chief.back.modules.edit', $module->getKey())->with('messages.success', $module->slug. ' is toegevoegd. Happy editing!');
@@ -76,9 +77,15 @@ class ModulesController extends Controller
             $id,
             $request->slug,
             $request->trans,
-            $request->get('files', []),
+            array_merge($request->get('files', []), $request->file('files', [])), // Images are passed as base64 strings, not as file, Documents are passed via the file segment
             $request->get('filesOrder', [])
         );
+
+        // Page specific if redirect to the page
+        if($module->isPageSpecific()) {
+            $route = route('chief.back.pages.edit', $module->page_id);
+            return redirect()->to($route.'#modules')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i> '.$module->slug.' werd aangepast');
+        }
 
         return redirect()->route('chief.back.modules.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i> '.$module->slug.' werd aangepast');
     }

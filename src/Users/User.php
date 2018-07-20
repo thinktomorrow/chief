@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Users;
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 use Thinktomorrow\Chief\Common\Traits\Enablable;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -61,11 +60,6 @@ class User extends Authenticatable implements HasMedia
     }
 
     public function isSquantoDeveloper()
-    {
-        return $this->isSuperAdmin();
-    }
-
-    public function isSuperAdmin()
     {
         return $this->hasRole('developer');
     }

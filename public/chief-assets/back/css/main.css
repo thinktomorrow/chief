@@ -2689,8 +2689,7 @@ p:first-child {
 
 h1:not(:last-child),
 h2:not(:last-child),
-h3:not(:last-child),
-p:last-child {
+h3:not(:last-child) {
   margin-bottom: 1.5rem;
 }
 
@@ -2698,6 +2697,10 @@ h4:not(:last-child),
 h5:not(:last-child),
 h6:not(:last-child) {
   margin-bottom: 0.75rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 /**
@@ -5807,7 +5810,7 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a .tabs-name {
-  display: none;
+  color: #dadada;
 }
 
 .translation-tabs-nav a.tab-error {
@@ -5826,7 +5829,7 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a.active .tabs-name, .translation-tabs-nav a.active:hover .tabs-name {
-  display: inline;
+  color: inherit;
 }
 
 .modal {
@@ -6484,6 +6487,14 @@ select {
   height: 2px;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
 .fade-enter-active, .fade-leave-active {
   -webkit-transition: opacity .3s;
   transition: opacity .3s;
@@ -6656,6 +6667,10 @@ select {
   height: auto;
 }
 
+.redactor-toolbar a {
+  margin-right: 0;
+}
+
 .redactor-toolbar li a.re-button-icon {
   padding: 8px 15px;
   font-size: 12px;
@@ -6674,7 +6689,6 @@ select {
 }
 
 .\--hidden {
-  visibility: hidden;
   display: none;
 }
 
@@ -6888,6 +6902,10 @@ select {
 /* Indicate thumb as default image */
 .thumb-default {
   border: 2px solid #4f5164;
+}
+
+.slim-result .out {
+  opacity: 0.2 !important;
 }
 
 .checkbox-delete {
@@ -7221,6 +7239,42 @@ select {
 .tab-block .tab-content .form-group {
   background-color: #ffffff;
   padding: 0.7rem 1rem;
+}
+
+.show-on-hover .menu-trigger {
+  visibility: hidden;
+}
+
+.show-on-hover:hover .menu-trigger {
+  visibility: visible;
+}
+
+.pagebuilder-menu {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  bottom: -24px;
+  left: -15px;
+  font-size: 2rem;
+  height: 2rem;
+  z-index: 1;
+}
+
+.pagebuilder-menu .icon {
+  font-size: inherit;
+}
+
+.pagebuilder-menu-items {
+  float: right;
+  margin-left: 0.6rem;
 }
 
 /**

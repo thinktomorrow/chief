@@ -44,14 +44,22 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
-        $this->markTestIncomplete();
-
+        $this->disableExceptionHandling();
         $page = Page::create(['collection' => 'singles']);
 
-        // Upload asset
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::DOCUMENT => [
+                        'new' => [
+                            UploadedFile::fake()->create('fake.pdf')
+                        ]
+                    ]
+                ]
+            ]));
 
-        $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertTrue($page->hasFile(MediaType::DOCUMENT));
+        $this->assertCount(1, $page->getAllFiles(MediaType::DOCUMENT));
     }
 
     /** @test */

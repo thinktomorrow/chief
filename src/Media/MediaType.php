@@ -10,4 +10,6 @@ class MediaType
     const THUMB = 'images-thumb';
     const BACKGROUND = 'images-background';
     const CONTENT = 'images';
+
+    const DOCUMENT = 'document';
 }

@@ -10,11 +10,11 @@
     <div class="col-lg-9 bs-component">
 
         @if($line->editInEditor())
-            <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="form-control redactor-editor" rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
+            <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="input inset-s" data-editor rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
         @elseif($line->editInTextarea())
-            <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="form-control" rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
+            <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="input inset-s" rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
         @else
-            <input type="text" name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="form-control" value="{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}"/>
+            <input type="text" name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="input inset-s" value="{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}"/>
         @endif
 
         @if($line->description)
