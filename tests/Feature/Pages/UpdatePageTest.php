@@ -143,4 +143,26 @@ class UpdatePageTest extends TestCase
 
         $this->assertNull($this->page->fresh()->getTranslation('en'));
     }
+
+    /** @test */
+    public function slug_uses_title_if_its_empty()
+    {
+        $page = factory(Page::class)->create([
+            'trans.nl.title'  => 'foobar nl',
+            'trans.nl.slug'   => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar nl',
+                    'slug'  => '',
+                ],
+            ])
+        );
+
+        $response->assertStatus(302);
+
+        $this->assertEquals('foobar-nl', $page->fresh()->slug);
+    }
 }

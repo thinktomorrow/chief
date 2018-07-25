@@ -48,7 +48,11 @@ class UpdatePage
     private function savePageTranslations(Page $page, $translations)
     {
         $translations = collect($translations)->map(function ($trans, $locale) {
-            $trans['slug'] = strip_tags($trans['slug']);
+            if($trans['slug'] != ''){
+                $trans['slug'] = str_slug($trans['slug']);
+            }else{
+                $trans['slug'] = str_slug($trans['title']);
+            }
 
             return $trans;
         });
