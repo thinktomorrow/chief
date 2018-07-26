@@ -69,8 +69,8 @@ class CollectionInstanceTest extends TestCase
     {
         Page::create([
             'collection' => 'articles',
-            'title:nl' => 'new title',
-            'slug:nl' => 'new-slug',
+            'title:nl'   => 'new title',
+            'slug:nl'    => 'new-slug',
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, PageTranslation::first()->page()->first());
