@@ -1,9 +1,9 @@
-[Install](/index.md)
-[Local development](/chief-development.md)
+[Install](../index.md)
+[Local development](../chief-development.md)
 [Pages](pages/index.md)
-[Server](/server.md)
-[Changelog](/CHANGELOG.md)
-[Guidelines](/GUIDELINES.md)
+[Server](../server.md)
+[Changelog](../CHANGELOG.md)
+[Guidelines](../GUIDELINES.md)
 # Pages
 
 ## TODO

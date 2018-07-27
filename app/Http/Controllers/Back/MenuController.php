@@ -83,9 +83,13 @@ class MenuController extends Controller
 
         $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->toArray();
 
+        $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
+            return $page->hidden_in_menu == true;
+        }))->toArray();
+
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
-            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
+            'pages'            => $pages,
             'collections'      => $collections,
             'internal_page_id' => $internal_page_id,
             'parents'          => $menuitems,
