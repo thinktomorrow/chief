@@ -73,7 +73,6 @@ class RefreshDatabase extends BaseCommand
 
         $admins = collect([
             ['Philippe', 'Damen', 'philippe@thinktomorrow.be', $password],
-            ['Bob', 'Dries', 'bob@thinktomorrow.be', $password],
             ['Ben', 'Cavens', 'ben@thinktomorrow.be', $password],
             ['Johnny', 'Berkmans', 'johnny@thinktomorrow.be', $password],
             ['Json', 'Voorhees', 'json@thinktomorrow.be', $password],
