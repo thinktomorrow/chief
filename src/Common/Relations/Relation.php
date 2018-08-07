@@ -92,7 +92,12 @@ class Relation extends Model
         }
 
         return $collection->reject(function($item) use($parent){
-            return $item->id == $parent->id;
+            if(is_a($item, Page::class))
+            {
+                return $item->id == $parent->id;
+            }
+
+            return false;
         });
     }
 }
