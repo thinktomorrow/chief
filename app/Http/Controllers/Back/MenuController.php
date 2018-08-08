@@ -80,8 +80,7 @@ class MenuController extends Controller
         }
 
         $menuitems = ChiefMenu::fromMenuItems()->getForSelect($id);
-
-        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->toArray();
+        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->values()->toArray();
 
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;
@@ -107,7 +106,7 @@ class MenuController extends Controller
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $menu->title . '" werd aangepast');
+        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label .' is aangepast');
     }
 
     /**

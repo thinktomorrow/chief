@@ -22,27 +22,38 @@
             <div class="column-4 center-y">
                 <strong>Link</strong>
             </div>
-            <div class="column-2">
-
-            </div>
+            <div class="column-2"></div>
         </div>
         @foreach($menu as $menuitem)
 
-            <hr class="separator">
+            <hr class="separator stack-s">
 
             @include('chief::back.menu._partials._rowitem', ['item' => $menuitem])
 
-            @foreach($menuitem->children as $child)
+            <div class="stack-s">
 
-                @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
+                @foreach($menuitem->children as $child)
 
-                @foreach($child->children as $subchild)
-                    @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
+                    @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
+
+                    <div class="stack-xs">
+
+                        @foreach($child->children as $subchild)
+
+                            @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
+
+                            @foreach($child->children as $subchild)
+                                @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
+                            @endforeach
+
+                        @endforeach
+
+                    </div>
+
                 @endforeach
 
-                <div class="stack"></div>
+            </div>
 
-            @endforeach
         @endforeach
     </div>
 

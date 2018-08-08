@@ -4,20 +4,35 @@
         @if(isset($level) && $level > 0)
             <span class="icon icon-arrow-right text-border inline-s tree-parent"></span>
         @endif
-        <a href="{{ route('chief.back.menu.edit', $item->id) }}">{{ $item->label }}</a>
+
+        @if($item->auto_generated)
+            {{ $item->label }}
+        @else
+            <a href="{{ route('chief.back.menu.edit', $item->id) }}">{{ $item->label }}</a>
+            @if($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_COLLECTION)
+                &nbsp;<em class="text-subtle">pagina groep</em>
+            @endif
+        @endif
     </div>
 
     <div class="column-4 center-y">
         @if($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_INTERNAL)
-            <a class="label label--primary squished-xs" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
+            <a class="label label--primary" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
         @elseif($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_NOLINK)
             -
+        @elseif($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_COLLECTION)
+
         @else
             <a class="text-subtle" href="{{ $item->url }}" target="_blank">{{ $item->url }}</a>
         @endif
     </div>
 
     <div class="column-2 text-right">
-        <a href="{{ route('chief.back.menu.edit', $item->id) }}" class="btn btn-link text-font">Aanpassen</a>
+        @if($item->auto_generated)
+
+        @else
+            <a href="{{ route('chief.back.menu.edit', $item->id) }}" class="">Aanpassen</a>
+        @endif
+
     </div>
 </div>

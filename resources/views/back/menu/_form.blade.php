@@ -158,6 +158,31 @@
     </radio-options>
 @endchiefformgroup
 
+@if($menuitem->id && ! $menuitem->siblings()->isEmpty())
+    @chiefformgroup(['field' => 'order'])
+        @slot('label', 'Sortering')
+        @slot('description', 'Sortering van dit menu item op het huidige niveau')
+        <div class="row">
+            <div class="column-1">
+                <input type="number" name="order" id="order" placeholder="Menu order" value="{{ old('order', $menuitem->order) }}" class="input inset-s text-center">
+            </div>
+        </div>
+        <div class="stack">
+
+            <div class="panel panel-default bg-white">
+                <div class="inset-s" style="border-bottom:1px solid #f5f5f5">
+                    <span class="bold">Huidige sortering op dit niveau:</span>
+                </div>
+                @foreach($menuitem->siblingsIncludingSelf() as $sibling)
+                    <div class="inset-s" style="border-bottom:1px solid #f5f5f5;{{ $sibling->id == $menuitem->id ? 'background-color:#f5f5f5;' : '' }}">
+                        <span class="bold inline-s">{{ $sibling->order }}</span>
+                        <span>{{ $sibling->label }}</span>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endchiefformgroup
+@endif
 
 @push('custom-scripts')
 
