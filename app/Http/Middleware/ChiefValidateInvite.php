@@ -26,10 +26,10 @@ class ChiefValidateInvite
             return redirect()->route('invite.expired');
         }
 
-        if (in_array($invitation->state(),[InvitationState::ACCEPTED, InvitationState::REVOKED])) {
+        if (in_array($invitation->state(), [InvitationState::ACCEPTED, InvitationState::REVOKED])) {
 
             // We allow the user to pass if the invitee is already logged in. Otherwise the invite link cannot be reused.
-            if( ! auth()->guard('chief')->check() || ! auth()->guard('chief')->user()->is($invitation->invitee)){
+            if (! auth()->guard('chief')->check() || ! auth()->guard('chief')->user()->is($invitation->invitee)) {
                 return redirect()->route('invite.expired');
             }
         }

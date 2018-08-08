@@ -29,5 +29,4 @@ class ModuleTest extends TestCase
 
         $this->assertEquals($module->id, Module::findBySlug('foobar')->id);
     }
-
 }

@@ -82,7 +82,7 @@ class ModulesController extends Controller
         );
 
         // Page specific if redirect to the page
-        if($module->isPageSpecific()) {
+        if ($module->isPageSpecific()) {
             $route = route('chief.back.pages.edit', $module->page_id);
             return redirect()->to($route.'#modules')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i> '.$module->slug.' werd aangepast');
         }

@@ -65,7 +65,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
      */
     public function modules()
     {
-        return $this->hasMany(Module::class, 'page_id')->where('collection','<>','text');
+        return $this->hasMany(Module::class, 'page_id')->where('collection', '<>', 'text');
     }
 
     /**
@@ -242,15 +242,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
 
         // Homepage id is explicitly set
-        if($homepage_id && $page = static::findPublished($homepage_id)) {
+        if ($homepage_id && $page = static::findPublished($homepage_id)) {
             return $page;
         }
 
-        if($page = static::collection('singles')->published()->first()) {
+        if ($page = static::collection('singles')->published()->first()) {
             return $page;
         }
 
-        if($page = static::published()->first()) {
+        if ($page = static::published()->first()) {
             return $page;
         }
 
@@ -310,15 +310,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function statusAsLabel()
     {
-        if($this->isPublished()) {
+        if ($this->isPublished()) {
             return '<a href="'.$this->menuUrl().'" target="_blank"><em>online</em></a>';
         }
 
-        if($this->isDraft()) {
+        if ($this->isDraft()) {
             return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
-        if($this->isArchived()) {
+        if ($this->isArchived()) {
             return '<span><em>gearchiveerd</em></span>';
         }
 
@@ -327,15 +327,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function statusAsPlainLabel()
     {
-        if($this->isPublished()) {
+        if ($this->isPublished()) {
             return 'online';
         }
 
-        if($this->isDraft()) {
+        if ($this->isDraft()) {
             return 'offline';
         }
 
-        if($this->isArchived()) {
+        if ($this->isArchived()) {
             return 'gearchiveerd';
         }
 

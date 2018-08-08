@@ -26,7 +26,7 @@ class HomepageTest extends TestCase
     }
 
     /** @test */
-    function by_default_it_uses_first_published_single_page_as_the_homepage()
+    public function by_default_it_uses_first_published_single_page_as_the_homepage()
     {
         $article = ArticlePageFake::create();
         $product = ProductPageFake::create(['published' => 1]);
@@ -36,7 +36,7 @@ class HomepageTest extends TestCase
     }
 
     /** @test */
-    function when_no_single_given_it_uses_first_published_page_as_the_homepage()
+    public function when_no_single_given_it_uses_first_published_page_as_the_homepage()
     {
         $article = ArticlePageFake::create();
         $product = ProductPageFake::create(['published' => 1]);
@@ -45,7 +45,7 @@ class HomepageTest extends TestCase
     }
 
     /** @test */
-    function it_guesses_the_homepage_if_explicitly_set_in_settings()
+    public function it_guesses_the_homepage_if_explicitly_set_in_settings()
     {
         $article = ArticlePageFake::create();
         $product = ProductPageFake::create(['published' => 1]);
@@ -57,7 +57,7 @@ class HomepageTest extends TestCase
     }
 
     /** @test */
-    function if_no_page_can_be_guessed_it_throws_an_exception()
+    public function if_no_page_can_be_guessed_it_throws_an_exception()
     {
         ArticlePageFake::create();
 

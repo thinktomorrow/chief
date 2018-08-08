@@ -51,13 +51,13 @@ class Relation extends Model
             ->orderBy('sort', 'ASC')
             ->get();
 
-        return $relations->map(function ($relation) use($parent_type, $parent_id) {
+        return $relations->map(function ($relation) use ($parent_type, $parent_id) {
             $child = (new $relation->child_type)->find($relation->child_id);
 
-            if(!$child) {
+            if (!$child) {
 
                 // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
-                if( ! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
+                if (! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
                     throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
                 }
@@ -68,11 +68,12 @@ class Relation extends Model
             $child->relation = $relation;
 
             return $child;
-
         })
 
         // In case of soft-deleted entries, this will be null and should be ignored. We make sure that keys are reset in case of removed child
-        ->reject(function($child){ return is_null($child); })
+        ->reject(function ($child) {
+            return is_null($child);
+        })
         ->values();
     }
 
@@ -91,9 +92,8 @@ class Relation extends Model
             $collection = $collection->merge((new $type())->all());
         }
 
-        return $collection->reject(function($item) use($parent){
-            if(is_a($item, Page::class))
-            {
+        return $collection->reject(function ($item) use ($parent) {
+            if (is_a($item, Page::class)) {
                 return $item->id == $parent->id;
             }
 
