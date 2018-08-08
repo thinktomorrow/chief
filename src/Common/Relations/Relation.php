@@ -91,6 +91,13 @@ class Relation extends Model
             $collection = $collection->merge((new $type())->all());
         }
 
-        return $collection;
+        return $collection->reject(function($item) use($parent){
+            if(is_a($item, Page::class))
+            {
+                return $item->id == $parent->id;
+            }
+
+            return false;
+        });
     }
 }

@@ -35,8 +35,8 @@ class PageUpdateRequest extends FormRequest
                 continue;
             }
 
-            $rules['trans.' . $locale . '.title']   = 'required|max:200';
-            $rules['trans.' . $locale . '.slug']   = 'unique:page_translations,slug,' . $this->id . ',page_id';
+            $rules['trans.' . $locale . '.title'] = 'required|max:200';
+            $rules['trans.' . $locale . '.slug']  = 'unique:page_translations,slug,' . $this->id . ',page_id';
         }
 
         return $rules;

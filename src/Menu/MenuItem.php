@@ -28,6 +28,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         'label',
         'url',
     ];
+    protected $with = ['page', 'translations'];
 
     public $timestamps = false;
     public $guarded = [];

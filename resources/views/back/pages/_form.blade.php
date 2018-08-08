@@ -1,8 +1,10 @@
 <tabs>
-    <tab name="Inhoud">
+    <tab name="Inhoud" id="inhoud">
         <section class="row formgroup stack gutter-l">
-            <div class="formgroup-input column-8">
+            <div class="column-4">
                 <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
+            </div>
+            <div class="formgroup-input column-8">
 
                 @if(count($page->availableLocales()) > 1)
                     <tabs v-cloak>
@@ -19,27 +21,12 @@
                 @endif
             </div>
         </section>
-        <section class="formgroup stack">
-            <page-builder
-                    :locales='@json($page->availableLocales())'
-                    :default-sections='@json($sections)'
-                    :modules='@json($relations)'>
-            </page-builder>
-        </section>
-
-        <div class="stack clearfix">
-                <a href="#modules" class="btn btn-o-primary right">volgende</a>
-        </div>
-    </tab>
-
-    <tab name="Eigen modules" id="modules">
-
-        @include('chief::back.pages._partials.modules')
 
         @if(count($page->translatableFields()) > 0)
             <section class="row formgroup stack gutter-l">
                 <div class="column-4">
                     <h2 class="formgroup-label">Inhoud</h2>
+                    <p>Deze titel en inhoud wordt weergegeven als je dit {{ $page->collectionDetails()->singular }} koppelt als module aan een pagina </p>
                 </div>
                 <div class="formgroup-input column-8">
                     @include('chief::back._elements.translatable_fieldgroups', [
@@ -48,6 +35,31 @@
                 </div>
             </section>
         @endif
+
+        <div class="stack clearfix">
+            <a href="#builder" class="btn btn-o-primary right">volgende</a>
+        </div>
+    </tab>
+    <tab name="Page builder" id="builder">
+        <section class="formgroup stack">
+            <h2>Pagebuilder</h2>
+            <page-builder
+                    :locales='@json($page->availableLocales())'
+                    :default-sections='@json($sections)'
+                    :modules='@json($relations)'>
+            </page-builder>
+        </section>
+
+        <div class="stack clearfix">
+            <a href="#inhoud" class="btn btn-o-primary left">Vorige</a>
+            <a href="#modules" class="btn btn-o-primary right">volgende</a>
+        </div>
+    </tab>
+
+    <tab name="Eigen modules" id="modules">
+
+        @include('chief::back.pages._partials.modules')
+
 
         @foreach($page->mediaFields() as $media)
 
@@ -68,6 +80,7 @@
         @endforeach
 
         <div class="stack clearfix">
+            <a href="#builder" class="btn btn-o-primary left">Vorige</a>
             <a href="#seo" class="btn btn-o-primary right">volgende</a>
         </div>
     </tab>
@@ -92,16 +105,11 @@
                     @include('chief::back.pages._partials.seo-form')
                 @endforeach
             @endif
-            <label for="seo-title"><i>Preview</i></label>
-            <div class="panel seo-preview --border inset bc-success">
-                <h2 class="text-information">SEO Titel</h2>
-                <span class="link text-success">https://crius-group.com/page</span>
-                <p class="caption">preview van description tekst hier</p>
-            </div>
         </div>
     </section>
 
     <div class="stack clearfix">
+        <a href="#modules" class="btn btn-o-primary left">Vorige</a>
         <button type="submit" class="btn btn-primary right">Wijzigingen opslaan</button>
     </div>
 </tab>

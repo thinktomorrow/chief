@@ -28,8 +28,8 @@ class UserController extends Controller
         $this->authorize('create-user');
 
         return view('chief::back.users.create', [
-            'user' => new User(),
-            'roleNames'=> Role::all()->pluck('name')->toArray()
+            'user'      => new User(),
+            'roleNames' => Role::all()->pluck('name')->toArray()
         ]);
     }
 
@@ -60,9 +60,15 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
+        if(auth()->guard('chief')->user()->hasRole('developer')){
+            $roles = Role::all();
+        }else{
+            $roles = Role::whereNotIn('name', ['developer'])->get();            
+        }
+
         return view('chief::back.users.edit', [
-            'user' => User::findOrFail($id),
-            'roleNames'=> Role::all()->pluck('name')->toArray()
+            'user'      => User::findOrFail($id),
+            'roleNames' => $roles->pluck('name')->toArray()
         ]);
     }
 

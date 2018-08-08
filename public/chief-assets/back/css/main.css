@@ -2689,8 +2689,7 @@ p:first-child {
 
 h1:not(:last-child),
 h2:not(:last-child),
-h3:not(:last-child),
-p:last-child {
+h3:not(:last-child) {
   margin-bottom: 1.5rem;
 }
 
@@ -2698,6 +2697,10 @@ h4:not(:last-child),
 h5:not(:last-child),
 h6:not(:last-child) {
   margin-bottom: 0.75rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 /**
@@ -5162,7 +5165,6 @@ a.text-information:hover {
 .panel {
   border: 1px solid transparent;
   border-radius: 5px;
-  overflow: hidden;
 }
 
 .panel .card-image {
@@ -5870,7 +5872,6 @@ table .btn ~ .btn {
 .modal-content {
   margin: 0 auto;
   max-height: calc(100vh - 2rem);
-  overflow-y: auto;
   max-width: 640px;
   text-align: left;
   z-index: 1;
@@ -6433,11 +6434,11 @@ select {
 }
 
 .\--remove-padding {
-  padding: 0;
+  padding: 0 !important;
 }
 
 .\--remove-margin {
-  margin: 0;
+  margin: 0 !important;
 }
 
 .\--raised, .alert:hover, .nav-pills-primary li:hover,

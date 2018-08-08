@@ -142,9 +142,21 @@ class PagesController extends Controller
         if(!$page = Page::findPublishedBySlug($slug)) {
             throw new NotFoundHttpException('No published page found by slug ['.$slug.']');
         }
-        return view('front.pages.show', [
-            'page' => $page,
-        ]);
+
+        // TODO: If slug matches the homepage page, redirect to root to avoid duplicate content
+        if($page->isHomepage()) {
+            return redirect()->route('pages.home');
+        }
+
+        return $page->view();
+    }
+
+    public function homepage()
+    {
+        // Get the page that has the flag 'is_homepage'. Otherwise we take the first singles pages found. If not found, we take the first published page...
+        $page = Page::guessHomepage();
+
+        return $page->view();
     }
 }
 ```
@@ -185,6 +197,10 @@ An example of this view file is the following:
 @stop
 ```
 
+Next to get the front-end to work you should set a homepage id in the chief-settings config file.
+This determines what the homepage/landing page will be. Currently this is changed through that config file.
+Eventually this will be editable in the admin.
+
 # Multilingual
 
 There are a couple of places where you need to configure the localisation of your application.
@@ -222,8 +238,8 @@ public function boot()
 Q: I get the "Route [login] not defined" error. Help!  
 A: Extend our ChiefExceptionHandler in the `app/handler.php` file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.
 
-Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!  
-A: /
+Q: I get the "Tokenmismatch" error after login into the admin. Help!  
+A: This most likely means you have an outdated version of chief. Run 'composer update' to get the latest version.
 
 Q: I get the "Class web-chief does not exist" error. Help!  
 A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel.php` file.

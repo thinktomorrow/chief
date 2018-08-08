@@ -89,8 +89,9 @@ class PagesController extends Controller
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
-        $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
-        $module_collections = Module::availableCollections()->values()->map->toArray()->toArray();
+        $relations                 = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
+        $module_collections        = Module::availableCollections()->values()->map->toArray()->toArray();
+
 
         // Current sections
         $sections = $page->children()->map(function ($section, $index) {
@@ -117,11 +118,11 @@ class PagesController extends Controller
         })->toArray();
 
         return view('chief::back.pages.edit', [
-            'page'      => $page,
-            'sections'  => $sections,
-            'relations' => $relations,
+            'page'               => $page,
+            'sections'           => $sections,
+            'relations'          => $relations,
             'module_collections' => $module_collections,
-            'images'    => $this->populateMedia($page),
+            'images'             => $this->populateMedia($page),
         ]);
     }
 
