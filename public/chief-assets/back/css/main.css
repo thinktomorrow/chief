@@ -5162,7 +5162,6 @@ a.text-information:hover {
 .panel {
   border: 1px solid transparent;
   border-radius: 5px;
-  overflow: hidden;
 }
 
 .panel .card-image {
@@ -5870,7 +5869,6 @@ table .btn ~ .btn {
 .modal-content {
   margin: 0 auto;
   max-height: calc(100vh - 2rem);
-  overflow-y: auto;
   max-width: 640px;
   text-align: left;
   z-index: 1;
