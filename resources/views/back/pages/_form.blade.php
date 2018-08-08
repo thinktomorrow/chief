@@ -1,4 +1,18 @@
 <tabs>
+    <tab name="Pagina" id="builder">
+        <section class="formgroup stack">
+            <h2>Pagina inhoud</h2>
+            <page-builder
+                    :locales='@json($page->availableLocales())'
+                    :default-sections='@json($sections)'
+                    :modules='@json($relations)'>
+            </page-builder>
+        </section>
+
+        <div class="stack clearfix">
+            <a href="#inhoud" class="btn btn-o-primary right">volgende</a>
+        </div>
+    </tab>
     <tab name="Inhoud" id="inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
@@ -37,29 +51,13 @@
         @endif
 
         <div class="stack clearfix">
-            <a href="#builder" class="btn btn-o-primary right">volgende</a>
-        </div>
-    </tab>
-    <tab name="Page builder" id="builder">
-        <section class="formgroup stack">
-            <h2>Pagebuilder</h2>
-            <page-builder
-                    :locales='@json($page->availableLocales())'
-                    :default-sections='@json($sections)'
-                    :modules='@json($relations)'>
-            </page-builder>
-        </section>
-
-        <div class="stack clearfix">
-            <a href="#inhoud" class="btn btn-o-primary left">Vorige</a>
-            <a href="#modules" class="btn btn-o-primary right">volgende</a>
-        </div>
+            <a href="#builder" class="btn btn-o-primary left">Vorige</a>
+            <a href="#modules" class="btn btn-o-primary right">volgende</a>        </div>
     </tab>
 
     <tab name="Eigen modules" id="modules">
 
         @include('chief::back.pages._partials.modules')
-
 
         @foreach($page->mediaFields() as $media)
 
