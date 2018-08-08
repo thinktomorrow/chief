@@ -41,11 +41,13 @@ class UpdateSections
         // Remove existing relations expect the text ones
         $this->removeExistingModules();
 
-        if(empty($this->relation_references)) return $this;
+        if (empty($this->relation_references)) {
+            return $this;
+        }
 
         $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references);
 
-        foreach($referred_instances as $instance) {
+        foreach ($referred_instances as $instance) {
             $this->page->adoptChild($instance, ['sort' => 0]);
         }
 
@@ -54,17 +56,21 @@ class UpdateSections
 
     private function removeExistingModules()
     {
-        foreach($this->page->children() as $instance) {
-            if($instance instanceof TextModule) continue;
+        foreach ($this->page->children() as $instance) {
+            if ($instance instanceof TextModule) {
+                continue;
+            }
             $this->page->rejectChild($instance);
         }
     }
 
     public function addTextModules()
     {
-        if(!isset($this->text_modules['new']) || empty($this->text_modules['new'])) return $this;
+        if (!isset($this->text_modules['new']) || empty($this->text_modules['new'])) {
+            return $this;
+        }
 
-        foreach($this->text_modules['new'] as $text_module) {
+        foreach ($this->text_modules['new'] as $text_module) {
 
             // Create page specific text module
             $module = app(CreateModule::class)->handle(
@@ -89,14 +95,17 @@ class UpdateSections
 
     public function updateTextModules()
     {
-        if(!isset($this->text_modules['replace']) || empty($this->text_modules['replace'])) return $this;
+        if (!isset($this->text_modules['replace']) || empty($this->text_modules['replace'])) {
+            return $this;
+        }
 
-        foreach($this->text_modules['replace'] as $text_module) {
-
-            if(! $module = FlatReferenceFactory::fromString($text_module['id'])->instance() ) continue;
+        foreach ($this->text_modules['replace'] as $text_module) {
+            if (! $module = FlatReferenceFactory::fromString($text_module['id'])->instance()) {
+                continue;
+            }
 
             // Do not update if content of text is completely empty. We will remove this module instead
-            if($this->isTextCompletelyEmpty($text_module['trans'])) {
+            if ($this->isTextCompletelyEmpty($text_module['trans'])) {
                 $this->removeTextModule($module);
                 continue;
             }
@@ -120,17 +129,21 @@ class UpdateSections
     {
         $children = $this->page->children();
 
-        foreach($this->sorting as $sorting => $reference) {
+        foreach ($this->sorting as $sorting => $reference) {
 
             // Reference can be null in case that the module has been removed (empty selection). This will avoid
             // in case of duplicate module references that the removed module will be used for the sorting instead.
-            if(!$reference) continue;
+            if (!$reference) {
+                continue;
+            }
 
-            $child = $children->first(function($c) use($reference){
+            $child = $children->first(function ($c) use ($reference) {
                 return $c->flatReference()->get() == $reference;
             });
 
-            if(!$child) continue;
+            if (!$child) {
+                continue;
+            }
 
             $this->page->sortChild($child, $sorting);
         }
@@ -150,13 +163,11 @@ class UpdateSections
         $is_completely_empty = true;
 
         foreach ($trans as $locale => $lines) {
-
-            foreach($lines as $key => $line) {
-
-                $stripped_line = $this->stripTagsBlacklist($line,['p', 'br']);
+            foreach ($lines as $key => $line) {
+                $stripped_line = $this->stripTagsBlacklist($line, ['p', 'br']);
                 $stripped_line = trim($stripped_line);
 
-                if($stripped_line) {
+                if ($stripped_line) {
                     $is_completely_empty = false;
                     break;
                 }

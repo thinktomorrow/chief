@@ -36,7 +36,6 @@ class UpdateMenu
             DB::commit();
 
             return $menu->fresh();
-
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
@@ -50,11 +49,10 @@ class UpdateMenu
         $sequence = $siblings->pluck('order', 'id')->toArray();
         asort($sequence);
 
-        if(in_array($menu->order, $sequence)){
-            foreach($sequence as $id => $order){
-                if($order < $menu->order){
-
-                }else{
+        if (in_array($menu->order, $sequence)) {
+            foreach ($sequence as $id => $order) {
+                if ($order < $menu->order) {
+                } else {
                     $sequence[$id]++;
                 }
             }

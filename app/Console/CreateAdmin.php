@@ -26,7 +26,7 @@ class CreateAdmin extends BaseCommand
 
         if ($this->option('dev')) {
             $role = 'developer';
-        }else{
+        } else {
             $role = 'admin';
         }
         

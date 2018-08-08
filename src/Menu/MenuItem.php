@@ -51,17 +51,17 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
     public function children()
     {
-        return $this->hasMany(MenuItem::class, 'parent_id')->orderBy('order','ASC');
+        return $this->hasMany(MenuItem::class, 'parent_id')->orderBy('order', 'ASC');
     }
 
     public function siblings()
     {
-        return static::where('parent_id',$this->parent_id)->where('id','<>',$this->id)->orderBy('order','ASC')->get();
+        return static::where('parent_id', $this->parent_id)->where('id', '<>', $this->id)->orderBy('order', 'ASC')->get();
     }
 
     public function siblingsIncludingSelf()
     {
-        return static::where('parent_id',$this->parent_id)->orderBy('order','ASC')->get();
+        return static::where('parent_id', $this->parent_id)->orderBy('order', 'ASC')->get();
     }
 
     /**
@@ -103,7 +103,6 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->ofType(static::TYPE_COLLECTION)) {
-
                 $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {

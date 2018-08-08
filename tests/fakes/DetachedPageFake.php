@@ -21,7 +21,6 @@ class DetachedPageFake extends Page
         });
 
         Schema::create('detached_page_translations', function (Blueprint $table) {
-
             $table->increments('id');
             $table->integer('page_id')->unsigned();
             $table->string('locale');
@@ -46,6 +45,4 @@ class DetachedPageFake extends Page
     {
         return [];
     }
-
-
 }

@@ -37,7 +37,7 @@ class ArchivePageTest extends TestCase
         $this->page->publish();
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.archive', $this->page->id) );
+            ->put(route('chief.back.pages.archive', $this->page->id));
 
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withArchived()->get());
