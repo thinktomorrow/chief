@@ -53,7 +53,7 @@ class UploadMedia
 
     private function addFile(HasMedia $model, string $type, array &$files_order, $file)
     {
-        if(is_string($file)) {
+        if (is_string($file)) {
             $image_name = json_decode($file)->output->name;
             $asset = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
         } else {
