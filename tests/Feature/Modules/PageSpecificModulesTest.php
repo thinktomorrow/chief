@@ -24,7 +24,7 @@ class PageSpecificModulesTest extends TestCase
     }
 
     /** @test */
-    function it_can_assign_a_module_to_a_page()
+    public function it_can_assign_a_module_to_a_page()
     {
         $page = Page::create(['collection' => 'singles', 'slug' => 'foobar', 'title:nl' => 'foobar']);
         $module = Module::create(['slug' => 'foobar', 'collection' => 'newsletter', 'page_id' => $page->id]);

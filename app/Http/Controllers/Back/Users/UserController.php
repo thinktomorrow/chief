@@ -60,10 +60,10 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
-        if(auth()->guard('chief')->user()->hasRole('developer')){
+        if (auth()->guard('chief')->user()->hasRole('developer')) {
             $roles = Role::all();
-        }else{
-            $roles = Role::whereNotIn('name', ['developer'])->get();            
+        } else {
+            $roles = Role::whereNotIn('name', ['developer'])->get();
         }
 
         return view('chief::back.users.edit', [

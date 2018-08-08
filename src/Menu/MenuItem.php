@@ -85,7 +85,6 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->ofType(static::TYPE_COLLECTION)) {
-
                 $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
