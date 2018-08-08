@@ -32,8 +32,8 @@ trait ActingAsCollection
         return new CollectionDetails(
             $collectionKey,
             static::class,
-            property_exists($this,'labelSingular') ? $this->labelSingular : str_singular($collectionKey),
-            property_exists($this,'labelPlural') ? $this->labelPlural : str_plural($collectionKey),
+            property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($collectionKey),
+            property_exists($this, 'labelPlural') ? $this->labelPlural : str_plural($collectionKey),
             $this->flatReferenceLabel()
         );
     }
@@ -70,7 +70,6 @@ trait ActingAsCollection
     {
         // Here we load up the proper collection model instead of the generic base class.
         return tap(static::fromCollectionKey($collectionKey), function ($instance) use ($model) {
-
             $instance->setRawAttributes($model->attributes);
             $instance->setRelations($model->relations);
             $instance->exists = $model->exists;
@@ -88,13 +87,10 @@ trait ActingAsCollection
      */
     private function loadCustomTranslations($instance)
     {
-        if ($this->requiresCustomTranslation($instance))
-        {
-            if (!is_array($instance->with) || !in_array('translations', $instance->with))
-            {
+        if ($this->requiresCustomTranslation($instance)) {
+            if (!is_array($instance->with) || !in_array('translations', $instance->with)) {
                 $instance->unsetRelation('translations');
-            } else
-            {
+            } else {
                 $instance->load('translations');
             }
         }
@@ -196,8 +192,12 @@ trait ActingAsCollection
 
     private static function collectionType(): string
     {
-        if(new static() instanceof Page) return 'pages';
-        if(new static() instanceof Module) return 'modules';
+        if (new static() instanceof Page) {
+            return 'pages';
+        }
+        if (new static() instanceof Module) {
+            return 'modules';
+        }
 
         throw new \DomainException('No collection type, either pages or modules, could be determined for ' . static::class);
     }

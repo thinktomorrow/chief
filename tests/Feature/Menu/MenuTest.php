@@ -231,7 +231,6 @@ class MenuTest extends TestCase
 
         $collection = ChiefMenu::fromMenuItems()->items();
         $this->assertEquals("second item", $collection->first()->children()->first()->label);
-
     }
 
     /** @test */

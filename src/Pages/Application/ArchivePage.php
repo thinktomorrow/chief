@@ -14,7 +14,9 @@ class ArchivePage
         try {
             DB::beginTransaction();
 
-            if(!$page = Page::find($id)) return;
+            if (!$page = Page::find($id)) {
+                return;
+            }
 
             $page->archive();
 
@@ -23,7 +25,6 @@ class ArchivePage
                 ->log('archived');
 
             DB::commit();
-
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;

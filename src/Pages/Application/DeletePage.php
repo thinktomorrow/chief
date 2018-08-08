@@ -28,7 +28,6 @@ class DeletePage
                 ->log('deleted');
             
             DB::commit();
-
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
