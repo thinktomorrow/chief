@@ -25,7 +25,7 @@ class Invitation extends Model implements StatefulContract
         return self::create([
             'invitee_id' => $invitee_id,
             'inviter_id' => $inviter_id,
-            'state'      => 'none',
+            'state'      => InvitationState::NONE,
             'token'      => $token,
             'expires_at' => now()->addMinutes($expires ?? self::$expires),
         ]);
