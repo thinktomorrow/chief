@@ -1,14 +1,21 @@
 <template>
     <div class="pagebuilder-menu show-on-hover">
         <span v-show="!active" @click="active = true" class="block icon icon-plus-circle menu-trigger"></span>
-        <span v-show="active" @click="active = false" class="block icon icon-minus-circle menu-trigger"></span>
-        <div v-show="active" class="pagebuilder-menu-items">
-            <span @click="addingNewTextSectionAfter(section.sort)">
-                <span title="tekst / afbeelding toevoegen" class="icon icon-align-left"></span>
-            </span>
-            <span @click="addingModuleSectionAfter(section.sort)">
-                <span title="vast blok selecteren" class="icon icon-clipboard"></span>
-            </span>
+        <span v-show="active" @click="active = false" class="block icon icon-minus-circle"></span>
+        <div v-show="active" class="pagebuilder-menu-items bg-white squished --raised rounded inline-group-s">
+            <div class="block left pointer" @click="addingNewTextSectionAfter(section.sort)">
+                <span title="tekst / afbeelding toevoegen" class="label label-o--secondary center-y"><i class="icon icon-align-left"></i>Text</span>
+            </div>
+            <div class="block left pointer" @click="addingModuleSectionAfter(section.sort)">
+                <span title="vast blok selecteren" class="label label-o--secondary center-y">
+                    <i class="icon icon-layout"></i>
+                    Module
+                </span>
+            </div>
+            <!-- NON FUNCTIONAL -->
+            <div class="block left pointer">
+                <span title="titel selecteren" class="label label-o--secondary center-y"><i class="icon icon-award"></i>Title</span>
+            </div>
         </div>
     </div>
 </template>
