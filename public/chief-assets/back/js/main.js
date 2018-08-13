@@ -29477,7 +29477,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "block left pointer",
+            staticClass: "left pointer",
             on: {
               click: function($event) {
                 _vm.addingNewTextSectionAfter(_vm.section.sort)
@@ -29490,7 +29490,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "block left pointer",
+            staticClass: "left pointer",
             on: {
               click: function($event) {
                 _vm.addingModuleSectionAfter(_vm.section.sort)
@@ -29500,7 +29500,7 @@ var render = function() {
           [_vm._m(1)]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "block left pointer" }, [
+        _c("div", { staticClass: "left pointer" }, [
           _c(
             "span",
             {
@@ -29512,7 +29512,7 @@ var render = function() {
                 }
               }
             },
-            [_c("i", { staticClass: "icon icon-award" }), _vm._v("H")]
+            [_vm._v("H1")]
           )
         ])
       ]

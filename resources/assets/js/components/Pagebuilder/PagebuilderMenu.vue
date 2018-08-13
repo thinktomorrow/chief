@@ -4,17 +4,17 @@
 
         <span v-show="active" @click="active = false" class="block icon icon-minus-circle"></span>
         <div v-show="active" class="pagebuilder-menu-items bg-white squished --raised rounded inline-group-s">
-            <div class="block left pointer" @click="addingNewTextSectionAfter(section.sort)">
+            <div class="left pointer" @click="addingNewTextSectionAfter(section.sort)">
                 <span title="tekst / afbeelding toevoegen" class="label label-o--secondary center-y"><i class="icon icon-align-left"></i>Text</span>
             </div>
-            <div class="block left pointer" @click="addingModuleSectionAfter(section.sort)">
+            <div class="left pointer" @click="addingModuleSectionAfter(section.sort)">
                 <span title="vast blok selecteren" class="label label-o--secondary center-y">
                     <i class="icon icon-layout"></i>
                     Module
                 </span>
             </div>
-            <div class="block left pointer">
-                <span title="pagina titel toevoegen" @click="addingNewPagetitleSectionAfter(section.sort)" class="label label-o--secondary center-y"><i class="icon icon-award"></i>H</span>
+            <div class="left pointer">
+                <span title="pagina titel toevoegen" @click="addingNewPagetitleSectionAfter(section.sort)" class="label label-o--secondary center-y">H1</span>
             </div>
         </div>
     </div>
