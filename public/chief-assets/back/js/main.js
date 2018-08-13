@@ -2458,6 +2458,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2511,36 +2520,51 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Eventbus.$on('addingModuleSectionAfter', function (position, component) {
             _this.addModuleSectionAfter(position);
         });
+
+        Eventbus.$on('addingNewPagetitleSectionAfter', function (position, component) {
+            _this.addNewPagetitleSectionAfter(position);
+        });
     },
 
     methods: {
         addNewTextSectionAfter: function addNewTextSectionAfter(section_sort) {
-
-            var index = section_sort + 1;
-            this._resortSectionsAfter(section_sort);
-
-            this.sections.push({
+            this._addNewSectionAfter(section_sort, {
                 id: null,
                 key: this._randomHash(),
-                sort: index,
                 type: 'text',
                 slug: this._randomHash(),
                 trans: []
             });
         },
         addModuleSectionAfter: function addModuleSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                id: null,
+                key: this._randomHash(),
+                type: 'module'
+            });
+        },
+        addNewPagetitleSectionAfter: function addNewPagetitleSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                id: null,
+                key: this._randomHash(),
+                type: 'pagetitle',
+                slug: this._randomHash(),
+                trans: []
+            });
+        },
+        _addNewSectionAfter: function _addNewSectionAfter(section_sort, data) {
 
             var index = section_sort + 1;
             this._resortSectionsAfter(section_sort);
 
-            this.sections.push({
-                id: null,
-                key: this._randomHash(),
-                sort: index,
-                type: 'module'
-            });
+            // Add sort value to the data
+            data.sort = index;
+
+            this.sections.push(data);
         },
-        removeSection: function removeSection() {},
+        removeSection: function removeSection() {
+            //
+        },
         _randomHash: function _randomHash() {
 
             // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -2604,6 +2628,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             Eventbus.$emit('addingModuleSectionAfter', position, this);
 
             this.active = false;
+        },
+        addingNewPagetitleSectionAfter: function addingNewPagetitleSectionAfter(position) {
+            Eventbus.$emit('addingNewPagetitleSectionAfter', position, this);
+
+            this.active = false;
         }
     }
 });
@@ -2615,6 +2644,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+//
 //
 //
 //
@@ -2663,7 +2693,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'section': { type: Object },
         'locales': { default: function _default() {
                 return [];
-            }, type: Array }
+            }, type: Array },
+
+        // Allow redactor editor
+        'editor': { default: true, type: Boolean },
+
+        // Single line for edit or multiple lines
+        'single': { default: false, type: Boolean }
     },
     data: function data() {
         return {
@@ -2673,12 +2709,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     mounted: function mounted() {
 
-        for (var key in this.locales) {
-            if (!this.locales.hasOwnProperty(key)) continue;
+        if (this.editor) {
+            for (var key in this.locales) {
+                if (!this.locales.hasOwnProperty(key)) continue;
 
-            window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
-                // options
-            });
+                window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                    // options
+                });
+            }
         }
     },
 
@@ -29386,7 +29424,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "pagebuilder-menu show-on-hover" }, [
+  return _c("div", { staticClass: "pagebuilder-menu show-on-hover center-y" }, [
     _c("span", {
       directives: [
         {
@@ -29462,7 +29500,21 @@ var render = function() {
           [_vm._m(1)]
         ),
         _vm._v(" "),
-        _vm._m(2)
+        _c("div", { staticClass: "block left pointer" }, [
+          _c(
+            "span",
+            {
+              staticClass: "label label-o--secondary center-y",
+              attrs: { title: "pagina titel toevoegen" },
+              on: {
+                click: function($event) {
+                  _vm.addingNewPagetitleSectionAfter(_vm.section.sort)
+                }
+              }
+            },
+            [_c("i", { staticClass: "icon icon-award" }), _vm._v("H")]
+          )
+        ])
       ]
     )
   ])
@@ -29496,21 +29548,6 @@ var staticRenderFns = [
         _vm._v("\n                Module\n            ")
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "block left pointer" }, [
-      _c(
-        "span",
-        {
-          staticClass: "label label-o--secondary center-y",
-          attrs: { title: "titel selecteren" }
-        },
-        [_c("i", { staticClass: "icon icon-award" }), _vm._v("Title")]
-      )
-    ])
   }
 ]
 render._withStripped = true
@@ -29988,6 +30025,19 @@ var render = function() {
         domProps: { value: _vm.section.slug }
       }),
       _vm._v(" "),
+      _c("input", {
+        attrs: {
+          type: "hidden",
+          name:
+            "sections[text][" +
+            _vm.new_or_replace_key +
+            "][" +
+            _vm._uid +
+            "][type]"
+        },
+        domProps: { value: _vm.section.type }
+      }),
+      _vm._v(" "),
       _vm.locales.length > 1
         ? _c(
             "tabs",
@@ -30009,7 +30059,7 @@ var render = function() {
                         "][content]",
                       id: "editor-" + locale + "-" + _vm._uid,
                       cols: "30",
-                      rows: "10"
+                      rows: _vm.single ? 1 : 10
                     },
                     domProps: {
                       innerHTML: _vm._s(_vm.renderInitialContent(locale))
@@ -30036,7 +30086,7 @@ var render = function() {
                   "][content]",
                 id: "editor-" + _vm.locales[0] + "-" + _vm._uid,
                 cols: "30",
-                rows: "10"
+                rows: _vm.single ? 1 : 10
               },
               domProps: {
                 innerHTML: _vm._s(_vm.renderInitialContent(_vm.locales[0]))
@@ -30215,7 +30265,22 @@ var render = function() {
             ? _c("text-section", {
                 key: section.key,
                 staticClass: "stack",
+                class: section.type,
                 attrs: { section: section, locales: _vm.locales }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          section.type == "pagetitle"
+            ? _c("text-section", {
+                key: section.key,
+                staticClass: "stack",
+                class: section.type,
+                attrs: {
+                  section: section,
+                  locales: _vm.locales,
+                  single: true,
+                  editor: false
+                }
               })
             : _vm._e(),
           _vm._v(" "),
@@ -30223,6 +30288,7 @@ var render = function() {
             ? _c("module-section", {
                 key: section.key,
                 staticClass: "stack",
+                class: section.type,
                 attrs: { section: section, modules: _vm.modules }
               })
             : _vm._e()
@@ -30238,6 +30304,13 @@ var render = function() {
         [
           _vm._l(_vm.sortedSections, function(section) {
             return [
+              section.type == "pagetitle" && !section.id
+                ? _c("option", {
+                    attrs: { selected: "" },
+                    domProps: { value: section.slug }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
               section.type == "text" && !section.id
                 ? _c("option", {
                     attrs: { selected: "" },

@@ -106,9 +106,9 @@ class PagesController extends Controller
                 'key'        => $section->flatReference()->get(),
 
                 // Assign type of section: text, module or pages
-                'type'       => $section->collectionKey() == 'text'
-                                    ? 'text'
-                                    : 'module',
+                'type'       => !in_array($section->collectionKey(), ['text','pagetitle'])
+                                    ? 'module'
+                                    : $section->collectionKey(),
                                       // Currently not yet support for page specific display
                                       // : (($section instanceof Page) ? 'pages' : 'module'),
                 'slug'       => $section->slug,

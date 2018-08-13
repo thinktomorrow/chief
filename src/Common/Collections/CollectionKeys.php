@@ -50,6 +50,15 @@ class CollectionKeys
         return new static([$key => $class]);
     }
 
+    public function rejectByClass(string $class): self
+    {
+        if ($key = array_search($class, $this->pairs)) {
+            unset($this->pairs[$key]);
+        }
+
+        return new static($this->pairs);
+    }
+
     /**
      * Filter the collection pairs by their parent type: either 'pages' or 'modules'
      *

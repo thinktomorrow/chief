@@ -1,6 +1,7 @@
 <template>
-    <div class="pagebuilder-menu show-on-hover">
+    <div class="pagebuilder-menu show-on-hover center-y">
         <span v-show="!active" @click="active = true" class="block icon icon-plus-circle menu-trigger"></span>
+
         <span v-show="active" @click="active = false" class="block icon icon-minus-circle"></span>
         <div v-show="active" class="pagebuilder-menu-items bg-white squished --raised rounded inline-group-s">
             <div class="block left pointer" @click="addingNewTextSectionAfter(section.sort)">
@@ -12,9 +13,8 @@
                     Module
                 </span>
             </div>
-            <!-- NON FUNCTIONAL -->
             <div class="block left pointer">
-                <span title="titel selecteren" class="label label-o--secondary center-y"><i class="icon icon-award"></i>Title</span>
+                <span title="pagina titel toevoegen" @click="addingNewPagetitleSectionAfter(section.sort)" class="label label-o--secondary center-y"><i class="icon icon-award"></i>H</span>
             </div>
         </div>
     </div>
@@ -36,6 +36,11 @@
             },
             addingModuleSectionAfter(position){
                 Eventbus.$emit('addingModuleSectionAfter',position, this);
+
+                this.active = false;
+            },
+            addingNewPagetitleSectionAfter(position){
+                Eventbus.$emit('addingNewPagetitleSectionAfter',position, this);
 
                 this.active = false;
             },

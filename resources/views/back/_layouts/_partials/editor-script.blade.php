@@ -5,9 +5,9 @@
             @if(admin()->hasRole('developer'))
                 buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @else
-                buttons: ['format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
+                buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
-            formatting: ['p', 'h2', 'h3'],
+            formatting: ['p', 'h1', 'h2', 'h3'],
             imageResizable: true,
             imagePosition: true,
             callbacks: {
