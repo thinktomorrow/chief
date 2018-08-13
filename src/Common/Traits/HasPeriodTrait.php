@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Common\Traits;
 
 use Illuminate\Support\Carbon;
 
-
 trait HasPeriodTrait
 {
     protected static function bootHasPeriodTrait()
