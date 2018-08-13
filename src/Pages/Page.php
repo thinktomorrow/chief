@@ -45,7 +45,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-    public    $table   = "pages";
+    public $table   = "pages";
     protected $guarded = [];
     protected $dates   = ['deleted_at'];
     protected $with    = ['translations'];

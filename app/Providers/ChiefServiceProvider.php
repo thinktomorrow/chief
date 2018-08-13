@@ -139,6 +139,5 @@ class ChiefServiceProvider extends ServiceProvider
             'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
             'role' => \Thinktomorrow\Chief\Authorization\Role::class,
         ];
-
     }
 }
