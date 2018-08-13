@@ -10,17 +10,19 @@ use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\Common\Audit\Audit;
+use Illuminate\Support\Carbon;
 
 class UpdatePage
 {
     use TranslatableCommand;
 
-    public function handle($id, array $sections, array $translations, array $relations, array $files, array $files_order): Page
+    public function handle($id, array $sections, array $translations, array $relations, array $files, array $files_order, $start_at, $end_at): Page
     {
         try {
             DB::beginTransaction();
-
-            $page = Page::findOrFail($id);
+            $page           = Page::findOrFail($id);
+            $page->start_at = Carbon::parse($start_at);
+            $page->end_at   = $end_at;
 
             $this->savePageTranslations($page, $translations);
 
