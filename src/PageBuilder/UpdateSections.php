@@ -4,8 +4,10 @@ namespace Thinktomorrow\Chief\PageBuilder;
 
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
+use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
+use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\Page;
 
@@ -57,7 +59,7 @@ class UpdateSections
     private function removeExistingModules()
     {
         foreach ($this->page->children() as $instance) {
-            if ($instance instanceof TextModule) {
+            if ($instance instanceof TextModule || $instance instanceof PagetitleModule) {
                 continue;
             }
             $this->page->rejectChild($instance);
@@ -72,12 +74,23 @@ class UpdateSections
 
         foreach ($this->text_modules['new'] as $text_module) {
 
+            // Create pagetitle text module
+            if(isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
+                $module = app(CreateModule::class)->handle(
+                    (new PagetitleModule)->collectionDetails()->key,
+                    $text_module['slug'],
+                    $this->page->id
+                );
+            }
+
             // Create page specific text module
-            $module = app(CreateModule::class)->handle(
-                (new TextModule)->collectionDetails()->key,
-                $text_module['slug'],
-                $this->page->id
-            );
+            else {
+                $module = app(CreateModule::class)->handle(
+                    (new TextModule)->collectionDetails()->key,
+                    $text_module['slug'],
+                    $this->page->id
+                );
+            }
 
             // Connect to page - sorting will be set later on...
             $this->page->adoptChild($module, ['sort' => 0]);
@@ -106,7 +119,7 @@ class UpdateSections
 
             // Do not update if content of text is completely empty. We will remove this module instead
             if ($this->isTextCompletelyEmpty($text_module['trans'])) {
-                $this->removeTextModule($module);
+                $this->removeTextualModule($module);
                 continue;
             }
 
@@ -117,11 +130,15 @@ class UpdateSections
         return $this;
     }
 
-    private function removeTextModule(TextModule $module)
+    private function removeTextualModule($module)
     {
+        if( ! $module instanceof TextModule && ! $module instanceof PagetitleModule) {
+            throw new \Exception('Invalid request to remove non textual module');
+        }
+
         $this->page->rejectChild($module);
 
-        // In case of text module, we also delete the module itself
+        // In case of a textual module, we also delete the module itself
         $module->delete();
     }
 

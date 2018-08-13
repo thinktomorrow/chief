@@ -19,13 +19,21 @@
                 v-bind:key="section.key"
                 v-bind:section="section"
                 v-bind:locales="locales"
-                class="stack"></text-section>
+                class="stack" :class="section.type"></text-section>
+
+            <text-section v-if="section.type == 'pagetitle'"
+                          v-bind:key="section.key"
+                          v-bind:section="section"
+                          v-bind:locales="locales"
+                          :single="true"
+                          :editor="false"
+                          class="stack" :class="section.type"></text-section>
 
             <module-section v-if="section.type == 'module'"
                 v-bind:key="section.key"
                 v-bind:section="section"
                 v-bind:modules="modules"
-                class="stack"></module-section>
+                class="stack" :class="section.type"></module-section>
 
             <!--<pages-section v-if="section.type == 'pages'"-->
                     <!--v-bind:key="section.key"-->
@@ -37,6 +45,7 @@
 
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
+                <option selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
                 <option selected v-if="section.type == 'text' && !section.id" :value="section.slug"></option>
                 <option selected v-else :value="section.id"></option>
             </template>
@@ -86,36 +95,49 @@
             Eventbus.$on('addingModuleSectionAfter',(position, component) => {
                 this.addModuleSectionAfter(position);
             });
+
+            Eventbus.$on('addingNewPagetitleSectionAfter',(position, component) => {
+                this.addNewPagetitleSectionAfter(position);
+            });
         },
         methods: {
             addNewTextSectionAfter(section_sort){
-
-                let index = section_sort + 1;
-                this._resortSectionsAfter(section_sort);
-
-                this.sections.push({
+                this._addNewSectionAfter(section_sort, {
                     id: null,
                     key: this._randomHash(),
-                    sort: index,
                     type: 'text',
                     slug: this._randomHash(),
                     trans: []
                 });
             },
             addModuleSectionAfter(section_sort){
+                this._addNewSectionAfter(section_sort, {
+                    id: null,
+                    key: this._randomHash(),
+                    type: 'module',
+                });
+            },
+            addNewPagetitleSectionAfter(section_sort){
+                this._addNewSectionAfter(section_sort, {
+                    id: null,
+                    key: this._randomHash(),
+                    type: 'pagetitle',
+                    slug: this._randomHash(),
+                    trans: []
+                });
+            },
+            _addNewSectionAfter(section_sort, data){
 
                 let index = section_sort + 1;
                 this._resortSectionsAfter(section_sort);
 
-                this.sections.push({
-                    id: null,
-                    key: this._randomHash(),
-                    sort: index,
-                    type: 'module',
-                });
+                // Add sort value to the data
+                data.sort = index;
+
+                this.sections.push(data);
             },
             removeSection(){
-
+                //
             },
             _randomHash(){
 
