@@ -39,6 +39,13 @@ class PageUpdateRequest extends FormRequest
             $rules['trans.' . $locale . '.slug']  = 'unique:page_translations,slug,' . $this->id . ',page_id';
         }
 
+        if ($this->request->get('start_at') != null) {
+            $rules['start_at'] = 'before:end_at';
+        }
+
+        if ($this->request->get('end_at') != null) {
+            $rules['end_at'] = 'after:start_at';
+        }
         return $rules;
     }
 

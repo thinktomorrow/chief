@@ -6,6 +6,8 @@
 
         @if($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::HTML)
             <textarea data-editor class="inset-s" name="trans[{{ $locale }}][{{ $key }}]" id="trans-{{ $locale }}-{{ $key }}" cols="10" rows="5">{{ old('trans.'.$locale.'.'. $key,$model->translateForForm($locale,$key)) }}</textarea>
+        @elseif($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::DATE)
+            <input type="datetime-local" class="input inset-s" name="{{$key}}" value="{{ old($key, $model->$key) }}">
         @else
             <input type="text" name="trans[{{ $locale }}][{{ $key }}]" id="trans-{{ $locale }}-{{ $key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('trans.'.$locale.'.'.$key, $model->translateForForm($locale,$key)) }}">
         @endif
