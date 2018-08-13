@@ -50,7 +50,6 @@ class AuthenticateChiefSession
      */
     protected function storePasswordHashInSession($request)
     {
-        
         if (! $request->user()) {
             return;
         }
