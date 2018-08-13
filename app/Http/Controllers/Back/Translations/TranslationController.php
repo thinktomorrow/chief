@@ -1,5 +1,5 @@
 <?php
-namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Translations;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Squanto\Domain\Line;
@@ -11,10 +11,26 @@ class TranslationController extends SquantoController
 {
     public function index()
     {
+        $this->authorize('view-squanto');
+
         $pages = Page::sequence()->get();
         $pages->each(function ($page) {
             $page->groupedlines = $this->groupLinesByKey($page);
         });
         return view('squanto::index', compact('pages'));
+    }
+
+    public function update(Request $request, $page_id)
+    {
+        $this->authorize('update-squanto');
+        
+        return parent::update($request, $page_id);
+    }
+
+    public function edit($id)
+    {
+        $this->authorize('udpate-squanto');
+        
+        return parent::edit($id);
     }
 }

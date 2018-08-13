@@ -36,7 +36,7 @@ class AuthenticateChiefSession
         if ($request->session()->get('password_hash') !== $request->user()->getAuthPassword()) {
             $this->logout($request);
         }
-
+        
         return tap($next($request), function () use ($request) {
             $this->storePasswordHashInSession($request);
         });
@@ -50,13 +50,14 @@ class AuthenticateChiefSession
      */
     protected function storePasswordHashInSession($request)
     {
+        
         if (! $request->user()) {
             return;
         }
-
+        
         $request->session()->put([
             'password_hash' => $request->user()->getAuthPassword(),
-        ]);
+            ]);
     }
 
     /**
