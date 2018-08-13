@@ -1,14 +1,17 @@
 <template>
-    <div class="pagebuilder-menu show-on-hover">
+    <div class="pagebuilder-menu show-on-hover center-y">
         <span v-show="!active" @click="active = true" class="block icon icon-plus-circle menu-trigger"></span>
         <span v-show="active" @click="active = false" class="block icon icon-minus-circle menu-trigger"></span>
-        <div v-show="active" class="pagebuilder-menu-items">
+        <div v-show="active" class="pagebuilder-menu-items center-y inline-group-s">
             <span @click="addingNewTextSectionAfter(section.sort)">
                 <span title="tekst / afbeelding toevoegen" class="icon icon-align-left"></span>
             </span>
             <span @click="addingModuleSectionAfter(section.sort)">
                 <span title="vast blok selecteren" class="icon icon-clipboard"></span>
             </span>
+            <a title="Pagina titel toevoegen"  @click="addingNewPagetitleSectionAfter(section.sort)" class="label label-o--default font-xs" style="font-size:.5em;">
+                H
+            </a>
         </div>
     </div>
 </template>
@@ -29,6 +32,11 @@
             },
             addingModuleSectionAfter(position){
                 Eventbus.$emit('addingModuleSectionAfter',position, this);
+
+                this.active = false;
+            },
+            addingNewPagetitleSectionAfter(position){
+                Eventbus.$emit('addingNewPagetitleSectionAfter',position, this);
 
                 this.active = false;
             },

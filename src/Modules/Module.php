@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
@@ -111,6 +112,18 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     }
 
     /**
+     * We exclude the generic textModule out of the available collections.
+     * @return Collection
+     */
+    public static function availableCollections(): Collection
+    {
+        return CollectionKeys::fromConfig()
+            ->filterByType(static::collectionType())
+            ->rejectByClass(TextModule::class)
+            ->toCollectionDetails();
+    }
+
+    /**
      * Details of the collection such as naming, key and class.
      * Used in several dynamic parts of the admin application.
      */
@@ -140,11 +153,11 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function mediaFields($key = null)
     {
         $types = [
-            MediaType::BACKGROUND => [
-                'type' => MediaType::BACKGROUND,
-                'label' => 'Achtergrond afbeelding',
-                'description' => '',
-            ]
+//            MediaType::BACKGROUND => [
+//                'type' => MediaType::BACKGROUND,
+//                'label' => 'Achtergrond afbeelding',
+//                'description' => '',
+//            ]
         ];
 
         return $key ? array_pluck($types, $key) : $types;
