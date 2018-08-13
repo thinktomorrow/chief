@@ -3595,6 +3595,10 @@ a:hover {
   width: 100%;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 ::-moz-selection {
   background-color: #435fa8;
   color: #ffffff;
@@ -4993,29 +4997,8 @@ a.text-information:hover {
 .label {
   padding: 0.1875rem 0.375rem;
   display: inline-block;
-  font-size: smaller;
   position: relative;
   border-radius: 5px;
-}
-
-.label::before {
-  border-style: solid;
-  border-width: 10px 10px 10px 0;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-}
-
-.label::after {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  position: absolute;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
 }
 
 .label--right::before {
@@ -5026,18 +5009,6 @@ a.text-information:hover {
 .label--right::after {
   content: '';
   left: -4px;
-}
-
-.label--left::before {
-  content: '';
-  right: -7.5px;
-  -webkit-transform: translateY(-50%) scale(-1);
-          transform: translateY(-50%) scale(-1);
-}
-
-.label--left::after {
-  content: '';
-  right: -4px;
 }
 
 .label--primary {
@@ -7244,6 +7215,19 @@ select {
   visibility: visible;
 }
 
+.menu-trigger:after {
+  content: '';
+  display: block;
+  width: calc(100% - 2rem);
+  height: 1px;
+  background: transparent;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  z-index: -1;
+  border-top: 1px dashed #dadada;
+}
+
 .pagebuilder-menu {
   position: absolute;
   display: -webkit-box;
@@ -7258,18 +7242,38 @@ select {
   width: 100%;
   bottom: -24px;
   left: -15px;
-  font-size: 2rem;
   height: 2rem;
   z-index: 1;
 }
 
-.pagebuilder-menu .icon {
-  font-size: inherit;
+.pagebuilder-menu .block.icon {
+  font-size: 2rem;
 }
 
 .pagebuilder-menu-items {
   float: right;
   margin-left: 0.6rem;
+  position: relative;
+}
+
+.pagebuilder-menu-items:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 0 solid #0000;
+  border-top-width: 10px;
+  border-bottom-width: 10px;
+  border-right: 10px solid #FFF;
+  left: -10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.pagebuilder-menu-items .icon {
+  margin-right: 0.5rem;
 }
 
 /**

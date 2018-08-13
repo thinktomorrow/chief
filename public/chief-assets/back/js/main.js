@@ -2604,6 +2604,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -29447,7 +29451,7 @@ var render = function() {
           expression: "active"
         }
       ],
-      staticClass: "block icon icon-minus-circle menu-trigger",
+      staticClass: "block icon icon-minus-circle",
       on: {
         click: function($event) {
           _vm.active = false
@@ -29466,62 +29470,86 @@ var render = function() {
             expression: "active"
           }
         ],
-        staticClass: "pagebuilder-menu-items center-y inline-group-s"
+        staticClass:
+          "pagebuilder-menu-items bg-white squished --raised rounded inline-group-s"
       },
       [
         _c(
-          "span",
+          "div",
           {
+            staticClass: "left pointer",
             on: {
               click: function($event) {
                 _vm.addingNewTextSectionAfter(_vm.section.sort)
               }
             }
           },
-          [
-            _c("span", {
-              staticClass: "icon icon-align-left",
-              attrs: { title: "tekst / afbeelding toevoegen" }
-            })
-          ]
+          [_vm._m(0)]
         ),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           {
+            staticClass: "left pointer",
             on: {
               click: function($event) {
                 _vm.addingModuleSectionAfter(_vm.section.sort)
               }
             }
           },
-          [
-            _c("span", {
-              staticClass: "icon icon-clipboard",
-              attrs: { title: "vast blok selecteren" }
-            })
-          ]
+          [_vm._m(1)]
         ),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "label label-o--default font-xs",
-            staticStyle: { "font-size": ".5em" },
-            attrs: { title: "Pagina titel toevoegen" },
-            on: {
-              click: function($event) {
-                _vm.addingNewPagetitleSectionAfter(_vm.section.sort)
+        _c("div", { staticClass: "left pointer" }, [
+          _c(
+            "span",
+            {
+              staticClass: "label label-o--secondary center-y",
+              attrs: { title: "pagina titel toevoegen" },
+              on: {
+                click: function($event) {
+                  _vm.addingNewPagetitleSectionAfter(_vm.section.sort)
+                }
               }
-            }
-          },
-          [_vm._v("\n            H\n        ")]
-        )
+            },
+            [_vm._v("H1")]
+          )
+        ])
       ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "tekst / afbeelding toevoegen" }
+      },
+      [_c("i", { staticClass: "icon icon-align-left" }), _vm._v("Text")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "vast blok selecteren" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-layout" }),
+        _vm._v("\n                Module\n            ")
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 if (false) {

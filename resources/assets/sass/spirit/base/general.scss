@@ -54,6 +54,10 @@ a{
     width: 100%;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 // SELECTION COLORS
 ::selection{
     background-color: $color-secondary;
