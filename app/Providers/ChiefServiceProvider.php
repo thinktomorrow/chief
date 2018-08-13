@@ -133,5 +133,12 @@ class ChiefServiceProvider extends ServiceProvider
             'table'    => 'chief_password_resets',
             'expire'   => 60,
         ];
+
+        // Custom models for permission
+        $this->app['config']['permission.models'] = [
+            'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
+            'role' => \Thinktomorrow\Chief\Authorization\Role::class,
+        ];
+
     }
 }

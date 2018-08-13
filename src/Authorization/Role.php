@@ -9,6 +9,13 @@ class Role extends BaseRole implements RoleContract
 {
     protected $guard_name = 'chief';
 
+    public function __construct(array $attributes = [])
+    {
+        $attributes['guard_name'] = $attributes['guard_name'] ?? 'chief';
+
+        parent::__construct($attributes);
+    }
+
     public static function create(array $attributes = [])
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? 'chief';

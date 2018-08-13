@@ -23,6 +23,7 @@
                         <a class="block squished --link-with-bg {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>
                     </div>
                 </dropdown>
+                @include('chief::back._project.nav')
             </ul>
 
             <div class="column">
