@@ -54,6 +54,8 @@ class CreatePage
         $translation['slug']    = $translation['slug'] ?? $translation['title'];
         $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
 
+        $translation['short'] = $translation['short'] ?? teaser($translations['content'], 100);
+
         return $translation;
     }
 }
