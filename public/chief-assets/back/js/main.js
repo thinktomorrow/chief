@@ -2025,8 +2025,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
          * selected value will default to option.id, visible label to option.label
          * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
          */
-        valuekey: { default: 'id', type: String },
-        labelkey: { default: 'label', type: String },
+        valuekey: { default: null, type: String },
+        labelkey: { default: null, type: String },
 
         /** Grouped options */
         groupvalues: { default: null, type: String },
@@ -2038,9 +2038,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return {
             // List of available options
             values: this.parseOptions(this.options),
+            // values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
             // Active selected option
-            value: []
+            value: [],
+
+            realValueKey: this.valuekey,
+            realLabelKey: this.labelkey
         };
     },
 
@@ -2105,13 +2109,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     methods: {
         parseOptions: function parseOptions(options) {
-
             options = this.isJson(options) ? JSON.parse(options) : options;
-
+            console.log(options);
             // We need an array so if options is given as key:value pairs, we convert them here.
             if (this.isKeyValuePair(options)) {
 
                 var convertedOptions = [];
+
+                this.realValueKey = 'id';
+                this.realLabelKey = 'label';
 
                 Object.getOwnPropertyNames(options).forEach(function (key) {
                     convertedOptions.push({
@@ -2119,9 +2125,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                         'label': options[key]
                     });
                 });
-
                 options = convertedOptions;
-                console.log(convertedOptions);
             }
 
             return options;
@@ -2260,11 +2264,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         isKeyValuePair: function isKeyValuePair(pairs) {
             if (!this.isObject(pairs)) return false;
 
-            // Check if the values are primitives, which is expected in key value pairs
+            // Check if the values are primitives, which is expected in key value pairs,
+            // also we except the first key to not be 0
             for (var key in Object.getOwnPropertyNames(pairs)) {
+
+                if (parseInt(key) === 0) return false;
+
                 if (!this.isPrimitive(pairs[key])) return false;
             }
-
+            console.log('dudududu');
             return true;
         }
     }
@@ -29685,8 +29693,8 @@ var render = function() {
           multiple: _vm.multiple,
           "hide-selected": _vm.multiple,
           "close-on-select": !_vm.multiple,
-          label: _vm.labelkey,
-          "track-by": _vm.valuekey,
+          label: _vm.realLabelKey,
+          "track-by": _vm.realValueKey,
           "group-label": _vm.grouplabel,
           "group-values": _vm.groupvalues,
           placeholder: _vm.placeholder,

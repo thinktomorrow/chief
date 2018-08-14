@@ -9,8 +9,8 @@
             :hide-selected="multiple"
             :close-on-select="!multiple"
 
-            :label="labelkey"
-            :track-by="valuekey"
+            :label="realLabelKey"
+            :track-by="realValueKey"
 
             :group-label="grouplabel"
             :group-values="groupvalues"
@@ -56,8 +56,8 @@
              * selected value will default to option.id, visible label to option.label
              * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
              */
-            valuekey: { default: 'id', type: String },
-            labelkey: { default: 'label', type: String },
+            valuekey: { default: null, type: String },
+            labelkey: { default: null, type: String },
 
             /** Grouped options */
             groupvalues: { default: null, type: String },
@@ -69,9 +69,13 @@
             return {
                 // List of available options
                 values: this.parseOptions(this.options),
+                // values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
                 // Active selected option
                 value: [],
+
+                realValueKey: this.valuekey,
+                realLabelKey: this.labelkey
             }
         },
         computed: {
@@ -135,13 +139,15 @@
         },
         methods: {
             parseOptions(options){
-
                 options = this.isJson(options) ? JSON.parse(options) : options;
-
+console.log(options);
                 // We need an array so if options is given as key:value pairs, we convert them here.
                 if(this.isKeyValuePair(options)) {
 
                     let convertedOptions = [];
+
+                    this.realValueKey = 'id';
+                    this.realLabelKey = 'label';
 
                     Object.getOwnPropertyNames(options).forEach((key) => {
                         convertedOptions.push({
@@ -149,9 +155,7 @@
                             'label' : options[key]
                         })
 ;                    });
-
                     options = convertedOptions;
-                    console.log(convertedOptions);
                 }
 
                 return options;
@@ -293,11 +297,15 @@
             {
                 if(!this.isObject(pairs)) return false;
 
-                // Check if the values are primitives, which is expected in key value pairs
+                // Check if the values are primitives, which is expected in key value pairs,
+                // also we except the first key to not be 0
                 for(let key in Object.getOwnPropertyNames(pairs)){
+
+                    if(parseInt(key) === 0) return false;
+
                     if( ! this.isPrimitive(pairs[key]) ) return false;
                 }
-
+console.log('dudududu');
                 return true;
             },
         },
