@@ -56,8 +56,8 @@
              * selected value will default to option.id, visible label to option.label
              * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
              */
-            valuekey: { default: null, type: String },
-            labelkey: { default: null, type: String },
+            valuekey: { default: 'id', type: String },
+            labelkey: { default: 'label', type: String },
 
             /** Grouped options */
             groupvalues: { default: null, type: String },
@@ -140,14 +140,11 @@
         methods: {
             parseOptions(options){
                 options = this.isJson(options) ? JSON.parse(options) : options;
-console.log(options);
+
                 // We need an array so if options is given as key:value pairs, we convert them here.
                 if(this.isKeyValuePair(options)) {
 
                     let convertedOptions = [];
-
-                    this.realValueKey = 'id';
-                    this.realLabelKey = 'label';
 
                     Object.getOwnPropertyNames(options).forEach((key) => {
                         convertedOptions.push({
@@ -155,6 +152,20 @@ console.log(options);
                             'label' : options[key]
                         })
 ;                    });
+                    options = convertedOptions;
+                }
+
+                // If array is a list of primitive values, we convert them to a uniform object with value and label props.
+                else if(this.isSingleValueListing(options)) {
+                    let convertedOptions = [];
+
+                    options.forEach((value) => {
+                        convertedOptions.push({
+                            'id' : value,
+                            'label' : value
+                        })
+                    });
+
                     options = convertedOptions;
                 }
 
@@ -293,19 +304,32 @@ console.log(options);
                 if (Array.isArray(value) && value.length === 0) return true;
                 return !value;
             },
+            isSingleValueListing(options)
+            {
+                if(!this.isArray(options) || typeof options[0] == "undefined") return false;
+
+                if(! this.isPrimitive(options[0])) return false;
+
+                return true;
+            },
             isKeyValuePair(pairs)
             {
                 if(!this.isObject(pairs)) return false;
 
                 // Check if the values are primitives, which is expected in key value pairs,
                 // also we except the first key to not be 0
-                for(let key in Object.getOwnPropertyNames(pairs)){
+                const propertyKeys = Object.getOwnPropertyNames(pairs);
+                for(let k in propertyKeys){
 
-                    if(parseInt(key) === 0) return false;
+                    const key = propertyKeys[k];
+
+                    if(parseInt(key) === 0){
+                        return false;
+                    }
 
                     if( ! this.isPrimitive(pairs[key]) ) return false;
                 }
-console.log('dudududu');
+
                 return true;
             },
         },
