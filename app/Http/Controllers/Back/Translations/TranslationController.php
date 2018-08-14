@@ -6,9 +6,12 @@ use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Page;
 use Thinktomorrow\Squanto\Services\CachedTranslationFile;
 use Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController as SquantoController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TranslationController extends SquantoController
 {
+    use AuthorizesRequests;
+    
     public function index()
     {
         $this->authorize('view-squanto');
@@ -29,7 +32,7 @@ class TranslationController extends SquantoController
 
     public function edit($id)
     {
-        $this->authorize('udpate-squanto');
+        $this->authorize('update-squanto');
         
         return parent::edit($id);
     }

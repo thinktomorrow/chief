@@ -6,9 +6,12 @@ use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Page;
 use Thinktomorrow\Squanto\Services\CachedTranslationFile;
 use Thinktomorrow\Squanto\Manager\Http\Controllers\LineController as SquantoLineController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LineController extends SquantoLineController
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         $this->authorize('view-squanto');
