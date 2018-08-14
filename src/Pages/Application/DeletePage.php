@@ -16,10 +16,14 @@ class DeletePage
 
             $page = Page::withArchived()->findOrFail($id);
 
-            // Can only delete a draft of archived page
+            // Can only delete a draft or archived page
             if (!$page->isDraft() && !$page->isArchived()) {
                 return;
             }
+
+            //Add random string to slug to avoid unique problems with softdeleted pages.
+            $page->slug .= '$'.str_random(8);
+            $page->save();
 
             $page->delete();
 
