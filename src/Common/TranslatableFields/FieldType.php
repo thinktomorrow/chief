@@ -9,6 +9,7 @@ class FieldType
     const INPUT = 'input'; // oneliner text (input)
     const TEXT = 'text'; // Plain text (textarea)
     const HTML = 'html'; // Html text (wysiwyg)
+    const SELECT = 'select'; // Select options
 
     /**
      * @var string
@@ -17,7 +18,7 @@ class FieldType
 
     public function __construct(string $type)
     {
-        if (!in_array($type, [static::INPUT, static::TEXT, static::HTML])) {
+        if (!in_array($type, [static::INPUT, static::TEXT, static::HTML, static::SELECT])) {
             throw new \Exception('Invalid type identifier given ['.$type.'].');
         }
 

@@ -45,7 +45,8 @@
     export default {
         components: { Multiselect },
         props: {
-            options: {default: function(){ return []; }, type: Array},
+            // Should be an Array but can be an object as well.
+            options: {default: function(){ return []; }},
             selected: {default: null},
             name: {default: '', type: String},
             multiple: {default: false, type: Boolean},
@@ -55,8 +56,8 @@
              * selected value will default to option.id, visible label to option.label
              * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
              */
-            valuekey: { default: null, type: String },
-            labelkey: { default: null, type: String },
+            valuekey: { default: 'id', type: String },
+            labelkey: { default: 'label', type: String },
 
             /** Grouped options */
             groupvalues: { default: null, type: String },
@@ -67,7 +68,7 @@
         data () {
             return {
                 // List of available options
-                values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
+                values: this.parseOptions(this.options),
 
                 // Active selected option
                 value: [],
@@ -133,6 +134,28 @@
 
         },
         methods: {
+            parseOptions(options){
+
+                options = this.isJson(options) ? JSON.parse(options) : options;
+
+                // We need an array so if options is given as key:value pairs, we convert them here.
+                if(this.isKeyValuePair(options)) {
+
+                    let convertedOptions = [];
+
+                    Object.getOwnPropertyNames(options).forEach((key) => {
+                        convertedOptions.push({
+                            'id' : key,
+                            'label' : options[key]
+                        })
+;                    });
+
+                    options = convertedOptions;
+                    console.log(convertedOptions);
+                }
+
+                return options;
+            },
             resetValue(){
                 this.value = this.defaultValue();
             },
@@ -265,6 +288,17 @@
                 if (value === 0) return false;
                 if (Array.isArray(value) && value.length === 0) return true;
                 return !value;
+            },
+            isKeyValuePair(pairs)
+            {
+                if(!this.isObject(pairs)) return false;
+
+                // Check if the values are primitives, which is expected in key value pairs
+                for(let key in Object.getOwnPropertyNames(pairs)){
+                    if( ! this.isPrimitive(pairs[key]) ) return false;
+                }
+
+                return true;
             },
         },
     }

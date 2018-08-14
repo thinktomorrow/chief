@@ -19,7 +19,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ## NEXT - 2018-07-27
 
 ### Added
-- updated docs
+- updated docsp te  
 
 ### Fixed
 - Dont show hidden_in_menu pages in the internal page dropdown for menuitems: this had weird behaviour as linking a hidden menu would hide the menuitem everywhere. Even in the admin.
