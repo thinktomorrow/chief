@@ -76,7 +76,7 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        if(!empty($exception->guards()) && array_first($exception->guards()) == 'chief'){
+        if (!empty($exception->guards()) && array_first($exception->guards()) == 'chief') {
             return redirect()->guest(route('chief.back.login'));
         }
 

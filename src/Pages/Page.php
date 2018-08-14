@@ -39,16 +39,16 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ActingAsChild;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
-    protected $translationModel = PageTranslation::class;
+    protected $translationModel      = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
-    protected $translatedAttributes = [
+    protected $translatedAttributes  = [
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-    public $table = "pages";
+    public    $table   = "pages";
     protected $guarded = [];
-    protected $dates = ['deleted_at'];
-    protected $with = ['translations'];
+    protected $dates   = ['deleted_at'];
+    protected $with    = ['translations'];
 
     public function __construct(array $attributes = [])
     {

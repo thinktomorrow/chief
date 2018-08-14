@@ -1,19 +1,30 @@
 @chiefformgroup(['field' => 'label'])
     @slot('label', 'Label')
     @slot('description', 'Dit is de tekst die wordt getoond in het menu. Verkies een korte, duidelijke term.')
-    <tabs v-cloak>
-        @foreach($menuitem->availableLocales() as $locale)
-            <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
-                <div class="row">
-                    <div class="column-4">
-                        <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+    @if(count($menuitem->availableLocales()) > 1)
+        <tabs v-cloak>
+            @foreach($menuitem->availableLocales() as $locale)
+                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
+                    <div class="row">
+                        <div class="column-4">
+                            <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+                        </div>
                     </div>
-                </div>
 
-                <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
-            </tab>
+                    <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
+                </tab>
+            @endforeach
+        </tabs>
+    @else
+        @foreach($menuitem->availableLocales() as $locale)
+            <div class="row">
+                <div class="column-4">
+                    <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+                </div>
+            </div>
+            <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
         @endforeach
-    </tabs>
+    @endif
 @endchiefformgroup
 
 <section class="formgroup">

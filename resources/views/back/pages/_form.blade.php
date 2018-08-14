@@ -19,7 +19,6 @@
                 <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
             </div>
             <div class="formgroup-input column-8">
-
                 @if(count($page->availableLocales()) > 1)
                     <tabs v-cloak>
                         @foreach($page->availableLocales() as $locale)

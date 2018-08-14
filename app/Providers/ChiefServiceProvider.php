@@ -137,8 +137,7 @@ class ChiefServiceProvider extends ServiceProvider
         // Custom models for permission
         $this->app['config']['permission.models'] = [
             'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
-            'role' => \Thinktomorrow\Chief\Authorization\Role::class,
+            'role'       => \Thinktomorrow\Chief\Authorization\Role::class,
         ];
-
     }
 }

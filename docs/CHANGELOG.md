@@ -11,6 +11,11 @@ All Notable changes to the `chief` application template will be documented in th
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## NEXT - 2018-08-13
+
+### Fixed
+- squanto permission middleware
+
 ## NEXT - 2018-08-09
 
 ### Added

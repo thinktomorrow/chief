@@ -75,7 +75,7 @@ class UpdateSections
         foreach ($this->text_modules['new'] as $text_module) {
 
             // Create pagetitle text module
-            if(isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
+            if (isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
                 $module = app(CreateModule::class)->handle(
                     (new PagetitleModule)->collectionDetails()->key,
                     $text_module['slug'],
@@ -132,7 +132,7 @@ class UpdateSections
 
     private function removeTextualModule($module)
     {
-        if( ! $module instanceof TextModule && ! $module instanceof PagetitleModule) {
+        if (! $module instanceof TextModule && ! $module instanceof PagetitleModule) {
             throw new \Exception('Invalid request to remove non textual module');
         }
 

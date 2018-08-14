@@ -29,7 +29,7 @@ class GeneratePermissionCommandTest extends TestCase
         Role::create(['name' => 'new admin']);
 
         $this->artisan('chief:permission', [
-            'name' => 'view-ability',
+            'name'   => 'view-ability',
             '--role' => 'new admin'
         ]);
 
