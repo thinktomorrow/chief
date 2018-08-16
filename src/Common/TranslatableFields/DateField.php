@@ -2,10 +2,10 @@
 declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Common\TranslatableFields;
 
-class DateField
+class DateField extends Field
 {
     public static function make()
     {
-        return Field::make(new FieldType(FieldType::DATE));
+        return new static(new FieldType(FieldType::DATE));
     }
 }

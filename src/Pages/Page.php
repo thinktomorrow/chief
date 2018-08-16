@@ -45,7 +45,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-    public $table   = "pages";
+    public    $table   = "pages";
     protected $guarded = [];
     protected $dates   = ['deleted_at'];
     protected $with    = ['translations'];
@@ -66,6 +66,18 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function modules()
     {
         return $this->hasMany(Module::class, 'page_id')->where('collection', '<>', 'text');
+    }
+
+    /**
+     * Each page model can expose some custom fields. Add here the list of fields defined as name => Field where Field
+     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     *
+     * @param null $key
+     * @return array
+     */
+    public function customFields()
+    {
+        return [];
     }
 
     /**

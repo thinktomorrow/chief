@@ -16,17 +16,18 @@ class UpdatePage
 {
     use TranslatableCommand;
 
-    public function handle($id, array $sections, array $translations, array $relations, array $files, array $files_order, $start_at, $end_at): Page
+    public function handle($id, array $sections, array $translations, array $custom_fields, array $relations, array $files, array $files_order): Page
     {
         try {
             DB::beginTransaction();
+
             $page           = Page::findOrFail($id);
-            $page->start_at = Carbon::parse($start_at);
-            $page->end_at   = $end_at;
 
             $this->savePageTranslations($page, $translations);
 
             $this->saveSections($page, $sections);
+
+            $this->saveCustomFields($page, $custom_fields);
 
             // Explicit relations - these are the related modules/pages passed outside the pagebuilder
             // This is currently not being used as the pagebuilder already takes care of this.
@@ -87,5 +88,29 @@ class UpdatePage
                         ->addTextModules()
                         ->updateTextModules()
                         ->sort();
+    }
+
+    private function saveCustomFields(Page $page, array $custom_fields)
+    {
+        // Keep track of any default model that will require a save on the model. This way we do it just once after
+        // setting all values.
+        $requires_model_save = false;
+
+        foreach($custom_fields as $key => $value)
+        {
+            // If custom method exists, use that to save the value, else revert to default save as column
+            $methodName = 'save'. ucfirst(camel_case($key)) . 'Field';
+
+            if(method_exists($page, $methodName)) {
+                $page->$methodName($value);
+            } else {
+                $page->$key = $value;
+                $requires_model_save = true;
+            }
+        }
+
+        if($requires_model_save) {
+            $page->save();
+        }
     }
 }

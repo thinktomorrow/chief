@@ -19,7 +19,6 @@
                 <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
             </div>
             <div class="formgroup-input column-8">
-
                 @if(count($page->availableLocales()) > 1)
                     <tabs v-cloak>
                         @foreach($page->availableLocales() as $locale)
@@ -36,6 +35,29 @@
             </div>
         </section>
 
+        @if(count($page->customFields()) > 0)
+            @foreach($page->customFields() as $key => $field)
+                <section class="row formgroup stack gutter-l">
+                    <div class="column-4">
+                        @if($field->label)
+                            <h2 class="formgroup-label">{{ $field->label }}</h2>
+                        @endif
+
+                        @if($field->description)
+                            <p>{{ $field->description }}</p>
+                        @endif
+                    </div>
+                    <div class="formgroup-input column-8">
+                        @include('chief::back._elements.customfield', [
+                            'key'   => $key,
+                            'field' => $field,
+                            'model' => $page
+                        ])
+                    </div>
+                </section>
+            @endforeach
+        @endif
+
         @if(count($page->translatableFields()) > 0)
             <section class="row formgroup stack gutter-l">
                 <div class="column-4">
@@ -49,15 +71,6 @@
                 </div>
             </section>
         @endif
-
-        <div class="stack clearfix">
-            <a href="#builder" class="btn btn-o-primary left">Vorige</a>
-            <a href="#modules" class="btn btn-o-primary right">volgende</a>        </div>
-    </tab>
-
-    <tab name="Eigen modules" id="modules">
-
-        @include('chief::back.pages._partials.modules')
 
         @foreach($page->mediaFields() as $media)
 
@@ -76,6 +89,15 @@
                 'description' => $media['description'],
             ])
         @endforeach
+
+        <div class="stack clearfix">
+            <a href="#builder" class="btn btn-o-primary left">Vorige</a>
+            <a href="#modules" class="btn btn-o-primary right">volgende</a>        </div>
+    </tab>
+
+    <tab name="Eigen modules" id="modules">
+
+        @include('chief::back.pages._partials.modules')
 
         <div class="stack clearfix">
             <a href="#builder" class="btn btn-o-primary left">Vorige</a>

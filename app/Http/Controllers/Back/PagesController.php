@@ -136,16 +136,14 @@ class PagesController extends Controller
     public function update(PageUpdateRequest $request, $id)
     {
         $this->authorize('update-page');
-
         $page = app(UpdatePage::class)->handle(
             $id,
             $request->get('sections', []),
             $request->get('trans', []),
+            $request->get('custom_fields', []),
             $request->get('relations', []),
             array_merge($request->get('files', []), $request->file('files', [])), // Images are passed as base64 strings, not as file, Documents are passed via the file segment
-            $request->get('filesOrder', []),
-            $request->get('start_at', ''),
-            $request->get('end_at', '')
+            $request->get('filesOrder', [])
         );
 
         return redirect()->route('chief.back.pages.edit', $page->id)->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $page->title . '" werd aangepast');

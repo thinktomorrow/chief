@@ -2012,9 +2012,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["a"] = ({
     components: { Multiselect: __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a },
     props: {
+        // Should be an Array but can be an object as well.
         options: { default: function _default() {
                 return [];
-            }, type: Array },
+            } },
         selected: { default: null },
         name: { default: '', type: String },
         multiple: { default: false, type: Boolean },
@@ -2024,8 +2025,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
          * selected value will default to option.id, visible label to option.label
          * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
          */
-        valuekey: { default: null, type: String },
-        labelkey: { default: null, type: String },
+        valuekey: { default: 'id', type: String },
+        labelkey: { default: 'label', type: String },
 
         /** Grouped options */
         groupvalues: { default: null, type: String },
@@ -2036,7 +2037,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: function data() {
         return {
             // List of available options
-            values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
+            values: this.parseOptions(this.options),
 
             // Active selected option
             value: []
@@ -2103,6 +2104,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
     },
     methods: {
+        parseOptions: function parseOptions(options) {
+
+            options = this.isJson(options) ? JSON.parse(options) : options;
+
+            // We need an array so if options is given as key:value pairs, we convert them here.
+            if (this.isKeyValuePair(options)) {
+
+                var convertedOptions = [];
+
+                Object.getOwnPropertyNames(options).forEach(function (key) {
+                    convertedOptions.push({
+                        'id': key,
+                        'label': options[key]
+                    });
+                });
+
+                options = convertedOptions;
+                console.log(convertedOptions);
+            }
+
+            return options;
+        },
         resetValue: function resetValue() {
             this.value = this.defaultValue();
         },
@@ -2233,6 +2256,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (value === 0) return false;
             if (Array.isArray(value) && value.length === 0) return true;
             return !value;
+        },
+        isKeyValuePair: function isKeyValuePair(pairs) {
+            if (!this.isObject(pairs)) return false;
+
+            // Check if the values are primitives, which is expected in key value pairs
+            for (var key in Object.getOwnPropertyNames(pairs)) {
+                if (!this.isPrimitive(pairs[key])) return false;
+            }
+
+            return true;
         }
     }
 });

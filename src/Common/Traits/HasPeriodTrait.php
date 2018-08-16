@@ -32,4 +32,16 @@ trait HasPeriodTrait
     {
         return $query->where('start_at', '<', Carbon::now())->where('end_at', '>', Carbon::now());
     }
+
+    public function saveStartAtField($start_at)
+    {
+        $this->start_at = Carbon::parse($start_at);
+        $this->save();
+    }
+
+    public function saveEndAtField($end_at)
+    {
+        $this->end_at = Carbon::parse($end_at);
+        $this->save();
+    }
 }

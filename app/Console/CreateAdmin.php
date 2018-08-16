@@ -14,11 +14,18 @@ class CreateAdmin extends BaseCommand
     {
         $this->settingPermissionsAndRoles();
 
-        $anticipations = $this->getAnticipations();
-
-        $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
+        $anticipations       = $this->getAnticipations();
         $anticipatedLastname = null;
-        $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
+        $firstname           = null;
+        $lastname            = null;
+
+        while(!$firstname){
+            $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
+        }
+        
+        while(!$lastname){
+            $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
+        }
 
         $email = $this->ask('email', str_slug($firstname).'@thinktomorrow.be');
 

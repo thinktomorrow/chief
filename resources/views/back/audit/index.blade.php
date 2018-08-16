@@ -28,7 +28,7 @@
                     {{ $event->description }}
                 </div>
                 <div class="column-3 center-y">
-                    {{ \Thinktomorrow\Chief\Common\Collections\CollectionKeys::fromConfig()->filterByClass($event->subject_type)->toCollectionDetail()->singular }}
+                    {{ ucfirst(\Thinktomorrow\Chief\Common\Collections\CollectionKeys::fromConfig()->filterByClass($event->subject_type)->toCollectionDetail()->singular) }}
                 </div>
                 <div class="column-3 center-y">
                     <a href="{{route('chief.back.audit.show', $event->causer_id)}}">{{ $event->causer->fullname }}</a>
