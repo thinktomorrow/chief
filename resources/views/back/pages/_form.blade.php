@@ -82,16 +82,18 @@
             ?>
 
             @include($viewPath, [
-                'group' => $media['type'],
-                'files' => $images[$media['type']],
-                'label' => $media['label'],
+                'group'       => $media['type'],
+                'files'       => $images[$media['type']],
+                'label'       => $media['label'],
                 'description' => $media['description'],
+                'multiple'    => $media['multiple'] ?? true
             ])
         @endforeach
 
         <div class="stack clearfix">
             <a href="#builder" class="btn btn-o-primary left">Vorige</a>
-            <a href="#modules" class="btn btn-o-primary right">volgende</a>        </div>
+            <a href="#modules" class="btn btn-o-primary right">volgende</a>        
+        </div>
     </tab>
 
     <tab name="Eigen modules" id="modules">

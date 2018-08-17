@@ -37,6 +37,7 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
+
         $this->assertTrue($page->hasFile(MediaType::HERO));
         $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
     }
@@ -98,11 +99,11 @@ class UploadMediaTest extends TestCase
         $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
 
         // Remove asset
-        $this->asAdmin()
+        $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
-                        'remove' => [
+                        'delete' => [
                             $page->getAllFiles(MediaType::HERO)->first()->id,
                         ]
                     ]
