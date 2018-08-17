@@ -30,7 +30,8 @@ class CustomFieldsTest extends TestCase
         $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
 
         // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {})->name('pages.show');
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
 
@@ -66,5 +67,4 @@ class CustomFieldsTest extends TestCase
         $this->assertEquals($category1->id, $this->page->categories[0]->id);
         $this->assertEquals($category3->id, $this->page->categories[1]->id);
     }
-
 }

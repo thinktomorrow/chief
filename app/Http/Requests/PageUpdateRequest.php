@@ -49,17 +49,13 @@ class PageUpdateRequest extends FormRequest
         }
 
         $data = $this->instance()->all();
-        if(isset($data['files']))
-        {
-            foreach($data['files'] as $key => $files)
-            {
-                if(isset($files['new']))
-                {
-                    foreach($files['new'] as $index => $file)
-                    {
-                        if($file instanceof UploadedFile) {
+        if (isset($data['files'])) {
+            foreach ($data['files'] as $key => $files) {
+                if (isset($files['new'])) {
+                    foreach ($files['new'] as $index => $file) {
+                        if ($file instanceof UploadedFile) {
                             $rules['files.'.$key.'.new.'.$index] = 'max:10000';
-                        }else{
+                        } else {
                             $rules['filessize.'.$key.'.new.'.$index] = 'accepted';
                         }
                     }
@@ -73,17 +69,13 @@ class PageUpdateRequest extends FormRequest
     {
         $data = $this->all();
 
-        if(isset($data['files']))
-        {
-            foreach($data['files'] as $key => $files)
-            {
-                if(isset($files['new']))
-                {
-                    foreach($files['new'] as $index => $file)
-                    {
-                        if(!$file instanceof UploadedFile && (json_decode($data['files'][$key]['new'][$index])->input->size / 1024 / 1024) > 10) {
+        if (isset($data['files'])) {
+            foreach ($data['files'] as $key => $files) {
+                if (isset($files['new'])) {
+                    foreach ($files['new'] as $index => $file) {
+                        if (!$file instanceof UploadedFile && (json_decode($data['files'][$key]['new'][$index])->input->size / 1024 / 1024) > 10) {
                             $data['filessize'][$key]['new'][$index] = false;
-                        }else{
+                        } else {
                             $data['filessize'][$key]['new'][$index] = true;
                         }
                     }
