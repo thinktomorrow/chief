@@ -9,7 +9,7 @@
         >
         </chief-multiselect>
     @elseif($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::DATE)
-        <input type="datetime-local" class="input inset-s" id="custom_fields-{{ $key }}" name="custom_fields[{{ $key }}]" value="{{ old('custom_fields.' . $key, $model->$key->format('Y-m-d\TH:i:s')) }}">
+        <input type="datetime-local" class="input inset-s" id="custom_fields-{{ $key }}" name="custom_fields[{{ $key }}]" value="{{ old('custom_fields.' . $key, optional($model->$key)->format('Y-m-d\TH:i:s')) }}">
     @else
         <input type="text" name="custom_fields[{{ $key }}]" id="custom_fields-{{ $key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('custom_fields.' . $key, $model->$key) }}">
     @endif
