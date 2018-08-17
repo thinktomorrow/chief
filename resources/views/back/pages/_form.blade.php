@@ -1,18 +1,20 @@
 <tabs>
-    <tab name="Pagina" id="builder">
-        <section class="formgroup stack">
-            <h2>Pagina inhoud</h2>
-            <page-builder
-                    :locales='@json($page->availableLocales())'
-                    :default-sections='@json($sections)'
-                    :modules='@json($relations)'>
-            </page-builder>
-        </section>
+    @if($page->hasPagebuilder())
+        <tab name="Pagina" id="builder">
+            <section class="formgroup stack">
+                <h2>Pagina inhoud</h2>
+                <page-builder
+                        :locales='@json($page->availableLocales())'
+                        :default-sections='@json($sections)'
+                        :modules='@json($relations)'>
+                </page-builder>
+            </section>
 
-        <div class="stack clearfix">
-            <a href="#inhoud" class="btn btn-o-primary right">volgende</a>
-        </div>
-    </tab>
+            <div class="stack clearfix">
+                <a href="#inhoud" class="btn btn-o-primary right">volgende</a>
+            </div>
+        </tab>
+    @endif
     <tab name="Inhoud" id="inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
