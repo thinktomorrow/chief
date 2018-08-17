@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Traits\HasPeriodTrait;
+use Thinktomorrow\Chief\Common\Traits\HasPeriod\HasPeriodTrait;
 
 class AgendaPageFake extends Page
 {
