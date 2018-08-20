@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Menu;
 use Vine\NodeCollection;
 use Vine\Node;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\DB;
 
 class ChiefMenu
 {
@@ -16,7 +17,14 @@ class ChiefMenu
         $this->collection = $collection;
     }
 
-    public static function fromMenuItems()
+    public static function forType($type = "main")
+    {
+        $items = MenuItem::where('menu_type', $type)->get();
+
+        return self::fromArray($items->toArray());
+    }
+
+    public static function fromMenuItems($type = 'main')
     {
         $collection = NodeCollection::fromSource(new MenuItem());
 
@@ -62,5 +70,12 @@ class ChiefMenu
         });
 
         return $menuitems;
+    }
+
+    public static function getTypes()
+    {
+        $types = DB::table('menu_items')->select('menu_type')->groupBy('menu_type')->get();
+
+        return $types;
     }
 }

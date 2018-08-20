@@ -18,6 +18,7 @@ class CreateMenuTable extends Migration
             $table->unsignedInteger('parent_id')->nullable();
             $table->enum('type', ['collection', 'internal', 'custom', 'nolink'])->default('custom');
             $table->string('collection_type')->nullable();
+            $table->string('menu_type')->default('main');
             $table->boolean('hidden_in_menu')->default(false);
             $table->unsignedInteger('page_id')->nullable();
             $table->integer('order')->default(0);

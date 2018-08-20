@@ -19,9 +19,16 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $menu = ChiefMenu::fromMenuItems()->items();
+        $menu = ChiefMenu::getTypes();
 
         return view('chief::back.menu.index', compact('menu'));
+    }
+
+    public function show($type)
+    {
+        $menu = ChiefMenu::forType($type)->items();
+
+        return view('chief::back.menu.show', compact('menu'));
     }
 
     /**
@@ -86,13 +93,7 @@ class MenuController extends Controller
             return $page->hidden_in_menu == true;
         }))->toArray();
 
-        return view('chief::back.menu.edit', [
-            'menuitem'         => $menuitem,
-            'pages'            => $pages,
-            'collections'      => $collections,
-            'internal_page_id' => $internal_page_id,
-            'parents'          => $menuitems,
-        ]);
+        
     }
 
     /**

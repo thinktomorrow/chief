@@ -19,26 +19,40 @@
             <div class="column center-y">
                 <strong>Label</strong>
             </div>
-            {{-- <div class="column-4 center-y">
+            <div class="column-4 center-y">
                 <strong>Link</strong>
-            </div> --}}
+            </div>
             <div class="column-2"></div>
         </div>
         @foreach($menu as $menuitem)
 
-        <div class="row bg-white inset panel panel-default stack">
-            <div class="column-9">
-                    <a class="text-black bold" href="{{ route('chief.back.pages.edit',$menuitem->menu_type) }}">
-                        {{ $menuitem->menu_type }}
-                    </a>
-                    {{-- <div>
-                        <span class="text-subtle">Laatst aangepast op {{ $page->updated_at->format('d/m/Y') }}</span>
+            <hr class="separator stack-s">
+
+            @include('chief::back.menu._partials._rowitem', ['item' => $menuitem])
+
+            <div class="stack-s">
+
+                @foreach($menuitem->children as $child)
+
+                    @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
+
+                    <div class="stack-xs">
+
+                        @foreach($child->children as $subchild)
+
+                            @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
+
+                            @foreach($child->children as $subchild)
+                                @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
+                            @endforeach
+
+                        @endforeach
+
                     </div>
-                    <div class="stack-s font-s">
-                        {{ teaser($page->content,250,'...') }}
-                    </div> --}}
+
+                @endforeach
+
             </div>
-        </div>
 
         @endforeach
     </div>

@@ -24,13 +24,14 @@ class MenuTest extends TestCase
         $this->setUpDatabase();
 
         $this->app['config']->set('thinktomorrow.chief.collections', [
-            'singles' => Single::class,
+            'singles'  => Single::class,
             'articles' => ArticlePageFake::class,
         ]);
 
         // We expect to have frontend routes for the pages and articles
         Route::get('statics/{slug}', function () {
         })->name('pages.show');
+
         Route::get('articles/{slug}', function () {
         })->name('articles.show');
 
@@ -255,5 +256,34 @@ class MenuTest extends TestCase
         $pages = $this->getResponseData($response, 'pages');
 
         $this->assertCount(1, $pages);
+    }
+
+    /** @test */
+    public function it_can_get_menu_by_type()
+    {
+        $page   = factory(Page::class)->create([
+            'slug'      => 'foobar',
+            'published' => 1
+        ]);
+
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id, 'menu_type' => 'main']);
+        
+        MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
+        
+        $collection = ChiefMenu::forType('main')->items();
+        $this->assertEquals($second->id, $collection->find('page_id', $page->id)->id);
+        $this->assertEquals(2, $collection->total());
+    }
+
+    /** @test */
+    public function it_can_get_all_menu_types()
+    {
+        MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);
+        MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id, 'menu_type' => 'main']);
+        
+        MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
+
+        $this->assertEquals(2, ChiefMenu::getTypes());
     }
 }
