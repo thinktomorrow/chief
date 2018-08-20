@@ -9,8 +9,8 @@
             :hide-selected="multiple"
             :close-on-select="!multiple"
 
-            :label="labelkey"
-            :track-by="valuekey"
+            :label="realLabelKey"
+            :track-by="realValueKey"
 
             :group-label="grouplabel"
             :group-values="groupvalues"
@@ -69,9 +69,13 @@
             return {
                 // List of available options
                 values: this.parseOptions(this.options),
+                // values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
                 // Active selected option
                 value: [],
+
+                realValueKey: this.valuekey,
+                realLabelKey: this.labelkey
             }
         },
         computed: {
@@ -135,7 +139,6 @@
         },
         methods: {
             parseOptions(options){
-
                 options = this.isJson(options) ? JSON.parse(options) : options;
 
                 // We need an array so if options is given as key:value pairs, we convert them here.
@@ -149,9 +152,21 @@
                             'label' : options[key]
                         })
 ;                    });
+                    options = convertedOptions;
+                }
+
+                // If array is a list of primitive values, we convert them to a uniform object with value and label props.
+                else if(this.isSingleValueListing(options)) {
+                    let convertedOptions = [];
+
+                    options.forEach((value) => {
+                        convertedOptions.push({
+                            'id' : value,
+                            'label' : value
+                        })
+                    });
 
                     options = convertedOptions;
-                    console.log(convertedOptions);
                 }
 
                 return options;
@@ -289,12 +304,29 @@
                 if (Array.isArray(value) && value.length === 0) return true;
                 return !value;
             },
+            isSingleValueListing(options)
+            {
+                if(!this.isArray(options) || typeof options[0] == "undefined") return false;
+
+                if(! this.isPrimitive(options[0])) return false;
+
+                return true;
+            },
             isKeyValuePair(pairs)
             {
                 if(!this.isObject(pairs)) return false;
 
-                // Check if the values are primitives, which is expected in key value pairs
-                for(let key in Object.getOwnPropertyNames(pairs)){
+                // Check if the values are primitives, which is expected in key value pairs,
+                // also we except the first key to not be 0
+                const propertyKeys = Object.getOwnPropertyNames(pairs);
+                for(let k in propertyKeys){
+
+                    const key = propertyKeys[k];
+
+                    if(parseInt(key) === 0){
+                        return false;
+                    }
+
                     if( ! this.isPrimitive(pairs[key]) ) return false;
                 }
 

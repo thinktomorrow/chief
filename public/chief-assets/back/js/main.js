@@ -2038,9 +2038,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return {
             // List of available options
             values: this.parseOptions(this.options),
+            // values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
             // Active selected option
-            value: []
+            value: [],
+
+            realValueKey: this.valuekey,
+            realLabelKey: this.labelkey
         };
     },
 
@@ -2105,7 +2109,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     methods: {
         parseOptions: function parseOptions(options) {
-
             options = this.isJson(options) ? JSON.parse(options) : options;
 
             // We need an array so if options is given as key:value pairs, we convert them here.
@@ -2119,10 +2122,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                         'label': options[key]
                     });
                 });
-
                 options = convertedOptions;
-                console.log(convertedOptions);
             }
+
+            // If array is a list of primitive values, we convert them to a uniform object with value and label props.
+            else if (this.isSingleValueListing(options)) {
+                    var _convertedOptions = [];
+
+                    options.forEach(function (value) {
+                        _convertedOptions.push({
+                            'id': value,
+                            'label': value
+                        });
+                    });
+
+                    options = _convertedOptions;
+                }
 
             return options;
         },
@@ -2257,11 +2272,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (Array.isArray(value) && value.length === 0) return true;
             return !value;
         },
+        isSingleValueListing: function isSingleValueListing(options) {
+            if (!this.isArray(options) || typeof options[0] == "undefined") return false;
+
+            if (!this.isPrimitive(options[0])) return false;
+
+            return true;
+        },
         isKeyValuePair: function isKeyValuePair(pairs) {
             if (!this.isObject(pairs)) return false;
 
-            // Check if the values are primitives, which is expected in key value pairs
-            for (var key in Object.getOwnPropertyNames(pairs)) {
+            // Check if the values are primitives, which is expected in key value pairs,
+            // also we except the first key to not be 0
+            var propertyKeys = Object.getOwnPropertyNames(pairs);
+            for (var k in propertyKeys) {
+
+                var key = propertyKeys[k];
+
+                if (parseInt(key) === 0) {
+                    return false;
+                }
+
                 if (!this.isPrimitive(pairs[key])) return false;
             }
 
@@ -29685,8 +29716,8 @@ var render = function() {
           multiple: _vm.multiple,
           "hide-selected": _vm.multiple,
           "close-on-select": !_vm.multiple,
-          label: _vm.labelkey,
-          "track-by": _vm.valuekey,
+          label: _vm.realLabelKey,
+          "track-by": _vm.realValueKey,
           "group-label": _vm.grouplabel,
           "group-values": _vm.groupvalues,
           placeholder: _vm.placeholder,
