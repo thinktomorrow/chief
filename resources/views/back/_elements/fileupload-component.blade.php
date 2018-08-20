@@ -21,8 +21,8 @@
                 };
             },
             created: function () {
-                this.fileDropArea = document.querySelector('#file-drop-area-' + this.group);
-                this.fileInput = this.fileDropArea.querySelector('input');
+                this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
+                this.fileInput     = this.fileDropArea.querySelector('input');
                 this.fileInputName = this.fileInput.name;
 
                 /**

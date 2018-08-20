@@ -1,18 +1,20 @@
 <tabs>
-    <tab name="Pagina" id="builder">
-        <section class="formgroup stack">
-            <h2>Pagina inhoud</h2>
-            <page-builder
-                    :locales='@json($page->availableLocales())'
-                    :default-sections='@json($sections)'
-                    :modules='@json($relations)'>
-            </page-builder>
-        </section>
+    @if($page->hasPagebuilder())
+        <tab name="Pagina" id="builder">
+            <section class="formgroup stack">
+                <h2>Pagina inhoud</h2>
+                <page-builder
+                        :locales='@json($page->availableLocales())'
+                        :default-sections='@json($sections)'
+                        :modules='@json($relations)'>
+                </page-builder>
+            </section>
 
-        <div class="stack clearfix">
-            <a href="#inhoud" class="btn btn-o-primary right">volgende</a>
-        </div>
-    </tab>
+            <div class="stack clearfix">
+                <a href="#inhoud" class="btn btn-o-primary right">volgende</a>
+            </div>
+        </tab>
+    @endif
     <tab name="Inhoud" id="inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
@@ -82,16 +84,18 @@
             ?>
 
             @include($viewPath, [
-                'group' => $media['type'],
-                'files' => $images[$media['type']],
-                'label' => $media['label'],
+                'group'       => $media['type'],
+                'files'       => $images[$media['type']],
+                'label'       => $media['label'],
                 'description' => $media['description'],
+                'multiple'    => $media['multiple'] ?? true
             ])
         @endforeach
 
         <div class="stack clearfix">
             <a href="#builder" class="btn btn-o-primary left">Vorige</a>
-            <a href="#modules" class="btn btn-o-primary right">volgende</a>        </div>
+            <a href="#modules" class="btn btn-o-primary right">volgende</a>        
+        </div>
     </tab>
 
     <tab name="Eigen modules" id="modules">

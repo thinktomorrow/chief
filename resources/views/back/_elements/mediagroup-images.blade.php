@@ -9,8 +9,8 @@
                 <div id="filegroup-{{ $group }}" :class="{'sorting-mode' : reorder}">
                     <div class="row gutter-s">
                         <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
-                        @dragstart="handleSortingStart"
-                        @dragenter.prevent="handleSortingEnter">
+                            @dragstart="handleSortingStart"
+                            @dragenter.prevent="handleSortingEnter">
                         <slim group="{{ $group }}" :options="{
                             id: item.id,
                             filename: item.filename,
@@ -19,17 +19,16 @@
                             label: 'Drop hier uw afbeelding',
                         }"></slim>
                     </div>
-
-                    <div class="column-3">
+                    <div v-if="{{ json_encode($multiple) }} == true || items.length < 1" class="column-3">
                         <div class="thumb thumb-new" id="file-drop-area-{{ $group }}"
                              :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                              @dragover.prevent="handleDraggingOver"
                              @dragleave.prevent="handleDraggingLeave"
                              @drop.prevent="handleDrop">
                             <!-- allow to click for upload -->
-                            <input v-if="checkSupport" type="file" @change="handleFileSelect" multiple accept="image/*"/>
+                            <input v-if="checkSupport" type="file" @change="handleFileSelect" {{$multiple ? 'multiple' : ''}} accept="image/*"/>
                             <!-- if not supported, a file can still be passed along -->
-                            <input v-else type="file" name="files[{{ $group }}][]" multiple accept="image/*"/>
+                            <input v-else type="file" name="files[{{ $group }}][]" {{$multiple ? 'multiple' : ''}} accept="image/*"/>
                             <span class="icon icon-plus"></span>
                         </div>
                     </div>

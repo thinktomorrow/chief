@@ -45,10 +45,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-    public $table   = "pages";
-    protected $guarded = [];
-    protected $dates   = ['deleted_at'];
-    protected $with    = ['translations'];
+
+    public    $table       = "pages";
+    protected $guarded     = [];
+    protected $dates       = ['deleted_at'];
+    protected $with        = ['translations'];
+    protected $pagebuilder = true;
+
 
     public function __construct(array $attributes = [])
     {
@@ -58,8 +61,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /**
-     * page specific modules. We exclude text modules since they are modules in pure
-     * technical terms and not so much as behaviour element for the admin.
+     * Page specific modules. We exclude text modules since they are modules in pure
+     * technical terms and not so much as behavioural elements for the admin.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -352,5 +355,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         }
 
         return '-';
+    }
+
+    public function hasPagebuilder()
+    {
+        return $this->pagebuilder;
     }
 }
