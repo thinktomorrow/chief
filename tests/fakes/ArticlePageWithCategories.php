@@ -17,7 +17,7 @@ class ArticlePageWithCategories extends Page
     {
         return [
             'custom' => InputField::make(),
-            'categories' => SelectField::make()->options(Category::all()->pluck('title','id')->toArray()),
+            'categories' => SelectField::make()->options(Category::all()->pluck('title', 'id')->toArray()),
 
         ];
     }
@@ -29,7 +29,7 @@ class ArticlePageWithCategories extends Page
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class,'article_category', 'article_id','category_id');
+        return $this->belongsToMany(Category::class, 'article_category', 'article_id', 'category_id');
     }
 
     public static function migrateUp()

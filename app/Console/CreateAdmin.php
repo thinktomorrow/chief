@@ -19,11 +19,11 @@ class CreateAdmin extends BaseCommand
         $firstname           = null;
         $lastname            = null;
 
-        while(!$firstname){
+        while (!$firstname) {
             $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
         }
         
-        while(!$lastname){
+        while (!$lastname) {
             $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
         }
 
