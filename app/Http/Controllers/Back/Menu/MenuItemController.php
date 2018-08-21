@@ -75,11 +75,13 @@ class MenuItemController extends Controller
         // as expected by t9he select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
-            $page = Page::find($menuitem->page_id);
-            $internal_page_id = $page->flatReference()->get();
+            //Archived and deleted pages can no longer be referenced in a menu item
+            if($page = Page::find($menuitem->page_id)){
+                $internal_page_id = $page->flatReference()->get();
+            }
         }
 
-        $menuitems = ChiefMenu::fromMenuItems()->getForSelect($id);
+        $menuitems   = ChiefMenu::fromMenuItems()->getForSelect($id);
         $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->values()->toArray();
 
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
