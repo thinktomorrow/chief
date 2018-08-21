@@ -28,6 +28,6 @@ class MenuController extends Controller
     {
         $menu = ChiefMenu::fromMenuItems($type)->items();
 
-        return view('chief::back.menu.show', compact('menu'));
+        return view('chief::back.menu.show', compact('menu', 'type'));
     }
 }

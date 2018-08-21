@@ -249,7 +249,7 @@ class MenuTest extends TestCase
         ]);
 
         $response = $this->asAdmin()
-            ->get(route('chief.back.menu.create'));
+            ->get(route('chief.back.menuitem.create', 'main'));
 
         $response->assertStatus(200);
 

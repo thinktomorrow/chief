@@ -17,22 +17,16 @@ use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
 class MenuItemController extends Controller
 {
-    public function index()
-    {
-        $menu = ChiefMenu::getTypes();
-        
-        return view('chief::back.menu.index', compact('menu'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function create()
+    public function create($menutype)
     {
-        $menuitem       = new MenuItem;
-        $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
+        $menuitem            = new MenuItem;
+        $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
+        $menuitem->menu_type = $menutype;
         
         $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
 
@@ -57,7 +51,7 @@ class MenuItemController extends Controller
     {
         $menu = app(CreateMenu::class)->handle($request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label . ' is aangemaakt');
+        return redirect()->route('chief.back.menu.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
     /**
@@ -88,7 +82,13 @@ class MenuItemController extends Controller
             return $page->hidden_in_menu == true;
         }))->toArray();
 
-        
+        return view('chief::back.menu.edit', [
+            'menuitem'         => $menuitem,
+            'pages'            => $pages,
+            'collections'      => $collections,
+            'internal_page_id' => $internal_page_id,
+            'parents'          => $menuitems,
+        ]);
     }
 
     /**

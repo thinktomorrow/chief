@@ -25,6 +25,7 @@
             <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
         @endforeach
     @endif
+    <input type="hidden" name="menu_type" value="{{$menuitem->menu_type}}">
 @endchiefformgroup
 
 <section class="formgroup">

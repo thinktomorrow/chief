@@ -1,5 +1,5 @@
 <modal id="delete-menuitem-{{$menuitem->id}}" class="large-modal" title=''>
-    <form id="deleteForm-menuitem-{{$menuitem->id}}" v-cloak action="{{route('chief.back.menu.destroy', $menuitem->id)}}" method="POST">
+    <form id="deleteForm-menuitem-{{$menuitem->id}}" v-cloak action="{{route('chief.back.menuitem.destroy', $menuitem->id)}}" method="POST">
         @method('DELETE')
         @csrf
 

@@ -24,7 +24,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create();
 
-        $response = $this->asAdminWithoutRole()->get(route('chief.back.menu.edit', $menuitem->id));
+        $response = $this->asAdminWithoutRole()->get(route('chief.back.menuitem.edit', $menuitem->id));
         $response->assertStatus(200);
     }
 
@@ -33,7 +33,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create();
 
-        $response = $this->get(route('chief.back.menu.edit', $menuitem->id));
+        $response = $this->get(route('chief.back.menuitem.edit', $menuitem->id));
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
@@ -43,7 +43,7 @@ class UpdateMenuItemTest extends TestCase
         $menuitem = factory(MenuItem::class)->create();
 
         $response = $this->asAdmin()
-            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']));
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
@@ -57,7 +57,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create();
 
-        $response = $this->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar']));
+        $response = $this->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar']));
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'nieuw label', 'trans.nl.url' => null]);
@@ -71,9 +71,9 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->flatReference()->get()]);
 
         $response = $this->asAdminWithoutRole()
-            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
-                'type' => 'internal',
-                'page_id' => $newpage->flatReference()->get(),
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
+                'type'           => 'internal',
+                'page_id'        => $newpage->flatReference()->get(),
                 'trans.nl.label' => 'foobar',
             ]));
 
@@ -91,7 +91,7 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
         $response = $this->asAdminWithoutRole()
-            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menu.index'));
@@ -110,9 +110,9 @@ class UpdateMenuItemTest extends TestCase
         $child = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $response = $this->actingAs($defaultAdmin, 'chief')
-            ->put(route('chief.back.menu.update', $child->id), $this->validParams([
+            ->put(route('chief.back.menuitem.update', $child->id), $this->validParams([
                 'allow_parent' => true,
-                'parent_id' => $parent->id
+                'parent_id'    => $parent->id
             ]));
 
         $response->assertStatus(302);
@@ -123,7 +123,7 @@ class UpdateMenuItemTest extends TestCase
 
         // If item can be set to top level again
         $this->actingAs($defaultAdmin, 'chief')
-            ->put(route('chief.back.menu.update', $child->id), $this->validParams([
+            ->put(route('chief.back.menuitem.update', $child->id), $this->validParams([
                 'allow_parent' => false,
             ]));
 
@@ -138,11 +138,11 @@ class UpdateMenuItemTest extends TestCase
         $defaultAdmin = factory(User::class)->make();
 
         $secondItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 2]);
-        $firstItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 1]);
-        $thirdItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 3]);
+        $firstItem  = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 1]);
+        $thirdItem  = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 3]);
 
         $response = $this->actingAs($defaultAdmin, 'chief')
-            ->put(route('chief.back.menu.update', $secondItem->id), $this->validParams([
+            ->put(route('chief.back.menuitem.update', $secondItem->id), $this->validParams([
                 'order' => 1,
             ]));
 
@@ -159,9 +159,9 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
         $this->asAdminWithoutRole()
-            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
-                'trans.nl.label'      => 'new label',
-                'trans.nl.url'      => 'thinktomorrow.be',
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
+                'trans.nl.label' => 'new label',
+                'trans.nl.url'   => 'thinktomorrow.be',
             ]));
 
         $this->assertEquals('http://thinktomorrow.be', $menuitem->fresh()->url);
@@ -174,7 +174,7 @@ class UpdateMenuItemTest extends TestCase
 
         $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '', 'url:nl' => 'http://google.com']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.update', $menuitem->id),
+            route('chief.back.menuitem.update', $menuitem->id),
             1,
             'put'
         );
@@ -188,7 +188,7 @@ class UpdateMenuItemTest extends TestCase
 
         $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
             route('chief.back.menu.index'),
-            route('chief.back.menu.update', $menuitem->id),
+            route('chief.back.menuitem.update', $menuitem->id),
             1,
             'put'
         );
@@ -203,10 +203,10 @@ class UpdateMenuItemTest extends TestCase
         // Inside our logic the page should be existing. If not, the creation is aborted but we do not
         // show this response to the interface since this is rather a hack then expected behaviour.
         $this->asAdminWithoutRole()
-            ->put(route('chief.back.menu.update', $menuitem->id), $this->validParams([
-                'type' => 'internal',
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
+                'type'           => 'internal',
                 'trans.nl.label' => 'updated label',
-                'page_id' => Single::class.'@999' // Fake page reference
+                'page_id'        => Single::class.'@999'  // Fake page reference
             ]));
 
         // Assert our values are still the same
@@ -216,13 +216,13 @@ class UpdateMenuItemTest extends TestCase
     private function validParams($overrides = [])
     {
         $params = [
-            'type' => 'custom',
-            'allow_parent' => false, // flag to allow nesting or not
-            'parent_id' => null,
-            'trans' => [
+            'type'         => 'custom',
+            'allow_parent' => false,      // flag to allow nesting or not
+            'parent_id'    => null,
+            'trans'        => [
                 'nl' => [
                     'label' => 'nieuw label',
-                    'url' => 'http://google.com',
+                    'url'   => 'http://google.com',
                 ]
             ],
         ];
