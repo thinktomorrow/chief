@@ -9,7 +9,7 @@
             {{ $item->label }}
         @else
             <a href="{{ route('chief.back.menu.edit', $item->id) }}">{{ $item->label }}</a>
-            @if($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_COLLECTION)
+            @if($item->collection_type)
                 &nbsp;<em class="text-subtle">pagina groep</em>
             @endif
         @endif
@@ -20,17 +20,13 @@
             <a class="label label--primary" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
         @elseif($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_NOLINK)
             -
-        @elseif($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_COLLECTION)
-
         @else
             <a class="text-subtle" href="{{ $item->url }}" target="_blank">{{ $item->url }}</a>
         @endif
     </div>
 
     <div class="column-2 text-right">
-        @if($item->auto_generated)
-
-        @else
+        @if( ! $item->auto_generated)
             <a href="{{ route('chief.back.menu.edit', $item->id) }}" class="">Aanpassen</a>
         @endif
 

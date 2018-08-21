@@ -3,8 +3,7 @@
 @section('page-title','Voeg nieuw menu-item toe')
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Menubeheer.')
-    {{-- <button data-submit-form="createForm" type="button" class="btn btn-primary">Menu-item toevoegen</button> --}}
+    @slot('title', 'Menu overzicht')
     <div class="inline-group-s">
         <a href="{{ route('chief.back.menu.create') }}" class="btn btn-primary">
             <i class="icon icon-plus"></i>

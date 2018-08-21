@@ -4,6 +4,9 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu item bewerken.')
+    @slot('subtitle')
+        <a class="center-y" href="{{ route('chief.back.menu.index') }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+    @endslot
         <form action="{{route('chief.back.menu.destroy', $menuitem->id)}}" method="POST">
             {{ method_field('DELETE') }}
             {{ csrf_field() }}
