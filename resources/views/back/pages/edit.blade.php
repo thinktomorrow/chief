@@ -35,11 +35,6 @@
 
         </form>
 
-        @include('chief::back.modules._partials.create-modal', [
-           'collections' => $module_collections,
-           'page_id' => $page->id,
-       ])
-
         @foreach($page->modules as $module)
             @include('chief::back.modules._partials.delete-modal', [
                 'module' => $module
