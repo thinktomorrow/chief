@@ -67,6 +67,18 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     }
 
     /**
+     * Each page / Module model can expose some custom fields. Add here the list of fields defined as name => Field where Field
+     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     *
+     * @param null $key
+     * @return array
+     */
+    public function customFields()
+    {
+        return [];
+    }
+
+    /**
      * Each module model can expose the managed translatable fields. These should be included as attributes just like the regular
      * translatable attributes. This method allows for easy installation of the form fields in chief.
      *
@@ -121,23 +133,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
             ->filterByType(static::collectionType())
             ->rejectByClass(TextModule::class)
             ->toCollectionDetails();
-    }
-
-    /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
-     */
-    public function collectionDetails(): CollectionDetails
-    {
-        $collectionKey = $this->collectionKey();
-
-        return new CollectionDetails(
-            $collectionKey,
-            static::class,
-            $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
-            $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
-            $this->flatReferenceLabel()
-        );
     }
 
     public function mediaUrls($type = null, $size = 'full'): Collection
