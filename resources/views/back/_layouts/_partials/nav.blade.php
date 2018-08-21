@@ -9,9 +9,16 @@
                     <dropdown>
                         <span class="center-y nav-item {{ isActiveUrl('admin/pages*') ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Pagina's</span>
                         <div v-cloak class="dropdown-box inset-s">
-                            @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections() as $key => $collection)
+                            @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections()->reject(function($page, $key){ return $key == 'singles'; }) as $key => $collection)
                                 <a class="block squished --link-with-bg {{ isActiveUrl('admin/pages/'.$key.'*') ? 'active' : '' }}" href="{{ route('chief.back.pages.index',['collection' => $key]) }}">{{ ucfirst($collection->plural) }}</a>
                             @endforeach
+
+                            <hr>
+
+                            @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections()->filter(function($page, $key){ return $key == 'singles'; }) as $key => $collection)
+                                <a class="block squished --link-with-bg {{ isActiveUrl('admin/pages/'.$key.'*') ? 'active' : '' }}" href="{{ route('chief.back.pages.index',['collection' => $key]) }}">{{ ucfirst($collection->plural) }}</a>
+                            @endforeach
+
                         </div>
                     </dropdown>
                 </li>
