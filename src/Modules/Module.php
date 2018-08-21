@@ -45,6 +45,13 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+
+        parent::__construct($attributes);
+    }
+
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
