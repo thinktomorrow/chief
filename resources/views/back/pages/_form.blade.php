@@ -51,8 +51,9 @@
                     </div>
                     <div class="formgroup-input column-8">
                         @include('chief::back._elements.customfield', [
-                            'key' => $key,
+                            'key'   => $key,
                             'field' => $field,
+                            'model' => $page
                         ])
                     </div>
                 </section>
