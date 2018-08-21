@@ -271,7 +271,7 @@ class MenuTest extends TestCase
         
         MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
         
-        $collection = ChiefMenu::forType('main')->items();
+        $collection = ChiefMenu::fromMenuItems('main')->items();
         $this->assertEquals($second->id, $collection->find('page_id', $page->id)->id);
         $this->assertEquals(2, $collection->total());
     }
@@ -279,11 +279,6 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_get_all_menu_types()
     {
-        MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);
-        MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id, 'menu_type' => 'main']);
-        
-        MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
-
-        $this->assertEquals(2, ChiefMenu::getTypes());
+        $this->assertCount(1, ChiefMenu::getTypes());
     }
 }

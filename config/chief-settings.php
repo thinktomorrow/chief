@@ -8,4 +8,10 @@ return [
      */
     'homepage_id' => null,
 
+    'menutypes' => [
+        'main' => [
+            'label' => 'main',
+            'view'  => 'front.menu.main'
+        ]
+    ]
 ];

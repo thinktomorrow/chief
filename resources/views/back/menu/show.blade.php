@@ -6,7 +6,7 @@
     @slot('title', 'Menubeheer.')
     {{-- <button data-submit-form="createForm" type="button" class="btn btn-primary">Menu-item toevoegen</button> --}}
     <div class="inline-group-s">
-        <a href="{{ route('chief.back.menu.create') }}" class="btn btn-primary">
+        <a href="{{ route('chief.back.menuitem.create') }}" class="btn btn-primary">
             <i class="icon icon-plus"></i>
             Voeg een menu-item toe
         </a>

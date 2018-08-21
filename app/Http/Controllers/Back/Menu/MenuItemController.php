@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -15,20 +15,13 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
-class MenuController extends Controller
+class MenuItemController extends Controller
 {
     public function index()
     {
         $menu = ChiefMenu::getTypes();
-
+        
         return view('chief::back.menu.index', compact('menu'));
-    }
-
-    public function show($type)
-    {
-        $menu = ChiefMenu::forType($type)->items();
-
-        return view('chief::back.menu.show', compact('menu'));
     }
 
     /**

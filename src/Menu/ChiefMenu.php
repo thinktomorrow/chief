@@ -17,18 +17,11 @@ class ChiefMenu
         $this->collection = $collection;
     }
 
-    public static function forType($type = "main")
-    {
-        $items = MenuItem::where('menu_type', $type)->get();
-
-        return self::fromArray($items->toArray());
-    }
-
     public static function fromMenuItems($type = 'main')
     {
-        $collection = NodeCollection::fromSource(new MenuItem());
+        $items = MenuItem::getNodeEntries($type);
 
-        return new static($collection);
+        return self::fromArray($items);
     }
 
     public static function fromArray(array $items)
@@ -74,8 +67,22 @@ class ChiefMenu
 
     public static function getTypes()
     {
-        $types = DB::table('menu_items')->select('menu_type')->groupBy('menu_type')->get();
+        $types = config('thinktomorrow.chief-settings.menutypes', []);
 
         return $types;
+    }
+
+    public static function renderMenu($type)
+    {
+        $types    = self::getTypes();
+        $viewPath = $types[$type]['view'];
+
+        if (! view()->exists($viewPath)) {
+            $viewpath = 'front._partials.nav';
+        }
+
+        return view($viewPath, [
+            'menu' => self::fromMenuItems($type),
+        ])->render();
     }
 }

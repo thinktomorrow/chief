@@ -8,7 +8,7 @@
         @if($item->auto_generated)
             {{ $item->label }}
         @else
-            <a href="{{ route('chief.back.menu.edit', $item->id) }}">{{ $item->label }}</a>
+            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}">{{ $item->label }}</a>
             @if($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_COLLECTION)
                 &nbsp;<em class="text-subtle">pagina groep</em>
             @endif
@@ -28,10 +28,8 @@
     </div>
 
     <div class="column-2 text-right">
-        @if($item->auto_generated)
-
-        @else
-            <a href="{{ route('chief.back.menu.edit', $item->id) }}" class="">Aanpassen</a>
+        @if(!$item->auto_generated)
+            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="">Aanpassen</a>
         @endif
 
     </div>

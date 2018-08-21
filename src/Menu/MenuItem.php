@@ -114,6 +114,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
                         'url'        => $this->composePageUrl($item, $page),
                         'parent_id'  => $item->id,
                         'type'       => 'auto_generated',
+                        'menu_type'  => $item->menu_type
                     ]));
                 });
             }
@@ -133,7 +134,48 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         return array_merge($items->all(), $collectionItems->all());
     }
 
-    private function composePageUrl(MenuItem $item, Page $page)
+    public static function getNodeEntries($type = 'main'): array
+    {
+        $items           = static::where('menu_type', $type)->get();
+        $collectionItems = collect([]);
+
+        // Expose the collection items and populate them with the collection data
+        foreach ($items as $k => $item) {
+
+            // Fetch the collection items
+            if ($item->ofType(static::TYPE_COLLECTION)) {
+                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
+
+                $pages->reject(function ($page) {
+                    return $page->hidden_in_menu == true;
+                })->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
+                    $collectionItems->push(MenuItem::make([
+                        'id'         => 1000 . $item->id . $page->id, // Unique integer identifier since model->id is automatically casted to int.
+                        'label'      => $page->menuLabel(),
+                        'url'        => self::composePageUrl($item, $page),
+                        'parent_id'  => $item->id,
+                        'type'       => 'auto_generated',
+                        'menu_type'  => $item->menu_type
+                    ]));
+                });
+            }
+
+            // Fetch the urls of the internal links
+            if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
+                if ($page->hidden_in_menu == true) {
+                    unset($items[$k]);
+                } else {
+                    $item->url = self::composePageUrl($item, $page);
+                    $item->page_label = $page->menuLabel();
+                    $items[$k] = $item;
+                }
+            }
+        }
+
+        return array_merge($items->all(), $collectionItems->all());
+    }
+
+    private static function composePageUrl(MenuItem $item, Page $page)
     {
         return $page->menuUrl();
     }
