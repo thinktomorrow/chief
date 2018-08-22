@@ -70,5 +70,6 @@
         'files' => $images[$media['type']],
         'label' => $media['label'],
         'description' => $media['description'],
+        'multiple'    => $media['multiple'] ?? true
     ])
 @endforeach
