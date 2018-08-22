@@ -25,7 +25,7 @@ class DeleteMenuItemTest extends TestCase
             ->delete(route('chief.back.menuitem.destroy', $menuitem->id));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menuType()));
 
         $this->assertCount(0, MenuItem::all());
     }

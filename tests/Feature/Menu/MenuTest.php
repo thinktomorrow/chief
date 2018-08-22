@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
@@ -279,6 +280,6 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_get_all_menu_types()
     {
-        $this->assertCount(1, ChiefMenu::getTypes());
+        $this->assertCount(1, Menu::all());
     }
 }

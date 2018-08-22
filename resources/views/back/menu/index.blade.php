@@ -4,38 +4,24 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu overzicht')
-    {{-- <div class="inline-group-s">
-        <a href="{{ route('chief.back.menu.create') }}" class="btn btn-primary">
-            <i class="icon icon-plus"></i>
-            Voeg een menu-item toe
-        </a>
-    </div> --}}
 @endcomponent
 
 @section('content')
-    <div class="treeview stack-l">
-        <div class="row">
-            <div class="column center-y">
-                <strong>Label</strong>
-            </div>
-            {{-- <div class="column-4 center-y">
-                <strong>Link</strong>
-            </div> --}}
-            <div class="column-2"></div>
-        </div>
-        @foreach($menu as $key => $menuitem)
+    <div class="stack-l">
+        @foreach($menus as $menu)
 
             <div class="row bg-white inset panel panel-default stack">
                 <div class="column-9">
-                        <a class="text-black bold" href="{{ route('chief.back.menu.show', $key) }}">
-                            {{ $menuitem['label'] }}
-                        </a>
-                        {{-- <div>
-                            <span class="text-subtle">Laatst aangepast op {{ $page->updated_at->format('d/m/Y') }}</span>
+                    <a class="text-black bold" href="{{ route('chief.back.menus.show', $menu->key()) }}">
+                        {{ $menu->label() }}
+                    </a>
+                </div>
+                <div class="column-3 text-right">
+                    <options-dropdown class="inline-block">
+                        <div class="inset-s" v-cloak>
+                            <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="block squished-s --link-with-bg">Beheren</a>
                         </div>
-                        <div class="stack-s font-s">
-                            {{ teaser($page->content,250,'...') }}
-                        </div> --}}
+                    </options-dropdown>
                 </div>
             </div>
         @endforeach

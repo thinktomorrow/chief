@@ -46,7 +46,7 @@ class UpdateMenuItemTest extends TestCase
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.index'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']);
@@ -78,7 +78,7 @@ class UpdateMenuItemTest extends TestCase
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.index'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.label' => 'foobar', 'page_id' => $newpage->id]);
@@ -94,7 +94,7 @@ class UpdateMenuItemTest extends TestCase
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.index'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']);
@@ -116,7 +116,7 @@ class UpdateMenuItemTest extends TestCase
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.index'));
 
         $this->assertCount(1, $parent->fresh()->children);
         $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
@@ -173,7 +173,7 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '', 'url:nl' => 'http://google.com']),
-            route('chief.back.menu.index'),
+            route('chief.back.menus.index'),
             route('chief.back.menuitem.update', $menuitem->id),
             1,
             'put'
@@ -187,7 +187,7 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->flatReference()->get()]);
 
         $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
-            route('chief.back.menu.index'),
+            route('chief.back.menus.index'),
             route('chief.back.menuitem.update', $menuitem->id),
             1,
             'put'

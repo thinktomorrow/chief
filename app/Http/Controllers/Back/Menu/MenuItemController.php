@@ -27,8 +27,8 @@ class MenuItemController extends Controller
         $menuitem            = new MenuItem;
         $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
-        
-        $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
+
+        $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
 
         $collections = CollectionKeys::fromConfig()
             ->filterByType('pages')
@@ -59,7 +59,7 @@ class MenuItemController extends Controller
     {
         $menu = app(CreateMenu::class)->handle($request);
 
-        return redirect()->route('chief.back.menu.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
+        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
     /**
@@ -83,7 +83,7 @@ class MenuItemController extends Controller
             }
         }
 
-        $menuitems   = ChiefMenu::fromMenuItems()->getForSelect($id);
+        $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
         $collections = CollectionKeys::fromConfig()
                                 ->filterByType('pages')
                                 ->rejectByKey('singles')
@@ -118,7 +118,7 @@ class MenuItemController extends Controller
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label .' is aangepast');
+        return redirect()->route('chief.back.menus.index')->with('messages.success', $menu->label .' is aangepast');
     }
 
     /**
@@ -129,12 +129,12 @@ class MenuItemController extends Controller
      */
     public function destroy($id)
     {
-        $menu = app(DeleteMenu::class)->handle($id);
+        $menuItem = app(DeleteMenu::class)->handle($id);
 
-        if ($menu) {
+        if ($menuItem) {
             $message = 'Het item werd verwijderd.';
 
-            return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
+            return redirect()->route('chief.back.menus.show', $menuItem->menuType())->with('messages.warning', $message);
         } else {
             return redirect()->back()->with('messages.warning', 'Je menu item is niet verwijderd. Probeer opnieuw');
         }

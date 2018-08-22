@@ -37,6 +37,11 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         return $this->type == $type;
     }
 
+    public function menuType()
+    {
+        return $this->menu_type;
+    }
+
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id')

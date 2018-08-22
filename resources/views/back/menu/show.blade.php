@@ -3,10 +3,15 @@
 @section('page-title','Voeg nieuw menu-item toe')
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Menubeheer.')
-    {{-- <button data-submit-form="createForm" type="button" class="btn btn-primary">Menu-item toevoegen</button> --}}
+    @slot('title', 'Menu ' . $menu->label())
+
+    @if(Thinktomorrow\Chief\Menu\Menu::all()->count() > 1)
+        @slot('subtitle')
+            <a class="center-y" href="{{ route('chief.back.menus.index') }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+        @endslot
+    @endif
     <div class="inline-group-s">
-        <a href="{{ route('chief.back.menuitem.create', $type) }}" class="btn btn-primary">
+        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
             <i class="icon icon-plus"></i>
             Voeg een menu-item toe
         </a>
@@ -24,15 +29,15 @@
             </div>
             <div class="column-2"></div>
         </div>
-        @foreach($menu as $menuitem)
+        @foreach($menuItems as $menuItem)
 
             <hr class="separator stack-s">
 
-            @include('chief::back.menu._partials._rowitem', ['item' => $menuitem])
+            @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
 
             <div class="stack-s">
 
-                @foreach($menuitem->children as $child)
+                @foreach($menuItem->children as $child)
 
                     @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 

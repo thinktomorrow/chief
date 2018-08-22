@@ -8,10 +8,14 @@ return [
      */
     'homepage_id' => null,
 
-    'menutypes' => [
+    /**
+     * Define your menus here. By default there is a generic 'main' menu but you
+     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     */
+    'menus' => [
         'main' => [
-            'label' => 'main',
-            'view'  => 'front.menu.main'
+            'label' => 'Hoofdnavigatie',
+            'view'  => 'front.menus.main'
         ]
     ]
 ];

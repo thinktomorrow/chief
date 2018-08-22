@@ -64,25 +64,4 @@ class ChiefMenu
 
         return $menuitems;
     }
-
-    public static function getTypes()
-    {
-        $types = config('thinktomorrow.chief-settings.menutypes', []);
-
-        return $types;
-    }
-
-    public static function renderMenu($type)
-    {
-        $types    = self::getTypes();
-        $viewPath = $types[$type]['view'];
-
-        if (! view()->exists($viewPath)) {
-            $viewpath = 'front._partials.nav';
-        }
-
-        return view($viewPath, [
-            'menu' => self::fromMenuItems($type),
-        ])->render();
-    }
 }

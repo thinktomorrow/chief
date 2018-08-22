@@ -44,3 +44,9 @@ if (!function_exists('cached_asset')) {
         }
     }
 }
+
+if (!function_exists('chiefmenu')) {
+    function chiefmenu($key = 'main'){
+        return \Thinktomorrow\Chief\Menu\Menu::find($key);
+    }
+}

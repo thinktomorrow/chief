@@ -37,7 +37,7 @@ class CreateMenuItemTest extends TestCase
             ->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.show', 'main'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['trans.nl.url' => 'https://thinktomorrow.be']);
@@ -64,7 +64,7 @@ class CreateMenuItemTest extends TestCase
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.show', 'main'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(2, MenuItem::all());
         $this->assertCount(1, $parent->fresh()->children);
@@ -79,7 +79,7 @@ class CreateMenuItemTest extends TestCase
             ->post(route('chief.back.menuitem.store'), $this->validParams(['type' => 'internal', 'page_id' => $page->flatReference()->get()]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.show', 'main'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.url' => null]);
@@ -98,7 +98,7 @@ class CreateMenuItemTest extends TestCase
                 ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.show', 'main'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), [
@@ -120,7 +120,7 @@ class CreateMenuItemTest extends TestCase
                 ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.show', 'main'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), [
@@ -146,7 +146,7 @@ class CreateMenuItemTest extends TestCase
     public function type_needs_to_be_custom_or_internal()
     {
         $this->assertValidation(new MenuItem(), 'type', $this->validParams(['type' => 'foobar']),
-            route('chief.back.menu.show', 'main'),
+            route('chief.back.menus.show', 'main'),
             route('chief.back.menuitem.store')
         );
     }
@@ -155,7 +155,7 @@ class CreateMenuItemTest extends TestCase
     public function label_is_required()
     {
         $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '']),
-            route('chief.back.menu.show', 'main'),
+            route('chief.back.menus.show', 'main'),
             route('chief.back.menuitem.store')
         );
     }
@@ -164,7 +164,7 @@ class CreateMenuItemTest extends TestCase
     public function type_internal_makes_pageid_required()
     {
         $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
-            route('chief.back.menu.show', 'main'),
+            route('chief.back.menus.show', 'main'),
             route('chief.back.menuitem.store')
         );
     }
