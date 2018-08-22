@@ -38,7 +38,7 @@ class CustomFieldsTest extends TestCase
     /** @test */
     public function it_can_edit_a_page_with_a_custom_field()
     {
-        $this->asAdmin()
+        $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
                 'custom_fields' => [
                     'custom' => 'foobar'

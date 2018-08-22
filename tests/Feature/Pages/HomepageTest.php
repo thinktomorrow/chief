@@ -21,15 +21,15 @@ class HomepageTest extends TestCase
         $this->app['config']->set('thinktomorrow.chief.collections', [
             'articles' => ArticlePageFake::class,
             'products' => ProductPageFake::class,
-            'singles' => Single::class,
+            'singles'  => Single::class,
         ]);
     }
 
     /** @test */
     public function by_default_it_uses_first_published_single_page_as_the_homepage()
     {
-        $article = ArticlePageFake::create();
-        $product = ProductPageFake::create(['published' => 1]);
+        $article  = ArticlePageFake::create();
+        $product  = ProductPageFake::create(['published' => 1]);
         $product2 = ProductPageFake::create();
 
         $this->assertEquals($product->id, Page::guessHomepage()->id);
@@ -47,8 +47,8 @@ class HomepageTest extends TestCase
     /** @test */
     public function it_guesses_the_homepage_if_explicitly_set_in_settings()
     {
-        $article = ArticlePageFake::create();
-        $product = ProductPageFake::create(['published' => 1]);
+        $article  = ArticlePageFake::create();
+        $product  = ProductPageFake::create(['published' => 1]);
         $product2 = ProductPageFake::create(['published' => 1]);
 
         $this->app['config']->set('thinktomorrow.chief-settings.homepage_id', $product2->id);

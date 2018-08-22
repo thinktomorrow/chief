@@ -50,9 +50,10 @@
                         @endif
                     </div>
                     <div class="formgroup-input column-8">
-                        @include('chief::back._elements.customfield', [
-                            'key' => $key,
+                        @include('chief::back._fields.customfield', [
+                            'key'   => $key,
                             'field' => $field,
+                            'model' => $page
                         ])
                     </div>
                 </section>
@@ -60,18 +61,26 @@
         @endif
 
         @if(count($page->translatableFields()) > 0)
-            <section class="row formgroup stack gutter-l">
-                <div class="column-4">
-                    <h2 class="formgroup-label">Inhoud</h2>
-                    <p>Deze titel en inhoud wordt weergegeven als je dit {{ $page->collectionDetails()->singular }} koppelt als module aan een pagina </p>
-                </div>
-                <div class="formgroup-input column-8">
-                    @include('chief::back._elements.translatable_fieldgroups', [
-                        'model' => $page,
-                    ])
-                </div>
-            </section>
+            @foreach($page->translatableFields() as $key => $field)
+                <section class="row formgroup stack gutter-l">
+                    <div class="column-4">
+                        @if($field->label)
+                            <h2 class="formgroup-label">{{ $field->label }}</h2>
+                        @endif
+
+                        @if($field->description)
+                            <p>{{ $field->description }}</p>
+                        @endif
+                    </div>
+                    <div class="formgroup-input column-8">
+                        @include('chief::back._fields.translatable_formgroup', [
+                            'model' => $page
+                        ])
+                    </div>
+                </section>
+            @endforeach
         @endif
+
 
         @foreach($page->mediaFields() as $media)
 

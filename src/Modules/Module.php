@@ -45,6 +45,13 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+
+        parent::__construct($attributes);
+    }
+
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
@@ -64,6 +71,18 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public function isPageSpecific(): bool
     {
         return !is_null($this->page_id);
+    }
+
+    /**
+     * Each page / Module model can expose some custom fields. Add here the list of fields defined as name => Field where Field
+     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     *
+     * @param null $key
+     * @return array
+     */
+    public function customFields()
+    {
+        return [];
     }
 
     /**
@@ -121,23 +140,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
             ->filterByType(static::collectionType())
             ->rejectByClass(TextModule::class)
             ->toCollectionDetails();
-    }
-
-    /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
-     */
-    public function collectionDetails(): CollectionDetails
-    {
-        $collectionKey = $this->collectionKey();
-
-        return new CollectionDetails(
-            $collectionKey,
-            static::class,
-            $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
-            $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
-            $this->flatReferenceLabel()
-        );
     }
 
     public function mediaUrls($type = null, $size = 'full'): Collection

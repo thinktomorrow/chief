@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\Common\Audit\Audit;
+use Illuminate\Support\Carbon;
 
 class UpdatePage
 {
@@ -20,7 +21,7 @@ class UpdatePage
         try {
             DB::beginTransaction();
 
-            $page = Page::findOrFail($id);
+            $page           = Page::findOrFail($id);
 
             $this->savePageTranslations($page, $translations);
 

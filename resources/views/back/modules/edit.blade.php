@@ -7,6 +7,9 @@
     @slot('title')
         {{ $module->slug }} <span class="text-subtle">{{ $module->collectionDetails()->singular }}</span>
     @endslot
+    @slot('subtitle')
+        <a class="center-y" href="{{ route('chief.back.modules.index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle modules</a>
+    @endslot
     <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
 @endcomponent
 

@@ -136,7 +136,6 @@ class PagesController extends Controller
     public function update(PageUpdateRequest $request, $id)
     {
         $this->authorize('update-page');
-
         $page = app(UpdatePage::class)->handle(
             $id,
             $request->get('sections', []),

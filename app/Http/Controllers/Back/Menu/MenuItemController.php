@@ -30,7 +30,15 @@ class MenuItemController extends Controller
         
         $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
 
-        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->values()->toArray();
+        $collections = CollectionKeys::fromConfig()
+            ->filterByType('pages')
+            ->rejectByKey('singles')
+            ->toCollectionDetails()
+            ->values()
+            ->prepend([
+                'key' => null,
+                'plural' => '...',
+            ])->toArray();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
@@ -76,7 +84,15 @@ class MenuItemController extends Controller
         }
 
         $menuitems   = ChiefMenu::fromMenuItems()->getForSelect($id);
-        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->values()->toArray();
+        $collections = CollectionKeys::fromConfig()
+                                ->filterByType('pages')
+                                ->rejectByKey('singles')
+                                ->toCollectionDetails()
+                                ->values()
+                                ->prepend([
+                                    'key' => null,
+                                    'plural' => '...',
+                                ])->toArray();
 
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;
