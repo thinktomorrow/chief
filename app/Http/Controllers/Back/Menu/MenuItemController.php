@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -15,26 +15,20 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
-class MenuController extends Controller
+class MenuItemController extends Controller
 {
-    public function index()
-    {
-        $menu = ChiefMenu::fromMenuItems()->items();
-
-        return view('chief::back.menu.index', compact('menu'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function create()
+    public function create($menutype)
     {
-        $menuitem       = new MenuItem;
-        $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
-        
-        $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
+        $menuitem            = new MenuItem;
+        $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
+        $menuitem->menu_type = $menutype;
+
+        $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
 
         $collections = CollectionKeys::fromConfig()
             ->filterByType('pages')
@@ -65,7 +59,7 @@ class MenuController extends Controller
     {
         $menu = app(CreateMenu::class)->handle($request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label . ' is aangemaakt');
+        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
     /**
@@ -89,7 +83,7 @@ class MenuController extends Controller
             }
         }
 
-        $menuitems   = ChiefMenu::fromMenuItems()->getForSelect($id);
+        $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
         $collections = CollectionKeys::fromConfig()
                                 ->filterByType('pages')
                                 ->rejectByKey('singles')
@@ -124,7 +118,7 @@ class MenuController extends Controller
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label .' is aangepast');
+        return redirect()->route('chief.back.menus.index')->with('messages.success', $menu->label .' is aangepast');
     }
 
     /**
@@ -135,12 +129,12 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $menu = app(DeleteMenu::class)->handle($id);
+        $menuItem = app(DeleteMenu::class)->handle($id);
 
-        if ($menu) {
+        if ($menuItem) {
             $message = 'Het item werd verwijderd.';
 
-            return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
+            return redirect()->route('chief.back.menus.show', $menuItem->menuType())->with('messages.warning', $message);
         } else {
             return redirect()->back()->with('messages.warning', 'Je menu item is niet verwijderd. Probeer opnieuw');
         }

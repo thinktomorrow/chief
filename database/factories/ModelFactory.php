@@ -32,5 +32,6 @@ $factory->define(MenuItem::class, function (Faker\Generator $faker) {
     return [
         'type'      => 'custom',
         'label:nl'  => 'nieuw label',
+        'menu_type' => 'main'
     ];
 });

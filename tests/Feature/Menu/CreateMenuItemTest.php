@@ -19,14 +19,14 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $response = $this->asAdminWithoutRole()->get(route('chief.back.menu.create'));
+        $response = $this->asAdminWithoutRole()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertStatus(200);
     }
 
     /** @test */
     public function guests_cannot_view_the_create_form()
     {
-        $response = $this->get(route('chief.back.menu.create'));
+        $response = $this->get(route('chief.back.menuitem.create', 'main'));
         $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
     }
 
@@ -34,10 +34,10 @@ class CreateMenuItemTest extends TestCase
     public function creating_a_new_menuItem()
     {
         $response = $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
+            ->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['trans.nl.url' => 'https://thinktomorrow.be']);
@@ -46,25 +46,25 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_menuItem()
     {
-        $response = $this->post(route('chief.back.menu.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
+        $response = $this->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, MenuItem::all());
     }
 
     /** @test */
-    public function an_menuitem_can_be_nested()
+    public function a_menuitem_can_be_nested()
     {
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
         $response = $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams([
+            ->post(route('chief.back.menuitem.store'), $this->validParams([
                 'allow_parent' => true,
                 'parent_id' => $parent->id
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(2, MenuItem::all());
         $this->assertCount(1, $parent->fresh()->children);
@@ -76,10 +76,10 @@ class CreateMenuItemTest extends TestCase
     {
         $page = factory(Page::class)->create();
         $response = $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams(['type' => 'internal', 'page_id' => $page->flatReference()->get()]));
+            ->post(route('chief.back.menuitem.store'), $this->validParams(['type' => 'internal', 'page_id' => $page->flatReference()->get()]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.url' => null]);
@@ -89,7 +89,7 @@ class CreateMenuItemTest extends TestCase
     public function creating_a_new_custom_menuItem()
     {
         $response = $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams([
+            ->post(route('chief.back.menuitem.store'), $this->validParams([
                     'type'              => 'custom',
                     'trans.nl.label'    => 'nieuw label',
                     'trans.nl.url'      => 'https://thinktomorrow.be',
@@ -98,7 +98,7 @@ class CreateMenuItemTest extends TestCase
                 ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), [
@@ -113,14 +113,14 @@ class CreateMenuItemTest extends TestCase
     public function create_custom_without_link()
     {
         $response = $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams([
+            ->post(route('chief.back.menuitem.store'), $this->validParams([
                     'type'              => 'custom',
                     'trans.nl.label'    => 'nieuw label',
                     'trans.en.label'    => 'new label',
                 ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', 'main'));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), [
@@ -133,7 +133,7 @@ class CreateMenuItemTest extends TestCase
     public function url_field_is_sanitized_if_scheme_is_missing()
     {
         $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams([
+            ->post(route('chief.back.menuitem.store'), $this->validParams([
                 'type'              => 'custom',
                 'trans.nl.label'    => 'nieuw label',
                 'trans.nl.url'      => 'thinktomorrow.be',
@@ -146,8 +146,8 @@ class CreateMenuItemTest extends TestCase
     public function type_needs_to_be_custom_or_internal()
     {
         $this->assertValidation(new MenuItem(), 'type', $this->validParams(['type' => 'foobar']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
+            route('chief.back.menus.show', 'main'),
+            route('chief.back.menuitem.store')
         );
     }
 
@@ -155,8 +155,8 @@ class CreateMenuItemTest extends TestCase
     public function label_is_required()
     {
         $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
+            route('chief.back.menus.show', 'main'),
+            route('chief.back.menuitem.store')
         );
     }
 
@@ -164,8 +164,8 @@ class CreateMenuItemTest extends TestCase
     public function type_internal_makes_pageid_required()
     {
         $this->assertValidation(new MenuItem(), 'page_id', $this->validParams(['type' => 'internal', 'page_id' => '']),
-            route('chief.back.menu.index'),
-            route('chief.back.menu.store')
+            route('chief.back.menus.show', 'main'),
+            route('chief.back.menuitem.store')
         );
     }
 
@@ -175,7 +175,7 @@ class CreateMenuItemTest extends TestCase
         // Inside our logic the page should be existing. If not, the creation is aborted but we do not
         // show this response to the interface since this is rather a hack then expected behaviour.
         $this->asAdminWithoutRole()
-            ->post(route('chief.back.menu.store'), $this->validParams([
+            ->post(route('chief.back.menuitem.store'), $this->validParams([
                 'type' => 'internal',
                 'page_id' => Page::class.'@999' // Fake page reference
             ]));

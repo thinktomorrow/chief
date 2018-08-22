@@ -26,7 +26,7 @@
                 <dropdown>
                     <span class="center-y nav-item {{ (isActiveUrl('admin/translations*') || isActiveUrl('admin/menu*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Site</span>
                     <div v-cloak class="dropdown-box inset-s">
-                        <a class="block squished --link-with-bg {{ isActiveUrl('admin/menu*') ? 'active' : '' }}" href="{{ route('chief.back.menu.index') }}">Menu</a>
+                        <a class="block squished --link-with-bg {{ isActiveUrl('admin/menus*') ? 'active' : '' }}" href="{{ route('chief.back.menus.index') }}">Menu</a>
                         <a class="block squished --link-with-bg {{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>
                     </div>
                 </dropdown>

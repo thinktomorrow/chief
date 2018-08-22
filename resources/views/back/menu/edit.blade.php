@@ -5,9 +5,9 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu item bewerken.')
     @slot('subtitle')
-        <a class="center-y" href="{{ route('chief.back.menu.index') }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+        <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
     @endslot
-        <form action="{{route('chief.back.menu.destroy', $menuitem->id)}}" method="POST">
+        <form action="{{route('chief.back.menuitem.destroy', $menuitem->id)}}" method="POST">
             {{ method_field('DELETE') }}
             {{ csrf_field() }}
             <span class="btn btn-link inline-block inline-s" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
@@ -19,7 +19,7 @@
 
     @section('content')
 
-        <form id="updateForm" method="POST" action="{{ route('chief.back.menu.update', $menuitem->id) }}" enctype="multipart/form-data" role="form">
+        <form id="updateForm" method="POST" action="{{ route('chief.back.menuitem.update', $menuitem->id) }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
 

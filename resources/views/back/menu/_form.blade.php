@@ -25,6 +25,7 @@
             <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
         @endforeach
     @endif
+    <input type="hidden" name="menu_type" value="{{$menuitem->menu_type}}">
 @endchiefformgroup
 
 <section class="formgroup">
@@ -103,44 +104,46 @@
     </div>
 </section>
 
-@chiefformgroup(['field' => 'parent_id'])
-    @slot('label', 'Niveau')
-    @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
-    <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
-        <div>
-            <label class="block stack-xs custom-indicators" for="withoutParentId">
-                <input v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
-                       name="allow_parent"
-                       value="0"
-                       id="withoutParentId"
-                       type="radio">
-                <span class="custom-radiobutton --primary"></span>
-                <strong>Geef dit item weer op het hoogste niveau.</strong>
-            </label>
-            <label class="block stack-xs custom-indicators" for="parentId">
-                <input v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
-                       name="allow_parent"
-                       value="1"
-                       id="parentId"
-                       type="radio">
-                <span class="custom-radiobutton --primary"></span>
-                <strong>Selecteer het menuitem waaronder deze zich behoort.</strong>
+@if(count($parents) > 0)
+    @chiefformgroup(['field' => 'parent_id'])
+        @slot('label', 'Niveau')
+        @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
+        <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
+            <div>
+                <label class="block stack-xs custom-indicators" for="withoutParentId">
+                    <input v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
+                           name="allow_parent"
+                           value="0"
+                           id="withoutParentId"
+                           type="radio">
+                    <span class="custom-radiobutton --primary"></span>
+                    <strong>Geef dit item weer op het hoogste niveau.</strong>
+                </label>
+                <label class="block stack-xs custom-indicators" for="parentId">
+                    <input v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
+                           name="allow_parent"
+                           value="1"
+                           id="parentId"
+                           type="radio">
+                    <span class="custom-radiobutton --primary"></span>
+                    <strong>Selecteer het menuitem waaronder deze zich behoort.</strong>
 
-                <div v-if="type == '1'" class="stack-xs input-group-prefix relative">
-                    <chief-multiselect
-                            name="parent_id"
-                            :options='@json($parents)'
-                            selected='@json(old('parent_id', $menuitem->parent_id))'
-                            labelkey="label"
-                            valuekey="id"
-                            placeholder="Kies het bovenliggende menuitem"
-                    >
-                    </chief-multiselect>
-                </div>
-            </label>
-        </div>
-    </radio-options>
-@endchiefformgroup
+                    <div v-if="type == '1'" class="stack-xs input-group-prefix relative">
+                        <chief-multiselect
+                                name="parent_id"
+                                :options='@json($parents)'
+                                selected='@json(old('parent_id', $menuitem->parent_id))'
+                                labelkey="label"
+                                valuekey="id"
+                                placeholder="Kies het bovenliggende menuitem"
+                        >
+                        </chief-multiselect>
+                    </div>
+                </label>
+            </div>
+        </radio-options>
+    @endchiefformgroup
+@endif
 
 
 @chiefformgroup(['field' => 'collection_type'])
