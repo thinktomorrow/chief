@@ -1,18 +1,26 @@
 <?php
 
-namespace Thinktomorrow\Chief\Pages;
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\PageSets;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 
-class CollectedPages extends Collection implements PresentForParent
+class PageSet extends Collection implements PresentForParent
 {
+    public static function fromReference(PageSetReference $pageSetReference): PageSet
+    {
+        return $pageSetReference->toPageSet();
+    }
+
     /**
      * Present collection of pages. All pages are considered to be of the same collection type.
      *
      * @param ActsAsParent $parent
      * @return string
+     * @throws \Throwable
      */
     public function presentForParent(ActsAsParent $parent): string
     {
@@ -40,4 +48,14 @@ class CollectedPages extends Collection implements PresentForParent
     {
         return $this->first()->collectionKey();
     }
+
+    public function run()
+    {
+        // Reconstitute the action - optional @ ->defaults to the name of the pageset e.g. @upcoming
+
+        // We expect a collectedPages to be returned ??
+        // TODO: maybe move collectedPages to this class instead?
+    }
+
+    // TODO: make available as child -> presentForParent logic
 }

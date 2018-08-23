@@ -92,7 +92,6 @@ class PagesController extends Controller
         $relations                 = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
         $module_collections        = Module::availableCollections()->values()->map->toArray()->toArray();
 
-
         // Current sections
         $sections = $page->children()->map(function ($section, $index) {
             $section->injectTranslationForForm();
