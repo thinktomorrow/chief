@@ -18033,3 +18033,413 @@ $R.add('module', 'list', {
         }
     });
 })(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'video', {
+        translations: {
+            en: {
+                "video": "Video",
+                "video-html-code": "Video Embed Code or Youtube/Vimeo Link"
+            }
+        },
+        modals: {
+            'video':
+                '<form action=""> \
+                    <div class="form-item"> \
+                        <label for="modal-video-input">## video-html-code ## <span class="req">*</span></label> \
+                        <textarea id="modal-video-input" name="video" style="height: 160px;"></textarea> \
+                    </div> \
+                </form>'
+        },
+        init: function(app)
+        {
+            this.app = app;
+            this.lang = app.lang;
+            this.opts = app.opts;
+            this.toolbar = app.toolbar;
+            this.component = app.component;
+            this.insertion = app.insertion;
+            this.inspector = app.inspector;
+        },
+        // messages
+        onmodal: {
+            video: {
+                opened: function($modal, $form)
+                {
+                    $form.getField('video').focus();
+                },
+                insert: function($modal, $form)
+                {
+                    var data = $form.getData();
+                    this._insert(data);
+                }
+            }
+        },
+        oncontextbar: function(e, contextbar)
+        {
+            var data = this.inspector.parse(e.target)
+            if (data.isComponentType('video'))
+            {
+                var node = data.getComponent();
+                var buttons = {
+                    "remove": {
+                        title: this.lang.get('delete'),
+                        api: 'plugin.video.remove',
+                        args: node
+                    }
+                };
+
+                contextbar.set(e, node, buttons, 'bottom');
+            }
+
+        },
+
+        // public
+        start: function()
+        {
+            var obj = {
+                title: this.lang.get('video'),
+                api: 'plugin.video.open'
+            };
+
+            var $button = this.toolbar.addButtonAfter('image', 'video', obj);
+            $button.setIcon('<i class="re-icon-video"></i>');
+        },
+        open: function()
+		{
+            var options = {
+                title: this.lang.get('video'),
+                width: '600px',
+                name: 'video',
+                handle: 'insert',
+                commands: {
+                    insert: { title: this.lang.get('insert') },
+                    cancel: { title: this.lang.get('cancel') }
+                }
+            };
+
+            this.app.api('module.modal.build', options);
+		},
+        remove: function(node)
+        {
+            this.component.remove(node);
+        },
+
+        // private
+		_insert: function(data)
+		{
+    		this.app.api('module.modal.close');
+
+    		if (data.video.trim() === '')
+    		{
+        	    return;
+    		}
+
+            // parsing
+            data.video = this._matchData(data.video);
+
+            // inserting
+            if (this._isVideoIframe(data.video))
+            {
+                var $video = this.component.create('video', data.video);
+                this.insertion.insertHtml($video);
+            }
+		},
+
+		_isVideoIframe: function(data)
+		{
+            return (data.match(/<iframe|<video/gi) !== null);
+		},
+		_matchData: function(data)
+		{
+			var iframeStart = '<iframe style="width: 500px; height: 281px;" src="';
+			var iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
+
+            if (this._isVideoIframe(data))
+			{
+				var allowed = ['iframe', 'video', 'source'];
+				var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+
+			    data = data.replace(tags, function ($0, $1)
+			    {
+			        return (allowed.indexOf($1.toLowerCase()) === -1) ? '' : $0;
+			    });
+			}
+
+			if (data.match(this.opts.regex.youtube))
+			{
+				data = data.replace(this.opts.regex.youtube, iframeStart + '//www.youtube.com/embed/$1' + iframeEnd);
+			}
+			else if (data.match(this.opts.regex.vimeo))
+			{
+				data = data.replace(this.opts.regex.vimeo, iframeStart + '//player.vimeo.com/video/$2' + iframeEnd);
+			}
+
+
+			return data;
+		}
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('class', 'video.component', {
+        mixins: ['dom', 'component'],
+        init: function(app, el)
+        {
+            this.app = app;
+
+            // init
+            return (el && el.cmnt !== undefined) ? el : this._init(el);
+        },
+
+        // private
+        _init: function(el)
+        {
+            if (typeof el !== 'undefined')
+            {
+                var $node = $R.dom(el);
+                var $wrapper = $node.closest('figure');
+                if ($wrapper.length !== 0)
+                {
+                    this.parse($wrapper);
+                }
+                else
+                {
+                    this.parse('<figure>');
+                    this.append(el);
+                }
+            }
+            else
+            {
+                this.parse('<figure>');
+            }
+
+
+            this._initWrapper();
+        },
+        _initWrapper: function()
+        {
+            this.addClass('redactor-component');
+            this.attr({
+                'data-redactor-type': 'video',
+                'tabindex': '-1',
+                'contenteditable': false
+            });
+        }
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'widget', {
+        translations: {
+            en: {
+                "widget": "Widget",
+                "widget-html-code": "Widget HTML Code"
+            }
+        },
+        modals: {
+            'widget':
+                '<form action=""> \
+                    <div class="form-item"> \
+                        <label for="modal-widget-input">## widget-html-code ## <span class="req">*</span></label> \
+                        <textarea id="modal-widget-input" name="widget" style="height: 200px;"></textarea> \
+                    </div> \
+                </form>'
+        },
+        init: function(app)
+        {
+            this.app = app;
+            this.lang = app.lang;
+            this.opts = app.opts;
+            this.toolbar = app.toolbar;
+            this.component = app.component;
+            this.insertion = app.insertion;
+            this.inspector = app.inspector;
+            this.selection = app.selection;
+        },
+        // messages
+        onmodal: {
+            widget: {
+                opened: function($modal, $form)
+                {
+                    $form.getField('widget').focus();
+
+                    if (this.$currentItem)
+                    {
+                        var code = decodeURI(this.$currentItem.attr('data-widget-code'));
+                        $form.getField('widget').val(code);
+                    }
+                },
+                insert: function($modal, $form)
+                {
+                    var data = $form.getData();
+                    this._insert(data);
+                }
+            }
+        },
+        oncontextbar: function(e, contextbar)
+        {
+            var data = this.inspector.parse(e.target)
+            if (!data.isFigcaption() && data.isComponentType('widget'))
+            {
+                var node = data.getComponent();
+                var buttons = {
+                    "edit": {
+                        title: this.lang.get('edit'),
+                        api: 'plugin.widget.open',
+                        args: node
+                    },
+                    "remove": {
+                        title: this.lang.get('delete'),
+                        api: 'plugin.widget.remove',
+                        args: node
+                    }
+                };
+
+                contextbar.set(e, node, buttons, 'bottom');
+            }
+        },
+        onbutton: {
+            widget: {
+                observe: function(button)
+                {
+                    this._observeButton(button);
+                }
+            }
+        },
+
+        // public
+        start: function()
+        {
+            var obj = {
+                title: this.lang.get('widget'),
+                api: 'plugin.widget.open',
+                observe: 'widget'
+            };
+
+            var $button = this.toolbar.addButton('widget', obj);
+            $button.setIcon('<i class="re-icon-widget"></i>');
+        },
+        open: function()
+		{
+            this.$currentItem = this._getCurrent();
+
+            var options = {
+                title: this.lang.get('widget'),
+                width: '600px',
+                name: 'widget',
+                handle: 'insert',
+                commands: {
+                    insert: { title: (this.$currentItem) ? this.lang.get('save') : this.lang.get('insert') },
+                    cancel: { title: this.lang.get('cancel') }
+                }
+            };
+
+            this.app.api('module.modal.build', options);
+		},
+        remove: function(node)
+        {
+            this.component.remove(node);
+        },
+
+        // private
+		_getCurrent: function()
+		{
+    		var current = this.selection.getCurrent();
+    		var data = this.inspector.parse(current);
+    		if (data.isComponentType('widget'))
+    		{
+        		return this.component.build(data.getComponent());
+    		}
+		},
+		_insert: function(data)
+		{
+    		this.app.api('module.modal.close');
+
+    		if (data.widget.trim() === '')
+    		{
+        	    return;
+    		}
+
+    		var html = (this._isHtmlString(data.widget)) ? data.widget : document.createTextNode(data.widget);
+            var $component = this.component.create('widget', html);
+            $component.attr('data-widget-code', encodeURI(data.widget.trim()));
+    		this.insertion.insertHtml($component);
+
+		},
+        _isHtmlString: function(html)
+        {
+            return !(typeof html === 'string' && !/^\s*<(\w+|!)[^>]*>/.test(html));
+        },
+		_observeButton: function(button)
+		{
+    		var current = this.selection.getCurrent();
+    		var data = this.inspector.parse(current);
+
+    		if (data.isComponentType('table')) button.disable();
+    		else button.enable();
+		}
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('class', 'widget.component', {
+        mixins: ['dom', 'component'],
+        init: function(app, el)
+        {
+            this.app = app;
+
+            // init
+            return (el && el.cmnt !== undefined) ? el : this._init(el);
+        },
+        getData: function()
+        {
+            return {
+                html: this._getHtml()
+            };
+        },
+
+        // private
+        _init: function(el)
+        {
+            if (typeof el !== 'undefined')
+            {
+                var $node = $R.dom(el);
+                var $figure = $node.closest('figure');
+                if ($figure.length !== 0)
+                {
+                    this.parse($figure);
+                }
+                else
+                {
+                    this.parse('<figure>');
+                    this.html(el);
+                }
+            }
+            else
+            {
+                this.parse('<figure>');
+            }
+
+
+            this._initWrapper();
+        },
+        _getHtml: function()
+        {
+            var $wrapper = $R.dom('<div>');
+            $wrapper.html(this.html());
+            $wrapper.find('.redactor-component-caret').remove();
+
+            return $wrapper.html();
+        },
+        _initWrapper: function()
+        {
+            this.addClass('redactor-component');
+            this.attr({
+                'data-redactor-type': 'widget',
+                'tabindex': '-1',
+                'contenteditable': false
+            });
+        }
+    });
+})(Redactor);

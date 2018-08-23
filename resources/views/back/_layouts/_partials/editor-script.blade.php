@@ -1,9 +1,9 @@
 @push('custom-scripts')
     <script>
         $R.options = {
-            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video'],
+            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'widget'],
             @if(admin()->hasRole('developer'))
-                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
+                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'widget'],
             @else
                 buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
