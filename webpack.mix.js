@@ -24,6 +24,7 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 		'resources/assets/js/vendors/redactor/plugins/redactor-columns.js',
 		'resources/assets/js/vendors/redactor/plugins/rich-links.js',
 		'resources/assets/js/vendors/redactor/plugins/custom-classes.js',
+		'resources/assets/js/vendors/redactor/plugins/video.js',
 	], 'public/chief-assets/back/js/vendors/redactor.js')
 
 	/**
