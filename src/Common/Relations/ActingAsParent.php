@@ -56,24 +56,28 @@ trait ActingAsParent
         $collected_pages_key = null;
         $collected_pages_type = null;
 
-        foreach ($children as $i => $child) {
+        foreach ($children as $i => $child)
+        {
             $key = $i;
 
-            if ($child instanceof Page) {
+            if ($child instanceof Page)
+            {
 
                 // Only published pages you fool!
-                if (! $child->isPublished()) {
+                if (!$child->isPublished())
+                {
                     continue;
                 }
 
-
                 // Set the current pages collection to the current collection type
-                if ($collected_pages_type == null || $collected_pages_type != $child->collectionKey()) {
+                if ($collected_pages_type == null || $collected_pages_type != $child->collectionKey())
+                {
                     $collected_pages_type = $child->collectionKey();
                     $collected_pages_key = $key;
                 }
 
-                if (!isset($grouped_children[$collected_pages_key])) {
+                if (!isset($grouped_children[$collected_pages_key]))
+                {
                     $grouped_children[$collected_pages_key] = new CollectedPages();
                 }
 
@@ -87,7 +91,7 @@ trait ActingAsParent
 
             $grouped_children[$key] = $child;
         }
-
+        
         return collect($grouped_children)->map(function (PresentForParent $child) {
             return $child->presentForParent($this);
         });
