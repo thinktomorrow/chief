@@ -18,12 +18,4 @@ return [
             'view'  => 'front.menus.main'
         ]
     ],
-
-    /**
-     * Define your snippets here. A snippet is a piece of html that can be injected
-     * into the wysiwyg editor. A snippet can refer to a blade view or file.
-     */
-    'snippets' => [
-        //
-    ],
 ];

@@ -48,23 +48,11 @@ trait ActingAsParent
 
     public function presentChildren(): \Illuminate\Support\Collection
     {
-        $grouped_children = $this->combinePagesIntoCollections($this->children());
-
-        return collect($grouped_children)->map(function (PresentForParent $child) {
-            return $child->presentForParent($this);
-        });
-    }
-
-    /**
-     * Pages are presented in one module file with the collection of all pages combined
-     * But only if they are sorted right after each other
-     *
-     * @param $children
-     * @return array
-     */
-    private function combinePagesIntoCollections($children): array
-    {
         $grouped_children = [];
+        $children = $this->children();
+
+        // Pages are presented in one module file with the collection of all pages combined
+        // But only if they are sorted right after each other
         $collected_pages_key = null;
         $collected_pages_type = null;
 
@@ -103,8 +91,10 @@ trait ActingAsParent
 
             $grouped_children[$key] = $child;
         }
-
-        return $grouped_children;
+        
+        return collect($grouped_children)->map(function (PresentForParent $child) {
+            return $child->presentForParent($this);
+        });
     }
 
     public function relationWithChild(ActsAsChild $child): Relation
