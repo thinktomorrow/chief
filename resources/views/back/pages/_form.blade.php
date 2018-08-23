@@ -6,7 +6,9 @@
                 <page-builder
                         :locales='@json($page->availableLocales())'
                         :default-sections='@json($sections)'
-                        :modules='@json($relations)'>
+                        :modules='@json($available_modules)'
+                        :pages='@json($available_pages)'
+                        :pagesets='@json($available_pagesets)'>
                 </page-builder>
             </section>
 

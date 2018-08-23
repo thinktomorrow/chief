@@ -31,15 +31,27 @@
 
             <module-section v-if="section.type == 'module'"
                 v-bind:key="section.key"
+                sectionKey="modules"
                 v-bind:section="section"
-                v-bind:modules="modules"
+                v-bind:options="modules"
+                placeholder="Selecteer een module"
                 class="stack" :class="section.type"></module-section>
 
-            <!--<pages-section v-if="section.type == 'pages'"-->
-                    <!--v-bind:key="section.key"-->
-                    <!--v-bind:section="section"-->
-                    <!--v-bind:modules="modules"-->
-                  <!--class="stack"></pages-section>-->
+            <module-section v-if="section.type == 'page'"
+                v-bind:key="section.key"
+                sectionKey="modules"
+                v-bind:section="section"
+                v-bind:options="pages"
+                placeholder="Selecteer een pagina"
+                class="stack" :class="section.type"></module-section>
+
+            <module-section v-if="section.type == 'pageset'"
+                v-bind:key="section.key"
+                sectionKey="pagesets"
+                v-bind:section="section"
+                v-bind:options="pagesets"
+                placeholder="Selecteer een pagina groep"
+                class="stack" :class="section.type"></module-section>
 
         </template>
 
@@ -56,26 +68,20 @@
 <script>
     import TextSection from './TextSection.vue';
     import ModuleSection from './ModuleSection.vue';
-    import PageModuleSection from './PageModuleSection.vue';
     import PagebuilderMenu from './PagebuilderMenu.vue';
-    // For modules we show module name
-    // For pages we try to combine them into one section
-    // Text modules are shown the content
-
-    //    section.id (if null it is considered a new one)
-    //    section.slug (required for new ones)
 
     export default{
         components: {
             'text-section': TextSection,
             'module-section': ModuleSection,
-            'pages-section' : PageModuleSection,
             'pagebuilder-menu': PagebuilderMenu
         },
         props: {
             'defaultSections': { default: function(){ return [] }, type: Array},
             'locales': { default: function(){ return [] }, type: Array},
             'modules' : { default: function(){ return [] }, type: Array},
+            'pages' : { default: function(){ return [] }, type: Array},
+            'pagesets' : { default: function(){ return [] }, type: Array},
         },
         data(){
             return {
@@ -96,6 +102,14 @@
                 this.addModuleSectionAfter(position);
             });
 
+            Eventbus.$on('addingPageSectionAfter',(position, component) => {
+                this.addPageSectionAfter(position);
+            });
+
+            Eventbus.$on('addingPageSetSectionAfter',(position, component) => {
+                this.addPageSetSectionAfter(position);
+            });
+
             Eventbus.$on('addingNewPagetitleSectionAfter',(position, component) => {
                 this.addNewPagetitleSectionAfter(position);
             });
@@ -103,8 +117,6 @@
         methods: {
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
-                    id: null,
-                    key: this._randomHash(),
                     type: 'text',
                     slug: this._randomHash(),
                     trans: []
@@ -112,15 +124,21 @@
             },
             addModuleSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
-                    id: null,
-                    key: this._randomHash(),
                     type: 'module',
+                });
+            },
+            addPageSectionAfter(section_sort){
+                this._addNewSectionAfter(section_sort, {
+                    type: 'page',
+                });
+            },
+            addPageSetSectionAfter(section_sort){
+                this._addNewSectionAfter(section_sort, {
+                    type: 'pageset',
                 });
             },
             addNewPagetitleSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
-                    id: null,
-                    key: this._randomHash(),
                     type: 'pagetitle',
                     slug: this._randomHash(),
                     trans: []
@@ -131,8 +149,9 @@
                 let index = section_sort + 1;
                 this._resortSectionsAfter(section_sort);
 
-                // Add sort value to the data
                 data.sort = index;
+                data.id = data.id || null,
+                data.key = data.key || this._randomHash(),
 
                 this.sections.push(data);
             },

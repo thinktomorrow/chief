@@ -13,6 +13,18 @@
                     Module
                 </span>
             </div>
+            <div class="left pointer" @click="addingPageSetSectionAfter(section.sort)">
+                <span title="pagina groep selecteren" class="label label-o--secondary center-y">
+                    <i class="icon icon-layout"></i>
+                    Paginagroep
+                </span>
+            </div>
+            <div class="left pointer" @click="addingPageSectionAfter(section.sort)">
+                <span title="pagina selecteren" class="label label-o--secondary center-y">
+                    <i class="icon icon-layout"></i>
+                    Pagina
+                </span>
+            </div>
             <div class="left pointer">
                 <span title="pagina titel toevoegen" @click="addingNewPagetitleSectionAfter(section.sort)" class="label label-o--secondary center-y">H1</span>
             </div>
@@ -36,6 +48,16 @@
             },
             addingModuleSectionAfter(position){
                 Eventbus.$emit('addingModuleSectionAfter',position, this);
+
+                this.active = false;
+            },
+            addingPageSetSectionAfter(position){
+                Eventbus.$emit('addingPageSetSectionAfter',position, this);
+
+                this.active = false;
+            },
+            addingPageSectionAfter(position){
+                Eventbus.$emit('addingPageSectionAfter',position, this);
 
                 this.active = false;
             },

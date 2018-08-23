@@ -3,9 +3,6 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\PageSets\PageSet;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
 
 trait ActingAsParent
 {

@@ -2365,10 +2365,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'pagebuilder-menu': __WEBPACK_IMPORTED_MODULE_1__PagebuilderMenu_vue__["a" /* default */]
     },
     props: {
+        'sectionKey': { required: true, type: String },
         'section': { type: Object },
-        'modules': { default: function _default() {
+        'options': { default: function _default() {
                 return [];
-            }, type: Array }
+            }, type: Array },
+        'placeholder': { default: 'Selecteer een module' }
     },
     data: function data() {
         return {
@@ -2403,79 +2405,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MultiSelect_vue__ = __webpack_require__("./resources/assets/js/components/MultiSelect.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    components: {
-        'chief-multiselect': __WEBPACK_IMPORTED_MODULE_0__MultiSelect_vue__["default"]
-    },
-    props: {
-        'section': { type: Object },
-        'modules': { default: function _default() {
-                return [];
-            }, type: Array }
-    },
-    data: function data() {
-        return {};
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        Eventbus.$on('updated-select', function (name, valuesForSelect, values, component) {
-
-            // Only trigger event coming from own child component
-            if (component.$parent._uid != _this._uid) return true;
-
-            _this.section.pageCollection = [];
-
-            for (var k in valuesForSelect) {
-                if (!valuesForSelect.hasOwnProperty(k)) continue;
-                _this.section.pageCollection.push(valuesForSelect[k]);
-            }
-
-            return true;
-        });
-    },
-
-    methods: {
-        //
-    }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagebuilder/Pagebuilder.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TextSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/TextSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/ModuleSection.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PageModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2535,20 +2483,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
-// For modules we show module name
-// For pages we try to combine them into one section
-// Text modules are shown the content
-
-//    section.id (if null it is considered a new one)
-//    section.slug (required for new ones)
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     components: {
         'text-section': __WEBPACK_IMPORTED_MODULE_0__TextSection_vue__["a" /* default */],
         'module-section': __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__["a" /* default */],
-        'pages-section': __WEBPACK_IMPORTED_MODULE_2__PageModuleSection_vue__["a" /* default */],
-        'pagebuilder-menu': __WEBPACK_IMPORTED_MODULE_3__PagebuilderMenu_vue__["a" /* default */]
+        'pagebuilder-menu': __WEBPACK_IMPORTED_MODULE_2__PagebuilderMenu_vue__["a" /* default */]
     },
     props: {
         'defaultSections': { default: function _default() {
@@ -2558,6 +2498,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return [];
             }, type: Array },
         'modules': { default: function _default() {
+                return [];
+            }, type: Array },
+        'pages': { default: function _default() {
+                return [];
+            }, type: Array },
+        'pagesets': { default: function _default() {
                 return [];
             }, type: Array }
     },
@@ -2585,6 +2531,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.addModuleSectionAfter(position);
         });
 
+        Eventbus.$on('addingPageSectionAfter', function (position, component) {
+            _this.addPageSectionAfter(position);
+        });
+
+        Eventbus.$on('addingPageSetSectionAfter', function (position, component) {
+            _this.addPageSetSectionAfter(position);
+        });
+
         Eventbus.$on('addingNewPagetitleSectionAfter', function (position, component) {
             _this.addNewPagetitleSectionAfter(position);
         });
@@ -2593,8 +2547,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     methods: {
         addNewTextSectionAfter: function addNewTextSectionAfter(section_sort) {
             this._addNewSectionAfter(section_sort, {
-                id: null,
-                key: this._randomHash(),
                 type: 'text',
                 slug: this._randomHash(),
                 trans: []
@@ -2602,15 +2554,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         },
         addModuleSectionAfter: function addModuleSectionAfter(section_sort) {
             this._addNewSectionAfter(section_sort, {
-                id: null,
-                key: this._randomHash(),
                 type: 'module'
+            });
+        },
+        addPageSectionAfter: function addPageSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                type: 'page'
+            });
+        },
+        addPageSetSectionAfter: function addPageSetSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                type: 'pageset'
             });
         },
         addNewPagetitleSectionAfter: function addNewPagetitleSectionAfter(section_sort) {
             this._addNewSectionAfter(section_sort, {
-                id: null,
-                key: this._randomHash(),
                 type: 'pagetitle',
                 slug: this._randomHash(),
                 trans: []
@@ -2621,10 +2579,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             var index = section_sort + 1;
             this._resortSectionsAfter(section_sort);
 
-            // Add sort value to the data
             data.sort = index;
-
-            this.sections.push(data);
+            data.id = data.id || null, data.key = data.key || this._randomHash(), this.sections.push(data);
         },
         removeSection: function removeSection() {
             //
@@ -2672,6 +2628,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -2690,6 +2658,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         },
         addingModuleSectionAfter: function addingModuleSectionAfter(position) {
             Eventbus.$emit('addingModuleSectionAfter', position, this);
+
+            this.active = false;
+        },
+        addingPageSetSectionAfter: function addingPageSetSectionAfter(position) {
+            Eventbus.$emit('addingPageSetSectionAfter', position, this);
+
+            this.active = false;
+        },
+        addingPageSectionAfter: function addingPageSectionAfter(position) {
+            Eventbus.$emit('addingPageSectionAfter', position, this);
 
             this.active = false;
         },
@@ -29564,6 +29542,32 @@ var render = function() {
           [_vm._m(1)]
         ),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "left pointer",
+            on: {
+              click: function($event) {
+                _vm.addingPageSetSectionAfter(_vm.section.sort)
+              }
+            }
+          },
+          [_vm._m(2)]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "left pointer",
+            on: {
+              click: function($event) {
+                _vm.addingPageSectionAfter(_vm.section.sort)
+              }
+            }
+          },
+          [_vm._m(3)]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "left pointer" }, [
           _c(
             "span",
@@ -29612,6 +29616,38 @@ var staticRenderFns = [
         _vm._v("\n                Module\n            ")
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "pagina groep selecteren" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-layout" }),
+        _vm._v("\n                Paginagroep\n            ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "pagina selecteren" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-layout" }),
+        _vm._v("\n                Pagina\n            ")
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -29644,54 +29680,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-28cb1975", { render: render, staticRenderFns: staticRenderFns })
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-322c5520\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    {
-      staticClass: "stack block inset",
-      staticStyle: { "border-left": "3px solid #14c8a7" }
-    },
-    [
-      _c("h3", [_vm._v("PAGINAS")]),
-      _vm._v(" "),
-      _c("chief-multiselect", {
-        attrs: {
-          name: "sections[modules][" + _vm._uid + "]",
-          options: _vm.modules,
-          multiple: true,
-          selected: _vm.section.pageCollection,
-          grouplabel: "group",
-          groupvalues: "values",
-          labelkey: "label",
-          valuekey: "id",
-          placeholder: "Selecteer een of meerdere pagina's."
-        }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-322c5520", { render: render, staticRenderFns: staticRenderFns })
   }
 }
 
@@ -30013,15 +30001,15 @@ var render = function() {
           [
             _c("chief-multiselect", {
               attrs: {
-                name: "sections[modules][" + _vm._uid + "]",
-                options: _vm.modules,
+                name: "sections[" + _vm.sectionKey + "][" + _vm._uid + "]",
+                options: _vm.options,
                 multiple: false,
                 selected: _vm.section.id,
                 grouplabel: "group",
                 groupvalues: "values",
                 labelkey: "label",
                 valuekey: "id",
-                placeholder: "Selecteer een module."
+                placeholder: _vm.placeholder
               }
             })
           ],
@@ -30353,7 +30341,40 @@ var render = function() {
                 key: section.key,
                 staticClass: "stack",
                 class: section.type,
-                attrs: { section: section, modules: _vm.modules }
+                attrs: {
+                  sectionKey: "modules",
+                  section: section,
+                  options: _vm.modules,
+                  placeholder: "Selecteer een module"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          section.type == "page"
+            ? _c("module-section", {
+                key: section.key,
+                staticClass: "stack",
+                class: section.type,
+                attrs: {
+                  sectionKey: "modules",
+                  section: section,
+                  options: _vm.pages,
+                  placeholder: "Selecteer een pagina"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          section.type == "pageset"
+            ? _c("module-section", {
+                key: section.key,
+                staticClass: "stack",
+                class: section.type,
+                attrs: {
+                  sectionKey: "pagesets",
+                  section: section,
+                  options: _vm.pagesets,
+                  placeholder: "Selecteer een pagina groep"
+                }
               })
             : _vm._e()
         ]
@@ -42403,61 +42424,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-5fa816ef", Component.options)
   } else {
     hotAPI.reload("data-v-5fa816ef", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/Pagebuilder/PageModuleSection.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_plugins_transform_object_rest_spread_transform_runtime_polyfill_false_helpers_false_node_modules_vue_loader_lib_selector_type_script_index_0_PageModuleSection_vue__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_322c5520_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PageModuleSection_vue__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-322c5520\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__("./node_modules/vue-loader/lib/runtime/component-normalizer.js");
-var disposed = false
-/* script */
-
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-
-var Component = Object(__WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__["a" /* default */])(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_plugins_transform_object_rest_spread_transform_runtime_polyfill_false_helpers_false_node_modules_vue_loader_lib_selector_type_script_index_0_PageModuleSection_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_322c5520_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PageModuleSection_vue__["a" /* render */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_322c5520_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PageModuleSection_vue__["b" /* staticRenderFns */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Pagebuilder/PageModuleSection.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-322c5520", Component.options)
-  } else {
-    hotAPI.reload("data-v-322c5520", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

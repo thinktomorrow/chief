@@ -11,9 +11,13 @@ use Thinktomorrow\Chief\Pages\Page;
 
 class PageSet extends Collection implements PresentForParent
 {
-    public function __construct($items = [])
+    /** @var string */
+    private $key;
+
+    public function __construct($items = [], string $key = null)
     {
         $this->validateItems($items);
+        $this->key = $key;
 
         parent::__construct($items);
     }
@@ -34,7 +38,14 @@ class PageSet extends Collection implements PresentForParent
     {
         $guessedParentViewName = $parent->collectionKey();
         $guessedViewName = $this->collectionKey();
-        $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
+        $guessedPageSetViewName = $this->key ? $guessedViewName . '.' . $this->key  : $guessedViewName;
+
+        $viewPaths = [
+            'front.modules.'.$guessedParentViewName.'.'.$guessedPageSetViewName,
+            'front.modules.'.$guessedParentViewName.'.'.$guessedViewName,
+            'front.modules.'.$guessedPageSetViewName,
+            'front.modules.'.$guessedViewName,
+        ];
 
         foreach ($viewPaths as $viewPath) {
             if (! view()->exists($viewPath)) {

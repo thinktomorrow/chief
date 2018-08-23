@@ -72,7 +72,13 @@ class PageSetReference implements ProvidesFlatReference
 
         $this->validateAction($class, $method);
 
-        return call_user_func_array([app($class),$method],$this->parameters);
+        $result = call_user_func_array([app($class),$method],$this->parameters);
+
+        if( ! $result instanceof PageSet && $result instanceof Collection) {
+            return new PageSet($result->all(), $this->key);
+        }
+
+        return $result;
     }
 
     public function store()
@@ -101,11 +107,11 @@ class PageSetReference implements ProvidesFlatReference
     private static function validateAction($class, $method)
     {
         if( ! class_exists($class)) {
-            throw new \InvalidArgumentException('The class ['.$class.'] isn\'t a valid class reference or does not exist.');
+            throw new \InvalidArgumentException('The class ['.$class.'] isn\'t a valid class reference or does not exist in the chief-settings.pagesets config entry.');
         }
 
         if(!method_exists($class, $method)) {
-            throw new \InvalidArgumentException('The method ['.$method.'] does not exist on class ['.$class.'].');
+            throw new \InvalidArgumentException('The method ['.$method.'] does not exist on the class ['.$class.']. Make sure you provide a valid method to the action value in the chief-settings.pagesets config entry.');
         }
     }
 
@@ -121,6 +127,6 @@ class PageSetReference implements ProvidesFlatReference
 
     public function flatReferenceGroup(): string
     {
-        return 'pagesets';
+        return 'pageset';
     }
 }

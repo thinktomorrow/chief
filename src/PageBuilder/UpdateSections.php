@@ -67,6 +67,8 @@ class UpdateSections
 
         foreach($this->pageset_refs as $flat_pageset_ref) {
 
+            if(!$flat_pageset_ref) continue;
+
             $stored_pageset_ref = $this->findOrCreateStoredPageSetReference($flat_pageset_ref);
 
             $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
@@ -249,6 +251,6 @@ class UpdateSections
             return PageSetReference::find($id)->store();
         }
 
-        return FlatReferenceFactory::fromString($flat_pageset_ref);
+        return FlatReferenceFactory::fromString($flat_pageset_ref)->instance();
     }
 }

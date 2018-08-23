@@ -15,7 +15,7 @@ class CreatePagesetsTable extends Migration
     {
         Schema::create('pagesets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('key');
+            $table->string('key')->unique();
             $table->string('action');
             $table->string('parameters');
         });

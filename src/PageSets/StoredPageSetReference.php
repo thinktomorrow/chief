@@ -54,6 +54,6 @@ class StoredPageSetReference extends Model implements ActsAsChild
 
     public function flatReferenceGroup(): string
     {
-        return 'pagesets';
+        return 'pageset';
     }
 }
