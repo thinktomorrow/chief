@@ -1,7 +1,7 @@
 @push('custom-scripts')
     <script>
         $R.options = {
-            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes'],
+            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'snippets'],
             @if(admin()->hasRole('developer'))
                 buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @else
@@ -22,6 +22,7 @@
             },
             imageUpload: '{{ $imageUploadUrl }}',
             definedlinks: '{{ route('chief.api.internal-links') }}',
+            snippetslink: '{{ route('chief.api.snippets-links') }}',
             customClasses: [
                 {
                     title: '<span class="icon icon-droplet"></span> link als knop',

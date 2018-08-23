@@ -67,6 +67,7 @@
 
                     window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
                         // options
+                        buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'video', 'snippets']
                     });
                 }
             }
