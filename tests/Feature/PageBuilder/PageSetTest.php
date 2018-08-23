@@ -111,13 +111,4 @@ class PageSetTest extends TestCase
 
         $this->assertCount(0, $this->page->fresh()->children());
     }
-
-//    /** @test */
-//    public function it_displays_pageset()
-//    {
-//        $module = TextModule::create(['collection' => 'pageset', 'slug' => 'eerste-text', 'content:nl' => 'eerste titel']);
-//        $this->page->adoptChild($module, ['sort' => 0]);
-//
-//        $this->assertEquals('eerste titel', $this->page->renderChildren());
-//    }
 }

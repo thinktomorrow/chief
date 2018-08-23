@@ -7,9 +7,17 @@ namespace Thinktomorrow\Chief\PageSets;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
+use Thinktomorrow\Chief\Pages\Page;
 
 class PageSet extends Collection implements PresentForParent
 {
+    public function __construct($items = [])
+    {
+        $this->validateItems($items);
+
+        parent::__construct($items);
+    }
+
     public static function fromReference(PageSetReference $pageSetReference): PageSet
     {
         return $pageSetReference->toPageSet();
@@ -49,13 +57,15 @@ class PageSet extends Collection implements PresentForParent
         return $this->first()->collectionKey();
     }
 
-    public function run()
+    /**
+     * @param $items
+     */
+    private function validateItems($items): void
     {
-        // Reconstitute the action - optional @ ->defaults to the name of the pageset e.g. @upcoming
-
-        // We expect a collectedPages to be returned ??
-        // TODO: maybe move collectedPages to this class instead?
+        foreach($items as $item){
+            if(! $item instanceof Page) {
+                throw new \InvalidArgumentException('PageSet collection accepts only Page objects: ' . $e->getMessage());
+            }
+        }
     }
-
-    // TODO: make available as child -> presentForParent logic
 }

@@ -11,6 +11,6 @@ class DummyPageSetRepository
     {
         $pages = Page::limit($limit)->get();
 
-        return new PageSet($pages->toArray());
+        return new PageSet($pages);
     }
 }

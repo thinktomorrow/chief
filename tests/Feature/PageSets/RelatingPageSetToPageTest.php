@@ -31,4 +31,14 @@ class RelatingPageSetToPageTest extends TestCase
         $this->assertCount(1, $this->page->children());
     }
 
+    /** @test */
+    public function it_displays_pageset()
+    {
+        $stored_pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5]))->store();
+        $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
+
+        // Empty string by default
+        $this->assertEquals('', $this->page->renderChildren());
+    }
+
 }
