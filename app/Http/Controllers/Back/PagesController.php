@@ -123,6 +123,10 @@ class PagesController extends Controller
             'relations'          => $relations,
             'module_collections' => $module_collections,
             'images'             => $this->populateMedia($page),
+
+            // Module collections for creating own page modules
+            'module_collections' => Module::availableCollections()->values()->map->toArray()->toArray(),
+
         ]);
     }
 
