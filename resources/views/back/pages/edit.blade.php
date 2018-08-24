@@ -37,7 +37,8 @@
 
 <!-- add own module -->
 @include('chief::back.modules._partials.create-modal', [
-    'collections' => $module_collections
+    'collections' => $module_collections,
+    'page_id' => $page->id,
 ])
 
 @foreach($page->modules as $module)
