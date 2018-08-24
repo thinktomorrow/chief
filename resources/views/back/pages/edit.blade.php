@@ -33,24 +33,27 @@
 
             @include('chief::back.pages._form')
 
-        </form>
+            <!-- add own modules -->
+            @include('chief::back.modules._partials.create-modal')
 
-        @foreach($page->modules as $module)
-            @include('chief::back.modules._partials.delete-modal', [
-                'module' => $module
-            ])
-        @endforeach
-    </div>
+</form>
+
+@foreach($page->modules as $module)
+    @include('chief::back.modules._partials.delete-modal', [
+        'module' => $module
+    ])
+@endforeach
+</div>
 
 @stop
 
 @push('custom-styles')
-    <!-- make redactor available for any components. -->
-    <script src="/chief-assets/back/js/vendors/redactor.js"></script>
+<!-- make redactor available for any components. -->
+<script src="/chief-assets/back/js/vendors/redactor.js"></script>
 @endpush
 
 @push('custom-scripts-after-vue')
-    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('pages.media.upload', $page->id)])
+@include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('pages.media.upload', $page->id)])
 @endpush
 
 @include('chief::back._elements.file-component')
