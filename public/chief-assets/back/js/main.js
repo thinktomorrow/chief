@@ -2354,6 +2354,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2370,7 +2371,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'options': { default: function _default() {
                 return [];
             }, type: Array },
-        'placeholder': { default: 'Selecteer een module' }
+        'placeholder': { default: 'Selecteer een module' },
+        'title': {}
     },
     data: function data() {
         return {
@@ -2412,6 +2414,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TextSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/TextSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/ModuleSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -2723,6 +2729,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2741,7 +2748,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'editor': { default: true, type: Boolean },
 
         // Single line for edit or multiple lines
-        'single': { default: false, type: Boolean }
+        'single': { default: false, type: Boolean },
+
+        'title': {}
     },
     data: function data() {
         return {
@@ -29994,6 +30003,13 @@ var render = function() {
       }
     },
     [
+      _vm.title
+        ? _c("h3", {
+            staticClass: "pagebuilder-section-title",
+            domProps: { textContent: _vm._s(_vm.title) }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
@@ -30051,6 +30067,13 @@ var render = function() {
       staticStyle: { "border-left": "3px solid #14c8a7" }
     },
     [
+      _vm.title
+        ? _c("h3", {
+            staticClass: "pagebuilder-section-title",
+            domProps: { textContent: _vm._s(_vm.title) }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c("input", {
         attrs: {
           type: "hidden",
@@ -30331,7 +30354,8 @@ var render = function() {
                   section: section,
                   locales: _vm.locales,
                   single: true,
-                  editor: false
+                  editor: false,
+                  title: "Pagina titel"
                 }
               })
             : _vm._e(),
@@ -30345,7 +30369,8 @@ var render = function() {
                   sectionKey: "modules",
                   section: section,
                   options: _vm.modules,
-                  placeholder: "Selecteer een module"
+                  placeholder: "Selecteer een module",
+                  title: "module"
                 }
               })
             : _vm._e(),
@@ -30359,7 +30384,8 @@ var render = function() {
                   sectionKey: "modules",
                   section: section,
                   options: _vm.pages,
-                  placeholder: "Selecteer een pagina"
+                  placeholder: "Selecteer een pagina",
+                  title: "pagina"
                 }
               })
             : _vm._e(),
@@ -30373,7 +30399,8 @@ var render = function() {
                   sectionKey: "pagesets",
                   section: section,
                   options: _vm.pagesets,
-                  placeholder: "Selecteer een pagina groep"
+                  placeholder: "Selecteer een pagina groep",
+                  title: "pagina groep"
                 }
               })
             : _vm._e()

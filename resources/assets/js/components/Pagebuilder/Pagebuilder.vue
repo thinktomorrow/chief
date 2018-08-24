@@ -22,12 +22,13 @@
                 class="stack" :class="section.type"></text-section>
 
             <text-section v-if="section.type == 'pagetitle'"
-                          v-bind:key="section.key"
-                          v-bind:section="section"
-                          v-bind:locales="locales"
-                          :single="true"
-                          :editor="false"
-                          class="stack" :class="section.type"></text-section>
+                  v-bind:key="section.key"
+                  v-bind:section="section"
+                  v-bind:locales="locales"
+                  :single="true"
+                  :editor="false"
+                  title="Pagina titel"
+                  class="stack" :class="section.type"></text-section>
 
             <module-section v-if="section.type == 'module'"
                 v-bind:key="section.key"
@@ -35,6 +36,7 @@
                 v-bind:section="section"
                 v-bind:options="modules"
                 placeholder="Selecteer een module"
+                title="module"
                 class="stack" :class="section.type"></module-section>
 
             <module-section v-if="section.type == 'page'"
@@ -43,6 +45,7 @@
                 v-bind:section="section"
                 v-bind:options="pages"
                 placeholder="Selecteer een pagina"
+                title="pagina"
                 class="stack" :class="section.type"></module-section>
 
             <module-section v-if="section.type == 'pageset'"
@@ -51,6 +54,7 @@
                 v-bind:section="section"
                 v-bind:options="pagesets"
                 placeholder="Selecteer een pagina groep"
+                title="pagina groep"
                 class="stack" :class="section.type"></module-section>
 
         </template>
