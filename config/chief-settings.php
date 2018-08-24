@@ -18,4 +18,11 @@ return [
             'view'  => 'front.menus.main'
         ]
     ],
+    // 'pagesets' => [
+    //     'singles'   => [
+    //         'action'     => DummyPageSetRepository::class.'@all',
+    //         'parameters' => [2],
+    //         'label'      => 'algemene paginas'
+    //     ],
+    // ]
 ];
