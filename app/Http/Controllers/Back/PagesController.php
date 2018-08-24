@@ -105,6 +105,10 @@ class PagesController extends Controller
             'available_pages'    => $available_pages,
             'available_pagesets' => $available_pagesets,
             'images'             => $this->populateMedia($page),
+
+            // Module collections for creating own page modules
+            'module_collections' => Module::availableCollections()->values()->map->toArray()->toArray(),
+
         ]);
     }
 

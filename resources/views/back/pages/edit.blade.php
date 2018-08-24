@@ -34,7 +34,9 @@
             @include('chief::back.pages._form')
 
             <!-- add own modules -->
-            @include('chief::back.modules._partials.create-modal')
+            @include('chief::back.modules._partials.create-modal', [
+                'collections' => $module_collections
+            ])
 
 </form>
 
