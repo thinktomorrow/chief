@@ -5,6 +5,9 @@ namespace Thinktomorrow\Chief\Common\Relations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\PageSets\PageSetReference;
+use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
 
 class Relation extends Model
 {
@@ -57,7 +60,7 @@ class Relation extends Model
             if (!$child) {
 
                 // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
-                if (! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
+                if ((!method_exists((new $relation->child_type),'withTrashed')) || ! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
                     throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
                 }
@@ -77,6 +80,33 @@ class Relation extends Model
         ->values();
     }
 
+    public static function availableChildrenOnlyModules(ActsAsParent $parent): Collection
+    {
+        return static::availableChildren($parent)->reject(function($item){
+            if ($item instanceof Page || $item instanceof StoredPageSetReference) {
+                return true;
+            }
+        });
+    }
+
+    public static function availableChildrenOnlyPages(ActsAsParent $parent): Collection
+    {
+        return static::availableChildren($parent)->filter(function($item){
+            if ($item instanceof Page) {
+                return true;
+            }
+        });
+    }
+
+    public static function availableChildrenOnlyPageSets(ActsAsParent $parent): Collection
+    {
+        // We want a regular collection, not the database one so we inject it into a regular one.
+        $stored_pagesets = collect(StoredPageSetReference::all()->keyBy('key')->all());
+        $all_pagesets = PageSetReference::all();
+
+        return $all_pagesets->merge($stored_pagesets);
+    }
+
     /**
      * Fetch all available children instances
      *
@@ -93,7 +123,7 @@ class Relation extends Model
         }
 
         return $collection->reject(function ($item) use ($parent) {
-            if (is_a($item, Page::class)) {
+            if ($item instanceof Page) {
                 return $item->id == $parent->id;
             }
 

@@ -3,8 +3,6 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
-use Thinktomorrow\Chief\Pages\CollectedPages;
-use Thinktomorrow\Chief\Pages\Page;
 
 trait ActingAsParent
 {
@@ -48,53 +46,7 @@ trait ActingAsParent
 
     public function presentChildren(): \Illuminate\Support\Collection
     {
-        $grouped_children = [];
-        $children = $this->children();
-
-        // Pages are presented in one module file with the collection of all pages combined
-        // But only if they are sorted right after each other
-        $collected_pages_key = null;
-        $collected_pages_type = null;
-
-        foreach ($children as $i => $child)
-        {
-            $key = $i;
-
-            if ($child instanceof Page)
-            {
-
-                // Only published pages you fool!
-                if (!$child->isPublished())
-                {
-                    continue;
-                }
-
-                // Set the current pages collection to the current collection type
-                if ($collected_pages_type == null || $collected_pages_type != $child->collectionKey())
-                {
-                    $collected_pages_type = $child->collectionKey();
-                    $collected_pages_key = $key;
-                }
-
-                if (!isset($grouped_children[$collected_pages_key]))
-                {
-                    $grouped_children[$collected_pages_key] = new CollectedPages();
-                }
-
-                $grouped_children[$collected_pages_key]->push($child);
-
-                continue;
-            }
-
-            // Reset the grouped_collection if other than page type
-            $collected_pages_key = null;
-
-            $grouped_children[$key] = $child;
-        }
-        
-        return collect($grouped_children)->map(function (PresentForParent $child) {
-            return $child->presentForParent($this);
-        });
+        return (new ParseChildrenForPresentation())($this, $this->children());
     }
 
     public function relationWithChild(ActsAsChild $child): Relation
