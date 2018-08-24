@@ -28,7 +28,7 @@ class Menu
         $types = config('thinktomorrow.chief-settings.menus', []);
 
         return collect($types)->map(function($menu, $key){
-            return new Menu($key, $menu['label'], $menu['view']);
+            return new static($key, $menu['label'], $menu['view']);
         });
     }
 
@@ -66,12 +66,16 @@ class Menu
 
     public function render()
     {
-        if ( ! view()->exists($this->view_path)) {
-            return '';
+        if (view()->exists($this->view_path)) {
+            return view($this->view_path,[
+                'menu' => $this,
+            ])->render();
         }
 
-        return view($this->view_path, [
-            'menu' => $this,
-        ])->render();
+        if(file_exists($this->view_path)) {
+            return file_get_contents($this->view_path);
+        }
+
+        return '';
     }
 }

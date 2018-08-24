@@ -174,7 +174,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
-                if ($page->hidden_in_menu == true) {
+                if ($page->hidden_in_menu == true || $page->isDraft() || $page->isArchived()) {
                     unset($items[$k]);
                 } else {
                     $item->url = self::composePageUrl($item, $page);

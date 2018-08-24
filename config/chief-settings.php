@@ -17,5 +17,5 @@ return [
             'label' => 'Hoofdnavigatie',
             'view'  => 'front.menus.main'
         ]
-    ]
+    ],
 ];
