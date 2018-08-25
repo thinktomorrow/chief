@@ -38,12 +38,12 @@ class PageSet extends Collection implements PresentForParent
     {
         $guessedParentViewName = $parent->collectionKey();
         $guessedViewName = $this->collectionKey();
-        $guessedPageSetViewName = $this->key ? $guessedViewName . '.' . $this->key  : $guessedViewName;
+        $guessedPageSetViewName = $this->key ? $this->key  : $guessedViewName;
 
         $viewPaths = [
             'front.modules.'.$guessedParentViewName.'.'.$guessedPageSetViewName,
-            'front.modules.'.$guessedParentViewName.'.'.$guessedViewName,
             'front.modules.'.$guessedPageSetViewName,
+            'front.modules.'.$guessedParentViewName.'.'.$guessedViewName,
             'front.modules.'.$guessedViewName,
         ];
 
