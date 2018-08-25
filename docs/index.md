@@ -6,6 +6,8 @@ description: chief is a package based cms built on top of the laravel framework.
 [Local development](/chief-development.md)
 [Pages](pages/index.md)
 [Modules](modules/index.md)
+[Menus](menus/index.md)
+[PageSets](pagesets/index.md)
 [Server](/server.md)
 [Changelog](/CHANGELOG.md)
 [Guidelines](/GUIDELINES.md)
@@ -119,9 +121,11 @@ php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvide
 There is one project related route that is expected by chief and that is: `pages.show`. This
 is the route for the detail of a static page. Make sure to add this one. 
 
+For the easiest setup you should also add the `pages.home` route. This will detect the homepage based on the config.
 
 ```File: routes\front.php```
 ```php
+Route::get('/', PagesController::class.'@homepage')->name('pages.home');
 Route::get('page/{slug}', PagesController::class.'@show')->name('pages.show');
 ```
 
@@ -188,7 +192,7 @@ An example of this view file is the following:
         {!! $page->content !!}
     </section>
 
-    {!! $page->presentChildren() !!}
+    {!! $page->renderChildren() !!}
 
     <section class="container editor-content">
         {!! $page->hero_title !!}

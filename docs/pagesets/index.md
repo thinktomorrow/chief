@@ -2,6 +2,8 @@
 [Local development](../chief-development.md)
 [Pages](pages/index.md)
 [Modules](modules/index.md)
+[Menus](menus/index.md)
+[PageSets](/index.md)
 [Server](../server.md)
 [Changelog](../CHANGELOG.md)
 [Guidelines](../GUIDELINES.md)
@@ -53,7 +55,7 @@ If the label is defined this will be used as the name of this pageset in the adm
 To customize how a pageset renders we can also customize the view that would be used.
 
 To create a view for this specific module, we create views/front/modules/pageset.blade.php in this case.
-The name of the view should be the same as the pageset type.
+The name of the view should be the same as the pageset type as defined in the chief-assets config file.
 You can also put this file in a folder with the name of a page to define a view specificly for this page and pageset.
 
 In this view we have access to the $pages and $parent variable.
