@@ -7,12 +7,40 @@
     position: fixed;
 }
 
-.active{
-    font-weight: bold;
+.underline{
+	text-decoration: underline;
+    text-decoration-color: #159957;
 }
 
 .chief{
 	display: inline-block;
 	width: 30px;
 	padding-left: 10px;
+}
+
+.main-nav {
+    width: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.main-nav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+}
+
+.main-nav a:hover {
+    color: #159957;
+}
+
+.active{
+    font-weight: bold;
+	color: #159957 !important;
 }
