@@ -1,0 +1,18 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.fixed{
+    position: fixed;
+}
+
+.active{
+    font-weight: bold;
+}
+
+.chief{
+	display: inline-block;
+	width: 30px;
+	padding-left: 10px;
+}

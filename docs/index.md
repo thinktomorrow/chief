@@ -1,16 +1,9 @@
 ---
+layout: default
 title: Install
 description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 1
 ---
-[Install](/index.md)
-[Local development](/chief-development.md)
-[Pages](pages/index.md)
-[Modules](modules/index.md)
-[Menus](menus/index.md)
-[PageSets](pagesets/index.md)
-[Server](/server.md)
-[Changelog](/CHANGELOG.md)
-[Guidelines](/GUIDELINES.md)
 # Chief
 
 Chief is a package based cms built on top of the laravel framework.

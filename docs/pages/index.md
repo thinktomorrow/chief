@@ -1,10 +1,9 @@
-[Install](../index.md)
-[Local development](../chief-development.md)
-[Pages](index.md)
-[Modules](modules/index.md)
-[Server](../server.md)
-[Changelog](../CHANGELOG.md)
-[Guidelines](../GUIDELINES.md)
+---
+layout: default
+title: Pages
+description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 3
+---
 # Pages
 
 ## TODO

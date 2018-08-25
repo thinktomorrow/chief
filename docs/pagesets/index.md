@@ -1,12 +1,9 @@
-[Install](../index.md)
-[Local development](../chief-development.md)
-[Pages](pages/index.md)
-[Modules](modules/index.md)
-[Menus](menus/index.md)
-[PageSets](/index.md)
-[Server](../server.md)
-[Changelog](../CHANGELOG.md)
-[Guidelines](../GUIDELINES.md)
+---
+layout: default
+title: Pagesets
+description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 6
+---
 # Pagesets
 
 A pageset is a collection of pages that can be added to a page as a module. 

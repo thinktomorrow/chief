@@ -1,11 +1,9 @@
-[Install](../index.md)
-[Local development](../chief-development.md)
-[Pages](pages/index.md)
-[Modules](modules/index.md)
-[Menus](/index.md)
-[Server](../server.md)
-[Changelog](../CHANGELOG.md)
-[Guidelines](../GUIDELINES.md)
+---
+layout: default
+title: Menus
+description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 5
+---
 # Menus
 
 Chief allows you to define multiple menus. And manage them seperatly
