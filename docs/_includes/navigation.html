@@ -17,6 +17,9 @@
             <a href="/chief{{ p.url }}" {% if p.url == page.url %}class="active"{% endif %}>
               {{ p.title }}
             </a>
+            {% if p.url == page.url %}
+              {% include toc.html html=content class="subnav" item_class="subnavitem" h_min=2 %}
+            {% endif %}
         {% endif %}
       {% endfor %}
       {% if site.github.is_project_page %}

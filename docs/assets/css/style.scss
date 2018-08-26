@@ -18,6 +18,7 @@
 	padding-left: 10px;
 }
 
+
 .main-nav {
     width: 300px;
     position: fixed;
@@ -29,11 +30,31 @@
 }
 
 .main-nav a {
-    padding: 6px 8px 6px 16px;
+    padding: 0px 8px 0px 16px;
     text-decoration: none;
     font-size: 18px;
     color: #818181;
     display: block;
+}
+
+.subnav{
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    a {
+        padding: 0px;
+        padding-left: 5px;
+        font-size: 15px;
+    }
+    ul {
+        padding-left: 20px;
+    }
+}
+
+.subnavitem{
+    list-style: none;
+    
 }
 
 .main-nav a:hover {

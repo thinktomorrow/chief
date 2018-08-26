@@ -10,7 +10,7 @@ A pageset is a collection of pages that can be added to a page as a module.
 In addition to this a pageset allows you to define query scopes.
 This lets you filter the collection by published or other query scopes as you see fit.
 
-# Creating pagesets
+## Creating pagesets
 To create a pageset you make a file in the src/Pagesets folder.
 
 ```php
@@ -48,7 +48,7 @@ There are a few things we can define here. For starters the required field is th
 The parameter accepts an array with parameters for this method.
 If the label is defined this will be used as the name of this pageset in the adminpanel. If label is not defined the name of the array is used.
 
-# Customizing pagesets
+## Customizing pagesets
 To customize how a pageset renders we can also customize the view that would be used.
 
 To create a view for this specific module, we create views/front/modules/pageset.blade.php in this case.
@@ -57,6 +57,6 @@ You can also put this file in a folder with the name of a page to define a view 
 
 In this view we have access to the $pages and $parent variable.
 
-# Using Pagesets
+## Using Pagesets
 Once this setup is done we can create instances of these pagesets from the admin panel.
 And following that to add them to a page, simple select them from the pagebuilder dropdown.

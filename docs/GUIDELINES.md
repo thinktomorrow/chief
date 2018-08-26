@@ -21,7 +21,7 @@ We have a couple of gulp tasks ready for the frontend development:
  - `gulp
 
 ## Guidelines
-#### Name classes explicitly for their purpose:
+Name classes explicitly for their purpose:
 
 ```
 <!-- bad -->
