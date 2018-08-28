@@ -29,12 +29,15 @@ class UpdatePageTest extends TestCase
         $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
 
         // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function(){})->name('pages.show');
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
     public function admin_can_view_the_edit_form()
     {
+        $this->disableExceptionHandling();
+
         $this->asAdmin()->get(route('chief.back.pages.edit', $this->page->id))
                                ->assertStatus(200);
     }
@@ -142,5 +145,27 @@ class UpdatePageTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertNull($this->page->fresh()->getTranslation('en'));
+    }
+
+    /** @test */
+    public function slug_uses_title_if_its_empty()
+    {
+        $page = factory(Page::class)->create([
+            'trans.nl.title'  => 'foobar nl',
+            'trans.nl.slug'   => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar nl',
+                    'slug'  => '',
+                ],
+            ])
+        );
+
+        $response->assertStatus(302);
+
+        $this->assertEquals('foobar-nl', $page->fresh()->slug);
     }
 }

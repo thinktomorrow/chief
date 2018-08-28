@@ -57,3 +57,9 @@ if (!function_exists('chiefSetting')) {
         return $manager->get($key, $default);
     }
 }
+
+if (!function_exists('chiefmenu')) {
+    function chiefmenu($key = 'main'){
+        return \Thinktomorrow\Chief\Menu\Menu::find($key);
+    }
+}

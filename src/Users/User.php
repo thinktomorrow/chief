@@ -61,11 +61,6 @@ class User extends Authenticatable implements HasMedia
 
     public function isSquantoDeveloper()
     {
-        return $this->isSuperAdmin();
-    }
-
-    public function isSuperAdmin()
-    {
         return $this->hasRole('developer');
     }
 

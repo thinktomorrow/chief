@@ -144,7 +144,7 @@ trait Translatable
     private function fetchLocales($available = true)
     {
         $available_locales = static::availableLocales();
-        $current_locales = $this->translations()->pluck('locale')->toArray();
+        $current_locales = $this->translations->pluck('locale')->toArray();
 
         return array_filter($available_locales, function ($v) use ($current_locales, $available) {
             return $available ? in_array($v, $current_locales) : !in_array($v, $current_locales);

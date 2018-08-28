@@ -31,7 +31,7 @@ class DetachedPageTest extends TestCase
     }
 
     /** @test */
-    function it_can_retrieve_custom_translation()
+    public function it_can_retrieve_custom_translation()
     {
         $page = Page::create([
             'collection'  => 'detached_pages',
@@ -44,7 +44,7 @@ class DetachedPageTest extends TestCase
     }
 
     /** @test */
-    function it_can_retrieve_translation_from_custom_table()
+    public function it_can_retrieve_translation_from_custom_table()
     {
         Page::create([
             'collection'  => 'detached_pages',
@@ -56,5 +56,4 @@ class DetachedPageTest extends TestCase
         $this->assertEquals(1, DetachedPageFakeTranslation::count());
         $this->assertEquals(0, PageTranslation::count());
     }
-
 }

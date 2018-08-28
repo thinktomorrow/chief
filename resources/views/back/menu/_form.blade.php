@@ -1,19 +1,31 @@
 @chiefformgroup(['field' => 'label'])
     @slot('label', 'Label')
     @slot('description', 'Dit is de tekst die wordt getoond in het menu. Verkies een korte, duidelijke term.')
-    <tabs v-cloak>
-        @foreach($menuitem->availableLocales() as $locale)
-            <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
-                <div class="row">
-                    <div class="column-4">
-                        <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+    @if(count($menuitem->availableLocales()) > 1)
+        <tabs v-cloak>
+            @foreach($menuitem->availableLocales() as $locale)
+                <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
+                    <div class="row">
+                        <div class="column-4">
+                            <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+                        </div>
                     </div>
-                </div>
 
-                <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
-            </tab>
+                    <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
+                </tab>
+            @endforeach
+        </tabs>
+    @else
+        @foreach($menuitem->availableLocales() as $locale)
+            <div class="row">
+                <div class="column-4">
+                    <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+                </div>
+            </div>
+            <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
         @endforeach
-    </tabs>
+    @endif
+    <input type="hidden" name="menu_type" value="{{$menuitem->menu_type}}">
 @endchiefformgroup
 
 <section class="formgroup">
@@ -49,32 +61,6 @@
                             </chief-multiselect>
 
                             <error class="caption text-warning" field="page_id" :errors="errors.all()"></error>
-
-                        </div>
-                    </label>
-
-                    <!-- collection type -->
-                    <label class="block stack custom-indicators" for="typeCollection">
-                        <input v-on:click="changeType('collection')" {{ (old('type', $menuitem->type) == 'collection') ? 'checked="checked"':'' }}
-                        name="type"
-                               value="collection"
-                               id="typeCollection"
-                               type="radio">
-                        <span class="custom-radiobutton --primary"></span>
-                        <strong>Paginagroep</strong> - automatische ophaling en weergave van online pagina's.
-
-                        <div v-if="type == 'collection'" class="stack-xs input-group-prefix relative">
-                            <chief-multiselect
-                                    name="collection_type"
-                                    :options='@json($collections)'
-                                    selected='@json(old('collection_type', $menuitem->collection_type))'
-                                    labelkey="plural"
-                                    valuekey="key"
-                                    placeholder="kies een paginagroep"
-                            >
-                            </chief-multiselect>
-
-                            <error class="caption text-warning" field="collection_type" :errors="errors.all()"></error>
 
                         </div>
                     </label>
@@ -118,46 +104,89 @@
     </div>
 </section>
 
+@if(count($parents) > 0)
+    @chiefformgroup(['field' => 'parent_id'])
+        @slot('label', 'Niveau')
+        @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
+        <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
+            <div>
+                <label class="block stack-xs custom-indicators" for="withoutParentId">
+                    <input v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
+                           name="allow_parent"
+                           value="0"
+                           id="withoutParentId"
+                           type="radio">
+                    <span class="custom-radiobutton --primary"></span>
+                    <strong>Geef dit item weer op het hoogste niveau.</strong>
+                </label>
+                <label class="block stack-xs custom-indicators" for="parentId">
+                    <input v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
+                           name="allow_parent"
+                           value="1"
+                           id="parentId"
+                           type="radio">
+                    <span class="custom-radiobutton --primary"></span>
+                    <strong>Selecteer het menuitem waaronder deze zich behoort.</strong>
 
-@chiefformgroup(['field' => 'parent_id'])
-    @slot('label', 'Niveau')
-    @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
-    <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
-        <div>
-            <label class="block stack-xs custom-indicators" for="withoutParentId">
-                <input v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
-                       name="allow_parent"
-                       value="0"
-                       id="withoutParentId"
-                       type="radio">
-                <span class="custom-radiobutton --primary"></span>
-                <strong>Geef dit item weer op het hoogste niveau.</strong>
-            </label>
-            <label class="block stack-xs custom-indicators" for="parentId">
-                <input v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"':'' }}
-                       name="allow_parent"
-                       value="1"
-                       id="parentId"
-                       type="radio">
-                <span class="custom-radiobutton --primary"></span>
-                <strong>Selecteer het menuitem waaronder deze zich behoort.</strong>
+                    <div v-if="type == '1'" class="stack-xs input-group-prefix relative">
+                        <chief-multiselect
+                                name="parent_id"
+                                :options='@json($parents)'
+                                selected='@json(old('parent_id', $menuitem->parent_id))'
+                                labelkey="label"
+                                valuekey="id"
+                                placeholder="Kies het bovenliggende menuitem"
+                        >
+                        </chief-multiselect>
+                    </div>
+                </label>
+            </div>
+        </radio-options>
+    @endchiefformgroup
+@endif
 
-                <div v-if="type == '1'" class="stack-xs input-group-prefix relative">
-                    <chief-multiselect
-                            name="parent_id"
-                            :options='@json($parents)'
-                            selected='@json(old('parent_id', $menuitem->parent_id))'
-                            labelkey="label"
-                            valuekey="id"
-                            placeholder="Kies het bovenliggende menuitem"
-                    >
-                    </chief-multiselect>
-                </div>
-            </label>
-        </div>
-    </radio-options>
+
+@chiefformgroup(['field' => 'collection_type'])
+    @slot('label', 'Onderliggende pagina groep')
+    @slot('description', 'Automatische oplijsting van een pagina groep.')
+    <chief-multiselect
+            name="collection_type"
+            :options='@json($collections)'
+            selected='@json(old('collection_type', $menuitem->collection_type))'
+            labelkey="plural"
+            valuekey="key"
+            placeholder="kies een paginagroep"
+    >
+    </chief-multiselect>
+
+    <error class="caption text-warning" field="collection_type" :errors="errors.all()"></error>
 @endchiefformgroup
 
+@if($menuitem->id && ! $menuitem->siblings()->isEmpty())
+    @chiefformgroup(['field' => 'order'])
+        @slot('label', 'Sortering')
+        @slot('description', 'Sortering van dit menu item op het huidige niveau')
+        <div class="row">
+            <div class="column-1">
+                <input type="number" name="order" id="order" placeholder="Menu order" value="{{ old('order', $menuitem->order) }}" class="input inset-s text-center">
+            </div>
+        </div>
+        <div class="stack">
+
+            <div class="panel panel-default bg-white">
+                <div class="inset-s" style="border-bottom:1px solid #f5f5f5">
+                    <span class="bold">Huidige sortering op dit niveau:</span>
+                </div>
+                @foreach($menuitem->siblingsIncludingSelf() as $sibling)
+                    <div class="inset-s" style="border-bottom:1px solid #f5f5f5;{{ $sibling->id == $menuitem->id ? 'background-color:#f5f5f5;' : '' }}">
+                        <span class="bold inline-s">{{ $sibling->order }}</span>
+                        <span>{{ $sibling->label }}</span>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endchiefformgroup
+@endif
 
 @push('custom-scripts')
 

@@ -4,7 +4,6 @@
 @push('custom-scripts')
     <script src="{{ cached_asset('/chief-assets/back/js/vendors/slim.kickstart.min.js','back') }}"></script>
     <script>
-
         Vue.component('slim', {
             props: ['options', 'group'],
             template: `

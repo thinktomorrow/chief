@@ -6,14 +6,14 @@ use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
+use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\PageSets\PageSetReference;
+use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
 
 class UpdateSections
 {
-    /** @var array */
-    private $sorting;
-
     /** @var Page */
     private $page;
 
@@ -23,17 +23,24 @@ class UpdateSections
     /** @var array */
     private $text_modules;
 
-    private function __construct(Page $page, array $relation_references, array $text_modules, array $sorting)
+    /**@var array */
+    private $pageset_refs;
+
+    /** @var array */
+    private $sorting;
+
+    private function __construct(Page $page, array $relation_references, array $text_modules, array $pageset_refs, array $sorting)
     {
         $this->page = $page;
         $this->relation_references = $relation_references;
         $this->text_modules = $text_modules;
+        $this->pageset_refs = $pageset_refs;
         $this->sorting = $sorting;
     }
 
-    public static function forPage(Page $page, array $relation_references, array $text_modules, array $sorting)
+    public static function forPage(Page $page, array $relation_references, array $text_modules, array $pageset_refs, array $sorting)
     {
-        return new static($page, $relation_references, $text_modules, $sorting);
+        return new static($page, $relation_references, $text_modules, $pageset_refs, $sorting);
     }
 
     public function updateModules()
@@ -41,12 +48,30 @@ class UpdateSections
         // Remove existing relations expect the text ones
         $this->removeExistingModules();
 
-        if(empty($this->relation_references)) return $this;
+        if (empty($this->relation_references)) {
+            return $this;
+        }
 
         $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references);
 
-        foreach($referred_instances as $instance) {
+        foreach ($referred_instances as $instance) {
             $this->page->adoptChild($instance, ['sort' => 0]);
+        }
+
+        return $this;
+    }
+
+    public function updatePageSets()
+    {
+        $this->removeExistingPagesets();
+
+        foreach($this->pageset_refs as $flat_pageset_ref) {
+
+            if(!$flat_pageset_ref) continue;
+
+            $stored_pageset_ref = $this->findOrCreateStoredPageSetReference($flat_pageset_ref);
+
+            $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
         }
 
         return $this;
@@ -54,24 +79,49 @@ class UpdateSections
 
     private function removeExistingModules()
     {
-        foreach($this->page->children() as $instance) {
-            if($instance instanceof TextModule) continue;
+        foreach ($this->page->children() as $instance) {
+            if ($instance instanceof StoredPageSetReference || $instance instanceof TextModule || $instance instanceof PagetitleModule) {
+                continue;
+            }
+            $this->page->rejectChild($instance);
+        }
+    }
+
+    private function removeExistingPagesets()
+    {
+        foreach ($this->page->children() as $instance) {
+            if ( ! $instance instanceof StoredPageSetReference) {
+                continue;
+            }
             $this->page->rejectChild($instance);
         }
     }
 
     public function addTextModules()
     {
-        if(!isset($this->text_modules['new']) || empty($this->text_modules['new'])) return $this;
+        if (!isset($this->text_modules['new']) || empty($this->text_modules['new'])) {
+            return $this;
+        }
 
-        foreach($this->text_modules['new'] as $text_module) {
+        foreach ($this->text_modules['new'] as $text_module) {
+
+            // Create pagetitle text module
+            if (isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
+                $module = app(CreateModule::class)->handle(
+                    (new PagetitleModule)->collectionDetails()->key,
+                    $text_module['slug'],
+                    $this->page->id
+                );
+            }
 
             // Create page specific text module
-            $module = app(CreateModule::class)->handle(
-                (new TextModule)->collectionDetails()->key,
-                $text_module['slug'],
-                $this->page->id
-            );
+            else {
+                $module = app(CreateModule::class)->handle(
+                    (new TextModule)->collectionDetails()->key,
+                    $text_module['slug'],
+                    $this->page->id
+                );
+            }
 
             // Connect to page - sorting will be set later on...
             $this->page->adoptChild($module, ['sort' => 0]);
@@ -89,15 +139,18 @@ class UpdateSections
 
     public function updateTextModules()
     {
-        if(!isset($this->text_modules['replace']) || empty($this->text_modules['replace'])) return $this;
+        if (!isset($this->text_modules['replace']) || empty($this->text_modules['replace'])) {
+            return $this;
+        }
 
-        foreach($this->text_modules['replace'] as $text_module) {
-
-            if(! $module = FlatReferenceFactory::fromString($text_module['id'])->instance() ) continue;
+        foreach ($this->text_modules['replace'] as $text_module) {
+            if (! $module = FlatReferenceFactory::fromString($text_module['id'])->instance()) {
+                continue;
+            }
 
             // Do not update if content of text is completely empty. We will remove this module instead
-            if($this->isTextCompletelyEmpty($text_module['trans'])) {
-                $this->removeTextModule($module);
+            if ($this->isTextCompletelyEmpty($text_module['trans'])) {
+                $this->removeTextualModule($module);
                 continue;
             }
 
@@ -108,11 +161,15 @@ class UpdateSections
         return $this;
     }
 
-    private function removeTextModule(TextModule $module)
+    private function removeTextualModule($module)
     {
+        if (! $module instanceof TextModule && ! $module instanceof PagetitleModule) {
+            throw new \Exception('Invalid request to remove non textual module');
+        }
+
         $this->page->rejectChild($module);
 
-        // In case of text module, we also delete the module itself
+        // In case of a textual module, we also delete the module itself
         $module->delete();
     }
 
@@ -120,17 +177,21 @@ class UpdateSections
     {
         $children = $this->page->children();
 
-        foreach($this->sorting as $sorting => $reference) {
+        foreach ($this->sorting as $sorting => $reference) {
 
             // Reference can be null in case that the module has been removed (empty selection). This will avoid
             // in case of duplicate module references that the removed module will be used for the sorting instead.
-            if(!$reference) continue;
+            if (!$reference) {
+                continue;
+            }
 
-            $child = $children->first(function($c) use($reference){
+            $child = $children->first(function ($c) use ($reference) {
                 return $c->flatReference()->get() == $reference;
             });
 
-            if(!$child) continue;
+            if (!$child) {
+                continue;
+            }
 
             $this->page->sortChild($child, $sorting);
         }
@@ -150,13 +211,11 @@ class UpdateSections
         $is_completely_empty = true;
 
         foreach ($trans as $locale => $lines) {
-
-            foreach($lines as $key => $line) {
-
-                $stripped_line = $this->stripTagsBlacklist($line,['p', 'br']);
+            foreach ($lines as $key => $line) {
+                $stripped_line = $this->stripTagsBlacklist($line, ['p', 'br']);
                 $stripped_line = trim($stripped_line);
 
-                if($stripped_line) {
+                if ($stripped_line) {
                     $is_completely_empty = false;
                     break;
                 }
@@ -181,5 +240,17 @@ class UpdateSections
         }
 
         return $value;
+    }
+
+    private function findOrCreateStoredPageSetReference(string $flat_pageset_ref): StoredPageSetReference
+    {
+        list($className, $id) = explode('@', $flat_pageset_ref);
+
+        /** If pageset reference is not stored yet, we will do this now */
+        if ($className == PageSetReference::class) {
+            return PageSetReference::find($id)->store();
+        }
+
+        return FlatReferenceFactory::fromString($flat_pageset_ref)->instance();
     }
 }

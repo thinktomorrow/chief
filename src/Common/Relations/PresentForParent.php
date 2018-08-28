@@ -6,5 +6,3 @@ interface PresentForParent
 {
     public function presentForParent(ActsAsParent $parent): string;
 }
-
-

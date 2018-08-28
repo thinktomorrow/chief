@@ -2,10 +2,10 @@
 declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Common\TranslatableFields;
 
-class HtmlField
+class HtmlField extends Field
 {
     public static function make()
     {
-        return Field::make(FieldType::fromString(FieldType::HTML));
+        return new static(new FieldType(FieldType::HTML));
     }
 }

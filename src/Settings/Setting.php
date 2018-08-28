@@ -9,10 +9,10 @@ use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 
 class Setting extends Model
 {
-    public $table = 'settings';
+    public $table      = 'settings';
     public $timestamps = false;
-    public $guarded = [];
-    public $casts = [
+    public $guarded    = [];
+    public $casts      = [
         'field' => 'array',
     ];
 
@@ -29,7 +29,7 @@ class Setting extends Model
     {
         if( ! $this->hasField()) return null;
 
-        $field = Field::make( FieldType::fromString($this->field['type']));
+        $field = FieldType::fromString($this->field['type']);
 
         if( isset($this->field['label']) ) $field->label($this->field['label']);
         if( isset($this->field['description']) ) $field->description($this->field['description']);

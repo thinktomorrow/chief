@@ -9,7 +9,7 @@
 
     @section('content')
 
-        <form id="createForm" method="POST" action="{{ route('chief.back.menu.store') }}" enctype="multipart/form-data" role="form">
+        <form id="createForm" method="POST" action="{{ route('chief.back.menuitem.store') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
             @include('chief::back.menu._form')

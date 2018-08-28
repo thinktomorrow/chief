@@ -2,7 +2,7 @@
     $defaultLocale = config('app.locale');
     $page_id = isset($page_id) ? $page_id : null;
 ?>
-<modal id="create-module" class="large-modal" title='' :active="{{ $errors->any() ? 'true' : 'false' }}">
+<modal id="create-module" class="large-modal" title='' :active="{{ ($errors->has('collection') || $errors->has('slug')) ? 'true' : 'false' }}">
     <form v-cloak id="createForm" method="POST" action="{{ route('chief.back.modules.store') }}" role="form">
         {{ csrf_field() }}
 

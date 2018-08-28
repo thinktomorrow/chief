@@ -21,7 +21,7 @@ class FlatReferenceCollection extends Collection
             $referenceStrings = [];
         }
 
-        return (new Collection($referenceStrings))->reject(function($referenceString){
+        return (new Collection($referenceStrings))->reject(function ($referenceString) {
             return is_null($referenceString);
         })->map(function ($referenceString) {
             return FlatReferenceFactory::fromString($referenceString)->instance();

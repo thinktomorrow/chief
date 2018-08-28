@@ -8,7 +8,7 @@ trait SettingFormParams
     protected function validSettingParams($overrides = [])
     {
         $params = [
-            'key' => 'new-key',
+            'key'   => 'new-key',
             'value' => 'new value',
         ];
 
@@ -22,7 +22,7 @@ trait SettingFormParams
     protected function validUpdateSettingParams($overrides = [])
     {
         $params = [
-            'key' => 'updated-key',
+            'key'   => 'updated-key',
             'value' => 'updated value',
         ];
 

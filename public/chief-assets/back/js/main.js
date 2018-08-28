@@ -2012,9 +2012,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["a"] = ({
     components: { Multiselect: __WEBPACK_IMPORTED_MODULE_0_vue_multiselect___default.a },
     props: {
+        // Should be an Array but can be an object as well.
         options: { default: function _default() {
                 return [];
-            }, type: Array },
+            } },
         selected: { default: null },
         name: { default: '', type: String },
         multiple: { default: false, type: Boolean },
@@ -2024,8 +2025,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
          * selected value will default to option.id, visible label to option.label
          * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
          */
-        valuekey: { default: null, type: String },
-        labelkey: { default: null, type: String },
+        valuekey: { default: 'id', type: String },
+        labelkey: { default: 'label', type: String },
 
         /** Grouped options */
         groupvalues: { default: null, type: String },
@@ -2036,10 +2037,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     data: function data() {
         return {
             // List of available options
-            values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
+            values: this.parseOptions(this.options),
+            // values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
             // Active selected option
-            value: []
+            value: [],
+
+            realValueKey: this.valuekey,
+            realLabelKey: this.labelkey
         };
     },
 
@@ -2103,6 +2108,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
     },
     methods: {
+        parseOptions: function parseOptions(options) {
+            options = this.isJson(options) ? JSON.parse(options) : options;
+
+            // We need an array so if options is given as key:value pairs, we convert them here.
+            if (this.isKeyValuePair(options)) {
+
+                var convertedOptions = [];
+
+                Object.getOwnPropertyNames(options).forEach(function (key) {
+                    convertedOptions.push({
+                        'id': key,
+                        'label': options[key]
+                    });
+                });
+                options = convertedOptions;
+            }
+
+            // If array is a list of primitive values, we convert them to a uniform object with value and label props.
+            else if (this.isSingleValueListing(options)) {
+                    var _convertedOptions = [];
+
+                    options.forEach(function (value) {
+                        _convertedOptions.push({
+                            'id': value,
+                            'label': value
+                        });
+                    });
+
+                    options = _convertedOptions;
+                }
+
+            return options;
+        },
         resetValue: function resetValue() {
             this.value = this.defaultValue();
         },
@@ -2233,6 +2271,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (value === 0) return false;
             if (Array.isArray(value) && value.length === 0) return true;
             return !value;
+        },
+        isSingleValueListing: function isSingleValueListing(options) {
+            if (!this.isArray(options) || typeof options[0] == "undefined") return false;
+
+            if (!this.isPrimitive(options[0])) return false;
+
+            return true;
+        },
+        isKeyValuePair: function isKeyValuePair(pairs) {
+            if (!this.isObject(pairs)) return false;
+
+            // Check if the values are primitives, which is expected in key value pairs,
+            // also we except the first key to not be 0
+            var propertyKeys = Object.getOwnPropertyNames(pairs);
+            for (var k in propertyKeys) {
+
+                var key = propertyKeys[k];
+
+                if (parseInt(key) === 0) {
+                    return false;
+                }
+
+                if (!this.isPrimitive(pairs[key])) return false;
+            }
+
+            return true;
         }
     }
 });
@@ -2290,6 +2354,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2301,10 +2366,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'pagebuilder-menu': __WEBPACK_IMPORTED_MODULE_1__PagebuilderMenu_vue__["a" /* default */]
     },
     props: {
+        'sectionKey': { required: true, type: String },
         'section': { type: Object },
-        'modules': { default: function _default() {
+        'options': { default: function _default() {
                 return [];
-            }, type: Array }
+            }, type: Array },
+        'placeholder': { default: 'Selecteer een module' },
+        'title': {}
     },
     data: function data() {
         return {
@@ -2339,79 +2407,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MultiSelect_vue__ = __webpack_require__("./resources/assets/js/components/MultiSelect.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    components: {
-        'chief-multiselect': __WEBPACK_IMPORTED_MODULE_0__MultiSelect_vue__["default"]
-    },
-    props: {
-        'section': { type: Object },
-        'modules': { default: function _default() {
-                return [];
-            }, type: Array }
-    },
-    data: function data() {
-        return {};
-    },
-    mounted: function mounted() {
-        var _this = this;
-
-        Eventbus.$on('updated-select', function (name, valuesForSelect, values, component) {
-
-            // Only trigger event coming from own child component
-            if (component.$parent._uid != _this._uid) return true;
-
-            _this.section.pageCollection = [];
-
-            for (var k in valuesForSelect) {
-                if (!valuesForSelect.hasOwnProperty(k)) continue;
-                _this.section.pageCollection.push(valuesForSelect[k]);
-            }
-
-            return true;
-        });
-    },
-
-    methods: {
-        //
-    }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagebuilder/Pagebuilder.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TextSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/TextSection.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/ModuleSection.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PageModuleSection_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2462,20 +2489,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
-// For modules we show module name
-// For pages we try to combine them into one section
-// Text modules are shown the content
-
-//    section.id (if null it is considered a new one)
-//    section.slug (required for new ones)
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     components: {
         'text-section': __WEBPACK_IMPORTED_MODULE_0__TextSection_vue__["a" /* default */],
         'module-section': __WEBPACK_IMPORTED_MODULE_1__ModuleSection_vue__["a" /* default */],
-        'pages-section': __WEBPACK_IMPORTED_MODULE_2__PageModuleSection_vue__["a" /* default */],
-        'pagebuilder-menu': __WEBPACK_IMPORTED_MODULE_3__PagebuilderMenu_vue__["a" /* default */]
+        'pagebuilder-menu': __WEBPACK_IMPORTED_MODULE_2__PagebuilderMenu_vue__["a" /* default */]
     },
     props: {
         'defaultSections': { default: function _default() {
@@ -2485,6 +2504,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 return [];
             }, type: Array },
         'modules': { default: function _default() {
+                return [];
+            }, type: Array },
+        'pages': { default: function _default() {
+                return [];
+            }, type: Array },
+        'pagesets': { default: function _default() {
                 return [];
             }, type: Array }
     },
@@ -2511,36 +2536,61 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         Eventbus.$on('addingModuleSectionAfter', function (position, component) {
             _this.addModuleSectionAfter(position);
         });
+
+        Eventbus.$on('addingPageSectionAfter', function (position, component) {
+            _this.addPageSectionAfter(position);
+        });
+
+        Eventbus.$on('addingPageSetSectionAfter', function (position, component) {
+            _this.addPageSetSectionAfter(position);
+        });
+
+        Eventbus.$on('addingNewPagetitleSectionAfter', function (position, component) {
+            _this.addNewPagetitleSectionAfter(position);
+        });
     },
 
     methods: {
         addNewTextSectionAfter: function addNewTextSectionAfter(section_sort) {
-
-            var index = section_sort + 1;
-            this._resortSectionsAfter(section_sort);
-
-            this.sections.push({
-                id: null,
-                key: this._randomHash(),
-                sort: index,
+            this._addNewSectionAfter(section_sort, {
                 type: 'text',
                 slug: this._randomHash(),
                 trans: []
             });
         },
         addModuleSectionAfter: function addModuleSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                type: 'module'
+            });
+        },
+        addPageSectionAfter: function addPageSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                type: 'page'
+            });
+        },
+        addPageSetSectionAfter: function addPageSetSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                type: 'pageset'
+            });
+        },
+        addNewPagetitleSectionAfter: function addNewPagetitleSectionAfter(section_sort) {
+            this._addNewSectionAfter(section_sort, {
+                type: 'pagetitle',
+                slug: this._randomHash(),
+                trans: []
+            });
+        },
+        _addNewSectionAfter: function _addNewSectionAfter(section_sort, data) {
 
             var index = section_sort + 1;
             this._resortSectionsAfter(section_sort);
 
-            this.sections.push({
-                id: null,
-                key: this._randomHash(),
-                sort: index,
-                type: 'module'
-            });
+            data.sort = index;
+            data.id = data.id || null, data.key = data.key || this._randomHash(), this.sections.push(data);
         },
-        removeSection: function removeSection() {},
+        removeSection: function removeSection() {
+            //
+        },
         _randomHash: function _randomHash() {
 
             // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -2577,6 +2627,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -2595,6 +2664,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         },
         addingModuleSectionAfter: function addingModuleSectionAfter(position) {
             Eventbus.$emit('addingModuleSectionAfter', position, this);
+
+            this.active = false;
+        },
+        addingPageSetSectionAfter: function addingPageSetSectionAfter(position) {
+            Eventbus.$emit('addingPageSetSectionAfter', position, this);
+
+            this.active = false;
+        },
+        addingPageSectionAfter: function addingPageSectionAfter(position) {
+            Eventbus.$emit('addingPageSectionAfter', position, this);
+
+            this.active = false;
+        },
+        addingNewPagetitleSectionAfter: function addingNewPagetitleSectionAfter(position) {
+            Eventbus.$emit('addingNewPagetitleSectionAfter', position, this);
 
             this.active = false;
         }
@@ -2644,6 +2728,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -2656,7 +2742,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'section': { type: Object },
         'locales': { default: function _default() {
                 return [];
-            }, type: Array }
+            }, type: Array },
+
+        // Allow redactor editor
+        'editor': { default: true, type: Boolean },
+
+        // Single line for edit or multiple lines
+        'single': { default: false, type: Boolean },
+
+        'title': {}
     },
     data: function data() {
         return {
@@ -2666,12 +2760,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     mounted: function mounted() {
 
-        for (var key in this.locales) {
-            if (!this.locales.hasOwnProperty(key)) continue;
+        if (this.editor) {
+            for (var key in this.locales) {
+                if (!this.locales.hasOwnProperty(key)) continue;
 
-            window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
-                // options
-            });
+                window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                    // options
+                });
+            }
         }
     },
 
@@ -29379,7 +29475,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "pagebuilder-menu show-on-hover" }, [
+  return _c("div", { staticClass: "pagebuilder-menu show-on-hover center-y" }, [
     _c("span", {
       directives: [
         {
@@ -29406,7 +29502,7 @@ var render = function() {
           expression: "active"
         }
       ],
-      staticClass: "block icon icon-minus-circle menu-trigger",
+      staticClass: "block icon icon-minus-circle",
       on: {
         click: function($event) {
           _vm.active = false
@@ -29425,47 +29521,144 @@ var render = function() {
             expression: "active"
           }
         ],
-        staticClass: "pagebuilder-menu-items"
+        staticClass:
+          "pagebuilder-menu-items bg-white squished --raised rounded inline-group-s"
       },
       [
         _c(
-          "span",
+          "div",
           {
+            staticClass: "left pointer",
             on: {
               click: function($event) {
                 _vm.addingNewTextSectionAfter(_vm.section.sort)
               }
             }
           },
-          [
-            _c("span", {
-              staticClass: "icon icon-align-left",
-              attrs: { title: "tekst / afbeelding toevoegen" }
-            })
-          ]
+          [_vm._m(0)]
         ),
         _vm._v(" "),
         _c(
-          "span",
+          "div",
           {
+            staticClass: "left pointer",
             on: {
               click: function($event) {
                 _vm.addingModuleSectionAfter(_vm.section.sort)
               }
             }
           },
-          [
-            _c("span", {
-              staticClass: "icon icon-clipboard",
-              attrs: { title: "vast blok selecteren" }
-            })
-          ]
-        )
+          [_vm._m(1)]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "left pointer",
+            on: {
+              click: function($event) {
+                _vm.addingPageSetSectionAfter(_vm.section.sort)
+              }
+            }
+          },
+          [_vm._m(2)]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "left pointer",
+            on: {
+              click: function($event) {
+                _vm.addingPageSectionAfter(_vm.section.sort)
+              }
+            }
+          },
+          [_vm._m(3)]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "left pointer" }, [
+          _c(
+            "span",
+            {
+              staticClass: "label label-o--secondary center-y",
+              attrs: { title: "pagina titel toevoegen" },
+              on: {
+                click: function($event) {
+                  _vm.addingNewPagetitleSectionAfter(_vm.section.sort)
+                }
+              }
+            },
+            [_vm._v("H1")]
+          )
+        ])
       ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "tekst / afbeelding toevoegen" }
+      },
+      [_c("i", { staticClass: "icon icon-align-left" }), _vm._v("Text")]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "vast blok selecteren" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-layout" }),
+        _vm._v("\n                Module\n            ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "pagina groep selecteren" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-layout" }),
+        _vm._v("\n                Paginagroep\n            ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "label label-o--secondary center-y",
+        attrs: { title: "pagina selecteren" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-layout" }),
+        _vm._v("\n                Pagina\n            ")
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 if (false) {
@@ -29501,54 +29694,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-322c5520\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    {
-      staticClass: "stack block inset",
-      staticStyle: { "border-left": "3px solid #14c8a7" }
-    },
-    [
-      _c("h3", [_vm._v("PAGINAS")]),
-      _vm._v(" "),
-      _c("chief-multiselect", {
-        attrs: {
-          name: "sections[modules][" + _vm._uid + "]",
-          options: _vm.modules,
-          multiple: true,
-          selected: _vm.section.pageCollection,
-          grouplabel: "group",
-          groupvalues: "values",
-          labelkey: "label",
-          valuekey: "id",
-          placeholder: "Selecteer een of meerdere pagina's."
-        }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-322c5520", { render: render, staticRenderFns: staticRenderFns })
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4afe08ae\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/MultiSelect.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -29568,8 +29713,8 @@ var render = function() {
           multiple: _vm.multiple,
           "hide-selected": _vm.multiple,
           "close-on-select": !_vm.multiple,
-          label: _vm.labelkey,
-          "track-by": _vm.valuekey,
+          label: _vm.realLabelKey,
+          "track-by": _vm.realValueKey,
           "group-label": _vm.grouplabel,
           "group-values": _vm.groupvalues,
           placeholder: _vm.placeholder,
@@ -29858,6 +30003,13 @@ var render = function() {
       }
     },
     [
+      _vm.title
+        ? _c("h3", {
+            staticClass: "pagebuilder-section-title",
+            domProps: { textContent: _vm._s(_vm.title) }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
           "div",
@@ -29865,15 +30017,15 @@ var render = function() {
           [
             _c("chief-multiselect", {
               attrs: {
-                name: "sections[modules][" + _vm._uid + "]",
-                options: _vm.modules,
+                name: "sections[" + _vm.sectionKey + "][" + _vm._uid + "]",
+                options: _vm.options,
                 multiple: false,
                 selected: _vm.section.id,
                 grouplabel: "group",
                 groupvalues: "values",
                 labelkey: "label",
                 valuekey: "id",
-                placeholder: "Selecteer een module."
+                placeholder: _vm.placeholder
               }
             })
           ],
@@ -29915,6 +30067,13 @@ var render = function() {
       staticStyle: { "border-left": "3px solid #14c8a7" }
     },
     [
+      _vm.title
+        ? _c("h3", {
+            staticClass: "pagebuilder-section-title",
+            domProps: { textContent: _vm._s(_vm.title) }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _c("input", {
         attrs: {
           type: "hidden",
@@ -29941,6 +30100,19 @@ var render = function() {
         domProps: { value: _vm.section.slug }
       }),
       _vm._v(" "),
+      _c("input", {
+        attrs: {
+          type: "hidden",
+          name:
+            "sections[text][" +
+            _vm.new_or_replace_key +
+            "][" +
+            _vm._uid +
+            "][type]"
+        },
+        domProps: { value: _vm.section.type }
+      }),
+      _vm._v(" "),
       _vm.locales.length > 1
         ? _c(
             "tabs",
@@ -29962,7 +30134,7 @@ var render = function() {
                         "][content]",
                       id: "editor-" + locale + "-" + _vm._uid,
                       cols: "30",
-                      rows: "10"
+                      rows: _vm.single ? 1 : 10
                     },
                     domProps: {
                       innerHTML: _vm._s(_vm.renderInitialContent(locale))
@@ -29989,7 +30161,7 @@ var render = function() {
                   "][content]",
                 id: "editor-" + _vm.locales[0] + "-" + _vm._uid,
                 cols: "30",
-                rows: "10"
+                rows: _vm.single ? 1 : 10
               },
               domProps: {
                 innerHTML: _vm._s(_vm.renderInitialContent(_vm.locales[0]))
@@ -30168,7 +30340,23 @@ var render = function() {
             ? _c("text-section", {
                 key: section.key,
                 staticClass: "stack",
+                class: section.type,
                 attrs: { section: section, locales: _vm.locales }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          section.type == "pagetitle"
+            ? _c("text-section", {
+                key: section.key,
+                staticClass: "stack",
+                class: section.type,
+                attrs: {
+                  section: section,
+                  locales: _vm.locales,
+                  single: true,
+                  editor: false,
+                  title: "Pagina titel"
+                }
               })
             : _vm._e(),
           _vm._v(" "),
@@ -30176,7 +30364,44 @@ var render = function() {
             ? _c("module-section", {
                 key: section.key,
                 staticClass: "stack",
-                attrs: { section: section, modules: _vm.modules }
+                class: section.type,
+                attrs: {
+                  sectionKey: "modules",
+                  section: section,
+                  options: _vm.modules,
+                  placeholder: "Selecteer een module",
+                  title: "module"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          section.type == "page"
+            ? _c("module-section", {
+                key: section.key,
+                staticClass: "stack",
+                class: section.type,
+                attrs: {
+                  sectionKey: "modules",
+                  section: section,
+                  options: _vm.pages,
+                  placeholder: "Selecteer een pagina",
+                  title: "pagina"
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          section.type == "pageset"
+            ? _c("module-section", {
+                key: section.key,
+                staticClass: "stack",
+                class: section.type,
+                attrs: {
+                  sectionKey: "pagesets",
+                  section: section,
+                  options: _vm.pagesets,
+                  placeholder: "Selecteer een pagina groep",
+                  title: "pagina groep"
+                }
               })
             : _vm._e()
         ]
@@ -30191,6 +30416,13 @@ var render = function() {
         [
           _vm._l(_vm.sortedSections, function(section) {
             return [
+              section.type == "pagetitle" && !section.id
+                ? _c("option", {
+                    attrs: { selected: "" },
+                    domProps: { value: section.slug }
+                  })
+                : _vm._e(),
+              _vm._v(" "),
               section.type == "text" && !section.id
                 ? _c("option", {
                     attrs: { selected: "" },
@@ -42219,61 +42451,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-5fa816ef", Component.options)
   } else {
     hotAPI.reload("data-v-5fa816ef", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/Pagebuilder/PageModuleSection.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_plugins_transform_object_rest_spread_transform_runtime_polyfill_false_helpers_false_node_modules_vue_loader_lib_selector_type_script_index_0_PageModuleSection_vue__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_322c5520_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PageModuleSection_vue__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-322c5520\",\"hasScoped\":false,\"optionsId\":\"0\",\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Pagebuilder/PageModuleSection.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__ = __webpack_require__("./node_modules/vue-loader/lib/runtime/component-normalizer.js");
-var disposed = false
-/* script */
-
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-
-var Component = Object(__WEBPACK_IMPORTED_MODULE_2__node_modules_vue_loader_lib_runtime_component_normalizer__["a" /* default */])(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_plugins_transform_object_rest_spread_transform_runtime_polyfill_false_helpers_false_node_modules_vue_loader_lib_selector_type_script_index_0_PageModuleSection_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_322c5520_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PageModuleSection_vue__["a" /* render */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_322c5520_hasScoped_false_optionsId_0_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PageModuleSection_vue__["b" /* staticRenderFns */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/Pagebuilder/PageModuleSection.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-322c5520", Component.options)
-  } else {
-    hotAPI.reload("data-v-322c5520", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true

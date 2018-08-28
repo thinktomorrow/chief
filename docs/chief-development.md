@@ -1,9 +1,9 @@
-[Install](/index.md)
-[Local development](/chief-development.md)
-[Pages](pages/index.md)
-[Server](/server.md)
-[Changelog](/CHANGELOG.md)
-[Guidelines](/GUIDELINES.md)
+---
+layout: default
+title: Local development
+description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 2
+---
 # Local Chief development
 
 For local development of chief we need another project to include the Chief package into since a package does not contain the whole laravel framework.

@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\Common\Relations;
 
-
 trait PresentingForParent
 {
     public function presentForParent(ActsAsParent $parent): string

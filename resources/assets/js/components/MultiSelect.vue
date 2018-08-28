@@ -9,8 +9,8 @@
             :hide-selected="multiple"
             :close-on-select="!multiple"
 
-            :label="labelkey"
-            :track-by="valuekey"
+            :label="realLabelKey"
+            :track-by="realValueKey"
 
             :group-label="grouplabel"
             :group-values="groupvalues"
@@ -45,7 +45,8 @@
     export default {
         components: { Multiselect },
         props: {
-            options: {default: function(){ return []; }, type: Array},
+            // Should be an Array but can be an object as well.
+            options: {default: function(){ return []; }},
             selected: {default: null},
             name: {default: '', type: String},
             multiple: {default: false, type: Boolean},
@@ -55,8 +56,8 @@
              * selected value will default to option.id, visible label to option.label
              * e.g. [{id: 1, label: "first"}, {id: 2, label: "second"}]
              */
-            valuekey: { default: null, type: String },
-            labelkey: { default: null, type: String },
+            valuekey: { default: 'id', type: String },
+            labelkey: { default: 'label', type: String },
 
             /** Grouped options */
             groupvalues: { default: null, type: String },
@@ -67,10 +68,14 @@
         data () {
             return {
                 // List of available options
-                values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
+                values: this.parseOptions(this.options),
+                // values: this.isJson(this.options) ? JSON.parse(this.options) : this.options,
 
                 // Active selected option
                 value: [],
+
+                realValueKey: this.valuekey,
+                realLabelKey: this.labelkey
             }
         },
         computed: {
@@ -133,6 +138,39 @@
 
         },
         methods: {
+            parseOptions(options){
+                options = this.isJson(options) ? JSON.parse(options) : options;
+
+                // We need an array so if options is given as key:value pairs, we convert them here.
+                if(this.isKeyValuePair(options)) {
+
+                    let convertedOptions = [];
+
+                    Object.getOwnPropertyNames(options).forEach((key) => {
+                        convertedOptions.push({
+                            'id' : key,
+                            'label' : options[key]
+                        })
+;                    });
+                    options = convertedOptions;
+                }
+
+                // If array is a list of primitive values, we convert them to a uniform object with value and label props.
+                else if(this.isSingleValueListing(options)) {
+                    let convertedOptions = [];
+
+                    options.forEach((value) => {
+                        convertedOptions.push({
+                            'id' : value,
+                            'label' : value
+                        })
+                    });
+
+                    options = convertedOptions;
+                }
+
+                return options;
+            },
             resetValue(){
                 this.value = this.defaultValue();
             },
@@ -265,6 +303,34 @@
                 if (value === 0) return false;
                 if (Array.isArray(value) && value.length === 0) return true;
                 return !value;
+            },
+            isSingleValueListing(options)
+            {
+                if(!this.isArray(options) || typeof options[0] == "undefined") return false;
+
+                if(! this.isPrimitive(options[0])) return false;
+
+                return true;
+            },
+            isKeyValuePair(pairs)
+            {
+                if(!this.isObject(pairs)) return false;
+
+                // Check if the values are primitives, which is expected in key value pairs,
+                // also we except the first key to not be 0
+                const propertyKeys = Object.getOwnPropertyNames(pairs);
+                for(let k in propertyKeys){
+
+                    const key = propertyKeys[k];
+
+                    if(parseInt(key) === 0){
+                        return false;
+                    }
+
+                    if( ! this.isPrimitive(pairs[key]) ) return false;
+                }
+
+                return true;
             },
         },
     }

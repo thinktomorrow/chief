@@ -39,9 +39,9 @@ class MenuRequest extends FormRequest
     {
         $translations = $this->request->get('trans', []);
         
-        $rules['type']      = 'required|in:custom,internal,collection,nolink';
-        $rules['page_id']   = 'required_if:type,internal';
-        $rules['collection_type']   = 'required_if:type,collection';
+        $rules['type']            = 'required|in:custom,internal,collection,nolink';
+        $rules['page_id']         = 'required_if:type,internal';
+        $rules['collection_type'] = 'required_if:type,collection';
 
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {
@@ -66,14 +66,17 @@ class MenuRequest extends FormRequest
             $attributes['trans.' . $locale . '.url']     = $locale . ' link';
         }
 
+        $attributes['page_id'] = 'Interne pagina';
+
+
         return $attributes;
     }
 
     public function messages()
     {
         return [
-            'required_if' => 'Gelieve nog een :attribute in te vullen, aub.',
-            'url' => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
+            'required_if' => 'Gelieve nog een :attribute te kiezen, aub.',
+            'url'         => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
         ];
     }
 

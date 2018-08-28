@@ -7,25 +7,38 @@ use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 
 class CreateAdmin extends BaseCommand
 {
-    protected $signature = 'chief:admin';
+    protected $signature = 'chief:admin {--dev}';
     protected $description = 'Create a new chief admin user';
 
     public function handle()
     {
         $this->settingPermissionsAndRoles();
 
-        $anticipations = $this->getAnticipations();
-
-        $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
+        $anticipations       = $this->getAnticipations();
         $anticipatedLastname = null;
-        $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
+        $firstname           = null;
+        $lastname            = null;
+
+        while (!$firstname) {
+            $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
+        }
+        
+        while (!$lastname) {
+            $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
+        }
 
         $email = $this->ask('email', str_slug($firstname).'@thinktomorrow.be');
 
         $password = $this->askPassword();
 
-        $this->createUser($firstname, $lastname, $email, $password, ['admin']);
-
+        if ($this->option('dev')) {
+            $role = 'developer';
+        } else {
+            $role = 'admin';
+        }
+        
+        $this->createUser($firstname, $lastname, $email, $password, [$role]);
+        
         $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
     }
 

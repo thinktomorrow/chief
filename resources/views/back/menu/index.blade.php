@@ -3,46 +3,27 @@
 @section('page-title','Voeg nieuw menu-item toe')
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Menubeheer.')
-    {{-- <button data-submit-form="createForm" type="button" class="btn btn-primary">Menu-item toevoegen</button> --}}
-    <div class="inline-group-s">
-        <a href="{{ route('chief.back.menu.create') }}" class="btn btn-primary">
-            <i class="icon icon-plus"></i>
-            Voeg een menu-item toe
-        </a>
-    </div>
+    @slot('title', 'Menu overzicht')
 @endcomponent
 
 @section('content')
-    <div class="treeview stack-l">
-        <div class="row">
-            <div class="column center-y">
-                <strong>Label</strong>
+    <div class="stack-l">
+        @foreach($menus as $menu)
+
+            <div class="row bg-white inset panel panel-default stack">
+                <div class="column-9">
+                    <a class="text-black bold" href="{{ route('chief.back.menus.show', $menu->key()) }}">
+                        {{ $menu->label() }}
+                    </a>
+                </div>
+                <div class="column-3 text-right">
+                    <options-dropdown class="inline-block">
+                        <div class="inset-s" v-cloak>
+                            <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="block squished-s --link-with-bg">Beheren</a>
+                        </div>
+                    </options-dropdown>
+                </div>
             </div>
-            <div class="column-4 center-y">
-                <strong>Link</strong>
-            </div>
-            <div class="column-2">
-
-            </div>
-        </div>
-        @foreach($menu as $menuitem)
-
-            <hr class="separator">
-
-            @include('chief::back.menu._partials._rowitem', ['item' => $menuitem])
-
-            @foreach($menuitem->children as $child)
-
-                @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
-
-                @foreach($child->children as $subchild)
-                    @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
-                @endforeach
-
-                <div class="stack"></div>
-
-            @endforeach
         @endforeach
     </div>
 

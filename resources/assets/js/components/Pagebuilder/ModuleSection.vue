@@ -1,17 +1,18 @@
 <template>
     <section class="stack block inset relative" style="border-left:3px solid rgba(21, 200, 167, 1); background-color:rgba(21, 200, 167, 0.05)">
+        <h3 class="pagebuilder-section-title" v-if="title" v-text="title"></h3>
         <div class="row">
             <div class="column-6">
                 <chief-multiselect
-                        :name="'sections[modules]['+_uid+']'"
-                        :options='modules'
+                        :name="'sections['+sectionKey+']['+_uid+']'"
+                        :options='options'
                         :multiple="false"
                         :selected="section.id"
                         grouplabel="group"
                         groupvalues="values"
                         labelkey="label"
                         valuekey="id"
-                        placeholder="Selecteer een module."
+                        :placeholder="placeholder"
                 >
                 </chief-multiselect>
             </div>
@@ -32,8 +33,11 @@
             'pagebuilder-menu': PagebuilderMenu
         },
         props: {
+            'sectionKey': { required: true, type: String },
             'section': { type: Object },
-            'modules' : { default: function(){ return [] }, type: Array}
+            'options' : { default: function(){ return [] }, type: Array },
+            'placeholder': { default: 'Selecteer een module'},
+            'title': {}
         },
         data(){
             return {

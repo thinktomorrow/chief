@@ -17,14 +17,5 @@
         <tab name="E-mail">
             @include('chief::back.system._partials.mail')
         </tab>
-        <tab name="Social">
-            @include('chief::back.system._partials.social')
-        </tab>
-        <tab name="Social cards">
-            @include('chief::back.system._partials.socialcards')
-        </tab>
-        <tab name="Analytics">
-            @include('chief::back.system._partials.analytics')
-        </tab>
     </tabs>
 @stop

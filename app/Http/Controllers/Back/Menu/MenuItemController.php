@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
@@ -15,28 +15,30 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
-class MenuController extends Controller
+class MenuItemController extends Controller
 {
-    public function index()
-    {
-        $menu = ChiefMenu::fromMenuItems()->items();
-
-        return view('chief::back.menu.index', compact('menu'));
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return Response
      */
-    public function create()
+    public function create($menutype)
     {
-        $menuitem       = new MenuItem;
-        $menuitem->type = MenuItem::TYPE_INTERNAL; // Default menu type
-        
-        $menuitems = ChiefMenu::fromMenuItems()->getForSelect();
+        $menuitem            = new MenuItem;
+        $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
+        $menuitem->menu_type = $menutype;
 
-        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->values()->toArray();
+        $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
+
+        $collections = CollectionKeys::fromConfig()
+            ->filterByType('pages')
+            ->rejectByKey('singles')
+            ->toCollectionDetails()
+            ->values()
+            ->prepend([
+                'key' => null,
+                'plural' => '...',
+            ])->toArray();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
@@ -57,7 +59,7 @@ class MenuController extends Controller
     {
         $menu = app(CreateMenu::class)->handle($request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', $menu->label . ' is aangemaakt');
+        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
     /**
@@ -75,17 +77,30 @@ class MenuController extends Controller
         // as expected by t9he select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
-            $page = Page::find($menuitem->page_id);
-            $internal_page_id = $page->flatReference()->get();
+            //Archived and deleted pages can no longer be referenced in a menu item
+            if($page = Page::find($menuitem->page_id)){
+                $internal_page_id = $page->flatReference()->get();
+            }
         }
 
-        $menuitems = ChiefMenu::fromMenuItems()->getForSelect($id);
+        $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
+        $collections = CollectionKeys::fromConfig()
+                                ->filterByType('pages')
+                                ->rejectByKey('singles')
+                                ->toCollectionDetails()
+                                ->values()
+                                ->prepend([
+                                    'key' => null,
+                                    'plural' => '...',
+                                ])->toArray();
 
-        $collections = CollectionKeys::fromConfig()->filterByType('pages')->rejectByKey('singles')->toCollectionDetails()->toArray();
+        $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
+            return $page->hidden_in_menu == true;
+        }))->toArray();
 
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
-            'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
+            'pages'            => $pages,
             'collections'      => $collections,
             'internal_page_id' => $internal_page_id,
             'parents'          => $menuitems,
@@ -103,7 +118,7 @@ class MenuController extends Controller
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
-        return redirect()->route('chief.back.menu.index')->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $menu->title . '" werd aangepast');
+        return redirect()->route('chief.back.menus.index')->with('messages.success', $menu->label .' is aangepast');
     }
 
     /**
@@ -114,12 +129,12 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        $menu = app(DeleteMenu::class)->handle($id);
+        $menuItem = app(DeleteMenu::class)->handle($id);
 
-        if ($menu) {
+        if ($menuItem) {
             $message = 'Het item werd verwijderd.';
 
-            return redirect()->route('chief.back.menu.index')->with('messages.warning', $message);
+            return redirect()->route('chief.back.menus.show', $menuItem->menuType())->with('messages.warning', $message);
         } else {
             return redirect()->back()->with('messages.warning', 'Je menu item is niet verwijderd. Probeer opnieuw');
         }

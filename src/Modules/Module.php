@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Modules;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
-use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
@@ -44,6 +44,13 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
+    public function __construct(array $attributes = [])
+    {
+        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+
+        parent::__construct($attributes);
+    }
+
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
@@ -63,6 +70,18 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public function isPageSpecific(): bool
     {
         return !is_null($this->page_id);
+    }
+
+    /**
+     * Each page / Module model can expose some custom fields. Add here the list of fields defined as name => Field where Field
+     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     *
+     * @param null $key
+     * @return array
+     */
+    public function customFields()
+    {
+        return [];
     }
 
     /**
@@ -105,26 +124,21 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
+            'title'   => InputField::make()->label('titel'),
             'content' => HtmlField::make()->label('Inhoud'),
         ];
     }
 
     /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
+     * We exclude the generic textModule out of the available collections.
+     * @return Collection
      */
-    public function collectionDetails(): CollectionDetails
+    public static function availableCollections(): Collection
     {
-        $collectionKey = $this->collectionKey();
-
-        return new CollectionDetails(
-            $collectionKey,
-            static::class,
-            $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
-            $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
-            $this->flatReferenceLabel()
-        );
+        return CollectionKeys::fromConfig()
+            ->filterByType(static::collectionType())
+            ->rejectByClass(TextModule::class)
+            ->toCollectionDetails();
     }
 
     public function mediaUrls($type = null, $size = 'full'): Collection
@@ -140,11 +154,11 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function mediaFields($key = null)
     {
         $types = [
-            MediaType::BACKGROUND => [
-                'type' => MediaType::BACKGROUND,
-                'label' => 'Achtergrond afbeelding',
-                'description' => '',
-            ]
+//            MediaType::BACKGROUND => [
+//                'type' => MediaType::BACKGROUND,
+//                'label' => 'Achtergrond afbeelding',
+//                'description' => '',
+//            ]
         ];
 
         return $key ? array_pluck($types, $key) : $types;

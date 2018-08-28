@@ -12,11 +12,11 @@ class InternalLinksController extends Controller
     public function index(Request $request)
     {
         // Fetch the links for specific locale
-        if($request->has('locale')) {
+        if ($request->has('locale')) {
             app()->setLocale($request->get('locale'));
         }
 
-        $links = Page::all()->map(function($page){
+        $links = Page::all()->map(function ($page) {
             return [
                 'name' => $page->menuLabel(),
                 'url' => $page->menuUrl(),
@@ -25,5 +25,4 @@ class InternalLinksController extends Controller
 
         return response()->json($links->prepend(['name' => '...', 'url' => ''])->all());
     }
-
 }

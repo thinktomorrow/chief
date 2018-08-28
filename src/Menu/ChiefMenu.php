@@ -4,8 +4,6 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Menu;
 
 use Vine\NodeCollection;
-use Vine\Node;
-use Thinktomorrow\Chief\Pages\Page;
 
 class ChiefMenu
 {
@@ -16,16 +14,20 @@ class ChiefMenu
         $this->collection = $collection;
     }
 
-    public static function fromMenuItems()
+    public static function fromMenuItems($type = 'main')
     {
-        $collection = NodeCollection::fromSource(new MenuItem());
+        $items = MenuItem::getNodeEntries($type);
 
-        return new static($collection);
+        return self::fromArray($items);
     }
 
     public static function fromArray(array $items)
     {
         $collection = NodeCollection::fromArray($items);
+
+        $collection->mapRecursive(function($node){
+            return $node->replaceEntry((new MenuItem())->entry($node));
+        });
 
         return new static($collection);
     }

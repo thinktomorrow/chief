@@ -23,7 +23,7 @@ class CreateSettingTest extends TestCase
             ->post(route('chief.back.settings.store'), $this->validSettingParams());
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.settings.edit', Setting::first()->getKey()));
+        $response->assertRedirect(route('chief.back.settings.edit'));
 
         $this->assertCount(1, Setting::all());
         $this->assertNewSettingValues(Setting::first());
@@ -110,34 +110,5 @@ class CreateSettingTest extends TestCase
         $settings = Setting::all();
         $this->assertCount(1, $settings);
         $this->assertNotNull($settings->first()->slug);
-    }
-
-    /** @test */
-    public function it_can_delete_settings()
-    {
-        $user = $this->developer();
-        $response = $this->actingAs($user, 'chief')
-            ->post(route('chief.back.settings.store'), $this->validSettingParams(['published' => false]));
-
-        $this->assertCount(1, Setting::get());
-
-        $setting = Setting::first();
-        $this->actingAs($user, 'chief')
-            ->delete(route('chief.back.settings.destroy', $setting->id), ['deleteconfirmation' => 'DELETE']);
-
-        $this->assertCount(0, Setting::get());
-    }
-    /** @test */
-    public function it_can_archive_settings()
-    {
-        $user = $this->developer();
-        $setting = factory(Setting::class)->create(['published' => true]);
-
-        $this->assertCount(1, Setting::get());
-
-        $this->actingAs($user, 'chief')
-            ->delete(route('chief.back.settings.destroy', Setting::first()->id), ['deleteconfirmation' => 'DELETE']);
-
-        $this->assertCount(0, Setting::withArchived()->get());
     }
 }

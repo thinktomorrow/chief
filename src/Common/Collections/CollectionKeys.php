@@ -50,6 +50,15 @@ class CollectionKeys
         return new static([$key => $class]);
     }
 
+    public function rejectByClass(string $class): self
+    {
+        if ($key = array_search($class, $this->pairs)) {
+            unset($this->pairs[$key]);
+        }
+
+        return new static($this->pairs);
+    }
+
     /**
      * Filter the collection pairs by their parent type: either 'pages' or 'modules'
      *
@@ -60,7 +69,7 @@ class CollectionKeys
     {
         $parentInstance = $this->parentInstanceByType($type);
 
-        $filtered = collect($this->pairs)->filter(function ($className) use($parentInstance) {
+        $filtered = collect($this->pairs)->filter(function ($className) use ($parentInstance) {
             return (new $className instanceof $parentInstance);
         });
 
@@ -69,9 +78,13 @@ class CollectionKeys
 
     private function parentInstanceByType($type)
     {
-        if($type == 'pages') return Page::class;
+        if ($type == 'pages') {
+            return Page::class;
+        }
 
-        if($type == 'modules') return Module::class;
+        if ($type == 'modules') {
+            return Module::class;
+        }
 
         throw new \DomainException('Invalid collection type [' . $type .'], should be either pages or modules');
     }

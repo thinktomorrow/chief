@@ -22,10 +22,10 @@ class DeleteMenuItemTest extends TestCase
         $menuitem = factory(MenuItem::class)->create();
 
         $response = $this->asAdmin()
-            ->delete(route('chief.back.menu.destroy', $menuitem->id));
+            ->delete(route('chief.back.menuitem.destroy', $menuitem->id));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menu.index'));
+        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menuType()));
 
         $this->assertCount(0, MenuItem::all());
     }
@@ -35,7 +35,7 @@ class DeleteMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create();
 
-        $response = $this->delete(route('chief.back.menu.destroy', $menuitem->id));
+        $response = $this->delete(route('chief.back.menuitem.destroy', $menuitem->id));
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(1, MenuItem::all());
