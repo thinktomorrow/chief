@@ -138,6 +138,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         return CollectionKeys::fromConfig()
             ->filterByType(static::collectionType())
             ->rejectByClass(TextModule::class)
+            ->rejectByClass(PagetitleModule::class)
             ->toCollectionDetails();
     }
 
