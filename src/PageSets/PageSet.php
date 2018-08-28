@@ -65,6 +65,8 @@ class PageSet extends Collection implements PresentForParent
 
     private function collectionKey()
     {
+        if($this->isEmpty()) return null;
+
         return $this->first()->collectionKey();
     }
 
