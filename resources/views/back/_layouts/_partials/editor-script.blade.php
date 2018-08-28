@@ -10,6 +10,7 @@
             formatting: ['p', 'h1', 'h2', 'h3'],
             imageResizable: true,
             imagePosition: true,
+            imageFigure: false,
             callbacks: {
                 upload: {
                     beforeSend: function(xhr)
