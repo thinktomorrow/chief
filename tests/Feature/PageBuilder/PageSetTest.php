@@ -29,7 +29,7 @@ class PageSetTest extends TestCase
             'articles'   => ArticlePageFake::class,
         ]);
 
-        $this->app['config']->set('thinktomorrow.chief-settings.pagesets', [
+        $this->app['config']->set('thinktomorrow.chief.pagesets', [
             'foobar'   => [
                 'action' => DummyPageSetRepository::class.'@all',
             ],

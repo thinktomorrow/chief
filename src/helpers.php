@@ -53,7 +53,7 @@ if (!function_exists('chiefSetting')) {
         if(is_null($key)) {
             return $manager;
         }
-
+        
         return $manager->get($key, $default);
     }
 }

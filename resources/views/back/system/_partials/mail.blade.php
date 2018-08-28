@@ -6,7 +6,7 @@
         </p>
     </div>
     <div class="formgroup-input column-7">
-        <input type="text" name="mail-system" id="mail-system" class="input inset-s" placeholder="E-mailadres">
+        <input type="text" name="settings[system-mail]" id="mail-system" class="input inset-s" placeholder="E-mailadres">
     </div>
 </section>
 <section class="row formgroup gutter-l">
@@ -17,10 +17,10 @@
         </p>
     </div>
     <div class="formgroup-input column-7">
-        <input type="text" name="mail-sender" id="mail-sender" class="input inset-s" placeholder="Naam afzender">
+        <input type="text" name="settings[sender-name]" id="mail-sender" class="input inset-s" placeholder="Naam afzender">
     </div>
 </section>
-<section class="row formgroup gutter-l border-primary">
+{{-- <section class="row formgroup gutter-l border-primary">
     <div class="column-5 center-y">
         <div class="text-primary">
             <h2 class="formgroup-label text-primary">Test e-mail</h2>
@@ -37,4 +37,4 @@
             <icon class="icon icon-mail"></icon>
         </a>
     </div>
-</section>
+</section> --}}

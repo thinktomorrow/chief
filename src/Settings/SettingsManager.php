@@ -10,7 +10,14 @@ class SettingsManager
     {
         $this->fetch();
 
-        if( ! isset($this->values[$key])) return $default;
+        if( ! isset($this->values[$key] )) return $default;
+        
+        if( is_array($this->values[$key]) ) {
+            
+            if($this->values[$key]['value'] == null) return $default;
+
+            return $this->values[$key]['value'];
+        }
 
         return $this->values[$key];
     }

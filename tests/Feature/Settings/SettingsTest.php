@@ -13,9 +13,7 @@ class SettingsTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief-settings', [
-            'homepage_id' => 1,
-        ]);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage_id.value', 1);
     }
 
     /** @test */
@@ -45,9 +43,7 @@ class SettingsTest extends TestCase
     /** @test */
     function if_value_is_null_the_default_is_used()
     {
-        $this->app['config']->set('thinktomorrow.chief-settings', [
-            'homepage_id' => null,
-        ]);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage_id.value', null);
 
         $this->assertEquals('foobar', chiefSetting('homepage_id', 'foobar'));
     }

@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -64,6 +65,7 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
+                'command.chief:settings',
             ]);
 
             // Bind our commands to the container
@@ -73,6 +75,7 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
+            $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()

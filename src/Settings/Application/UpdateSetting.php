@@ -1,31 +1,30 @@
 <?php
 
-namespace Thinktomorrow\Chief\Modules\Application;
+namespace Thinktomorrow\Chief\Settings\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Settings\Setting;
 
 class UpdateSetting
 {
 
-    public function handle($id, array $data)
+    public function handle(array $data)
     {
         try {
             DB::beginTransaction();
-
             foreach($data as $key => $value){
-                Setting::create([
-                    'key'   => $key,
-                    'value' => $value,
-                    'field' => [
-                        'type'        => FieldType::HTML,
-                        'label'       => 'homepage',
-                        'description' => 'extra information',
-                    ],
-                ]);
+                if($key && $value){
+                    $setting = Setting::where('key', $key)->first();
+
+                    if(!$setting) continue;
+
+                    $setting->value = $value;
+                    $setting->save();
+                }
             }            
 
             DB::commit();

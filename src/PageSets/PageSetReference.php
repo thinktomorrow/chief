@@ -47,7 +47,7 @@ class PageSetReference implements ProvidesFlatReference
 
     public static function all(): Collection
     {
-        $sets = config('thinktomorrow.chief-settings.pagesets', []);
+        $sets = config('thinktomorrow.chief.pagesets', []);
 
         return collect($sets)->map(function($set, $key){
             return PageSetReference::fromArray($key, $set);
@@ -107,11 +107,11 @@ class PageSetReference implements ProvidesFlatReference
     private static function validateAction($class, $method)
     {
         if( ! class_exists($class)) {
-            throw new \InvalidArgumentException('The class ['.$class.'] isn\'t a valid class reference or does not exist in the chief-settings.pagesets config entry.');
+            throw new \InvalidArgumentException('The class ['.$class.'] isn\'t a valid class reference or does not exist in the chief.pagesets config entry.');
         }
 
         if(!method_exists($class, $method)) {
-            throw new \InvalidArgumentException('The method ['.$method.'] does not exist on the class ['.$class.']. Make sure you provide a valid method to the action value in the chief-settings.pagesets config entry.');
+            throw new \InvalidArgumentException('The method ['.$method.'] does not exist on the class ['.$class.']. Make sure you provide a valid method to the action value in the chief.pagesets config entry.');
         }
     }
 

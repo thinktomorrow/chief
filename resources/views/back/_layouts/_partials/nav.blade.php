@@ -17,7 +17,7 @@
                             @can('view-user')
                                 <a class="block squished --link-with-bg {{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Users</a>
                             @endcan
-                            <a class="block squished --link-with-bg {{ isActiveUrl('admin/settings*') ? 'active' : '' }}" href="{{ route('chief.back.settings.index') }}">Settings</a>
+                                <a class="block squished --link-with-bg {{ isActiveUrl('admin/settings*') ? 'active' : '' }}" href="{{ route('chief.back.settings.edit') }}">Settings</a>
                             @can('view-audit')
                                 <a class="block squished --link-with-bg {{ isActiveUrl('admin/audit*') ? 'active' : '' }}" href="{{ route('chief.back.audit.index') }}">Audit</a>
                             @endcan

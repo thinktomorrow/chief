@@ -146,8 +146,8 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * -----------------------------------------------------------------
      */
     Route::post('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@store')->name('chief.back.settings.store');
-    Route::put('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@update')->name('chief.back.settings.update');
-    Route::get('settings/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@edit')->name('chief.back.settings.edit');
+    Route::put('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@update')->name('chief.back.settings.update');
+    Route::get('settings/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@edit')->name('chief.back.settings.edit');
 
 
 
