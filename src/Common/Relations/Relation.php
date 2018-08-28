@@ -60,7 +60,7 @@ class Relation extends Model
             if (!$child) {
 
                 // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
-                if ((!method_exists((new $relation->child_type),'withTrashed')) || ! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
+                if ((!method_exists((new $relation->child_type),'trashed')) || ! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
                     throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
                 }
@@ -129,5 +129,29 @@ class Relation extends Model
 
             return false;
         });
+    }
+
+    public function delete()
+    {
+        return static::where('parent_type',$this->parent_type)
+                ->where('parent_id',$this->parent_id)
+                ->where('child_type',$this->child_type)
+                ->where('child_id',$this->child_id)
+                ->delete();
+    }
+
+    public static function deleteRelationsOf($type, $id)
+    {
+        $relations = static::where(function($query) use($type, $id){
+            return $query->where('parent_type', $type)
+                         ->where('parent_id', $id);
+        })->orWhere(function($query) use($type, $id){
+            return $query->where('child_type', $type)
+                ->where('child_id', $id);
+        })->get();
+
+        foreach($relations as $relation) {
+            $relation->delete();
+        }
     }
 }
