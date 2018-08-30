@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Install | chief</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Install" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="chief is a package based cms built on top of the laravel framework." />
+<meta property="og:description" content="chief is a package based cms built on top of the laravel framework." />
+<link rel="canonical" href="http://localhost:4000/chief/" />
+<meta property="og:url" content="http://localhost:4000/chief/" />
+<meta property="og:site_name" content="chief" />
+<script type="application/ld+json">
+{"name":"chief","description":"chief is a package based cms built on top of the laravel framework.","@type":"WebSite","url":"http://localhost:4000/chief/","headline":"Install","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/chief/assets/css/style.css?v=f7b31a36fb89b4e3d04001f76cc6703b24019832">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+  <body>
+    <header class="fixed" role="banner">
+      <nav class="main-nav">
+    <h2 class="project-tagline">
+        <div class="chief">
+        <svg viewBox="0 0 1000 1000">
+            <path d="M682.4 896.267c-79.733 0-154.933-31.2-211.2-87.467l-288-288c-8-8-12.533-18.933-12.533-30.133v-345.067l-115.467-115.467c-16.533-16.533-16.533-43.733 0-60.267 8.267-8.267 19.2-12.533 30.133-12.533s21.867 4.267 30.133 12.533l115.467 115.467h345.067c11.467 0 22.133 4.533 30.133 12.533l287.467 288.533c56.533 56.533 87.467 131.467 87.467 211.2 0.267 164.8-133.867 298.667-298.667 298.667zM558.4 170.667h-241.867l85.333 85.333h241.6l-85.067-85.333zM833.333 446.667c0 0 0 0 0 0l-105.067-105.333c-1.067 0-1.867 0-2.933 0h-238.4l225.867 225.867c16.533 16.533 16.533 43.733 0 60.267s-43.733 16.533-60.267 0l-396.533-396.533v241.867l275.467 275.733c40.267 40.267 93.867 62.4 150.933 62.4 117.6 0 213.6-95.733 213.6-213.6 0-56.8-22.4-110.4-62.667-150.667z" />
+        </svg>
+        </div>
+  Chief
+</h2>
+      
+      
+      
+      
+        
+      
+        
+            <a href="/chief/" class="active">
+              Install
+            </a>
+            
+              <ul class="subnav">
+  <li class="subnavitem"><a href="#chief">Chief</a></li>
+  <li class="subnavitem"><a href="#install-in-existing-project">Install in existing project</a></li>
+  <li class="subnavitem"><a href="#database">Database</a></li>
+  <li class="subnavitem"><a href="#config--assets">Config &amp; Assets</a></li>
+  <li class="subnavitem"><a href="#default-routes">Default routes</a></li>
+  <li class="subnavitem"><a href="#multilingual">Multilingual</a></li>
+  <li class="subnavitem"><a href="#project-setup-advice">Project setup advice</a></li>
+  <li class="subnavitem"><a href="#mysql-index-length">MySQL index length</a></li>
+</ul>
+            
+        
+      
+        
+            <a href="/chief/chief-development.html" >
+              Local development
+            </a>
+            
+        
+      
+        
+            <a href="/chief/pages/" >
+              Pages
+            </a>
+            
+        
+      
+        
+            <a href="/chief/modules/" >
+              Modules
+            </a>
+            
+        
+      
+        
+            <a href="/chief/menus/" >
+              Menus
+            </a>
+            
+        
+      
+        
+            <a href="/chief/pagesets/" >
+              Pagesets
+            </a>
+            
+        
+      
+      
+        <a href="http://github.com/thinktomorrow/chief" target="_blank"><i class="fab fa-github"></i> Github</a>
+      
+  </nav>
+
+    </header>
+    <main id="content" class="main-content" role="main">
+      <h2 id="chief">Chief</h2>
+
+<p>Chief is a package based cms built on top of the laravel framework.
+Chief is solely the back-end(admin panel). You will need to create the front-end yourself.
+To install chief we need to install it into another project.
+This can be either an existing one or a fresh Laravel 5.6+ project.</p>
+
+<p>Start a new Think Tomorrow project skeleton with the following command</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>composer create-project thinktomorrow/project-skeleton &lt;projectname&gt;
+</code></pre></div></div>
+
+<h2 id="install-in-existing-project">Install in existing project</h2>
+
+<p>Chief can be installed via composer.</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">composer</span> <span class="k">require</span> <span class="nx">thinktomorrow</span><span class="o">/</span><span class="nx">chief</span>
+</code></pre></div></div>
+<p>The package will automatically register its service provider to hook into your application.</p>
+
+<p>Next edit the application exception handler to extend the chief exception handler.
+The Chief Exception handler takes care of the admin authentication and authorization.
+In the <code class="highlighter-rouge">App\Exceptions\Handler</code> file extend the class as such:</p>
+
+<p><code class="highlighter-rouge">File: App\Exceptions\Handler.php</code></p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">use</span> <span class="nx">Thinktomorrow\Chief\App\Exceptions\Handler</span> <span class="k">as</span> <span class="nx">ChiefExceptionHandler</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Handler</span> <span class="k">extends</span> <span class="nx">ChiefExceptionHandler</span>
+</code></pre></div></div>
+
+<p>Add the <code class="highlighter-rouge">AuthenticateChiefSession::class</code> middleware to your <code class="highlighter-rouge">App\Http\Kernel</code> file. 
+You should place these in a <code class="highlighter-rouge">web-chief</code> middleware group like so:</p>
+
+<p><code class="highlighter-rouge">File: App\Http\Kernel.php</code></p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="nv">$middlewareGroups</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="s1">'web-chief'</span> <span class="o">=&gt;</span> <span class="p">[</span>
+            <span class="nx">\Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<p>Next in the same file we should add the following entries to the $routeMiddleware array.</p>
+
+<p><code class="highlighter-rouge">File: App\Http\Kernel.php</code></p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="nv">$routeMiddleware</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">'auth.superadmin'</span> <span class="o">=&gt;</span> <span class="nx">AuthenticateSuperadmin</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'chief-guest'</span> <span class="o">=&gt;</span> <span class="nx">\Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'chief-validate-invite'</span> <span class="o">=&gt;</span> <span class="nx">\Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'role'</span> <span class="o">=&gt;</span> <span class="nx">\Spatie\Permission\Middlewares\RoleMiddleware</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="s1">'permission'</span> <span class="o">=&gt;</span> <span class="nx">\Spatie\Permission\Middlewares\PermissionMiddleware</span><span class="o">::</span><span class="na">class</span><span class="p">,</span>
+        <span class="o">...</span>
+    <span class="p">];</span>
+</code></pre></div></div>
+
+<h2 id="database">Database</h2>
+
+<p>Connect a database with your application and make sure you have set the proper database credentials in your <code class="highlighter-rouge">.env</code> file.</p>
+
+<p>Next perform the migrate artisan command. This will automatically run the chief migrations as well.
+Note that Chief has separate tables for the chief admin users, <code class="highlighter-rouge">chief-users</code> and <code class="highlighter-rouge">chief_password_resets</code>. This way there
+is no interference with your application user logic.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">php</span> <span class="nx">artisan</span> <span class="nx">migrate</span>
+</code></pre></div></div>
+
+<p>Next we need at least one main admin user to login and start managing the admin panel.
+This command will create the basic roles and permissions and allows to setup the first admin account:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">php</span> <span class="nx">artisan</span> <span class="nx">chief</span><span class="o">:</span><span class="nx">admin</span>
+</code></pre></div></div>
+
+<h2 id="config--assets">Config &amp; Assets</h2>
+
+<p>The next step is to publish the chief-assets to our public folder.
+If you want to overwrite existing files you can add the <code class="highlighter-rouge">--force</code> flag here.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">php</span> <span class="nx">artisan</span> <span class="nx">vendor</span><span class="o">:</span><span class="nx">publish</span> <span class="o">--</span><span class="nx">tag</span><span class="o">=</span><span class="nx">chief</span><span class="o">-</span><span class="nx">assets</span>
+</code></pre></div></div>
+
+<p>Publish the chief config to <code class="highlighter-rouge">config/thinktomorrow/chief</code> as this will require you to set some application defaults such as
+contact email and application name.</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">php</span> <span class="nx">artisan</span> <span class="nx">vendor</span><span class="o">:</span><span class="nx">publish</span> <span class="o">--</span><span class="nx">tag</span><span class="o">=</span><span class="nx">chief</span><span class="o">-</span><span class="nx">config</span>
+</code></pre></div></div>
+<p>Make sure to set at least the <code class="highlighter-rouge">name</code> value to your project name as it is used in some of the generator commands. Ideally this should match
+the namespace of your <code class="highlighter-rouge">src</code> folder, if you have any. Make sure to namespace the src folder in your composer.json to match this name.</p>
+
+<p>The following vendor assets should also be published to your application:</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// The dimsav translatable package
+</span><span class="nx">php</span> <span class="nx">artisan</span> <span class="nx">vendor</span><span class="o">:</span><span class="nx">publish</span> <span class="o">--</span><span class="nx">tag</span><span class="o">=</span><span class="nx">translatable</span>
+
+<span class="c1">// The thinktomorrow locale package
+</span><span class="nx">php</span> <span class="nx">artisan</span> <span class="nx">vendor</span><span class="o">:</span><span class="nx">publish</span> <span class="o">--</span><span class="nx">provider</span><span class="o">=</span><span class="s2">"Thinktomorrow\Locale\LocaleServiceProvider"</span>
+</code></pre></div></div>
+
+<h2 id="default-routes">Default routes</h2>
+<p>There is one project related route that is expected by chief and that is: <code class="highlighter-rouge">pages.show</code>. This
+is the route for the detail of a static page. Make sure to add this one.</p>
+
+<p>For the easiest setup you should also add the <code class="highlighter-rouge">pages.home</code> route. This will detect the homepage based on the config.</p>
+
+<p><code class="highlighter-rouge">File: routes\front.php</code></p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Route</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="nx">PagesController</span><span class="o">::</span><span class="na">class</span><span class="o">.</span><span class="s1">'@homepage'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">(</span><span class="s1">'pages.home'</span><span class="p">);</span>
+<span class="nx">Route</span><span class="o">::</span><span class="na">get</span><span class="p">(</span><span class="s1">'page/{slug}'</span><span class="p">,</span> <span class="nx">PagesController</span><span class="o">::</span><span class="na">class</span><span class="o">.</span><span class="s1">'@show'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">(</span><span class="s1">'pages.show'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Also add a controller file for this front end route.
+This one is an example:</p>
+
+<p><code class="highlighter-rouge">File: App\Http\Controller</code></p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?php</span>
+<span class="k">namespace</span> <span class="nx">App\Http\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpKernel\Exception\NotFoundHttpException</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Thinktomorrow\Chief\Pages\Page</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">PagesController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nv">$slug</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$page</span> <span class="o">=</span> <span class="nx">Page</span><span class="o">::</span><span class="na">findPublishedBySlug</span><span class="p">(</span><span class="nv">$slug</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">NotFoundHttpException</span><span class="p">(</span><span class="s1">'No published page found by slug ['</span><span class="o">.</span><span class="nv">$slug</span><span class="o">.</span><span class="s1">']'</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// TODO: If slug matches the homepage page, redirect to root to avoid duplicate content
+</span>        <span class="k">if</span><span class="p">(</span><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">isHomepage</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">redirect</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">route</span><span class="p">(</span><span class="s1">'pages.home'</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nv">$page</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">homepage</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// Get the page that has the flag 'is_homepage'. Otherwise we take the first singles pages found. If not found, we take the first published page...
+</span>        <span class="nv">$page</span> <span class="o">=</span> <span class="nx">Page</span><span class="o">::</span><span class="na">guessHomepage</span><span class="p">();</span>
+
+        <span class="k">return</span> <span class="nv">$page</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>To get this route to work it’s a good idea to add a view file where we can show a page.</p>
+
+<p>An example of this view file is the following:</p>
+
+<p><code class="highlighter-rouge">File: resources\views\front\pages\show.blade.php</code></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@extends('front._layouts.master')
+
+@section('content')
+
+    <span class="c">&lt;!-- hero --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span> <span class="na">style=</span><span class="s">"background: url() top right no-repeat;"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"column-7"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;h1&gt;&lt;/h1&gt;</span>
+                <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"editor-content"</span><span class="nt">&gt;</span>
+                    {!! trans('pages.statics.hero.description') !!}
+                <span class="nt">&lt;/div&gt;</span>
+            <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+
+    <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"container editor-content"</span><span class="nt">&gt;</span>
+        {!! $page-&gt;content !!}
+    <span class="nt">&lt;/section&gt;</span>
+
+    {!! $page-&gt;renderChildren() !!}
+
+    <span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">"container editor-content"</span><span class="nt">&gt;</span>
+        {!! $page-&gt;hero_title !!}
+        {!! $page-&gt;hero_description !!}
+    <span class="nt">&lt;/section&gt;</span>
+
+@stop
+</code></pre></div></div>
+
+<p>Next to get the front-end to work you should set a homepage id in the chief-settings config file.
+This determines what the homepage/landing page will be. Currently this is changed through that config file.
+Eventually this will be editable in the admin.</p>
+
+<h2 id="multilingual">Multilingual</h2>
+
+<p>There are a couple of places where you need to configure the localisation of your application.
+At the following files you should change the locales to your desired setup:</p>
+
+<ul>
+  <li>Set the available locales of the application in the <code class="highlighter-rouge">config/translatable.php</code> file. The values in the <code class="highlighter-rouge">locales</code> array will be available for the admin to manage.</li>
+  <li>Set the frontend locales of the application in the <code class="highlighter-rouge">config/thinktomorrow/locale.php</code> file. The values in this <code class="highlighter-rouge">locales</code> array will be the allowed locales for the visitors of your application.</li>
+  <li>Set the default and fallback locale in the <code class="highlighter-rouge">config/app.php</code> file. Keep in mind that this value needs to consist of one of the available locales as set in the <code class="highlighter-rouge">config/translatable.php</code>.</li>
+</ul>
+
+<h2 id="project-setup-advice">Project setup advice</h2>
+<p>Following adjustments are not automatically enforced but are however recommended in your project.</p>
+
+<h2 id="mysql-index-length">MySQL index length</h2>
+<p>Add following snippet in the AppServiceProvider of your project if you use MySQL older than 5.7.7
+ref: https://laravel.com/docs/master/migrations#creating-indexes
+<code class="highlighter-rouge">Schema::defaultStringLength(191)</code></p>
+
+<p><code class="highlighter-rouge">File: App\Providers\AppServiceProvider.php</code></p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nx">Illuminate\Support\Facades\Schema</span><span class="p">;</span>
+
+<span class="sd">/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">boot</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nx">Schema</span><span class="o">::</span><span class="na">defaultStringLength</span><span class="p">(</span><span class="mi">191</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="faq">FAQ</h1>
+
+<p>Q: I get the “Route [login] not defined” error. Help!<br />
+A: Extend our ChiefExceptionHandler in the <code class="highlighter-rouge">app/handler.php</code> file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.</p>
+
+<p>Q: I get the “Tokenmismatch” error after login into the admin. Help!<br />
+A: This most likely means you have an outdated version of chief. Run ‘composer update’ to get the latest version.</p>
+
+<p>Q: I get the “Class web-chief does not exist” error. Help!<br />
+A: Add the <code class="highlighter-rouge">AuthenticateChiefSession::class</code> middleware group to your <code class="highlighter-rouge">App\Http\Kernel.php</code> file.</p>
+
+<p>Q: I get the ‘Expected response code 250 but got code “530”, with message “530 5.7.1 Authentication required ”’ error. Help! 
+A: Please make sure your mail settings in your .env file are correct.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="http://github.com/thinktomorrow/chief">chief</a> is maintained by <a href="http://github.com/thinktomorrow">thinktomorrow</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+
+    
+  </body>
+</html>

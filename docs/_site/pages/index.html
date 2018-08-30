@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Pages | chief</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Pages" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="chief is a package based cms built on top of the laravel framework." />
+<meta property="og:description" content="chief is a package based cms built on top of the laravel framework." />
+<link rel="canonical" href="http://localhost:4000/chief/pages/" />
+<meta property="og:url" content="http://localhost:4000/chief/pages/" />
+<meta property="og:site_name" content="chief" />
+<script type="application/ld+json">
+{"description":"chief is a package based cms built on top of the laravel framework.","@type":"WebPage","url":"http://localhost:4000/chief/pages/","headline":"Pages","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/chief/assets/css/style.css?v=f7b31a36fb89b4e3d04001f76cc6703b24019832">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+  <body>
+    <header class="fixed" role="banner">
+      <nav class="main-nav">
+    <h2 class="project-tagline">
+        <div class="chief">
+        <svg viewBox="0 0 1000 1000">
+            <path d="M682.4 896.267c-79.733 0-154.933-31.2-211.2-87.467l-288-288c-8-8-12.533-18.933-12.533-30.133v-345.067l-115.467-115.467c-16.533-16.533-16.533-43.733 0-60.267 8.267-8.267 19.2-12.533 30.133-12.533s21.867 4.267 30.133 12.533l115.467 115.467h345.067c11.467 0 22.133 4.533 30.133 12.533l287.467 288.533c56.533 56.533 87.467 131.467 87.467 211.2 0.267 164.8-133.867 298.667-298.667 298.667zM558.4 170.667h-241.867l85.333 85.333h241.6l-85.067-85.333zM833.333 446.667c0 0 0 0 0 0l-105.067-105.333c-1.067 0-1.867 0-2.933 0h-238.4l225.867 225.867c16.533 16.533 16.533 43.733 0 60.267s-43.733 16.533-60.267 0l-396.533-396.533v241.867l275.467 275.733c40.267 40.267 93.867 62.4 150.933 62.4 117.6 0 213.6-95.733 213.6-213.6 0-56.8-22.4-110.4-62.667-150.667z" />
+        </svg>
+        </div>
+  Chief
+</h2>
+      
+      
+      
+      
+        
+      
+        
+            <a href="/chief/" >
+              Install
+            </a>
+            
+        
+      
+        
+            <a href="/chief/chief-development.html" >
+              Local development
+            </a>
+            
+        
+      
+        
+            <a href="/chief/pages/" class="active">
+              Pages
+            </a>
+            
+              <ul class="subnav">
+  <li class="subnavitem"><a href="#todo">TODO</a></li>
+  <li class="subnavitem"><a href="#required">required</a></li>
+  <li class="subnavitem"><a href="#adding-a-new-page">Adding a new page</a></li>
+  <li class="subnavitem"><a href="#setting-custom-fields">Setting custom fields</a></li>
+  <li class="subnavitem"><a href="#page-api">Page API</a></li>
+  <li class="subnavitem"><a href="#publishable-api">Publishable API</a></li>
+  <li class="subnavitem"><a href="#featurable-api">Featurable API</a></li>
+  <li class="subnavitem"><a href="#create-custom-page">Create custom page</a></li>
+</ul>
+            
+        
+      
+        
+            <a href="/chief/modules/" >
+              Modules
+            </a>
+            
+        
+      
+        
+            <a href="/chief/menus/" >
+              Menus
+            </a>
+            
+        
+      
+        
+            <a href="/chief/pagesets/" >
+              Pagesets
+            </a>
+            
+        
+      
+      
+        <a href="http://github.com/thinktomorrow/chief" target="_blank"><i class="fab fa-github"></i> Github</a>
+      
+  </nav>
+
+    </header>
+    <main id="content" class="main-content" role="main">
+      <h1 id="pages">Pages</h1>
+
+<h2 id="todo">TODO</h2>
+<ul>
+  <li>what is a page?</li>
+  <li>Single page</li>
+  <li>adding a new page (+ what’s needs to be created)</li>
+  <li>customizing a page model
+    <ul>
+      <li>fields</li>
+      <li>media</li>
+    </ul>
+  </li>
+  <li>detached page</li>
+</ul>
+
+<h2 id="required">required</h2>
+<p>Make sure to set your namespace in the config <code class="highlighter-rouge">config/thinktomorrow/chief.php</code>.</p>
+
+<h1 id="work-with-pages">Work with pages</h1>
+<p>Each page model should basically require:</p>
+<ul>
+  <li>routes</li>
+  <li>corresponding controllers</li>
+  <li>views.</li>
+</ul>
+
+<p>We recommend creating a PageController to manage the different page endpoints. Here’s an example:</p>
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nx">App\Http\Controllers</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Illuminate\Http\Request</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Thinktomorrow\Chief\Pages\Page</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">App\Http\Controllers\Controller</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">PageController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'pages.index'</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s1">'pages'</span> <span class="o">=&gt;</span> <span class="nx">Page</span><span class="o">::</span><span class="na">all</span><span class="p">()</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">show</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">view</span><span class="p">(</span><span class="s1">'pages.index'</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s1">'page'</span> <span class="o">=&gt;</span> <span class="nx">Page</span><span class="o">::</span><span class="na">findBySlug</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">slug</span><span class="p">)</span>
+        <span class="p">]);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Create the necessary routes for each endpoint. By default, we assume the page routing has the following naming convention:
+<code class="highlighter-rouge">pages.index</code>, <code class="highlighter-rouge">pages.show</code> (TODO: elaborate)</p>
+
+<h2 id="adding-a-new-page">Adding a new page</h2>
+<ul>
+  <li>create a new model and extend from the Page model like so:</li>
+</ul>
+
+<h2 id="setting-custom-fields">Setting custom fields</h2>
+<p>We can use squanto fields to include a way to manage static content. Squanto is the package that deals with static text management of the site.
+The way you can aim these translations to a specific</p>
+
+<h2 id="page-api">Page API</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">all</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Retrieves all the pages</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">findBySlug</span><span class="p">(</span><span class="nv">$slug</span><span class="p">)</span> 
+</code></pre></div></div>
+<p>Retrieve a page by its unique slug value.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">sortedByCreated</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Sort the results by last created pages.</p>
+
+<h2 id="publishable-api">Publishable API</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">getAllPublished</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Retrieves all the published pages.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">findPublishedBySlug</span><span class="p">(</span><span class="nv">$slug</span><span class="p">)</span> 
+</code></pre></div></div>
+<p>Retrieve a published page by its unique slug value.
+If the page is not published, no page will be returned.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">sortedByPublished</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Sort the results by last created pages.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">isPublished</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Returns true of false based on the published status
+See isDraft() for the inverse.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">isDraft</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Return true or false based on the draft status
+See isPublished() for the inverse.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">publish</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Changes the page to published
+See draft() for the inverse</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">draft</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Changes the page to draft
+See publish() for the inverse</p>
+
+<h2 id="featurable-api">Featurable API</h2>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">isFeatured</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Returns true of false based on the featured status
+See isDraft() for the inverse.</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">feature</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Changes the page to featured
+See unfeature() for the inverse</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$page</span><span class="o">-&gt;</span><span class="na">unfeature</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Changes the page to not featured
+See feature() for the inverse</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Page</span><span class="o">::</span><span class="na">featured</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">all</span><span class="p">()</span> 
+</code></pre></div></div>
+<p>Scope the query by the featured pages.</p>
+
+<h2 id="create-custom-page">Create custom page</h2>
+
+<ul>
+  <li>routing</li>
+  <li>model</li>
+  <li>controllers</li>
+  <li>
+    <p>views</p>
+  </li>
+  <li>custom traits / behaviour -&gt; bit extreme</li>
+</ul>
+
+<p>-&gt; easy setup for new page element…. chief:page <name></name></p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="http://github.com/thinktomorrow/chief">chief</a> is maintained by <a href="http://github.com/thinktomorrow">thinktomorrow</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+
+    
+  </body>
+</html>

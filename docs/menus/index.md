@@ -6,6 +6,10 @@ navigation_weight: 5
 ---
 # Menus
 
+- intro
+- create a menu
+- render a menu
+
 Chief allows you to define multiple menus. And manage them seperatly
 
 ## Creating a menu
