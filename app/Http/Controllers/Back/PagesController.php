@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\PageSets\PageSetReference;
 use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
@@ -73,9 +74,12 @@ class PagesController extends Controller
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
-        $available_modules = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($page))->toArray();
-        $available_pages = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($page))->toArray();
-        $available_pagesets = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets($page))->toArray();
+
+        $available = Relation::availableChildren($page);
+        
+        $available_modules         = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($available))->toArray();
+        $available_pages           = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($available))->toArray();
+        $available_pagesets        = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets())->toArray();
 
         // Current sections
         $sections = $page->children()->map(function ($section, $index) {
