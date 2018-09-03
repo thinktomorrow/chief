@@ -51,7 +51,7 @@ class UpdatePage
     {
         $translations = collect($translations)->map(function ($trans, $locale) {
             if ($trans['slug'] != '') {
-                $trans['slug'] = str_slug($trans['slug']);
+                $trans['slug'] = str_slug_slashed($trans['slug']);
             } else {
                 $trans['slug'] = str_slug($trans['title']);
             }

@@ -50,3 +50,16 @@ if (!function_exists('chiefmenu')) {
         return \Thinktomorrow\Chief\Menu\Menu::find($key);
     }
 }
+
+if (!function_exists('str_slug_slashed')) {
+    function str_slug_slashed($title, $separator = '-', $language = 'en'){
+
+        $parts = explode('/',$title);
+
+        foreach($parts as $i => $part){
+            $parts[$i] = str_slug($part, $separator, $language);
+        }
+
+        return implode('/',$parts);
+    }
+}
