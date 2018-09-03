@@ -22,7 +22,7 @@
         [v-cloak]{ display:none; }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ cached_asset('/chief-assets/back/css/main.css','back') }}">
+    <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
 
     @stack('custom-styles')
     @include('chief::back._layouts._partials.project-head')
