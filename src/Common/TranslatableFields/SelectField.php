@@ -23,4 +23,11 @@ class SelectField extends Field
 
         return $this;
     }
+
+    public function multiple($value)
+    {
+        $this->values['multiple'] = $value;
+
+        return $this;
+    }
 }
