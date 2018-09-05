@@ -1,4 +1,3 @@
-<!-- Login form area -->
 @extends('chief::back._layouts.login')
 
 @section('title')
@@ -6,7 +5,9 @@
 @endsection
 
 @section('content')
-    <div class="login-page">
+    <div class="reset-wrapper">
+        <div class="reset-block">
+
         <h1>Reset uw wachtwoord</h1>
 
         @if($errors and count($errors) > 0)
@@ -17,27 +18,38 @@
             </div>
         @endif
 
+
         <form class="login-form" role="form" method="POST" action="{{ route('chief.back.password.request') }}">
+                    <div class="form-wrapper">
             {{ csrf_field() }}
 
             <input type="hidden" name="token" value="{{ $token }}">
 
-            <div class="input-group">
-                <span class="lnr lnr-user"></span>
-                {!! Form::text('email', null, array('class'=>'validate[required]', 'placeholder'=>'E-mail', 'id'=>'identity', 'value' => '$email')) !!}
+            <div class="squished">
+                <div class="input-group-prefix relative">
+                    <span class="input-prefix"><span class="lnr lnr-envelope"></span></span>
+                    <input type="email" class="validate[required]" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}">
+                </div>
             </div>
 
-            <div class="input-group">
-                <span class="lnr lnr-keyboard"></span>
-                {!! Form::password('password', array('class'=>'validate[required]', 'placeholder'=>'Nieuw wachtwoord', 'id'=>'password')) !!}
+            <div class="squished">
+                <div class="input-group-prefix relative">
+                    <span class="input-prefix"><span class="lnr lnr-keyboard"></span></span>
+                    <input type="password" class="validate[required]" name="password" placeholder="Nieuw wachtwoord" id="password">
+                </div>
             </div>
 
-            <div class="input-group">
-                <span class="lnr lnr-keyboard"></span>
-                {!! Form::password('password-confirm', array('class'=>'validate[required]', 'name'=>'password_confirmation' , 'placeholder'=>'Herhaal wachtwoord', 'id'=>'password')) !!}
+            <div class="squished">
+                <div class="input-group-prefix relative">
+                    <span class="input-prefix"><span class="lnr lnr-keyboard"></span></span>
+                    <input type="password" class="validate[required]" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm">
+                </div>
             </div>
 
-            {!! Form::submit('Reset wachtwoord', array('class'=>'greyishBtn submitForm'))!!}
+            <div class="squished">
+                <button type="submit" class="btn btn-block submitForm">Reset mijn wachtwoord</button>
+            </div>
+        </div>
 
         </form>
     </div>
