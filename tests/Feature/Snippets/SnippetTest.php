@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Snippets;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Snippets\Snippet;
 use Thinktomorrow\Chief\Tests\TestCase;
+use SebastianBergmann\CodeCoverage\Report\Html\Renderer;
 
 class SnippetTest extends TestCase
 {
@@ -31,5 +32,13 @@ class SnippetTest extends TestCase
     {
         $this->assertCount(1, Snippet::all());
         $this->assertInstanceOf(Snippet::class, Snippet::all()->first());
+    }
+
+    /** @test */
+    public function it_can_escape_for_redactor_clips()
+    {
+        $rendered = Snippet::renderForClips();
+
+        $this->assertEquals('["snippet stub", "\<p\>This is a snippet\</p\>"]', $rendered);
     }
 }

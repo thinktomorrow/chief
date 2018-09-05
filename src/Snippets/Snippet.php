@@ -19,9 +19,9 @@ class Snippet
 
     public function __construct(string $key, string $label, string $view_path)
     {
-        $this->label = $label;
+        $this->label     = $label;
         $this->view_path = $view_path;
-        $this->key = $key;
+        $this->key       = $key;
     }
 
     public static function all(): Collection
@@ -68,5 +68,18 @@ class Snippet
         }
 
         return '';
+    }
+
+    public static function renderForClips()
+    {
+        $result = [];
+        foreach(self::all() as $snippet){
+            $view   = $snippet->render();
+            $view = trim(preg_replace('/\s+/', ' ', $view));
+            $view   = str_replace('\'', '"', $view);
+            $result = '[\''. $snippet->label . '\', \'' . str_replace(['<', '>'], ['\<', '\>'], $view) . '\']';
+        }
+
+        return $result;
     }
 }

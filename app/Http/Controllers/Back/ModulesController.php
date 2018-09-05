@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\App\Http\Requests\ModuleCreateRequest;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\App\Http\Requests\ModuleUpdateRequest;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
+use Thinktomorrow\Chief\Snippets\Snippet;
 
 class ModulesController extends Controller
 {
@@ -57,8 +58,9 @@ class ModulesController extends Controller
         $module->injectTranslationForForm();
 
         return view('chief::back.modules.edit', [
-            'module'            => $module,
-            'images'          => $this->populateMedia($module),
+            'module'   => $module,
+            'images'   => $this->populateMedia($module),
+            'snippets' => Snippet::renderForClips()
         ]);
     }
 

@@ -18035,314 +18035,110 @@ $R.add('module', 'list', {
 })(Redactor);
 (function($R)
 {
-    $R.add('plugin', 'video', {
+    $R.add('plugin', 'clips', {
         translations: {
-            en: {
-                "video": "Video",
-                "video-html-code": "Video Embed Code or Youtube/Vimeo Link"
+    		en: {
+    			"clips": "Clips",
+    			"clips-select": "Please, select a clip"
             }
         },
         modals: {
-            'video':
-                '<form action=""> \
-                    <div class="form-item"> \
-                        <label for="modal-video-input">## video-html-code ## <span class="req">*</span></label> \
-                        <textarea id="modal-video-input" name="video" style="height: 160px;"></textarea> \
-                    </div> \
-                </form>'
+            'clips': ''
         },
         init: function(app)
         {
             this.app = app;
-            this.lang = app.lang;
             this.opts = app.opts;
+            this.lang = app.lang;
             this.toolbar = app.toolbar;
-            this.component = app.component;
             this.insertion = app.insertion;
-            this.inspector = app.inspector;
         },
         // messages
         onmodal: {
-            video: {
-                opened: function($modal, $form)
+            clips: {
+                open: function($modal)
                 {
-                    $form.getField('video').focus();
-                },
-                insert: function($modal, $form)
-                {
-                    var data = $form.getData();
-                    this._insert(data);
+                    this._build($modal);
                 }
             }
-        },
-        oncontextbar: function(e, contextbar)
-        {
-            var data = this.inspector.parse(e.target)
-            if (data.isComponentType('video'))
-            {
-                var node = data.getComponent();
-                var buttons = {
-                    "remove": {
-                        title: this.lang.get('delete'),
-                        api: 'plugin.video.remove',
-                        args: node
-                    }
-                };
-
-                contextbar.set(e, node, buttons, 'bottom');
-            }
-
         },
 
         // public
         start: function()
         {
-            var obj = {
-                title: this.lang.get('video'),
-                api: 'plugin.video.open'
+            if (!this.opts.clips) return;
+
+            var data = {
+                title: this.lang.get('clips'),
+                api: 'plugin.clips.open'
             };
 
-            var $button = this.toolbar.addButtonAfter('image', 'video', obj);
-            $button.setIcon('<i class="re-icon-video"></i>');
+            var $button = this.toolbar.addButton('clips', data);
+            $button.setIcon('<i class="re-icon-clips"></i>');
         },
-        open: function()
-		{
+        open: function(type)
+        {
             var options = {
-                title: this.lang.get('video'),
+                title: this.lang.get('clips'),
                 width: '600px',
-                name: 'video',
-                handle: 'insert',
-                commands: {
-                    insert: { title: this.lang.get('insert') },
-                    cancel: { title: this.lang.get('cancel') }
-                }
+                name: 'clips'
             };
 
             this.app.api('module.modal.build', options);
 		},
-        remove: function(node)
-        {
-            this.component.remove(node);
-        },
 
-        // private
-		_insert: function(data)
+		// private
+		_build: function($modal)
 		{
-    		this.app.api('module.modal.close');
+    		var $body = $modal.getBody();
+            var $label = this._buildLabel();
+            var $list = this._buildList();
 
-    		if (data.video.trim() === '')
-    		{
-        	    return;
-    		}
+            this._buildItems($list);
 
-            // parsing
-            data.video = this._matchData(data.video);
+            $body.html('');
+            $body.append($label);
+            $body.append($list);
 
-            // inserting
-            if (this._isVideoIframe(data.video))
+		},
+		_buildLabel: function()
+		{
+            var $label = $R.dom('<label>');
+            $label.html(this.lang.parse('## clips-select ##:'));
+
+    		return $label;
+		},
+		_buildList: function()
+		{
+    		var $list = $R.dom('<ul>');
+            $list.addClass('redactor-clips-list');
+
+            return $list;
+		},
+		_buildItems: function($list)
+		{
+    		var items = this.opts.clips;
+    		for (var i = 0; i < items.length; i++)
             {
-                var $video = this.component.create('video', data.video);
-                this.insertion.insertHtml($video);
+                var $li = $R.dom('<li>');
+                var $item = $R.dom('<span>');
+
+                $item.attr('data-index', i);
+                $item.html(items[i][0]);
+                $item.on('click', this._insert.bind(this));
+
+                $li.append($item);
+                $list.append($li);
             }
 		},
-
-		_isVideoIframe: function(data)
+		_insert: function(e)
 		{
-            return (data.match(/<iframe|<video/gi) !== null);
-		},
-		_matchData: function(data)
-		{
-			var iframeStart = '<iframe style="width: 500px; height: 281px;" src="';
-			var iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
+            var $item = $R.dom(e.target);
+            var index = $item.attr('data-index');
+            var html = this.opts.clips[index][1];
 
-            if (this._isVideoIframe(data))
-			{
-				var allowed = ['iframe', 'video', 'source'];
-				var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-
-			    data = data.replace(tags, function ($0, $1)
-			    {
-			        return (allowed.indexOf($1.toLowerCase()) === -1) ? '' : $0;
-			    });
-			}
-
-			if (data.match(this.opts.regex.youtube))
-			{
-				data = data.replace(this.opts.regex.youtube, iframeStart + '//www.youtube.com/embed/$1' + iframeEnd);
-			}
-			else if (data.match(this.opts.regex.vimeo))
-			{
-				data = data.replace(this.opts.regex.vimeo, iframeStart + '//player.vimeo.com/video/$2' + iframeEnd);
-			}
-
-
-			return data;
+            this.app.api('module.modal.close');
+            this.insertion.insertRaw(html);
 		}
-    });
-})(Redactor);
-(function($R)
-{
-    $R.add('class', 'video.component', {
-        mixins: ['dom', 'component'],
-        init: function(app, el)
-        {
-            this.app = app;
-
-            // init
-            return (el && el.cmnt !== undefined) ? el : this._init(el);
-        },
-
-        // private
-        _init: function(el)
-        {
-            if (typeof el !== 'undefined')
-            {
-                var $node = $R.dom(el);
-                var $wrapper = $node.closest('figure');
-                if ($wrapper.length !== 0)
-                {
-                    this.parse($wrapper);
-                }
-                else
-                {
-                    this.parse('<figure>');
-                    this.append(el);
-                }
-            }
-            else
-            {
-                this.parse('<figure>');
-            }
-
-
-            this._initWrapper();
-        },
-        _initWrapper: function()
-        {
-            this.addClass('redactor-component');
-            this.attr({
-                'data-redactor-type': 'video',
-                'tabindex': '-1',
-                'contenteditable': false
-            });
-        }
-    });
-})(Redactor);
-(function($R)
-{
-    $R.add('plugin', 'snippets', {
-        init: function(app)
-        {
-            this.app = app;
-            this.opts = app.opts;
-            this.toolbar = app.toolbar;
-        },
-        modals: {
-            'snippets':
-                '<form action=""> \
-                    <div class="form-item"> \
-                        <label for="modal-video-input">Snippets <span class="req">*</span></label> \
-                        <textarea id="modal-video-input" name="video" style="height: 160px;"></textarea> \
-                    </div> \
-                </form>'
-        },
-        // messages
-        onmodal: {
-            snippets: {
-                open: function($modal, $form)
-                {
-                    console.log('open trigger');
-                    if (!this.opts.snippetslink) return;
-
-                    this.$modal = $modal;
-                    this.$form = $form;
-
-                    this._load($modal);
-                }
-            }
-        },
-        start: function()
-        {
-            var obj = {
-                title: 'snippets',
-                api: 'plugin.snippets.open'
-            };
-
-            var $button = this.toolbar.addButtonAfter('image', 'snippets', obj);
-            $button.setIcon('<i class="re-icon-video"></i>');
-        },
-        _load: function($modal)
-        {
-            console.log('load');
-            var $body = $modal.getBody();
-
-			this.$box = $R.dom('<div>');
-			this.$box.attr('data-title', 'choose');
-			this.$box.addClass('redactor-modal-tab');
-			this.$box.hide();
-			this.$box.css({
-    			overflow: 'auto',
-    			height: '300px',
-    			'line-height': 1
-			});
-
-			$body.append(this.$box);
-            $R.ajax.get({
-                url: this.opts.snippetslink,
-                success: this.data.bind(this)
-            });
-        },
-        _build: function(data)
-        {
-            var $selector = this.$modal.find('#redactor-defined-links');
-            if ($selector.length === 0)
-            {
-                var $body = this.$modal.getBody();
-                var $item = $R.dom('<div class="form-item" />');
-                var $selector = $R.dom('<select id="redactor-defined-links" />');
-
-                $item.append($selector);
-                $body.prepend($item);
-            }
-
-            this.links = [];
-
-            $selector.html('');
-            $selector.off('change');
-
-            for (var key in data)
-            {
-                if (!data.hasOwnProperty(key) || typeof data[key] !== 'object')
-                {
-                    continue;
-                }
-
-                this.links[key] = data[key];
-
-                var $option = $R.dom('<option>');
-                $option.val(key);
-                $option.html(data[key].name);
-
-                $selector.append($option);
-            }
-
-            $selector.on('change', this._select.bind(this));
-        },
-        open: function()
-		{
-            console.log('test open')
-            var options = {
-                title: 'snippets',
-                width: '600px',
-                name: 'snippets',
-                handle: 'insert',
-                commands: {
-                    insert: { title: 'insert' },
-                    cancel: { title: 'cancel' }
-                }
-            };
-            
-            this.app.api('module.modal.build', options);
-        },
     });
 })(Redactor);

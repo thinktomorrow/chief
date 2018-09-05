@@ -21,6 +21,7 @@ if (!function_exists('honeypot_fields')) {
 }
 
 
+
 /**
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box

@@ -1,11 +1,11 @@
 @push('custom-scripts')
     <script>
         $R.options = {
-            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'snippets'],
+            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'widget', 'clips'],
             @if(admin()->hasRole('developer'))
-                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
+                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'widget', 'clips'],
             @else
-                buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
+                buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'clips'],
             @endif
             formatting: ['p', 'h1', 'h2', 'h3'],
             imageResizable: true,
@@ -22,7 +22,10 @@
             },
             imageUpload: '{{ $imageUploadUrl }}',
             definedlinks: '{{ route('chief.api.internal-links') }}',
-            snippetslink: '{{ route('chief.api.snippets-links') }}',
+            clips: [
+                ['test', 'first snippet'],
+                ['test 2', 'second snippet']
+            ], 
             customClasses: [
                 {
                     title: '<span class="icon icon-droplet"></span> link als knop',
