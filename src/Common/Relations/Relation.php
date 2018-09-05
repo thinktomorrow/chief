@@ -120,10 +120,13 @@ class Relation extends Model
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
         $collection = collect([]);
         
-        foreach ($available_children_types as $type) {
-            $collection = $collection->merge((new $type())->all());
-        }
-        
+        // Merging the results of all the pages and all the modules, then filter by the config
+        // This prevents us from having duplicates and also reduces the query load.
+        $collection = array_merge(Page::all()->all(), Module::all()->all());
+        $collection = collect($collection)->filter(function($page) use($available_children_types){
+            return in_array(get_class($page), $available_children_types); 
+        });
+
         return $collection->reject(function ($item) use ($parent) {
             if ($item instanceof Page) {
                 return $item->id == $parent->id;
