@@ -10,8 +10,8 @@
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input v-if="id" type="file" :name="'files['+group+'][replace]['+id+']'" />
-                            <input v-else type="file" :name="'files['+group+'][new][]'" />
+                            <input v-if="id" type="file" :name="'files['+group+'][replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
+                            <input v-else type="file" :name="'files['+group+'][new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                         </div>
                         <input v-if="deletion" type="hidden" :name="'files['+group+'][delete][]'" :value="id"/>
                     </div>
