@@ -3,9 +3,9 @@
         $R.options = {
             plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'widget', 'clips'],
             @if(admin()->hasRole('developer'))
-                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'widget', 'clips'],
+                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'widget'],
             @else
-                buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'clips'],
+                buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
             formatting: ['p', 'h1', 'h2', 'h3'],
             imageResizable: true,
@@ -23,9 +23,8 @@
             imageUpload: '{{ $imageUploadUrl }}',
             definedlinks: '{{ route('chief.api.internal-links') }}',
             clips: [
-                ['test', 'first snippet'],
-                ['test 2', 'second snippet']
-            ], 
+                {!! $snippets !!}
+            ],
             customClasses: [
                 {
                     title: '<span class="icon icon-droplet"></span> link als knop',
