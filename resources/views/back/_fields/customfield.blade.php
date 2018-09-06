@@ -5,7 +5,7 @@
         name="custom_fields[{{ $key }}]"
         :options='@json($field->options)'
         selected='@json(old($key, $field->selected))'
-        {{-- :multiple='{{ $field->multiple ?? false }}' --}}
+        :multiple='@json(!!$field->multiple)'
 >
 </chief-multiselect>
 @elseif($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::DATE)
