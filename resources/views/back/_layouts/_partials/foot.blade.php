@@ -1,12 +1,31 @@
 <!-- project specific includes -->
 @include('chief::back._layouts._partials.project-footer')
 
+<script src="{{ chief_cached_asset('/chief-assets/back/js/main.js') }}"></script>
+
 <!-- place to add custom vue components, right before the global Vue instance is created -->
 @stack('custom-components')
 
-<script src="{{ chief_cached_asset('/chief-assets/back/js/main.js') }}"></script>
+<!-- radio options component, todo: place in component file instead of inline -->
+<script>
+    Vue.component('radio-options',{
+        props: ['errors', 'defaultType'],
+        data: function(){
+            return {
+                type: this.defaultType,
+            };
+        },
+        methods:{
+            changeType: function(type){
+                this.type = type;
+            },
+        }
+    });
+</script>
+
 
 @stack('custom-scripts')
+
 <script>
 
     /**

@@ -77,7 +77,7 @@ class PageSet extends Collection implements PresentForParent
     {
         foreach($items as $item){
             if(! $item instanceof Page) {
-                throw new \InvalidArgumentException('PageSet collection accepts only Page objects: ' . $e->getMessage());
+                throw new \InvalidArgumentException('PageSet collection accepts only Page objects.');
             }
         }
     }
