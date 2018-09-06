@@ -118,22 +118,38 @@ class Relation extends Model
     public static function availableChildren(ActsAsParent $parent): Collection
     {
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
-        $collection = collect([]);
-        
+
+        // Preload pages and modules in 2 queries to reduce calls - For some reason the collection merge looks at the model id and
+        // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
+        $collection = collect(array_merge(Page::all()->all(), Module::all()->all()));
+
         // Merging the results of all the pages and all the modules, then filter by the config
         // This prevents us from having duplicates and also reduces the query load.
-        $collection = array_merge(Page::all()->all(), Module::all()->all());
-        $collection = collect($collection)->filter(function($page) use($available_children_types){
-            return in_array(get_class($page), $available_children_types); 
+        $collection = $collection->filter(function($page) use($available_children_types){
+            return in_array(get_class($page), $available_children_types);
         });
 
+        // Filter out our already loaded pages and modules
+        $remaining_children_types = collect($available_children_types)->reject(function($type){
+            return (new $type() instanceof Page || new $type() instanceof Module);
+        });
+
+        // only for non module / page children
+        foreach ($remaining_children_types as $type) {
+            // For some reason the collection merge looks at the model id and
+            // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
+            $collection = collect(array_merge($collection->all(), (new $type())->all()->all()));
+        }
+
+        // Filter out our parent
         return $collection->reject(function ($item) use ($parent) {
-            if ($item instanceof Page) {
+
+            if ($item instanceof $parent) {
                 return $item->id == $parent->id;
             }
 
             return false;
-        });
+        })->values();
     }
 
     public function delete()
