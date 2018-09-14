@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\Common\Audit\Audit;
-use Illuminate\Support\Carbon;
 
 class UpdatePage
 {
@@ -21,7 +20,7 @@ class UpdatePage
         try {
             DB::beginTransaction();
 
-            $page           = Page::findOrFail($id);
+            $page = Page::findOrFail($id);
 
             $this->savePageTranslations($page, $translations);
 
@@ -52,7 +51,7 @@ class UpdatePage
     {
         $translations = collect($translations)->map(function ($trans, $locale) {
             if ($trans['slug'] != '') {
-                $trans['slug'] = str_slug($trans['slug']);
+                $trans['slug'] = str_slug_slashed($trans['slug']);
             } else {
                 $trans['slug'] = str_slug($trans['title']);
             }
@@ -80,11 +79,13 @@ class UpdatePage
     private function saveSections($page, $sections)
     {
         $modules = $sections['modules'] ?? [];
-        $text    = $sections['text'] ?? [];
-        $order   = $sections['order'] ?? [];
+        $text = $sections['text'] ?? [];
+        $pagesets = $sections['pagesets'] ?? [];
+        $order = $sections['order'] ?? [];
 
-        UpdateSections::forPage($page, $modules, $text, $order)
+        UpdateSections::forPage($page, $modules, $text, $pagesets, $order)
                         ->updateModules()
+                        ->updatePageSets()
                         ->addTextModules()
                         ->updateTextModules()
                         ->sort();

@@ -70,6 +70,28 @@ class PageBuildTest extends TestCase
     }
 
     /** @test */
+    public function it_can_fetch_all_sections_with_multiple_pages_in_order()
+    {
+        $module    = TextModule::create(['collection' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $otherPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
+        $thirdPage = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug-2', 'published' => true]);
+        $module2   = TextModule::create(['collection' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $module3   = NewsletterModuleFake::create(['collection' => 'newsletter', 'slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
+
+        $this->page->adoptChild($module, ['sort' => 0]);
+        $this->page->adoptChild($module2, ['sort' => 2]);
+        $this->page->adoptChild($otherPage, ['sort' => 1]);
+        $this->page->adoptChild($thirdPage, ['sort' => 4]);
+        $this->page->adoptChild($module3, ['sort' => 5]);
+
+        $this->assertCount(5, $this->page->children());
+        $this->assertCount(5, $this->page->presentChildren());
+
+        // Modules show their content by default but pages do not since this is not expected behaviour
+        $this->assertEquals('eerste texttweede textnieuwsbrief', $this->page->renderChildren());
+    }
+
+    /** @test */
     public function it_can_add_a_text_module()
     {
         $this->asAdmin()

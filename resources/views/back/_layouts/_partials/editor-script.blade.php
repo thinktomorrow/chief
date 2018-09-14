@@ -1,7 +1,7 @@
 @push('custom-scripts')
     <script>
         $R.options = {
-            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'widget', 'clips'],
+            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'widget'],
             @if(admin()->hasRole('developer'))
                 buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'widget'],
             @else
@@ -10,6 +10,7 @@
             formatting: ['p', 'h1', 'h2', 'h3'],
             imageResizable: true,
             imagePosition: true,
+            imageFigure: false,
             callbacks: {
                 upload: {
                     beforeSend: function(xhr)
@@ -22,9 +23,6 @@
             },
             imageUpload: '{{ $imageUploadUrl }}',
             definedlinks: '{{ route('chief.api.internal-links') }}',
-            clips: [
-                {!! $snippets !!}
-            ],
             customClasses: [
                 {
                     title: '<span class="icon icon-droplet"></span> link als knop',

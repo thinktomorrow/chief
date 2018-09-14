@@ -1,13 +1,12 @@
-[Install](../index.md)
-[Local development](../chief-development.md)
-[Pages](pages/index.md)
-[Modules](index.md)
-[Server](../server.md)
-[Changelog](../CHANGELOG.md)
-[Guidelines](../GUIDELINES.md)
+---
+layout: default
+title: Modules
+description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 4
+---
 # Modules
 
-# Creating modules
+## Creating modules
 To create a module you make a file in the src/Modules folder.
 These modules should extend 'Thinktomorrow\Chief\Modules\Module'.
 
@@ -60,7 +59,7 @@ the module will be available to add to a page.
     ],
 ```
 
-# Customizing modules
+## Customizing modules
 Next to the module model where we can set the names to be used, we can also customize the view that would be used.
 
 To create a view for this specific module, we create views/front/modules/hero.blade.php in this case.
@@ -84,6 +83,6 @@ We can get the title, content, and if we have media files attached we can retrie
 </div>
 ```
 
-# Using Modules
+## Using Modules
 Once this setup is done we can create instances of these modules from the admin panel.
 And following that to add them to a page, simple select them from the pagebuilder dropdown.

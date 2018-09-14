@@ -31,7 +31,11 @@
                     {{ ucfirst(\Thinktomorrow\Chief\Common\Collections\CollectionKeys::fromConfig()->filterByClass($event->subject_type)->toCollectionDetail()->singular) }}
                 </div>
                 <div class="column-3 center-y">
-                    <a href="{{route('chief.back.audit.show', $event->causer_id)}}">{{ $event->causer->fullname }}</a>
+                    @if($event->causer)
+                        <a href="{{route('chief.back.audit.show', $event->causer_id)}}">{{ $event->causer->fullname }}</a>
+                    @else
+                        /
+                    @endif
                 </div>
                 <div class="column-3 center-y">
                     {{ $event->created_at }}

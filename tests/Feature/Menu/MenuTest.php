@@ -215,7 +215,7 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_order_the_menu_items()
     {
-        $page = factory(Page::class)->create();
+        $page = factory(Page::class)->create([]);
         app()->setLocale('nl');
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);

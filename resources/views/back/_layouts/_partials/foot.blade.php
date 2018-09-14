@@ -4,7 +4,7 @@
 <!-- place to add custom vue components, right before the global Vue instance is created -->
 @stack('custom-components')
 
-<script src="{{ cached_asset('/chief-assets/back/js/main.js','back') }}"></script>
+<script src="{{ chief_cached_asset('/chief-assets/back/js/main.js') }}"></script>
 
 @stack('custom-scripts')
 <script>
@@ -65,7 +65,7 @@
 
 </script>
 
-<script src="{{ cached_asset('/chief-assets/back/js/native.js','back') }}"></script>
+<script src="{{ chief_cached_asset('/chief-assets/back/js/native.js') }}"></script>
 @stack('custom-scripts-after-vue')
 
 </body>

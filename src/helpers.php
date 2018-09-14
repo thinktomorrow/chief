@@ -26,16 +26,15 @@ if (!function_exists('honeypot_fields')) {
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
  */
-if (!function_exists('cached_asset')) {
-    function cached_asset($filepath, $type = null)
+if (!function_exists('chief_cached_asset')) {
+    function chief_cached_asset($filepath)
     {
-        $manifestPath = $type == 'back' ? '/chief-assets/back' : '/assets';
+        $manifestPath = '/chief-assets/back';
 
         // Manifest expects each entry to start with a leading slash - we make sure to deduplicate the manifest path.
         $entry = str_replace($manifestPath, '', '/'.ltrim($filepath, '/'));
 
         try {
-
             // Paths should be given relative to the manifestpath so make sure to remove the basepath
             return asset(mix($entry, $manifestPath));
         } catch (\Exception $e) {
@@ -49,5 +48,18 @@ if (!function_exists('cached_asset')) {
 if (!function_exists('chiefmenu')) {
     function chiefmenu($key = 'main'){
         return \Thinktomorrow\Chief\Menu\Menu::find($key);
+    }
+}
+
+if (!function_exists('str_slug_slashed')) {
+    function str_slug_slashed($title, $separator = '-', $language = 'en'){
+
+        $parts = explode('/',$title);
+
+        foreach($parts as $i => $part){
+            $parts[$i] = str_slug($part, $separator, $language);
+        }
+
+        return implode('/',$parts);
     }
 }

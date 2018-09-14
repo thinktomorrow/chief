@@ -18,11 +18,11 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
+use Illuminate\Support\Facades\DB;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
@@ -182,9 +182,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceLabel(): string
     {
-        $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+        if($this->exists){
+            $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
 
-        return $this->title ? $this->title . $status : '';
+            return $this->title ? $this->title . $status : '';
+        }
+
+        return '';
     }
 
     public function flatReferenceGroup(): string

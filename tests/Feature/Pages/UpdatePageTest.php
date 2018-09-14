@@ -168,4 +168,24 @@ class UpdatePageTest extends TestCase
 
         $this->assertEquals('foobar-nl', $page->fresh()->slug);
     }
+
+    /** @test */
+    public function slug_can_contain_slashes()
+    {
+        $page = factory(Page::class)->create([
+            'trans.nl.title'  => 'foobar nl',
+            'trans.nl.slug'   => 'titel-nl'
+        ]);
+
+        $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar nl',
+                    'slug'  => 'articles/foobar',
+                ],
+            ])
+        );
+
+        $this->assertEquals('articles/foobar', $page->fresh()->slug);
+    }
 }

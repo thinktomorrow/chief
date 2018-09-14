@@ -1,15 +1,10 @@
 ---
+layout: default
 title: Install
 description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 1
 ---
-[Install](/index.md)
-[Local development](/chief-development.md)
-[Pages](pages/index.md)
-[Modules](modules/index.md)
-[Server](/server.md)
-[Changelog](/CHANGELOG.md)
-[Guidelines](/GUIDELINES.md)
-# Chief
+## Chief
 
 Chief is a package based cms built on top of the laravel framework.
 Chief is solely the back-end(admin panel). You will need to create the front-end yourself.
@@ -70,7 +65,7 @@ protected $routeMiddleware = [
     ];
 ```
 
-### Database
+## Database
 
 Connect a database with your application and make sure you have set the proper database credentials in your `.env` file. 
 
@@ -89,7 +84,7 @@ This command will create the basic roles and permissions and allows to setup the
 php artisan chief:admin
 ```
 
-### Config & Assets
+## Config & Assets
 
 The next step is to publish the chief-assets to our public folder.
 If you want to overwrite existing files you can add the `--force` flag here.
@@ -115,13 +110,15 @@ php artisan vendor:publish --tag=translatable
 php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvider"
 ```
 
-# Default routes
+## Default routes
 There is one project related route that is expected by chief and that is: `pages.show`. This
 is the route for the detail of a static page. Make sure to add this one. 
 
+For the easiest setup you should also add the `pages.home` route. This will detect the homepage based on the config.
 
 ```File: routes\front.php```
 ```php
+Route::get('/', PagesController::class.'@homepage')->name('pages.home');
 Route::get('page/{slug}', PagesController::class.'@show')->name('pages.show');
 ```
 
@@ -188,7 +185,7 @@ An example of this view file is the following:
         {!! $page->content !!}
     </section>
 
-    {!! $page->presentChildren() !!}
+    {!! $page->renderChildren() !!}
 
     <section class="container editor-content">
         {!! $page->hero_title !!}
@@ -202,7 +199,7 @@ Next to get the front-end to work you should set a homepage id in the chief-sett
 This determines what the homepage/landing page will be. Currently this is changed through that config file.
 Eventually this will be editable in the admin.
 
-# Multilingual
+## Multilingual
 
 There are a couple of places where you need to configure the localisation of your application.
 At the following files you should change the locales to your desired setup:
@@ -211,7 +208,7 @@ At the following files you should change the locales to your desired setup:
 - Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
 
-# Project setup advice
+## Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
 
 ## MySQL index length
@@ -234,7 +231,7 @@ public function boot()
 }
 ```
 
-### FAQ
+# FAQ
 
 Q: I get the "Route [login] not defined" error. Help!  
 A: Extend our ChiefExceptionHandler in the `app/handler.php` file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.

@@ -1,10 +1,9 @@
-[Install](../index.md)
-[Local development](../chief-development.md)
-[Pages](index.md)
-[Modules](modules/index.md)
-[Server](../server.md)
-[Changelog](../CHANGELOG.md)
-[Guidelines](../GUIDELINES.md)
+---
+layout: default
+title: Pages
+description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 3
+---
 # Pages
 
 ## TODO
@@ -63,58 +62,87 @@ We can use squanto fields to include a way to manage static content. Squanto is 
 The way you can aim these translations to a specific
 
 ## Page API
-#### Page::all()
+
+```php 
+Page::all() 
+```
 Retrieves all the pages
 
-#### Page::findBySlug($slug)
+```php 
+Page::findBySlug($slug) 
+```
 Retrieve a page by its unique slug value.
 
-#### Page::sortedByCreated()->all()
+```php 
+Page::sortedByCreated()->all() 
+```
 Sort the results by last created pages.
 
 ## Publishable API
 
-#### Page::getAllPublished()
+```php 
+Page::getAllPublished() 
+```
 Retrieves all the published pages.
 
-#### Page::findPublishedBySlug($slug)
+```php 
+Page::findPublishedBySlug($slug) 
+```
 Retrieve a published page by its unique slug value.
 If the page is not published, no page will be returned.
 
-#### Page::sortedByPublished()->all()
+```php 
+Page::sortedByPublished()->all() 
+```
 Sort the results by last created pages.
 
-#### $page->isPublished()
+```php 
+$page->isPublished() 
+```
 Returns true of false based on the published status
 See isDraft() for the inverse.
 
-#### $page->isDraft()
+```php 
+$page->isDraft() 
+```
 Return true or false based on the draft status
 See isPublished() for the inverse.
 
-#### $page->publish()
+```php 
+$page->publish() 
+```
 Changes the page to published
 See draft() for the inverse
 
-#### $page->draft()
+```php 
+$page->draft() 
+```
 Changes the page to draft
 See publish() for the inverse
 
 ## Featurable API
 
-#### $page->isFeatured()
+```php 
+$page->isFeatured() 
+```
 Returns true of false based on the featured status
 See isDraft() for the inverse.
 
-#### $page->feature()
+```php 
+$page->feature() 
+```
 Changes the page to featured
 See unfeature() for the inverse
 
-#### $page->unfeature()
+```php 
+$page->unfeature() 
+```
 Changes the page to not featured
 See feature() for the inverse
 
-#### Page::featured()->all()
+```php 
+Page::featured()->all() 
+```
 Scope the query by the featured pages.
 
 ## Create custom page

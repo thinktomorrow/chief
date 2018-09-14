@@ -1,5 +1,6 @@
 <template>
     <section class="stack block inset relative" style="border-left:3px solid #14c8a7">
+        <h3 class="pagebuilder-section-title" v-if="title" v-text="title"></h3>
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
         <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][type]'" :value="section.type">
@@ -52,6 +53,8 @@
 
             // Single line for edit or multiple lines
             'single': { default: false, type: Boolean },
+
+            'title': {}
         },
         data(){
             return {
