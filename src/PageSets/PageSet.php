@@ -8,9 +8,12 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class PageSet extends Collection implements PresentForParent
 {
+    use WithSnippets;
+
     /** @var string */
     private $key;
 
@@ -27,6 +30,17 @@ class PageSet extends Collection implements PresentForParent
         return $pageSetReference->toPageSet();
     }
 
+    public function presentForParent(ActsAsParent $parent): string
+    {
+        $value = $this->presentRawValueForParent($parent);
+
+        if($this->withSnippets && $this->shouldParseWithSnippets($value)) {
+            $value = $this->parseWithSnippets($value);
+        }
+
+        return $value;
+    }
+
     /**
      * Present collection of pages. All pages are considered to be of the same collection type.
      *
@@ -34,7 +48,7 @@ class PageSet extends Collection implements PresentForParent
      * @return string
      * @throws \Throwable
      */
-    public function presentForParent(ActsAsParent $parent): string
+    private function presentRawValueForParent(ActsAsParent $parent): string
     {
         $guessedParentViewName = $parent->collectionKey();
         $guessedViewName = $this->collectionKey();

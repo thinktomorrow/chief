@@ -32,7 +32,7 @@
 @endpush
 
 @push('custom-scripts-after-vue')
-    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('modules.media.upload', $module->id), 'snippets' => $snippets])
+    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => route('modules.media.upload', $module->id)])
 @endpush
 
 @include('chief::back._elements.file-component')

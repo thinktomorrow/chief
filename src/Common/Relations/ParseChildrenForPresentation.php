@@ -37,6 +37,8 @@ class ParseChildrenForPresentation
      */
     private $current_pageset_type = null;
 
+    private $withSnippets = false;
+
     public function __construct()
     {
         $this->collection = collect([]);
@@ -48,6 +50,8 @@ class ParseChildrenForPresentation
     {
         $this->parent = $parent;
         $this->children = $children;
+
+        $this->withSnippets = $parent->withSnippets;
 
         return $this->toCollection();
     }
@@ -69,8 +73,10 @@ class ParseChildrenForPresentation
             $this->collection[$i] = $child;
         }
 
-        return $this->collection->map(function (PresentForParent $child) {
-            return $child->presentForParent($this->parent);
+        return $this->collection->map(function (PresentForParent $child){
+            return $this->withSnippets
+                    ? $child->withSnippets()->presentForParent($this->parent)
+                    : $child->presentForParent($this->parent);
         });
     }
 

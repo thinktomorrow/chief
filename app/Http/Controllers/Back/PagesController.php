@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;
@@ -46,11 +45,13 @@ class PagesController extends Controller
         $page = Page::fromCollectionKey($collection);
         $page->existingRelationIds = collect([]);
         $relations = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
+        $module_collections = Module::availableCollections()->values()->map->toArray()->toArray();
 
         return view('chief::back.pages.create', [
             'page'      => $page,
             'relations' => $relations,
             'images'    => $this->populateMedia($page),
+            'module_collections' => $module_collections,
         ]);
     }
 
@@ -74,9 +75,11 @@ class PagesController extends Controller
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
+        $relations                 = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildren($page))->toArray();
+        $module_collections        = Module::availableCollections()->values()->map->toArray()->toArray();
 
         $available = Relation::availableChildren($page);
-        
+
         $available_modules         = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($available))->toArray();
         $available_pages           = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($available))->toArray();
         $available_pagesets        = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets())->toArray();

@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Snippets;
 
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Snippets\Snippet;
+use Thinktomorrow\Chief\Snippets\SnippetCollection;
 use Thinktomorrow\Chief\Tests\TestCase;
-use SebastianBergmann\CodeCoverage\Report\Html\Renderer;
 
 class SnippetTest extends TestCase
 {
@@ -13,32 +12,44 @@ class SnippetTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief-settings.snippets', [
-            'snippet-id'   => [
-                'label' => 'snippet stub',
-                'view' => __DIR__.'/snippet-stub.html'
-            ],
+        $this->app['config']->set('thinktomorrow.chief.loadSnippetsFrom', [
+            realpath(__DIR__.'/snippet-stub.html'),
         ]);
+    }
+
+    /** @test */
+    function it_can_fetch_a_snippet()
+    {
+        $snippet = SnippetCollection::find('snippet-stub');
+
+        $this->assertInstanceOf(Snippet::class, $snippet);
+        $this->assertEquals('snippet-stub', $snippet->key());
+        $this->assertEquals('Snippet stub', $snippet->label());
+        $this->assertEquals(realpath(__DIR__.'/snippet-stub.html'), $snippet->path());
     }
     
     /** @test */
     function it_can_render_a_snippet()
     {
-        $this->assertEquals('<p>This is a snippet</p>', Snippet::find('snippet-id')->render());
+        $this->assertEquals('<p>This is a snippet</p>', SnippetCollection::find('snippet-stub')->render());
     }
     
     /** @test */
     function it_can_list_all_snippets()
     {
-        $this->assertCount(1, Snippet::all());
-        $this->assertInstanceOf(Snippet::class, Snippet::all()->first());
+        $this->assertCount(1, SnippetCollection::load());
+        $this->assertInstanceOf(Snippet::class, SnippetCollection::load()->first());
     }
 
     /** @test */
-    public function it_can_escape_for_redactor_clips()
+    function it_ignores_invalid_loading_path()
     {
-        $rendered = Snippet::renderForClips();
+        $this->app['config']->set('thinktomorrow.chief.loadSnippetsFrom', [
+            false,
+        ]);
 
-        $this->assertEquals('["snippet stub", "\<p\>This is a snippet\</p\>"]', $rendered);
+        SnippetCollection::refresh();
+
+        $this->assertCount(0, SnippetCollection::load());
     }
 }
