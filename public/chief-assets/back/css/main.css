@@ -7302,6 +7302,14 @@ select {
   margin-right: 0.5rem;
 }
 
+.pagebuilder-section-title, h3.pagebuilder-section-title {
+  margin-bottom: .2em;
+  font-size: 0.8em;
+  font-weight: normal;
+  color: #14c8a7;
+  margin-top: -0.8em;
+}
+
 /**
  * Inset
  * A square inset indents content on all four sides equally.
