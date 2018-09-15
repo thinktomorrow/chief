@@ -2766,7 +2766,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
                     // options
-                    buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'video', 'snippets']
                 });
             }
         }
