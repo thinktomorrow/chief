@@ -25,6 +25,9 @@ class SnippetParserTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
+        // Default not enable snippet loading
+        $this->app['config']->set('thinktomorrow.chief.withSnippets', false);
+
         $this->app['config']->set('thinktomorrow.chief.loadSnippetsFrom', [
             realpath(__DIR__.'/snippet-stub.html'),
         ]);
@@ -36,8 +39,6 @@ class SnippetParserTest extends TestCase
             'text' => TextModule::class,
             'newsletter' => NewsletterModuleFake::class,
         ]);
-
-        $this->page = ArticlePageFake::create(['collection' => 'articles']);
     }
 
     /** @test */
@@ -60,8 +61,50 @@ class SnippetParserTest extends TestCase
     /** @test */
     function it_can_render_a_snippet_when_found_in_content()
     {
+        $page = $this->addSnippetToPageContent();
+
+        $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->withSnippets()->content);
+        $this->assertEquals('foo [[snippet-stub]] bar', $page->fresh()->content);
+    }
+
+    /** @test */
+    function it_can_render_a_snippet_when_found_in_pagebuilder_section()
+    {
+        $page = $this->addSnippetToPageSection();
+
+        $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->withSnippets()->renderChildren());
+        $this->assertEquals('foo [[snippet-stub]] bar', $page->fresh()->renderChildren());
+    }
+
+    /** @test */
+    function it_can_render_a_snippet_when_found_in_module_content()
+    {
+        $page = ArticlePageFake::create(['collection' => 'articles']);
+        $module = $this->addSnippetToModule();
+
+        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->withSnippets()->presentForParent($page));
+        $this->assertEquals('[[snippet-stub]]', $module->fresh()->presentForParent($page));
+
+    }
+
+    /** @test */
+    function it_can_enable_snippet_loading_by_default()
+    {
+        $this->app['config']->set('thinktomorrow.chief.withSnippets', true);
+
+        $page = $this->addSnippetToPageSection();
+        $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->renderChildren());
+
+        $module = $this->addSnippetToModule();
+        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->presentForParent($page));
+    }
+
+    private function addSnippetToPageContent()
+    {
+        $page = ArticlePageFake::create(['collection' => 'articles']);
+
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',
@@ -71,15 +114,15 @@ class SnippetParserTest extends TestCase
                 ],
             ]));
 
-        $this->assertEquals('foo <p>This is a snippet</p> bar', $this->page->fresh()->withSnippets()->content);
-        $this->assertEquals('foo [[snippet-stub]] bar', $this->page->fresh()->content);
+        return $page;
     }
 
-    /** @test */
-    function it_can_render_a_snippet_when_found_in_pagebuilder_section()
+    private function addSnippetToPageSection()
     {
+        $page = ArticlePageFake::create(['collection' => 'articles']);
+
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -92,12 +135,10 @@ class SnippetParserTest extends TestCase
                 ]
             ]));
 
-        $this->assertEquals('foo <p>This is a snippet</p> bar', $this->page->fresh()->withSnippets()->renderChildren());
-        $this->assertEquals('foo [[snippet-stub]] bar', $this->page->fresh()->renderChildren());
+        return $page;
     }
 
-    /** @test */
-    function it_can_render_a_snippet_when_found_in_module_content()
+    private function addSnippetToModule()
     {
         $module = app(CreateModule::class)->handle('newsletter', 'new-slug');
 
@@ -111,8 +152,6 @@ class SnippetParserTest extends TestCase
                 ],
             ]));
 
-        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->withSnippets()->presentForParent($this->page));
-        $this->assertEquals('[[snippet-stub]]', $module->fresh()->presentForParent($this->page));
-
+        return $module;
     }
 }

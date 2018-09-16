@@ -22,6 +22,8 @@ class PageSet extends Collection implements PresentForParent
         $this->validateItems($items);
         $this->key = $key;
 
+        $this->withSnippets = config('thinktomorrow.chief.withSnippets',false);
+
         parent::__construct($items);
     }
 

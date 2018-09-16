@@ -61,6 +61,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
+        $this->withSnippets = config('thinktomorrow.chief.withSnippets',false);
+
         parent::__construct($attributes);
     }
 

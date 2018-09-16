@@ -24,14 +24,7 @@ class SnippetCollection extends Collection
 
         foreach($paths as $path) {
 
-            // If file is not found, it is possible a false value is passed so we ignore this early on
-            if(!$path) continue;
-
-            $fullpath = base_path($path);
-
-            if( !is_dir($fullpath) && !file_exists($fullpath) ) {
-                $fullpath = realpath($path);
-            }
+            if( ! $fullpath = self::constructFullPath($path) ) { continue; }
 
             // Load directory or single file
             if(is_dir($fullpath)) {
@@ -65,6 +58,28 @@ class SnippetCollection extends Collection
         return $loadedSnippets->first(function(Snippet $snippet) use($key){
             return $snippet->key() == $key;
         });
+    }
+
+    /**
+     * If file is not found, it is possible a false value is passed so we ignore this early on
+     * realpath() returns false if dir does not exists.
+     * If then the directory still does not exists, we will silently abort and continue.
+     *
+     * @param $path
+     * @return bool|string
+     */
+    private static function constructFullPath($path)
+    {
+        if(!$path) return false;
+
+        $fullpath = base_path($path);
+
+        // We will create a fullpath reference if the file does not exist as an extra safety measure.
+        if (!is_dir($fullpath) && !file_exists($fullpath)) {
+            $fullpath = realpath($path);
+        }
+
+        return $fullpath;
     }
 
     public function toClips(): array
