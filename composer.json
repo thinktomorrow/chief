@@ -9,7 +9,7 @@
         "dimsav/laravel-translatable": "^9.0",
         "doctrine/dbal": "^2.5",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "5.6.*",
+        "laravel/framework": "~5.6.12",
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^2.8",
         "spatie/laravel-image-optimizer": "^1.1",
