@@ -44,11 +44,11 @@ class Snippet
 
     public function render()
     {
-        if (($bladePath = str_replace('.blade.php','',$this->path)) && view()->exists($bladePath)) {
+        if (($bladePath = str_replace('.blade.php', '', $this->path)) && view()->exists($bladePath)) {
             return view($bladePath)->render();
         }
 
-        if(file_exists($this->path)) {
+        if (file_exists($this->path)) {
             return file_get_contents($this->path);
         }
 

@@ -33,7 +33,7 @@ class PageSetReference implements ProvidesFlatReference
     public static function fromArray(string $key, array $values): PageSetReference
     {
         // Constraints
-        if(!isset($values['action'])) {
+        if (!isset($values['action'])) {
             throw new \InvalidArgumentException('Pageset reference array is missing required values for the "action" keys. Given: ' . print_r($values, true));
         }
 
@@ -49,14 +49,14 @@ class PageSetReference implements ProvidesFlatReference
     {
         $sets = config('thinktomorrow.chief-settings.pagesets', []);
 
-        return collect($sets)->map(function($set, $key){
+        return collect($sets)->map(function ($set, $key) {
             return PageSetReference::fromArray($key, $set);
         });
     }
 
     public static function find($key): ?PageSetReference
     {
-        return static::all()->filter(function($ref) use($key){
+        return static::all()->filter(function ($ref) use ($key) {
             return $ref->key() == $key;
         })->first();
     }
@@ -72,9 +72,9 @@ class PageSetReference implements ProvidesFlatReference
 
         $this->validateAction($class, $method);
 
-        $result = call_user_func_array([app($class),$method],$this->parameters);
+        $result = call_user_func_array([app($class),$method], $this->parameters);
 
-        if( ! $result instanceof PageSet && $result instanceof Collection) {
+        if (! $result instanceof PageSet && $result instanceof Collection) {
             return new PageSet($result->all(), $this->key);
         }
 
@@ -97,7 +97,7 @@ class PageSetReference implements ProvidesFlatReference
 
     private static function parseAction($action, $default_method = '__invoke'): array
     {
-        if(false !== strpos($action, '@')) {
+        if (false !== strpos($action, '@')) {
             return explode('@', $action);
         }
 
@@ -106,11 +106,11 @@ class PageSetReference implements ProvidesFlatReference
 
     private static function validateAction($class, $method)
     {
-        if( ! class_exists($class)) {
+        if (! class_exists($class)) {
             throw new \InvalidArgumentException('The class ['.$class.'] isn\'t a valid class reference or does not exist in the chief-settings.pagesets config entry.');
         }
 
-        if(!method_exists($class, $method)) {
+        if (!method_exists($class, $method)) {
             throw new \InvalidArgumentException('The method ['.$method.'] does not exist on the class ['.$class.']. Make sure you provide a valid method to the action value in the chief-settings.pagesets config entry.');
         }
     }

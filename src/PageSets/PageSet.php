@@ -36,7 +36,7 @@ class PageSet extends Collection implements PresentForParent
     {
         $value = $this->presentRawValueForParent($parent);
 
-        if($this->withSnippets && $this->shouldParseWithSnippets($value)) {
+        if ($this->withSnippets && $this->shouldParseWithSnippets($value)) {
             $value = $this->parseWithSnippets($value);
         }
 
@@ -81,7 +81,9 @@ class PageSet extends Collection implements PresentForParent
 
     private function collectionKey()
     {
-        if($this->isEmpty()) return null;
+        if ($this->isEmpty()) {
+            return null;
+        }
 
         return $this->first()->collectionKey();
     }
@@ -91,8 +93,8 @@ class PageSet extends Collection implements PresentForParent
      */
     private function validateItems($items): void
     {
-        foreach($items as $item){
-            if(! $item instanceof Page) {
+        foreach ($items as $item) {
+            if (! $item instanceof Page) {
                 throw new \InvalidArgumentException('PageSet collection accepts only Page objects: ' . $e->getMessage());
             }
         }

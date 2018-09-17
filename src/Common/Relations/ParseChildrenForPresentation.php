@@ -59,13 +59,12 @@ class ParseChildrenForPresentation
     public function toCollection(): Collection
     {
         foreach ($this->children as $i => $child) {
-
             if ($child instanceof Page) {
                 $this->addPageToCollection($i, $child);
                 continue;
             }
 
-            if($child instanceof StoredPageSetReference){
+            if ($child instanceof StoredPageSetReference) {
                 $this->addPageSetToCollection($i, $child->toPageSet());
                 continue;
             }
@@ -73,7 +72,7 @@ class ParseChildrenForPresentation
             $this->collection[$i] = $child;
         }
 
-        return $this->collection->map(function (PresentForParent $child){
+        return $this->collection->map(function (PresentForParent $child) {
             return $this->withSnippets
                     ? $child->withSnippets()->presentForParent($this->parent)
                     : $child->presentForParent($this->parent);
@@ -88,7 +87,9 @@ class ParseChildrenForPresentation
     private function addPageToCollection($index, Page $child)
     {
         // Only published pages you fool!
-        if (! $child->isPublished()) return;
+        if (! $child->isPublished()) {
+            return;
+        }
 
         // Set the current pages collection to the current collection type
         if ($this->current_pageset_type == null || $this->current_pageset_type != $child->collectionKey()) {

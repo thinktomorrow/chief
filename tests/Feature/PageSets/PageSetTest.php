@@ -28,9 +28,9 @@ class PageSetTest extends TestCase
     }
 
     /** @test */
-    function it_can_store_a_pageset_reference()
+    public function it_can_store_a_pageset_reference()
     {
-        $stored_pageset_ref = (new PageSetReference('key','foobar@all', [5]))->store();
+        $stored_pageset_ref = (new PageSetReference('key', 'foobar@all', [5]))->store();
 
         $this->assertInstanceOf(StoredPageSetReference::class, $stored_pageset_ref);
         $this->assertEquals('foobar@all', $stored_pageset_ref->action);
@@ -38,29 +38,29 @@ class PageSetTest extends TestCase
     }
 
     /** @test */
-    function it_guards_against_non_existing_class_reference()
+    public function it_guards_against_non_existing_class_reference()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $pageset_ref = (new PageSetReference('key','foobar@all', [5]));
+        $pageset_ref = (new PageSetReference('key', 'foobar@all', [5]));
         $pageset_ref->toPageSet();
     }
 
     /** @test */
-    function it_guards_against_non_existing_method_reference()
+    public function it_guards_against_non_existing_method_reference()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $pageset_ref = (new PageSetReference('key',DummyPageSetRepository::class.'@unknown', [5]));
+        $pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@unknown', [5]));
         $pageset_ref->toPageSet();
     }
 
     /** @test */
-    function it_can_run_a_pageset_query()
+    public function it_can_run_a_pageset_query()
     {
         AgendaPageFake::create(['collection' => 'agenda']);
 
-        $stored_pageset_ref = (new PageSetReference('key',DummyPageSetRepository::class.'@all', [5]))->store();
+        $stored_pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5]))->store();
         $pageset = $stored_pageset_ref->toPageSet();
 
         $this->assertInstanceOf(PageSet::class, $pageset);
@@ -69,11 +69,11 @@ class PageSetTest extends TestCase
     }
 
     /** @test */
-    function it_can_run_a_stored_pageset_reference()
+    public function it_can_run_a_stored_pageset_reference()
     {
         AgendaPageFake::create(['collection' => 'agenda']);
 
-        $pageset_ref = (new PageSetReference('key',DummyPageSetRepository::class.'@all', [5]));
+        $pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5]));
         $pageset = $pageset_ref->toPageSet();
 
         $this->assertInstanceOf(PageSet::class, $pageset);
@@ -82,15 +82,15 @@ class PageSetTest extends TestCase
     }
 
     /** @test */
-    function it_can_present_itself_with_a_human_readable_label()
+    public function it_can_present_itself_with_a_human_readable_label()
     {
-        $pageset_ref = (new PageSetReference('key',DummyPageSetRepository::class.'@all', [5], 'foobar'));
+        $pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5], 'foobar'));
 
         $this->assertEquals('foobar', $pageset_ref->flatReferenceLabel());
     }
 
     /** @test */
-    function it_can_find_a_pageset_ref()
+    public function it_can_find_a_pageset_ref()
     {
         $pageset_ref = PageSetReference::find('foobar');
 
@@ -100,7 +100,7 @@ class PageSetTest extends TestCase
     }
 
     /** @test */
-    function it_can_use_parameters()
+    public function it_can_use_parameters()
     {
         AgendaPageFake::create(['collection' => 'agenda']);
         AgendaPageFake::create(['collection' => 'agenda']);
@@ -111,6 +111,4 @@ class PageSetTest extends TestCase
         // Parameter of 2 for query limit is passed.
         $this->assertCount(2, $pageset_ref->toPageSet());
     }
-
-
 }

@@ -67,7 +67,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     {
         $value = $this->presentRawValueForParent($parent);
 
-        if($this->withSnippets && $this->shouldParseWithSnippets($value)) {
+        if ($this->withSnippets && $this->shouldParseWithSnippets($value)) {
             $value = $this->parseWithSnippets($value);
         }
 

@@ -27,14 +27,14 @@ class Menu
     {
         $types = config('thinktomorrow.chief-settings.menus', []);
 
-        return collect($types)->map(function($menu, $key){
+        return collect($types)->map(function ($menu, $key) {
             return new static($key, $menu['label'], $menu['view']);
         });
     }
 
     public static function find($key): ?self
     {
-        return static::all()->filter(function($menu) use($key){
+        return static::all()->filter(function ($menu) use ($key) {
             return $menu->key() == $key;
         })->first();
     }
@@ -67,12 +67,12 @@ class Menu
     public function render()
     {
         if (view()->exists($this->view_path)) {
-            return view($this->view_path,[
+            return view($this->view_path, [
                 'menu' => $this,
             ])->render();
         }
 
-        if(file_exists($this->view_path)) {
+        if (file_exists($this->view_path)) {
             return file_get_contents($this->view_path);
         }
 

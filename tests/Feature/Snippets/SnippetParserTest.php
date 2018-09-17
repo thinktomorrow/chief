@@ -42,7 +42,7 @@ class SnippetParserTest extends TestCase
     }
 
     /** @test */
-    function it_does_not_parse_value_without_valid_snippet_key()
+    public function it_does_not_parse_value_without_valid_snippet_key()
     {
         $this->assertEquals('<p>This is untouched</p>', SnippetParser::parse('<p>This is untouched</p>'));
         $this->assertEquals('<p>This is [also] untouched</p>', SnippetParser::parse('<p>This is [also] untouched</p>'));
@@ -53,13 +53,13 @@ class SnippetParserTest extends TestCase
     }
 
     /** @test */
-    function it_can_parse_a_value_that_contains_a_snippet_key()
+    public function it_can_parse_a_value_that_contains_a_snippet_key()
     {
         $this->assertEquals('<p>This is <p>This is a snippet</p> untouched</p>', SnippetParser::parse('<p>This is [[snippet-stub]] untouched</p>'));
     }
 
     /** @test */
-    function it_can_render_a_snippet_when_found_in_content()
+    public function it_can_render_a_snippet_when_found_in_content()
     {
         $page = $this->addSnippetToPageContent();
 
@@ -68,7 +68,7 @@ class SnippetParserTest extends TestCase
     }
 
     /** @test */
-    function it_can_render_a_snippet_when_found_in_pagebuilder_section()
+    public function it_can_render_a_snippet_when_found_in_pagebuilder_section()
     {
         $page = $this->addSnippetToPageSection();
 
@@ -77,18 +77,17 @@ class SnippetParserTest extends TestCase
     }
 
     /** @test */
-    function it_can_render_a_snippet_when_found_in_module_content()
+    public function it_can_render_a_snippet_when_found_in_module_content()
     {
         $page = ArticlePageFake::create(['collection' => 'articles']);
         $module = $this->addSnippetToModule();
 
         $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->withSnippets()->presentForParent($page));
         $this->assertEquals('[[snippet-stub]]', $module->fresh()->presentForParent($page));
-
     }
 
     /** @test */
-    function it_can_enable_snippet_loading_by_default()
+    public function it_can_enable_snippet_loading_by_default()
     {
         $this->app['config']->set('thinktomorrow.chief.withSnippets', true);
 

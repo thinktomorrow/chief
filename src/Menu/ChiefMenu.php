@@ -25,7 +25,7 @@ class ChiefMenu
     {
         $collection = NodeCollection::fromArray($items);
 
-        $collection->mapRecursive(function($node){
+        $collection->mapRecursive(function ($node) {
             return $node->replaceEntry((new MenuItem())->entry($node));
         });
 

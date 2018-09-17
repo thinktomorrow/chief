@@ -18,7 +18,7 @@ class SnippetTest extends TestCase
     }
 
     /** @test */
-    function it_can_fetch_a_snippet()
+    public function it_can_fetch_a_snippet()
     {
         $snippet = SnippetCollection::find('snippet-stub');
 
@@ -29,20 +29,20 @@ class SnippetTest extends TestCase
     }
     
     /** @test */
-    function it_can_render_a_snippet()
+    public function it_can_render_a_snippet()
     {
         $this->assertEquals('<p>This is a snippet</p>', SnippetCollection::find('snippet-stub')->render());
     }
     
     /** @test */
-    function it_can_list_all_snippets()
+    public function it_can_list_all_snippets()
     {
         $this->assertCount(1, SnippetCollection::load());
         $this->assertInstanceOf(Snippet::class, SnippetCollection::load()->first());
     }
 
     /** @test */
-    function it_ignores_invalid_loading_path()
+    public function it_ignores_invalid_loading_path()
     {
         $this->app['config']->set('thinktomorrow.chief.loadSnippetsFrom', [
             false,

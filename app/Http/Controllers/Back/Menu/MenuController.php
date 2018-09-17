@@ -23,7 +23,7 @@ class MenuController extends Controller
         $menus = Menu::all();
 
         // If there is only one menu, we will show the menu immediately.
-        if($menus->count() == 1) {
+        if ($menus->count() == 1) {
             return $this->show($menus->first()->key());
         }
 

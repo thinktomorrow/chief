@@ -84,7 +84,7 @@ class Relation extends Model
 
     public static function availableChildrenOnlyModules(Collection $collection): Collection
     {
-        return $collection->reject(function($item){
+        return $collection->reject(function ($item) {
             if ($item instanceof Page || $item instanceof StoredPageSetReference) {
                 return true;
             }
@@ -93,7 +93,7 @@ class Relation extends Model
 
     public static function availableChildrenOnlyPages(Collection $collection): Collection
     {
-        return $collection->filter(function($item){
+        return $collection->filter(function ($item) {
             if ($item instanceof Page) {
                 return true;
             }
@@ -125,12 +125,12 @@ class Relation extends Model
 
         // Merging the results of all the pages and all the modules, then filter by the config
         // This prevents us from having duplicates and also reduces the query load.
-        $collection = $collection->filter(function($page) use($available_children_types){
+        $collection = $collection->filter(function ($page) use ($available_children_types) {
             return in_array(get_class($page), $available_children_types);
         });
 
         // Filter out our already loaded pages and modules
-        $remaining_children_types = collect($available_children_types)->reject(function($type){
+        $remaining_children_types = collect($available_children_types)->reject(function ($type) {
             return (new $type() instanceof Page || new $type() instanceof Module);
         });
 
@@ -143,7 +143,6 @@ class Relation extends Model
 
         // Filter out our parent
         return $collection->reject(function ($item) use ($parent) {
-
             if ($item instanceof $parent) {
                 return $item->id == $parent->id;
             }
@@ -154,24 +153,24 @@ class Relation extends Model
 
     public function delete()
     {
-        return static::where('parent_type',$this->parent_type)
-                ->where('parent_id',$this->parent_id)
-                ->where('child_type',$this->child_type)
-                ->where('child_id',$this->child_id)
+        return static::where('parent_type', $this->parent_type)
+                ->where('parent_id', $this->parent_id)
+                ->where('child_type', $this->child_type)
+                ->where('child_id', $this->child_id)
                 ->delete();
     }
 
     public static function deleteRelationsOf($type, $id)
     {
-        $relations = static::where(function($query) use($type, $id){
+        $relations = static::where(function ($query) use ($type, $id) {
             return $query->where('parent_type', $type)
                          ->where('parent_id', $id);
-        })->orWhere(function($query) use($type, $id){
+        })->orWhere(function ($query) use ($type, $id) {
             return $query->where('child_type', $type)
                 ->where('child_id', $id);
         })->get();
 
-        foreach($relations as $relation) {
+        foreach ($relations as $relation) {
             $relation->delete();
         }
     }
