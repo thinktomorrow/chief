@@ -22,7 +22,7 @@ class RelatingPageSetToPageTest extends TestCase
     }
 
     /** @test */
-    function a_page_can_keep_a_pageset_relation()
+    public function a_page_can_keep_a_pageset_relation()
     {
         $stored_pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5]))->store();
 
@@ -40,5 +40,4 @@ class RelatingPageSetToPageTest extends TestCase
         // Empty string by default
         $this->assertEquals('', $this->page->renderChildren());
     }
-
 }

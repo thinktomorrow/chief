@@ -83,8 +83,7 @@ class PagesController extends Controller
 
         // Current sections
         $sections = $page->children()->map(function ($section, $index) {
-
-            if($section instanceof TranslatableContract) {
+            if ($section instanceof TranslatableContract) {
                 $section->injectTranslationForForm();
             }
 
@@ -118,15 +117,15 @@ class PagesController extends Controller
 
     private function guessSectionType($section)
     {
-        if($section instanceof ActsAsCollection && in_array($section->collectionKey(),['text','pagetitle'])) {
+        if ($section instanceof ActsAsCollection && in_array($section->collectionKey(), ['text','pagetitle'])) {
             return $section->collectionKey();
         }
 
-        if($section instanceof StoredPageSetReference || $section instanceof PageSetReference) {
+        if ($section instanceof StoredPageSetReference || $section instanceof PageSetReference) {
             return 'pageset';
         }
 
-        if($section instanceof Page) {
+        if ($section instanceof Page) {
             return 'page';
         }
 

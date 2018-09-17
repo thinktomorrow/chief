@@ -50,7 +50,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     ];
 
 
-    public    $table       = "pages";
+    public $table       = "pages";
     protected $guarded     = [];
     protected $dates       = ['deleted_at'];
     protected $with        = ['translations'];
@@ -77,7 +77,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         $value = $this->getTranslatableAttribute($value);
 
-        if($this->shouldParseWithSnippets($value)) {
+        if ($this->shouldParseWithSnippets($value)) {
             $value = $this->parseWithSnippets($value);
         }
 
@@ -206,7 +206,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceLabel(): string
     {
-        if($this->exists){
+        if ($this->exists) {
             $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
 
             return $this->title ? $this->title . $status : '';

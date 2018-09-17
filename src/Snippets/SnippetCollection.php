@@ -12,7 +12,9 @@ class SnippetCollection extends Collection
 
     public static function load(): SnippetCollection
     {
-        if(static::$loadedSnippets) return static::$loadedSnippets;
+        if (static::$loadedSnippets) {
+            return static::$loadedSnippets;
+        }
 
         /** @var FileLoader $fileLoader */
         $fileLoader = app(FileLoader::class);
@@ -22,32 +24,30 @@ class SnippetCollection extends Collection
         /** @var SplFileInfo[] */
         $files = collect();
 
-        foreach($paths as $path) {
-
-            if( ! $fullpath = self::constructFullPath($path) ) { continue; }
-
-            // Load directory or single file
-            if(is_dir($fullpath)) {
-                $files = $files->merge($fileLoader->handleRecursive($fullpath));
-            } else if(is_file($fullpath)) {
-                $files = $files->merge($fileLoader->handleFile($fullpath));
+        foreach ($paths as $path) {
+            if (! $fullpath = self::constructFullPath($path)) {
+                continue;
             }
 
+            // Load directory or single file
+            if (is_dir($fullpath)) {
+                $files = $files->merge($fileLoader->handleRecursive($fullpath));
+            } elseif (is_file($fullpath)) {
+                $files = $files->merge($fileLoader->handleFile($fullpath));
+            }
         }
 
-        return static::$loadedSnippets = new static($files->map(function(SplFileInfo $file){
-
+        return static::$loadedSnippets = new static($files->map(function (SplFileInfo $file) {
             $path = $file->getRealPath();
 
-            if(0 === strpos($path, resource_path('views')) && false !== strpos($file->getBasename(),'.blade.php')) {
+            if (0 === strpos($path, resource_path('views')) && false !== strpos($file->getBasename(), '.blade.php')) {
                 $path = substr($path, strlen(resource_path('views')));
             }
 
-            $key = substr($file->getBasename(),0, strpos($file->getBasename(),'.'));
-            $label = ucfirst(str_replace(['-','_'],' ',$key));
+            $key = substr($file->getBasename(), 0, strpos($file->getBasename(), '.'));
+            $label = ucfirst(str_replace(['-','_'], ' ', $key));
 
             return new Snippet($key, $label, $path);
-
         })->all());
     }
 
@@ -55,7 +55,7 @@ class SnippetCollection extends Collection
     {
         $loadedSnippets = static::load();
 
-        return $loadedSnippets->first(function(Snippet $snippet) use($key){
+        return $loadedSnippets->first(function (Snippet $snippet) use ($key) {
             return $snippet->key() == $key;
         });
     }
@@ -70,7 +70,9 @@ class SnippetCollection extends Collection
      */
     private static function constructFullPath($path)
     {
-        if(!$path) return false;
+        if (!$path) {
+            return false;
+        }
 
         $fullpath = base_path($path);
 
@@ -84,7 +86,7 @@ class SnippetCollection extends Collection
 
     public function toClips(): array
     {
-        return $this->map(function($snippet){
+        return $this->map(function ($snippet) {
             return [$snippet->label(), $snippet->placeholder()];
         })->toArray();
     }
@@ -100,6 +102,4 @@ class SnippetCollection extends Collection
 
         return empty($paths);
     }
-
-
 }

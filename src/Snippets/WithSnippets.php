@@ -8,7 +8,7 @@ trait WithSnippets
 
     public function constructWithSnippets()
     {
-        $this->withSnippets = config('thinktomorrow.chief.withSnippets',false);
+        $this->withSnippets = config('thinktomorrow.chief.withSnippets', false);
     }
 
     public function withSnippets()
