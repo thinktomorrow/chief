@@ -6,6 +6,11 @@ trait WithSnippets
 {
     public $withSnippets = false;
 
+    public function constructWithSnippets()
+    {
+        $this->withSnippets = config('thinktomorrow.chief.withSnippets',false);
+    }
+
     public function withSnippets()
     {
         $this->withSnippets = true;

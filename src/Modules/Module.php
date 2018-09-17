@@ -53,7 +53,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     {
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
-        $this->withSnippets = config('thinktomorrow.chief.withSnippets', false);
+        $this->constructWithSnippets();
 
         parent::__construct($attributes);
     }
