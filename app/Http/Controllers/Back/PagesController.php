@@ -76,7 +76,7 @@ class PagesController extends Controller
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
 
         $available = Relation::availableChildren($page);
-        
+
         $available_modules         = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($available))->toArray();
         $available_pages           = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($available))->toArray();
         $available_pagesets        = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets())->toArray();

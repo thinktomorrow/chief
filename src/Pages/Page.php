@@ -22,21 +22,25 @@ use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
-use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
+    use BaseTranslatable {
+        getAttribute as getTranslatableAttribute;
+    }
+
     use ActingAsCollection,
         AssetTrait,
         Translatable,
-        BaseTranslatable,
         SoftDeletes,
         Publishable,
         Featurable,
         Archivable,
         AuditTrait,
         ActingAsParent,
-        ActingAsChild;
+        ActingAsChild,
+        WithSnippets;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel      = PageTranslation::class;
@@ -57,7 +61,27 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
+        $this->withSnippets = config('thinktomorrow.chief.withSnippets',false);
+
         parent::__construct($attributes);
+    }
+
+    /**
+     * Parse and render any found snippets in custom
+     * or translatable attribute values.
+     *
+     * @param string $value
+     * @return mixed|null|string|string[]
+     */
+    public function getAttribute($value)
+    {
+        $value = $this->getTranslatableAttribute($value);
+
+        if($this->shouldParseWithSnippets($value)) {
+            $value = $this->parseWithSnippets($value);
+        }
+
+        return $value;
     }
 
     /**
