@@ -51,7 +51,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     // CHIEF API
     Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
-    Route::get('api/snippets-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.snippets-links');
 
     // Pages
     Route::get('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
