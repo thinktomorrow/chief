@@ -20,6 +20,7 @@ use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\PageSets\PageSetReference;
 use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
@@ -73,14 +74,16 @@ class PagesController extends Controller
         $page->injectTranslationForForm();
 
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
-        $available_modules = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($page))->toArray();
-        $available_pages = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($page))->toArray();
-        $available_pagesets = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets($page))->toArray();
+
+        $available = Relation::availableChildren($page);
+
+        $available_modules         = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($available))->toArray();
+        $available_pages           = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($available))->toArray();
+        $available_pagesets        = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets())->toArray();
 
         // Current sections
         $sections = $page->children()->map(function ($section, $index) {
-
-            if($section instanceof TranslatableContract) {
+            if ($section instanceof TranslatableContract) {
                 $section->injectTranslationForForm();
             }
 
@@ -114,15 +117,15 @@ class PagesController extends Controller
 
     private function guessSectionType($section)
     {
-        if($section instanceof ActsAsCollection && in_array($section->collectionKey(),['text','pagetitle'])) {
+        if ($section instanceof ActsAsCollection && in_array($section->collectionKey(), ['text','pagetitle'])) {
             return $section->collectionKey();
         }
 
-        if($section instanceof StoredPageSetReference || $section instanceof PageSetReference) {
+        if ($section instanceof StoredPageSetReference || $section instanceof PageSetReference) {
             return 'pageset';
         }
 
-        if($section instanceof Page) {
+        if ($section instanceof Page) {
             return 'page';
         }
 

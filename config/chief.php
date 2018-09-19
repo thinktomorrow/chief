@@ -76,6 +76,24 @@ return [
                 'limit' => 1,
             ]
         ],
-    ]
+    ],
 
+    /**
+     * Define the directory where your html snippets reside. This can be a blade file or regular html.
+     * The identifier of each snippet is taken from the filename so make sure to properly name
+     * your files. We will load up all the snippets as available clips in e.g. the editor.
+     * The given directory should be relative to the project root.
+     */
+    'loadSnippetsFrom' => [
+        'resources/views/front/snippets',
+    ],
+
+    /**
+     * Enable snippet rendering by default.
+     *
+     * Pages and modules will parse any valid snippet placeholders found in a text or content
+     * block and render it to the expected html. If set to false, you can always manually
+     * manage this by calling the 'withSnippets()' method on a Page or Module object.
+     */
+    'withSnippets' => true,
 ];

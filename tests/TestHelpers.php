@@ -56,6 +56,11 @@ trait TestHelpers
 
     protected function asAdmin()
     {
+        // Allow multiple calls in one test run.
+        if (($admin = User::first()) && $this->isAuthenticated('chief')) {
+            return $this->actingAs($admin, 'chief');
+        }
+
         $admin = factory(User::class)->create();
         $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 

@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\PageSets\PageSetReference;
 use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Thinktomorrow\Chief\Modules\Module;
+use Illuminate\Support\Facades\DB;
 
 class Relation extends Model
 {
@@ -50,9 +52,9 @@ class Relation extends Model
     public static function children($parent_type, $parent_id)
     {
         $relations = static::where('parent_type', $parent_type)
-            ->where('parent_id', $parent_id)
-            ->orderBy('sort', 'ASC')
-            ->get();
+                            ->where('parent_id', $parent_id)
+                            ->orderBy('sort', 'ASC')
+                            ->get();
 
         return $relations->map(function ($relation) use ($parent_type, $parent_id) {
             $child = (new $relation->child_type)->find($relation->child_id);
@@ -60,7 +62,7 @@ class Relation extends Model
             if (!$child) {
 
                 // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
-                if ((!method_exists((new $relation->child_type),'withTrashed')) || ! (new $relation->child_type)->withTrashed()->find($relation->child_id)) {
+                if ((!method_exists((new $relation->child_type), 'trashed')) || ! (new $relation->child_type)->onlyTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
                     throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
                 }
@@ -80,29 +82,29 @@ class Relation extends Model
         ->values();
     }
 
-    public static function availableChildrenOnlyModules(ActsAsParent $parent): Collection
+    public static function availableChildrenOnlyModules(Collection $collection): Collection
     {
-        return static::availableChildren($parent)->reject(function($item){
+        return $collection->reject(function ($item) {
             if ($item instanceof Page || $item instanceof StoredPageSetReference) {
                 return true;
             }
         });
     }
 
-    public static function availableChildrenOnlyPages(ActsAsParent $parent): Collection
+    public static function availableChildrenOnlyPages(Collection $collection): Collection
     {
-        return static::availableChildren($parent)->filter(function($item){
+        return $collection->filter(function ($item) {
             if ($item instanceof Page) {
                 return true;
             }
         });
     }
 
-    public static function availableChildrenOnlyPageSets(ActsAsParent $parent): Collection
+    public static function availableChildrenOnlyPageSets(): Collection
     {
         // We want a regular collection, not the database one so we inject it into a regular one.
         $stored_pagesets = collect(StoredPageSetReference::all()->keyBy('key')->all());
-        $all_pagesets = PageSetReference::all();
+        $all_pagesets    = PageSetReference::all();
 
         return $all_pagesets->merge($stored_pagesets);
     }
@@ -116,18 +118,60 @@ class Relation extends Model
     public static function availableChildren(ActsAsParent $parent): Collection
     {
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
-        $collection = collect([]);
 
-        foreach ($available_children_types as $type) {
-            $collection = $collection->merge((new $type())->all());
+        // Preload pages and modules in 2 queries to reduce calls - For some reason the collection merge looks at the model id and
+        // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
+        $collection = collect(array_merge(Page::all()->all(), Module::all()->all()));
+
+        // Merging the results of all the pages and all the modules, then filter by the config
+        // This prevents us from having duplicates and also reduces the query load.
+        $collection = $collection->filter(function ($page) use ($available_children_types) {
+            return in_array(get_class($page), $available_children_types);
+        });
+
+        // Filter out our already loaded pages and modules
+        $remaining_children_types = collect($available_children_types)->reject(function ($type) {
+            return (new $type() instanceof Page || new $type() instanceof Module);
+        });
+
+        // only for non module / page children
+        foreach ($remaining_children_types as $type) {
+            // For some reason the collection merge looks at the model id and
+            // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
+            $collection = collect(array_merge($collection->all(), (new $type())->all()->all()));
         }
 
+        // Filter out our parent
         return $collection->reject(function ($item) use ($parent) {
-            if ($item instanceof Page) {
+            if ($item instanceof $parent) {
                 return $item->id == $parent->id;
             }
 
             return false;
-        });
+        })->values();
+    }
+
+    public function delete()
+    {
+        return static::where('parent_type', $this->parent_type)
+                ->where('parent_id', $this->parent_id)
+                ->where('child_type', $this->child_type)
+                ->where('child_id', $this->child_id)
+                ->delete();
+    }
+
+    public static function deleteRelationsOf($type, $id)
+    {
+        $relations = static::where(function ($query) use ($type, $id) {
+            return $query->where('parent_type', $type)
+                         ->where('parent_id', $id);
+        })->orWhere(function ($query) use ($type, $id) {
+            return $query->where('child_type', $type)
+                ->where('child_id', $id);
+        })->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
     }
 }

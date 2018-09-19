@@ -1,9 +1,3 @@
----
-layout: default
-title: Changelog
-description: chief is a package based cms built on top of the laravel framework.
-navigation_weight: 8
----
 # Changelog
 
 All Notable changes to the `chief` application template will be documented in this file.

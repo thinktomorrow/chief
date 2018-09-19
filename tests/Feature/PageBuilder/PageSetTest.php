@@ -49,13 +49,14 @@ class PageSetTest extends TestCase
         ], [], [], []);
 
         // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {})->name('pages.show');
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
     public function it_can_add_a_pageset()
     {
-        $pageset_ref = (new PageSetReference('foobar',DummyPageSetRepository::class.'@all', [5], 'foobar'));
+        $pageset_ref = (new PageSetReference('foobar', DummyPageSetRepository::class.'@all', [5], 'foobar'));
 
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
@@ -74,7 +75,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function it_can_keep_an_already_stored_pageset()
     {
-        $stored_pageset_ref = (new PageSetReference('foobar',DummyPageSetRepository::class.'@all', [5], 'foobar'))->store();
+        $stored_pageset_ref = (new PageSetReference('foobar', DummyPageSetRepository::class.'@all', [5], 'foobar'))->store();
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
         $this->asAdmin()
@@ -94,7 +95,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function it_can_remove_a_pageset()
     {
-        $stored_pageset_ref = (new PageSetReference('foobar',DummyPageSetRepository::class.'@all', [5], 'foobar'))->store();
+        $stored_pageset_ref = (new PageSetReference('foobar', DummyPageSetRepository::class.'@all', [5], 'foobar'))->store();
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
         $this->assertCount(1, $this->page->fresh()->children());

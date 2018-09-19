@@ -1,8 +1,8 @@
 @push('custom-styles')
-    <link rel="stylesheet" href="{{ cached_asset('/chief-assets/back/css/vendors/slim.min.css','back') }}">
+    <link rel="stylesheet" href="{{ chief_cached_asset('/chief-assets/back/css/vendors/slim.min.css') }}">
 @endpush
 @push('custom-scripts')
-    <script src="{{ cached_asset('/chief-assets/back/js/vendors/slim.kickstart.min.js','back') }}"></script>
+    <script src="{{ chief_cached_asset('/chief-assets/back/js/vendors/slim.kickstart.min.js') }}"></script>
     <script>
         Vue.component('slim', {
             props: ['options', 'group'],
@@ -10,8 +10,8 @@
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input v-if="id" type="file" :name="'files['+group+'][replace]['+id+']'" />
-                            <input v-else type="file" :name="'files['+group+'][new][]'" />
+                            <input v-if="id" type="file" :name="'files['+group+'][replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
+                            <input v-else type="file" :name="'files['+group+'][new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                         </div>
                         <input v-if="deletion" type="hidden" :name="'files['+group+'][delete][]'" :value="id"/>
                     </div>

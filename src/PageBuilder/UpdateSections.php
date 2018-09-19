@@ -65,9 +65,10 @@ class UpdateSections
     {
         $this->removeExistingPagesets();
 
-        foreach($this->pageset_refs as $flat_pageset_ref) {
-
-            if(!$flat_pageset_ref) continue;
+        foreach ($this->pageset_refs as $flat_pageset_ref) {
+            if (!$flat_pageset_ref) {
+                continue;
+            }
 
             $stored_pageset_ref = $this->findOrCreateStoredPageSetReference($flat_pageset_ref);
 
@@ -90,7 +91,7 @@ class UpdateSections
     private function removeExistingPagesets()
     {
         foreach ($this->page->children() as $instance) {
-            if ( ! $instance instanceof StoredPageSetReference) {
+            if (! $instance instanceof StoredPageSetReference) {
                 continue;
             }
             $this->page->rejectChild($instance);

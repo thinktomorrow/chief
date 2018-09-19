@@ -9,7 +9,7 @@
     <title>Chief • @yield('page-title', 'Admin')</title>
     <meta name="author" content="Think Tomorrow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('chief-assets/back/img/favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('chief-assets/back/img/favicon.png')}}" type="image/x-icon">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -22,7 +22,7 @@
         [v-cloak]{ display:none; }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ cached_asset('/chief-assets/back/css/main.css','back') }}">
+    <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
 
     @stack('custom-styles')
     @include('chief::back._layouts._partials.project-head')

@@ -22,20 +22,25 @@ use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
+    use BaseTranslatable {
+        getAttribute as getTranslatableAttribute;
+    }
+
     use ActingAsCollection,
         AssetTrait,
         Translatable,
-        BaseTranslatable,
         SoftDeletes,
         Publishable,
         Featurable,
         Archivable,
         AuditTrait,
         ActingAsParent,
-        ActingAsChild;
+        ActingAsChild,
+        WithSnippets;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel      = PageTranslation::class;
@@ -45,7 +50,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     ];
 
 
-    public    $table       = "pages";
+    public $table       = "pages";
     protected $guarded     = [];
     protected $dates       = ['deleted_at'];
     protected $with        = ['translations'];
@@ -56,7 +61,27 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
+        $this->constructWithSnippets();
+
         parent::__construct($attributes);
+    }
+
+    /**
+     * Parse and render any found snippets in custom
+     * or translatable attribute values.
+     *
+     * @param string $value
+     * @return mixed|null|string|string[]
+     */
+    public function getAttribute($value)
+    {
+        $value = $this->getTranslatableAttribute($value);
+
+        if ($this->shouldParseWithSnippets($value)) {
+            $value = $this->parseWithSnippets($value);
+        }
+
+        return $value;
     }
 
     /**
@@ -181,9 +206,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceLabel(): string
     {
-        $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+        if ($this->exists) {
+            $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
 
-        return $this->title ? $this->title . $status : '';
+            return $this->title ? $this->title . $status : '';
+        }
+
+        return '';
     }
 
     public function flatReferenceGroup(): string

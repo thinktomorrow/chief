@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Common\Relations\PresentingForParent;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
@@ -19,18 +20,22 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
-use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
 {
+    use PresentingForParent {
+        presentForParent as presentRawValueForParent;
+    }
+
     use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
         SoftDeletes,
         ActingAsChild,
-        PresentingForParent;
+        WithSnippets;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;
@@ -48,12 +53,25 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     {
         $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
+        $this->constructWithSnippets();
+
         parent::__construct($attributes);
     }
 
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
+    }
+
+    public function presentForParent(ActsAsParent $parent): string
+    {
+        $value = $this->presentRawValueForParent($parent);
+
+        if ($this->withSnippets && $this->shouldParseWithSnippets($value)) {
+            $value = $this->parseWithSnippets($value);
+        }
+
+        return $value;
     }
 
     /**

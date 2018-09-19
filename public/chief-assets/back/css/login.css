@@ -46,6 +46,7 @@ main {
 
 aside {
   background: #13c6a6 url("../img/logo.svg") no-repeat center center;
+  background-size: 100%;
   width: 60%;
   display: -webkit-box;
   display: -ms-flexbox;

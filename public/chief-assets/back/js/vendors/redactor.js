@@ -18230,80 +18230,30 @@ $R.add('module', 'list', {
 })(Redactor);
 (function($R)
 {
-    $R.add('plugin', 'widget', {
+    $R.add('plugin', 'clips', {
         translations: {
-            en: {
-                "widget": "Widget",
-                "widget-html-code": "Widget HTML Code"
+    		en: {
+    			"clips": "Clips",
+    			"clips-select": "Please, select a clip"
             }
         },
         modals: {
-            'widget':
-                '<form action=""> \
-                    <div class="form-item"> \
-                        <label for="modal-widget-input">## widget-html-code ## <span class="req">*</span></label> \
-                        <textarea id="modal-widget-input" name="widget" style="height: 200px;"></textarea> \
-                    </div> \
-                </form>'
+            'clips': ''
         },
         init: function(app)
         {
             this.app = app;
-            this.lang = app.lang;
             this.opts = app.opts;
+            this.lang = app.lang;
             this.toolbar = app.toolbar;
-            this.component = app.component;
             this.insertion = app.insertion;
-            this.inspector = app.inspector;
-            this.selection = app.selection;
         },
         // messages
         onmodal: {
-            widget: {
-                opened: function($modal, $form)
+            clips: {
+                open: function($modal)
                 {
-                    $form.getField('widget').focus();
-
-                    if (this.$currentItem)
-                    {
-                        var code = decodeURI(this.$currentItem.attr('data-widget-code'));
-                        $form.getField('widget').val(code);
-                    }
-                },
-                insert: function($modal, $form)
-                {
-                    var data = $form.getData();
-                    this._insert(data);
-                }
-            }
-        },
-        oncontextbar: function(e, contextbar)
-        {
-            var data = this.inspector.parse(e.target)
-            if (!data.isFigcaption() && data.isComponentType('widget'))
-            {
-                var node = data.getComponent();
-                var buttons = {
-                    "edit": {
-                        title: this.lang.get('edit'),
-                        api: 'plugin.widget.open',
-                        args: node
-                    },
-                    "remove": {
-                        title: this.lang.get('delete'),
-                        api: 'plugin.widget.remove',
-                        args: node
-                    }
-                };
-
-                contextbar.set(e, node, buttons, 'bottom');
-            }
-        },
-        onbutton: {
-            widget: {
-                observe: function(button)
-                {
-                    this._observeButton(button);
+                    this._build($modal);
                 }
             }
         },
@@ -18311,134 +18261,79 @@ $R.add('module', 'list', {
         // public
         start: function()
         {
-            var obj = {
-                title: this.lang.get('widget'),
-                api: 'plugin.widget.open',
-                observe: 'widget'
+            if (!this.opts.clips) return;
+
+            var data = {
+                title: this.lang.get('clips'),
+                api: 'plugin.clips.open'
             };
 
-            var $button = this.toolbar.addButton('widget', obj);
-            $button.setIcon('<i class="re-icon-widget"></i>');
+            var $button = this.toolbar.addButton('clips', data);
+            $button.setIcon('<i class="re-icon-clips"></i>');
         },
-        open: function()
-		{
-            this.$currentItem = this._getCurrent();
-
+        open: function(type)
+        {
             var options = {
-                title: this.lang.get('widget'),
+                title: this.lang.get('clips'),
                 width: '600px',
-                name: 'widget',
-                handle: 'insert',
-                commands: {
-                    insert: { title: (this.$currentItem) ? this.lang.get('save') : this.lang.get('insert') },
-                    cancel: { title: this.lang.get('cancel') }
-                }
+                name: 'clips'
             };
 
             this.app.api('module.modal.build', options);
 		},
-        remove: function(node)
-        {
-            this.component.remove(node);
-        },
 
-        // private
-		_getCurrent: function()
+		// private
+		_build: function($modal)
 		{
-    		var current = this.selection.getCurrent();
-    		var data = this.inspector.parse(current);
-    		if (data.isComponentType('widget'))
-    		{
-        		return this.component.build(data.getComponent());
-    		}
-		},
-		_insert: function(data)
-		{
-    		this.app.api('module.modal.close');
+    		var $body = $modal.getBody();
+            var $label = this._buildLabel();
+            var $list = this._buildList();
 
-    		if (data.widget.trim() === '')
-    		{
-        	    return;
-    		}
+            this._buildItems($list);
 
-    		var html = (this._isHtmlString(data.widget)) ? data.widget : document.createTextNode(data.widget);
-            var $component = this.component.create('widget', html);
-            $component.attr('data-widget-code', encodeURI(data.widget.trim()));
-    		this.insertion.insertHtml($component);
+            $body.html('');
+            $body.append($label);
+            $body.append($list);
 
 		},
-        _isHtmlString: function(html)
-        {
-            return !(typeof html === 'string' && !/^\s*<(\w+|!)[^>]*>/.test(html));
-        },
-		_observeButton: function(button)
+		_buildLabel: function()
 		{
-    		var current = this.selection.getCurrent();
-    		var data = this.inspector.parse(current);
+            var $label = $R.dom('<label>');
+            $label.html(this.lang.parse('## clips-select ##:'));
 
-    		button.enable();
+    		return $label;
+		},
+		_buildList: function()
+		{
+    		var $list = $R.dom('<ul>');
+            $list.addClass('redactor-clips-list');
+
+            return $list;
+		},
+		_buildItems: function($list)
+		{
+    		var items = this.opts.clips;
+    		for (var i = 0; i < items.length; i++)
+            {
+                var $li = $R.dom('<li>');
+                var $item = $R.dom('<span>');
+
+                $item.attr('data-index', i);
+                $item.html(items[i][0]);
+                $item.on('click', this._insert.bind(this));
+
+                $li.append($item);
+                $list.append($li);
+            }
+		},
+		_insert: function(e)
+		{
+            var $item = $R.dom(e.target);
+            var index = $item.attr('data-index');
+            var html = this.opts.clips[index][1];
+
+            this.app.api('module.modal.close');
+            this.insertion.insertRaw(html);
 		}
-    });
-})(Redactor);
-(function($R)
-{
-    $R.add('class', 'widget.component', {
-        mixins: ['dom', 'component'],
-        init: function(app, el)
-        {
-            this.app = app;
-
-            // init
-            return (el && el.cmnt !== undefined) ? el : this._init(el);
-        },
-        getData: function()
-        {
-            return {
-                html: this._getHtml()
-            };
-        },
-
-        // private
-        _init: function(el)
-        {
-            if (typeof el !== 'undefined')
-            {
-                var $node = $R.dom(el);
-                var $figure = $node.closest('figure');
-                if ($figure.length !== 0)
-                {
-                    this.parse($figure);
-                }
-                else
-                {
-                    this.parse('<figure>');
-                    this.html(el);
-                }
-            }
-            else
-            {
-                this.parse('<figure>');
-            }
-
-
-            this._initWrapper();
-        },
-        _getHtml: function()
-        {
-            var $wrapper = $R.dom('<div>');
-            $wrapper.html(this.html());
-            $wrapper.find('.redactor-component-caret').remove();
-
-            return $wrapper.html();
-        },
-        _initWrapper: function()
-        {
-            this.addClass('redactor-component');
-            this.attr({
-                'data-redactor-type': 'widget',
-                'tabindex': '-1',
-                'contenteditable': false
-            });
-        }
     });
 })(Redactor);
