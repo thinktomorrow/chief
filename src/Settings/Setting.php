@@ -20,7 +20,9 @@ class Setting extends Model
     {
         $fields = $this->fieldsFromConfig();
 
-        if( !isset($fields[$this->key])) return $this->defaultField();
+        if (!isset($fields[$this->key])) {
+            return $this->defaultField();
+        }
 
         return is_callable($fields[$this->key])
             ? call_user_func($fields[$this->key])
@@ -29,7 +31,9 @@ class Setting extends Model
 
     private static function fieldsFromConfig()
     {
-        if(static::$fieldsFromConfig) return static::$fieldsFromConfig;
+        if (static::$fieldsFromConfig) {
+            return static::$fieldsFromConfig;
+        }
 
         return static::$fieldsFromConfig = config('thinktomorrow.chief.settingFields', []);
     }

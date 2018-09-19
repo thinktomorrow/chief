@@ -15,18 +15,18 @@ class UpdateSetting
             // Retrieve all current settings
             $settings = Setting::all();
 
-            foreach($data as $key => $value){
-
+            foreach ($data as $key => $value) {
                 $setting = $settings->firstWhere('key', '=', $key);
 
                 // If its the same, please do not bother updating.
-                if($setting->value == $value) continue;
+                if ($setting->value == $value) {
+                    continue;
+                }
 
                 $setting->update(['value' => $value]);
-            }            
+            }
 
             DB::commit();
-
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;

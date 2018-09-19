@@ -12,11 +12,14 @@ class SettingsManager
     {
         $this->fetch();
 
-        if( ! isset($this->values[$key] )) return $default;
+        if (! isset($this->values[$key])) {
+            return $default;
+        }
         
-        if( is_array($this->values[$key]) ) {
-            
-            if($this->values[$key]['value'] == null) return $default;
+        if (is_array($this->values[$key])) {
+            if ($this->values[$key]['value'] == null) {
+                return $default;
+            }
 
             return $this->values[$key]['value'];
         }
@@ -36,12 +39,14 @@ class SettingsManager
 
     private function fetch()
     {
-        if($this->values) return;
+        if ($this->values) {
+            return;
+        }
 
         $config_values = static::configValues();
 
         $database_values = Schema::hasTable((new Setting)->getTable())
-            ? Setting::all()->pluck('value','key')->toArray()
+            ? Setting::all()->pluck('value', 'key')->toArray()
             : [];
 
         $this->values = array_merge($config_values, $database_values);

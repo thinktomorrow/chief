@@ -17,9 +17,8 @@ class SeedSettings extends BaseCommand
 
     public function handle()
     {
-        foreach(chiefSetting()->configValues() as $key => $value){
-
-            if(Setting::where('key', $key)->first()) {
+        foreach (chiefSetting()->configValues() as $key => $value) {
+            if (Setting::where('key', $key)->first()) {
                 continue;
             }
 

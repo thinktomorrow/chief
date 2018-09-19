@@ -9,13 +9,13 @@ class HomepageFieldGenerator
     public static function generate(): Field
     {
         $singles = \Thinktomorrow\Chief\Pages\Single::all();
-        $singles = $singles->map(function($single){
+        $singles = $singles->map(function ($single) {
 
             // Select label (from translatable title field)
             $single->label = $single->title;
 
             return $single;
-        })->pluck('label','id')->toArray();
+        })->pluck('label', 'id')->toArray();
 
         return \Thinktomorrow\Chief\Common\TranslatableFields\SelectField::make()
             ->label('Homepagina')

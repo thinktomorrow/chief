@@ -18,13 +18,13 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function if_setting_is_missing_in_database_it_retrieves_setting_from_config()
+    public function if_setting_is_missing_in_database_it_retrieves_setting_from_config()
     {
         $this->assertEquals(1, chiefSetting('homepage'));
     }
 
     /** @test */
-    function setting_from_database_overrules_the_config_one()
+    public function setting_from_database_overrules_the_config_one()
     {
         Setting::create(['key' => 'homepage', 'value' => 'foobar']);
 
@@ -32,7 +32,7 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function it_can_change_a_setting_at_runtime()
+    public function it_can_change_a_setting_at_runtime()
     {
         $this->assertEquals('1', chiefSetting('homepage'));
 
@@ -42,7 +42,7 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function if_value_is_null_the_default_is_used()
+    public function if_value_is_null_the_default_is_used()
     {
         $this->app['config']->set('thinktomorrow.chief-settings.homepage.value', null);
 
@@ -50,13 +50,13 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function unknown_setting_returns_default()
+    public function unknown_setting_returns_default()
     {
         $this->assertEquals('foobar', chiefSetting('xxx', 'foobar'));
     }
 
     /** @test */
-    function it_can_store_new_settings_value()
+    public function it_can_store_new_settings_value()
     {
         $setting = Setting::create(['key' => 'foo', 'value' => 'bar']);
 
@@ -69,7 +69,7 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function it_has_a_default_input_field_for_admin()
+    public function it_has_a_default_input_field_for_admin()
     {
         $setting = Setting::create([
             'key'   => 'foo',
@@ -81,7 +81,7 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function it_can_have_a_custom_field_for_the_admin()
+    public function it_can_have_a_custom_field_for_the_admin()
     {
         Setting::refreshFieldsFromConfig();
 

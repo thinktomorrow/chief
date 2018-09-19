@@ -7,8 +7,6 @@ use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Settings\Application\UpdateSetting;
 
-
-
 class SettingsController extends Controller
 {
     public function edit()
