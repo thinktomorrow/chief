@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Settings;
 
+use Illuminate\Support\Facades\Schema;
+
 class SettingsManager
 {
     private $values;
@@ -32,7 +34,10 @@ class SettingsManager
         if($this->values) return;
 
         $config_values   = config('thinktomorrow.chief-settings');
-        $database_values = Setting::all()->pluck('value','key')->toArray();
+        
+        $database_values = Schema::hasTable((new Setting)->getTable())
+            ? Setting::all()->pluck('value','key')->toArray()
+            : [];
 
         $this->values = array_merge($config_values, $database_values);
     }
