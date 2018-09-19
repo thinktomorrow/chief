@@ -61,7 +61,9 @@ if (!function_exists('chiefSetting')) {
 if (!function_exists('chiefmenu')) {
     function chiefmenu($key = 'main')
     {
-        return \Thinktomorrow\Chief\Menu\Menu::find($key);
+        $menu = \Thinktomorrow\Chief\Menu\Menu::find($key);
+
+        return $menu ?? new \Thinktomorrow\Chief\Menu\NullMenu();
     }
 }
 
