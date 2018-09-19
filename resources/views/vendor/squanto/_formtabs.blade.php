@@ -18,13 +18,13 @@
             @php $tab = (object)$tab; @endphp
 
             <template slot="tabnav" slot-scope="rows">
-                    <nav class="translation-tabs-nav inline-group-s stack-s sticky" style="top:6rem;">
+                    <nav class="tabs-nav inline-group-s stack sticky bg-grey-lightest" style="top:6.8rem;">
                         <a v-for="tab in rows.tabs"
                            :href="tab.hash"
                            :aria-controls="tab.hash"
                            :aria-selected="tab.isActive"
                            role="tab"
-                           class="inline-block squished-s"
+                           class="inline-block squished-s --bottomline"
                            :class="{'active': tab.isActive }"
                         >
                             <span class="tabs-name" v-text="tab.name"></span>

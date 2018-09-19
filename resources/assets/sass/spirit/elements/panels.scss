@@ -15,7 +15,7 @@
 }
 
 $panel-name: default primary secondary success warning error information;
-$colors: $color-subtle $color-primary $color-secondary $color-success $color-warning $color-error $color-information;
+$colors: $color-border $color-primary $color-secondary $color-success $color-warning $color-error $color-information;
 
 @each $panel in $panel-name{
     $i: index($panel-name, $panel);

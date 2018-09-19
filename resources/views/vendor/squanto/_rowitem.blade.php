@@ -11,17 +11,13 @@
 
             <!-- only show subnav if multiple groupings (other than the default general) -->
             @if((!isset($show_cart_subnav) || $show_cart_subnav) && count($page->groupedlines) > 1)
-                <div class="row card-body inset-s">
-                    <ul>
+                <div class="font-s">
                         <?php $id = 1 ?>
                         @foreach($page->groupedlines as $group => $lines)
                             @if($group != 'general')
-                                <li>
-                                    <a href="{{ route('squanto.edit',$page->id) . '#section' . $id++ .'-nl' }}" ><span>{{ $group }}</span></a>
-                                </li>
+                                <a class="text-subtle" href="{{ route('squanto.edit',$page->id) . '#section' . $id++ .'-nl' }}" ><span>{{ $group }}</span></a>
                             @endif
                         @endforeach
-                    </ul>
                 </div>
             @endif
         </div>

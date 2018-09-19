@@ -2689,7 +2689,8 @@ p:first-child {
 
 h1:not(:last-child),
 h2:not(:last-child),
-h3:not(:last-child) {
+h3:not(:last-child),
+p:last-child {
   margin-bottom: 1.5rem;
 }
 
@@ -2697,10 +2698,6 @@ h4:not(:last-child),
 h5:not(:last-child),
 h6:not(:last-child) {
   margin-bottom: 0.75rem;
-}
-
-p:last-child {
-  margin-bottom: 0;
 }
 
 /**
@@ -3526,7 +3523,7 @@ ol li {
 
 blockquote {
   padding: 1.2em;
-  background: #dadada;
+  background: #6d7775;
   border-left: 2px solid #a7b6dc;
 }
 
@@ -3536,7 +3533,7 @@ pre {
 
 code {
   display: inline-block;
-  background: white;
+  background: #bcc1c0;
   padding: .1em;
 }
 
@@ -3784,20 +3781,20 @@ a.text-font:hover {
 }
 
 .bg-subtle {
-  background-color: #dadada;
+  background-color: #6d7775;
 }
 
 .text-subtle {
-  color: #dadada;
+  color: #6d7775;
 }
 
 .text-subtle.\--link-with-bg:hover {
-  color: #c6c6c6;
-  background-color: white;
+  color: #596260;
+  background-color: #c9cecd;
 }
 
 a.text-subtle:hover {
-  color: #c6c6c6;
+  color: #596260;
 }
 
 .bg-grey-lightest {
@@ -5275,7 +5272,7 @@ ul.listgroup li:last-child {
 
 ul.listgroup li:hover {
   color: #ffffff;
-  background-color: #dadada;
+  background-color: #6d7775;
   padding-left: 1rem;
 }
 
@@ -5780,7 +5777,7 @@ table .btn ~ .btn {
 }
 
 .translation-tabs-nav a .tabs-name {
-  color: #dadada;
+  color: #6d7775;
 }
 
 .translation-tabs-nav a.tab-error {
@@ -6155,8 +6152,8 @@ input[type='file'] {
   height: 100%;
   line-height: 1rem;
   padding: 0.75rem;
-  border-left: 1px solid #dadada;
-  background-color: white;
+  border-left: 1px solid #6d7775;
+  background-color: #bcc1c0;
 }
 
 .custom-indicators {
@@ -6230,7 +6227,7 @@ input[type=checkbox] {
 }
 
 .custom-indicators.disabled .custom-radiobutton, .custom-indicators.disabled .custom-checkbox {
-  background-color: #dadada;
+  background-color: #6d7775;
 }
 
 input[type=radio]:checked ~ .custom-radiobutton {
@@ -6690,7 +6687,7 @@ select {
 
 .info-bar .info-title {
   font-weight: 100;
-  color: #dadada;
+  color: #6d7775;
   font-size: .86em;
 }
 
@@ -6701,7 +6698,7 @@ select {
 .event-metadata {
   text-transform: uppercase;
   font-size: 0.86em;
-  color: #dadada;
+  color: #6d7775;
 }
 
 .panel-list {
@@ -6709,7 +6706,7 @@ select {
 }
 
 .panel-list li {
-  color: #dadada;
+  color: #6d7775;
   list-style: none;
 }
 
@@ -6727,7 +6724,7 @@ select {
   height: calc(100% + 0.75rem);
   left: calc(16px / 2);
   top: 17px;
-  border-left: 1px dashed #dadada;
+  border-left: 1px dashed #6d7775;
 }
 
 .panel-list li.event-new .icon:before {
@@ -6799,8 +6796,8 @@ select {
   min-height: 80px;
   min-width: 80px;
   border-radius: .75rem;
-  -webkit-box-shadow: 1px 5px 28px -10px #dadada;
-          box-shadow: 1px 5px 28px -10px #dadada;
+  -webkit-box-shadow: 1px 5px 28px -10px #6d7775;
+          box-shadow: 1px 5px 28px -10px #6d7775;
   /* SLIM CROPPER OVERRIDES */
 }
 
