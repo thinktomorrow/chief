@@ -48,7 +48,7 @@ class HomepageTest extends TestCase
         $product  = ProductPageFake::create(['published' => 1]);
         $product2 = ProductPageFake::create(['published' => 1]);
 
-        $this->app['config']->set('thinktomorrow.chief-settings.homepage_id.value', $product2->id);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage', $product2->id);
 
         $this->assertEquals($product2->id, Page::guessHomepage()->id);
     }

@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
-use Illuminate\Support\Facades\Artisan;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Settings\SettingsManager;
@@ -23,15 +22,17 @@ class UpdateSettingTest extends TestCase
     /** @test */
     public function update_a_setting()
     {
+        $this->disableExceptionHandling();
+
         factory(Setting::class)->create([
             'key'   => 'foo',
             'value' => 'old foo'
         ]);
 
-        $response = $this->asAdmin()
-            ->post(route('chief.back.settings.update'), $this->validSettingParams());
-        $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.settings.edit'));
+        $this->asAdmin()
+            ->put(route('chief.back.settings.update'), $this->validSettingParams())
+            ->assertStatus(302)
+            ->assertRedirect(route('chief.back.settings.edit'));
 
         $this->assertUpdatedSettingValues(Setting::first());
     }

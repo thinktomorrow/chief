@@ -8,11 +8,11 @@
         <div class="stack">
             <h1>Jouw uitnodiging is afgewezen.</h1>
 
-            <p>Ok. Je hebt jouw uitnodiging tot {{ config('thinktomorrow.chief.name') }} afgewezen. </p>
+            <p>Ok. Je hebt jouw uitnodiging tot {{ chiefSetting('client.app_name') }} afgewezen. </p>
             <p>Mocht je toch opnieuw toegang wensen, kan je je wenden tot de beheerder. </p>
 
             <div class="stack">
-                <a class="btn btn-o-primary" href="mailto:{{ config('thinktomorrow.chief.contact.email') }}">Contacteer jouw beheerder</a>
+                <a class="btn btn-o-primary" href="mailto:{{ chiefSetting('contact.email') }}">Contacteer jouw beheerder ({{ chiefSetting('contact.name') }})</a>
                 <a class="btn btn-link" href="{{ route('chief.back.login') }}">Ga naar login pagina</a>
             </div>
 

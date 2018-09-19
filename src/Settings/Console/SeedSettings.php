@@ -17,16 +17,16 @@ class SeedSettings extends BaseCommand
 
     public function handle()
     {
-        $settings = config('thinktomorrow.chief-settings', []);
+        foreach(chiefSetting()->configValues() as $key => $value){
 
-        foreach($settings as $key => $setting){
-            if(isset($setting['value']) && isset($setting['field'])){
-                if(!Setting::where('key', $key)->first())
-                {
-                    $setting['key'] = $key;
-                    Setting::create($setting);
-                }
+            if(Setting::where('key', $key)->first()) {
+                continue;
             }
+
+            Setting::create([
+                'key' => $key,
+                'value' => $value,
+            ]);
         }
     }
 }

@@ -20,18 +20,14 @@ class SettingsController extends Controller
         return view('chief::back.system.settings', compact('settings'));
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
         $this->authorize('update-setting');
+
         app(UpdateSetting::class)->handle(
             $request->get('settings')
         );
-        
-        return redirect()->route('chief.back.settings.edit')->with('messages.success', 'Settings aangepast!');
-    }
 
-    public function update()
-    {
-        
+        return redirect()->route('chief.back.settings.edit')->with('messages.success', 'Settings zijn aangepast!');
     }
 }

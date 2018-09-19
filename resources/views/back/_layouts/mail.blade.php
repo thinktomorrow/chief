@@ -116,7 +116,7 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
                 <tr>
                     <td bgcolor="#f5f5f5" align="left" style="padding: 30px 30px 30px 30px; color: #13c6a6; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px; text-align: center" >
-                        <p style="margin: 0; padding:0;">&copy; {{ date('Y')}} • <a href="{{ url('') }}" target="_blank" style="color: #13c6a6;">{{ config('thinktomorrow.chief.name') }}</a></p>
+                        <p style="margin: 0; padding:0;">&copy; {{ date('Y')}} • <a href="{{ url('') }}" target="_blank" style="color: #13c6a6;">{{ chiefSetting('client.app_name') }}</a></p>
                     </td>
                 </tr>
                 </td>

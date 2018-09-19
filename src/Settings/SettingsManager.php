@@ -29,12 +29,17 @@ class SettingsManager
         $this->values[$key] = $value;
     }
 
+    public static function configValues(): array
+    {
+        return array_dot(config('thinktomorrow.chief-settings'));
+    }
+
     private function fetch()
     {
         if($this->values) return;
 
-        $config_values   = config('thinktomorrow.chief-settings');
-        
+        $config_values = static::configValues();
+
         $database_values = Schema::hasTable((new Setting)->getTable())
             ? Setting::all()->pluck('value','key')->toArray()
             : [];

@@ -275,14 +275,14 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function isHomepage(): bool
     {
-        $homepage_id = chiefSetting('homepage_id');
+        $homepage_id = chiefSetting('homepage');
 
         return $this->id == $homepage_id;
     }
 
     public static function guessHomepage(): self
     {
-        $homepage_id = chiefSetting('homepage_id');
+        $homepage_id = chiefSetting('homepage');
 
         // Homepage id is explicitly set
         if ($homepage_id && $page = static::findPublished($homepage_id)) {

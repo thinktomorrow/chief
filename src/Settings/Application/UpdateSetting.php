@@ -3,31 +3,30 @@
 namespace Thinktomorrow\Chief\Settings\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Models\UniqueSlug;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Settings\Setting;
 
 class UpdateSetting
 {
-
     public function handle(array $data)
     {
         try {
             DB::beginTransaction();
+
+            // Retrieve all current settings
+            $settings = Setting::all();
+
             foreach($data as $key => $value){
-                if($key && $value){
-                    $setting = Setting::where('key', $key)->first();
 
-                    if(!$setting) continue;
+                $setting = $settings->firstWhere('key', '=', $key);
 
-                    $setting->value = $value;
-                    $setting->save();
-                }
+                // If its the same, please do not bother updating.
+                if($setting->value == $value) continue;
+
+                $setting->update(['value' => $value]);
             }            
 
             DB::commit();
+
         } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;

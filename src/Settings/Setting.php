@@ -6,34 +6,42 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Common\TranslatableFields\Field;
 use Thinktomorrow\Chief\Common\TranslatableFields\FieldType;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
+use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 
 class Setting extends Model
 {
-    public $table      = 'settings';
+    public $table = 'settings';
     public $timestamps = false;
-    public $guarded    = [];
-    public $casts      = [
-        'field' => 'array',
-    ];
+    public $guarded = [];
 
-    public function hasField(): bool
+    private static $fieldsFromConfig;
+
+    public function getFieldAttribute()
     {
-        if( ! $this->field || !is_array($this->field)) return false;
+        $fields = $this->fieldsFromConfig();
 
-        if( ! isset($this->field['type'])) return false;
+        if( !isset($fields[$this->key])) return $this->defaultField();
 
-        return true;
+        return is_callable($fields[$this->key])
+            ? call_user_func($fields[$this->key])
+            : $fields[$this->key];
     }
 
-    public function getField()
+    private static function fieldsFromConfig()
     {
-        if( ! $this->hasField()) return null;
+        if(static::$fieldsFromConfig) return static::$fieldsFromConfig;
 
-        $field = FieldType::fromString($this->field['type']);
+        return static::$fieldsFromConfig = config('thinktomorrow.chief.settingFields', []);
+    }
 
-        if( isset($this->field['label']) ) $field->label($this->field['label']);
-        if( isset($this->field['description']) ) $field->description($this->field['description']);
+    private function defaultField()
+    {
+        return InputField::make()
+                    ->label(ucfirst(str_replace(['-','_','.'], ' ', $this->key)));
+    }
 
-        return $field;
+    public static function refreshFieldsFromConfig()
+    {
+        static::$fieldsFromConfig = null;
     }
 }

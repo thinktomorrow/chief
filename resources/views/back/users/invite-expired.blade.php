@@ -17,7 +17,7 @@
             </ul>
 
             <div class="stack">
-                <a class="btn btn-o-primary" href="mailto:{{ config('thinktomorrow.chief.contact.email') }}">Contacteer jouw beheerder</a>
+                <a class="btn btn-o-primary" href="mailto:{{ chiefSetting('contact.email') }}">Contacteer jouw beheerder ({{ chiefSetting('contact.name') }})</a>
                 <a class="btn btn-link" href="{{ route('chief.back.login') }}">Ga naar login pagina</a>
             </div>
 

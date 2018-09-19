@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
 use Thinktomorrow\Chief\Common\TranslatableFields\FieldType;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
+use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -13,39 +14,39 @@ class SettingsTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief-settings.homepage_id.value', 1);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage', 1);
     }
 
     /** @test */
     function if_setting_is_missing_in_database_it_retrieves_setting_from_config()
     {
-        $this->assertEquals(1, chiefSetting('homepage_id'));
+        $this->assertEquals(1, chiefSetting('homepage'));
     }
 
     /** @test */
     function setting_from_database_overrules_the_config_one()
     {
-        Setting::create(['key' => 'homepage_id', 'value' => 'foobar']);
+        Setting::create(['key' => 'homepage', 'value' => 'foobar']);
 
-        $this->assertEquals('foobar', chiefSetting('homepage_id'));
+        $this->assertEquals('foobar', chiefSetting('homepage'));
     }
 
     /** @test */
     function it_can_change_a_setting_at_runtime()
     {
-        $this->assertEquals('1', chiefSetting('homepage_id'));
+        $this->assertEquals('1', chiefSetting('homepage'));
 
-        chiefSetting()->set('homepage_id', 'foobar');
+        chiefSetting()->set('homepage', 'foobar');
 
-        $this->assertEquals('foobar', chiefSetting('homepage_id'));
+        $this->assertEquals('foobar', chiefSetting('homepage'));
     }
 
     /** @test */
     function if_value_is_null_the_default_is_used()
     {
-        $this->app['config']->set('thinktomorrow.chief-settings.homepage_id.value', null);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage.value', null);
 
-        $this->assertEquals('foobar', chiefSetting('homepage_id', 'foobar'));
+        $this->assertEquals('foobar', chiefSetting('homepage', 'foobar'));
     }
 
     /** @test */
@@ -68,20 +69,31 @@ class SettingsTest extends TestCase
     }
 
     /** @test */
-    function it_has_information_about_the_field_presentation_for_the_admin()
+    function it_has_a_default_input_field_for_admin()
     {
         $setting = Setting::create([
             'key'   => 'foo',
             'value' => 'bar',
-            'field' => [
-                'type'        => FieldType::HTML,
-                'label'       => 'homepage',
-                'description' => 'extra information',
-            ],
         ]);
 
-        $field = HtmlField::make()->label('homepage')->description('extra information');
+        $this->assertInstanceOf(InputField::class, $setting->field);
+        $this->assertEquals('Foo', $setting->field->label);
+    }
 
-        $this->assertEquals($field, $setting->getField());
+    /** @test */
+    function it_can_have_a_custom_field_for_the_admin()
+    {
+        Setting::refreshFieldsFromConfig();
+
+        $this->app['config']->set('thinktomorrow.chief.settingFields', [
+            'foo'  => HtmlField::make()->label('Foobar')
+        ]);
+
+        $setting = Setting::create([
+            'key'   => 'foo',
+            'value' => 'bar',
+        ]);
+
+        $this->assertInstanceOf(HtmlField::class, $setting->field);
     }
 }
