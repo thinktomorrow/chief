@@ -102,7 +102,9 @@ return [
      * By default a standard input field is used.
      */
     'settingFields' => [
-        'homepage' => function(){ return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate(); },
+        'homepage' => function () {
+            return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
+        },
         'contact.email' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
                         ->label('Webmaster email')
                         ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),

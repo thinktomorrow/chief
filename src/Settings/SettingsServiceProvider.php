@@ -13,8 +13,8 @@ class SettingsServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton(SettingsManager::class, function($app){
-           return new SettingsManager();
+        $this->app->singleton(SettingsManager::class, function ($app) {
+            return new SettingsManager();
         });
     }
 }

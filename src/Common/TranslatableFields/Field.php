@@ -34,7 +34,9 @@ class Field
         }
 
         // Without arguments we assume you want to retrieve a value property
-        if(empty($arguments)) return $this->__get($name);
+        if (empty($arguments)) {
+            return $this->__get($name);
+        }
 
         $this->values[$name] = $arguments[0];
 
