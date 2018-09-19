@@ -2,9 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
+use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdatePageTest extends TestCase
@@ -19,12 +21,16 @@ class UpdatePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'statics' => Page::class,
-            'articles' => ArticleFake::class,
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
         ]);
 
         $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
+
+        // For our project context we expect the page detail route to be known
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
@@ -60,26 +66,29 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function it_can_update_the_page_relations()
     {
+        $this->markTestSkipped('Relations update is disabled in preference of the pagebuilder module logic.');
+
         $page = factory(Page::class)->create();
         $otherPage = factory(Page::class)->create();
 
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
                 'relations' => [
-                    $otherPage->getRelationId()
+                    $otherPage->flatReference()->get()
                 ]
             ]));
 
-        $this->assertCount(1, $page->children());
-        $this->assertEquals($otherPage->id, $page->children()->first()->id);
+        $this->assertCount(1, $page->fresh()->children());
+        $this->assertEquals($otherPage->id, $page->fresh()->children()->first()->id);
     }
 
     /** @test */
     public function when_updating_page_title_is_required()
     {
-        $this->assertValidation(new Page(), 'trans.nl.title', $this->validPageParams(['trans.nl.title' => '']),
-            route('chief.back.pages.index', 'statics'),
-            route('chief.back.pages.update', $this->page->id)
+        $this->assertValidation(new Page(), 'trans.nl.title', $this->validUpdatePageParams(['trans.nl.title' => '']),
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.update', $this->page->id),
+            1, 'put'
         );
     }
 
@@ -88,22 +97,38 @@ class UpdatePageTest extends TestCase
     {
         $otherPage = factory(Page::class)->create([
             'trans.nl.title'  => 'titel nl',
-            'trans.nl.slug'   => 'foobarnl'
+            'trans.nl.slug'   => 'slug-nl'
         ]);
 
-        $this->assertCount(1, Page::all());
+        $this->assertValidation(new Page(), 'trans.nl.slug', $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']),
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.update', $this->page->id),
+            2, 'put'
+        );
 
-        $response = $this->asDefaultAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
-                'trans.nl.title'  => 'foobarnl',
-                'trans.en.title'  => 'foobaren',
-            ])
-            );
+        // Assert nothing has been updated
+        $this->assertNewPageValues($this->page);
+    }
 
-        $response->assertStatus(302);
+    /** @test */
+    public function slugcheck_takes_archived_into_account_as_well()
+    {
+        $otherPage = factory(Page::class)->create([
+            'trans.nl.title'  => 'titel nl',
+            'trans.nl.slug'   => 'slug-nl'
+        ]);
 
-        $this->assertNotNull($otherPage->{'slug:nl'});
-        $this->assertNotEquals($this->page->{'slug:nl'}, $otherPage->{'slug:nl'});
+        $otherPage->archive();
+
+        $this->assertValidation(new Page(), 'trans.nl.slug', $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']),
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.update', $this->page->id),
+            1, // Archived one is not counted
+            'put'
+        );
+
+        // Assert nothing has been updated
+        $this->assertNewPageValues($this->page);
     }
 
     /** @test */
@@ -120,5 +145,27 @@ class UpdatePageTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertNull($this->page->fresh()->getTranslation('en'));
+    }
+
+    /** @test */
+    public function slug_uses_title_if_its_empty()
+    {
+        $page = factory(Page::class)->create([
+            'trans.nl.title'  => 'foobar nl',
+            'trans.nl.slug'   => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar nl',
+                    'slug'  => '',
+                ],
+            ])
+        );
+
+        $response->assertStatus(302);
+
+        $this->assertEquals('foobar-nl', $page->fresh()->slug);
     }
 }

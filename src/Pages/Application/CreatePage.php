@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Pages\Application;
 
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Relations\RelatedCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
@@ -53,6 +53,10 @@ class CreatePage
     {
         $translation['slug']    = $translation['slug'] ?? $translation['title'];
         $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
+
+        if (isset($translation['content'])) {
+            $translation['short'] = $translation['short'] ?? teaser($translation['content'], 100);
+        }
 
         return $translation;
     }

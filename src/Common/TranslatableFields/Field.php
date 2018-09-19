@@ -1,26 +1,21 @@
 <?php
+
 declare(strict_types = 1);
+
 namespace Thinktomorrow\Chief\Common\TranslatableFields;
 
 class Field
 {
-    /**
-     * @var FieldType
-     */
+    /** @var FieldType */
     private $fieldType;
 
     protected $values = [];
 
-    private function __construct(FieldType $fieldType)
+    public function __construct(FieldType $fieldType)
     {
         $this->fieldType = $fieldType;
 
         $this->values['type'] = $fieldType->get();
-    }
-
-    public static function make(FieldType $fieldType)
-    {
-        return new static($fieldType);
     }
 
     public function __get($key)

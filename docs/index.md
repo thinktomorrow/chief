@@ -1,15 +1,10 @@
 ---
+layout: default
 title: Install
 description: chief is a package based cms built on top of the laravel framework.
+navigation_weight: 1
 ---
-[Install](index.md)
-[Local development](chief-development.md)
-[Overriding chief](overriding-chief.md)
-[Pages](pages.md)
-[Server](server.md)
-[Changelog](CHANGELOG.md)
-[Guidelines](GUIDELINES.md)
-# Chief
+## Chief
 
 Chief is a package based cms built on top of the laravel framework.
 Chief is solely the back-end(admin panel). You will need to create the front-end yourself.
@@ -21,7 +16,7 @@ Start a new Think Tomorrow project skeleton with the following command
 composer create-project thinktomorrow/project-skeleton <projectname>
 ```
 
-## Installment
+## Install in existing project
 
 Chief can be installed via composer.
 ```php
@@ -64,11 +59,13 @@ protected $routeMiddleware = [
         'auth.superadmin' => AuthenticateSuperadmin::class,
         'chief-guest' => \Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated::class,
         'chief-validate-invite' => \Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         ...
     ];
 ```
 
-### Database
+## Database
 
 Connect a database with your application and make sure you have set the proper database credentials in your `.env` file. 
 
@@ -87,7 +84,7 @@ This command will create the basic roles and permissions and allows to setup the
 php artisan chief:admin
 ```
 
-### Config & Assets
+## Config & Assets
 
 The next step is to publish the chief-assets to our public folder.
 If you want to overwrite existing files you can add the `--force` flag here.
@@ -113,11 +110,96 @@ php artisan vendor:publish --tag=translatable
 php artisan vendor:publish --provider="Thinktomorrow\Locale\LocaleServiceProvider"
 ```
 
-# Default routes
+## Default routes
 There is one project related route that is expected by chief and that is: `pages.show`. This
 is the route for the detail of a static page. Make sure to add this one. 
 
-# Multilingual
+For the easiest setup you should also add the `pages.home` route. This will detect the homepage based on the config.
+
+```File: routes\front.php```
+```php
+Route::get('/', PagesController::class.'@homepage')->name('pages.home');
+Route::get('page/{slug}', PagesController::class.'@show')->name('pages.show');
+```
+
+Also add a controller file for this front end route.
+This one is an example:
+
+```File: App\Http\Controller```
+```php
+<?php
+namespace App\Http\Controllers;
+
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Thinktomorrow\Chief\Pages\Page;
+
+class PagesController extends Controller
+{
+    public function show($slug)
+    {
+        if(!$page = Page::findPublishedBySlug($slug)) {
+            throw new NotFoundHttpException('No published page found by slug ['.$slug.']');
+        }
+
+        // TODO: If slug matches the homepage page, redirect to root to avoid duplicate content
+        if($page->isHomepage()) {
+            return redirect()->route('pages.home');
+        }
+
+        return $page->view();
+    }
+
+    public function homepage()
+    {
+        // Get the page that has the flag 'is_homepage'. Otherwise we take the first singles pages found. If not found, we take the first published page...
+        $page = Page::guessHomepage();
+
+        return $page->view();
+    }
+}
+```
+
+To get this route to work it's a good idea to add a view file where we can show a page.
+
+An example of this view file is the following:
+
+```File: resources\views\front\pages\show.blade.php```
+```html
+@extends('front._layouts.master')
+
+@section('content')
+
+    <!-- hero -->
+    <div class="row" style="background: url({{ $page->mediaUrl(\Thinktomorrow\Chief\Media\MediaType::HERO) }}) top right no-repeat;">
+        <div class="container">
+            <div class="column-7">
+                <h1>{{ $page->title }}</h1>
+                <div class="editor-content">
+                    {!! trans('pages.statics.hero.description') !!}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="container editor-content">
+        {!! $page->content !!}
+    </section>
+
+    {!! $page->renderChildren() !!}
+
+    <section class="container editor-content">
+        {!! $page->hero_title !!}
+        {!! $page->hero_description !!}
+    </section>
+
+@stop
+```
+
+Next to get the front-end to work you should set a homepage id in the chief-settings config file.
+This determines what the homepage/landing page will be. Currently this is changed through that config file.
+Eventually this will be editable in the admin.
+
+## Multilingual
 
 There are a couple of places where you need to configure the localisation of your application.
 At the following files you should change the locales to your desired setup:
@@ -126,11 +208,7 @@ At the following files you should change the locales to your desired setup:
 - Set the frontend locales of the application in the `config/thinktomorrow/locale.php` file. The values in this `locales` array will be the allowed locales for the visitors of your application.
 - Set the default and fallback locale in the `config/app.php` file. Keep in mind that this value needs to consist of one of the available locales as set in the `config/translatable.php`.
 
-# Changing Chief model behaviour
-
-To change the model behaviour for chief models you can extend the models in your application.
-
-# Project setup advice
+## Project setup advice
 Following adjustments are not automatically enforced but are however recommended in your project.
 
 ## MySQL index length
@@ -153,13 +231,16 @@ public function boot()
 }
 ```
 
-### FAQ
+# FAQ
 
 Q: I get the "Route [login] not defined" error. Help!  
 A: Extend our ChiefExceptionHandler in the `app/handler.php` file. This is because the chief admin uses a custom guard and does not rely on the default auth laravel routes.
 
-Q: I get the "Unable to locate factory with name [default] [Thinktomorrow\Chief\Users\User]." error. Help!  
-A: /
+Q: I get the "Tokenmismatch" error after login into the admin. Help!  
+A: This most likely means you have an outdated version of chief. Run 'composer update' to get the latest version.
 
 Q: I get the "Class web-chief does not exist" error. Help!  
 A: Add the `AuthenticateChiefSession::class` middleware group to your `App\Http\Kernel.php` file.
+
+Q: I get the 'Expected response code 250 but got code “530”, with message “530 5.7.1 Authentication required ”' error. Help! 
+A: Please make sure your mail settings in your .env file are correct.

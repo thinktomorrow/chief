@@ -93,7 +93,7 @@
         removeEmptyFigures: function()
         {
             var html = this.app.source.getCode();
-console.log(html);
+
             // html = html.replace('<div class="row', '<div contenteditable="false" class="row');
             // html = html.replace('<div class="column', '<div contenteditable="true" class="column');
 

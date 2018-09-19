@@ -8,6 +8,10 @@ use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 
 class UploadMedia
 {
+    /**
+     * Upload from base64encoded files, usually
+     * coming from slim upload component
+     */
     public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
     {
         // When no files are uploaded, we still would like to sort our assets duh
@@ -18,6 +22,9 @@ class UploadMedia
 
             return;
         }
+
+        // We allow for more memory consumption because the gd decoding can require a lot of memory when parsing large images.
+        ini_set('memory_limit', '256M');
 
         foreach ($files_by_type as $type => $files) {
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
@@ -46,8 +53,13 @@ class UploadMedia
 
     private function addFile(HasMedia $model, string $type, array &$files_order, $file)
     {
-        $image_name = json_decode($file)->output->name;
-        $asset = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
+        if (is_string($file)) {
+            $image_name = json_decode($file)->output->name;
+            $asset      = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
+        } else {
+            $image_name = $file->getClientOriginalName();
+            $asset      = $this->addAsset($file, $type, null, $image_name, $model);
+        }
 
         // New files are passed with their filename (instead of their id)
         // For new files we will replace the filename with the id.
@@ -63,6 +75,8 @@ class UploadMedia
      */
     private function addAsset($file, $type = '', $locale = null, $filename = null, HasMedia $model)
     {
+        $filename = $this->sluggifyFilename($filename);
+
         if (is_string($file)) {
             $asset = AssetUploader::uploadFromBase64($file, $filename);
         } else {
@@ -98,8 +112,21 @@ class UploadMedia
 
     private function removeFiles(HasMedia $model, array $files)
     {
-        if (isset($files['remove']) && is_array($files['remove']) && !empty($files['remove'])) {
-            $model->assets()->whereIn('id', $files['remove'])->delete();
+        if (isset($files['delete']) && is_array($files['delete']) && !empty($files['delete'])) {
+            $model->assets()->whereIn('id', $files['delete'])->delete();
         }
+    }
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    private function sluggifyFilename($filename): string
+    {
+        $extension = substr($filename, strrpos($filename, '.') + 1);
+        $filename  = substr($filename, 0, strrpos($filename, '.'));
+        $filename  = str_slug($filename) . '.' . $extension;
+
+        return $filename;
     }
 }

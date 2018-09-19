@@ -26,6 +26,7 @@ Vue.component('sidebar', require('./components/Sidebar.vue').default);
 Vue.component('alert', require('./components/Alert.vue').default);
 Vue.component('delete', require('./components/RemoveButton.vue').default);
 Vue.component('error', require('./components/Error.vue').default);
+Vue.component('page-builder', require('./components/Pagebuilder/Pagebuilder.vue').default);
 
 // sticky polyfill init
 Stickyfill.add(document.querySelectorAll('.sticky'));

@@ -3,28 +3,6 @@
 use Thinktomorrow\Chief\Media\MediaType;
 
 return [
-
-    /**
-     * Contact email which will receive all incoming communication
-     * This contact will receive e.g. contact form submissions
-     */
-    'contact'     => [
-        'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
-        'name'  => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
-    ],
-
-    /**
-     * Name of the project.
-     *
-     * This is used in a couple of places such as the mail footer.
-     */
-    'name'        => 'Chief',
-
-    /**
-     * Client name
-     */
-    'client'      => 'Think Tomorrow',
-
     /**
      * Domain settings.
      *
@@ -58,13 +36,29 @@ return [
      * is required for the class mapping from database to their respective classes.
      */
     'collections' => [
-        'pages' => [
-            'statics' => \Thinktomorrow\Chief\Pages\Page::class,
-        ],
-        'modules' => [
-            //
-        ],
+        // Pages
+        'singles' => \Thinktomorrow\Chief\Pages\Single::class,
+
+        // Modules
     ],
+
+    /**
+     * Define your menus here. By default there is a generic 'main' menu but you
+     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     */
+    'menus' => [
+        'main' => [
+            'label' => 'Hoofdnavigatie',
+            'view'  => 'front.menus.main'
+        ]
+    ],
+    // 'pagesets' => [
+    //     'singles'   => [
+    //         'action'     => DummyPageSetRepository::class.'@all',
+    //         'parameters' => [2],
+    //         'label'      => 'algemene paginas'
+    //     ],
+    // ]
 
     /**
      * Set of mediatypes used for each collection.

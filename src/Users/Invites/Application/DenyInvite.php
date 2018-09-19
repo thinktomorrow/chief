@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Common\State\StateException;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
-use Thinktomorrow\Chief\Users\Invites\Events\InviteAccepted;
 
 class DenyInvite
 {

@@ -3,11 +3,13 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\HasCollection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
+use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Common\Relations\PresentForParent;
+use Thinktomorrow\Chief\Common\Relations\PresentingForParent;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -18,15 +20,17 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
 use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Pages\Page;
 
-class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild
+class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
 {
-    use HasCollection,
+    use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
         SoftDeletes,
-        ActingAsChild;
+        ActingAsChild,
+        PresentingForParent;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;
@@ -40,12 +44,45 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
-    /**
-     * The collection scope for the specific class.
-     * @var string
-     */
-    protected static $collectionScopeClass = ModuleCollectionScope::class;
+    public function __construct(array $attributes = [])
+    {
+        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
 
+        parent::__construct($attributes);
+    }
+
+    public function page()
+    {
+        return $this->belongsTo(Page::class, 'page_id');
+    }
+
+    /**
+     * The page specific ones are the text modules
+     * which are added via the page builder
+     *
+     * @param $query
+     */
+    public function scopeWithoutPageSpecific($query)
+    {
+        $query->whereNull('page_id');
+    }
+
+    public function isPageSpecific(): bool
+    {
+        return !is_null($this->page_id);
+    }
+
+    /**
+     * Each page / Module model can expose some custom fields. Add here the list of fields defined as name => Field where Field
+     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     *
+     * @param null $key
+     * @return array
+     */
+    public function customFields()
+    {
+        return [];
+    }
 
     /**
      * Each module model can expose the managed translatable fields. These should be included as attributes just like the regular
@@ -87,50 +124,42 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
+            'title'   => InputField::make()->label('titel'),
             'content' => HtmlField::make()->label('Inhoud'),
         ];
     }
 
     /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
-     *
-     * @param null $key
-     * @return object
+     * We exclude the generic textModule out of the available collections.
+     * @return Collection
      */
-    public static function collectionDetails($key = null)
+    public static function availableCollections(): Collection
     {
-        $collectionKey = (new static)->collectionKey();
-
-        $names = (object) [
-            'key'      => $collectionKey,
-            'class'    => static::class,
-            'singular' => $collectionKey ? ucfirst(str_singular($collectionKey)) : null,
-            'plural'   => $collectionKey ? ucfirst(str_plural($collectionKey)) : null,
-        ];
-
-        return $key ? $names->$key : $names;
+        return CollectionKeys::fromConfig()
+            ->filterByType(static::collectionType())
+            ->rejectByClass(TextModule::class)
+            ->rejectByClass(PagetitleModule::class)
+            ->toCollectionDetails();
     }
 
-    public function mediaUrls($type = null): Collection
+    public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        return $this->getAllFiles($type)->map->getFileUrl();
+        return $this->getAllFiles($type)->map->getFileUrl($size);
     }
 
-    public function mediaUrl($type = null): ?string
+    public function mediaUrl($type = null, $size = 'full'): ?string
     {
-        return $this->mediaUrls($type)->first();
+        return $this->mediaUrls($type, $size)->first();
     }
 
     public static function mediaFields($key = null)
     {
         $types = [
-            MediaType::BACKGROUND => [
-                'type' => MediaType::BACKGROUND,
-                'label' => 'Achtergrond afbeelding',
-                'description' => '',
-            ]
+//            MediaType::BACKGROUND => [
+//                'type' => MediaType::BACKGROUND,
+//                'label' => 'Achtergrond afbeelding',
+//                'description' => '',
+//            ]
         ];
 
         return $key ? array_pluck($types, $key) : $types;
@@ -138,40 +167,16 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public static function findBySlug($slug)
     {
-        return self::ignoreCollection()->where('slug', $slug)->first();
+        return static::where('slug', $slug)->first();
     }
 
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string
+    public function flatReferenceLabel(): string
     {
-        $guessedParentViewName = $parent->collectionKey();
-        $guessedViewName = strtolower((new \ReflectionClass($this))->getShortName());
-        $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
-
-        foreach($viewPaths as $viewPath) {
-            if( ! view()->exists($viewPath)) continue;
-
-            return view($viewPath, [
-                'banner' => $this,
-                'parent' => $parent,
-                'relation' => $relation,
-            ])->render();
-        }
-
-        return '';
+        return $this->slug ?? '';
     }
 
-    public function getRelationId(): string
+    public function flatReferenceGroup(): string
     {
-        return $this->getMorphClass().'@'.$this->id;
-    }
-
-    public function getRelationLabel(): string
-    {
-        return $this->collection.': '. $this->slug;
-    }
-
-    public function getRelationGroup(): string
-    {
-        return static::collectionDetails('plural');
+        return $this->collectionDetails()->singular;
     }
 }

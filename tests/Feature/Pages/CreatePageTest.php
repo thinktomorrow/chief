@@ -19,8 +19,10 @@ class CreatePageTest extends TestCase
     /** @test */
     public function creating_a_new_page()
     {
+        $this->disableExceptionHandling();
+
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.pages.edit', Page::first()->getKey()));
@@ -32,7 +34,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_page()
     {
-        $response = $this->post(route('chief.back.pages.store', 'statics'), $this->validPageParams());
+        $response = $this->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Page::all());
@@ -42,8 +44,8 @@ class CreatePageTest extends TestCase
     public function when_creating_page_title_is_required()
     {
         $this->assertValidation(new Page(), 'trans.nl.title', $this->validPageParams(['trans.nl.title' => '']),
-            route('chief.back.pages.index', 'statics'),
-            route('chief.back.pages.store', 'statics')
+            route('chief.back.pages.index', 'singles'),
+            route('chief.back.pages.store', 'singles')
         );
     }
 
@@ -58,7 +60,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams([
                     'trans.nl.title'  => 'foobarnl',
                     'trans.en.title'  => 'foobaren',
                 ])
@@ -82,7 +84,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams([
                     'trans.nl.slug'  => 'foobar',
                     'trans.en.slug'  => 'foobar',
                 ])
@@ -98,7 +100,7 @@ class CreatePageTest extends TestCase
     public function uses_title_as_slug_if_slug_is_empty()
     {
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams([
+            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams([
                     'trans.nl.title'    => 'foobar',
                     'trans.nl.slug'     => '',
                     'trans.en.title'    => 'foobar',
@@ -110,35 +112,5 @@ class CreatePageTest extends TestCase
         $pages = Page::all();
         $this->assertCount(1, $pages);
         $this->assertNotNull($pages->first()->slug);
-    }
-
-    /** @test */
-    public function it_can_delete_pages()
-    {
-        $user = $this->developer();
-        $response  =$this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'statics'), $this->validPageParams(['published' => false]));
-
-        $this->assertCount(1, Page::get());
-
-        $page = Page::first();
-        $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
-
-        $this->assertCount(0, Page::get());
-    }
-    /** @test */
-    public function it_can_archive_pages()
-    {
-        $user = $this->developer();
-        $page = factory(Page::class)->create(['published' => true]);
-
-        $this->assertCount(1, Page::get());
-
-        $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.pages.destroy', Page::first()->id), ['deleteconfirmation' => 'DELETE']);
-
-        $this->assertCount(0, Page::get());
-        $this->assertCount(1, Page::withArchived()->get());
     }
 }

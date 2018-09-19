@@ -17806,7 +17806,7 @@ $R.add('module', 'list', {
         removeEmptyFigures: function()
         {
             var html = this.app.source.getCode();
-console.log(html);
+
             // html = html.replace('<div class="row', '<div contenteditable="false" class="row');
             // html = html.replace('<div class="column', '<div contenteditable="true" class="column');
 
@@ -17826,46 +17826,619 @@ console.log(html);
         /** Called when redactor instance is enabled */
         start: function(){
 
-            console.log();
-
             /**
              * For support of columns in the wysiwyg, we'll need to make sure that only the
              * column body is editable. Nice effect of contenteditable is that the hard
              * enter is treated as soft enter inside the column as well as that the
              * tab brings the cursor to the next column in line.
              */
-            this.restrictColumnEditability();
+            //this.restrictColumnEditability();
 
             var dropdown = {};
             var $button = this.toolbar.addButton('column', { title: 'Columns' });
 
-            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.set', args: [6,6] };
-            dropdown.three = { title: '<strong>3</strong> columns', api: 'plugin.redactorColumns.set', args: [4,4,4] };
+            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
+            dropdown.three = { title: '<strong>3</strong> columns', api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
 
             $button.setIcon('<i class="icon icon-grid"></i>');
             $button.setDropdown(dropdown);
         },
 
-        set: function(sections){
+        setAsTable: function(sections){
 
             var columns = [];
 
             sections.forEach(function(section){
-                columns.push('<div class="column-'+ section +'" contenteditable="true"></div>');
+                columns.push('<td class="column-'+ section +'"></td>');
             });
 
-            this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
+            this.app.insertion.insertHtml('<br><table class="block"><tbody class="block"><tr class="row gutter">' + columns.join('') + '</tr></tbody></table><br><br>');
         },
 
-        restrictColumnEditability: function()
-        {
-            var html = this.app.source.getCode();
-
-            html = html.replace('<div class="row', '<div contenteditable="false" class="row');
-            html = html.replace('<div class="column', '<div contenteditable="true" class="column');
-
-            this.app.source.setCode(html);
-        },
+        // set: function(sections){
+        //
+        //     var columns = [];
+        //
+        //     sections.forEach(function(section){
+        //         columns.push('<div class="column-'+ section +'" contenteditable="true"></div>');
+        //     });
+        //
+        //     this.app.insertion.insertHtml('<br><div class="row gutter" contenteditable="false">' + columns.join('') + '</div><br>');
+        // },
+        //
+        // restrictColumnEditability: function()
+        // {
+        //     var html = this.app.source.getCode();
+        //
+        //     html = html.replace('<div class="row', '<div contenteditable="false" class="row');
+        //     html = html.replace('<div class="column', '<div contenteditable="true" class="column');
+        //
+        //     this.app.source.setCode(html);
+        // },
     });
 
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'rich-links', {
+        init: function(app)
+        {
+            this.app = app;
+            this.opts = app.opts;
+            this.component = app.component;
+
+            this.links = [];
+        },
+        // messages
+        onmodal: {
+            link: {
+                open: function($modal, $form)
+                {
+                    if (!this.opts.definedlinks) return;
+
+                    this.$modal = $modal;
+                    this.$form = $form;
+
+                    this._load();
+                }
+            }
+        },
+
+        // private
+        _load: function()
+        {
+            if (typeof this.opts.definedlinks === 'object')
+            {
+                this._build(this.opts.definedlinks);
+            }
+            else
+            {
+                $R.ajax.get({
+                    url: this.opts.definedlinks,
+                    success: this._build.bind(this)
+                });
+            }
+        },
+        _build: function(data)
+        {
+            var $selector = this.$modal.find('#redactor-defined-links');
+            if ($selector.length === 0)
+            {
+                var $body = this.$modal.getBody();
+                var $item = $R.dom('<div class="form-item" />');
+                var $selector = $R.dom('<select id="redactor-defined-links" />');
+
+                $item.append($selector);
+                $body.prepend($item);
+            }
+
+            this.links = [];
+
+            $selector.html('');
+            $selector.off('change');
+
+            for (var key in data)
+            {
+                if (!data.hasOwnProperty(key) || typeof data[key] !== 'object')
+                {
+                    continue;
+                }
+
+                this.links[key] = data[key];
+
+                var $option = $R.dom('<option>');
+                $option.val(key);
+                $option.html(data[key].name);
+
+                $selector.append($option);
+            }
+
+            $selector.on('change', this._select.bind(this));
+        },
+        _select: function(e)
+        {
+            var formData = this.$form.getData();
+            var key = $R.dom(e.target).val();
+            var data = { text: '', url: '' };
+
+            if (key !== '0')
+            {
+                data.text = this.links[key].name;
+                data.url = this.links[key].url;
+            }
+
+            if (formData.text !== '')
+            {
+                data = { url: data.url };
+            }
+
+            this.$form.setData(data);
+        }
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'custom-classes', {
+        init: function(app)
+        {
+            this.app = app;
+            this.toolbar = app.toolbar;
+            this.opts = app.opts;
+            this.selection = app.selection;
+        },
+        /** Called when redactor instance is enabled */
+        start: function(){
+
+            var dropdown = {};
+            for (var key in this.opts.customClasses)
+            {
+                var custom_tag = this.opts.customClasses[key];
+
+                dropdown[key] = {
+                    title: custom_tag.title,
+                    api: 'plugin.custom-classes.toggle',
+                    args: custom_tag
+                };
+            }
+
+            var $button = this.toolbar.addButtonAfter('link', 'toggle-button', { title: 'Wijzig link opmaak' });
+
+            $button.setIcon('<i class="icon icon-droplet"></i>');
+            $button.setDropdown(dropdown);
+        },
+        toggle: function(custom_tag) {
+
+            var currentEl = this.selection.getParent();
+
+            // If nothing is selected or the current element does not match our tag whitelist, we abort
+            if(!currentEl || custom_tag.tags.indexOf(currentEl.tagName.toLowerCase()) == -1){
+                return;
+            }
+
+            // Remove existing classes first
+            var current_classes = currentEl.classList;
+            while(current_classes.length > 0) {
+                current_classes.remove(current_classes.item(0));
+            }
+
+            // Add our requested classes
+            var classes = custom_tag.class.split(' ');
+            for(var i in classes) {
+
+                // Avoid empty execution
+                if( ! classes[i]) continue;
+
+                currentEl.classList.add(classes[i]);
+            }
+        }
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'video', {
+        translations: {
+            en: {
+                "video": "Video",
+                "video-html-code": "Video Embed Code or Youtube/Vimeo Link"
+            }
+        },
+        modals: {
+            'video':
+                '<form action=""> \
+                    <div class="form-item"> \
+                        <label for="modal-video-input">## video-html-code ## <span class="req">*</span></label> \
+                        <textarea id="modal-video-input" name="video" style="height: 160px;"></textarea> \
+                    </div> \
+                </form>'
+        },
+        init: function(app)
+        {
+            this.app = app;
+            this.lang = app.lang;
+            this.opts = app.opts;
+            this.toolbar = app.toolbar;
+            this.component = app.component;
+            this.insertion = app.insertion;
+            this.inspector = app.inspector;
+        },
+        // messages
+        onmodal: {
+            video: {
+                opened: function($modal, $form)
+                {
+                    $form.getField('video').focus();
+                },
+                insert: function($modal, $form)
+                {
+                    var data = $form.getData();
+                    this._insert(data);
+                }
+            }
+        },
+        oncontextbar: function(e, contextbar)
+        {
+            var data = this.inspector.parse(e.target)
+            if (data.isComponentType('video'))
+            {
+                var node = data.getComponent();
+                var buttons = {
+                    "remove": {
+                        title: this.lang.get('delete'),
+                        api: 'plugin.video.remove',
+                        args: node
+                    }
+                };
+
+                contextbar.set(e, node, buttons, 'bottom');
+            }
+
+        },
+
+        // public
+        start: function()
+        {
+            var obj = {
+                title: this.lang.get('video'),
+                api: 'plugin.video.open'
+            };
+
+            var $button = this.toolbar.addButtonAfter('image', 'video', obj);
+            $button.setIcon('<i class="re-icon-video"></i>');
+        },
+        open: function()
+		{
+            var options = {
+                title: this.lang.get('video'),
+                width: '600px',
+                name: 'video',
+                handle: 'insert',
+                commands: {
+                    insert: { title: this.lang.get('insert') },
+                    cancel: { title: this.lang.get('cancel') }
+                }
+            };
+
+            this.app.api('module.modal.build', options);
+		},
+        remove: function(node)
+        {
+            this.component.remove(node);
+        },
+
+        // private
+		_insert: function(data)
+		{
+    		this.app.api('module.modal.close');
+
+    		if (data.video.trim() === '')
+    		{
+        	    return;
+    		}
+
+            // parsing
+            data.video = this._matchData(data.video);
+
+            // inserting
+            if (this._isVideoIframe(data.video))
+            {
+                var $video = this.component.create('video', data.video);
+                this.insertion.insertHtml($video);
+            }
+		},
+
+		_isVideoIframe: function(data)
+		{
+            return (data.match(/<iframe|<video/gi) !== null);
+		},
+		_matchData: function(data)
+		{
+			var iframeStart = '<iframe style="width: 500px; height: 281px;" src="';
+			var iframeEnd = '" frameborder="0" allowfullscreen></iframe>';
+
+            if (this._isVideoIframe(data))
+			{
+				var allowed = ['iframe', 'video', 'source'];
+				var tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+
+			    data = data.replace(tags, function ($0, $1)
+			    {
+			        return (allowed.indexOf($1.toLowerCase()) === -1) ? '' : $0;
+			    });
+			}
+
+			if (data.match(this.opts.regex.youtube))
+			{
+				data = data.replace(this.opts.regex.youtube, iframeStart + '//www.youtube.com/embed/$1' + iframeEnd);
+			}
+			else if (data.match(this.opts.regex.vimeo))
+			{
+				data = data.replace(this.opts.regex.vimeo, iframeStart + '//player.vimeo.com/video/$2' + iframeEnd);
+			}
+
+
+			return data;
+		}
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('class', 'video.component', {
+        mixins: ['dom', 'component'],
+        init: function(app, el)
+        {
+            this.app = app;
+
+            // init
+            return (el && el.cmnt !== undefined) ? el : this._init(el);
+        },
+
+        // private
+        _init: function(el)
+        {
+            if (typeof el !== 'undefined')
+            {
+                var $node = $R.dom(el);
+                var $wrapper = $node.closest('figure');
+                if ($wrapper.length !== 0)
+                {
+                    this.parse($wrapper);
+                }
+                else
+                {
+                    this.parse('<figure>');
+                    this.append(el);
+                }
+            }
+            else
+            {
+                this.parse('<figure>');
+            }
+
+
+            this._initWrapper();
+        },
+        _initWrapper: function()
+        {
+            this.addClass('redactor-component');
+            this.attr({
+                'data-redactor-type': 'video',
+                'tabindex': '-1',
+                'contenteditable': false
+            });
+        }
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('plugin', 'widget', {
+        translations: {
+            en: {
+                "widget": "Widget",
+                "widget-html-code": "Widget HTML Code"
+            }
+        },
+        modals: {
+            'widget':
+                '<form action=""> \
+                    <div class="form-item"> \
+                        <label for="modal-widget-input">## widget-html-code ## <span class="req">*</span></label> \
+                        <textarea id="modal-widget-input" name="widget" style="height: 200px;"></textarea> \
+                    </div> \
+                </form>'
+        },
+        init: function(app)
+        {
+            this.app = app;
+            this.lang = app.lang;
+            this.opts = app.opts;
+            this.toolbar = app.toolbar;
+            this.component = app.component;
+            this.insertion = app.insertion;
+            this.inspector = app.inspector;
+            this.selection = app.selection;
+        },
+        // messages
+        onmodal: {
+            widget: {
+                opened: function($modal, $form)
+                {
+                    $form.getField('widget').focus();
+
+                    if (this.$currentItem)
+                    {
+                        var code = decodeURI(this.$currentItem.attr('data-widget-code'));
+                        $form.getField('widget').val(code);
+                    }
+                },
+                insert: function($modal, $form)
+                {
+                    var data = $form.getData();
+                    this._insert(data);
+                }
+            }
+        },
+        oncontextbar: function(e, contextbar)
+        {
+            var data = this.inspector.parse(e.target)
+            if (!data.isFigcaption() && data.isComponentType('widget'))
+            {
+                var node = data.getComponent();
+                var buttons = {
+                    "edit": {
+                        title: this.lang.get('edit'),
+                        api: 'plugin.widget.open',
+                        args: node
+                    },
+                    "remove": {
+                        title: this.lang.get('delete'),
+                        api: 'plugin.widget.remove',
+                        args: node
+                    }
+                };
+
+                contextbar.set(e, node, buttons, 'bottom');
+            }
+        },
+        onbutton: {
+            widget: {
+                observe: function(button)
+                {
+                    this._observeButton(button);
+                }
+            }
+        },
+
+        // public
+        start: function()
+        {
+            var obj = {
+                title: this.lang.get('widget'),
+                api: 'plugin.widget.open',
+                observe: 'widget'
+            };
+
+            var $button = this.toolbar.addButton('widget', obj);
+            $button.setIcon('<i class="re-icon-widget"></i>');
+        },
+        open: function()
+		{
+            this.$currentItem = this._getCurrent();
+
+            var options = {
+                title: this.lang.get('widget'),
+                width: '600px',
+                name: 'widget',
+                handle: 'insert',
+                commands: {
+                    insert: { title: (this.$currentItem) ? this.lang.get('save') : this.lang.get('insert') },
+                    cancel: { title: this.lang.get('cancel') }
+                }
+            };
+
+            this.app.api('module.modal.build', options);
+		},
+        remove: function(node)
+        {
+            this.component.remove(node);
+        },
+
+        // private
+		_getCurrent: function()
+		{
+    		var current = this.selection.getCurrent();
+    		var data = this.inspector.parse(current);
+    		if (data.isComponentType('widget'))
+    		{
+        		return this.component.build(data.getComponent());
+    		}
+		},
+		_insert: function(data)
+		{
+    		this.app.api('module.modal.close');
+
+    		if (data.widget.trim() === '')
+    		{
+        	    return;
+    		}
+
+    		var html = (this._isHtmlString(data.widget)) ? data.widget : document.createTextNode(data.widget);
+            var $component = this.component.create('widget', html);
+            $component.attr('data-widget-code', encodeURI(data.widget.trim()));
+    		this.insertion.insertHtml($component);
+
+		},
+        _isHtmlString: function(html)
+        {
+            return !(typeof html === 'string' && !/^\s*<(\w+|!)[^>]*>/.test(html));
+        },
+		_observeButton: function(button)
+		{
+    		var current = this.selection.getCurrent();
+    		var data = this.inspector.parse(current);
+
+    		button.enable();
+		}
+    });
+})(Redactor);
+(function($R)
+{
+    $R.add('class', 'widget.component', {
+        mixins: ['dom', 'component'],
+        init: function(app, el)
+        {
+            this.app = app;
+
+            // init
+            return (el && el.cmnt !== undefined) ? el : this._init(el);
+        },
+        getData: function()
+        {
+            return {
+                html: this._getHtml()
+            };
+        },
+
+        // private
+        _init: function(el)
+        {
+            if (typeof el !== 'undefined')
+            {
+                var $node = $R.dom(el);
+                var $figure = $node.closest('figure');
+                if ($figure.length !== 0)
+                {
+                    this.parse($figure);
+                }
+                else
+                {
+                    this.parse('<figure>');
+                    this.html(el);
+                }
+            }
+            else
+            {
+                this.parse('<figure>');
+            }
+
+
+            this._initWrapper();
+        },
+        _getHtml: function()
+        {
+            var $wrapper = $R.dom('<div>');
+            $wrapper.html(this.html());
+            $wrapper.find('.redactor-component-caret').remove();
+
+            return $wrapper.html();
+        },
+        _initWrapper: function()
+        {
+            this.addClass('redactor-component');
+            this.attr({
+                'data-redactor-type': 'widget',
+                'tabindex': '-1',
+                'contenteditable': false
+            });
+        }
+    });
 })(Redactor);

@@ -36,7 +36,7 @@ if (!function_exists('cached_asset')) {
         try {
 
             // Paths should be given relative to the manifestpath so make sure to remove the basepath
-            return asset(mix($entry.'/test', $manifestPath));
+            return asset(mix($entry, $manifestPath));
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
 
@@ -45,15 +45,21 @@ if (!function_exists('cached_asset')) {
     }
 }
 
-if (!function_exists('setting')) {
-    function setting($key = null, $default = null) {
+if (!function_exists('chiefSetting')) {
+    function chiefSetting($key = null, $default = null) {
 
         $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
 
         if(is_null($key)) {
             return $manager;
         }
-
+        
         return $manager->get($key, $default);
+    }
+}
+
+if (!function_exists('chiefmenu')) {
+    function chiefmenu($key = 'main'){
+        return \Thinktomorrow\Chief\Menu\Menu::find($key);
     }
 }

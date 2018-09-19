@@ -6,7 +6,7 @@
                 <h1 class="--remove-margin">
                     {{ $title ?? '' }}
                 </h1>
-                {!! isset($subtitle) ? '<p>'.$subtitle.'</p>' : '' !!}
+                {!! isset($subtitle) ? '<div class="font-s">'.$subtitle.'</div>' : '' !!}
                 {{ $extra ??  '' }}
             </div>
             <div class="text-right center-y">

@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
+use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
@@ -15,6 +16,8 @@ use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -25,6 +28,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
         $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
 
+        (new MacrosServiceProvider($this->app))->boot();
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
@@ -41,6 +45,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
+            __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
         ], 'chief-config');
 
         $this->publishes([
@@ -52,19 +57,25 @@ class ChiefServiceProvider extends ServiceProvider
             $this->commands([
                 // Local development
                 'command.chief:refresh',
+                'command.chief:seed',
 
                 // Project setup tools
                 'command.chief:permission',
                 'command.chief:role',
                 'command.chief:admin',
+                'command.chief:developer',
                 'command.chief:page',
+                'command.chief:settings',
             ]);
 
             // Bind our commands to the container
             $this->app->bind('command.chief:refresh', RefreshDatabase::class);
+            $this->app->bind('command.chief:seed', Seed::class);
             $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
+            $this->app->bind('command.chief:developer', CreateDeveloper::class);
+            $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()
@@ -80,9 +91,11 @@ class ChiefServiceProvider extends ServiceProvider
     {
         // TODO: test this logic...
         $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'thinktomorrow.chief');
+        $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
 
         $this->setupEnvironmentProviders();
 
+        (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
@@ -125,6 +138,12 @@ class ChiefServiceProvider extends ServiceProvider
             'provider' => 'chief',
             'table'    => 'chief_password_resets',
             'expire'   => 60,
+        ];
+
+        // Custom models for permission
+        $this->app['config']['permission.models'] = [
+            'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
+            'role'       => \Thinktomorrow\Chief\Authorization\Role::class,
         ];
     }
 }

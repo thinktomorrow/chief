@@ -4,9 +4,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Tests\Fakes\ArticleFake;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
 use Thinktomorrow\Chief\Pages\Page;
@@ -22,14 +24,15 @@ class MenuTest extends TestCase
 
         $this->setUpDatabase();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.pages', [
-            'statics' => Page::class,
-            'articles' => ArticleFake::class,
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'singles'  => Single::class,
+            'articles' => ArticlePageFake::class,
         ]);
 
         // We expect to have frontend routes for the pages and articles
         Route::get('statics/{slug}', function () {
         })->name('pages.show');
+
         Route::get('articles/{slug}', function () {
         })->name('articles.show');
 
@@ -57,7 +60,7 @@ class MenuTest extends TestCase
             'slug'      => 'foobar',
             'published' => 1
         ]);
-        
+
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
         $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id]);
 
@@ -72,13 +75,23 @@ class MenuTest extends TestCase
             'collection'    => 'articles',
             'published'     => 1
         ]);
-        
+
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
         $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'custom', 'url' => 'https://google.com', 'parent_id' => $first->id]);
 
         $tree = ChiefMenu::fromArray([$first, $second])->items();
 
         $this->assertNotNull($tree->find('url', 'https://google.com'));
+    }
+
+    /** @test */
+    public function it_does_not_require_a_link()
+    {
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'nolink']);
+
+        $tree = ChiefMenu::fromArray([$first])->items();
+
+        $this->assertNull($tree->first()->url);
     }
 
     /** @test */
@@ -90,7 +103,7 @@ class MenuTest extends TestCase
         ]);
 
         // Sanity check
-        $this->assertCount(3, ArticleFake::all());
+        $this->assertCount(3, ArticlePageFake::all());
 
         // Create main collection menu item - this will hold the collection as children
         $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
@@ -105,7 +118,7 @@ class MenuTest extends TestCase
         $this->assertEquals($mainMenuItem->label, $main->label);
         $this->assertEquals($mainMenuItem->url, $main->url);
 
-        foreach (ArticleFake::all() as $k => $page) {
+        foreach (ArticlePageFake::all() as $k => $page) {
             $item = $main->children()[$k];
 
             $this->assertEquals($page->menuLabel(), $item->label);
@@ -117,7 +130,7 @@ class MenuTest extends TestCase
     public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
-            'collection' => 'statics',
+            'collection' => 'singles',
             'slug'      => 'foobar',
             'published' => 1
         ]);
@@ -140,10 +153,10 @@ class MenuTest extends TestCase
             $this->assertNotNull($node->url);
             $check++;
         });
-        
+
         $this->assertEquals(3, $check);
     }
-    
+
     /** @test */
     public function menu_item_without_parent_is_considered_top_level()
     {
@@ -157,7 +170,7 @@ class MenuTest extends TestCase
         $this->assertEquals(2, $collection->count());
         $this->assertEquals(3, $collection->total());
     }
-    
+
     /** @test */
     public function it_can_be_sorted()
     {
@@ -165,13 +178,13 @@ class MenuTest extends TestCase
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
         $third  = MenuItem::create(['label:nl' => 'last item', 'parent_id' => $first->id, 'order' => 1]);
-        
+
         $collection = ChiefMenu::fromMenuItems()->items();
-        
+
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals('last item', $collection->first()->children()->first()->label);
     }
-    
+
     /** @test */
     public function if_a_page_is_hidden_it_is_not_shown_in_menu()
     {
@@ -185,7 +198,7 @@ class MenuTest extends TestCase
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals(2, $collection->total());
     }
-    
+
     /** @test */
     public function it_can_have_a_custom_value()
     {
@@ -197,6 +210,29 @@ class MenuTest extends TestCase
     public function if_url_is_external_the_link_will_contain_target_blank()
     {
         // test it out
+    }
+
+    /** @test */
+    public function it_can_order_the_menu_items()
+    {
+        $page = factory(Page::class)->create([]);
+        app()->setLocale('nl');
+        $first  = MenuItem::create(['label:nl' => 'first item']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
+        $third  = MenuItem::create(['label:nl' => 'last item', 'type' => 'internal', 'page_id' =>  $page->id, 'parent_id' => $first->id, 'order' => 1]);
+
+        $collection = ChiefMenu::fromMenuItems()->items();
+        $this->assertInstanceof(NodeCollection::class, $collection);
+
+        $this->assertEquals("last item", $collection->first()->children()->first()->label);
+
+        $second->order  = 1;
+        $third->order   = 2;
+        $second->save();
+        $third->save();
+
+        $collection = ChiefMenu::fromMenuItems()->items();
+        $this->assertEquals("second item", $collection->first()->children()->first()->label);
     }
 
     /** @test */
@@ -214,12 +250,36 @@ class MenuTest extends TestCase
         ]);
 
         $response = $this->asAdmin()
-            ->get(route('chief.back.menu.create', 'statics'));
+            ->get(route('chief.back.menuitem.create', 'main'));
 
         $response->assertStatus(200);
 
         $pages = $this->getResponseData($response, 'pages');
 
         $this->assertCount(1, $pages);
+    }
+
+    /** @test */
+    public function it_can_get_menu_by_type()
+    {
+        $page   = factory(Page::class)->create([
+            'slug'      => 'foobar',
+            'published' => 1
+        ]);
+
+        $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);
+        $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id, 'menu_type' => 'main']);
+        
+        MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
+        
+        $collection = ChiefMenu::fromMenuItems('main')->items();
+        $this->assertEquals($second->id, $collection->find('page_id', $page->id)->id);
+        $this->assertEquals(2, $collection->total());
+    }
+
+    /** @test */
+    public function it_can_get_all_menu_types()
+    {
+        $this->assertCount(1, Menu::all());
     }
 }

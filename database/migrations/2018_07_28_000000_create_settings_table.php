@@ -12,6 +12,7 @@ class CreateSettingsTable extends Migration
             $table->increments('id');
             $table->string('key')->index();
             $table->text('value');
+            $table->json('field')->nullable();
         });
     }
 

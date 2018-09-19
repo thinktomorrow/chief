@@ -14,7 +14,7 @@ class DeleteModule
         try {
             DB::beginTransaction();
 
-            $module = Module::ignoreCollection()->findOrFail($id);
+            $module = Module::findOrFail($id);
             $module->delete();
 
             DB::commit();

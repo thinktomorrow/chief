@@ -27,8 +27,8 @@ class DeletePageTest extends TestCase
                 'deleteconfirmation' => 'DELETE'
             ]);
 
-        $this->assertCount(0, Page::ignoreCollection()->get());
-        $this->assertCount(1, Page::ignoreCollection()->onlyTrashed()->get());
+        $this->assertCount(0, Page::all());
+        $this->assertCount(1, Page::onlyTrashed()->get());
     }
 
     /** @test */
@@ -39,21 +39,20 @@ class DeletePageTest extends TestCase
                 'deleteconfirmation' => 'FAKE'
             ]);
 
-        $this->assertCount(1, Page::ignoreCollection()->get());
-        $this->assertCount(0, Page::ignoreCollection()->onlyTrashed()->get());
+        $this->assertCount(1, Page::all());
+        $this->assertCount(0, Page::onlyTrashed()->get());
     }
 
     /** @test */
-    public function a_published_page_is_archived()
+    public function a_published_page_cannot_be_deleted()
     {
         $this->page->publish();
 
         $this->asAdmin()
-            ->delete(route('chief.back.pages.destroy', Page::ignoreCollection()->first()->id), [
+            ->delete(route('chief.back.pages.destroy', Page::first()->id), [
                 'deleteconfirmation' => 'DELETE'
             ]);
 
-        $this->assertCount(0, Page::ignoreCollection()->get());
-        $this->assertCount(1, Page::withArchived()->get());
+        $this->assertCount(1, Page::all());
     }
 }

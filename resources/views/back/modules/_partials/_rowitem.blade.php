@@ -4,7 +4,7 @@
                 {{ $module->slug }}
             </a>
             <div>
-                <span class="text-subtle">{{ $module->collectionDetails('singular') }} | Aangepast op: {{ $module->updated_at->format('d/m/Y') }}</span>
+                <span class="text-subtle">{{ $module->collectionDetails()->singular }} | Aangepast op: {{ $module->updated_at->format('d/m/Y') }}</span>
             </div>
     </div>
     <div class="column-3 text-right">
@@ -15,7 +15,7 @@
                 <hr class="stack-s">
 
                 <a @click="showModal('delete-module-{{$module->id}}')" class="block squished-s text-error --link-with-bg">
-                    Gooi {{ $module->collectionDetails('singular') }} weg
+                    Verwijder {{ $module->collectionDetails()->singular }}
                 </a>
             </div>
         </options-dropdown>

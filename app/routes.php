@@ -23,10 +23,10 @@ Route::get('admin/login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginCo
 Route::post('admin/login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@login')->name('chief.back.login.store')->middleware('web');
 
 // Password Reset Routes...
-Route::get('password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('chief.back.password.request')->middleware('web');
-Route::post('password/email', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('chief.back.password.email')->middleware('web');
-Route::get('password/reset/{token}', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('chief.back.password.reset')->middleware('web');
-Route::post('password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@reset')->name('chief.back.password.reset.store')->middleware('web');
+Route::get('admin/password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('chief.back.password.request')->middleware('web');
+Route::post('admin/password/email', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('chief.back.password.email')->middleware('web');
+Route::get('admin/password/reset/{token}', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('chief.back.password.reset')->middleware('web');
+Route::post('admin/password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@reset')->name('chief.back.password.reset.store')->middleware('web');
 
 // Invitation routes...
 Route::get('invite/expired', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@expired')->name('invite.expired')->middleware('web');
@@ -48,17 +48,22 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::get('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@edit')->name('chief.back.password.edit');
     Route::put('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
 
+
+    // CHIEF API
+    Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
+
     // Pages
     Route::get('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
     Route::post('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@store')->name('chief.back.pages.store');
     Route::put('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@update')->name('chief.back.pages.update');
     Route::get('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@show')->name('chief.back.pages.show')->where('id', '[0-9]+');
     Route::get('pages/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@edit')->name('chief.back.pages.edit');
-    Route::delete('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@destroy')->name('chief.back.pages.destroy');
 
-    // Page publication
+    // Page publication and states
     Route::post('pages/{id}/publish', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishPageController@publish')->name('chief.back.pages.publish');
     Route::post('pages/{id}/draft', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishPageController@draft')->name('chief.back.pages.draft');
+    Route::put('pages/{id}/archive', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@archive')->name('chief.back.pages.archive');
+    Route::delete('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@destroy')->name('chief.back.pages.destroy');
 
     // Modules
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
@@ -68,53 +73,31 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::get('modules/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@edit')->name('chief.back.modules.edit');
     Route::delete('modules/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@destroy')->name('chief.back.modules.destroy');
 
-
-    // Route::get('media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@library')->name('media.library');
-    // Route::get('media-modal', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@mediaModal')->name('media.modal');
-    // Route::get('uploadtest', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@uploadtest')->name('media.uploadtest');
-    // Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
-    // Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
-
     // AUDIT
-
     Route::get('audit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@index')->name('chief.back.audit.index');
     Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@show')->name('chief.back.audit.show');
 
     // Menu
-    Route::get('menu', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@index')->name('chief.back.menu.index');
-    Route::post('menu', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@store')->name('chief.back.menu.store');
-    Route::get('menu/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@create')->name('chief.back.menu.create');
-    Route::put('menu/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@update')->name('chief.back.menu.update');
-    Route::get('menu/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@show')->name('chief.back.menu.show');
-    Route::delete('menu/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@destroy')->name('chief.back.menu.destroy');
-    Route::get('menu/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MenuController@edit')->name('chief.back.menu.edit');
+    Route::get('menus', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuController@index')->name('chief.back.menus.index');
+    Route::get('menus/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuController@show')->name('chief.back.menus.show');
 
-    Route::post('page/{id}/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@upload')->name('page.upload');
+    Route::get('menuitem', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@index')->name('chief.back.menuitem.index');
+    Route::post('menuitem', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@store')->name('chief.back.menuitem.store');
+    Route::get('menuitem/create/{menutype}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@create')->name('chief.back.menuitem.create');
+    Route::put('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@update')->name('chief.back.menuitem.update');
+    Route::get('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@show')->name('chief.back.menuitem.show');
+    Route::delete('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@destroy')->name('chief.back.menuitem.destroy');
+    Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@edit')->name('chief.back.menuitem.edit');
 
     Route::get('/settings', ['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
-
-    // Route::post('notes/publish', ['as' => 'notes.publish','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\NoteController::class.'@publish']);
-    // Route::resource('notes', Thinktomorrow\Chief\App\Http\Controllers\Back\NoteController::class);
-
-    // YOUR PROFILE MANAGEMENT
-    Route::get('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@edit')->name('chief.back.you.edit');
-    Route::put('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@update')->name('chief.back.you.update');
 
     /**
      * -----------------------------------------------------------------
      * MEDIA MANAGEMENT
      * -----------------------------------------------------------------
      */
-//    Route::post('media-upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadMediaController@store')->name('media.upload');
     Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
     Route::post('modules/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadModulesMediaController@store')->name('modules.media.upload');
-
-
-//    Route::get('media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@library')->name('media.library');
-//    Route::get('media-modal', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@mediaModal')->name('media.modal');
-//    Route::get('uploadtest', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaLibraryController@uploadtest')->name('media.uploadtest');
-//    Route::post('media/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@upload')->name('media.upload');
-//    Route::post('media/remove', 'Thinktomorrow\Chief\App\Http\Controllers\Back\MediaController@remove')->name('media.remove');
 
     /**
      * -----------------------------------------------------------------
@@ -129,6 +112,10 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@update')->name('chief.back.users.update');
     Route::get('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@show')->name('chief.back.users.show');
     Route::get('users/{user}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@edit')->name('chief.back.users.edit');
+
+    // YOUR PROFILE MANAGEMENT
+    Route::get('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@edit')->name('chief.back.you.edit');
+    Route::put('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@update')->name('chief.back.you.update');
 
     // INVITE MANAGEMENT
     Route::post('users/{id}/disable', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\DisableUserController@store')->name('chief.back.users.disable');
@@ -158,13 +145,9 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * SETTINGS MANAGEMENT
      * -----------------------------------------------------------------
      */
-    Route::get('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@index')->name('chief.back.settings.index');
-    Route::post('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@store')->name('chief.back.settings.store');
-    Route::get('settings/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@create')->name('chief.back.settings.create');
-    Route::put('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@update')->name('chief.back.settings.update');
-    Route::get('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@show')->name('chief.back.settings.show');
-    Route::delete('settings/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@destroy')->name('chief.back.settings.destroy');
-    Route::get('settings/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SettingsController@edit')->name('chief.back.settings.edit');
+    Route::post('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@store')->name('chief.back.settings.store');
+    Route::put('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@update')->name('chief.back.settings.update');
+    Route::get('settings/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@edit')->name('chief.back.settings.edit');
 
 
 
@@ -174,14 +157,14 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * -----------------------------------------------------------------
      */
     // Developer access
-    Route::get('translations/lines/create', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.create','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@create']);
-    Route::delete('translations/lines/{id}', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.destroy','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@destroy']);
-    Route::get('translations/lines/{id}/edit', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@edit']);
-    Route::put('translations/lines/{id}', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@update']);
-    Route::post('translations/lines', ['middleware' => 'auth.superadmin', 'as' => 'squanto.lines.store','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\LineController@store']);
+    Route::get('translations/lines/create', ['as' => 'squanto.lines.create', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@create']);
+    Route::delete('translations/lines/{id}', ['as' => 'squanto.lines.destroy', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@destroy']);
+    Route::get('translations/lines/{id}/edit', ['as' => 'squanto.lines.edit', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@edit']);
+    Route::put('translations/lines/{id}', ['as' => 'squanto.lines.update', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@update']);
+    Route::post('translations/lines', ['as' => 'squanto.lines.store', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@store']);
 
     // Client access
-    Route::get('translations/{id}/edit', ['as' => 'squanto.edit','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@edit']);
-    Route::put('translations/{id}', ['as' => 'squanto.update','uses' => '\Thinktomorrow\Squanto\Manager\Http\Controllers\TranslationController@update']);
-    Route::get('translations', ['as' => 'squanto.index','uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController@index']);
+    Route::get('translations/{id}/edit', ['as' => 'squanto.edit', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\TranslationController@edit']);
+    Route::put('translations/{id}', ['as' => 'squanto.update', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\TranslationController@update']);
+    Route::get('translations', ['as' => 'squanto.index', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\TranslationController@index']);
 });

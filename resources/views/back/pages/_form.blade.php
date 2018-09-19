@@ -1,135 +1,176 @@
 <tabs>
-    <tab name="Inhoud">
+    @if($page->hasPagebuilder())
+        <tab name="Pagina" id="builder">
+            <section class="formgroup stack">
+                <h2>Pagina inhoud</h2>
+                <page-builder
+                        :locales='@json($page->availableLocales())'
+                        :default-sections='@json($sections)'
+                        :modules='@json($available_modules)'
+                        :pages='@json($available_pages)'
+                        :pagesets='@json($available_pagesets)'>
+                </page-builder>
+            </section>
+
+            <div class="stack clearfix">
+                <a href="#inhoud" class="btn btn-o-primary right">volgende</a>
+            </div>
+        </tab>
+    @endif
+    <tab name="Inhoud" id="inhoud">
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
-                <h2 class="formgroup-label">Titel</h2>
+                <h2 class="formgroup-label">{{ $page->collectionDetails()->singular }} titel</h2>
             </div>
             <div class="formgroup-input column-8">
-                <tabs>
+                @if(count($page->availableLocales()) > 1)
+                    <tabs v-cloak>
+                        @foreach($page->availableLocales() as $locale)
+                            <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
+                                @include('chief::back.pages._partials.title-form')
+                            </tab>
+                        @endforeach
+                    </tabs>
+                @else
                     @foreach($page->availableLocales() as $locale)
-
-                        <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.title')}">
-                            <div class="stack-s">
-                                <label for="trans-{{ $locale }}-title">Titel</label>
-                                <input type="text" name="trans[{{ $locale }}][title]" id="trans-{{ $locale }}-title" class="input inset-s" placeholder="Titel" value="{{ old('trans.'.$locale.'.title', $page->translateForForm($locale,'title')) }}">
-                                <span class="stack inline-block text-default">
-                                    <b>Permalink:</b> https://crius-group.com/
-                                    <input class="inset-s" type="text" name="trans[{{$locale}}][slug]" value="{{ old('trans.'.$locale.'.slug', $page->translateForForm($locale,'slug')) }}">
-                                </span>
-                            </div>
-
-                            <error class="caption text-warning" field="trans.{{ $locale }}.title" :errors="errors.get('trans.{{ $locale }}')"></error>
-                            <error class="caption text-warning" field="trans.{{ $locale }}.slug" :errors="errors.get('trans.{{ $locale }}')"></error>
-
-                        </tab>
-
+                        @include('chief::back.pages._partials.title-form')
                     @endforeach
-                </tabs>
+                @endif
             </div>
         </section>
 
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Inhoud</h2>
-            </div>
-            <div class="formgroup-input column-8">
-                @include('chief::back._elements.translatable_fieldgroups', [
-                    'model' => $page,
-                ])
-            </div>
-        </section>
+        @if(count($page->customFields()) > 0)
+            @foreach($page->customFields() as $key => $field)
+                <section class="row formgroup stack gutter-l">
+                    <div class="column-4">
+                        @if($field->label)
+                            <h2 class="formgroup-label">{{ $field->label }}</h2>
+                        @endif
 
-        @foreach($page->mediaFields() as $mediaType)
-            @include('chief::back._elements.mediagroup', [
-                'group' => $mediaType['type'],
-                'files' => $images[$mediaType['type']],
-                'label' => $mediaType['label'],
-                'description' => $mediaType['description'],
+                        @if($field->description)
+                            <p>{{ $field->description }}</p>
+                        @endif
+                    </div>
+                    <div class="formgroup-input column-8">
+                        @include('chief::back._fields.customfield', [
+                            'key'   => $key,
+                            'field' => $field,
+                            'model' => $page
+                        ])
+                    </div>
+                </section>
+            @endforeach
+        @endif
+
+        @if(count($page->translatableFields()) > 0)
+            @foreach($page->translatableFields() as $key => $field)
+                <section class="row formgroup stack gutter-l">
+                    <div class="column-4">
+                        @if($field->label)
+                            <h2 class="formgroup-label">{{ $field->label }}</h2>
+                        @endif
+
+                        @if($field->description)
+                            <p>{{ $field->description }}</p>
+                        @endif
+                    </div>
+                    <div class="formgroup-input column-8">
+                        @include('chief::back._fields.translatable_formgroup', [
+                            'model' => $page
+                        ])
+                    </div>
+                </section>
+            @endforeach
+        @endif
+
+
+        @foreach($page->mediaFields() as $media)
+
+            <?php
+
+            $viewPath = (isset($media['is_document']) && $media['is_document'])
+                ? 'chief::back._elements.mediagroup-documents'
+                : 'chief::back._elements.mediagroup-images';
+
+            ?>
+
+            @include($viewPath, [
+                'group'       => $media['type'],
+                'files'       => $images[$media['type']],
+                'label'       => $media['label'],
+                'description' => $media['description'],
+                'multiple'    => $media['multiple'] ?? true
             ])
         @endforeach
 
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Featured image</h2>
-                <p class="caption">Kies hier de afbeelding die bij de pagina hoort</p>
-            </div>
-            <div class="formgroup-input column-7">
-                <div class="input-group">
-                    <label for="file">Upload</label>
-                    <label class="custom-file">
-                        <input type="file" id="file">
-                        <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
-                    </label>
-                </div>
-            </div>
-        </section>
-        <a href="#seo" class="btn btn-o-primary right">volgende</a>
+        <div class="stack clearfix">
+            <a href="#builder" class="btn btn-o-primary left">Vorige</a>
+            <a href="#modules" class="btn btn-o-primary right">volgende</a>        
+        </div>
     </tab>
-    <tab name="Seo">
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Zoekmachines</h2>
-                <p class="caption">Titel en omschrijving van het pagina zoals het in search engines (o.a. google) wordt weergegeven.</p>
-            </div>
-            <div class="formgroup-input column-7">
-                <tabs>
+
+    <tab name="Eigen modules" id="modules">
+
+        @include('chief::back.pages._partials.modules')
+
+        <div class="stack clearfix">
+            <a href="#builder" class="btn btn-o-primary left">Vorige</a>
+            <a href="#seo" class="btn btn-o-primary right">volgende</a>
+        </div>
+    </tab>
+
+<tab name="Seo">
+    <section class="row formgroup stack gutter-l">
+        <div class="column-4">
+            <h2 class="formgroup-label">Zoekmachines</h2>
+            <p class="caption">Titel en omschrijving van het pagina zoals het in search engines (o.a. google) wordt weergegeven.</p>
+        </div>
+        <div class="formgroup-input column-7">
+            @if(count($page->availableLocales()) > 1)
+                <tabs v-cloak>
                     @foreach($page->availableLocales() as $locale)
-
                         <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.seo_title')}">
-                            <div class="stack-s">
-                                <label for="trans-{{ $locale }}-seo_title">Seo titel</label>
-                                <input type="text" name="trans[{{ $locale }}][seo_title]" id="trans-{{ $locale }}-seo_title" class="input inset-s" placeholder="Seo titel" value="{{ old('trans.'.$locale.'.seo_title',$page->translateForForm($locale,'seo_title')) }}">
-                            </div>
-
-                            <error class="caption text-warning" field="trans.{{ $locale }}.seo_title" :errors="errors.get('trans.{{ $locale }}')"></error>
-
-                            <div class="stack">
-                                <label for="trans-{{ $locale }}-seo_description">Seo omschrijving</label>
-                                <textarea class="inset-s" name="trans[{{ $locale }}][seo_description]" id="trans-{{ $locale }}-seo_description" cols="30" rows="10">{{ old('trans.'.$locale.'.seo_description',$page->translateForForm($locale,'seo_description')) }}</textarea>
-                            </div>
+                            @include('chief::back.pages._partials.seo-form')
                         </tab>
-
                     @endforeach
                 </tabs>
+            @else
+                @foreach($page->availableLocales() as $locale)
+                    @include('chief::back.pages._partials.seo-form')
+                @endforeach
+            @endif
+        </div>
+    </section>
 
-                <label for="seo-title"><i>Preview</i></label>
-                <div class="panel seo-preview --border inset bc-success">
-                    <h2 class="text-information">SEO Titel</h2>
-                    <span class="link text-success">https://crius-group.com/page</span>
-                    <p class="caption">preview van description tekst hier</p>
-                </div>
-            </div>
-        </section>
-        <a href="#modules" class="btn btn-o-primary right">volgende</a>
-    </tab>
-
-    <tab name="Relaties">
-
-        {{-- MODULES --}}
-        <section class="row formgroup stack gutter-l">
-            <div class="column-4">
-                <h2 class="formgroup-label">Gerelateerde onderwerpen</h2>
-                <p class="caption">Bij het pagina kan je enkele gerelateerde onderwerpen koppelen. <br>Deze worden automatisch onderaan de pagina pagina getoond.</p>
-            </div>
-            <div class="formgroup-input column-8">
-                <h4>Voeg een nieuwe relatie toe</h4>
-                <chief-multiselect
-                name="relations"
-                :options='@json($relations)'
-                selected='@json($page->existingRelationIds->toArray())'
-                :multiple="true"
-                grouplabel="group"
-                groupvalues="values"
-                labelkey="label"
-                valuekey="id"
-                placeholder="..."
-                >
-                </chief-multiselect>
-            </div>
-            <div class="column-12 text-right">
-                <a class="btn btn-o-primary">Opslaan als draft</a>
-                <a @click="showModal('publication-page')" class="btn btn-o-secondary">Plan je pagina in</a>
-            </div>
-        </section>
-    </tab>
+    <div class="stack clearfix">
+        <a href="#modules" class="btn btn-o-primary left">Vorige</a>
+        <button type="submit" class="btn btn-primary right">Wijzigingen opslaan</button>
+    </div>
+</tab>
 </tabs>
+
+
+@push('custom-scripts')
+<script>
+Vue.component('chief-permalink', {
+    props: ['root', 'defaultPath'],
+    data: function(){
+        return {
+            path: this.defaultPath || '',
+            editMode: false,
+        };
+    },
+    computed: {
+        fullUrl: function(){
+            return this.root + '/' + this.path;
+        }
+    },
+    render: function(){
+        return this.$scopedSlots.default({
+            data: this.$data,
+            fullUrl: this.fullUrl
+        });
+    }
+});
+</script>
+@endpush

@@ -2,10 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Translations;
 
-use Thinktomorrow\Chief\Translations\Translation;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Page;
 
@@ -19,7 +17,7 @@ class EditTranslationTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDatabase();
+        $this->setUpDefaultAuthorization();
 
         // Set locales to nl, fr for our tests
         app('config')['squanto'] = array_merge(config('squanto'), ['locales' => ['nl','fr']]);
@@ -32,7 +30,7 @@ class EditTranslationTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $response = $this->asDefaultAdmin()->get(route('squanto.edit', $this->squantoPage->id));
+        $response = $this->asAdmin()->get(route('squanto.edit', $this->squantoPage->id));
         $response->assertStatus(200);
     }
 
@@ -46,9 +44,7 @@ class EditTranslationTest extends TestCase
     /** @test */
     public function editing_a_new_translation()
     {
-        $this->disableExceptionHandling();
-
-        $response = $this->asDefaultAdmin()
+        $response = $this->asAdmin()
             ->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 
         $response->assertStatus(302);
@@ -59,7 +55,7 @@ class EditTranslationTest extends TestCase
     }
 
     /** @test */
-    public function only_authenticated_admin_can_edit_a_translation()
+    public function non_authenticated_admin_cannot_edit_a_translation()
     {
         $response = $this->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
 

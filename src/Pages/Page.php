@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\HasCollection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
@@ -18,16 +18,14 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
-use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
+use Thinktomorrow\Chief\Modules\Module;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
-    use HasCollection,
+    use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
@@ -40,22 +38,49 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ActingAsChild;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
-    protected $translationModel = PageTranslation::class;
+    protected $translationModel      = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
-    protected $translatedAttributes = [
-        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description',
+    protected $translatedAttributes  = [
+        'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-    public $table = "pages";
-    protected $guarded = [];
-    protected $dates = ['deleted_at'];
-    protected $with = ['translations'];
-    
+
+    public    $table       = "pages";
+    protected $guarded     = [];
+    protected $dates       = ['deleted_at'];
+    protected $with        = ['translations'];
+    protected $pagebuilder = true;
+
+
+    public function __construct(array $attributes = [])
+    {
+        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+
+        parent::__construct($attributes);
+    }
+
     /**
-     * The collection scope for the specific class.
-     * @var string
+     * Page specific modules. We exclude text modules since they are modules in pure
+     * technical terms and not so much as behavioural elements for the admin.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected static $collectionScopeClass = PageCollectionScope::class;
+    public function modules()
+    {
+        return $this->hasMany(Module::class, 'page_id')->where('collection', '<>', 'text');
+    }
+
+    /**
+     * Each page model can expose some custom fields. Add here the list of fields defined as name => Field where Field
+     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     *
+     * @param null $key
+     * @return array
+     */
+    public function customFields()
+    {
+        return [];
+    }
 
     /**
      * Each page model can expose the managed translatable fields. These should be included as attributes just like the regular
@@ -103,80 +128,67 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
-            'short' => HtmlField::make()->label('Korte samenvatting')->description('Wordt gebruikt voor overzichtspagina\'s.'),
-            'content' => HtmlField::make()->label('Inhoud'),
+
         ];
     }
 
     /**
-     * Details of the collection such as naming, key and class.
-     * Used in several dynamic parts of the admin application.
+     * Each page model can expose the managed media fields.
+     * This method allows for easy installation of the form fields in chief.
      *
      * @param null $key
-     * @return object
+     * @return array
      */
-    public static function collectionDetails($key = null)
+    final public static function mediaFields($key = null)
     {
-        $collectionKey = (new static)->collectionKey();
+        $mediaFields = array_merge(static::defaultMediaFields(), static::customMediaFields());
 
-        $names = (object) [
-            'key'      => $collectionKey,
-            'class'    => static::class,
-            'singular' => $collectionKey == 'statics' ? 'pagina' : ucfirst(str_singular($collectionKey)),
-            'plural'   => $collectionKey == 'statics' ? 'pagina\'s' : ucfirst(str_plural($collectionKey)),
-        ];
-
-        return $key ? $names->$key : $names;
+        return $key ? array_pluck($mediaFields, $key) : $mediaFields;
     }
 
     /**
-     * TODO: these flatten and inflate methods should be out of this class into their own environment...
-     * They are also used for the relation select fields.
-     * @return mixed
+     * The custom addition of media fields for a page model.
+     *
+     * To add a field, you should:
+     * 1. override this method with your own and return the comprised list of fields.
+     *
+     * @return array
      */
-    public static function flattenForSelect()
+    public static function customMediaFields(): array
     {
-        return self::ignoreCollection()->published()->get()->map(function (Page $page) {
-            return [
-                'id'    => $page->getRelationId(),
-                'label' => $page->getRelationLabel(),
-                'group' => $page->getRelationGroup(),
-            ];
-        });
+        return [];
     }
 
-    public static function flattenForGroupedSelect(): Collection
+    /**
+     * The default set of media fields for a page model.
+     *
+     * If you wish to remove any of these fields, you should:
+     * 1. override this method with your own and return the comprised list of fields.
+     *
+     * @return array
+     */
+    public static function defaultMediaFields(): array
     {
-        $grouped = [];
-
-        self::flattenForSelect()->each(function ($entry) use (&$grouped) {
-            if (isset($grouped[$entry['group']])) {
-                $grouped[$entry['group']]['values'][] = $entry;
-            } else {
-                $grouped[$entry['group']] = ['group' => $entry['group'], 'values' => [$entry]];
-            }
-        });
-
-        // We remove the group key as we need to have non-assoc array for the multiselect options.
-        return collect(array_values($grouped));
+        return [
+            // MediaType::HERO => [
+            //     'type' => MediaType::HERO,
+            //     'is_document' => false,
+            //     'label' => 'Hoofdafbeelding',
+            //     'description' => '',
+            // ],
+        ];
     }
 
-    public static function inflate($relateds = [])
+    public function flatReferenceLabel(): string
     {
-        if (!is_array($relateds)) {
-            $relateds = [$relateds];
-        }
+        $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
 
-        if (count($relateds) == 1 && is_null(reset($relateds))) {
-            $relateds = [];
-        }
+        return $this->title ? $this->title . $status : '';
+    }
 
-        return collect($relateds)->map(function ($related) {
-            list($type, $id) = explode('@', $related);
-            
-            return (new $type)->ignoreCollection()->find($id);
-        })->first();
+    public function flatReferenceGroup(): string
+    {
+        return $this->collectionDetails()->singular;
     }
 
     public function mediaUrls($type = null): Collection
@@ -189,69 +201,28 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $this->mediaUrls($type)->first();
     }
 
-    public static function mediaFields($key = null)
-    {
-        $types = [
-            MediaType::HERO => [
-                'type' => MediaType::HERO,
-                'label' => 'Hoofdafbeelding',
-                'description' => '',
-            ],
-            MediaType::THUMB => [
-                'type' => MediaType::THUMB,
-                'label' => 'Thumbnails',
-                'description' => '',
-            ],
-        ];
-
-        return $key ? array_pluck($types, $key) : $types;
-    }
-
     public static function findPublished($id)
     {
-        return (($page = self::ignoreCollection()->published()->find($id)))
+        return (($page = self::published()->find($id)))
             ? $page
             : null;
     }
 
     public static function findBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? self::ignoreCollection()->find($trans->page_id) : null;
+        return ($trans = PageTranslation::findBySlug($slug)) ? static::find($trans->page_id) : null;
     }
 
     public static function findPublishedBySlug($slug)
     {
-        return ($trans = PageTranslation::findBySlug($slug)) ? self::findPublished($trans->page_id) : null;
+        $translationModel = (new static)->translationModel;
+
+        return ($trans =  $translationModel::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at', 'DESC');
-    }
-
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina onder ' . $parent->id;
-    }
-
-    public function presentForChild(ActsAsChild $child, Relation $relation): string
-    {
-        return 'Dit is de relatie weergave van een pagina als parent voor ' . $child->id;
-    }
-
-    public function getRelationId(): string
-    {
-        return $this->getMorphClass().'@'.$this->id;
-    }
-
-    public function getRelationLabel(): string
-    {
-        return $this->title ?? '';
-    }
-
-    public function getRelationGroup(): string
-    {
-        return static::collectionDetails('plural');
     }
 
     public function previewUrl()
@@ -271,5 +242,122 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function menuLabel(): string
     {
         return $this->title;
+    }
+
+    public function isHomepage(): bool
+    {
+        $homepage_id = chiefSetting('homepage_id');
+
+        return $this->id == $homepage_id;
+    }
+
+    public static function guessHomepage(): self
+    {
+        $homepage_id = chiefSetting('homepage_id');
+
+        // Homepage id is explicitly set
+        if ($homepage_id && $page = static::findPublished($homepage_id)) {
+            return $page;
+        }
+
+        if ($page = static::collection('singles')->published()->first()) {
+            return $page;
+        }
+
+        if ($page = static::published()->first()) {
+            return $page;
+        }
+
+        throw new NotFoundHomepage('No homepage could be guessed. Make sure to provide a published page and set its id in the thinktomorrow.chief-settings.homepage_id config parameter.');
+    }
+
+    public function view()
+    {
+        $viewPaths = [
+            'front.'.$this->collectionKey().'.show',
+            'front.pages.'.$this->collectionKey().'.show',
+            'front.pages.show'
+        ];
+
+        foreach ($viewPaths as $viewPath) {
+            if (! view()->exists($viewPath)) {
+                continue;
+            }
+
+            return view($viewPath, [
+                'page' => $this,
+            ]);
+        }
+
+        throw new NotFoundView('Frontend view could not be determined for page. Make sure to at least provide a front.pages.show viewfile.');
+    }
+
+    /**
+     * PUBLISHABLE OVERRIDES BECAUSE OF ARCHIVED STATE IS SET ELSEWHERE.
+     * IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
+     */
+    public function isPublished()
+    {
+        return (!!$this->published && is_null($this->archived_at));
+    }
+
+    public function isDraft()
+    {
+        return (!$this->published && is_null($this->archived_at));
+    }
+
+    public function publish()
+    {
+        $this->published = 1;
+        $this->archived_at = null;
+
+        $this->save();
+    }
+
+    public function draft()
+    {
+        $this->published = 0;
+        $this->archived_at = null;
+
+        $this->save();
+    }
+
+    public function statusAsLabel()
+    {
+        if ($this->isPublished()) {
+            return '<a href="'.$this->menuUrl().'" target="_blank"><em>online</em></a>';
+        }
+
+        if ($this->isDraft()) {
+            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>offline</em></a>';
+        }
+
+        if ($this->isArchived()) {
+            return '<span><em>gearchiveerd</em></span>';
+        }
+
+        return '-';
+    }
+
+    public function statusAsPlainLabel()
+    {
+        if ($this->isPublished()) {
+            return 'online';
+        }
+
+        if ($this->isDraft()) {
+            return 'offline';
+        }
+
+        if ($this->isArchived()) {
+            return 'gearchiveerd';
+        }
+
+        return '-';
+    }
+
+    public function hasPagebuilder()
+    {
+        return $this->pagebuilder;
     }
 }

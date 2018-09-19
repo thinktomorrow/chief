@@ -2,16 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Common\Relations\Relation;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChildFake extends Model implements ActsAsChild
+class ChildFake extends Model implements ActsAsChild, PresentForParent
 {
     use ActingAsChild;
 
@@ -27,23 +28,28 @@ class ChildFake extends Model implements ActsAsChild
         });
     }
 
-    public function presentForParent(ActsAsParent $parent, Relation $relation): string
+    public function presentForParent(ActsAsParent $parent): string
     {
         return '<div>child '.$this->id.' view for parent '.$parent->id.'</div>';
     }
 
-    public function getRelationId(): string
+    /**
+     * Composite key consisting of the type of class combined with the
+     * model id. Both are joined with an @ symbol. This is used as
+     * identifier of the relation mostly as form values.
+     */
+    public function flatReference(): FlatReference
     {
-        return $this->getMorphClass().'@'.$this->id;
+        return new FlatReference(get_class($this), 1);
     }
 
-    public function getRelationLabel(): string
+    public function flatReferenceLabel(): string
     {
-        return $this->id;
+        return (string) $this->name;
     }
 
-    public function getRelationGroup(): string
+    public function flatReferenceGroup(): string
     {
-        return 'children';
+        return (string) $this->name;
     }
 }

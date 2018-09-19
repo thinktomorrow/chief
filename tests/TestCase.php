@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
-use Thinktomorrow\Locale\LocaleServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Spatie\Activitylog\ActivitylogServiceProvider;
@@ -31,7 +30,6 @@ abstract class TestCase extends OrchestraTestCase
         return [
             PermissionServiceProvider::class,
 
-            LocaleServiceProvider::class,
             TranslatableServiceProvider::class,
             SquantoServiceProvider::class,
             SquantoManagerServiceProvider::class,

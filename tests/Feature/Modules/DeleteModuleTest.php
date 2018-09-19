@@ -14,7 +14,7 @@ class DeleteModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections.modules', [
+        $this->app['config']->set('thinktomorrow.chief.collections', [
             'newsletter' => NewsletterModuleFake::class,
         ]);
     }
@@ -27,7 +27,7 @@ class DeleteModuleTest extends TestCase
         $this->asAdmin()
             ->delete(route('chief.back.modules.destroy', $module->id));
 
-        $this->assertCount(0, Module::ignoreCollection()->get());
-        $this->assertCount(1, Module::ignoreCollection()->onlyTrashed()->get());
+        $this->assertCount(0, Module::all());
+        $this->assertCount(1, Module::onlyTrashed()->get());
     }
 }

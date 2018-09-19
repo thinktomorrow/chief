@@ -5,25 +5,8 @@ $dot-size: 5px;
 .label{
     padding: $space-xs / 2 $space-xs;
     display: inline-block;
-    font-size: smaller;
     position: relative;
     border-radius: $label-border-radius;
-    &::before{
-      border-style: solid;
-      border-width: $dot-size*2 $dot-size*2 $dot-size*2 0;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    &::after{
-      width: $dot-size;
-      height: $dot-size;
-      border-radius: 50%;
-      background-color: $color-white;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-    }
 }
 .label--right{
   &::before{
@@ -35,17 +18,7 @@ $dot-size: 5px;
     left: -($dot-size - 1px);
   }
 }
-.label--left{
-  &::before{
-    content:'';
-    right: -($dot-size*1.5);
-    transform: translateY(-50%) scale(-1);
-  }
-  &::after{
-    content:'';
-    right: -($dot-size - 1px);
-  }
-}
+
 
 $label-name: primary secondary success warning error information;
 $colors: $color-primary $color-secondary $color-success $color-warning $color-error $color-information;;
