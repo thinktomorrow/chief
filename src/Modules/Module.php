@@ -142,7 +142,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
+            'title'   => InputField::make()->label('titel'),
             'content' => HtmlField::make()->label('Inhoud'),
         ];
     }

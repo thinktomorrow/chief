@@ -45,10 +45,25 @@ if (!function_exists('chief_cached_asset')) {
     }
 }
 
+if (!function_exists('chiefSetting')) {
+    function chiefSetting($key = null, $default = null)
+    {
+        $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
+
+        if (is_null($key)) {
+            return $manager;
+        }
+        
+        return $manager->get($key, $default);
+    }
+}
+
 if (!function_exists('chiefmenu')) {
     function chiefmenu($key = 'main')
     {
-        return \Thinktomorrow\Chief\Menu\Menu::find($key);
+        $menu = \Thinktomorrow\Chief\Menu\Menu::find($key);
+
+        return $menu ?? new \Thinktomorrow\Chief\Menu\NullMenu();
     }
 }
 

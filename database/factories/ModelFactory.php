@@ -3,6 +3,7 @@
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Settings\Setting;
 
 $factory->define(User::class, function (Faker\Generator $faker) {
     static $password;
@@ -33,5 +34,10 @@ $factory->define(MenuItem::class, function (Faker\Generator $faker) {
         'type'      => 'custom',
         'label:nl'  => 'nieuw label',
         'menu_type' => 'main'
+    ];
+});
+
+$factory->define(Setting::class, function (Faker\Generator $faker) {
+    return [
     ];
 });

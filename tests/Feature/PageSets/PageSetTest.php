@@ -19,7 +19,7 @@ class PageSetTest extends TestCase
             'agenda' => AgendaPageFake::class,
         ]);
 
-        $this->app['config']->set('thinktomorrow.chief-settings.pagesets', [
+        $this->app['config']->set('thinktomorrow.chief.pagesets', [
             'foobar'   => [
                 'action' => DummyPageSetRepository::class.'@all',
                 'parameters' => [2],

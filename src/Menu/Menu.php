@@ -25,7 +25,7 @@ class Menu
 
     public static function all(): Collection
     {
-        $types = config('thinktomorrow.chief-settings.menus', []);
+        $types = config('thinktomorrow.chief.menus', []);
 
         return collect($types)->map(function ($menu, $key) {
             return new static($key, $menu['label'], $menu['view']);

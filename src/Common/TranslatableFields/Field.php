@@ -1,17 +1,17 @@
 <?php
+
 declare(strict_types = 1);
+
 namespace Thinktomorrow\Chief\Common\TranslatableFields;
 
 class Field
 {
-    /**
-     * @var FieldType
-     */
+    /** @var FieldType */
     private $fieldType;
 
     protected $values = [];
 
-    protected function __construct(FieldType $fieldType)
+    public function __construct(FieldType $fieldType)
     {
         $this->fieldType = $fieldType;
 
@@ -29,8 +29,13 @@ class Field
 
     public function __call($name, $arguments)
     {
-        if (!in_array($name, ['label', 'description'])) {
+        if (!in_array($name, ['label', 'description', 'type'])) {
             throw new \InvalidArgumentException('Cannot set value by ['. $name .'].');
+        }
+
+        // Without arguments we assume you want to retrieve a value property
+        if (empty($arguments)) {
+            return $this->__get($name);
         }
 
         $this->values[$name] = $arguments[0];

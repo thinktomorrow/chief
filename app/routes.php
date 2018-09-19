@@ -89,8 +89,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::delete('menuitem/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@destroy')->name('chief.back.menuitem.destroy');
     Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuItemController@edit')->name('chief.back.menuitem.edit');
 
-    Route::get('/settings', ['as' => 'chief.back.settings.index','uses' => Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController::class.'@show']);
-
     /**
      * -----------------------------------------------------------------
      * MEDIA MANAGEMENT
@@ -139,6 +137,15 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('permissions/{permission}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization\PermissionController@update')->name('chief.back.permissions.update');
     Route::get('permissions/{permission}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization\PermissionController@show')->name('chief.back.permissions.show');
     Route::get('permissions/{permission}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization\PermissionController@edit')->name('chief.back.permissions.edit');
+
+    /**
+     * -----------------------------------------------------------------
+     * SETTINGS MANAGEMENT
+     * -----------------------------------------------------------------
+     */
+    Route::put('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@update')->name('chief.back.settings.update');
+    Route::get('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@edit')->name('chief.back.settings.edit');
+
 
     /**
      * -----------------------------------------------------------------

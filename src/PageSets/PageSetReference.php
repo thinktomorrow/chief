@@ -47,7 +47,7 @@ class PageSetReference implements ProvidesFlatReference
 
     public static function all(): Collection
     {
-        $sets = config('thinktomorrow.chief-settings.pagesets', []);
+        $sets = config('thinktomorrow.chief.pagesets', []);
 
         return collect($sets)->map(function ($set, $key) {
             return PageSetReference::fromArray($key, $set);

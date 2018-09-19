@@ -26,6 +26,12 @@ class FieldType
         $this->type = $type;
     }
 
+    public static function fromString(string $type)
+    {
+        $class = 'Thinktomorrow\Chief\Common\TranslatableFields\\'.ucfirst($type.'Field');
+        return new $class(new static($type));
+    }
+
     public function get()
     {
         return $this->type;

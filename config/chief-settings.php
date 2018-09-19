@@ -3,26 +3,34 @@
 return [
 
     /**
-     * Here you should set which page is considered to be the homepage, aka the default page found at the url root.
-     * e.g. 'homepage_id' => 2,
+     * Homepage
+     *
+     * Here you should set which page is considered to be the homepage,
+     * aka the default page found at the url root.
+     *
+     * e.g. 'homepage' => 2,
      */
-    'homepage_id' => null,
+    'homepage' => null,
 
     /**
-     * Define your menus here. By default there is a generic 'main' menu but you
-     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     * Contact person (aka webmaster)
+     *
+     * The contact person receives all incoming communication e.g. contact form submissions
+     * and is the sender address for all transaction mails such as password reset mails.
      */
-    'menus' => [
-        'main' => [
-            'label' => 'Hoofdnavigatie',
-            'view'  => 'front.menus.main'
-        ]
+    'contact' => [
+        'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
+        'name'  => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
     ],
-    // 'pagesets' => [
-    //     'singles'   => [
-    //         'action'     => DummyPageSetRepository::class.'@all',
-    //         'parameters' => [2],
-    //         'label'      => 'algemene paginas'
-    //     ],
-    // ]
+
+    /**
+     * Client details
+     *
+     * This is mainly a backend thing but it can occur in a
+     * couple of frontend places such as the mail footer.
+     */
+    'client' => [
+        'name' => 'Think Tomorrow',
+        'app_name' => 'Chief',
+    ]
 ];

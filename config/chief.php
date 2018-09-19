@@ -3,28 +3,6 @@
 use Thinktomorrow\Chief\Media\MediaType;
 
 return [
-
-    /**
-     * Contact email which will receive all incoming communication
-     * This contact will receive e.g. contact form submissions
-     */
-    'contact'     => [
-        'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
-        'name'  => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
-    ],
-
-    /**
-     * Name of the project.
-     *
-     * This is used in a couple of places such as the mail footer.
-     */
-    'name'        => 'Chief',
-
-    /**
-     * Client name
-     */
-    'client'      => 'Think Tomorrow',
-
     /**
      * Domain settings.
      *
@@ -65,6 +43,24 @@ return [
     ],
 
     /**
+     * Define your menus here. By default there is a generic 'main' menu but you
+     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     */
+    'menus' => [
+        'main' => [
+            'label' => 'Hoofdnavigatie',
+            'view'  => 'front.menus.main'
+        ]
+    ],
+    // 'pagesets' => [
+    //     'singles'   => [
+    //         'action'     => DummyPageSetRepository::class.'@all',
+    //         'parameters' => [2],
+    //         'label'      => 'algemene paginas'
+    //     ],
+    // ]
+
+    /**
      * Set of mediatypes used for each collection.
      * Default set of mediatypes that is available for every collection
      */
@@ -100,4 +96,26 @@ return [
      * manage this by calling the 'withSnippets()' method on a Page or Module object.
      */
     'withSnippets' => true,
+
+    /**
+     * Define specific setting fields.
+     * By default a standard input field is used.
+     */
+    'settingFields' => [
+        'homepage' => function () {
+            return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
+        },
+        'contact.email' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+                        ->label('Webmaster email')
+                        ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
+        'contact.name' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+                        ->label('Webmaster naam')
+                        ->description('Voor en achternaam van de webmaster.'),
+        'client.app_name' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+                        ->label('Site naam')
+                        ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
+        'client.name' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+                        ->label('Organisatie')
+                        ->description('Naam van uw bedrijf. Dit wordt getoond in o.a. de mail communicatie.'),
+    ],
 ];
