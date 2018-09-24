@@ -94,13 +94,14 @@ class ParseChildrenForPresentation
         // Set the current pages collection to the current collection type
         if ($this->current_pageset_type == null || $this->current_pageset_type != $child->collectionKey()) {
             $this->current_pageset_type = $child->collectionKey();
+            $this->current_pageset_index = $index;
         }
-        $this->current_pageset_index = $index;
-        
-        $this->pushPageToCollection($child);
+        // If current pageset index is null, let's make sure it is set to the current index
+        elseif(is_null($this->current_pageset_index)) {
+            $this->current_pageset_index = $index;
+        }
 
-        // Reset the grouped_collection after each loop (keep type so we know when matching pages follow up on each other.
-        $this->current_pageset_index = null;
+        $this->pushPageToCollection($child);
     }
 
     private function pushPageToCollection(Page $page)
