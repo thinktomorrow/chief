@@ -36,7 +36,7 @@ class MenuItemController extends Controller
             ->toCollectionDetails()
             ->values()
             ->prepend([
-                'key' => null,
+                'key' => '',
                 'plural' => '...',
             ])->toArray();
 
@@ -90,7 +90,7 @@ class MenuItemController extends Controller
                                 ->toCollectionDetails()
                                 ->values()
                                 ->prepend([
-                                    'key' => null,
+                                    'key' => '',
                                     'plural' => '...',
                                 ])->toArray();
 
