@@ -12,7 +12,7 @@
 </section>
 
 @if(count($module->customFields()) > 0)
-    @foreach($module->customFields() as $key => $field)
+    @foreach($module->customFields() as $field)
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
                 @if($field->label)
@@ -25,7 +25,7 @@
             </div>
             <div class="formgroup-input column-8">
                 @include('chief::back._fields.customfield', [
-                    'key'   => $key,
+                    'key'   => $field->key(),
                     'field' => $field,
                     'model' => $module
                 ])
@@ -35,7 +35,7 @@
 @endif
 
 @if(count($module->translatableFields()) > 0)
-    @foreach($module->translatableFields() as $key => $field)
+    @foreach($module->translatableFields() as $field)
         <section class="row formgroup stack gutter-l">
             <div class="column-4">
                 @if($field->label)
@@ -48,7 +48,8 @@
             </div>
             <div class="formgroup-input column-8">
                 @include('chief::back._fields.translatable_formgroup', [
-                    'model' => $module
+                    'model' => $module,
+                    'key' => $field->key(),
                 ])
             </div>
         </section>
