@@ -85,7 +85,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module3, ['sort' => 5]);
 
         $this->assertCount(5, $this->page->children());
-        $this->assertCount(5, $this->page->presentChildren());
+        $this->assertCount(4, $this->page->presentChildren());
 
         // Modules show their content by default but pages do not since this is not expected behaviour
         $this->assertEquals('eerste texttweede textnieuwsbrief', $this->page->renderChildren());
