@@ -3,10 +3,7 @@
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\TranslatableFields\Field;
-use Thinktomorrow\Chief\Common\TranslatableFields\FieldType;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
+use Thinktomorrow\Chief\Common\Fields\InputField;
 
 class Setting extends Model
 {
@@ -20,13 +17,19 @@ class Setting extends Model
     {
         $fields = $this->fieldsFromConfig();
 
-        if (!isset($fields[$this->key])) {
-            return $this->defaultField();
+        // TODO: a fieldgroup should be used here to filter / find by key
+        foreach($fields as $field){
+
+            if(is_callable($field)){
+                $field = call_user_func($field);
+            }
+
+            if($field->key != $this->key) continue;
+
+            return $field;
         }
 
-        return is_callable($fields[$this->key])
-            ? call_user_func($fields[$this->key])
-            : $fields[$this->key];
+        return $this->defaultField();
     }
 
     private static function fieldsFromConfig()
@@ -40,7 +43,7 @@ class Setting extends Model
 
     private function defaultField()
     {
-        return InputField::make()
+        return InputField::make($this->key)
                     ->label(ucfirst(str_replace(['-','_','.'], ' ', $this->key)));
     }
 

@@ -9,8 +9,7 @@ use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\PageSets\PageSetReference;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Thinktomorrow\Chief\Sets\SetReference;
 
 class UpdateSections
 {
@@ -24,23 +23,23 @@ class UpdateSections
     private $text_modules;
 
     /**@var array */
-    private $pageset_refs;
+    private $set_refs;
 
     /** @var array */
     private $sorting;
 
-    private function __construct(Page $page, array $relation_references, array $text_modules, array $pageset_refs, array $sorting)
+    private function __construct(Page $page, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
         $this->page = $page;
         $this->relation_references = $relation_references;
         $this->text_modules = $text_modules;
-        $this->pageset_refs = $pageset_refs;
+        $this->set_refs = $set_refs;
         $this->sorting = $sorting;
     }
 
-    public static function forPage(Page $page, array $relation_references, array $text_modules, array $pageset_refs, array $sorting)
+    public static function forPage(Page $page, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
-        return new static($page, $relation_references, $text_modules, $pageset_refs, $sorting);
+        return new static($page, $relation_references, $text_modules, $set_refs, $sorting);
     }
 
     public function updateModules()
@@ -61,18 +60,18 @@ class UpdateSections
         return $this;
     }
 
-    public function updatePageSets()
+    public function updateSets()
     {
-        $this->removeExistingPagesets();
+        $this->removeExistingSets();
 
-        foreach ($this->pageset_refs as $flat_pageset_ref) {
-            if (!$flat_pageset_ref) {
+        foreach ($this->set_refs as $flat_set_ref) {
+            if (!$flat_set_ref) {
                 continue;
             }
 
-            $stored_pageset_ref = $this->findOrCreateStoredPageSetReference($flat_pageset_ref);
+            $stored_set_ref = $this->findOrCreateStoredSetReference($flat_set_ref);
 
-            $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
+            $this->page->adoptChild($stored_set_ref, ['sort' => 0]);
         }
 
         return $this;
@@ -81,17 +80,17 @@ class UpdateSections
     private function removeExistingModules()
     {
         foreach ($this->page->children() as $instance) {
-            if ($instance instanceof StoredPageSetReference || $instance instanceof TextModule || $instance instanceof PagetitleModule) {
+            if ($instance instanceof StoredSetReference || $instance instanceof TextModule || $instance instanceof PagetitleModule) {
                 continue;
             }
             $this->page->rejectChild($instance);
         }
     }
 
-    private function removeExistingPagesets()
+    private function removeExistingSets()
     {
         foreach ($this->page->children() as $instance) {
-            if (! $instance instanceof StoredPageSetReference) {
+            if (! $instance instanceof StoredSetReference) {
                 continue;
             }
             $this->page->rejectChild($instance);
@@ -243,15 +242,15 @@ class UpdateSections
         return $value;
     }
 
-    private function findOrCreateStoredPageSetReference(string $flat_pageset_ref): StoredPageSetReference
+    private function findOrCreateStoredSetReference(string $flat_set_ref)
     {
-        list($className, $id) = explode('@', $flat_pageset_ref);
+        list($className, $id) = explode('@', $flat_set_ref);
 
-        /** If pageset reference is not stored yet, we will do this now */
-        if ($className == PageSetReference::class) {
-            return PageSetReference::find($id)->store();
+        /** If set reference is not stored yet, we will do this now */
+        if ($className == SetReference::class) {
+            return SetReference::find($id)->store();
         }
 
-        return FlatReferenceFactory::fromString($flat_pageset_ref)->instance();
+        return FlatReferenceFactory::fromString($flat_set_ref)->instance();
     }
 }

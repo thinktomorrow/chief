@@ -1,8 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\PageSets;
+namespace Thinktomorrow\Chief\Tests\Feature\Sets;
 
-use Thinktomorrow\Chief\PageSets\PageSetReference;
+use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -18,13 +18,20 @@ class RelatingPageSetToPageTest extends TestCase
             'articles'   => ArticlePageFake::class,
         ]);
 
+        $this->app['config']->set('thinktomorrow.chief.sets', [
+            'foobar'   => [
+                'action' => DummySetRepository::class.'@all',
+                'parameters' => [2],
+            ],
+        ]);
+
         $this->page = ArticlePageFake::create(['collection' => 'articles']);
     }
 
     /** @test */
     public function a_page_can_keep_a_pageset_relation()
     {
-        $stored_pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5]))->store();
+        $stored_pageset_ref = (new SetReference('key', DummySetRepository::class.'@all', [5]))->store();
 
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
@@ -34,7 +41,7 @@ class RelatingPageSetToPageTest extends TestCase
     /** @test */
     public function it_displays_pageset()
     {
-        $stored_pageset_ref = (new PageSetReference('key', DummyPageSetRepository::class.'@all', [5]))->store();
+        $stored_pageset_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5]))->store();
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
         // Empty string by default

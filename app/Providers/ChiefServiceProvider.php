@@ -6,6 +6,7 @@ use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
@@ -38,6 +39,9 @@ class ChiefServiceProvider extends ServiceProvider
         // Media library
         (new MediaLibraryServiceProvider($this->app))->boot();
 //        (new AssetLibraryServiceProvider($this->app))->boot();
+
+        // Project defaults
+        (new ProjectServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -83,6 +87,11 @@ class ChiefServiceProvider extends ServiceProvider
             });
         }
 
+        // Manager register is globally available
+        $this->app->singleton(Register::class, function(){
+            return new Register();
+        });
+
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
     }
@@ -105,6 +114,9 @@ class ChiefServiceProvider extends ServiceProvider
         // Media library
         (new MediaLibraryServiceProvider($this->app))->register();
         (new AssetLibraryServiceProvider($this->app))->register();
+
+        // Project defaults
+        (new ProjectServiceProvider($this->app))->register();
     }
 
     /**

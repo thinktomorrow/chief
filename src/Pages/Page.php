@@ -19,6 +19,7 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
+use Thinktomorrow\Chief\Management\Field;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
@@ -49,7 +50,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-
     public $table       = "pages";
     protected $guarded     = [];
     protected $dates       = ['deleted_at'];
@@ -59,7 +59,13 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function __construct(array $attributes = [])
     {
-        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+        // TODO: this should come from the manager->fields() as fieldgroup
+        $translatableColumns = [];
+        foreach(static::translatableFields() as $translatableField) {
+            $translatableColumns[] = $translatableField->column();
+        }
+
+        $this->translatedAttributes = array_merge($this->translatedAttributes, $translatableColumns);
 
         $this->constructWithSnippets();
 
@@ -97,7 +103,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     /**
      * Each page model can expose some custom fields. Add here the list of fields defined as name => Field where Field
-     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     * is an instance of \Thinktomorrow\Chief\Common\Fields\Field
      *
      * @param null $key
      * @return array

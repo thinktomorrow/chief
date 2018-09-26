@@ -35,8 +35,14 @@ class UpdateModule
 
     private function saveModuleTranslations(Module $module, $translations)
     {
+        // TODO: this should come from the manager->fields() as fieldgroup
+        $translatableColumns = [];
+        foreach($module::translatableFields() as $translatableField) {
+            $translatableColumns[] = $translatableField->column();
+        }
+
         $this->saveTranslations($translations, $module, array_merge([
             'title'
-        ], array_keys($module::translatableFields())));
+        ], $translatableColumns));
     }
 }

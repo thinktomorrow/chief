@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use \Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
+use Thinktomorrow\Chief\Common\Fields\InputField;
 
 class DetachedPageFake extends Page
 {
@@ -37,7 +37,7 @@ class DetachedPageFake extends Page
     public static function customTranslatableFields(): array
     {
         return [
-            'question' => InputField::make(),
+            'question' => InputField::make('question'),
         ];
     }
 

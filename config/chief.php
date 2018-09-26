@@ -43,6 +43,17 @@ return [
     ],
 
     /**
+     * Custom query sets.
+     */
+    'sets' => [
+//         'singles'   => [
+//             'action'     => DummyPageSetRepository::class.'@all',
+//             'parameters' => [2],
+//             'label'      => 'algemene paginas'
+//         ],
+    ],
+
+    /**
      * Define your menus here. By default there is a generic 'main' menu but you
      * are free to add different ones as well. e.g. footer-menu, sidebar,...
      */
@@ -52,13 +63,6 @@ return [
             'view'  => 'front.menus.main'
         ]
     ],
-    // 'pagesets' => [
-    //     'singles'   => [
-    //         'action'     => DummyPageSetRepository::class.'@all',
-    //         'parameters' => [2],
-    //         'label'      => 'algemene paginas'
-    //     ],
-    // ]
 
     /**
      * Set of mediatypes used for each collection.
@@ -102,19 +106,20 @@ return [
      * By default a standard input field is used.
      */
     'settingFields' => [
+        // TODO: callable can be removed when we set everything up in a service provider
         'homepage' => function () {
             return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
         },
-        'contact.email' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+        'contact.email' => \Thinktomorrow\Chief\Common\Fields\InputField::make('contact.email')
                         ->label('Webmaster email')
                         ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
-        'contact.name' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+        'contact.name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('contact.name')
                         ->label('Webmaster naam')
                         ->description('Voor en achternaam van de webmaster.'),
-        'client.app_name' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+        'client.app_name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('client.app_name')
                         ->label('Site naam')
                         ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
-        'client.name' => \Thinktomorrow\Chief\Common\TranslatableFields\InputField::make()
+        'client.name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('client.name')
                         ->label('Organisatie')
                         ->description('Naam van uw bedrijf. Dit wordt getoond in o.a. de mail communicatie.'),
     ],

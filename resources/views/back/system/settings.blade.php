@@ -18,14 +18,14 @@
                     <p class="caption">{{ $setting->field->description }}</p>
                 </div>
                 <div class="column-7">
-                    @if($setting->field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::SELECT)
+                    @if($setting->field->type == \Thinktomorrow\Chief\Common\Fields\FieldType::SELECT)
                         <chief-multiselect
                                 name="settings[{{ $setting->key }}]"
                                 :options='@json($setting->field->options)'
                                 selected='@json(old($setting->key, $setting->field->selected))'
                         >
                         </chief-multiselect>
-                    @elseif($setting->field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::TEXT)
+                    @elseif($setting->field->type == \Thinktomorrow\Chief\Common\Fields\FieldType::TEXT)
                         <textarea class="inset-s" name="settings[{{$setting->key}}]" id="description" cols="10" rows="5">{{ $setting->value }}</textarea>
                     @else
                         <input type="text" name="settings[{{ $setting->key }}]" id="settings-{{ $setting->key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('settings.' . $setting->key, $setting->value) }}">
