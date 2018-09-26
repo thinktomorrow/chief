@@ -80,6 +80,8 @@ class Handler extends ExceptionHandler
             return redirect()->guest(route('chief.back.login'));
         }
 
-        return parent::unauthenticated($request, $exception);
+        return $request->expectsJson()
+            ? response()->json(['message' => $exception->getMessage()], 401)
+            : redirect()->guest('/');
     }
 }

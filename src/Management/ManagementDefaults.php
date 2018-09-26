@@ -10,7 +10,8 @@ use Thinktomorrow\Chief\Media\UploadMedia;
 
 trait ManagementDefaults
 {
-    use TranslatableCommand;
+    use ManagesMedia,
+        TranslatableCommand;
 
     protected $model;
 
@@ -91,6 +92,12 @@ trait ManagementDefaults
 
                 return $default;
             }
+        }
+
+        // Is it a media field
+        // An array grouped by type is returned. Each media array has an id, filename and path.
+        if($field->ofType(FieldType::MEDIA)) {
+            return $this->populateMedia($this->model);
         }
 
         return $this->model->{$field->column()};

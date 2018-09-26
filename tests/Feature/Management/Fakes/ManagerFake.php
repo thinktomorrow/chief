@@ -53,7 +53,7 @@ class ManagerFake implements ModelManager
             InputField::make('custom'),
             InputField::make('title_trans')->translatable(true),
             InputField::make('content_trans')->translatable(true),
-            MediaField::make('hero'),
+            MediaField::make('avatar'),
         ];
     }
 

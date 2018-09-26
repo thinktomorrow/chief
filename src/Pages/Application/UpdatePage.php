@@ -86,12 +86,12 @@ class UpdatePage
     {
         $modules = $sections['modules'] ?? [];
         $text = $sections['text'] ?? [];
-        $pagesets = $sections['pagesets'] ?? [];
+        $sets = $sections['pagesets'] ?? [];
         $order = $sections['order'] ?? [];
 
-        UpdateSections::forPage($page, $modules, $text, $pagesets, $order)
+        UpdateSections::forPage($page, $modules, $text, $sets, $order)
                         ->updateModules()
-                        ->updatePageSets()
+                        ->updateSets()
                         ->addTextModules()
                         ->updateTextModules()
                         ->sort();

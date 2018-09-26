@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\PageSets\PageSetReference;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
 use Thinktomorrow\Chief\Modules\Module;
-use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class Relation extends Model
 {
@@ -85,7 +84,7 @@ class Relation extends Model
     public static function availableChildrenOnlyModules(Collection $collection): Collection
     {
         return $collection->reject(function ($item) {
-            if ($item instanceof Page || $item instanceof StoredPageSetReference) {
+            if ($item instanceof Page || $item instanceof StoredSetReference) {
                 return true;
             }
         });
@@ -100,13 +99,14 @@ class Relation extends Model
         });
     }
 
-    public static function availableChildrenOnlyPageSets(): Collection
+    public static function availableChildrenOnlySets(): Collection
     {
         // We want a regular collection, not the database one so we inject it into a regular one.
-        $stored_pagesets = collect(StoredPageSetReference::all()->keyBy('key')->all());
-        $all_pagesets    = PageSetReference::all();
+        $stored_sets = collect(StoredSetReference::all()->keyBy('key')->all());
+        $all_sets    = SetReference::all();
 
-        return $all_pagesets->merge($stored_pagesets);
+        return $all_sets
+                ->merge($stored_sets);
     }
 
     /**

@@ -3,14 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Modules\PagetitleModule;
-use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
-use Thinktomorrow\Chief\PageSets\PageSetReference;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Feature\PageSets\DummyPageSetRepository;
+use Thinktomorrow\Chief\Tests\Feature\Sets\DummySetRepository;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageSetTest extends TestCase
@@ -29,9 +26,9 @@ class PageSetTest extends TestCase
             'articles'   => ArticlePageFake::class,
         ]);
 
-        $this->app['config']->set('thinktomorrow.chief.pagesets', [
+        $this->app['config']->set('thinktomorrow.chief.sets', [
             'foobar'   => [
-                'action' => DummyPageSetRepository::class.'@all',
+                'action' => DummySetRepository::class.'@all',
             ],
         ]);
 
@@ -56,7 +53,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function it_can_add_a_pageset()
     {
-        $pageset_ref = (new PageSetReference('foobar', DummyPageSetRepository::class.'@all', [5], 'foobar'));
+        $pageset_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5], 'foobar'));
 
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
@@ -69,13 +66,13 @@ class PageSetTest extends TestCase
             ]));
 
         $this->assertCount(1, $this->page->children());
-        $this->assertInstanceOf(StoredPageSetReference::class, $this->page->children()->first());
+        $this->assertInstanceOf(StoredSetReference::class, $this->page->children()->first());
     }
 
     /** @test */
     public function it_can_keep_an_already_stored_pageset()
     {
-        $stored_pageset_ref = (new PageSetReference('foobar', DummyPageSetRepository::class.'@all', [5], 'foobar'))->store();
+        $stored_pageset_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5], 'foobar'))->store();
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
         $this->asAdmin()
@@ -89,13 +86,13 @@ class PageSetTest extends TestCase
             ]));
 
         $this->assertCount(1, $this->page->children());
-        $this->assertInstanceOf(StoredPageSetReference::class, $this->page->children()->first());
+        $this->assertInstanceOf(StoredSetReference::class, $this->page->children()->first());
     }
 
     /** @test */
     public function it_can_remove_a_pageset()
     {
-        $stored_pageset_ref = (new PageSetReference('foobar', DummyPageSetRepository::class.'@all', [5], 'foobar'))->store();
+        $stored_pageset_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5], 'foobar'))->store();
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
         $this->assertCount(1, $this->page->fresh()->children());

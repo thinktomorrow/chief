@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\PageSets\PageSet;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Thinktomorrow\Chief\Sets\Set;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class ParseChildrenForPresentation
 {
@@ -64,8 +64,8 @@ class ParseChildrenForPresentation
                 continue;
             }
 
-            if ($child instanceof StoredPageSetReference) {
-                $this->addPageSetToCollection($i, $child->toPageSet());
+            if ($child instanceof StoredSetReference) {
+                $this->addSetToCollection($i, $child->toSet());
                 continue;
             }
 
@@ -79,9 +79,9 @@ class ParseChildrenForPresentation
         });
     }
 
-    private function addPageSetToCollection($index, PageSet $pageset)
+    private function addSetToCollection($index, Set $set)
     {
-        $this->collection[$index] = $pageset;
+        $this->collection[$index] = $set;
     }
 
     private function addPageToCollection($index, Page $child)
@@ -107,7 +107,7 @@ class ParseChildrenForPresentation
     private function pushPageToCollection(Page $page)
     {
         if (!isset($this->collection[$this->current_pageset_index])) {
-            $this->collection[$this->current_pageset_index] = new PageSet();
+            $this->collection[$this->current_pageset_index] = new Set([], $page->collectionKey());
         }
 
         $this->collection[$this->current_pageset_index]->push($page);

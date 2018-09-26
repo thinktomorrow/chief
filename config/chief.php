@@ -43,6 +43,17 @@ return [
     ],
 
     /**
+     * Custom query sets.
+     */
+    'sets' => [
+//         'singles'   => [
+//             'action'     => DummyPageSetRepository::class.'@all',
+//             'parameters' => [2],
+//             'label'      => 'algemene paginas'
+//         ],
+    ],
+
+    /**
      * Define your menus here. By default there is a generic 'main' menu but you
      * are free to add different ones as well. e.g. footer-menu, sidebar,...
      */
@@ -52,13 +63,6 @@ return [
             'view'  => 'front.menus.main'
         ]
     ],
-    // 'pagesets' => [
-    //     'singles'   => [
-    //         'action'     => DummyPageSetRepository::class.'@all',
-    //         'parameters' => [2],
-    //         'label'      => 'algemene paginas'
-    //     ],
-    // ]
 
     /**
      * Set of mediatypes used for each collection.

@@ -8,7 +8,7 @@
                         :default-sections='@json($sections)'
                         :modules='@json($available_modules)'
                         :pages='@json($available_pages)'
-                        :pagesets='@json($available_pagesets)'>
+                        :pagesets='@json($available_sets)'>
                 </page-builder>
             </section>
 
