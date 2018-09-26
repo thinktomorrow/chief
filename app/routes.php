@@ -48,15 +48,22 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::get('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@edit')->name('chief.back.password.edit');
     Route::put('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
 
-
     // CHIEF API
     Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
+
+    // Manager routes
+    Route::get('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@index')->name('chief.back.managers.index');
+    Route::get('manage/{key}/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@create')->name('chief.back.managers.create');
+    Route::post('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@store')->name('chief.back.managers.store');
+    Route::put('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@update')->name('chief.back.managers.update')->where('id', '[0-9]+');
+    Route::get('manage/{key}/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@edit')->name('chief.back.managers.edit')->where('id', '[0-9]+');
+    Route::delete('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@destroy')->name('chief.back.managers.destroy')->where('id', '[0-9]+');
 
     // Pages
     Route::get('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
     Route::post('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@store')->name('chief.back.pages.store');
     Route::put('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@update')->name('chief.back.pages.update');
-    Route::get('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@show')->name('chief.back.pages.show')->where('id', '[0-9]+');
+//    Route::get('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@show')->name('chief.back.pages.show')->where('id', '[0-9]+');
     Route::get('pages/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@edit')->name('chief.back.pages.edit');
 
     // Page publication and states
@@ -91,11 +98,12 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     /**
      * -----------------------------------------------------------------
-     * MEDIA MANAGEMENT
+     * MEDIA MANAGEMENT (used by editor)
      * -----------------------------------------------------------------
      */
     Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
     Route::post('modules/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadModulesMediaController@store')->name('modules.media.upload');
+    Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('managers.media.upload');
 
     /**
      * -----------------------------------------------------------------

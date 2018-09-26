@@ -2,9 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
-use Thinktomorrow\Chief\Common\TranslatableFields\FieldType;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
+use Thinktomorrow\Chief\Common\Fields\HtmlField;
+use Thinktomorrow\Chief\Common\Fields\InputField;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -86,7 +85,7 @@ class SettingsTest extends TestCase
         Setting::refreshFieldsFromConfig();
 
         $this->app['config']->set('thinktomorrow.chief.settingFields', [
-            'foo'  => HtmlField::make()->label('Foobar')
+            HtmlField::make('foo')->label('Foobar'),
         ]);
 
         $setting = Setting::create([

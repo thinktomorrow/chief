@@ -59,9 +59,15 @@ class UpdatePage
             return $trans;
         });
 
+        // TODO: this should come from the manager->fields() as fieldgroup
+        $translatableColumns = [];
+        foreach($page::translatableFields() as $translatableField) {
+            $translatableColumns[] = $translatableField->column();
+        }
+
         $this->saveTranslations($translations, $page, array_merge([
             'title', 'slug', 'seo_title', 'seo_description'
-        ], array_keys($page::translatableFields())));
+        ], $translatableColumns));
     }
 
     private function syncRelations($page, $relateds)

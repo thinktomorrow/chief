@@ -1,13 +1,13 @@
 <?php
 declare(strict_types = 1);
 
-namespace Thinktomorrow\Chief\Common\TranslatableFields;
+namespace Thinktomorrow\Chief\Common\Fields;
 
 class SelectField extends Field
 {
-    public static function make()
+    public static function make(string $key)
     {
-        return new static(new FieldType(FieldType::SELECT));
+        return new static(new FieldType(FieldType::SELECT), $key);
     }
 
     public function options(array $values)

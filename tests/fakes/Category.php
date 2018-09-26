@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
+use Thinktomorrow\Chief\Common\Fields\HtmlField;
 
 class Category extends Model
 {
