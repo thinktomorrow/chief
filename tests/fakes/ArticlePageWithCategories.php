@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
-use Thinktomorrow\Chief\Common\TranslatableFields\SelectField;
+use Thinktomorrow\Chief\Common\Fields\HtmlField;
+use Thinktomorrow\Chief\Common\Fields\InputField;
+use Thinktomorrow\Chief\Common\Fields\SelectField;
 use Thinktomorrow\Chief\Pages\Page;
 
 class ArticlePageWithCategories extends Page
@@ -16,8 +16,8 @@ class ArticlePageWithCategories extends Page
     public function customFields(): array
     {
         return [
-            'custom' => InputField::make(),
-            'categories' => SelectField::make()->options(Category::all()->pluck('title', 'id')->toArray()),
+            InputField::make('custom'),
+            SelectField::make('categories')->options(Category::all()->pluck('title', 'id')->toArray()),
 
         ];
     }

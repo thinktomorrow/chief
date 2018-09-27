@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\PageSets\PageSet;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
+use Thinktomorrow\Chief\Sets\Set;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class ParseChildrenForPresentation
 {
@@ -37,6 +37,8 @@ class ParseChildrenForPresentation
      */
     private $current_pageset_type = null;
 
+    private $withSnippets = false;
+
     public function __construct()
     {
         $this->collection = collect([]);
@@ -49,20 +51,21 @@ class ParseChildrenForPresentation
         $this->parent = $parent;
         $this->children = $children;
 
+        $this->withSnippets = $parent->withSnippets;
+
         return $this->toCollection();
     }
 
     public function toCollection(): Collection
     {
         foreach ($this->children as $i => $child) {
-
             if ($child instanceof Page) {
                 $this->addPageToCollection($i, $child);
                 continue;
             }
 
-            if($child instanceof StoredPageSetReference){
-                $this->addPageSetToCollection($i, $child->toPageSet());
+            if ($child instanceof StoredSetReference) {
+                $this->addSetToCollection($i, $child->toSet());
                 continue;
             }
 
@@ -70,36 +73,41 @@ class ParseChildrenForPresentation
         }
 
         return $this->collection->map(function (PresentForParent $child) {
-            return $child->presentForParent($this->parent);
+            return $this->withSnippets
+                    ? $child->withSnippets()->presentForParent($this->parent)
+                    : $child->presentForParent($this->parent);
         });
     }
 
-    private function addPageSetToCollection($index, PageSet $pageset)
+    private function addSetToCollection($index, Set $set)
     {
-        $this->collection[$index] = $pageset;
+        $this->collection[$index] = $set;
     }
 
     private function addPageToCollection($index, Page $child)
     {
         // Only published pages you fool!
-        if (! $child->isPublished()) return;
+        if (! $child->isPublished()) {
+            return;
+        }
 
         // Set the current pages collection to the current collection type
         if ($this->current_pageset_type == null || $this->current_pageset_type != $child->collectionKey()) {
             $this->current_pageset_type = $child->collectionKey();
+            $this->current_pageset_index = $index;
         }
-        $this->current_pageset_index = $index;
-        
-        $this->pushPageToCollection($child);
+        // If current pageset index is null, let's make sure it is set to the current index
+        elseif(is_null($this->current_pageset_index)) {
+            $this->current_pageset_index = $index;
+        }
 
-        // Reset the grouped_collection after each loop (keep type so we know when matching pages follow up on each other.
-        $this->current_pageset_index = null;
+        $this->pushPageToCollection($child);
     }
 
     private function pushPageToCollection(Page $page)
     {
         if (!isset($this->collection[$this->current_pageset_index])) {
-            $this->collection[$this->current_pageset_index] = new PageSet();
+            $this->collection[$this->current_pageset_index] = new Set([], $page->collectionKey());
         }
 
         $this->collection[$this->current_pageset_index]->push($page);

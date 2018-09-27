@@ -36,7 +36,7 @@ class MenuItemController extends Controller
             ->toCollectionDetails()
             ->values()
             ->prepend([
-                'key' => null,
+                'key' => '',
                 'plural' => '...',
             ])->toArray();
 
@@ -78,7 +78,7 @@ class MenuItemController extends Controller
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
             //Archived and deleted pages can no longer be referenced in a menu item
-            if($page = Page::find($menuitem->page_id)){
+            if ($page = Page::find($menuitem->page_id)) {
                 $internal_page_id = $page->flatReference()->get();
             }
         }
@@ -90,7 +90,7 @@ class MenuItemController extends Controller
                                 ->toCollectionDetails()
                                 ->values()
                                 ->prepend([
-                                    'key' => null,
+                                    'key' => '',
                                     'plural' => '...',
                                 ])->toArray();
 

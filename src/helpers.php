@@ -21,6 +21,7 @@ if (!function_exists('honeypot_fields')) {
 }
 
 
+
 /**
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
@@ -44,21 +45,37 @@ if (!function_exists('chief_cached_asset')) {
     }
 }
 
+if (!function_exists('chiefSetting')) {
+    function chiefSetting($key = null, $default = null)
+    {
+        $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
+
+        if (is_null($key)) {
+            return $manager;
+        }
+        
+        return $manager->get($key, $default);
+    }
+}
+
 if (!function_exists('chiefmenu')) {
-    function chiefmenu($key = 'main'){
-        return \Thinktomorrow\Chief\Menu\Menu::find($key);
+    function chiefmenu($key = 'main')
+    {
+        $menu = \Thinktomorrow\Chief\Menu\Menu::find($key);
+
+        return $menu ?? new \Thinktomorrow\Chief\Menu\NullMenu();
     }
 }
 
 if (!function_exists('str_slug_slashed')) {
-    function str_slug_slashed($title, $separator = '-', $language = 'en'){
+    function str_slug_slashed($title, $separator = '-', $language = 'en')
+    {
+        $parts = explode('/', $title);
 
-        $parts = explode('/',$title);
-
-        foreach($parts as $i => $part){
+        foreach ($parts as $i => $part) {
             $parts[$i] = str_slug($part, $separator, $language);
         }
 
-        return implode('/',$parts);
+        return implode('/', $parts);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
+use Thinktomorrow\Chief\Common\Fields\HtmlField;
 use Thinktomorrow\Chief\Pages\Page;
 
 class ArticlePageFake extends Page
@@ -17,7 +17,7 @@ class ArticlePageFake extends Page
     public static function customTranslatableFields(): array
     {
         return [
-            'content' => HtmlField::make(),
+            HtmlField::make('content'),
         ];
     }
 }

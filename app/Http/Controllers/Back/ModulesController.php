@@ -11,6 +11,8 @@ use Thinktomorrow\Chief\App\Http\Requests\ModuleCreateRequest;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\App\Http\Requests\ModuleUpdateRequest;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
+use Thinktomorrow\Chief\Snippets\Snippet;
+use Thinktomorrow\Chief\Snippets\SnippetCollection;
 
 class ModulesController extends Controller
 {
@@ -57,18 +59,11 @@ class ModulesController extends Controller
         $module->injectTranslationForForm();
 
         return view('chief::back.modules.edit', [
-            'module'            => $module,
-            'images'          => $this->populateMedia($module),
+            'module'   => $module,
+            'images'   => $this->populateMedia($module),
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param  int $id
-     * @return Response
-     */
     public function update(ModuleUpdateRequest $request, $id)
     {
         $this->authorize('update-page');

@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
 use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Common\Relations\PresentingForParent;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
@@ -17,20 +18,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
-use Thinktomorrow\Chief\Common\TranslatableFields\HtmlField;
-use Thinktomorrow\Chief\Common\TranslatableFields\InputField;
-use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Common\Fields\HtmlField;
+use Thinktomorrow\Chief\Common\Fields\InputField;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
 {
+    use PresentingForParent {
+        presentForParent as presentRawValueForParent;
+    }
+
     use ActingAsCollection,
         AssetTrait,
         Translatable,
         BaseTranslatable,
         SoftDeletes,
         ActingAsChild,
-        PresentingForParent;
+        WithSnippets;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;
@@ -46,7 +51,15 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public function __construct(array $attributes = [])
     {
-        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+        // TODO: this should come from the manager->fields() as fieldgroup
+        $translatableColumns = [];
+        foreach(static::translatableFields() as $translatableField) {
+            $translatableColumns[] = $translatableField->column();
+        }
+
+        $this->translatedAttributes = array_merge($this->translatedAttributes, $translatableColumns);
+
+        $this->constructWithSnippets();
 
         parent::__construct($attributes);
     }
@@ -54,6 +67,17 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
+    }
+
+    public function presentForParent(ActsAsParent $parent): string
+    {
+        $value = $this->presentRawValueForParent($parent);
+
+        if ($this->withSnippets && $this->shouldParseWithSnippets($value)) {
+            $value = $this->parseWithSnippets($value);
+        }
+
+        return $value;
     }
 
     /**
@@ -74,7 +98,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     /**
      * Each page / Module model can expose some custom fields. Add here the list of fields defined as name => Field where Field
-     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     * is an instance of \Thinktomorrow\Chief\Common\Fields\Field
      *
      * @param null $key
      * @return array
@@ -124,8 +148,8 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function defaultTranslatableFields(): array
     {
         return [
-            'title' => InputField::make()->label('titel'),
-            'content' => HtmlField::make()->label('Inhoud'),
+            InputField::make('title')->label('titel'),
+            HtmlField::make('content')->label('Inhoud'),
         ];
     }
 

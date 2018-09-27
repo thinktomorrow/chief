@@ -84,8 +84,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
     public function url()
     {
-        if ($this->ofType(static::TYPE_INTERNAL) && $page = $this->page)
-        {
+        if ($this->ofType(static::TYPE_INTERNAL) && $page = $this->page) {
             return $page->menuUrl();
         }
 
@@ -104,12 +103,10 @@ class MenuItem extends Model implements TranslatableContract, VineSource
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
-        foreach ($items as $k => $item)
-        {
+        foreach ($items as $k => $item) {
 
             // Fetch the collection items
-            if ($item->collection_type)
-            {
+            if ($item->collection_type) {
                 $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
@@ -129,13 +126,10 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             }
 
             // Fetch the urls of the internal links
-            if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page)
-            {
-                if ($page->hidden_in_menu == true)
-                {
+            if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
+                if ($page->hidden_in_menu == true) {
                     unset($items[$k]);
-                } else
-                {
+                } else {
                     $item->url = $this->composePageUrl($item, $page);
                     $item->page_label = $page->menuLabel();
                     $items[$k] = $item;

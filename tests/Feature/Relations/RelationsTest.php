@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class RelationsTest extends TestCase
@@ -171,7 +171,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    public function available_children_can_be_listed_for_a_select()
+    public function available_children_can_be_page_or_module()
     {
         config()->set('thinktomorrow.chief.relations.children', [
             ChildFake::class,
@@ -183,20 +183,65 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
-        $relations = FlatReferencePresenter::toSelectValues(Relation::availableChildren($parent))->toArray();
+        $relations = Relation::availableChildren($parent);
 
-        // Custom select listing for relations
-        $this->assertEquals([
-            [
-                'id' => $child->flatReference()->get(),
-                'label' => $child->flatReferenceLabel(),
-                'group' => $child->flatReferenceGroup()
-            ],
-            [
-                'id' => $child2->flatReference()->get(),
-                'label' => $child2->flatReferenceLabel(),
-                'group' => $child->flatReferenceGroup()
-            ],
-        ], $relations);
+
+        $this->assertInstanceOf(Collection::class, $relations);
+        $this->assertEquals([$child->id, $child2->id], $relations->pluck('id')->toArray());
+    }
+
+    /** @test */
+    public function page_that_is_not_listed_as_child_should_not_be_available()
+    {
+        config()->set('thinktomorrow.chief.collections', [
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
+        ]);
+
+        config()->set('thinktomorrow.chief.relations.children', [
+            ChildFake::class,
+            ArticlePageFake::class,
+        ]);
+
+        // Create models
+        $parent = ParentFake::create();
+        ChildFake::create();
+        ArticlePageFake::create(['collection' => 'articles']);
+        Single::create(['collection' => 'singles']);
+
+        $availableChildren = Relation::availableChildren($parent);
+
+        $this->assertCount(2, $availableChildren);
+        $this->assertInstanceOf(ArticlePageFake::class, $availableChildren[0]);
+        $this->assertInstanceOf(ChildFake::class, $availableChildren[1]);
+    }
+
+    /** @test */
+    public function page_as_parent_should_not_listed_as_available()
+    {
+        config()->set('thinktomorrow.chief.collections', [
+            'singles' => Single::class,
+            'articles' => ArticlePageFake::class,
+        ]);
+
+        config()->set('thinktomorrow.chief.relations.children', [
+            ChildFake::class,
+            ArticlePageFake::class,
+        ]);
+
+        // Create models
+        $parent = ArticlePageFake::create(['collection' => 'articles']);
+        ChildFake::create();
+        ArticlePageFake::create(['collection' => 'articles', 'id' => 999]);
+        Single::create(['collection' => 'singles']);
+
+        $availableChildren = Relation::availableChildren($parent);
+
+        $this->assertCount(2, $availableChildren);
+        $this->assertInstanceOf(ArticlePageFake::class, $availableChildren[0]);
+        $this->assertInstanceOf(ChildFake::class, $availableChildren[1]);
+
+        // Assert the proper article is kept as child
+        $this->assertEquals(999, $availableChildren[0]->id);
     }
 }

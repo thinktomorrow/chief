@@ -4,11 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\NotFoundHomepage;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFake;
-use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFakeTranslation;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -51,7 +48,7 @@ class HomepageTest extends TestCase
         $product  = ProductPageFake::create(['published' => 1]);
         $product2 = ProductPageFake::create(['published' => 1]);
 
-        $this->app['config']->set('thinktomorrow.chief-settings.homepage_id', $product2->id);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage', $product2->id);
 
         $this->assertEquals($product2->id, Page::guessHomepage()->id);
     }

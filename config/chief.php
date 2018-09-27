@@ -3,28 +3,6 @@
 use Thinktomorrow\Chief\Media\MediaType;
 
 return [
-
-    /**
-     * Contact email which will receive all incoming communication
-     * This contact will receive e.g. contact form submissions
-     */
-    'contact'     => [
-        'email' => env('MAIL_ADMIN_EMAIL', 'info@thinktomorrow.be'),
-        'name'  => env('MAIL_ADMIN_NAME', 'Think Tomorrow'),
-    ],
-
-    /**
-     * Name of the project.
-     *
-     * This is used in a couple of places such as the mail footer.
-     */
-    'name'        => 'Chief',
-
-    /**
-     * Client name
-     */
-    'client'      => 'Think Tomorrow',
-
     /**
      * Domain settings.
      *
@@ -65,6 +43,28 @@ return [
     ],
 
     /**
+     * Custom query sets.
+     */
+    'sets' => [
+//         'singles'   => [
+//             'action'     => DummyPageSetRepository::class.'@all',
+//             'parameters' => [2],
+//             'label'      => 'algemene paginas'
+//         ],
+    ],
+
+    /**
+     * Define your menus here. By default there is a generic 'main' menu but you
+     * are free to add different ones as well. e.g. footer-menu, sidebar,...
+     */
+    'menus' => [
+        'main' => [
+            'label' => 'Hoofdnavigatie',
+            'view'  => 'front.menus.main'
+        ]
+    ],
+
+    /**
      * Set of mediatypes used for each collection.
      * Default set of mediatypes that is available for every collection
      */
@@ -80,6 +80,47 @@ return [
                 'limit' => 1,
             ]
         ],
-    ]
+    ],
 
+    /**
+     * Define the directory where your html snippets reside. This can be a blade file or regular html.
+     * The identifier of each snippet is taken from the filename so make sure to properly name
+     * your files. We will load up all the snippets as available clips in e.g. the editor.
+     * The given directory should be relative to the project root.
+     */
+    'loadSnippetsFrom' => [
+        'resources/views/front/snippets',
+    ],
+
+    /**
+     * Enable snippet rendering by default.
+     *
+     * Pages and modules will parse any valid snippet placeholders found in a text or content
+     * block and render it to the expected html. If set to false, you can always manually
+     * manage this by calling the 'withSnippets()' method on a Page or Module object.
+     */
+    'withSnippets' => true,
+
+    /**
+     * Define specific setting fields.
+     * By default a standard input field is used.
+     */
+    'settingFields' => [
+        // TODO: callable can be removed when we set everything up in a service provider
+        'homepage' => function () {
+            return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
+        },
+        'contact.email' => \Thinktomorrow\Chief\Common\Fields\InputField::make('contact.email')
+                        ->label('Webmaster email')
+                        ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
+        'contact.name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('contact.name')
+                        ->label('Webmaster naam')
+                        ->description('Voor en achternaam van de webmaster.'),
+        'client.app_name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('client.app_name')
+                        ->label('Site naam')
+                        ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
+        'client.name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('client.name')
+                        ->label('Organisatie')
+                        ->description('Naam van uw bedrijf. Dit wordt getoond in o.a. de mail communicatie.'),
+    ],
 ];

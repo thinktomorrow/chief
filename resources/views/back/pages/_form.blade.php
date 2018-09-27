@@ -8,7 +8,7 @@
                         :default-sections='@json($sections)'
                         :modules='@json($available_modules)'
                         :pages='@json($available_pages)'
-                        :pagesets='@json($available_pagesets)'>
+                        :pagesets='@json($available_sets)'>
                 </page-builder>
             </section>
 
@@ -40,7 +40,7 @@
         </section>
 
         @if(count($page->customFields()) > 0)
-            @foreach($page->customFields() as $key => $field)
+            @foreach($page->customFields() as $field)
                 <section class="row formgroup stack gutter-l">
                     <div class="column-4">
                         @if($field->label)
@@ -53,7 +53,7 @@
                     </div>
                     <div class="formgroup-input column-8">
                         @include('chief::back._fields.customfield', [
-                            'key'   => $key,
+                            'key'   => $field->key(),
                             'field' => $field,
                             'model' => $page
                         ])
@@ -63,7 +63,7 @@
         @endif
 
         @if(count($page->translatableFields()) > 0)
-            @foreach($page->translatableFields() as $key => $field)
+            @foreach($page->translatableFields() as $field)
                 <section class="row formgroup stack gutter-l">
                     <div class="column-4">
                         @if($field->label)
@@ -76,7 +76,8 @@
                     </div>
                     <div class="formgroup-input column-8">
                         @include('chief::back._fields.translatable_formgroup', [
-                            'model' => $page
+                            'model' => $page,
+                            'key' => $field->key(),
                         ])
                     </div>
                 </section>

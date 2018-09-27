@@ -1,4 +1,4 @@
-@if($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::HTML)
+@if($field->type == \Thinktomorrow\Chief\Common\Fields\FieldType::HTML)
     <textarea data-editor class="inset-s" name="trans[{{ $locale }}][{{ $key }}]" id="trans-{{ $locale }}-{{ $key }}" cols="10" rows="5">{{ old('trans.'.$locale.'.'. $key,$model->translateForForm($locale,$key)) }}</textarea>
 @else
     <input type="text" name="trans[{{ $locale }}][{{ $key }}]" id="trans-{{ $locale }}-{{ $key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('trans.'.$locale.'.'.$key, $model->translateForForm($locale,$key)) }}">

@@ -6,16 +6,19 @@ use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -31,10 +34,14 @@ class ChiefServiceProvider extends ServiceProvider
         (new EventServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
+        (new SettingsServiceProvider($this->app))->boot();
 
         // Media library
         (new MediaLibraryServiceProvider($this->app))->boot();
 //        (new AssetLibraryServiceProvider($this->app))->boot();
+
+        // Project defaults
+        (new ProjectServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -62,6 +69,7 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
+                'command.chief:settings',
             ]);
 
             // Bind our commands to the container
@@ -71,12 +79,18 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
+            $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()
                 ]);
             });
         }
+
+        // Manager register is globally available
+        $this->app->singleton(Register::class, function(){
+            return new Register();
+        });
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
@@ -95,10 +109,14 @@ class ChiefServiceProvider extends ServiceProvider
         (new EventServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new SquantoManagerServiceProvider($this->app))->register();
+        (new SettingsServiceProvider($this->app))->register();
 
         // Media library
         (new MediaLibraryServiceProvider($this->app))->register();
         (new AssetLibraryServiceProvider($this->app))->register();
+
+        // Project defaults
+        (new ProjectServiceProvider($this->app))->register();
     }
 
     /**

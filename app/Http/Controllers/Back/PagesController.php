@@ -18,9 +18,8 @@ use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
 use Thinktomorrow\Chief\Pages\Application\UpdatePage;
 use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
-use Thinktomorrow\Chief\PageSets\PageSetReference;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
-use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class PagesController extends Controller
 {
@@ -76,15 +75,14 @@ class PagesController extends Controller
         $page->existingRelationIds = FlatReferenceCollection::make($page->children())->toFlatReferences();
 
         $available = Relation::availableChildren($page);
-        
-        $available_modules         = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($available))->toArray();
-        $available_pages           = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($available))->toArray();
-        $available_pagesets        = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPageSets())->toArray();
+
+        $available_modules     = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyModules($available))->toArray();
+        $available_pages       = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlyPages($available))->toArray();
+        $available_sets        = FlatReferencePresenter::toGroupedSelectValues(Relation::availableChildrenOnlySets())->toArray();
 
         // Current sections
         $sections = $page->children()->map(function ($section, $index) {
-
-            if($section instanceof TranslatableContract) {
+            if ($section instanceof TranslatableContract) {
                 $section->injectTranslationForForm();
             }
 
@@ -107,7 +105,7 @@ class PagesController extends Controller
             'sections'           => $sections,
             'available_modules'  => $available_modules,
             'available_pages'    => $available_pages,
-            'available_pagesets' => $available_pagesets,
+            'available_sets'     => $available_sets,
             'images'             => $this->populateMedia($page),
 
             // Module collections for creating own page modules
@@ -116,17 +114,24 @@ class PagesController extends Controller
         ]);
     }
 
+    /**
+     * Section type is the grouping inside the pagebuilder (specifically the menu)
+     *
+     * @param $section
+     * @return string
+     */
     private function guessSectionType($section)
     {
-        if($section instanceof ActsAsCollection && in_array($section->collectionKey(),['text','pagetitle'])) {
+        if ($section instanceof ActsAsCollection && in_array($section->collectionKey(), ['text','pagetitle'])) {
             return $section->collectionKey();
         }
 
-        if($section instanceof StoredPageSetReference || $section instanceof PageSetReference) {
+        if ($section instanceof StoredSetReference || $section instanceof SetReference) {
+            // TODO: clean this up and replace 'pageset' with 'set';
             return 'pageset';
         }
 
-        if($section instanceof Page) {
+        if ($section instanceof Page) {
             return 'page';
         }
 

@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\PageSets\PageSetReference;
-use Thinktomorrow\Chief\PageSets\StoredPageSetReference;
 use Thinktomorrow\Chief\Modules\Module;
-use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class Relation extends Model
 {
@@ -84,8 +83,8 @@ class Relation extends Model
 
     public static function availableChildrenOnlyModules(Collection $collection): Collection
     {
-        return $collection->reject(function($item){
-            if ($item instanceof Page || $item instanceof StoredPageSetReference) {
+        return $collection->reject(function ($item) {
+            if ($item instanceof Page || $item instanceof StoredSetReference) {
                 return true;
             }
         });
@@ -93,20 +92,21 @@ class Relation extends Model
 
     public static function availableChildrenOnlyPages(Collection $collection): Collection
     {
-        return $collection->filter(function($item){
+        return $collection->filter(function ($item) {
             if ($item instanceof Page) {
                 return true;
             }
         });
     }
 
-    public static function availableChildrenOnlyPageSets(): Collection
+    public static function availableChildrenOnlySets(): Collection
     {
         // We want a regular collection, not the database one so we inject it into a regular one.
-        $stored_pagesets = collect(StoredPageSetReference::all()->keyBy('key')->all());
-        $all_pagesets    = PageSetReference::all();
+        $stored_sets = collect(StoredSetReference::all()->keyBy('key')->all());
+        $all_sets    = SetReference::all();
 
-        return $all_pagesets->merge($stored_pagesets);
+        return $all_sets
+                ->merge($stored_sets);
     }
 
     /**
@@ -118,41 +118,59 @@ class Relation extends Model
     public static function availableChildren(ActsAsParent $parent): Collection
     {
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
-        $collection = collect([]);
-        
-        foreach ($available_children_types as $type) {
-            $collection = $collection->merge((new $type())->all());
+
+        // Preload pages and modules in 2 queries to reduce calls - For some reason the collection merge looks at the model id and
+        // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
+        $collection = collect(array_merge(Page::all()->all(), Module::all()->all()));
+
+        // Merging the results of all the pages and all the modules, then filter by the config
+        // This prevents us from having duplicates and also reduces the query load.
+        $collection = $collection->filter(function ($page) use ($available_children_types) {
+            return in_array(get_class($page), $available_children_types);
+        });
+
+        // Filter out our already loaded pages and modules
+        $remaining_children_types = collect($available_children_types)->reject(function ($type) {
+            return (new $type() instanceof Page || new $type() instanceof Module);
+        });
+
+        // only for non module / page children
+        foreach ($remaining_children_types as $type) {
+            // For some reason the collection merge looks at the model id and
+            // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
+            $collection = collect(array_merge($collection->all(), (new $type())->all()->all()));
         }
-        
+
+        // Filter out our parent
         return $collection->reject(function ($item) use ($parent) {
-            if ($item instanceof Page) {
+            if ($item instanceof $parent) {
                 return $item->id == $parent->id;
             }
 
             return false;
-        });
+        })->values();
     }
 
     public function delete()
     {
-        return static::where('parent_type',$this->parent_type)
-                ->where('parent_id',$this->parent_id)
-                ->where('child_type',$this->child_type)
-                ->where('child_id',$this->child_id)
+        return static::where('parent_type', $this->parent_type)
+                ->where('parent_id', $this->parent_id)
+                ->where('child_type', $this->child_type)
+                ->where('child_id', $this->child_id)
                 ->delete();
     }
 
     public static function deleteRelationsOf($type, $id)
     {
-        $relations = static::where(function($query) use($type, $id){
+        $relations = static::where(function ($query) use ($type, $id) {
             return $query->where('parent_type', $type)
                          ->where('parent_id', $id);
-        })->orWhere(function($query) use($type, $id){
+        })->orWhere(function ($query) use ($type, $id) {
             return $query->where('child_type', $type)
                 ->where('child_id', $id);
         })->get();
 
-        foreach($relations as $relation) {
+        foreach ($relations as $relation) {
             $relation->delete();
         }
     }

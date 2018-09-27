@@ -1,9 +1,9 @@
 @push('custom-scripts')
     <script>
         $R.options = {
-            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'widget'],
+            plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'clips'],
             @if(admin()->hasRole('developer'))
-                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link', 'widget'],
+                buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @else
                 buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
@@ -11,6 +11,9 @@
             imageResizable: true,
             imagePosition: true,
             imageFigure: false,
+            @if( ! \Thinktomorrow\Chief\Snippets\SnippetCollection::appearsEmpty())
+                clips: @json(\Thinktomorrow\Chief\Snippets\SnippetCollection::load()->toClips()),
+            @endif
             callbacks: {
                 upload: {
                     beforeSend: function(xhr)

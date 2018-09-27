@@ -19,24 +19,29 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
+use Thinktomorrow\Chief\Management\Field;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
-use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, ActsAsCollection
 {
+    use BaseTranslatable {
+        getAttribute as getTranslatableAttribute;
+    }
+
     use ActingAsCollection,
         AssetTrait,
         Translatable,
-        BaseTranslatable,
         SoftDeletes,
         Publishable,
         Featurable,
         Archivable,
         AuditTrait,
         ActingAsParent,
-        ActingAsChild;
+        ActingAsChild,
+        WithSnippets;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel      = PageTranslation::class;
@@ -45,8 +50,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
-
-    public    $table       = "pages";
+    public $table       = "pages";
     protected $guarded     = [];
     protected $dates       = ['deleted_at'];
     protected $with        = ['translations'];
@@ -55,9 +59,35 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function __construct(array $attributes = [])
     {
-        $this->translatedAttributes = array_merge($this->translatedAttributes, array_keys(static::translatableFields()));
+        // TODO: this should come from the manager->fields() as fieldgroup
+        $translatableColumns = [];
+        foreach(static::translatableFields() as $translatableField) {
+            $translatableColumns[] = $translatableField->column();
+        }
+
+        $this->translatedAttributes = array_merge($this->translatedAttributes, $translatableColumns);
+
+        $this->constructWithSnippets();
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * Parse and render any found snippets in custom
+     * or translatable attribute values.
+     *
+     * @param string $value
+     * @return mixed|null|string|string[]
+     */
+    public function getAttribute($value)
+    {
+        $value = $this->getTranslatableAttribute($value);
+
+        if ($this->shouldParseWithSnippets($value)) {
+            $value = $this->parseWithSnippets($value);
+        }
+
+        return $value;
     }
 
     /**
@@ -73,7 +103,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     /**
      * Each page model can expose some custom fields. Add here the list of fields defined as name => Field where Field
-     * is an instance of \Thinktomorrow\Chief\Common\TranslatableFields\Field
+     * is an instance of \Thinktomorrow\Chief\Common\Fields\Field
      *
      * @param null $key
      * @return array
@@ -182,7 +212,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceLabel(): string
     {
-        if($this->exists){
+        if ($this->exists) {
             $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
 
             return $this->title ? $this->title . $status : '';
@@ -251,14 +281,14 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function isHomepage(): bool
     {
-        $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
+        $homepage_id = chiefSetting('homepage');
 
         return $this->id == $homepage_id;
     }
 
     public static function guessHomepage(): self
     {
-        $homepage_id = config('thinktomorrow.chief-settings.homepage_id');
+        $homepage_id = chiefSetting('homepage');
 
         // Homepage id is explicitly set
         if ($homepage_id && $page = static::findPublished($homepage_id)) {

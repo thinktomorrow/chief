@@ -33,7 +33,6 @@ class ArchivePageTest extends TestCase
     /** @test */
     public function a_published_page_is_archived()
     {
-        $this->disableExceptionHandling();
         $this->page->publish();
 
         $this->asAdmin()
