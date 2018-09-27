@@ -8,10 +8,26 @@
         :multiple='@json(!!$field->multiple)'
 >
 </chief-multiselect>
+@elseif($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::RADIO)
+    <radio-options inline-template :errors="errors" default-type="{{ old($key, $field->selected) }}">
+        <div>
+            @foreach($field->options as $value => $label)
+                <label class="block stack-xs custom-indicators" for="{{ $key.'-'.$value }}">
+                    <input v-on:click="changeType({{ $value }})" {{ old($key, $field->selected) == $value ? 'checked="checked"':'' }}
+                    name="custom_fields[{{ $key }}]"
+                           value="{{ $value }}"
+                           id="{{ $key.'-'.$value }}"
+                           type="radio">
+                    <span class="custom-radiobutton --primary"></span>
+                    <strong>{{ $label }}</strong>
+                </label>
+            @endforeach
+        </div>
+    </radio-options>
 @elseif($field->type == \Thinktomorrow\Chief\Common\Fields\FieldType::DATE)
 <input type="date" class="input inset-s" id="custom_fields-{{ $key }}" name="custom_fields[{{ $key }}]" value="{{ old('custom_fields.' . $key, optional($model->$key)->format('Y-m-d\TH:i:s')) }}">
 @else
-<input type="text" name="custom_fields[{{ $key }}]" id="custom_fields-{{ $key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('custom_fields.' . $key, $model->$key) }}">
+    <input type="text" name="custom_fields[{{ $key }}]" id="custom_fields-{{ $key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('custom_fields.' . $key, $model->$key) }}">
 @endif
 
 <error class="caption text-warning" field="custom_fields.{{ $key }}" :errors="errors.get('custom_fields')"></error>

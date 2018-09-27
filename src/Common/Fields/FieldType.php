@@ -12,6 +12,7 @@ class FieldType
     const HTML = 'html';    // Html text (wysiwyg)
     const SELECT = 'select';  // Select options
     const MEDIA = 'media';  // media file (slim uploader)
+    const RADIO = 'radio';  // media file (slim uploader)
 
     /**
      * @var string
@@ -27,6 +28,7 @@ class FieldType
             static::SELECT,
             static::DATE,
             static::MEDIA,
+            static::RADIO,
         ])) {
             throw new \Exception('Invalid type identifier given [' . $type . '].');
         }

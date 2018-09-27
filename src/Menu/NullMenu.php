@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Menu;
 
 use Illuminate\Support\Collection;
+use Vine\NodeCollection;
 
 class NullMenu
 {
@@ -35,7 +36,7 @@ class NullMenu
 
     public function menu(): ChiefMenu
     {
-        return new ChiefMenu($this->all());
+        return new ChiefMenu(new NodeCollection());
     }
 
     public function items()

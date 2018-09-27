@@ -14,7 +14,6 @@
 
     @include('chief::back._modules.footer')
     @stack('sidebar')
-    @stack('custom-components')
 
 </main>
 
