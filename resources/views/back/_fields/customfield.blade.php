@@ -8,7 +8,7 @@
         :multiple='@json(!!$field->multiple)'
 >
 </chief-multiselect>
-@elseif($field->type == \Thinktomorrow\Chief\Common\TranslatableFields\FieldType::RADIO)
+@elseif($field->type == \Thinktomorrow\Chief\Common\Fields\FieldType::RADIO)
     <radio-options inline-template :errors="errors" default-type="{{ old($key, $field->selected) }}">
         <div>
             @foreach($field->options as $value => $label)
