@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types = 1);
+
 namespace Thinktomorrow\Chief\Common\Fields;
 
 class InputField extends Field
