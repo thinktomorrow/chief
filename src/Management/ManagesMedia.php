@@ -29,4 +29,23 @@ trait ManagesMedia
 
         return $images;
     }
+
+    protected function populateDocuments(HasMedia $model): array
+    {
+        $documents = [];
+
+        foreach($this->fields() as $field) {
+            if($field->ofType(FieldType::DOCUMENT)) {
+                $documents[$field->key] = [];
+            }
+        }
+
+        foreach ($model->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
+            foreach ($assetsByType as $asset) {
+                $documents[$type][] = $asset;
+            }
+        }
+
+        return $documents;
+    }
 }

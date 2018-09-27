@@ -4,7 +4,7 @@
         <div class="row stack">
             <div class="column squished-s">
                 <h1 class="--remove-margin">
-                    {{ $title ?? '' }}
+                    {!! $title ?? '' !!}
                 </h1>
                 {!! isset($subtitle) ? '<div class="font-s">'.$subtitle.'</div>' : '' !!}
                 {{ $extra ??  '' }}

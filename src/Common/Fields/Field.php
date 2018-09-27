@@ -36,9 +36,13 @@ class Field
         return (isset($this->values['validation']) && !empty($this->values['validation']));
     }
 
-    public function ofType(string $type): bool
+    public function ofType(...$type): bool
     {
-        return ($this->fieldType->get() == $type);
+        foreach($type as $_type) {
+            if($this->fieldType->get() == $_type) return true;
+        }
+
+        return false;
     }
 
     public function __get($key)

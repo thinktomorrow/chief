@@ -100,6 +100,10 @@ trait ManagementDefaults
             return $this->populateMedia($this->model);
         }
 
+        if($field->ofType(FieldType::DOCUMENT)) {
+            return $this->populateDocuments($this->model);
+        }
+
         return $this->model->{$field->column()};
     }
 
@@ -118,7 +122,7 @@ trait ManagementDefaults
             }
 
             // Make our media fields able to be translatable as well...
-            if ($field->ofType(FieldType::MEDIA)) {
+            if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
                 throw new \Exception('Cannot process the ' . $field->key . ' media field. Currently no support for translatable media files. We should fix this!');
             }
 
@@ -131,7 +135,7 @@ trait ManagementDefaults
             return;
         }
 
-        if ($field->ofType(FieldType::MEDIA)) {
+        if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
             // Images are passed as base64 strings, not as file, Documents are passed via the file segment
             $this->queued_files = array_merge($request->get('files', []), $request->file('files', []));
             $this->queued_filesOrder = $request->get('filesOrder', []);
