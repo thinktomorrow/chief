@@ -20,4 +20,9 @@ class Managers
             ? $class::findById($id)
             : app($class);
     }
+
+    public function findByModel(ManagedModel $model): ?ModelManager
+    {
+        return $this->findByKey($model->managerKey());
+    }
 }

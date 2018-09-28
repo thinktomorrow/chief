@@ -3,6 +3,10 @@
 namespace Thinktomorrow\Chief\Common\Relations;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
+use Thinktomorrow\Chief\Management\ManagedModel;
+use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\Set;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
@@ -19,29 +23,29 @@ class ParseChildrenForPresentation
     private $children;
 
     /**
-     * Resulting collection
+     * Resulting sets
      * @var array
      */
-    private $collection;
+    private $sets;
 
     /**
      * Keep track of current pageset index key
      * @var string
      */
-    private $current_pageset_index = null;
+    private $current_index = null;
 
     /**
      * Keep track of current pageset type. This is mainly to bundle
      * individual selected pages together.
      * @var string
      */
-    private $current_pageset_type = null;
+    private $current_type = null;
 
     private $withSnippets = false;
 
     public function __construct()
     {
-        $this->collection = collect([]);
+        $this->sets = collect([]);
     }
 
     // pages can be adopted as children individually or as a pageset. They are presented in one module file
@@ -59,20 +63,25 @@ class ParseChildrenForPresentation
     public function toCollection(): Collection
     {
         foreach ($this->children as $i => $child) {
-            if ($child instanceof Page) {
-                $this->addPageToCollection($i, $child);
-                continue;
-            }
-
             if ($child instanceof StoredSetReference) {
                 $this->addSetToCollection($i, $child->toSet());
                 continue;
             }
 
-            $this->collection[$i] = $child;
+            if ($child instanceof Page) {
+                $this->addPageToCollection($i, $child);
+                continue;
+            }
+
+            if ($child instanceof ManagedModel) {
+                $this->addManagedModelToCollection($i, $child);
+                continue;
+            }
+
+            $this->sets[$i] = $child;
         }
 
-        return $this->collection->map(function (PresentForParent $child) {
+        return $this->sets->map(function (PresentForParent $child) {
             return ($this->withSnippets && method_exists('withSnippets', $child))
                 ? $child->withSnippets()->presentForParent($this->parent)
                 : $child->presentForParent($this->parent);
@@ -81,35 +90,44 @@ class ParseChildrenForPresentation
 
     private function addSetToCollection($index, Set $set)
     {
-        $this->collection[$index] = $set;
+        $this->sets[$index] = $set;
     }
 
-    private function addPageToCollection($index, Page $child)
+    private function addPageToCollection($index, $child){
+        return $this->addModelToCollection($index,$child, $child->collectionKey());
+    }
+
+    private function addManagedModelToCollection($index, $child){
+        return $this->addModelToCollection($index,$child, $child->managerKey());
+    }
+
+    private function addModelToCollection($index, $child, $key)
     {
         // Only published pages you fool!
-        if (! $child->isPublished()) {
+        if (method_exists($child, 'isPublished') && ! $child->isPublished() ) {
             return;
         }
 
-        // Set the current pages collection to the current collection type
-        if ($this->current_pageset_type == null || $this->current_pageset_type != $child->collectionKey()) {
-            $this->current_pageset_type = $child->collectionKey();
-            $this->current_pageset_index = $index;
+        // Set the current collection to the model key identifier: for pages this is the collection key, for
+        // other managed models this is the registered key.
+        if ($this->current_type == null || $this->current_type != $key) {
+            $this->current_type = $key;
+            $this->current_index = $index;
         }
         // If current pageset index is null, let's make sure it is set to the current index
-        elseif(is_null($this->current_pageset_index)) {
-            $this->current_pageset_index = $index;
+        elseif(is_null($this->current_index)) {
+            $this->current_index = $index;
         }
 
-        $this->pushPageToCollection($child);
+        $this->pushToSet($child, $key);
     }
 
-    private function pushPageToCollection(Page $page)
+    private function pushToSet($model, string $setKey)
     {
-        if (!isset($this->collection[$this->current_pageset_index])) {
-            $this->collection[$this->current_pageset_index] = new Set([], $page->collectionKey());
+        if (!isset($this->sets[$this->current_index])) {
+            $this->sets[$this->current_index] = new Set([], $setKey);
         }
 
-        $this->collection[$this->current_pageset_index]->push($page);
+        $this->sets[$this->current_index]->push($model);
     }
 }
