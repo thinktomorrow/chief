@@ -82,7 +82,7 @@ class ParseChildrenForPresentation
         }
 
         return $this->sets->map(function (PresentForParent $child) {
-            return ($this->withSnippets && method_exists('withSnippets', $child))
+            return ($this->withSnippets && method_exists($child, 'withSnippets'))
                 ? $child->withSnippets()->presentForParent($this->parent)
                 : $child->presentForParent($this->parent);
         });
