@@ -27,6 +27,9 @@ class UploadMedia
         ini_set('memory_limit', '256M');
 
         foreach ($files_by_type as $type => $files) {
+
+            $this->validateFileUploads($files);
+
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
 
             $this->addFiles($model, $type, $files, $files_order);
@@ -128,5 +131,26 @@ class UploadMedia
         $filename  = str_slug($filename) . '.' . $extension;
 
         return $filename;
+    }
+
+    /**
+     * @param $files
+     * @throws FileTooBigException
+     */
+    private function validateFileUploads($files): void
+    {
+        foreach ($files as $_files) {
+            foreach ($_files as $file) {
+                if (!$file->isValid()) {
+                    if ($file->getError() == UPLOAD_ERR_INI_SIZE) {
+                        throw new FileTooBigException(
+                            'Cannot upload file because it exceeded the allowed upload_max_filesize: upload_max_filesize is smaller than post size. ' .
+                            'upload_max_filesize: ' . (int)ini_get('upload_max_filesize') . 'MB, ' .
+                            'post_max_size: ' . (int)(ini_get('post_max_size')) . 'MB'
+                        );
+                    }
+                }
+            }
+        }
     }
 }
