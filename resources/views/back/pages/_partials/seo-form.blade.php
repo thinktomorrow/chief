@@ -12,7 +12,7 @@
 
 <label for="seo-title"><i>Preview</i></label>
 <div class="panel seo-preview --border inset bc-success">
-    <h2 class="text-information --remove-margin">Crius Group - {{ old('trans.'.$locale.'.seo_title',$page->translateForForm($locale,'seo_title')) }}</h2>
-    <span class="link text-success">https://crius-group.com/{{ old('trans.'.$locale.'.seo_title',$page->translateForForm($locale,'seo_title')) }}</span>
+    <h2 class="text-information --remove-margin">Projectnaam - {{ old('trans.'.$locale.'.seo_title',$page->translateForForm($locale,'seo_title')) }}</h2>
+    <span class="link text-success">https://projectnaam.com/{{ old('trans.'.$locale.'.seo_title',$page->translateForForm($locale,'seo_title')) }}</span>
     <p class="caption">{{ old('trans.'.$locale.'.seo_description',$page->translateForForm($locale,'seo_description')) }}</p>
 </div>
