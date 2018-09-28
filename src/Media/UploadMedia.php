@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Media;
 
+use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\AssetLibrary\Models\AssetUploader;
@@ -141,7 +142,7 @@ class UploadMedia
     {
         foreach ($files as $_files) {
             foreach ($_files as $file) {
-                if (!$file->isValid()) {
+                if ($file instanceof UploadedFile && !$file->isValid()) {
                     if ($file->getError() == UPLOAD_ERR_INI_SIZE) {
                         throw new FileTooBigException(
                             'Cannot upload file because it exceeded the allowed upload_max_filesize: upload_max_filesize is smaller than post size. ' .
