@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerWithValidationFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldValidatorTest extends TestCase
@@ -22,10 +22,10 @@ class FieldValidatorTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerWithValidationFake::class);
+        app(Register::class)->register('fakes', ManagerFakeWithValidation::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = app(ManagerWithValidationFake::class)->manage($this->model);
+        $this->fake = app(ManagerFakeWithValidation::class)->manage($this->model);
     }
 
     /** @test */

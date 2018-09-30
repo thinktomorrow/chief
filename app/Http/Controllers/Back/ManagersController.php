@@ -39,12 +39,8 @@ class ManagersController extends Controller
 
         if( ! $manager->can('create')){ NotAllowedManagerRoute::create($manager); }
 
-        // Prep the fields, arrange in proper order
-        $fields = $manager->fields();
-
         return view('chief::back.managers.create',[
             'manager' => $manager,
-            'fields' => $fields,
         ]);
     }
 
@@ -66,12 +62,8 @@ class ManagersController extends Controller
 
         if( ! $manager->can('edit')){ NotAllowedManagerRoute::edit($manager); }
 
-        // Prep the fields, arrange in proper order
-        $fields = $manager->fields();
-
         return view('chief::back.managers.edit',[
             'manager' => $manager,
-            'fields' => $fields,
         ]);
     }
 

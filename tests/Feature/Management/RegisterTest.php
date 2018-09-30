@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerWithValidationFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class RegisterTest extends TestCase
@@ -74,13 +74,13 @@ class RegisterTest extends TestCase
     {
         $register = new Register();
         $register->register('one',ManagerFake::class);
-        $register->register('two',ManagerWithValidationFake::class);
+        $register->register('two',ManagerFakeWithValidation::class);
 
         $this->assertCount(1, $register->filterByClass(ManagerFake::class)->all());
-        $this->assertEquals('two', $register->filterByClass(ManagerWithValidationFake::class)->toKey());
+        $this->assertEquals('two', $register->filterByClass(ManagerFakeWithValidation::class)->toKey());
 
         $this->assertCount(1, $register->rejectByClass(ManagerFake::class)->all());
-        $this->assertEquals('one', $register->rejectByClass(ManagerWithValidationFake::class)->toKey());
+        $this->assertEquals('one', $register->rejectByClass(ManagerFakeWithValidation::class)->toKey());
     }
 
     /** @test */
@@ -89,12 +89,12 @@ class RegisterTest extends TestCase
         $managerRegister = new Register();
 
         $managerRegister->register('one', ManagerFake::class);
-        $managerRegister->register('one', ManagerWithValidationFake::class);
+        $managerRegister->register('one', ManagerFakeWithValidation::class);
 
         $this->assertCount(1, $managerRegister->all());
         $this->assertEquals(['one' => [
             'key' => 'one',
-            'class' => ManagerWithValidationFake::class,
+            'class' => ManagerFakeWithValidation::class,
         ]
         ], $managerRegister->all());
     }

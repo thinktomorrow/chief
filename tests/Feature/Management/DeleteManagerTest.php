@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerWithoutDestroyFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithoutDelete;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class DeleteManagerTest extends TestCase
@@ -59,8 +59,8 @@ class DeleteManagerTest extends TestCase
         $this->disableExceptionHandling();
         $this->expectException(NotAllowedManagerRoute::class);
 
-        app(Register::class)->register('fakes', ManagerWithoutDestroyFake::class);
-        app(ManagerWithoutDestroyFake::class)->manage($this->model);
+        app(Register::class)->register('fakes', ManagerFakeWithoutDelete::class);
+        app(ManagerFakeWithoutDelete::class)->manage($this->model);
 
         $this->asAdmin()
             ->delete('/admin/manage/fakes/1', [

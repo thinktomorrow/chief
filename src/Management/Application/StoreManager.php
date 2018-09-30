@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Management\FieldValidator;
+use Thinktomorrow\Chief\Management\Fields\FieldValidator;
 use Thinktomorrow\Chief\Management\ModelManager;
 
 class StoreManager

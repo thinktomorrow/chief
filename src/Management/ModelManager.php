@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Management;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Fields\Field;
+use Thinktomorrow\Chief\Management\Fields\FieldArrangement;
 
 interface ModelManager
 {
@@ -49,6 +50,13 @@ interface ModelManager
      * @return Field[]
      */
     public function fields(): array;
+
+    /**
+     * This determines the arrangement of the manageable fields
+     * on the create and edit forms. By default, all fields
+     * are presented in their order of appearance
+     */
+    public function fieldArrangement(): FieldArrangement;
 
     /**
      * @param Field|string $field

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Common\Fields\Field;
 use Thinktomorrow\Chief\Common\Fields\FieldType;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Management\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Media\UploadMedia;
 
 abstract class AbstractManager
@@ -74,6 +75,18 @@ abstract class AbstractManager
     public function can($verb): bool
     {
         return !is_null($this->route($verb));
+    }
+
+    abstract public function fields(): array;
+
+    /**
+     * This determines the arrangement of the manageable fields
+     * on the create and edit forms. By default, all fields
+     * are presented in their order of appearance
+     */
+    public function fieldArrangement(): FieldArrangement
+    {
+        return new FieldArrangement($this->fields());
     }
 
     public function getFieldValue($field, $default = null)

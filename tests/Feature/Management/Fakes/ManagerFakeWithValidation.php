@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
 use Thinktomorrow\Chief\Common\Fields\InputField;
 
-class ManagerWithValidationFake extends ManagerFake
+class ManagerFakeWithValidation extends ManagerFake
 {
     public function fields(): array
     {

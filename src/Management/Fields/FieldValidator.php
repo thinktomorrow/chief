@@ -1,9 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\Management;
+namespace Thinktomorrow\Chief\Management\Fields;
 
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Management\ModelManager;
 
 class FieldValidator
 {
