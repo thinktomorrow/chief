@@ -51,6 +51,8 @@ interface ModelManager
 
     public function renderField(Field $field);
 
+    public function delete();
+
     /**
      * Details and display data regarding the Manager and the model in general.
      *

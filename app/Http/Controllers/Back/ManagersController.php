@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Application\UpdateManager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 
 class ManagersController extends Controller
 {
@@ -76,8 +77,18 @@ class ManagersController extends Controller
                          ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->managedModelDetails()->title . '" werd aangepast');
     }
 
-    public function delete(string $key, $id)
+    public function delete(string $key, $id, Request $request)
     {
-        //
+        $manager = $this->managers->findByKey($key, $id);
+
+        if (request()->get('deleteconfirmation') !== 'DELETE') {
+            return redirect()->back()->with('messages.warning', $manager->managerDetails()->singular . ' is niet verwijderd.');
+        }
+
+        $manager->delete();
+
+        return redirect()->to($manager->route('index'))
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->managedModelDetails()->title . '" is verwijderd.');
+
     }
 }

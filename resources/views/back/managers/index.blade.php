@@ -22,7 +22,12 @@
         </div>
     @endif
 
-    @foreach($managers as $manager)
-        @include('chief::back.managers._partials._rowitem')
-    @endforeach
+    <div v-cloak class="v-loader inset-xl text-center">loading...</div>
+    <div v-cloak>
+        @foreach($managers as $manager)
+            @include('chief::back.managers._partials._rowitem')
+            @include('chief::back.managers._partials.delete-modal')
+        @endforeach
+    </div>
+
 @stop

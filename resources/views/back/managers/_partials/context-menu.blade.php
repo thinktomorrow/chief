@@ -3,7 +3,12 @@
 
         @if(\Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.managers.edit')
             <a href="{{ $manager->route('edit') }}" class="block squished-s --link-with-bg">Aanpassen</a>
+            <hr>
         @endif
+
+        <a v-cloak @click="showModal('delete-manager-<?= str_slug($manager->route('destroy')); ?>')" class="block squished-s text-error --link-with-bg">
+            Verwijderen
+        </a>
 
     </div>
 </options-dropdown>

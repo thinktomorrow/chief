@@ -11,7 +11,7 @@
 
     <div class="inline-group-s">
         <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-        {{--@include('chief::back.managers._partials.context-menu')--}}
+        @include('chief::back.managers._partials.context-menu')
     </div>
 
 @endcomponent
@@ -22,7 +22,7 @@
     <div v-cloak>
 
         <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
-        {{--@include('chief::back.managers._partials.delete-modal')--}}
+        @include('chief::back.managers._partials.delete-modal')
 
         <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}

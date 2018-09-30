@@ -58,6 +58,9 @@ a{
     cursor: pointer;
 }
 
+// Remove outline for mouse users but keep visible for screen readers
+:focus:not(:focus-visible) { outline: none }
+
 // SELECTION COLORS
 ::selection{
     background-color: $color-secondary;

@@ -31,7 +31,6 @@ class UpdateManagerTest extends TestCase
     /** @test */
     public function it_can_update_a_field()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()
             ->put($this->fake->route('update'), [
                 'title' => 'foobar-updated',

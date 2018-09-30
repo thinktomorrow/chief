@@ -164,6 +164,15 @@ trait ManagementDefaults
         return (new static($this->register))->manage($this->model);
     }
 
+    public function delete()
+    {
+        if( ! $this->canRouteTo('destroy')) {
+            throw new NotAllowedManagerRoute('Not allowed to delete this manager. Aborting. Destroy route is not allowed by the ' . $this->key.' manager.');
+        }
+
+        $this->model->delete();
+    }
+
     public function renderField(Field $field)
     {
         $viewpath ='chief::back._fields.'.$field->type;
@@ -189,7 +198,7 @@ trait ManagementDefaults
         return $request->has('trans');
     }
 
-    private function validateConstraints(): void
+    private function validateConstraints()
     {
         if (!$this->model) {
             throw new \DomainException('Model class should be set for this manager. Please set the model property default via the constructor or by extending the setupDefaults method.');
