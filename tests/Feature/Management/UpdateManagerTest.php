@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModel;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -17,14 +17,14 @@ class UpdateManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModel::migrateUp();
-        ManagedModelTranslation::migrateUp();
+        ManagedModelFake::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
         app(Register::class)->register('fakes', ManagerFake::class);
 
-        $this->model = ManagedModel::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
         $this->fake = app(ManagerFake::class)->manage($this->model);
     }
 

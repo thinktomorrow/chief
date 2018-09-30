@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Management\Application;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\FieldValidator;
 use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 
 class UpdateManager
 {
@@ -13,6 +14,10 @@ class UpdateManager
 
     public function handle(ModelManager $manager, Request $request)
     {
+        if( ! $manager->can('update')){
+            NotAllowedManagerRoute::update($manager);
+        }
+
         app(FieldValidator::class)->validate($manager, $request);
 
         foreach($manager->fields() as $field) {

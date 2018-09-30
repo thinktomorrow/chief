@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Common\Fields\FieldType;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Media\UploadMedia;
 
-trait ManagementDefaults
+abstract class AbstractManager
 {
     use ManagesMedia,
         TranslatableCommand;
@@ -31,11 +31,12 @@ trait ManagementDefaults
         $this->register = $register;
         $this->key = $this->register->filterByClass(static::class)->toKey();
 
+        // Without passing parameter, we assume the generic model instance is set
+        $this->manage();
+
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
     }
-
-    abstract public function manage($model): ModelManager;
 
     public function managerDetails(): ManagerDetails
     {
@@ -47,6 +48,13 @@ trait ManagementDefaults
         );
     }
 
+    /**
+     * Determine which actions should be available for this
+     * manager and their respective routed urls.
+     *
+     * @param $verb
+     * @return null|string
+     */
     public function route($verb): ?string
     {
         // Closures since the model is not always set. e.g. when asking for create route
@@ -56,14 +64,14 @@ trait ManagementDefaults
             'store'   => route('chief.back.managers.store', [$this->key, $this->model->id]),
             'edit'    => route('chief.back.managers.edit', [$this->key, $this->model->id]),
             'update'  => route('chief.back.managers.update', [$this->key, $this->model->id]),
-            'destroy' => route('chief.back.managers.destroy', [$this->key, $this->model->id]),
+            'delete' => route('chief.back.managers.delete', [$this->key, $this->model->id]),
             'upload' => route('managers.media.upload', [$this->key, $this->model->id])
         ];
 
         return $routes[$verb] ?? null;
     }
 
-    public function canRouteTo($verb): bool
+    public function can($verb): bool
     {
         return !is_null($this->route($verb));
     }
@@ -166,8 +174,8 @@ trait ManagementDefaults
 
     public function delete()
     {
-        if( ! $this->canRouteTo('destroy')) {
-            throw new NotAllowedManagerRoute('Not allowed to delete this manager. Aborting. Destroy route is not allowed by the ' . $this->key.' manager.');
+        if( ! $this->can('delete')) {
+            NotAllowedManagerRoute::delete($this);
         }
 
         $this->model->delete();

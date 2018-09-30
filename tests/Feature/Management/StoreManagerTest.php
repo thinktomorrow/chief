@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModel;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -16,8 +16,8 @@ class StoreManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModel::migrateUp();
-        ManagedModelTranslation::migrateUp();
+        ManagedModelFake::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
@@ -36,7 +36,7 @@ class StoreManagerTest extends TestCase
                 'title' => 'foobar-created',
             ]);
 
-        $this->assertEquals('foobar-created', ManagedModel::first()->title);
+        $this->assertEquals('foobar-created', ManagedModelFake::first()->title);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class StoreManagerTest extends TestCase
                 'custom' => 'custom-created',
             ]);
 
-        $this->assertEquals('custom-created', ManagedModel::first()->custom_column);
+        $this->assertEquals('custom-created', ManagedModelFake::first()->custom_column);
     }
 
     /** @test */
@@ -66,7 +66,7 @@ class StoreManagerTest extends TestCase
                 ],
             ]);
 
-        $first = ManagedModel::first();
+        $first = ManagedModelFake::first();
 
         $this->assertEquals('title-nl-created', $first->title_trans);
         $this->assertEquals('content-nl-created', $first->content_trans);
@@ -89,6 +89,6 @@ class StoreManagerTest extends TestCase
                 ],
             ]);
 
-        $this->assertEquals('tt-favicon.png', ManagedModel::first()->getFilename('hero'));
+        $this->assertEquals('tt-favicon.png', ManagedModelFake::first()->getFilename('hero'));
     }
 }

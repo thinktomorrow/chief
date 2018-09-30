@@ -9,6 +9,17 @@ use Thinktomorrow\Chief\Common\Fields\Field;
 interface ModelManager
 {
     /**
+     * Set the specific model to be managed.
+     *
+     * Either give a specific model to manage or if no parameter passed,
+     * we will assume a generic model instance instead for e.g. create and store.
+     *
+     * @param ManagedModel|null $model
+     * @return ModelManager
+     */
+    public function manage(ManagedModel $model = null): ModelManager;
+
+    /**
      * Find an instance by id.
      *
      * @param $id
@@ -26,7 +37,7 @@ interface ModelManager
 
     public function route($verb): ?string;
 
-    public function canRouteTo($verb): bool;
+    public function can($verb): bool;
 
     /**
      * The set of fields that should be manageable for a certain model.

@@ -7,26 +7,20 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Fields\Field;
 use Thinktomorrow\Chief\Common\Fields\InputField;
 use Thinktomorrow\Chief\Common\Fields\MediaField;
+use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\ManagedModelDetails;
 use Thinktomorrow\Chief\Management\ManagementDefaults;
 use Thinktomorrow\Chief\Management\ModelManager;
-use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Management\ManagedModel;
 
-class ManagerFake implements ModelManager
+class ManagerFake extends AbstractManager implements ModelManager
 {
-    use ManagementDefaults{
-        __construct as __baseConstruct;
-    }
-
-    public function __construct(Register $register)
+    public function manage(ManagedModel $model = null): ModelManager
     {
-        $this->model = new ManagedModel();
+        if(is_null($model)) {
+            $model = new ManagedModelFake();
+        }
 
-        $this->__baseConstruct($register);
-    }
-
-    public function manage(ManagedModel $model): ModelManager
-    {
         $this->model = $model;
 
         return $this;
@@ -34,7 +28,7 @@ class ManagerFake implements ModelManager
 
     public static function findById($id): ?ModelManager
     {
-        return app(static::class)->manage(ManagedModel::where('id', $id)->first());
+        return app(static::class)->manage(ManagedModelFake::where('id', $id)->first());
     }
 
     public static function findAllManaged(): Collection

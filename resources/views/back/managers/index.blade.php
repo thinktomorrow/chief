@@ -5,16 +5,18 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', $modelManager->managerDetails()->plural)
     <div class="inline-group-s">
-        <a href="{{ $modelManager->route('create') }}" class="btn btn-primary">
-            <i class="icon icon-plus"></i>
-            Voeg een {{ $modelManager->managerDetails()->singular }} toe
-        </a>
+        @if($modelManager->can('create'))
+            <a href="{{ $modelManager->route('create') }}" class="btn btn-primary">
+                <i class="icon icon-plus"></i>
+                Voeg een {{ $modelManager->managerDetails()->singular }} toe
+            </a>
+        @endif
     </div>
 @endcomponent
 
 @section('content')
 
-    @if($managers->isEmpty())
+    @if($managers->isEmpty() && $manager->can('create'))
         <div class="center-center stack-xl">
             <a href="{{ $modelManager->route('create') }}" class="btn btn-primary squished-l">
                 <i class="icon icon-zap icon-fw"></i> Tijd om een {{ $modelManager->managerDetails()->singular }} toe te voegen

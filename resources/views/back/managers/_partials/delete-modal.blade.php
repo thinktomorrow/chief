@@ -1,7 +1,7 @@
-<?php $managedModelId = str_slug($manager->route('destroy')); ?>
+<?php $managedModelId = str_slug($manager->route('delete')); ?>
 
 <modal id="delete-manager-{{ $managedModelId }}" class="large-modal" title=''>
-    <form action="{{ $manager->route('destroy') }}" method="POST" id="delete-manager-form-{{ $managedModelId }}" slot>
+    <form action="{{ $manager->route('delete') }}" method="POST" id="delete-manager-form-{{ $managedModelId }}" slot>
         @method('DELETE')
         @csrf
         <div v-cloak>

@@ -23,6 +23,8 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
+        if( ! $manager->can('index')){ NotAllowedManagerRoute::index($manager); }
+
         $managers = $manager::findAllManaged();
 
         return view('chief::back.managers.index',[
@@ -34,6 +36,8 @@ class ManagersController extends Controller
     public function create(string $key)
     {
         $manager = $this->managers->findByKey($key);
+
+        if( ! $manager->can('create')){ NotAllowedManagerRoute::create($manager); }
 
         // Prep the fields, arrange in proper order
         $fields = $manager->fields();
@@ -48,6 +52,8 @@ class ManagersController extends Controller
     {
         $modelManager = $this->managers->findByKey($key);
 
+        if( ! $modelManager->can('store')){ NotAllowedManagerRoute::store($modelManager); }
+
         $manager = app(Storemanager::class)->handle($modelManager, $request);
 
         return redirect()->to($manager->route('index'))
@@ -57,6 +63,8 @@ class ManagersController extends Controller
     public function edit(string $key, $id)
     {
         $manager = $this->managers->findByKey($key, $id);
+
+        if( ! $manager->can('edit')){ NotAllowedManagerRoute::edit($manager); }
 
         // Prep the fields, arrange in proper order
         $fields = $manager->fields();
@@ -70,6 +78,8 @@ class ManagersController extends Controller
     public function update(string $key, $id, Request $request)
     {
         $manager = $this->managers->findByKey($key, $id);
+
+        if( ! $manager->can('update')){ NotAllowedManagerRoute::update($manager); }
 
         app(Updatemanager::class)->handle($manager, $request);
 

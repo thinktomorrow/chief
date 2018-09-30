@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModel;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerWithoutDestroyFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -19,22 +19,23 @@ class DeleteManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModel::migrateUp();
-        ManagedModelTranslation::migrateUp();
+        ManagedModelFake::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
         app(Register::class)->register('fakes', ManagerFake::class);
 
-        $this->model = ManagedModel::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
         $this->fake = app(ManagerFake::class)->manage($this->model);
     }
 
     /** @test */
     public function it_can_delete_a_model()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()
-            ->delete($this->fake->route('destroy'),[
+            ->delete($this->fake->route('delete'),[
                 'deleteconfirmation' => 'DELETE',
             ]);
 
@@ -45,7 +46,7 @@ class DeleteManagerTest extends TestCase
     public function deleting_a_model_requires_the_proper_confirmation_string()
     {
         $this->asAdmin()
-            ->delete($this->fake->route('destroy'),[
+            ->delete($this->fake->route('delete'),[
                 'deleteconfirmation' => 'FOOBAR',
             ]);
 

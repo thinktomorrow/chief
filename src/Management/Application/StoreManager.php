@@ -13,6 +13,10 @@ class StoreManager
 
     public function handle(ModelManager $manager, Request $request): ModelManager
     {
+        if( ! $manager->can('store')){
+            NotAllowedManagerRoute::store($manager);
+        }
+
         app(FieldValidator::class)->validate($manager, $request);
 
         foreach($manager->fields() as $field) {
