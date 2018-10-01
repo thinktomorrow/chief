@@ -56,18 +56,21 @@ class Relation extends Model
                             ->get();
 
         return $relations->map(function ($relation) use ($parent_type, $parent_id) {
-            $child = (new $relation->child_type)->find($relation->child_id);
+
+            $instance = (new $relation->child_type);
+
+            $child = $instance->find($relation->child_id);
 
             if (!$child) {
 
                 // When fetching an archived relation, this is the point where we no longer provide it to the application
                 // This means the relation will disappear the next time the user updates this parent and its relations.
-                if((new $relation->child_type)->withArchived()->find($relation->child_id)) {
+                if( method_exists($instance, 'withArchived') && $instance->withArchived()->find($relation->child_id)) {
                     return null;
                 }
 
                 // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
-                if ((!method_exists((new $relation->child_type), 'trashed')) || ! (new $relation->child_type)->onlyTrashed()->find($relation->child_id)) {
+                if ((!method_exists($instance, 'trashed')) || ! $instance->onlyTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
                     throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the collection type matches the class type.');
                 }
