@@ -60,6 +60,12 @@ class Relation extends Model
 
             if (!$child) {
 
+                // When fetching an archived relation, this is the point where we no longer provide it to the application
+                // This means the relation will disappear the next time the user updates this parent and its relations.
+                if((new $relation->child_type)->withArchived()->find($relation->child_id)) {
+                    return null;
+                }
+
                 // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
                 if ((!method_exists((new $relation->child_type), 'trashed')) || ! (new $relation->child_type)->onlyTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
