@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Common\Relations\PresentForParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
@@ -50,13 +51,17 @@ class Set extends Collection implements PresentForParent
      */
     private function presentRawValueForParent(ActsAsParent $parent): string
     {
-        $guessedParentViewName = $parent->collectionKey();
-        $guessedSetViewName = $this->key;
-
         $viewPaths = [
-            'front.modules.'.$guessedParentViewName.'.'.$guessedSetViewName,
-            'front.modules.'.$guessedSetViewName,
+            'front.modules.'. $parent->collectionKey().'.'.$this->key,
+            'front.modules.'.$this->key,
         ];
+
+        // In case the collection is made out of pages, we'll also allow to use the
+        // generic collection page view for these sets as well.
+        if($this->first() instanceof ActsAsCollection){
+            $viewPaths[] = 'front.modules.'. $parent->collectionKey().'.'.$this->first()->collectionKey();
+            $viewPaths[] = 'front.modules.'. $this->first()->collectionKey();
+        }
 
         foreach ($viewPaths as $viewPath) {
             if (! view()->exists($viewPath)) {
@@ -64,11 +69,11 @@ class Set extends Collection implements PresentForParent
             }
 
             return view($viewPath, [
-                'collection'  => $this->all(),
+                'collection'  => $this,
+                'parent'     => $parent,
 
                 /** @deprecated Backward compatibility for current modules where pages is passed  */
-                'pages'  => $this->all(),
-                'parent'     => $parent,
+                'pages'  => $this,
             ])->render();
         }
 
