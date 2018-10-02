@@ -276,7 +276,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function menuLabel(): string
     {
-        return $this->title;
+        return $this->title ?? '';
     }
 
     public function isHomepage(): bool
