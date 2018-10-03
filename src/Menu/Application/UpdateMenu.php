@@ -19,6 +19,8 @@ class UpdateMenu
         try {
             DB::beginTransaction();
 
+            $request = $this->forceRemoveUrlWhenNoLinkIsRequested($request);
+
             $menu = MenuItem::find($id);
             $menu->type = $request->get('type', null);
             $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
@@ -78,5 +80,28 @@ class UpdateMenu
     private function getPage($collection_id)
     {
         return FlatReferenceCollection::fromFlatReferences([$collection_id])->first();
+    }
+
+    /**
+     * If no link is required, we make sure to remove any current url and force it in the request so we remove it
+     *
+     * @param MenuRequest $request
+     * @return \Illuminate\Http\Request|MenuRequest
+     */
+    private function forceRemoveUrlWhenNoLinkIsRequested(MenuRequest $request)
+    {
+        if (MenuItem::TYPE_NOLINK == $request->get('type'))
+        {
+            $trans = $request->get('trans', []);
+
+            foreach ($trans as $locale => $translations)
+            {
+                $trans[$locale]['url'] = null;
+            }
+
+            $request = $request->merge(['trans' => $trans]);
+        }
+
+        return $request;
     }
 }

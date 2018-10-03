@@ -118,7 +118,7 @@ class MenuItemController extends Controller
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
-        return redirect()->route('chief.back.menus.index')->with('messages.success', $menu->label .' is aangepast');
+        return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangepast');
     }
 
     /**

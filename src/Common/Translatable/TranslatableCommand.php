@@ -36,7 +36,7 @@ trait TranslatableCommand
         $attributes = [];
 
         foreach ($keys as $key) {
-            if (isset($translation[$key])) {
+            if (array_key_exists($key, $translation)) {
                 $attributes[$key] = $translation[$key];
             }
         }
