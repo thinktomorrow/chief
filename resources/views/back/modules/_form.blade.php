@@ -60,9 +60,9 @@
 
     <?php
 
-    $viewPath = (isset($media['is_document']) && $media['is_document'])
-        ? 'chief::back._elements.mediagroup-documents'
-        : 'chief::back._elements.mediagroup-images';
+        $viewPath = (isset($media['is_document']) && $media['is_document'])
+            ? 'chief::back._elements.mediagroup-documents'
+            : 'chief::back._elements.mediagroup-images';
 
     ?>
 
