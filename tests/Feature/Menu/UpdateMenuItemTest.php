@@ -46,7 +46,7 @@ class UpdateMenuItemTest extends TestCase
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.index'));
+        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menu_type));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['trans.nl.label' => 'foobar', 'trans.nl.url' => 'https://thinktomorrow.be']);
@@ -78,7 +78,7 @@ class UpdateMenuItemTest extends TestCase
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.index'));
+        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menu_type));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'internal', 'trans.nl.label' => 'foobar', 'page_id' => $newpage->id]);
@@ -94,7 +94,7 @@ class UpdateMenuItemTest extends TestCase
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.index'));
+        $response->assertRedirect(route('chief.back.menus.show', $menuitem->menu_type));
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']);
@@ -116,7 +116,7 @@ class UpdateMenuItemTest extends TestCase
             ]));
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.menus.index'));
+        $response->assertRedirect(route('chief.back.menus.show', $parent->menu_type));
 
         $this->assertCount(1, $parent->fresh()->children);
         $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
