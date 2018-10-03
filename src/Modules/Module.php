@@ -44,6 +44,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         'title', 'content'
     ];
 
+    public $useTranslationFallback = true;
     public $table = "modules";
     protected $guarded = [];
     protected $dates = ['deleted_at'];

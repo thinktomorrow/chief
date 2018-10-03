@@ -19,7 +19,6 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Traits\Featurable;
 use Thinktomorrow\Chief\Common\Traits\Archivable\Archivable;
 use Thinktomorrow\Chief\Common\Audit\AuditTrait;
-use Thinktomorrow\Chief\Management\Field;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Common\Publish\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
@@ -50,6 +49,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'seo_title', 'seo_description'
     ];
 
+    public $useTranslationFallback = true;
     public $table       = "pages";
     protected $guarded     = [];
     protected $dates       = ['deleted_at'];
@@ -262,15 +262,11 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function previewUrl()
     {
-        // TODO: how we allow for these default routes to be set up in every new project?
-//        return '';
         return route('pages.show', $this->slug).'?preview-mode';
     }
 
     public function menuUrl(): string
     {
-        // TODO: how we allow for these default routes to be set up in every new project?
-//        return '';
         return route('pages.show', $this->slug);
     }
 
