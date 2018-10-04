@@ -47,6 +47,8 @@ class MediaTest extends TestCase
     {
         $this->setUpDefaultAuthorization();
 
+        config()->set(['app.fallback_locale' => 'nl']);
+
         $article = ArticlePageFake::create(['collection' => 'articles']);
 
         $response = $this->asAdmin()->post(route('pages.media.upload', $article->id), [
@@ -55,9 +57,11 @@ class MediaTest extends TestCase
             ],
         ]);
 
+
         $this->assertTrue($article->hasFile(MediaType::CONTENT));
 
         $assets = $article->getAllFiles(MediaType::CONTENT);
+
         $this->assertCount(1, $assets);
 
         $response->assertStatus(201)

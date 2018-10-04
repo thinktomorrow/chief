@@ -146,7 +146,8 @@
     		var current = this.selection.getCurrent();
     		var data = this.inspector.parse(current);
 
-    		button.enable();
+    		if (data.isComponentType('table')) button.disable();
+    		else button.enable();
 		}
     });
 })(Redactor);
