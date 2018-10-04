@@ -25,6 +25,8 @@ class UploadMediaTest extends TestCase
     {
         $page = Page::create(['collection' => 'singles']);
 
+        config()->set(['app.fallback_locale' => 'nl']);
+
         // Upload asset
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
@@ -47,6 +49,8 @@ class UploadMediaTest extends TestCase
     {
         $this->disableExceptionHandling();
         $page = Page::create(['collection' => 'singles']);
+
+        config()->set(['app.fallback_locale' => 'nl']);
 
         $this->asAdmin()
             ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
