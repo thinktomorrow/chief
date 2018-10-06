@@ -79,6 +79,27 @@ class Set extends Collection implements PresentForParent
 
         // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
-        return '';
+        return $this->map(function($item) use($parent){
+
+            return ($item instanceof PresentForParent)
+                ? $item->presentForParent($parent)
+                : ($item->content ?? '');
+
+        })->implode('');
+    }
+
+    /**
+     * Override the collection map function to include the key
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function map(callable $callback)
+    {
+        $keys = array_keys($this->items);
+
+        $items = array_map($callback, $this->items, $keys);
+
+        return new static(array_combine($keys, $items), $this->key);
     }
 }

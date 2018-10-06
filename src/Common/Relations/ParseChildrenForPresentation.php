@@ -68,17 +68,14 @@ class ParseChildrenForPresentation
                 continue;
             }
 
-            if ($child instanceof Page) {
-                $this->addPageToCollection($i, $child);
+            // A module is something we will add as is, without combining them together
+            if($child instanceof Module) {
+                $this->sets[$i] = $child;
                 continue;
             }
 
-            if ($child instanceof ManagedModel) {
-                $this->addManagedModelToCollection($i, $child);
-                continue;
-            }
-
-            $this->sets[$i] = $child;
+            // By default, models are considered collections and will be collected together as a set
+            $this->addModelToCollection($i, $child, get_class($child));
         }
 
         return $this->sets->map(function (PresentForParent $child) {
@@ -91,14 +88,6 @@ class ParseChildrenForPresentation
     private function addSetToCollection($index, Set $set)
     {
         $this->sets[$index] = $set;
-    }
-
-    private function addPageToCollection($index, $child){
-        return $this->addModelToCollection($index,$child, $child->collectionKey());
-    }
-
-    private function addManagedModelToCollection($index, $child){
-        return $this->addModelToCollection($index,$child, $child->managerKey());
     }
 
     private function addModelToCollection($index, $child, $key)

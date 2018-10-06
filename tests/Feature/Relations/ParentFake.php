@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
+use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
 use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Schema;
 
 class ParentFake extends Model implements ActsAsParent
 {
-    use ActingAsParent;
+    use ActingAsParent,
+        ActingAsCollection; // TODO: this is required for parsing the children but should not be required!!!
 
     public $table = 'fake_parents';
     public $timestamps = false;
