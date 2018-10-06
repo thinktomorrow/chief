@@ -23,7 +23,7 @@ class ManagersTest extends TestCase
     /** @test */
     function it_can_find_a_manager_by_key()
     {
-        app(Register::class)->register('foo', ManagerFake::class);
+        app(Register::class)->register('foo', ManagerFake::class, ManagedModelFake::class);
 
         /** @var Managers $managers */
         $managers = app(Managers::class);
@@ -38,8 +38,8 @@ class ManagersTest extends TestCase
             'products' => ManagerFakeWithValidation::class,
         ]);
 
-        app(Register::class)->register('foo', ManagerFake::class);
-        app(Register::class)->register('bar', ManagerFakeWithValidation::class);
+        app(Register::class)->register('foo', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register('bar', ManagerFakeWithValidation::class, ManagedModelFake::class);
 
         ManagedModelFake::create(['id' => 1]);
 

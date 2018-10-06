@@ -21,7 +21,7 @@ class CreateManagerTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class);
+        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->fake = app(ManagerFake::class);
     }
@@ -29,7 +29,6 @@ class CreateManagerTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->fake->route('create'))
             ->assertStatus(200);
     }

@@ -21,7 +21,7 @@ class StoreManagerTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class);
+        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
 //        $this->model = ManagedModel::create(['title' => 'Foobar', 'custom_column' => 'custom']);
         $this->fake = app(ManagerFake::class);

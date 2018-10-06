@@ -26,7 +26,7 @@ class FieldArrangementTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class);
+        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
         $this->manager = app(ManagerFake::class)->manage($this->model);
@@ -46,7 +46,7 @@ class FieldArrangementTest extends TestCase
     /** @test */
     public function fields_can_be_arranged_by_tabs()
     {
-        app(Register::class)->register('fakes', ManagerFakeWithFieldTabs::class);
+        app(Register::class)->register('fakes', ManagerFakeWithFieldTabs::class, ManagedModelFake::class);
         $manager = app(ManagerFakeWithFieldTabs::class)->manage($this->model);
         $arrangement = $manager->fieldArrangement();
 

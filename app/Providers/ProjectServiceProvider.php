@@ -18,8 +18,8 @@ class ProjectServiceProvider extends ServiceProvider
         //
     }
 
-    public function registerManager($key, $class)
+    public function registerManager($key, $class, $model)
     {
-        return app(Register::class)->register($key, $class);
+        return app(Register::class)->register($key, $class, $model);
     }
 }

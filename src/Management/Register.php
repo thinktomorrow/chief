@@ -18,11 +18,12 @@ class Register
         }
     }
 
-    public function register($key, $class)
+    public function register($key, $class, $model)
     {
         $this->push([
             'key'      => $key,
             'class'    => $class,
+            'model'    => $model,
         ]);
 
         return $this;
@@ -50,6 +51,11 @@ class Register
         return $this->filter('class', $class);
     }
 
+    public function filterByModel(string $class): self
+    {
+        return $this->filter('model', $class);
+    }
+
     public function rejectByKey(string $key): self
     {
         return $this->filter('key', $key, 'reject');
@@ -58,6 +64,11 @@ class Register
     public function rejectByClass(string $class): self
     {
         return $this->filter('class', $class, 'reject');
+    }
+
+    public function rejectByModel(string $class): self
+    {
+        return $this->filter('model', $class, 'reject');
     }
 
     private function filter(string $key, $value, $type = 'filter'): self
@@ -110,16 +121,34 @@ class Register
         return $first['class'];
     }
 
+    /**
+     * Return the model of the first entry.
+     * This assumes you have filtered to just one specific registration
+     *
+     * @return string
+     */
+    public function toModel(): string
+    {
+        $first = array_first($this->registrations);
+
+        return $first['model'];
+    }
+
     private function validate($registration)
     {
-        if(!isset($registration['key']) || !isset($registration['class'])) {
-            throw new \InvalidArgumentException('Invalid manager registration. Each registration requires a \'key\' and \'class\' entry.');
+        if(!isset($registration['key']) || !isset($registration['class']) || !isset($registration['model'])) {
+            throw new \InvalidArgumentException('Invalid manager registration. Each registration requires a \'key\', \'class\' and  \'model\' entry.');
         }
 
         $class = $registration['class'];
+        $model = $registration['model'];
 
         if(!class_exists($class)) {
-            throw new \InvalidArgumentException('Class name ['.$class.'] is an invalid class reference. Please check if the class exists.');
+            throw new \InvalidArgumentException('Class ['.$class.'] is an invalid class reference. Please check if the class exists.');
+        }
+
+        if(!class_exists($model)) {
+            throw new \InvalidArgumentException('Model class ['.$model.'] is an invalid model reference. Please check if the class exists.');
         }
 
         $manager = new ReflectionClass($class);

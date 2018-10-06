@@ -22,7 +22,7 @@ class FieldValidatorTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFakeWithValidation::class);
+        app(Register::class)->register('fakes', ManagerFakeWithValidation::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
         $this->fake = app(ManagerFakeWithValidation::class)->manage($this->model);
