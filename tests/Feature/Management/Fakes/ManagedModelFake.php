@@ -10,7 +10,7 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 
-class ManagedModelFake extends Model implements TranslatableContract, HasMedia, \Thinktomorrow\Chief\Management\ManagedModel
+class ManagedModelFake extends Model implements TranslatableContract, HasMedia
 {
     use Translatable, \Dimsav\Translatable\Translatable, AssetTrait;
 
@@ -26,10 +26,5 @@ class ManagedModelFake extends Model implements TranslatableContract, HasMedia, 
             $table->string('custom_column')->nullable();
             $table->timestamps();
         });
-    }
-
-    public static function managerKey(): string
-    {
-        return 'fakes';
     }
 }

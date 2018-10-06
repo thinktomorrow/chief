@@ -3,11 +3,12 @@
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Common\Fields\Field;
 use Thinktomorrow\Chief\Common\Fields\FieldType;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Management\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 
 abstract class AbstractManager
 {
@@ -33,10 +34,34 @@ abstract class AbstractManager
         $this->key = $this->register->filterByClass(static::class)->toKey();
 
         // Without passing parameter, we assume the generic model instance is set
-        $this->manage();
+        $model = $this->register->filterByClass(static::class)->toModel();
+        $this->manage(app($model));
 
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
+    }
+
+    public function manage($model): ModelManager
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public static function findManaged($id): ModelManager
+    {
+        $model = app(Register::class)->filterByClass(static::class)->toModel();
+
+        return app(static::class)->manage($model::where('id', $id)->first());
+    }
+
+    public static function findAllManaged(): Collection
+    {
+        $model = app(Register::class)->filterByClass(static::class)->toModel();
+
+        return $model::all()->map(function($model){
+            return app(static::class)->manage($model);
+        });
     }
 
     public function managerDetails(): ManagerDetails
@@ -50,6 +75,20 @@ abstract class AbstractManager
     }
 
     /**
+     * Information regarding a specific managed model instance.
+     *
+     * @return ManagedModelDetails
+     */
+    public function managedModelDetails(): ManagedModelDetails
+    {
+        // We try to assume a default for title but it's better you set this up yourself.
+        $title = $this->model->title ?? ($this->model->id ?? '');
+        $locales = method_exists($this->model, 'availableLocales') ? $this->model->availableLocales() : [config('app.locale')];
+
+        return new ManagedModelDetails( $title, '', '', $locales);
+    }
+
+    /**
      * Determine which actions should be available for this
      * manager and their respective routed urls.
      *
@@ -58,7 +97,6 @@ abstract class AbstractManager
      */
     public function route($verb): ?string
     {
-        // Closures since the model is not always set. e.g. when asking for create route
         $routes = [
             'index'   => route('chief.back.managers.index', [$this->key]),
             'create'  => route('chief.back.managers.create', [$this->key]),
@@ -76,8 +114,6 @@ abstract class AbstractManager
     {
         return !is_null($this->route($verb));
     }
-
-    abstract public function fields(): array;
 
     /**
      * This determines the arrangement of the manageable fields

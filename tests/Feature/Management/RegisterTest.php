@@ -2,9 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\Management\NonRegisteredManager;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;

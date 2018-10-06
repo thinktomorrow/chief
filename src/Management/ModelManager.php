@@ -15,24 +15,24 @@ interface ModelManager
      * Either give a specific model to manage or if no parameter passed,
      * we will assume a generic model instance instead for e.g. create and store.
      *
-     * @param ManagedModel|null $model
+     * @param $model
      * @return ModelManager
      */
-    public function manage(ManagedModel $model = null): ModelManager;
+    public function manage($model): ModelManager;
 
     /**
-     * Find an instance by id.
+     * Find an instance by id wrapped in a Manager
      *
      * @param $id
-     * @return null|ModelManager
+     * @return ModelManager
      */
-    public static function findById($id): ?ModelManager;
+    public static function findManaged($id): ModelManager;
 
     /**
-     * Get all ModelManagers that should be managed.
+     * Get all managed models wrapped in a Manager
      * E.g. used for the index.
      *
-     * @return Collection of ModelManager
+     * @return Collection of ManagedModel
      */
     public static function findAllManaged(): Collection;
 

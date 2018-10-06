@@ -7,12 +7,11 @@ namespace Thinktomorrow\Chief\Management;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
- * Class ManagerDetails
- * @property $key
- * @property $class
- * @property $singular
- * @property $plural
- * @property $slug
+ * Class ManagerModelDetails
+ * @property $title
+ * @property $subtitle
+ * @property $intro
+ * @property $locale
  */
 class ManagedModelDetails implements Arrayable
 {

@@ -2,6 +2,4 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-class NonRegisteredManager extends \Exception
-{
-}
+class NonRegisteredManager extends \Exception{}

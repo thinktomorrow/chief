@@ -12,12 +12,12 @@ class Managers
         $this->register = $register;
     }
 
-    public function findByKey($key, $id = null): ?ModelManager
+    public function findByKey($key, $id = null): ModelManager
     {
         $class = $this->register->filterByKey($key)->toClass();
 
         return $id
-            ? $class::findById($id)
+            ? $class::findManaged($id)
             : app($class);
     }
 }

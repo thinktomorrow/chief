@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 use Thinktomorrow\Chief\Common\Fields\Field;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;

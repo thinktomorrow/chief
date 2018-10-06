@@ -6,6 +6,14 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * Class ManagerDetails
+ * @property $key
+ * @property $class
+ * @property $singular
+ * @property $plural
+ * @property $slug
+ */
 class ManagerDetails implements Arrayable
 {
     /** @var array */
