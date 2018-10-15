@@ -2485,8 +2485,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -2533,14 +2531,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var self = this;
         var el = document.getElementById('sections-div');
         var sortable = __WEBPACK_IMPORTED_MODULE_3_sortablejs___default.a.create(el, {
-            // ghostClass: "ghost",
+            ghostClass: "ghost",
+            dragClass: "drag",
+            draggable: ".item",
+            setData: function setData(dataTransfer, dragEl) {
+                // do something
+            },
             onEnd: function onEnd(evt) {
-                var itemEl = evt.item; // dragged HTMLElement
-                evt.to; // target list
-                evt.from; // previous list
-                evt.oldIndex; // element's old index within old parent
-                evt.newIndex; // element's new index within new parent
-
                 self.changeSectionLocation(evt.oldIndex, evt.newIndex);
             }
         });
@@ -2571,10 +2568,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     methods: {
         changeSectionLocation: function changeSectionLocation(oldIndex, newIndex) {
+
             var temp = this.sections[oldIndex];
 
             this.sections.splice(oldIndex, 1);
-            this._resortSectionsAfterDel(oldIndex);
+            this._resortSectionsAfterDel(oldIndex - 1);
 
             this.sections.splice(newIndex, 0, temp);
             this._resortSectionsAfter(newIndex - 1);
@@ -2622,17 +2620,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             data.sort = index;
             data.id = data.id || null, data.key = data.key || this._randomHash(), this.sections.push(data);
         },
-
-        // relocateSection(index){
-        //     var temp = this.sections[oldIndex];
-        //     console.log(this.sections);
-        //     this.sections.splice(index,1);
-        //     console.log(this.sections);
-        //     this._resortSectionsBefore(index);
-        //     this.sections.splice()
-        //     this.sections.splice()
-        //     console.log(this.sections);
-        // },
         _randomHash: function _randomHash() {
 
             // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -3081,7 +3068,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* .ghost {\n    opacity: 0;\n} */\n", ""]);
+exports.push([module.i, "\n.drag {\n    opacity: 1;\n}\n.ghost {\n    opacity: 0.3;\n}\n\n", ""]);
 
 // exports
 
@@ -32003,7 +31990,7 @@ var render = function() {
             section.type == "pagetitle"
               ? _c("text-section", {
                   key: section.key,
-                  staticClass: "stack",
+                  staticClass: "stack item",
                   class: section.type,
                   attrs: {
                     section: section,
@@ -32018,7 +32005,7 @@ var render = function() {
             section.type == "module"
               ? _c("module-section", {
                   key: section.key,
-                  staticClass: "stack",
+                  staticClass: "stack item",
                   class: section.type,
                   attrs: {
                     sectionKey: "modules",
@@ -32033,7 +32020,7 @@ var render = function() {
             section.type == "page"
               ? _c("module-section", {
                   key: section.key,
-                  staticClass: "stack",
+                  staticClass: "stack item",
                   class: section.type,
                   attrs: {
                     sectionKey: "modules",
@@ -32048,7 +32035,7 @@ var render = function() {
             section.type == "pageset"
               ? _c("module-section", {
                   key: section.key,
-                  staticClass: "stack",
+                  staticClass: "stack item",
                   class: section.type,
                   attrs: {
                     sectionKey: "pagesets",

@@ -24,7 +24,7 @@
                     :single="true"
                     :editor="false"
                     title="Pagina titel"
-                    class="stack" :class="section.type"></text-section>
+                    class="stack item" :class="section.type"></text-section>
 
                 <module-section v-if="section.type == 'module'"
                     v-bind:key="section.key"
@@ -33,7 +33,7 @@
                     v-bind:options="modules"
                     placeholder="Selecteer een module"
                     title="module"
-                    class="stack" :class="section.type"></module-section>
+                    class="stack item" :class="section.type"></module-section>
 
                 <module-section v-if="section.type == 'page'"
                     v-bind:key="section.key"
@@ -42,7 +42,7 @@
                     v-bind:options="pages"
                     placeholder="Selecteer een pagina"
                     title="pagina"
-                    class="stack" :class="section.type"></module-section>
+                    class="stack item" :class="section.type"></module-section>
 
                 <module-section v-if="section.type == 'pageset'"
                     v-bind:key="section.key"
@@ -51,14 +51,12 @@
                     v-bind:options="pagesets"
                     placeholder="Selecteer een pagina groep"
                     title="pagina groep"
-                    class="stack" :class="section.type"></module-section>
+                    class="stack item" :class="section.type"></module-section>
 
             </template>
 
         </div>
-
         
-
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
                 <option selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
@@ -104,14 +102,13 @@
             var self = this;
             var el = document.getElementById('sections-div');
             var sortable = Sortable.create(el, {
-                // ghostClass: "ghost",
+                ghostClass: "ghost",
+                dragClass: "drag",
+                draggable: ".item",
+                setData: function (dataTransfer, dragEl) {
+                    // do something
+                },
                 onEnd: function(evt) {
-                    var itemEl = evt.item;  // dragged HTMLElement
-                    evt.to;    // target list
-                    evt.from;  // previous list
-                    evt.oldIndex;  // element's old index within old parent
-                    evt.newIndex;  // element's new index within new parent
-
                     self.changeSectionLocation(evt.oldIndex, evt.newIndex);
                 }
             });
@@ -139,10 +136,11 @@
         },
         methods: {
             changeSectionLocation(oldIndex, newIndex) {
+
                 var temp = this.sections[oldIndex];
 
                 this.sections.splice(oldIndex,1);
-                this._resortSectionsAfterDel(oldIndex);
+                this._resortSectionsAfterDel(oldIndex-1);
 
                 this.sections.splice(newIndex,0,temp);
                 this._resortSectionsAfter(newIndex-1);
@@ -152,6 +150,7 @@
                 this.sections.sort(function(a, b) {
                     return a.sort - b.sort;
                 });
+
             },
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
@@ -193,16 +192,6 @@
 
                 this.sections.push(data);
             },
-            // relocateSection(index){
-            //     var temp = this.sections[oldIndex];
-            //     console.log(this.sections);
-            //     this.sections.splice(index,1);
-            //     console.log(this.sections);
-            //     this._resortSectionsBefore(index);
-            //     this.sections.splice()
-            //     this.sections.splice()
-            //     console.log(this.sections);
-            // },
             _randomHash(){
 
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -232,7 +221,11 @@
 </script>
 
 <style>
-/* .ghost {
-    opacity: 0;
-} */
+.drag {
+    opacity: 1;
+}
+.ghost {
+    opacity: 0.3;
+}
+
 </style>
