@@ -13,51 +13,51 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <template v-for="section in sortedSections">
+        <div id="sections-div">
 
-            <text-section v-if="section.type == 'text'"
-                v-bind:key="section.key"
-                v-bind:section="section"
-                v-bind:locales="locales"
-                class="stack" :class="section.type"></text-section>
+            <template v-for="section in sortedSections">
+            
+                <text-section v-if="section.type == 'pagetitle'"
+                    v-bind:key="section.key"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    :single="true"
+                    :editor="false"
+                    title="Pagina titel"
+                    class="stack" :class="section.type"></text-section>
 
-            <text-section v-if="section.type == 'pagetitle'"
-                  v-bind:key="section.key"
-                  v-bind:section="section"
-                  v-bind:locales="locales"
-                  :single="true"
-                  :editor="false"
-                  title="Pagina titel"
-                  class="stack" :class="section.type"></text-section>
+                <module-section v-if="section.type == 'module'"
+                    v-bind:key="section.key"
+                    sectionKey="modules"
+                    v-bind:section="section"
+                    v-bind:options="modules"
+                    placeholder="Selecteer een module"
+                    title="module"
+                    class="stack" :class="section.type"></module-section>
 
-            <module-section v-if="section.type == 'module'"
-                v-bind:key="section.key"
-                sectionKey="modules"
-                v-bind:section="section"
-                v-bind:options="modules"
-                placeholder="Selecteer een module"
-                title="module"
-                class="stack" :class="section.type"></module-section>
+                <module-section v-if="section.type == 'page'"
+                    v-bind:key="section.key"
+                    sectionKey="modules"
+                    v-bind:section="section"
+                    v-bind:options="pages"
+                    placeholder="Selecteer een pagina"
+                    title="pagina"
+                    class="stack" :class="section.type"></module-section>
 
-            <module-section v-if="section.type == 'page'"
-                v-bind:key="section.key"
-                sectionKey="modules"
-                v-bind:section="section"
-                v-bind:options="pages"
-                placeholder="Selecteer een pagina"
-                title="pagina"
-                class="stack" :class="section.type"></module-section>
+                <module-section v-if="section.type == 'pageset'"
+                    v-bind:key="section.key"
+                    sectionKey="pagesets"
+                    v-bind:section="section"
+                    v-bind:options="pagesets"
+                    placeholder="Selecteer een pagina groep"
+                    title="pagina groep"
+                    class="stack" :class="section.type"></module-section>
 
-            <module-section v-if="section.type == 'pageset'"
-                v-bind:key="section.key"
-                sectionKey="pagesets"
-                v-bind:section="section"
-                v-bind:options="pagesets"
-                placeholder="Selecteer een pagina groep"
-                title="pagina groep"
-                class="stack" :class="section.type"></module-section>
+            </template>
 
-        </template>
+        </div>
+
+        
 
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
@@ -73,6 +73,7 @@
     import TextSection from './TextSection.vue';
     import ModuleSection from './ModuleSection.vue';
     import PagebuilderMenu from './PagebuilderMenu.vue';
+    import Sortable from 'sortablejs';
 
     export default{
         components: {
@@ -94,11 +95,20 @@
         },
         computed: {
             sortedSections() {
-                // return this.sections.sort((a, b) => a.sort > b.sort );
                 return this.sections.sort(function(a, b) {
                     return a.sort - b.sort;
                 });
             }
+        },
+        mounted: function() {
+            var self = this;
+            var el = document.getElementById('sections-div');
+            var sortable = Sortable.create(el, {
+                ghostClass: "ghost",
+                onEnd: function(evt) {
+                    self.changeSectionLocation(evt.oldIndex, evt.newIndex);
+                },
+            });
         },
         created(){
             Eventbus.$on('addingNewTextSectionAfter',(position, component) => {
@@ -122,6 +132,16 @@
             });
         },
         methods: {
+            changeSectionLocation(oldIndex, newIndex) {
+                var temp = this.sections[oldIndex];
+                temp.sort = newIndex + 1;
+
+                this._resortSectionsBefore(oldIndex);
+                this.sections.splice(oldIndex,1);
+
+                this._resortSectionsAfter(newIndex-1);
+                this.sections.splice(newIndex, 0, temp);
+            },
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
                     type: 'text',
@@ -162,9 +182,6 @@
 
                 this.sections.push(data);
             },
-            removeSection(){
-                //
-            },
             _randomHash(){
 
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -178,7 +195,23 @@
                     if(this.sections[k].sort <= index) continue;
                     this.sections[k].sort++;
                 }
+            },
+            _resortSectionsBefore(index){
+                for(let k in this.sections) {
+
+                    if( ! this.sections.hasOwnProperty(k)) continue;
+
+                    if(this.sections[k].sort <= index) continue;
+                    this.sections[k].sort--;
+
+                }
             }
         }
     }
 </script>
+
+<style>
+/* .ghost {
+    opacity: 0;
+} */
+</style>
