@@ -94,7 +94,10 @@
         },
         computed: {
             sortedSections() {
-                return this.sections.sort((a, b) => a.sort > b.sort );
+                // return this.sections.sort((a, b) => a.sort > b.sort );
+                return this.sections.sort(function(a, b) {
+                    return a.sort - b.sort;
+                });
             }
         },
         created(){
@@ -169,6 +172,7 @@
             },
             _resortSectionsAfter(index){
                 for(let k in this.sections) {
+
                     if( ! this.sections.hasOwnProperty(k)) continue;
 
                     if(this.sections[k].sort <= index) continue;
