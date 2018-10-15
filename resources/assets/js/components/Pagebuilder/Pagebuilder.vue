@@ -104,10 +104,16 @@
             var self = this;
             var el = document.getElementById('sections-div');
             var sortable = Sortable.create(el, {
-                ghostClass: "ghost",
+                // ghostClass: "ghost",
                 onEnd: function(evt) {
+                    var itemEl = evt.item;  // dragged HTMLElement
+                    evt.to;    // target list
+                    evt.from;  // previous list
+                    evt.oldIndex;  // element's old index within old parent
+                    evt.newIndex;  // element's new index within new parent
+
                     self.changeSectionLocation(evt.oldIndex, evt.newIndex);
-                },
+                }
             });
         },
         created(){
@@ -134,13 +140,18 @@
         methods: {
             changeSectionLocation(oldIndex, newIndex) {
                 var temp = this.sections[oldIndex];
-                temp.sort = newIndex + 1;
 
-                this._resortSectionsBefore(oldIndex);
                 this.sections.splice(oldIndex,1);
+                this._resortSectionsAfterDel(oldIndex);
 
+                this.sections.splice(newIndex,0,temp);
                 this._resortSectionsAfter(newIndex-1);
-                this.sections.splice(newIndex, 0, temp);
+
+                temp.sort = newIndex;
+
+                this.sections.sort(function(a, b) {
+                    return a.sort - b.sort;
+                });
             },
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
@@ -182,6 +193,16 @@
 
                 this.sections.push(data);
             },
+            // relocateSection(index){
+            //     var temp = this.sections[oldIndex];
+            //     console.log(this.sections);
+            //     this.sections.splice(index,1);
+            //     console.log(this.sections);
+            //     this._resortSectionsBefore(index);
+            //     this.sections.splice()
+            //     this.sections.splice()
+            //     console.log(this.sections);
+            // },
             _randomHash(){
 
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -196,7 +217,7 @@
                     this.sections[k].sort++;
                 }
             },
-            _resortSectionsBefore(index){
+            _resortSectionsAfterDel(index){
                 for(let k in this.sections) {
 
                     if( ! this.sections.hasOwnProperty(k)) continue;
