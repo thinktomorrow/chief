@@ -32,6 +32,12 @@
             </textarea>
         </template>
 
+        <div class="stack-s">
+            <span class="btn btn-primary squished-s delete-button" 
+            @click="removeThisSection(section.sort)">
+                <span class="icon icon-trash"></span>
+            </span>
+        </div>
 
         <pagebuilder-menu :section="section"></pagebuilder-menu>
     </section>
@@ -86,6 +92,18 @@
 
                 return content;
             },
+            removeThisSection(position){
+                Eventbus.$emit('removeThisSection', position, this);
+
+                this.active = false;
+            },
         }
     }
 </script>
+<style scoped>
+.delete-button {
+    background-color: red;
+    border: red;
+    z-index: 100;
+}
+</style>

@@ -13,9 +13,18 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <div id="sections-div">
+        <draggable :value="sortedSections" @end="changeSectionLocation" :options="{filter:'.delete-button'}">
 
             <template v-for="section in sortedSections">
+
+                <text-section v-if="section.type == 'text'"
+                    v-bind:key="section.key"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    :single="true"
+                    :editor="true"
+                    title="Pagina text"
+                    class="stack item" :class="section.type"></text-section>
             
                 <text-section v-if="section.type == 'pagetitle'"
                     v-bind:key="section.key"
@@ -55,7 +64,7 @@
 
             </template>
 
-        </div>
+        </draggable>
         
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
@@ -72,12 +81,14 @@
     import ModuleSection from './ModuleSection.vue';
     import PagebuilderMenu from './PagebuilderMenu.vue';
     import Sortable from 'sortablejs';
+    import draggable from 'vuedraggable';
 
     export default{
         components: {
             'text-section': TextSection,
             'module-section': ModuleSection,
-            'pagebuilder-menu': PagebuilderMenu
+            'pagebuilder-menu': PagebuilderMenu,
+            'draggable': draggable
         },
         props: {
             'defaultSections': { default: function(){ return [] }, type: Array},
@@ -99,19 +110,7 @@
             }
         },
         mounted: function() {
-            var self = this;
-            var el = document.getElementById('sections-div');
-            var sortable = Sortable.create(el, {
-                ghostClass: "ghost",
-                dragClass: "drag",
-                draggable: ".item",
-                setData: function (dataTransfer, dragEl) {
-                    // do something
-                },
-                onEnd: function(evt) {
-                    self.changeSectionLocation(evt.oldIndex, evt.newIndex);
-                }
-            });
+            //
         },
         created(){
             Eventbus.$on('addingNewTextSectionAfter',(position, component) => {
@@ -133,24 +132,31 @@
             Eventbus.$on('addingNewPagetitleSectionAfter',(position, component) => {
                 this.addNewPagetitleSectionAfter(position);
             });
+
+            Eventbus.$on('removeThisSection',(position, component) => {
+                this.removeSection(position);
+            });
         },
+
         methods: {
-            changeSectionLocation(oldIndex, newIndex) {
-
-                var temp = this.sections[oldIndex];
-
-                this.sections.splice(oldIndex,1);
-                this._resortSectionsAfterDel(oldIndex-1);
-
-                this.sections.splice(newIndex,0,temp);
-                this._resortSectionsAfter(newIndex-1);
-
-                temp.sort = newIndex;
-
+            test() {
+                console.log('test');
+            },
+            sortSections() {
                 this.sections.sort(function(a, b) {
                     return a.sort - b.sort;
                 });
-
+            },
+            removeSection(index) {
+                this.sections.splice(index,1);
+                this._resortSectionsAfterDel(index-1);
+                this.sortSections();
+                // does remove modules but doesn't remove text sections
+            },
+            changeSectionLocation(event) {
+                var temp = this.sections[event.oldIndex];
+                this.removeSection(event.oldIndex);
+                this._addNewSectionAfter(event.newIndex-1, temp);
             },
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
@@ -191,9 +197,9 @@
                 data.key = data.key || this._randomHash(),
 
                 this.sections.push(data);
+                this.sortSections();
             },
             _randomHash(){
-
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
                 return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             },
@@ -227,5 +233,4 @@
 .ghost {
     opacity: 0.3;
 }
-
 </style>
