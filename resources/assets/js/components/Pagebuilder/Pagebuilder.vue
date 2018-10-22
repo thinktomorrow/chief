@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="pagebuilder">
 
         <div v-if="sections.length < 1" class="relative stack" style="border-left:3px solid transparent;">
             <span class="btn btn-primary squished" @click="addNewTextSectionAfter(-1)">
@@ -13,7 +13,15 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <draggable :value="sortedSections" @end="changeSectionLocation" :options="{filter:'.delete-button'}">
+        <draggable :value="sortedSections" 
+        @end="changeSectionLocation" 
+        @start="minimizeSections"
+        :options="{
+            filter: '.delete-button',
+            handle: '.grip-button',
+            dragClass: 'drag',
+            ghostClass: 'ghost'
+        }">
 
             <template v-for="section in sortedSections">
 
@@ -80,7 +88,6 @@
     import TextSection from './TextSection.vue';
     import ModuleSection from './ModuleSection.vue';
     import PagebuilderMenu from './PagebuilderMenu.vue';
-    import Sortable from 'sortablejs';
     import draggable from 'vuedraggable';
 
     export default{
@@ -157,6 +164,28 @@
                 var temp = this.sections[event.oldIndex];
                 this.removeSection(event.oldIndex);
                 this._addNewSectionAfter(event.newIndex-1, temp);
+                this.maximizeSections();
+            },
+            minimizeSections() {
+                var allSections = document.getElementById('pagebuilder').getElementsByTagName('section');
+                for(var i = 0; i < allSections.length; i++) {
+                    if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
+                        var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
+                        allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
+                    }
+                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
+                }
+                console.log(this.sections);
+            },
+            maximizeSections() {
+                var allSections = document.getElementById('pagebuilder').getElementsByTagName('section');
+                for(var i = 0; i < allSections.length; i++) {
+                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
+                    if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
+                        var titleText = allSections[i].getElementsByTagName('h3')[0];
+                        titleText.innerHTML = titleText.innerHTML.substring(0, titleText.innerHTML.indexOf(' - '));
+                    } 
+                } 
             },
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
@@ -226,11 +255,13 @@
     }
 </script>
 
-<style>
+<style scoped>
 .drag {
-    opacity: 1;
+    
 }
 .ghost {
-    opacity: 0.3;
+    opacity: 0;
+    height: 0;
+    transition: 0.2s all ease;
 }
 </style>
