@@ -2610,6 +2610,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             this.sections.splice(index, 1);
             this._resortSectionsAfterDel(index - 1);
             this.sortSections();
+            console.log(this.sections);
             // does remove modules but doesn't remove text sections
         },
         changeSectionLocation: function changeSectionLocation(event) {
@@ -2890,7 +2891,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return content;
         },
         removeThisSection: function removeThisSection(position) {
-            Eventbus.$emit('removeThisSection', position, this);
+            // Eventbus.$emit('removeThisSection', position, this);
+
+            // text sections worden alleen verwijderd wanneer ze leeg zijn 
+            this.removeInput();
 
             this.active = false;
         },
@@ -2901,6 +2905,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         mouseLeave: function mouseLeave() {
             this.$el.getElementsByClassName('module-icons-left')[0].classList.remove('reveal-left');
             this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');
+        },
+        removeInput: function removeInput() {
+            var textAreas = this.$el.getElementsByTagName('textarea');
+            for (var i = 0; i < textAreas.length; i++) {
+                textAreas[i].innerHTML = "";
+                if (this.section.type === "text") {
+                    this.$el.getElementsByClassName('redactor-styles')[0].innerHTML = "";
+                }
+            }
+            this.$el.style.display = "none";
         }
     }
 });
@@ -32212,6 +32226,7 @@ var render = function() {
             return [
               section.type == "pagetitle" && !section.id
                 ? _c("option", {
+                    key: section.key,
                     attrs: { selected: "" },
                     domProps: { value: section.slug }
                   })
@@ -32219,10 +32234,12 @@ var render = function() {
               _vm._v(" "),
               section.type == "text" && !section.id
                 ? _c("option", {
+                    key: section.key,
                     attrs: { selected: "" },
                     domProps: { value: section.slug }
                   })
                 : _c("option", {
+                    key: section.key,
                     attrs: { selected: "" },
                     domProps: { value: section.id }
                   })

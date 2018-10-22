@@ -99,7 +99,10 @@
                 return content;
             },
             removeThisSection(position){
-                Eventbus.$emit('removeThisSection', position, this);
+                // Eventbus.$emit('removeThisSection', position, this);
+
+                // text sections worden alleen verwijderd wanneer ze leeg zijn 
+                this.removeInput();
 
                 this.active = false;
             },
@@ -110,7 +113,18 @@
             mouseLeave(){
                 this.$el.getElementsByClassName('module-icons-left')[0].classList.remove('reveal-left');
                 this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');    
+            },
+            removeInput(){
+                let textAreas = this.$el.getElementsByTagName('textarea');
+                for(var i = 0; i < textAreas.length; i++) {
+                    textAreas[i].innerHTML = "";
+                    if(this.section.type === "text") {
+                        this.$el.getElementsByClassName('redactor-styles')[0].innerHTML = "";
+                    }  
+                }
+                this.$el.style.display = "none";
             }
+
         }
     }
 

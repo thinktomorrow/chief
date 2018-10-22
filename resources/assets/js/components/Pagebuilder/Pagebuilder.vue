@@ -76,9 +76,9 @@
         
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
-                <option selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
-                <option selected v-if="section.type == 'text' && !section.id" :value="section.slug"></option>
-                <option selected v-else :value="section.id"></option>
+                <option v-bind:key="section.key" selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
+                <option v-bind:key="section.key" selected v-if="section.type == 'text' && !section.id" :value="section.slug"></option>
+                <option v-bind:key="section.key" selected v-else :value="section.id"></option>
             </template>
         </select>
 
@@ -158,6 +158,7 @@
                 this.sections.splice(index,1);
                 this._resortSectionsAfterDel(index-1);
                 this.sortSections();
+                console.log(this.sections);
                 // does remove modules but doesn't remove text sections
             },
             changeSectionLocation(event) {
