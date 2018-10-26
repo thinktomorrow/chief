@@ -94,7 +94,9 @@
         },
         computed: {
             sortedSections() {
-                return this.sections.sort((a, b) => a.sort > b.sort );
+                return this.sections.sort(function(a, b) {
+                    return a.sort - b.sort;
+                });
             }
         },
         created(){
