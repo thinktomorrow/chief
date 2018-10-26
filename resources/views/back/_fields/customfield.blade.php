@@ -25,7 +25,7 @@
         </div>
     </radio-options>
 @elseif($field->type == \Thinktomorrow\Chief\Common\Fields\FieldType::DATE)
-<input type="date" class="input inset-s" id="custom_fields-{{ $key }}" name="custom_fields[{{ $key }}]" value="{{ old('custom_fields.' . $key, optional($model->$key)->format('Y-m-d\TH:i:s')) }}">
+<input type="date" class="input inset-s" id="custom_fields-{{ $key }}" name="custom_fields[{{ $key }}]" value="{{ old('custom_fields.' . $key, optional($model->$key)->format('Y-m-d')) }}">
 @else
     <input type="text" name="custom_fields[{{ $key }}]" id="custom_fields-{{ $key }}" class="input inset-s" placeholder="{{ $placeholder ?? '' }}" value="{{ old('custom_fields.' . $key, $model->$key) }}">
 @endif
