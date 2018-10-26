@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="pagebuilder">
 
         <div v-if="sections.length < 1" class="relative stack" style="border-left:3px solid transparent;">
             <span class="btn btn-primary squished" @click="addNewTextSectionAfter(-1)">
@@ -13,57 +13,72 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <template v-for="section in sortedSections">
+        <draggable :value="sortedSections" 
+        @end="changeSectionLocation" 
+        @start="minimizeSections"
+        :options="{
+            filter: '.delete-button',
+            handle: '.grip-button',
+            dragClass: 'drag',
+            ghostClass: 'ghost'
+        }">
 
-            <text-section v-if="section.type == 'text'"
-                v-bind:key="section.key"
-                v-bind:section="section"
-                v-bind:locales="locales"
-                class="stack" :class="section.type"></text-section>
+            <template v-for="section in sortedSections">
 
-            <text-section v-if="section.type == 'pagetitle'"
-                  v-bind:key="section.key"
-                  v-bind:section="section"
-                  v-bind:locales="locales"
-                  :single="true"
-                  :editor="false"
-                  title="Pagina titel"
-                  class="stack" :class="section.type"></text-section>
+                <text-section v-if="section.type == 'text'"
+                    v-bind:key="section.key"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    :single="true"
+                    :editor="true"
+                    title="Pagina text"
+                    class="stack item" :class="section.type"></text-section>
+            
+                <text-section v-if="section.type == 'pagetitle'"
+                    v-bind:key="section.key"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    :single="true"
+                    :editor="false"
+                    title="Pagina titel"
+                    class="stack item" :class="section.type"></text-section>
 
-            <module-section v-if="section.type == 'module'"
-                v-bind:key="section.key"
-                sectionKey="modules"
-                v-bind:section="section"
-                v-bind:options="modules"
-                placeholder="Selecteer een module"
-                title="module"
-                class="stack" :class="section.type"></module-section>
+                <module-section v-if="section.type == 'module'"
+                    v-bind:key="section.key"
+                    sectionKey="modules"
+                    v-bind:section="section"
+                    v-bind:options="modules"
+                    placeholder="Selecteer een module"
+                    title="module"
+                    class="stack item" :class="section.type"></module-section>
 
-            <module-section v-if="section.type == 'page'"
-                v-bind:key="section.key"
-                sectionKey="modules"
-                v-bind:section="section"
-                v-bind:options="pages"
-                placeholder="Selecteer een pagina"
-                title="pagina"
-                class="stack" :class="section.type"></module-section>
+                <module-section v-if="section.type == 'page'"
+                    v-bind:key="section.key"
+                    sectionKey="modules"
+                    v-bind:section="section"
+                    v-bind:options="pages"
+                    placeholder="Selecteer een pagina"
+                    title="pagina"
+                    class="stack item" :class="section.type"></module-section>
 
-            <module-section v-if="section.type == 'pageset'"
-                v-bind:key="section.key"
-                sectionKey="pagesets"
-                v-bind:section="section"
-                v-bind:options="pagesets"
-                placeholder="Selecteer een pagina groep"
-                title="pagina groep"
-                class="stack" :class="section.type"></module-section>
+                <module-section v-if="section.type == 'pageset'"
+                    v-bind:key="section.key"
+                    sectionKey="pagesets"
+                    v-bind:section="section"
+                    v-bind:options="pagesets"
+                    placeholder="Selecteer een pagina groep"
+                    title="pagina groep"
+                    class="stack item" :class="section.type"></module-section>
 
-        </template>
+            </template>
 
+        </draggable>
+        
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
-                <option selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
-                <option selected v-if="section.type == 'text' && !section.id" :value="section.slug"></option>
-                <option selected v-else :value="section.id"></option>
+                <option v-bind:key="section.key" selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
+                <option v-bind:key="section.key" selected v-if="section.type == 'text' && !section.id" :value="section.slug"></option>
+                <option v-bind:key="section.key" selected v-else :value="section.id"></option>
             </template>
         </select>
 
@@ -73,12 +88,14 @@
     import TextSection from './TextSection.vue';
     import ModuleSection from './ModuleSection.vue';
     import PagebuilderMenu from './PagebuilderMenu.vue';
+    import draggable from 'vuedraggable';
 
     export default{
         components: {
             'text-section': TextSection,
             'module-section': ModuleSection,
-            'pagebuilder-menu': PagebuilderMenu
+            'pagebuilder-menu': PagebuilderMenu,
+            'draggable': draggable
         },
         props: {
             'defaultSections': { default: function(){ return [] }, type: Array},
@@ -119,8 +136,49 @@
             Eventbus.$on('addingNewPagetitleSectionAfter',(position, component) => {
                 this.addNewPagetitleSectionAfter(position);
             });
+
+            Eventbus.$on('removeThisSection',(position, component) => {
+                this.removeSection(position);
+            });
         },
+
         methods: {
+            sortSections() {
+                this.sections.sort(function(a, b) {
+                    return a.sort - b.sort;
+                });
+            },
+            removeSection(index) {
+                this.sections.splice(index,1);
+                this._resortSectionsAfterDel(index-1);
+                this.sortSections();
+            },
+            changeSectionLocation(event) {
+                var temp = this.sections[event.oldIndex];
+                this.removeSection(event.oldIndex);
+                this._addNewSectionAfter(event.newIndex-1, temp);
+                this.maximizeSections();
+            },
+            minimizeSections() {
+                var allSections = this.$el.getElementsByTagName('section');
+                for(var i = 0; i < allSections.length; i++) {
+                    if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
+                        var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
+                        allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
+                    }
+                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
+                }
+            },
+            maximizeSections() {
+                var allSections = this.$el.getElementsByTagName('section');
+                for(var i = 0; i < allSections.length; i++) {
+                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
+                    if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
+                        var titleText = allSections[i].getElementsByTagName('h3')[0];
+                        titleText.innerHTML = titleText.innerHTML.substring(0, titleText.innerHTML.indexOf(' - '));
+                    } 
+                } 
+            },
             addNewTextSectionAfter(section_sort){
                 this._addNewSectionAfter(section_sort, {
                     type: 'text',
@@ -160,23 +218,49 @@
                 data.key = data.key || this._randomHash(),
 
                 this.sections.push(data);
-            },
-            removeSection(){
-                //
+                this.sortSections();
             },
             _randomHash(){
-
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
                 return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             },
             _resortSectionsAfter(index){
                 for(let k in this.sections) {
+
                     if( ! this.sections.hasOwnProperty(k)) continue;
 
                     if(this.sections[k].sort <= index) continue;
                     this.sections[k].sort++;
                 }
+            },
+            _resortSectionsAfterDel(index){
+                for(let k in this.sections) {
+
+                    if( ! this.sections.hasOwnProperty(k)) continue;
+
+                    if(this.sections[k].sort <= index) continue;
+                    this.sections[k].sort--;
+
+                }
             }
         }
     }
 </script>
+
+<style>
+.section-item{
+    border-left:3px solid rgba(21, 200, 167, 1);
+    background-color:rgba(21, 200, 167, 0.05);
+}
+
+.ghost {
+    transition: 0.2s all ease;
+    background-color: transparent;
+    border-left: transparent;
+}
+
+.ghost > * {
+    display:none;
+}
+
+</style>

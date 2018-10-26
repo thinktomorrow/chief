@@ -209,12 +209,12 @@ class UpdateSections
     private function isTextCompletelyEmpty($trans): bool
     {
         $is_completely_empty = true;
-
+        
         foreach ($trans as $locale => $lines) {
             foreach ($lines as $key => $line) {
                 $stripped_line = $this->stripTagsBlacklist($line, ['p', 'br']);
                 $stripped_line = trim($stripped_line);
-
+    
                 if ($stripped_line) {
                     $is_completely_empty = false;
                     break;
