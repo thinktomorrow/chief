@@ -2689,8 +2689,7 @@ p:first-child {
 
 h1:not(:last-child),
 h2:not(:last-child),
-h3:not(:last-child),
-p:last-child {
+h3:not(:last-child) {
   margin-bottom: 1.5rem;
 }
 
@@ -2698,6 +2697,10 @@ h4:not(:last-child),
 h5:not(:last-child),
 h6:not(:last-child) {
   margin-bottom: 0.75rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 /**
@@ -3373,6 +3376,8 @@ h6:not(:last-child) {
 .clearfix:before, .container:before, .clearfix:after, .container:after {
   content: " ";
   display: table;
+  /* Small hack for Safari to remove a non-visual line */
+  position: absolute;
 }
 
 .clearfix:after, .container:after {
@@ -7980,6 +7985,8 @@ select {
 .clearfix:before, .container:before, .clearfix:after, .container:after {
   content: " ";
   display: table;
+  /* Small hack for Safari to remove a non-visual line */
+  position: absolute;
 }
 
 .clearfix:after, .container:after {

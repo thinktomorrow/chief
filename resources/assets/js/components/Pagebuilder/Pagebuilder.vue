@@ -116,9 +116,6 @@
                 });
             }
         },
-        mounted: function() {
-            //
-        },
         created(){
             Eventbus.$on('addingNewTextSectionAfter',(position, component) => {
                 this.addNewTextSectionAfter(position);
@@ -146,9 +143,6 @@
         },
 
         methods: {
-            test() {
-                console.log('test');
-            },
             sortSections() {
                 this.sections.sort(function(a, b) {
                     return a.sort - b.sort;
@@ -158,8 +152,6 @@
                 this.sections.splice(index,1);
                 this._resortSectionsAfterDel(index-1);
                 this.sortSections();
-                console.log(this.sections);
-                // does remove modules but doesn't remove text sections
             },
             changeSectionLocation(event) {
                 var temp = this.sections[event.oldIndex];
@@ -168,7 +160,7 @@
                 this.maximizeSections();
             },
             minimizeSections() {
-                var allSections = document.getElementById('pagebuilder').getElementsByTagName('section');
+                var allSections = this.$el.getElementsByTagName('section');
                 for(var i = 0; i < allSections.length; i++) {
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
@@ -176,10 +168,9 @@
                     }
                     allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
                 }
-                console.log(this.sections);
             },
             maximizeSections() {
-                var allSections = document.getElementById('pagebuilder').getElementsByTagName('section');
+                var allSections = this.$el.getElementsByTagName('section');
                 for(var i = 0; i < allSections.length; i++) {
                     allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
@@ -256,13 +247,20 @@
     }
 </script>
 
-<style scoped>
-.drag {
-    
+<style>
+.section-item{
+    border-left:3px solid rgba(21, 200, 167, 1);
+    background-color:rgba(21, 200, 167, 0.05);
 }
+
 .ghost {
-    opacity: 0;
-    height: 0;
     transition: 0.2s all ease;
+    background-color: transparent;
+    border-left: transparent;
 }
+
+.ghost > * {
+    display:none;
+}
+
 </style>

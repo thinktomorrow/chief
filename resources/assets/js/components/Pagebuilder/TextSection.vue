@@ -1,5 +1,5 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="stack block inset relative" style="border-left:3px solid #14c8a7">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="section-item stack block inset relative">
         <h3 class="pagebuilder-section-title" v-if="title" v-text="title"></h3>
 
         <div class="to-minimize">
