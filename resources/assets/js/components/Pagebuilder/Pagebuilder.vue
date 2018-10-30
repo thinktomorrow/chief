@@ -13,14 +13,14 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <draggable :value="sortedSections" 
+        <draggable class="relative stack" 
+        :value="sortedSections" 
         @end="changeSectionLocation" 
         @start="minimizeSections"
         :options="{
-            filter: '.delete-button',
             handle: '.grip-button',
             dragClass: 'drag',
-            ghostClass: 'ghost'
+            ghostClass: 'ghost',
         }">
 
             <template v-for="section in sortedSections">
@@ -151,7 +151,6 @@
             removeSection(index) {
                 this.sections.splice(index,1);
                 this._resortSectionsAfterDel(index-1);
-                this.sortSections();
             },
             changeSectionLocation(event) {
                 var temp = this.sections[event.oldIndex];
@@ -160,8 +159,13 @@
                 this.maximizeSections();
             },
             minimizeSections() {
+                document.getElementById('pagebuilder').classList.add('stretch');
                 var allSections = this.$el.getElementsByTagName('section');
                 for(var i = 0; i < allSections.length; i++) {
+
+                    allSections[i].getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
+                    allSections[i].getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
+
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
                         allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
@@ -170,8 +174,13 @@
                 }
             },
             maximizeSections() {
+                document.getElementById('pagebuilder').classList.remove('stretch');
                 var allSections = this.$el.getElementsByTagName('section');
                 for(var i = 0; i < allSections.length; i++) {
+
+                    allSections[i].getElementsByClassName('module-icons-left')[0].classList.remove('hide-icons');
+                    allSections[i].getElementsByClassName('module-icons-right')[0].classList.remove('hide-icons');
+
                     allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var titleText = allSections[i].getElementsByTagName('h3')[0];
@@ -248,19 +257,44 @@
 </script>
 
 <style>
-.section-item{
+.section-item {
     border-left:3px solid rgba(21, 200, 167, 1);
     background-color:rgba(21, 200, 167, 0.05);
 }
 
 .ghost {
     transition: 0.2s all ease;
-    background-color: transparent;
+    background-color: rgba(255,255,255,0.5);
     border-left: transparent;
 }
 
 .ghost > * {
     display:none;
 }
+
+.hide-icons {
+    opacity: 0 !important;
+}
+
+.stretch {
+    width: 125%;
+    margin-left: -12.5%;
+    transition: 0.2s all ease;
+}
+
+@media (max-width:1024px) {
+    .stretch {
+        width: 110%;
+        margin-left: -5%;
+    }
+}
+
+@media (max-width:768px) {
+    .stretch {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
 
 </style>

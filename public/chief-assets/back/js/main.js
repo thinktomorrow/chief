@@ -2603,7 +2603,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         removeSection: function removeSection(index) {
             this.sections.splice(index, 1);
             this._resortSectionsAfterDel(index - 1);
-            this.sortSections();
         },
         changeSectionLocation: function changeSectionLocation(event) {
             var temp = this.sections[event.oldIndex];
@@ -2612,8 +2611,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             this.maximizeSections();
         },
         minimizeSections: function minimizeSections() {
+            document.getElementById('pagebuilder').classList.add('stretch');
             var allSections = this.$el.getElementsByTagName('section');
             for (var i = 0; i < allSections.length; i++) {
+
+                allSections[i].getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
+                allSections[i].getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
+
                 if (allSections[i].getElementsByClassName('multiselect__single')[0]) {
                     var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
                     allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
@@ -2622,8 +2626,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
         },
         maximizeSections: function maximizeSections() {
+            document.getElementById('pagebuilder').classList.remove('stretch');
             var allSections = this.$el.getElementsByTagName('section');
             for (var i = 0; i < allSections.length; i++) {
+
+                allSections[i].getElementsByClassName('module-icons-left')[0].classList.remove('hide-icons');
+                allSections[i].getElementsByClassName('module-icons-right')[0].classList.remove('hide-icons');
+
                 allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
                 if (allSections[i].getElementsByClassName('multiselect__single')[0]) {
                     var titleText = allSections[i].getElementsByTagName('h3')[0];
@@ -3184,7 +3193,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.section-item{\n    border-left:3px solid rgba(21, 200, 167, 1);\n    background-color:rgba(21, 200, 167, 0.05);\n}\n.ghost {\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n    background-color: transparent;\n    border-left: transparent;\n}\n.ghost > * {\n    display:none;\n}\n\n", ""]);
+exports.push([module.i, "\n.section-item {\n    border-left:3px solid rgba(21, 200, 167, 1);\n    background-color:rgba(21, 200, 167, 0.05);\n}\n.ghost {\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n    background-color: rgba(255,255,255,0.5);\n    border-left: transparent;\n}\n.ghost > * {\n    display:none;\n}\n.hide-icons {\n    opacity: 0 !important;\n}\n.stretch {\n    width: 125%;\n    margin-left: -12.5%;\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n}\n@media (max-width:1024px) {\n.stretch {\n        width: 110%;\n        margin-left: -5%;\n}\n}\n@media (max-width:768px) {\n.stretch {\n        width: 100%;\n        margin-left: 0;\n}\n}\n\n\n", ""]);
 
 // exports
 
@@ -32151,10 +32160,10 @@ var render = function() {
       _c(
         "draggable",
         {
+          staticClass: "relative stack",
           attrs: {
             value: _vm.sortedSections,
             options: {
-              filter: ".delete-button",
               handle: ".grip-button",
               dragClass: "drag",
               ghostClass: "ghost"
