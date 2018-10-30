@@ -3193,7 +3193,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.section-item {\n    border-left:3px solid rgba(21, 200, 167, 1);\n    background-color:rgba(21, 200, 167, 0.05);\n}\n.ghost {\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n    background-color: rgba(255,255,255,0.5);\n    border-left: transparent;\n}\n.ghost > * {\n    display:none;\n}\n.hide-icons {\n    opacity: 0 !important;\n}\n.stretch {\n    width: 125%;\n    margin-left: -12.5%;\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n}\n@media (max-width:1024px) {\n.stretch {\n        width: 110%;\n        margin-left: -5%;\n}\n}\n@media (max-width:768px) {\n.stretch {\n        width: 100%;\n        margin-left: 0;\n}\n}\n\n\n", ""]);
+exports.push([module.i, "\n.section-item {\n    border-left:3px solid rgba(21, 200, 167, 1);\n    background-color:rgba(21, 200, 167, 0.05);\n}\n.ghost {\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n    background-color: rgba(255,255,255,0.5);\n    border-left: transparent;\n}\n.ghost > * {\n    display:none;\n}\n.hide-icons {\n    opacity: 0 !important;\n}\n.stretch {\n    width: 130%;\n    margin-left: -15%;\n    -webkit-transition: 0.2s all ease;\n    transition: 0.2s all ease;\n}\n@media (max-width:1024px) {\n.stretch {\n        width: 110%;\n        margin-left: -5%;\n}\n}\n@media (max-width:768px) {\n.stretch {\n        width: 100%;\n        margin-left: 0;\n}\n}\n\n\n", ""]);
 
 // exports
 

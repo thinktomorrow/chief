@@ -277,8 +277,8 @@
 }
 
 .stretch {
-    width: 125%;
-    margin-left: -12.5%;
+    width: 130%;
+    margin-left: -15%;
     transition: 0.2s all ease;
 }
 
