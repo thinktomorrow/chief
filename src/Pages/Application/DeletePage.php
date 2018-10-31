@@ -3,7 +3,7 @@ namespace Thinktomorrow\Chief\Pages\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Audit\Audit;
+use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 
 class DeletePage

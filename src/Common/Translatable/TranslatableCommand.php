@@ -56,7 +56,7 @@ trait TranslatableCommand
         $is_completely_empty = true;
 
         foreach ($keys as $key) {
-            if (!isset($translation[$key])) {
+            if (!array_key_exists($key,$translation)) {
                 continue;
             }
 

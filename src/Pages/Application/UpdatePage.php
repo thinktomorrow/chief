@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\PageBuilder\UpdateSections;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Models\UniqueSlug;
-use Thinktomorrow\Chief\Common\Audit\Audit;
+use Thinktomorrow\Chief\Audit\Audit;
 
 class UpdatePage
 {

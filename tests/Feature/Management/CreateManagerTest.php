@@ -23,12 +23,13 @@ class CreateManagerTest extends TestCase
 
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
-        $this->fake = app(ManagerFake::class);
+        $this->fake = new ManagerFake(app(Register::class)->first());
     }
 
     /** @test */
     public function admin_can_view_the_create_form()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->fake->route('create'))
             ->assertStatus(200);
     }

@@ -99,7 +99,7 @@ abstract class TestCase extends OrchestraTestCase
 
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
-        $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Common\Audit\Audit::class);
+        $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Audit\Audit::class);
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
         $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);

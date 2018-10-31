@@ -71,7 +71,7 @@ class UpdateModuleTest extends TestCase
     /** @test */
     public function slug_must_be_unique()
     {
-        $otherModule = Module::create(['collection' => 'newsletter', 'slug' => 'other-slug']);
+        $otherModule = Module::create(['morph_key' => 'newsletter', 'slug' => 'other-slug']);
 
         $this->assertValidation(new Module(), 'slug', $this->validUpdateModuleParams(['slug' => 'other-slug']),
             route('chief.back.modules.index'),

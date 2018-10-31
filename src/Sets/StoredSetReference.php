@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 
 /**
  * @property $id
@@ -38,6 +38,11 @@ class StoredSetReference extends Model implements ActsAsChild
         return SetReference::all()->first(function($setReference){
             return $setReference->key() == $this->key;
         });
+    }
+
+    public function viewkey(): string
+    {
+        return $this->key;
     }
 
     public function flatReference(): FlatReference

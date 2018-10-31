@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Settings;
 
-use Thinktomorrow\Chief\Common\Fields\Field;
+use Thinktomorrow\Chief\Fields\Types\Field;
 
 class HomepageFieldGenerator
 {
@@ -17,7 +17,7 @@ class HomepageFieldGenerator
             return $single;
         })->pluck('label', 'id')->toArray();
 
-        return \Thinktomorrow\Chief\Common\Fields\SelectField::make('homepage')
+        return \Thinktomorrow\Chief\Fields\Types\SelectField::make('homepage')
             ->label('Homepagina')
             ->description('Bepaal de homepagina van de site')
             ->options($singles)

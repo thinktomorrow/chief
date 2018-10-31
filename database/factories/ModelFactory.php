@@ -18,7 +18,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
 
 $factory->define(Page::class, function (Faker\Generator $faker) {
     return [
-        'collection' => 'singles',
+        'morph_key' => 'singles',
         'published'   => 1,
         'featured'    => $faker->boolean(),
         'publication' => null,

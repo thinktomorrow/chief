@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
-use Thinktomorrow\Chief\Management\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Management\Fields\FieldTab;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\FieldTab;
 use Thinktomorrow\Chief\Management\ManagementDefaults;
 
 class ManagerFakeWithFieldTabs extends ManagerFake

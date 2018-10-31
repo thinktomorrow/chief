@@ -16,7 +16,7 @@
 
 @section('content')
 
-    @if($managers->isEmpty() && $manager->can('create'))
+    @if($managers->isEmpty() && $modelManager->can('create'))
         <div class="center-center stack-xl">
             <a href="{{ $modelManager->route('create') }}" class="btn btn-primary squished-l">
                 <i class="icon icon-zap icon-fw"></i> Tijd om een {{ $modelManager->managerDetails()->singular }} toe te voegen

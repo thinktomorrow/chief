@@ -34,7 +34,7 @@ class MediaTest extends TestCase
     /** @test */
     public function a_page_can_have_an_image_for_hero()
     {
-        $page = Page::create(['collection' => 'singles']);
+        $page = Page::create(['morph_key' => 'singles']);
 
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
@@ -47,7 +47,7 @@ class MediaTest extends TestCase
     {
         $this->setUpDefaultAuthorization();
 
-        $article = ArticlePageFake::create(['collection' => 'articles']);
+        $article = ArticlePageFake::create(['morph_key' => 'articles']);
 
         $response = $this->asAdmin()->post(route('pages.media.upload', $article->id), [
             'file' => [

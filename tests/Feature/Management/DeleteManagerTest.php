@@ -27,7 +27,7 @@ class DeleteManagerTest extends TestCase
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = app(ManagerFake::class)->manage($this->model);
+        $this->fake = (new ManagerFake(app(Register::class)->first()))->manage($this->model);
     }
 
     /** @test */
@@ -59,7 +59,7 @@ class DeleteManagerTest extends TestCase
         $this->expectException(NotAllowedManagerRoute::class);
 
         app(Register::class)->register('fakes', ManagerFakeWithoutDelete::class, ManagedModelFake::class);
-        app(ManagerFakeWithoutDelete::class)->manage($this->model);
+        (new ManagerFakeWithoutDelete(app(Register::class)->first()))->manage($this->model);
 
         $this->asAdmin()
             ->delete('/admin/manage/fakes/1', [

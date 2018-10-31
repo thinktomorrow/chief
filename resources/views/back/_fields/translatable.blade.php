@@ -1,6 +1,6 @@
-@if(count($manager->managedModelDetails()->locales) > 1)
+@if(count($field->locales) > 1)
     <tabs>
-        @foreach($manager->managedModelDetails()->locales as $locale)
+        @foreach($field->locales as $locale)
             <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
                 @include($viewpath, [
                     'key'   => 'trans.'.$locale.'.'.$field->key,
@@ -11,7 +11,7 @@
         @endforeach
     </tabs>
 @else
-    @foreach($manager->managedModelDetails()->locales as $locale)
+    @foreach($field->locales as $locale)
         @include($viewpath, [
             'key'   => 'trans.'.$locale.'.'.$field->key,
             'name' => 'trans['.$locale.']['.$field->key.']',

@@ -2,19 +2,19 @@
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceFactory;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
 
 class UpdateSections
 {
-    /** @var Page */
-    private $page;
+    /** @var ActsAsParent */
+    private $model;
 
     /** @var array */
     private $relation_references;
@@ -28,18 +28,18 @@ class UpdateSections
     /** @var array */
     private $sorting;
 
-    private function __construct(Page $page, array $relation_references, array $text_modules, array $set_refs, array $sorting)
+    private function __construct(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
-        $this->page = $page;
+        $this->model = $model;
         $this->relation_references = $relation_references;
         $this->text_modules = $text_modules;
         $this->set_refs = $set_refs;
         $this->sorting = $sorting;
     }
 
-    public static function forPage(Page $page, array $relation_references, array $text_modules, array $set_refs, array $sorting)
+    public static function forModel(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
-        return new static($page, $relation_references, $text_modules, $set_refs, $sorting);
+        return new static($model, $relation_references, $text_modules, $set_refs, $sorting);
     }
 
     public function updateModules()
@@ -54,7 +54,7 @@ class UpdateSections
         $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references);
 
         foreach ($referred_instances as $instance) {
-            $this->page->adoptChild($instance, ['sort' => 0]);
+            $this->model->adoptChild($instance, ['sort' => 0]);
         }
 
         return $this;
@@ -71,7 +71,7 @@ class UpdateSections
 
             $stored_set_ref = $this->findOrCreateStoredSetReference($flat_set_ref);
 
-            $this->page->adoptChild($stored_set_ref, ['sort' => 0]);
+            $this->model->adoptChild($stored_set_ref, ['sort' => 0]);
         }
 
         return $this;
@@ -79,21 +79,21 @@ class UpdateSections
 
     private function removeExistingModules()
     {
-        foreach ($this->page->children() as $instance) {
+        foreach ($this->model->children() as $instance) {
             if ($instance instanceof StoredSetReference || $instance instanceof TextModule || $instance instanceof PagetitleModule) {
                 continue;
             }
-            $this->page->rejectChild($instance);
+            $this->model->rejectChild($instance);
         }
     }
 
     private function removeExistingSets()
     {
-        foreach ($this->page->children() as $instance) {
+        foreach ($this->model->children() as $instance) {
             if (! $instance instanceof StoredSetReference) {
                 continue;
             }
-            $this->page->rejectChild($instance);
+            $this->model->rejectChild($instance);
         }
     }
 
@@ -108,23 +108,23 @@ class UpdateSections
             // Create pagetitle text module
             if (isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
                 $module = app(CreateModule::class)->handle(
-                    (new PagetitleModule)->collectionDetails()->key,
+                    (new PagetitleModule)->morphKey(),
                     $text_module['slug'],
-                    $this->page->id
+                    $this->model->id
                 );
             }
 
             // Create page specific text module
             else {
                 $module = app(CreateModule::class)->handle(
-                    (new TextModule)->collectionDetails()->key,
+                    (new TextModule)->morphKey(),
                     $text_module['slug'],
-                    $this->page->id
+                    $this->model->id
                 );
             }
 
             // Connect to page - sorting will be set later on...
-            $this->page->adoptChild($module, ['sort' => 0]);
+            $this->model->adoptChild($module, ['sort' => 0]);
 
             // Add content
             app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
@@ -167,7 +167,7 @@ class UpdateSections
             throw new \Exception('Invalid request to remove non textual module');
         }
 
-        $this->page->rejectChild($module);
+        $this->model->rejectChild($module);
 
         // In case of a textual module, we also delete the module itself
         $module->delete();
@@ -175,7 +175,7 @@ class UpdateSections
 
     public function sort()
     {
-        $children = $this->page->children();
+        $children = $this->model->children();
 
         foreach ($this->sorting as $sorting => $reference) {
 
@@ -193,7 +193,7 @@ class UpdateSections
                 continue;
             }
 
-            $this->page->sortChild($child, $sorting);
+            $this->model->sortChild($child, $sorting);
         }
 
         return $this;

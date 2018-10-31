@@ -4,38 +4,38 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Fields\Field;
-use Thinktomorrow\Chief\Common\Fields\FieldType;
-use Thinktomorrow\Chief\Management\Fields\FieldArrangement;
+use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Fields\Types\Field;
+use Thinktomorrow\Chief\Fields\Types\FieldType;
+use Thinktomorrow\Chief\Common\Models\HasManagerModelDetails;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Pages\Page;
 
 abstract class AbstractManager
 {
-    use ManagesMedia,
+    use HasManagerModelDetails,
+        ManagesMedia,
+        ManagesPagebuilder,
         TranslatableCommand;
-
-    protected $model;
 
     protected $queued_translations = [];
     protected $translation_columns = [];
-    protected $queued_files = [];
-    protected $queued_filesOrder = [];
+
+    protected $model;
 
     /** @var Register */
-    protected $register;
+    protected $registration;
 
     /** @var string */
     protected $key;
 
-    public function __construct(Register $register)
+    public function __construct(Registration $registration)
     {
-        $this->register = $register;
-        $this->key = $this->register->filterByClass(static::class)->toKey();
+        $this->registration = $registration;
 
         // Without passing parameter, we assume the generic model instance is set
-        $model = $this->register->filterByClass(static::class)->toModel();
-        $this->manage(app($model));
+        $this->manage(app($this->registration->model()));
 
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
@@ -48,44 +48,30 @@ abstract class AbstractManager
         return $this;
     }
 
-    public static function findManaged($id): ModelManager
+    public function findManaged($id): ModelManager
     {
-        $model = app(Register::class)->filterByClass(static::class)->toModel();
+        $model = $this->registration->model();
 
-        return app(static::class)->manage($model::where('id', $id)->first());
+        return (new static($this->registration))->manage($model::where('id', $id)->first());
     }
 
-    public static function findAllManaged(): Collection
+    public function findAllManaged(): Collection
     {
-        $model = app(Register::class)->filterByClass(static::class)->toModel();
+        $model = $this->registration->model();
 
         return $model::all()->map(function($model){
-            return app(static::class)->manage($model);
+            return (new static($this->registration))->manage($model);
         });
     }
 
     public function managerDetails(): ManagerDetails
     {
         return new ManagerDetails(
-            $this->key,
+            $this->registration->key(),
             static::class,
-            property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($this->key),
-            property_exists($this, 'labelPlural') ? $this->labelPlural : str_plural($this->key)
+            property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($this->registration->key()),
+            property_exists($this, 'labelPlural') ? $this->labelPlural : str_plural($this->registration->key())
         );
-    }
-
-    /**
-     * Information regarding a specific managed model instance.
-     *
-     * @return ManagedModelDetails
-     */
-    public function managedModelDetails(): ManagedModelDetails
-    {
-        // We try to assume a default for title but it's better you set this up yourself.
-        $title = $this->model->title ?? ($this->model->id ?? '');
-        $locales = method_exists($this->model, 'availableLocales') ? $this->model->availableLocales() : [config('app.locale')];
-
-        return new ManagedModelDetails( $title, '', '', $locales);
     }
 
     /**
@@ -98,13 +84,13 @@ abstract class AbstractManager
     public function route($verb): ?string
     {
         $routes = [
-            'index'   => route('chief.back.managers.index', [$this->key]),
-            'create'  => route('chief.back.managers.create', [$this->key]),
-            'store'   => route('chief.back.managers.store', [$this->key, $this->model->id]),
-            'edit'    => route('chief.back.managers.edit', [$this->key, $this->model->id]),
-            'update'  => route('chief.back.managers.update', [$this->key, $this->model->id]),
-            'delete' => route('chief.back.managers.delete', [$this->key, $this->model->id]),
-            'upload' => route('managers.media.upload', [$this->key, $this->model->id])
+            'index'   => route('chief.back.managers.index', [$this->registration->key()]),
+            'create'  => route('chief.back.managers.create', [$this->registration->key()]),
+            'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
+            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),
+            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->model->id]),
+            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
+            'upload' => route('managers.media.upload', [$this->registration->key(), $this->model->id])
         ];
 
         return $routes[$verb] ?? null;
@@ -129,7 +115,7 @@ abstract class AbstractManager
     {
         // If string is passed, we use this to find the proper field
         if (is_string($field)) {
-            foreach ($this->fields() as $possibleField) {
+            foreach ($this->fields()->all() as $possibleField) {
                 if ($possibleField->key() == $field) {
                     $field = $possibleField;
                     break;
@@ -172,7 +158,7 @@ abstract class AbstractManager
     public function setField(Field $field, Request $request)
     {
         // Is field set as translatable?
-        if ($field->translatable()) {
+        if ($field->isTranslatable()) {
 
             if (!$this->requestContainsTranslations($request)) {
                 return;
@@ -192,14 +178,6 @@ abstract class AbstractManager
             return;
         }
 
-        if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
-            // Images are passed as base64 strings, not as file, Documents are passed via the file segment
-            $this->queued_files = array_merge($request->get('files', []), $request->file('files', []));
-            $this->queued_filesOrder = $request->get('filesOrder', []);
-
-            return;
-        }
-
         // By default we assume the key matches the attribute / column naming
         $this->model->{$field->column()} = $request->get($field->key());
     }
@@ -213,12 +191,7 @@ abstract class AbstractManager
             $this->saveTranslations($this->queued_translations, $this->model, $this->translation_columns);
         }
 
-        // Media
-        if (!empty($this->queued_files)) {
-            app(UploadMedia::class)->fromUploadComponent($this->model, $this->queued_files, $this->queued_filesOrder);
-        }
-
-        return (new static($this->register))->manage($this->model);
+        return (new static($this->registration))->manage($this->model);
     }
 
     public function delete()
@@ -238,7 +211,7 @@ abstract class AbstractManager
             return '';
         }
 
-        $path = $field->translatable()
+        $path = $field->isTranslatable()
             ? 'chief::back._fields.translatable'
             : $viewpath;
 
@@ -250,19 +223,41 @@ abstract class AbstractManager
         ])->render();
     }
 
+    /**
+     * This method can be used to manipulate the store request payload
+     * before being passed to the storing / updating the models.
+     *
+     * @param Request $request
+     * @return Request
+     */
+    public function storeRequest(Request $request): Request
+    {
+        return $request;
+    }
+
+    /**
+     * This method can be used to manipulate the update request payload
+     * before being passed to the storing / updating the models.
+     *
+     * @param Request $request
+     * @return Request
+     */
+    public function updateRequest(Request $request): Request
+    {
+        return $request;
+    }
+
     protected function requestContainsTranslations(Request $request): bool
     {
         return $request->has('trans');
     }
 
-    private function validateConstraints()
+    protected function validateConstraints()
     {
         if (!$this->model) {
             throw new \DomainException('Model class should be set for this manager. Please set the model property default via the constructor or by extending the setupDefaults method.');
         }
-
-        if (!$this->key) {
-            throw new \DomainException('The registered key identifier should be set for this manager. Please call the provided setupDefaults method in your constructor.');
-        }
     }
+
+
 }

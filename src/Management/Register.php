@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management;
 
-use ReflectionClass;
-
 class Register
 {
     /** @var array */
@@ -20,25 +18,24 @@ class Register
 
     public function register($key, $class, $model)
     {
-        $this->push([
-            'key'      => $key,
-            'class'    => $class,
-            'model'    => $model,
-        ]);
+        $this->push( new Registration($key, $class, $model) );
 
         return $this;
     }
 
-    private function push(array $registration)
+    private function push(Registration $registration)
     {
-        $this->validate($registration);
-
-        $this->registrations[$registration['key']] = $registration;
+        $this->registrations[$registration->key()] = $registration;
     }
 
     public function all()
     {
         return $this->registrations;
+    }
+
+    public function first(): Registration
+    {
+        return array_first($this->registrations);
     }
 
     public function filterByKey(string $key): self
@@ -48,12 +45,12 @@ class Register
 
     public function filterByClass(string $class): self
     {
-        return $this->filter('class', $class);
+        return $this->filter('managerClass', $class);
     }
 
     public function filterByModel(string $class): self
     {
-        return $this->filter('model', $class);
+        return $this->filter('modelClass', $class);
     }
 
     public function rejectByKey(string $key): self
@@ -63,24 +60,27 @@ class Register
 
     public function rejectByClass(string $class): self
     {
-        return $this->filter('class', $class, 'reject');
+        return $this->filter('managerClass', $class, 'reject');
     }
 
     public function rejectByModel(string $class): self
     {
-        return $this->filter('model', $class, 'reject');
+        return $this->filter('modelClass', $class, 'reject');
     }
 
     private function filter(string $key, $value, $type = 'filter'): self
     {
         $registrations = $this->registrations;
 
-        foreach($registrations as $k => $registration) {
-            if($type == 'filter' && (!isset($registration[$key]) || $registration[$key] != $value)) {
+        foreach($registrations as $k => $registration)
+        {
+            $containsValue = $registration->has($key, $value);
+
+            if($type == 'filter' && ! $containsValue) {
                 unset($registrations[$k]);
             }
 
-            if($type == 'reject' && (isset($registration[$key]) && $registration[$key] == $value)) {
+            if($type == 'reject' && $containsValue) {
                 unset($registrations[$k]);
             }
         }
@@ -92,73 +92,7 @@ class Register
         return new static($registrations);
     }
 
-    public function toKeys(): array
-    {
-        return array_keys($this->registrations);
-    }
-
     /**
-     * Return the key of the first entry. This assumes you have filtered to
-     * just one specific registration
-     *
-     * @return string
-     */
-    public function toKey(): string
-    {
-        return array_first($this->toKeys());
-    }
-
-    /**
-     * Return the class of the first entry.
-     * This assumes you have filtered to just one specific registration
-     *
-     * @return string
-     */
-    public function toClass(): string
-    {
-        $first = array_first($this->registrations);
-
-        return $first['class'];
-    }
-
-    /**
-     * Return the model of the first entry.
-     * This assumes you have filtered to just one specific registration
-     *
-     * @return string
-     */
-    public function toModel(): string
-    {
-        $first = array_first($this->registrations);
-
-        return $first['model'];
-    }
-
-    private function validate($registration)
-    {
-        if(!isset($registration['key']) || !isset($registration['class']) || !isset($registration['model'])) {
-            throw new \InvalidArgumentException('Invalid manager registration. Each registration requires a \'key\', \'class\' and  \'model\' entry.');
-        }
-
-        $class = $registration['class'];
-        $model = $registration['model'];
-
-        if(!class_exists($class)) {
-            throw new \InvalidArgumentException('Class ['.$class.'] is an invalid class reference. Please check if the class exists.');
-        }
-
-        if(!class_exists($model)) {
-            throw new \InvalidArgumentException('Model class ['.$model.'] is an invalid model reference. Please check if the class exists.');
-        }
-
-        $manager = new ReflectionClass($class);
-        if( ! $manager->implementsInterface(ModelManager::class)) {
-            throw new \InvalidArgumentException('Class ['.$class.'] is expected to implement the ['.ModelManager::class.'] contract.');
-        }
-    }
-
-    /**
-     *
      * Filtering on key or class is expected to contain one entry.
      * If not we should protect the application and warn the developer that a
      * manager was not registered properly

@@ -62,7 +62,7 @@ class CreateModuleTest extends TestCase
     public function slug_must_be_unique()
     {
         $module = Module::create([
-            'collection' => 'newsletter',
+            'morph_key' => 'newsletter',
             'slug'   => 'foobar'
         ]);
 
@@ -71,7 +71,7 @@ class CreateModuleTest extends TestCase
         $response = $this->asAdmin()
             ->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams([
                 'slug'  => 'foobar',
-                'collection' => 'newsletter',
+                'morph_key' => 'newsletter',
             ])
         );
 

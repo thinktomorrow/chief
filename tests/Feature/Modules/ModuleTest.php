@@ -25,7 +25,7 @@ class ModuleTest extends TestCase
     /** @test */
     public function it_can_find_a_module_by_slug()
     {
-        $module = Module::create(['slug' => 'foobar', 'collection' => 'module-collection']);
+        $module = Module::create(['slug' => 'foobar', 'morph_key' => 'module-collection']);
 
         $this->assertEquals($module->id, Module::findBySlug('foobar')->id);
     }

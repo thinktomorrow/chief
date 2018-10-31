@@ -79,3 +79,16 @@ if (!function_exists('str_slug_slashed')) {
         return implode('/', $parts);
     }
 }
+
+if(!function_exists('is_array_empty')) {
+    function is_array_empty(array $values){
+        $empty = true;
+
+        foreach ($values as $value) {
+            if (! $value || !trim($value)) continue;
+            $empty = false;
+        }
+
+        return $empty;
+    }
+}

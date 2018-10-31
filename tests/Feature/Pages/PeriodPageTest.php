@@ -11,10 +11,6 @@ class PeriodPageTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'articles' => AgendaPageFake::class,
-        ]);
     }
 
     /** @test */
@@ -22,7 +18,7 @@ class PeriodPageTest extends TestCase
     {
         $start_at = Carbon::now()->addDays(1);
         $end_at   = Carbon::now()->addWeeks(1);
-        $article  = AgendaPageFake::create(['collection' => 'articles', 'start_at' => $start_at, 'end_at' => $end_at]);
+        $article  = AgendaPageFake::create(['start_at' => $start_at, 'end_at' => $end_at]);
 
         $this->assertTrue($start_at->toDateTimeString() == AgendaPageFake::first()->start_at->toDateTimeString());
         $this->assertTrue($end_at->toDateTimeString() == AgendaPageFake::first()->end_at->toDateTimeString());
@@ -32,12 +28,10 @@ class PeriodPageTest extends TestCase
     public function it_can_get_only_passed_articles()
     {
         AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->subWeeks(1),
             'end_at'     => Carbon::now()->subDays(1)
         ]);
         AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->addDays(1),
             'end_at'     => Carbon::now()->addWeeks(1)
         ]);
@@ -49,12 +43,10 @@ class PeriodPageTest extends TestCase
     public function it_can_get_only_upcoming_articles()
     {
         AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->subWeeks(1),
             'end_at'     => Carbon::now()->subDays(1)
         ]);
         AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->addDays(1),
             'end_at'     => Carbon::now()->addWeeks(1)
         ]);
@@ -66,12 +58,10 @@ class PeriodPageTest extends TestCase
     public function it_can_get_only_ongoing_articles()
     {
         AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->subWeeks(1),
             'end_at'     => Carbon::now()->subDays(1)
         ]);
         AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->subDays(1),
             'end_at'     => Carbon::now()->addWeeks(1)
         ]);
@@ -83,13 +73,11 @@ class PeriodPageTest extends TestCase
     public function it_can_articles_sorted_by_start_date()
     {
         $article1 = AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->subDays(1),
             'end_at'     => Carbon::now()->subDays(1)
         ]);
 
         $article2 = AgendaPageFake::create([
-            'collection' => 'articles',
             'start_at'   => Carbon::now()->subDays(5),
             'end_at'     => Carbon::now()->addWeeks(1)
         ]);

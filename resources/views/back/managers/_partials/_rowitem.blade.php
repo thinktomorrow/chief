@@ -3,20 +3,20 @@
 
         @if($manager->can('edit'))
             <a class="text-black bold" href="{{ $manager->route('edit') }}">
-                {!! $manager->managedModelDetails()->title !!}
+                {!! $manager->modelDetails()->title !!}
             </a>
         @else
-            {!! $manager->managedModelDetails()->title !!}
+            {!! $manager->modelDetails()->title !!}
         @endif
 
-        @if($manager->managedModelDetails()->subtitle)
+        @if($manager->modelDetails()->subtitle)
             <div>
-                <span class="text-subtle">{!! $manager->managedModelDetails()->subtitle !!}</span>
+                <span class="text-subtle">{!! $manager->modelDetails()->subtitle !!}</span>
             </div>
         @endif
-        @if($manager->managedModelDetails()->intro)
+        @if($manager->modelDetails()->intro)
             <div class="stack-s font-s">
-                {!! $manager->managedModelDetails()->intro !!}
+                {!! $manager->modelDetails()->intro !!}
             </div>
         @endif
     </div>

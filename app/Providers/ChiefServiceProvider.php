@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Illuminate\Support\Facades\Validator;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
@@ -94,6 +95,20 @@ class ChiefServiceProvider extends ServiceProvider
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
+
+        // Custom validator for requiring on translations only the fallback locale
+        // this is called in the validation as required-fallback-locale
+        Validator::extend('requiredFallbackLocale',function($attribute, $value, $parameters, $validator){
+
+            $fallbackLocale = config('app.fallback_locale');
+
+            if(false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
+                return !! trim($value);
+            }
+
+            return true;
+
+        });
     }
 
     public function register()

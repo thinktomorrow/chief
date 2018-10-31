@@ -23,13 +23,13 @@ class StoreManagerTest extends TestCase
 
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
-//        $this->model = ManagedModel::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = app(ManagerFake::class);
+        $this->fake = (new ManagerFake(app(Register::class)->first()));
     }
 
     /** @test */
     public function it_can_create_a_field()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()
             ->post($this->fake->route('store'), [
                 'title' => 'foobar-created',
@@ -77,6 +77,7 @@ class StoreManagerTest extends TestCase
     /** @test */
     public function it_can_create_a_media_field()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()
             ->post($this->fake->route('store'), [
                 'files' => [

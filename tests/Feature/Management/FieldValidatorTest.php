@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
@@ -25,7 +26,7 @@ class FieldValidatorTest extends TestCase
         app(Register::class)->register('fakes', ManagerFakeWithValidation::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = app(ManagerFakeWithValidation::class)->manage($this->model);
+        $this->fake = (new ManagerFakeWithValidation(app(Register::class)->first()))->manage($this->model);
     }
 
     /** @test */
@@ -41,11 +42,24 @@ class FieldValidatorTest extends TestCase
     /** @test */
     public function a_required_translatable_field_can_be_validated()
     {
+        config()->set('app.fallback_locale','nl');
+
         $this->assertValidation(new ManagedModelFake(), 'trans.nl.title_trans', $this->payload(['trans.nl.title_trans' => '']),
             $this->fake->route('edit'),
             $this->fake->route('update'),
             1, 'put'
         );
+    }
+
+    /** @test */
+    public function a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
+    {
+        config()->set('app.fallback_locale','nl');
+
+        $response = $this->actingAs($this->developer(), 'chief')
+            ->put($this->fake->route('update'),$this->payload(['trans.en.title_trans' => '']));
+
+        $response->assertSessionHasNoErrors();
     }
 
     protected function payload($overrides = [])

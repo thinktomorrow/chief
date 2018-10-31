@@ -25,13 +25,13 @@ class ModuleCollectionTest extends TestCase
     {
         $this->expectException(\PDOException::class);
 
-        Module::create(['collection' => null, 'slug' => 'foobar']);
+        Module::create(['morph_key' => null, 'slug' => 'foobar']);
     }
 
     /** @test */
     public function a_module_can_be_divided_by_collection()
     {
-        Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
 
         $this->assertCount(1, NewsletterModuleFake::all());
         $this->assertCount(0, OtherModuleFake::all());
@@ -44,7 +44,7 @@ class ModuleCollectionTest extends TestCase
     /** @test */
     public function a_module_can_be_retrieved_by_collection()
     {
-        Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
 
         $this->assertNotNull(NewsletterModuleFake::first());
         $this->assertNull(OtherModuleFake::first());
@@ -56,7 +56,7 @@ class ModuleCollectionTest extends TestCase
     /** @test */
     public function collection_scope_can_be_ignored()
     {
-        Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
 
         $this->assertNotNull(Module::first());
     }
@@ -64,7 +64,7 @@ class ModuleCollectionTest extends TestCase
     /** @test */
     public function it_can_create_instance_from_collection_id()
     {
-        $module = Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+        $module = Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
 
         $instance = $module->flatReference()->instance();
 
@@ -75,7 +75,7 @@ class ModuleCollectionTest extends TestCase
     /** @test */
     public function collection_scope_can_be_set_on_runtime()
     {
-        Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
 
         $this->assertNotNull(Module::collection('newsletter')->first());
         $this->assertNull(Module::collection('others')->first());
@@ -86,9 +86,9 @@ class ModuleCollectionTest extends TestCase
     /** @test */
     public function it_can_retrieve_all_available_collections()
     {
-        Module::create(['collection' => 'newsletter', 'slug' => 'foobar']);
-        Module::create(['collection' => 'others', 'slug' => 'foobar-2']);
-        Module::create(['collection' => 'newsletter', 'slug' => 'foobar-3']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
+        Module::create(['morph_key' => 'others', 'slug' => 'foobar-2']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar-3']);
 
         $this->assertEquals(['newsletter', 'others'], Module::availableCollections()->keys()->toArray());
     }
@@ -97,7 +97,7 @@ class ModuleCollectionTest extends TestCase
     public function it_returns_the_right_collection_with_the_eloquent_find_methods()
     {
         $module = NewsletterModuleFake::create([
-            'collection' => 'newsletter',
+            'morph_key' => 'newsletter',
             'slug' => 'foobar',
         ]);
 
@@ -109,7 +109,7 @@ class ModuleCollectionTest extends TestCase
     public function it_returns_the_right_collection_model_by_slug()
     {
         NewsletterModuleFake::create([
-            'collection' => 'newsletter',
+            'morph_key' => 'newsletter',
             'slug' => 'foobar',
         ]);
 

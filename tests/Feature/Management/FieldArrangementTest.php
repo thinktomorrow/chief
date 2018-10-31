@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\Common\Fields\Field;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
@@ -27,7 +27,7 @@ class FieldArrangementTest extends TestCase
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->manager = app(ManagerFake::class)->manage($this->model);
+        $this->manager = (new ManagerFake(app(Register::class)->first()))->manage($this->model);
     }
 
     /** @test */
@@ -36,16 +36,17 @@ class FieldArrangementTest extends TestCase
         $arrangement = $this->manager->fieldArrangement();
 
         $this->assertFalse($arrangement->hasTabs());
-        $this->assertCount(5, $arrangement->fields());
+        $this->assertCount(6, $arrangement->fields());
         $this->assertEquals('title', $arrangement->fields()[0]->key);
         $this->assertEquals('avatar', $arrangement->fields()[4]->key);
+        $this->assertEquals('doc', $arrangement->fields()[5]->key);
     }
 
     /** @test */
     public function fields_can_be_arranged_by_tabs()
     {
         app(Register::class)->register('fakes', ManagerFakeWithFieldTabs::class, ManagedModelFake::class);
-        $manager = app(ManagerFakeWithFieldTabs::class)->manage($this->model);
+        $manager = (new ManagerFakeWithFieldTabs(app(Register::class)->first()))->manage($this->model);
         $arrangement = $manager->fieldArrangement();
 
         $this->assertTrue($arrangement->hasTabs());

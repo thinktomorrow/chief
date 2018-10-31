@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Common\Morphable\MorphableContract;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Application\ArchivePage;
@@ -122,7 +122,7 @@ class PagesController extends Controller
      */
     private function guessSectionType($section)
     {
-        if ($section instanceof ActsAsCollection && in_array($section->collectionKey(), ['text','pagetitle'])) {
+        if ($section instanceof MorphableContract && in_array($section->collectionKey(), ['text','pagetitle'])) {
             return $section->collectionKey();
         }
 

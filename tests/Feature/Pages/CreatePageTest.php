@@ -2,7 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreatePageTest extends TestCase
@@ -14,18 +17,18 @@ class CreatePageTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+
+        app(Register::class)->register('singles', PageManager::class, Single::class);
     }
 
     /** @test */
     public function creating_a_new_page()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.pages.edit', Page::first()->getKey()));
+        $response->assertRedirect(route('chief.back.managers.edit', ['singles', Page::first()->getKey()]));
 
         $this->assertCount(1, Page::all());
         $this->assertNewPageValues(Page::first());
@@ -34,7 +37,7 @@ class CreatePageTest extends TestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_page()
     {
-        $response = $this->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+        $response = $this->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Page::all());
@@ -44,8 +47,8 @@ class CreatePageTest extends TestCase
     public function when_creating_page_title_is_required()
     {
         $this->assertValidation(new Page(), 'trans.nl.title', $this->validPageParams(['trans.nl.title' => '']),
-            route('chief.back.pages.index', 'singles'),
-            route('chief.back.pages.store', 'singles')
+            route('chief.back.managers.index', 'singles'),
+            route('chief.back.managers.store', 'singles')
         );
     }
 
@@ -60,7 +63,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams([
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams([
                     'trans.nl.title'  => 'foobarnl',
                     'trans.en.title'  => 'foobaren',
                 ])
@@ -84,7 +87,7 @@ class CreatePageTest extends TestCase
         $this->assertCount(1, Page::all());
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams([
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams([
                     'trans.nl.slug'  => 'foobar',
                     'trans.en.slug'  => 'foobar',
                 ])
@@ -100,7 +103,7 @@ class CreatePageTest extends TestCase
     public function uses_title_as_slug_if_slug_is_empty()
     {
         $response = $this->asAdmin()
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams([
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams([
                     'trans.nl.title'    => 'foobar',
                     'trans.nl.slug'     => '',
                     'trans.en.title'    => 'foobar',

@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Collections\GlobalCollectionScope;
+use Thinktomorrow\Chief\Common\Morphable\GlobalMorphableScope;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
@@ -45,7 +45,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id')
-            ->withoutGlobalScope(GlobalCollectionScope::class);
+            ->withoutGlobalScope(GlobalMorphableScope::class);
     }
 
     public function parent()

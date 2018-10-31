@@ -2,9 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\Pages\Homepage;
 use Thinktomorrow\Chief\Pages\NotFoundHomepage;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -14,12 +13,6 @@ class HomepageTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'articles' => ArticlePageFake::class,
-            'products' => ProductPageFake::class,
-            'singles'  => Single::class,
-        ]);
     }
 
     /** @test */
@@ -29,7 +22,7 @@ class HomepageTest extends TestCase
         $product  = ProductPageFake::create(['published' => 1]);
         $product2 = ProductPageFake::create();
 
-        $this->assertEquals($product->id, Page::guessHomepage()->id);
+        $this->assertEquals($product->id, Homepage::guess()->id);
     }
 
     /** @test */
@@ -38,7 +31,7 @@ class HomepageTest extends TestCase
         $article = ArticlePageFake::create();
         $product = ProductPageFake::create(['published' => 1]);
 
-        $this->assertEquals($product->id, Page::guessHomepage()->id);
+        $this->assertEquals($product->id, Homepage::guess()->id);
     }
 
     /** @test */
@@ -50,7 +43,7 @@ class HomepageTest extends TestCase
 
         $this->app['config']->set('thinktomorrow.chief-settings.homepage', $product2->id);
 
-        $this->assertEquals($product2->id, Page::guessHomepage()->id);
+        $this->assertEquals($product2->id, Homepage::guess()->id);
     }
 
     /** @test */
@@ -60,6 +53,6 @@ class HomepageTest extends TestCase
 
         $this->expectException(NotFoundHomepage::class);
 
-        Page::guessHomepage();
+        Homepage::guess();
     }
 }

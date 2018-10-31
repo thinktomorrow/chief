@@ -4,8 +4,10 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Fields\Field;
-use Thinktomorrow\Chief\Management\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\Types\Field;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Common\Models\ManagerModelDetails;
 
 interface ModelManager
 {
@@ -26,7 +28,7 @@ interface ModelManager
      * @param $id
      * @return ModelManager
      */
-    public static function findManaged($id): ModelManager;
+    public function findManaged($id): ModelManager;
 
     /**
      * Get all managed models wrapped in a Manager
@@ -34,7 +36,7 @@ interface ModelManager
      *
      * @return Collection of ManagedModel
      */
-    public static function findAllManaged(): Collection;
+    public function findAllManaged(): Collection;
 
     public function route($verb): ?string;
 
@@ -44,12 +46,12 @@ interface ModelManager
      * The set of fields that should be manageable for a certain model.
      *
      * Additionally, you should:
-     * 2. Make sure to setup the proper migrations and
-     * 3. For a translatable field you should add this field to the translatable values of the model as well.
+     * 1. Make sure to setup the proper migrations and
+     * 2. For a translatable field you should add this field to the $translatedAttributes property of the model as well.
      *
-     * @return Field[]
+     * @return Fields
      */
-    public function fields(): array;
+    public function fields(): Fields;
 
     /**
      * This determines the arrangement of the manageable fields
@@ -73,6 +75,24 @@ interface ModelManager
     public function delete();
 
     /**
+     * This method can be used to manipulate the store request payload
+     * before being passed to the storing / updating the models.
+     *
+     * @param Request $request
+     * @return Request
+     */
+    public function storeRequest(Request $request): Request;
+
+    /**
+     * This method can be used to manipulate the update request payload
+     * before being passed to the storing / updating the models.
+     *
+     * @param Request $request
+     * @return Request
+     */
+    public function updateRequest(Request $request): Request;
+
+    /**
      * Details and display data regarding the Manager and the model in general.
      *
      * @return ManagerDetails
@@ -82,7 +102,7 @@ interface ModelManager
     /**
      * Information regarding a specific managed model instance.
      *
-     * @return ManagedModelDetails
+     * @return ManagerModelDetails
      */
-    public function managedModelDetails(): ManagedModelDetails;
+    public function modelDetails(): ManagerModelDetails;
 }

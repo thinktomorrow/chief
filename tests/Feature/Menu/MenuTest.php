@@ -70,7 +70,7 @@ class MenuTest extends TestCase
     public function it_can_be_a_custom_link()
     {
         $page   = factory(Page::class, 3)->create([
-            'collection'    => 'articles',
+            'morph_key'    => 'articles',
             'published'     => 1
         ]);
 
@@ -96,7 +96,7 @@ class MenuTest extends TestCase
     public function it_can_reference_a_collection_of_pages()
     {
         factory(Page::class, 3)->create([
-            'collection'    => 'articles',
+            'morph_key'    => 'articles',
             'published'     => 1
         ]);
 
@@ -104,7 +104,7 @@ class MenuTest extends TestCase
         $this->assertCount(3, ArticlePageFake::all());
 
         // Create main collection menu item - this will hold the collection as children
-        $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
+        $mainMenuItem = MenuItem::create(['type' => 'morph_key', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
 
         // Retrieve the menu
         $main = ChiefMenu::fromMenuItems()->items()->first();
@@ -128,19 +128,19 @@ class MenuTest extends TestCase
     public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
-            'collection' => 'singles',
+            'morph_key' => 'singles',
             'slug'      => 'foobar',
             'published' => 1
         ]);
 
         factory(Page::class, 3)->create([
-            'collection'    => 'articles',
+            'morph_key'    => 'articles',
             'published'     => 1
         ]);
 
         MenuItem::create(['type' => 'internal', 'label:nl' => 'first item', 'page_id' => $page->id]);
         MenuItem::create(['type' => 'custom', 'label:nl' => 'second item', 'url:nl' => 'https://google.com']);
-        MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com/article-index']);
+        MenuItem::create(['type' => 'morph_key', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com/article-index']);
 
         $collection = ChiefMenu::fromMenuItems()->items();
 

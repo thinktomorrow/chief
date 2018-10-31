@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Fields\HtmlField;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Common\Traits\HasPeriod\HasPeriodTrait;
 
 class AgendaPageFake extends Page

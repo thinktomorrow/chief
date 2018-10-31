@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\FlatReferences\ProvidesFlatReference;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
 
 class SetReference implements ProvidesFlatReference
 {

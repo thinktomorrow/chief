@@ -6,10 +6,9 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Common\Audit\Audit;
+use Thinktomorrow\Chief\Audit\Audit;
 
 class AuditTest extends TestCase
 {
@@ -22,9 +21,13 @@ class AuditTest extends TestCase
         $this->setUpDatabase();
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'singles' => Single::class,
-        ]);
+//        $this->app['config']->set('thinktomorrow.chief.collections', [
+//            'singles' => Single::class,
+//        ]);
+
+
+
+
     }
 
     /** @test */
@@ -34,7 +37,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
 
         $page       = Page::first();
         $activity   = Audit::getAllActivityFor($page);
@@ -52,12 +55,12 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
         
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams());
+            ->put(route('chief.back.managers.update', $page->id), $this->validUpdatePageParams());
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -73,12 +76,12 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams(['published' => false]));
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams(['published' => false]));
         
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.pages.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
+             ->delete(route('chief.back.managers.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -96,7 +99,7 @@ class AuditTest extends TestCase
         $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->put(route('chief.back.pages.archive', $page->id));
+             ->put(route('chief.back.managers.archive', $page->id));
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -114,7 +117,7 @@ class AuditTest extends TestCase
         Auth::guard('chief')->login($user);
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
         
         $activity = Page::first();
 
@@ -130,7 +133,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.index'));
@@ -152,7 +155,7 @@ class AuditTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.pages.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.show', $user->id));

@@ -20,7 +20,7 @@ class IndexModuleTest extends TestCase
             'newsletter' => NewsletterModuleFake::class,
         ]);
 
-        Module::create(['collection' => 'newsletter', 'slug' => 'new-slug']);
+        Module::create(['morph_key' => 'newsletter', 'slug' => 'new-slug']);
     }
 
     /** @test */

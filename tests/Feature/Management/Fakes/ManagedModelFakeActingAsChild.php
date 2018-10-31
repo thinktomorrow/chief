@@ -5,11 +5,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\PresentForParent;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Relations\PresentForParent;
 
 class ManagedModelFakeActingAsChild extends Model implements ActsAsChild, PresentForParent
 {
@@ -62,5 +62,10 @@ class ManagedModelFakeActingAsChild extends Model implements ActsAsChild, Presen
     public function presentForParent(ActsAsParent $parent): string
     {
         return 'ManagedModelFakeActingAsChild presentation as child';
+    }
+
+    public function viewKey(): string
+    {
+        return 'managed-model-fakes';
     }
 }

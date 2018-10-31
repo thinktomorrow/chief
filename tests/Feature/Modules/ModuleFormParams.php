@@ -8,7 +8,7 @@ trait ModuleFormParams
     protected function validModuleParams($overrides = [])
     {
         $params = [
-            'collection' => 'newsletter',
+            'morph_key' => 'newsletter',
             'slug' => 'new-slug',
         ];
 
@@ -22,7 +22,7 @@ trait ModuleFormParams
     protected function validUpdateModuleParams($overrides = [])
     {
         $params = [
-            'collection' => 'newsletter',
+            'morph_key' => 'newsletter',
             'slug' => 'updated-slug',
             'trans' => [
                 'nl' => [

@@ -25,7 +25,7 @@ class UpdateManagerTest extends TestCase
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = app(ManagerFake::class)->manage($this->model);
+        $this->fake = (new ManagerFake(app(Register::class)->first()))->manage($this->model);
     }
 
     /** @test */
@@ -88,5 +88,45 @@ class UpdateManagerTest extends TestCase
             ]);
 
         $this->assertEquals('tt-favicon.png', $this->model->getFilename('hero'));
+    }
+
+    /** @test */
+    public function it_can_upload_a_document()
+    {
+        $this->asAdmin()
+            ->put($this->fake->route('update'), [
+                'files' => [
+                    'doc' => [
+                        'new' => [
+                            $this->dummyDocument('tt-document.pdf'),
+                        ]
+                    ]
+                ],
+            ]);
+
+        $this->assertEquals('tt-document.pdf', $this->model->getFilename('doc'));
+    }
+
+    /** @test */
+    public function it_can_upload_both_images_and_documents()
+    {
+        $this->asAdmin()
+            ->put($this->fake->route('update'), [
+                'files' => [
+                    'hero' => [
+                        'new' => [
+                            $this->dummySlimImagePayload('tt-favicon.png'),
+                        ]
+                    ],
+                    'doc' => [
+                        'new' => [
+                            $this->dummyDocument('tt-document.pdf'),
+                        ]
+                    ]
+                ],
+            ]);
+
+        $this->assertEquals('tt-favicon.png', $this->model->getFilename('hero'));
+        $this->assertEquals('tt-document.pdf', $this->model->getFilename('doc'));
     }
 }

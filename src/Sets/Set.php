@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\PresentForParent;
+use Thinktomorrow\Chief\Common\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Relations\PresentForParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Set extends Collection implements PresentForParent
@@ -15,15 +15,20 @@ class Set extends Collection implements PresentForParent
     use WithSnippets;
 
     /** @var string */
-    private $key;
+    private $viewKey;
 
-    public function __construct($items = [], string $key)
+    public function __construct($items = [], string $viewKey)
     {
-        $this->key = $key;
+        $this->viewKey = $viewKey;
 
         $this->constructWithSnippets();
 
         parent::__construct($items);
+    }
+
+    public function viewKey(): string
+    {
+        return $this->viewKey;
     }
 
     public static function fromReference(SetReference $setReference): Set
@@ -52,15 +57,15 @@ class Set extends Collection implements PresentForParent
     private function presentRawValueForParent(ActsAsParent $parent): string
     {
         $viewPaths = [
-            'front.modules.'. $parent->collectionKey().'.'.$this->key,
-            'front.modules.'.$this->key,
+            'front.modules.'. $parent->viewKey().'.'.$this->viewKey(),
+            'front.modules.'.$this->viewKey(),
         ];
 
         // In case the collection is made out of pages, we'll also allow to use the
         // generic collection page view for these sets as well.
-        if($this->first() instanceof ActsAsCollection){
-            $viewPaths[] = 'front.modules.'. $parent->collectionKey().'.'.$this->first()->collectionKey();
-            $viewPaths[] = 'front.modules.'. $this->first()->collectionKey();
+        if($this->first() instanceof PresentForParent){
+            $viewPaths[] = 'front.modules.'. $parent->viewKey().'.'.$this->first()->viewKey();
+            $viewPaths[] = 'front.modules.'. $this->first()->viewKey();
         }
 
         foreach ($viewPaths as $viewPath) {
@@ -100,6 +105,6 @@ class Set extends Collection implements PresentForParent
 
         $items = array_map($callback, $this->items, $keys);
 
-        return new static(array_combine($keys, $items), $this->key);
+        return new static(array_combine($keys, $items), $this->viewKey);
     }
 }

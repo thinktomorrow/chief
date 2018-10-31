@@ -27,7 +27,7 @@ class EditManagerTest extends TestCase
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->manager = app(ManagerFake::class)->manage($this->model);
+        $this->manager = (new ManagerFake(app(Register::class)->first()))->manage($this->model);
     }
 
     /** @test */

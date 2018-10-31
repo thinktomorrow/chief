@@ -9,15 +9,6 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageRelationsTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-    }
-
     /** @test */
     public function a_page_can_have_a_relation_with_another_page()
     {
@@ -47,8 +38,8 @@ class PageRelationsTest extends TestCase
         ParentFake::migrate();
         ChildFake::migrate();
 
-        $page = Single::create(['collection' => 'singles']);
-        $parent = Single::create(['collection' => 'singles']);
+        $page = Single::create(['morph_key' => 'singles']);
+        $parent = Single::create(['morph_key' => 'singles']);
         $child = ChildFake::create();
 
         $page->adoptChild($child);

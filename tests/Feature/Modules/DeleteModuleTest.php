@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
@@ -24,7 +24,7 @@ class DeleteModuleTest extends TestCase
     /** @test */
     public function it_can_delete_modules()
     {
-        $module = Module::create(['collection' => 'newsletter', 'slug' => 'other-slug']);
+        $module = Module::create(['morph_key' => 'newsletter', 'slug' => 'other-slug']);
 
         $this->asAdmin()
             ->delete(route('chief.back.modules.destroy', $module->id));
@@ -40,7 +40,7 @@ class DeleteModuleTest extends TestCase
 
         $page = factory(Page::class)->create();
 
-        $module = Module::create(['collection' => 'newsletter', 'slug' => 'other-slug']);
+        $module = Module::create(['morph_key' => 'newsletter', 'slug' => 'other-slug']);
         $page->adoptChild($module);
 
         $this->assertEquals(1, Relation::count());

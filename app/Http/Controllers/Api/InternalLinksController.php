@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Pages\Page;
 
 class InternalLinksController extends Controller

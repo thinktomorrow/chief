@@ -3,6 +3,7 @@
 use Thinktomorrow\Chief\Media\MediaType;
 
 return [
+
     /**
      * Domain settings.
      *
@@ -16,30 +17,15 @@ return [
     ],
 
     /**
-     * Here we define which models are allowed to be set as children or parents
-     * After changing this value, make sure you flush the cached relations.
-     * This has no effect on already created relations, only new ones.
+     * By default all models are available as children. Here we define which models are explicitly disallowed.
+     *
+     * This reflects itself in the select options of the page builder. Make note that this has no effect on already
+     * created relations, only new ones. After changing this value, make sure you flush the cached relations.
      */
     'relations'   => [
-
-        'children' => [
-            \Thinktomorrow\Chief\Pages\Page::class,
+        'blacklist' => [
+            // \Thinktomorrow\Chief\Pages\Page::class,
         ],
-
-        'parents' => [
-            \Thinktomorrow\Chief\Pages\Page::class,
-        ],
-    ],
-
-    /**
-     * Here you should provide the mapping of page and module collections. This
-     * is required for the class mapping from database to their respective classes.
-     */
-    'collections' => [
-        // Pages
-        'singles' => \Thinktomorrow\Chief\Pages\Single::class,
-
-        // Modules
     ],
 
     /**
@@ -110,16 +96,16 @@ return [
         'homepage' => function () {
             return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
         },
-        'contact.email' => \Thinktomorrow\Chief\Common\Fields\InputField::make('contact.email')
+        'contact.email' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.email')
                         ->label('Webmaster email')
                         ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
-        'contact.name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('contact.name')
+        'contact.name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.name')
                         ->label('Webmaster naam')
                         ->description('Voor en achternaam van de webmaster.'),
-        'client.app_name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('client.app_name')
+        'client.app_name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('client.app_name')
                         ->label('Site naam')
                         ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
-        'client.name' => \Thinktomorrow\Chief\Common\Fields\InputField::make('client.name')
+        'client.name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('client.name')
                         ->label('Organisatie')
                         ->description('Naam van uw bedrijf. Dit wordt getoond in o.a. de mail communicatie.'),
     ],

@@ -37,7 +37,7 @@ class ModulesController extends Controller
         $this->authorize('create-page');
 
         $module = app(CreateModule::class)->handle(
-            $request->get('collection'),
+            $request->get('morph_key'),
             $request->get('slug'),
             $request->get('page_id')
         );

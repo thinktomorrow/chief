@@ -2,9 +2,6 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Translations;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Squanto\Domain\Line;
-use Thinktomorrow\Squanto\Domain\Page;
-use Thinktomorrow\Squanto\Services\CachedTranslationFile;
 use Thinktomorrow\Squanto\Manager\Http\Controllers\LineController as SquantoLineController;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 

@@ -1,18 +1,19 @@
 <li>
     <a class="nav-item icon icon-feather" href="{{ route('chief.back.dashboard') }}"></a>
 </li>
-<li>
-    @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections()->filter(function($page, $key){ return $key == 'singles'; }) as $key => $collection)
-        <a class="block nav-item  {{ isActiveUrl('admin/pages/'.$key.'*') ? 'active' : '' }}" href="{{ route('chief.back.pages.index',['collection' => $key]) }}">{{ ucfirst($collection->plural) }}</a>
-    @endforeach
-</li>
 
 <li>
     <dropdown>
-        <span class="center-y nav-item {{ (isActiveUrl('admin/pages*') && !isActiveUrl('admin/pages/singles*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Collecties</span>
+        <span class="center-y nav-item {{ (isActiveUrl('admin/managers*')) ? 'active' : '' }}" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">Collecties</span>
         <div v-cloak class="dropdown-box inset-s">
-            @foreach(\Thinktomorrow\Chief\Pages\Page::availableCollections()->reject(function($page, $key){ return $key == 'singles'; }) as $key => $collection)
-                <a class="block squished --link-with-bg {{ isActiveUrl('admin/pages/'.$key.'*') ? 'active' : '' }}" href="{{ route('chief.back.pages.index',['collection' => $key]) }}">{{ ucfirst($collection->plural) }}</a>
+            @foreach(app(\Thinktomorrow\Chief\Management\Register::class)->all() as $registration)
+
+                <?php $manager = app(\Thinktomorrow\Chief\Management\Managers::class)->findByKey($registration->key()); ?>
+
+                <a class="block squished --link-with-bg {{ isActiveUrl('admin/managers/'.$registration->key().'*') ? 'active' : '' }}" href="{{ route('chief.back.managers.index',['key' => $registration->key()]) }}">
+                    {{ $manager->managerDetails()->plural }}
+                </a>
+
             @endforeach
         </div>
     </dropdown>

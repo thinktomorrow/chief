@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
 

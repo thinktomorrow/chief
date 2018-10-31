@@ -3,14 +3,13 @@
 namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Management\Fields\FieldValidator;
+use Thinktomorrow\Chief\Fields\FieldValidator;
 use Thinktomorrow\Chief\Management\ModelManager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 
 class UpdateManager
 {
-    // If there is a save<key>Field this has priority over the set<Key>Field methods
-    private $saveMethods = [];
+   use StoringAndUpdatingFields;
 
     public function handle(ModelManager $manager, Request $request)
     {
@@ -18,38 +17,13 @@ class UpdateManager
             NotAllowedManagerRoute::update($manager);
         }
 
-        app(FieldValidator::class)->validate($manager, $request);
+        $request = $manager->updateRequest($request);
 
-        foreach($manager->fields() as $field) {
+        app(FieldValidator::class)->validate($manager->fields(), $request);
 
-            // Custom save methods
-            $saveMethodName = 'save'. ucfirst(camel_case($field->key())) . 'Field';
-            if(method_exists($manager,$saveMethodName)) {
-                $this->saveMethods[$field->key] = ['field' => $field, 'method' => $saveMethodName];
-                continue;
-            }
+        $this->handleFields($manager, $request);
 
-            // Custom set methods - default is the generic setField() method.
-            $methodName = 'set'. ucfirst(camel_case($field->key())) . 'Field';
-            (method_exists($manager, $methodName))
-                ? $manager->$methodName($field, $request)
-                : $manager->setField($field, $request);
-        }
-
-        // Save the model
-        $manager->saveFields();
-
-        // Handle off any custom save methods
+        // Handle any custom save methods
         $this->handleCustomSaves($manager, $request);
-    }
-
-    private function handleCustomSaves($manager, $request)
-    {
-        foreach($this->saveMethods as $data)
-        {
-            $method = $data['method'];
-
-            $manager->$method($data['field'], $request);
-        }
     }
 }

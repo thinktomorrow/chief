@@ -14,10 +14,31 @@ class Managers
 
     public function findByKey($key, $id = null): ModelManager
     {
-        $class = $this->register->filterByKey($key)->toClass();
+        $registration = $this->register->filterByKey($key)->first();
+
+        return $this->instance($registration, $id);
+    }
+
+    public function findByModel($model, $id = null): ModelManager
+    {
+        $registration = $this->register->filterByModel($model)->first();
+
+        return $this->instance($registration, $id);
+    }
+
+    /**
+     * @param $registration
+     * @param $id
+     * @return mixed
+     */
+    private function instance(Registration $registration, $id = null)
+    {
+        $managerClass = $registration->class();
+
+        $manager = new $managerClass($registration);
 
         return $id
-            ? $class::findManaged($id)
-            : app($class);
+            ? $manager->findManaged($id)
+            : $manager;
     }
 }

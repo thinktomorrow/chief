@@ -2,17 +2,18 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
-use Thinktomorrow\Chief\Common\Fields\InputField;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Fields;
 
 class ManagerFakeWithValidation extends ManagerFake
 {
-    public function fields(): array
+    public function fields(): Fields
     {
-        return [
+        return new Fields([
             InputField::make('title')->validation(['required']),
             InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']),
-            InputField::make('title_trans')->validation(['trans.*.title_trans' => 'required'])->translatable(true),
-            InputField::make('content_trans')->translatable(true),
-        ];
+            InputField::make('title_trans')->validation('required')->translatable(['nl', 'en']),
+            InputField::make('content_trans')->translatable(['nl', 'en']),
+        ]);
     }
 }
