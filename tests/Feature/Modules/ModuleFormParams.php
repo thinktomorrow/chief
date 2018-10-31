@@ -3,6 +3,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
+
 trait ModuleFormParams
 {
     protected function validModuleParams($overrides = [])
@@ -43,7 +45,7 @@ trait ModuleFormParams
 
     protected function assertNewModuleValues($module)
     {
-        $this->assertEquals('newsletter', $module->collection);
+        $this->assertEquals(NewsletterModuleFake::class, $module->morph_key);
         $this->assertEquals('new-slug', $module->slug);
     }
 

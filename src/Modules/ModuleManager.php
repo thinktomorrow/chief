@@ -2,16 +2,53 @@
 
 namespace Thinktomorrow\Chief\Modules;
 
+use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
+use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\FieldTab;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Modules\Application\DeleteModule;
+use Thinktomorrow\Chief\Pages\Application\ArchivePage;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class ModuleManager extends AbstractManager implements ModelManager
 {
+    public function can($verb): bool
+    {
+        $this->authorize($verb);
+
+        return parent::can($verb);
+    }
+
+    private function authorize($verb)
+    {
+        $permission = 'update-page';
+
+        if(in_array($verb, ['index','show'])) {
+            $permission = 'view-page';
+        }
+        elseif(in_array($verb, ['create','store'])) {
+            $permission = 'create-page';
+        }
+        elseif(in_array($verb, ['delete'])) {
+            $permission = 'delete-page';
+        }
+
+        if( ! auth()->guard('chief')->user()->hasPermissionTo($permission)){
+            throw NotAllowedManagerRoute::notAllowedPermission($permission);
+        }
+    }
+
     /**
      * The set of fields that should be manageable for a certain model.
      *
@@ -24,8 +61,60 @@ class ModuleManager extends AbstractManager implements ModelManager
     public function fields(): Fields
     {
         return new Fields([
-            InputField::make('title')->translatable($this->model->availableLocales()),
+            InputField::make('slug')->validation('required'),
+            InputField::make('title')->translatable($this->model->availableLocales())->validation('required-fallback-locale|max:200'),
             HtmlField::make('content')->translatable($this->model->availableLocales()),
         ]);
     }
+
+    public function saveFields(): ModelManager
+    {
+        // Store the morph_key upon creation
+        if(! $this->model->morph_key) {
+            $this->model->morph_key = $this->model->morphKey();
+        }
+
+        return parent::saveFields();
+    }
+
+    public function delete()
+    {
+        if( ! $this->can('delete')) {
+            NotAllowedManagerRoute::delete($this);
+        }
+
+        app(DeleteModule::class)->handle($this->model->id);
+    }
+
+    public function storeRequest(Request $request): Request
+    {
+        $trans = [];
+        foreach ($request->get('trans', []) as $locale => $translation) {
+            if (is_array_empty($translation)) {
+                continue;
+            }
+
+            $trans[$locale] = $translation;
+        }
+
+        return $request->merge(['trans' => $trans]);
+    }
+
+    public function updateRequest(Request $request): Request
+    {
+        $trans = [];
+        foreach ($request->get('trans', []) as $locale => $translation) {
+            if (is_array_empty($translation)) {
+
+                // Nullify all values
+                $trans[$locale] = array_map(function($value){ return null; }, $translation);
+                continue;
+            }
+
+            $trans[$locale] = $translation;
+        }
+
+        return $request->merge(['trans' => $trans]);
+    }
+
 }

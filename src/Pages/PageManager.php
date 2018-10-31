@@ -126,7 +126,7 @@ class PageManager extends AbstractManager implements ModelManager
     public function storeRequest(Request $request): Request
     {
         $trans = [];
-        foreach ($request->get('trans') as $locale => $translation) {
+        foreach ($request->get('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
             }
@@ -142,7 +142,7 @@ class PageManager extends AbstractManager implements ModelManager
     public function updateRequest(Request $request): Request
     {
         $trans = [];
-        foreach ($request->get('trans') as $locale => $translation) {
+        foreach ($request->get('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
 
                 // Nullify all values

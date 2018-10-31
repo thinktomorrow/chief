@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
@@ -16,18 +18,19 @@ class DeleteModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'newsletter' => NewsletterModuleFake::class,
-        ]);
+        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
     }
 
     /** @test */
     public function it_can_delete_modules()
     {
-        $module = Module::create(['morph_key' => 'newsletter', 'slug' => 'other-slug']);
+        $this->disableExceptionHandling();
+        $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
 
         $this->asAdmin()
-            ->delete(route('chief.back.modules.destroy', $module->id));
+            ->delete(route('chief.back.managers.delete', ['newsletter', $module->id]),[
+                'deleteconfirmation' => 'DELETE',
+            ]);
 
         $this->assertCount(0, Module::all());
         $this->assertCount(1, Module::onlyTrashed()->get());
@@ -36,17 +39,17 @@ class DeleteModuleTest extends TestCase
     /** @test */
     public function it_also_deletes_module_relations()
     {
-        $this->disableExceptionHandling();
-
         $page = factory(Page::class)->create();
 
-        $module = Module::create(['morph_key' => 'newsletter', 'slug' => 'other-slug']);
+        $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
         $page->adoptChild($module);
 
         $this->assertEquals(1, Relation::count());
 
         $this->asAdmin()
-            ->delete(route('chief.back.modules.destroy', $module->id));
+            ->delete(route('chief.back.managers.delete', ['newsletter', $module->id]),[
+            'deleteconfirmation' => 'DELETE',
+        ]);
 
         $this->assertCount(0, Module::all());
         $this->assertEquals(0, Relation::count());
