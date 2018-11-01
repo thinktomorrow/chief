@@ -7,7 +7,7 @@ class FlatReferenceFactory
     public static function fromString(string $reference): FlatReference
     {
         if (false == strpos($reference, '@')) {
-            throw new \InvalidArgumentException('Invalid collection id. Composite key should honour schema <class>@<id>. [' . $reference . '] was passed instead.');
+            throw new \InvalidArgumentException('Invalid reference composition. A flat reference should honour schema <class>@<id>. [' . $reference . '] was passed instead.');
         }
 
         list($className, $id) = explode('@', $reference);

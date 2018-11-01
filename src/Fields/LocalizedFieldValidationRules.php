@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fields;
 
-class LocalizedFieldValidation
+class LocalizedFieldValidationRules
 {
     /** @var array */
     private $locales;
@@ -43,9 +43,9 @@ class LocalizedFieldValidation
      * this locale should be completely ignored as such.
      *
      * @param array $data
-     * @return LocalizedFieldValidation
+     * @return LocalizedFieldValidationRules
      */
-    public function withPayload(array $data)
+    public function influenceByPayload(array $data)
     {
         // Remove locales that are considered empty in the request payload
         if ( ! isset($data['trans'])) return $this;

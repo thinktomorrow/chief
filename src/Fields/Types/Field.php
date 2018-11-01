@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Thinktomorrow\Chief\Fields\LocalizedFieldValidation;
+use Thinktomorrow\Chief\Fields\LocalizedFieldValidationRules;
 
 class Field
 {
@@ -44,8 +44,8 @@ class Field
             $rules = [$this->values['name'] => (is_array($rules) ? reset($rules) : $rules)];
 
             if($this->isTranslatable()) {
-                $rules = (new LocalizedFieldValidation($this->locales))
-                            ->withPayload($data)
+                $rules = (new LocalizedFieldValidationRules($this->locales))
+                            ->influenceByPayload($data)
                             ->rules($rules);
             }
         }

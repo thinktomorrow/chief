@@ -22,7 +22,6 @@ class ModulesController extends Controller
 
         return view('chief::back.modules.index', [
             'modules' => Module::withoutPageSpecific()->get(),
-            'collections' => Module::availableCollections()->values()->map->toArray()->toArray(),
         ]);
     }
 

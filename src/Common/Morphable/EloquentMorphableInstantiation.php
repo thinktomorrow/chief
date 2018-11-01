@@ -80,6 +80,7 @@ trait EloquentMorphableInstantiation
      */
     private function requiresCustomTranslation(Model $instance): bool
     {
+        // TODO: this check should not be explicitly targeted at PageTranslation ...
         return $instance->relationLoaded('translations') && $instance->translations->isEmpty() && $instance->translationModel != PageTranslation::class;
     }
 

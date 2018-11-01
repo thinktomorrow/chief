@@ -10,7 +10,7 @@ trait ModuleFormParams
     protected function validModuleParams($overrides = [])
     {
         $params = [
-            'morph_key' => 'newsletter',
+            'morph_key' => NewsletterModuleFake::class,
             'slug' => 'new-slug',
         ];
 
@@ -24,7 +24,7 @@ trait ModuleFormParams
     protected function validUpdateModuleParams($overrides = [])
     {
         $params = [
-            'morph_key' => 'newsletter',
+            'morph_key' => NewsletterModuleFake::class,
             'slug' => 'updated-slug',
             'trans' => [
                 'nl' => [
