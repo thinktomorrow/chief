@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Pages\Single;
@@ -20,12 +19,6 @@ class MorphableInstanceTest extends TestCase
         Relation::morphMap([
             'articles' => ArticlePageFake::class,
         ]);
-
-//        $this->app['config']->set('thinktomorrow.chief.collections', [
-//            'articles' => ArticlePageFake::class,
-//            'products' => ProductPageFake::class,
-//            'singles'  => Single::class,
-//        ]);
     }
 
     public function tearDown()
@@ -81,12 +74,13 @@ class MorphableInstanceTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_singles_morphable_by_default()
+    public function a_generic_morphable_has_no_morph_key()
     {
         $page = Page::create();
 
         $instance = Page::find($page->id);
-        $this->assertInstanceOf(Single::class, $instance);
+        $this->assertInstanceOf(Page::class, $instance);
+        $this->assertEquals(Page::class, $instance->morph_key);
     }
 
     /** @test */

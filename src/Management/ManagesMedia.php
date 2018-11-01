@@ -15,8 +15,6 @@ trait ManagesMedia
         $files = array_merge($request->get('files', []), $request->file('files', []));
         $filesOrder = $request->get('filesOrder', []);
 
-        if (empty($files)) return;
-
         app(UploadMedia::class)->fromUploadComponent($this->model, $files, $filesOrder);
     }
 

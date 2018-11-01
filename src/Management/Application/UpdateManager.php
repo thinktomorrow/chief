@@ -21,9 +21,17 @@ class UpdateManager
 
         app(FieldValidator::class)->validate($manager->fields(), $request);
 
+        if(method_exists($manager, 'beforeUpdate')){
+            $manager->beforeUpdate($request);
+        }
+
         $this->handleFields($manager, $request);
 
         // Handle any custom save methods
         $this->handleCustomSaves($manager, $request);
+
+        if(method_exists($manager, 'afterUpdate')){
+            $manager->afterUpdate($request);
+        }
     }
 }

@@ -3,7 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
@@ -17,16 +19,18 @@ class UploadMediaTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+
+        app(Register::class)->register('singles', PageManager::class, Single::class);
     }
 
     /** @test */
     public function a_new_asset_can_be_uploaded()
     {
-        $page = Page::create(['morph_key' => 'singles']);
+        $page = Single::create();
 
         // Upload asset
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'new' => [
@@ -37,18 +41,17 @@ class UploadMediaTest extends TestCase
             ]));
 
 
-        $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertTrue($page->fresh()->hasFile(MediaType::HERO));
+        $this->assertCount(1, $page->fresh()->getAllFiles(MediaType::HERO));
     }
 
     /** @test */
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
-        $this->disableExceptionHandling();
-        $page = Page::create(['morph_key' => 'singles']);
+        $page = Single::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::DOCUMENT => [
                         'new' => [
@@ -65,14 +68,14 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function an_asset_can_be_replaced()
     {
-        $page = Page::create(['morph_key' => 'singles']);
+        $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
         $existing_asset = $page->getAllFiles(MediaType::HERO)->first();
 
         // Replace asset
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'replace' => [
@@ -90,7 +93,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function an_asset_can_be_removed()
     {
-        $page = Page::create(['morph_key' => 'singles']);
+        $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
         // Assert Image is there
@@ -99,7 +102,7 @@ class UploadMediaTest extends TestCase
 
         // Remove asset
         $response = $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'delete' => [
@@ -115,16 +118,16 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    public function an_asset_can_be_sorted()
+    public function assets_can_be_sorted()
     {
-        $page = Page::create(['morph_key' => 'singles']);
+        $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
         $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO);
 
         $images = $page->fresh()->getAllFiles(MediaType::HERO);
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
                 'filesOrder' => [
                     MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
                 ]
@@ -140,10 +143,10 @@ class UploadMediaTest extends TestCase
         // TODO: this is something that should be provided by Assetlibrary
         $this->markTestIncomplete();
 
-        $page = Page::create(['morph_key' => 'singles']);
+        $page = Single::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'new' => [

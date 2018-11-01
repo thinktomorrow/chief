@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
 use Thinktomorrow\Chief\Common\UniqueSlug;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
@@ -11,12 +12,14 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldTab;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\ModelManager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
@@ -83,6 +86,8 @@ class PageManager extends AbstractManager implements ModelManager
             HtmlField::make('content')->translatable($this->model->availableLocales()),
             InputField::make('seo_title')->translatable($this->model->availableLocales()),
             TextField::make('seo_description')->translatable($this->model->availableLocales()),
+            MediaField::make(MediaType::HERO)->multiple(false),
+            MediaField::make(MediaType::THUMB)->multiple(false),
         ]);
     }
 
@@ -156,6 +161,22 @@ class PageManager extends AbstractManager implements ModelManager
 
         // Merge with request...
         return $request->merge(['trans' => $trans]);
+    }
+
+
+
+    public function afterStore($request)
+    {
+        Audit::activity()
+            ->performedOn($this->model)
+            ->log('created');
+    }
+
+    public function afterUpdate($request)
+    {
+        Audit::activity()
+            ->performedOn($this->model)
+            ->log('edited');
     }
 
     private function enforceUniqueSlug(array $translations, string $locale, Page $page): array

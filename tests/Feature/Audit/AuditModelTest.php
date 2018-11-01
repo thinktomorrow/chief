@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -18,22 +20,14 @@ class AuditTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDatabase();
         $this->setUpDefaultAuthorization();
 
-//        $this->app['config']->set('thinktomorrow.chief.collections', [
-//            'singles' => Single::class,
-//        ]);
-
-
-
-
+        app(Register::class)->register('singles', PageManager::class, Single::class);
     }
 
     /** @test */
     public function it_logs_create_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
@@ -45,7 +39,7 @@ class AuditTest extends TestCase
         $this->assertCount(1, $activity);
         $this->assertEquals('created', $activity->first()->description);
         $this->assertEquals($user->id, $activity->first()->causer_id);
-        $this->assertEquals(Single::class, $activity->first()->subject_type);
+        $this->assertEquals('singles', $activity->first()->subject_type);
     }
 
     /** @test */
@@ -60,14 +54,14 @@ class AuditTest extends TestCase
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-            ->put(route('chief.back.managers.update', $page->id), $this->validUpdatePageParams());
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams());
 
         $activity = Audit::getAllActivityFor($page);
 
         $this->assertCount(2, $activity);
         $this->assertEquals('edited', $activity->last()->description);
         $this->assertEquals($user->id, $activity->last()->causer_id);
-        $this->assertEquals(get_class($page), $activity->last()->subject_type);
+        $this->assertEquals($page->getMorphClass(), $activity->last()->subject_type);
     }
 
     /** @test */
@@ -81,14 +75,14 @@ class AuditTest extends TestCase
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.managers.destroy', $page->id), ['deleteconfirmation' => 'DELETE']);
+             ->delete(route('chief.back.managers.delete', ['singles', $page->id]), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getAllActivityFor($page);
 
         $this->assertCount(2, $activity);
         $this->assertEquals('deleted', $activity->last()->description);
         $this->assertEquals($user->id, $activity->last()->causer_id);
-        $this->assertEquals(get_class($page), $activity->last()->subject_type);
+        $this->assertEquals($page->getMorphClass(), $activity->last()->subject_type);
     }
 
     /** @test */
@@ -99,14 +93,14 @@ class AuditTest extends TestCase
         $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->put(route('chief.back.managers.archive', $page->id));
+             ->put(route('chief.back.pages.archive', $page->id));
 
         $activity = Audit::getAllActivityFor($page);
 
         $this->assertCount(1, $activity);
         $this->assertEquals('archived', $activity->last()->description);
         $this->assertEquals($user->id, $activity->last()->causer_id);
-        $this->assertEquals(Single::class, $activity->last()->subject_type);
+        $this->assertEquals('singles', $activity->last()->subject_type);
     }
 
     /** @test */
@@ -119,7 +113,8 @@ class AuditTest extends TestCase
         $this->actingAs($user, 'chief')
             ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
         
-        $activity = Page::first();
+        $article = Page::first();
+        $activity = $article->activity->first();
 
         $this->assertCount(1, $article->activity);
         $this->assertEquals('created', $activity->description);
@@ -130,6 +125,7 @@ class AuditTest extends TestCase
     /** @test */
     public function it_show_events()
     {
+        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')

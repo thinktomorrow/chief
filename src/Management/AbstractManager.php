@@ -4,13 +4,11 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Common\Models\HasManagerModelDetails;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Pages\Page;
 
 abstract class AbstractManager
 {

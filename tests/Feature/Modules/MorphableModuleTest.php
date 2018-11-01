@@ -20,7 +20,7 @@ class MorphableModuleTest extends TestCase
         // Reset relation mapping
         Relation::$morphMap = [];
 
-        parent::tearDown(); 
+        parent::tearDown();
     }
 
     /** @test */

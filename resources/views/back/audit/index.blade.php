@@ -28,7 +28,7 @@
                     {{ $event->description }}
                 </div>
                 <div class="column-3 center-y">
-                    {{ ucfirst(\Thinktomorrow\Chief\Common\Morphable\CollectionKeys::fromConfig()->filterByClass($event->subject_type)->toCollectionDetail()->singular) }}
+                    {{ $event->subject_type }}
                 </div>
                 <div class="column-3 center-y">
                     @if($event->causer)

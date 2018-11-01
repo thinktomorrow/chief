@@ -4,10 +4,10 @@ namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
-use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -24,25 +24,15 @@ class PageBuildTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'singles'    => Single::class,
-            'articles'   => ArticlePageFake::class,
-            'text'       => TextModule::class,
-            'newsletter' => NewsletterModuleFake::class,
-        ]);
+        app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
 
-        $this->page = app(CreatePage::class)->handle('articles', [
-            'trans' => [
-                'nl' => [
-                    'title' => 'new title',
-                    'slug'  => 'new-slug',
-                ],
-                'en' => [
-                    'title' => 'nouveau title',
-                    'slug'  => 'nouveau-slug',
-                ],
-            ],
-        ], [], [], []);
+        // Create a dummy page up front based on the expected validPageParams
+        $this->page = ArticlePageFake::create([
+            'title:nl' => 'new title',
+            'slug:nl' => 'new-slug',
+            'title:en' => 'nouveau title',
+            'slug:en' => 'nouveau-slug',
+        ]);
 
         // For our project context we expect the page detail route to be known
         Route::get('pages/{slug}', function () {
@@ -52,10 +42,10 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_fetch_all_sections_in_order()
     {
-        $module    = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['morph_key' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
-        $module2   = TextModule::create(['morph_key' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
-        $module3   = NewsletterModuleFake::create(['morph_key' => 'newsletter', 'slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
+        $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
+        $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
         $this->page->adoptChild($module, ['sort' => 0]);
         $this->page->adoptChild($module2, ['sort' => 2]);
@@ -71,11 +61,11 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_fetch_all_sections_with_multiple_pages_in_order()
     {
-        $module    = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['morph_key' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
-        $thirdPage = ArticlePageFake::create(['morph_key' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug-2', 'published' => true]);
-        $module2   = TextModule::create(['morph_key' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
-        $module3   = NewsletterModuleFake::create(['morph_key' => 'newsletter', 'slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
+        $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
+        $thirdPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug-2', 'published' => true]);
+        $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
         $this->page->adoptChild($module, ['sort' => 0]);
         $this->page->adoptChild($module2, ['sort' => 2]);
@@ -94,7 +84,7 @@ class PageBuildTest extends TestCase
     public function it_can_add_a_text_module()
     {
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -117,12 +107,12 @@ class PageBuildTest extends TestCase
     public function it_can_replace_a_text_module()
     {
         // Add first text module
-        $module = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text']);
+        $module = TextModule::create(['slug' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -144,11 +134,11 @@ class PageBuildTest extends TestCase
     public function it_removes_a_text_module_when_its_completely_empty()
     {
         // Add first text module
-        $module = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text']);
+        $module = TextModule::create(['slug' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -173,11 +163,11 @@ class PageBuildTest extends TestCase
     public function it_removes_a_text_module_when_it_only_contains_empty_paragraph_tag()
     {
         // Add first text module
-        $module = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text']);
+        $module = TextModule::create(['slug' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -198,11 +188,11 @@ class PageBuildTest extends TestCase
     public function it_does_not_remove_a_text_module_when_its_not_completely_empty()
     {
         // Add first text module
-        $module = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text']);
+        $module = TextModule::create(['slug' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -225,11 +215,11 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_add_an_existing_module()
     {
-        $module = NewsletterModuleFake::create(['morph_key' => 'newsletter', 'slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
+        $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -246,12 +236,12 @@ class PageBuildTest extends TestCase
     /** @test */
     public function adding_existing_module_does_not_change_anything()
     {
-        $module = NewsletterModuleFake::create(['morph_key' => 'newsletter', 'slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
+        $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -268,11 +258,11 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_add_pages_as_module()
     {
-        $article = ArticlePageFake::create(['morph_key' => 'articles', 'title:nl' => 'tweede artikel', 'slug:nl' => 'tweede-slug']);
+        $article = ArticlePageFake::create(['title:nl' => 'tweede artikel', 'slug:nl' => 'tweede-slug']);
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -289,12 +279,12 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_remove_modules()
     {
-        $module = NewsletterModuleFake::create(['morph_key' => 'newsletter', 'slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
+        $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -309,14 +299,14 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_set_the_order()
     {
-        $text_module = TextModule::create(['morph_key' => 'text', 'slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['morph_key' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug']);
-        $newsletter = NewsletterModuleFake::create(['morph_key' => 'newsletter', 'slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $text_module = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug']);
+        $newsletter = NewsletterModuleFake::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
 
         $this->page->adoptChild($text_module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validPageParams([
+            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [
                     [
                         'slug' => 'text-1',

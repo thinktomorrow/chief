@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Menu;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Common\Morphable\GlobalMorphableScope;
+use Thinktomorrow\Chief\Common\Morphable\Morphables;
 use Thinktomorrow\Chief\Common\Translatable\Translatable;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
@@ -107,7 +108,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->collection_type) {
-                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
+                $pages = Morphables::instance($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;
@@ -150,7 +151,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->collection_type) {
-                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
+                $pages = Morphables::instance($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;

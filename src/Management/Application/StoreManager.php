@@ -20,10 +20,18 @@ class StoreManager
 
         app(FieldValidator::class)->validate($manager->fields(), $request);
 
+        if(method_exists($manager, 'beforeStore')){
+            $manager->beforeStore($request);
+        }
+
         $this->handleFields($manager, $request);
 
         // Handle off any custom save methods
         $this->handleCustomSaves($manager, $request);
+
+        if(method_exists($manager, 'afterStore')){
+            $manager->afterStore($request);
+        }
 
         // Since the model doesn't exist yet, it is now created via the save method
         // For the store we return the new manager which is now connected to the created model instance

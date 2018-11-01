@@ -5,22 +5,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class MediaTest extends TestCase
 {
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'singles' => Single::class,
-            'articles' => ArticlePageFake::class,
-        ]);
-    }
-    
     /** @test */
     public function it_can_have_an_image()
     {
@@ -47,7 +36,7 @@ class MediaTest extends TestCase
     {
         $this->setUpDefaultAuthorization();
 
-        $article = ArticlePageFake::create(['morph_key' => 'articles']);
+        $article = ArticlePageFake::create();
 
         $response = $this->asAdmin()->post(route('pages.media.upload', $article->id), [
             'file' => [

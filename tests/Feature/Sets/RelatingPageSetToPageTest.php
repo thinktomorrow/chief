@@ -14,10 +14,6 @@ class RelatingPageSetToPageTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'articles'   => ArticlePageFake::class,
-        ]);
-
         $this->app['config']->set('thinktomorrow.chief.sets', [
             'foobar'   => [
                 'action' => DummySetRepository::class.'@all',
@@ -25,7 +21,7 @@ class RelatingPageSetToPageTest extends TestCase
             ],
         ]);
 
-        $this->page = ArticlePageFake::create(['collection' => 'articles']);
+        $this->page = ArticlePageFake::create();
     }
 
     /** @test */

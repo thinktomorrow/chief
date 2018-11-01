@@ -12,6 +12,13 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class FlatReferenceTest extends TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        MorphableContractFakeModel::migrateUp();
+    }
+
     /** @test */
     public function it_can_create_a_collection_from_flat_references()
     {
@@ -30,8 +37,6 @@ class FlatReferenceTest extends TestCase
     /** @test */
     public function it_can_create_collection_id_from_string()
     {
-        $this->setUpCollectionFakeWorld();
-
         $acts_as_collection = MorphableContractFakeModel::create(['label' => 'new label']);
 
         $this->assertInstanceOf(FlatReference::class, $acts_as_collection->flatReference());
@@ -43,9 +48,7 @@ class FlatReferenceTest extends TestCase
     /** @test */
     public function it_can_create_instance_from_collection_id()
     {
-        $this->setUpCollectionFakeWorld();
-
-        $first = MorphableContractFakeModel::create(['morph_key' => 'has_collection_fakes']);
+        $first = MorphableContractFakeModel::create();
         $instance = $first->flatReference()->instance();
 
         $this->assertInstanceOf(MorphableContractFakeModel::class, $instance);
@@ -55,8 +58,6 @@ class FlatReferenceTest extends TestCase
     /** @test */
     public function it_can_instantiate_multiple_collection_ids()
     {
-        $this->setUpCollectionFakeWorld();
-
         $first = MorphableContractFakeModel::create();
         $second = MorphableContractFakeModel::create();
 
