@@ -47,7 +47,7 @@
                 this.active = false;
             },
             addingModuleSectionAfter(position){
-                Eventbus.$emit('addingModuleSectionAfter',position, this);
+                Eventbus.$emit('addingModuleSectionAfter', position, this);
 
                 this.active = false;
             },

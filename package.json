@@ -21,8 +21,8 @@
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
     "module": "^1.2.5",
-    "vue-template-compiler": "^2.5.16",
-    "vue-server-renderer": "^2.5.16"
+    "vue-server-renderer": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
   },
   "dependencies": {
     "axios": "^0.18",
@@ -32,11 +32,13 @@
     "lodash": "^4.17.4",
     "npmlog": "^4.1.2",
     "popper.js": "^1.14.3",
+    "sortablejs": "^1.7.0",
     "stickyfilljs": "^2.0.3",
     "tippy.js": "^2.1.1",
     "vue": "^2.5.16",
     "vue-loader": "^14.2.2",
     "vue-multiselect": "^2.0.3",
+    "vuedraggable": "^2.16.0",
     "warpaint": "https://github.com/thinktomorrow/warpaint.git#0.1"
   }
 }

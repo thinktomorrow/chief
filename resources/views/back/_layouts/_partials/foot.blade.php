@@ -70,7 +70,7 @@
     });
 
     window.showModal = function(id, options){
-        Eventbus.$emit('open-modal',id, options);
+        Eventbus.$emit('open-modal', id, options);
     };
 
     window.closeModal = function(id){

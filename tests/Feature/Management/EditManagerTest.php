@@ -53,6 +53,8 @@ class EditManagerTest extends TestCase
         $asset = AssetUploader::upload($source);
         $asset->attachToModel($this->model, 'avatar');
 
+        config()->set(['app.fallback_locale' => 'nl']);
+
         $this->assertEquals('tt-favicon.png', $this->model->getFilename('avatar'));
 
         $this->assertCount(1, $this->manager->getFieldValue('avatar'));

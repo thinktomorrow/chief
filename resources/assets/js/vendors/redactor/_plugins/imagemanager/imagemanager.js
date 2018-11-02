@@ -77,27 +77,6 @@
 			var data = JSON.parse(decodeURI($el.attr('data-params')));
 
 			this.app.api('module.image.insert', { image: data });
-		},
-        onupload: {
-            stop: function(response)
-            {
-                /**
-                 * Hack to clean up empty images that are inserted after upload
-                 * Currently no precise idea from where this originates...
-                 */
-                console.log('DUDUDU');
-                this.removeEmptyFigures();
-
-            }
-        },
-        removeEmptyFigures: function()
-        {
-            var html = this.app.source.getCode();
-
-            // html = html.replace('<div class="row', '<div contenteditable="false" class="row');
-            // html = html.replace('<div class="column', '<div contenteditable="true" class="column');
-
-            //this.app.source.setCode(html);
-        },
+		}
     });
 })(Redactor);

@@ -28,6 +28,8 @@ class UploadMediaTest extends TestCase
     {
         $page = Single::create();
 
+        config()->set(['app.fallback_locale' => 'nl']);
+
         // Upload asset
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
@@ -49,6 +51,8 @@ class UploadMediaTest extends TestCase
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
         $page = Single::create();
+
+        config()->set(['app.fallback_locale' => 'nl']);
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([

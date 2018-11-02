@@ -1,4 +1,4 @@
-.upload-box {
+.upload-redactor-box {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -13,15 +13,15 @@
 	overflow: hidden;
 	text-align: center;
 }
-.upload-placeholder {
+.upload-redactor-placeholder {
 	font-size: 15px;
 	line-height: 1.5;
 	color: rgba(0, 0, 0, .3);
 	font-style: italic;
 }
 
-.upload-hover { background-color: rgba(#007dff, .075);   }
-.upload-error { background-color: rgba(#ff3265, .075);   }
+.upload-redactor-hover { background-color: rgba(#007dff, .075);   }
+.upload-redactor-error { background-color: rgba(#ff3265, .075);   }
 
-.upload-box-hover { outline: 5px dashed rgba(#007dff, .3); }
-.upload-box-error { outline: 5px dashed rgba(#ff3265, .3);  }
+.upload-redactor-box-hover { outline: 5px dashed rgba(#007dff, .3); }
+.upload-redactor-box-error { outline: 5px dashed rgba(#ff3265, .3);  }

@@ -77,11 +77,6 @@ class CreateAdmin extends BaseCommand
                 'lastname'  => 'Berkmans',
                 'email'     => 'johnny@thinktomorrow.be',
             ],
-            [
-                'firstname' => 'Bob',
-                'lastname'  => 'Dries',
-                'email'     => 'bob@thinktomorrow.be',
-            ],
         ];
 
         return $anticipations;

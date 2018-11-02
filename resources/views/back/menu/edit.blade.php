@@ -7,13 +7,9 @@
     @slot('subtitle')
         <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
     @endslot
-        <form action="{{route('chief.back.menuitem.destroy', $menuitem->id)}}" method="POST">
-            {{ method_field('DELETE') }}
-            {{ csrf_field() }}
-            <span class="btn btn-link inline-block inline-s" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
-                verwijderen
-            </span>
-        </form>
+        <span class="btn btn-link inline-block inline-s" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
+            verwijderen
+        </span>
         <button data-submit-form="updateForm" type="button" class="btn btn-primary">Opslaan</button>
     @endcomponent
 
@@ -26,9 +22,5 @@
             @include('chief::back.menu._form')
 
         </form>
-
+        @include('chief::back.menu._partials.delete-modal')
     @stop
-
-@push('custom-components')
-    @include('chief::back.menu._partials.delete-modal')
-@endpush
