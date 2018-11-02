@@ -99,6 +99,13 @@ abstract class AbstractManager
         return !is_null($this->route($verb));
     }
 
+    public function guard($verb)
+    {
+        if( ! $this->can($verb)) {
+            NotAllowedManagerRoute::notAllowedVerb($verb, $this);
+        }
+    }
+
     /**
      * This determines the arrangement of the manageable fields
      * on the create and edit forms. By default, all fields
@@ -194,9 +201,7 @@ abstract class AbstractManager
 
     public function delete()
     {
-        if( ! $this->can('delete')) {
-            NotAllowedManagerRoute::delete($this);
-        }
+        $this->guard('delete');
 
         $this->model->delete();
     }

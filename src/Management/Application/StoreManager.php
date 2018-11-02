@@ -12,9 +12,7 @@ class StoreManager
 
     public function handle(ModelManager $manager, Request $request): ModelManager
     {
-        if( ! $manager->can('store')){
-            NotAllowedManagerRoute::store($manager);
-        }
+        $manager->guard('store');
 
         $request = $manager->storeRequest($request);
 

@@ -2,24 +2,15 @@
 
 namespace Thinktomorrow\Chief\Modules;
 
-use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
-use Thinktomorrow\Chief\Common\UniqueSlug;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldTab;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
-use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\ModelManager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
-use Thinktomorrow\Chief\Pages\Application\ArchivePage;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class ModuleManager extends AbstractManager implements ModelManager
 {
@@ -79,9 +70,7 @@ class ModuleManager extends AbstractManager implements ModelManager
 
     public function delete()
     {
-        if( ! $this->can('delete')) {
-            NotAllowedManagerRoute::delete($this);
-        }
+        $this->guard('delete');
 
         app(DeleteModule::class)->handle($this->model->id);
     }

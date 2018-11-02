@@ -115,18 +115,14 @@ class PageManager extends AbstractManager implements ModelManager
 
     public function delete()
     {
-        if( ! $this->can('delete')) {
-            NotAllowedManagerRoute::delete($this);
-        }
+        $this->guard('delete');
 
         app(DeletePage::class)->handle($this->model->id);
     }
 
     public function archive()
     {
-        if( ! $this->can('delete')) {
-            NotAllowedManagerRoute::delete($this);
-        }
+        $this->guard('delete');
 
         app(ArchivePage::class)->handle($this->model->id);
     }

@@ -43,6 +43,12 @@ interface ModelManager
     public function can($verb): bool;
 
     /**
+     * @param $verb
+     * @throws NotAllowedManagerRoute
+     */
+    public function guard($verb);
+
+    /**
      * The set of fields that should be manageable for a certain model.
      *
      * Additionally, you should:
