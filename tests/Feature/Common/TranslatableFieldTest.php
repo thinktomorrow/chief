@@ -29,12 +29,14 @@ class TranslatableFieldTest extends TestCase
     }
 
     /** @test */
-    public function non_given_label_and_description_are_by_default_null()
+    public function by_default_label_is_key_and_description_null()
     {
         $field = InputField::make('foobar');
 
-        $this->assertNull($field->label);
+        $this->assertEquals('foobar', $field->label);
         $this->assertNull($field->description);
+
+        $this->assertNull($field->label(null)->label);
     }
 
     /** @test */
