@@ -44,4 +44,16 @@ class PagebuilderField extends Field
 
         return $this;
     }
+
+    public function __get($key)
+    {
+        $value = parent::__get($key);
+
+        // Default empty array for these following values
+        if(!$value && in_array($key, ['sections','availableModules','availablePages', 'availableSets'])){
+            return [];
+        }
+
+        return $value;
+    }
 }

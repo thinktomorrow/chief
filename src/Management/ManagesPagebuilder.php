@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Relations\AvailableChildren;
-use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -72,6 +71,7 @@ trait ManagesPagebuilder
         })->toArray();
 
         return PagebuilderField::make('sections')
+                                ->translatable($this->model->availableLocales())
                                 ->sections($sections)
                                 ->availablePages($available_pages)
                                 ->availableModules($available_modules)

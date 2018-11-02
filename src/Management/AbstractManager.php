@@ -203,20 +203,17 @@ abstract class AbstractManager
 
     public function renderField(Field $field)
     {
-        $viewpath ='chief::back._fields.'.$field->type;
+        $path = $field->ofType(FieldType::PAGEBUILDER)
+            ? 'chief::back._fields.pagebuilder'
+            : 'chief::back._fields.formgroup';
 
-        if (!view()->exists($viewpath)) {
-            return '';
-        }
-
-        $path = $field->isTranslatable()
-            ? 'chief::back._fields.translatable'
-            : $viewpath;
+        // form element view path
+        $viewpath = 'chief::back._fields.' . $field->type;
 
         return view($path, [
-            'field' => $field,
-            'key' => $field->key, // As parameter so that it can be altered for translatable values
-            'manager' => $this,
+            'field'    => $field,
+            'key'      => $field->key, // As parameter so that it can be altered for translatable values
+            'manager'  => $this,
             'viewpath' => $viewpath,
         ])->render();
     }

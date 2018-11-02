@@ -75,8 +75,11 @@ class PageManager extends AbstractManager implements ModelManager
     public function fields(): Fields
     {
         return new Fields([
-            PagebuilderField::make('sections')->translatable($this->model->availableLocales()),
-            InputField::make('title')->translatable($this->model->availableLocales())->validation('required-fallback-locale|max:200'),
+            $this->createPagebuilderField(),
+            InputField::make('title')->translatable($this->model->availableLocales())
+                                     ->validation('required-fallback-locale|max:200')
+                                     ->label('Pagina titel')
+                                     ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
             InputField::make('slug')->translatable($this->model->availableLocales())
                 ->validation($this->model->id
                     ? 'unique:page_translations,slug,' . $this->model->id . ',page_id'

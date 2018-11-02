@@ -17,7 +17,7 @@ class Field
     {
         $this->fieldType = $fieldType;
 
-        $this->values['key'] = $this->values['column'] = $this->values['name'] = $key;
+        $this->values['key'] = $this->values['column'] = $this->values['name'] = $this->values['label'] = $key;
         $this->values['locales'] = [];
         $this->values['type'] = $fieldType->get();
     }
