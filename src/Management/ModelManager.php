@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Common\Models\ManagerModelDetails;
+use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
 
 interface ModelManager
 {
@@ -78,6 +78,10 @@ interface ModelManager
 
     public function renderField(Field $field);
 
+    /**
+     * Action to execute deletion of the model.
+     * @return mixed
+     */
     public function delete();
 
     /**
@@ -108,7 +112,7 @@ interface ModelManager
     /**
      * Information regarding a specific managed model instance.
      *
-     * @return ManagerModelDetails
+     * @return ManagedModelDetails
      */
-    public function modelDetails(): ManagerModelDetails;
+    public function modelDetails(): ManagedModelDetails;
 }

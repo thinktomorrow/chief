@@ -4,8 +4,10 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Management\Application\DeleteManager;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Application\UpdateManager;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 
@@ -79,11 +81,12 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        if (request()->get('deleteconfirmation') !== 'DELETE') {
+        try{
+            app(DeleteManager::class)->handle($manager, $request);
+        }
+        catch(DeleteAborted $e){
             return redirect()->back()->with('messages.warning', $manager->managerDetails()->singular . ' is niet verwijderd.');
         }
-
-        $manager->delete();
 
         return redirect()->to($manager->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" is verwijderd.');

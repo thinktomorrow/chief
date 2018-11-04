@@ -34,22 +34,9 @@ class DeleteManagerTest extends TestCase
     public function it_can_delete_a_model()
     {
         $this->asAdmin()
-            ->delete($this->fake->route('delete'),[
-                'deleteconfirmation' => 'DELETE',
-            ]);
+            ->delete($this->fake->route('delete'));
 
         $this->assertNull($this->model->fresh());
-    }
-
-    /** @test */
-    public function deleting_a_model_requires_the_proper_confirmation_string()
-    {
-        $this->asAdmin()
-            ->delete($this->fake->route('delete'),[
-                'deleteconfirmation' => 'FOOBAR',
-            ]);
-
-        $this->assertNotNull($this->model->fresh());
     }
 
     /** @test */
@@ -62,9 +49,7 @@ class DeleteManagerTest extends TestCase
         (new ManagerFakeWithoutDelete(app(Register::class)->first()))->manage($this->model);
 
         $this->asAdmin()
-            ->delete('/admin/manage/fakes/1', [
-                'deleteconfirmation' => 'DELETE',
-            ]); // We force the url since it is not provided by the manager
+            ->delete('/admin/manage/fakes/1'); // We force the url since it is not provided by the manager
 
         $this->assertNotNull($this->model->fresh());
     }

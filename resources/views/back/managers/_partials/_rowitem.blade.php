@@ -21,6 +21,7 @@
         @endif
     </div>
     <div class="column-3 text-right">
+        {!! $manager->modelDetails()->context !!}
         @include('chief::back.managers._partials.context-menu')
     </div>
 </div>

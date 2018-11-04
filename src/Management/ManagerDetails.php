@@ -19,8 +19,9 @@ class ManagerDetails implements Arrayable
     /** @var array */
     private $values = [];
 
-    public function __construct(string $key, string $class, string $singular, string $plural)
+    public function __construct(string $id, string $key, string $class, string $singular, string $plural)
     {
+        $this->values['id'] = $id;
         $this->values['key'] = $key;
         $this->values['class'] = $class;
         $this->values['singular'] = $singular;
@@ -48,7 +49,7 @@ class ManagerDetails implements Arrayable
 
     public function __toString()
     {
-        return (string)$this->get('key');
+        return (string)$this->get('id');
     }
 
     public function toArray()

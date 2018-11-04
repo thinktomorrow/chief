@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Models\HasModuleModelDetails;
 use Thinktomorrow\Chief\Common\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Common\Morphable\Morphable;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
@@ -31,7 +30,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     }
 
     use Morphable,
-        HasModuleModelDetails,
         AssetTrait,
         Translatable,
         BaseTranslatable,
@@ -193,6 +191,9 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public function flatReferenceGroup(): string
     {
-        return $this->modelDetails()->singular;
+        $classKey = get_class($this);
+        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+
+        return $labelSingular;
     }
 }

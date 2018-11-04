@@ -17,6 +17,14 @@ return [
     ],
 
     /**
+     * Definitions of the few route names that the chief backend uses to interact with the frontend.
+     * This is for instance used to preview an url of a page.
+     */
+    'routes' => [
+        'pages-show' => 'pages.show',
+    ],
+
+    /**
      * By default all models are available as children. Here we define which models are explicitly disallowed.
      *
      * This reflects itself in the select options of the page builder. Make note that this has no effect on already

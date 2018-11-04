@@ -4,11 +4,8 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Models\HasPageModelDetails;
 use Thinktomorrow\Chief\Common\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Common\Morphable\Morphable;
-use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
@@ -36,7 +33,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     use Morphable,
-        HasPageModelDetails,
         AssetTrait,
         Translatable,
         SoftDeletes,
@@ -120,7 +116,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function flatReferenceGroup(): string
     {
-        return $this->modelDetails()->singular;
+        $classKey = get_class($this);
+        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+
+        return $labelSingular;
     }
 
     public function mediaUrls($type = null): Collection

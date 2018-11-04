@@ -92,3 +92,10 @@ if(!function_exists('is_array_empty')) {
         return $empty;
     }
 }
+
+if(! function_exists('contract')){
+    function contract($instance, $contract){
+        return $instance instanceof $contract;
+    }
+}
+

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -231,6 +230,7 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_show_create_menu()
     {
+        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         factory(Page::class)->create([

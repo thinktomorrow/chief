@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
-use Thinktomorrow\Chief\Common\Models\HasManagerModelDetails;
+use Thinktomorrow\Chief\Management\Details\HasManagedModelDetails;
 use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 
 abstract class AbstractManager
 {
-    use HasManagerModelDetails,
+    use HasManagedModelDetails,
         ManagesMedia,
         ManagesPagebuilder,
         TranslatableCommand;
@@ -32,7 +32,7 @@ abstract class AbstractManager
     {
         $this->registration = $registration;
 
-        // Without passing parameter, we assume the generic model instance is set
+        // Upon instantiation, a general model is set that doesn't point to a persisted record.
         $this->manage(app($this->registration->model()));
 
         // Check if key and model are present since the model should be set by the manager itself
@@ -65,6 +65,7 @@ abstract class AbstractManager
     public function managerDetails(): ManagerDetails
     {
         return new ManagerDetails(
+            str_slug($this->registration->key().'-'.$this->model->id),
             $this->registration->key(),
             static::class,
             property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($this->registration->key()),
@@ -201,8 +202,6 @@ abstract class AbstractManager
 
     public function delete()
     {
-        $this->guard('delete');
-
         $this->model->delete();
     }
 
