@@ -29,7 +29,9 @@ trait ManagesPublishing
     {
         $label = $this->publicationStatusAsPlainLabel();
 
-        if($plain) return $label;
+        if ($plain) {
+            return $label;
+        }
 
         if ($this->model->isPublished()) {
             return '<a href="'.$this->model->menuUrl().'" target="_blank"><em>'.$label.'</em></a>';

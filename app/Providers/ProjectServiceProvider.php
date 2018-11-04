@@ -15,7 +15,6 @@ class ProjectServiceProvider extends ServiceProvider
         Relation::morphMap([
             'singles' => Single::class,
         ]);
-
     }
 
     public function register()

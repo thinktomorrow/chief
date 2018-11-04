@@ -8,5 +8,4 @@ use Thinktomorrow\Chief\Modules\Module;
 
 class NewsletterModuleFake extends Module
 {
-
 }

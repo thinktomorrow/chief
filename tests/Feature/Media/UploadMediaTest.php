@@ -55,7 +55,7 @@ class UploadMediaTest extends TestCase
         config()->set(['app.fallback_locale' => 'nl']);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::DOCUMENT => [
                         'new' => [
@@ -79,7 +79,7 @@ class UploadMediaTest extends TestCase
 
         // Replace asset
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'replace' => [
@@ -106,7 +106,7 @@ class UploadMediaTest extends TestCase
 
         // Remove asset
         $response = $this->asAdmin()
-            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'delete' => [
@@ -131,7 +131,7 @@ class UploadMediaTest extends TestCase
         $images = $page->fresh()->getAllFiles(MediaType::HERO);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'filesOrder' => [
                     MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
                 ]
@@ -150,7 +150,7 @@ class UploadMediaTest extends TestCase
         $page = Single::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['singles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'new' => [

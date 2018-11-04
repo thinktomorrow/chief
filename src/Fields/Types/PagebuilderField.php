@@ -50,7 +50,7 @@ class PagebuilderField extends Field
         $value = parent::__get($key);
 
         // Default empty array for these following values
-        if(!$value && in_array($key, ['sections','availableModules','availablePages', 'availableSets'])){
+        if (!$value && in_array($key, ['sections','availableModules','availablePages', 'availableSets'])) {
             return [];
         }
 

@@ -26,10 +26,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     {
         $fields = [];
 
-        foreach($this->fields as $i => $field) {
-
-            if(is_callable($key)) {
-                if(true == $key($field)) {
+        foreach ($this->fields as $i => $field) {
+            if (is_callable($key)) {
+                if (true == $key($field)) {
                     $fields[] = $field;
                 }
 
@@ -37,10 +36,14 @@ class Fields implements \ArrayAccess, \IteratorAggregate
             }
 
             // Reject from list if value does not match expected one
-            if($value && $value == $field->$key) $fields[] = $field;
+            if ($value && $value == $field->$key) {
+                $fields[] = $field;
+            }
 
             // Reject from list if key returns null (key not present on field)
-            elseif(!$value && !is_null($field->$key)) $fields[] = $field;
+            elseif (!$value && !is_null($field->$key)) {
+                $fields[] = $field;
+            }
         }
 
         return new static($fields);
@@ -48,7 +51,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     private function validateFields(array $fields)
     {
-        array_map(function(Field $field){}, $fields);
+        array_map(function (Field $field) {
+        }, $fields);
     }
 
     public function add(Field $value)
@@ -72,7 +76,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     public function offsetSet($offset, $value)
     {
-        if( ! $value instanceof Field) {
+        if (! $value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
         }
 
@@ -87,4 +91,5 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->fields);
-}}
+    }
+}

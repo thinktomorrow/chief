@@ -47,10 +47,9 @@ class Audit extends Activity
 
     public function getTitle()
     {
-        try{
+        try {
             $title = (new $this->subject_type)->collectionDetails()->singular;
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $title = $this->subject_type;
         }
 

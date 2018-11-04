@@ -105,7 +105,7 @@ class SnippetParserTest extends TestCase
         $page = ArticlePageFake::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles', $page->id]), $this->validUpdatePageParams([
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',
@@ -123,7 +123,7 @@ class SnippetParserTest extends TestCase
         $page = ArticlePageFake::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles', $page->id]), $this->validUpdatePageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',

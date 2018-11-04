@@ -29,8 +29,8 @@ class FieldTab
     {
         $result = [];
 
-        foreach($fields->all() as $field) {
-            if(in_array($field->key, $this->fieldKeys)) {
+        foreach ($fields->all() as $field) {
+            if (in_array($field->key, $this->fieldKeys)) {
                 $result[] = $field;
             }
         }

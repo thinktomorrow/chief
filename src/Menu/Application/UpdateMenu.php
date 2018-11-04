@@ -90,12 +90,10 @@ class UpdateMenu
      */
     private function forceRemoveUrlWhenNoLinkIsRequested(MenuRequest $request)
     {
-        if (MenuItem::TYPE_NOLINK == $request->get('type'))
-        {
+        if (MenuItem::TYPE_NOLINK == $request->get('type')) {
             $trans = $request->get('trans', []);
 
-            foreach ($trans as $locale => $translations)
-            {
+            foreach ($trans as $locale => $translations) {
                 $trans[$locale]['url'] = null;
             }
 

@@ -18,7 +18,7 @@ class StoreManager
 
         app(FieldValidator::class)->validate($manager->fields(), $request);
 
-        if(method_exists($manager, 'beforeStore')){
+        if (method_exists($manager, 'beforeStore')) {
             $manager->beforeStore($request);
         }
 
@@ -27,7 +27,7 @@ class StoreManager
         // Handle off any custom save methods
         $this->handleCustomSaves($manager, $request);
 
-        if(method_exists($manager, 'afterStore')){
+        if (method_exists($manager, 'afterStore')) {
             $manager->afterStore($request);
         }
 

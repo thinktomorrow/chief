@@ -11,11 +11,11 @@ class Morphables
         $class = $key;
 
         // We assume the key is the full namespaced class or a string altered by the relation morph map.
-        if($morphedModel = Relation::getMorphedModel($key)) {
+        if ($morphedModel = Relation::getMorphedModel($key)) {
             $class = $morphedModel;
         }
 
-        if(!class_exists($class)) {
+        if (!class_exists($class)) {
             throw new NotFoundMorphKey('No class found by morphkey [' . $class . ']. Make sure that the morphkey is a valid class reference.');
         }
 

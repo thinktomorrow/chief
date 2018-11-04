@@ -42,7 +42,7 @@ class FieldValidatorTest extends TestCase
     /** @test */
     public function a_required_translatable_field_can_be_validated()
     {
-        config()->set('app.fallback_locale','nl');
+        config()->set('app.fallback_locale', 'nl');
 
         $this->assertValidation(new ManagedModelFake(), 'trans.nl.title_trans', $this->payload(['trans.nl.title_trans' => '']),
             $this->fake->route('edit'),
@@ -54,10 +54,10 @@ class FieldValidatorTest extends TestCase
     /** @test */
     public function a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
     {
-        config()->set('app.fallback_locale','nl');
+        config()->set('app.fallback_locale', 'nl');
 
         $response = $this->actingAs($this->developer(), 'chief')
-            ->put($this->fake->route('update'),$this->payload(['trans.en.title_trans' => '']));
+            ->put($this->fake->route('update'), $this->payload(['trans.en.title_trans' => '']));
 
         $response->assertSessionHasNoErrors();
     }

@@ -48,11 +48,14 @@ class LocalizedFieldValidationRules
     public function influenceByPayload(array $data)
     {
         // Remove locales that are considered empty in the request payload
-        if ( ! isset($data['trans'])) return $this;
+        if (! isset($data['trans'])) {
+            return $this;
+        }
 
-        foreach ($data['trans'] as $locale => $values)
-        {
-            if ($locale == $this->defaultLocale || ! is_array_empty($values))  continue;
+        foreach ($data['trans'] as $locale => $values) {
+            if ($locale == $this->defaultLocale || ! is_array_empty($values)) {
+                continue;
+            }
 
             $key = array_search($locale, $this->locales);
             unset($this->locales[$key]);

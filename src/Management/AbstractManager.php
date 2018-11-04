@@ -57,7 +57,7 @@ abstract class AbstractManager
     {
         $model = $this->registration->model();
 
-        return $model::all()->map(function($model){
+        return $model::all()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
     }
@@ -102,7 +102,7 @@ abstract class AbstractManager
 
     public function guard($verb)
     {
-        if( ! $this->can($verb)) {
+        if (! $this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this);
         }
     }
@@ -131,9 +131,8 @@ abstract class AbstractManager
             if (is_string($field)) {
 
                 // Could be translatable field
-                if($this->isTranslatableKey($field)) {
-
-                    $attribute = substr($field, strrpos($field,'.') + 1);
+                if ($this->isTranslatableKey($field)) {
+                    $attribute = substr($field, strrpos($field, '.') + 1);
                     $locale = substr($field, strlen('trans.'), 2);
 
                     return $this->model->getTranslationFor($attribute, $locale);
@@ -145,11 +144,11 @@ abstract class AbstractManager
 
         // Is it a media field
         // An array grouped by type is returned. Each media array has an id, filename and path.
-        if($field->ofType(FieldType::MEDIA)) {
+        if ($field->ofType(FieldType::MEDIA)) {
             return $this->populateMedia($this->model);
         }
 
-        if($field->ofType(FieldType::DOCUMENT)) {
+        if ($field->ofType(FieldType::DOCUMENT)) {
             return $this->populateDocuments($this->model);
         }
 
@@ -165,7 +164,6 @@ abstract class AbstractManager
     {
         // Is field set as translatable?
         if ($field->isTranslatable()) {
-
             if (!$this->requestContainsTranslations($request)) {
                 return;
             }
@@ -257,6 +255,4 @@ abstract class AbstractManager
             throw new \DomainException('Model class should be set for this manager. Please set the model property default via the constructor or by extending the setupDefaults method.');
         }
     }
-
-
 }

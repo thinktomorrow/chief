@@ -63,7 +63,7 @@ class Set extends Collection implements PresentForParent
 
         // In case the collection is made out of pages, we'll also allow to use the
         // generic collection page view for these sets as well.
-        if($this->first() instanceof PresentForParent){
+        if ($this->first() instanceof PresentForParent) {
             $viewPaths[] = 'front.modules.'. $parent->viewKey().'.'.$this->first()->viewKey();
             $viewPaths[] = 'front.modules.'. $this->first()->viewKey();
         }
@@ -84,12 +84,10 @@ class Set extends Collection implements PresentForParent
 
         // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
-        return $this->map(function($item) use($parent){
-
+        return $this->map(function ($item) use ($parent) {
             return ($item instanceof PresentForParent)
                 ? $item->presentForParent($parent)
                 : ($item->content ?? '');
-
         })->implode('');
     }
 

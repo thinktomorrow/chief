@@ -14,7 +14,9 @@ trait Morphable
          * is correct but still just into a generic Page class (and not the expected class)
          * so we want to use the proper morph identification at those moments
          */
-        if($this->morph_key) return $this->morph_key;
+        if ($this->morph_key) {
+            return $this->morph_key;
+        }
 
         // Get static class or mapped class if set so in laravel app.
         return $this->getMorphClass();

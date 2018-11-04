@@ -23,7 +23,7 @@ class UpdateModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class );
+        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
 
         $this->module = NewsletterModuleFake::create([
             'slug' => 'new-slug',

@@ -61,7 +61,7 @@ class UpdatePage
 
         // TODO: this should come from the manager->fields() as fieldgroup
         $translatableColumns = [];
-        foreach($page::translatableFields() as $translatableField) {
+        foreach ($page::translatableFields() as $translatableField) {
             $translatableColumns[] = $translatableField->column();
         }
 

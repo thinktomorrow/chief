@@ -8,7 +8,9 @@ class ManagerFakeWithoutDelete extends ManagerFake
 {
     public function route($verb): ?string
     {
-        if($verb == 'delete') return null;
+        if ($verb == 'delete') {
+            return null;
+        }
 
         return parent::route($verb);
     }

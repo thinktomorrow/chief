@@ -89,7 +89,7 @@ class ChiefServiceProvider extends ServiceProvider
         }
 
         // Manager register is globally available
-        $this->app->singleton(Register::class, function(){
+        $this->app->singleton(Register::class, function () {
             return new Register();
         });
 
@@ -98,16 +98,14 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
-        Validator::extend('requiredFallbackLocale',function($attribute, $value, $parameters, $validator){
-
+        Validator::extend('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
             $fallbackLocale = config('app.fallback_locale');
 
-            if(false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
+            if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
                 return !! trim($value);
             }
 
             return true;
-
         });
     }
 

@@ -137,6 +137,4 @@ trait TestHelpers
     {
         return UploadedFile::fake()->create($name, $sizeInKilobytes);
     }
-
-
 }

@@ -21,7 +21,8 @@ class CreatePageTest extends TestCase
 
         app(Register::class)->register('singles', PageManager::class, Single::class);
 
-        Route::get('pages/{slug}', function () {})->name('pages.show');
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */

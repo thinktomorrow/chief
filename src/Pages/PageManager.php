@@ -39,7 +39,7 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     {
         parent::__construct($registration);
 
-        $this->uniqueSlug = UniqueSlug::make(new PageTranslation)->slugResolver(function($value){
+        $this->uniqueSlug = UniqueSlug::make(new PageTranslation)->slugResolver(function ($value) {
             return str_slug_slashed($value);
         });
     }
@@ -55,17 +55,15 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     {
         $permission = 'update-page';
 
-        if(in_array($verb, ['index','show'])) {
+        if (in_array($verb, ['index','show'])) {
             $permission = 'view-page';
-        }
-        elseif(in_array($verb, ['create','store'])) {
+        } elseif (in_array($verb, ['create','store'])) {
             $permission = 'create-page';
-        }
-        elseif(in_array($verb, ['delete'])) {
+        } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }
 
-        if( ! auth()->guard('chief')->user()->hasPermissionTo($permission)){
+        if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
             throw NotAllowedManagerRoute::notAllowedPermission($permission);
         }
     }
@@ -114,13 +112,13 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     {
         return parent::modelDetails()
                         ->set('title', $this->model->title)
-                        ->set('context','<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
+                        ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
     }
 
     public function saveFields(): ModelManager
     {
         // Store the morph_key upon creation
-        if(! $this->model->morph_key) {
+        if (! $this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
@@ -164,7 +162,9 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
             if (is_array_empty($translation)) {
 
                 // Nullify all values
-                $trans[$locale] = array_map(function($value){ return null; }, $translation);
+                $trans[$locale] = array_map(function ($value) {
+                    return null;
+                }, $translation);
                 continue;
             }
 
@@ -212,6 +212,4 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
 
         return $translation;
     }
-
-
 }

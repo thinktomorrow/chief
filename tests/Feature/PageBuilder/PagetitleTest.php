@@ -43,7 +43,7 @@ class PagetitleTest extends TestCase
     public function it_can_add_a_pagetitle_module()
     {
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -72,7 +72,7 @@ class PagetitleTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -98,7 +98,7 @@ class PagetitleTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
