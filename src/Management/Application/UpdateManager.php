@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Management\ModelManager;
 
 class UpdateManager
 {
-   use StoringAndUpdatingFields;
+    use StoringAndUpdatingFields;
 
     public function handle(ModelManager $manager, Request $request)
     {
@@ -18,7 +18,7 @@ class UpdateManager
 
         app(FieldValidator::class)->validate($manager->fields(), $request);
 
-        if(method_exists($manager, 'beforeUpdate')){
+        if (method_exists($manager, 'beforeUpdate')) {
             $manager->beforeUpdate($request);
         }
 
@@ -27,7 +27,7 @@ class UpdateManager
         // Handle any custom save methods
         $this->handleCustomSaves($manager, $request);
 
-        if(method_exists($manager, 'afterUpdate')){
+        if (method_exists($manager, 'afterUpdate')) {
             $manager->afterUpdate($request);
         }
     }

@@ -21,7 +21,7 @@ class UniqueSlug
         $this->model = $model;
         $this->blacklist = $blacklist;
 
-        $this->slugResolver = function($slug){
+        $this->slugResolver = function ($slug) {
             return str_slug($slug);
         };
     }
@@ -69,7 +69,7 @@ class UniqueSlug
     {
         $model = $this->model->findBySlug($slug);
 
-        if (!in_array($slug, $this->blacklist) && (!$model || ($entity && $entity->id && $model->id == $entity->id)) ) {
+        if (!in_array($slug, $this->blacklist) && (!$model || ($entity && $entity->id && $model->id == $entity->id))) {
             return true;
         }
 

@@ -19,7 +19,6 @@ class MorphablePageTest extends TestCase
             'articles' => ArticlePageFake::class,
             'others' => OtherCollectionFake::class,
         ]);
-
     }
 
     /** @test */

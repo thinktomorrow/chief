@@ -84,7 +84,7 @@ class PageBuildTest extends TestCase
     public function it_can_add_a_text_module()
     {
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -112,7 +112,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -138,7 +138,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -167,7 +167,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -192,7 +192,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -219,7 +219,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -241,7 +241,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -262,7 +262,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -284,7 +284,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -306,7 +306,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($text_module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update',['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [
                     [
                         'slug' => 'text-1',

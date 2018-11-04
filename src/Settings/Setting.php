@@ -18,13 +18,14 @@ class Setting extends Model
         $fields = $this->fieldsFromConfig();
 
         // TODO: a fieldgroup should be used here to filter / find by key
-        foreach($fields as $field){
-
-            if(is_callable($field)){
+        foreach ($fields as $field) {
+            if (is_callable($field)) {
                 $field = call_user_func($field);
             }
 
-            if($field->key != $this->key) continue;
+            if ($field->key != $this->key) {
+                continue;
+            }
 
             return $field;
         }

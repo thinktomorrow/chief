@@ -165,7 +165,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         // TODO: how we allow for these default routes to be set up in every new project?
 //        return '';
-        if(!$this->slug) return '';
+        if (!$this->slug) {
+            return '';
+        }
         return route('pages.show', $this->slug);
     }
 

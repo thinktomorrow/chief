@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\Management\Application;
 
-
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\Fields;
@@ -16,19 +15,18 @@ trait StoringAndUpdatingFields
 
     protected function handleFields(ModelManager $manager, Request $request)
     {
-        foreach($manager->fields() as $field) {
+        foreach ($manager->fields() as $field) {
 
             // Custom save methods
             $saveMethodName = 'save'. ucfirst(camel_case($field->key())) . 'Field';
-            if(method_exists($manager,$saveMethodName)) {
+            if (method_exists($manager, $saveMethodName)) {
                 $this->saveMethods[$field->key] = ['field' => $field, 'method' => $saveMethodName];
                 continue;
             }
 
             // Media fields are treated separately
-            if($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
-
-                if( ! isset($this->saveMethods['_files'])){
+            if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
+                if (! isset($this->saveMethods['_files'])) {
                     $this->saveMethods['_files'] = ['field' => new Fields([$field]), 'method' => 'uploadMedia'];
                     continue;
                 }
@@ -50,8 +48,7 @@ trait StoringAndUpdatingFields
 
     protected function handleCustomSaves($manager, $request)
     {
-        foreach($this->saveMethods as $data)
-        {
+        foreach ($this->saveMethods as $data) {
             $method = $data['method'];
 
             $manager->$method($data['field'], $request);

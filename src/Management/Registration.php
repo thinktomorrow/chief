@@ -14,7 +14,7 @@ class Registration
         $this->managerClass = $managerClass;
         $this->modelClass = $modelClass;
 
-         $this->validate();
+        $this->validate();
     }
 
     public static function fromArray(array $registration)
@@ -59,16 +59,16 @@ class Registration
 
     private function validate()
     {
-        if(!class_exists($this->managerClass)) {
+        if (!class_exists($this->managerClass)) {
             throw new \InvalidArgumentException('Manager class ['.$this->managerClass.'] is an invalid class reference. Please make sure the class exists.');
         }
 
-        if(!class_exists($this->modelClass)) {
+        if (!class_exists($this->modelClass)) {
             throw new \InvalidArgumentException('Model class ['.$this->modelClass.'] is an invalid model reference. Please make sure the class exists.');
         }
 
         $manager = new \ReflectionClass($this->managerClass);
-        if( ! $manager->implementsInterface(ModelManager::class)) {
+        if (! $manager->implementsInterface(ModelManager::class)) {
             throw new \InvalidArgumentException('Class ['.$this->managerClass.'] is expected to implement the ['.ModelManager::class.'] contract.');
         }
     }

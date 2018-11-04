@@ -61,7 +61,9 @@ class AvailableChildren
 
     private function collection()
     {
-        if($this->collection) return $this->collection;
+        if ($this->collection) {
+            return $this->collection;
+        }
 
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
 
@@ -88,7 +90,7 @@ class AvailableChildren
         }
 
         // Filter out our parent
-        return $this->collection = $collection->reject(function ($item){
+        return $this->collection = $collection->reject(function ($item) {
             if ($item instanceof $this->parent) {
                 return $item->id == $this->parent->id;
             }

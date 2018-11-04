@@ -25,17 +25,15 @@ class ModuleManager extends AbstractManager implements ModelManager
     {
         $permission = 'update-page';
 
-        if(in_array($verb, ['index','show'])) {
+        if (in_array($verb, ['index','show'])) {
             $permission = 'view-page';
-        }
-        elseif(in_array($verb, ['create','store'])) {
+        } elseif (in_array($verb, ['create','store'])) {
             $permission = 'create-page';
-        }
-        elseif(in_array($verb, ['delete'])) {
+        } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }
 
-        if( ! auth()->guard('chief')->user()->hasPermissionTo($permission)){
+        if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
             throw NotAllowedManagerRoute::notAllowedPermission($permission);
         }
     }
@@ -61,7 +59,7 @@ class ModuleManager extends AbstractManager implements ModelManager
     public function saveFields(): ModelManager
     {
         // Store the morph_key upon creation
-        if(! $this->model->morph_key) {
+        if (! $this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
@@ -96,7 +94,9 @@ class ModuleManager extends AbstractManager implements ModelManager
             if (is_array_empty($translation)) {
 
                 // Nullify all values
-                $trans[$locale] = array_map(function($value){ return null; }, $translation);
+                $trans[$locale] = array_map(function ($value) {
+                    return null;
+                }, $translation);
                 continue;
             }
 
@@ -105,5 +105,4 @@ class ModuleManager extends AbstractManager implements ModelManager
 
         return $request->merge(['trans' => $trans]);
     }
-
 }

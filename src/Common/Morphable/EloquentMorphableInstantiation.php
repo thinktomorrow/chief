@@ -107,5 +107,4 @@ trait EloquentMorphableInstantiation
 
         return $model;
     }
-
 }

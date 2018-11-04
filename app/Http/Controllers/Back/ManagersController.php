@@ -25,11 +25,13 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
-        if( ! $manager->can('index')){ NotAllowedManagerRoute::index($manager); }
+        if (! $manager->can('index')) {
+            NotAllowedManagerRoute::index($manager);
+        }
 
         $managers = $manager->findAllManaged();
 
-        return view('chief::back.managers.index',[
+        return view('chief::back.managers.index', [
             'modelManager' => $manager,
             'managers' => $managers,
         ]);
@@ -39,9 +41,11 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
-        if( ! $manager->can('create')){ NotAllowedManagerRoute::create($manager); }
+        if (! $manager->can('create')) {
+            NotAllowedManagerRoute::create($manager);
+        }
 
-        return view('chief::back.managers.create',[
+        return view('chief::back.managers.create', [
             'manager' => $manager,
         ]);
     }
@@ -60,9 +64,11 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        if( ! $manager->can('edit')){ NotAllowedManagerRoute::edit($manager); }
+        if (! $manager->can('edit')) {
+            NotAllowedManagerRoute::edit($manager);
+        }
 
-        return view('chief::back.managers.edit',[
+        return view('chief::back.managers.edit', [
             'manager' => $manager,
         ]);
     }
@@ -81,15 +87,13 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        try{
+        try {
             app(DeleteManager::class)->handle($manager, $request);
-        }
-        catch(DeleteAborted $e){
+        } catch (DeleteAborted $e) {
             return redirect()->back()->with('messages.warning', $manager->managerDetails()->singular . ' is niet verwijderd.');
         }
 
         return redirect()->to($manager->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" is verwijderd.');
-
     }
 }

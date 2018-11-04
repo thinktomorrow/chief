@@ -68,7 +68,7 @@ class PresentSections
             }
 
             // A module is something we will add as is, without combining them together
-            if($child instanceof Module) {
+            if ($child instanceof Module) {
                 $this->sets[$i] = $child;
                 continue;
             }
@@ -92,7 +92,7 @@ class PresentSections
     private function addModelToCollection($index, $child, $key)
     {
         // Only published pages you fool!
-        if (method_exists($child, 'isPublished') && ! $child->isPublished() ) {
+        if (method_exists($child, 'isPublished') && ! $child->isPublished()) {
             return;
         }
 
@@ -103,7 +103,7 @@ class PresentSections
             $this->current_index = $index;
         }
         // If current pageset index is null, let's make sure it is set to the current index
-        elseif(is_null($this->current_index)) {
+        elseif (is_null($this->current_index)) {
             $this->current_index = $index;
         }
 

@@ -35,15 +35,17 @@ class Field
      */
     public function getValidation(array $data = [])
     {
-        if( ! $this->hasValidation()) return null;
+        if (! $this->hasValidation()) {
+            return null;
+        }
 
         list('rules' => $rules, 'messages' => $messages, 'customAttributes' => $customAttributes) = $this->values['validation'];
 
         // Normalize rules: If no attribute is passed for the rule, we use the field name.
-        if( !is_array($rules) || isset($rules[0])) {
+        if (!is_array($rules) || isset($rules[0])) {
             $rules = [$this->values['name'] => (is_array($rules) ? reset($rules) : $rules)];
 
-            if($this->isTranslatable()) {
+            if ($this->isTranslatable()) {
                 $rules = (new LocalizedFieldValidationRules($this->locales))
                             ->influenceByPayload($data)
                             ->rules($rules);
@@ -71,8 +73,10 @@ class Field
 
     public function ofType(...$type): bool
     {
-        foreach($type as $_type) {
-            if($this->fieldType->get() == $_type) return true;
+        foreach ($type as $_type) {
+            if ($this->fieldType->get() == $_type) {
+                return true;
+            }
         }
 
         return false;
@@ -80,7 +84,7 @@ class Field
 
     public function __get($key)
     {
-        if(isset($this->$key)) {
+        if (isset($this->$key)) {
             return $this->$key;
         }
 

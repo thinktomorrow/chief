@@ -36,12 +36,13 @@ class FieldArrangement
 
     private function validateTabs(array $tabs)
     {
-        array_map(function(FieldTab $tab){}, $tabs);
+        array_map(function (FieldTab $tab) {
+        }, $tabs);
     }
 
     private function fillTabsWithTheirFields(array $tabs, Fields $fields)
     {
-        foreach($tabs as $tab){
+        foreach ($tabs as $tab) {
             $tab->fill($fields);
         }
     }

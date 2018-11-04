@@ -11,14 +11,14 @@ class Register
 
     public function __construct(array $registrations = [])
     {
-        foreach($registrations as $registration) {
+        foreach ($registrations as $registration) {
             $this->push($registration);
         }
     }
 
     public function register($key, $class, $model)
     {
-        $this->push( new Registration($key, $class, $model) );
+        $this->push(new Registration($key, $class, $model));
 
         return $this;
     }
@@ -72,20 +72,19 @@ class Register
     {
         $registrations = $this->registrations;
 
-        foreach($registrations as $k => $registration)
-        {
+        foreach ($registrations as $k => $registration) {
             $containsValue = $registration->has($key, $value);
 
-            if($type == 'filter' && ! $containsValue) {
+            if ($type == 'filter' && ! $containsValue) {
                 unset($registrations[$k]);
             }
 
-            if($type == 'reject' && $containsValue) {
+            if ($type == 'reject' && $containsValue) {
                 unset($registrations[$k]);
             }
         }
 
-        if($type == 'filter') {
+        if ($type == 'filter') {
             $this->registrationMustExistConstraint($key, $value, $registrations);
         }
 

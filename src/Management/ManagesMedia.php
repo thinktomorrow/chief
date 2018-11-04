@@ -22,8 +22,8 @@ trait ManagesMedia
     {
         // Get all types for media
         $images = [];
-        foreach($this->fields()->all() as $field) {
-            if($field->ofType(FieldType::MEDIA)) {
+        foreach ($this->fields()->all() as $field) {
+            if ($field->ofType(FieldType::MEDIA)) {
                 $images[$field->key] = [];
             }
         }
@@ -45,8 +45,8 @@ trait ManagesMedia
     {
         $documents = [];
 
-        foreach($this->fields()->all() as $field) {
-            if($field->ofType(FieldType::DOCUMENT)) {
+        foreach ($this->fields()->all() as $field) {
+            if ($field->ofType(FieldType::DOCUMENT)) {
                 $documents[$field->key] = [];
             }
         }
