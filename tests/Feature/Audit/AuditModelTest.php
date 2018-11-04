@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -23,6 +24,8 @@ class AuditTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         app(Register::class)->register('singles', PageManager::class, Single::class);
+
+        Route::get('pages/{slug}', function () {})->name('pages.show');
     }
 
     /** @test */
