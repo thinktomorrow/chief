@@ -27,10 +27,12 @@ class FieldValidator
     {
         $validation = ['rules' => [], 'messages' => [], 'customAttributes' => []];
 
-        foreach($manager->fields() as $field) {
-            if( ! $field->hasValidation()) continue;
+        foreach ($manager->fields() as $field) {
+            if (! $field->hasValidation()) {
+                continue;
+            }
 
-            foreach(array_keys($validation) as $key){
+            foreach (array_keys($validation) as $key) {
                 $validation[$key] = array_merge($validation[$key], $field->validation[$key]);
             }
         }

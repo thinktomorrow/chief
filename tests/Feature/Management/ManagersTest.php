@@ -21,7 +21,7 @@ class ManagersTest extends TestCase
     }
 
     /** @test */
-    function it_can_find_a_manager_by_key()
+    public function it_can_find_a_manager_by_key()
     {
         app(Register::class)->register('foo', ManagerFake::class);
 
@@ -32,7 +32,7 @@ class ManagersTest extends TestCase
     }
 
     /** @test */
-    function it_can_find_a_manager_by_id()
+    public function it_can_find_a_manager_by_id()
     {
         $this->app['config']->set('thinktomorrow.chief.collections', [
             'products' => ManagerWithValidationFake::class,
@@ -48,7 +48,7 @@ class ManagersTest extends TestCase
 
         $this->assertInstanceOf(ManagerWithValidationFake::class, $managers->findByKey('bar', 1));
 
-        $this->assertEquals(1,$this->getProtectedModelProperty($managers->findByKey('bar', 1))->id);
+        $this->assertEquals(1, $this->getProtectedModelProperty($managers->findByKey('bar', 1))->id);
     }
 
     private function getProtectedModelProperty($instance)
@@ -59,6 +59,4 @@ class ManagersTest extends TestCase
 
         return $property->getValue($instance);
     }
-
-
 }

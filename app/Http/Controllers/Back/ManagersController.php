@@ -24,7 +24,7 @@ class ManagersController extends Controller
 
         $managers = $manager::findAllManaged();
 
-        return view('chief::back.managers.index',[
+        return view('chief::back.managers.index', [
             'modelManager' => $manager,
             'managers' => $managers,
         ]);
@@ -37,7 +37,7 @@ class ManagersController extends Controller
         // Prep the fields, arrange in proper order
         $fields = $manager->fields();
 
-        return view('chief::back.managers.create',[
+        return view('chief::back.managers.create', [
             'manager' => $manager,
             'fields' => $fields,
         ]);
@@ -60,7 +60,7 @@ class ManagersController extends Controller
         // Prep the fields, arrange in proper order
         $fields = $manager->fields();
 
-        return view('chief::back.managers.edit',[
+        return view('chief::back.managers.edit', [
             'manager' => $manager,
             'fields' => $fields,
         ]);
