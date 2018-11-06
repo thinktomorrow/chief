@@ -58,7 +58,7 @@ class Set extends Collection implements PresentForParent
 
         // In case the collection is made out of pages, we'll also allow to use the
         // generic collection page view for these sets as well.
-        if($this->first() instanceof ActsAsCollection){
+        if ($this->first() instanceof ActsAsCollection) {
             $viewPaths[] = 'front.modules.'. $parent->collectionKey().'.'.$this->first()->collectionKey();
             $viewPaths[] = 'front.modules.'. $this->first()->collectionKey();
         }
