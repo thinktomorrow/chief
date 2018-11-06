@@ -19,7 +19,6 @@
         @start="minimizeSections"
         :options="{
             handle: '.grip-button',
-            dragClass: 'drag',
             ghostClass: 'ghost',
         }">
 
@@ -141,7 +140,6 @@
                 this.removeSection(position);
             });
         },
-
         methods: {
             sortSections() {
                 this.sections.sort(function(a, b) {

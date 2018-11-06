@@ -71,6 +71,13 @@
                 return true;
             });
 
+            var dragElement = document.createElement('img');
+            dragElement.src = '/chief-assets/back/img/favicon.png';
+
+            this.$el.addEventListener('dragstart', function(event) {
+                event.dataTransfer.setDragImage(dragElement, 0, 0);
+            });
+
         },
         methods: {
             removeThisSection(position){

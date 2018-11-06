@@ -2406,6 +2406,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             return true;
         });
+
+        var dragElement = document.createElement('img');
+        dragElement.src = '/chief-assets/back/img/favicon.png';
+
+        this.$el.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setDragImage(dragElement, 0, 0);
+        });
     },
 
     methods: {
@@ -2436,7 +2443,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuedraggable__ = __webpack_require__("./node_modules/vuedraggable/dist/vuedraggable.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuedraggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vuedraggable__);
-//
 //
 //
 //
@@ -2592,7 +2598,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.removeSection(position);
         });
     },
-
 
     methods: {
         sortSections: function sortSections() {
@@ -2877,6 +2882,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 });
             }
         }
+
+        var dragElement = document.createElement('img');
+        dragElement.src = '/chief-assets/back/img/favicon.png';
+
+        this.$el.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setDragImage(dragElement, 0, 0);
+        });
     },
 
     methods: {
@@ -32165,7 +32177,6 @@ var render = function() {
             value: _vm.sortedSections,
             options: {
               handle: ".grip-button",
-              dragClass: "drag",
               ghostClass: "ghost"
             }
           },
