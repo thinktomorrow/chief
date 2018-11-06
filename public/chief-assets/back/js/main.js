@@ -2407,12 +2407,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return true;
         });
 
-        var dragElement = document.createElement('img');
-        dragElement.src = '/chief-assets/back/img/favicon.png';
+        // oplossing met icon
+        // var dragElement = document.createElement('img');
+        // dragElement.src = '/chief-assets/back/img/favicon.png';
 
-        this.$el.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setDragImage(dragElement, 0, 0);
-        });
+        // this.$el.addEventListener('dragstart', function(event) {
+        //     //call minimize
+
+        //     //timeout
+        //     event.dataTransfer.setDragImage(this, 0, 0);
+        // });
     },
 
     methods: {
@@ -2598,6 +2602,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.removeSection(position);
         });
     },
+    mounted: function mounted() {
+        var _this2 = this;
+
+        var allSections = document.getElementById('pagebuilder').getElementsByTagName('section');
+
+        var _loop = function _loop() {
+            var that = _this2;
+
+            allSections[i].addEventListener('dragstart', function (event) {
+
+                // has to be done because you can only use a visible element attached to the DOM as a param for setDragImage.
+                var clone = this.cloneNode(true);
+                clone.style.position = "absolute";
+                clone.style.left = "-9999px";
+                clone.style.width = this.offsetWidth + "px";
+                that.minimizeSection(clone);
+                document.body.appendChild(clone);
+
+                event.dataTransfer.setDragImage(clone, 0, 0);
+            }, false);
+
+            allSections[i].addEventListener('dragend', function () {
+                document.body.removeChild(document.body.lastChild);
+            });
+        };
+
+        for (var i = 0; i < allSections.length; i++) {
+            _loop();
+        }
+    },
 
     methods: {
         sortSections: function sortSections() {
@@ -2619,25 +2653,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             document.getElementById('pagebuilder').classList.add('stretch');
             var allSections = this.$el.getElementsByTagName('section');
             for (var i = 0; i < allSections.length; i++) {
-
-                allSections[i].getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
-                allSections[i].getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
-
-                if (allSections[i].getElementsByClassName('multiselect__single')[0]) {
-                    var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
-                    allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
-                }
-                allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";
+                this.minimizeSection(allSections[i]);
             }
+        },
+        minimizeSection: function minimizeSection(section) {
+            section.getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
+            section.getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
+            if (section.getElementsByClassName('multiselect__single')[0]) {
+                var selectedText = section.getElementsByClassName('multiselect__single')[0].innerHTML;
+                section.getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
+            }
+            section.getElementsByClassName('to-minimize')[0].style.display = "none";
         },
         maximizeSections: function maximizeSections() {
             document.getElementById('pagebuilder').classList.remove('stretch');
             var allSections = this.$el.getElementsByTagName('section');
             for (var i = 0; i < allSections.length; i++) {
-
                 allSections[i].getElementsByClassName('module-icons-left')[0].classList.remove('hide-icons');
                 allSections[i].getElementsByClassName('module-icons-right')[0].classList.remove('hide-icons');
-
                 allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
                 if (allSections[i].getElementsByClassName('multiselect__single')[0]) {
                     var titleText = allSections[i].getElementsByTagName('h3')[0];
@@ -2883,12 +2916,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
         }
 
-        var dragElement = document.createElement('img');
-        dragElement.src = '/chief-assets/back/img/favicon.png';
+        // oplossing met icon
+        // var dragElement = document.createElement('img');
+        // dragElement.src = '/chief-assets/back/img/favicon.png';
 
-        this.$el.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setDragImage(dragElement, 0, 0);
-        });
+        // this.$el.addEventListener('dragstart', function(event) {
+        //     event.dataTransfer.setDragImage(dragElement, 0, 0);
+        // });
     },
 
     methods: {

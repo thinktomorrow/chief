@@ -140,6 +140,30 @@
                 this.removeSection(position);
             });
         },
+        mounted() {
+            let allSections = document.getElementById('pagebuilder').getElementsByTagName('section');
+            for(var i = 0; i < allSections.length; i++) {
+                let that = this;
+
+                allSections[i].addEventListener('dragstart', function(event) {
+
+                    // has to be done because you can only use a visible element attached to the DOM as a param for setDragImage.
+                    let clone = this.cloneNode(true);
+                    clone.style.position = "absolute";
+                    clone.style.left = "-9999px";
+                    clone.style.width = this.offsetWidth + "px";
+                    that.minimizeSection(clone);
+                    document.body.appendChild(clone);
+
+                    event.dataTransfer.setDragImage(clone, 0, 0);
+                    
+                }, false);
+
+                allSections[i].addEventListener('dragend', function() {
+                    document.body.removeChild(document.body.lastChild);
+                })
+            }
+        },
         methods: {
             sortSections() {
                 this.sections.sort(function(a, b) {
@@ -160,25 +184,24 @@
                 document.getElementById('pagebuilder').classList.add('stretch');
                 var allSections = this.$el.getElementsByTagName('section');
                 for(var i = 0; i < allSections.length; i++) {
-
-                    allSections[i].getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
-                    allSections[i].getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
-
-                    if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
-                        var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
-                        allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
-                    }
-                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
+                    this.minimizeSection(allSections[i]); 
                 }
+            },
+            minimizeSection(section) {
+                section.getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
+                section.getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
+                if(section.getElementsByClassName('multiselect__single')[0]) {
+                    var selectedText = section.getElementsByClassName('multiselect__single')[0].innerHTML;
+                    section.getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
+                }
+                section.getElementsByClassName('to-minimize')[0].style.display = "none"; 
             },
             maximizeSections() {
                 document.getElementById('pagebuilder').classList.remove('stretch');
                 var allSections = this.$el.getElementsByTagName('section');
                 for(var i = 0; i < allSections.length; i++) {
-
                     allSections[i].getElementsByClassName('module-icons-left')[0].classList.remove('hide-icons');
                     allSections[i].getElementsByClassName('module-icons-right')[0].classList.remove('hide-icons');
-
                     allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var titleText = allSections[i].getElementsByTagName('h3')[0];
