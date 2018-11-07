@@ -34,9 +34,8 @@
             "Thinktomorrow\\Chief\\" : "src/"
         },
         "files": [
-            "src/helpers.php",
-            "chief-core/utils/vendors/htmlLawed.php",
-            "chief-core/utils/helpers.php"
+            "src/Common/vendors/htmlLawed.php",
+            "src/Common/helpers.php"
         ]
     },
     "autoload-dev": {

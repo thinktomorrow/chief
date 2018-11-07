@@ -39,19 +39,19 @@ class LocalizedFieldValidationRules
     }
 
     /**
-     * Request payload can influence the validation rules. If an entire locale input is empty
-     * this locale should be completely ignored as such.
+     * Request payload can influence the validation rules. If an entire locale input
+     * is empty, this locale should be completely ignored unless its the default
      *
      * @param array $data
      * @return LocalizedFieldValidationRules
      */
     public function influenceByPayload(array $data)
     {
-        // Remove locales that are considered empty in the request payload
         if (! isset($data['trans'])) {
             return $this;
         }
 
+        // Remove locales that are considered empty in the request payload
         foreach ($data['trans'] as $locale => $values) {
             if ($locale == $this->defaultLocale || ! is_array_empty($values)) {
                 continue;
