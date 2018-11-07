@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Management\Details\HasManagedModelDetails;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 
 abstract class AbstractManager

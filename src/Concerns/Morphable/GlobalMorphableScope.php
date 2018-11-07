@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Thinktomorrow\Chief\Common\Morphable;
+namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

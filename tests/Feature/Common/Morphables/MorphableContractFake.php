@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
 
-use Thinktomorrow\Chief\Common\Morphable\Morphable;
-use Thinktomorrow\Chief\Common\Morphable\CollectionDetails;
-use Thinktomorrow\Chief\Common\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\Concerns\Morphable\CollectionDetails;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 
 class MorphableContractFake implements MorphableContract

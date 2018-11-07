@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\Pages\Application;
 
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Morphable\CollectionKeys;
+use Thinktomorrow\Chief\Concerns\Morphable\CollectionKeys;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\PageTranslation;
-use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
 use Thinktomorrow\Chief\Audit\Audit;
 
 class CreatePage

@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Models\Notes;
 
 use Carbon\Carbon;
-use Thinktomorrow\Chief\Common\Publish\Publishable;
+use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Translatable\Translatable;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Optiphar\Site\Notes\NoteReminder;
 

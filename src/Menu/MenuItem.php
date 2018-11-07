@@ -5,10 +5,10 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Morphable\GlobalMorphableScope;
-use Thinktomorrow\Chief\Common\Morphable\Morphables;
-use Thinktomorrow\Chief\Common\Translatable\Translatable;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Concerns\Morphable\GlobalMorphableScope;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
+use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
 use Vine\Source as VineSource;
 use Vine\Node;

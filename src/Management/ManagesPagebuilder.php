@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Relations\AvailableChildren;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\PageBuilder\UpdateSections;

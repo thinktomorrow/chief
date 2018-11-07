@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Morphable\CollectionDetails;
+use Thinktomorrow\Chief\Concerns\Morphable\CollectionDetails;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;

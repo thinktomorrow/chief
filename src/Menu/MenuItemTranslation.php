@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Menu;
 
-use Thinktomorrow\Chief\Common\Contracts\SluggableContract;
+use Thinktomorrow\Chief\Concerns\Sluggable\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Pages\Page;
 

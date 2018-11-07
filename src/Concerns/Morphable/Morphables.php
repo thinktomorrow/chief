@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Morphable;
+namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 

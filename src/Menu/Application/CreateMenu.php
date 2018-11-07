@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Common\Morphable\CollectionKeys;
+use Thinktomorrow\Chief\Concerns\Morphable\CollectionKeys;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class CreateMenu
 {

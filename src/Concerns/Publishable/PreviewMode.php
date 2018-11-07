@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Publish;
+namespace Thinktomorrow\Chief\Concerns\Publishable;
 
 class PreviewMode
 {

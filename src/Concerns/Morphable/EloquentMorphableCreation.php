@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Morphable;
+namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 trait EloquentMorphableCreation
 {

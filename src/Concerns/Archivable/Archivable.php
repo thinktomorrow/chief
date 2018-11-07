@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Traits\Archivable;
+namespace Thinktomorrow\Chief\Concerns\Archivable;
 
 trait Archivable
 {

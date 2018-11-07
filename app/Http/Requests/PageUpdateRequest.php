@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Illuminate\Http\UploadedFile;
 
 class PageUpdateRequest extends FormRequest

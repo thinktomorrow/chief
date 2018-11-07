@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class CreateModule
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Traits;
+namespace Thinktomorrow\Chief\Concerns\Publishable;
 
 use Illuminate\Support\Facades\Session;
-use Thinktomorrow\Chief\Common\Publish\PreviewMode;
 
 trait CheckPreviewTrait
 {

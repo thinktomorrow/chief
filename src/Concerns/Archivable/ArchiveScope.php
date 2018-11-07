@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Thinktomorrow\Chief\Common\Traits\Archivable;
+namespace Thinktomorrow\Chief\Concerns\Archivable;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

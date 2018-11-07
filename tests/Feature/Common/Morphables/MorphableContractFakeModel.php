@@ -5,10 +5,10 @@ namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Common\Morphable\Morphable;
-use Thinktomorrow\Chief\Common\Morphable\CollectionDetails;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\Concerns\Morphable\CollectionDetails;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 
 class MorphableContractFakeModel extends Model implements MorphableContract
 {

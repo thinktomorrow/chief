@@ -1,8 +1,7 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Translatable;
+namespace Thinktomorrow\Chief\Concerns\Translatable;
 
-use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 /**

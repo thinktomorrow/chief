@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Thinktomorrow\Chief\Common\Morphable\Morphable;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Relations\ActsAsParent;

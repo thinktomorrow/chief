@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
-use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldTab;
@@ -32,7 +32,7 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     use ManagesPublishing,
         ManagesPreviews;
 
-    /** @var UniqueSlug */
+    /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
 
     public function __construct(Registration $registration)

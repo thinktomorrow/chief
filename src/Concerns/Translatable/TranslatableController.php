@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Translatable;
+namespace Thinktomorrow\Chief\Concerns\Translatable;
 
 use Illuminate\Http\Request;
 

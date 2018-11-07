@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Contracts;
+namespace Thinktomorrow\Chief\Concerns\Sluggable;
 
 interface SluggableContract
 {

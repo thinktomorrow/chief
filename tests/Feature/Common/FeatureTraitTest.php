@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Traits\Featurable;
+use Thinktomorrow\Chief\Concerns\Featurable;
 
 /**
  * Class ValidationTraitDummyClass

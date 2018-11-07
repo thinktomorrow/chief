@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
-use Thinktomorrow\Chief\Common\Morphable\GlobalMorphableScope;
-use Thinktomorrow\Chief\Common\Contracts\SluggableContract;
+use Thinktomorrow\Chief\Concerns\Morphable\GlobalMorphableScope;
+use Thinktomorrow\Chief\Concerns\Sluggable\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
 
 class PageTranslation extends Model implements SluggableContract

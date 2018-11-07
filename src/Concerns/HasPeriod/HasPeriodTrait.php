@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\Traits\HasPeriod;
+namespace Thinktomorrow\Chief\Concerns\HasPeriod;
 
 use Illuminate\Support\Carbon;
 
