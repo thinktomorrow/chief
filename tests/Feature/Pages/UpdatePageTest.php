@@ -17,12 +17,12 @@ class UpdatePageTest extends TestCase
 
     protected function setUp()
     {
-        parent::setUp();
+        parent:: setUp();
 
         $this->setUpDefaultAuthorization();
 
         $this->app['config']->set('thinktomorrow.chief.collections', [
-            'singles' => Single::class,
+            'singles'  => Single::class,
             'articles' => ArticlePageFake::class,
         ]);
 
@@ -66,7 +66,7 @@ class UpdatePageTest extends TestCase
     {
         $this->markTestSkipped('Relations update is disabled in preference of the pagebuilder module logic.');
 
-        $page = factory(Page::class)->create();
+        $page      = factory(Page::class)->create();
         $otherPage = factory(Page::class)->create();
 
         $this->asAdmin()
@@ -94,8 +94,8 @@ class UpdatePageTest extends TestCase
     public function slug_must_be_unique()
     {
         $otherPage = factory(Page::class)->create([
-            'trans.nl.title'  => 'titel nl',
-            'trans.nl.slug'   => 'slug-nl'
+            'trans.nl.title' => 'titel nl',
+            'trans.nl.slug'  => 'slug-nl'
         ]);
 
         $this->assertValidation(new Page(), 'trans.nl.slug', $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']),
@@ -112,8 +112,8 @@ class UpdatePageTest extends TestCase
     public function slugcheck_takes_archived_into_account_as_well()
     {
         $otherPage = factory(Page::class)->create([
-            'trans.nl.title'  => 'titel nl',
-            'trans.nl.slug'   => 'slug-nl'
+            'trans.nl.title' => 'titel nl',
+            'trans.nl.slug'  => 'slug-nl'
         ]);
 
         $otherPage->archive();
@@ -142,19 +142,42 @@ class UpdatePageTest extends TestCase
                     'seo_title'       => '',
                     'seo_description' => '',
                 ],
+            ]));
+        $response->assertStatus(302);
+        
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->title);
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
+    }
+
+     /** @test */
+     public function updating_to_empty_fields_removes_the_translation()
+     {
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
+                'trans.en'  => [
+                    'title'           => '',
+                    'slug'            => '',
+                    'seo_title'       => '',
+                    'seo_description' => '',
+                ],
             ])
         );
         $response->assertStatus(302);
-        
-        $this->assertNull($this->page->fresh()->getTranslation('en'));
-    }
+         
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->title);
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
+        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
+     }
 
     /** @test */
     public function slug_uses_title_if_its_empty()
     {
         $page = factory(Page::class)->create([
-            'trans.nl.title'  => 'foobar nl',
-            'trans.nl.slug'   => 'titel-nl'
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
         ]);
 
         $response = $this->asAdmin()
@@ -175,8 +198,8 @@ class UpdatePageTest extends TestCase
     public function slug_can_contain_slashes()
     {
         $page = factory(Page::class)->create([
-            'trans.nl.title'  => 'foobar nl',
-            'trans.nl.slug'   => 'titel-nl'
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
         ]);
 
         $this->asAdmin()
