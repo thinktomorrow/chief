@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\PageBuilder\UpdateSections;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Models\UniqueSlug;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Media\UploadMedia;
 use Thinktomorrow\Chief\Common\Audit\Audit;
+use Thinktomorrow\Chief\Pages\PageTranslation;
+use Thinktomorrow\Chief\PageBuilder\UpdateSections;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 
 class UpdatePage
 {
@@ -65,9 +66,17 @@ class UpdatePage
             $translatableColumns[] = $translatableField->column();
         }
 
-        $this->saveTranslations($translations, $page, array_merge([
-            'title', 'slug', 'seo_title', 'seo_description'
-        ], $translatableColumns));
+        // $this->saveTranslations($translations, $page, array_merge([
+        //     'title', 'slug', 'seo_title', 'seo_description'
+        // ], $translatableColumns));
+        foreach ($translations as $locale => $value) {
+            if ($this->isCompletelyEmpty(['title', 'slug', 'seo_title', 'seo_description'], $value)) {
+                continue;
+            }
+
+            $value = $this->enforceUniqueSlug($value, $page, $locale);
+            $page->updateTranslation($locale, $value);
+        }
     }
 
     private function syncRelations($page, $relateds)
@@ -118,5 +127,22 @@ class UpdatePage
         if ($requires_model_save) {
             $page->save();
         }
+    }
+
+     /**
+     * @param array $translations
+     * @param $page
+     * @return array
+     */
+    private function enforceUniqueSlug(array $translation, $page, $locale): array
+    {
+        $translation['slug']    = $translation['slug'] ?? $translation['title'];
+        $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
+
+        if (isset($translation['content'])) {
+            $translation['short'] = $translation['short'] ?? teaser($translation['content'], 100);
+        }
+
+        return $translation;
     }
 }

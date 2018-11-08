@@ -24,7 +24,7 @@ class UniqueSlug
 
     public function get($title, SluggableContract $entity = null)
     {
-        $slug = $originalslug = Str::slug($title);
+        $slug = $originalslug = str_slug_slashed($title);
         $i = 1;
 
         while (!$this->isSlugUnique($slug, $entity)) {

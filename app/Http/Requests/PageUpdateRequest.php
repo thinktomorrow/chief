@@ -32,7 +32,7 @@ class PageUpdateRequest extends FormRequest
 
         $translations = $this->request->get('trans', []);
         foreach ($translations as $locale => $trans) {
-            if ($this->isCompletelyEmpty(['title', 'slug'], $trans) && $locale !== config('app.locale')) {
+            if ($this->isCompletelyEmpty(['title', 'slug', 'seo_title', 'seo_description'], $trans) && $locale !== config('app.locale')) {
                 continue;
             }
 

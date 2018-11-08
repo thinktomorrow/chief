@@ -132,16 +132,20 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function only_nl_is_required()
     {
+        $this->page->removeTranslation('en');
+
         $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
                 'trans.en'  => [
-                    'title' => '',
-                    'slug' => '',
+                    'title'           => '',
+                    'slug'            => '',
+                    'seo_title'       => '',
+                    'seo_description' => '',
                 ],
             ])
         );
         $response->assertStatus(302);
-
+        
         $this->assertNull($this->page->fresh()->getTranslation('en'));
     }
 
