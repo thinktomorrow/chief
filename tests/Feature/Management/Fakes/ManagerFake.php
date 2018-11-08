@@ -41,7 +41,7 @@ class ManagerFake implements ModelManager
     {
         $models = ManagedModel::all();
 
-        return $models->map(function($model){
+        return $models->map(function ($model) {
             return app(static::class)->manage($model);
         });
     }

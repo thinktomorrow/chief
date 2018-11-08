@@ -62,7 +62,7 @@ class UpdatePage
 
         // TODO: this should come from the manager->fields() as fieldgroup
         $translatableColumns = [];
-        foreach($page::translatableFields() as $translatableField) {
+        foreach ($page::translatableFields() as $translatableField) {
             $translatableColumns[] = $translatableField->column();
         }
 
@@ -129,11 +129,11 @@ class UpdatePage
         }
     }
 
-     /**
-     * @param array $translations
-     * @param $page
-     * @return array
-     */
+    /**
+    * @param array $translations
+    * @param $page
+    * @return array
+    */
     private function enforceUniqueSlug(array $translation, $page, $locale): array
     {
         $translation['slug']    = $translation['slug'] ?? $translation['title'];

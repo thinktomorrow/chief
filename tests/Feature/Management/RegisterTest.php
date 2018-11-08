@@ -22,16 +22,16 @@ class RegisterTest extends TestCase
     }
 
     /** @test */
-    function it_can_register_a_manager()
+    public function it_can_register_a_manager()
     {
         $register = new Register();
-        $register->register('foo',ManagerFake::class);
+        $register->register('foo', ManagerFake::class);
 
         $this->assertEquals('foo', $register->toKey());
     }
 
     /** @test */
-    function it_can_register_multiple_managers()
+    public function it_can_register_multiple_managers()
     {
         $managerRegister = new Register();
 
@@ -44,7 +44,7 @@ class RegisterTest extends TestCase
     }
 
     /** @test */
-    function it_cannot_register_an_incomplete_manager()
+    public function it_cannot_register_an_incomplete_manager()
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -52,29 +52,29 @@ class RegisterTest extends TestCase
     }
 
     /** @test */
-    function it_cannot_register_an_invalid_class()
+    public function it_cannot_register_an_invalid_class()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new Register())->register('foo','bar');
+        (new Register())->register('foo', 'bar');
     }
 
     /** @test */
-    function it_can_list_all_keys()
+    public function it_can_list_all_keys()
     {
         $register = new Register();
-        $register->register('one',ManagerFake::class);
-        $register->register('two',ManagerFake::class);
+        $register->register('one', ManagerFake::class);
+        $register->register('two', ManagerFake::class);
 
         $this->assertEquals(['one', 'two'], $register->toKeys());
     }
 
     /** @test */
-    function it_can_filter_by_class()
+    public function it_can_filter_by_class()
     {
         $register = new Register();
-        $register->register('one',ManagerFake::class);
-        $register->register('two',ManagerWithValidationFake::class);
+        $register->register('one', ManagerFake::class);
+        $register->register('two', ManagerWithValidationFake::class);
 
         $this->assertCount(1, $register->filterByClass(ManagerFake::class)->all());
         $this->assertEquals('two', $register->filterByClass(ManagerWithValidationFake::class)->toKey());
@@ -84,7 +84,7 @@ class RegisterTest extends TestCase
     }
 
     /** @test */
-    function it_overwrites_an_already_registered_manager()
+    public function it_overwrites_an_already_registered_manager()
     {
         $managerRegister = new Register();
 
@@ -98,5 +98,4 @@ class RegisterTest extends TestCase
         ]
         ], $managerRegister->all());
     }
-
 }

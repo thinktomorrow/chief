@@ -82,9 +82,8 @@ trait ManagementDefaults
             if (is_string($field)) {
 
                 // Could be translatable field
-                if($this->isTranslatableKey($field)) {
-
-                    $attribute = substr($field, strrpos($field,'.') + 1);
+                if ($this->isTranslatableKey($field)) {
+                    $attribute = substr($field, strrpos($field, '.') + 1);
                     $locale = substr($field, strlen('trans.'), 2);
 
                     return $this->model->getTranslationFor($attribute, $locale);
@@ -96,11 +95,11 @@ trait ManagementDefaults
 
         // Is it a media field
         // An array grouped by type is returned. Each media array has an id, filename and path.
-        if($field->ofType(FieldType::MEDIA)) {
+        if ($field->ofType(FieldType::MEDIA)) {
             return $this->populateMedia($this->model);
         }
 
-        if($field->ofType(FieldType::DOCUMENT)) {
+        if ($field->ofType(FieldType::DOCUMENT)) {
             return $this->populateDocuments($this->model);
         }
 
@@ -116,7 +115,6 @@ trait ManagementDefaults
     {
         // Is field set as translatable?
         if ($field->translatable()) {
-
             if (!$this->requestContainsTranslations($request)) {
                 return;
             }

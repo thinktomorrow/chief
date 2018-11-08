@@ -56,7 +56,6 @@ class Relation extends Model
                             ->get();
 
         return $relations->map(function ($relation) use ($parent_type, $parent_id) {
-
             $instance = (new $relation->child_type);
 
             $child = $instance->find($relation->child_id);
@@ -65,7 +64,7 @@ class Relation extends Model
 
                 // When fetching an archived relation, this is the point where we no longer provide it to the application
                 // This means the relation will disappear the next time the user updates this parent and its relations.
-                if( method_exists($instance, 'withArchived') && $instance->withArchived()->find($relation->child_id)) {
+                if (method_exists($instance, 'withArchived') && $instance->withArchived()->find($relation->child_id)) {
                     return null;
                 }
 

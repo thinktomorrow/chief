@@ -13,7 +13,7 @@ class Register
 
     public function __construct(array $registrations = [])
     {
-        foreach($registrations as $registration) {
+        foreach ($registrations as $registration) {
             $this->push($registration);
         }
     }
@@ -64,17 +64,17 @@ class Register
     {
         $registrations = $this->registrations;
 
-        foreach($registrations as $k => $registration) {
-            if($type == 'filter' && (!isset($registration[$key]) || $registration[$key] != $value)) {
+        foreach ($registrations as $k => $registration) {
+            if ($type == 'filter' && (!isset($registration[$key]) || $registration[$key] != $value)) {
                 unset($registrations[$k]);
             }
 
-            if($type == 'reject' && (isset($registration[$key]) && $registration[$key] == $value)) {
+            if ($type == 'reject' && (isset($registration[$key]) && $registration[$key] == $value)) {
                 unset($registrations[$k]);
             }
         }
 
-        if($type == 'filter') {
+        if ($type == 'filter') {
             $this->registrationMustExistConstraint($key, $value, $registrations);
         }
 
@@ -112,18 +112,18 @@ class Register
 
     private function validate($registration)
     {
-        if(!isset($registration['key']) || !isset($registration['class'])) {
+        if (!isset($registration['key']) || !isset($registration['class'])) {
             throw new \InvalidArgumentException('Invalid manager registration. Each registration requires a \'key\' and \'class\' entry.');
         }
 
         $class = $registration['class'];
 
-        if(!class_exists($class)) {
+        if (!class_exists($class)) {
             throw new \InvalidArgumentException('Class name ['.$class.'] is an invalid class reference. Please check if the class exists.');
         }
 
         $manager = new ReflectionClass($class);
-        if( ! $manager->implementsInterface(ModelManager::class)) {
+        if (! $manager->implementsInterface(ModelManager::class)) {
             throw new \InvalidArgumentException('Class ['.$class.'] is expected to implement the ['.ModelManager::class.'] contract.');
         }
     }
