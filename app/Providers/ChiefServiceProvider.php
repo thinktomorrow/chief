@@ -88,7 +88,7 @@ class ChiefServiceProvider extends ServiceProvider
         }
 
         // Manager register is globally available
-        $this->app->singleton(Register::class, function(){
+        $this->app->singleton(Register::class, function () {
             return new Register();
         });
 

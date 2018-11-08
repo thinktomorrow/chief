@@ -93,18 +93,20 @@ class ParseChildrenForPresentation
         $this->sets[$index] = $set;
     }
 
-    private function addPageToCollection($index, $child){
-        return $this->addModelToCollection($index,$child, $child->collectionKey());
+    private function addPageToCollection($index, $child)
+    {
+        return $this->addModelToCollection($index, $child, $child->collectionKey());
     }
 
-    private function addManagedModelToCollection($index, $child){
-        return $this->addModelToCollection($index,$child, $child->managerKey());
+    private function addManagedModelToCollection($index, $child)
+    {
+        return $this->addModelToCollection($index, $child, $child->managerKey());
     }
 
     private function addModelToCollection($index, $child, $key)
     {
         // Only published pages you fool!
-        if (method_exists($child, 'isPublished') && ! $child->isPublished() ) {
+        if (method_exists($child, 'isPublished') && ! $child->isPublished()) {
             return;
         }
 
@@ -115,7 +117,7 @@ class ParseChildrenForPresentation
             $this->current_index = $index;
         }
         // If current pageset index is null, let's make sure it is set to the current index
-        elseif(is_null($this->current_index)) {
+        elseif (is_null($this->current_index)) {
             $this->current_index = $index;
         }
 

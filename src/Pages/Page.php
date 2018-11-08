@@ -61,7 +61,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         // TODO: this should come from the manager->fields() as fieldgroup
         $translatableColumns = [];
-        foreach(static::translatableFields() as $translatableField) {
+        foreach (static::translatableFields() as $translatableField) {
             $translatableColumns[] = $translatableField->column();
         }
 
