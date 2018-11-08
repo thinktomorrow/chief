@@ -35,7 +35,7 @@ class StoredSetReference extends Model implements ActsAsChild
 
     public function toReference(): SetReference
     {
-        return SetReference::all()->first(function($setReference){
+        return SetReference::all()->first(function ($setReference) {
             return $setReference->key() == $this->key;
         });
     }

@@ -15,11 +15,11 @@ class StoreManager
     {
         app(FieldValidator::class)->validate($manager, $request);
 
-        foreach($manager->fields() as $field) {
+        foreach ($manager->fields() as $field) {
 
             // Custom save methods
             $saveMethodName = 'save'. ucfirst(camel_case($field->key())) . 'Field';
-            if(method_exists($manager,$saveMethodName)) {
+            if (method_exists($manager, $saveMethodName)) {
                 $this->saveMethods[$field->key] = ['field' => $field, 'method' => $saveMethodName];
                 continue;
             }
@@ -44,8 +44,7 @@ class StoreManager
 
     private function handleCustomSaves($manager, $request)
     {
-        foreach($this->saveMethods as $data)
-        {
+        foreach ($this->saveMethods as $data) {
             $method = $data['method'];
 
             $manager->$method($data['field'], $request);
