@@ -151,9 +151,9 @@ class UpdatePageTest extends TestCase
         $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
     }
 
-     /** @test */
-     public function updating_to_empty_fields_removes_the_translation()
-     {
+    /** @test */
+    public function updating_to_empty_fields_removes_the_translation()
+    {
         $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
                 'trans.en'  => [
@@ -170,7 +170,7 @@ class UpdatePageTest extends TestCase
         $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
         $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
         $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
-     }
+    }
 
     /** @test */
     public function slug_uses_title_if_its_empty()
