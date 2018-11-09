@@ -198,13 +198,3 @@ if (!function_exists('addQueryToUrl')) {
         return $baseurl . '?' . $query . $fragment;
     }
 }
-
-/**
- * Form fields for honeypot protection on form submissions
- */
-if (!function_exists('honeypot_fields')) {
-    function honeypot_fields()
-    {
-        return '<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>';
-    }
-}

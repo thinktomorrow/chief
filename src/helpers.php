@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\HtmlString;
+
 /**
  * Retrieve the logged in admin
  */
@@ -14,9 +16,12 @@ if (!function_exists('admin')) {
  * Form fields for honeypot protection on form submissions
  */
 if (!function_exists('honeypot_fields')) {
+    /**
+     * @return \Illuminate\Support\HtmlString
+     */
     function honeypot_fields()
     {
-        return '<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>';
+        return new HtmlString('<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>');
     }
 }
 
