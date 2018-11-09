@@ -7,7 +7,6 @@ trait PresentingForParent
 {
     public function presentForParent(ActsAsParent $parent): string
     {
-        // TODO: can we expect the morphkey here????
         $guessedParentViewName = $parent->viewKey();
         $guessedViewName = $this->viewKey();
         $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
