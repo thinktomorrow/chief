@@ -43,10 +43,9 @@ class MediaTest extends TestCase
                 UploadedFile::fake()->image('image.png')
             ],
         ]);
-
         $this->assertTrue($article->hasFile(MediaType::CONTENT));
 
-        $assets = $article->getAllFiles(MediaType::CONTENT);
+        $assets = $article->getAllFiles(MediaType::CONTENT, 'nl');
         $this->assertCount(1, $assets);
 
         $response->assertStatus(201)
