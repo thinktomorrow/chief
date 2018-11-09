@@ -8,8 +8,7 @@ A PHP Labware internal utility; www.bioinformatics.org/phplabware/internal_utili
 
 See htmLawed_README.txt/htm
 */
-if(!function_exists('htmLawed')){
-
+if (!function_exists('htmLawed')) {
     function htmLawed($t, $C=1, $S=array())
     {
         $C = is_array($C) ? $C : array();
@@ -154,20 +153,20 @@ if(!function_exists('htmLawed')){
                     $o = 0;
                 }
                     break; case 'minlen': if ($l < $v) {
-                $o = 0;
-            }
+                        $o = 0;
+                    }
                 break; case 'maxval': if ((float)($t) > $v) {
-                $o = 0;
-            }
+                    $o = 0;
+                }
                 break; case 'minval': if ((float)($t) < $v) {
-                $o = 0;
-            }
+                    $o = 0;
+                }
                 break; case 'match': if (!preg_match($v, $t)) {
-                $o = 0;
-            }
+                    $o = 0;
+                }
                 break; case 'nomatch': if (preg_match($v, $t)) {
-                $o = 0;
-            }
+                    $o = 0;
+                }
                 break; case 'oneof':
                 $m = 0;
                 foreach (explode('|', $v) as $n) {
