@@ -62,12 +62,8 @@ class PageUpdateRequest extends FormRequest
     protected function validatePeriod(array $rules)
     {
         if (optional($this->request->get('custom_fields'))['start_at'] != null || optional($this->request->get('custom_fields'))['end_at'] != null){
-            $rules['custom_fields.start_at'] = 'required|before:custom_fields.end_at';
-            $rules['custom_fields.end_at']   = 'required|after:custom_fields.start_at';
-            if(optional($this->request->get('custom_fields'))['start_at']->eq(optional($this->request->get('custom_fields'))['end_at'])) {
-                $rules['custom_fields.start_at'] = '';
-                $rules['custom_fields.end_at']   = '';
-            }
+            $rules['custom_fields.start_at'] = 'required';
+            $rules['custom_fields.end_at']   = 'after_or_equal:custom_fields.start_at';
         }
 
         return $rules;
@@ -103,8 +99,8 @@ class PageUpdateRequest extends FormRequest
         //TODO find a clean way to translate these attribute. array wildcards dont work here.
         return [
             'files.*.new.*'          => 'bestand',
-            'custom_fields.start_at' => 'Start date',
-            'custom_fields.end_at'   => 'End date'
+            'custom_fields.start_at' => 'start date',
+            'custom_fields.end_at'   => 'end date'
         ];
     }
 }

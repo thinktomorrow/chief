@@ -36,6 +36,7 @@ trait HasPeriodTrait
     public function saveStartAtField($start_at)
     {
         $this->start_at = Carbon::parse($start_at);
+        $this->end_at   = Carbon::parse($start_at)->endofDay();
         $this->save();
     }
 

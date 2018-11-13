@@ -277,10 +277,33 @@ class UpdatePageTest extends TestCase
 
         $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $agenda->id), $this->validUpdatePageParams([
+                'custom_fields.end_at'  => Carbon::now(),
+            ])
+        );
+
+        $response->assertSessionHasErrors(['custom_fields.start_at' => 'The start date field is required.']);
+    }
+
+    /** @test */
+    public function it_can_set_only_start_at_to_define_one_day_period()
+    {
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'agenda' => AgendaPageFake::class,
+        ]);
+
+        $agenda = AgendaPageFake::create([
+            'collection'     => 'agenda',
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $agenda->id), $this->validUpdatePageParams([
                 'custom_fields.start_at'  => Carbon::now(),
             ])
         );
 
-        $response->assertSessionHasErrors(['custom_fields.end_at' => 'The End date field is required.']);
+        $this->assertTrue($agenda->fresh()->end_at->gt($agenda->fresh()->start_at));
+        $this->assertNotNull($agenda->fresh()->start_at);
     }
 }
