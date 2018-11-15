@@ -67,6 +67,11 @@ class UpdatePage
         }
 
         foreach ($translations as $locale => $value) {
+            if ($this->isCompletelyEmpty(array_merge($translatableColumns, ['title', 'slug', 'seo_title', 'seo_description']), $value)) {
+                $page->removeTranslation($locale);
+                continue;
+            }
+
             $value = $this->enforceUniqueSlug($value, $page, $locale);
             $page->updateTranslation($locale, $value);
         }
