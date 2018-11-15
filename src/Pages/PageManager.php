@@ -103,7 +103,7 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     {
         return new FieldArrangement($this->fields(), [
             new FieldTab('pagina', ['sections']),
-            new FieldTab('algemeen', ['title', 'content', MediaType::HERO, MediaType::THUMB]),
+            new FieldTab('inhoud', ['title', 'content', MediaType::HERO, MediaType::THUMB]),
             new FieldTab('seo', ['seo_title', 'seo_content']),
         ]);
     }
