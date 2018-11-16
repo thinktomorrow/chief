@@ -188,6 +188,7 @@
 // Image
 #redactor-image-resizer {
     position: absolute;
+    z-index: 1050;
     background-color: rgba(#007dff, .9);
     width: 13px;
     height: 13px;

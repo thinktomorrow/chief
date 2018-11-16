@@ -344,6 +344,7 @@
 
 #redactor-image-resizer {
   position: absolute;
+  z-index: 1050;
   background-color: rgba(0, 125, 255, 0.9);
   width: 13px;
   height: 13px;
@@ -3376,8 +3377,6 @@ p:last-child {
 .clearfix:before, .container:before, .clearfix:after, .container:after {
   content: " ";
   display: table;
-  /* Small hack for Safari to remove a non-visual line */
-  position: absolute;
 }
 
 .clearfix:after, .container:after {
@@ -3602,6 +3601,10 @@ a:hover {
 
 .pointer {
   cursor: pointer;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 ::-moz-selection {
@@ -7985,8 +7988,6 @@ select {
 .clearfix:before, .container:before, .clearfix:after, .container:after {
   content: " ";
   display: table;
-  /* Small hack for Safari to remove a non-visual line */
-  position: absolute;
 }
 
 .clearfix:after, .container:after {
