@@ -1,12 +1,14 @@
 (function($R)
 {
-    $R.add('plugin', 'rich-links', {
+    $R.add('plugin', 'definedlinks', {
         init: function(app)
         {
             this.app = app;
             this.opts = app.opts;
+
             this.component = app.component;
 
+            // local
             this.links = [];
         },
         // messages
@@ -22,25 +24,25 @@
                     this._load();
                 }
             }
-        },
+		},
 
-        // private
-        _load: function()
-        {
-            if (typeof this.opts.definedlinks === 'object')
-            {
+		// private
+		_load: function()
+		{
+    		if (typeof this.opts.definedlinks === 'object')
+    		{
                 this._build(this.opts.definedlinks);
-            }
+    		}
             else
             {
-                $R.ajax.get({
-                    url: this.opts.definedlinks,
-                    success: this._build.bind(this)
-                });
-            }
-        },
-        _build: function(data)
-        {
+        		$R.ajax.get({
+            		url: this.opts.definedlinks,
+            		success: this._build.bind(this)
+        		});
+    		}
+		},
+		_build: function(data)
+		{
             var $selector = this.$modal.find('#redactor-defined-links');
             if ($selector.length === 0)
             {
@@ -74,25 +76,25 @@
             }
 
             $selector.on('change', this._select.bind(this));
-        },
-        _select: function(e)
-        {
-            var formData = this.$form.getData();
-            var key = $R.dom(e.target).val();
-            var data = { text: '', url: '' };
+		},
+		_select: function(e)
+		{
+			var formData = this.$form.getData();
+			var key = $R.dom(e.target).val();
+			var data = { text: '', url: '' };
 
-            if (key !== '0')
-            {
-                data.text = this.links[key].name;
-                data.url = this.links[key].url;
-            }
+			if (key !== '0')
+			{
+				data.text = this.links[key].name;
+				data.url = this.links[key].url;
+			}
 
-            if (formData.text !== '')
-            {
-                data = { url: data.url };
-            }
+			if (formData.text !== '')
+			{
+    			data = { url: data.url };
+			}
 
-            this.$form.setData(data);
-        }
+			this.$form.setData(data);
+		}
     });
 })(Redactor);
