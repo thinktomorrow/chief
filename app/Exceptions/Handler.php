@@ -54,6 +54,11 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
+        if(admin())
+        {
+            return $this->renderChiefException($request, $exception);
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -83,5 +88,12 @@ class Handler extends ExceptionHandler
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)
             : redirect()->guest('/');
+    }
+
+    protected function renderChiefException($request, Exception $exception)
+    {
+        //Do we need to log the exception here?
+        return redirect()->route('chief.back.dashboard')
+                         ->with('messages.error', 'Oeps. Het lijkt erop dat er iets fout ging.');
     }
 }
