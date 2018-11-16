@@ -32,9 +32,9 @@ class PagesController extends Controller
         return view('chief::back.pages.index', [
             'page'              => $model,
             'collectionDetails' => $model->collectionDetails(),
-            'published'         => $this->lengthAwarePaginator($model->published()->get(), 1, 'published'),
-            'drafts'            => $this->lengthAwarePaginator($model->drafted()->get(), 1, 'drafted'),
-            'archived'          => $this->lengthAwarePaginator($model->archived()->get(), 1, 'archived'),
+            'published'         => $this->lengthAwarePaginator($model->published()->get(), 10, 'published'),
+            'drafts'            => $this->lengthAwarePaginator($model->drafted()->get(), 10, 'drafted'),
+            'archived'          => $this->lengthAwarePaginator($model->archived()->get(), 10, 'archived'),
         ]);
     }
 
