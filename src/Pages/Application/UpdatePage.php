@@ -60,14 +60,13 @@ class UpdatePage
             return $trans;
         });
 
-        // TODO: this should come from the manager->fields() as fieldgroup
-        $translatableColumns = [];
+        $translatableColumns = ['title', 'slug', 'seo_title', 'seo_description'];
         foreach ($page::translatableFields() as $translatableField) {
             $translatableColumns[] = $translatableField->column();
         }
 
         foreach ($translations as $locale => $value) {
-            if ($this->isCompletelyEmpty(array_merge($translatableColumns, ['title', 'slug', 'seo_title', 'seo_description']), $value)) {
+            if ($this->isCompletelyEmpty($translatableColumns, $value)) {
                 $page->removeTranslation($locale);
                 continue;
             }
