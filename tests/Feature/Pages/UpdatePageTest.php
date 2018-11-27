@@ -132,8 +132,6 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function only_nl_is_required()
     {
-        $this->page->removeTranslation('en');
-
         $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
                 'trans.en'  => [
@@ -141,14 +139,11 @@ class UpdatePageTest extends TestCase
                     'slug'            => '',
                     'seo_title'       => '',
                     'seo_description' => '',
+                    'content'         => ''
                 ],
             ]));
+
         $response->assertStatus(302);
-        
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
     }
 
     /** @test */
@@ -165,11 +160,8 @@ class UpdatePageTest extends TestCase
             ])
         );
         $response->assertStatus(302);
-         
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
+
+        $this->assertNull($this->page->fresh()->getTranslation('en'));
     }
 
     /** @test */
