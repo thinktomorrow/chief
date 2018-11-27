@@ -197,22 +197,26 @@ class PagesController extends Controller
 
     public function publish(Request $request, $id)
     {
-        $page = Page::findOrFail($id);
-        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
-
-        ($published) ? $page->publish() : $page->draft();
+        $this->togglePublish($request, $id);
 
         return redirect()->back();
     }
 
     public function unpublish(Request $request, $id)
     {
+        $this->togglePublish($request, $id);
+
+        return redirect()->back();
+    }
+
+    private function togglePublish(Request $request, $id)
+    {
         $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
 
-        return redirect()->back();
+        return $page;
     }
 
     /**
