@@ -11,8 +11,6 @@ use Thinktomorrow\Chief\App\Http\Requests\ModuleCreateRequest;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\App\Http\Requests\ModuleUpdateRequest;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
-use Thinktomorrow\Chief\Snippets\Snippet;
-use Thinktomorrow\Chief\Snippets\SnippetCollection;
 
 class ModulesController extends Controller
 {

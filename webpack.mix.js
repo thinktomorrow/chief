@@ -19,13 +19,13 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
      */
 	.scripts([
 		'resources/assets/js/vendors/redactor/redactor.js',
-		'resources/assets/js/vendors/redactor/_plugins/alignment/alignment.js',
-		'resources/assets/js/vendors/redactor/_plugins/imagemanager/imagemanager.js',
-		'resources/assets/js/vendors/redactor/_plugins/redactor-columns.js',
-		'resources/assets/js/vendors/redactor/_plugins/rich-links.js',
-		'resources/assets/js/vendors/redactor/_plugins/custom-classes.js',
-		'resources/assets/js/vendors/redactor/_plugins/video/video.js',
-		'resources/assets/js/vendors/redactor/_plugins/clips/clips.js',
+		'resources/assets/js/redactor-plugins/alignment/alignment.js',
+		'resources/assets/js/redactor-plugins/imagemanager/imagemanager.js',
+		'resources/assets/js/redactor-plugins/redactor-columns.js',
+		'resources/assets/js/redactor-plugins/rich-links.js',
+		'resources/assets/js/redactor-plugins/custom-classes.js',
+		'resources/assets/js/redactor-plugins/video/video.js',
+		'resources/assets/js/redactor-plugins/clips/clips.js',
 	], 'public/chief-assets/back/js/vendors/redactor.js')
 
 	/**
