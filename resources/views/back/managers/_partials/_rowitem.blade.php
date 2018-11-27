@@ -16,3 +16,4 @@
         @include('chief::back.managers._partials.context-menu')
     </div>
 </div>
+@include('chief::back.managers._partials.delete-modal')
