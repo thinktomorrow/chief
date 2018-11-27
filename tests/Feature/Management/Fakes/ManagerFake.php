@@ -69,6 +69,11 @@ class ManagerFake implements ModelManager
      */
     public function managedModelDetails(): ManagedModelDetails
     {
-        return new ManagedModelDetails($this->model->title ?? '', '', '', ['nl','en']);
+        return new ManagedModelDetails($this->model->id, $this->model->title ?? '', '', '', ['nl','en']);
+    }
+
+    public function delete()
+    {
+        $this->model->delete();
     }
 }

@@ -7,6 +7,8 @@ use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Application\DeleteManager;
+use Thinktomorrow\Chief\Management\Application\UpdateManager;
+use Thinktomorrow\Chief\Management\Application\StoreManager;
 
 class ManagersController extends Controller
 {
@@ -47,7 +49,7 @@ class ManagersController extends Controller
     {
         $modelManager = $this->managers->findByKey($key);
 
-        $manager = app(Storemanager::class)->handle($modelManager, $request);
+        $manager = app(StoreManager::class)->handle($modelManager, $request);
 
         return redirect()->to($manager->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->managedModelDetails()->title . '" werd aangepast');
@@ -70,7 +72,7 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        app(Updatemanager::class)->handle($manager, $request);
+        app(UpdateManager::class)->handle($manager, $request);
 
         return redirect()->to($manager->route('edit'))
                          ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->managedModelDetails()->title . '" werd aangepast');
