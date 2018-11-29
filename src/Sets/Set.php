@@ -92,7 +92,7 @@ class Set extends Collection implements PresentForParent
      */
     public function simplePaginate($perPage = 12, $currentPage = null): Paginator
     {
-        $currentPage = $currentPage ?? request()->get('page',1);
+        $currentPage = $currentPage ?? request()->get('page', 1);
         $path = request()->path();
         $items = array_slice($this->all(), ($currentPage - 1) * $perPage);
 
@@ -109,7 +109,7 @@ class Set extends Collection implements PresentForParent
      */
     public function paginate($perPage = 12, $currentPage = null): Paginator
     {
-        $currentPage = $currentPage ?? request()->get('page',1);
+        $currentPage = $currentPage ?? request()->get('page', 1);
         $path = request()->path();
         $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
 

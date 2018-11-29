@@ -11,8 +11,7 @@ class DeleteManager
 {
     public function handle(ModelManager $manager, Request $request)
     {
-        if($request->get('deleteconfirmation') != 'DELETE')
-        {
+        if ($request->get('deleteconfirmation') != 'DELETE') {
             throw new DeleteAborted();
         }
         $manager->delete();

@@ -112,7 +112,7 @@ class UpdatePage
         foreach ($custom_fields as $key => $value) {
             // If custom method exists, use that to save the value, else revert to default save as column
             $methodName = 'save'. ucfirst(camel_case($key)) . 'Field';
-
+            
             if (method_exists($page, $methodName)) {
                 $page->$methodName($value);
             } else {
