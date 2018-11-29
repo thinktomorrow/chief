@@ -1,7 +1,7 @@
 /*
     Redactor
-    Version 3.1.2
-    Updated: September 29, 2018
+    Version 3.1.5
+    Updated: November 14, 2018
 
     http://imperavi.com/redactor/
 
@@ -123,8 +123,7 @@ AjaxRequest.prototype = {
     }
 };
 var DomCache = [0];
-var DomExpando = 'data' + new Date();
-var DomDisplayCache = {};
+var DomExpando = 'data' + +new Date();
 var DomHClass = 'is-hidden';
 var DomHMClass = 'is-hidden-mobile';
 
@@ -467,7 +466,7 @@ Dom.prototype = {
 
             for (var key in attrs)
             {
-                if (reDataAttr.test(attrs[key].nodeName))
+                if (attrs[key] && reDataAttr.test(attrs[key].nodeName))
                 {
                     var dataName = attrs[key].nodeName.match(reDataAttr)[1];
                     var val = attrs[key].value;
@@ -541,6 +540,7 @@ Dom.prototype = {
 
         return cacheIndex;
     },
+
 
     // class
     addClass: function(value)
@@ -1336,7 +1336,7 @@ var $R = function(selector, options)
 
 // Globals
 $R.app = [];
-$R.version = '3.1.2';
+$R.version = '3.1.5';
 $R.options = {};
 $R.modules = {};
 $R.services = {};
@@ -1729,7 +1729,7 @@ $R.opts = {
         'h4.': { format: 'h4' },
         'h5.': { format: 'h5' },
         'h6.': { format: 'h6' },
-        '1.': { format: 'ol' },
+        //'1.': { format: 'ol' },
         '*.': { format: 'ul' }
     },
     shortcodesAdd: false, // object
@@ -1757,6 +1757,7 @@ $R.opts = {
 
     // misc
     grammarly: true,
+    notranslate: false,
 
     // private
     bufferLimit: 100,
@@ -4075,7 +4076,8 @@ $R.add('service', 'selection', {
         this._clearSaved();
 
         var el = this.getElement();
-        if (el && (el.tagName === 'TD' || el.tagName === 'TH') && el.innerHTML === '')
+        var tags = ['TD', 'TH', 'P', 'DIV', 'PRE', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'LI', 'BLOCKQUOTE'];
+        if (el && (tags.indexOf(el.tagName) !== -1) && (el.innerHTML === '' || el.innerHTML === '<br>'))
         {
             this.savedElement = el;
         }
@@ -5355,7 +5357,7 @@ $R.add('class', 'toolbar.dropdown', {
         var btnHeight = this.$btn.height();
         var btnWidth = this.$btn.width();
         var position = (isFixed) ? 'fixed' : 'absolute';
-        var topOffset = 2;
+        var topOffset = (isFixed) ? (2 + this.opts.toolbarFixedTopOffset) : 2;
         var leftOffset = 0;
         var left = (pos.left + leftOffset);
         var width = parseFloat(this.css('width'));
@@ -6474,6 +6476,9 @@ $R.add('class', 'cleaner.figure', {
     {
         if (this._isNonEditable(node)) return;
 
+        var $node = $R.dom(node);
+        if ($node.closest('.redactor-component').length !== 0) return;
+
         var src = node.getAttribute('src');
         var isVideo = (src && (src.match(this.opts.regex.youtube) || src.match(this.opts.regex.vimeo)));
         var $figure = this._wrapFigure(node);
@@ -6793,7 +6798,7 @@ $R.add('service', 'offset', {
     },
     get: function(el, trimmed)
     {
-        var offset = { start: 0, end: 0, newline: false };
+        var offset = { start: 0, end: 0 };
         var node = this.utils.getNode(el);
         if (!node) return false;
 
@@ -6816,7 +6821,6 @@ $R.add('service', 'offset', {
 
             var selection = this._getString(range, trimmed);
 
-            offset.newline = (selection.search(/^\n/) !== -1 && selection.trim() === '');
             offset.start = this._getString(clonedRange, trimmed).length - fix;
             offset.end = offset.start + selection.length + fix;
         }
@@ -6834,7 +6838,6 @@ $R.add('service', 'offset', {
         var size = this.size(node);
         var charIndex = 0, range = document.createRange();
 
-        offset.newline = (typeof offset.newline === 'undefined') ? false : offset.newline;
         offset.end = (offset.end > size) ? size : offset.end;
 
         range.setStart(node, 0);
@@ -6846,11 +6849,8 @@ $R.add('service', 'offset', {
             if (node.nodeType == 3)
             {
                 var nextCharIndex = charIndex + node.length;
-                var isNewLineStr = (node.nodeValue.search(/^\n/) !== -1 && node.nodeValue.trim() === '');
 
-                if (!foundStart && !this._isFigcaptionNext(node)
-                    && (offset.newline === false && !isNewLineStr)
-                    && offset.start >= charIndex && offset.start <= nextCharIndex)
+                if (!foundStart && !this._isFigcaptionNext(node) && offset.start >= charIndex && offset.start <= nextCharIndex)
                 {
                     range.setStart(node, offset.start - charIndex);
                     foundStart = true;
@@ -7857,11 +7857,11 @@ $R.add('service', 'insertion', {
 
                 this.utils.splitNode(current, fragment);
                 this.caret.setEnd(fragment.last);
-
                 return this._sendNodes(fragment.nodes);
             }
 
             parsedInput.html = (clean !== false) ? parsedInput.html.replace(/\n/g, '<br>') : parsedInput.html;
+
             fragment = this.utils.createFragment(parsedInput.html);
 
             return this.insertNode(fragment.nodes, 'end');
@@ -7974,7 +7974,7 @@ $R.add('service', 'insertion', {
         $editor.html('');
         $editor.append(fragment.frag);
 
-        this.caret.setEnd($editor);
+        this.caret.setEnd(fragment.last);
 
         return this._sendNodes(fragment.nodes);
     },
@@ -8503,6 +8503,8 @@ $R.add('service', 'inline', {
     init: function(app)
     {
         this.app = app;
+
+        this.count = 0;
     },
     // public
     format: function(args)
@@ -8511,7 +8513,6 @@ $R.add('service', 'inline', {
 
         // type of applying styles and attributes
         this.type = (args.type) ? args.type : 'set'; // add, remove, toggle
-
         // tag
         this.tag = (typeof args === 'string') ? args : args.tag;
         this.tag = this.tag.toLowerCase();
@@ -8520,8 +8521,12 @@ $R.add('service', 'inline', {
         if (typeof args === 'string') this.args = false;
         else this.buildArgs(args);
 
+        this.editor.disableNonEditables();
+
         // format
         var nodes = (this.selection.isCollapsed()) ? this.formatCollapsed() : this.formatUncollapsed();
+
+        this.editor.enableNonEditables();
 
         return nodes;
     },
@@ -8533,7 +8538,11 @@ $R.add('service', 'inline', {
         var data = this.inspector.parse(current);
         var isComponent = (data.isComponent() && !data.isComponentType('table') && !data.isFigcaption());
 
-        if (!current || data.isPre() || data.isCode() || isComponent)
+        if (current === false && this.selection.isAll())
+        {
+            return true;
+        }
+        else if (!current || data.isPre() || data.isCode() || isComponent)
         {
             return false;
         }
@@ -8875,7 +8884,7 @@ $R.add('service', 'inline', {
                 {
                     $inline.addClass('redactor-convertable-apply');
                 }
-                else if (hasSameArgs)
+                else if (hasSameArgs && this.tag !== 'a')
                 {
                     this._replaceToStrike($inline);
                 }
@@ -10207,7 +10216,7 @@ $R.add('module', 'editor', {
         var $editor = this.editor.getElement();
         var $container = this.container.getElement();
 
-        var classesEditor = ['redactor-in', 'redactor-in-' + this.uuid, 'redactor-structure', 'redactor-placeholder', this.opts.stylesClass];
+        var classesEditor = ['redactor-in', 'redactor-in-' + this.uuid, 'redactor-structure', 'redactor-placeholder', 'notranslate', this.opts.stylesClass];
         var classesContainer = ['redactor-focus', 'redactor-blur', 'redactor-over', 'redactor-styles-on',
                                 'redactor-styles-off', 'redactor-toolbar-on', 'redactor-text-labeled-on', 'redactor-source-view'];
 
@@ -10269,6 +10278,11 @@ $R.add('module', 'editor', {
         if (!this.opts.grammarly)
         {
             $editor.attr('data-gramm_editor', false);
+        }
+
+        if (this.opts.notranslate)
+        {
+            $editor.addClass('notranslate');
         }
 
         if (this.opts.styles)
@@ -12173,6 +12187,11 @@ $R.add('class', 'toolbar.fixed', {
         var $toolbar = this.toolbar.getElement();
         var $wrapper = this.toolbar.getWrapper();
 
+        if (this.editor.isSourceMode())
+        {
+            return;
+        }
+
         var $targets = $container.parents().filter(function(node)
         {
             return (getComputedStyle(node, null).display === 'none') ? node : false;
@@ -12673,6 +12692,7 @@ $R.add('module', 'link', {
         this.app.api('module.modal.close');
 
         var links = this._getLinks();
+
         if (!this._insertSingle(links, data))
         {
             this._removeInSelection(links);
@@ -14951,7 +14971,7 @@ $R.add('class', 'input.paste', {
             html = (!url || url === '') ? html : url;
 
             // file
-            if (clipboard.files.length > 0 && html === '')
+            if (clipboard.files !== null && clipboard.files.length > 0 && html === '')
             {
                 var files = [];
                 for (var i = 0; i < clipboard.files.length; i++)
@@ -15176,7 +15196,7 @@ $R.add('class', 'input.shortcut', {
         var special = this.hotkeys[e.keyCode];
         var character = String.fromCharCode(e.which).toLowerCase();
         var modif = "", possible = {};
-        var cmdKeys = ["alt", "ctrl", "meta", "shift"];
+        var cmdKeys = ["meta", "ctrl", "alt", "shift"];
 
         for (var i = 0; i < cmdKeys.length; i++)
         {
@@ -15205,16 +15225,19 @@ $R.add('class', 'input.shortcut', {
         {
             if (possible[keys[i]])
             {
+
                 e.preventDefault();
                 this.worked = true;
 
                 if (command.message)
                 {
                     this.app.broadcast(command.message, command.args);
+                    this.app.broadcast('buffer.trigger');
                 }
                 else if (command.api)
                 {
                     this.app.api(command.api, command.args);
+                    this.app.broadcast('buffer.trigger');
                 }
 
                 return;
@@ -16420,6 +16443,7 @@ $R.add('class', 'image.component', {
         var imageMargin = '';
         var textAlign = '';
         var $el = this;
+        var $figcaption = this.find('figcaption');
 
         if (typeof this.opts.imagePosition === 'object')
         {
@@ -16454,6 +16478,15 @@ $R.add('class', 'image.component', {
 
             $el.css({ 'float': imageFloat, 'margin': imageMargin, 'text-align': textAlign });
             $el.attr('rel', $el.attr('style'));
+
+            if (align === 'center')
+            {
+                $figcaption.css('text-align', 'center');
+            }
+            else
+            {
+                $figcaption.css('text-align', '');
+            }
         }
     },
     _set_link: function(data)
@@ -17095,6 +17128,12 @@ $R.add('module', 'buffer', {
 
         this.keyPressed = false;
     },
+    onbuffer: {
+        trigger: function()
+        {
+            this.trigger();
+        }
+    },
     onstate: function(e, html, offset)
     {
         if ((e && (e.ctrlKey || e.metaKey)) || (e && (this._isUndo(e) || this._isRedo(e))))
@@ -17147,7 +17186,6 @@ $R.add('module', 'buffer', {
         var cmd = ctrl || e.shiftKey || e.altKey;
         var keys = [this.keycodes.SPACE, this.keycodes.ENTER, this.keycodes.BACKSPACE, this.keycodes.DELETE, this.keycodes.TAB,
                     this.keycodes.LEFT, this.keycodes.RIGHT, this.keycodes.UP, this.keycodes.DOWN];
-
         // undo
         if (this._isUndo(e)) // z key
         {
@@ -17174,6 +17212,7 @@ $R.add('module', 'buffer', {
             cmd = true;
             this.trigger();
         }
+
 
         // empty buffer
         if (!cmd && !this._hasUndo())
