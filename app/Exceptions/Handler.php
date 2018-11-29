@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
-        if(admin())
+        if(strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin'))
         {
             return $this->renderChiefException($request, $exception);
         }
@@ -92,8 +92,9 @@ class Handler extends ExceptionHandler
 
     protected function renderChiefException($request, Exception $exception)
     {
-        //Do we need to log the exception here?
-        return redirect()->route('chief.back.dashboard')
-                         ->with('messages.error', 'Oeps. Het lijkt erop dat er iets fout ging.');
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Something went wrong.'], 404);
+        }
+        return response()->view('chief::errors.custom');
     }
 }
