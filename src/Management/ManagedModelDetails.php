@@ -19,8 +19,9 @@ class ManagedModelDetails implements Arrayable
     /** @var array */
     private $values = [];
 
-    public function __construct(string $title, string $subtitle, string $intro, array $locales)
+    public function __construct($id, string $title, string $subtitle, string $intro, array $locales)
     {
+        $this->values['id'] = $id;
         $this->values['title'] = $title;
         $this->values['subtitle'] = $subtitle;
         $this->values['intro'] = $intro;

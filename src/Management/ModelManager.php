@@ -64,4 +64,6 @@ interface ModelManager
      * @return ManagedModelDetails
      */
     public function managedModelDetails(): ManagedModelDetails;
+
+    public function delete();
 }

@@ -2,12 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Illuminate\Support\Carbon;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Fakes\AgendaPageFake;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
 
 class UpdatePageTest extends TestCase
 {
@@ -132,8 +134,6 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function only_nl_is_required()
     {
-        $this->page->removeTranslation('en');
-
         $response = $this->asAdmin()
             ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
                 'trans.en'  => [
@@ -141,14 +141,11 @@ class UpdatePageTest extends TestCase
                     'slug'            => '',
                     'seo_title'       => '',
                     'seo_description' => '',
+                    'content'         => ''
                 ],
             ]));
+
         $response->assertStatus(302);
-        
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
     }
 
     /** @test */
@@ -165,11 +162,8 @@ class UpdatePageTest extends TestCase
             ])
         );
         $response->assertStatus(302);
-         
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->slug);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_title);
-        $this->assertEquals('', $this->page->fresh()->getTranslation('en')->seo_description);
+
+        $this->assertNull($this->page->fresh()->getTranslation('en'));
     }
 
     /** @test */
@@ -212,5 +206,96 @@ class UpdatePageTest extends TestCase
         );
 
         $this->assertEquals('articles/foobar', $page->fresh()->slug);
+    }
+
+    /** @test */
+    public function it_can_add_a_period_with_same_start_and_end_date()
+    {
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'agenda' => AgendaPageFake::class,
+        ]);
+
+        $agenda = AgendaPageFake::create([
+            'collection'     => 'agenda',
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $agenda->id), $this->validUpdatePageParams([
+                'custom_fields.start_at'  => $now = Carbon::now(),
+                'custom_fields.end_at'    => $now
+            ])
+        );
+
+        $this->assertEquals($agenda->fresh()->end_at->day, $agenda->fresh()->start_at->day);
+    }
+
+    /** @test */
+    public function it_can_add_a_period()
+    {
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'agenda' => AgendaPageFake::class,
+        ]);
+
+        $agenda = AgendaPageFake::create([
+            'collection'     => 'agenda',
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $agenda->id), $this->validUpdatePageParams([
+                'custom_fields.start_at'  => Carbon::now(),
+                'custom_fields.end_at'    => Carbon::now()->addDay()
+            ])
+        );
+
+        $this->assertTrue($agenda->fresh()->end_at->gt($agenda->fresh()->start_at));
+    }
+
+    /** @test */
+    public function it_requires_both_start_and_end_date_if_one_of_them_is_filled_in()
+    {
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'agenda' => AgendaPageFake::class,
+        ]);
+
+        $agenda = AgendaPageFake::create([
+            'collection'     => 'agenda',
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $agenda->id), $this->validUpdatePageParams([
+                'custom_fields.end_at'  => Carbon::now(),
+            ])
+        );
+
+        $response->assertSessionHasErrors(['custom_fields.start_at' => 'The start date field is required.']);
+    }
+
+    /** @test */
+    public function it_can_set_only_start_at_to_define_one_day_period()
+    {
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'agenda' => AgendaPageFake::class,
+        ]);
+
+        $agenda = AgendaPageFake::create([
+            'collection'     => 'agenda',
+            'trans.nl.title' => 'foobar nl',
+            'trans.nl.slug'  => 'titel-nl'
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $agenda->id), $this->validUpdatePageParams([
+                'custom_fields.start_at'  => Carbon::now(),
+            ])
+        );
+
+        $this->assertTrue($agenda->fresh()->end_at->gt($agenda->fresh()->start_at));
+        $this->assertNotNull($agenda->fresh()->start_at);
     }
 }

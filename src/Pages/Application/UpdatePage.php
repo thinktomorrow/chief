@@ -60,13 +60,17 @@ class UpdatePage
             return $trans;
         });
 
-        // TODO: this should come from the manager->fields() as fieldgroup
-        $translatableColumns = [];
+        $translatableColumns = ['title', 'slug', 'seo_title', 'seo_description'];
         foreach ($page::translatableFields() as $translatableField) {
             $translatableColumns[] = $translatableField->column();
         }
 
         foreach ($translations as $locale => $value) {
+            if ($this->isCompletelyEmpty($translatableColumns, $value)) {
+                $page->removeTranslation($locale);
+                continue;
+            }
+
             $value = $this->enforceUniqueSlug($value, $page, $locale);
             $page->updateTranslation($locale, $value);
         }
@@ -108,7 +112,7 @@ class UpdatePage
         foreach ($custom_fields as $key => $value) {
             // If custom method exists, use that to save the value, else revert to default save as column
             $methodName = 'save'. ucfirst(camel_case($key)) . 'Field';
-
+            
             if (method_exists($page, $methodName)) {
                 $page->$methodName($value);
             } else {

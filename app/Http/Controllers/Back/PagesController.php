@@ -32,9 +32,9 @@ class PagesController extends Controller
         return view('chief::back.pages.index', [
             'page'              => $model,
             'collectionDetails' => $model->collectionDetails(),
-            'published'         => $this->lengthAwarePaginator($model->published()->get(), 1, 'published'),
-            'drafts'            => $this->lengthAwarePaginator($model->drafted()->get(), 1, 'drafted'),
-            'archived'          => $this->lengthAwarePaginator($model->archived()->get(), 1, 'archived'),
+            'published'         => $this->lengthAwarePaginator($model->published()->get(), 10, 'published'),
+            'drafts'            => $this->lengthAwarePaginator($model->drafted()->get(), 10, 'drafted'),
+            'archived'          => $this->lengthAwarePaginator($model->archived()->get(), 10, 'archived'),
         ]);
     }
 
@@ -197,22 +197,26 @@ class PagesController extends Controller
 
     public function publish(Request $request, $id)
     {
-        $page = Page::findOrFail($id);
-        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
-
-        ($published) ? $page->publish() : $page->draft();
+        $this->togglePublish($request, $id);
 
         return redirect()->back();
     }
 
     public function unpublish(Request $request, $id)
     {
+        $this->togglePublish($request, $id);
+
+        return redirect()->back();
+    }
+
+    private function togglePublish(Request $request, $id)
+    {
         $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
 
-        return redirect()->back();
+        return $page;
     }
 
     /**

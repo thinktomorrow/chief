@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
 use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
@@ -80,5 +81,38 @@ class Set extends Collection implements PresentForParent
         // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
         return '';
+    }
+
+    /**
+     * Paginate the collection with a simple navigation (prev and next)
+     *
+     * @param int $perPage
+     * @param null $currentPage
+     * @return Paginator
+     */
+    public function simplePaginate($perPage = 12, $currentPage = null): Paginator
+    {
+        $currentPage = $currentPage ?? request()->get('page', 1);
+        $path = request()->path();
+        $items = array_slice($this->all(), ($currentPage - 1) * $perPage);
+
+        return (new \Illuminate\Pagination\Paginator($items, $perPage, $currentPage))->setPath($path);
+    }
+
+    /**
+     * Paginate the collection with a length aware pagination result which allows
+     * to navigate to the first, last or any specific page
+     *
+     * @param int $perPage
+     * @param null $currentPage
+     * @return Paginator
+     */
+    public function paginate($perPage = 12, $currentPage = null): Paginator
+    {
+        $currentPage = $currentPage ?? request()->get('page', 1);
+        $path = request()->path();
+        $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
+
+        return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->count(), $perPage, $currentPage))->setPath($path);
     }
 }
