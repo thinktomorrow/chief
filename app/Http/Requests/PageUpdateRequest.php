@@ -61,7 +61,7 @@ class PageUpdateRequest extends FormRequest
 
     protected function validatePeriod(array $rules)
     {
-        if (optional($this->request->get('custom_fields'))['start_at'] != null || optional($this->request->get('custom_fields'))['end_at'] != null){
+        if (optional($this->request->get('custom_fields'))['start_at'] != null || optional($this->request->get('custom_fields'))['end_at'] != null) {
             $rules['custom_fields.start_at'] = 'required';
             $rules['custom_fields.end_at']   = 'after_or_equal:custom_fields.start_at';
         }
