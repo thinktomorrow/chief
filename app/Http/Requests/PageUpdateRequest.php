@@ -63,7 +63,7 @@ class PageUpdateRequest extends FormRequest
     {
         if (optional($this->request->get('custom_fields'))['start_at'] != null || optional($this->request->get('custom_fields'))['end_at'] != null) {
             $rules['custom_fields.start_at'] = 'required';
-            $rules['custom_fields.end_at']   = 'after_or_equal:custom_fields.start_at';
+            $rules['custom_fields.end_at']   = 'nullable|after_or_equal:custom_fields.start_at';
         }
 
         return $rules;
