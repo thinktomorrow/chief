@@ -43,7 +43,7 @@ trait HasPeriodTrait
 
     public function saveEndAtField($end_at)
     {
-        if($end_at){
+        if ($end_at) {
             $this->end_at = Carbon::parse($end_at)->endOfDay();
             $this->save();
         }
