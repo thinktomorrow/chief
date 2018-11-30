@@ -1,6 +1,5 @@
 <template>
     <div ref="parent">
-        <div v-if="isActive" class="dropdown-backdrop" @click="close"></div>
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
         <transition name="fade">
             <div v-show="isActive" style="z-index: 1;">
@@ -16,12 +15,15 @@
         created(){
 
             Eventbus.$on('open-dropdown',(id) => {
-                if(this.id == id){
+                if(this._uid == id){
                     this.toggle();
+                }
+                else if(this.isActive){
+                    this.close();
                 }
             });
             Eventbus.$on('close-dropdown',(id) => {
-                if(this.id == id){
+                if(this._uid == id){
                     this.close();
                 }
             });
@@ -34,7 +36,7 @@
             this.targetEl = this.$refs.parent.children[1];
 
             // Emit the 'open-dropdown' event in case the dropdown is set to open on pageload
-            if(this.isActive === true) Eventbus.$emit('open-dropdown',this.id);
+            if(this.isActive === true) Eventbus.$emit('open-dropdown',this._uid);
 
             // Listen to keydown to close modal on escape
             document.addEventListener("keydown", (e) => {
@@ -42,6 +44,13 @@
                     this.toggle();
                 }
             });
+
+            // Listen to any click and closes the dropdown if click was outside of dropdown div
+            document.addEventListener("click", (e) => {
+                if(!e.target.matches('.dropdown-box') && !this.isClosing) {
+                    this.close();
+                }
+            })
         },
         props: {
             active: {default: false, type: Boolean }
@@ -57,8 +66,12 @@
         },
         methods: {
             open(){
+
+                if(this.isActive) return;
+                
                 if(!this.popper && !this.isClosing){
                     this.isActive = true;
+                    Eventbus.$emit('open-dropdown',this._uid);
                     this.createDropdownElement();
                 };
             },
@@ -69,11 +82,11 @@
                 }
             },
             toggle(){
-
-                !this.isActive
-                    ? this.open()
-                    : this.close();
-
+                if(!this.isActive) {
+                    this.open();
+                } else {
+                    this.close();
+                }
             },
             createDropdownElement(){
 
