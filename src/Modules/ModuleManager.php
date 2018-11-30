@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;

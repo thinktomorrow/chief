@@ -1,6 +1,5 @@
-<div class="row bg-white inset-s panel panel-default stack-s">
+<div class="column-3 bg-white inset-s panel panel-default stack-s">
     <div class="column-9">
-
         @if($manager->can('edit'))
             <a class="text-black bold" href="{{ $manager->route('edit') }}">
                 {!! $manager->modelDetails()->title !!}

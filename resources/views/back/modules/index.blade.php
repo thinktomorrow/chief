@@ -32,9 +32,12 @@
         @endif
 
         @if(!$modules->isEmpty())
-            @foreach($modules as $module)
-                @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+            @foreach($modules as $key => $module_group)
+                <h2 class="column-12">{{ucfirst($key)}}</h2>
+                @foreach($module_group as $module)
+                    @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                    @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                @endforeach
             @endforeach
         @endif
 

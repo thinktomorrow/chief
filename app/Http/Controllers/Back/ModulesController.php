@@ -6,11 +6,7 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Module;
-use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\ModuleCreateRequest;
-use Thinktomorrow\Chief\Modules\Application\UpdateModule;
-use Thinktomorrow\Chief\App\Http\Requests\ModuleUpdateRequest;
-use Thinktomorrow\Chief\Modules\Application\DeleteModule;
 
 class ModulesController extends Controller
 {
@@ -18,9 +14,11 @@ class ModulesController extends Controller
     {
         $this->authorize('view-page');
 
+        $modules = Module::withoutPageSpecific()->orderBy('morph_key')->get()->groupBy('morph_key');
+
         return view('chief::back.modules.index', [
             'modelManager' => '',
-            'modules' => Module::withoutPageSpecific()->get(),
+            'modules' => $modules,
         ]);
     }
 
