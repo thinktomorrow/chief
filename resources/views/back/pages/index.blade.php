@@ -5,7 +5,7 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', $collectionDetails->plural)
         <div class="inline-group-s">
-            <a @click="showModal('create-page')" class="btn btn-primary">
+            <a @click="showModal('create-page')" class="btn btn-primary row center-y">
                 <i class="icon icon-plus"></i>
                 Voeg een {{ $collectionDetails->singular }} toe
             </a>

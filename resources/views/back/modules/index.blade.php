@@ -5,7 +5,7 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Vaste modules')
         <div class="inline-group-s">
-            <a @click="showModal('create-module')" class="btn btn-primary">
+            <a @click="showModal('create-module')" class="btn btn-primary row center-y">
                 <i class="icon icon-plus"></i>
                 Voeg een module toe
             </a>
@@ -33,11 +33,13 @@
 
         @if(!$modules->isEmpty())
             @foreach($modules as $key => $module_group)
-                <h2 class="column-12">{{ucfirst($key)}}</h2>
-                @foreach($module_group as $module)
-                    @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                    @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                @endforeach
+                <div class="row gutter stack">
+                    <h2 class="column-12 stack-xs">{{ucfirst($key)}}</h2>
+                    @foreach($module_group as $module)
+                        @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                        @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                    @endforeach
+                </div>
             @endforeach
         @endif
 
