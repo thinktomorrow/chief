@@ -54,8 +54,23 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
+        if(strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin'))
+        {
+            return $this->renderChiefException($request, $exception);
+        }
+
         return parent::render($request, $exception);
     }
+
+    protected function renderChiefException($request, Exception $exception)
+    {
+        if ($request->expectsJson()) {
+            return response()->json(['error' => 'Something went wrong.'], 404);
+        }
+
+        return response()->view('chief::back.errors.custom');
+    }
+
 
     protected function unauthorized($request, AuthorizationException $exception)
     {
