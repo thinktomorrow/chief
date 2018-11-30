@@ -13,10 +13,14 @@ class FieldTab
     /** @var string */
     private $title;
 
-    public function __construct(string $title, array $fieldKeys)
+    /** @var string */
+    private $view;
+
+    public function __construct(string $title, array $fieldKeys, string $view = null)
     {
         $this->title = $title;
         $this->fieldKeys = $fieldKeys;
+        $this->view = $view;
         $this->fields = [];
     }
 
@@ -48,5 +52,19 @@ class FieldTab
     public function fields(): array
     {
         return $this->fields;
+    }
+
+    /**
+     * Optional custom view to display this tab and its fields
+     * @return string
+     */
+    public function view(): ?string
+    {
+        return $this->view;
+    }
+
+    public function hasView(): bool
+    {
+        return !is_null($this->view);
     }
 }

@@ -1,27 +1,26 @@
 <?php
-    $defaultLocale = config('app.locale');
+    $defaultLocale = config('app.fallback_locale');
     $page_id = isset($page_id) ? $page_id : null;
 ?>
-<modal id="create-module" class="large-modal" title='' :active="{{ ($errors->has('collection') || $errors->has('slug')) ? 'true' : 'false' }}">
-    <form v-cloak id="createForm" method="POST" action="{{ route('chief.back.modules.store') }}" role="form">
+<modal id="create-module" class="large-modal" title='' :active="{{ ($errors->has('morph_key') || $errors->has('slug')) ? 'true' : 'false' }}">
+    <form v-cloak id="createModuleForm" method="POST" action="{{ route('chief.back.modules.store') }}" role="form">
         {{ csrf_field() }}
 
         <input type="hidden" name="page_id" value="{{ $page_id }}">
-
         <div class="stack-s">
-            <label for="collectionField">Type</label>
+            <label for="morphKeyField">Type</label>
             <chief-multiselect
-                    id="collectionField"
-                    name="collection"
-                    :options='@json($collections)'
-                    selected='@json(old('collection'))'
+                    id="morphKeyField"
+                    name="module_key"
+                    :options='@json(\Thinktomorrow\Chief\Modules\Module::available()->values()->toArray())'
+                    selected='@json(old('module_key'))'
                     labelkey="singular"
                     valuekey="key"
                     placeholder="..."
             >
             </chief-multiselect>
 
-            <error class="caption text-warning" field="collection" :errors="errors.all()"></error>
+            <error class="caption text-warning" field="morph_key" :errors="errors.all()"></error>
 
         </div>
 
@@ -35,6 +34,6 @@
     </form>
 
     <div slot="modal-action-buttons" v-cloak>
-        <button type="button" class="btn btn-primary" data-submit-form="createForm">Voeg module toe</button>
+        <button type="button" class="btn btn-primary" data-submit-form="createModuleForm">Voeg module toe</button>
     </div>
 </modal>

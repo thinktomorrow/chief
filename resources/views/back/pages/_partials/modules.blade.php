@@ -1,7 +1,10 @@
+<?php
+    $page = $manager->model();
+?>
+
 <h2>Eigen modules</h2>
 <p>Hier vind je de verzameling van alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina tonen door
     ze te selecteren in de <a href="#inhoud">inhoudstab</a></p>
-
 @if($page->modules->isEmpty())
     <div class="center-center stack-xl">
         <div>
@@ -14,7 +17,7 @@
 
 @if(!$page->modules->isEmpty())
     @foreach($page->modules as $module)
-        @include('chief::back.modules._partials._rowitem')
+        @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
     @endforeach
 
     <div class="stack">

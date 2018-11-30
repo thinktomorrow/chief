@@ -50,7 +50,9 @@ abstract class AbstractManager
     {
         $model = $this->registration->model();
 
-        return (new static($this->registration))->manage($model::where('id', $id)->first());
+        $modelInstance = $model::where('id', $id)->first();
+
+        return (new static($this->registration))->manage($modelInstance);
     }
 
     public function findAllManaged(): Collection
@@ -60,6 +62,11 @@ abstract class AbstractManager
         return $model::all()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
+    }
+
+    public function model()
+    {
+        return $this->model;
     }
 
     public function managerDetails(): ManagerDetails

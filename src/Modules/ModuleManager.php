@@ -8,12 +8,36 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\AbstractManager;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\ModelManager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
 
 class ModuleManager extends AbstractManager implements ModelManager
 {
+    public function route($verb): ?string
+    {
+        /**
+         * Page specific modules are expected to be found and managed in the context of a certain page.
+         * Therefore the index of these modules is at the modules tab of this page model.
+         */
+        if($verb == 'index' && $this->model->isPageSpecific()){
+            return app(Managers::class)->findByModel($this->model->page)->route('edit').'#eigen%20modules';
+        }
+
+        $routes = [
+            'index'   => route('chief.back.managers.index', [$this->registration->key()]),
+            'create'  => route('chief.back.managers.create', [$this->registration->key()]),
+            'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
+            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),
+            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->model->id]),
+            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
+            'upload' => route('managers.media.upload', [$this->registration->key(), $this->model->id])
+        ];
+
+        return $routes[$verb] ?? null;
+    }
+
     public function can($verb): bool
     {
         $this->authorize($verb);

@@ -110,6 +110,7 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
 
     public function modelDetails(): ManagedModelDetails
     {
+        return parent::modelDetails();
         return parent::modelDetails()
                         ->set('title', $this->model->title)
                         ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');

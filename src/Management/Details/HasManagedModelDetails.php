@@ -13,10 +13,11 @@ trait HasManagedModelDetails
     public function modelDetails(): ManagedModelDetails
     {
         // Generic model details
-        $classKey = get_class($this->model);
-        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
-        $labelPlural = property_exists($this, 'labelPlural') ? $this->labelPlural : str_plural($classKey);
-        $internal_label = contract($this->model, ProvidesFlatReference::class) ? $this->model->flatReferenceLabel() : $classKey;
+        $id = str_slug($this->registration->key().'-'.$this->model->id);
+        $key = $this->registration->key();
+        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($key);
+        $labelPlural = property_exists($this, 'labelPlural') ? $this->labelPlural : str_plural($key);
+        $internal_label = contract($this->model, ProvidesFlatReference::class) ? $this->model->flatReferenceLabel() : $key;
 
         // Manager index and header info
         $title = $this->model->title ?? ($this->model->id ? $labelSingular . ' ' . $this->model->id : $labelSingular);
@@ -24,7 +25,8 @@ trait HasManagedModelDetails
         $intro = '';
 
         return new ManagedModelDetails(
-            $classKey,
+            $id,
+            $key,
             $labelSingular,
             $labelPlural,
             $internal_label,

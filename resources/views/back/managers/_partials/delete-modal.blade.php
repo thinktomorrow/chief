@@ -13,7 +13,7 @@
         </div>
     </form>
 
-    <div slot="modal-action-buttons">
+    <div v-cloak slot="modal-action-buttons">
         <button type="button" class="btn btn-o-tertiary stack" data-submit-form="delete-manager-form-{{ $managedModelId }}">Ja, verwijder</button>
     </div>
 </modal>

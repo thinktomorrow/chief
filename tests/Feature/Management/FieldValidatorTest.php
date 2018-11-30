@@ -26,7 +26,7 @@ class FieldValidatorTest extends TestCase
         app(Register::class)->register('fakes', ManagerFakeWithValidation::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = (new ManagerFakeWithValidation(app(Register::class)->first()))->manage($this->model);
+        $this->fake = (new ManagerFakeWithValidation(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
     }
 
     /** @test */

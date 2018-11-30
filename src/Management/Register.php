@@ -16,9 +16,9 @@ class Register
         }
     }
 
-    public function register($key, $class, $model)
+    public function register($key, $class, $model, array $tags = [])
     {
-        $this->push(new Registration($key, $class, $model));
+        $this->push(new Registration($key, $class, $model, $tags));
 
         return $this;
     }
@@ -38,37 +38,68 @@ class Register
         return array_first($this->registrations);
     }
 
+    /**
+     * Filter registrations by callback function
+     *
+     * @param callable $callback
+     * @return Register
+     */
+    public function filter(callable $callback): self
+    {
+        if( ! is_callable($callback)) return new static($this->registrations);
+
+        $registrations = $this->registrations;
+
+        foreach ($registrations as $k => $registration) {
+            if(!! call_user_func($callback, $registration)) {
+                unset($registrations[$k]);
+            }
+        }
+
+        return new static($registrations);
+    }
+
     public function filterByKey(string $key): self
     {
-        return $this->filter('key', $key);
+        return $this->filterBy('key', $key);
     }
 
     public function filterByClass(string $class): self
     {
-        return $this->filter('managerClass', $class);
+        return $this->filterBy('managerClass', $class);
     }
 
     public function filterByModel(string $class): self
     {
-        return $this->filter('modelClass', $class);
+        return $this->filterBy('modelClass', $class);
+    }
+
+    public function filterByTag(string $tag): self
+    {
+        try{
+            return $this->filterBy('tags', $tag);
+        }
+        catch(NonRegisteredManager $e){
+            return new static();
+        }
     }
 
     public function rejectByKey(string $key): self
     {
-        return $this->filter('key', $key, 'reject');
+        return $this->filterBy('key', $key, 'reject');
     }
 
     public function rejectByClass(string $class): self
     {
-        return $this->filter('managerClass', $class, 'reject');
+        return $this->filterBy('managerClass', $class, 'reject');
     }
 
     public function rejectByModel(string $class): self
     {
-        return $this->filter('modelClass', $class, 'reject');
+        return $this->filterBy('modelClass', $class, 'reject');
     }
 
-    private function filter(string $key, $value, $type = 'filter'): self
+    private function filterBy(string $key, $value, $type = 'filter'): self
     {
         $registrations = $this->registrations;
 

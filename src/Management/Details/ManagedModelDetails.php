@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management\Details;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Class ModelDetails
  *
@@ -15,14 +17,15 @@ namespace Thinktomorrow\Chief\Management\Details;
  * @property $subtitle
  * @property $intro
  */
-class ManagedModelDetails
+class ManagedModelDetails implements Arrayable
 {
     /** @var array */
     protected $values = [];
 
-    public function __construct(string $key, string $singular, string $plural, string $internal_label, string $title, string $subtitle, string $intro)
+    public function __construct($id, string $key, string $singular, string $plural, string $internal_label, string $title, string $subtitle, string $intro)
     {
         // Default model details
+        $this->values['id'] = $id;
         $this->values['key'] = $key;
         $this->values['singular'] = $singular;
         $this->values['plural'] = $plural;
@@ -63,5 +66,15 @@ class ManagedModelDetails
     public function __toString()
     {
         return (string) $this->get('key');
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->values;
     }
 }

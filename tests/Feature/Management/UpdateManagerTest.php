@@ -25,7 +25,7 @@ class UpdateManagerTest extends TestCase
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = (new ManagerFake(app(Register::class)->first()))->manage($this->model);
+        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
     }
 
     /** @test */

@@ -90,6 +90,7 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_displays_admin_page_for_authenticated()
     {
+        $this->disableExceptionHandling();
         $admin = factory(User::class)->make();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
 

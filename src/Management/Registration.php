@@ -7,12 +7,14 @@ class Registration
     private $key;
     private $managerClass;
     private $modelClass;
+    private $tags;
 
-    public function __construct(string $key, string $managerClass, string $modelClass)
+    public function __construct(string $key, string $managerClass, string $modelClass, array $tags = [])
     {
         $this->key = $key;
         $this->managerClass = $managerClass;
         $this->modelClass = $modelClass;
+        $this->tags = $tags;
 
         $this->validate();
     }
@@ -52,8 +54,15 @@ class Registration
         return $this->modelClass;
     }
 
+    public function tags(): array
+    {
+        return $this->tags;
+    }
+
     public function has(string $key, $value): bool
     {
+        if($key == 'tags') return in_array($value, $this->tags);
+
         return $this->$key == $value;
     }
 

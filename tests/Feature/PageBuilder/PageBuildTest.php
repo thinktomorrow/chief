@@ -83,6 +83,7 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_add_a_text_module()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\App\Providers\ProjectServiceProvider;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
@@ -29,7 +30,6 @@ class CreateManagerTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->fake->route('create'))
             ->assertStatus(200);
     }

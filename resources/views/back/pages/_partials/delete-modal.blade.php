@@ -1,5 +1,5 @@
 <modal id="delete-page-{{$page->id}}" class="large-modal" title=''>
-    <form action="{{route('chief.back.pages.destroy', $page->id)}}" method="POST" id="delete-form-{{$page->id}}" slot>
+    <form action="{{route('chief.back.pages.destroy', $page->id)}}" method="POST" id="delete-page-form-{{$page->id}}" slot>
         @method('DELETE')
         @csrf
         <div v-cloak>
@@ -17,6 +17,6 @@
     </form>
 
     <div slot="modal-action-buttons">
-        <button type="button" class="btn btn-o-tertiary stack" data-submit-form="delete-form-{{$page->id}}">{{ $page->isDraft() || $page->isArchived() ? 'Verwijder' : 'Archiveer' }} dit artikel</button>
+        <button type="button" class="btn btn-o-tertiary stack" data-submit-form="delete-page-form-{{$page->id}}">{{ $page->isDraft() || $page->isArchived() ? 'Verwijder' : 'Archiveer' }} dit artikel</button>
     </div>
 </modal>

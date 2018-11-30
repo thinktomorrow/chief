@@ -23,7 +23,7 @@ class StoreManagerTest extends TestCase
 
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
-        $this->fake = (new ManagerFake(app(Register::class)->first()));
+        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()));
     }
 
     /** @test */

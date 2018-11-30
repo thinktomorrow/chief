@@ -38,6 +38,12 @@ interface ModelManager
      */
     public function findAllManaged(): Collection;
 
+    /**
+     * Retrieve the managed model instance
+     * @return mixed
+     */
+    public function model();
+
     public function route($verb): ?string;
 
     public function can($verb): bool;

@@ -6,6 +6,9 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
+use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
@@ -55,6 +58,15 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         $this->constructWithSnippets();
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * Enlist all available managed modules.
+     * @return Collection of ManagedModelDetails
+     */
+    public static function available(): Collection
+    {
+        return app(Managers::class)->findDetailsByTag('module');
     }
 
     public function page()

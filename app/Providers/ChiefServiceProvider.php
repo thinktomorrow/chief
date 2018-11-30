@@ -88,11 +88,6 @@ class ChiefServiceProvider extends ServiceProvider
             });
         }
 
-        // Manager register is globally available
-        $this->app->singleton(Register::class, function () {
-            return new Register();
-        });
-
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
 
@@ -116,6 +111,11 @@ class ChiefServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
 
         $this->setupEnvironmentProviders();
+
+        // Manager register is globally available
+        $this->app->singleton(Register::class, function () {
+            return new Register();
+        });
 
         (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();

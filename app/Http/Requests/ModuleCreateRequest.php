@@ -27,7 +27,7 @@ class ModuleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'morph_key' => 'required',
+            'module_key' => 'required',
             'slug'      => 'required|unique:modules,slug',
         ];
     }
@@ -35,7 +35,7 @@ class ModuleCreateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'morph_key' => 'type',
+            'module_key' => 'type',
             'slug'      => 'interne link',
         ];
     }

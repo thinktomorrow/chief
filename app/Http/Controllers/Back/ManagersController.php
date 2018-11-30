@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Application\UpdateManager;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 
 class ManagersController extends Controller
 {
@@ -25,9 +24,7 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
-        if (! $manager->can('index')) {
-            NotAllowedManagerRoute::index($manager);
-        }
+        $manager->guard('index');
 
         $managers = $manager->findAllManaged();
 
@@ -41,9 +38,7 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
-        if (! $manager->can('create')) {
-            NotAllowedManagerRoute::create($manager);
-        }
+        $manager->guard('create');
 
         return view('chief::back.managers.create', [
             'manager' => $manager,
@@ -64,9 +59,7 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        if (! $manager->can('edit')) {
-            NotAllowedManagerRoute::edit($manager);
-        }
+        $manager->guard('edit');
 
         return view('chief::back.managers.edit', [
             'manager' => $manager,

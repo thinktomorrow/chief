@@ -74,7 +74,7 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     // Modules
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
-//    Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
+    Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
 //    Route::put('modules/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@update')->name('chief.back.modules.update');
 //    Route::get('modules/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@show')->name('chief.back.modules.show')->where('id', '[0-9]+');
 //    Route::get('modules/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@edit')->name('chief.back.modules.edit');
