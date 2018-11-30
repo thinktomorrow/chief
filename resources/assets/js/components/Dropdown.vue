@@ -44,13 +44,6 @@
                     this.toggle();
                 }
             });
-
-            // Listen to any click and closes the dropdown if click was outside of dropdown div
-            document.addEventListener("click", (e) => {
-                if(!e.target.matches('.dropdown-box') && !this.isClosing) {
-                    this.close();
-                }
-            })
         },
         props: {
             active: {default: false, type: Boolean }
@@ -73,12 +66,16 @@
                     this.isActive = true;
                     Eventbus.$emit('open-dropdown',this._uid);
                     this.createDropdownElement();
+
+                    document.addEventListener("click", this.closeDropdownClickEvent, false);
                 };
             },
             close(){
                 if(this.popper && !this.isClosing){
                     this.isActive = false;
                     this.destroyDropdownElement();
+
+                    document.removeEventListener("click", this.closeDropdownClickEvent, false);
                 }
             },
             toggle(){
@@ -124,7 +121,12 @@
                     }, 500);
                 });
 
-            }
+            },
+            closeDropdownClickEvent(event){
+                if(!event.target.matches('.dropdown-box') && !this.isClosing) {
+                    this.close();
+                }
+            },
         },
     }
 </script>
