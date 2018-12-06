@@ -64,11 +64,16 @@ class Handler extends ExceptionHandler
 
     protected function renderChiefException($request, Exception $exception)
     {
-        if ($request->expectsJson()) {
-            return response()->json(['error' => 'Something went wrong.'], 404);
-        }
+        if(!config('app.debug'))
+        {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Something went wrong.'], 404);
+            }
 
-        return response()->view('chief::back.errors.custom');
+            return response()->view('chief::back.errors.custom');
+        }
+        
+        return parent::render($request, $exception);
     }
 
 
