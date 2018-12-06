@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
-        if(strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin'))
+        if((strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin')) && !$exception instanceof AuthenticationException)
         {
             return $this->renderChiefException($request, $exception);
         }
