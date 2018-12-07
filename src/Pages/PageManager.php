@@ -35,6 +35,9 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
 
+    /** @var PageBuilderField */
+    private $pageBuilderField;
+
     public function __construct(Registration $registration)
     {
         parent::__construct($registration);
@@ -80,7 +83,7 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     public function fields(): Fields
     {
         return new Fields([
-            $this->createPagebuilderField(),
+            $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
                                      ->validation('required-fallback-locale|max:200')
                                      ->label('Pagina titel')
@@ -97,6 +100,13 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
             MediaField::make(MediaType::HERO)->multiple(false),
             MediaField::make(MediaType::THUMB)->multiple(false),
         ]);
+    }
+
+    private function pageBuilderField()
+    {
+        if($this->pageBuilderField) return $this->pageBuilderField;
+
+        return $this->pageBuilderField = $this->createPagebuilderField();
     }
 
     public function fieldArrangement(): FieldArrangement
