@@ -12,7 +12,8 @@ trait HasManagedModelDetails
      */
     public function modelDetails(): ManagedModelDetails
     {
-        // Generic model details
+        // Generic model details 
+        //might be able to remove this as id isnt general info
         $id = str_slug($this->registration->key().'-'.$this->model->id);
         $key = $this->registration->key();
         $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($key);

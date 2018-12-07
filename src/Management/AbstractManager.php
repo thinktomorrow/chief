@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
-use Thinktomorrow\Chief\Management\Details\HasManagedModelDetails;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Management\Details\HasManagedModelDetails;
 
 abstract class AbstractManager
 {
@@ -69,15 +70,21 @@ abstract class AbstractManager
         return $this->model;
     }
 
-    public function managerDetails(): ManagerDetails
+    /**
+     * If the model exists return it otherwise
+     * throws a nonExistingRecord exception;
+     *
+     * @return void
+     */
+    public function existingModel()
     {
-        return new ManagerDetails(
-            str_slug($this->registration->key().'-'.$this->model->id),
-            $this->registration->key(),
-            static::class,
-            property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($this->registration->key()),
-            property_exists($this, 'labelPlural') ? $this->labelPlural : str_plural($this->registration->key())
-        );
+        //check if model exists
+        if(! $this->model->exists)
+        {
+            throw new NonExistingRecord();
+        }
+        
+        return $this->model;
     }
 
     /**
@@ -92,15 +99,26 @@ abstract class AbstractManager
         $routes = [
             'index'   => route('chief.back.managers.index', [$this->registration->key()]),
             'create'  => route('chief.back.managers.create', [$this->registration->key()]),
-            'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
-            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),
-            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->model->id]),
-            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
-            'upload' => route('managers.media.upload', [$this->registration->key(), $this->model->id])
+            'store'   => route('chief.back.managers.store', [$this->registration->key()]),
         ];
 
-        return $routes[$verb] ?? null;
+        if(array_key_exists($verb, $routes)) return $routes[$verb] ?? null;
+
+        //These routes expect the model to be persisted in the database
+        $modelRoutes = [
+            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
+            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
+            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
+            'publish' => route('chief.back.managers.publish', [$this->registration->key(), $this->existingModel()->id]),
+            'draft'   => route('chief.back.managers.draft', [$this->registration->key(), $this->existingModel()->id]),
+            'archive' => route('chief.back.managers.archive', [$this->registration->key(), $this->existingModel()->id]),
+            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
+        ];
+
+        return $modelRoutes[$verb] ?? null;
     }
+
+    
 
     public function can($verb): bool
     {
@@ -204,6 +222,8 @@ abstract class AbstractManager
 
         return (new static($this->registration))->manage($this->model);
     }
+
+    
 
     public function delete()
     {

@@ -32,6 +32,7 @@ class AuditTest extends TestCase
     /** @test */
     public function it_logs_create_events_on_pages()
     {
+        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
@@ -97,7 +98,7 @@ class AuditTest extends TestCase
         $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->put(route('chief.back.pages.archive', $page->id));
+             ->put(route('chief.back.managers.archive', ['singles', $page->id]));
 
         $activity = Audit::getAllActivityFor($page);
 

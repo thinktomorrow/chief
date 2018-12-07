@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\App\Providers\ProjectServiceProvider;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;

@@ -30,8 +30,8 @@ class ModuleManager extends AbstractManager implements ModelManager
             'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
             'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),
             'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->model->id]),
-            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
-            'upload' => route('managers.media.upload', [$this->registration->key(), $this->model->id])
+            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
+            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->model->id])
         ];
 
         return $routes[$verb] ?? null;

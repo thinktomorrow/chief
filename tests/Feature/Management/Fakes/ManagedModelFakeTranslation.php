@@ -10,6 +10,7 @@ class ManagedModelFakeTranslation extends Model
 {
     public $table = 'fake_managed_models_translations';
     public $timestamps = false;
+    public $guarded = [];
 
     public static function migrateUp()
     {
@@ -19,6 +20,7 @@ class ManagedModelFakeTranslation extends Model
             $table->string('locale')->nullable();
             $table->string('title_trans')->nullable();
             $table->string('content_trans')->nullable();
+            $table->string('slug')->nullable();
         });
     }
 }

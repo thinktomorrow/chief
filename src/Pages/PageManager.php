@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
 use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;

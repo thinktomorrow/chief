@@ -67,10 +67,9 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 //    Route::get('pages/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@edit')->name('chief.back.pages.edit');
 
     // Page publication and states
-    Route::post('pages/{id}/publish', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishPageController@publish')->name('chief.back.pages.publish');
-    Route::post('pages/{id}/draft', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishPageController@draft')->name('chief.back.pages.draft');
-    Route::put('pages/{id}/archive', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@archive')->name('chief.back.pages.archive');
-//    Route::delete('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@destroy')->name('chief.back.pages.destroy');
+    Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@publish')->name('chief.back.managers.publish')->where('id', '[0-9]+');
+    Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@draft')->name('chief.back.managers.draft')->where('id', '[0-9]+');
+    Route::put('archive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ArchiveController@archive')->name('chief.back.managers.archive')->where('id', '[0-9]+');
 
     // Modules
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
@@ -103,7 +102,7 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      */
     Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
     Route::post('modules/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadModulesMediaController@store')->name('modules.media.upload');
-    Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('managers.media.upload');
+    Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('chief.back.managers.media.upload');
 
     /**
      * -----------------------------------------------------------------

@@ -19,7 +19,6 @@
 @endcomponent
 
 @section('content')
-
     <div v-cloak class="v-loader inset-xl text-center">loading...</div>
     <div v-cloak>
 
@@ -54,4 +53,3 @@
 @include('chief::back._elements.file-component')
 @include('chief::back._elements.slimcropper-component')
 @include('chief::back._elements.fileupload-component')
-

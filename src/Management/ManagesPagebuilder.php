@@ -4,16 +4,17 @@
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
-use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Relations\AvailableChildren;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Modules\PagetitleModule;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\PageBuilder\UpdateSections;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Modules\TextModule;
+use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
+use Thinktomorrow\Chief\PageBuilder\UpdateSections;
+use Thinktomorrow\Chief\Relations\AvailableChildren;
+use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
 trait ManagesPagebuilder
 {
@@ -46,6 +47,7 @@ trait ManagesPagebuilder
         $model = $this->model;
 
         $availableChildren = AvailableChildren::forParent($model);
+        
         $available_modules = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlyModules())->toArray();
         $available_pages = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlyPages())->toArray();
         $available_sets = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlySets())->toArray();

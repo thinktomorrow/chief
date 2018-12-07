@@ -20,7 +20,6 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
 use Thinktomorrow\Chief\Audit\AuditTrait;
-use Thinktomorrow\Chief\Management\Field;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
@@ -51,7 +50,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
 
-    public $table       = "pages";
+    public $table          = "pages";
     protected $guarded     = [];
     protected $dates       = ['deleted_at'];
     protected $with        = ['translations'];

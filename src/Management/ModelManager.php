@@ -108,12 +108,7 @@ interface ModelManager
      */
     public function updateRequest(Request $request): Request;
 
-    /**
-     * Details and display data regarding the Manager and the model in general.
-     *
-     * @return ManagerDetails
-     */
-    public function managerDetails(): ManagerDetails;
+    
 
     /**
      * Information regarding a specific managed model instance.
