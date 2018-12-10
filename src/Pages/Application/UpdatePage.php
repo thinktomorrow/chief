@@ -51,7 +51,7 @@ class UpdatePage
     private function savePageTranslations(Page $page, $translations)
     {
         $translations = collect($translations)->map(function ($trans, $locale) {
-            if ($trans['slug'] != '') {
+            if (isset($trans['slug']) && $trans['slug'] != '') {
                 $trans['slug'] = str_slug_slashed($trans['slug']);
             } else {
                 $trans['slug'] = str_slug($trans['title']);
@@ -70,7 +70,7 @@ class UpdatePage
                 $page->removeTranslation($locale);
                 continue;
             }
-
+            
             $value = $this->enforceUniqueSlug($value, $page, $locale);
             $page->updateTranslation($locale, $value);
         }
@@ -134,7 +134,7 @@ class UpdatePage
     private function enforceUniqueSlug(array $translation, $page, $locale): array
     {
         $translation['slug']    = $translation['slug'] ?? $translation['title'];
-        $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale));
+        $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale, false));
 
         if (isset($translation['content'])) {
             $translation['short'] = $translation['short'] ?? teaser($translation['content'], 100);

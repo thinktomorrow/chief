@@ -189,6 +189,42 @@ class UpdatePageTest extends TestCase
     }
 
     /** @test */
+    public function slug_uses_title_if_its_empty_but_stays_unique()
+    {
+        config()->set(['app.locale' => 'nl']);
+        config()->set(['app.fallback_locale' => 'nl']);
+        config()->set(['translatable.locales' => [
+            'nl',
+            'en',
+        ]]);
+        config()->set(['translatable.fallback_locale' => 'nl']);
+
+        $this->disableExceptionHandling();
+        $page = factory(Page::class)->create([
+            'title:nl' => 'foobar',
+            'slug:nl'  => 'foobar',
+        ]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar',
+                    'slug'  => 'foobar',
+                ],
+                'trans.en'  => [
+                    'title' => 'foobar',
+                    'slug'  => null
+                ],
+            ])
+        );
+        
+        $response->assertStatus(302);
+
+        $this->assertEquals('foobar', $page->fresh()->getTranslationFor('slug', 'nl'));
+        $this->assertEquals('foobar-1', $page->fresh()->getTranslationFor('slug', 'en'));
+    }
+
+    /** @test */
     public function slug_can_contain_slashes()
     {
         $page = factory(Page::class)->create([
