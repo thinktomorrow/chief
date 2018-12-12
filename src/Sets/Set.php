@@ -78,9 +78,17 @@ class Set extends Collection implements PresentForParent
             ])->render();
         }
 
-        // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
-        // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
-        return '';
+        // If no view has been created for this page collection, we try once again to fetch the content value if the page element should have a presenter method available.
+        // This will silently fail if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
+        $output = [];
+
+        foreach($this->items as $item){
+            if(method_exists($item, 'presentForParent')){
+                $output[] = $item->presentForParent($parent);
+            }
+        }
+
+        return implode('', $output);
     }
 
     /**

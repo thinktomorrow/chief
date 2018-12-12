@@ -63,6 +63,7 @@ class ParseChildrenForPresentation
     public function toCollection(): Collection
     {
         foreach ($this->children as $i => $child) {
+
             if ($child instanceof StoredSetReference) {
                 $this->addSetToCollection($i, $child->toSet());
                 continue;
@@ -78,19 +79,26 @@ class ParseChildrenForPresentation
                 continue;
             }
 
-            $this->sets[$i] = $child;
+            $this->addToCollection($i, $child);
         }
 
-        return $this->sets->map(function (PresentForParent $child) {
+        return $this->sets->values()->map(function (PresentForParent $child) {
             return ($this->withSnippets && method_exists($child, 'withSnippets'))
                 ? $child->withSnippets()->presentForParent($this->parent)
                 : $child->presentForParent($this->parent);
         });
     }
 
+    private function addToCollection($index, $child)
+    {
+        $this->sets[$index] = $child;
+        $this->current_type = null;
+    }
+
     private function addSetToCollection($index, Set $set)
     {
         $this->sets[$index] = $set;
+        $this->current_type = null;
     }
 
     private function addPageToCollection($index, $child)

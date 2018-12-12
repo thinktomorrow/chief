@@ -65,8 +65,7 @@ class PageBuildTest extends TestCase
         $this->assertCount(4, $this->page->children());
         $this->assertCount(4, $this->page->presentChildren());
 
-        // Modules show their content by default but pages do not since this is not expected behaviour
-        $this->assertEquals('eerste texttweede textnieuwsbrief', $this->page->renderChildren());
+        $this->assertEquals('eerste textarticle texttweede textnieuwsbrief', $this->page->renderChildren());
     }
 
     /** @test */
@@ -85,10 +84,35 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module3, ['sort' => 5]);
 
         $this->assertCount(5, $this->page->children());
-        $this->assertCount(4, $this->page->presentChildren());
+        $this->assertCount(5, $this->page->presentChildren());
 
         // Modules show their content by default but pages do not since this is not expected behaviour
-        $this->assertEquals('eerste texttweede textnieuwsbrief', $this->page->renderChildren());
+        $this->assertEquals('eerste textarticle texttweede textarticle textnieuwsbrief', $this->page->renderChildren());
+    }
+
+    /** @test */
+    public function all_types_are_grouped_together_but_only_when_sorted_next_to_each_other()
+    {
+        $page2 = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article-text-1', 'slug:nl' => 'article-slug', 'published' => true]);
+        $page3 = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article-text-2', 'slug:nl' => 'article-slug-3', 'published' => true]);
+        $module = TextModule::create(['collection' => 'text', 'slug' => 'tweede-text', 'content:nl' => 'module-text']);
+        $page4 = ArticlePageFake::create(['collection' => 'articles', 'title:nl' => 'artikel title', 'content:nl' => 'article-text-3', 'slug:nl' => 'article-slug-4', 'published' => true]);
+
+        $this->page->adoptChild($page2, ['sort' => 1]);
+        $this->page->adoptChild($page3, ['sort' => 2]);
+        $this->page->adoptChild($module, ['sort' => 3]);
+        $this->page->adoptChild($page4, ['sort' => 4]);
+
+        $this->assertCount(4, $this->page->children());
+
+        $this->assertCount(3, $this->page->presentChildren());
+        $this->assertEquals(collect([
+            'article-text-1article-text-2',
+            'module-text',
+            'article-text-3',
+        ]), $this->page->presentChildren());
+
+        $this->assertEquals('article-text-1article-text-2module-textarticle-text-3', $this->page->renderChildren());
     }
 
     /** @test */
