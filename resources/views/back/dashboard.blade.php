@@ -15,9 +15,7 @@
             <p>Don't try to follow trends. Create them</p>
         </div>
         <div class="gutter column-8 inset right">
-            @foreach(app(\Thinktomorrow\Chief\Management\Register::class)->all() as $registration)
-
-                <?php $manager = app(\Thinktomorrow\Chief\Management\Managers::class)->findByKey($registration->key()); ?>
+            @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page', 'module']) as $manager)
 
                 <div class="column-6">
                     <div class="panel panel-default --raised">

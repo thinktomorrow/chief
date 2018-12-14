@@ -4,6 +4,6 @@ namespace Thinktomorrow\Chief\Pages;
 
 class Single extends Page
 {
-    public $labelSingular = 'pagina';
-    public $labelPlural = 'pagina\'s';
+    public $labelSingular = 'algemene pagina';
+    public $labelPlural = 'algemene pagina\'s';
 }

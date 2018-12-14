@@ -61,7 +61,12 @@ class Registration
 
     public function has(string $key, $value): bool
     {
-        if($key == 'tags') return in_array($value, $this->tags);
+        if($key == 'tags'){
+
+            if(is_array($value)) return (count(array_intersect($this->tags, $value)) > 0);
+
+            return in_array($value, $this->tags);
+        }
 
         return $this->$key == $value;
     }

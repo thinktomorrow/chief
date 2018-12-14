@@ -83,7 +83,7 @@ class ManagersController extends Controller
         try {
             app(DeleteManager::class)->handle($manager, $request);
         } catch (DeleteAborted $e) {
-            return redirect()->back()->with('messages.warning', $manager->managerDetails()->singular . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $manager->modelDetails()->singular . ' is niet verwijderd.');
         }
 
         return redirect()->to($manager->route('index'))

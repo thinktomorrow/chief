@@ -101,7 +101,7 @@ class ChiefServiceProvider extends ServiceProvider
             }
 
             return true;
-        });
+        }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
     }
 
     public function register()

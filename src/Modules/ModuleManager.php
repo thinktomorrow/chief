@@ -74,8 +74,8 @@ class ModuleManager extends AbstractManager implements ModelManager
     {
         return new Fields([
             InputField::make('slug')->validation('required'),
-            InputField::make('title')->translatable($this->model->availableLocales())->validation('required-fallback-locale|max:200'),
-            HtmlField::make('content')->translatable($this->model->availableLocales()),
+            HtmlField::make('content')->translatable($this->model->availableLocales())
+                        ->label('inhoud'),
         ]);
     }
 

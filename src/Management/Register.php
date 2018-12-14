@@ -74,10 +74,10 @@ class Register
         return $this->filterBy('modelClass', $class);
     }
 
-    public function filterByTag(string $tag): self
+    public function filterByTag($tag): self
     {
         try{
-            return $this->filterBy('tags', $tag);
+            return $this->filterBy('tags', (array) $tag);
         }
         catch(NonRegisteredManager $e){
             return new static();

@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
@@ -25,13 +24,8 @@ class ProjectServiceProvider extends ServiceProvider
 
         $this->registerPage('singles', PageManager::class, Single::class);
 
-        $this->registerModule('text', ModuleManager::class, TextModule::class);
-        $this->registerModule('pagetitle', ModuleManager::class, PagetitleModule::class);
-    }
-
-    public function register()
-    {
-        //
+        $this->registerManager('text', ModuleManager::class, TextModule::class, ['pagesection']);
+        $this->registerManager('pagetitle', ModuleManager::class, PagetitleModule::class, ['pagesection']);
     }
 
     public function registerModule($key, $class, $model)
@@ -47,5 +41,10 @@ class ProjectServiceProvider extends ServiceProvider
     public function registerManager($key, $class, $model, array $tags = [])
     {
         return app(Register::class)->register($key, $class, $model, $tags);
+    }
+
+    public function register()
+    {
+        //
     }
 }

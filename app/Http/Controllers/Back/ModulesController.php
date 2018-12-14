@@ -17,7 +17,6 @@ class ModulesController extends Controller
         $modules = Module::withoutPageSpecific()->orderBy('morph_key')->get()->groupBy('morph_key');
 
         return view('chief::back.modules.index', [
-            'modelManager' => '',
             'modules' => $modules,
         ]);
     }
