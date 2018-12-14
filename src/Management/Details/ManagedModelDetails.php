@@ -22,7 +22,7 @@ class ManagedModelDetails implements Arrayable
     /** @var array */
     protected $values = [];
 
-    public function __construct($id, string $key, string $singular, string $plural, string $internal_label, string $title, string $subtitle, string $intro)
+    public function __construct($id, string $key, string $singular, string $plural, string $internal_label, string $title)
     {
         // Default model details
         $this->values['id'] = $id;
@@ -30,11 +30,7 @@ class ManagedModelDetails implements Arrayable
         $this->values['singular'] = $singular;
         $this->values['plural'] = $plural;
         $this->values['internal_label'] = $internal_label;
-
-        // Manager model details
         $this->values['title'] = $title;
-        $this->values['subtitle'] = $subtitle;
-        $this->values['intro'] = $intro;
     }
 
     public function get($attribute = null)

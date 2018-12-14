@@ -7,9 +7,11 @@
     @yield('header')
 
     <section id="content" class="container">
-        @include('chief::back._elements.errors')
-        @include('chief::back._elements.messages')
-        @yield('content')
+        <div class="stack">
+            @include('chief::back._elements.errors')
+            @include('chief::back._elements.messages')
+            @yield('content')
+        </div>
     </section>
 
     @stack('sidebar')

@@ -22,8 +22,6 @@ trait HasManagedModelDetails
 
         // Manager index and header info
         $title = $this->model->title ?? ($this->model->id ? $labelSingular . ' ' . $this->model->id : $labelSingular);
-        $subtitle = '';
-        $intro = '';
 
         return new ManagedModelDetails(
             $id,
@@ -31,9 +29,7 @@ trait HasManagedModelDetails
             $labelSingular,
             $labelPlural,
             $internal_label,
-            $title,
-            $subtitle,
-            $intro
+            $title
         );
     }
 }

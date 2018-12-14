@@ -113,16 +113,21 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
         return new FieldArrangement($this->fields(), [
             new FieldTab('pagina', ['sections']),
             new FieldTab('inhoud', ['title', 'content', MediaType::HERO, MediaType::THUMB]),
+            new FieldTab('eigen modules', [], 'chief::back.pages._partials.modules'),
             new FieldTab('seo', ['seo_title', 'seo_content']),
         ]);
     }
 
     public function modelDetails(): ManagedModelDetails
     {
+        // For existing model
+        if($this->model->id) {
+            return parent::modelDetails()
+                ->set('title', $this->model->title)
+                ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
+        }
+
         return parent::modelDetails();
-        return parent::modelDetails()
-                        ->set('title', $this->model->title)
-                        ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
     }
 
     public function saveFields(): ModelManager

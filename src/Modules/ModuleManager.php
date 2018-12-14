@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\AbstractManager;
+use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\ModelManager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
@@ -14,6 +15,13 @@ use Thinktomorrow\Chief\Modules\Application\DeleteModule;
 
 class ModuleManager extends AbstractManager implements ModelManager
 {
+    public function modelDetails(): ManagedModelDetails
+    {
+        $modelDetails = parent::modelDetails();
+
+        return $modelDetails->set('plural', $this->model->isPageSpecific() ? 'eigen modules' : 'vaste modules');
+    }
+
     public function route($verb): ?string
     {
         /**
@@ -25,7 +33,7 @@ class ModuleManager extends AbstractManager implements ModelManager
         }
 
         $routes = [
-            'index'   => route('chief.back.managers.index', [$this->registration->key()]),
+            'index'   => route('chief.back.modules.index'),
             'create'  => route('chief.back.managers.create', [$this->registration->key()]),
             'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
             'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),

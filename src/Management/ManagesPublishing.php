@@ -33,12 +33,12 @@ trait ManagesPublishing
             return $label;
         }
 
-        if ($this->model->isPublished()) {
-            return '<a href="'.$this->model->menuUrl().'" target="_blank"><em>'.$label.'</em></a>';
+        if ($this->isPublished()) {
+            return '<a href="'.$this->previewUrl().'" target="_blank"><em>'.$label.'</em></a>';
         }
 
-        if ($this->model->isDraft()) {
-            return '<a href="'.$this->model->previewUrl().'" target="_blank" class="text-error"><em>'.$label.'</em></a>';
+        if ($this->isDraft()) {
+            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>'.$label.'</em></a>';
         }
 
         return '<span><em>'.$label.'</em></span>';
@@ -46,15 +46,15 @@ trait ManagesPublishing
 
     private function publicationStatusAsPlainLabel()
     {
-        if ($this->model->isPublished()) {
+        if ($this->isPublished()) {
             return 'online';
         }
 
-        if ($this->model->isDraft()) {
+        if ($this->isDraft()) {
             return 'offline';
         }
 
-        if ($this->model->isArchived()) {
+        if ($this->isArchived()) {
             return 'gearchiveerd';
         }
 

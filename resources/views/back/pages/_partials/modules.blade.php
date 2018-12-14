@@ -16,9 +16,12 @@
 @endif
 
 @if(!$page->modules->isEmpty())
-    @foreach($page->modules as $module)
-        @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-    @endforeach
+    <div class="row gutter-s">
+        @foreach($page->modules as $module)
+            @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+        @endforeach
+    </div>
+
 
     <div class="stack">
         <a @click="showModal('create-module')" class="btn btn-primary">
