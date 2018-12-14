@@ -16,7 +16,7 @@
         "spatie/laravel-permission": "^2.17",
         "thinktomorrow/assetlibrary": "~0.4.8",
         "thinktomorrow/squanto": "^0.4",
-        "thinktomorrow/vine": "dev-master"
+        "thinktomorrow/vine": "~0.2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
