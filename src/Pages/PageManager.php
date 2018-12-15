@@ -124,6 +124,7 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
         if($this->model->id) {
             return parent::modelDetails()
                 ->set('title', $this->model->title)
+                ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
                 ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
         }
 

@@ -24,8 +24,7 @@
         </div>
     @endif
 
-    <div v-cloak class="v-loader inset-xl text-center">loading...</div>
-    <div class="row gutter-s" v-cloak>
+    <div class="row gutter-s">
         @foreach($managers as $manager)
             @include('chief::back.managers._partials._rowitem')
             @include('chief::back.managers._partials.delete-modal')

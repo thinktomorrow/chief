@@ -60,7 +60,17 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
+        /**
+         * If the manager does not contain a model, it means that this request tries
+         * to retrieve a (soft) deleted model. In that case we kindly redirect
+         * the admin to the managers index with a brief explanation.
+         */
+        if(!$manager->model()){
+            return redirect()->route('chief.back.dashboard')->with('messages.error', 'Oeps, de pagina die je probeerde te bewerken, is verwijderd of bestaat niet meer.');
+        }
+
         $manager->guard('edit');
+
         return view('chief::back.managers.edit', [
             'manager' => $manager,
         ]);
