@@ -7,17 +7,17 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
+use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
 
-class ModuleManager extends AbstractManager implements ModelManager
+class ModuleManager extends AbstractManager implements Manager
 {
-    public function modelDetails(): ManagedModelDetails
+    public function modelDetails(): Details
     {
-        $modelDetails = parent::modelDetails();
+        $modelDetails = parent::details();
 
         return $modelDetails->set('plural', $this->model->isPageSpecific() ? 'eigen modules' : 'vaste modules');
     }
@@ -87,7 +87,7 @@ class ModuleManager extends AbstractManager implements ModelManager
         ]);
     }
 
-    public function saveFields(): ModelManager
+    public function saveFields(): Manager
     {
         // Store the morph_key upon creation
         if (! $this->model->morph_key) {

@@ -9,9 +9,9 @@ use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 
-class ManagerFake extends AbstractManager implements ModelManager
+class ManagerFake extends AbstractManager implements Manager
 {
     public function fields(): Fields
     {

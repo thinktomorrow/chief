@@ -7,9 +7,9 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
+use Thinktomorrow\Chief\Management\Details\Details;
 
-interface ModelManager
+interface Manager
 {
     /**
      * Set the specific model to be managed.
@@ -18,17 +18,21 @@ interface ModelManager
      * we will assume a generic model instance instead for e.g. create and store.
      *
      * @param $model
-     * @return ModelManager
+     * @return Manager
      */
-    public function manage($model): ModelManager;
+    public function manage($model): Manager;
+
+    public function assistedBy(string $assistant): bool;
+
+    public function assistant(string $assistant): Assistant;
 
     /**
      * Find an instance by id wrapped in a Manager
      *
      * @param $id
-     * @return ModelManager
+     * @return Manager
      */
-    public function findManaged($id): ModelManager;
+    public function findManaged($id): Manager;
 
     /**
      * Get all managed models wrapped in a Manager
@@ -80,7 +84,7 @@ interface ModelManager
 
     public function setField(Field $field, Request $request);
 
-    public function saveFields(): ModelManager;
+    public function saveFields(): Manager;
 
     public function renderField(Field $field);
 
@@ -108,12 +112,10 @@ interface ModelManager
      */
     public function updateRequest(Request $request): Request;
 
-    
-
     /**
      * Information regarding a specific managed model instance.
      *
-     * @return ManagedModelDetails
+     * @return Details
      */
-    public function modelDetails(): ManagedModelDetails;
+    public function details(): Details;
 }

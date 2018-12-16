@@ -13,20 +13,21 @@ use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
+use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
+use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\ManagerThatPreviews;
 use Thinktomorrow\Chief\Management\ManagerThatPublishes;
 use Thinktomorrow\Chief\Management\ManagesPreviews;
 use Thinktomorrow\Chief\Management\ManagesPublishing;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
-class PageManager extends AbstractManager implements ModelManager, ManagerThatPublishes, ManagerThatPreviews
+class PageManager extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatPreviews
 {
     use ManagesPublishing,
         ManagesPreviews;
@@ -118,20 +119,20 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
         ]);
     }
 
-    public function modelDetails(): ManagedModelDetails
+    public function modelDetails(): Details
     {
         // For existing model
         if($this->model->id) {
-            return parent::modelDetails()
+            return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
                 ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
         }
 
-        return parent::modelDetails();
+        return parent::details();
     }
 
-    public function saveFields(): ModelManager
+    public function saveFields(): Manager
     {
         // Store the morph_key upon creation
         if (! $this->model->morph_key) {

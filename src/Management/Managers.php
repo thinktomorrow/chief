@@ -14,14 +14,14 @@ class Managers
         $this->register = $register;
     }
 
-    public function findByKey($key, $id = null): ModelManager
+    public function findByKey($key, $id = null): Manager
     {
         $registration = $this->register->filterByKey($key)->first();
 
         return $this->instance($registration, $id);
     }
 
-    public function findByModel($model, $id = null): ModelManager
+    public function findByModel($model, $id = null): Manager
     {
         /**
          * If an instance is passed as model, we try to extract the class and id
@@ -67,7 +67,7 @@ class Managers
         $registrations = collect($this->register->filterByTag($tag)->all());
 
         return $registrations->map(function($registration){
-            return $this->instance($registration)->modelDetails();
+            return $this->instance($registration)->details();
         });
     }
 

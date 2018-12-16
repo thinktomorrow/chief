@@ -82,8 +82,8 @@ class Registration
         }
 
         $manager = new \ReflectionClass($this->managerClass);
-        if (! $manager->implementsInterface(ModelManager::class)) {
-            throw new \InvalidArgumentException('Class ['.$this->managerClass.'] is expected to implement the ['.ModelManager::class.'] contract.');
+        if (! $manager->implementsInterface(Manager::class)) {
+            throw new \InvalidArgumentException('Class ['.$this->managerClass.'] is expected to implement the ['.Manager::class.'] contract.');
         }
     }
 }

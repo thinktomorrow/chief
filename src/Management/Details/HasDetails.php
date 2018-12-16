@@ -4,13 +4,13 @@ namespace Thinktomorrow\Chief\Management\Details;
 
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
 
-trait HasManagedModelDetails
+trait HasDetails
 {
     /**
      * Details of the model such as naming, key and class.
      * Used in several dynamic parts of the admin application.
      */
-    public function modelDetails(): ManagedModelDetails
+    public function details(): Details
     {
         // Generic model details 
         //might be able to remove this as id isnt general info
@@ -23,7 +23,7 @@ trait HasManagedModelDetails
         // Manager index and header info
         $title = $this->model->title ?? ($this->model->id ? $labelSingular . ' ' . $this->model->id : $labelSingular);
 
-        return new ManagedModelDetails(
+        return new Details(
             $id,
             $key,
             $labelSingular,

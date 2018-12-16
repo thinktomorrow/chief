@@ -37,6 +37,6 @@ class ModulesController extends Controller
         $manager->manage($module);
 
         return redirect()->to($manager->route('edit'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" is toegevoegd');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is toegevoegd');
     }
 }

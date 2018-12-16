@@ -1,12 +1,12 @@
 @extends('chief::back._layouts.master')
 
-@section('page-title',$manager->modelDetails()->title)
+@section('page-title',$manager->details()->title)
 
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', $manager->modelDetails()->title)
+    @slot('title', $manager->details()->title)
     @slot('subtitle')
-        <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->modelDetails()->plural }}</a>
+        <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
     @endslot
 
     <div class="inline-group-s">

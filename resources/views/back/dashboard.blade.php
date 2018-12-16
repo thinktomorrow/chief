@@ -25,8 +25,8 @@
                             </div>
                             <div class="stack">
                                 <h1 class="--remove-margin">{{ $manager->findAllManaged()->count() }}</h1>
-                                <p>{{ $manager->modelDetails()->plural }}</p>
-                                <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->modelDetails()->plural }}</a>
+                                <p>{{ $manager->details()->plural }}</p>
+                                <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                             </div>
                         </div>
                     </div>

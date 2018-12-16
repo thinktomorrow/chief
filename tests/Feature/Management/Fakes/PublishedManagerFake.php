@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\DocumentField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\ManagesPreviews;
@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Management\ManagesPublishing;
 use Thinktomorrow\Chief\Management\ManagerThatPreviews;
 use Thinktomorrow\Chief\Management\ManagerThatPublishes;
 
-class PublishedManagerFake extends AbstractManager implements ModelManager, ManagerThatPublishes, ManagerThatPreviews
+class PublishedManagerFake extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatPreviews
 {
     use ManagesPublishing,
         ManagesPreviews;

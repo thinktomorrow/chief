@@ -9,11 +9,11 @@ use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
-use Thinktomorrow\Chief\Management\Details\HasManagedModelDetails;
+use Thinktomorrow\Chief\Management\Details\HasDetails;
 
 abstract class AbstractManager
 {
-    use HasManagedModelDetails,
+    use HasDetails,
         ManagesMedia,
         ManagesPagebuilder,
         TranslatableCommand;
@@ -40,14 +40,14 @@ abstract class AbstractManager
         $this->validateConstraints();
     }
 
-    public function manage($model): ModelManager
+    public function manage($model): Manager
     {
         $this->model = $model;
 
         return $this;
     }
 
-    public function findManaged($id): ModelManager
+    public function findManaged($id): Manager
     {
         $model = $this->registration->model();
 
@@ -211,7 +211,7 @@ abstract class AbstractManager
         $this->model->{$field->column()} = $request->get($field->key());
     }
 
-    public function saveFields(): ModelManager
+    public function saveFields(): Manager
     {
         $this->model->save();
 

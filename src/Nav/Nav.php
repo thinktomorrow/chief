@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Nav;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Register;
 
 class Nav
@@ -53,9 +53,9 @@ class Nav
     private static function fromManagers(Collection $collection)
     {
         return new static(...$collection->map(function($manager){
-            return new NavItem($manager->modelDetails()->plural, $manager->route('index'), [
-                'key' => $manager->modelDetails()->key,
-                'tags' => app(Register::class)->filterByKey($manager->modelDetails()->key)->first()->tags()
+            return new NavItem($manager->details()->plural, $manager->route('index'), [
+                'key' => $manager->details()->key,
+                'tags' => app(Register::class)->filterByKey($manager->details()->key)->first()->tags()
             ]);
         })->values()->toArray());
     }
@@ -93,10 +93,10 @@ class Nav
         return $this;
     }
 
-    public function addManager(ModelManager $manager)
+    public function addManager(Manager $manager)
     {
-        $this->items[] = new NavItem($manager->modelDetails()->plural, $manager->route('index'), [
-            'key' => $manager->modelDetails()->key,
+        $this->items[] = new NavItem($manager->details()->plural, $manager->route('index'), [
+            'key' => $manager->details()->key,
         ]);
 
         return $this;

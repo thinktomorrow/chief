@@ -7,8 +7,6 @@ namespace Thinktomorrow\Chief\Management\Details;
 use Illuminate\Contracts\Support\Arrayable;
 
 /**
- * Class ModelDetails
- *
  * @property $key
  * @property $singular
  * @property $plural
@@ -17,7 +15,7 @@ use Illuminate\Contracts\Support\Arrayable;
  * @property $subtitle
  * @property $intro
  */
-class ManagedModelDetails implements Arrayable
+class Details implements Arrayable
 {
     /** @var array */
     protected $values = [];

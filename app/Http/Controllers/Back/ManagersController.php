@@ -53,7 +53,7 @@ class ManagersController extends Controller
         $manager = app(StoreManager::class)->handle($modelManager, $request);
 
         return redirect()->to($manager->route('edit'))
-                         ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" is toegevoegd');
+                         ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is toegevoegd');
     }
 
     public function edit(string $key, $id)
@@ -83,7 +83,7 @@ class ManagersController extends Controller
         app(UpdateManager::class)->handle($manager, $request);
 
         return redirect()->to($manager->route('edit'))
-                         ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" werd aangepast');
+                         ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" werd aangepast');
     }
 
     public function delete(string $key, $id, Request $request)
@@ -93,10 +93,10 @@ class ManagersController extends Controller
         try {
             app(DeleteManager::class)->handle($manager, $request);
         } catch (DeleteAborted $e) {
-            return redirect()->back()->with('messages.warning', $manager->modelDetails()->singular . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
         }
 
         return redirect()->to($manager->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" is verwijderd.');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is verwijderd.');
     }
 }
