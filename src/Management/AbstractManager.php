@@ -29,6 +29,8 @@ abstract class AbstractManager
     /** @var string */
     protected $key;
 
+    protected $assistants = [];
+
     public function __construct(Registration $registration)
     {
         $this->registration = $registration;
@@ -51,7 +53,7 @@ abstract class AbstractManager
     {
         $model = $this->registration->model();
 
-        $modelInstance = $model::where('id', $id)->first();
+        $modelInstance = $model::where('id', $id)->withoutGlobalScopes()->first();
 
         return (new static($this->registration))->manage($modelInstance);
     }
@@ -65,6 +67,36 @@ abstract class AbstractManager
         });
     }
 
+    public function assistedBy(string $assistant): bool
+    {
+        return !! $this->getAssistantClass($assistant);
+    }
+
+    public function assistant(string $assistant): Assistant
+    {
+        if( ! $this->assistedBy($assistant)){
+            throw new \Exception('No assistant [' . $assistant . '] present on manager ' . get_class($this));
+        }
+
+        $instance = app($this->getAssistantClass($assistant));
+        $instance->manager($this);
+
+        return $instance;
+    }
+
+    private function getAssistantClass($assistant): ?string
+    {
+        if(in_array($assistant, $this->assistants)) {
+            return $assistant;
+        }
+
+       if(isset($this->assistants[$assistant])){
+           return $this->assistants[$assistant];
+       }
+
+       return null;
+    }
+
     public function model()
     {
         return $this->model;
@@ -74,13 +106,11 @@ abstract class AbstractManager
      * If the model exists return it otherwise
      * throws a nonExistingRecord exception;
      *
-     * @return void
+     * @throws NonExistingRecord
      */
-    public function existingModel()
+    protected function existingModel()
     {
-        //check if model exists
-        if(! $this->model->exists)
-        {
+        if(! $this->model->exists) {
             throw new NonExistingRecord();
         }
         
@@ -93,6 +123,7 @@ abstract class AbstractManager
      *
      * @param $verb
      * @return null|string
+     * @throws NonExistingRecord
      */
     public function route($verb): ?string
     {
@@ -111,7 +142,6 @@ abstract class AbstractManager
             'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
             'publish' => route('chief.back.managers.publish', [$this->registration->key(), $this->existingModel()->id]),
             'draft'   => route('chief.back.managers.draft', [$this->registration->key(), $this->existingModel()->id]),
-            'archive' => route('chief.back.managers.archive', [$this->registration->key(), $this->existingModel()->id]),
             'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
         ];
 

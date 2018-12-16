@@ -38,6 +38,10 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
     /** @var PageBuilderField */
     private $pageBuilderField;
 
+    protected $assistants = [
+        'archive' => ArchiveAssistant::class,
+    ];
+
     public function __construct(Registration $registration)
     {
         parent::__construct($registration);
@@ -149,11 +153,6 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         }
 
         app(DeletePage::class)->handle($this->model->id);
-    }
-
-    public function archive()
-    {
-        app(ArchivePage::class)->handle($this->model->id);
     }
 
     public function storeRequest(Request $request): Request

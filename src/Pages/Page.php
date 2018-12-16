@@ -52,7 +52,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public $table          = "pages";
     protected $guarded     = [];
-    protected $dates       = ['deleted_at'];
+    protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
     protected $pagebuilder = true;
 

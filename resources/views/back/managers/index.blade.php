@@ -30,5 +30,16 @@
             @include('chief::back.managers._partials.delete-modal')
         @endforeach
     </div>
+    @if($modelManager->assistedBy('archive'))
+
+        <?php $archiveAssistant = $modelManager->assistant('archive'); ?>
+
+        @if( ! $archiveAssistant->findAll()->isEmpty())
+            <hr>
+            <div class="center-x">
+                <a class="squished-s" href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
+            </div>
+        @endif
+    @endif
 
 @stop

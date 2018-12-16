@@ -13,7 +13,6 @@ Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => funct
     return view('chief::spirit.home');
 }])->middleware('web');
 
-
 /**
  * -----------------------------------------------------------------
  * NON-AUTHENTICATED ADMIN ROUTES
@@ -39,19 +38,15 @@ Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back
  * -----------------------------------------------------------------
  */
 Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chief']], function () {
-    Route::get('logout', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@logout')->name('chief.back.logout');
 
+    // Dashboard
     Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
-    Route::get('getting-started', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@gettingStarted')->name('chief.back.dashboard.getting-started');
 
-    // Prompt for a (new) password
-    Route::get('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@edit')->name('chief.back.password.edit');
-    Route::put('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
-
-    // CHIEF API
-    Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
-
-    // Manager routes
+    /**
+     * -----------------------------------------------------------------
+     * MANAGER ROUTES
+     * -----------------------------------------------------------------
+     */
     Route::get('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@index')->name('chief.back.managers.index');
     Route::get('manage/{key}/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@create')->name('chief.back.managers.create');
     Route::post('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@store')->name('chief.back.managers.store');
@@ -59,31 +54,27 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::get('manage/{key}/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@edit')->name('chief.back.managers.edit')->where('id', '[0-9]+');
     Route::delete('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@delete')->name('chief.back.managers.delete')->where('id', '[0-9]+');
 
-    // Pages
-//    Route::get('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@index')->name('chief.back.pages.index');
-//    Route::post('pages/{collection}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@store')->name('chief.back.pages.store');
-//    Route::put('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@update')->name('chief.back.pages.update');
-//    Route::get('pages/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@show')->name('chief.back.pages.show')->where('id', '[0-9]+');
-//    Route::get('pages/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PagesController@edit')->name('chief.back.pages.edit');
-
-    // Page publication and states
-    Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@publish')->name('chief.back.managers.publish')->where('id', '[0-9]+');
-    Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@draft')->name('chief.back.managers.draft')->where('id', '[0-9]+');
-    Route::put('archive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ArchiveController@archive')->name('chief.back.managers.archive')->where('id', '[0-9]+');
-
     // Modules
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
     Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
-//    Route::put('modules/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@update')->name('chief.back.modules.update');
-//    Route::get('modules/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@show')->name('chief.back.modules.show')->where('id', '[0-9]+');
-//    Route::get('modules/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@edit')->name('chief.back.modules.edit');
-//    Route::delete('modules/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@destroy')->name('chief.back.modules.destroy');
 
-    // AUDIT
-    Route::get('audit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@index')->name('chief.back.audit.index');
-    Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@show')->name('chief.back.audit.show');
+    /**
+     * -----------------------------------------------------------------
+     * MANAGER ASSISTANT ROUTES
+     * -----------------------------------------------------------------
+     */
+    Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@publish')->name('chief.back.managers.publish')->where('id', '[0-9]+');
+    Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@draft')->name('chief.back.managers.draft')->where('id', '[0-9]+');
 
-    // Menu
+    Route::get('archive/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@index')->name('chief.back.assistants.archive-index');
+    Route::post('archive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');
+    Route::post('unarchive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@unarchive')->name('chief.back.assistants.unarchive')->where('id', '[0-9]+');
+
+    /**
+     * -----------------------------------------------------------------
+     * MENU MANAGEMENT
+     * -----------------------------------------------------------------
+     */
     Route::get('menus', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuController@index')->name('chief.back.menus.index');
     Route::get('menus/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Menu\MenuController@show')->name('chief.back.menus.show');
 
@@ -97,18 +88,22 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
 
     /**
      * -----------------------------------------------------------------
-     * MEDIA MANAGEMENT (used by editor)
+     * EDITOR API & MEDIA MANAGEMENT (used by editor)
      * -----------------------------------------------------------------
      */
     Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
     Route::post('modules/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadModulesMediaController@store')->name('modules.media.upload');
     Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('chief.back.managers.media.upload');
+    Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
 
     /**
      * -----------------------------------------------------------------
-     * AUTHORIZATION MANAGEMENT
+     * USERS & AUTHORIZATION MANAGEMENT
      * -----------------------------------------------------------------
      */
+    Route::get('getting-started', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@gettingStarted')->name('chief.back.dashboard.getting-started');
+    Route::get('logout', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@logout')->name('chief.back.logout');
+
     // USER MANAGEMENT
     Route::get('users', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@index')->name('chief.back.users.index');
     Route::post('users', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@store')->name('chief.back.users.store');
@@ -117,6 +112,10 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@update')->name('chief.back.users.update');
     Route::get('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@show')->name('chief.back.users.show');
     Route::get('users/{user}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@edit')->name('chief.back.users.edit');
+
+    // Prompt for a first / new password
+    Route::get('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@edit')->name('chief.back.password.edit');
+    Route::put('password-prompt', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ChangePasswordController@update')->name('chief.back.password.update');
 
     // YOUR PROFILE MANAGEMENT
     Route::get('you', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\YouController@edit')->name('chief.back.you.edit');
@@ -153,6 +152,13 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@update')->name('chief.back.settings.update');
     Route::get('settings', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController@edit')->name('chief.back.settings.edit');
 
+    /**
+     * -----------------------------------------------------------------
+     * AUDIT LOG
+     * -----------------------------------------------------------------
+     */
+    Route::get('audit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@index')->name('chief.back.audit.index');
+    Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditController@show')->name('chief.back.audit.show');
 
     /**
      * -----------------------------------------------------------------

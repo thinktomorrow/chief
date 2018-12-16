@@ -106,7 +106,6 @@ if (! function_exists('contract')) {
 if (! function_exists('isManagerThatPublishes')) {
     function isManagerThatPublishes($class)
     {
-
         return contract($class, \Thinktomorrow\Chief\Management\ManagerThatPublishes::class);
     }
 }
