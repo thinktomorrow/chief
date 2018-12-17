@@ -22,7 +22,7 @@ class ArchivePageTest extends TestCase
     public function it_can_archive_a_page()
     {
         $this->asAdmin()
-            ->put(route('chief.back.managers.archive', $this->page->key, $this->page->id));
+            ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
         // Archived page is not included in default retrieval
         $this->assertCount(0, Page::all());
@@ -35,7 +35,7 @@ class ArchivePageTest extends TestCase
         $this->page->publish();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.archive', $this->page->key, $this->page->id));
+            ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withArchived()->get());
