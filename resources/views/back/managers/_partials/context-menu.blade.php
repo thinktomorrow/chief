@@ -2,7 +2,7 @@
     <div class="inset-s" v-cloak>
 
         @if(contract($manager, \Thinktomorrow\Chief\Management\ManagerThatPreviews::class))
-            <a class="block squished-s --link-with-bg" href="{!! $manager->previewUrl() !!}">Bekijk preview</a>
+            <a class="block squished-s --link-with-bg" href="{!! $manager->previewUrl() !!}" target="_blank">Bekijk preview</a>
         @endif
 
         @if($manager->can('edit') && \Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.managers.edit')

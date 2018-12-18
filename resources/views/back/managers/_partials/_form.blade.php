@@ -2,7 +2,7 @@
 @if($fieldArrangement->hasTabs())
     <tabs>
         @foreach($fieldArrangement->tabs() as $tab)
-            <tab name="{{ $tab->title() }}" id="{{ $tab->title() }}">
+            <tab name="{{ $tab->title() }}">
                 @if($tab->hasView())
                     @include($tab->view())
                 @else

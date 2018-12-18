@@ -15,7 +15,8 @@
         </div>
     </section>
 
-    @stack('sidebar')
+    <!-- place outside the main content area as a place for modals, secondary forms, ... -->
+    @stack('portals')
 
 </main>
 

@@ -123,7 +123,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         ]);
     }
 
-    public function modelDetails(): Details
+    public function details(): Details
     {
         // For existing model
         if($this->model->id) {

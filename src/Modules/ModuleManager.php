@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Modules\Application\DeleteModule;
 
 class ModuleManager extends AbstractManager implements Manager
 {
-    public function modelDetails(): Details
+    public function details(): Details
     {
         $modelDetails = parent::details();
 
@@ -29,7 +29,7 @@ class ModuleManager extends AbstractManager implements Manager
          * Therefore the index of these modules is at the modules tab of this page model.
          */
         if($verb == 'index' && $this->model->isPageSpecific()){
-            return app(Managers::class)->findByModel($this->model->page)->route('edit').'#eigen%20modules';
+            return app(Managers::class)->findByModel($this->model->page)->route('edit').'#eigen-modules';
         }
 
         $routes = [
