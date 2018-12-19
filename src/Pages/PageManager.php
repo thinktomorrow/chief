@@ -108,7 +108,9 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
     private function pageBuilderField()
     {
-        if($this->pageBuilderField) return $this->pageBuilderField;
+        if ($this->pageBuilderField) {
+            return $this->pageBuilderField;
+        }
 
         return $this->pageBuilderField = $this->createPagebuilderField();
     }
@@ -126,7 +128,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
     public function details(): Details
     {
         // For existing model
-        if($this->model->id) {
+        if ($this->model->id) {
             return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))

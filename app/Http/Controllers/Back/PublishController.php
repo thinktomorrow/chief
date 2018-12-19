@@ -23,7 +23,9 @@ class PublishController extends Controller
 
         $manager->guard('publish');
 
-        if(!isManagerThatPublishes($manager)) throw NotAllowedManagerRoute::notAllowedVerb('publish', $manager);
+        if (!isManagerThatPublishes($manager)) {
+            throw NotAllowedManagerRoute::notAllowedVerb('publish', $manager);
+        }
 
         $manager->publish();
         
@@ -36,7 +38,9 @@ class PublishController extends Controller
 
         $manager->guard('draft');
 
-        if(!isManagerThatPublishes($manager)) throw NotAllowedManagerRoute::notAllowedVerb('draft', $manager);
+        if (!isManagerThatPublishes($manager)) {
+            throw NotAllowedManagerRoute::notAllowedVerb('draft', $manager);
+        }
 
         $manager->draft();
 

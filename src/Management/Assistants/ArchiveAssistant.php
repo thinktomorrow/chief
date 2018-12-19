@@ -60,7 +60,7 @@ class ArchiveAssistant implements Assistant
 
     public function findAll(): Collection
     {
-        return $this->model->archived()->get()->map(function ($model){
+        return $this->model->archived()->get()->map(function ($model) {
             return $this->managers->findByModel($model);
         });
     }
@@ -71,7 +71,9 @@ class ArchiveAssistant implements Assistant
             'index' => route('chief.back.assistants.archive-index', [$this->manager->details()->key]),
         ];
 
-        if(array_key_exists($verb, $routes)) return $routes[$verb] ?? null;
+        if (array_key_exists($verb, $routes)) {
+            return $routes[$verb] ?? null;
+        }
 
         $modelRoutes = [
             'archive' => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),

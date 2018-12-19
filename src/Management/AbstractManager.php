@@ -74,7 +74,7 @@ abstract class AbstractManager
 
     public function assistant(string $assistant): Assistant
     {
-        if( ! $this->assistedBy($assistant)){
+        if (! $this->assistedBy($assistant)) {
             throw new \Exception('No assistant [' . $assistant . '] present on manager ' . get_class($this));
         }
 
@@ -86,15 +86,15 @@ abstract class AbstractManager
 
     private function getAssistantClass($assistant): ?string
     {
-        if(in_array($assistant, $this->assistants)) {
+        if (in_array($assistant, $this->assistants)) {
             return $assistant;
         }
 
-       if(isset($this->assistants[$assistant])){
-           return $this->assistants[$assistant];
-       }
+        if (isset($this->assistants[$assistant])) {
+            return $this->assistants[$assistant];
+        }
 
-       return null;
+        return null;
     }
 
     public function model()
@@ -110,7 +110,7 @@ abstract class AbstractManager
      */
     protected function existingModel()
     {
-        if(! $this->model->exists) {
+        if (! $this->model->exists) {
             throw new NonExistingRecord();
         }
         
@@ -133,7 +133,9 @@ abstract class AbstractManager
             'store'   => route('chief.back.managers.store', [$this->registration->key()]),
         ];
 
-        if(array_key_exists($verb, $routes)) return $routes[$verb] ?? null;
+        if (array_key_exists($verb, $routes)) {
+            return $routes[$verb] ?? null;
+        }
 
         //These routes expect the model to be persisted in the database
         $modelRoutes = [

@@ -46,12 +46,14 @@ class Register
      */
     public function filter(callable $callback): self
     {
-        if( ! is_callable($callback)) return new static($this->registrations);
+        if (! is_callable($callback)) {
+            return new static($this->registrations);
+        }
 
         $registrations = $this->registrations;
 
         foreach ($registrations as $k => $registration) {
-            if(!! call_user_func($callback, $registration)) {
+            if (!! call_user_func($callback, $registration)) {
                 unset($registrations[$k]);
             }
         }
@@ -76,10 +78,9 @@ class Register
 
     public function filterByTag($tag): self
     {
-        try{
+        try {
             return $this->filterBy('tags', (array) $tag);
-        }
-        catch(NonRegisteredManager $e){
+        } catch (NonRegisteredManager $e) {
             return new static();
         }
     }

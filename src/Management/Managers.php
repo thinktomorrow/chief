@@ -27,8 +27,7 @@ class Managers
          * If an instance is passed as model, we try to extract the class and id
          * ourselves and assume we can read the id value via the id property
          */
-        if(null === $id && !is_string($model)) {
-
+        if (null === $id && !is_string($model)) {
             $modelClass = get_class($model);
 
             $registration = $this->register->filterByModel($modelClass)->first();
@@ -51,7 +50,7 @@ class Managers
     {
         $registrations = collect($this->register->filterByTag($tag)->all());
 
-        return $registrations->map(function($registration){
+        return $registrations->map(function ($registration) {
             return $this->instance($registration);
         });
     }
@@ -66,7 +65,7 @@ class Managers
     {
         $registrations = collect($this->register->filterByTag($tag)->all());
 
-        return $registrations->map(function($registration){
+        return $registrations->map(function ($registration) {
             return $this->instance($registration)->details();
         });
     }
@@ -75,7 +74,7 @@ class Managers
     {
         $registrations = collect($this->register->all());
 
-        return $registrations->map(function($registration){
+        return $registrations->map(function ($registration) {
             return $this->instance($registration);
         });
     }
