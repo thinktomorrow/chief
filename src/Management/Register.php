@@ -135,7 +135,7 @@ class Register
     private function registrationMustExistConstraint(string $key, $value, $registrations): void
     {
         if (empty($registrations) && count($registrations) != $this->registrations) {
-            throw new NonRegisteredManager('No manager found for ' . $key . ' [' . print_r($value) . ']. Did you perhaps forgot to register the manager?');
+            throw new NonRegisteredManager('No manager found for ' . $key . ' [' . print_r($value, true) . ']. Did you perhaps forgot to register the manager?');
         }
     }
 }
