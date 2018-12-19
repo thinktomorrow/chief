@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2000291d91d3fe998f28d9056000a5b",
+    "content-hash": "64a0985c2801c910141442437d7a40dd",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -2629,28 +2629,28 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "2.8.4",
+            "version": "3.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "28f481486706d22255879965f4f57b7562d13c3b"
+                "reference": "59c3a6cf8abdcad7143b8b9d0a114148cc857a91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/28f481486706d22255879965f4f57b7562d13c3b",
-                "reference": "28f481486706d22255879965f4f57b7562d13c3b",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/59c3a6cf8abdcad7143b8b9d0a114148cc857a91",
+                "reference": "59c3a6cf8abdcad7143b8b9d0a114148cc857a91",
                 "shasum": ""
             },
             "require": {
                 "illuminate/config": "~5.5.0|~5.6.0|~5.7.0",
                 "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
                 "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
-                "php": "^7.0",
+                "php": "^7.1",
                 "spatie/string": "^2.1"
             },
             "require-dev": {
                 "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^6.2|^7.0"
+                "phpunit/phpunit": "^7.4"
             },
             "type": "library",
             "extra": {
@@ -2695,7 +2695,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2018-09-23T12:00:26+00:00"
+            "time": "2018-10-18T19:00:00+00:00"
         },
         {
             "name": "spatie/laravel-image-optimizer",
@@ -4122,29 +4122,29 @@
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.4.3",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "fa485b9213b3a71196ce8d5b93231cfe2837e91b"
+                "reference": "c7de0ace71990da33a8ed0f10716df6dfef66195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/fa485b9213b3a71196ce8d5b93231cfe2837e91b",
-                "reference": "fa485b9213b3a71196ce8d5b93231cfe2837e91b",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/c7de0ace71990da33a8ed0f10716df6dfef66195",
+                "reference": "c7de0ace71990da33a8ed0f10716df6dfef66195",
                 "shasum": ""
             },
             "require": {
-                "dimsav/laravel-translatable": "~9.0",
-                "illuminate/contracts": "~5.6",
-                "illuminate/database": "~5.6",
-                "illuminate/support": "~5.6",
+                "dimsav/laravel-translatable": "~9.2",
+                "illuminate/contracts": "~5.6|~5.7",
+                "illuminate/database": "~5.6|~5.7",
+                "illuminate/support": "~5.6|~5.7",
                 "league/flysystem": "^1.0",
                 "php": ">=7.1"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9.7",
-                "orchestra/testbench": "~3.6.0",
+                "orchestra/testbench": "~3.6.0|~3.7.0",
                 "phpunit/phpunit": "7.0",
                 "squizlabs/php_codesniffer": "~2.3"
             },
@@ -4179,7 +4179,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2018-05-29T11:46:02+00:00"
+            "time": "2018-12-07T15:30:05+00:00"
         },
         {
             "name": "thinktomorrow/vine",
