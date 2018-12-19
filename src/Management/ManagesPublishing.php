@@ -16,7 +16,7 @@ trait ManagesPublishing
     }
 
     public function publish()
-    {   
+    {
         $this->model->publish();
     }
 
@@ -60,6 +60,4 @@ trait ManagesPublishing
 
         return '-';
     }
-
-    
 }

@@ -28,7 +28,7 @@ class ModuleManager extends AbstractManager implements Manager
          * Page specific modules are expected to be found and managed in the context of a certain page.
          * Therefore the index of these modules is at the modules tab of this page model.
          */
-        if($verb == 'index' && $this->model->isPageSpecific()){
+        if ($verb == 'index' && $this->model->isPageSpecific()) {
             return app(Managers::class)->findByModel($this->model->page)->route('edit').'#eigen-modules';
         }
 

@@ -56,8 +56,7 @@ class Handler extends ExceptionHandler
         }
 
         //could use some code cleanup
-        if((strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin')) && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException)
-        {
+        if ((strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin')) && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException) {
             return $this->renderChiefException($request, $exception);
         }
 
@@ -66,8 +65,7 @@ class Handler extends ExceptionHandler
 
     protected function renderChiefException($request, Exception $exception)
     {
-        if(!config('app.debug'))
-        {
+        if (!config('app.debug')) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Something went wrong.'], 404);
             }
