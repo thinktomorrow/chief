@@ -228,9 +228,9 @@ class AdminLoginTest extends TestCase
             'email'     => 'foo@example.com'
         ]);
 
-        $this->assertNull(admin());
+        $this->assertNull(chiefAdmin());
 
         Auth::guard('chief')->login($admin);
-        $this->assertEquals(Auth::guard('chief')->user(), admin());
+        $this->assertEquals(Auth::guard('chief')->user(), chiefAdmin());
     }
 }

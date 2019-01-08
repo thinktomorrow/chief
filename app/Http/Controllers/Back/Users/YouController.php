@@ -13,13 +13,13 @@ class YouController extends Controller
     public function edit()
     {
         return view('chief::back.you.edit', [
-            'user' => admin(),
+            'user' => chiefAdmin(),
         ]);
     }
 
     public function update(Request $request)
     {
-        $user = admin();
+        $user = chiefAdmin();
 
         $this->validate($request, [
             'firstname' => 'required',

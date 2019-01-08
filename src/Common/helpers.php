@@ -3,8 +3,8 @@
 /**
  * Retrieve the logged in admin
  */
-if (!function_exists('admin')) {
-    function admin()
+if (!function_exists('chiefAdmin')) {
+    function chiefAdmin()
     {
         return \Illuminate\Support\Facades\Auth::guard('chief')->user();
     }

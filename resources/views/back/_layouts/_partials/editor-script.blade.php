@@ -2,7 +2,7 @@
     <script>
         $R.options = {
             plugins: ['redactorColumns', 'imagemanager', 'alignment', 'rich-links', 'custom-classes', 'video', 'clips'],
-            @if(admin()->hasRole('developer'))
+            @if(chiefAdmin()->hasRole('developer'))
                 buttons: ['html', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @else
                 buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
