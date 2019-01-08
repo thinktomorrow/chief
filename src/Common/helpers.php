@@ -203,50 +203,60 @@ if (!function_exists('cleanupHTML')) {
  * @param array $parameters
  * @return bool
  */
-function isActiveUrl($name, $parameters = [])
+if(!function_exists('isActiveUrl'))
 {
-    if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
-        $flag = true;
-        $current = \Illuminate\Support\Facades\Route::current();
+    function isActiveUrl($name, $parameters = [])
+    {
+        if (\Illuminate\Support\Facades\Route::currentRouteNamed($name))
+        {
+            $flag = true;
+            $current = \Illuminate\Support\Facades\Route::current();
 
-        /**
-         * If a single parameter is passed as string, we will convert this to
-         * the proper array keyed by the first uri parameter
-         */
-        if (!is_array($parameters)) {
-            $names = $current->parameterNames();
-            $parameters = [reset($names) => $parameters];
-        }
-
-        foreach ($parameters as $key => $parameter) {
-            if ($current->parameter($key, false) != $parameter) {
-                $flag = false;
+            /**
+             * If a single parameter is passed as string, we will convert this to
+             * the proper array keyed by the first uri parameter
+             */
+            if (!is_array($parameters))
+            {
+                $names = $current->parameterNames();
+                $parameters = [reset($names) => $parameters];
             }
+
+            foreach ($parameters as $key => $parameter)
+            {
+                if ($current->parameter($key, false) != $parameter)
+                {
+                    $flag = false;
+                }
+            }
+
+            return $flag;
         }
 
-        return $flag;
+        $name = ltrim($name, '/');
+
+        if (false !== strpos($name, '*'))
+        {
+            $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
+
+            return !!preg_match("#$pattern#", request()->path());
+        }
+
+        return ($name == request()->path());
     }
-
-    $name = ltrim($name, '/');
-
-    if (false !== strpos($name, '*')) {
-        $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
-        return !!preg_match("#$pattern#", request()->path());
-    }
-
-    return ($name == request()->path());
 }
 
-if (!function_exists('addQueryToUrl')) {
-    /**
-     * Inject a query parameter into an url
-     * If the query key already exists, it will be overwritten with the new value
-     *
-     * @param $url
-     * @param array $query_params
-     * @param array $overrides
-     * @return string
-     */
+/**
+ * Inject a query parameter into an url
+ * If the query key already exists, it will be overwritten with the new value
+ *
+ * @param $url
+ * @param array $query_params
+ * @param array $overrides
+ * @return string
+ */
+if (!function_exists('addQueryToUrl'))
+{
     function addQueryToUrl($url, array $query_params = [], $overrides = [])
     {
         $parsed_url = parse_url($url);
