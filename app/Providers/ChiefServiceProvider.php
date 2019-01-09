@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Validator;
-use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\Seed;
@@ -20,6 +19,7 @@ use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\Settings\Console\SeedSettings;
+use Spatie\Permission\PermissionServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -37,9 +37,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
 
-        // Media library
-        (new MediaLibraryServiceProvider($this->app))->boot();
-//        (new AssetLibraryServiceProvider($this->app))->boot();
+        (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
         (new ProjectServiceProvider($this->app))->boot();
@@ -51,6 +49,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
             __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            // __DIR__.'/../../config/permission.php' => config_path('thinktomorrow/permission.php'),
         ], 'chief-config');
 
         $this->publishes([
@@ -124,8 +123,6 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();
 
-        // Media library
-        (new MediaLibraryServiceProvider($this->app))->register();
         (new AssetLibraryServiceProvider($this->app))->register();
 
         // Project defaults

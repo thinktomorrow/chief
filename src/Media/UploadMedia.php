@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Media;
 
 use Illuminate\Http\UploadedFile;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\AssetLibrary\Models\Asset;
 use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 

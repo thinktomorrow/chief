@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64a0985c2801c910141442437d7a40dd",
+    "content-hash": "76ee7026b977200a0660458851e05bae",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -1570,6 +1570,58 @@
             "time": "2018-12-22T17:56:55+00:00"
         },
         {
+            "name": "maennchen/zipstream-php",
+            "version": "v0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maennchen/ZipStream-PHP.git",
+                "reference": "95922b6324955974675fd4923f987faa598408af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maennchen/ZipStream-PHP/zipball/95922b6324955974675fd4923f987faa598408af",
+                "reference": "95922b6324955974675fd4923f987faa598408af",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">= 7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ZipStream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Duncan",
+                    "email": "pabs@pablotron.org"
+                },
+                {
+                    "name": "Jesse Donat",
+                    "email": "donatj@gmail.com"
+                },
+                {
+                    "name": "Jonatan Männchen",
+                    "email": "jonatan@maennchen.ch"
+                }
+            ],
+            "description": "ZipStream is a library for dynamically streaming dynamic zip files from PHP without writing to the disk at all on the server.",
+            "keywords": [
+                "stream",
+                "zip"
+            ],
+            "time": "2018-02-09T09:26:57+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.24.0",
             "source": {
@@ -2758,16 +2810,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "6.9.2",
+            "version": "7.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "24d0b5bc2271f2258bb999c3e9450fec6000fd64"
+                "reference": "a50e59d1eec7c2e161942ffd0d13860759e4760d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/24d0b5bc2271f2258bb999c3e9450fec6000fd64",
-                "reference": "24d0b5bc2271f2258bb999c3e9450fec6000fd64",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a50e59d1eec7c2e161942ffd0d13860759e4760d",
+                "reference": "a50e59d1eec7c2e161942ffd0d13860759e4760d",
                 "shasum": ""
             },
             "require": {
@@ -2777,8 +2829,9 @@
                 "illuminate/pipeline": "~5.5.0|~5.6.0|~5.7.0",
                 "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
                 "league/flysystem": "^1.0.8",
-                "php": "^7.0",
-                "spatie/image": "^1.4",
+                "maennchen/zipstream-php": "~0.4",
+                "php": "^7.1",
+                "spatie/image": "^1.4.0",
                 "spatie/pdf-to-image": "^1.2",
                 "spatie/temporary-directory": "^1.1"
             },
@@ -2787,11 +2840,13 @@
             },
             "require-dev": {
                 "doctrine/dbal": "^2.5.2",
+                "ext-pdo_sqlite": "*",
                 "guzzlehttp/guzzle": "^6.3",
                 "league/flysystem-aws-s3-v3": "^1.0.13",
                 "mockery/mockery": "^1.0.0",
-                "orchestra/testbench": "~3.5.0|~3.6.0",
-                "phpunit/phpunit": "^6.2|^7.0"
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
+                "phpunit/phpunit": "^7.0",
+                "spatie/phpunit-snapshot-assertions": "^1.2"
             },
             "suggest": {
                 "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
@@ -2834,7 +2889,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2018-10-30T15:01:06+00:00"
+            "time": "2019-01-05T14:06:46+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -4060,21 +4115,21 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.4.8",
+            "version": "0.4.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "69f8ad07ef60bbde3064914fe4e54a289c7d2bd3"
+                "reference": "bfde4e2a66e60bb18b7ea97556eddfe55f569c13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/69f8ad07ef60bbde3064914fe4e54a289c7d2bd3",
-                "reference": "69f8ad07ef60bbde3064914fe4e54a289c7d2bd3",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/bfde4e2a66e60bb18b7ea97556eddfe55f569c13",
+                "reference": "bfde4e2a66e60bb18b7ea97556eddfe55f569c13",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.3",
-                "spatie/laravel-medialibrary": "^6.0"
+                "spatie/laravel-medialibrary": "^7.0"
             },
             "require-dev": {
                 "orchestra/testbench": "^3.6",
@@ -4119,20 +4174,20 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2018-10-04T10:46:06+00:00"
+            "time": "2019-01-08T13:37:54+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.5.2",
+            "version": "0.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "c7de0ace71990da33a8ed0f10716df6dfef66195"
+                "reference": "8d792418ea064983403ff9f8222cde511603018a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/c7de0ace71990da33a8ed0f10716df6dfef66195",
-                "reference": "c7de0ace71990da33a8ed0f10716df6dfef66195",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/8d792418ea064983403ff9f8222cde511603018a",
+                "reference": "8d792418ea064983403ff9f8222cde511603018a",
                 "shasum": ""
             },
             "require": {
@@ -4180,7 +4235,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2018-12-07T15:30:05+00:00"
+            "time": "2019-01-08T14:15:14+00:00"
         },
         {
             "name": "thinktomorrow/vine",

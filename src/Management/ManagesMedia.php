@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\Fields;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\Fields\Types\FieldType;
 
 trait ManagesMedia
 {

@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 
 class ManagedModelFake extends Model implements TranslatableContract, HasMedia
 {

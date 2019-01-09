@@ -3,26 +3,26 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
-use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
-use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Relations\PresentForParent;
-use Thinktomorrow\Chief\Relations\PresentingForParent;
-use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
-use Dimsav\Translatable\Translatable as BaseTranslatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
-use Thinktomorrow\Chief\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\Chief\Management\Managers;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\Chief\Relations\PresentForParent;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Relations\PresentingForParent;
+use Dimsav\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
 class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, MorphableContract, PresentForParent
 {
