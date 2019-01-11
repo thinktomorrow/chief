@@ -73,8 +73,11 @@ interface Manager
      * This determines the arrangement of the manageable fields
      * on the create and edit forms. By default, all fields
      * are presented in their order of appearance
+     *
+     * @param null $key pinpoint to a specific field arrangement e.g. for create page.
+     * @return FieldArrangement
      */
-    public function fieldArrangement(): FieldArrangement;
+    public function fieldArrangement($key = null): FieldArrangement;
 
     /**
      * @param Field|string $field

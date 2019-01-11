@@ -19,7 +19,7 @@ class ModuleManager extends AbstractManager implements Manager
     {
         $modelDetails = parent::details();
         $modelDetails = $modelDetails->set('plural', $this->model->isPageSpecific() ? 'eigen modules' : 'vaste modules');
-        $modelDetails = $modelDetails->set('title', $this->model->title ?? '<u><i>No title</i></u>');
+        $modelDetails = $modelDetails->set('title', $this->model->slug);
 
         return $modelDetails;
     }

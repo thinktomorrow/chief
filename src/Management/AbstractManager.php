@@ -111,7 +111,7 @@ abstract class AbstractManager
     protected function existingModel()
     {
         if (! $this->model->exists) {
-            throw new NonExistingRecord();
+            throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
         
         return $this->model;
@@ -169,8 +169,11 @@ abstract class AbstractManager
      * This determines the arrangement of the manageable fields
      * on the create and edit forms. By default, all fields
      * are presented in their order of appearance
+     *
+     * @param null $key pinpoint to a specific field arrangement e.g. for create page.
+     * @return FieldArrangement
      */
-    public function fieldArrangement(): FieldArrangement
+    public function fieldArrangement($key = null): FieldArrangement
     {
         return new FieldArrangement($this->fields());
     }

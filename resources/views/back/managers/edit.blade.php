@@ -29,7 +29,9 @@
 
             <input type="hidden" name="_method" value="PUT">
 
-            @include('chief::back.managers._partials._form')
+            @include('chief::back.managers._partials._form', [
+                'fieldArrangement' => $manager->fieldArrangement('edit')
+             ])
 
             <div class="stack text-right">
                 <button type="submit" class="btn btn-primary"> Wijzigingen opslaan</button>
