@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\Pages\Application;
 
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\PageBuilder\UpdateSections;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Models\UniqueSlug;
-use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Common\UniqueSlug;
+use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\Common\Audit\Audit;
+use Thinktomorrow\Chief\Pages\PageTranslation;
+use Thinktomorrow\Chief\PageBuilder\UpdateSections;
+use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 
 class UpdatePage
 {
@@ -50,7 +51,7 @@ class UpdatePage
     private function savePageTranslations(Page $page, $translations)
     {
         $translations = collect($translations)->map(function ($trans, $locale) {
-            if ($trans['slug'] != '') {
+            if (isset($trans['slug']) && $trans['slug'] != '') {
                 $trans['slug'] = str_slug_slashed($trans['slug']);
             } else {
                 $trans['slug'] = str_slug($trans['title']);
@@ -59,15 +60,20 @@ class UpdatePage
             return $trans;
         });
 
-        // TODO: this should come from the manager->fields() as fieldgroup
-        $translatableColumns = [];
+        $translatableColumns = ['title', 'slug', 'seo_title', 'seo_description'];
         foreach ($page::translatableFields() as $translatableField) {
             $translatableColumns[] = $translatableField->column();
         }
 
-        $this->saveTranslations($translations, $page, array_merge([
-            'title', 'slug', 'seo_title', 'seo_description'
-        ], $translatableColumns));
+        foreach ($translations as $locale => $value) {
+            if ($this->isCompletelyEmpty($translatableColumns, $value)) {
+                $page->removeTranslation($locale);
+                continue;
+            }
+            
+            $value = $this->enforceUniqueSlug($value, $page, $locale);
+            $page->updateTranslation($locale, $value);
+        }
     }
 
     private function syncRelations($page, $relateds)
@@ -106,7 +112,7 @@ class UpdatePage
         foreach ($custom_fields as $key => $value) {
             // If custom method exists, use that to save the value, else revert to default save as column
             $methodName = 'save'. ucfirst(camel_case($key)) . 'Field';
-
+            
             if (method_exists($page, $methodName)) {
                 $page->$methodName($value);
             } else {
@@ -118,5 +124,22 @@ class UpdatePage
         if ($requires_model_save) {
             $page->save();
         }
+    }
+
+    /**
+    * @param array $translations
+    * @param $page
+    * @return array
+    */
+    private function enforceUniqueSlug(array $translation, $page, $locale): array
+    {
+        $translation['slug']    = $translation['slug'] ?? $translation['title'];
+        $translation['slug']    = UniqueSlug::make(new PageTranslation)->get($translation['slug'], $page->getTranslation($locale, false));
+
+        if (isset($translation['content'])) {
+            $translation['short'] = $translation['short'] ?? teaser($translation['content'], 100);
+        }
+
+        return $translation;
     }
 }
