@@ -18,8 +18,10 @@ class ModuleManager extends AbstractManager implements Manager
     public function details(): Details
     {
         $modelDetails = parent::details();
+        $modelDetails = $modelDetails->set('plural', $this->model->isPageSpecific() ? 'eigen modules' : 'vaste modules');
+        $modelDetails = $modelDetails->set('title', $this->model->title ?? '<u><i>No title</i></u>');
 
-        return $modelDetails->set('plural', $this->model->isPageSpecific() ? 'eigen modules' : 'vaste modules');
+        return $modelDetails;
     }
 
     public function route($verb): ?string
@@ -81,6 +83,7 @@ class ModuleManager extends AbstractManager implements Manager
     public function fields(): Fields
     {
         return new Fields([
+            InputField::make('title')->validation('required'),
             InputField::make('slug')->validation('required'),
             HtmlField::make('content')->translatable($this->model->availableLocales())
                         ->label('inhoud'),
