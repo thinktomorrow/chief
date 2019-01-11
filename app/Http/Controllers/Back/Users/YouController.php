@@ -4,9 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
 
 class YouController extends Controller
 {
@@ -22,8 +20,8 @@ class YouController extends Controller
         $user = chiefAdmin();
 
         $this->validate($request, [
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'firstname' => 'required|max:50',
+            'lastname' => 'required|max:50',
             'email' =>  'required|email|unique:'.(new User())->getTable().',email,'.$user->id,
         ]);
 
