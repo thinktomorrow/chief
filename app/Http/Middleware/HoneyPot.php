@@ -33,7 +33,7 @@ class HoneyPot
      */
     private function honeypot(Request $request)
     {
-        if (!$request->exists('your_name') or $request->has('your_name')) {
+        if (!$request->exists('your_name') || $request->get('your_name') != null) {
             abort('403', 'Request blocked due to assumed spam attempt. Honeypot field was filled in.');
         }
     }

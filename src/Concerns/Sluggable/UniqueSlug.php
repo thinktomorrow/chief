@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Concerns\Sluggable;
 
-use Thinktomorrow\Chief\Concerns\Sluggable\SluggableContract;
-
 class UniqueSlug
 {
     /** @var SluggableContract */

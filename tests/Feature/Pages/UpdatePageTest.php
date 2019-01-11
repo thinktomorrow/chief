@@ -128,6 +128,12 @@ class UpdatePageTest extends TestCase
     }
 
     /** @test */
+    function emptying_all_fields_of_a_translation_removes_the_translation()
+    {
+        $this->markTestIncomplete();
+    }
+
+    /** @test */
     public function slug_uses_title_if_its_empty()
     {
         $page = factory(Page::class)->create([
