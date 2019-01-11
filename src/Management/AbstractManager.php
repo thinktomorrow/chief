@@ -142,6 +142,7 @@ abstract class AbstractManager
             'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
             'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
             'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
+            'archive'  => route('chief.back.managers.archive', [$this->registration->key(), $this->existingModel()->id]),
             'publish' => route('chief.back.managers.publish', [$this->registration->key(), $this->existingModel()->id]),
             'draft'   => route('chief.back.managers.draft', [$this->registration->key(), $this->existingModel()->id]),
             'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),

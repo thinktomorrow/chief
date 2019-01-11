@@ -19,7 +19,6 @@ use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\Settings\Console\SeedSettings;
-use Spatie\Permission\PermissionServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {

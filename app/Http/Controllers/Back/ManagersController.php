@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
@@ -92,6 +91,21 @@ class ManagersController extends Controller
 
         try {
             app(DeleteManager::class)->handle($manager, $request);
+        } catch (DeleteAborted $e) {
+            return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
+        }
+
+        return redirect()->to($manager->route('index'))
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is verwijderd.');
+    }
+
+    public function archive(string $key, $id, Request $request)
+    {
+        $manager = $this->managers->findByKey($key, $id);
+
+        try {
+            app(DeleteManager::class)->handle($manager, $request);
+            app(ArchiveManager::class)->handle($manager, $request);
         } catch (DeleteAborted $e) {
             return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
         }

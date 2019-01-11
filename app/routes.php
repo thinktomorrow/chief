@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@update')->name('chief.back.managers.update')->where('id', '[0-9]+');
     Route::get('manage/{key}/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@edit')->name('chief.back.managers.edit')->where('id', '[0-9]+');
     Route::delete('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@delete')->name('chief.back.managers.delete')->where('id', '[0-9]+');
+    Route::post('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@archive')->name('chief.back.managers.archive')->where('id', '[0-9]+');
 
     // Modules
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');

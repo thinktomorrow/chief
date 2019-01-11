@@ -650,16 +650,16 @@
         },
         {
             "name": "fideloper/proxy",
-            "version": "4.0.0",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fideloper/TrustedProxy.git",
-                "reference": "cf8a0ca4b85659b9557e206c90110a6a4dba980a"
+                "reference": "177c79a2d1f9970f89ee2fb4c12b429af38b6dfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/cf8a0ca4b85659b9557e206c90110a6a4dba980a",
-                "reference": "cf8a0ca4b85659b9557e206c90110a6a4dba980a",
+                "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/177c79a2d1f9970f89ee2fb4c12b429af38b6dfb",
+                "reference": "177c79a2d1f9970f89ee2fb4c12b429af38b6dfb",
                 "shasum": ""
             },
             "require": {
@@ -700,7 +700,7 @@
                 "proxy",
                 "trusted proxy"
             ],
-            "time": "2018-02-07T20:20:57+00:00"
+            "time": "2019-01-10T14:06:47+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1045,16 +1045,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.19",
+            "version": "v5.7.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "5c1d1ec7e8563ea31826fd5eb3f6791acf01160c"
+                "reference": "10cd20294b5668f90ba91996236834e71f7ff670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/5c1d1ec7e8563ea31826fd5eb3f6791acf01160c",
-                "reference": "5c1d1ec7e8563ea31826fd5eb3f6791acf01160c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/10cd20294b5668f90ba91996236834e71f7ff670",
+                "reference": "10cd20294b5668f90ba91996236834e71f7ff670",
                 "shasum": ""
             },
             "require": {
@@ -1128,7 +1128,7 @@
                 "moontoast/math": "^1.1",
                 "orchestra/testbench-core": "3.7.*",
                 "pda/pheanstalk": "^3.0",
-                "phpunit/phpunit": "^7.0",
+                "phpunit/phpunit": "^7.5",
                 "predis/predis": "^1.1.1",
                 "symfony/css-selector": "^4.1",
                 "symfony/dom-crawler": "^4.1",
@@ -1187,7 +1187,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-12-18T14:00:38+00:00"
+            "time": "2019-01-08T14:39:11+00:00"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -2579,20 +2579,21 @@
         },
         {
             "name": "spatie/image",
-            "version": "1.5.2",
+            "version": "1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/image.git",
-                "reference": "d4cb6afff1b98fd6e17396d91e0e584c3d91bb23"
+                "reference": "086bf7c6598ccaf8a0fdee2dcdcfc3637fe8a9eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/d4cb6afff1b98fd6e17396d91e0e584c3d91bb23",
-                "reference": "d4cb6afff1b98fd6e17396d91e0e584c3d91bb23",
+                "url": "https://api.github.com/repos/spatie/image/zipball/086bf7c6598ccaf8a0fdee2dcdcfc3637fe8a9eb",
+                "reference": "086bf7c6598ccaf8a0fdee2dcdcfc3637fe8a9eb",
                 "shasum": ""
             },
             "require": {
-                "league/glide": "^1.2",
+                "ext-exif": "*",
+                "league/glide": "^1.4",
                 "php": "^7.0",
                 "spatie/image-optimizer": "^1.0",
                 "spatie/temporary-directory": "^1.0.0",
@@ -2627,7 +2628,7 @@
                 "image",
                 "spatie"
             ],
-            "time": "2018-05-05T21:44:52+00:00"
+            "time": "2019-01-10T09:02:14+00:00"
         },
         {
             "name": "spatie/image-optimizer",
@@ -4115,16 +4116,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.4.9",
+            "version": "0.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "bfde4e2a66e60bb18b7ea97556eddfe55f569c13"
+                "reference": "9c66f6cb8dbe5fbc49a03e6dfc0d226276df131d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/bfde4e2a66e60bb18b7ea97556eddfe55f569c13",
-                "reference": "bfde4e2a66e60bb18b7ea97556eddfe55f569c13",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/9c66f6cb8dbe5fbc49a03e6dfc0d226276df131d",
+                "reference": "9c66f6cb8dbe5fbc49a03e6dfc0d226276df131d",
                 "shasum": ""
             },
             "require": {
@@ -4174,20 +4175,20 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2019-01-08T13:37:54+00:00"
+            "time": "2019-01-10T10:10:20+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.5.3",
+            "version": "0.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "8d792418ea064983403ff9f8222cde511603018a"
+                "reference": "f580acd5defe9d748f8dfaf6c0d0459fd79ee59e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/8d792418ea064983403ff9f8222cde511603018a",
-                "reference": "8d792418ea064983403ff9f8222cde511603018a",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/f580acd5defe9d748f8dfaf6c0d0459fd79ee59e",
+                "reference": "f580acd5defe9d748f8dfaf6c0d0459fd79ee59e",
                 "shasum": ""
             },
             "require": {
@@ -4235,7 +4236,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2019-01-08T14:15:14+00:00"
+            "time": "2019-01-10T09:44:45+00:00"
         },
         {
             "name": "thinktomorrow/vine",
@@ -4784,16 +4785,16 @@
         },
         {
             "name": "laravel/dusk",
-            "version": "v4.0.4",
+            "version": "v4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/dusk.git",
-                "reference": "3b2df334d92b6215400ddd183253eb4bcc07debb"
+                "reference": "c30c8a01d35661e253a7d3ea7ae6a79faf3f8d92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/dusk/zipball/3b2df334d92b6215400ddd183253eb4bcc07debb",
-                "reference": "3b2df334d92b6215400ddd183253eb4bcc07debb",
+                "url": "https://api.github.com/repos/laravel/dusk/zipball/c30c8a01d35661e253a7d3ea7ae6a79faf3f8d92",
+                "reference": "c30c8a01d35661e253a7d3ea7ae6a79faf3f8d92",
                 "shasum": ""
             },
             "require": {
@@ -4841,7 +4842,7 @@
                 "testing",
                 "webdriver"
             ],
-            "time": "2018-12-19T13:55:39+00:00"
+            "time": "2019-01-10T14:22:35+00:00"
         },
         {
             "name": "maximebf/debugbar",

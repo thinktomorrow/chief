@@ -4,32 +4,35 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldTab;
+use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\ManagesPreviews;
+use Thinktomorrow\Chief\Management\ManagesArchiving;
+use Thinktomorrow\Chief\Management\ManagesPublishing;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
+use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
+use Thinktomorrow\Chief\Pages\Application\ArchivePage;
+use Thinktomorrow\Chief\Management\ManagerThatArchives;
 use Thinktomorrow\Chief\Management\ManagerThatPreviews;
 use Thinktomorrow\Chief\Management\ManagerThatPublishes;
-use Thinktomorrow\Chief\Management\ManagesPreviews;
-use Thinktomorrow\Chief\Management\ManagesPublishing;
-use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Media\MediaType;
-use Thinktomorrow\Chief\Pages\Application\ArchivePage;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 
-class PageManager extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatPreviews
+class PageManager extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatArchives, ManagerThatPreviews
 {
     use ManagesPublishing,
+        ManagesArchiving,
         ManagesPreviews;
 
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
@@ -155,6 +158,11 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         }
 
         app(DeletePage::class)->handle($this->model->id);
+    }
+
+    public function archive()
+    {
+        app(ArchivePage::class)->handle($this->model->id);
     }
 
     public function storeRequest(Request $request): Request
