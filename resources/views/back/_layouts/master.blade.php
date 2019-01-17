@@ -12,7 +12,6 @@
         @yield('content')
     </section>
 
-    @include('chief::back._modules.footer')
     @stack('sidebar')
 
 </main>
