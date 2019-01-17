@@ -118,8 +118,14 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         return $this->pageBuilderField = $this->createPagebuilderField();
     }
 
-    public function fieldArrangement(): FieldArrangement
+    public function fieldArrangement($key = null): FieldArrangement
     {
+        if($key == 'create') {
+            return new FieldArrangement($this->fields()->filterBy(function($field){
+                return $field->key == 'title';
+            }));
+        }
+
         return new FieldArrangement($this->fields(), [
             new FieldTab('pagina', ['sections']),
             new FieldTab('inhoud', ['title', 'content', MediaType::HERO, MediaType::THUMB]),

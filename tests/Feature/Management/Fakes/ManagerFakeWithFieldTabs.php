@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Management\ManagementDefaults;
 
 class ManagerFakeWithFieldTabs extends ManagerFake
 {
-    public function fieldArrangement(): FieldArrangement
+    public function fieldArrangement($key = null): FieldArrangement
     {
         return new FieldArrangement($this->fields(), [
             new FieldTab('Main', ['title', 'custom', 'avatar']),
