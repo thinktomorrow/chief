@@ -83,8 +83,10 @@ class ModuleManager extends AbstractManager implements Manager
     public function fields(): Fields
     {
         return new Fields([
-            InputField::make('title')->validation('required'),
             InputField::make('slug')->validation('required'),
+            InputField::make('title')
+                ->translatable($this->model->availableLocales())
+                ->label('titel'),
             HtmlField::make('content')->translatable($this->model->availableLocales())
                         ->label('inhoud'),
         ]);
