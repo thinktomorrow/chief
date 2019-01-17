@@ -18,8 +18,11 @@ trait ChiefDatabaseTransactions
 
             touch($this->testDatabasePath);
 
-            $migrations = app(Filesystem::class)->allFiles(realpath(__DIR__.'/../database/migrations'));
+            $chief_migrations = app(Filesystem::class)->allFiles(realpath(__DIR__.'/../database/migrations'));
+            $assetlibrary_migrations = app(Filesystem::class)->allFiles(realpath(__DIR__.'/../vendor/thinktomorrow/assetlibrary/database/migrations'));
+            $squanto_migrations = app(Filesystem::class)->allFiles(realpath(__DIR__.'/../vendor/thinktomorrow/squanto/database/migrations'));
 
+            $migrations = array_merge($chief_migrations, $assetlibrary_migrations, $squanto_migrations);
             foreach ($migrations as $migration) {
                 include_once $migration->getPathName();
 

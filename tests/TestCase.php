@@ -17,6 +17,7 @@ use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Spatie\Activitylog\ActivitylogServiceProvider;
+use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {

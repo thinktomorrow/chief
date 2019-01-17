@@ -38,7 +38,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Media library
         (new MediaLibraryServiceProvider($this->app))->boot();
-//        (new AssetLibraryServiceProvider($this->app))->boot();
+    //    (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
         (new ProjectServiceProvider($this->app))->boot();
