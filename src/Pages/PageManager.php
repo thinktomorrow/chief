@@ -139,7 +139,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
         return new FieldArrangement($this->fields(), [
             new FieldsTab('pagina', ['sections']),
-            new RemainingFieldsTab('inhoud', ['slug']),
+            new RemainingFieldsTab('inhoud'),
             new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
             new FieldsTab('seo', ['seo_title', 'seo_description']),
         ]);
