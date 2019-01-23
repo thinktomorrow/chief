@@ -22,6 +22,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         return $this->fields;
     }
 
+    public function keys(): array
+    {
+        return array_map(function(Field $field){ return $field->key(); }, $this->fields);
+    }
+
     public function filterBy($key, $value = null)
     {
         $fields = [];
@@ -55,9 +60,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         }, $fields);
     }
 
-    public function add(Field $value)
+    public function add(Field ...$field)
     {
-        $this->fields[] = $value;
+        $this->fields = array_merge($this->fields, $field);
 
         return $this;
     }

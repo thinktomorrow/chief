@@ -5,7 +5,8 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldTab;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
@@ -127,10 +128,10 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         }
 
         return new FieldArrangement($this->fields(), [
-            new FieldTab('pagina', ['sections']),
-            new FieldTab('inhoud', ['title', 'content', MediaType::HERO, MediaType::THUMB]),
-            new FieldTab('eigen modules', [], 'chief::back.pages._partials.modules'),
-            new FieldTab('seo', ['seo_title', 'seo_content']),
+            new FieldsTab('pagina', ['sections']),
+            new RemainingFieldsTab('inhoud', ['slug']),
+            new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
+            new FieldsTab('seo', ['seo_title', 'seo_description']),
         ]);
     }
 

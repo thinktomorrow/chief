@@ -12,11 +12,12 @@ class FieldArrangement
 
     public function __construct(Fields $fields, array $tabs = [])
     {
-        $this->validateTabs($tabs);
-        $this->fillTabsWithTheirFields($tabs, $fields);
-
-        $this->tabs = $tabs;
         $this->fields = $fields;
+
+        $this->validateTabs($tabs);
+        $this->tabs = $tabs;
+
+        $this->fillTabsWithTheirFields();
     }
 
     public function fields(): array
@@ -36,14 +37,36 @@ class FieldArrangement
 
     private function validateTabs(array $tabs)
     {
-        array_map(function (FieldTab $tab) {
+        array_map(function (FieldsTab $tab) {
         }, $tabs);
     }
 
-    private function fillTabsWithTheirFields(array $tabs, Fields $fields)
+    private function fillTabsWithTheirFields()
     {
-        foreach ($tabs as $tab) {
-            $tab->fill($fields);
+        // Clone the fields
+        $remainingFields = new Fields($this->fields->all());
+        $remainingFieldsTabIndex = null;
+
+        foreach ($this->tabs as $index => $tab) {
+
+            // Take note of a wildcard tab
+            if($tab instanceof RemainingFieldsTab){
+                $remainingFieldsTabIndex = $index;
+                continue;
+            };
+
+            // Slim down the remaining fields array so in the end we know which fields are actually missing/
+            foreach($remainingFields as $k => $remainingField) {
+                if($tab->contains($remainingField)){
+                    unset($remainingFields[$k]);
+                }
+            }
+
+            $tab->fill($this->fields);
+        }
+
+        if($remainingFieldsTabIndex){
+            $this->tabs[$remainingFieldsTabIndex] = $this->tabs[$remainingFieldsTabIndex]->withRemaining($remainingFields->keys())->fill($this->fields);
         }
     }
 }
