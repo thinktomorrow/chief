@@ -54,7 +54,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function a_stored_reference_must_refer_to_existing_reference()
     {
-        $this->expectException(\TypeError::class);
+        $this->expectException(\Exception::class);
 
         $stored_set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5]))->store();
         $stored_set_ref->toSet();
