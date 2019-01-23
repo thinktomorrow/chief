@@ -103,10 +103,16 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 ),
             TextField::make('short')->translatable($this->model->availableLocales()),
             HtmlField::make('content')->translatable($this->model->availableLocales()),
-            InputField::make('seo_title')->translatable($this->model->availableLocales()),
-            TextField::make('seo_description')->translatable($this->model->availableLocales()),
-            MediaField::make(MediaType::HERO)->multiple(false),
-            MediaField::make(MediaType::THUMB)->multiple(false),
+            InputField::make('seo_title')
+                ->translatable($this->model->availableLocales())
+                ->label('seo titel'),
+            TextField::make('seo_description')
+                ->translatable($this->model->availableLocales())
+                ->label('seo omschrijving'),
+            MediaField::make(MediaType::THUMB)
+                ->multiple(false)
+                ->label('Thumb afbeelding')
+                ->description('Deze kan gebruikt worden wanneer deze pagina gekoppeld wordt aan andere pagina\'s.'),
         ]);
     }
 
