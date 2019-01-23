@@ -96,11 +96,15 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                                      ->validation('required-fallback-locale|max:200')
                                      ->label('Pagina titel')
                                      ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
-            InputField::make('slug')->translatable($this->model->availableLocales())
+            InputField::make('slug')
+                ->translatable($this->model->availableLocales())
                 ->validation($this->model->id
-                    ? 'unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'unique:page_translations,slug'
-                ),
+                    ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
+                    : 'required-fallback-locale|unique:page_translations,slug'
+                )
+                ->label('Link')
+                ->description('De unieke url verwijzing naar deze pagina.')
+                ->prepend(url('/').'/'),
             TextField::make('short')->translatable($this->model->availableLocales()),
             HtmlField::make('content')->translatable($this->model->availableLocales()),
             InputField::make('seo_title')
