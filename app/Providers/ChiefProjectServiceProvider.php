@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Pages\Single;
 
-class ProjectServiceProvider extends ServiceProvider
+class ChiefProjectServiceProvider extends ServiceProvider
 {
     public function boot()
     {

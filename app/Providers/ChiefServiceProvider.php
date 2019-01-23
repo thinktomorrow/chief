@@ -39,7 +39,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
-        (new ProjectServiceProvider($this->app))->boot();
+        (new ChiefProjectServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -125,7 +125,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AssetLibraryServiceProvider($this->app))->register();
 
         // Project defaults
-        (new ProjectServiceProvider($this->app))->register();
+        (new ChiefProjectServiceProvider($this->app))->register();
     }
 
     /**
