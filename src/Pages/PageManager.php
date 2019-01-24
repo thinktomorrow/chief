@@ -7,13 +7,10 @@ use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldsTab;
 use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
-use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Details\Details;
@@ -105,18 +102,13 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 ->label('Link')
                 ->description('De unieke url verwijzing naar deze pagina.')
                 ->prepend(url('/').'/'),
-            TextField::make('short')->translatable($this->model->availableLocales()),
-            HtmlField::make('content')->translatable($this->model->availableLocales()),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
-                ->label('seo titel'),
+                ->label('Zoekmachine titel'),
             TextField::make('seo_description')
                 ->translatable($this->model->availableLocales())
-                ->label('seo omschrijving'),
-            MediaField::make(MediaType::THUMB)
-                ->multiple(false)
-                ->label('Thumb afbeelding')
-                ->description('Deze kan gebruikt worden wanneer deze pagina gekoppeld wordt aan andere pagina\'s.'),
+                ->label('Zoekmachine omschrijving')
+                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
         ]);
     }
 

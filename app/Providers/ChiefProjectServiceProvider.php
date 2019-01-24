@@ -28,14 +28,14 @@ class ChiefProjectServiceProvider extends ServiceProvider
         $this->registerManager('pagetitle', ModuleManager::class, PagetitleModule::class, ['pagesection']);
     }
 
-    public function registerModule($key, $class, $model)
+    public function registerModule($key, $class, $model, array $tags = [])
     {
-        return $this->registerManager($key, $class, $model, ['module']);
+        return $this->registerManager($key, $class, $model, array_merge(['module'],$tags));
     }
 
-    public function registerPage($key, $class, $model)
+    public function registerPage($key, $class, $model, array $tags = [])
     {
-        return $this->registerManager($key, $class, $model, ['page']);
+        return $this->registerManager($key, $class, $model, array_merge(['page'],$tags));
     }
 
     public function registerManager($key, $class, $model, array $tags = [])

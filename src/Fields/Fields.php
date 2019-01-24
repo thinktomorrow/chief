@@ -67,6 +67,23 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         return $this;
     }
 
+    public function remove($keys = null)
+    {
+        if(!$keys) return $this;
+
+        if(is_string($keys)) {
+            $keys = func_get_args();
+        }
+
+        foreach($this->fields as $k => $field){
+            if(in_array($field->key, $keys)){
+                unset($this->fields[$k]);
+            }
+        }
+
+        return $this;
+    }
+
     public function offsetExists($offset)
     {
         return isset($this->fields[$offset]);
