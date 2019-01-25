@@ -5,14 +5,12 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldTab;
-use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Details\Details;
@@ -95,17 +93,22 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                                      ->validation('required-fallback-locale|max:200')
                                      ->label('Pagina titel')
                                      ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
-            InputField::make('slug')->translatable($this->model->availableLocales())
+            InputField::make('slug')
+                ->translatable($this->model->availableLocales())
                 ->validation($this->model->id
-                    ? 'unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'unique:page_translations,slug'
-                ),
-            TextField::make('short')->translatable($this->model->availableLocales()),
-            HtmlField::make('content')->translatable($this->model->availableLocales()),
-            InputField::make('seo_title')->translatable($this->model->availableLocales()),
-            TextField::make('seo_description')->translatable($this->model->availableLocales()),
-            MediaField::make(MediaType::HERO)->multiple(false),
-            MediaField::make(MediaType::THUMB)->multiple(false),
+                    ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
+                    : 'required-fallback-locale|unique:page_translations,slug'
+                )
+                ->label('Link')
+                ->description('De unieke url verwijzing naar deze pagina.')
+                ->prepend(url('/').'/'),
+            InputField::make('seo_title')
+                ->translatable($this->model->availableLocales())
+                ->label('Zoekmachine titel'),
+            TextField::make('seo_description')
+                ->translatable($this->model->availableLocales())
+                ->label('Zoekmachine omschrijving')
+                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
         ]);
     }
 
@@ -118,13 +121,19 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         return $this->pageBuilderField = $this->createPagebuilderField();
     }
 
-    public function fieldArrangement(): FieldArrangement
+    public function fieldArrangement($key = null): FieldArrangement
     {
+        if($key == 'create') {
+            return new FieldArrangement($this->fields()->filterBy(function($field){
+                return $field->key == 'title';
+            }));
+        }
+
         return new FieldArrangement($this->fields(), [
-            new FieldTab('pagina', ['sections']),
-            new FieldTab('inhoud', ['title', 'content', MediaType::HERO, MediaType::THUMB]),
-            new FieldTab('eigen modules', [], 'chief::back.pages._partials.modules'),
-            new FieldTab('seo', ['seo_title', 'seo_content']),
+            new FieldsTab('pagina', ['sections']),
+            new RemainingFieldsTab('inhoud'),
+            new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
+            new FieldsTab('seo', ['seo_title', 'seo_description']),
         ]);
     }
 

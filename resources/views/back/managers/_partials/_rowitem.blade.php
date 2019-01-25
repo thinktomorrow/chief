@@ -1,6 +1,6 @@
 <div class="column-6">
     <div class="row bg-white inset-s panel panel-default">
-        <div>
+        <div class="column">
             @if($manager->can('edit'))
                 <a class="text-black bold" href="{{ $manager->route('edit') }}">
                     {!! $manager->details()->title !!}
@@ -20,7 +20,7 @@
                 </div>
             @endif
         </div>
-        <div class="column text-right">
+        <div class="column-4 text-right">
             {!! $manager->details()->context !!}
             @include('chief::back.managers._partials.context-menu')
         </div>

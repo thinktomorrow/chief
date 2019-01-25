@@ -1,4 +1,3 @@
-<?php $fieldArrangement = $manager->fieldArrangement(); ?>
 @if($fieldArrangement->hasTabs())
     <tabs>
         @foreach($fieldArrangement->tabs() as $tab)

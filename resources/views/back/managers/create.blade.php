@@ -26,7 +26,9 @@
         <form id="createForm" method="POST" action="{{ $manager->route('store') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
-             @include('chief::back.managers._partials._form')
+             @include('chief::back.managers._partials._form', [
+                'fieldArrangement' => $manager->fieldArrangement('create')
+             ])
 
             <div class="stack text-right">
                 <button type="submit" class="btn btn-primary">Aanmaken</button>
@@ -36,15 +38,6 @@
     </div>
 
 @stop
-
-@push('custom-styles')
-    <!-- make redactor available for any components. -->
-    <script src="/chief-assets/back/js/vendors/redactor.js"></script>
-@endpush
-
-@push('custom-scripts-after-vue')
-    @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('upload')])
-@endpush
 
 @include('chief::back._elements.file-component')
 @include('chief::back._elements.slimcropper-component')

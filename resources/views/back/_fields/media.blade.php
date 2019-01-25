@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-subtle" @click.prevent="toggleReorder">
+        <a v-if="{{ json_encode($field->multiple) }} == true" class="btn btn-subtle" @click.prevent="toggleReorder">
             @{{ reorder ? 'Gedaan met herschikken' : 'Herschik afbeeldingen' }}
         </a>
         <input type="hidden" name="filesOrder[{{ $key }}]" :value="filesOrder">

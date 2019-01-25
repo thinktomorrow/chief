@@ -61,8 +61,8 @@ class Set extends Collection implements PresentForParent
             'front.modules.'.$this->viewKey(),
         ];
 
-        // In case the collection is made out of pages, we'll also allow to use the
-        // generic collection page view for these sets as well.
+        // In case the collection set is made out of pages, we'll also allow to use the
+        // generic collection page view for these sets as well as a fallback view
         if ($this->first() instanceof PresentForParent) {
             $viewPaths[] = 'front.modules.'. $parent->viewKey().'.'.$this->first()->viewKey();
             $viewPaths[] = 'front.modules.'. $this->first()->viewKey();

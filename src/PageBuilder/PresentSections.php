@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\PageBuilder;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\PresentForParent;
 use Thinktomorrow\Chief\Sets\Set;
@@ -73,8 +74,7 @@ class PresentSections
                 continue;
             }
 
-            // By default, models are considered collections and will be collected together as a set
-            $this->addModelToCollection($i, $child, get_class($child));
+            $this->addChildToCollection($i, $child);
         }
 
         return $this->sets->map(function (PresentForParent $child) {
@@ -89,12 +89,14 @@ class PresentSections
         $this->sets[$index] = $set;
     }
 
-    private function addModelToCollection($index, $child, $key)
+    private function addChildToCollection($index, ActsAsChild $child)
     {
         // Only published pages you fool!
         if (method_exists($child, 'isPublished') && ! $child->isPublished()) {
             return;
         }
+
+        $key = $child->viewkey();
 
         // Set the current collection to the model key identifier: for pages this is the collection key, for
         // other managed models this is the registered key.

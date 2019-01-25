@@ -2,25 +2,31 @@
 
 namespace Thinktomorrow\Chief\Fields;
 
-class FieldTab
+use Thinktomorrow\Chief\Fields\Types\Field;
+
+class FieldsTab
 {
-    /** @var array */
+    /** @var string */
+    protected $title;
+
+    /** @var string */
+    protected $view;
+
+    /**
+     * array of fieldKeys of the fields which are accepted in this tab
+     * @var array
+     */
     private $fieldKeys;
 
     /** @var array */
     private $fields;
-
-    /** @var string */
-    private $title;
-
-    /** @var string */
-    private $view;
 
     public function __construct(string $title, array $fieldKeys, string $view = null)
     {
         $this->title = $title;
         $this->fieldKeys = $fieldKeys;
         $this->view = $view;
+
         $this->fields = [];
     }
 
@@ -29,19 +35,24 @@ class FieldTab
         return $this->title;
     }
 
-    public function fill(Fields $fields): FieldTab
+    /**
+     * @param Fields $fields
+     * @return FieldsTab
+     */
+    public function fill(Fields $fields): FieldsTab
     {
-        $result = [];
-
         foreach ($fields->all() as $field) {
-            if (in_array($field->key, $this->fieldKeys)) {
-                $result[] = $field;
+            if ($this->contains($field)) {
+                $this->fields[] = $field;
             }
         }
 
-        $this->fields = $result;
-
         return $this;
+    }
+
+    public function contains(Field $field): bool
+    {
+        return in_array($field->key, $this->fieldKeys);
     }
 
     /**
