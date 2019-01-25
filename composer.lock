@@ -4116,16 +4116,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.5.1",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "3bb44a1c227a23426da83ffef6f909a0150f4e1f"
+                "reference": "df720d18ef7d1b175724b095964edb69a4712fd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/3bb44a1c227a23426da83ffef6f909a0150f4e1f",
-                "reference": "3bb44a1c227a23426da83ffef6f909a0150f4e1f",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/df720d18ef7d1b175724b095964edb69a4712fd0",
+                "reference": "df720d18ef7d1b175724b095964edb69a4712fd0",
                 "shasum": ""
             },
             "require": {
@@ -4175,7 +4175,7 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2019-01-18T09:29:37+00:00"
+            "time": "2019-01-25T10:19:19+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
