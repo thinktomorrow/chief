@@ -22,7 +22,7 @@ interface Manager
      */
     public function manage($model): Manager;
 
-    public function assistedBy(string $assistant): bool;
+    public function isAssistedBy(string $assistant): bool;
 
     public function assistant(string $assistant): Assistant;
 

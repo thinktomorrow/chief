@@ -54,9 +54,10 @@ trait ManagesPublishing
             return 'offline';
         }
 
-        if ($this->isArchived()) {
+        if( $this->isAssistedBy('archive') && $this->assistant('archive')->isArchived()) {
             return 'gearchiveerd';
         }
+
 
         return '-';
     }

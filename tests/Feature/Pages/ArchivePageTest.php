@@ -30,7 +30,7 @@ class ArchivePageTest extends TestCase
     }
 
     /** @test */
-    public function a_published_page_is_archived()
+    public function a_published_page_can_be_archived()
     {
         $this->page->publish();
 

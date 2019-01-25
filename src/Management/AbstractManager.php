@@ -16,7 +16,8 @@ abstract class AbstractManager
     use HasDetails,
         ManagesMedia,
         ManagesPagebuilder,
-        TranslatableCommand;
+        TranslatableCommand,
+        AssistedManager;
 
     protected $queued_translations = [];
     protected $translation_columns = [];
@@ -28,8 +29,6 @@ abstract class AbstractManager
 
     /** @var string */
     protected $key;
-
-    protected $assistants = [];
 
     public function __construct(Registration $registration)
     {
@@ -65,36 +64,6 @@ abstract class AbstractManager
         return $model::all()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
-    }
-
-    public function assistedBy(string $assistant): bool
-    {
-        return !! $this->getAssistantClass($assistant);
-    }
-
-    public function assistant(string $assistant): Assistant
-    {
-        if (! $this->assistedBy($assistant)) {
-            throw new \Exception('No assistant [' . $assistant . '] present on manager ' . get_class($this));
-        }
-
-        $instance = app($this->getAssistantClass($assistant));
-        $instance->manager($this);
-
-        return $instance;
-    }
-
-    private function getAssistantClass($assistant): ?string
-    {
-        if (in_array($assistant, $this->assistants)) {
-            return $assistant;
-        }
-
-        if (isset($this->assistants[$assistant])) {
-            return $this->assistants[$assistant];
-        }
-
-        return null;
     }
 
     public function model()

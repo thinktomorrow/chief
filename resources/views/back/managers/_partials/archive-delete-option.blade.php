@@ -1,5 +1,5 @@
 <hr>
-@if($manager->assistedBy('archive'))
+@if($manager->isAssistedBy('archive'))
 
     @if(! $manager->assistant('archive')->isArchived())
         <a data-submit-form="archiveForm-{{ $manager->details()->id }}" class="block squished-s text-warning --link-with-bg">Archiveer</a>
