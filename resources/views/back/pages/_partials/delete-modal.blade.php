@@ -7,7 +7,7 @@
                 <h2 class="formgroup-label" slot="modal-header">Ok. Tijd om op te ruimen. <br>Ben je zeker?</h2>
                 <p>Type {{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }} om dit item te verwijderen.</p>
                 <div class="input-group stack">
-                    <input name="deleteconfirmation" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s" autocomplete="off">
+                    <input data-delete-confirmation name="deleteconfirmation" placeholder="{{ $page->isDraft() || $page->isArchived() ? 'DELETE' : 'ARCHIVE' }}" type="text" class="input inset-s" autocomplete="off">
                 </div>
             @else
                 <h2 class="formgroup-label">Een item dat online staat kan je niet zomaar verwijderen.</h2>

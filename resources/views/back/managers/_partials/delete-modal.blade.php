@@ -8,7 +8,7 @@
             <h2 class="formgroup-label">Verwijder {{ $manager->details()->title }}</h2>
             <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
             <div class="input-group stack column-6">
-                <input name="deleteconfirmation" placeholder="DELETE" type="text" class="input inset-s" autocomplete="off">
+                <input data-delete-confirmation name="deleteconfirmation" placeholder="DELETE" type="text" class="input inset-s" autocomplete="off">
             </div>
         </div>
     </form>
