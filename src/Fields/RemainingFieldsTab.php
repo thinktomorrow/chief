@@ -8,9 +8,9 @@ class RemainingFieldsTab extends FieldsTab
 
     public function __construct(string $title, array $fieldKeysBlacklist = [], string $view = null)
     {
-       parent::__construct($title, [], $view);
+        parent::__construct($title, [], $view);
 
-       $this->fieldKeysBlacklist = $fieldKeysBlacklist;
+        $this->fieldKeysBlacklist = $fieldKeysBlacklist;
     }
 
     public function withRemaining(array $fieldKeys): FieldsTab

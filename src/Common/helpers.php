@@ -204,12 +204,10 @@ if (!function_exists('cleanupHTML')) {
  * @param array $parameters
  * @return bool
  */
-if(!function_exists('isActiveUrl'))
-{
+if (!function_exists('isActiveUrl')) {
     function isActiveUrl($name, $parameters = [])
     {
-        if (\Illuminate\Support\Facades\Route::currentRouteNamed($name))
-        {
+        if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
             $flag = true;
             $current = \Illuminate\Support\Facades\Route::current();
 
@@ -217,16 +215,13 @@ if(!function_exists('isActiveUrl'))
              * If a single parameter is passed as string, we will convert this to
              * the proper array keyed by the first uri parameter
              */
-            if (!is_array($parameters))
-            {
+            if (!is_array($parameters)) {
                 $names = $current->parameterNames();
                 $parameters = [reset($names) => $parameters];
             }
 
-            foreach ($parameters as $key => $parameter)
-            {
-                if ($current->parameter($key, false) != $parameter)
-                {
+            foreach ($parameters as $key => $parameter) {
+                if ($current->parameter($key, false) != $parameter) {
                     $flag = false;
                 }
             }
@@ -236,8 +231,7 @@ if(!function_exists('isActiveUrl'))
 
         $name = ltrim($name, '/');
 
-        if (false !== strpos($name, '*'))
-        {
+        if (false !== strpos($name, '*')) {
             $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
 
             return !!preg_match("#$pattern#", request()->path());
@@ -256,8 +250,7 @@ if(!function_exists('isActiveUrl'))
  * @param array $overrides
  * @return string
  */
-if (!function_exists('addQueryToUrl'))
-{
+if (!function_exists('addQueryToUrl')) {
     function addQueryToUrl($url, array $query_params = [], $overrides = [])
     {
         $parsed_url = parse_url($url);
@@ -297,13 +290,14 @@ if (!function_exists('addQueryToUrl'))
     }
 }
 
-if(!function_exists('ddd')){
-    function ddd($var, ...$moreVars){
+if (!function_exists('ddd')) {
+    function ddd($var, ...$moreVars)
+    {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        if(php_sapi_name() == 'cli'){
-            print_r("\e[1;30m dumped at: " . str_replace(base_path(),'', $trace[0]['file']). ", line: " . $trace[0]['line'] . "\e[40m\n");
-        } else{
-            print_r("[dumped at: " . str_replace(base_path(),'', $trace[0]['file']). ", line: " . $trace[0]['line'] . "]\n");
+        if (php_sapi_name() == 'cli') {
+            print_r("\e[1;30m dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "\e[40m\n");
+        } else {
+            print_r("[dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "]\n");
         }
         return dd($var, ...$moreVars);
     }

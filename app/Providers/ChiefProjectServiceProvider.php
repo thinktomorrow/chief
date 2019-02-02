@@ -30,12 +30,12 @@ class ChiefProjectServiceProvider extends ServiceProvider
 
     public function registerModule($key, $class, $model, array $tags = [])
     {
-        return $this->registerManager($key, $class, $model, array_merge(['module'],$tags));
+        return $this->registerManager($key, $class, $model, array_merge(['module'], $tags));
     }
 
     public function registerPage($key, $class, $model, array $tags = [])
     {
-        return $this->registerManager($key, $class, $model, array_merge(['page'],$tags));
+        return $this->registerManager($key, $class, $model, array_merge(['page'], $tags));
     }
 
     public function registerManager($key, $class, $model, array $tags = [])

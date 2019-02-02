@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-
 trait AssistedManager
 {
     protected $assistants = [];
@@ -44,8 +43,8 @@ trait AssistedManager
             return $assistant;
         }
 
-        foreach($this->assistants as $class){
-            if($assistant == $class::key()){
+        foreach ($this->assistants as $class) {
+            if ($assistant == $class::key()) {
                 return $class;
             }
         }
