@@ -50,14 +50,14 @@ class FieldArrangement
         foreach ($this->tabs as $index => $tab) {
 
             // Take note of a wildcard tab
-            if($tab instanceof RemainingFieldsTab){
+            if ($tab instanceof RemainingFieldsTab) {
                 $remainingFieldsTabIndex = $index;
                 continue;
             };
 
             // Slim down the remaining fields array so in the end we know which fields are actually missing/
-            foreach($remainingFields as $k => $remainingField) {
-                if($tab->contains($remainingField)){
+            foreach ($remainingFields as $k => $remainingField) {
+                if ($tab->contains($remainingField)) {
                     unset($remainingFields[$k]);
                 }
             }
@@ -65,7 +65,7 @@ class FieldArrangement
             $tab->fill($this->fields);
         }
 
-        if($remainingFieldsTabIndex){
+        if ($remainingFieldsTabIndex) {
             $this->tabs[$remainingFieldsTabIndex] = $this->tabs[$remainingFieldsTabIndex]->withRemaining($remainingFields->keys())->fill($this->fields);
         }
     }

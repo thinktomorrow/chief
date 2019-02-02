@@ -120,8 +120,8 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
     public function fieldArrangement($key = null): FieldArrangement
     {
-        if($key == 'create') {
-            return new FieldArrangement($this->fields()->filterBy(function($field){
+        if ($key == 'create') {
+            return new FieldArrangement($this->fields()->filterBy(function ($field) {
                 return $field->key == 'title';
             }));
         }
