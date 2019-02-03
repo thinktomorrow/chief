@@ -24,7 +24,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     public function keys(): array
     {
-        return array_map(function(Field $field){ return $field->key(); }, $this->fields);
+        return array_map(function (Field $field) {
+            return $field->key();
+        }, $this->fields);
     }
 
     public function filterBy($key, $value = null)
@@ -69,14 +71,16 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     public function remove($keys = null)
     {
-        if(!$keys) return $this;
+        if (!$keys) {
+            return $this;
+        }
 
-        if(is_string($keys)) {
+        if (is_string($keys)) {
             $keys = func_get_args();
         }
 
-        foreach($this->fields as $k => $field){
-            if(in_array($field->key, $keys)){
+        foreach ($this->fields as $k => $field) {
+            if (in_array($field->key, $keys)) {
                 unset($this->fields[$k]);
             }
         }

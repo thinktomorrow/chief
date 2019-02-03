@@ -3,12 +3,13 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\PageManager;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
 
 class UploadMediaTest extends TestCase
 {
@@ -20,18 +21,22 @@ class UploadMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register('singles', UploadMediaManager::class, Single::class);
+
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
     public function a_new_asset_can_be_uploaded()
     {
-        $page = Single::create();
+        $this->disableExceptionHandling();
+        $page = Single::create(['slug' => 'test']);
 
         config()->set(['app.fallback_locale' => 'nl']);
 
         // Upload asset
-        $this->asAdmin()
+        $response = $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
@@ -41,7 +46,6 @@ class UploadMediaTest extends TestCase
                     ]
                 ]
             ]));
-
 
         $this->assertTrue($page->fresh()->hasFile(MediaType::HERO));
         $this->assertCount(1, $page->fresh()->getAllFiles(MediaType::HERO));

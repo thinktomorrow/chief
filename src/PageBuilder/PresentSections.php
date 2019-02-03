@@ -71,13 +71,14 @@ class PresentSections
             // A module is something we will add as is, without combining them together
             if ($child instanceof Module) {
                 $this->sets[$i] = $child;
+                $this->current_type = null;
                 continue;
             }
 
             $this->addChildToCollection($i, $child);
         }
 
-        return $this->sets->map(function (PresentForParent $child) {
+        return $this->sets->values()->map(function (PresentForParent $child) {
             return ($this->withSnippets && method_exists($child, 'withSnippets'))
                 ? $child->withSnippets()->presentForParent($this->parent)
                 : $child->presentForParent($this->parent);
@@ -87,6 +88,7 @@ class PresentSections
     private function addSetToCollection($index, Set $set)
     {
         $this->sets[$index] = $set;
+        $this->current_type = null;
     }
 
     private function addChildToCollection($index, ActsAsChild $child)

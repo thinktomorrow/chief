@@ -30,6 +30,11 @@ class ArchiveAssistant implements Assistant
         $this->model = $manager->model();
     }
 
+    public static function key(): string
+    {
+        return 'archive';
+    }
+
     public function isArchived(): bool
     {
         return $this->model->isArchived();

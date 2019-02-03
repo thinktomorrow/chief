@@ -39,7 +39,7 @@ class StoredSetReference extends Model implements ActsAsChild
             return $setReference->key() == $this->key;
         });
 
-        if(!$reference){
+        if (!$reference) {
             throw new \Exception('No query set found by key ['. $this->key. ']. Make sure that this '.$this->key.' set is added to the chief.sets config array.');
         }
 

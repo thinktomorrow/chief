@@ -30,10 +30,7 @@
             @include('chief::back.managers._partials.delete-modal')
         @endforeach
     </div>
-    @if($modelManager->assistedBy('archive'))
-
-        <?php $archiveAssistant = $modelManager->assistant('archive'); ?>
-
+    @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
         @if( ! $archiveAssistant->findAll()->isEmpty())
             <hr>
             <div class="center-x">
