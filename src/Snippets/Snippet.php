@@ -17,9 +17,9 @@ class Snippet
 
     public function __construct(string $key, string $label, string $path)
     {
-        $this->label     = $label;
+        $this->label = $label;
         $this->path = $path;
-        $this->key       = $key;
+        $this->key = $key;
     }
 
     public function key()

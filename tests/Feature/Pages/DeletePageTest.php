@@ -2,8 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class DeletePageTest extends TestCase
@@ -17,13 +19,14 @@ class DeletePageTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         $this->page = factory(Page::class)->create(['published' => false]);
+        app(Register::class)->register('singles', PageManager::class, Single::class);
     }
 
     /** @test */
     public function it_can_delete_a_page()
     {
         $this->asAdmin()
-            ->delete(route('chief.back.pages.destroy', $this->page->id), [
+            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]), [
                 'deleteconfirmation' => 'DELETE'
             ]);
 
@@ -35,7 +38,7 @@ class DeletePageTest extends TestCase
     public function page_is_not_deleted_with_invalid_confirmation_string()
     {
         $this->asAdmin()
-            ->delete(route('chief.back.pages.destroy', $this->page->id), [
+            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]), [
                 'deleteconfirmation' => 'FAKE'
             ]);
 
@@ -49,7 +52,7 @@ class DeletePageTest extends TestCase
         $this->page->publish();
 
         $this->asAdmin()
-            ->delete(route('chief.back.pages.destroy', Page::first()->id), [
+            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]), [
                 'deleteconfirmation' => 'DELETE'
             ]);
 

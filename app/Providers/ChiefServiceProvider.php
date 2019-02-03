@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Spatie\MediaLibrary\MediaLibraryServiceProvider;
+use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\Seed;
@@ -36,12 +36,10 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
 
-        // Media library
-        (new MediaLibraryServiceProvider($this->app))->boot();
-//        (new AssetLibraryServiceProvider($this->app))->boot();
+        (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
-        (new ProjectServiceProvider($this->app))->boot();
+        (new ChiefProjectServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -50,6 +48,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
             __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            // __DIR__.'/../../config/permission.php' => config_path('thinktomorrow/permission.php'),
         ], 'chief-config');
 
         $this->publishes([
@@ -87,13 +86,20 @@ class ChiefServiceProvider extends ServiceProvider
             });
         }
 
-        // Manager register is globally available
-        $this->app->singleton(Register::class, function () {
-            return new Register();
-        });
-
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
+
+        // Custom validator for requiring on translations only the fallback locale
+        // this is called in the validation as required-fallback-locale
+        Validator::extend('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
+            $fallbackLocale = config('app.fallback_locale');
+
+            if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
+                return !! trim($value);
+            }
+
+            return true;
+        }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
     }
 
     public function register()
@@ -104,6 +110,11 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->setupEnvironmentProviders();
 
+        // Manager register is globally available
+        $this->app->singleton(Register::class, function () {
+            return new Register();
+        });
+
         (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
@@ -111,12 +122,10 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();
 
-        // Media library
-        (new MediaLibraryServiceProvider($this->app))->register();
         (new AssetLibraryServiceProvider($this->app))->register();
 
         // Project defaults
-        (new ProjectServiceProvider($this->app))->register();
+        (new ChiefProjectServiceProvider($this->app))->register();
     }
 
     /**

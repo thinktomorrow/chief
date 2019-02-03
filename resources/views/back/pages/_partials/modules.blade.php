@@ -1,7 +1,10 @@
-<h2>Eigen modules</h2>
-<p>Hier vind je de verzameling van alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina tonen door
-    ze te selecteren in de <a href="#inhoud">inhoudstab</a></p>
+<?php
+    $page = $manager->model();
+?>
 
+<h2>Eigen modules</h2>
+<p>Hier vind je alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina plaatsen door
+    ze te selecteren in de <a href="#pagina">pagina tab</a></p>
 @if($page->modules->isEmpty())
     <div class="center-center stack-xl">
         <div>
@@ -13,9 +16,12 @@
 @endif
 
 @if(!$page->modules->isEmpty())
-    @foreach($page->modules as $module)
-        @include('chief::back.modules._partials._rowitem')
-    @endforeach
+    <div class="row gutter-s">
+        @foreach($page->modules as $module)
+            @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+        @endforeach
+    </div>
+
 
     <div class="stack">
         <a @click="showModal('create-module')" class="btn btn-primary">
@@ -24,3 +30,7 @@
         </a>
     </div>
 @endif
+
+@push('portals')
+    @include('chief::back.modules._partials.create-modal', ['page_id' => $page->id])
+@endpush

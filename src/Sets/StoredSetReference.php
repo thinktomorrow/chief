@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 
 /**
  * @property $id
@@ -35,9 +35,20 @@ class StoredSetReference extends Model implements ActsAsChild
 
     public function toReference(): SetReference
     {
-        return SetReference::all()->first(function ($setReference) {
+        $reference = SetReference::all()->first(function ($setReference) {
             return $setReference->key() == $this->key;
         });
+
+        if (!$reference) {
+            throw new \Exception('No query set found by key ['. $this->key. ']. Make sure that this '.$this->key.' set is added to the chief.sets config array.');
+        }
+
+        return $reference;
+    }
+
+    public function viewkey(): string
+    {
+        return $this->key;
     }
 
     public function flatReference(): FlatReference

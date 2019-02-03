@@ -3,28 +3,24 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Relations\AvailableChildren;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class RelationsTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     public function setUp()
     {
         parent::setUp();
-
-        $this->setUpDatabase();
 
         ParentFake::migrate();
         ChildFake::migrate();
     }
 
     /** @test */
-    public function a_parent_can_attach_a_child()
+    public function a_parent_can_adopt_a_child()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -39,7 +35,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    public function a_parent_can_attach_multiple_children()
+    public function a_parent_can_adopt_many_children()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -53,7 +49,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    public function a_child_can_attach_multiple_parents()
+    public function a_child_can_accept_multiple_parents()
     {
         $parent = ParentFake::create();
         $parent2 = ParentFake::create();
@@ -67,7 +63,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    public function a_parent_can_detach_a_child()
+    public function a_parent_can_reject_a_child()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -85,7 +81,7 @@ class RelationsTest extends TestCase
     }
 
     /** @test */
-    public function a_child_can_detach_its_parent()
+    public function a_child_can_reject_its_parent()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
@@ -110,6 +106,10 @@ class RelationsTest extends TestCase
 
         $this->assertInstanceOf(Relation::class, $parent->relationWithChild($child));
         $this->assertInstanceOf(Relation::class, $child->relationWithParent($parent));
+
+        // Relation can fetch the related instances as well
+        $this->assertInstanceOf(ChildFake::class, $parent->relationWithChild($child)->child);
+        $this->assertInstanceOf(ParentFake::class, $child->relationWithParent($parent)->parent);
     }
 
     /** @test */
@@ -139,16 +139,6 @@ class RelationsTest extends TestCase
         $this->assertEquals($parent2->id, $child->parents()->first()->id);
         $this->assertEquals($parent->id, $child->parents()->last()->id);
     }
-    
-    /** @test */
-    public function a_parent_or_child_can_return_a_relation_identifier()
-    {
-        $parent = ParentFake::create();
-        $child = ChildFake::create();
-
-        $this->assertEquals($parent->getMorphClass().'@'.$parent->id, $parent->flatReference()->get());
-        $this->assertEquals($child->getMorphClass().'@'.$child->id, $child->flatReference()->get());
-    }
 
     /** @test */
     public function available_children_for_a_parent_can_be_listed_as_a_collection()
@@ -163,8 +153,7 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
-        $relations = Relation::availableChildren($parent);
-
+        $relations = AvailableChildren::forParent($parent)->all();
 
         $this->assertInstanceOf(Collection::class, $relations);
         $this->assertEquals([$child->id, $child2->id], $relations->pluck('id')->toArray());
@@ -183,8 +172,7 @@ class RelationsTest extends TestCase
         $parent->adoptChild($child, ['sort' => 2]);
         $parent->adoptChild($child2, ['sort' => 1]);
 
-        $relations = Relation::availableChildren($parent);
-
+        $relations = AvailableChildren::forParent($parent)->all();
 
         $this->assertInstanceOf(Collection::class, $relations);
         $this->assertEquals([$child->id, $child2->id], $relations->pluck('id')->toArray());
@@ -193,11 +181,6 @@ class RelationsTest extends TestCase
     /** @test */
     public function page_that_is_not_listed_as_child_should_not_be_available()
     {
-        config()->set('thinktomorrow.chief.collections', [
-            'singles' => Single::class,
-            'articles' => ArticlePageFake::class,
-        ]);
-
         config()->set('thinktomorrow.chief.relations.children', [
             ChildFake::class,
             ArticlePageFake::class,
@@ -206,10 +189,10 @@ class RelationsTest extends TestCase
         // Create models
         $parent = ParentFake::create();
         ChildFake::create();
-        ArticlePageFake::create(['collection' => 'articles']);
-        Single::create(['collection' => 'singles']);
+        ArticlePageFake::create();
+        Single::create();
 
-        $availableChildren = Relation::availableChildren($parent);
+        $availableChildren = AvailableChildren::forParent($parent)->all();
 
         $this->assertCount(2, $availableChildren);
         $this->assertInstanceOf(ArticlePageFake::class, $availableChildren[0]);
@@ -219,23 +202,18 @@ class RelationsTest extends TestCase
     /** @test */
     public function page_as_parent_should_not_listed_as_available()
     {
-        config()->set('thinktomorrow.chief.collections', [
-            'singles' => Single::class,
-            'articles' => ArticlePageFake::class,
-        ]);
-
         config()->set('thinktomorrow.chief.relations.children', [
             ChildFake::class,
             ArticlePageFake::class,
         ]);
 
         // Create models
-        $parent = ArticlePageFake::create(['collection' => 'articles']);
+        $parent = ArticlePageFake::create();
         ChildFake::create();
-        ArticlePageFake::create(['collection' => 'articles', 'id' => 999]);
-        Single::create(['collection' => 'singles']);
+        ArticlePageFake::create(['id' => 999]);
+        Single::create();
 
-        $availableChildren = Relation::availableChildren($parent);
+        $availableChildren = AvailableChildren::forParent($parent)->all();
 
         $this->assertCount(2, $availableChildren);
         $this->assertInstanceOf(ArticlePageFake::class, $availableChildren[0]);

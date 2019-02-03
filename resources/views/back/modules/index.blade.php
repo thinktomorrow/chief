@@ -32,9 +32,19 @@
         @endif
 
         @if(!$modules->isEmpty())
-            @foreach($modules as $module)
-                @include('chief::back.modules._partials._rowitem')
-                @include('chief::back.modules._partials.delete-modal')
+            @foreach($modules as $groupLabel => $module_group)
+
+                <div class="stack">
+                    <h2>{{ ucfirst($groupLabel) }}</h2>
+                    <div class="row gutter-s">
+                        @foreach($module_group as $module)
+                            @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                            @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                        @endforeach
+                    </div>
+
+                </div>
+
             @endforeach
         @endif
 

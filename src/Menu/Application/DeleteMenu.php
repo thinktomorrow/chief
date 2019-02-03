@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Menu\Application;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class DeleteMenu
 {

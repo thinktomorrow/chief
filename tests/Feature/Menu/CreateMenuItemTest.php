@@ -19,6 +19,7 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
+        $this->disableExceptionHandling();
         $response = $this->asAdminWithoutRole()->get(route('chief.back.menuitem.create', 'main'));
         $response->assertStatus(200);
     }

@@ -2,9 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\Fakes\OtherModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreateModuleTest extends TestCase
@@ -17,24 +18,19 @@ class CreateModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'newsletter' => NewsletterModuleFake::class,
-            'others' => OtherModuleFake::class,
-        ]);
+        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
     }
 
     /** @test */
     public function creating_a_new_module()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()
-            ->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams());
+            ->post(route('chief.back.managers.store', 'newsletter'), $this->validModuleParams());
 
         $module = Module::first();
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.modules.edit', $module->getKey()));
+        $response->assertRedirect(route('chief.back.managers.edit', ['newsletter', $module->id]));
 
         $this->assertCount(1, Module::all());
         $this->assertNewModuleValues($module);
@@ -43,7 +39,7 @@ class CreateModuleTest extends TestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_module()
     {
-        $response = $this->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams());
+        $response = $this->post(route('chief.back.managers.store', 'newsletter'), $this->validModuleParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Module::all());
@@ -53,31 +49,28 @@ class CreateModuleTest extends TestCase
     public function when_creating_module_slug_is_required()
     {
         $this->assertValidation(new Module(), 'slug', $this->validModuleParams(['slug' => '']),
-            route('chief.back.modules.index', 'newsletter'),
-            route('chief.back.modules.store', 'newsletter')
+            route('chief.back.managers.index', 'newsletter'),
+            route('chief.back.managers.store', 'newsletter')
         );
     }
 
     /** @test */
-    public function slug_must_be_unique()
+    public function internal_title_is_not_required_to_be_unique()
     {
-        $module = Module::create([
-            'collection' => 'newsletter',
-            'slug'   => 'foobar'
-        ]);
+        Module::create(['slug' => 'foobar']);
 
         $this->assertCount(1, Module::all());
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.modules.store', 'newsletter'), $this->validModuleParams([
+            ->post(route('chief.back.managers.store', 'newsletter'), $this->validModuleParams([
                 'slug'  => 'foobar',
-                'collection' => 'newsletter',
+                'morph_key' => 'newsletter',
             ])
         );
 
         $response->assertStatus(302);
 
         $modules = Module::all();
-        $this->assertCount(1, $modules);
+        $this->assertCount(2, $modules);
     }
 }

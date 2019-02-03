@@ -3,11 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\Common\Collections\CollectionDetails;
-use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\MenuItem;
@@ -17,11 +14,6 @@ use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
 class MenuItemController extends Controller
 {
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create($menutype)
     {
         $menuitem            = new MenuItem;
@@ -30,15 +22,8 @@ class MenuItemController extends Controller
 
         $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
 
-        $collections = CollectionKeys::fromConfig()
-            ->filterByType('pages')
-            ->rejectByKey('singles')
-            ->toCollectionDetails()
-            ->values()
-            ->prepend([
-                'key' => '',
-                'plural' => '...',
-            ])->toArray();
+        // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
+        $collections = [];
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
@@ -49,12 +34,6 @@ class MenuItemController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param MenuRequest $request
-     * @return Response
-     */
     public function store(MenuRequest $request)
     {
         $menu = app(CreateMenu::class)->handle($request);
@@ -62,12 +41,6 @@ class MenuItemController extends Controller
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function edit($id)
     {
         $menuitem = MenuItem::findOrFail($id);
@@ -84,15 +57,9 @@ class MenuItemController extends Controller
         }
 
         $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
-        $collections = CollectionKeys::fromConfig()
-                                ->filterByType('pages')
-                                ->rejectByKey('singles')
-                                ->toCollectionDetails()
-                                ->values()
-                                ->prepend([
-                                    'key' => '',
-                                    'plural' => '...',
-                                ])->toArray();
+
+        // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
+        $collections = [];
 
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;
@@ -107,13 +74,6 @@ class MenuItemController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param MenuRequest $request
-     * @param  int $id
-     * @return Response
-     */
     public function update(MenuRequest $request, $id)
     {
         $menu = app(UpdateMenu::class)->handle($id, $request);
@@ -121,12 +81,6 @@ class MenuItemController extends Controller
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangepast');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function destroy($id)
     {
         $menuItem = app(DeleteMenu::class)->handle($id);

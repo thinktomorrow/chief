@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -54,8 +55,27 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
+        //could use some code cleanup
+        if ((strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin')) && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException) {
+            return $this->renderChiefException($request, $exception);
+        }
+
         return parent::render($request, $exception);
     }
+
+    protected function renderChiefException($request, Exception $exception)
+    {
+        if (!config('app.debug')) {
+            if ($request->expectsJson()) {
+                return response()->json(['error' => 'Something went wrong.'], 404);
+            }
+
+            return response()->view('chief::back.errors.custom');
+        }
+        
+        return parent::render($request, $exception);
+    }
+
 
     protected function unauthorized($request, AuthorizationException $exception)
     {

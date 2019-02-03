@@ -2,11 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Common\Relations\ActingAsParent;
-use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Relations\ActingAsParent;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,23 +26,8 @@ class ParentFake extends Model implements ActsAsParent
         });
     }
 
-    /**
-     * Composite key consisting of the type of class combined with the
-     * model id. Both are joined with an @ symbol. This is used as
-     * identifier of the relation mostly as form values.
-     */
-    public function flatReference(): FlatReference
+    public function viewKey(): string
     {
-        return new FlatReference(get_class($this), 1);
-    }
-
-    public function flatReferenceLabel(): string
-    {
-        return (string) $this->name;
-    }
-
-    public function flatReferenceGroup(): string
-    {
-        return (string) $this->name;
+        return 'parentfake';
     }
 }

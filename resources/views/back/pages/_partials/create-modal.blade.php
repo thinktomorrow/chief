@@ -2,7 +2,7 @@
     $defaultLocale = config('app.locale');
 ?>
 <modal id="create-page" class="large-modal" title='' :active="{{ $errors->has('trans.'.$defaultLocale.'.title') ? 'true' : 'false' }}">
-    <form v-cloak id="createForm" method="POST" action="{{ route('chief.back.pages.store', $page->collectionKey()) }}" role="form">
+    <form v-cloak id="createPageForm" method="POST" action="{{ route('chief.back.pages.store', $page->collectionKey()) }}" role="form">
         {{ csrf_field() }}
 
         <div class="stack-s">
@@ -15,6 +15,6 @@
     </form>
 
     <div slot="modal-action-buttons" v-cloak>
-        <button type="button" class="btn btn-primary" data-submit-form="createForm">Voeg toe</button>
+        <button type="button" class="btn btn-primary" data-submit-form="createPageForm">Voeg toe</button>
     </div>
 </modal>

@@ -1,6 +1,6 @@
 <div class="row bg-white inset panel panel-default stack">
     <div class="column-9">
-            <a class="text-black bold" href="{{ route('chief.back.modules.edit',$module->getKey()) }}">
+            <a class="text-black bold" href="{{ $manager->route('edit') }}">
                 {{ $module->slug }}
             </a>
             <div>

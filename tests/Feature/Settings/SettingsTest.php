@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
-use Thinktomorrow\Chief\Common\Fields\HtmlField;
-use Thinktomorrow\Chief\Common\Fields\InputField;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Tests\TestCase;
 

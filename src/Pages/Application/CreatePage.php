@@ -3,24 +3,24 @@
 namespace Thinktomorrow\Chief\Pages\Application;
 
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
+use Thinktomorrow\Chief\Concerns\Morphable\CollectionKeys;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\PageTranslation;
-use Thinktomorrow\Chief\Common\UniqueSlug;
-use Thinktomorrow\Chief\Common\Audit\Audit;
+use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
+use Thinktomorrow\Chief\Audit\Audit;
 
 class CreatePage
 {
     use TranslatableCommand;
 
-    public function handle(string $collection, array $translations): Page
+    public function handle(string $morphKey, array $translations): Page
     {
         try {
             DB::beginTransaction();
 
-            $page = Page::create(['collection' => $collection]);
+            $page = Page::create(['morph_key' => $morphKey]);
 
             foreach ($translations as $locale => $value) {
                 if ($this->isCompletelyEmpty(['title'], $value)) {

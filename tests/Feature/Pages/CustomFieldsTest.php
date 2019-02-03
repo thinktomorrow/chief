@@ -3,8 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategories;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategoriesManager;
 use Thinktomorrow\Chief\Tests\Fakes\Category;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -23,11 +26,11 @@ class CustomFieldsTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'articles' => ArticlePageWithCategories::class,
-        ]);
+        app(Register::class)->register('articles', ArticlePageWithCategoriesManager::class, ArticlePageWithCategories::class);
 
-        $this->page = app(CreatePage::class)->handle('articles', $this->validPageParams()['trans'], [], [], []);
+        $this->asAdmin()->post(route('chief.back.managers.store', 'articles'), $this->validPageParams());
+
+        $this->page = ArticlePageWithCategories::first();
 
         // For our project context we expect the page detail route to be known
         Route::get('pages/{slug}', function () {
@@ -39,10 +42,8 @@ class CustomFieldsTest extends TestCase
     public function it_can_edit_a_page_with_a_custom_field()
     {
         $response = $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
-                'custom_fields' => [
-                    'custom' => 'foobar'
-                ],
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
+                'custom' => 'foobar'
             ]));
 
         $this->assertEquals('foobar', $this->page->fresh()->custom);
@@ -57,10 +58,8 @@ class CustomFieldsTest extends TestCase
         $category3 = Category::create(['title' => 'derde category']);
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $this->page->id), $this->validUpdatePageParams([
-                'custom_fields' => [
-                    'categories' => [$category1->id, $category3->id]
-                ],
+            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
+                'categories' => [$category1->id, $category3->id]
             ]));
 
         $this->assertCount(2, $this->page->categories);

@@ -2,24 +2,24 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\Relations\Relation;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Pages\Application\ArchivePage;
+use Thinktomorrow\Chief\Pages\Application\CreatePage;
+use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
+use Thinktomorrow\Chief\Pages\Application\UpdatePage;
+use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
-use Thinktomorrow\Chief\Common\Relations\Relation;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
-use Thinktomorrow\Chief\Pages\Application\UpdatePage;
-use Thinktomorrow\Chief\Pages\Application\ArchivePage;
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\App\Http\Requests\PageCreateRequest;
-use Thinktomorrow\Chief\App\Http\Requests\PageUpdateRequest;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Common\FlatReferences\FlatReferenceCollection;
 
 class PagesController extends Controller
 {
@@ -32,13 +32,11 @@ class PagesController extends Controller
         return view('chief::back.pages.index', [
             'page'              => $model,
             'collectionDetails' => $model->collectionDetails(),
-            'published'         => $this->lengthAwarePaginator($model->published()->get(), 10, 'published'),
-            'drafts'            => $this->lengthAwarePaginator($model->drafted()->get(), 10, 'drafted'),
-            'archived'          => $this->lengthAwarePaginator($model->archived()->get(), 10, 'archived'),
+            'published'         => $model->published()->paginate(10),
+            'drafts'            => $model->drafted()->paginate(10),
+            'archived'          => $model->archived()->paginate(10),
         ]);
     }
-
-    
 
     public function create($collection)
     {
@@ -124,7 +122,7 @@ class PagesController extends Controller
      */
     private function guessSectionType($section)
     {
-        if ($section instanceof ActsAsCollection && in_array($section->collectionKey(), ['text','pagetitle'])) {
+        if ($section instanceof MorphableContract && in_array($section->collectionKey(), ['text','pagetitle'])) {
             return $section->collectionKey();
         }
 
@@ -197,26 +195,22 @@ class PagesController extends Controller
 
     public function publish(Request $request, $id)
     {
-        $this->togglePublish($request, $id);
+        $page = Page::findOrFail($id);
+        $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
+
+        ($published) ? $page->publish() : $page->draft();
 
         return redirect()->back();
     }
 
     public function unpublish(Request $request, $id)
     {
-        $this->togglePublish($request, $id);
-
-        return redirect()->back();
-    }
-
-    private function togglePublish(Request $request, $id)
-    {
         $page = Page::findOrFail($id);
         $published = true === !$request->checkboxStatus; // string comp. since bool is passed as string
 
         ($published) ? $page->publish() : $page->draft();
 
-        return $page;
+        return redirect()->back();
     }
 
     /**

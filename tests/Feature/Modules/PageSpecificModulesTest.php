@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
@@ -13,21 +14,11 @@ class PageSpecificModulesTest extends TestCase
 {
     use ChiefDatabaseTransactions;
 
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'newsletter' => NewsletterModuleFake::class,
-            'singles'    => Single::class,
-        ]);
-    }
-
     /** @test */
     public function it_can_assign_a_module_to_a_page()
     {
-        $page = Page::create(['collection' => 'singles', 'slug' => 'foobar', 'title:nl' => 'foobar']);
-        $module = Module::create(['slug' => 'foobar', 'collection' => 'newsletter', 'page_id' => $page->id]);
+        $page = Page::create(['morph_key' => 'singles', 'slug' => 'foobar', 'title:nl' => 'foobar']);
+        $module = Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar', 'page_id' => $page->id]);
 
         $this->assertEquals($page->id, $module->page->id);
         $this->assertTrue($module->isPageSpecific());

@@ -20,8 +20,7 @@
 
 @section('content')
 
-    <div v-cloak class="v-loader inset-xl text-center">loading...</div>
-    <div v-cloak>
+    <div>
 
         <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
         @include('chief::back.pages._partials.delete-modal')

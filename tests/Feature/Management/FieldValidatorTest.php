@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModel;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerWithValidationFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldValidatorTest extends TestCase
@@ -17,21 +17,21 @@ class FieldValidatorTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModel::migrateUp();
-        ManagedModelTranslation::migrateUp();
+        ManagedModelFake::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerWithValidationFake::class);
+        app(Register::class)->register('fakes', ManagerFakeWithValidation::class, ManagedModelFake::class);
 
-        $this->model = ManagedModel::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = app(ManagerWithValidationFake::class)->manage($this->model);
+        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->fake = (new ManagerFakeWithValidation(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
     }
 
     /** @test */
     public function a_required_field_can_be_validated()
     {
-        $this->assertValidation(new ManagedModel(), 'title', $this->payload(['title' => '']),
+        $this->assertValidation(new ManagedModelFake(), 'title', $this->payload(['title' => '']),
             $this->fake->route('edit'),
             $this->fake->route('update'),
             1, 'put'
@@ -41,11 +41,24 @@ class FieldValidatorTest extends TestCase
     /** @test */
     public function a_required_translatable_field_can_be_validated()
     {
-        $this->assertValidation(new ManagedModel(), 'trans.nl.title_trans', $this->payload(['trans.nl.title_trans' => '']),
+        config()->set('app.fallback_locale', 'nl');
+
+        $this->assertValidation(new ManagedModelFake(), 'trans.nl.title_trans', $this->payload(['trans.nl.title_trans' => '']),
             $this->fake->route('edit'),
             $this->fake->route('update'),
             1, 'put'
         );
+    }
+
+    /** @test */
+    public function a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
+    {
+        config()->set('app.fallback_locale', 'nl');
+
+        $response = $this->actingAs($this->developer(), 'chief')
+            ->put($this->fake->route('update'), $this->payload(['trans.en.title_trans' => '']));
+
+        $response->assertSessionHasNoErrors();
     }
 
     protected function payload($overrides = [])

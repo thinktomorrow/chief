@@ -3,33 +3,34 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\Collections\ActingAsCollection;
-use Thinktomorrow\Chief\Common\Collections\CollectionKeys;
-use Thinktomorrow\Chief\Common\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\PresentForParent;
-use Thinktomorrow\Chief\Common\Relations\PresentingForParent;
-use Thinktomorrow\Chief\Common\Translatable\Translatable;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
-use Dimsav\Translatable\Translatable as BaseTranslatable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
-use Thinktomorrow\Chief\Common\Fields\HtmlField;
-use Thinktomorrow\Chief\Common\Fields\InputField;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\Chief\Management\Managers;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\Chief\Relations\PresentForParent;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Relations\PresentingForParent;
+use Dimsav\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, ActsAsCollection, PresentForParent
+class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, MorphableContract, PresentForParent
 {
     use PresentingForParent {
         presentForParent as presentRawValueForParent;
     }
 
-    use ActingAsCollection,
+    use Morphable,
         AssetTrait,
         Translatable,
         BaseTranslatable,
@@ -52,17 +53,18 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public function __construct(array $attributes = [])
     {
-        // TODO: this should come from the manager->fields() as fieldgroup
-        $translatableColumns = [];
-        foreach (static::translatableFields() as $translatableField) {
-            $translatableColumns[] = $translatableField->column();
-        }
-
-        $this->translatedAttributes = array_merge($this->translatedAttributes, $translatableColumns);
-
         $this->constructWithSnippets();
 
         parent::__construct($attributes);
+    }
+
+    /**
+     * Enlist all available managed modules.
+     * @return Collection of ManagedModelDetails
+     */
+    public static function available(): Collection
+    {
+        return app(Managers::class)->findDetailsByTag('module');
     }
 
     public function page()
@@ -99,7 +101,7 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     /**
      * Each page / Module model can expose some custom fields. Add here the list of fields defined as name => Field where Field
-     * is an instance of \Thinktomorrow\Chief\Common\Fields\Field
+     * is an instance of \Thinktomorrow\Chief\Fields\Types\Field
      *
      * @param null $key
      * @return array
@@ -154,19 +156,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         ];
     }
 
-    /**
-     * We exclude the generic textModule out of the available collections.
-     * @return Collection
-     */
-    public static function availableCollections(): Collection
-    {
-        return CollectionKeys::fromConfig()
-            ->filterByType(static::collectionType())
-            ->rejectByClass(TextModule::class)
-            ->rejectByClass(PagetitleModule::class)
-            ->toCollectionDetails();
-    }
-
     public function mediaUrls($type = null, $size = 'full'): Collection
     {
         return $this->getAllFiles($type)->map->getFileUrl($size);
@@ -195,6 +184,16 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         return static::where('slug', $slug)->first();
     }
 
+    public function viewkey(): string
+    {
+        return $this->morphKey();
+    }
+
+    public function flatReference(): FlatReference
+    {
+        return new FlatReference(static::class, $this->id);
+    }
+
     public function flatReferenceLabel(): string
     {
         return $this->slug ?? '';
@@ -202,6 +201,9 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
 
     public function flatReferenceGroup(): string
     {
-        return $this->collectionDetails()->singular;
+        $classKey = get_class($this);
+        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+
+        return $labelSingular;
     }
 }

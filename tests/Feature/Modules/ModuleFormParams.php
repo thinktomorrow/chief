@@ -3,12 +3,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
+
 trait ModuleFormParams
 {
     protected function validModuleParams($overrides = [])
     {
         $params = [
-            'collection' => 'newsletter',
+            'morph_key' => NewsletterModuleFake::class,
             'slug' => 'new-slug',
         ];
 
@@ -22,14 +24,14 @@ trait ModuleFormParams
     protected function validUpdateModuleParams($overrides = [])
     {
         $params = [
-            'collection' => 'newsletter',
+            'morph_key' => NewsletterModuleFake::class,
             'slug' => 'updated-slug',
             'trans' => [
                 'nl' => [
-                    'title' => 'aangepaste title',
+                    'content' => 'aangepaste content',
                 ],
                 'en' => [
-                    'title' => 'updated title',
+                    'content' => 'updated content',
                 ],
             ],
         ];
@@ -43,7 +45,7 @@ trait ModuleFormParams
 
     protected function assertNewModuleValues($module)
     {
-        $this->assertEquals('newsletter', $module->collection);
+        $this->assertEquals(NewsletterModuleFake::class, $module->morph_key);
         $this->assertEquals('new-slug', $module->slug);
     }
 
@@ -51,7 +53,7 @@ trait ModuleFormParams
     {
         $this->assertEquals('updated-slug', $module->slug);
 
-        $this->assertEquals('aangepaste title', $module->{'title:nl'});
-        $this->assertEquals('updated title', $module->{'title:en'});
+        $this->assertEquals('aangepaste content', $module->{'content:nl'});
+        $this->assertEquals('updated content', $module->{'content:en'});
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Modules;
 
-use Thinktomorrow\Chief\Common\Fields\HtmlField;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
 
 class PagetitleModule extends Module
 {

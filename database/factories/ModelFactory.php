@@ -18,14 +18,12 @@ $factory->define(User::class, function (Faker\Generator $faker) {
 
 $factory->define(Page::class, function (Faker\Generator $faker) {
     return [
-        'collection' => 'singles',
+        'morph_key' => 'singles',
         'published'   => 1,
         'featured'    => $faker->boolean(),
         'publication' => null,
         'title:nl'    => $faker->words(rand(2, 4), true),
-        'title:en'    => $faker->words(rand(2, 4), true),
         'slug:nl'     => $faker->unique()->slug,
-        'slug:en'     => $faker->unique()->slug,
     ];
 });
 

@@ -5,8 +5,8 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Fields\HtmlField;
-use Thinktomorrow\Chief\Common\Traits\HasPeriod\HasPeriodTrait;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Concerns\HasPeriod\HasPeriodTrait;
 
 class AgendaPageFake extends Page
 {

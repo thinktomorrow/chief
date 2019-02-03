@@ -16,9 +16,8 @@
 
     <!-- hide vue elements until vue is loaded -->
     <style type="text/css">
-        .v-loader{display:none !important;}
-        [v-cloak].v-loader{display:block !important;}
-
+        .v-loading{display:none !important;}
+        [v-cloak].v-loading{display:block !important;}
         [v-cloak]{ display:none; }
     </style>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">

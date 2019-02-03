@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModel;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -16,20 +16,19 @@ class CreateManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModel::migrateUp();
-        ManagedModelTranslation::migrateUp();
+        ManagedModelFake::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class);
+        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
-        $this->fake = app(ManagerFake::class);
+        $this->fake = new ManagerFake(app(Register::class)->first());
     }
 
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->get($this->fake->route('create'))
             ->assertStatus(200);
     }

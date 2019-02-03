@@ -3,77 +3,30 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Fields\Field;
-use Thinktomorrow\Chief\Common\Fields\InputField;
-use Thinktomorrow\Chief\Common\Fields\MediaField;
-use Thinktomorrow\Chief\Management\ManagedModelDetails;
-use Thinktomorrow\Chief\Management\ManagementDefaults;
-use Thinktomorrow\Chief\Management\ModelManager;
-use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Fields\Types\DocumentField;
+use Thinktomorrow\Chief\Fields\Types\Field;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Management\AbstractManager;
+use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Management\Manager;
 
-class ManagerFake implements ModelManager
+class ManagerFake extends AbstractManager implements Manager
 {
-    use ManagementDefaults{
-        __construct as __baseConstruct;
-    }
-
-    public function __construct(Register $register)
+    public function fields(): Fields
     {
-        $this->model = new ManagedModel();
-
-        $this->__baseConstruct($register);
-    }
-
-    public function manage(ManagedModel $model): ModelManager
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    public static function findById($id): ?ModelManager
-    {
-        return app(static::class)->manage(ManagedModel::where('id', $id)->first());
-    }
-
-    public static function findAllManaged(): Collection
-    {
-        $models = ManagedModel::all();
-
-        return $models->map(function ($model) {
-            return app(static::class)->manage($model);
-        });
-    }
-
-    public function fields(): array
-    {
-        return [
+        return new Fields([
             InputField::make('title'),
             InputField::make('custom'),
-            InputField::make('title_trans')->translatable(true),
-            InputField::make('content_trans')->translatable(true),
+            InputField::make('title_trans')->translatable(['nl', 'fr']),
+            InputField::make('content_trans')->translatable(['nl', 'fr']),
             MediaField::make('avatar'),
-        ];
+            DocumentField::make('doc'),
+        ]);
     }
 
     public function setCustomField(Field $field, Request $request)
     {
         $this->model->custom_column = $request->get($field->key());
-    }
-
-    /**
-     * Information regarding a specific managed model instance.
-     *
-     * @return ManagedModelDetails
-     */
-    public function managedModelDetails(): ManagedModelDetails
-    {
-        return new ManagedModelDetails($this->model->id, $this->model->title ?? '', '', '', ['nl','en']);
-    }
-
-    public function delete()
-    {
-        $this->model->delete();
     }
 }
