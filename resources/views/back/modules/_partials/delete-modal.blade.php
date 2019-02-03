@@ -6,7 +6,7 @@
             <h2 class="formgroup-label" slot="modal-header">Ok. Tijd om op te ruimen. <br>Ben je zeker?</h2>
             <p>Type 'DELETE' om dit item te verwijderen.</p>
             <div class="input-group">
-                <input name="deleteconfirmation" placeholder="" type="text" class="input inset-s" autocomplete="off">
+                <input data-delete-confirmation name="deleteconfirmation" placeholder="" type="text" class="input inset-s" autocomplete="off">
             </div>
         </div>
     </form>

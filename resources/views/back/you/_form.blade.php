@@ -1,12 +1,17 @@
-
-@chiefformgroup(['field' => ['firstname', 'lastname']])
-    @slot('label', 'Naam')
+@chiefformgroup(['field' => 'firstname'])
+    @slot('label', 'Voornaam')
     <div class="row gutter">
-        <div class="column-5">
+        <div class="column-12">
             <label for="firstName">Voornaam</label>
             <input id="firstName" class="input inset-s" type="text" name="firstname" value="{{ old('firstname',$user->firstname) }}">
         </div>
-        <div class="column-7">
+    </div>
+@endchiefformgroup
+
+@chiefformgroup(['field' => 'lastname'])
+    @slot('label', 'Achternaam')
+    <div class="row gutter">
+        <div class="column-12">
             <label for="lastName">Achternaam</label>
             <input id="lastName" class="input inset-s" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
         </div>
