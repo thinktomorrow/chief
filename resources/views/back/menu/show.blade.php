@@ -11,7 +11,7 @@
         @endslot
     @endif
     <div class="inline-group-s">
-        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
+        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary row center-y">
             <i class="icon icon-plus"></i>
             Voeg een menu-item toe
         </a>

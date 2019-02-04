@@ -1,5 +1,5 @@
-<div class="column-6">
-    <div class="row bg-white inset-s panel panel-default">
+<div class="s-column-6 m-column-4 l-column-3 inset-xs">
+    <div class="row bg-white inset-s panel panel-default" style="height:100%">
         <div class="column">
             @if($manager->can('edit'))
                 <a class="text-black bold" href="{{ $manager->route('edit') }}">
@@ -26,3 +26,4 @@
         </div>
     </div>
 </div>
+

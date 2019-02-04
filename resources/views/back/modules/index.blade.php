@@ -5,7 +5,7 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Vaste modules')
         <div class="inline-group-s">
-            <a @click="showModal('create-module')" class="btn btn-primary">
+            <a @click="showModal('create-module')" class="btn btn-primary row center-y">
                 <i class="icon icon-plus"></i>
                 Voeg een module toe
             </a>
@@ -42,7 +42,6 @@
                             @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
                         @endforeach
                     </div>
-
                 </div>
 
             @endforeach
