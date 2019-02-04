@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -21,11 +20,6 @@ class MenuTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'singles'  => Single::class,
-            'articles' => ArticlePageFake::class,
-        ]);
 
         // We expect to have frontend routes for the pages and articles
         Route::get('statics/{slug}', function () {
@@ -70,7 +64,7 @@ class MenuTest extends TestCase
     public function it_can_be_a_custom_link()
     {
         $page   = factory(Page::class, 3)->create([
-            'collection'    => 'articles',
+            'morph_key'    => ArticlePageFake::class,
             'published'     => 1
         ]);
 
@@ -96,7 +90,7 @@ class MenuTest extends TestCase
     public function it_can_reference_a_collection_of_pages()
     {
         factory(Page::class, 3)->create([
-            'collection'    => 'articles',
+            'morph_key'    => ArticlePageFake::class,
             'published'     => 1
         ]);
 
@@ -104,7 +98,7 @@ class MenuTest extends TestCase
         $this->assertCount(3, ArticlePageFake::all());
 
         // Create main collection menu item - this will hold the collection as children
-        $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
+        $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => ArticlePageFake::class, 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
 
         // Retrieve the menu
         $main = ChiefMenu::fromMenuItems()->items()->first();
@@ -128,19 +122,19 @@ class MenuTest extends TestCase
     public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
-            'collection' => 'singles',
+            'morph_key' => 'singles',
             'slug'      => 'foobar',
             'published' => 1
         ]);
 
         factory(Page::class, 3)->create([
-            'collection'    => 'articles',
+            'morph_key'    => ArticlePageFake::class,
             'published'     => 1
         ]);
 
         MenuItem::create(['type' => 'internal', 'label:nl' => 'first item', 'page_id' => $page->id]);
         MenuItem::create(['type' => 'custom', 'label:nl' => 'second item', 'url:nl' => 'https://google.com']);
-        MenuItem::create(['type' => 'collection', 'collection_type' => 'articles', 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com/article-index']);
+        MenuItem::create(['type' => 'collection', 'collection_type' => ArticlePageFake::class, 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com/article-index']);
 
         $collection = ChiefMenu::fromMenuItems()->items();
 
@@ -236,6 +230,7 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_show_create_menu()
     {
+        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         factory(Page::class)->create([

@@ -2,15 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Snippets;
 
-use Thinktomorrow\Chief\Modules\Application\CreateModule;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Snippets\SnippetCollection;
-use Thinktomorrow\Chief\Snippets\SnippetParser;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\Feature\Modules\ModuleFormParams;
-use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Modules\ModuleManager;
+use Thinktomorrow\Chief\Snippets\SnippetParser;
+use Thinktomorrow\Chief\Snippets\SnippetCollection;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageManager;
+use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
+use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Feature\Modules\ModuleFormParams;
 
 class SnippetParserTest extends TestCase
 {
@@ -25,6 +27,10 @@ class SnippetParserTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
+        /** @var Register */
+        app(Register::class)->register('articles', ArticlePageManager::class, ArticlePageFake::class);
+        app(Register::class)->register('newsletters', ModuleManager::class, NewsletterModuleFake::class);
+
         // Default not enable snippet loading
         $this->app['config']->set('thinktomorrow.chief.withSnippets', false);
 
@@ -34,11 +40,8 @@ class SnippetParserTest extends TestCase
 
         SnippetCollection::refresh();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'articles' => ArticlePageFake::class,
-            'text' => TextModule::class,
-            'newsletter' => NewsletterModuleFake::class,
-        ]);
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
@@ -70,6 +73,7 @@ class SnippetParserTest extends TestCase
     /** @test */
     public function it_can_render_a_snippet_when_found_in_pagebuilder_section()
     {
+        $this->disableExceptionHandling();
         $page = $this->addSnippetToPageSection();
 
         $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->withSnippets()->renderChildren());
@@ -79,7 +83,8 @@ class SnippetParserTest extends TestCase
     /** @test */
     public function it_can_render_a_snippet_when_found_in_module_content()
     {
-        $page = ArticlePageFake::create(['collection' => 'articles']);
+        $this->disableExceptionHandling();
+        $page = ArticlePageFake::create();
         $module = $this->addSnippetToModule();
 
         $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->withSnippets()->presentForParent($page));
@@ -100,10 +105,10 @@ class SnippetParserTest extends TestCase
 
     private function addSnippetToPageContent()
     {
-        $page = ArticlePageFake::create(['collection' => 'articles']);
+        $page = ArticlePageFake::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles', $page->id]), $this->validUpdatePageParams([
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',
@@ -112,16 +117,16 @@ class SnippetParserTest extends TestCase
                     ],
                 ],
             ]));
-
+        
         return $page;
     }
 
     private function addSnippetToPageSection()
     {
-        $page = ArticlePageFake::create(['collection' => 'articles']);
+        $page = ArticlePageFake::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.update', $page->id), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles', $page->id]), $this->validUpdatePageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -139,10 +144,10 @@ class SnippetParserTest extends TestCase
 
     private function addSnippetToModule()
     {
-        $module = app(CreateModule::class)->handle('newsletter', 'new-slug');
+        $module = NewsletterModuleFake::create(['slug' => 'new-slug']);
 
         $this->asAdmin()
-            ->put(route('chief.back.modules.update', $module->id), $this->validUpdateModuleParams([
+            ->put(route('chief.back.managers.update', ['newsletters', $module->id]), $this->validUpdateModuleParams([
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',

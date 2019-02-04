@@ -1,0 +1,72 @@
+<?php
+
+namespace Thinktomorrow\Chief\Fields;
+
+class FieldArrangement
+{
+    /** @var Fields */
+    private $fields;
+
+    /** @var array */
+    private $tabs;
+
+    public function __construct(Fields $fields, array $tabs = [])
+    {
+        $this->fields = $fields;
+
+        $this->validateTabs($tabs);
+        $this->tabs = $tabs;
+
+        $this->fillTabsWithTheirFields();
+    }
+
+    public function fields(): array
+    {
+        return $this->fields->all();
+    }
+
+    public function tabs(): array
+    {
+        return $this->tabs;
+    }
+
+    public function hasTabs(): bool
+    {
+        return count($this->tabs) > 0;
+    }
+
+    private function validateTabs(array $tabs)
+    {
+        array_map(function (FieldsTab $tab) {
+        }, $tabs);
+    }
+
+    private function fillTabsWithTheirFields()
+    {
+        // Clone the fields
+        $remainingFields = new Fields($this->fields->all());
+        $remainingFieldsTabIndex = null;
+
+        foreach ($this->tabs as $index => $tab) {
+
+            // Take note of a wildcard tab
+            if ($tab instanceof RemainingFieldsTab) {
+                $remainingFieldsTabIndex = $index;
+                continue;
+            };
+
+            // Slim down the remaining fields array so in the end we know which fields are actually missing/
+            foreach ($remainingFields as $k => $remainingField) {
+                if ($tab->contains($remainingField)) {
+                    unset($remainingFields[$k]);
+                }
+            }
+
+            $tab->fill($this->fields);
+        }
+
+        if ($remainingFieldsTabIndex) {
+            $this->tabs[$remainingFieldsTabIndex] = $this->tabs[$remainingFieldsTabIndex]->withRemaining($remainingFields->keys())->fill($this->fields);
+        }
+    }
+}

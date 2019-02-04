@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Fields\InputField;
+use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class Setting extends Model
 {

@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
-use Thinktomorrow\Chief\Common\Collections\GlobalCollectionScope;
-use Thinktomorrow\Chief\Common\Contracts\SluggableContract;
+use Thinktomorrow\Chief\Concerns\Morphable\GlobalMorphableScope;
+use Thinktomorrow\Chief\Concerns\Sluggable\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
 
 class PageTranslation extends Model implements SluggableContract
@@ -19,7 +19,7 @@ class PageTranslation extends Model implements SluggableContract
 
     public function pageWithoutCollectionScope()
     {
-        return $this->page()->withoutGlobalScope(GlobalCollectionScope::class);
+        return $this->page()->withoutGlobalScope(GlobalMorphableScope::class);
     }
 
     public static function findBySlug($slug)

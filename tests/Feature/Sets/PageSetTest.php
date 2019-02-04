@@ -15,10 +15,6 @@ class PageSetTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'agenda' => AgendaPageFake::class,
-        ]);
-
         $this->app['config']->set('thinktomorrow.chief.sets', [
             'foobar'   => [
                 'action' => DummySetRepository::class.'@all',
@@ -58,7 +54,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function a_stored_reference_must_refer_to_existing_reference()
     {
-        $this->expectException(\TypeError::class);
+        $this->expectException(\Exception::class);
 
         $stored_set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5]))->store();
         $stored_set_ref->toSet();
@@ -67,7 +63,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function it_can_run_a_set_query()
     {
-        AgendaPageFake::create(['collection' => 'agenda']);
+        AgendaPageFake::create();
 
         $stored_set_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5]))->store();
         $set = $stored_set_ref->toSet();
@@ -80,7 +76,7 @@ class PageSetTest extends TestCase
     /** @test */
     public function it_can_run_a_stored_set_reference()
     {
-        AgendaPageFake::create(['collection' => 'agenda']);
+        AgendaPageFake::create();
 
         $set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5]));
         $set = $set_ref->toSet();
@@ -111,9 +107,9 @@ class PageSetTest extends TestCase
     /** @test */
     public function it_can_use_parameters()
     {
-        AgendaPageFake::create(['collection' => 'agenda']);
-        AgendaPageFake::create(['collection' => 'agenda']);
-        AgendaPageFake::create(['collection' => 'agenda']);
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+        AgendaPageFake::create();
 
         $set_ref = SetReference::find('foobar');
 

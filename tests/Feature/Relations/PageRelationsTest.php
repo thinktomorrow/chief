@@ -3,20 +3,12 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageRelationsTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->setUpDatabase();
-    }
-
     /** @test */
     public function a_page_can_have_a_relation_with_another_page()
     {
@@ -37,11 +29,17 @@ class PageRelationsTest extends TestCase
     /** @test */
     public function a_page_can_have_a_relation_with_a_module()
     {
+        // TODO: ActingAsCollection should not be necessary for building up a children presentation...
+        $this->app['config']->set('thinktomorrow.chief.collections', [
+            'fakes' => ParentFake::class,
+            'singles' => Single::class,
+        ]);
+
         ParentFake::migrate();
         ChildFake::migrate();
 
-        $page = Page::create();
-        $parent = ParentFake::create();
+        $page = Single::create(['morph_key' => 'singles']);
+        $parent = Single::create(['morph_key' => 'singles']);
         $child = ChildFake::create();
 
         $page->adoptChild($child);
@@ -49,7 +47,7 @@ class PageRelationsTest extends TestCase
 
         $this->assertCount(1, $page->children());
         $this->assertEquals($parent->id, $page->parents()->first()->id);
-        $this->assertInstanceOf(ParentFake::class, $page->parents()->first());
+        $this->assertInstanceOf(Single::class, $page->parents()->first());
 
         $this->assertCount(1, $page->parents());
         $this->assertInstanceOf(ChildFake::class, $page->children()->first());

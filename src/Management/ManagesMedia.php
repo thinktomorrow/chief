@@ -2,16 +2,27 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Thinktomorrow\Chief\Common\Fields\FieldType;
+use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Fields\Fields;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\Fields\Types\FieldType;
 
 trait ManagesMedia
 {
+    public function uploadMedia(Fields $fields, Request $request)
+    {
+        $files = array_merge($request->get('files', []), $request->file('files', []));
+        $filesOrder = $request->get('filesOrder', []);
+
+        app(UploadMedia::class)->fromUploadComponent($this->model, $files, $filesOrder);
+    }
+
     protected function populateMedia(HasMedia $model): array
     {
         // Get all types for media
         $images = [];
-        foreach ($this->fields() as $field) {
+        foreach ($this->fields()->all() as $field) {
             if ($field->ofType(FieldType::MEDIA)) {
                 $images[$field->key] = [];
             }
@@ -34,7 +45,7 @@ trait ManagesMedia
     {
         $documents = [];
 
-        foreach ($this->fields() as $field) {
+        foreach ($this->fields()->all() as $field) {
             if ($field->ofType(FieldType::DOCUMENT)) {
                 $documents[$field->key] = [];
             }

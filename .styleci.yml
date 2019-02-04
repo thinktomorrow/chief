@@ -1,1 +1,8 @@
 preset: psr2
+
+risky: false
+
+finder:
+  exclude:
+    - "tests"
+    - "src/Common/vendors"

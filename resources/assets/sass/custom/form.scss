@@ -5,8 +5,6 @@
         margin-bottom:0;
     }
 
-    @extend .stack-l;
-
     h2{
         font-size:1em;
         text-transform: uppercase;
@@ -64,4 +62,37 @@
     line-height: 1;
     border-radius: 4px;
     cursor: pointer;
+}
+
+// Field addons (prepend or appending fixed content in input field)
+.input-addon {
+
+    display: flex;
+
+    .input{
+        flex: 1;
+
+        &:not(:first-child) {
+            border-left: 0;
+        }
+        &:not(:last-child) {
+            border-right: 0;
+        }
+    }
+
+    .addon{
+        background-color: #f4f6f5;
+        border: 1px solid #dadada;
+        color: #666666;
+        font: inherit;
+        font-weight: normal;
+    }
+
+    .input:first-child, .addon:first-child{
+        border-radius: 5px 0 0 5px;
+    }
+
+    .input:last-child, .addon:last-child{
+        border-radius: 0 5px 5px 0;
+    }
 }

@@ -14,17 +14,13 @@ class DetachedPageTest extends TestCase
     {
         parent::setUp();
 
-        $this->app['config']->set('thinktomorrow.chief.collections', [
-            'detached_pages' => DetachedPageFake::class,
-        ]);
-
         DetachedPageFake::migrateUp();
     }
 
     /** @test */
     public function a_detached_page_can_be_retrieved_via_generic_page_model()
     {
-        $created = Page::create(['collection' => 'detached_pages']);
+        $created = Page::create(['morph_key' => DetachedPageFake::class]);
         $page = Page::find($created->id);
 
         $this->assertInstanceOf(DetachedPageFake::class, $page);
@@ -34,9 +30,8 @@ class DetachedPageTest extends TestCase
     public function it_can_retrieve_custom_translation()
     {
         $page = Page::create([
-            'collection'  => 'detached_pages',
+            'morph_key'  => DetachedPageFake::class,
             'question:nl' => 'nl vraag',
-            'title:nl'    => 'nl title',
             'slug:nl'     => 'nl slug',
         ]);
 
@@ -46,10 +41,8 @@ class DetachedPageTest extends TestCase
     /** @test */
     public function it_can_retrieve_translation_from_custom_table()
     {
-        Page::create([
-            'collection'  => 'detached_pages',
+        DetachedPageFake::create([
             'question:nl' => 'nl vraag',
-            'title:nl'    => 'nl title',
             'slug:nl'     => 'nl slug',
         ]);
 

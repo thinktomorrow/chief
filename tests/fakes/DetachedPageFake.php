@@ -7,10 +7,12 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use \Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Common\Fields\InputField;
+use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class DetachedPageFake extends Page
 {
+    public $translatedAttributes = ['question','title','slug'];
+
     protected $translationModel = DetachedPageFakeTranslation::class;
 
     public static function migrateUp()
@@ -24,25 +26,9 @@ class DetachedPageFake extends Page
             $table->increments('id');
             $table->integer('page_id')->unsigned();
             $table->string('locale');
-            $table->string('slug')->unique();
-            $table->string('title');
-            $table->string('seo_title')->nullable();
-            $table->text('seo_description')->nullable();
-
             $table->string('question');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
-    }
-
-    public static function customTranslatableFields(): array
-    {
-        return [
-            'question' => InputField::make('question'),
-        ];
-    }
-
-    public static function defaultTranslatableFields(): array
-    {
-        return [];
     }
 }

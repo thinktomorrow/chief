@@ -6,9 +6,8 @@ namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Common\Collections\ActsAsCollection;
-use Thinktomorrow\Chief\Common\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Common\Relations\PresentForParent;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Relations\PresentForParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 
 class Set extends Collection implements PresentForParent
@@ -16,15 +15,20 @@ class Set extends Collection implements PresentForParent
     use WithSnippets;
 
     /** @var string */
-    private $key;
+    private $viewKey;
 
-    public function __construct($items = [], string $key)
+    public function __construct($items = [], string $viewKey)
     {
-        $this->key = $key;
+        $this->viewKey = $viewKey;
 
         $this->constructWithSnippets();
 
         parent::__construct($items);
+    }
+
+    public function viewKey(): string
+    {
+        return $this->viewKey;
     }
 
     public static function fromReference(SetReference $setReference): Set
@@ -53,15 +57,15 @@ class Set extends Collection implements PresentForParent
     private function presentRawValueForParent(ActsAsParent $parent): string
     {
         $viewPaths = [
-            'front.modules.'. $parent->collectionKey().'.'.$this->key,
-            'front.modules.'.$this->key,
+            'front.modules.'. $parent->viewKey().'.'.$this->viewKey(),
+            'front.modules.'.$this->viewKey(),
         ];
 
-        // In case the collection is made out of pages, we'll also allow to use the
-        // generic collection page view for these sets as well.
-        if ($this->first() instanceof ActsAsCollection) {
-            $viewPaths[] = 'front.modules.'. $parent->collectionKey().'.'.$this->first()->collectionKey();
-            $viewPaths[] = 'front.modules.'. $this->first()->collectionKey();
+        // In case the collection set is made out of pages, we'll also allow to use the
+        // generic collection page view for these sets as well as a fallback view
+        if ($this->first() instanceof PresentForParent) {
+            $viewPaths[] = 'front.modules.'. $parent->viewKey().'.'.$this->first()->viewKey();
+            $viewPaths[] = 'front.modules.'. $this->first()->viewKey();
         }
 
         foreach ($viewPaths as $viewPath) {
@@ -78,17 +82,29 @@ class Set extends Collection implements PresentForParent
             ])->render();
         }
 
-        // If no view has been created for this page collection, we try once again to fetch the content value if the page element should have a presenter method available.
-        // This will silently fail if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
-        $output = [];
+        // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
+        // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
+        return $this->map(function ($item) use ($parent) {
+            return ($item instanceof PresentForParent)
+                ? $item->presentForParent($parent)
+                : ($item->content ?? '');
+        })->implode('');
+    }
 
-        foreach($this->items as $item){
-            if(method_exists($item, 'presentForParent')){
-                $output[] = $item->presentForParent($parent);
-            }
-        }
 
-        return implode('', $output);
+    /**
+     * Override the collection map function to include the key
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function map(callable $callback)
+    {
+        $keys = array_keys($this->items);
+
+        $items = array_map($callback, $this->items, $keys);
+
+        return new static(array_combine($keys, $items), $this->viewKey);
     }
 
     /**

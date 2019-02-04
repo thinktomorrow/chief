@@ -28,7 +28,7 @@
                     {{ $event->description }}
                 </div>
                 <div class="column-3 center-y">
-                    {{ ucfirst($event->getTitle()) }}
+                    {{ $event->subject_type }}
                 </div>
                 <div class="column-3 center-y">
                     @if($event->causer)

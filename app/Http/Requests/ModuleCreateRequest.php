@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class ModuleCreateRequest extends FormRequest
 {
@@ -27,16 +27,16 @@ class ModuleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'collection' => 'required',
-            'slug' => 'required|unique:modules,slug',
+            'module_key' => 'required',
+            'slug'      => 'required|unique:modules,slug',
         ];
     }
 
     public function attributes()
     {
         return [
-            'collection' => 'type',
-            'slug' => 'interne link',
+            'module_key' => 'type',
+            'slug'      => 'interne link',
         ];
     }
 }

@@ -1,0 +1,50 @@
+paths:
+- ./src
+exclude_files:
+- .*test.*
+layers:
+- name: Common
+  collectors:
+  - type: className
+    regex: .*\\Common\\.*
+- name: Media
+  collectors:
+  - type: className
+    regex: .*\\Chief\\Media\\.*
+- name: Fields
+  collectors:
+  - type: className
+    regex: .*\\Fields\\.*
+- name: FlatReferences
+  collectors:
+  - type: className
+    regex: .*\\FlatReferences\\.*
+- name: Relations
+  collectors:
+  - type: className
+    regex: .*\\Chief\\Relations\\.*
+- name: Snippets
+  collectors:
+  - type: className
+    regex: .*\\Snippets\\.*
+- name: Authorization
+  collectors:
+  - type: className
+    regex: .*\\Authorization\\.*
+#- name: Users
+#  collectors:
+#  - type: className
+#    regex: .*\\Users\\.*
+- name: Management
+  collectors:
+  - type: className
+    regex: .*\\Management\\.*
+ruleset:
+  Management:
+  - Common
+  - FlatReferences
+  - Relations
+  - Fields
+  Relations:
+  - FlatReferences
+  Common:

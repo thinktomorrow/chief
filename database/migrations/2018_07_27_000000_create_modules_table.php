@@ -17,7 +17,7 @@ class CreateModulesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('page_id')->nullable();
             $table->string('collection', 32)->index();
-            $table->string('slug')->unique(); // Internal system identifier
+            $table->string('slug');
             $table->timestamps();
             $table->softDeletes();
 

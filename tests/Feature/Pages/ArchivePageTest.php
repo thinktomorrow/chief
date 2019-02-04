@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -23,7 +22,7 @@ class ArchivePageTest extends TestCase
     public function it_can_archive_a_page()
     {
         $this->asAdmin()
-            ->put(route('chief.back.pages.archive', $this->page->id));
+            ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
         // Archived page is not included in default retrieval
         $this->assertCount(0, Page::all());
@@ -31,12 +30,12 @@ class ArchivePageTest extends TestCase
     }
 
     /** @test */
-    public function a_published_page_is_archived()
+    public function a_published_page_can_be_archived()
     {
         $this->page->publish();
 
         $this->asAdmin()
-            ->put(route('chief.back.pages.archive', $this->page->id));
+            ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withArchived()->get());

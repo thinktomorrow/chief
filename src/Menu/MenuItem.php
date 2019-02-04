@@ -5,9 +5,10 @@ namespace Thinktomorrow\Chief\Menu;
 
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Common\Collections\GlobalCollectionScope;
-use Thinktomorrow\Chief\Common\Translatable\Translatable;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Concerns\Morphable\GlobalMorphableScope;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
+use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Pages\Page;
 use Vine\Source as VineSource;
 use Vine\Node;
@@ -45,7 +46,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id')
-            ->withoutGlobalScope(GlobalCollectionScope::class);
+            ->withoutGlobalScope(GlobalMorphableScope::class);
     }
 
     public function parent()
@@ -107,7 +108,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->collection_type) {
-                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
+                $pages = Morphables::instance($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;
@@ -150,7 +151,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
             // Fetch the collection items
             if ($item->collection_type) {
-                $pages = Page::fromCollectionKey($item->collection_type)->getAllPublished();
+                $pages = Morphables::instance($item->collection_type)->getAllPublished();
 
                 $pages->reject(function ($page) {
                     return $page->hidden_in_menu == true;

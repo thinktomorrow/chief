@@ -2,9 +2,9 @@
 namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Common\Relations\Relation;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Common\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class DeleteModule
 {

@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModel;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
@@ -19,15 +19,15 @@ class EditManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModel::migrateUp();
-        ManagedModelTranslation::migrateUp();
+        ManagedModelFake::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class);
+        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 
-        $this->model = ManagedModel::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->manager = app(ManagerFake::class)->manage($this->model);
+        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->manager = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
     }
 
     /** @test */

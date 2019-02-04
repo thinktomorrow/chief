@@ -3,47 +3,32 @@
 namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Management\FieldValidator;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Fields\FieldValidator;
+use Thinktomorrow\Chief\Management\Manager;
 
 class UpdateManager
 {
-    // If there is a save<key>Field this has priority over the set<Key>Field methods
-    private $saveMethods = [];
+    use StoringAndUpdatingFields;
 
-    public function handle(ModelManager $manager, Request $request)
+    public function handle(Manager $manager, Request $request)
     {
-        app(FieldValidator::class)->validate($manager, $request);
+        $manager->guard('update');
 
-        foreach ($manager->fields() as $field) {
+        $request = $manager->updateRequest($request);
 
-            // Custom save methods
-            $saveMethodName = 'save'. ucfirst(camel_case($field->key())) . 'Field';
-            if (method_exists($manager, $saveMethodName)) {
-                $this->saveMethods[$field->key] = ['field' => $field, 'method' => $saveMethodName];
-                continue;
-            }
+        app(FieldValidator::class)->validate($manager->fields(), $request);
 
-            // Custom set methods - default is the generic setField() method.
-            $methodName = 'set'. ucfirst(camel_case($field->key())) . 'Field';
-            (method_exists($manager, $methodName))
-                ? $manager->$methodName($field, $request)
-                : $manager->setField($field, $request);
+        if (method_exists($manager, 'beforeUpdate')) {
+            $manager->beforeUpdate($request);
         }
 
-        // Save the model
-        $manager->saveFields();
+        $this->handleFields($manager, $request);
 
-        // Handle off any custom save methods
+        // Handle any custom save methods
         $this->handleCustomSaves($manager, $request);
-    }
 
-    private function handleCustomSaves($manager, $request)
-    {
-        foreach ($this->saveMethods as $data) {
-            $method = $data['method'];
-
-            $manager->$method($data['field'], $request);
+        if (method_exists($manager, 'afterUpdate')) {
+            $manager->afterUpdate($request);
         }
     }
 }
