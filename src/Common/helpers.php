@@ -3,8 +3,8 @@
 /**
  * Retrieve the logged in admin
  */
-if (!function_exists('admin')) {
-    function admin()
+if (!function_exists('chiefAdmin')) {
+    function chiefAdmin()
     {
         return \Illuminate\Support\Facades\Auth::guard('chief')->user();
     }
@@ -12,11 +12,12 @@ if (!function_exists('admin')) {
 
 /**
  * Form fields for honeypot protection on form submissions
+ * return HtmlString which does not force you to use blade escaping tags.
  */
 if (!function_exists('honeypot_fields')) {
     function honeypot_fields()
     {
-        return '<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>';
+        return new \Illuminate\Support\HtmlString('<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>');
     }
 }
 
@@ -100,6 +101,13 @@ if (! function_exists('contract')) {
     function contract($instance, $contract)
     {
         return $instance instanceof $contract;
+    }
+}
+
+if (! function_exists('isManagerThatPublishes')) {
+    function isManagerThatPublishes($class)
+    {
+        return contract($class, \Thinktomorrow\Chief\Management\ManagerThatPublishes::class);
     }
 }
 
@@ -196,50 +204,53 @@ if (!function_exists('cleanupHTML')) {
  * @param array $parameters
  * @return bool
  */
-function isActiveUrl($name, $parameters = [])
-{
-    if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
-        $flag = true;
-        $current = \Illuminate\Support\Facades\Route::current();
+if (!function_exists('isActiveUrl')) {
+    function isActiveUrl($name, $parameters = [])
+    {
+        if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
+            $flag = true;
+            $current = \Illuminate\Support\Facades\Route::current();
 
-        /**
-         * If a single parameter is passed as string, we will convert this to
-         * the proper array keyed by the first uri parameter
-         */
-        if (!is_array($parameters)) {
-            $names = $current->parameterNames();
-            $parameters = [reset($names) => $parameters];
-        }
-
-        foreach ($parameters as $key => $parameter) {
-            if ($current->parameter($key, false) != $parameter) {
-                $flag = false;
+            /**
+             * If a single parameter is passed as string, we will convert this to
+             * the proper array keyed by the first uri parameter
+             */
+            if (!is_array($parameters)) {
+                $names = $current->parameterNames();
+                $parameters = [reset($names) => $parameters];
             }
+
+            foreach ($parameters as $key => $parameter) {
+                if ($current->parameter($key, false) != $parameter) {
+                    $flag = false;
+                }
+            }
+
+            return $flag;
         }
 
-        return $flag;
+        $name = ltrim($name, '/');
+
+        if (false !== strpos($name, '*')) {
+            $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
+
+            return !!preg_match("#$pattern#", request()->path());
+        }
+
+        return ($name == request()->path());
     }
-
-    $name = ltrim($name, '/');
-
-    if (false !== strpos($name, '*')) {
-        $pattern = str_replace('\*', '(.*)', preg_quote($name, '#'));
-        return !!preg_match("#$pattern#", request()->path());
-    }
-
-    return ($name == request()->path());
 }
 
+/**
+ * Inject a query parameter into an url
+ * If the query key already exists, it will be overwritten with the new value
+ *
+ * @param $url
+ * @param array $query_params
+ * @param array $overrides
+ * @return string
+ */
 if (!function_exists('addQueryToUrl')) {
-    /**
-     * Inject a query parameter into an url
-     * If the query key already exists, it will be overwritten with the new value
-     *
-     * @param $url
-     * @param array $query_params
-     * @param array $overrides
-     * @return string
-     */
     function addQueryToUrl($url, array $query_params = [], $overrides = [])
     {
         $parsed_url = parse_url($url);
@@ -276,5 +287,18 @@ if (!function_exists('addQueryToUrl')) {
         $query = urldecode(http_build_query(array_merge($current_query, $query_params)));
 
         return $baseurl . '?' . $query . $fragment;
+    }
+}
+
+if (!function_exists('ddd')) {
+    function ddd($var, ...$moreVars)
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        if (php_sapi_name() == 'cli') {
+            print_r("\e[1;30m dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "\e[40m\n");
+        } else {
+            print_r("[dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "]\n");
+        }
+        return dd($var, ...$moreVars);
     }
 }

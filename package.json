@@ -12,33 +12,33 @@
     "watch-test": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require=tests/Vue/setup.js tests/Vue/**/*.spec.js"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.12",
-    "browser-sync": "^2.18.13",
+    "@vue/test-utils": "^1.0.0-beta.28",
+    "browser-sync": "^2.26.3",
     "browser-sync-webpack-plugin": "^1.2.0",
-    "expect": "^23.0.0-alpha.0",
-    "jsdom": "^11.6.2",
+    "expect": "^23.6.0",
+    "jsdom": "^11.12.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
     "module": "^1.2.5",
-    "vue-server-renderer": "^2.5.16",
-    "vue-template-compiler": "^2.5.16"
+    "vue-server-renderer": "^2.5.22",
+    "vue-template-compiler": "^2.5.22"
   },
   "dependencies": {
     "axios": "^0.18",
     "cross-env": "^5.1",
-    "es6-promise": "^4.1.1",
-    "laravel-mix": "^2.0",
-    "lodash": "^4.17.4",
+    "es6-promise": "^4.2.5",
+    "laravel-mix": "^2.1.14",
+    "lodash": "^4.17.11",
     "npmlog": "^4.1.2",
-    "popper.js": "^1.14.3",
-    "sortablejs": "^1.7.0",
-    "stickyfilljs": "^2.0.3",
-    "tippy.js": "^2.1.1",
-    "vue": "^2.5.16",
+    "popper.js": "^1.14.6",
+    "sortablejs": "^1.8.1",
+    "stickyfilljs": "^2.1.0",
+    "tippy.js": "^2.6.0",
+    "vue": "^2.5.22",
     "vue-loader": "^14.2.2",
     "vue-multiselect": "^2.0.3",
     "vuedraggable": "^2.16.0",
-    "warpaint": "https://github.com/thinktomorrow/warpaint.git#0.1"
+    "warpaint": "git+https://github.com/thinktomorrow/warpaint.git"
   }
 }

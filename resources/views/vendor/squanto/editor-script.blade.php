@@ -2,7 +2,7 @@
 <script>
     $R.options = {
         plugins: ['alignment', 'rich-links'],
-        @if(admin()->hasRole('developer'))
+        @if(chiefAdmin()->hasRole('developer'))
         buttons: ['html', 'format', 'bold', 'italic', 'lists', 'link'],
         @else
         buttons: ['format', 'bold', 'italic', 'lists', 'link'],

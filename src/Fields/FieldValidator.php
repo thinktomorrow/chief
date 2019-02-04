@@ -44,7 +44,7 @@ class FieldValidator
 
     private function performValidation(array $data, array $rules, array $messages = [], array $customAttributes = [])
     {
-        $this->validator->make($data, $rules, $messages, $customAttributes)
-                        ->validate();
+        return $this->validator->make($data, $rules, $messages, $customAttributes)
+                               ->validate();
     }
 }

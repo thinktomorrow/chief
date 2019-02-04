@@ -2,13 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\Fakes\OtherModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdateModuleTest extends TestCase
@@ -50,6 +47,7 @@ class UpdateModuleTest extends TestCase
     /** @test */
     public function it_can_edit_a_module()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['newsletter', $this->module->id]), $this->validUpdateModuleParams());
 

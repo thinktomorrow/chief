@@ -29,7 +29,7 @@ class NavItem
 
     public function details($key = null, $default = null)
     {
-        if($key){
+        if ($key) {
             return $this->details[$key] ?? $default;
         }
 

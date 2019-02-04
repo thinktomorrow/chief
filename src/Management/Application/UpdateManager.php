@@ -4,13 +4,13 @@ namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\FieldValidator;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 
 class UpdateManager
 {
     use StoringAndUpdatingFields;
 
-    public function handle(ModelManager $manager, Request $request)
+    public function handle(Manager $manager, Request $request)
     {
         $manager->guard('update');
 

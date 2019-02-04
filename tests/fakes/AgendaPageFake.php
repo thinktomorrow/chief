@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Concerns\HasPeriod\HasPeriodTrait;

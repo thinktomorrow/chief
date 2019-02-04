@@ -17,7 +17,6 @@ class ModulesController extends Controller
         $modules = Module::withoutPageSpecific()->orderBy('morph_key')->get()->groupBy('morph_key');
 
         return view('chief::back.modules.index', [
-            'modelManager' => '',
             'modules' => $modules,
         ]);
     }
@@ -38,6 +37,6 @@ class ModulesController extends Controller
         $manager->manage($module);
 
         return redirect()->to($manager->route('edit'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->modelDetails()->title . '" is toegevoegd');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is toegevoegd');
     }
 }

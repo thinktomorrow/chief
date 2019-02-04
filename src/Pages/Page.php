@@ -3,28 +3,27 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
-use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
-use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Relations\ActingAsParent;
-use Thinktomorrow\Chief\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
-use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
-use Thinktomorrow\Chief\Concerns\Featurable;
-use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
-use Thinktomorrow\Chief\Audit\AuditTrait;
-use Thinktomorrow\Chief\Management\Field;
-use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Audit\AuditTrait;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\Chief\Concerns\Featurable;
+use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\Chief\Relations\ActingAsParent;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
+use Dimsav\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract
 {
@@ -51,9 +50,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         'slug', 'title', 'content', 'short', 'seo_title', 'seo_description'
     ];
 
-    public $table       = "pages";
+    public $table          = "pages";
     protected $guarded     = [];
-    protected $dates       = ['deleted_at'];
+    protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
     protected $pagebuilder = true;
 

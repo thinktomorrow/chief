@@ -28,10 +28,10 @@ trait ModuleFormParams
             'slug' => 'updated-slug',
             'trans' => [
                 'nl' => [
-                    'title' => 'aangepaste title',
+                    'content' => 'aangepaste content',
                 ],
                 'en' => [
-                    'title' => 'updated title',
+                    'content' => 'updated content',
                 ],
             ],
         ];
@@ -53,7 +53,7 @@ trait ModuleFormParams
     {
         $this->assertEquals('updated-slug', $module->slug);
 
-        $this->assertEquals('aangepaste title', $module->{'title:nl'});
-        $this->assertEquals('updated title', $module->{'title:en'});
+        $this->assertEquals('aangepaste content', $module->{'content:nl'});
+        $this->assertEquals('updated content', $module->{'content:en'});
     }
 }

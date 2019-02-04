@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\Users;
 
-use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
-use Thinktomorrow\Chief\Concerns\Enablable;
-use Thinktomorrow\Chief\Users\Invites\Invitation;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\Chief\Concerns\Enablable;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 
 class User extends Authenticatable implements HasMedia
 {

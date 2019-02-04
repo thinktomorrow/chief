@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\PresentForParent;
@@ -60,8 +61,8 @@ class Set extends Collection implements PresentForParent
             'front.modules.'.$this->viewKey(),
         ];
 
-        // In case the collection is made out of pages, we'll also allow to use the
-        // generic collection page view for these sets as well.
+        // In case the collection set is made out of pages, we'll also allow to use the
+        // generic collection page view for these sets as well as a fallback view
         if ($this->first() instanceof PresentForParent) {
             $viewPaths[] = 'front.modules.'. $parent->viewKey().'.'.$this->first()->viewKey();
             $viewPaths[] = 'front.modules.'. $this->first()->viewKey();
@@ -90,6 +91,7 @@ class Set extends Collection implements PresentForParent
         })->implode('');
     }
 
+
     /**
      * Override the collection map function to include the key
      *
@@ -103,5 +105,38 @@ class Set extends Collection implements PresentForParent
         $items = array_map($callback, $this->items, $keys);
 
         return new static(array_combine($keys, $items), $this->viewKey);
+    }
+
+    /**
+     * Paginate the collection with a simple navigation (prev and next)
+     *
+     * @param int $perPage
+     * @param null $currentPage
+     * @return Paginator
+     */
+    public function simplePaginate($perPage = 12, $currentPage = null): Paginator
+    {
+        $currentPage = $currentPage ?? request()->get('page', 1);
+        $path = request()->path();
+        $items = array_slice($this->all(), ($currentPage - 1) * $perPage);
+
+        return (new \Illuminate\Pagination\Paginator($items, $perPage, $currentPage))->setPath($path);
+    }
+
+    /**
+     * Paginate the collection with a length aware pagination result which allows
+     * to navigate to the first, last or any specific page
+     *
+     * @param int $perPage
+     * @param null $currentPage
+     * @return Paginator
+     */
+    public function paginate($perPage = 12, $currentPage = null): Paginator
+    {
+        $currentPage = $currentPage ?? request()->get('page', 1);
+        $path = request()->path();
+        $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
+
+        return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->count(), $perPage, $currentPage))->setPath($path);
     }
 }

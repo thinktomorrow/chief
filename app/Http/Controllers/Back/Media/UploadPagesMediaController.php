@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Media;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 use Thinktomorrow\Chief\Media\MediaType;

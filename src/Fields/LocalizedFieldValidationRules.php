@@ -23,8 +23,8 @@ class LocalizedFieldValidationRules
         foreach ($rules as $attr => $rule) {
             foreach ($this->locales as $locale) {
 
-                // If it contains an asterisk, w'll replace that, else by default prepend the name with the
-                // expected trans.<locale>. string
+                // If it contains an asterisk, we'll replace that, else by default
+                // prepend the name with the expected trans.<locale>. string
                 $localizedAttr = (false !== strpos($attr, '*'))
                     ? str_replace('*', $locale, $attr)
                     : 'trans.' . $locale . '.' . $attr;
@@ -40,7 +40,7 @@ class LocalizedFieldValidationRules
 
     /**
      * Request payload can influence the validation rules. If an entire locale input
-     * is empty, this locale should be completely ignored unless its the default
+     * is empty, this locale should be completely ignored unless it's the default
      *
      * @param array $data
      * @return LocalizedFieldValidationRules

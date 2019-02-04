@@ -9,6 +9,13 @@ trait Archivable
         static::addGlobalScope(new ArchiveScope());
     }
 
+    public function __construct(array $attributes = [])
+    {
+        $this->dates = array_merge($this->dates, ['archived_at']);
+
+        parent::__construct($attributes);
+    }
+
     public function isArchived()
     {
         return !is_null($this->{$this->getArchivedAtColumn()});

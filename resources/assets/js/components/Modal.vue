@@ -50,6 +50,7 @@ export default {
         },
         close: function(){
             this.isVisible = false;
+            if(this.$el.querySelector('[data-delete-confirmation]')) this.$el.querySelector('[data-delete-confirmation]').value = "";
         },
 
     },
@@ -73,7 +74,7 @@ export default {
         }
 
     },
-    mounted: function () {
+    mounted() {
 
         // Emit the 'open-modal' event in case the modal is set to open on pageload
         if(this.active === true) Eventbus.$emit('open-modal',this.id);

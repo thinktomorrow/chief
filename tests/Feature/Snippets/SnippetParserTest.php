@@ -2,18 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Snippets;
 
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Modules\Application\CreateModule;
-use Thinktomorrow\Chief\Modules\ModuleManager;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Snippets\SnippetCollection;
-use Thinktomorrow\Chief\Snippets\SnippetParser;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\Feature\Modules\ModuleFormParams;
-use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Modules\ModuleManager;
+use Thinktomorrow\Chief\Snippets\SnippetParser;
+use Thinktomorrow\Chief\Snippets\SnippetCollection;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageManager;
+use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
+use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Feature\Modules\ModuleFormParams;
 
 class SnippetParserTest extends TestCase
 {
@@ -29,7 +28,7 @@ class SnippetParserTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         /** @var Register */
-        app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
+        app(Register::class)->register('articles', ArticlePageManager::class, ArticlePageFake::class);
         app(Register::class)->register('newsletters', ModuleManager::class, NewsletterModuleFake::class);
 
         // Default not enable snippet loading
@@ -40,6 +39,9 @@ class SnippetParserTest extends TestCase
         ]);
 
         SnippetCollection::refresh();
+
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
@@ -71,6 +73,7 @@ class SnippetParserTest extends TestCase
     /** @test */
     public function it_can_render_a_snippet_when_found_in_pagebuilder_section()
     {
+        $this->disableExceptionHandling();
         $page = $this->addSnippetToPageSection();
 
         $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->withSnippets()->renderChildren());
@@ -114,7 +117,7 @@ class SnippetParserTest extends TestCase
                     ],
                 ],
             ]));
-
+        
         return $page;
     }
 

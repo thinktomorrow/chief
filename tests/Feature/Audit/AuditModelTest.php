@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
 use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -32,6 +33,7 @@ class AuditTest extends TestCase
     /** @test */
     public function it_logs_create_events_on_pages()
     {
+        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
@@ -97,7 +99,7 @@ class AuditTest extends TestCase
         $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->put(route('chief.back.pages.archive', $page->id));
+             ->post(route('chief.back.assistants.archive', ['singles', $page->id]));
 
         $activity = Audit::getAllActivityFor($page);
 

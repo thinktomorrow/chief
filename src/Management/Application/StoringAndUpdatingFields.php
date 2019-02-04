@@ -6,14 +6,14 @@ namespace Thinktomorrow\Chief\Management\Application;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Management\ModelManager;
+use Thinktomorrow\Chief\Management\Manager;
 
 trait StoringAndUpdatingFields
 {
     // If there is a save<key>Field this has priority over the set<Key>Field methods
     protected $saveMethods = [];
 
-    protected function handleFields(ModelManager $manager, Request $request)
+    protected function handleFields(Manager $manager, Request $request)
     {
         foreach ($manager->fields() as $field) {
 

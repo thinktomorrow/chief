@@ -46,12 +46,14 @@ class Register
      */
     public function filter(callable $callback): self
     {
-        if( ! is_callable($callback)) return new static($this->registrations);
+        if (! is_callable($callback)) {
+            return new static($this->registrations);
+        }
 
         $registrations = $this->registrations;
 
         foreach ($registrations as $k => $registration) {
-            if(!! call_user_func($callback, $registration)) {
+            if (!! call_user_func($callback, $registration)) {
                 unset($registrations[$k]);
             }
         }
@@ -74,12 +76,11 @@ class Register
         return $this->filterBy('modelClass', $class);
     }
 
-    public function filterByTag(string $tag): self
+    public function filterByTag($tag): self
     {
-        try{
-            return $this->filterBy('tags', $tag);
-        }
-        catch(NonRegisteredManager $e){
+        try {
+            return $this->filterBy('tags', (array) $tag);
+        } catch (NonRegisteredManager $e) {
             return new static();
         }
     }
@@ -128,14 +129,14 @@ class Register
      * manager was not registered properly
      *
      * @param string $key
-     * @param $value
+     * @param mixed $value
      * @param $registrations
      * @throws NonRegisteredManager
      */
     private function registrationMustExistConstraint(string $key, $value, $registrations): void
     {
         if (empty($registrations) && count($registrations) != $this->registrations) {
-            throw new NonRegisteredManager('No manager found for ' . $key . ' [' . $value . ']. Did you perhaps forgot to register the manager?');
+            throw new NonRegisteredManager('No manager found for ' . $key . ' [' . print_r($value, true) . ']. Did you perhaps forgot to register the manager?');
         }
     }
 }

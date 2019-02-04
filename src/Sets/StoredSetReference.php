@@ -35,9 +35,15 @@ class StoredSetReference extends Model implements ActsAsChild
 
     public function toReference(): SetReference
     {
-        return SetReference::all()->first(function ($setReference) {
+        $reference = SetReference::all()->first(function ($setReference) {
             return $setReference->key() == $this->key;
         });
+
+        if (!$reference) {
+            throw new \Exception('No query set found by key ['. $this->key. ']. Make sure that this '.$this->key.' set is added to the chief.sets config array.');
+        }
+
+        return $reference;
     }
 
     public function viewkey(): string

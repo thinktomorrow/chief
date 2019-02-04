@@ -24,8 +24,8 @@
 
         @if(!$drafts->isEmpty() || !$published->isEmpty() || !$archived->isEmpty())
         <tabs v-cloak>
-            @if( ! $drafts->isEmpty())
-                <tab name="Drafts ({{$drafts->count()}})" id="drafts">
+            @if( $drafts->total() > 0)
+                <tab name="Drafts ({{ $drafts->total() }})" id="drafts">
                         @foreach($drafts as $page)
                             @include('chief::back.pages._partials._rowitem')
                             @include('chief::back.pages._partials.delete-modal')
@@ -36,8 +36,8 @@
                 </tab>
             @endif
 
-            @if( ! $published->isEmpty())
-                <tab name="Published ({{ $published->count() }})" id="published">
+            @if( $published->total() > 0)
+                <tab name="Published ({{ $published->total() }})" id="published">
                     @foreach($published as $page)
                         @include('chief::back.pages._partials._rowitem')
                         @include('chief::back.pages._partials.delete-modal')
@@ -47,8 +47,9 @@
                     </div>
                 </tab>
             @endif
-            @if( ! $archived->isEmpty())
-                <tab name="Archief ({{ $archived->count() }})" id="archived">
+
+            @if( $archived->total() > 0)
+                <tab name="Archief ({{ $archived->total() }})" id="archived">
                     @foreach($archived as $page)
                         @include('chief::back.pages._partials._rowitem')
                         @include('chief::back.pages._partials.delete-modal')

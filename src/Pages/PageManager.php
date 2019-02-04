@@ -4,36 +4,41 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Authorization\ChiefGateFactory;
-use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldTab;
-use Thinktomorrow\Chief\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
+use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Details\ManagedModelDetails;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
-use Thinktomorrow\Chief\Management\ManagerThatPreviews;
-use Thinktomorrow\Chief\Management\ManagerThatPublishes;
+use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\ManagesPreviews;
 use Thinktomorrow\Chief\Management\ManagesPublishing;
-use Thinktomorrow\Chief\Management\ModelManager;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Media\MediaType;
-use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
+use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
+use Thinktomorrow\Chief\Pages\Application\ArchivePage;
+use Thinktomorrow\Chief\Management\ManagerThatPreviews;
+use Thinktomorrow\Chief\Management\ManagerThatPublishes;
+use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 
-class PageManager extends AbstractManager implements ModelManager, ManagerThatPublishes, ManagerThatPreviews
+class PageManager extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatPreviews
 {
     use ManagesPublishing,
         ManagesPreviews;
 
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
+
+    /** @var PageBuilderField */
+    private $pageBuilderField;
+
+    protected $assistants = [
+        'archive' => ArchiveAssistant::class,
+    ];
 
     public function __construct(Registration $registration)
     {
@@ -80,43 +85,69 @@ class PageManager extends AbstractManager implements ModelManager, ManagerThatPu
     public function fields(): Fields
     {
         return new Fields([
-            $this->createPagebuilderField(),
+            $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
                                      ->validation('required-fallback-locale|max:200')
                                      ->label('Pagina titel')
                                      ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
-            InputField::make('slug')->translatable($this->model->availableLocales())
+            InputField::make('slug')
+                ->translatable($this->model->availableLocales())
                 ->validation($this->model->id
-                    ? 'unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'unique:page_translations,slug'
-                ),
-            TextField::make('short')->translatable($this->model->availableLocales()),
-            HtmlField::make('content')->translatable($this->model->availableLocales()),
-            InputField::make('seo_title')->translatable($this->model->availableLocales()),
-            TextField::make('seo_description')->translatable($this->model->availableLocales()),
-            MediaField::make(MediaType::HERO)->multiple(false),
-            MediaField::make(MediaType::THUMB)->multiple(false),
+                    ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
+                    : 'required-fallback-locale|unique:page_translations,slug'
+                )
+                ->label('Link')
+                ->description('De unieke url verwijzing naar deze pagina.')
+                ->prepend(url('/').'/'),
+            InputField::make('seo_title')
+                ->translatable($this->model->availableLocales())
+                ->label('Zoekmachine titel'),
+            TextField::make('seo_description')
+                ->translatable($this->model->availableLocales())
+                ->label('Zoekmachine omschrijving')
+                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
         ]);
     }
 
-    public function fieldArrangement(): FieldArrangement
+    private function pageBuilderField()
     {
+        if ($this->pageBuilderField) {
+            return $this->pageBuilderField;
+        }
+
+        return $this->pageBuilderField = $this->createPagebuilderField();
+    }
+
+    public function fieldArrangement($key = null): FieldArrangement
+    {
+        if ($key == 'create') {
+            return new FieldArrangement($this->fields()->filterBy(function ($field) {
+                return $field->key == 'title';
+            }));
+        }
+
         return new FieldArrangement($this->fields(), [
-            new FieldTab('pagina', ['sections']),
-            new FieldTab('inhoud', ['title', 'content', MediaType::HERO, MediaType::THUMB]),
-            new FieldTab('seo', ['seo_title', 'seo_content']),
+            new FieldsTab('pagina', ['sections']),
+            new RemainingFieldsTab('inhoud'),
+            new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
+            new FieldsTab('seo', ['seo_title', 'seo_description']),
         ]);
     }
 
-    public function modelDetails(): ManagedModelDetails
+    public function details(): Details
     {
-        return parent::modelDetails();
-        return parent::modelDetails()
-                        ->set('title', $this->model->title)
-                        ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
+        // For existing model
+        if ($this->model->id) {
+            return parent::details()
+                ->set('title', $this->model->title)
+                ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
+                ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
+        }
+
+        return parent::details();
     }
 
-    public function saveFields(): ModelManager
+    public function saveFields(): Manager
     {
         // Store the morph_key upon creation
         if (! $this->model->morph_key) {

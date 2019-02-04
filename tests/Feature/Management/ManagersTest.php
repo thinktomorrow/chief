@@ -2,13 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
+use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class ManagersTest extends TestCase
 {
@@ -49,6 +50,18 @@ class ManagersTest extends TestCase
         $this->assertInstanceOf(ManagerFakeWithValidation::class, $managers->findByKey('bar', 1));
 
         $this->assertEquals(1, $this->getProtectedModelProperty($managers->findByKey('bar', 1))->id);
+    }
+
+    /** @test */
+    public function it_throws_error_if_model_not_persisted_and_we_expect_it_to_be()
+    {
+        $this->disableExceptionHandling();
+        $this->expectException(NonExistingRecord::class);
+
+        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
+        $this->fake = new ManagerFake(app(Register::class)->first());
+
+        $response = $this->fake->route('update');
     }
 
     private function getProtectedModelProperty($instance)

@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\Validator;
-use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\Seed;
@@ -37,12 +36,10 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
 
-        // Media library
-        (new MediaLibraryServiceProvider($this->app))->boot();
-//        (new AssetLibraryServiceProvider($this->app))->boot();
+        (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
-        (new ProjectServiceProvider($this->app))->boot();
+        (new ChiefProjectServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__.'/../routes.php');
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
@@ -51,6 +48,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
             __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            // __DIR__.'/../../config/permission.php' => config_path('thinktomorrow/permission.php'),
         ], 'chief-config');
 
         $this->publishes([
@@ -101,7 +99,7 @@ class ChiefServiceProvider extends ServiceProvider
             }
 
             return true;
-        });
+        }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
     }
 
     public function register()
@@ -124,12 +122,10 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();
 
-        // Media library
-        (new MediaLibraryServiceProvider($this->app))->register();
         (new AssetLibraryServiceProvider($this->app))->register();
 
         // Project defaults
-        (new ProjectServiceProvider($this->app))->register();
+        (new ChiefProjectServiceProvider($this->app))->register();
     }
 
     /**

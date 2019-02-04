@@ -15,9 +15,7 @@
             <p>Don't try to follow trends. Create them</p>
         </div>
         <div class="gutter column-8 inset right">
-            @foreach(app(\Thinktomorrow\Chief\Management\Register::class)->all() as $registration)
-
-                <?php $manager = app(\Thinktomorrow\Chief\Management\Managers::class)->findByKey($registration->key()); ?>
+            @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page']) as $manager)
 
                 <div class="column-6">
                     <div class="panel panel-default --raised">
@@ -27,8 +25,8 @@
                             </div>
                             <div class="stack">
                                 <h1 class="--remove-margin">{{ $manager->findAllManaged()->count() }}</h1>
-                                <p>{{ $manager->managerDetails()->plural }}</p>
-                                <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->managerDetails()->plural }}</a>
+                                <p>{{ $manager->details()->plural }}</p>
+                                <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                             </div>
                         </div>
                     </div>
