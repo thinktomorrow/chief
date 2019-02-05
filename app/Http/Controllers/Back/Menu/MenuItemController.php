@@ -22,8 +22,12 @@ class MenuItemController extends Controller
 
         $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
 
-        // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
-        $collections = [];
+        $collections = collect(app(Managers::class)->findDetailsByTag('menu-collection')->all())->map(function($manager){
+            return [
+                'key'       => $manager->key, 
+                'plural'    => $manager->plural
+            ];
+        })->values();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
