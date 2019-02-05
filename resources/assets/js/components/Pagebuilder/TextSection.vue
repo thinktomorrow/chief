@@ -58,15 +58,12 @@
         },
         props: {
             'section': { type: Object },
+            'title': {},
             'locales': { default: function(){ return [] }, type: Array},
-
             // Allow redactor editor
             'editor': { default: true, type: Boolean },
-
             // Single line for edit or multiple lines
             'single': { default: false, type: Boolean },
-
-            'title': {}
         },
         data(){
             return {
@@ -103,7 +100,7 @@
 
                 // text sections worden alleen verwijderd wanneer ze leeg zijn 
                 this.removeInput();
-
+                // Eventbus.$emit('removeThisSection', position, this);
                 this.active = false;
             },
             mouseEnter(){

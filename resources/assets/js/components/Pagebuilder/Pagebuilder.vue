@@ -13,7 +13,7 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <draggable :value="sortedSections" 
+        <draggable :value="this.sections" 
         @end="changeSectionLocation" 
         @start="minimizeSections"
         :options="{
@@ -23,28 +23,9 @@
             ghostClass: 'ghost'
         }">
 
-            <template v-for="section in sortedSections">
+            <div v-for="section in sortedSections" v-bind:key="section.key">
 
-                <text-section v-if="section.type == 'text'"
-                    v-bind:key="section.key"
-                    v-bind:section="section"
-                    v-bind:locales="locales"
-                    :single="true"
-                    :editor="true"
-                    title="Pagina text"
-                    class="stack item" :class="section.type"></text-section>
-            
-                <text-section v-if="section.type == 'pagetitle'"
-                    v-bind:key="section.key"
-                    v-bind:section="section"
-                    v-bind:locales="locales"
-                    :single="true"
-                    :editor="false"
-                    title="Pagina titel"
-                    class="stack item" :class="section.type"></text-section>
-
-                <module-section v-if="section.type == 'module'"
-                    v-bind:key="section.key"
+                <module-section v-if="section.type === 'module'"
                     sectionKey="modules"
                     v-bind:section="section"
                     v-bind:options="modules"
@@ -52,8 +33,7 @@
                     title="module"
                     class="stack item" :class="section.type"></module-section>
 
-                <module-section v-if="section.type == 'page'"
-                    v-bind:key="section.key"
+                <module-section v-if="section.type === 'page'"
                     sectionKey="modules"
                     v-bind:section="section"
                     v-bind:options="pages"
@@ -61,8 +41,7 @@
                     title="pagina"
                     class="stack item" :class="section.type"></module-section>
 
-                <module-section v-if="section.type == 'pageset'"
-                    v-bind:key="section.key"
+                <module-section v-if="section.type === 'pageset'"
                     sectionKey="pagesets"
                     v-bind:section="section"
                     v-bind:options="pagesets"
@@ -70,7 +49,23 @@
                     title="pagina groep"
                     class="stack item" :class="section.type"></module-section>
 
-            </template>
+                <text-section v-if="section.type === 'text'"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    :single="true"
+                    :editor="true"
+                    title="Pagina text"
+                    class="stack item" :class="section.type"></text-section>
+
+                <text-section v-if="section.type === 'pagetitle'"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    :single="true"
+                    :editor="false"
+                    title="Pagina titel"
+                    class="stack item" :class="section.type"></text-section>
+
+            </div>
 
         </draggable>
         
@@ -154,10 +149,28 @@
                 this.sortSections();
             },
             changeSectionLocation(event) {
-                var temp = this.sections[event.oldIndex];
-                this.removeSection(event.oldIndex);
-                this._addNewSectionAfter(event.newIndex-1, temp);
+
+                var higherIndex,
+                    sectionId = this.sections[event.oldIndex].id;
+                
+                event.newIndex >= event.oldIndex ? higherIndex = true : higherIndex = false;
+
+                this.sections[event.oldIndex].sort = event.newIndex;
+
+                // Calculate indices of elements after oldindex
+                for(var i = 0; i < this.sections.length; i++) {
+                    if(i > event.oldIndex) this.sections[i].sort--;
+                    if(i === event.oldIndex && !higherIndex) this.sections[i].sort--;
+                }      
+
+                // Calculate indices of elements after newindex
+                for(var i = 0; i < this.sections.length; i++) {
+                    if(i > event.newIndex) this.sections[i].sort++;
+                    if(i === event.newIndex && !higherIndex) this.sections[i].sort++;
+                }        
+
                 this.maximizeSections();
+
             },
             minimizeSections() {
                 var allSections = this.$el.getElementsByTagName('section');
@@ -179,46 +192,39 @@
                     } 
                 } 
             },
-            addNewTextSectionAfter(section_sort){
-                this._addNewSectionAfter(section_sort, {
+            addNewTextSectionAfter(index){
+                this._addNewSectionAfter(index, {
                     type: 'text',
                     slug: this._randomHash(),
                     trans: []
                 });
             },
-            addModuleSectionAfter(section_sort){
-                this._addNewSectionAfter(section_sort, {
+            addModuleSectionAfter(index){
+                this._addNewSectionAfter(index, {
                     type: 'module',
                 });
             },
-            addPageSectionAfter(section_sort){
-                this._addNewSectionAfter(section_sort, {
+            addPageSectionAfter(index){
+                this._addNewSectionAfter(index, {
                     type: 'page',
                 });
             },
-            addPageSetSectionAfter(section_sort){
-                this._addNewSectionAfter(section_sort, {
+            addPageSetSectionAfter(index){
+                this._addNewSectionAfter(index, {
                     type: 'pageset',
                 });
             },
-            addNewPagetitleSectionAfter(section_sort){
-                this._addNewSectionAfter(section_sort, {
+            addNewPagetitleSectionAfter(index){
+                this._addNewSectionAfter(index, {
                     type: 'pagetitle',
                     slug: this._randomHash(),
                     trans: []
                 });
             },
-            _addNewSectionAfter(section_sort, data){
-
-                let index = section_sort + 1;
-                this._resortSectionsAfter(section_sort);
-
-                data.sort = index;
-                data.id = data.id || null,
-                data.key = data.key || this._randomHash(),
-
+            _addNewSectionAfter(index, data){
+                this._resortSectionsAfter(index);
+                data.sort = index + 1;
                 this.sections.push(data);
-                this.sortSections();
             },
             _randomHash(){
                 // http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
@@ -248,6 +254,7 @@
 </script>
 
 <style>
+
 .section-item{
     border-left:3px solid rgba(21, 200, 167, 1);
     background-color:rgba(21, 200, 167, 0.05);
@@ -257,6 +264,8 @@
     transition: 0.2s all ease;
     background-color: transparent;
     border-left: transparent;
+    height: 40px;
+    width: 100%;
 }
 
 .ghost > * {
