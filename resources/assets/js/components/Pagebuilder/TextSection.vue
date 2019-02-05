@@ -116,8 +116,10 @@
                 for(var i = 0; i < textAreas.length; i++) {
                     textAreas[i].innerHTML = "";
                     if(this.section.type === "text") {
-                        this.$el.getElementsByClassName('redactor-styles')[0].innerHTML = "";
-                    }  
+                        this.$el.getElementsByClassName('redactor-styles')[i].innerHTML = "";
+                        console.log(this.$el.getElementsByClassName('redactor-styles')[i].innerHTML);
+                    }
+                    console.log(textAreas[i]);
                 }
                 this.$el.style.display = "none";
             }
