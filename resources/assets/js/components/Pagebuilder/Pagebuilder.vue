@@ -13,7 +13,7 @@
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
-        <draggable :value="this.sections" 
+        <draggable :value="sortedSections" 
         @end="changeSectionLocation" 
         @start="minimizeSections"
         :options="{
@@ -150,23 +150,22 @@
             },
             changeSectionLocation(event) {
 
-                var higherIndex,
-                    sectionId = this.sections[event.oldIndex].id;
-                
-                event.newIndex >= event.oldIndex ? higherIndex = true : higherIndex = false;
+                var isHigherIndex = event.newIndex >= event.oldIndex,
+                    newIndex = event.newIndex,
+                    oldIndex = event.oldIndex;
 
-                this.sections[event.oldIndex].sort = event.newIndex;
+                this.sections[oldIndex].sort = newIndex;
 
                 // Calculate indices of elements after oldindex
                 for(var i = 0; i < this.sections.length; i++) {
-                    if(i > event.oldIndex) this.sections[i].sort--;
-                    if(i === event.oldIndex && !higherIndex) this.sections[i].sort--;
+                    if(i > oldIndex) this.sections[i].sort--;
+                    else if(i === oldIndex && !isHigherIndex) this.sections[i].sort--;
                 }      
 
                 // Calculate indices of elements after newindex
                 for(var i = 0; i < this.sections.length; i++) {
-                    if(i > event.newIndex) this.sections[i].sort++;
-                    if(i === event.newIndex && !higherIndex) this.sections[i].sort++;
+                    if(i > newIndex) this.sections[i].sort++;
+                    else if(i === newIndex && !isHigherIndex) this.sections[i].sort++;
                 }        
 
                 this.maximizeSections();
