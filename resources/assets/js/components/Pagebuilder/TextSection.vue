@@ -96,11 +96,8 @@
                 return content;
             },
             removeThisSection(position){
-                // Eventbus.$emit('removeThisSection', position, this);
-
                 // text sections worden alleen verwijderd wanneer ze leeg zijn 
                 this.removeInput();
-                // Eventbus.$emit('removeThisSection', position, this);
                 this.active = false;
             },
             mouseEnter(){
@@ -117,9 +114,7 @@
                     textAreas[i].innerHTML = "";
                     if(this.section.type === "text") {
                         this.$el.getElementsByClassName('redactor-styles')[i].innerHTML = "";
-                        console.log(this.$el.getElementsByClassName('redactor-styles')[i].innerHTML);
                     }
-                    console.log(textAreas[i]);
                 }
                 this.$el.style.display = "none";
             }
