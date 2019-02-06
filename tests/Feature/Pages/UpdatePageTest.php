@@ -85,8 +85,9 @@ class UpdatePageTest extends TestCase
         ]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']))
-            ->assertSessionHasNoErrors();
+            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']));
+
+        $this->assertNull(session('errors'));
 
         $this->assertEquals('slug-nl-1', $this->page->fresh()->slug);
     }
@@ -102,8 +103,9 @@ class UpdatePageTest extends TestCase
         $otherPage->archive();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']))
-            ->assertSessionHasNoErrors();
+            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']));
+
+        $this->assertNull(session('errors'));
 
         $this->assertEquals('slug-nl-1', $this->page->fresh()->slug);
     }

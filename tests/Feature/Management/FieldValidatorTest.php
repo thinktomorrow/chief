@@ -58,7 +58,7 @@ class FieldValidatorTest extends TestCase
         $response = $this->actingAs($this->developer(), 'chief')
             ->put($this->fake->route('update'), $this->payload(['trans.en.title_trans' => '']));
 
-        $response->assertSessionHasNoErrors();
+        $this->assertNull(session('errors'));
     }
 
     protected function payload($overrides = [])
