@@ -58,15 +58,12 @@
         },
         props: {
             'section': { type: Object },
+            'title': {},
             'locales': { default: function(){ return [] }, type: Array},
-
             // Allow redactor editor
             'editor': { default: true, type: Boolean },
-
             // Single line for edit or multiple lines
             'single': { default: false, type: Boolean },
-
-            'title': {}
         },
         data(){
             return {
@@ -99,11 +96,8 @@
                 return content;
             },
             removeThisSection(position){
-                // Eventbus.$emit('removeThisSection', position, this);
-
                 // text sections worden alleen verwijderd wanneer ze leeg zijn 
                 this.removeInput();
-
                 this.active = false;
             },
             mouseEnter(){
@@ -119,8 +113,8 @@
                 for(var i = 0; i < textAreas.length; i++) {
                     textAreas[i].innerHTML = "";
                     if(this.section.type === "text") {
-                        this.$el.getElementsByClassName('redactor-styles')[0].innerHTML = "";
-                    }  
+                        this.$el.getElementsByClassName('redactor-styles')[i].innerHTML = "";
+                    }
                 }
                 this.$el.style.display = "none";
             }
