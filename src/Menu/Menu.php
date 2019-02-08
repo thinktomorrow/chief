@@ -76,6 +76,17 @@ class Menu
             return file_get_contents($this->view_path);
         }
 
-        return '';
+        return $this->fallbackRender();
+    }
+
+    private function fallbackRender()
+    {
+        $menu = [];
+
+        $this->items()->each(function($item) use(&$menu){
+            $menu[] = sprintf('<li><a href="%s">%s</a></li>',$item->url, $item->label);
+        });
+
+        return '<ul>'.implode('', $menu).'</ul>';
     }
 }
