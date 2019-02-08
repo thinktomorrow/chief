@@ -3,10 +3,11 @@
 return [
 
     /**
-     * Homepage
+     * Homepage id
      *
-     * Here you should set which page is considered to be the homepage,
-     * aka the default page found at the url root.
+     * Here you can explicitly set the page that is considered to be the website homepage,
+     * This page is always retrieved via the root url and does not have an own url.
+     * If value is left empty, the first published page is used as a default.
      *
      * e.g. 'homepage' => 2,
      */

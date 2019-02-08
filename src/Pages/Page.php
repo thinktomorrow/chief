@@ -180,7 +180,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $viewPaths = [
             'front.'.$this->morphKey().'.show',
             'front.pages.'.$this->morphKey().'.show',
-            'front.pages.show'
+            'front.pages.show',
+            'pages.show',
         ];
 
         foreach ($viewPaths as $viewPath) {
@@ -193,7 +194,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             ]);
         }
 
-        throw new NotFoundView('Frontend view could not be determined for page. Make sure to at least provide a front.pages.show viewfile.');
+        throw new NotFoundView('Frontend view could not be determined for page. Make sure to at least provide a default view for pages. This can be either [pages.show] or [front.pages.show].');
     }
 
     /**
