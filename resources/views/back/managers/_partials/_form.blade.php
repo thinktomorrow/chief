@@ -3,7 +3,7 @@
         @foreach($fieldArrangement->tabs() as $tab)
             <tab name="{{ $tab->title() }}">
                 @if($tab->hasView())
-                    @include($tab->view())
+                    @include($tab->view(), ['tab' => $tab])
                 @else
                     @foreach($tab->fields() as $field)
                         {!! $manager->renderField($field) !!}
