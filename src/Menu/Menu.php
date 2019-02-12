@@ -83,8 +83,8 @@ class Menu
     {
         $menu = [];
 
-        $this->items()->each(function($item) use(&$menu){
-            $menu[] = sprintf('<li><a href="%s">%s</a></li>',$item->url, $item->label);
+        $this->items()->each(function ($item) use (&$menu) {
+            $menu[] = sprintf('<li><a href="%s">%s</a></li>', $item->url, $item->label);
         });
 
         return '<ul>'.implode('', $menu).'</ul>';
