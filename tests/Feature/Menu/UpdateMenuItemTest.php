@@ -87,7 +87,6 @@ class UpdateMenuItemTest extends TestCase
     /** @test */
     public function editing_a_custom_menuItem()
     {
-        $this->disableExceptionHandling();
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
         $response = $this->asAdminWithoutRole()
@@ -98,6 +97,30 @@ class UpdateMenuItemTest extends TestCase
 
         $this->assertCount(1, MenuItem::all());
         $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']);
+    }
+
+    /** @test */
+    public function a_custom_url_can_be_relative()
+    {
+        $menuitem = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
+
+        $this->asAdminWithoutRole()
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => '/contact']));
+
+        $this->assertCount(1, MenuItem::all());
+        $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => '/contact']);
+    }
+
+    /** @test */
+    public function a_relative_url_is_sanitized_to_proper_relative_url()
+    {
+        $menuitem = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
+
+        $this->asAdminWithoutRole()
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'contact/']));
+
+        $this->assertCount(1, MenuItem::all());
+        $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => '/contact']);
     }
 
     /** @test */

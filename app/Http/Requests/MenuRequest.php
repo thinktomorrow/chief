@@ -91,10 +91,26 @@ class MenuRequest extends FormRequest
                 continue;
             }
 
-            $data['trans'][$locale]['url'] = Root::fromString($trans['url'])->get();
+            // Check if it is a relative
+            if( $this->isRelativeUrl($trans['url']) ){
+                $data['trans'][$locale]['url'] = '/'. trim($trans['url'], '/');
+            } else {
+                $data['trans'][$locale]['url'] = Root::fromString($trans['url'])->get();
+            }
+
             $this->request->set('trans', $data['trans']);
         }
 
         return $data;
+    }
+
+    private function isRelativeUrl($url): bool
+    {
+        $nakedUrl = ltrim($url, '/');
+
+        // Check if passed url is not intended as a host instead of a relative path
+        $notIntentedAsRoot = (null == Root::fromString($url)->scheme() && false === strpos($url, '.'));
+
+        return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/'.$nakedUrl]));
     }
 }
