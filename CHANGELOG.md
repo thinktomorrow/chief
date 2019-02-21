@@ -3,6 +3,10 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 
+## 0.2.2 - 2019-02-21
+- Fix: force package version of spatie/image-optimizer to 1.1.4 since 1.1.5 requires php 7.2.
+- Change: modules view folder was only targetted at views/front/modules/ and is now also allowed under view/modules.
+
 ## 0.2.1 - 2019-02-14
 - Fix: pagebuilder removal bug where removing a multilingual text section would only remove the current visible translation.
 - Fix: pagebuilder sorting bug that occurred in a specific case where text placed on top could not be dragged.
