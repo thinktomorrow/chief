@@ -9,7 +9,12 @@ trait PresentingForParent
     {
         $guessedParentViewName = $parent->viewKey();
         $guessedViewName = $this->viewKey();
-        $viewPaths = ['front.modules.'.$guessedParentViewName.'.'.$guessedViewName, 'front.modules.'.$guessedViewName];
+        $viewPaths = [
+            'front.modules.'.$guessedParentViewName.'.'.$guessedViewName,
+            'front.modules.'.$guessedViewName,
+            'modules.'.$guessedParentViewName.'.'.$guessedViewName,
+            'modules.'.$guessedViewName,
+        ];
 
         foreach ($viewPaths as $viewPath) {
             if (! view()->exists($viewPath)) {
