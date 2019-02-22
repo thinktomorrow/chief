@@ -17,7 +17,7 @@
 
 @if(!$page->modules->isEmpty())
     <div class="row gutter-s">
-        @foreach($page->modules as $module)
+        @foreach($page->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
             @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
         @endforeach
     </div>
