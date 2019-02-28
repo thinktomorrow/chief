@@ -2,7 +2,9 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-class NotAllowedManagerRoute extends \Exception
+use Illuminate\Auth\Access\AuthorizationException;
+
+class NotAllowedManagerRoute extends AuthorizationException
 {
     public static function index(Manager $manager)
     {

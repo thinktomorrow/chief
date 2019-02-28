@@ -32,8 +32,6 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function entering_valid_login_credentials_for_disabled_user_wont_let_you_pass()
     {
-        $this->disableExceptionHandling();
-
         $admin = factory(User::class)->create([
             'email' => 'foo@example.com',
             'password' => bcrypt('foobar'),
@@ -90,7 +88,6 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_displays_admin_page_for_authenticated()
     {
-        $this->disableExceptionHandling();
         $admin = factory(User::class)->make();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
 
