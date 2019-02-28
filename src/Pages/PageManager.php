@@ -69,7 +69,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         }
 
         if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
-            throw NotAllowedManagerRoute::notAllowedPermission($permission);
+            throw NotAllowedManagerRoute::notAllowedPermission($permission, $this);
         }
     }
 

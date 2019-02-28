@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 ## unreleased
 - Add: view folder for sets was only targeted at views/front/modules/ and is now also allowed under view/modules.
 - Fix: Don't show menutitle when title is not set in given locale.
+- Fix: missing argument for permission exception in PageManager.
 
 ## 0.2.2 - 2019-02-21
 - Fix: force package version of spatie/image-optimizer to 1.1.4 since 1.1.5 requires php 7.2.
