@@ -51,11 +51,21 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
     public function can($verb): bool
     {
-        $this->authorize($verb);
+        try{
+            $this->authorize($verb);
+        }
+        catch(NotAllowedManagerRoute $e)
+        {
+            return false;
+        }
 
         return parent::can($verb);
     }
 
+    /**
+     * @param $verb
+     * @throws NotAllowedManagerRoute
+     */
     private function authorize($verb)
     {
         $permission = 'update-page';

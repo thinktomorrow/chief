@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Management;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
@@ -119,8 +120,6 @@ abstract class AbstractManager
 
         return $modelRoutes[$verb] ?? null;
     }
-
-    
 
     public function can($verb): bool
     {

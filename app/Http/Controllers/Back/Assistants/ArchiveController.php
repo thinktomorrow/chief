@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 
 class ArchiveController extends Controller
 {

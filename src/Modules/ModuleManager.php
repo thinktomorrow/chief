@@ -50,7 +50,13 @@ class ModuleManager extends AbstractManager implements Manager
 
     public function can($verb): bool
     {
-        $this->authorize($verb);
+        try{
+            $this->authorize($verb);
+        }
+        catch(NotAllowedManagerRoute $e)
+        {
+            return false;
+        }
 
         return parent::can($verb);
     }
@@ -68,7 +74,7 @@ class ModuleManager extends AbstractManager implements Manager
         }
 
         if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
-            throw NotAllowedManagerRoute::notAllowedPermission($permission);
+            throw NotAllowedManagerRoute::notAllowedPermission($permission, $this);
         }
     }
 

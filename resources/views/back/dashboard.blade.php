@@ -17,6 +17,8 @@
         <div class="gutter column-8 inset right">
             @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page', 'dashboard']) as $manager)
 
+                @if(!$manager->can('index')) @continue @endif
+
                 @if($manager->findAllManaged()->count() > 0)
                     <div class="column-6">
                         <div class="panel panel-default --raised">
