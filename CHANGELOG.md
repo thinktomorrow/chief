@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+
+## 0.2.3 - 2019-02-28
 - Add: view folder for sets was only targeted at views/front/modules/ and is now also allowed under view/modules.
 - Fix: Don't show menutitle when title is not set in given locale.
 - Fix: missing argument for permission exception in PageManager.
