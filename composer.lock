@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b004957b45d866a7ba0548e9ccd6b7e",
+    "content-hash": "3149e8905a5ded5540e566e94925af77",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -58,25 +58,24 @@
         },
         {
             "name": "dimsav/laravel-translatable",
-            "version": "v9.3.0",
+            "version": "v9.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dimsav/laravel-translatable.git",
-                "reference": "36c729fd40d070c2fda89b47bcfca731c703505f"
+                "reference": "5101036717e8201389382c77ebfdeafbe073ef06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dimsav/laravel-translatable/zipball/36c729fd40d070c2fda89b47bcfca731c703505f",
-                "reference": "36c729fd40d070c2fda89b47bcfca731c703505f",
+                "url": "https://api.github.com/repos/dimsav/laravel-translatable/zipball/5101036717e8201389382c77ebfdeafbe073ef06",
+                "reference": "5101036717e8201389382c77ebfdeafbe073ef06",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.6.*|5.7.*",
+                "illuminate/support": "5.6.*|5.7.*|5.8.*",
                 "php": ">=7.1.3"
             },
             "require-dev": {
-                "orchestra/testbench": "3.6.*|3.7.*",
-                "phpunit/phpunit": "~7.0"
+                "orchestra/testbench": "3.6.*|3.7.*|3.8.*"
             },
             "type": "library",
             "extra": {
@@ -99,7 +98,14 @@
                 {
                     "name": "Dimitrios Savvopoulos",
                     "email": "ds@dimsav.com",
-                    "homepage": "http://dimsav.com"
+                    "homepage": "http://dimsav.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev.gummibeer@gmail.com",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A Laravel package for multilingual models",
@@ -109,7 +115,7 @@
                 "laravel",
                 "translation"
             ],
-            "time": "2019-02-03T13:22:06+00:00"
+            "time": "2019-02-28T08:12:22+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1045,16 +1051,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.7.27",
+            "version": "v5.7.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "688fbfa889d43f392825b381ad3981847120fdfa"
+                "reference": "8e69728f1c80a024588adbd24c65c4fcf9aa9192"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/688fbfa889d43f392825b381ad3981847120fdfa",
-                "reference": "688fbfa889d43f392825b381ad3981847120fdfa",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/8e69728f1c80a024588adbd24c65c4fcf9aa9192",
+                "reference": "8e69728f1c80a024588adbd24c65c4fcf9aa9192",
                 "shasum": ""
             },
             "require": {
@@ -1127,7 +1133,7 @@
                 "mockery/mockery": "^1.0",
                 "moontoast/math": "^1.1",
                 "orchestra/testbench-core": "3.7.*",
-                "pda/pheanstalk": "^3.0",
+                "pda/pheanstalk": "^3.0|^4.0",
                 "phpunit/phpunit": "^7.5",
                 "predis/predis": "^1.1.1",
                 "symfony/css-selector": "^4.1",
@@ -1149,7 +1155,7 @@
                 "league/flysystem-sftp": "Required to use the Flysystem SFTP driver (^1.0).",
                 "moontoast/math": "Required to use ordered UUIDs (^1.1).",
                 "nexmo/client": "Required to use the Nexmo transport (^1.0).",
-                "pda/pheanstalk": "Required to use the beanstalk queue driver (^3.0).",
+                "pda/pheanstalk": "Required to use the beanstalk queue driver (^3.0|^4.0).",
                 "predis/predis": "Required to use the redis cache and queue drivers (^1.0).",
                 "pusher/pusher-php-server": "Required to use the Pusher broadcast driver (^3.0).",
                 "symfony/css-selector": "Required to use some of the crawler integration testing tools (^4.1).",
@@ -1187,7 +1193,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-02-19T14:37:47+00:00"
+            "time": "2019-02-26T15:41:34+00:00"
         },
         {
             "name": "laravel/nexmo-notification-channel",
@@ -1414,7 +1420,7 @@
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
                     "email": "lcobucci@gmail.com",
-                    "role": "Developer"
+                    "role": "developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -1858,16 +1864,16 @@
         },
         {
             "name": "opis/closure",
-            "version": "3.1.5",
+            "version": "3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opis/closure.git",
-                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6"
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opis/closure/zipball/41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
-                "reference": "41f5da65d75cf473e5ee582df8fc7f2c733ce9d6",
+                "url": "https://api.github.com/repos/opis/closure/zipball/ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
+                "reference": "ccb8e3928c5c8181c76cdd0ed9366c5bcaafd91b",
                 "shasum": ""
             },
             "require": {
@@ -1915,7 +1921,7 @@
                 "serialization",
                 "serialize"
             ],
-            "time": "2019-01-14T14:45:33+00:00"
+            "time": "2019-02-22T10:30:00+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2682,28 +2688,30 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.2.1",
+            "version": "3.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "3c340e70cdb86f6d61de45a097fdf55dde36f5e8"
+                "reference": "8db5d2f314a26ee9a1617bdecd98947fdf29fcfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/3c340e70cdb86f6d61de45a097fdf55dde36f5e8",
-                "reference": "3c340e70cdb86f6d61de45a097fdf55dde36f5e8",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/8db5d2f314a26ee9a1617bdecd98947fdf29fcfa",
+                "reference": "8db5d2f314a26ee9a1617bdecd98947fdf29fcfa",
                 "shasum": ""
             },
             "require": {
-                "illuminate/config": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/config": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
                 "php": "^7.1",
                 "spatie/string": "^2.1"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^7.4"
+                "ext-json": "*",
+                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0|~3.8.0",
+                "phpunit/phpunit": "^7.4 | ^8.0",
+                "scrutinizer/ocular": "^1.5"
             },
             "type": "library",
             "extra": {
@@ -2748,30 +2756,30 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-02-01T21:44:15+00:00"
+            "time": "2019-02-27T12:41:17+00:00"
         },
         {
             "name": "spatie/laravel-image-optimizer",
-            "version": "1.3.2",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-image-optimizer.git",
-                "reference": "d4c8f831d60f3a68dc5323910a6670d9819a4e3e"
+                "reference": "ab2f78c9ce6ddff6aad9b8e377f7e84a5906d12d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-image-optimizer/zipball/d4c8f831d60f3a68dc5323910a6670d9819a4e3e",
-                "reference": "d4c8f831d60f3a68dc5323910a6670d9819a4e3e",
+                "url": "https://api.github.com/repos/spatie/laravel-image-optimizer/zipball/ab2f78c9ce6ddff6aad9b8e377f7e84a5906d12d",
+                "reference": "ab2f78c9ce6ddff6aad9b8e377f7e84a5906d12d",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
-                "php": "^7.0",
+                "laravel/framework": "~5.7.0|~5.8.0",
+                "php": "^7.2",
                 "spatie/image-optimizer": "^1.1.0"
             },
             "require-dev": {
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^6.3|^7.0"
+                "orchestra/testbench": "~3.7.0|~3.8.0",
+                "phpunit/phpunit": "^8.0"
             },
             "type": "library",
             "extra": {
@@ -2807,31 +2815,31 @@
                 "laravel-image-optimizer",
                 "spatie"
             ],
-            "time": "2018-08-27T14:44:11+00:00"
+            "time": "2019-02-27T10:14:49+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "7.5.5",
+            "version": "7.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "a50e59d1eec7c2e161942ffd0d13860759e4760d"
+                "reference": "6ffb8a41e60f024abd35ff47e08628354d6efd0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/a50e59d1eec7c2e161942ffd0d13860759e4760d",
-                "reference": "a50e59d1eec7c2e161942ffd0d13860759e4760d",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/6ffb8a41e60f024abd35ff47e08628354d6efd0e",
+                "reference": "6ffb8a41e60f024abd35ff47e08628354d6efd0e",
                 "shasum": ""
             },
             "require": {
-                "illuminate/bus": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/console": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/pipeline": "~5.5.0|~5.6.0|~5.7.0",
-                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0",
+                "illuminate/bus": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/console": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/database": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/pipeline": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
+                "illuminate/support": "~5.5.0|~5.6.0|~5.7.0|~5.8.0",
                 "league/flysystem": "^1.0.8",
                 "maennchen/zipstream-php": "~0.4",
-                "php": "^7.1",
+                "php": "^7.2",
                 "spatie/image": "^1.4.0",
                 "spatie/pdf-to-image": "^1.2",
                 "spatie/temporary-directory": "^1.1"
@@ -2845,9 +2853,9 @@
                 "guzzlehttp/guzzle": "^6.3",
                 "league/flysystem-aws-s3-v3": "^1.0.13",
                 "mockery/mockery": "^1.0.0",
-                "orchestra/testbench": "~3.5.0|~3.6.0|~3.7.0",
-                "phpunit/phpunit": "^7.0",
-                "spatie/phpunit-snapshot-assertions": "^1.2"
+                "orchestra/testbench": "~3.8.0",
+                "phpunit/phpunit": "^8.0",
+                "spatie/phpunit-snapshot-assertions": "^2.0"
             },
             "suggest": {
                 "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
@@ -2890,20 +2898,20 @@
                 "media",
                 "spatie"
             ],
-            "time": "2019-01-05T14:06:46+00:00"
+            "time": "2019-02-27T09:31:55+00:00"
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.33.0",
+            "version": "2.34.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "9da0a1618b0c85f71ef7e11b942d5f6f92d2c063"
+                "reference": "10f6b2e19cce79936e42b65f08549cbf564c052e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/9da0a1618b0c85f71ef7e11b942d5f6f92d2c063",
-                "reference": "9da0a1618b0c85f71ef7e11b942d5f6f92d2c063",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/10f6b2e19cce79936e42b65f08549cbf564c052e",
+                "reference": "10f6b2e19cce79936e42b65f08549cbf564c052e",
                 "shasum": ""
             },
             "require": {
@@ -2955,7 +2963,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2019-02-20T15:56:22+00:00"
+            "time": "2019-02-26T21:25:08+00:00"
         },
         {
             "name": "spatie/pdf-to-image",
@@ -4182,16 +4190,16 @@
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.5.4",
+            "version": "0.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "f580acd5defe9d748f8dfaf6c0d0459fd79ee59e"
+                "reference": "ea3ea61105a7ef8800f478f52772a9dcbc02628f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/f580acd5defe9d748f8dfaf6c0d0459fd79ee59e",
-                "reference": "f580acd5defe9d748f8dfaf6c0d0459fd79ee59e",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/ea3ea61105a7ef8800f478f52772a9dcbc02628f",
+                "reference": "ea3ea61105a7ef8800f478f52772a9dcbc02628f",
                 "shasum": ""
             },
             "require": {
@@ -4239,7 +4247,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2019-01-10T09:44:45+00:00"
+            "time": "2019-03-01T10:03:17+00:00"
         },
         {
             "name": "thinktomorrow/vine",
@@ -4448,22 +4456,22 @@
     "packages-dev": [
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "ba046deba51f3899963c7d09840bf623c4ebf5ed"
+                "reference": "5fcba4cc8e92a230b13b99c1083fc22ba8a5c479"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/ba046deba51f3899963c7d09840bf623c4ebf5ed",
-                "reference": "ba046deba51f3899963c7d09840bf623c4ebf5ed",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/5fcba4cc8e92a230b13b99c1083fc22ba8a5c479",
+                "reference": "5fcba4cc8e92a230b13b99c1083fc22ba8a5c479",
                 "shasum": ""
             },
             "require": {
-                "illuminate/routing": "5.5.x|5.6.x|5.7.x",
-                "illuminate/session": "5.5.x|5.6.x|5.7.x",
-                "illuminate/support": "5.5.x|5.6.x|5.7.x",
+                "illuminate/routing": "5.5.x|5.6.x|5.7.x|5.8.x",
+                "illuminate/session": "5.5.x|5.6.x|5.7.x|5.8.x",
+                "illuminate/support": "5.5.x|5.6.x|5.7.x|5.8.x",
                 "maximebf/debugbar": "~1.15.0",
                 "php": ">=7.0",
                 "symfony/debug": "^3|^4",
@@ -4512,7 +4520,7 @@
                 "profiler",
                 "webprofiler"
             ],
-            "time": "2019-02-04T10:23:43+00:00"
+            "time": "2019-02-26T18:01:54+00:00"
         },
         {
             "name": "doctrine/instantiator",

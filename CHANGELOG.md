@@ -3,6 +3,10 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 
+## 0.2.4 - 2019-03-01
+- Update packages including thinktomorrow/squanto to 0.5.5
+- Change: with the update of squanto empty translation lines will now be kept as valid values, and no longer cascades down to the translation file source.
+
 ## 0.2.3 - 2019-02-28
 - Add: view folder for sets was only targeted at views/front/modules/ and is now also allowed under view/modules.
 - Fix: Don't show menutitle when title is not set in given locale.
