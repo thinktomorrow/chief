@@ -9,7 +9,7 @@ use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
 class GenerateRoleCommandTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

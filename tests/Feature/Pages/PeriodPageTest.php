@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class PeriodPageTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }

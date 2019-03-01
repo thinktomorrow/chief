@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class MorphableInstanceTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -21,7 +21,7 @@ class MorphableInstanceTest extends TestCase
         ]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // Force empty the morphMap each time because it is kept during the entire testrun.
         Relation::$morphMap = [];

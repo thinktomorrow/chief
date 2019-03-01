@@ -15,7 +15,7 @@ class PublishManagerTest extends TestCase
 {
     private $fake;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

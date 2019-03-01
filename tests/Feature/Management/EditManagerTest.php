@@ -15,7 +15,7 @@ class EditManagerTest extends TestCase
     private $manager;
     private $model;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

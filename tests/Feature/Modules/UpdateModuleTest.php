@@ -14,7 +14,7 @@ class UpdateModuleTest extends TestCase
 
     private $module;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

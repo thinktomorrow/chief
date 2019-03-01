@@ -17,7 +17,7 @@ class MenuTest extends TestCase
 {
     use ChiefDatabaseTransactions;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -262,9 +262,9 @@ class MenuTest extends TestCase
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);
         $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id, 'menu_type' => 'main']);
-        
+
         MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'footer']);
-        
+
         $collection = ChiefMenu::fromMenuItems('main')->items();
         $this->assertEquals($second->id, $collection->find('page_id', $page->id)->id);
         $this->assertEquals(2, $collection->total());

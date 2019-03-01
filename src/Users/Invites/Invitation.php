@@ -11,6 +11,8 @@ class Invitation extends Model implements StatefulContract
 {
     public $guarded = [];
 
+    protected $dates = ['expires_at'];
+
     /**
      * Minutes from now that invitation will expire.
      *

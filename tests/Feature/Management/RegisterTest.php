@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

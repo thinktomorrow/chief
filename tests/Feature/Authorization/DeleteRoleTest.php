@@ -9,7 +9,7 @@ class DeleteRoleTest extends TestCase
 {
     private $newRole;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

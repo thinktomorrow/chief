@@ -9,7 +9,7 @@ class UpdateYouTest extends TestCase
 {
     private $newUser;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

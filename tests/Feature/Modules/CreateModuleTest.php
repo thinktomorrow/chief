@@ -12,7 +12,7 @@ class CreateModuleTest extends TestCase
 {
     use ModuleFormParams;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

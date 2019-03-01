@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class SnippetTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -27,13 +27,13 @@ class SnippetTest extends TestCase
         $this->assertEquals('Snippet stub', $snippet->label());
         $this->assertEquals(realpath(__DIR__.'/snippet-stub.html'), $snippet->path());
     }
-    
+
     /** @test */
     public function it_can_render_a_snippet()
     {
         $this->assertEquals('<p>This is a snippet</p>', SnippetCollection::find('snippet-stub')->render());
     }
-    
+
     /** @test */
     public function it_can_list_all_snippets()
     {
