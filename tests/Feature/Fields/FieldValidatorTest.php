@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Management;
+namespace Thinktomorrow\Chief\Tests\Feature\Fields;
 
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;

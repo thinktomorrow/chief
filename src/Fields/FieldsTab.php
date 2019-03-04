@@ -21,7 +21,7 @@ class FieldsTab
     /** @var array */
     private $fields;
 
-    public function __construct(string $title, array $fieldKeys, string $view = null)
+    public function __construct(string $title, array $fieldKeys = [], string $view = null)
     {
         $this->title = $title;
         $this->fieldKeys = $fieldKeys;
