@@ -32,4 +32,11 @@ trait HasDetails
             $title
         );
     }
+
+    public function indexDetails()
+    {
+        return new Details(
+
+        );
+    }
 }

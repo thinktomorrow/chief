@@ -12,6 +12,9 @@ class FieldsTab
     /** @var string */
     protected $view;
 
+    /** @var array */
+    private $viewData;
+
     /**
      * array of fieldKeys of the fields which are accepted in this tab
      * @var array
@@ -21,11 +24,12 @@ class FieldsTab
     /** @var array */
     private $fields;
 
-    public function __construct(string $title, array $fieldKeys = [], string $view = null)
+    public function __construct(string $title, array $fieldKeys = [], string $view = null, array $viewData = [])
     {
         $this->title = $title;
         $this->fieldKeys = $fieldKeys;
         $this->view = $view;
+        $this->viewData = $viewData;
 
         $this->fields = [];
     }
@@ -72,6 +76,11 @@ class FieldsTab
     public function view(): ?string
     {
         return $this->view;
+    }
+
+    public function viewData(): array
+    {
+        return array_merge(['tab' => $this], $this->viewData);
     }
 
     public function hasView(): bool

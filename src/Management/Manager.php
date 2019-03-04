@@ -121,4 +121,11 @@ interface Manager
      * @return Details
      */
     public function details(): Details;
+
+    /**
+     * Information for display on the managers index page.
+     *
+     * @return Details
+     */
+    public function indexDetails(): Details;
 }
