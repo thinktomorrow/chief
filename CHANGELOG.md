@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Add: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.
 
 ## 0.2.4 - 2019-03-01
 - Update packages including thinktomorrow/squanto to 0.5.5
