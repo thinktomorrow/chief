@@ -26,7 +26,7 @@ class ManagersController extends Controller
 
         $manager->guard('index');
 
-        $managers = $manager->findAllManaged();
+        $managers = $manager->findAllManaged(true);
 
         return view('chief::back.managers.index', [
             'modelManager' => $manager,
