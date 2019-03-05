@@ -1,4 +1,4 @@
-<div class="s-column-6 m-column-4 l-column-3 inset-xs">
+<div class="s-column-6 m-column-4 inset-xs">
     <div class="row bg-white inset-s panel panel-default" style="height:100%">
         <div class="column">
             @if($manager->can('edit'))

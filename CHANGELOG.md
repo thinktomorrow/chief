@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Add: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.
+- Add: possibility to display sidebar data on manager index page via a `sections()` method on the manager.
 
 ## 0.2.4 - 2019-03-01
 - Update packages including thinktomorrow/squanto to 0.5.5
