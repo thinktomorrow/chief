@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class PresentRelationsTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

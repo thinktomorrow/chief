@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Users\User;
 
 class UpdateMenuItemTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

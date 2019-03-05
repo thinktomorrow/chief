@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class FlatReferenceTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

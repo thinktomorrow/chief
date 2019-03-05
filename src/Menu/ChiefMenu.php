@@ -14,9 +14,9 @@ class ChiefMenu
         $this->collection = $collection;
     }
 
-    public static function fromMenuItems($type = 'main')
+    public static function fromMenuItems($type = 'main', $admin = false)
     {
-        $items = MenuItem::getNodeEntries($type);
+        $items = MenuItem::getNodeEntries($type, $admin);
 
         return self::fromArray($items);
     }
@@ -40,7 +40,7 @@ class ChiefMenu
     public function getForSelect($id = null)
     {
         $this->collection = $this->items();
-        
+
         if ($id) {
             $this->collection = $this->collection->prune(function ($node) use ($id) {
                 return !in_array($id, $node->pluckAncestors('id'));
