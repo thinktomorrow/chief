@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Filters\Filter;
+use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
@@ -60,11 +62,21 @@ abstract class AbstractManager
         return (new static($this->registration))->manage($modelInstance);
     }
 
-    public function findAllManaged(): Collection
+    public function findAllManaged($apply_filters = false): Collection
     {
         $model = $this->registration->model();
 
-        return $model::all()->map(function ($model) {
+        if($apply_filters) {
+            $builder = (new $model)->query();
+            $this->filters()->apply($builder);
+
+            $results = $builder->get();
+        }
+        else {
+            $results = $model::all();
+        }
+
+        return $results->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
     }
@@ -251,6 +263,11 @@ abstract class AbstractManager
             'manager'  => $this,
             'viewpath' => $viewpath,
         ])->render();
+    }
+
+    public static function filters(): Filters
+    {
+        return new Filters();
     }
 
     /**
