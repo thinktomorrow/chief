@@ -116,6 +116,10 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine omschrijving')
                 ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
+            InputField::make('seo_keywords')
+                ->translatable($this->model->availableLocales())
+                ->label('Zoekmachine sleutelwoorden')
+                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
         ]);
     }
 
@@ -135,12 +139,12 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 return $field->key == 'title';
             }));
         }
-
+        
         return new FieldArrangement($this->fields(), [
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('inhoud'),
             new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
-            new FieldsTab('seo', ['seo_title', 'seo_description']),
+            new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords']),
         ]);
     }
 
