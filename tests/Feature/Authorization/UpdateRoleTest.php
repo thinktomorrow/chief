@@ -49,7 +49,6 @@ class UpdateRoleTest extends TestCase
         $response->assertStatus(302)
             ->assertRedirect(route('chief.back.roles.index'))
             ->assertSessionHas('messages.success');
-
         $this->assertUpdatedValues($this->newRole->fresh());
     }
 
@@ -113,7 +112,7 @@ class UpdateRoleTest extends TestCase
     private function validParams($overrides = [])
     {
         $params = [
-            'name' => 'new name',
+            'name' => 'new-name',
             'permission_names' => ['create-role', 'update-role'],
         ];
 
@@ -127,20 +126,20 @@ class UpdateRoleTest extends TestCase
     private function validUpdateParams($overrides = [])
     {
         return $this->validParams(array_merge([
-            'name' => 'updated name',
+            'name' => 'updated-name',
             'permission_names' => ['view-role']
         ], $overrides));
     }
 
     private function assertNewValues(Role $role)
     {
-        $this->assertEquals('new name', $role->name);
+        $this->assertEquals('new-name', $role->name);
         $this->assertEquals(['create-role', 'update-role'], $role->permissions->pluck('name')->toArray());
     }
 
     private function assertUpdatedValues(Role $role)
     {
-        $this->assertEquals('updated name', $role->name);
+        $this->assertEquals('updated-name', $role->name);
         $this->assertEquals(['view-role'], $role->permissions->pluck('name')->toArray());
     }
 }
