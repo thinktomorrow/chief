@@ -66,13 +66,12 @@ abstract class AbstractManager
     {
         $model = $this->registration->model();
 
-        if($apply_filters) {
+        if ($apply_filters) {
             $builder = (new $model)->query();
             $this->filters()->apply($builder);
 
             $results = $builder->get();
-        }
-        else {
+        } else {
             $results = $model::all();
         }
 

@@ -52,7 +52,9 @@ class Nav
 
     private static function fromManagers(Collection $collection)
     {
-        return new static(...$collection->reject(function($manager){ return !$manager->can('index'); })->map(function ($manager) {
+        return new static(...$collection->reject(function ($manager) {
+            return !$manager->can('index');
+        })->map(function ($manager) {
             return new NavItem($manager->details()->plural, $manager->route('index'), [
                 'key' => $manager->details()->key,
                 'tags' => app(Register::class)->filterByKey($manager->details()->key)->first()->tags()
@@ -95,7 +97,9 @@ class Nav
 
     public function addManager(Manager $manager)
     {
-        if(!$manager->can('index')) return $this;
+        if (!$manager->can('index')) {
+            return $this;
+        }
 
         $this->items[] = new NavItem($manager->details()->plural, $manager->route('index'), [
             'key' => $manager->details()->key,
@@ -136,7 +140,7 @@ class Nav
         }
 
         // Don't bother using a dropdown if there's only one item.
-        if(count($this->items) == 1){
+        if (count($this->items) == 1) {
             return $this->render();
         }
 

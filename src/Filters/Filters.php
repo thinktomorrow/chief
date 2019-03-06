@@ -25,9 +25,8 @@ class Filters implements \ArrayAccess, \IteratorAggregate
 
     public function apply(Builder $builder)
     {
-        foreach($this->all() as $filter)
-        {
-            if(request()->filled($filter->name) && $filter->query && $filter->query instanceof Closure){
+        foreach ($this->all() as $filter) {
+            if (request()->filled($filter->name) && $filter->query && $filter->query instanceof Closure) {
                 $builder->tap($filter->query);
             }
         }
@@ -37,7 +36,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate
     {
         $requestInput = request()->all();
 
-        return array_reduce($this->all(), function($carry, Filter $filter) use($requestInput){
+        return array_reduce($this->all(), function ($carry, Filter $filter) use ($requestInput) {
             return $carry . $filter->render($requestInput);
         }, '');
     }
