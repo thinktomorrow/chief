@@ -36,12 +36,14 @@ trait PageFormParams
                     'title' => 'aangepaste title',
                     'seo_title' => 'aangepaste seo title',
                     'seo_description' => 'aangepaste seo description',
+                    'seo_keywords' => 'aangepaste seo keywords',
                 ],
                 'en' => [
                     'slug' => 'updated-slug',
                     'title' => 'updated title',
                     'seo_title' => 'updated seo title',
                     'seo_description' => 'updated seo description',
+                    'seo_keywords' => 'updated seo keywords',
                 ],
             ],
             'relations' => [],
@@ -61,11 +63,13 @@ trait PageFormParams
 
         $this->assertNull($page->{'seo_title:nl'});
         $this->assertNull($page->{'seo_description:nl'});
+        $this->assertNull($page->{'seo_keywords:nl'});
 
         $this->assertEquals('nouveau-slug', $page->{'slug:en'});
         $this->assertEquals('nouveau title', $page->{'title:en'});
         $this->assertNull($page->{'seo_title:en'});
         $this->assertNull($page->{'seo_description:en'});
+        $this->assertNull($page->{'seo_keywords:en'});
     }
 
     protected function assertUpdatedPageValues($page)
@@ -74,10 +78,12 @@ trait PageFormParams
         $this->assertEquals('aangepaste title', $page->{'title:nl'});
         $this->assertEquals('aangepaste seo title', $page->{'seo_title:nl'});
         $this->assertEquals('aangepaste seo description', $page->{'seo_description:nl'});
+        $this->assertEquals('aangepaste seo keywords', $page->{'seo_keywords:nl'});
 
         $this->assertEquals('updated-slug', $page->{'slug:en'});
         $this->assertEquals('updated title', $page->{'title:en'});
         $this->assertEquals('updated seo title', $page->{'seo_title:en'});
         $this->assertEquals('updated seo description', $page->{'seo_description:en'});
+        $this->assertEquals('updated seo keywords', $page->{'seo_keywords:en'});
     }
 }

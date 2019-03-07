@@ -3,6 +3,9 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Fix: menuitems of offline pages now show in admin.
+- Fix: role name cant contain spaces.
+- Add: seo_keywords added to page seo tab
+- removed: PageUpdateRequest, PageCreateRequest, PagesController, ModuleUpdateRequest
 
 ## 0.2.5 - 2019-03-05
 - Add: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.

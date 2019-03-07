@@ -2,15 +2,16 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Menu\Application\CreateMenu;
-use Thinktomorrow\Chief\Menu\ChiefMenu;
-use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
+use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
+use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
+use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
+use Thinktomorrow\Chief\Management\Managers;
 
 class MenuItemController extends Controller
 {
@@ -21,9 +22,7 @@ class MenuItemController extends Controller
         $menuitem->menu_type = $menutype;
 
         $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
-
-        // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
-        $collections = [];
+        $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
@@ -59,7 +58,7 @@ class MenuItemController extends Controller
         $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
 
         // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
-        $collections = [];
+        $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
 
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;

@@ -60,7 +60,7 @@ class RoleController extends Controller
         $this->authorize('update-role');
 
         $this->validate($request, [
-            'name' => 'required|unique:roles,name,'.$id,
+            'name' => 'required|alpha_dash|unique:roles,name,'.$id,
             'permission_names' =>'required|array',
             'permission_names.*'   => 'required', // Avoid null array entry
         ]);

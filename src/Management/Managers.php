@@ -70,6 +70,22 @@ class Managers
         });
     }
 
+    public function findByTagForSelect($tag)
+    {
+        $managers = $this->findByTag($tag);
+        //return array with group name and values
+        $grouped = [];
+
+        $managers = $managers->map(function (Manager $item) {
+            return [
+                'id'    => $item->details()->id,
+                'group' => $item->details()->plural,
+            ];
+        })->toArray();
+        // We remove the group key as we need to have non-assoc array for the multiselect options.
+        return collect(array_values($managers));
+    }
+
     public function all(): Collection
     {
         $registrations = collect($this->register->all());

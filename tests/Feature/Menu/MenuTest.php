@@ -200,7 +200,7 @@ class MenuTest extends TestCase
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
         $third  = MenuItem::create(['label:nl' => 'last item', 'type' => 'internal', 'page_id' =>  $page->id, 'parent_id' => $first->id, 'order' => 1]);
 
-        $collection = ChiefMenu::fromMenuItems('main', true)->items();
+        $collection = ChiefMenu::fromMenuItems('main')->forAdmin()->items();
         $this->assertInstanceof(NodeCollection::class, $collection);
         $this->assertEquals(3, $collection->total());
     }

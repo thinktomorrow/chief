@@ -8,15 +8,16 @@ use Vine\NodeCollection;
 class ChiefMenu
 {
     private $collection;
+    private $forAdmin = false;
 
     public function __construct(NodeCollection $collection)
     {
         $this->collection = $collection;
     }
 
-    public static function fromMenuItems($type = 'main', $admin = false)
+    public static function fromMenuItems($type = 'main')
     {
-        $items = MenuItem::getNodeEntries($type, $admin);
+        $items = app(MenuItem::class)->nodeEntries($type);
 
         return self::fromArray($items);
     }
@@ -32,8 +33,22 @@ class ChiefMenu
         return new static($collection);
     }
 
+    public function forAdmin()
+    {
+        $this->forAdmin = true;
+
+        return $this;
+    }
+
     public function items(): NodeCollection
     {
+        if(!$this->forAdmin)
+        {
+            $this->collection = $this->collection->shake(function($node){
+                return !$node->hidden_in_menu;
+            });
+        }
+
         return $this->collection->sort('order');
     }
 

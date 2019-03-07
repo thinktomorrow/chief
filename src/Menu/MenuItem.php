@@ -22,16 +22,17 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     use Translatable,
         BaseTranslatable;
 
-    protected $translationModel = MenuItemTranslation::class;
+    protected $translationModel      = MenuItemTranslation::class;
     protected $translationForeignKey = 'menu_item_id';
-    protected $translatedAttributes = [
+    protected $translatedAttributes  = [
         'label',
         'url',
     ];
+
     protected $with = ['page', 'translations'];
 
     public $timestamps = false;
-    public $guarded = [];
+    public $guarded    = [];
 
     public function ofType($type): bool
     {
@@ -61,12 +62,12 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
     public function siblings()
     {
-        return static::where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->where('id', '<>', $this->id)->orderBy('order', 'ASC')->get();
+        return static:: where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->where('id', '<>', $this->id)->orderBy('order', 'ASC')->get();
     }
 
     public function siblingsIncludingSelf()
     {
-        return static::where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->orderBy('order', 'ASC')->get();
+        return static:: where('parent_id', $this->parent_id)->where('menu_type', $this->menuType())->orderBy('order', 'ASC')->get();
     }
 
     /**
@@ -98,89 +99,42 @@ class MenuItem extends Model implements TranslatableContract, VineSource
      *
      * @return array
      */
-    public function nodeEntries(): array
+    public function nodeEntries($type = 'main'): array
     {
-        $items = static::all();
+        $items           = $this->where('menu_type', $type)->get();
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
         foreach ($items as $k => $item) {
-
             // Fetch the collection items
             if ($item->collection_type) {
                 $pages = Morphables::instance($item->collection_type)->getAllPublished();
 
-                $pages->reject(function ($page) {
-                    return $page->hidden_in_menu == true;
-                })->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
+                $pages->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
+
                     $collectionItems->push(MenuItem::make([
-                        // Unique integer identifier since model->id is automatically casted to int.
-                        'id'              => 1000 . $item->id . $page->id,
-                        'label'           => $page->menuLabel(),
-                        'url'             => $this->composePageUrl($item, $page),
-                        'parent_id'       => $item->id,
-                        'type'            => 'auto_generated',
-                        'collection_type' => null,
-                        'menu_type'       => $item->menu_type
+                        'id'             => 1000 . $item->id . $page->id,         // Unique integer identifier since model->id is automatically casted to int.
+                        'label'          => $page->menuLabel(),
+                        'url'            => self::composePageUrl($item, $page),
+                        'parent_id'      => $item->id,
+                        'type'           => 'auto_generated',
+                        'menu_type'      => $item->menu_type,
+                        'hidden_in_menu' => $page->hidden_in_menu,
+                        'draft'          => $page->isDraft(),
                     ]));
                 });
             }
-
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
-                if ($page->hidden_in_menu == true) {
+
+                if ($page->isArchived()) {
                     unset($items[$k]);
                 } else {
-                    $item->url            = $this->composePageUrl($item, $page);
-                    $item->page_label     = $page->menuLabel();
-                    $item->hidden_in_menu = $page->hidden_in_menu;
-                    $item->draft          = $page->isDraft();
-                    $item->archived       = $page->isArchived();
-                    $items[$k]            = $item;
-                }
-            }
-        }
-
-        return array_merge($items->all(), $collectionItems->all());
-    }
-
-    public static function getNodeEntries($type = 'main', $admin = false): array
-    {
-        $items           = static::where('menu_type', $type)->get();
-        $collectionItems = collect([]);
-
-        // Expose the collection items and populate them with the collection data
-        foreach ($items as $k => $item) {
-
-            // Fetch the collection items
-            if ($item->collection_type) {
-                $pages = Morphables::instance($item->collection_type)->getAllPublished();
-
-                $pages->reject(function ($page) use($admin){
-                    return ($page->hidden_in_menu == true && !$admin);
-                })->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
-                    $collectionItems->push(MenuItem::make([
-                        'id'         => 1000 . $item->id . $page->id, // Unique integer identifier since model->id is automatically casted to int.
-                        'label'      => $page->menuLabel(),
-                        'url'        => self::composePageUrl($item, $page),
-                        'parent_id'  => $item->id,
-                        'type'       => 'auto_generated',
-                        'menu_type'  => $item->menu_type
-                    ]));
-                });
-            }
-
-            // Fetch the urls of the internal links
-            if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
-                if ((!$admin) && ($page->hidden_in_menu == true || $page->isDraft() || $page->isArchived())) {
-                    unset($items[$k]);
-                } else {
-                    $item->url            = self::composePageUrl($item, $page);
-                    $item->page_label     = $page->menuLabel();
-                    $item->hidden_in_menu = $page->hidden_in_menu;
-                    $item->draft          = $page->isDraft();
-                    $item->archived       = $page->isArchived();
-                    $items[$k]            = $item;
+                           $item->url            = self::composePageUrl($item, $page);
+                           $item->page_label     = $page->menuLabel();
+                           $item->hidden_in_menu = $page->hidden_in_menu;
+                           $item->draft          = $page->isDraft();
+                    $items[$k]                   = $item;
                 }
             }
         }
@@ -221,19 +175,18 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function entry(Node $node)
     {
         return (object) [
-            'id'              => $node->id,
-            'type'            => $node->type,
-            'label'           => $node->label,
-            'page_label'      => $node->page_label,                 // Extra info when dealing with internal links
-            'url'             => $node->url,
-            'order'           => $node->order,
-            'page_id'         => $node->page_id,
-            'parent_id'       => $node->parent_id,
-            'collection_type' => $node->collection_type,
-            'auto_generated'  => $node->entry()->autoGenerated(),
-            'hidden_in_menu'  => $node->hidden_in_menu,
-            'draft'           => $node->draft,
-            'archived'        => $node->archived
+            'id'             => $node->id,
+            'type'           => $node->type,
+            'label'          => $node->label,
+            'page_label'     => $node->page_label,                       // Extra info when dealing with internal links
+            'url'            => $node->url,
+            'order'          => $node->order,
+            'page_id'        => $node->page_id,
+            'parent_id'      => $node->parent_id,
+            'morph_key'      => $node->morph_key,
+            'auto_generated' => $node->entry()->autoGenerated(),
+            'hidden_in_menu' => $node->hidden_in_menu || $node->draft,
+            'draft'          => $node->draft
         ];
     }
 }
