@@ -50,11 +50,9 @@ class ModuleManager extends AbstractManager implements Manager
 
     public function can($verb): bool
     {
-        try{
+        try {
             $this->authorize($verb);
-        }
-        catch(NotAllowedManagerRoute $e)
-        {
+        } catch (NotAllowedManagerRoute $e) {
             return false;
         }
 
