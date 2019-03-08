@@ -111,7 +111,6 @@ class MenuItem extends Model implements TranslatableContract, VineSource
                 $pages = Morphables::instance($item->collection_type)->getAllPublished();
 
                 $pages->each(function (ActsAsMenuItem $page) use (&$collectionItems, $item) {
-
                     $collectionItems->push(MenuItem::make([
                         'id'             => 1000 . $item->id . $page->id,         // Unique integer identifier since model->id is automatically casted to int.
                         'label'          => $page->menuLabel(),
@@ -126,14 +125,13 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             }
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
-
                 if ($page->isArchived()) {
                     unset($items[$k]);
                 } else {
-                           $item->url            = self::composePageUrl($item, $page);
-                           $item->page_label     = $page->menuLabel();
-                           $item->hidden_in_menu = $page->hidden_in_menu;
-                           $item->draft          = $page->isDraft();
+                    $item->url            = self::composePageUrl($item, $page);
+                    $item->page_label     = $page->menuLabel();
+                    $item->hidden_in_menu = $page->hidden_in_menu;
+                    $item->draft          = $page->isDraft();
                     $items[$k]                   = $item;
                 }
             }

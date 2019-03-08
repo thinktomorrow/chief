@@ -42,9 +42,8 @@ class ChiefMenu
 
     public function items(): NodeCollection
     {
-        if(!$this->forAdmin)
-        {
-            $this->collection = $this->collection->shake(function($node){
+        if (!$this->forAdmin) {
+            $this->collection = $this->collection->shake(function ($node) {
                 return !$node->hidden_in_menu;
             });
         }

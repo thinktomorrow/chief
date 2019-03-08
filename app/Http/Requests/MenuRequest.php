@@ -92,7 +92,7 @@ class MenuRequest extends FormRequest
             }
 
             // Check if it is a relative
-            if( $this->isRelativeUrl($trans['url']) ){
+            if ($this->isRelativeUrl($trans['url'])) {
                 $data['trans'][$locale]['url'] = '/'. trim($trans['url'], '/');
             } else {
                 $data['trans'][$locale]['url'] = Root::fromString($trans['url'])->get();
