@@ -15,6 +15,8 @@ class InputFilter extends Filter
 
     public function apply($value = null): Closure
     {
-        return $this->query && $this->query instanceof Closure ? $this->query : function($query){ return $query; };
+        return $this->query && $this->query instanceof Closure ? $this->query : function ($query) {
+            return $query;
+        };
     }
 }
