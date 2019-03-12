@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+
+## 0.2.6 - 2019-03-12
 - Added: seo_keywords added to page seo tab. Please run `php artisan migrate` to add the seo_keywords column!
 - Added: Managers can have filters to query the admin index.
 - Added: Pagebuilder better outlines the dropzone in sort mode.
