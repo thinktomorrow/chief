@@ -6,10 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class AddSeoKeywordsOnPageTranslations extends Migration
 {
-    /**
-     * Run the migrations.
-     * @return void
-     */
     public function up()
     {
         Schema::table('page_translations', function (Blueprint $table) {
@@ -17,10 +13,6 @@ class AddSeoKeywordsOnPageTranslations extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     * @return void
-     */
     public function down()
     {
     }
