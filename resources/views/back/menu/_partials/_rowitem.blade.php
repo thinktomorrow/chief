@@ -9,8 +9,10 @@
             {{ $item->label }}
         @else
             <a href="{{ route('chief.back.menuitem.edit', $item->id) }}">{{ $item->label }}</a>
-            @if($item->hidden_in_menu || $item->draft || $item->archived)
-                <span class="text-subtle"><em>[OFFLINE]</em></span>
+            @if($item->hidden_in_menu)
+                &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
+            @elseif($item->draft)
+                &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
             @endif
             @if($item->collection_type)
                 &nbsp;<em class="text-subtle">pagina groep</em>

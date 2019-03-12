@@ -8,7 +8,7 @@ use Vine\NodeCollection;
 class ChiefMenu
 {
     private $collection;
-    private $forAdmin = false;
+    private $includeHidden = false;
 
     public function __construct(NodeCollection $collection)
     {
@@ -33,18 +33,18 @@ class ChiefMenu
         return new static($collection);
     }
 
-    public function forAdmin()
+    public function includeHidden()
     {
-        $this->forAdmin = true;
+        $this->includeHidden = true;
 
         return $this;
     }
 
     public function items(): NodeCollection
     {
-        if (!$this->forAdmin) {
+        if (!$this->includeHidden) {
             $this->collection = $this->collection->shake(function ($node) {
-                return !$node->hidden_in_menu;
+                return !$node->hidden_in_menu && !$node->draft;
             });
         }
 
