@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Filters;
 use Closure;
 use Thinktomorrow\Chief\Filters\Types\FilterType;
 
-class Filter
+abstract class Filter
 {
     /** @var FilterType */
     private $filterType;
@@ -33,6 +33,8 @@ class Filter
         return false;
     }
 
+    abstract function apply($value = null): Closure;
+
     public function __get($key)
     {
         if (isset($this->$key)) {
@@ -56,8 +58,8 @@ class Filter
 
     public function __call($name, $arguments)
     {
-        // Without arguments we assume you want to retrieve a value property
-        if (empty($arguments)) {
+        // Without arguments we assume you want to retrieve a value property, except for query() which is used on a custom Filter.
+        if (empty($arguments) && !in_array($name,['apply'])) {
             return $this->__get($name);
         }
 

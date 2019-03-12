@@ -13,6 +13,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate
 
     public function __construct(array $filters = [])
     {
+        $filters = $this->sanitizeFilters($filters);
         $this->validateFilters($filters);
 
         $this->filters = $filters;
@@ -26,8 +27,8 @@ class Filters implements \ArrayAccess, \IteratorAggregate
     public function apply(Builder $builder)
     {
         foreach ($this->all() as $filter) {
-            if (request()->filled($filter->name) && $filter->query && $filter->query instanceof Closure) {
-                $builder->tap($filter->query);
+            if (request()->filled($filter->name)) {
+                $builder->tap($filter->apply( request()->input($filter->name, null) ));
             }
         }
     }
@@ -100,5 +101,18 @@ class Filters implements \ArrayAccess, \IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->filters);
+    }
+
+    private function sanitizeFilters(array $filters)
+    {
+        return array_map(function($filter){
+
+            if(is_string($filter) && class_exists($filter)){
+                return $filter::init();
+            }
+
+            return $filter;
+
+        }, $filters);
     }
 }
