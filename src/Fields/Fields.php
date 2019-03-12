@@ -22,6 +22,16 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         return $this->fields;
     }
 
+    public function any(): bool
+    {
+        return count($this->all()) > 0;
+    }
+
+    public function isEmpty(): bool
+    {
+        return !$this->any();
+    }
+
     public function keys(): array
     {
         return array_map(function (Field $field) {

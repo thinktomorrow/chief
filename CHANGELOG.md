@@ -6,6 +6,8 @@ All Notable changes to the `chief` application template will be documented in th
 - Add: seo_keywords added to page seo tab
 - removed: PageUpdateRequest, PageCreateRequest, PagesController, ModuleUpdateRequest
 - removed unused view files for modules/pages
+- Added: Managers can now have filters to query the admin index.
+- Change: `findAllManaged()` has changed and now contains the filtering logic. Please keep in mind, should you have written your own `findAllManaged` version.
 
 ## 0.2.5 - 2019-03-05
 - Add: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.

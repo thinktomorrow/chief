@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
 
@@ -41,7 +42,7 @@ interface Manager
      *
      * @return Collection of ManagedModel
      */
-    public function findAllManaged(): Collection;
+    public function findAllManaged($apply_filters = false): Collection;
 
     /**
      * Retrieve the managed model instance
@@ -79,6 +80,13 @@ interface Manager
      * @return FieldArrangement
      */
     public function fieldArrangement($key = null): FieldArrangement;
+
+    /**
+     * Collection of filters to be used on the admin index pages.
+     *
+     * @return Filters
+     */
+    public static function filters(): Filters;
 
     /**
      * @param Field|string $field
