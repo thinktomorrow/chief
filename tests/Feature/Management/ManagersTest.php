@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslati
 
 class ManagersTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

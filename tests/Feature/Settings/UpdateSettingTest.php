@@ -10,7 +10,7 @@ class UpdateSettingTest extends TestCase
 {
     use SettingFormParams;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

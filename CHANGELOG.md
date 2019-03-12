@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Fix: menuitems of offline pages now show in admin.
 - Fix: role name cant contain spaces.
 - Add: seo_keywords added to page seo tab
 - removed: PageUpdateRequest, PageCreateRequest, PagesController, ModuleUpdateRequest

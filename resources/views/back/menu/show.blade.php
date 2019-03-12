@@ -36,9 +36,7 @@
             @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
 
             <div class="stack-s">
-
                 @foreach($menuItem->children as $child)
-
                     @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 
                     <div class="stack-xs">

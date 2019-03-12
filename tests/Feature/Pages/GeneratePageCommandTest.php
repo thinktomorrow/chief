@@ -9,7 +9,7 @@ class GeneratePageCommandTest extends TestCase
 {
     private $command;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

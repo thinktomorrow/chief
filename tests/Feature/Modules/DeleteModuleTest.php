@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class DeleteModuleTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

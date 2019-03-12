@@ -12,7 +12,7 @@ class StateMachineTest extends TestCase
     private $dummyStatefulContract;
     private $machine;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

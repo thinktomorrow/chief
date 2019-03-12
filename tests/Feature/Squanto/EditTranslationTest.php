@@ -13,7 +13,7 @@ class EditTranslationTest extends TestCase
 
     private $squantoPage;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

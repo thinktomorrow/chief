@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Audit\Audit;
 
-class AuditTest extends TestCase
+class AuditModelTest extends TestCase
 {
     use ChiefDatabaseTransactions, PageFormParams;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -56,7 +56,7 @@ class AuditTest extends TestCase
 
         $this->actingAs($user, 'chief')
             ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
-        
+
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
@@ -77,7 +77,7 @@ class AuditTest extends TestCase
 
         $this->actingAs($user, 'chief')
             ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams(['published' => false]));
-        
+
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
@@ -118,7 +118,7 @@ class AuditTest extends TestCase
 
         $this->actingAs($user, 'chief')
             ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
-        
+
         $article = Page::first();
         $activity = $article->activity->first();
 

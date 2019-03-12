@@ -153,8 +153,8 @@
             name="collection_type"
             :options='@json($collections)'
             selected='@json(old('collection_type', $menuitem->collection_type))'
-            labelkey="plural"
-            valuekey="key"
+            labelkey="group"
+            valuekey="id"
             placeholder="kies een paginagroep"
     >
     </chief-multiselect>

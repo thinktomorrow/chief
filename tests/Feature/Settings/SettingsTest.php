@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class SettingsTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

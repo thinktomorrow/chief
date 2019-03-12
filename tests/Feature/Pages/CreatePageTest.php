@@ -13,7 +13,7 @@ class CreatePageTest extends TestCase
 {
     use PageFormParams;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

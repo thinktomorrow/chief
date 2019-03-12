@@ -12,7 +12,7 @@ class DeletePageTest extends TestCase
 {
     private $page;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

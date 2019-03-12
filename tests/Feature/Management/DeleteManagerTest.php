@@ -15,7 +15,7 @@ class DeleteManagerTest extends TestCase
     private $fake;
     private $model;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

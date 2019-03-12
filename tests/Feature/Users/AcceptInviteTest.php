@@ -16,7 +16,7 @@ class AcceptInviteTest extends TestCase
     private $inviter;
     private $invitation;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
