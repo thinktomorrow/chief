@@ -24,19 +24,49 @@
         </div>
     @endif
 
-    <div class="row gutter-s">
-        @foreach($managers as $manager)
-            @include('chief::back.managers._partials._rowitem')
-            @include('chief::back.managers._partials.delete-modal')
-        @endforeach
-    </div>
-    @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
-        @if( ! $archiveAssistant->findAll()->isEmpty())
-            <hr>
-            <div class="center-x">
-                <a class="squished-s" href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
+    @if($modelManager::sections()->has('sidebar'))
+        <div class="row gutter">
+            <div class="column-9">
+                <div class="row gutter-s">
+                    @foreach($managers as $manager)
+                        @include('chief::back.managers._partials._rowitem')
+                        @include('chief::back.managers._partials.delete-modal')
+                    @endforeach
+                </div>
             </div>
+            <div class="column-3">
+
+                {!! $modelManager::sections()->sidebar !!}
+
+                @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
+                    @if( ! $archiveAssistant->findAll()->isEmpty())
+                        <div class="center-x">
+                            <a class="squished-s" href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
+                        </div>
+                    @endif
+                @endif
+
+            </div>
+        </div>
+    @else
+        <div class="row gutter-s">
+            @foreach($managers as $manager)
+                @include('chief::back.managers._partials._rowitem')
+                @include('chief::back.managers._partials.delete-modal')
+            @endforeach
+        </div>
+
+        {!! $modelManager->sections()->sidebar !!}
+
+        @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
+            @if( ! $archiveAssistant->findAll()->isEmpty())
+                <div class="center-x">
+                    <a class="squished-s" href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
+                </div>
+            @endif
         @endif
     @endif
+
+
 
 @stop

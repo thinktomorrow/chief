@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
+use Thinktomorrow\Chief\Management\Details\Sections;
 
 interface Manager
 {
@@ -121,4 +122,12 @@ interface Manager
      * @return Details
      */
     public function details(): Details;
+
+    /**
+     * Information and custom display on the index listing such as
+     * sidebar info, filters, search, title and so on.
+     *
+     * @return Sections
+     */
+    public static function sections(): Sections;
 }

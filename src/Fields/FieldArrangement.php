@@ -20,6 +20,16 @@ class FieldArrangement
         $this->fillTabsWithTheirFields();
     }
 
+    public function addTab(FieldsTab $tab, $order = null)
+    {
+        $order = (null === $order) ? count($this->tabs) : $order;
+
+        $tabs = $this->tabs;
+        array_splice($tabs, $order, 0, [$tab]);
+
+        return new static($this->fields, $tabs);
+    }
+
     public function fields(): array
     {
         return $this->fields->all();
@@ -37,8 +47,7 @@ class FieldArrangement
 
     private function validateTabs(array $tabs)
     {
-        array_map(function (FieldsTab $tab) {
-        }, $tabs);
+        array_map(function (FieldsTab $tab) {}, $tabs);
     }
 
     private function fillTabsWithTheirFields()

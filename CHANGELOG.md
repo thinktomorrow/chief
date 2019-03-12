@@ -2,6 +2,17 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Fix: role name cant contain spaces.
+- Add: seo_keywords added to page seo tab
+- removed: PageUpdateRequest, PageCreateRequest, PagesController, ModuleUpdateRequest
+
+## 0.2.5 - 2019-03-05
+- Add: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.
+- Add: possibility to display sidebar data on manager index page via a `sections()` method on the manager.
+
+## 0.2.4 - 2019-03-01
+- Update packages including thinktomorrow/squanto to 0.5.5
+- Change: with the update of squanto empty translation lines will now be kept as valid values, and no longer cascades down to the translation file source.
 
 ## 0.2.3 - 2019-02-28
 - Add: view folder for sets was only targeted at views/front/modules/ and is now also allowed under view/modules.

@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
@@ -15,6 +16,7 @@ use Thinktomorrow\Chief\Management\Details\HasDetails;
 abstract class AbstractManager
 {
     use HasDetails,
+        HasSections,
         ManagesMedia,
         ManagesPagebuilder,
         TranslatableCommand,

@@ -6,30 +6,10 @@ namespace Thinktomorrow\Chief\Management\Details;
 
 use Illuminate\Contracts\Support\Arrayable;
 
-/**
- * @property $key
- * @property $singular
- * @property $plural
- * @property $internal_label
- * @property $title
- * @property $subtitle
- * @property $intro
- */
-class Details implements Arrayable
+class Sections implements Arrayable
 {
     /** @var array */
     protected $values = [];
-
-    public function __construct($id, string $key, string $singular, string $plural, string $internal_label, string $title)
-    {
-        // Default model details
-        $this->values['id'] = $id;
-        $this->values['key'] = $key;
-        $this->values['singular'] = $singular;
-        $this->values['plural'] = $plural;
-        $this->values['internal_label'] = $internal_label;
-        $this->values['title'] = $title;
-    }
 
     public function get($attribute = null)
     {
