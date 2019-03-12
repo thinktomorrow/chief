@@ -6,11 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class ChangeMorphKey extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('pages', function (Blueprint $table) {
@@ -30,11 +25,6 @@ class ChangeMorphKey extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('pagesets');

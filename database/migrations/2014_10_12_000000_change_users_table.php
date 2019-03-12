@@ -6,11 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class ChangeUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('chief_users', function (Blueprint $table) {
@@ -32,11 +27,6 @@ class ChangeUsersTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('chief_users');

@@ -6,10 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class ChangeTitleOnPageTranslations extends Migration
 {
-    /**
-     * Run the migrations.
-     * @return void
-     */
     public function up()
     {
         Schema::table('page_translations', function (Blueprint $table) {
@@ -17,10 +13,6 @@ class ChangeTitleOnPageTranslations extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     * @return void
-     */
     public function down()
     {
     }
