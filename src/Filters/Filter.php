@@ -33,7 +33,7 @@ abstract class Filter
         return false;
     }
 
-    abstract function apply($value = null): Closure;
+    abstract public function apply($value = null): Closure;
 
     public function __get($key)
     {
@@ -59,7 +59,7 @@ abstract class Filter
     public function __call($name, $arguments)
     {
         // Without arguments we assume you want to retrieve a value property, except for query() which is used on a custom Filter.
-        if (empty($arguments) && !in_array($name,['apply'])) {
+        if (empty($arguments) && !in_array($name, ['apply'])) {
             return $this->__get($name);
         }
 

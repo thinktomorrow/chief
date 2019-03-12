@@ -28,7 +28,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate
     {
         foreach ($this->all() as $filter) {
             if (request()->filled($filter->name)) {
-                $builder->tap($filter->apply( request()->input($filter->name, null) ));
+                $builder->tap($filter->apply(request()->input($filter->name, null)));
             }
         }
     }
@@ -105,14 +105,12 @@ class Filters implements \ArrayAccess, \IteratorAggregate
 
     private function sanitizeFilters(array $filters)
     {
-        return array_map(function($filter){
-
-            if(is_string($filter) && class_exists($filter)){
+        return array_map(function ($filter) {
+            if (is_string($filter) && class_exists($filter)) {
                 return $filter::init();
             }
 
             return $filter;
-
         }, $filters);
     }
 }
