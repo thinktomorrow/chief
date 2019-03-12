@@ -9,7 +9,7 @@ class AddSeoKeywordsOnPageTranslations extends Migration
     public function up()
     {
         Schema::table('page_translations', function (Blueprint $table) {
-            $table->string('seo_keywords')->nullable();
+            $table->string('seo_keywords')->after('seo_description')->nullable();
         });
     }
 
