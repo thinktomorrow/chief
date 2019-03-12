@@ -9,18 +9,18 @@
         </div>
 
         <!-- top menu -->
-        <div class="relative stack inset-s" style="border-left:3px solid transparent;">
+        <div class="pagebuilder-menu-wrapper relative stack inset-s" style="border-left:3px solid transparent;">
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
         <draggable :value="sortedSections" 
-        @end="changeSectionLocation" 
-        @start="minimizeSections"
+        v-on:start="minimizeSections"
+        v-on:end="changeSectionLocation"
         :options="{
             filter: '.delete-button',
             handle: '.grip-button',
-            dragClass: 'drag',
-            ghostClass: 'ghost'
+            ghostClass: 'ghost',
+            dragClass: 'sortable-drag'
         }">
 
             <div v-for="section in sortedSections" v-bind:key="section.key">
@@ -172,24 +172,38 @@
 
             },
             minimizeSections() {
+                var pagebuilder = document.getElementById('pagebuilder');
                 var allSections = this.$el.getElementsByTagName('section');
+
                 for(var i = 0; i < allSections.length; i++) {
+                    allSections[i].getElementsByClassName('module-icons-left')[0].classList.add('hide-icons');
+                    allSections[i].getElementsByClassName('module-icons-right')[0].classList.add('hide-icons');
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
                         allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
                     }
                     allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
                 }
+
+                pagebuilder.classList.add('pagebuilder-dragging');
+                document.querySelector('body').classList.add('drag-cursor');
             },
             maximizeSections() {
+                var pagebuilder = document.getElementById('pagebuilder');
                 var allSections = this.$el.getElementsByTagName('section');
+
                 for(var i = 0; i < allSections.length; i++) {
+                    allSections[i].getElementsByClassName('module-icons-left')[0].classList.remove('hide-icons');
+                    allSections[i].getElementsByClassName('module-icons-right')[0].classList.remove('hide-icons');
                     allSections[i].getElementsByClassName('to-minimize')[0].style.display = "flex";
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var titleText = allSections[i].getElementsByTagName('h3')[0];
                         titleText.innerHTML = titleText.innerHTML.substring(0, titleText.innerHTML.indexOf(' - '));
                     } 
                 } 
+
+                pagebuilder.classList.remove('pagebuilder-dragging');
+                document.querySelector('body').classList.remove('drag-cursor');
             },
             addNewTextSectionAfter(index){
                 this._addNewSectionAfter(index, {
@@ -254,21 +268,43 @@
 
 <style>
 
-.section-item{
-    border-left:3px solid rgba(21, 200, 167, 1);
-    background-color:rgba(21, 200, 167, 0.05);
-}
+    .pagebuilder-dragging {
+        background-color: rgba(255, 255, 255, .3);
+        border-radius: 5px;
+        border: 2px dashed rgba(21, 200, 167, 1);
+        padding: 20px;
+    }
 
-.ghost {
-    transition: 0.2s all ease;
-    background-color: transparent;
-    border-left: transparent;
-    height: 40px;
-    width: 100%;
-}
+    .pagebuilder-dragging .pagebuilder-menu-wrapper {
+        display: none;
+    }
 
-.ghost > * {
-    display:none;
-}
+    .section-item{
+        border-left: 3px solid rgba(21, 200, 167, 1);
+        background-color: rgba(21, 200, 167, 0.05);
+    }
+
+    .ghost {
+        transition: 0.2s all ease;
+        background-color: rgba(21, 200, 167, 1);
+        height: 12px;
+        width: 100%;
+    }
+
+    .ghost > * {
+        display:none;
+    }
+
+    .hide-icons {
+        opacity: 0 !important;
+    }
+
+    .sortable-drag > * {
+        opacity: 0.2 !important;
+    }
+
+    .drag-cursor {
+        cursor: url('/chief-assets/back/img/move.svg') 12 12, auto !important;
+    }
 
 </style>
