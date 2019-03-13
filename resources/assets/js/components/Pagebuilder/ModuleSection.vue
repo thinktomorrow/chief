@@ -1,5 +1,5 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="section-item stack block inset relative">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="{section.id} section-item stack block inset relative">
         <h3 class="pagebuilder-section-title" v-if="title" v-text="title"></h3>
         <div class="row to-minimize">
             <div class="column-6">
@@ -7,7 +7,7 @@
                         :name="'sections['+sectionKey+']['+_uid+']'"
                         :options='options'
                         :multiple="false"
-                        :selected="section.id"
+                        :selected="this.selected"
                         grouplabel="group"
                         groupvalues="values"
                         labelkey="label"
@@ -50,9 +50,10 @@
         data(){
             return {
                 show_menu: false,
+                selected: this.section.id
             }
         },
-        mounted(){
+        created(){
 
             Eventbus.$on('updated-select', (name, valuesForSelect, values, component) => {
 
@@ -62,12 +63,13 @@
                 // Single module allows for one selection
                 if(valuesForSelect[0]) {
                     this.section.id = valuesForSelect[0];
+                    this.selected = this.section.id;
                 }
                 // Deselect a module
                 else if( typeof valuesForSelect[0] == "undefined"){
                     this.section.id = null;
                 }
-
+                
                 return true;
             });
 
