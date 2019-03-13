@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 ## unreleased
 - Fixed: header margin bug by updating warpaint 0.0.10
 - Fixed: fallback set to default page view
+- Fixed: pagebuilder module section now save in right order
 
 ## 0.2.6 - 2019-03-12
 - Added: seo_keywords added to page seo tab. Please run `php artisan migrate` to add the seo_keywords column!
