@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Authorization\Role;
@@ -29,13 +30,19 @@ class UserController extends Controller
 
         return view('chief::back.users.create', [
             'user'      => new User(),
-            'roleNames' => Role::all()->pluck('name')->toArray()
+            'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer')),
         ]);
     }
 
     public function store(Request $request)
     {
         $this->authorize('create-user');
+
+        // Sanitize an empty array that is passed as [null]
+        $requestRoles = $request->get('roles');
+        if(is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null ){
+            $request = $request->merge(['roles' => []]);
+        }
 
         $this->validate($request, [
             'firstname' => 'required',
@@ -60,21 +67,21 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
-        if (auth()->guard('chief')->user()->hasRole('developer')) {
-            $roles = Role::all();
-        } else {
-            $roles = Role::whereNotIn('name', ['developer'])->get();
-        }
-
         return view('chief::back.users.edit', [
             'user'      => User::findOrFail($id),
-            'roleNames' => $roles->pluck('name')->toArray()
+            'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer'))
         ]);
     }
 
     public function update(Request $request, $id)
     {
         $this->authorize('update-user');
+
+        // Sanitize an empty array that is passed as [null]
+        $requestRoles = $request->get('roles');
+        if(is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null ){
+            $request = $request->merge(['roles' => []]);
+        }
 
         $this->validate($request, [
             'firstname' => 'required',
@@ -84,6 +91,11 @@ class UserController extends Controller
         ]);
 
         $user = User::findOrFail($id);
+
+        // Only another developer can change another developer.
+        if(!chiefAdmin()->hasRole('developer') && ($user->hasRole('developer') || in_array('developer', $request->get('roles',[])) )) {
+            throw new AuthorizationException('Constraint: Only an user with role developer can update an user with developer role.');
+        }
 
         $user->update($request->only(['firstname', 'lastname', 'email']));
         $user->syncRoles($request->get('roles', []));
