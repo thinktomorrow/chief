@@ -6,6 +6,8 @@ All Notable changes to the `chief` application template will be documented in th
 - Removed: We removed the unused `view-setting` permission for the default roles setup. 
 - Removed: manager::archive() method in favor of ArchiveAssistant flow.
 - Removed: pagemanager::archive() method in favor of ArchiveAssistant flow.
+- Removed: unused views: authorization.permissions.*, _elements.mediagroup-*, authorization.roles._deletemodal
+- Removed: unused crudcommands: archive,create,update page commands 
 - Fixed: only a developer can edit/update an user with role developer.
 - Fixed: only a developer can assign an user with the developer role.
 - Fixed: improved user management UI 
