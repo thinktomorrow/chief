@@ -18,7 +18,9 @@ class Role extends BaseRole implements RoleContract
 
     public static function rolesForSelect($includeDeveloperRole = false)
     {
-        $roles = $includeDeveloperRole ? static::all() : static::all()->reject(function($role){ return $role->name == 'developer'; });
+        $roles = $includeDeveloperRole ? static::all() : static::all()->reject(function ($role) {
+            return $role->name == 'developer';
+        });
 
         return $roles->pluck('name')->toArray();
     }

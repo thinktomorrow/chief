@@ -19,8 +19,10 @@ class PublishedFilter extends SelectFilter
 
     public function apply($value = null): Closure
     {
-        return function($query) use($value){
-            if($value == 'all') return $query;
+        return function ($query) use ($value) {
+            if ($value == 'all') {
+                return $query;
+            }
 
             $value = $value == 'online' ? true : false;
             
