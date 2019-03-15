@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: own settings page now requires the user to have the `update-you` permission. In existing projects you can add this permission by running: `php artisan chief:permission update-you`. Next you'll need to add this permission to all the roles in your system. This is done via the UI.
 - Removed: We removed the unused `view-setting` permission for the default roles setup. 
 - Removed: manager::archive() method in favor of ArchiveAssistant flow.
+- Removed: pagemanager::archive() method in favor of ArchiveAssistant flow.
 - Fixed: only a developer can edit/update an user with role developer.
 - Fixed: only a developer can assign an user with the developer role.
 - Fixed: improved user management UI 
