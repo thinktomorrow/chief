@@ -21,7 +21,7 @@ class MorphableInstanceTest extends TestCase
         ]);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // Force empty the morphMap each time because it is kept during the entire testrun.
         Relation::$morphMap = [];
