@@ -16,7 +16,9 @@ class InvitationPresenter
 
     public function stateAsLabel(): string
     {
-        if($this->invitation->state() == InvitationState::ACCEPTED) return '';
+        if ($this->invitation->state() == InvitationState::ACCEPTED) {
+            return '';
+        }
 
         $flair = 'label--primary';
 

@@ -40,7 +40,7 @@ class UserController extends Controller
 
         // Sanitize an empty array that is passed as [null]
         $requestRoles = $request->get('roles');
-        if(is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null ){
+        if (is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null) {
             $request = $request->merge(['roles' => []]);
         }
 
@@ -79,7 +79,7 @@ class UserController extends Controller
 
         // Sanitize an empty array that is passed as [null]
         $requestRoles = $request->get('roles');
-        if(is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null ){
+        if (is_array($requestRoles) && count($requestRoles) == 1 && reset($requestRoles) === null) {
             $request = $request->merge(['roles' => []]);
         }
 
@@ -93,7 +93,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // Only another developer can change another developer.
-        if(!chiefAdmin()->hasRole('developer') && ($user->hasRole('developer') || in_array('developer', $request->get('roles',[])) )) {
+        if (!chiefAdmin()->hasRole('developer') && ($user->hasRole('developer') || in_array('developer', $request->get('roles', [])))) {
             throw new AuthorizationException('Constraint: Only an user with role developer can update an user with developer role.');
         }
 
