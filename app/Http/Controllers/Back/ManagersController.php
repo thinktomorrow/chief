@@ -98,6 +98,4 @@ class ManagersController extends Controller
         return redirect()->to($manager->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is verwijderd.');
     }
-
-
 }
