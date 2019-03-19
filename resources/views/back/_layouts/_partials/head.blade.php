@@ -25,4 +25,5 @@
 
     @stack('custom-styles')
     @include('chief::back._layouts._partials.project-head')
+    @include('chief::back._layouts._partials.analytics')
 </head>

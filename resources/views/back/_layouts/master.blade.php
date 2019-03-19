@@ -1,7 +1,10 @@
 @include('chief::back._layouts._partials.head')
 
 <body>
-
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6376ZS"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 <main id="main" class="bg-grey-lightest min-h-screen">
     @include('chief::back._layouts._partials.nav')
     @yield('header')
