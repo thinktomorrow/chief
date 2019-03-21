@@ -15,7 +15,7 @@ class MorphableModuleTest extends TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // Reset relation mapping
         Relation::$morphMap = [];
