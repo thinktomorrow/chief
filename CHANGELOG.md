@@ -2,9 +2,21 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Changed: own settings page now requires the user to have the `update-you` permission. In existing projects you can add this permission by running: `php artisan chief:permission update-you`. Next you'll need to add this permission to all the roles in your system. This is done via the UI.
+- Removed: We removed the unused `view-setting` permission for the default roles setup. 
+- Removed: manager::archive() method in favor of ArchiveAssistant flow.
+- Removed: pagemanager::archive() method in favor of ArchiveAssistant flow.
+- Removed: unused views: authorization.permissions.*, _elements.mediagroup-*, authorization.roles._deletemodal
+- Removed: unused crudcommands: archive,create,update page commands 
+- Fixed: only a developer can edit/update an user with role developer.
+- Fixed: only a developer can assign an user with the developer role.
+- Fixed: improved user management UI 
 - Fixed: header margin bug by updating warpaint 0.0.10
 - Fixed: fallback set to default page view
 - Fixed: pagebuilder module section now save in right order
+- Fixed: respect redirectTo url for AuthenticationException in L5.7
+- Fixed: allow field description value to contain html
+- Fixed: cast expires_at to date on invitation
 
 ## 0.2.6 - 2019-03-12
 - Added: seo_keywords added to page seo tab. Please run `php artisan migrate` to add the seo_keywords column!

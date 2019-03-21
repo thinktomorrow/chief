@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\Management\ManagesPreviews;
 use Thinktomorrow\Chief\Management\ManagesPublishing;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Management\ManagerThatPreviews;
 use Thinktomorrow\Chief\Management\ManagerThatPublishes;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
@@ -137,7 +136,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 return $field->key == 'title';
             }));
         }
-        
+
         return new FieldArrangement($this->fields(), [
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('inhoud'),
@@ -176,11 +175,6 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         }
 
         app(DeletePage::class)->handle($this->model->id);
-    }
-
-    public function archive()
-    {
-        app(ArchivePage::class)->handle($this->model->id);
     }
 
     public function storeRequest(Request $request): Request
