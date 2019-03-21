@@ -79,6 +79,8 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
+        // dd($request);
+
         app(UpdateManager::class)->handle($manager, $request);
 
         return redirect()->to($manager->route('edit'))

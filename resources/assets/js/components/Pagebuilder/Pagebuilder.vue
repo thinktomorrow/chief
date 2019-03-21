@@ -79,6 +79,7 @@
 
     </div>
 </template>
+
 <script>
     import TextSection from './TextSection.vue';
     import ModuleSection from './ModuleSection.vue';
@@ -109,7 +110,7 @@
                 return this.sections.sort(function(a, b) {
                     return a.sort - b.sort;
                 });
-            }
+            },
         },
         created(){
             Eventbus.$on('addingNewTextSectionAfter',(position, component) => {
@@ -237,6 +238,8 @@
             _addNewSectionAfter(index, data){
                 this._resortSectionsAfter(index);
                 data.sort = index + 1;
+                data.id = data.id || null,
+                data.key = data.key || this._randomHash(),
                 this.sections.push(data);
             },
             _randomHash(){

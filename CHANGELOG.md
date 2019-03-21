@@ -14,6 +14,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: improved user management UI 
 - Fixed: header margin bug by updating warpaint 0.0.10
 - Fixed: fallback set to default page view
+- Fixed: pagebuilder module section now save in right order
 - Fixed: respect redirectTo url for AuthenticationException in L5.7
 - Fixed: allow field description value to contain html
 - Fixed: cast expires_at to date on invitation
