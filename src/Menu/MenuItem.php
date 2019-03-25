@@ -87,7 +87,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     public function url()
     {
         if ($this->ofType(static::TYPE_INTERNAL) && $page = $this->page) {
-            return $page->menuUrl();
+            return $page->url();
         }
 
         return $this->url;
@@ -142,7 +142,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
     private static function composePageUrl(MenuItem $item, Page $page)
     {
-        return $page->menuUrl();
+        return $page->url();
     }
 
     /**

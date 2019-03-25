@@ -19,7 +19,7 @@ class InternalLinksController extends Controller
         $links = Page::all()->map(function ($page) {
             return [
                 'name' => $page->menuLabel(),
-                'url' => $page->menuUrl(),
+                'url' => $page->url(),
             ];
         });
 

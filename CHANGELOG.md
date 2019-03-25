@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Changed: `ActsAsMenuItem::mediaUrl()`  and `Page::mediaUrl()` are deprecated. Use `url()` method instead.
+
 ## 0.2.7 - 2019-03-21
 - Added: Publish filter added to pagemanager.
 - Changed: own settings page now requires the user to have the `update-you` permission. In existing projects you can add this permission by running: `php artisan chief:permission update-you`. Next you'll need to add this permission to all the roles in your system. This is done via the UI.

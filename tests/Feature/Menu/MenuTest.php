@@ -114,7 +114,7 @@ class MenuTest extends TestCase
             $item = $main->children()[$k];
 
             $this->assertEquals($page->menuLabel(), $item->label);
-            $this->assertEquals($page->menuUrl(), $item->url);
+            $this->assertEquals($page->url(), $item->url);
         }
     }
 
