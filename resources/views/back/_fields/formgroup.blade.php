@@ -5,7 +5,7 @@
         @endif
 
         @if($field->description)
-            <p>{{ $field->description }}</p>
+            <p>{!! $field->description !!}</p>
         @endif
     </div>
     <div class="formgroup-input column-8">

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Audit\Audit;
 
-class AuditTest extends TestCase
+class AuditModelTest extends TestCase
 {
     use ChiefDatabaseTransactions, PageFormParams;
 

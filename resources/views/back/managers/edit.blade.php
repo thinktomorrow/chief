@@ -26,7 +26,7 @@
 
         <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
-
+            
             <input type="hidden" name="_method" value="PUT">
 
             @include('chief::back.managers._partials._form', [

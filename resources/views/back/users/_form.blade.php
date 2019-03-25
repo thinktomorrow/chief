@@ -22,7 +22,7 @@
 
 @chiefformgroup(['field' => 'roles'])
     @slot('label', 'Rechten')
-    @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft. <a href="'.route('chief.back.roles.index').'">Meer uitleg</a>.')
+    @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.')
         <label for="roles">Rechten</label>
         <chief-multiselect
             name="roles"

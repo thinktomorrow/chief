@@ -18,13 +18,13 @@ class AuthorizationDefaults
         return collect([
 
             // full access, even to application logic stuff
-            'developer' => ['role', 'permission', 'user', 'page', 'disable-user', 'squanto', 'view-audit', 'view-setting', 'update-setting'],
+            'developer' => ['role', 'permission', 'user', 'page', 'disable-user', 'update-you', 'squanto', 'view-audit', 'update-setting'],
 
             // Manages everything, including users
-            'admin' => ['user', 'page', 'disable-user', 'view-squanto', 'update-squanto', 'view-audit', 'view-setting', 'update-setting'],
+            'admin' => ['user', 'page', 'disable-user', 'update-you', 'view-squanto', 'update-squanto', 'view-audit', 'update-setting'],
 
             // Writes and edits content
-            'author' => ['page', 'view-squanto', 'update-squanto'],
+            'author' => ['page', 'update-you', 'view-squanto', 'update-squanto'],
         ]);
     }
 
@@ -46,6 +46,7 @@ class AuthorizationDefaults
             'update-user',
             'delete-user',
             'disable-user',
+            'update-you',
 
             'view-page',
             'create-page',
@@ -59,8 +60,7 @@ class AuthorizationDefaults
 
             'view-audit',
 
-            'view-setting',
-            'update-setting'
+            'update-setting',
         ]);
     }
 }

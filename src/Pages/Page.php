@@ -11,6 +11,8 @@ use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\PresentForParent;
+use Thinktomorrow\Chief\Relations\PresentingForParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
@@ -25,7 +27,7 @@ use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, PresentForParent
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -40,6 +42,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         Archivable,
         AuditTrait,
         ActingAsParent,
+        PresentingForParent,
         ActingAsChild,
         WithSnippets;
 

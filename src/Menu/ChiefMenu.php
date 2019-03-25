@@ -8,6 +8,7 @@ use Vine\NodeCollection;
 class ChiefMenu
 {
     private $collection;
+    private $includeHidden = false;
 
     public function __construct(NodeCollection $collection)
     {
@@ -16,7 +17,7 @@ class ChiefMenu
 
     public static function fromMenuItems($type = 'main')
     {
-        $items = MenuItem::getNodeEntries($type);
+        $items = app(MenuItem::class)->nodeEntries($type);
 
         return self::fromArray($items);
     }
@@ -32,15 +33,28 @@ class ChiefMenu
         return new static($collection);
     }
 
+    public function includeHidden()
+    {
+        $this->includeHidden = true;
+
+        return $this;
+    }
+
     public function items(): NodeCollection
     {
+        if (!$this->includeHidden) {
+            $this->collection = $this->collection->shake(function ($node) {
+                return !$node->hidden_in_menu && !$node->draft;
+            });
+        }
+
         return $this->collection->sort('order');
     }
 
     public function getForSelect($id = null)
     {
         $this->collection = $this->items();
-        
+
         if ($id) {
             $this->collection = $this->collection->prune(function ($node) use ($id) {
                 return !in_array($id, $node->pluckAncestors('id'));

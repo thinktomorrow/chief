@@ -5,20 +5,20 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Fields\FieldsTab;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\ManagesPreviews;
 use Thinktomorrow\Chief\Management\ManagesPublishing;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Pages\Application\ArchivePage;
 use Thinktomorrow\Chief\Management\ManagerThatPreviews;
 use Thinktomorrow\Chief\Management\ManagerThatPublishes;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
@@ -51,11 +51,9 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
     public function can($verb): bool
     {
-        try{
+        try {
             $this->authorize($verb);
-        }
-        catch(NotAllowedManagerRoute $e)
-        {
+        } catch (NotAllowedManagerRoute $e) {
             return false;
         }
 
@@ -123,6 +121,13 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         ]);
     }
 
+    public static function filters(): Filters
+    {
+        return new Filters([
+            PublishedFilter::class
+        ]);
+    }
+
     private function pageBuilderField()
     {
         if ($this->pageBuilderField) {
@@ -139,7 +144,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 return $field->key == 'title';
             }));
         }
-        
+
         return new FieldArrangement($this->fields(), [
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('inhoud'),
@@ -178,11 +183,6 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         }
 
         app(DeletePage::class)->handle($this->model->id);
-    }
-
-    public function archive()
-    {
-        app(ArchivePage::class)->handle($this->model->id);
     }
 
     public function storeRequest(Request $request): Request

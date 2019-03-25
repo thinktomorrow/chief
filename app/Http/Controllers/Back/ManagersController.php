@@ -26,7 +26,7 @@ class ManagersController extends Controller
 
         $manager->guard('index');
 
-        $managers = $manager->findAllManaged();
+        $managers = $manager->findAllManaged(true);
 
         return view('chief::back.managers.index', [
             'modelManager' => $manager,
@@ -79,6 +79,8 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
+        // dd($request);
+
         app(UpdateManager::class)->handle($manager, $request);
 
         return redirect()->to($manager->route('edit'))
@@ -91,21 +93,6 @@ class ManagersController extends Controller
 
         try {
             app(DeleteManager::class)->handle($manager, $request);
-        } catch (DeleteAborted $e) {
-            return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
-        }
-
-        return redirect()->to($manager->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is verwijderd.');
-    }
-
-    public function archive(string $key, $id, Request $request)
-    {
-        $manager = $this->managers->findByKey($key, $id);
-
-        try {
-            app(DeleteManager::class)->handle($manager, $request);
-            app(ArchiveManager::class)->handle($manager, $request);
         } catch (DeleteAborted $e) {
             return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
         }

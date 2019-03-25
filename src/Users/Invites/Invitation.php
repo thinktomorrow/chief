@@ -50,15 +50,15 @@ class Invitation extends Model implements StatefulContract
 
     public function acceptUrl()
     {
-        return URL::signedRoute(
-            'invite.accept', ['token' => $this->token], $this->expires_at
+        return URL::temporarySignedRoute(
+            'invite.accept', $this->expires_at, ['token' => $this->token]
         );
     }
 
     public function denyUrl()
     {
-        return URL::signedRoute(
-            'invite.deny', ['token' => $this->token], $this->expires_at
+        return URL::temporarySignedRoute(
+            'invite.deny', $this->expires_at, ['token' => $this->token]
         );
     }
 
