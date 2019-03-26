@@ -84,9 +84,13 @@ class Field
 
     public static function translateValue($value, $locale)
     {
-        if(!is_array($value)) return $value;
+        if (!is_array($value)) {
+            return $value;
+        }
 
-        if($locale && isset($value[$locale])) return $value[$locale];
+        if ($locale && isset($value[$locale])) {
+            return $value[$locale];
+        }
 
         return $value;
     }

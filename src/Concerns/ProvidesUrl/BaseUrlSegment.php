@@ -8,17 +8,17 @@ class BaseUrlSegment
 {
     public static function strip($value)
     {
-        $originalValue = $value = trim($value,'/');
+        $originalValue = $value = trim($value, '/');
 
         $segments = static::all();
 
-        foreach($segments as $segment){
-            if(0 === strpos($originalValue, $segment)){
+        foreach ($segments as $segment) {
+            if (0 === strpos($originalValue, $segment)) {
                 $value = substr($value, strlen($segment));
             }
         }
 
-        return trim($value,'/');
+        return trim($value, '/');
     }
 
     private static function all(): array
@@ -27,9 +27,8 @@ class BaseUrlSegment
 
         $managers = app(Managers::class)->all();
 
-        foreach($managers as $manager)
-        {
-            if(contract($manager->model(), ProvidesUrl::class)){
+        foreach ($managers as $manager) {
+            if (contract($manager->model(), ProvidesUrl::class)) {
                 $segments[] = $manager->model()->baseUrlSegment();
             }
         }

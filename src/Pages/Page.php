@@ -176,7 +176,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         $parameters = trim($this->baseUrlSegment($locale) . '/' . $slug, '/');
 
-        return $this->resolveRoute('pages.show',$parameters, $locale);
+        return $this->resolveRoute('pages.show', $parameters, $locale);
     }
 
     /** @inheritdoc */
@@ -189,18 +189,20 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     /** @inheritdoc */
     public static function baseUrlSegment($locale = null): string
     {
-        if( !isset(static::$baseUrlSegment)){
+        if (!isset(static::$baseUrlSegment)) {
             return '/';
         }
 
-        if(!is_array(static::$baseUrlSegment)){
+        if (!is_array(static::$baseUrlSegment)) {
             return static::$baseUrlSegment;
         }
 
         // When an array, we try to locale the expected segment by locale
         $key = $locale ?? app()->getlocale();
 
-        if(isset(static::$baseUrlSegment[$key])) return static::$baseUrlSegment[$key];
+        if (isset(static::$baseUrlSegment[$key])) {
+            return static::$baseUrlSegment[$key];
+        }
 
         // Fall back to last entry in case no match is found
         $reversedSegments = array_reverse(static::$baseUrlSegment);

@@ -16,7 +16,9 @@ trait ResolvesRoute
      */
     protected function resolveRoute($name, $parameters = [], $locale = null)
     {
-        if(static::$routeResolver) return call_user_func_array(static::$routeResolver, [$name, $parameters, $locale]);
+        if (static::$routeResolver) {
+            return call_user_func_array(static::$routeResolver, [$name, $parameters, $locale]);
+        }
 
         return route($name, $parameters);
     }
