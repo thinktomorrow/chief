@@ -26,8 +26,8 @@ class ArchiveAssistant implements Assistant
 
     public function manager(Manager $manager)
     {
-        $this->manager = $manager;
-        $this->model = $manager->model();
+        $this->manager  = $manager;
+        $this->model    = $manager->model();
     }
 
     public static function key(): string
@@ -81,7 +81,7 @@ class ArchiveAssistant implements Assistant
         }
 
         $modelRoutes = [
-            'archive' => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),
+            'archive'   => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),
             'unarchive' => route('chief.back.assistants.unarchive', [$this->manager->details()->key, $this->manager->model()->id]),
         ];
 

@@ -16,19 +16,17 @@ use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\ManagesPreviews;
-use Thinktomorrow\Chief\Management\ManagesPublishing;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
 use Thinktomorrow\Chief\Management\ManagerThatPreviews;
-use Thinktomorrow\Chief\Management\ManagerThatPublishes;
 use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
+use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
 
-class PageManager extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatPreviews
+class PageManager extends AbstractManager implements Manager
 {
-    use ManagesPublishing,
-        ManagesPreviews;
+    use ManagesPreviews;
 
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
@@ -38,6 +36,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
     protected $assistants = [
         'archive' => ArchiveAssistant::class,
+        'publish' => PublishAssistant::class,
     ];
 
     public function __construct(Registration $registration)
@@ -162,7 +161,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
             return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
+                ->set('context', '<span class="inline-s">' . $this->model->publicationStatusAsLabel() . '</span>');
         }
 
         return parent::details();

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
@@ -24,10 +25,8 @@ class PublishManagerTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', PublishedManagerFake::class, ManagedModelFake::class);
-
-        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'slug' => 'foobar', 'custom_column' => 'custom']);
-        $this->fake = (new PublishedManagerFake(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
+        $this->page = factory(Page::class)->create(['published' => false]);
+        $this->fake = (new PublishedManagerFake(app(Register::class)->filterByKey('singles')->first()))->manage($this->page);
 
         Route::get('statics/{slug}', function () {
         })->name('pages.show');
@@ -36,10 +35,12 @@ class PublishManagerTest extends TestCase
     /** @test */
     public function admin_can_publish_a_model()
     {
+        $this->assertCount(0, Page::published()->get());
+
         $this->asAdmin()
             ->post($this->fake->route('publish'));
 
-        $this->assertTrue($this->model->fresh()->isPublished());
+        $this->assertCount(1, Page::published()->get());
     }
 
     /** @test */
@@ -48,7 +49,7 @@ class PublishManagerTest extends TestCase
         $this->asAdmin()
             ->post($this->fake->route('draft'));
 
-        $this->assertTrue(ManagedModelFake::first()->isDraft());
+        $this->assertTrue(Page::first()->isDraft());
     }
 
     /** @test */
@@ -60,10 +61,11 @@ class PublishManagerTest extends TestCase
     }
 
     /** @test */
-    public function cannot_publish_without_publishable_manager()
+    public function cannot_publish_without_publish_assistant()
     {
         $this->disableExceptionHandling();
         $this->expectException(NotAllowedManagerRoute::class);
+
         app(Register::class)->register('publishfakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'slug' => 'foobar', 'custom_column' => 'custom']);

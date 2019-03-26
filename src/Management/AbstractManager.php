@@ -2,13 +2,11 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Filters\Filter;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
@@ -93,10 +91,10 @@ abstract class AbstractManager
      */
     protected function existingModel()
     {
-        if (! $this->model->exists) {
+        if (!$this->model ||! $this->model->exists) {
             throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
-        
+
         return $this->model;
     }
 
@@ -125,13 +123,25 @@ abstract class AbstractManager
             'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
             'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
             'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
-            'archive'  => route('chief.back.managers.archive', [$this->registration->key(), $this->existingModel()->id]),
-            'publish' => route('chief.back.managers.publish', [$this->registration->key(), $this->existingModel()->id]),
-            'draft'   => route('chief.back.managers.draft', [$this->registration->key(), $this->existingModel()->id]),
             'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
         ];
 
-        return $modelRoutes[$verb] ?? null;
+        if (array_key_exists($verb, $modelRoutes)) {
+            return $modelRoutes[$verb] ?? null;
+        }
+
+        $assistantRoutes = [];
+
+        foreach($this->assistants as $key => $assistant)
+        {
+            $assistantRoutes[$key] = $this->assistant($key)->route($key);
+        }
+
+        if(!array_key_exists($verb, $this->assistants)){
+            throw NotAllowedManagerRoute::notAllowedVerb($verb, $this);
+        }
+
+        return $assistantRoutes[$verb];
     }
 
     public function can($verb): bool
@@ -240,7 +250,7 @@ abstract class AbstractManager
         return (new static($this->registration))->manage($this->model);
     }
 
-    
+
 
     public function delete()
     {

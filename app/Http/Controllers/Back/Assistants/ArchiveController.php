@@ -20,7 +20,7 @@ class ArchiveController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
-        $manager->guard('index');
+        $manager->guard('archive-index');
 
         $managers = $manager->assistant('archive')->findAll();
 
