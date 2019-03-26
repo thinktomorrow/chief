@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Changed: `ActsAsMenuItem::mediaUrl()`  and `Page::mediaUrl()` are deprecated. Use `url()` method instead.
 - Changed: updated to Laravel 5.8 - updated to phpunit 8
 
 ## 0.2.7 - 2019-03-21

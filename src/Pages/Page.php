@@ -156,21 +156,26 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $query->orderBy('created_at', 'DESC');
     }
 
-    public function previewUrl()
+    public function url(): string
     {
-        // TODO: how we allow for these default routes to be set up in every new project?
-//        return '';
-        return route('pages.show', $this->slug).'?preview-mode';
-    }
-
-    public function menuUrl(): string
-    {
-        // TODO: how we allow for these default routes to be set up in every new project?
-//        return '';
         if (!$this->slug) {
             return '';
         }
         return route('pages.show', $this->slug);
+    }
+
+    public function previewUrl()
+    {
+        return $this->url().'?preview-mode';
+    }
+
+    /**
+     * @deprecated since 0.2.8: use url() instead
+     * @return string
+     */
+    public function menuUrl(): string
+    {
+        return $this->url();
     }
 
     public function menuLabel(): string
@@ -233,7 +238,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function statusAsLabel()
     {
         if ($this->isPublished()) {
-            return '<a href="'.$this->menuUrl().'" target="_blank"><em>online</em></a>';
+            return '<a href="'.$this->url().'" target="_blank"><em>online</em></a>';
         }
 
         if ($this->isDraft()) {
