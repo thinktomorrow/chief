@@ -20,7 +20,8 @@
             filter: '.delete-button',
             handle: '.grip-button',
             ghostClass: 'ghost',
-            dragClass: 'sortable-drag'
+            dragClass: 'sortable-drag',
+            animation: 150
         }">
 
             <div v-for="section in sortedSections" v-bind:key="section.key">
@@ -273,9 +274,9 @@
 
     .pagebuilder-dragging {
         background-color: rgba(255, 255, 255, .3);
-        border-radius: 5px;
         border: 2px dashed rgba(21, 200, 167, 1);
-        padding: 20px;
+        border-radius: 5px;
+        padding: 40px;
     }
 
     .pagebuilder-dragging .pagebuilder-menu-wrapper {
@@ -290,7 +291,8 @@
     .ghost {
         transition: 0.2s all ease;
         background-color: rgba(21, 200, 167, 1);
-        height: 12px;
+        height: 10px;
+        border-radius: 5px;
         width: 100%;
     }
 
@@ -303,7 +305,7 @@
     }
 
     .sortable-drag > * {
-        opacity: 0.2 !important;
+        opacity: 0.5 !important;
     }
 
     .drag-cursor {
