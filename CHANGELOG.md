@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Changed: `ActsAsMenuItem::mediaUrl()`  and `Page::mediaUrl()` are deprecated. Use `url()` method instead.
+- Fixed: Adding more than one snippet broke the parsing of these snippets.
 
 ## 0.2.7 - 2019-03-21
 - Added: Publish filter added to pagemanager.

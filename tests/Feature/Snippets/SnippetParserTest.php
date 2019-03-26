@@ -62,6 +62,12 @@ class SnippetParserTest extends TestCase
     }
 
     /** @test */
+    public function it_can_parse_multiple_snippet_keys_in_one_string()
+    {
+        $this->assertEquals('<p>This is <p>This is a snippet</p> <p>This is a snippet</p> untouched</p>', SnippetParser::parse('<p>This is [[snippet-stub]] [[snippet-stub]] untouched</p>'));
+    }
+
+    /** @test */
     public function it_can_render_a_snippet_when_found_in_content()
     {
         $page = $this->addSnippetToPageContent();
