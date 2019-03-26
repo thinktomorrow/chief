@@ -3,6 +3,8 @@
 
 namespace Thinktomorrow\Chief\Management;
 
+use Thinktomorrow\Chief\Management\Exceptions\MissingAssistant;
+
 trait AssistedManager
 {
     protected $assistants = [];
@@ -28,7 +30,7 @@ trait AssistedManager
     public function assistant(string $assistant): Assistant
     {
         if (! $this->isAssistedBy($assistant)) {
-            throw new \Exception('No assistant [' . $assistant . '] present on manager ' . get_class($this));
+            throw new MissingAssistant('No assistant [' . $assistant . '] present on manager ' . get_class($this));
         }
 
         $instance = app($this->getAssistantClass($assistant));

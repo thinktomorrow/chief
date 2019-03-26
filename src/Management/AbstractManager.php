@@ -4,14 +4,15 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
-use Thinktomorrow\Chief\Management\Details\HasDetails;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 abstract class AbstractManager
 {
@@ -126,22 +127,7 @@ abstract class AbstractManager
             'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
         ];
 
-        if (array_key_exists($verb, $modelRoutes)) {
-            return $modelRoutes[$verb] ?? null;
-        }
-
-        $assistantRoutes = [];
-
-        foreach($this->assistants as $key => $assistant)
-        {
-            $assistantRoutes[$key] = $this->assistant($key)->route($key);
-        }
-
-        if(!array_key_exists($verb, $this->assistants)){
-            throw NotAllowedManagerRoute::notAllowedVerb($verb, $this);
-        }
-
-        return $assistantRoutes[$verb];
+        return $modelRoutes[$verb] ?? null;
     }
 
     public function can($verb): bool
@@ -149,11 +135,13 @@ abstract class AbstractManager
         return !is_null($this->route($verb));
     }
 
-    public function guard($verb)
+    public function guard($verb): Manager
     {
         if (! $this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this);
         }
+
+        return $this;
     }
 
     /**

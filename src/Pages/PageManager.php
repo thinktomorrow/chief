@@ -4,29 +4,30 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Fields\FieldsTab;
-use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Fields\Types\TextField;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
-use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Management\ManagesPreviews;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Management\ManagerThatPreviews;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
+use Thinktomorrow\Chief\Management\Details\Details;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Management\ManagesPreviews;
+use Thinktomorrow\Chief\Management\ManagesPublishingStatus;
+use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class PageManager extends AbstractManager implements Manager
 {
-    use ManagesPreviews;
+    use ManagesPreviews,
+        ManagesPublishingStatus;
 
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
@@ -161,7 +162,7 @@ class PageManager extends AbstractManager implements Manager
             return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-s">' . $this->model->publicationStatusAsLabel() . '</span>');
+                ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
         }
 
         return parent::details();

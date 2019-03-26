@@ -20,9 +20,9 @@ class PublishController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $manager->guard('publish');
-
-        $manager->assistant('publish')->publish();
+        $manager->assistant('publish')
+                ->guard('publish')
+                ->publish();
 
         return redirect()->back()->with('messages.success', $manager->details()->title .' is gepubliceerd. <a href="' . $manager->previewUrl() . '" target="_blank">Bekijk de pagina online</a>.');
     }
@@ -31,9 +31,9 @@ class PublishController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $manager->guard('draft');
-
-        $manager->assistant('publish')->draft();
+        $manager->assistant('publish')
+                ->guard('draft')
+                ->draft();
 
         return redirect()->back();
     }

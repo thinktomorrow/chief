@@ -20,8 +20,6 @@ class ArchiveController extends Controller
     {
         $manager = $this->managers->findByKey($key);
 
-        $manager->guard('archive-index');
-
         $managers = $manager->assistant('archive')->findAll();
 
         return view('chief::back.managers.archive.index', [
@@ -34,7 +32,9 @@ class ArchiveController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $manager->assistant('archive')->archive();
+        $manager->assistant('archive')
+                        ->guard('archive')
+                        ->archive();
 
         return redirect()->back()->with('messages.success', $manager->details()->title .' is gearchiveerd.');
     }
@@ -43,7 +43,9 @@ class ArchiveController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $manager->assistant('archive')->unarchive();
+        $manager->assistant('archive')
+            ->guard('unarchive')
+            ->unarchive();
 
         return redirect()->to($manager->route('index'))->with('messages.success', $manager->details()->title .' is hersteld.');
     }

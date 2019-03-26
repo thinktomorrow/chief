@@ -4,12 +4,13 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 interface Manager
 {
@@ -58,7 +59,7 @@ interface Manager
      * @param $verb
      * @throws NotAllowedManagerRoute
      */
-    public function guard($verb);
+    public function guard($verb): self;
 
     /**
      * The set of fields that should be manageable for a certain model.

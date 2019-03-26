@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Management\Assistant;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
 
@@ -40,6 +41,11 @@ class PublishAssistant implements Assistant
         return $this->model->isPublished();
     }
 
+    public function isDraft(): bool
+    {
+        return $this->model->isDraft();
+    }
+
     public function publishedAt(): Carbon
     {
         return $this->model->Published_at;
@@ -70,7 +76,7 @@ class PublishAssistant implements Assistant
         });
     }
 
-    public function route($verb)
+    public function route($verb): ?string
     {
         $modelRoutes = [
             'publish'   => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
@@ -78,5 +84,19 @@ class PublishAssistant implements Assistant
         ];
 
         return $modelRoutes[$verb] ?? null;
+    }
+
+    public function can($verb): bool
+    {
+        return !is_null($this->route($verb));
+    }
+
+    public function guard($verb): Assistant
+    {
+        if (! $this->can($verb)) {
+            NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
+        }
+
+        return $this;
     }
 }
