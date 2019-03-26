@@ -106,7 +106,9 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 )
                 ->label('Link')
                 ->description('De unieke url verwijzing naar deze pagina.')
-                ->prepend(url('/').'/'),
+                ->prepend(collect($this->model->availableLocales())->mapWithKeys(function($locale){
+                    return [$locale => url($this->model->baseUrlSegment($locale)).'/'];
+                })->all()),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),

@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.
 - Changed: `ActsAsMenuItem::mediaUrl()`  and `Page::mediaUrl()` are deprecated. Use `url()` method instead.
 
 ## 0.2.7 - 2019-03-21
