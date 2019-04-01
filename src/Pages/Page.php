@@ -176,7 +176,11 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         $parameters = trim($this->baseUrlSegment($locale) . '/' . $slug, '/');
 
-        return $this->resolveRoute('pages.show', $parameters, $locale);
+        $routeName = Homepage::is($this)
+                        ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
+                        : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+
+        return $this->resolveRoute($routeName, $parameters, $locale);
     }
 
     /** @inheritdoc */
