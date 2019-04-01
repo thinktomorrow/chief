@@ -24,7 +24,7 @@ class Root
     {
         $this->parse($host);
 
-        if (false !== filter_var($this->get(), FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED)) {
+        if (false !== filter_var($this->get(), FILTER_VALIDATE_URL)) {
             $this->valid = true;
         }
     }

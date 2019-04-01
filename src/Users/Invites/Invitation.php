@@ -11,13 +11,14 @@ class Invitation extends Model implements StatefulContract
 {
     public $guarded = [];
 
+    protected $dates = ['expires_at'];
+
     /**
      * Minutes from now that invitation will expire.
      *
      * @var int
      */
     private static $expires = 60 * 24 * 3;
-    protected $dates = ['expires_at'];
 
     public static function make(string $invitee_id, string $inviter_id, $expires = null)
     {
