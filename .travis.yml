@@ -22,11 +22,9 @@ env:
     - LARAVEL_VERSION="5.7.*"
     - LARAVEL_VERSION="5.8.*"
 
-before_install:
-  - composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
-
 before_script:
   - travis_retry composer self-update
+  - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist --dev
 
 script:
