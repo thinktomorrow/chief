@@ -18,10 +18,16 @@ return [
 
     /**
      * Definitions of the few route names that the chief backend uses to interact with the frontend.
-     * This is for instance used to preview an url of a page.
+     *
+     * The `pages.show` serves as a catch all for displaying all Chief managed pages.
+     * This catch-all route will point to a generic PagesController that directs the request
+     * to the proper published page.
+     *
+     * `pages.home` makes the distinction with other pages in that it is accessible on the root url.
      */
     'routes' => [
         'pages-show' => 'pages.show',
+        'pages-home' => 'pages.home',
     ],
 
     /**

@@ -2,7 +2,10 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
-- Changed: `ActsAsMenuItem::mediaUrl()`  and `Page::mediaUrl()` are deprecated. Use `url()` method instead.
+<<<<<<< HEAD
+- Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.
+- Added: pages.home route is not configurable in the chief config file.
+- Changed: `ActsAsMenuItem::menuUrl()`  and `Page::menuUrl()` are deprecated. Use `url()` method instead.
 - Fixed: Adding more than one snippet broke the parsing of these snippets.
 
 ## 0.2.7 - 2019-03-21

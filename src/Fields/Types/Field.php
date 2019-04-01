@@ -82,6 +82,19 @@ class Field
         return false;
     }
 
+    public static function translateValue($value, $locale)
+    {
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        if ($locale && isset($value[$locale])) {
+            return $value[$locale];
+        }
+
+        return $value;
+    }
+
     public function __get($key)
     {
         if (isset($this->$key)) {
