@@ -12,7 +12,7 @@ class AgendaPageFake extends Page
 {
     use HasPeriodTrait;
     
-    public function url(): string
+    public function url($locale = null): string
     {
         return route('articles.show', $this->slug);
     }
