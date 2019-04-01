@@ -9,6 +9,7 @@ _migration/uploads
 .env
 /report
 /docs/_site
+.phpunit.result.cache
 
 ##########################################
 # BUILDING

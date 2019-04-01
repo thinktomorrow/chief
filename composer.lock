@@ -504,25 +504,30 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "92a2c3768d50e21a1f26a53cb795ce72806266c5"
+                "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/92a2c3768d50e21a1f26a53cb795ce72806266c5",
-                "reference": "92a2c3768d50e21a1f26a53cb795ce72806266c5",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/72b6fbf76adb3cf5bc0db68559b33d41219aba27",
+                "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": "^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.4"
+                "phpunit/phpunit": "^6.4|^7.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Cron\\": "src/Cron/"
@@ -549,7 +554,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2018-06-06T03:12:17+00:00"
+            "time": "2019-03-31T00:38:28+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -935,16 +940,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.8.7",
+            "version": "v5.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f12c7baf9ceee80b131e06a01d3221d9a2488670"
+                "reference": "3f0a5744a866ae3ae0ca84f47080501714af01ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f12c7baf9ceee80b131e06a01d3221d9a2488670",
-                "reference": "f12c7baf9ceee80b131e06a01d3221d9a2488670",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3f0a5744a866ae3ae0ca84f47080501714af01ba",
+                "reference": "3f0a5744a866ae3ae0ca84f47080501714af01ba",
                 "shasum": ""
             },
             "require": {
@@ -1078,7 +1083,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-03-21T16:54:38+00:00"
+            "time": "2019-03-26T17:19:10+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1145,16 +1150,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.50",
+            "version": "1.0.51",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249"
+                "reference": "755ba7bf3fb9031e6581d091db84d78275874396"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/dab4e7624efa543a943be978008f439c333f2249",
-                "reference": "dab4e7624efa543a943be978008f439c333f2249",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/755ba7bf3fb9031e6581d091db84d78275874396",
+                "reference": "755ba7bf3fb9031e6581d091db84d78275874396",
                 "shasum": ""
             },
             "require": {
@@ -1225,7 +1230,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-02-01T08:50:36+00:00"
+            "time": "2019-03-30T13:22:34+00:00"
         },
         {
             "name": "league/glide",
@@ -5391,16 +5396,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.0.5",
+            "version": "8.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "19cbed2120839772c4a00e8b28456b0c77d1a7b4"
+                "reference": "925109f8bbe6dae28fbc7bb07446a53abd3b1c25"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/19cbed2120839772c4a00e8b28456b0c77d1a7b4",
-                "reference": "19cbed2120839772c4a00e8b28456b0c77d1a7b4",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/925109f8bbe6dae28fbc7bb07446a53abd3b1c25",
+                "reference": "925109f8bbe6dae28fbc7bb07446a53abd3b1c25",
                 "shasum": ""
             },
             "require": {
@@ -5469,7 +5474,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-03-16T07:33:46+00:00"
+            "time": "2019-03-26T14:00:24+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
