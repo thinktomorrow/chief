@@ -5,7 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## 0.2.8 - 2019-04-01
 - Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.
-- Added: pages.home route is not configurable in the chief config file.
+- Added: pages.home route is now configurable in the chief config file.
 - Changed: minimum requirement for Chief is now php 7.2.*.
 - Changed: from now on Laravel 5.8.* is used as expected laravel version. Updated to phpunit 8 as well.
 - Changed: `ActsAsMenuItem::menuUrl()`  and `Page::menuUrl()` are deprecated. Use `url()` method instead.
