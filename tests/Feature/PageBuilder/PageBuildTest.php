@@ -23,6 +23,7 @@ class PageBuildTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+        config()->set('app.fallback_locale', 'nl');
 
         app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
 
@@ -101,10 +102,11 @@ class PageBuildTest extends TestCase
         $this->assertEquals('article-text-1article-text-2module-textarticle-text-3', $this->page->renderChildren());
     }
 
+
     /** @test */
     public function it_can_add_a_text_module()
     {
-        $this->disableExceptionHandling();
+        config()->set('app.fallback_locale', 'nl');
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
@@ -171,7 +173,7 @@ class PageBuildTest extends TestCase
                             ]
                         ]
                     ]
-                ],
+                ]
             ]));
 
         $this->assertCount(0, $this->page->children());
@@ -200,7 +202,7 @@ class PageBuildTest extends TestCase
                             ]
                         ]
                     ]
-                ],
+                ]
             ]));
 
         $this->assertCount(0, $this->page->children());
