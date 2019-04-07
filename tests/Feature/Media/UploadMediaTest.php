@@ -30,7 +30,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded()
     {
-        $this->disableExceptionHandling();
+        // $this->disableExceptionHandling();
         $page = Single::create(['slug' => 'test']);
 
         config()->set(['app.fallback_locale' => 'nl']);
@@ -52,6 +52,96 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
+    public function required_asset_uploads_can_be_validated()
+    {
+        $page = Single::create(['slug' => 'test']);
+
+        config()->set(['app.fallback_locale' => 'nl']);
+
+        // Upload asset
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+
+                ]
+            ]));
+
+        $response->assertSessionHasErrors();
+    }
+
+    /** @test */
+    public function required_asset_uploads_can_be_validated_with_existing_and_removing()
+    {
+        config()->set(['app.fallback_locale' => 'nl']);
+        $page = Single::create(['slug' => 'test']);
+        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+
+        // Assert Image is there
+        $this->assertTrue($page->hasFile(MediaType::HERO));
+        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+
+        // Upload asset
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'delete' => [
+                            $page->getAllFiles(MediaType::HERO)->first()->id,
+                        ]
+                    ]
+                ]
+            ]));
+
+        $response->assertSessionHasErrors();
+    }
+
+    /** @test */
+    public function asset_uploads_dimensions_can_be_validated()
+    {
+        $page = Single::create(['slug' => 'test']);
+
+        config()->set(['app.fallback_locale' => 'nl']);
+
+        // Upload asset
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'new' => [
+                            $this->dummySlimImagePayload(),
+                            $this->dummySlimImagePayloadWithInvalidDimensions('tt-favicon.png'),
+                        ]
+                    ]
+                ]
+            ]));
+
+            $response->assertSessionHasErrors();
+    }
+
+    /** @test */
+    public function asset_uploads_dimensions_can_be_validated_after_editing_with_slim()
+    {
+        $page = Single::create(['slug' => 'test']);
+        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+
+        $existing_asset = $page->getAllFiles(MediaType::HERO)->first();
+
+        // Replace asset
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'replace' => [
+                            $existing_asset->id => $this->dummySlimImagePayloadWithInvalidDimensions(),
+                        ]
+                    ]
+                ]
+        ]));
+
+        $response->assertSessionHasErrors();
+    }
+
+    /** @test */
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
         $page = Single::create();
@@ -61,6 +151,11 @@ class UploadMediaTest extends TestCase
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
+                    MediaType::HERO => [
+                        'new' => [
+                            $this->dummySlimImagePayload(),
+                        ]
+                    ],
                     MediaType::DOCUMENT => [
                         'new' => [
                             UploadedFile::fake()->create('fake.pdf')
@@ -101,18 +196,24 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function an_asset_can_be_removed()
     {
-        $page = Single::create();
+        $this->disableExceptionHandling();
+        $page = Single::create(['slug' => 'test']);
+        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
         // Assert Image is there
         $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertCount(2, $page->getAllFiles(MediaType::HERO));
 
         // Remove asset
         $response = $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
+                        'replace' => [
+                            $page->getAllFiles(MediaType::HERO)->first()->id => null,
+                            $page->getAllFiles(MediaType::HERO)->last()->id => null,
+                        ],
                         'delete' => [
                             $page->getAllFiles(MediaType::HERO)->first()->id,
                         ]
@@ -121,8 +222,8 @@ class UploadMediaTest extends TestCase
             ]));
 
         // Assert Image is no longer there
-        $this->assertFalse($page->fresh()->hasFile(MediaType::HERO));
-        $this->assertCount(0, $page->fresh()->getAllFiles());
+        $this->assertTrue($page->fresh()->hasFile(MediaType::HERO));
+        $this->assertCount(1, $page->fresh()->getAllFiles());
     }
 
     /** @test */
@@ -138,6 +239,14 @@ class UploadMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'filesOrder' => [
                     MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
+                ],
+                'files' => [
+                    MediaType::HERO => [
+                        'replace' => [
+                            $images->last()->id => null,
+                            $images->first()->id => null,
+                        ]
+                    ]
                 ]
             ]));
 

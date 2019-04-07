@@ -15,6 +15,8 @@ class UploadMediaManager extends PageManager
     {
         return new Fields([
             MediaField::make(MediaType::HERO)
+                ->validation('image_required|chief_dimensions:min_width=100,min_height=200'),
+            MediaField::make(MediaType::DOCUMENT)
         ]);
     }
 }

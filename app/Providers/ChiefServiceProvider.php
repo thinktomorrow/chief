@@ -2,23 +2,25 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Support\Facades\Validator;
-use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
-use Thinktomorrow\Chief\App\Console\CreateAdmin;
-use Thinktomorrow\Chief\App\Console\Seed;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\Console\GeneratePage;
-use Thinktomorrow\Chief\App\Console\RefreshDatabase;
-use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
-use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
-use Thinktomorrow\Chief\Users\User;
+use Illuminate\Support\Facades\Validator;
+use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
-use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Settings\Console\SeedSettings;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
+use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
+use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -99,6 +101,13 @@ class ChiefServiceProvider extends ServiceProvider
 
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
+
+        Validator::extendImplicit('image_required',
+            'Thinktomorrow\Chief\Fields\ImageRequiredValidator@validate',
+            'Foto :attribute is verplicht.');
+        Validator::extend('chief_dimensions',
+            'Thinktomorrow\Chief\Fields\MediaDimensionsValidator@validate',
+            'Er was iets fout met de afmeting van de foto :attribute.');
     }
 
     public function register()
