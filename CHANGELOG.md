@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Fixed: Fixed saving new page without title. `required-fallback-locale` is now an implicit rule.
+- Fixed: Prepend and Append methods on fields don't require the field to be translated anymore
 
 ## 0.2.8 - 2019-04-01
 - Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.
