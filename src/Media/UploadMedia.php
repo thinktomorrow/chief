@@ -28,7 +28,6 @@ class UploadMedia
         ini_set('memory_limit', '256M');
 
         foreach ($files_by_type as $type => $files) {
-
             $this->validateFileUploads($files);
 
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];

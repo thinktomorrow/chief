@@ -43,7 +43,9 @@ class Field
 
         // Normalize rules: If no attribute is passed for the rule, we use the field name.
         if (!is_array($rules) || isset($rules[0])) {
-            if($this->values['type'] == 'media') $this->values['name'] = 'files.' .$this->values['name'];
+            if ($this->values['type'] == 'media') {
+                $this->values['name'] = 'files.' .$this->values['name'];
+            }
 
             $rules = [$this->values['name'] => (is_array($rules) ? reset($rules) : $rules)];
 
