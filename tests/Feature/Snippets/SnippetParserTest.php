@@ -26,6 +26,7 @@ class SnippetParserTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+        config()->set('app.fallback_locale', 'nl');
 
         /** @var Register */
         app(Register::class)->register('articles', ArticlePageManager::class, ArticlePageFake::class);

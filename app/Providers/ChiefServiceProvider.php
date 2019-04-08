@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -92,7 +90,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
-        Validator::extend('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
+        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
             $fallbackLocale = config('app.fallback_locale');
 
             if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {

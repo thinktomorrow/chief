@@ -23,6 +23,7 @@ class PagetitleTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+        config()->set('app.fallback_locale', 'nl');
 
         app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
 
