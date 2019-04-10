@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+
+## 0.2.9 - 2019-04-10
 - Changed: moved `Assistant` contract to `/Managers/Assistants/` folder.
 - Changed: Publication logic is no longer baked in Pagemanager but added as a Manager assistant.
 - Fixed: Fixed saving new page without title. `required-fallback-locale` is now an implicit rule.
