@@ -31,6 +31,7 @@ class UpdateModuleTest extends TestCase
     public function admin_can_view_the_edit_form()
     {
         $this->asAdmin()->get(route('chief.back.managers.edit', ['newsletter', $this->module->id]))
+            ->assertViewIs('chief::back.managers.edit')
             ->assertStatus(200);
     }
 

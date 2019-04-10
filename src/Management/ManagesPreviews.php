@@ -3,12 +3,16 @@
 
 namespace Thinktomorrow\Chief\Management;
 
+use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
+
 trait ManagesPreviews
 {
     public function previewUrl(): string
     {
-        $showRouteName = config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+        if (! $this->model instanceof ProvidesUrl) {
+            throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
+        }
 
-        return route($showRouteName, $this->model->slug). '?preview-mode';
+        return $this->model->previewUrl();
     }
 }

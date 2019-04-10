@@ -29,7 +29,8 @@ class UpdateUserTest extends TestCase
         $this->disableExceptionHandling();
 
         $response = $this->asAdmin()->get(route('chief.back.users.edit', $this->newUser->id));
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.users.edit')
+                 ->assertStatus(200);
     }
 
     /** @test */

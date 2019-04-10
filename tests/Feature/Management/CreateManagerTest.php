@@ -30,6 +30,7 @@ class CreateManagerTest extends TestCase
     public function admin_can_view_the_create_form()
     {
         $this->asAdmin()->get($this->fake->route('create'))
+            ->assertViewIs('chief::back.managers.create')
             ->assertStatus(200);
     }
 

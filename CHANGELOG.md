@@ -2,8 +2,16 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+
+## 0.2.10 - 2019-04-10
+- Fixed: avoid morphableInstantiation looping over models which are not morphable.
+
+## 0.2.9 - 2019-04-10
+- Changed: moved `Assistant` contract to `/Managers/Assistants/` folder.
+- Changed: Publication logic is no longer baked in Pagemanager but added as a Manager assistant.
 - Fixed: Fixed saving new page without title. `required-fallback-locale` is now an implicit rule.
 - Fixed: Prepend and Append methods on fields don't require the field to be translated anymore
+- Fixed: integration tests by checking view path of admin routes.
 
 ## 0.2.8 - 2019-04-01
 - Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.

@@ -25,7 +25,8 @@ class UpdateMenuItemTest extends TestCase
         $menuitem = factory(MenuItem::class)->create();
 
         $response = $this->asAdminWithoutRole()->get(route('chief.back.menuitem.edit', $menuitem->id));
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.menu.edit')
+                 ->assertStatus(200);
     }
 
     /** @test */

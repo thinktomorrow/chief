@@ -53,7 +53,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
     Route::put('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@update')->name('chief.back.managers.update')->where('id', '[0-9]+');
     Route::get('manage/{key}/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@edit')->name('chief.back.managers.edit')->where('id', '[0-9]+');
     Route::delete('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@delete')->name('chief.back.managers.delete')->where('id', '[0-9]+');
-    Route::post('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@archive')->name('chief.back.managers.archive')->where('id', '[0-9]+');
 
     // Modules
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
@@ -64,8 +63,8 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * MANAGER ASSISTANT ROUTES
      * -----------------------------------------------------------------
      */
-    Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@publish')->name('chief.back.managers.publish')->where('id', '[0-9]+');
-    Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\PublishController@draft')->name('chief.back.managers.draft')->where('id', '[0-9]+');
+    Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
+    Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@draft')->name('chief.back.assistants.draft')->where('id', '[0-9]+');
 
     Route::get('archive/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@index')->name('chief.back.assistants.archive-index');
     Route::post('archive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');

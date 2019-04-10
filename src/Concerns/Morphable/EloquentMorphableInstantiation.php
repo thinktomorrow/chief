@@ -25,7 +25,7 @@ trait EloquentMorphableInstantiation
     public function newCollection(array $models = [])
     {
         foreach ($models as $k => $model) {
-            if ($morphKey = $model->morphKey()) {
+            if ($model instanceof MorphableContract && $morphKey = $model->morphKey()) {
                 $models[$k] = $this->convertToMorphInstance($model, $morphKey);
             }
         }

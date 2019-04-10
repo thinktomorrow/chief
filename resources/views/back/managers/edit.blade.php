@@ -6,11 +6,16 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', $manager->details()->title)
     @slot('subtitle')
-        <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
+        <div class="inline-block">
+            <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
+        </div>
     @endslot
 
     <div class="inline-group-s">
-        {!! contract($manager, \Thinktomorrow\Chief\Management\ManagerThatPublishes::class) ? $manager->publicationStatusAsLabel() : '' !!}
+
+        @if(contract($manager, \Thinktomorrow\Chief\Management\ManagerThatPreviews::class))
+            {!! $manager->publicationStatusAsLabel() !!}
+        @endif
 
         <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
         @include('chief::back.managers._partials.context-menu')

@@ -43,6 +43,9 @@ class SnippetParserTest extends TestCase
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
+
+        Route::get('articles/{slug}', function () {
+        })->name('articles.show');
     }
 
     /** @test */
