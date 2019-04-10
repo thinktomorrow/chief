@@ -6,7 +6,9 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', $manager->details()->title)
     @slot('subtitle')
-        <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
+        <div class="inline-block">
+            <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
+        </div>
     @endslot
 
     <div class="inline-group-s">
