@@ -7,7 +7,9 @@ trait ManagesPublishingStatus
 {
     public function publicationStatusAsLabel($plain = false)
     {
-        if(!$this->isAssistedBy('publish')) return null;
+        if (!$this->isAssistedBy('publish')) {
+            return null;
+        }
 
         $label = $this->publicationStatusAsPlainLabel();
 
