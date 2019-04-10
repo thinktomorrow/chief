@@ -21,7 +21,7 @@ class MediaDimensionsValidator
         foreach ($values as $types) {
             foreach ($types as $image) {
                 if ($image) {
-                    $file = json_decode($image)->input;
+                    $file = json_decode($image)->output;
 
                     $width = $file->width;
                     $height = $file->height;
