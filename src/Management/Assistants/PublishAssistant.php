@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
 
-class ArchiveAssistant implements Assistant
+class PublishAssistant implements Assistant
 {
     private $manager;
 
@@ -26,66 +26,63 @@ class ArchiveAssistant implements Assistant
 
     public function manager(Manager $manager)
     {
-        $this->manager  = $manager;
-        $this->model    = $manager->model();
+        $this->manager = $manager;
+        $this->model = $manager->model();
     }
 
     public static function key(): string
     {
-        return 'archive';
+        return 'publish';
     }
 
-    public function isArchived(): bool
+    public function isPublished(): bool
     {
-        return $this->model->isArchived();
+        return $this->model->isPublished();
     }
 
-    public function archivedAt(): Carbon
+    public function isDraft(): bool
     {
-        return $this->model->archived_at;
+        return $this->model->isDraft();
     }
 
-    public function archive()
+    public function publishedAt(): Carbon
     {
-        $this->model->archive();
+        return $this->model->Published_at;
+    }
+
+    public function publish()
+    {
+        $this->model->publish();
 
         Audit::activity()
             ->performedOn($this->model)
-            ->log('archived');
+            ->log('published');
     }
 
-    public function unarchive()
+    public function draft()
     {
-        $this->model->unarchive();
+        $this->model->draft();
 
         Audit::activity()
             ->performedOn($this->model)
-            ->log('unarchived');
+            ->log('draft');
     }
 
     public function findAll(): Collection
     {
-        return $this->model->archived()->get()->map(function ($model) {
+        return $this->model->published()->get()->map(function ($model) {
             return $this->managers->findByModel($model);
         });
     }
 
     public function route($verb): ?string
     {
-        $routes = [
-            'index' => route('chief.back.assistants.archive-index', [$this->manager->details()->key]),
-        ];
-
-        if (array_key_exists($verb, $routes)) {
-            return $routes[$verb] ?? null;
-        }
-
         $modelRoutes = [
-            'archive'   => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),
-            'unarchive' => route('chief.back.assistants.unarchive', [$this->manager->details()->key, $this->manager->model()->id]),
+            'publish'   => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
+            'draft'     => route('chief.back.assistants.draft', [$this->manager->details()->key, $this->manager->model()->id]),
         ];
 
-        return isset($modelRoutes[$verb]) ? $modelRoutes[$verb] : null;
+        return $modelRoutes[$verb] ?? null;
     }
 
     public function can($verb): bool

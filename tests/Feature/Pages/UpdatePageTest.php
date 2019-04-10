@@ -40,7 +40,8 @@ class UpdatePageTest extends TestCase
     public function admin_can_view_the_edit_form()
     {
         $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]))
-                               ->assertStatus(200);
+            ->assertViewIs('chief::back.managers.edit')
+            ->assertStatus(200);
     }
 
     /** @test */

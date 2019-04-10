@@ -3,41 +3,25 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-trait ManagesPublishing
+trait ManagesPublishingStatus
 {
-    public function isPublished(): bool
-    {
-        return $this->model->isPublished();
-    }
-
-    public function isDraft(): bool
-    {
-        return $this->model->isDraft();
-    }
-
-    public function publish()
-    {
-        $this->model->publish();
-    }
-
-    public function draft()
-    {
-        $this->model->draft();
-    }
-
     public function publicationStatusAsLabel($plain = false)
     {
+        if (!$this->isAssistedBy('publish')) {
+            return null;
+        }
+
         $label = $this->publicationStatusAsPlainLabel();
 
         if ($plain) {
             return $label;
         }
 
-        if ($this->isPublished()) {
+        if ($this->assistant('publish')->isPublished()) {
             return '<a href="'.$this->previewUrl().'" target="_blank"><em>'.$label.'</em></a>';
         }
 
-        if ($this->isDraft()) {
+        if ($this->assistant('publish')->isDraft()) {
             return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>'.$label.'</em></a>';
         }
 
@@ -46,11 +30,11 @@ trait ManagesPublishing
 
     private function publicationStatusAsPlainLabel()
     {
-        if ($this->isPublished()) {
+        if ($this->assistant('publish')->isPublished()) {
             return 'online';
         }
 
-        if ($this->isDraft()) {
+        if ($this->assistant('publish')->isDraft()) {
             return 'offline';
         }
 

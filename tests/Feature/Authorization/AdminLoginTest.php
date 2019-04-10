@@ -88,10 +88,14 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_displays_admin_page_for_authenticated()
     {
+        $this->setUpDefaultAuthorization();
+
         $admin = factory(User::class)->make();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
 
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.dashboard')
+            ->assertStatus(200);
+
         $this->assertInstanceOf(User::class, Auth::guard('chief')->user());
         $this->assertFalse(session()->has('errors'));
     }

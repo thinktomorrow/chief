@@ -19,16 +19,17 @@ class CreateMenuItemTest extends TestCase
     /** @test */
     public function admin_can_view_the_create_form()
     {
-        $this->disableExceptionHandling();
         $response = $this->asAdminWithoutRole()->get(route('chief.back.menuitem.create', 'main'));
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.menu.create')
+                 ->assertStatus(200);
     }
 
     /** @test */
     public function guests_cannot_view_the_create_form()
     {
         $response = $this->get(route('chief.back.menuitem.create', 'main'));
-        $response->assertStatus(302)->assertRedirect(route('chief.back.login'));
+        $response->assertStatus(302)
+                 ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */

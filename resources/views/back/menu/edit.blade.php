@@ -5,7 +5,9 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu item bewerken.')
     @slot('subtitle')
-        <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+        <div class="inline-block">
+            <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+        </div>
     @endslot
         <span class="btn btn-link inline-block inline-s" @click="showModal('delete-menuitem-{{$menuitem->id}}')">
             verwijderen
