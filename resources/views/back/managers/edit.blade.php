@@ -13,7 +13,7 @@
 
     <div class="inline-group-s">
 
-        @if(contract($manager, \Thinktomorrow\Chief\Management\ManagesPreviews::class))
+        @if(contract($manager, \Thinktomorrow\Chief\Management\ManagerThatPreviews::class))
             {!! $manager->publicationStatusAsLabel() !!}
         @endif
 

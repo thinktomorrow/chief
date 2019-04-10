@@ -19,12 +19,13 @@ use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Management\ManagerThatPreviews;
 use Thinktomorrow\Chief\Management\ManagesPreviews;
 use Thinktomorrow\Chief\Management\ManagesPublishingStatus;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
-class PageManager extends AbstractManager implements Manager
+class PageManager extends AbstractManager implements Manager, ManagerThatPreviews
 {
     use ManagesPreviews,
         ManagesPublishingStatus;
