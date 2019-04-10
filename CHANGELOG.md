@@ -3,6 +3,9 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 
+## 0.2.10 - 2019-04-10
+- Fixed: avoid morphableInstantiation looping over models which are not morphable.
+
 ## 0.2.9 - 2019-04-10
 - Changed: moved `Assistant` contract to `/Managers/Assistants/` folder.
 - Changed: Publication logic is no longer baked in Pagemanager but added as a Manager assistant.
