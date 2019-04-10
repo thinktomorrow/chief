@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Management\Assistants\Assistant;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;

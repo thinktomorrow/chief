@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Thinktomorrow\Chief\Management;
+namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Thinktomorrow\Chief\Management\Exceptions\MissingAssistant;
 

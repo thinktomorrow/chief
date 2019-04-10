@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Management\Assistant;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;

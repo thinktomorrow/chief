@@ -10,7 +10,10 @@
     @endslot
 
     <div class="inline-group-s">
-        {!! $manager->publicationStatusAsLabel() !!}
+
+        @if(contract($manager, \Thinktomorrow\Chief\Management\ManagesPreviews::class))
+            {!! $manager->publicationStatusAsLabel() !!}
+        @endif
 
         <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
         @include('chief::back.managers._partials.context-menu')

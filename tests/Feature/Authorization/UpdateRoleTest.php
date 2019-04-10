@@ -26,7 +26,8 @@ class UpdateRoleTest extends TestCase
     public function only_developer_can_view_the_update_form()
     {
         $response = $this->actingAs($this->developer(), 'chief')->get(route('chief.back.roles.edit', Role::first()->id));
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.authorization.roles.edit')
+                 ->assertStatus(200);
     }
 
     /** @test */
