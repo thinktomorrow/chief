@@ -96,7 +96,9 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPreview
         return new Fields([
             $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
-                                     ->validation('required-fallback-locale|max:200')
+                                     ->validation('required-fallback-locale|max:200', [], [
+                                         'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
+                                     ])
                                      ->label('Pagina titel')
                                      ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
             InputField::make('slug')
@@ -104,7 +106,9 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPreview
                 ->validation($this->model->id
                     ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
                     : 'required-fallback-locale|unique:page_translations,slug'
-                )
+                ,[], [
+                    'trans.'.config('app.fallback_locale', 'nl').'.slug' => 'slug'
+                ])
                 ->label('Link')
                 ->description('De unieke url verwijzing naar deze pagina.')
                 ->prepend(collect($this->model->availableLocales())->mapWithKeys(function ($locale) {
