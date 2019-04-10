@@ -9,7 +9,7 @@ trait ManagesPreviews
 {
     public function previewUrl(): string
     {
-        if( ! $this->model instanceof ProvidesUrl){
+        if (! $this->model instanceof ProvidesUrl) {
             throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
         }
 
