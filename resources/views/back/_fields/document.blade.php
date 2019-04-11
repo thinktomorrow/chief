@@ -25,4 +25,14 @@
 
 <label for="">Voeg document toe:</label>
 <input type="file" name="files[{{ $key }}][new][]" multiple style="opacity:1; position:static;"/>
-<input type="hidden" id="removeFile" name="files[{{ $key }}][delete][]" multiple/>
+<input type="hidden" id="removeFile" name="files[{{ $key }}][delete][]" multiple value=""/>
+
+@push('custom-scripts')
+<script>
+    function removeFile(id)
+    {
+        document.getElementById('removeFile').value = id;
+        document.getElementById('asset-'+id).remove();
+    }
+</script>
+@endpush
