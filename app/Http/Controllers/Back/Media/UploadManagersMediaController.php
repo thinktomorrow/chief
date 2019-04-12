@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Media;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Media\MediaType;
+use Illuminate\Support\Facades\Validator;
+use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\AssetLibrary\Models\AssetUploader;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Pages\Page;
 
 class UploadManagersMediaController extends Controller
 {
@@ -33,12 +33,23 @@ class UploadManagersMediaController extends Controller
     public function store(string $key, $id, Request $request)
     {
         $uploads = $request->file('file');
+
         $model = $this->managers->findByKey($key, $id)->model();
 
         if (empty($uploads)) {
             return response()->json([
                 'error' => true,
                 'messages' => 'Geen afbeelding opgeladen.',
+            ], 500);
+        }
+
+        $validator = Validator::make($request->all(), ['file' => 'dimensions:max_width:2000|max:2000']);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'error' => true,
+                'message' => 'Afbeelding te groot.',
             ], 500);
         }
 

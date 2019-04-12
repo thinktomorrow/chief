@@ -14,6 +14,7 @@
             @if( ! \Thinktomorrow\Chief\Snippets\SnippetCollection::appearsEmpty())
                 clips: @json(\Thinktomorrow\Chief\Snippets\SnippetCollection::load()->toClips()),
             @endif
+            imageUpload: '{{ $imageUploadUrl }}',
             callbacks: {
                 upload: {
                     beforeSend: function(xhr)
@@ -21,10 +22,33 @@
                         let token = document.head.querySelector('meta[name="csrf-token"]');
 
                         xhr.setRequestHeader('X-CSRF-TOKEN', token.content);
+                        alert('beforesend');
+                        console.log('uploadebefore', response.message);
+                    },
+                    uploadError: function(response)
+                    {
+                        alert('uploadsuploaderror');
+
+                        console.log('uploaduploadError', response.message);
+                    }
+                },
+                image: {
+                    uploadError: function(response)
+                    {
+                        alert('imagesuploaderror');
+
+                        console.log('imageuploadError', response.message);
+                    }
+                },
+                file: {
+                    uploadError: function(response)
+                    {
+                        alert('filesuploaderror');
+
+                        console.log('fileuploadError', response.message);
                     }
                 }
             },
-            imageUpload: '{{ $imageUploadUrl }}',
             definedlinks: '{{ route('chief.api.internal-links') }}',
             customClasses: [
                 {
