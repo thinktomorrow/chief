@@ -45,6 +45,21 @@ trait ActingAsParent
         return $this->presentChildren()->implode('');
     }
 
+    // custom renderChildren method that can add classes based on theme if present
+    public function renderChildrenWithThemeArray(array $themeArray): string
+    {
+        $output = "";
+        if(!$themeArray) return $this->renderChildren();
+
+        foreach ($this->presentChildren() as $i => $child) {
+            $pos = strpos($child, 'class="') + 7;
+            $className = $themeArray[$i%count($themeArray)];
+            $newChild = substr_replace($child, $className.' ', $pos, 0);
+            $output = $output.$newChild;
+        } 
+        return $output;
+    }
+
     public function presentChildren(): \Illuminate\Support\Collection
     {
         return (new PresentSections())($this, $this->children());
