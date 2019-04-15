@@ -2,11 +2,11 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Fixed: document media can be removed now
+- Fixed: user can't block themself anymore
 
 ## 0.2.10 - 2019-04-10
 - Fixed: avoid morphableInstantiation looping over models which are not morphable.
-- Fixed: document media can be removed now
-- Fixed: user can't block themself anymore
 
 ## 0.2.9 - 2019-04-10
 - Changed: moved `Assistant` contract to `/Managers/Assistants/` folder.
