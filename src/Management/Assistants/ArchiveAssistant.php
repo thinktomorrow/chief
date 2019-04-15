@@ -58,6 +58,8 @@ class ArchiveAssistant implements Assistant
     {
         $this->model->unarchive();
 
+        if($this->manager->isAssistedBy('publish')) $this->model->draft();
+
         Audit::activity()
             ->performedOn($this->model)
             ->log('unarchived');

@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
+- Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
 - Fixed: document media can be removed now
 - Fixed: user can't block themself anymore
 
