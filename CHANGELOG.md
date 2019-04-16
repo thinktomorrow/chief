@@ -4,9 +4,9 @@ All Notable changes to the `chief` application template will be documented in th
 ## unreleased
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
 - Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
+- Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
 - Fixed: document media can be removed now
 - Fixed: user can't block themself anymore
-
 
 ## 0.2.10 - 2019-04-10
 - Fixed: avoid morphableInstantiation looping over models which are not morphable.
