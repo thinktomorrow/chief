@@ -19,45 +19,53 @@
 @endcomponent
 
 @section('content')
-    <div class="treeview stack-l">
-        <div class="row">
-            <div class="column center-y">
-                <strong>Label</strong>
-            </div>
-            <div class="column-4 center-y">
-                <strong>Link</strong>
-            </div>
-            <div class="column-2"></div>
+
+    @if($menuItems->isEmpty() )
+        <div class="center-center stack-xl">
+            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary squished-l">
+                <i class="icon icon-zap icon-fw"></i>Voeg een menu-item toe
+            </a>
         </div>
-        @foreach($menuItems as $menuItem)
+    @else
+        <div class="treeview stack-l">
+            <div class="row">
+                <div class="column center-y">
+                    <strong>Label</strong>
+                </div>
+                <div class="column-4 center-y">
+                    <strong>Link</strong>
+                </div>
+                <div class="column-2"></div>
+            </div>
+            @foreach($menuItems as $menuItem)
 
-            <hr class="separator stack-s">
+                <hr class="separator stack-s">
 
-            @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
+                @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
 
-            <div class="stack-s">
-                @foreach($menuItem->children as $child)
-                    @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
+                <div class="stack-s">
+                    @foreach($menuItem->children as $child)
+                        @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 
-                    <div class="stack-xs">
-
-                        @foreach($child->children as $subchild)
-
-                            @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
+                        <div class="stack-xs">
 
                             @foreach($child->children as $subchild)
-                                @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
+
+                                @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
+
+                                @foreach($child->children as $subchild)
+                                    @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
+                                @endforeach
+
                             @endforeach
 
-                        @endforeach
+                        </div>
 
-                    </div>
+                    @endforeach
 
-                @endforeach
+                </div>
 
-            </div>
-
-        @endforeach
-    </div>
-
+            @endforeach
+        </div>
+    @endif
 @stop

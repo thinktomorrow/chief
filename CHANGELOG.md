@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Added: empty state for menu items
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
 - Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
 - Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
