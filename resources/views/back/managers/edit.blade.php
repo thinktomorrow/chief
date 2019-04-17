@@ -13,8 +13,8 @@
 
     <div class="inline-group-s">
 
-        @if(contract($manager, \Thinktomorrow\Chief\Management\ManagerThatPreviews::class))
-            {!! $manager->publicationStatusAsLabel() !!}
+        @if($manager->isAssistedBy('publish'))
+            {!! $manager->assistant('publish')->publicationStatusAsLabel() !!}
         @endif
 
         <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
@@ -31,7 +31,7 @@
 
         <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
-            
+
             <input type="hidden" name="_method" value="PUT">
 
             @include('chief::back.managers._partials._form', [
