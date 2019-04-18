@@ -8,6 +8,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
 - Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
 - Fixed: document media can be removed now
+- Fixed: document upload will adhere to the multiple flag now.
 - Fixed: user can't block themself anymore
 
 ## 0.2.10 - 2019-04-10
