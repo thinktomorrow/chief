@@ -10,6 +10,9 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
 - Fixed: pagebuilder no longer shows modules that are specific for other pages.
 - Fixed: regular checkboxes are no longer hidden by default.
+- Added: config setting `strict` to display any non-fatal errors which are otherwise silently ignored. Defaults to correspond with the project's APP_DEBUG value.
+- Deprecated: `Page::hasPagebuilder()` since no longer used. Scheduled to be removed in version 0.4.
+- Changed: grouping of child pages as a collection is no longer based on the view key as a grouping id. Rather the `flatReferenceGroup()` value is used instead.
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items

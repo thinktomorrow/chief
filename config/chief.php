@@ -5,6 +5,12 @@ use Thinktomorrow\Chief\Media\MediaType;
 return [
 
     /**
+     * When in development, we would like to have more errors and avoid silent fails which is
+     * something that is appreciated in production but not in failure driven development. :)
+     */
+    'strict' => env('APP_DEBUG', false),
+
+    /**
      * Domain settings.
      *
      * Here you should set your primary location for your models
