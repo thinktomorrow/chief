@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+
+## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
 - Added: allow Field key value to be set via `Field::key()` method
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
