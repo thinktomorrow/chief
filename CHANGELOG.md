@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Added: empty state for menu items
+- Added: allow Field key value to be set via `Field::key()` method
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
 - Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
 - Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
