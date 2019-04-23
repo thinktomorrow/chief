@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Common;
+namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
@@ -39,5 +39,11 @@ class ProvidesUrlTest extends TestCase
         $page = Page::create([]);
 
         $this->assertEquals('', $page->url());
+    }
+
+    /** @test */
+    function the_base_url_segment_only_affects_newly_edited_urls()
+    {
+
     }
 }

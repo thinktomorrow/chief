@@ -97,8 +97,8 @@ class SnippetParserTest extends TestCase
         $page = ArticlePageFake::create();
         $module = $this->addSnippetToModule();
 
-        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->withSnippets()->presentForParent($page));
-        $this->assertEquals('[[snippet-stub]]', $module->fresh()->presentForParent($page));
+        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->withSnippets()->setViewParent($page)->renderView());
+        $this->assertEquals('[[snippet-stub]]', $module->fresh()->setViewParent($page)->renderView());
     }
 
     /** @test */
@@ -110,7 +110,7 @@ class SnippetParserTest extends TestCase
         $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->renderChildren());
 
         $module = $this->addSnippetToModule();
-        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->presentForParent($page));
+        $this->assertEquals('<p>This is a snippet</p>', $module->fresh()->setViewParent($page)->renderView());
     }
 
     private function addSnippetToPageContent()

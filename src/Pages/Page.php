@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Concerns\ProvidesUrl\BaseUrlSegment;
 use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Concerns\ProvidesUrl\ResolvesRoute;
-use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Concerns\Viewable\NotFoundView;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Audit\AuditTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,8 +17,6 @@ use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Relations\PresentForParent;
-use Thinktomorrow\Chief\Relations\PresentingForParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
@@ -31,7 +31,7 @@ use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, PresentForParent, ProvidesUrl
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -46,10 +46,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         Archivable,
         AuditTrait,
         ActingAsParent,
-        PresentingForParent,
         ActingAsChild,
         WithSnippets,
-        ResolvesRoute;
+        ResolvesRoute,
+        Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel      = PageTranslation::class;
@@ -62,13 +62,20 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $guarded     = [];
     protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
+
+    /** @deprecated since 0.2 */
     protected $pagebuilder = true;
 
+    protected $baseViewPath;
     protected static $baseUrlSegment = '/';
 
     public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
+
+        if(!isset($this->baseViewPath)) {
+            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.pages','pages');
+        }
 
         parent::__construct($attributes);
     }
@@ -100,11 +107,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function modules()
     {
         return $this->hasMany(Module::class, 'page_id')->where('morph_key', '<>', 'text');
-    }
-
-    public function viewkey(): string
-    {
-        return $this->morphKey();
     }
 
     public function flatReference(): FlatReference
@@ -227,28 +229,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $this->title ?? '';
     }
 
-    public function view()
-    {
-        $viewPaths = [
-            'front.'.$this->morphKey().'.show',
-            'front.pages.'.$this->morphKey().'.show',
-            'front.pages.show',
-            'pages.show',
-        ];
-
-        foreach ($viewPaths as $viewPath) {
-            if (! view()->exists($viewPath)) {
-                continue;
-            }
-
-            return view($viewPath, [
-                'page' => $this,
-            ]);
-        }
-
-        throw new NotFoundView('Frontend view could not be determined for page. Make sure to at least provide a default view for pages. This can be either [pages.show] or [front.pages.show].');
-    }
-
     /**
      * PUBLISHABLE OVERRIDES BECAUSE OF ARCHIVED STATE IS SET ELSEWHERE.
      * IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
@@ -313,6 +293,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return '-';
     }
 
+    /**
+     * @deprecated will no longer be used in later versions >= 0.4
+     * @return bool
+     */
     public function hasPagebuilder()
     {
         return $this->pagebuilder;

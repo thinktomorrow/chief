@@ -21,7 +21,8 @@ interface ProvidesFlatReference
 
     /**
      * Label that identifies the grouping under which this reference should belong.
-     * This is a categorization used to group select options and other listings
+     * This is a categorization used to group select options and other listings.
+     * It also combines similar models together in the view rendering.
      *
      * @return string
      */
