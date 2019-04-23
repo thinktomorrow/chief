@@ -10,6 +10,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: document media can be removed now
 - Fixed: document upload will adhere to the multiple flag now.
 - Fixed: user can't block themself anymore
+- Fixed: SelectField::multiple defaults to true when no boolean argument is passed.
 
 ## 0.2.10 - 2019-04-10
 - Fixed: avoid morphableInstantiation looping over models which are not morphable.
