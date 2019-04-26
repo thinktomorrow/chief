@@ -87,7 +87,7 @@ class PageManager extends AbstractManager implements Manager
      */
     public function fields(): Fields
     {
-        return new Fields([
+        return parent::fields()->add(
             $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
                                      ->validation('required-fallback-locale|max:200', [], [
@@ -117,8 +117,8 @@ class PageManager extends AbstractManager implements Manager
             InputField::make('seo_keywords')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
-                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
-        ]);
+                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.')
+        );
     }
 
     public static function filters(): Filters
@@ -140,12 +140,12 @@ class PageManager extends AbstractManager implements Manager
     public function fieldArrangement($key = null): FieldArrangement
     {
         if ($key == 'create') {
-            return new FieldArrangement($this->fields()->filterBy(function ($field) {
+            return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
                 return $field->key == 'title';
             }));
         }
 
-        return new FieldArrangement($this->fields(), [
+        return new FieldArrangement($this->fieldsWithAssistantFields(), [
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('inhoud'),
             new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),

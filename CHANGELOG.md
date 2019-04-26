@@ -11,6 +11,8 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: pagebuilder no longer shows modules that are specific for other pages.
 - Fixed: regular checkboxes are no longer hidden by default.
 - Added: config setting `strict` to display any non-fatal errors which are otherwise silently ignored. Defaults to correspond with the project's APP_DEBUG value.
+- Added: Assistants can now add their own field to the manager edit form via a `Assistant::fields(): Fields` method.
+- Added: Assistants can handle the saving of this field via a custom method following the same naming convention for custom save methods on the manager. e.g. saveExampleField
 - Added: Fields::merge() method which can be passed another Fields object. A Field value with the same key will overwrite the existing one.
 - Deprecated: `Page::hasPagebuilder()` since no longer used. Scheduled to be removed in version 0.4.
 - Changed: grouping of child pages as a collection is no longer based on the view key as a grouping id. Rather the `flatReferenceGroup()` value is used instead.

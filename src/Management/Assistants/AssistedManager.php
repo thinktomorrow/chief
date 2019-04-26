@@ -20,6 +20,17 @@ trait AssistedManager
         return !! $this->getAssistantClass($assistant);
     }
 
+    public function assistants(): array
+    {
+        $assistants = [];
+
+        foreach($this->assistants as $assistant){
+            $assistants[] = $this->assistant($assistant);
+        }
+
+        return $assistants;
+    }
+
     /**
      * Instantiate the assistant
      *

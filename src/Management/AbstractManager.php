@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Filters\Filters;
@@ -145,6 +146,30 @@ abstract class AbstractManager
         return $this;
     }
 
+    public function fields(): Fields
+    {
+        return new Fields();
+    }
+
+    /**
+     * Enrich the manager fields with any of the assistant specified fields
+     *
+     * @return Fields
+     * @throws \Exception
+     */
+    public function fieldsWithAssistantFields(): Fields
+    {
+        $fields = $this->fields();
+
+        foreach($this->assistants() as $assistant){
+            if( ! method_exists($assistant, 'fields')) continue;
+
+            $fields = $fields->merge($assistant->fields());
+        }
+
+        return $fields;
+    }
+
     /**
      * This determines the arrangement of the manageable fields
      * on the create and edit forms. By default, all fields
@@ -152,17 +177,18 @@ abstract class AbstractManager
      *
      * @param null $key pinpoint to a specific field arrangement e.g. for create page.
      * @return FieldArrangement
+     * @throws \Exception
      */
     public function fieldArrangement($key = null): FieldArrangement
     {
-        return new FieldArrangement($this->fields());
+        return new FieldArrangement($this->fieldsWithAssistantFields());
     }
 
     public function getFieldValue($field, $default = null)
     {
         // If string is passed, we use this to find the proper field
         if (is_string($field)) {
-            foreach ($this->fields()->all() as $possibleField) {
+            foreach ($this->fieldsWithAssistantFields()->all() as $possibleField) {
                 if ($possibleField->key() == $field) {
                     $field = $possibleField;
                     break;

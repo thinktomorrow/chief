@@ -83,9 +83,9 @@ class FieldArrangementTest extends TestCase
 
         $this->assertFalse($arrangement->hasTabs());
         $this->assertCount(6, $arrangement->fields());
-        $this->assertEquals('title', $arrangement->fields()[0]->key);
-        $this->assertEquals('avatar', $arrangement->fields()[4]->key);
-        $this->assertEquals('doc', $arrangement->fields()[5]->key);
+        $this->assertEquals('title', $arrangement->fields()->keys()[0]);
+        $this->assertEquals('avatar', $arrangement->fields()->keys()[4]);
+        $this->assertEquals('doc', $arrangement->fields()->keys()[5]);
     }
 
     /** @test */
@@ -99,6 +99,6 @@ class FieldArrangementTest extends TestCase
 
         $this->assertCount(3, $arrangement->tabs()[0]->fields());
         $this->assertCount(2, $arrangement->tabs()[1]->fields());
-        $this->assertInstanceOf(Field::class, $arrangement->tabs()[1]->fields()[0]);
+        $this->assertInstanceOf(Field::class, $arrangement->tabs()[1]->fields()->first());
     }
 }

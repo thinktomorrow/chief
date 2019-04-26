@@ -15,14 +15,14 @@ class ManagerFake extends AbstractManager implements Manager
 {
     public function fields(): Fields
     {
-        return new Fields([
+        return parent::fields()->add(
             InputField::make('title'),
             InputField::make('custom'),
             InputField::make('title_trans')->translatable(['nl', 'fr']),
             InputField::make('content_trans')->translatable(['nl', 'fr']),
             MediaField::make('avatar'),
-            DocumentField::make('doc'),
-        ]);
+            DocumentField::make('doc')
+        );
     }
 
     public function setCustomField(Field $field, Request $request)

@@ -30,6 +30,8 @@ interface Manager
 
     public function assistant(string $assistant): Assistant;
 
+    public function assistants(): array;
+
     /**
      * Find an instance by id wrapped in a Manager
      *
@@ -42,6 +44,7 @@ interface Manager
      * Get all managed models wrapped in a Manager
      * E.g. used for the index.
      *
+     * @param bool $apply_filters
      * @return Collection of ManagedModel
      */
     public function findAllManaged($apply_filters = false): Collection;
@@ -72,6 +75,13 @@ interface Manager
      * @return Fields
      */
     public function fields(): Fields;
+
+    /**
+     * The manager fields enriched with any of the assistant specified fields.
+     *
+     * @return Fields
+     */
+    public function fieldsWithAssistantFields(): Fields;
 
     /**
      * This determines the arrangement of the manageable fields

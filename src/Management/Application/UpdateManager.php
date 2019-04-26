@@ -16,7 +16,7 @@ class UpdateManager
 
         $request = $manager->updateRequest($request);
 
-        app(FieldValidator::class)->validate($manager->fields(), $request);
+        app(FieldValidator::class)->validate($manager->fieldsWithAssistantFields(), $request);
 
         if (method_exists($manager, 'beforeUpdate')) {
             $manager->beforeUpdate($request);
