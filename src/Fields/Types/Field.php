@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
+use Illuminate\Contracts\Validation\Validator;
 use Thinktomorrow\Chief\Fields\LocalizedFieldValidationRules;
+use Thinktomorrow\Chief\Fields\Validators\FieldValidatorFactory;
 
 class Field
 {
@@ -22,42 +24,21 @@ class Field
         $this->values['type'] = $fieldType->get();
     }
 
-    public function validation($rules = [], array $messages = [], array $attributes = [])
+    public function validation(...$arguments)
     {
-        $this->values['validation'] = ['rules' => $rules, 'messages' => $messages, 'customAttributes' => $attributes];
+        $this->values['validation'] = $arguments;
 
         return $this;
-    }
-
-    /**
-     * @param array $data - request data payload
-     * @return array|null
-     */
-    public function getValidation(array $data = [])
-    {
-        if (! $this->hasValidation()) {
-            return null;
-        }
-
-        list('rules' => $rules, 'messages' => $messages, 'customAttributes' => $customAttributes) = $this->values['validation'];
-
-        // Normalize rules: If no attribute is passed for the rule, we use the field name.
-        if (!is_array($rules) || isset($rules[0])) {
-            $rules = [$this->values['name'] => (is_array($rules) ? reset($rules) : $rules)];
-
-            if ($this->isTranslatable()) {
-                $rules = (new LocalizedFieldValidationRules($this->locales))
-                            ->influenceByPayload($data)
-                            ->rules($rules);
-            }
-        }
-
-        return ['rules' => $rules, 'messages' => $messages, 'customAttributes' => $customAttributes];
     }
 
     public function hasValidation(): bool
     {
         return (isset($this->values['validation']) && !empty($this->values['validation']));
+    }
+
+    public function validator(array $data): Validator
+    {
+        return app(FieldValidatorFactory::class)->create($this, $data);
     }
 
     public function translatable(array $locales = [])

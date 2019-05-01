@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\FieldValidator;
 use Thinktomorrow\Chief\Management\Manager;
 
 class StoreManager
@@ -16,7 +15,7 @@ class StoreManager
 
         $request = $manager->storeRequest($request);
 
-        app(FieldValidator::class)->validate($manager->fields(), $request);
+        $manager->fieldsWithAssistantFields()->validate($request->all());
 
         if (method_exists($manager, 'beforeStore')) {
             $manager->beforeStore($request);

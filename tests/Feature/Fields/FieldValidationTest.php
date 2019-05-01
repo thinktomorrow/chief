@@ -23,12 +23,10 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->translatable(['nl', 'fr']);
 
-        list('rules' => $rules) = $field->getValidation();
-
         $this->assertEquals([
-            'trans.nl.content_trans' => 'required|max:200',
-            'trans.fr.content_trans' => 'required|max:200',
-        ], $rules);
+            'trans.nl.content_trans' => ['required','max:200'],
+            'trans.fr.content_trans' => ['required','max:200'],
+        ], $field->validator([])->getRules());
     }
 
     /** @test */
@@ -39,12 +37,10 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->translatable(['nl', 'fr']);
 
-        list('rules' => $rules) = $field->getValidation();
-
         $this->assertEquals([
-            'trans.nl.foobar' => 'required|max:200',
-            'trans.fr.foobar' => 'required|max:200',
-        ], $rules);
+            'trans.nl.foobar' => ['required','max:200'],
+            'trans.fr.foobar' => ['required','max:200'],
+        ], $field->validator([])->getRules());
     }
 
     /** @test */
@@ -54,11 +50,9 @@ class FieldValidationTest extends TestCase
             ->validation(['foobar' => 'required|max:200'])
             ->translatable(['nl', 'fr']);
 
-        list('rules' => $rules) = $field->getValidation();
-
         $this->assertEquals([
-            'foobar' => 'required|max:200',
-        ], $rules);
+            'foobar' => ['required','max:200'],
+        ], $field->validator([])->getRules());
     }
 
     /** @test */
@@ -69,12 +63,10 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->translatable(['nl', 'fr']);
 
-        list('rules' => $rules) = $field->getValidation();
-
         $this->assertEquals([
-            'foo.nl.bar' => 'required|max:200',
-            'foo.fr.bar' => 'required|max:200',
-        ], $rules);
+            'foo.nl.bar' => ['required','max:200'],
+            'foo.fr.bar' => ['required','max:200'],
+        ], $field->validator([])->getRules());
     }
 
     /** @test */
@@ -85,13 +77,13 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->translatable(['nl', 'fr']);
 
-        list('rules' => $rules) = $field->getValidation(['trans' => [
+        $rules = $field->validator(['trans' => [
             'nl' => ['foobar' => 'entry'],
             'fr' => ['foobar' => null],
-        ]]);
+        ]])->getRules();
 
         $this->assertEquals([
-            'trans.nl.foobar' => 'required|max:200',
+            'trans.nl.foobar' => ['required','max:200'],
         ], $rules);
     }
 }

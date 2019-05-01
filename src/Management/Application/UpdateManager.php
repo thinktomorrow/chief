@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\FieldValidator;
 use Thinktomorrow\Chief\Management\Manager;
 
 class UpdateManager
@@ -16,7 +15,7 @@ class UpdateManager
 
         $request = $manager->updateRequest($request);
 
-        app(FieldValidator::class)->validate($manager->fieldsWithAssistantFields(), $request);
+        $manager->fieldsWithAssistantFields()->validate($request->all());
 
         if (method_exists($manager, 'beforeUpdate')) {
             $manager->beforeUpdate($request);

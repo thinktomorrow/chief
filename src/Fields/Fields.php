@@ -44,6 +44,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         return array_keys($this->fields);
     }
 
+    public function validate(array $data)
+    {
+        foreach($this->fields as $field){
+            $field->validator($data)->validate();
+        }
+    }
+
     public function filterBy($key, $value = null)
     {
         $fields = [];
@@ -69,12 +76,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         }
 
         return new static($fields);
-    }
-
-    private function validateFields(array $fields)
-    {
-        array_map(function (Field $field) {
-        }, $fields);
     }
 
     public function add(Field ...$fields): Fields
@@ -148,4 +149,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
         return $keyedFields;
     }
+
+    private function validateFields(array $fields)
+    {
+        array_map(function (Field $field) {
+        }, $fields);
+    }
+
 }
