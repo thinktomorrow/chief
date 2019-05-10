@@ -23,7 +23,6 @@ $factory->define(Page::class, function (Faker\Generator $faker) {
         'featured'    => $faker->boolean(),
         'publication' => null,
         'title:nl'    => $faker->words(rand(2, 4), true),
-        'slug:nl'     => $faker->unique()->slug,
     ];
 });
 

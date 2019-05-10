@@ -31,9 +31,7 @@ class PageBuildTest extends TestCase
         // Create a dummy page up front based on the expected validPageParams
         $this->page = ArticlePageFake::create([
             'title:nl' => 'new title',
-            'slug:nl' => 'new-slug',
             'title:en' => 'nouveau title',
-            'slug:en' => 'nouveau-slug',
         ]);
 
         $this->app['config']->set('thinktomorrow.chief.relations.children', [
@@ -49,7 +47,7 @@ class PageBuildTest extends TestCase
     public function it_can_fetch_all_sections_in_order()
     {
         $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
         $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
         $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
@@ -68,8 +66,8 @@ class PageBuildTest extends TestCase
     public function it_can_fetch_all_sections_with_multiple_pages_in_order()
     {
         $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug', 'published' => true]);
-        $thirdPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug-2', 'published' => true]);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
+        $thirdPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
         $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
         $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
@@ -89,10 +87,10 @@ class PageBuildTest extends TestCase
     /** @test */
     public function all_types_are_grouped_together_but_only_when_sorted_directly_after_each_other()
     {
-        $page2 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-1', 'slug:nl' => 'article-slug', 'published' => true]);
-        $page3 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-2', 'slug:nl' => 'article-slug-3', 'published' => true]);
+        $page2 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-1', 'published' => true]);
+        $page3 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-2', 'published' => true]);
         $module = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'module-text']);
-        $page4 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-3', 'slug:nl' => 'article-slug-4', 'published' => true]);
+        $page4 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-3', 'published' => true]);
         $this->page->adoptChild($page2, ['sort' => 1]);
         $this->page->adoptChild($page3, ['sort' => 2]);
         $this->page->adoptChild($module, ['sort' => 3]);
@@ -287,7 +285,7 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_add_pages_as_module()
     {
-        $article = ArticlePageFake::create(['title:nl' => 'tweede artikel', 'slug:nl' => 'tweede-slug']);
+        $article = ArticlePageFake::create(['title:nl' => 'tweede artikel']);
 
         // Replace text module content
         $this->asAdmin()
@@ -329,7 +327,7 @@ class PageBuildTest extends TestCase
     public function it_can_set_the_order()
     {
         $text_module = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'slug:nl' => 'article-slug']);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text']);
         $newsletter = NewsletterModuleFake::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
 
         $this->page->adoptChild($text_module, ['sort' => 0]);

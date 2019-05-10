@@ -4,10 +4,9 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\BaseUrlSegment;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\ResolvesRoute;
-use Thinktomorrow\Chief\Concerns\Viewable\NotFoundView;
+use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvesRoute;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
@@ -30,6 +29,7 @@ use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
 class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
 {
@@ -55,7 +55,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $translationModel      = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
     protected $translatedAttributes  = [
-        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords'
+        'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords'
     ];
 
     public $table          = "pages";
@@ -148,20 +148,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return static::published()->find($id);
     }
 
-    public static function findBySlug($slug)
-    {
-        return ($trans = PageTranslation::findBySlug($slug)) ? static::find($trans->page_id) : null;
-    }
-
-    public static function findPublishedBySlug($slug)
-    {
-        $translationModel = (new static)->translationModel;
-
-        // First slug segment could be the base url segment so check that first
-        $slugWithoutBaseSegment = BaseUrlSegment::strip($slug);
-        return (($trans = $translationModel::findBySlug($slugWithoutBaseSegment)) || ($trans = $translationModel::findBySlug($slug))) ? static::findPublished($trans->page_id) : null;
-    }
-
     public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at', 'DESC');
@@ -170,19 +156,21 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     /** @inheritdoc */
     public function url($locale = null): string
     {
-        $slug = $locale ? optional($this->getTranslation($locale))->slug : $this->slug;
+        if(!$locale) $locale = app()->getLocale();
 
-        if (!$slug) {
+        try{
+            $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
+
+            $routeName = Homepage::is($this)
+                ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
+                : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+
+            return $this->resolveRoute($routeName, $slug, $locale);
+        }
+        catch(UrlRecordNotFound $e)
+        {
             return '';
         }
-
-        $parameters = trim($this->baseUrlSegment($locale) . '/' . $slug, '/');
-
-        $routeName = Homepage::is($this)
-                        ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
-                        : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
-
-        return $this->resolveRoute($routeName, $parameters, $locale);
     }
 
     /** @inheritdoc */

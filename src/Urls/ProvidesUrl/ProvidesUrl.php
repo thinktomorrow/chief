@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Concerns\ProvidesUrl;
+namespace Thinktomorrow\Chief\Urls\ProvidesUrl;
 
 interface ProvidesUrl
 {

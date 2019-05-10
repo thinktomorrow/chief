@@ -55,12 +55,19 @@ interface Manager
      */
     public function model();
 
+    /**
+     * Assert that the model already exists (in database)
+     * @return bool
+     */
+    public function hasExistingModel(): bool;
+
     public function route($verb): ?string;
 
     public function can($verb): bool;
 
     /**
      * @param $verb
+     * @return Manager
      * @throws NotAllowedManagerRoute
      */
     public function guard($verb): self;

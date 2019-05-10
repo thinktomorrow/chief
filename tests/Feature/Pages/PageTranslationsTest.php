@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
-class UpdatePageTest extends TestCase
+class PageTranslationsTest extends TestCase
 {
     use PageFormParams;
 
@@ -30,37 +30,10 @@ class UpdatePageTest extends TestCase
             'title:en' => 'nouveau title',
         ]);
 
-        UrlRecord::create([
-            'locale' => 'nl', 'slug' => 'new-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
-        ]);
-
-        UrlRecord::create([
-            'locale' => 'en', 'slug' => 'nouveau-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
-        ]);
-
         // For our project context we expect the page detail route to be known
         Route::get('pages/{slug}', function () {
+
         })->name('pages.show');
-    }
-
-    /** @test */
-    public function admin_can_view_the_edit_form()
-    {
-        $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]))
-            ->assertViewIs('chief::back.managers.edit')
-            ->assertStatus(200);
-    }
-
-    /** @test */
-    public function guests_cannot_view_the_edit_form()
-    {
-        auth()->guard('chief')->logout();
-
-        $this->get(route('chief.back.managers.edit', ['singles', $this->page->id]))
-             ->assertStatus(302)
-             ->assertRedirect(route('chief.back.login'));
-
-        $this->assertNewPageValues($this->page->fresh());
     }
 
     /** @test */
@@ -95,7 +68,7 @@ class UpdatePageTest extends TestCase
                     'title' => '',
                 ],
             ])
-        );
+            );
 
         $response->assertStatus(302);
 
@@ -103,8 +76,50 @@ class UpdatePageTest extends TestCase
     }
 
     /** @test */
-    function emptying_all_fields_of_a_translation_removes_the_translation()
+    public function slug_uses_title_if_its_empty()
     {
-        $this->markTestIncomplete();
+        $page = factory(Page::class)->create([
+            'trans.nl.title'  => 'foobar nl',
+        ]);
+
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'titel-nl', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar nl',
+                ],
+                'url-slugs' => [
+                    'nl' => '',
+                ],
+            ])
+            );
+
+        $response->assertStatus(302);
+
+        $this->assertStringEndsWith('titel-nl', $page->url('nl'));
+    }
+
+    /** @test */
+    public function slug_can_contain_slashes()
+    {
+        $page = factory(Page::class)->create([
+            'trans.nl.title'  => 'foobar nl',
+        ]);
+
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'titel-nl', 'model_type' => 'singles', 'model_id' => $page->id]);
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'trans.nl'  => [
+                    'title' => 'foobar nl',
+                ],
+                'url-slugs' => [
+                    'nl' => 'articles/foobar',
+                ],
+            ])
+            );
+
+        $this->assertStringEndsWith('articles/foobar', $page->fresh()->url('nl'));
     }
 }

@@ -29,9 +29,7 @@ class PagetitleTest extends TestCase
         // Create a dummy page up front based on the expected validPageParams
         $this->page = ArticlePageFake::create([
             'title:nl' => 'new title',
-            'slug:nl' => 'new-slug',
             'title:en' => 'nouveau title',
-            'slug:en' => 'nouveau-slug',
         ]);
 
         // For our project context we expect the page detail route to be known

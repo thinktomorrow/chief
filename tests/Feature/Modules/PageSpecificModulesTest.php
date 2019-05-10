@@ -15,7 +15,7 @@ class PageSpecificModulesTest extends TestCase
     /** @test */
     public function it_can_assign_a_module_to_a_page()
     {
-        $page = Page::create(['morph_key' => 'singles', 'slug' => 'foobar', 'title:nl' => 'foobar']);
+        $page = Page::create(['morph_key' => 'singles', 'title:nl' => 'foobar']);
         $module = Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar', 'page_id' => $page->id]);
 
         $this->assertEquals($page->id, $module->page->id);

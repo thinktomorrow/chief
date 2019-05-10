@@ -50,4 +50,19 @@ class UrlTest extends TestCase
 
         UrlRecord::findBySlug('xxx', 'nl');
     }
+
+    /** @test */
+    function when_adding_new_url_it_sets_existing_url_as_redirect()
+    {
+        $existing = UrlRecord::create(['locale' => null, 'slug' => 'foo/bar', 'model_type' => 'foobar', 'model_id' => '1']);
+        $new = $existing->replace([
+            'locale' => 'nl',
+            'slug' => 'foo/bar',
+        ]);
+
+        $this->assertEquals($new->id, UrlRecord::findBySlug('foo/bar', 'nl')->id);
+
+        $this->assertTrue($existing->fresh()->isRedirect());
+        $this->assertEquals($new->id, $existing->fresh()->redirectTo()->id);
+    }
 }

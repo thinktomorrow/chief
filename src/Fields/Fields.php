@@ -47,7 +47,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     public function validate(array $data)
     {
         foreach($this->fields as $field){
-            $field->validator($data)->validate();
+             $field->validator($data)->validate();
         }
     }
 

@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Contracts\Validation\Validator;
-use Thinktomorrow\Chief\Fields\LocalizedFieldValidationRules;
 use Thinktomorrow\Chief\Fields\Validators\FieldValidatorFactory;
 
 class Field
@@ -21,11 +20,19 @@ class Field
 
         $this->values['key'] = $this->values['column'] = $this->values['name'] = $this->values['label'] = $key;
         $this->values['locales'] = [];
+        $this->values['viewData'] = [];
         $this->values['type'] = $fieldType->get();
     }
 
     public function validation(...$arguments)
     {
+        // If a Closure or Validator is passed, we do not want to pass it as an array.
+        if(count($arguments) == 1 && !is_array($arguments)){
+            $this->values['validation'] = reset($arguments);
+
+            return $this;
+        }
+
         $this->values['validation'] = $arguments;
 
         return $this;
@@ -74,6 +81,44 @@ class Field
         }
 
         return $value;
+    }
+
+    /**
+     * The view path to the full formgroup for this field.
+     *
+     * @param string|null $view
+     * @param array $viewData
+     * @return $this|mixed|null|string
+     */
+    public function view(string $view = null)
+    {
+        if($view){
+            $this->values['view'] = $view;
+            return $this;
+        }
+
+        return $this->__get('view') ?? 'chief::back._fields.formgroup';
+    }
+
+    public function viewData(array $viewData = [])
+    {
+        if($viewData){
+            $this->values['viewData'] = $viewData;
+            return $this;
+        }
+
+        return $this->__get('viewData');
+    }
+
+    /**
+     * In case of the default formgroup rendering, there is also made use of
+     * the form input element, which is targeted as a specific view as well
+     *
+     * @return string
+     */
+    public function formElementView(): string
+    {
+        return 'chief::back._fields.'.$this->fieldType->get();
     }
 
     public function __get($key)

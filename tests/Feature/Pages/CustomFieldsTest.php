@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategories;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategoriesManager;
 use Thinktomorrow\Chief\Tests\Fakes\Category;
@@ -21,6 +20,10 @@ class CustomFieldsTest extends TestCase
     {
         parent::setUp();
 
+        // For our project context we expect the page detail route to be known
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
+
         ArticlePageWithCategories::migrateUp();
         Category::migrateUp();
 
@@ -31,16 +34,13 @@ class CustomFieldsTest extends TestCase
         $this->asAdmin()->post(route('chief.back.managers.store', 'articles'), $this->validPageParams());
 
         $this->page = ArticlePageWithCategories::first();
-
-        // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
     }
 
 
     /** @test */
     public function it_can_edit_a_page_with_a_custom_field()
     {
+        $this->disableExceptionHandling();
         $response = $this->asAdmin()
             ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
                 'custom' => 'foobar'

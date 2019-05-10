@@ -294,3 +294,18 @@ if (!function_exists('ddd')) {
         return dd($var, ...$moreVars);
     }
 }
+
+if (!function_exists('chiefMemoize')) {
+    /**
+     * Memoize a function
+     *
+     * @param $key
+     * @param Closure $closure
+     * @param array $parameters
+     * @return mixed
+     */
+    function chiefMemoize($key, \Closure $closure, array $parameters = [])
+    {
+        return (new \Thinktomorrow\Chief\Common\Helpers\Memoize($key))->run($closure, $parameters);
+    }
+}

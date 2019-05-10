@@ -86,6 +86,11 @@ abstract class AbstractManager
         return $this->model;
     }
 
+    public function hasExistingModel(): bool
+    {
+        return ($this->model && $this->model->exists);
+    }
+
     /**
      * If the model exists return it otherwise
      * throws a nonExistingRecord exception;
@@ -94,7 +99,7 @@ abstract class AbstractManager
      */
     protected function existingModel()
     {
-        if (!$this->model ||! $this->model->exists) {
+        if (!$this->hasExistingModel()) {
             throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
 
@@ -274,19 +279,12 @@ abstract class AbstractManager
 
     public function renderField(Field $field)
     {
-        $path = $field->ofType(FieldType::PAGEBUILDER)
-            ? 'chief::back._fields.pagebuilder'
-            : 'chief::back._fields.formgroup';
-
-        // form element view path
-        $viewpath = 'chief::back._fields.' . $field->type;
-
-        return view($path, [
-            'field'    => $field,
-            'key'      => $field->key, // As parameter so that it can be altered for translatable values
-            'manager'  => $this,
-            'viewpath' => $viewpath,
-        ])->render();
+        return view($field->view(), array_merge([
+            'field'           => $field,
+            'key'             => $field->key, // As parameter so that it can be altered for translatable values
+            'manager'         => $this,
+            'formElementView' => $field->formElementView(),
+        ]), $field->viewData())->render();
     }
 
     public static function filters(): Filters

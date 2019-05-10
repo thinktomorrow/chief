@@ -2,7 +2,7 @@
     <tabs>
         @foreach($field->locales as $locale)
             <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
-                @include($viewpath, [
+                @include($formElementView, [
                     'key'   => 'trans.'.$locale.'.'.$field->key,
                     'name' => 'trans['.$locale.']['.$field->key.']',
                     'field' => $field
@@ -12,7 +12,7 @@
     </tabs>
 @else
     @foreach($field->locales as $locale)
-        @include($viewpath, [
+        @include($formElementView, [
             'key'   => 'trans.'.$locale.'.'.$field->key,
             'name' => 'trans['.$locale.']['.$field->key.']',
             'field' => $field

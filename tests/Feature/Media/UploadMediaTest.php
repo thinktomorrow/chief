@@ -30,8 +30,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded()
     {
-        $this->disableExceptionHandling();
-        $page = Single::create(['slug' => 'test']);
+        $page = Single::create();
 
         config()->set(['app.fallback_locale' => 'nl']);
 

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class PreviewTest extends TestCase
 {
@@ -12,31 +13,30 @@ class PreviewTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        $originalpage = factory(Page::class)->create([
-            'published' => 0
+        $originalpage = factory(Page::class)->create(['published' => 0]);
+        $urlRecord = UrlRecord::create([
+            'model_type' => $originalpage->getMorphClass(),
+            'model_id' => $originalpage->id,
+            'slug' => 'foobar',
         ]);
 
-        $response = $this->asAdminWithoutRole()->get(route('demo.pages.show', $originalpage->slug) . '?preview-mode');
+        $response = $this->asAdminWithoutRole()->get(route('demo.pages.show', $urlRecord->slug) . '?preview-mode');
 
         $response->assertStatus(200);
-        $response->assertViewHas('page');
-
-        $page = $response->original->getData()['page'];
-
-        $this->assertInstanceOf('Thinktomorrow\Chief\Pages\Page', $page);
-        $this->assertEquals($originalpage->slug, $page->slug);
     }
 
     /** @test */
     public function a_user_can_not_view_previews_of_draft_pages()
     {
-        $originalpage = factory(Page::class)->create([
-            'published' => 0
+        $originalpage = factory(Page::class)->create(['published' => 0]);
+        $urlRecord = UrlRecord::create([
+            'model_type' => $originalpage->getMorphClass(),
+            'model_id' => $originalpage->id,
+            'slug' => 'foobar',
         ]);
 
-        $response = $this->get(route('demo.pages.show', $originalpage->slug) . '?preview-mode');
+        $response = $this->get(route('demo.pages.show', $urlRecord->slug) . '?preview-mode');
 
-        $response->assertStatus(302);
-        $response->assertRedirect(route('demo.pages.index'));
+        $response->assertStatus(404);
     }
 }

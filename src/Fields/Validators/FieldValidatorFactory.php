@@ -10,11 +10,11 @@ use Thinktomorrow\Chief\Fields\Types\Field;
 class FieldValidatorFactory
 {
     /** @var Factory */
-    private $validator;
+    private $validatorFactory;
 
-    public function __construct(Factory $validator)
+    public function __construct(Factory $validatorFactory)
     {
-        $this->validator = $validator;
+        $this->validatorFactory = $validatorFactory;
     }
 
     public function create(Field $field, array $data): Validator
@@ -27,16 +27,21 @@ class FieldValidatorFactory
             return $field->validation;
         }
 
+        if($field->validation instanceof \Closure){
+            $closure = $field->validation;
+            return $closure($this->validatorFactory, $data);
+        }
+
         return $this->composeValidatorFromRules($field, $data);
     }
 
     private function composeValidatorFromRules(Field $field, array $data): Validator
     {
         if(!is_array($field->validation) || !isset($field->validation[0])){
-            throw new \Exception('Invalid validation given. Rules should be passed as array.');
+            throw new \Exception('Invalid validation given. Rules should be passed as non-associative array.');
         }
 
-        return $this->validator->make($data,
+        return $this->validatorFactory->make($data,
             $this->normalizeRules($field, $field->validation[0], $data),
             $field->validation[1] ?? [], // messages
             $field->validation[2] ?? [] // custom attributes

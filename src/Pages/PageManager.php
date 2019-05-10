@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldsTab;
@@ -15,6 +14,7 @@ use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
+use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
@@ -31,6 +31,7 @@ class PageManager extends AbstractManager implements Manager
     private $pageBuilderField;
 
     protected $assistants = [
+        'url' => UrlAssistant::class,
         'archive' => ArchiveAssistant::class,
         'publish' => PublishAssistant::class,
     ];
@@ -38,10 +39,6 @@ class PageManager extends AbstractManager implements Manager
     public function __construct(Registration $registration)
     {
         parent::__construct($registration);
-
-        $this->uniqueSlug = UniqueSlug::make(new PageTranslation)->slugResolver(function ($value) {
-            return str_slug_slashed($value);
-        });
     }
 
     public function can($verb): bool
@@ -95,18 +92,6 @@ class PageManager extends AbstractManager implements Manager
                                      ])
                                      ->label('De titel van je '.$this->model->labelSingular ?? 'pagina')
                                      ->description('Dit is de titel die zal worden getoond in de overzichten en modules.<br> Deze zal gebruikt worden als interne titel en slug van de nieuwe pagina.'),
-            InputField::make('slug')
-                ->translatable($this->model->availableLocales())
-                ->validation($this->model->id
-                    ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'required-fallback-locale|unique:page_translations,slug', [], [
-                    'trans.'.config('app.fallback_locale', 'nl').'.slug' => 'slug'
-                ])
-                ->label('Link')
-                ->description('De unieke url verwijzing naar deze pagina.')
-                ->prepend(collect($this->model->availableLocales())->mapWithKeys(function ($locale) {
-                    return [$locale => url($this->model->baseUrlSegment($locale)).'/'];
-                })->all()),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),
@@ -193,7 +178,6 @@ class PageManager extends AbstractManager implements Manager
                 continue;
             }
 
-            $translation = $this->enforceUniqueSlug($request->get('trans'), $locale, $this->model);
             $trans[$locale] = $this->addDefaultShortDescription($translation);
         }
 
@@ -214,7 +198,6 @@ class PageManager extends AbstractManager implements Manager
                 continue;
             }
 
-            $translation = $this->enforceUniqueSlug($request->get('trans'), $locale, $this->model);
             $trans[$locale] = $this->addDefaultShortDescription($translation);
         }
 
@@ -234,16 +217,6 @@ class PageManager extends AbstractManager implements Manager
         Audit::activity()
             ->performedOn($this->model)
             ->log('edited');
-    }
-
-    private function enforceUniqueSlug(array $translations, string $locale, Page $page): array
-    {
-        $translation = $translations[$locale];
-
-        $translation['slug']    = $translation['slug'] ?? $translation['title'];
-        $translation['slug']    = $this->uniqueSlug->get($translation['slug'], $page->getTranslation($locale));
-
-        return $translation;
     }
 
     /**

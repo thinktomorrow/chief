@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Concerns\ProvidesUrl;
+namespace Thinktomorrow\Chief\Urls\ProvidesUrl;
 
 use Thinktomorrow\Chief\Management\Managers;
 

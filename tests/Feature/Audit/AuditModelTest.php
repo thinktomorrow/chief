@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -33,7 +32,6 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_create_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
@@ -51,7 +49,6 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_edit_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')

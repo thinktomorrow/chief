@@ -10,6 +10,6 @@ class ArticlePageFake extends Page
 {
     public function url($locale = null): string
     {
-        return route('articles.show', $this->slug);
+        return route('articles.show', 'foobar');
     }
 }
