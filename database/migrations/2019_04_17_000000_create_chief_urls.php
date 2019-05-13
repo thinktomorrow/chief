@@ -13,10 +13,11 @@ class CreateChiefUrls extends Migration
         Schema::create('chief_urls', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('redirect_id')->nullable();
-            $table->string('locale')->nullable();
+            $table->string('locale');
             $table->string('slug');
             $table->string('model_type');
             $table->integer('model_id')->unsigned();
+            $table->boolean('managed_as_wildcard')->default(0);
             $table->timestamps();
 
             $table->unique(['locale', 'slug']);
@@ -42,10 +43,11 @@ class CreateChiefUrls extends Migration
         foreach(Page::all() as $page){
             foreach($page->translations as $translation){
                 UrlRecord::create([
-                    'locale'     => $translation->locale,
-                    'slug'       => $translation->slug,
-                    'model_type' => $page->getMorphClass(),
-                    'model_id'   => $page->id,
+                    'locale'              => $translation->locale,
+                    'managed_as_wildcard' => 0,
+                    'slug'                => $translation->slug,
+                    'model_type'          => $page->getMorphClass(),
+                    'model_id'            => $page->id,
                 ]);
             }
         }

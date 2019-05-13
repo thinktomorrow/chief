@@ -11,7 +11,7 @@ class UrlTest extends TestCase
     /** @test */
     function it_can_find_a_matching_slug()
     {
-        $record = UrlRecord::create(['locale' => null, 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
+        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
 
         $this->assertEquals($record->id, UrlRecord::findBySlug('foo/bar', 'nl')->id);
     }
@@ -19,7 +19,6 @@ class UrlTest extends TestCase
     /** @test */
     function it_can_find_a_localized_slug_when_locale_matches()
     {
-        UrlRecord::create(['locale' => null, 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
         UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
 
@@ -27,20 +26,21 @@ class UrlTest extends TestCase
     }
 
     /** @test */
-    function it_will_get_the_non_localized_record_when_locale_does_not_match()
+    function it_ignores_the_outer_slashes_from_the_slug_argument()
     {
-        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
-        $record = UrlRecord::create(['locale' => null, 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
+        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
 
-        $this->assertEquals($record->id, UrlRecord::findBySlug('foo/bar', 'en')->id);
+        $this->assertEquals($record->id, UrlRecord::findBySlug('/foo/bar/', 'nl')->id);
     }
 
     /** @test */
-    function it_ignores_the_outer_slashes_from_the_slug_argument()
+    function it_throws_exception_when_locale_does_not_match()
     {
-        $record = UrlRecord::create(['locale' => null, 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
+        $this->expectException(UrlRecordNotFound::class);
 
-        $this->assertEquals($record->id, UrlRecord::findBySlug('/foo/bar/', 'nl')->id);
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => '', 'model_id' => '']);
+
+        UrlRecord::findBySlug('foo/bar', 'en');
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class UrlTest extends TestCase
     /** @test */
     function when_adding_new_url_it_sets_existing_url_as_redirect()
     {
-        $existing = UrlRecord::create(['locale' => null, 'slug' => 'foo/bar', 'model_type' => 'foobar', 'model_id' => '1']);
+        $existing = UrlRecord::create(['locale' => 'fr', 'slug' => 'foo/bar', 'model_type' => 'foobar', 'model_id' => '1']);
         $new = $existing->replace([
             'locale' => 'nl',
             'slug' => 'foo/bar',

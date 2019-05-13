@@ -2,16 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductWithBaseSegments;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
-use Thinktomorrow\Chief\Urls\UrlSlugFields;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class PageUrlTest extends TestCase
 {
@@ -23,16 +21,11 @@ class PageUrlTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->setUpChiefEnvironment();
 
         app(Register::class)->register('products', PageManager::class, ProductWithBaseSegments::class);
 
         $this->manager = app(Managers::class)->findByKey('products');
-
-        $this->setUpDefaultAuthorization();
-
-        Route::get('{slug}', function ($slug) {
-            return ChiefResponse::fromSlug($slug);
-        })->name('pages.show');
     }
 
     /** @test */

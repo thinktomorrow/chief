@@ -15,11 +15,10 @@ class CreateManagerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->setUpChiefEnvironment();
 
         ManagedModelFake::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
-
-        $this->setUpDefaultAuthorization();
 
         app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
 

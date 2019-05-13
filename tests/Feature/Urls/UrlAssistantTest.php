@@ -3,15 +3,15 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Illuminate\Foundation\Testing\TestResponse;
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductManagerWithUrlAssistant;
 use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductWithBaseSegments;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
@@ -20,55 +20,36 @@ class UrlAssistantTest extends TestCase
     /** @var Manager */
     private $manager;
 
+    use PageFormParams;
+
     public function setUp(): void
     {
         parent::setUp();
+        $this->setUpChiefEnvironment();
 
-        Product::migrateUp();
+        ProductFake::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
-        app(Register::class)->register('products', ProductManagerWithUrlAssistant::class, Product::class);
+        app(Register::class)->register('products', ProductManagerWithUrlAssistant::class, ProductFake::class);
 
         $this->manager = app(Managers::class)->findByKey('products');
-
-        $this->setUpDefaultAuthorization();
-
-        Route::get('{slug}', function () {
-            return ChiefResponse::fromRequest();
-        })->name('pages.show');
     }
 
     /** @test */
     function it_adds_an_url_on_creation()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->post($this->manager->route('store'), [
             'url-slugs' => ['nl' => 'foobar'],
         ]);
 
-        $createdModel = Product::first();
+        $createdModel = ProductFake::first();
 
         $this->assertEquals(get_class($createdModel), UrlRecord::findBySlug('foobar', 'nl')->model_type);
         $this->assertEquals($createdModel->id, UrlRecord::findBySlug('foobar', 'nl')->model_id);
     }
 
     /** @test */
-    function it_can_add_one_url_for_all_locales()
-    {
-        $this->asAdmin()->post($this->manager->route('store'), [
-            'url-slugs' => [UrlAssistant::WILDCARD => 'foobar'],
-        ]);
-
-        $createdModel = Product::first();
-        $urlRecord = UrlRecord::findBySlug('foobar', 'nl');
-
-        $this->assertNull($urlRecord->locale);
-        $this->assertEquals(get_class($createdModel), $urlRecord->model_type);
-        $this->assertEquals($createdModel->id, $urlRecord->model_id);
-    }
-
-    /** @test */
-    function it_can_add_an_url_for_each_locale()
+    function it_adds_a_slug_for_each_locale()
     {
         $this->asAdmin()->post($this->manager->route('store'), [
             'url-slugs' => [
@@ -79,6 +60,44 @@ class UrlAssistantTest extends TestCase
 
         $this->assertEquals('foobar-nl', UrlRecord::findBySlug('foobar-nl', 'nl')->slug);
         $this->assertEquals('foobar-fr', UrlRecord::findBySlug('foobar-fr', 'fr')->slug);
+    }
+
+    /** @test */
+    function it_adds_a_wildcard_slug_for_all_available_locales()
+    {
+        // There are 2 locales: nl en en for this model
+        $this->asAdmin()->post($this->manager->route('store'), [
+            'url-slugs' => [UrlAssistant::WILDCARD => 'foobar'],
+        ]);
+
+        $urlRecordNl = UrlRecord::findBySlug('foobar', 'nl');
+        $urlRecordEn = UrlRecord::findBySlug('foobar', 'en');
+
+        $this->assertEquals(2, UrlRecord::count());
+        $this->assertEquals('nl', $urlRecordNl->locale);
+        $this->assertEquals('en', $urlRecordEn->locale);
+        $this->assertTrue($urlRecordNl->isManagedAsWildCard());
+        $this->assertTrue($urlRecordEn->isManagedAsWildCard());
+    }
+
+    /** @test */
+    function it_adds_a_wildcard_slug_prepended_with_the_basesegment()
+    {
+        app(Register::class)->register('products', PageManager::class, ProductWithBaseSegments::class);
+        $manager = app(Managers::class)->findByKey('products');
+
+        $this->asAdmin()->post($manager->route('store'), $this->validPageParams([
+            'url-slugs' => [UrlAssistant::WILDCARD => 'foobar'],
+        ]));
+
+        $urlRecordEn = UrlRecord::findBySlug('products/foobar', 'en');
+        $urlRecordNl = UrlRecord::findBySlug('producten/foobar', 'nl');
+
+        $this->assertEquals(2, UrlRecord::count());
+        $this->assertEquals('nl', $urlRecordNl->locale);
+        $this->assertEquals('en', $urlRecordEn->locale);
+        $this->assertTrue($urlRecordNl->isManagedAsWildCard());
+        $this->assertTrue($urlRecordEn->isManagedAsWildCard());
     }
 
     /** @test */
@@ -108,10 +127,10 @@ class UrlAssistantTest extends TestCase
             'url-slugs' => ['nl' => 'foobar'],
         ]);
 
-        $product = Product::first();
-        $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
+        $product = ProductFake::first();
+        $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), $this->validUpdatePageParams([
             'url-slugs' => ['nl' => 'foobar'],
-        ]);
+        ]));
 
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
@@ -127,7 +146,7 @@ class UrlAssistantTest extends TestCase
     {
         $this->asAdmin()->post($this->manager->route('store'), ['url-slugs' => ['nl' => 'foobar'],]);
 
-        $product = Product::create();
+        $product = ProductFake::create();
 
         $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
             'url-slugs' => ['nl' => 'foobar'],
@@ -145,7 +164,7 @@ class UrlAssistantTest extends TestCase
             'url-slugs' => ['nl' => 'foobar'],
         ]);
 
-        $product = Product::first();
+        $product = ProductFake::first();
         $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
             'url-slugs' => ['nl' => 'foobar-updated'],
         ]);
@@ -169,7 +188,7 @@ class UrlAssistantTest extends TestCase
         $this->assertFalse(UrlRecord::findBySlug('foobar-updated', 'nl')->isRedirect());
 
         // Update back to original value
-        $response = $this->asAdmin()->put($this->manager->manage(Product::first())->route('update'), [
+        $response = $this->asAdmin()->put($this->manager->manage(ProductFake::first())->route('update'), [
             'url-slugs' => ['nl' => 'foobar'],
         ]);
 
@@ -179,6 +198,28 @@ class UrlAssistantTest extends TestCase
         $this->assertCount(2,UrlRecord::all());
         $this->assertFalse(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar-updated', 'nl')->isRedirect());
+    }
+
+    /** @test */
+    function when_updating_an_url_to_empty_string()
+    {
+        $this->asAdmin()->post($this->manager->route('store'), [
+            'url-slugs' => ['nl' => 'foobar'],
+        ]);
+
+        $product = ProductFake::first();
+        $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
+            'url-slugs' => ['nl' => 'foobar-updated'],
+        ]);
+
+        $this->assertEquals(2, UrlRecord::count());
+        // Assert url is updated
+        $this->assertEquals('foobar-updated', UrlRecord::findByModel($product, 'nl')->slug);
+        $this->assertFalse(UrlRecord::findByModel($product, 'nl')->isRedirect());
+
+        // Assert old one is now set as redirect
+        $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
+        $this->get(route('pages.show','foobar'))->assertRedirect('foobar-updated');
     }
 
     /** @test */
@@ -193,12 +234,118 @@ class UrlAssistantTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors();
 
-        $this->assertCount(3,UrlRecord::all()); // And not 3 - so we know the new one is not added
+        $this->assertCount(3,UrlRecord::all()); // And not 4 - so we know the new one is not added
 
         // verify url still points to old model
         $this->assertEquals(1, UrlRecord::findBySlug('foobar', 'nl')->model_id);
-        $this->assertFalse(UrlRecord::findBySlug('other', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
+        $this->assertFalse(UrlRecord::findBySlug('other', 'nl')->isRedirect());
+    }
+
+    /** @test */
+    function updating_to_empty_url_will_remove_record_and_all_redirects()
+    {
+        $this->createAndChangeUrlSlug('foobar','');
+
+        $this->assertCount(0,UrlRecord::all());
+    }
+
+    /** @test */
+    function updating_to_same_url_will_keep_records_as_they_were()
+    {
+        $this->createAndChangeUrlSlug('foobar','foobar-updated');
+
+        $record = UrlRecord::findBySlug('foobar-updated', 'nl');
+
+        $product = ProductFake::orderBy('id','DESC')->first();
+        $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
+            'url-slugs' => ['nl' => 'foobar-updated'],
+        ]);
+
+        $this->assertCount(2,UrlRecord::all());
+
+        // assert the record in db is still the same row
+        $this->assertEquals($record->id, UrlRecord::findBySlug('foobar-updated', 'nl')->id);
+    }
+
+    /** @test */
+    function updating_wildcard_to_empty_string_removes_all_wildcards()
+    {
+        config()->set('translatable.locales',['nl','fr']);
+        $this->asAdmin()->post($this->manager->route('store'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => 'foobar-wildcard',
+                'nl' => 'foobar-nl'
+            ],
+        ]);
+        $this->assertCount(2,UrlRecord::all());
+
+        $product = ProductFake::orderBy('id','DESC')->first();
+        $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => '',
+                'nl' => 'foobar-nl'
+            ],
+        ]);
+
+        $this->assertCount(1,UrlRecord::all());
+        $this->assertFalse(UrlRecord::findBySlug('foobar-nl', 'nl')->isManagedAsWildCard());
+    }
+
+    /** @test */
+    function it_can_update_to_root_slug()
+    {
+        $this->createAndChangeUrlSlug('foobar','/');
+
+        $this->assertCount(2,UrlRecord::all());
+        $this->assertNotNull(UrlRecord::findBySlug('/', 'nl'));
+    }
+
+    /** @test */
+    function specific_locale_slug_trumps_wildcard_slug()
+    {
+        config()->set('translatable.locales',['nl','fr']);
+
+        $this->asAdmin()->post($this->manager->route('store'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => 'foobar-wildcard',
+                'nl' => 'foobar-nl',
+                'fr' => '',
+            ],
+        ]);
+
+        $this->assertCount(2,UrlRecord::all());
+
+        $this->assertFalse(UrlRecord::findBySlug('foobar-nl', 'nl')->isManagedAsWildCard());
+        $this->assertTrue(UrlRecord::findBySlug('foobar-wildcard', 'fr')->isManagedAsWildCard());
+    }
+
+    /** @test */
+    function specific_locale_slug_trumps_wildcard_slug_on_update()
+    {
+        config()->set('translatable.locales',['nl','fr']);
+
+        $this->asAdmin()->post($this->manager->route('store'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => 'foobar-wildcard',
+                'nl' => '',
+                'fr' => '',
+            ],
+        ]);
+
+        $product = ProductFake::orderBy('id','DESC')->first();
+        $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => 'foobar-wildcard',
+                'nl' => 'foobar-nl',
+                'fr' => '',
+            ],
+        ]);
+
+        $this->assertCount(3,UrlRecord::all());
+        $this->assertFalse(UrlRecord::findBySlug('foobar-nl', 'nl')->isManagedAsWildCard());
+        $this->assertTrue(UrlRecord::findBySlug('foobar-wildcard', 'fr')->isManagedAsWildCard());
+        $this->assertTrue(UrlRecord::findBySlug('foobar-wildcard', 'nl')->isManagedAsWildCard());
     }
 
     /** @test */
@@ -243,7 +390,7 @@ class UrlAssistantTest extends TestCase
         ]);
 
         // Get the last inserted model
-        $product = Product::orderBy('id','DESC')->first();
+        $product = ProductFake::orderBy('id','DESC')->first();
 
         // We change it to another value
         $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
@@ -253,34 +400,4 @@ class UrlAssistantTest extends TestCase
         return $response;
     }
 
-}
-
-class ProductManagerWithUrlAssistant extends ManagerFake
-{
-    protected $assistants = [
-        'url' => UrlAssistant::class,
-    ];
-}
-
-class Product extends ManagedModelFake implements ProvidesUrl
-{
-    public $translationModel = ManagedModelFakeTranslation::class;
-    public $translationForeignKey = 'managed_model_fake_id';
-
-    public function url($locale = null): string
-    {
-        if(!$locale) $locale = app()->getLocale();
-
-        return UrlRecord::findByModel($this, $locale)->slug;
-    }
-
-    public function previewUrl($locale = null): string
-    {
-        return $this->url($locale);
-    }
-
-    public static function baseUrlSegment($locale = null): string
-    {
-        return '/';
-    }
 }

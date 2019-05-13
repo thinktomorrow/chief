@@ -50,22 +50,24 @@ class ProvidesUrlTest extends TestCase
     }
 
     /** @test */
-    function general_url_is_always_a_fallback_when_localized_url_does_not_exist()
+    function when_url_does_not_exist_an_empty_string_is_returned()
     {
+        config()->set('app.fallback_locale', 'nl');
+
         $page = Page::create();
-        UrlRecord::create(['locale' => null, 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'bar/nl', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
+        UrlRecord::create(['locale' => 'fr', 'slug' => 'bar/fr', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 
         app()->setLocale('fr');
-        $this->assertEquals(url('/bar'), $page->url());
+        $this->assertEquals(url('/bar/fr'), $page->url());
 
-        app()->setLocale('nl');
-        $this->assertEquals(url('/bar'), $page->url());
+        app()->setLocale('en');
+        $this->assertEquals('', $page->url());
     }
 
     /** @test */
     function a_page_can_provide_an_url_with_a_segmented_slug()
     {
-        $this->disableExceptionHandling();
         $page = Page::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar/foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
 

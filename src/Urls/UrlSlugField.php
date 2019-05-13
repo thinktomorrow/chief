@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Urls;
 
-use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class UrlSlugField extends InputField
@@ -25,29 +24,6 @@ class UrlSlugField extends InputField
         return $this;
     }
 
-    /**
-     * Compose prepend based on the full url. We strip out the
-     * slug value but keep the base url segment.
-     *
-     * @param string $fullUrl
-     * @return $this
-     */
-    public function prepend(string $fullUrl)
-    {
-        $prepend = str_replace($this->rawSlugValue(), '', $fullUrl);
-        $prepend = trim($prepend, '/');
-
-        // If there is a base url segment but the current url record does not contain it yet,
-        // we'll need to add it to the prepend right about... now.
-        if($this->baseUrlSegment && !$this->endsWithBaseUrlSegment($prepend)){
-            $prepend = $prepend .'/'. $this->baseUrlSegment;
-        }
-
-        $this->prepend = $prepend .'/';
-
-        return $this;
-    }
-
     public function value()
     {
         return old($this->key, $this->rawSlugValue());
@@ -55,6 +31,8 @@ class UrlSlugField extends InputField
 
     private function rawSlugValue(): string
     {
+        if(!$this->urlRecord) return '';
+
         $slug = $this->urlRecord->slug;
 
         if($this->startsWithBaseUrlSegment($slug)){
@@ -71,10 +49,5 @@ class UrlSlugField extends InputField
     private function startsWithBaseUrlSegment($value): bool
     {
         return ($this->baseUrlSegment && 0 === strpos($value, $this->baseUrlSegment));
-    }
-
-    private function endsWithBaseUrlSegment($value): bool
-    {
-        return ($this->baseUrlSegment && Str::endsWith($value, $this->baseUrlSegment));
     }
 }

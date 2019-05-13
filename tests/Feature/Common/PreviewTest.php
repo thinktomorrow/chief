@@ -11,13 +11,12 @@ class PreviewTest extends TestCase
     /** @test */
     public function an_admin_can_view_previews_of_draft_pages()
     {
-        $this->disableExceptionHandling();
-
         $originalpage = factory(Page::class)->create(['published' => 0]);
         $urlRecord = UrlRecord::create([
             'model_type' => $originalpage->getMorphClass(),
             'model_id' => $originalpage->id,
             'slug' => 'foobar',
+            'locale' => 'nl',
         ]);
 
         $response = $this->asAdminWithoutRole()->get(route('demo.pages.show', $urlRecord->slug) . '?preview-mode');
@@ -33,6 +32,7 @@ class PreviewTest extends TestCase
             'model_type' => $originalpage->getMorphClass(),
             'model_id' => $originalpage->id,
             'slug' => 'foobar',
+            'locale' => 'nl',
         ]);
 
         $response = $this->get(route('demo.pages.show', $urlRecord->slug) . '?preview-mode');

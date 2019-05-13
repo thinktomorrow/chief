@@ -10,7 +10,7 @@ interface ProvidesUrl
      * @param null|string $locale
      * @return string
      */
-    public function url($locale = null): string;
+    public function url(string $locale = null): string;
 
     /**
      * Same as url() but used for admins to allow them to view drafted urls.
@@ -18,7 +18,7 @@ interface ProvidesUrl
      * @param null|string $locale
      * @return string
      */
-    public function previewUrl($locale = null): string;
+    public function previewUrl(string $locale = null): string;
 
     /**
      * The base category uri segment for this type of model.
@@ -27,5 +27,14 @@ interface ProvidesUrl
      * @param null|string $locale
      * @return string
      */
-    public static function baseUrlSegment($locale = null): string;
+    public static function baseUrlSegment(string $locale = null): string;
+
+    /**
+     * Create the full url for this given resource
+     *
+     * @param string|null $locale
+     * @param array|string|null $parameters
+     * @return string
+     */
+    public function resolveUrl(string $locale = null, $parameters = null): string;
 }

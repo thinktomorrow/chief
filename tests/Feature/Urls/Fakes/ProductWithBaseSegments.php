@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Urls;
+namespace Thinktomorrow\Chief\Tests\Feature\Urls\Fakes;
 
 use Thinktomorrow\Chief\Pages\Page;
 

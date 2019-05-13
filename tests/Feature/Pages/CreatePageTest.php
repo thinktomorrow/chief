@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -16,13 +15,9 @@ class CreatePageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->setUpDefaultAuthorization();
+        $this->setUpChiefEnvironment();
 
         app(Register::class)->register('singles', PageManager::class, Single::class);
-
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
     }
 
     /** @test */

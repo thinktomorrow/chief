@@ -18,6 +18,9 @@
                 @endif
                 <input type="text" name="{{ $field->name }}" id="{{ $field->key }}" class="input inset-s" placeholder="{{ $field->placeholder ?? '' }}" value="{{ $field->value() }}">
             </div>
+            @if($field->description)
+                <p>{!! $field->description !!}</p>
+            @endif
         @endforeach
         <error class="caption text-warning" field="url-slugs" :errors="errors.all()"></error>
 

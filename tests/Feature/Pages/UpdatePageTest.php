@@ -20,7 +20,7 @@ class UpdatePageTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDefaultAuthorization();
+        $this->setUpChiefEnvironment();
 
         app(Register::class)->register('singles', PageManager::class, Single::class);
 
@@ -31,16 +31,12 @@ class UpdatePageTest extends TestCase
         ]);
 
         UrlRecord::create([
-            'locale' => 'nl', 'slug' => 'new-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
+            'locale' => 'nl',  'slug' => 'new-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
         ]);
 
         UrlRecord::create([
-            'locale' => 'en', 'slug' => 'nouveau-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
+            'locale' => 'en',  'slug' => 'nouveau-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
         ]);
-
-        // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
     }
 
     /** @test */

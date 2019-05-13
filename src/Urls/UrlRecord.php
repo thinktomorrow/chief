@@ -21,14 +21,11 @@ class UrlRecord extends Model
      */
     public static function findBySlug(string $slug, string $locale): UrlRecord
     {
-        $record = static::where('slug', trim($slug,'/'))
-                        ->where(function($query) use($locale){
-                            $query->where('locale', $locale)
-                                  ->orWhereNull('locale');
-                        })
+        // Clear the input from any trailing slashes.
+        if($slug != '/'){ $slug = trim($slug,'/'); }
 
-                        // Make sure that the generic non-locale record is fetched after the locale one.
-                        ->orderBy('locale', 'DESC')
+        $record = static::where('slug', $slug)
+                        ->where('locale', $locale)
                         ->orderBy('redirect_id', 'ASC')
                         ->first();
 
@@ -52,13 +49,7 @@ class UrlRecord extends Model
     {
         $record = static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
-            ->where(function($query) use($locale){
-                $query->where('locale', $locale)
-                    ->orWhereNull('locale');
-            })
-
-            // Make sure that the generic non-locale record is fetched after the locale one.
-            ->orderBy('locale', 'DESC')
+            ->where('locale', $locale)
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
@@ -79,9 +70,10 @@ class UrlRecord extends Model
     public function replace(array $values): UrlRecord
     {
         $newRecord = static::create(array_merge([
-            'locale'     => $this->locale,
-            'model_type' => $this->model_type,
-            'model_id'   => $this->model_id,
+            'locale'              => $this->locale,
+            'managed_as_wildcard' => $this->isManagedAsWildCard(),
+            'model_type'          => $this->model_type,
+            'model_id'            => $this->model_id,
         ], $values));
 
         $this->redirectTo($newRecord);
@@ -105,9 +97,9 @@ class UrlRecord extends Model
      * Is this an url that is applicable to all locales?
      * @return bool
      */
-    public function isWildCard(): bool
+    public function isManagedAsWildCard(): bool
     {
-        return $this->locale == null;
+        return !!$this->managed_as_wildcard;
     }
 
     public function isRedirect(): bool

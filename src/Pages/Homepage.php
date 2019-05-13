@@ -11,6 +11,7 @@ class Homepage
         return $page->id == $homepage_id;
     }
 
+    // TODO: remove this method - no longer used...
     public static function guess(): Page
     {
         $homepage_id = chiefSetting('homepage');

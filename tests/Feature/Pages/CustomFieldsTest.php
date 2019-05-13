@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategories;
@@ -19,15 +18,10 @@ class CustomFieldsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
+        $this->setUpChiefEnvironment();
 
         ArticlePageWithCategories::migrateUp();
         Category::migrateUp();
-
-        $this->setUpDefaultAuthorization();
 
         app(Register::class)->register('articles', ArticlePageWithCategoriesManager::class, ArticlePageWithCategories::class);
 

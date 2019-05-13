@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvesRoute;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
@@ -48,7 +48,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ActingAsParent,
         ActingAsChild,
         WithSnippets,
-        ResolvesRoute,
+        ResolvingRoute,
         Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
@@ -154,18 +154,14 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /** @inheritdoc */
-    public function url($locale = null): string
+    public function url(string $locale = null): string
     {
         if(!$locale) $locale = app()->getLocale();
 
         try{
             $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 
-            $routeName = Homepage::is($this)
-                ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
-                : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
-
-            return $this->resolveRoute($routeName, $slug, $locale);
+            return $this->resolveUrl($locale, [$slug]);
         }
         catch(UrlRecordNotFound $e)
         {
@@ -173,15 +169,24 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         }
     }
 
-    /** @inheritdoc */
-    public function previewUrl($locale = null): string
+    public function resolveUrl(string $locale = null, $parameters = null): string
     {
-        return $this->url($locale).'?preview-mode';
+        $routeName = Homepage::is($this)
+            ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
+            : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+
+        return $this->resolveRoute($routeName, $parameters, $locale);
+    }
+
+    /** @inheritdoc */
+    public function previewUrl(string $locale = null, bool $useFallback = true): string
+    {
+        return $this->url($locale, $useFallback).'?preview-mode';
     }
 
 
     /** @inheritdoc */
-    public static function baseUrlSegment($locale = null): string
+    public static function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
             return '/';

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Urls\ProvidesUrl;
 
-trait ResolvesRoute
+trait ResolvingRoute
 {
     protected static $routeResolver;
 
