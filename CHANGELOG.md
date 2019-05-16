@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Changed: save button on the edit pages only displays if the model can be updated
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items

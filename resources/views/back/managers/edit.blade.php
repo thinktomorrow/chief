@@ -17,8 +17,10 @@
             {!! $manager->publicationStatusAsLabel() !!}
         @endif
 
-        <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-        @include('chief::back.managers._partials.context-menu')
+        @if($manager->can('update'))
+            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+            @include('chief::back.managers._partials.context-menu')
+        @endif
     </div>
 
 @endcomponent
@@ -28,23 +30,23 @@
 
         <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
         @include('chief::back.managers._partials.delete-modal')
+            <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
+                {{ csrf_field() }}
 
-        <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
-            {{ csrf_field() }}
-            
-            <input type="hidden" name="_method" value="PUT">
+                <input type="hidden" name="_method" value="PUT">
 
-            @include('chief::back.managers._partials._form', [
-                'fieldArrangement' => $manager->fieldArrangement('edit')
-             ])
+                @include('chief::back.managers._partials._form', [
+                    'fieldArrangement' => $manager->fieldArrangement('edit')
+                ])
 
-            <div class="stack text-right">
-                <button type="submit" class="btn btn-primary"> Wijzigingen opslaan</button>
-            </div>
+            @if($manager->can('update'))
+                <div class="stack text-right">
+                    <button type="submit" class="btn btn-primary"> Wijzigingen opslaan</button>
+                </div>
+            @endif
 
         </form>
     </div>
-
 @stop
 
 @push('custom-styles')
