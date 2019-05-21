@@ -2,8 +2,10 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
-- Changed: save button on the edit pages only displays if the model can be updated
+- Changed: save button on the edit pages only displays if the model can be updated.
 - Changed: implement thinktomorrow/url instead of copypasting the classes.
+- Changed: use themed password reset mail layout instead of default laravel one.
+- Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items

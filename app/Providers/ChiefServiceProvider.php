@@ -45,6 +45,7 @@ class ChiefServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
 
         $this->publishes([
             __DIR__ . '/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
