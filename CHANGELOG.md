@@ -2,9 +2,12 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
-- Changed: save button on the edit pages only displays if the model can be updated
+- Changed: save button on the edit pages only displays if the model can be updated.
 - Changed: implement thinktomorrow/url instead of copypasting the classes.
-- Fixed: pagebuilder modules now only show general and own modules in dropdown
+- Changed: use themed password reset mail layout instead of default laravel one.
+- Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
+- Fixed: pagebuilder no longer shows modules that are specific for other pages.
+- Fixed: regular checkboxes are no longer hidden by default.
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
