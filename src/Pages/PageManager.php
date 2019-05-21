@@ -99,8 +99,7 @@ class PageManager extends AbstractManager implements Manager
                 ->translatable($this->model->availableLocales())
                 ->validation($this->model->id
                     ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'required-fallback-locale|unique:page_translations,slug'
-                ,[], [
+                    : 'required-fallback-locale|unique:page_translations,slug', [], [
                     'trans.'.config('app.fallback_locale', 'nl').'.slug' => 'slug'
                 ])
                 ->label('Link')

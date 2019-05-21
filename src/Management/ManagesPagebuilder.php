@@ -48,7 +48,7 @@ trait ManagesPagebuilder
         
         $availableChildren = AvailableChildren::forParent($model);
         
-        $modules = $availableChildren->onlyModules()->reject(function($module) use ($model){
+        $modules = $availableChildren->onlyModules()->reject(function ($module) use ($model) {
             return $module->page_id != null && $module->page_id != $model->id;
         });
 
