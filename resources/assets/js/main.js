@@ -3,6 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 require('./vendors');
 
 import Errors from './utilities/Errors';
@@ -32,4 +33,7 @@ Vue.component('page-builder', require('./components/Pagebuilder/Pagebuilder.vue'
 Stickyfill.add(document.querySelectorAll('.sticky'));
 
 // Promise polyfill for support of IE9 and below
-require('es6-promise').polyfill();
+import Es6Promise from 'es6-promise';
+
+Es6Promise.polyfill()
+
