@@ -91,13 +91,13 @@ class UpdateMenuItemTest extends TestCase
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
         $response = $this->asAdminWithoutRole()
-            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']));
+            ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be/contact']));
 
         $response->assertStatus(302);
         $response->assertRedirect(route('chief.back.menus.show', $menuitem->menu_type));
 
         $this->assertCount(1, MenuItem::all());
-        $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be']);
+        $this->assertNewValues(MenuItem::first(), ['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be/contact']);
     }
 
     /** @test */
@@ -188,7 +188,7 @@ class UpdateMenuItemTest extends TestCase
                 'trans.nl.url'   => 'thinktomorrow.be',
             ]));
 
-        $this->assertEquals('http://thinktomorrow.be', $menuitem->fresh()->url);
+        $this->assertEquals('https://thinktomorrow.be', $menuitem->fresh()->url);
     }
 
     /** @test */
@@ -265,7 +265,7 @@ class UpdateMenuItemTest extends TestCase
         $this->assertEquals($overrides['page_id'] ?? '', $menuItem->{'page_id'});
 
         $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
-        $this->assertEquals(array_key_exists('trans.nl.url', $overrides) ? $overrides['trans.nl.url'] :  'http://google.com', $menuItem->{'url:nl'});
+        $this->assertEquals(array_key_exists('trans.nl.url', $overrides) ? $overrides['trans.nl.url'] :  'https://google.com', $menuItem->{'url:nl'});
 
         $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
         $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});

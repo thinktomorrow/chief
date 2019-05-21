@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Changed: save button on the edit pages only displays if the model can be updated
+- Changed: implement thinktomorrow/url instead of copypasting the classes.
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
