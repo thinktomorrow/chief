@@ -3,6 +3,8 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Changed: save button on the edit pages only displays if the model can be updated
+- Changed: Labeling pagebuilder links
+- Changed: Name of a collection page title on creation and h1, h2 and h3 in redactor
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
