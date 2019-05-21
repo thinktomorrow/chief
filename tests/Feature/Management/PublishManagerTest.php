@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Exceptions\MissingAssistant;
-use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
