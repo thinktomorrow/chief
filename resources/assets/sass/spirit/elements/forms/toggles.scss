@@ -5,6 +5,13 @@ $toggle-size: 1.5rem;
     .label-content{
         margin-left: $space-l;
     }
+
+    input[type=radio],
+    input[type=checkbox]{
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+    }
 }
 .custom-checkbox{
     border-radius: $default-border-radius;
@@ -46,13 +53,6 @@ $toggle-size: 1.5rem;
 }
 
 // RADIOS AND CHECKBOXES
-
-input[type=radio],
-input[type=checkbox]{
-    position: absolute;
-    z-index: -1;
-    opacity: 0;
-}
 
 .custom-indicators.disabled{
     cursor: not-allowed;

@@ -15766,7 +15766,7 @@ $R.add('module', 'image', {
                         <input type="text" id="modal-image-url" name="url" aria-label="## link ##" /> \
                     </div> \
                     <div class="form-item form-item-link"> \
-                        <label class="checkbox"><input type="checkbox" name="target" aria-label="## link-in-new-tab ##"> ## link-in-new-tab ##</label> \
+                        <label class="checkbox"><input class="checkbox-visible" type="checkbox" name="target" aria-label="## link-in-new-tab ##"> ## link-in-new-tab ##</label> \
                     </div> \
                 </form> \
             </div>'

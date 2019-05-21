@@ -19,17 +19,11 @@ use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Management\ManagerThatPreviews;
-use Thinktomorrow\Chief\Management\ManagesPreviews;
-use Thinktomorrow\Chief\Management\ManagesPublishingStatus;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
-class PageManager extends AbstractManager implements Manager, ManagerThatPreviews
+class PageManager extends AbstractManager implements Manager
 {
-    use ManagesPreviews,
-        ManagesPublishingStatus;
-
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
 
@@ -105,8 +99,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPreview
                 ->translatable($this->model->availableLocales())
                 ->validation($this->model->id
                     ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'required-fallback-locale|unique:page_translations,slug'
-                ,[], [
+                    : 'required-fallback-locale|unique:page_translations,slug', [], [
                     'trans.'.config('app.fallback_locale', 'nl').'.slug' => 'slug'
                 ])
                 ->label('Link')
@@ -167,7 +160,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPreview
             return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-s">' . $this->publicationStatusAsLabel() . '</span>');
+                ->set('context', '<span class="inline-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
         }
 
         return parent::details();

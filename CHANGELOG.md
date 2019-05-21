@@ -2,9 +2,14 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Added: Pagebuilder action labels to better describe their intent
 - Changed: save button on the edit pages only displays if the model can be updated
-- Changed: Labeling pagebuilder links
 - Changed: Name of a collection page title on creation and h1, h2 and h3 in redactor
+- Changed: implement thinktomorrow/url instead of copypasting the classes.
+- Changed: use themed password reset mail layout instead of default laravel one.
+- Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
+- Fixed: pagebuilder no longer shows modules that are specific for other pages.
+- Fixed: regular checkboxes are no longer hidden by default.
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
@@ -12,6 +17,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
 - Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
 - Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
+- Removed: ManagerThatPreviews, ManagesPreview, ManagesPublishingStatus and implemented the functions in publishassistant.
 - Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
 - Fixed: document media can be removed now
 - Fixed: document upload will adhere to the multiple flag now.

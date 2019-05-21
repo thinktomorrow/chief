@@ -45,10 +45,14 @@ trait ManagesPagebuilder
     protected function createPagebuilderField(): PagebuilderField
     {
         $model = $this->model;
-
+        
         $availableChildren = AvailableChildren::forParent($model);
         
-        $available_modules = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlyModules())->toArray();
+        $modules = $availableChildren->onlyModules()->reject(function ($module) use ($model) {
+            return $module->page_id != null && $module->page_id != $model->id;
+        });
+
+        $available_modules = FlatReferencePresenter::toGroupedSelectValues($modules)->toArray();
         $available_pages = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlyPages())->toArray();
         $available_sets = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlySets())->toArray();
 

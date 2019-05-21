@@ -24,7 +24,7 @@ class PublishController extends Controller
                 ->guard('publish')
                 ->publish();
 
-        return redirect()->back()->with('messages.success', $manager->details()->title .' is gepubliceerd. <a href="' . $manager->previewUrl() . '" target="_blank">Bekijk de pagina online</a>.');
+        return redirect()->back()->with('messages.success', $manager->details()->title .' is gepubliceerd. <a href="' . $manager->assistant('publish')->previewUrl() . '" target="_blank">Bekijk de pagina online</a>.');
     }
 
     public function draft(Request $request, $key, $id)
