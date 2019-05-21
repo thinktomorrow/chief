@@ -15,6 +15,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
 - Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
 - Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
+- Removed: ManagerThatPreviews, ManagesPreview, ManagesPublishingStatus and implemented the functions in publishassistant.
 - Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
 - Fixed: document media can be removed now
 - Fixed: document upload will adhere to the multiple flag now.

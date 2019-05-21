@@ -10,12 +10,10 @@ use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Fields\Types\DocumentField;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\ManagesPreviews;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
 
 class PublishedManagerFake extends AbstractManager implements Manager
 {
-    use ManagesPreviews;
 
     protected $assistants = [
         'publish' => PublishAssistant::class,

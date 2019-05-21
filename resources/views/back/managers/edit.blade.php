@@ -13,8 +13,8 @@
 
     <div class="inline-group-s">
 
-        @if(contract($manager, \Thinktomorrow\Chief\Management\ManagerThatPreviews::class))
-            {!! $manager->publicationStatusAsLabel() !!}
+        @if($manager->isAssistedBy('publish'))
+            {!! $manager->assistant('publish')->publicationStatusAsLabel() !!}
         @endif
 
         @if($manager->can('update'))
@@ -30,10 +30,10 @@
 
         <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
         @include('chief::back.managers._partials.delete-modal')
-            <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
-                {{ csrf_field() }}
+        <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
+            {{ csrf_field() }}
 
-                <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="_method" value="PUT">
 
                 @include('chief::back.managers._partials._form', [
                     'fieldArrangement' => $manager->fieldArrangement('edit')

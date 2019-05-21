@@ -6,9 +6,10 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 class PublishAssistant implements Assistant
 {
@@ -97,5 +98,50 @@ class PublishAssistant implements Assistant
         }
 
         return $this;
+    }
+
+    public function previewUrl(): string
+    {
+        if (! $this->model instanceof ProvidesUrl) {
+            throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
+        }
+
+        return $this->model->previewUrl();
+    }
+
+    public function publicationStatusAsLabel($plain = false)
+    {
+        $label = $this->publicationStatusAsPlainLabel();
+
+        if ($plain) {
+            return $label;
+        }
+
+        if ($this->isPublished()) {
+            return '<a href="'.$this->previewUrl().'" target="_blank"><em>'.$label.'</em></a>';
+        }
+
+        if ($this->isDraft()) {
+            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>'.$label.'</em></a>';
+        }
+
+        return '<span><em>'.$label.'</em></span>';
+    }
+
+    private function publicationStatusAsPlainLabel()
+    {
+        if ($this->isPublished()) {
+            return 'online';
+        }
+
+        if ($this->isDraft()) {
+            return 'offline';
+        }
+
+        if ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+            return 'gearchiveerd';
+        }
+
+        return '-';
     }
 }
