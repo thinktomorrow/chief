@@ -7,7 +7,7 @@
             @else
                 buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
-            formatting: ['p', 'h1', 'h2', 'h3'],
+            formatting: ['h2', 'h3', 'p', 'blockquote'],
             imageResizable: true,
             imagePosition: true,
             imageFigure: false,

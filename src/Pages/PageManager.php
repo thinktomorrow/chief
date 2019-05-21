@@ -93,8 +93,8 @@ class PageManager extends AbstractManager implements Manager
                                      ->validation('required-fallback-locale|max:200', [], [
                                          'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
                                      ])
-                                     ->label('Pagina titel')
-                                     ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
+                                     ->label('De titel van je '.$this->model->labelSingular ?? 'pagina')
+                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.<br> Deze zal gebruikt worden als interne titel en slug van de nieuwe pagina.'),
             InputField::make('slug')
                 ->translatable($this->model->availableLocales())
                 ->validation($this->model->id

@@ -2,7 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
-- Changed: save button on the edit pages only displays if the model can be updated.
+- Added: Pagebuilder action labels to better describe their intent
+- Changed: save button on the edit pages only displays if the model can be updated
+- Changed: Name of a collection page title on creation and h1, h2 and h3 in redactor
 - Changed: implement thinktomorrow/url instead of copypasting the classes.
 - Changed: use themed password reset mail layout instead of default laravel one.
 - Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.

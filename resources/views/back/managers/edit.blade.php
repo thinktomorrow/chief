@@ -41,7 +41,7 @@
 
             @if($manager->can('update'))
                 <div class="stack text-right">
-                    <button type="submit" class="btn btn-primary"> Wijzigingen opslaan</button>
+                    <button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
                 </div>
             @endif
 
