@@ -141,7 +141,7 @@ class CreateMenuItemTest extends TestCase
                 'trans.nl.url'      => 'thinktomorrow.be',
             ]));
 
-        $this->assertEquals('http://thinktomorrow.be', MenuItem::first()->url);
+        $this->assertEquals('https://thinktomorrow.be', MenuItem::first()->url);
     }
 
     /** @test */
@@ -213,7 +213,7 @@ class CreateMenuItemTest extends TestCase
         $this->assertEquals($overrides['parent_id'] ?? null, $menuItem->parent_id);
 
         $this->assertEquals($overrides['trans.nl.label'] ?? 'nieuw label', $menuItem->{'label:nl'});
-        $this->assertEquals($overrides['trans.nl.url'] ?? 'http://google.com', $menuItem->{'url:nl'});
+        $this->assertEquals($overrides['trans.nl.url'] ?? 'https://google.com', $menuItem->{'url:nl'});
 
         $this->assertEquals($overrides['trans.en.label'] ?? '', $menuItem->{'label:en'});
         $this->assertEquals($overrides['trans.en.url'] ?? '', $menuItem->{'url:en'});

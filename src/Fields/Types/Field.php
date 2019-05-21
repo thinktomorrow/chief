@@ -115,7 +115,7 @@ class Field
             return $this->__get($name);
         }
 
-        if (!in_array($name, ['label', 'description', 'column', 'name', 'prepend', 'append'])) {
+        if (!in_array($name, ['label', 'key', 'description', 'column', 'name', 'prepend', 'append'])) {
             throw new \InvalidArgumentException('Cannot set value by ['. $name .'].');
         }
 

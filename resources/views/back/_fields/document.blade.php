@@ -24,8 +24,8 @@
 @endforeach
 
 <label for="">Voeg document toe:</label>
-<input type="file" name="files[{{ $key }}][new][]" multiple style="opacity:1; position:static;"/>
-<input type="hidden" id="removeFile" name="files[{{ $key }}][delete][]" multiple value=""/>
+<input type="file" name="files[{{ $key }}][new][]" {{ $field->multiple ? 'multiple' : '' }} style="opacity:1; position:static;"/>
+<input type="hidden" id="removeFile" name="files[{{ $key }}][delete][]" {{ $field->multiple ? 'multiple' : '' }} value=""/>
 
 @push('custom-scripts')
 <script>

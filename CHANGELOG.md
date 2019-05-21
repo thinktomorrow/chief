@@ -2,14 +2,22 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Changed: save button on the edit pages only displays if the model can be updated
+- Changed: implement thinktomorrow/url instead of copypasting the classes.
+- Fixed: pagebuilder modules now only show general and own modules in dropdown
+
+## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
+- Added: allow Field key value to be set via `Field::key()` method
 - Changed: filters dont show if you have no models except if you're filtering and have an empty result
 - Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
 - Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
 - Removed: ManagerThatPreviews, ManagesPreview, ManagesPublishingStatus and implemented the functions in publishassistant.
 - Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
 - Fixed: document media can be removed now
+- Fixed: document upload will adhere to the multiple flag now.
 - Fixed: user can't block themself anymore
+- Fixed: SelectField::multiple defaults to true when no boolean argument is passed.
 
 ## 0.2.10 - 2019-04-10
 - Fixed: avoid morphableInstantiation looping over models which are not morphable.
