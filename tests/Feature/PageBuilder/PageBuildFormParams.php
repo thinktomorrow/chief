@@ -24,6 +24,11 @@ trait PageBuildFormParams
                     //
                 ]
             ],
+            'trans' => [
+               'nl' => [
+                   'title'=> 'slug',
+               ]
+            ]
         ];
 
         foreach ($overrides as $key => $value) {

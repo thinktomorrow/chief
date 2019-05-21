@@ -4,31 +4,31 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Fields\FieldsTab;
-use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Fields\Types\TextField;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
-use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Management\ManagesPreviews;
-use Thinktomorrow\Chief\Management\ManagesPublishing;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Management\ManagerThatPreviews;
-use Thinktomorrow\Chief\Management\ManagerThatPublishes;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
+use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
+use Thinktomorrow\Chief\Management\Details\Details;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Management\ManagerThatPreviews;
+use Thinktomorrow\Chief\Management\ManagesPreviews;
+use Thinktomorrow\Chief\Management\ManagesPublishingStatus;
+use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
-class PageManager extends AbstractManager implements Manager, ManagerThatPublishes, ManagerThatPreviews
+class PageManager extends AbstractManager implements Manager, ManagerThatPreviews
 {
-    use ManagesPublishing,
-        ManagesPreviews;
+    use ManagesPreviews,
+        ManagesPublishingStatus;
 
     /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
     private $uniqueSlug;
@@ -38,6 +38,7 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
 
     protected $assistants = [
         'archive' => ArchiveAssistant::class,
+        'publish' => PublishAssistant::class,
     ];
 
     public function __construct(Registration $registration)
@@ -95,7 +96,9 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
         return new Fields([
             $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
-                                     ->validation('required-fallback-locale|max:200')
+                                     ->validation('required-fallback-locale|max:200', [], [
+                                         'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
+                                     ])
                                      ->label('Pagina titel')
                                      ->description('Titel die kan worden getoond in de overzichten en modules. De titel op de pagina zelf wordt beheerd via de pagina tab'),
             InputField::make('slug')
@@ -103,10 +106,14 @@ class PageManager extends AbstractManager implements Manager, ManagerThatPublish
                 ->validation($this->model->id
                     ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
                     : 'required-fallback-locale|unique:page_translations,slug'
-                )
+                ,[], [
+                    'trans.'.config('app.fallback_locale', 'nl').'.slug' => 'slug'
+                ])
                 ->label('Link')
                 ->description('De unieke url verwijzing naar deze pagina.')
-                ->prepend(url('/').'/'),
+                ->prepend(collect($this->model->availableLocales())->mapWithKeys(function ($locale) {
+                    return [$locale => url($this->model->baseUrlSegment($locale)).'/'];
+                })->all()),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),

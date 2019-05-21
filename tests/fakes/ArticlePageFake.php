@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Pages\Page;
 
 class ArticlePageFake extends Page
 {
-    public function menuUrl(): string
+    public function url($locale = null): string
     {
         return route('articles.show', $this->slug);
     }

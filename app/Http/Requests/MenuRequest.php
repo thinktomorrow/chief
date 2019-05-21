@@ -2,9 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Thinktomorrow\Chief\Common\Helpers\Root;
+use Illuminate\Foundation\Http\FormRequest;
+use Thinktomorrow\Url\Url;
+use Thinktomorrow\Url\Root;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class MenuRequest extends FormRequest
@@ -95,7 +96,7 @@ class MenuRequest extends FormRequest
             if ($this->isRelativeUrl($trans['url'])) {
                 $data['trans'][$locale]['url'] = '/'. trim($trans['url'], '/');
             } else {
-                $data['trans'][$locale]['url'] = Root::fromString($trans['url'])->get();
+                $data['trans'][$locale]['url'] = Url::fromString($trans['url'])->secure()->get();
             }
 
             $this->request->set('trans', $data['trans']);

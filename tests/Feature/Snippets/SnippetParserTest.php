@@ -26,6 +26,7 @@ class SnippetParserTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+        config()->set('app.fallback_locale', 'nl');
 
         /** @var Register */
         app(Register::class)->register('articles', ArticlePageManager::class, ArticlePageFake::class);
@@ -42,6 +43,9 @@ class SnippetParserTest extends TestCase
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
+
+        Route::get('articles/{slug}', function () {
+        })->name('articles.show');
     }
 
     /** @test */
@@ -59,6 +63,12 @@ class SnippetParserTest extends TestCase
     public function it_can_parse_a_value_that_contains_a_snippet_key()
     {
         $this->assertEquals('<p>This is <p>This is a snippet</p> untouched</p>', SnippetParser::parse('<p>This is [[snippet-stub]] untouched</p>'));
+    }
+
+    /** @test */
+    public function it_can_parse_multiple_snippet_keys_in_one_string()
+    {
+        $this->assertEquals('<p>This is <p>This is a snippet</p> <p>This is a snippet</p> untouched</p>', SnippetParser::parse('<p>This is [[snippet-stub]] [[snippet-stub]] untouched</p>'));
     }
 
     /** @test */

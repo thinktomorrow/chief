@@ -5,11 +5,11 @@
     "license": "none",
     "type": "chief-cms",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2.0",
         "dimsav/laravel-translatable": "^9.0",
         "doctrine/dbal": "^2.5",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "~5.6.12|~5.7.1",
+        "laravel/framework": "~5.6.39|~5.7.0|~5.8.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^3.0",
         "spatie/laravel-image-optimizer": "^1.1",
@@ -17,7 +17,8 @@
         "spatie/image-optimizer": "1.1.4",
         "thinktomorrow/assetlibrary": "~0.5.0",
         "thinktomorrow/squanto": "^0.5.5",
-        "thinktomorrow/vine": "~0.2.1"
+        "thinktomorrow/vine": "~0.2.1",
+        "thinktomorrow/url": "~1.0.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
@@ -26,8 +27,8 @@
         "laravel/dusk": "^4.0",
         "mockery/mockery": "^1.1",
         "nunomaduro/collision": "^2.0",
-        "orchestra/testbench": "3.6.*|3.7.*",
-        "phpunit/phpunit": "~7.0"
+        "orchestra/testbench": "3.6.*|3.7.*|3.8.*",
+        "phpunit/phpunit": "~7.5|~8.0"
     },
     "autoload": {
         "psr-4": {

@@ -2,6 +2,42 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Changed: save button on the edit pages only displays if the model can be updated.
+- Changed: implement thinktomorrow/url instead of copypasting the classes.
+- Changed: use themed password reset mail layout instead of default laravel one.
+- Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
+- Fixed: pagebuilder no longer shows modules that are specific for other pages.
+
+## 0.2.11 - 2019-04-23
+- Added: empty state for menu items
+- Added: allow Field key value to be set via `Field::key()` method
+- Changed: filters dont show if you have no models except if you're filtering and have an empty result
+- Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
+- Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
+- Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
+- Fixed: document media can be removed now
+- Fixed: document upload will adhere to the multiple flag now.
+- Fixed: user can't block themself anymore
+- Fixed: SelectField::multiple defaults to true when no boolean argument is passed.
+
+## 0.2.10 - 2019-04-10
+- Fixed: avoid morphableInstantiation looping over models which are not morphable.
+
+## 0.2.9 - 2019-04-10
+- Changed: moved `Assistant` contract to `/Managers/Assistants/` folder.
+- Changed: Publication logic is no longer baked in Pagemanager but added as a Manager assistant.
+- Fixed: Fixed saving new page without title. `required-fallback-locale` is now an implicit rule.
+- Fixed: Prepend and Append methods on fields don't require the field to be translated anymore
+- Fixed: integration tests by checking view path of admin routes.
+
+## 0.2.8 - 2019-04-01
+- Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.
+- Added: pages.home route is now configurable in the chief config file.
+- Changed: minimum requirement for Chief is now php 7.2.*.
+- Changed: from now on Laravel 5.8.* is used as expected laravel version. Updated to phpunit 8 as well.
+- Changed: `ActsAsMenuItem::menuUrl()`  and `Page::menuUrl()` are deprecated. Use `url()` method instead.
+- Fixed: Adding more than one snippet broke the parsing of these snippets.
+
 ## 0.2.7 - 2019-03-21
 - Added: Publish filter added to pagemanager.
 - Changed: own settings page now requires the user to have the `update-you` permission. In existing projects you can add this permission by running: `php artisan chief:permission update-you`. Next you'll need to add this permission to all the roles in your system. This is done via the UI.

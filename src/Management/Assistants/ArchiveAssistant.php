@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Management\Assistant;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
 
@@ -26,8 +26,8 @@ class ArchiveAssistant implements Assistant
 
     public function manager(Manager $manager)
     {
-        $this->manager = $manager;
-        $this->model = $manager->model();
+        $this->manager  = $manager;
+        $this->model    = $manager->model();
     }
 
     public static function key(): string
@@ -58,6 +58,8 @@ class ArchiveAssistant implements Assistant
     {
         $this->model->unarchive();
 
+        if($this->manager->isAssistedBy('publish')) $this->model->draft();
+
         Audit::activity()
             ->performedOn($this->model)
             ->log('unarchived');
@@ -70,7 +72,7 @@ class ArchiveAssistant implements Assistant
         });
     }
 
-    public function route($verb)
+    public function route($verb): ?string
     {
         $routes = [
             'index' => route('chief.back.assistants.archive-index', [$this->manager->details()->key]),
@@ -81,10 +83,24 @@ class ArchiveAssistant implements Assistant
         }
 
         $modelRoutes = [
-            'archive' => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),
+            'archive'   => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),
             'unarchive' => route('chief.back.assistants.unarchive', [$this->manager->details()->key, $this->manager->model()->id]),
         ];
 
         return isset($modelRoutes[$verb]) ? $modelRoutes[$verb] : null;
+    }
+
+    public function can($verb): bool
+    {
+        return !is_null($this->route($verb));
+    }
+
+    public function guard($verb): Assistant
+    {
+        if (! $this->can($verb)) {
+            NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
+        }
+
+        return $this;
     }
 }

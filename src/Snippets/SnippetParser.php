@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Snippets;
 
 class SnippetParser
 {
-    private static $pattern = '#\[\[(.+)\]\]#';
+    private static $pattern = '#\[\[(.+?)\]\]#';
 
     public static function parse($value)
     {

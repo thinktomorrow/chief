@@ -4,6 +4,10 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Concerns\ProvidesUrl\BaseUrlSegment;
+use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Concerns\ProvidesUrl\ResolvesRoute;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Audit\AuditTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -27,7 +31,7 @@ use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, PresentForParent
+class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, PresentForParent, ProvidesUrl
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -44,7 +48,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         ActingAsParent,
         PresentingForParent,
         ActingAsChild,
-        WithSnippets;
+        WithSnippets,
+        ResolvesRoute;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel      = PageTranslation::class;
@@ -58,6 +63,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
     protected $pagebuilder = true;
+
+    protected static $baseUrlSegment = '/';
 
     public function __construct(array $attributes = [])
     {
@@ -148,7 +155,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         $translationModel = (new static)->translationModel;
 
-        return ($trans =  $translationModel::findBySlug($slug)) ? static::findPublished($trans->page_id) : null;
+        // First slug segment could be the base url segment so check that first
+        $slugWithoutBaseSegment = BaseUrlSegment::strip($slug);
+        return (($trans = $translationModel::findBySlug($slugWithoutBaseSegment)) || ($trans = $translationModel::findBySlug($slug))) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)
@@ -156,21 +165,61 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         $query->orderBy('created_at', 'DESC');
     }
 
-    public function previewUrl()
+    /** @inheritdoc */
+    public function url($locale = null): string
     {
-        // TODO: how we allow for these default routes to be set up in every new project?
-//        return '';
-        return route('pages.show', $this->slug).'?preview-mode';
-    }
+        $slug = $locale ? optional($this->getTranslation($locale))->slug : $this->slug;
 
-    public function menuUrl(): string
-    {
-        // TODO: how we allow for these default routes to be set up in every new project?
-//        return '';
-        if (!$this->slug) {
+        if (!$slug) {
             return '';
         }
-        return route('pages.show', $this->slug);
+
+        $parameters = trim($this->baseUrlSegment($locale) . '/' . $slug, '/');
+
+        $routeName = Homepage::is($this)
+                        ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
+                        : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+
+        return $this->resolveRoute($routeName, $parameters, $locale);
+    }
+
+    /** @inheritdoc */
+    public function previewUrl($locale = null): string
+    {
+        return $this->url($locale).'?preview-mode';
+    }
+
+
+    /** @inheritdoc */
+    public static function baseUrlSegment($locale = null): string
+    {
+        if (!isset(static::$baseUrlSegment)) {
+            return '/';
+        }
+
+        if (!is_array(static::$baseUrlSegment)) {
+            return static::$baseUrlSegment;
+        }
+
+        // When an array, we try to locale the expected segment by locale
+        $key = $locale ?? app()->getlocale();
+
+        if (isset(static::$baseUrlSegment[$key])) {
+            return static::$baseUrlSegment[$key];
+        }
+
+        // Fall back to last entry in case no match is found
+        $reversedSegments = array_reverse(static::$baseUrlSegment);
+        return reset($reversedSegments);
+    }
+
+    /**
+     * @deprecated since 0.2.8: use url() instead
+     * @return string
+     */
+    public function menuUrl(): string
+    {
+        return $this->url();
     }
 
     public function menuLabel(): string
@@ -233,7 +282,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function statusAsLabel()
     {
         if ($this->isPublished()) {
-            return '<a href="'.$this->menuUrl().'" target="_blank"><em>online</em></a>';
+            return '<a href="'.$this->url().'" target="_blank"><em>online</em></a>';
         }
 
         if ($this->isDraft()) {

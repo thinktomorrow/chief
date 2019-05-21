@@ -114,7 +114,7 @@ class MenuTest extends TestCase
             $item = $main->children()[$k];
 
             $this->assertEquals($page->menuLabel(), $item->label);
-            $this->assertEquals($page->menuUrl(), $item->url);
+            $this->assertEquals($page->url(), $item->url);
         }
     }
 
@@ -259,7 +259,8 @@ class MenuTest extends TestCase
         $response = $this->asAdmin()
             ->get(route('chief.back.menuitem.create', 'main'));
 
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.menu.create')
+                 ->assertStatus(200);
 
         $pages = $this->getResponseData($response, 'pages');
 

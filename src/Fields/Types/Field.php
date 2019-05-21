@@ -82,6 +82,19 @@ class Field
         return false;
     }
 
+    public static function translateValue($value, $locale = null)
+    {
+        if(!$locale || !is_array($value)) {
+            return $value;
+        }
+
+        if ($locale && isset($value[$locale])) {
+            return $value[$locale];
+        }
+
+        return $value;
+    }
+
     public function __get($key)
     {
         if (isset($this->$key)) {
@@ -102,7 +115,7 @@ class Field
             return $this->__get($name);
         }
 
-        if (!in_array($name, ['label', 'description', 'column', 'name', 'prepend', 'append'])) {
+        if (!in_array($name, ['label', 'key', 'description', 'column', 'name', 'prepend', 'append'])) {
             throw new \InvalidArgumentException('Cannot set value by ['. $name .'].');
         }
 

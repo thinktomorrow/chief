@@ -3,14 +3,15 @@
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Modules\TextModule;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Modules\TextModule;
+use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 
 class PageBuildTest extends TestCase
 {
@@ -23,6 +24,7 @@ class PageBuildTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
+        config()->set('app.fallback_locale', 'nl');
 
         app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
 
@@ -32,6 +34,10 @@ class PageBuildTest extends TestCase
             'slug:nl' => 'new-slug',
             'title:en' => 'nouveau title',
             'slug:en' => 'nouveau-slug',
+        ]);
+
+        $this->app['config']->set('thinktomorrow.chief.relations.children', [
+            Module::class,
         ]);
 
         // For our project context we expect the page detail route to be known
@@ -101,10 +107,11 @@ class PageBuildTest extends TestCase
         $this->assertEquals('article-text-1article-text-2module-textarticle-text-3', $this->page->renderChildren());
     }
 
+
     /** @test */
     public function it_can_add_a_text_module()
     {
-        $this->disableExceptionHandling();
+        config()->set('app.fallback_locale', 'nl');
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
@@ -171,7 +178,7 @@ class PageBuildTest extends TestCase
                             ]
                         ]
                     ]
-                ],
+                ]
             ]));
 
         $this->assertCount(0, $this->page->children());
@@ -200,7 +207,7 @@ class PageBuildTest extends TestCase
                             ]
                         ]
                     ]
-                ],
+                ]
             ]));
 
         $this->assertCount(0, $this->page->children());
@@ -370,5 +377,21 @@ class PageBuildTest extends TestCase
             TextModule::findBySlug('text-1')->flatReference()->get(),
             $text_module->flatReference()->get()],
             (new FlatReferenceCollection($this->page->children()->all()))->toFlatReferences()->all());
+    }
+
+    /** @test */
+    public function it_only_has_general_or_own_modules()
+    {
+        $module = Module::create(['slug' => 'foobar']);
+        $module->page_id = $this->page->id++;
+        $module->save();
+
+        $module = Module::create(['slug' => 'foobar 2']);
+        $module->page_id = $this->page->id;
+        $module->save();
+        $managers = app(Managers::class);
+        $pagebuilderField = $managers->findByKey('articles')->manage($this->page)->fields()->offsetGet(0);
+
+        $this->assertCount(1, $pagebuilderField->availableModules);
     }
 }

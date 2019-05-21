@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Artisan;
 use PHPUnit\Framework\Assert;
 
