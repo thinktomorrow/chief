@@ -7,7 +7,6 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;

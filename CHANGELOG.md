@@ -6,6 +6,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: implement thinktomorrow/url instead of copypasting the classes.
 - Changed: use themed password reset mail layout instead of default laravel one.
 - Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
+- Fixed: pagebuilder no longer shows modules that are specific for other pages.
 
 ## 0.2.11 - 2019-04-23
 - Added: empty state for menu items
