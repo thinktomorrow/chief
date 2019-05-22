@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+
+## 0.2.12 - 2019-05-22
 - Added: Pagebuilder action labels to better describe their intent
 - Changed: save button on the edit pages only displays if the model can be updated
 - Changed: Name of a collection page title on creation and h1, h2 and h3 in redactor
