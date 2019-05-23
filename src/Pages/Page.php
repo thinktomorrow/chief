@@ -157,7 +157,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
         // First slug segment could be the base url segment so check that first
         $slugWithoutBaseSegment = BaseUrlSegment::strip($slug);
-        return (($trans = $translationModel::findBySlug($slugWithoutBaseSegment)) || ($trans = $translationModel::findBySlug($slug))) ? static::findPublished($trans->page_id) : null;
+
+        return ( ($trans = $translationModel::findBySlug($slug)) || ($trans = $translationModel::findBySlug($slugWithoutBaseSegment))) ? static::findPublished($trans->page_id) : null;
     }
 
     public function scopeSortedByCreated($query)

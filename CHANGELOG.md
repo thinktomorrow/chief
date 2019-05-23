@@ -3,6 +3,9 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 
+## 0.2.13 - 2019-05-23
+- Fixed: Find published page where the slug matches one of the application base url segments. 
+
 ## 0.2.12 - 2019-05-22
 - Added: Pagebuilder action labels to better describe their intent
 - Changed: save button on the edit pages only displays if the model can be updated
