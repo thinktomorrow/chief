@@ -2,18 +2,18 @@
 
 namespace Thinktomorrow\Chief\Management;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Filters\Filter;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
+use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
-use Thinktomorrow\Chief\Management\Details\HasDetails;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 abstract class AbstractManager
 {
@@ -93,10 +93,10 @@ abstract class AbstractManager
      */
     protected function existingModel()
     {
-        if (! $this->model->exists) {
+        if (!$this->model ||! $this->model->exists) {
             throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
-        
+
         return $this->model;
     }
 
@@ -125,9 +125,6 @@ abstract class AbstractManager
             'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
             'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
             'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
-            'archive'  => route('chief.back.managers.archive', [$this->registration->key(), $this->existingModel()->id]),
-            'publish' => route('chief.back.managers.publish', [$this->registration->key(), $this->existingModel()->id]),
-            'draft'   => route('chief.back.managers.draft', [$this->registration->key(), $this->existingModel()->id]),
             'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
         ];
 
@@ -139,11 +136,13 @@ abstract class AbstractManager
         return !is_null($this->route($verb));
     }
 
-    public function guard($verb)
+    public function guard($verb): Manager
     {
         if (! $this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this);
         }
+
+        return $this;
     }
 
     /**
@@ -240,7 +239,7 @@ abstract class AbstractManager
         return (new static($this->registration))->manage($this->model);
     }
 
-    
+
 
     public function delete()
     {

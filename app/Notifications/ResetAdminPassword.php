@@ -38,11 +38,12 @@ class ResetAdminPassword extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
+            ->subject('Herstel jouw wachtwoord.')
             ->from(chiefSetting('contact.email'), chiefSetting('contact.name'))
-            ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', route('chief.back.password.reset', $this->token))
-            ->line('If you did not request a password reset, no further action is required.');
+            ->view('chief::back.mails.password-reset', [
+                'reset_url' => route('chief.back.password.reset', $this->token),
+            ]);
     }
 
     /**

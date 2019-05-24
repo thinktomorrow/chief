@@ -21,11 +21,8 @@
 
                 @if($manager->findAllManaged()->count() > 0)
                     <div class="column-6">
-                        <div class="panel panel-default --raised">
+                        <div class="panel panel-default --raised bg-white">
                             <div class="panel-body inset">
-                                <div class="btn btn-o-primary btn-circle">
-                                    <i class="icon icon-box"></i>
-                                </div>
                                 <div class="stack">
                                     <h1 class="--remove-margin">{{ $manager->findAllManaged()->count() }}</h1>
                                     <p>{{ $manager->details()->plural }}</p>

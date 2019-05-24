@@ -3,8 +3,43 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Added: You can now validate image uploads with image_required and chief_dimensions validation rules
+- Fixed: remove own module on page now works.
+
+## 0.2.13 - 2019-05-23
+- Fixed: Find published page where the slug matches one of the application base url segments. 
+
+## 0.2.12 - 2019-05-22
+- Added: Pagebuilder action labels to better describe their intent
+- Changed: save button on the edit pages only displays if the model can be updated
+- Changed: Name of a collection page title on creation and h1, h2 and h3 in redactor
+- Changed: implement thinktomorrow/url instead of copypasting the classes.
+- Changed: use themed password reset mail layout instead of default laravel one.
+- Changed: use chief translations for admin password reset form validation. This is provided via `chief::` lang namespace.
+- Fixed: pagebuilder no longer shows modules that are specific for other pages.
+- Fixed: regular checkboxes are no longer hidden by default.
+
+## 0.2.11 - 2019-04-23
+- Added: empty state for menu items
+- Added: allow Field key value to be set via `Field::key()` method
+- Changed: filters dont show if you have no models except if you're filtering and have an empty result
+- Changed: on unarchive, if the manager has the publish assistant, set to draft instead of online.
+- Changed: changed the permission for details of squanto lines to delete-squanto permission so only developers can see this.
+- Removed: ManagerThatPreviews, ManagesPreview, ManagesPublishingStatus and implemented the functions in publishassistant.
+- Removed: permission permissions, since permissions require code changes you can't manage permissions from the admin panel
+- Fixed: document media can be removed now
+- Fixed: document upload will adhere to the multiple flag now.
+- Fixed: user can't block themself anymore
+- Fixed: SelectField::multiple defaults to true when no boolean argument is passed.
+
+## 0.2.10 - 2019-04-10
+- Fixed: avoid morphableInstantiation looping over models which are not morphable.
+
+## 0.2.9 - 2019-04-10
+- Changed: moved `Assistant` contract to `/Managers/Assistants/` folder.
+- Changed: Publication logic is no longer baked in Pagemanager but added as a Manager assistant.
 - Fixed: Fixed saving new page without title. `required-fallback-locale` is now an implicit rule.
 - Fixed: Prepend and Append methods on fields don't require the field to be translated anymore
+- Fixed: integration tests by checking view path of admin routes.
 
 ## 0.2.8 - 2019-04-01
 - Added: A Page can now set a fixed base url segment (e.g. /news). This is set on the Page model via a `baseUrlSegment` property. This accepts a single string or an array of localized segments where the key should be the locale itself.

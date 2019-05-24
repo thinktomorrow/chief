@@ -43,16 +43,6 @@ class UploadManagersMediaController extends Controller
             ], 500);
         }
 
-        $validator = Validator::make($request->all(), ['file' => 'dimensions:max_width:2000|max:2000']);
-
-        if($validator->fails())
-        {
-            return response()->json([
-                'error' => true,
-                'message' => 'Afbeelding te groot.',
-            ], 500);
-        }
-
         $responseContent = [];
 
         foreach ($uploads as $upload) {

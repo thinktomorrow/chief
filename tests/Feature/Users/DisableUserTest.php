@@ -36,6 +36,21 @@ class DisableUserTest extends TestCase
     }
 
     /** @test */
+    public function admin_can_not_disable_themself()
+    {
+        $admin = $this->admin();
+        $admin->enable();
+
+        $this->assertTrue($admin->isEnabled());
+
+        $response = $this->actingAs($admin, 'chief')->post(route('chief.back.users.disable', $admin->id));
+
+        $response->assertSessionHas('messages.error', 'U kan uzelf niet blokkeren.');
+
+        $this->assertTrue($this->user->fresh()->isEnabled());
+    }
+
+    /** @test */
     public function user_cannot_be_disabled_by_regular_author()
     {
         $this->assertTrue($this->user->isEnabled());

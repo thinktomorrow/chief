@@ -2,10 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -31,4 +29,5 @@ class PageSpecificModulesTest extends TestCase
         $this->assertCount(1, $page->modules()->get());
         $this->assertInstanceOf(NewsletterModuleFake::class, $page->modules->first());
     }
+
 }

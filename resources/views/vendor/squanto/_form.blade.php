@@ -2,8 +2,8 @@
     <label class="col-lg-3 control-label" for="{{$locale.'-'.$line->id}}-inputValue">
         {{ $line->label }}
 
-        @can('update-squanto')
-            <a href="{{ route('squanto.lines.edit',$line->id) }}" class="subtle">{{ $line->key }}</a>
+        @can('delete-squanto')
+            <a href="{{ route('squanto.lines.edit', $line->id) }}" class="subtle">{{ $line->key }}</a>
         @endcan
 
     </label>

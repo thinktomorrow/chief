@@ -259,7 +259,8 @@ class MenuTest extends TestCase
         $response = $this->asAdmin()
             ->get(route('chief.back.menuitem.create', 'main'));
 
-        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.menu.create')
+                 ->assertStatus(200);
 
         $pages = $this->getResponseData($response, 'pages');
 

@@ -66,7 +66,6 @@ class AvailableChildren
         }
 
         $available_children_types = config('thinktomorrow.chief.relations.children', []);
-
         // Preload pages and modules in 2 queries to reduce calls - For some reason the collection merge looks at the model id and
         // thus overwrites 'duplicates'. This isn't expected behaviour since we have different class types.
         $collection = collect(array_merge(Page::all()->all(), Module::all()->all()));
@@ -88,7 +87,6 @@ class AvailableChildren
             // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
             $collection = collect(array_merge($collection->all(), (new $type())->all()->all()));
         }
-
         // Filter out our parent
         return $this->collection = $collection->reject(function ($item) {
             if ($item instanceof $this->parent) {

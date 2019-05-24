@@ -1,8 +1,9 @@
 <?php
 
-namespace Thinktomorrow\Chief\Management;
+namespace Thinktomorrow\Chief\Management\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Thinktomorrow\Chief\Management\Manager;
 
 class NotAllowedManagerRoute extends AuthorizationException
 {

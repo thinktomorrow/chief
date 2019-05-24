@@ -4,15 +4,15 @@ namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Modules\Application\DeleteModule;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Modules\Application\DeleteModule;
 
 class ModuleManager extends AbstractManager implements Manager
 {

@@ -41,17 +41,18 @@ class ChiefServiceProvider extends ServiceProvider
         // Project defaults
         (new ChiefProjectServiceProvider($this->app))->boot();
 
-        $this->loadRoutesFrom(__DIR__.'/../routes.php');
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadRoutesFrom(__DIR__ . '/../routes.php');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
 
         $this->publishes([
-            __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
-            __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            __DIR__ . '/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
+            __DIR__ . '/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
         ], 'chief-config');
 
         $this->publishes([
-            __DIR__.'/../../public/chief-assets' => public_path('/chief-assets'),
+            __DIR__ . '/../../public/chief-assets' => public_path('/chief-assets'),
         ], 'chief-assets');
 
         // Register commands
@@ -93,8 +94,8 @@ class ChiefServiceProvider extends ServiceProvider
         Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
             $fallbackLocale = config('app.fallback_locale');
 
-            if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
-                return !! trim($value);
+            if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
+                return !!trim($value);
             }
 
             return true;
@@ -110,8 +111,8 @@ class ChiefServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'thinktomorrow.chief');
-        $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'thinktomorrow.chief');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
 
         $this->setupEnvironmentProviders();
 
@@ -141,7 +142,7 @@ class ChiefServiceProvider extends ServiceProvider
      */
     private function setupEnvironmentProviders()
     {
-        if (!$this->app->environment('production') && $services = config('app.providers-'.app()->environment(), false)) {
+        if (!$this->app->environment('production') && $services = config('app.providers-' . app()->environment(), false)) {
             foreach ($services as $service) {
                 $this->app->register($service);
             }

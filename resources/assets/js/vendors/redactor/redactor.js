@@ -1824,9 +1824,9 @@ $R.lang['en'] = {
     "paragraph": "Normal text",
     "quote": "Quote",
     "code": "Code",
-    "heading1": "Heading 1",
-    "heading2": "Heading 2",
-    "heading3": "Heading 3",
+    "heading1": "Pagina titel",
+    "heading2": "Titel",
+    "heading3": "Tussentitel",
     "heading4": "Heading 4",
     "heading5": "Heading 5",
     "heading6": "Heading 6",
@@ -1871,27 +1871,6 @@ $R.buttons = {
         title: '## format ##',
         icon: true,
         dropdown: {
-            p: {
-                title: '## paragraph ##',
-                api: 'module.block.format',
-                args: {
-                    tag: 'p'
-                }
-            },
-            blockquote: {
-                title: '## quote ##',
-                api: 'module.block.format',
-                args: {
-                    tag: 'blockquote'
-                }
-            },
-            pre: {
-                title: '## code ##',
-                api: 'module.block.format',
-                args: {
-                    tag: 'pre'
-                }
-            },
             h1: {
                 title: '## heading1 ##',
                 api: 'module.block.format',
@@ -1932,6 +1911,27 @@ $R.buttons = {
                 api: 'module.block.format',
                 args: {
                     tag: 'h6'
+                }
+            },
+            p: {
+                title: '## paragraph ##',
+                api: 'module.block.format',
+                args: {
+                    tag: 'p'
+                }
+            },
+            blockquote: {
+                title: '## quote ##',
+                api: 'module.block.format',
+                args: {
+                    tag: 'blockquote'
+                }
+            },
+            pre: {
+                title: '## code ##',
+                api: 'module.block.format',
+                args: {
+                    tag: 'pre'
                 }
             }
         }
@@ -15766,7 +15766,7 @@ $R.add('module', 'image', {
                         <input type="text" id="modal-image-url" name="url" aria-label="## link ##" /> \
                     </div> \
                     <div class="form-item form-item-link"> \
-                        <label class="checkbox"><input type="checkbox" name="target" aria-label="## link-in-new-tab ##"> ## link-in-new-tab ##</label> \
+                        <label class="checkbox"><input class="checkbox-visible" type="checkbox" name="target" aria-label="## link-in-new-tab ##"> ## link-in-new-tab ##</label> \
                     </div> \
                 </form> \
             </div>'

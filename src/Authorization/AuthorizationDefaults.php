@@ -18,7 +18,7 @@ class AuthorizationDefaults
         return collect([
 
             // full access, even to application logic stuff
-            'developer' => ['role', 'permission', 'user', 'page', 'disable-user', 'update-you', 'squanto', 'view-audit', 'update-setting'],
+            'developer' => ['role', 'user', 'page', 'disable-user', 'update-you', 'squanto', 'view-audit', 'update-setting'],
 
             // Manages everything, including users
             'admin' => ['user', 'page', 'disable-user', 'update-you', 'view-squanto', 'update-squanto', 'view-audit', 'update-setting'],
@@ -31,11 +31,6 @@ class AuthorizationDefaults
     public static function permissions(): Collection
     {
         return collect([
-            'view-permission',
-            'create-permission',
-            'update-permission',
-            'delete-permission',
-
             'view-role',
             'create-role',
             'update-role',

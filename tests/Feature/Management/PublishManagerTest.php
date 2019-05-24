@@ -3,13 +3,14 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Exceptions\MissingAssistant;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Management\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\PublishedManagerFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\PublishedManagerFake;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class PublishManagerTest extends TestCase
 {
@@ -24,10 +25,8 @@ class PublishManagerTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', PublishedManagerFake::class, ManagedModelFake::class);
-
-        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'slug' => 'foobar', 'custom_column' => 'custom']);
-        $this->fake = (new PublishedManagerFake(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
+        $this->page = factory(Page::class)->create(['published' => false]);
+        $this->fake = (new PublishedManagerFake(app(Register::class)->filterByKey('singles')->first()))->manage($this->page);
 
         Route::get('statics/{slug}', function () {
         })->name('pages.show');
@@ -36,10 +35,12 @@ class PublishManagerTest extends TestCase
     /** @test */
     public function admin_can_publish_a_model()
     {
-        $this->asAdmin()
-            ->post($this->fake->route('publish'));
+        $this->assertCount(0, Page::published()->get());
 
-        $this->assertTrue($this->model->fresh()->isPublished());
+        $this->asAdmin()
+            ->post($this->fake->assistant('publish')->route('publish'));
+
+        $this->assertCount(1, Page::published()->get());
     }
 
     /** @test */
@@ -48,28 +49,29 @@ class PublishManagerTest extends TestCase
         $this->asAdmin()
             ->post($this->fake->route('draft'));
 
-        $this->assertTrue(ManagedModelFake::first()->isDraft());
+        $this->assertTrue(Page::first()->isDraft());
     }
 
     /** @test */
     public function guests_cannot_publish_a_model()
     {
-        $this->post($this->fake->route('publish'))
+        $this->post($this->fake->assistant('publish')->route('publish'))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }
 
     /** @test */
-    public function cannot_publish_without_publishable_manager()
+    public function cannot_publish_without_publish_assistant()
     {
         $this->disableExceptionHandling();
-        $this->expectException(NotAllowedManagerRoute::class);
+        $this->expectException(MissingAssistant::class);
+
         app(Register::class)->register('publishfakes', ManagerFake::class, ManagedModelFake::class);
 
         $this->model = ManagedModelFake::create(['title' => 'Foobar', 'slug' => 'foobar', 'custom_column' => 'custom']);
         $this->fake = (new ManagerFake(app(Register::class)->filterByKey('publishfakes')->first()))->manage($this->model);
 
         $this->asAdmin()
-            ->post($this->fake->route('publish'));
+            ->post($this->fake->assistant('publish')->route('publish'));
     }
 }

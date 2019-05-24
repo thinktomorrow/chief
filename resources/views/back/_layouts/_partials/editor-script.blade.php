@@ -7,7 +7,7 @@
             @else
                 buttons: ['undo', 'format', 'bold', 'italic', 'lists', 'image', 'file', 'link'],
             @endif
-            formatting: ['p', 'h1', 'h2', 'h3'],
+            formatting: ['h2', 'h3', 'p', 'blockquote'],
             imageResizable: true,
             imagePosition: true,
             imageFigure: false,
@@ -22,31 +22,7 @@
                         let token = document.head.querySelector('meta[name="csrf-token"]');
 
                         xhr.setRequestHeader('X-CSRF-TOKEN', token.content);
-                        alert('beforesend');
-                        console.log('uploadebefore', response.message);
                     },
-                    uploadError: function(response)
-                    {
-                        alert('uploadsuploaderror');
-
-                        console.log('uploaduploadError', response.message);
-                    }
-                },
-                image: {
-                    uploadError: function(response)
-                    {
-                        alert('imagesuploaderror');
-
-                        console.log('imageuploadError', response.message);
-                    }
-                },
-                file: {
-                    uploadError: function(response)
-                    {
-                        alert('filesuploaderror');
-
-                        console.log('fileuploadError', response.message);
-                    }
                 }
             },
             definedlinks: '{{ route('chief.api.internal-links') }}',

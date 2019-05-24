@@ -59,6 +59,17 @@ class CreatePageTest extends TestCase
     }
 
     /** @test */
+    public function when_creating_page_title_is_required_for_fallback_locale_even_when_entry_is_empty()
+    {
+        config()->set('app.fallback_locale', 'nl');
+
+        $this->assertValidation(new Page(), 'trans.nl.title', [],
+            route('chief.back.managers.index', 'singles'),
+            route('chief.back.managers.store', 'singles')
+        );
+    }
+
+    /** @test */
     public function slug_must_be_unique()
     {
         $page = factory(Page::class)->create([
