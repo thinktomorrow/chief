@@ -10,12 +10,10 @@
 @endcomponent
 
 @section('content')
-
     <div class="row gutter-s">
         @foreach($managers as $manager)
             @include('chief::back.managers.archive._rowitem')
             @include('chief::back.managers._partials.delete-modal')
         @endforeach
     </div>
-
 @stop

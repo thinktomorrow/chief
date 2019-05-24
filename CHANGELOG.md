@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Fixed: remove own module on page now works.
 
 ## 0.2.13 - 2019-05-23
 - Fixed: Find published page where the slug matches one of the application base url segments. 
