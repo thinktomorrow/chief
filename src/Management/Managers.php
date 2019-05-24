@@ -78,7 +78,7 @@ class Managers
 
         $managers = $managers->map(function (Manager $item) {
             return [
-                'id'    => $item->details()->id,
+                'id'    => $item->model()->getMorphClass(),
                 'group' => $item->details()->plural,
             ];
         })->toArray();

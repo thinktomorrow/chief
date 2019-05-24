@@ -90,8 +90,8 @@ class MenuTest extends TestCase
     public function it_can_reference_a_collection_of_pages()
     {
         factory(Page::class, 3)->create([
-            'morph_key'    => ArticlePageFake::class,
-            'published'     => 1
+            'morph_key' => ArticlePageFake::class,
+            'published' => 1
         ]);
 
         // Sanity check
