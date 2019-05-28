@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss')
 
 mix.setPublicPath(path.normalize('public/chief-assets/back'))
 	.js('resources/assets/js/main.js', 'public/chief-assets/back/js')
@@ -10,7 +11,10 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 
 	.options({
 		// Webpack setting to ignore sass loader to follow url() paths
-		processCssUrls: false
+		processCssUrls: false,
+		postCss: [
+			tailwindcss('./resources/assets/sass/tailwind.js'),
+		]
 	})
 
     /**

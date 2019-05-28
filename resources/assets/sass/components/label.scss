@@ -1,0 +1,46 @@
+$dot-size: 5px;
+
+.label {
+    @apply py-1 px-2 inline-block relative rounded;
+}
+
+.label--right{
+  &::before{
+    content:'';
+    left: -($dot-size*1.5);
+  }
+  &::after{
+    content:'';
+    left: -($dot-size - 1px);
+  }
+}
+
+$labelColors: (
+    primary: #13C6A6,
+    secondary: #4360A8,
+    success: #2fca74,
+    warning: #f5b848,
+    error: #ed4d4d,
+    information: #2083fe,
+);
+
+@each $label, $color in $labelColors {
+
+    .label-#{$label}{
+      background-color: $color;
+      border: 1px solid $color;
+      @apply text-white border;
+
+      &::before{
+        border-color: transparent $color transparent transparent;
+      }
+
+    }
+
+    .label-o--#{$label}{
+      background-color: transparent;
+      color: $color;
+      border: 1px solid $color;
+    }
+
+}

@@ -7,7 +7,10 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', $page->label)
     @slot('subtitle')
-        <a class="center-y" href="{{ route('squanto.index') }}"><span class="icon icon-arrow-left"></span> Terug naar teksten</a>
+        <a class="center-y" href="{{ route('squanto.index') }}">
+            <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg>
+            Terug naar teksten
+        </a>
     @endslot
 
     @can('create-squanto')

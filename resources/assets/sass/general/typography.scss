@@ -1,0 +1,40 @@
+html, body {
+    font-size: 14px;
+    @apply font-sans;
+}
+
+h1, h1:not(:last-child) {
+    @apply text-3xl mb-2;
+}
+
+h1, h2, h3, h4, h5 {
+    @apply font-bold text-grey-700;
+}
+
+p, body {
+    @apply font-normal text-grey-500;
+}
+
+a {
+    @apply text-primary-500;
+}
+
+ul, ol {
+    @apply break-words pl-0;
+}
+
+ol li {
+    list-style: inherit;
+}
+
+blockquote {
+    @apply p-4 text-grey-300 border-l-2 border-secondary-300;
+}
+
+pre {
+    @apply m-0;
+}
+
+code {
+    @apply inline-block text-grey-300 p-1;
+}

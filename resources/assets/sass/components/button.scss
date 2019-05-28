@@ -1,0 +1,30 @@
+.btn {
+	line-height: inherit;
+	text-overflow: ellipsis;
+	-webkit-appearance: none;
+	transition: 0.3s all ease;
+	@apply whitespace-no-wrap align-middle outline-none px-4 py-2 inline-block no-underline cursor-pointer rounded;
+}
+
+.btn-link {
+	&:after{
+		content:'';
+		background-color: currentColor;
+		transition: 0.3s all ease;
+		@apply block h-px w-0;
+	}
+	&:hover{
+		&:after{
+			@apply w-full;
+		}
+	}
+}
+
+.btn-primary {
+	@apply text-white bg-primary-500;
+}
+
+.btn-secondary {
+	@apply text-white bg-secondary-500;
+}
+
