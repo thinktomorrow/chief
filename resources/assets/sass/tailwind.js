@@ -10,11 +10,14 @@ module.exports = {
       xl: '1280px',
     },
     colors: {
-
       transparent: 'transparent',
       black: '#000',
       white: '#fff',
-      body: '#f4f6f5',
+
+      success: '#2fca74',
+      warning: '#f5b848',
+      error: '#ed4d4d',
+      information: '#2083fe',
 
       primary: {
         100: '#E7F9F6',
@@ -41,6 +44,7 @@ module.exports = {
       },
 
       grey: {
+        50: '#F8F8F9',
         100: '#EDEEF0',
         200: '#D3D4D8',
         300: '#B9B9C1',
@@ -190,6 +194,7 @@ module.exports = {
     },
     height: theme => ({
       auto: 'auto',
+      px: '1px',
       ...theme('spacing'),
       full: '100%',
       screen: '100vh',

@@ -1647,6 +1647,9 @@ module.exports = {
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
 	props: {
@@ -1878,7 +1881,6 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-//
 //
 //
 //
@@ -2381,6 +2383,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2802,6 +2810,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -2848,6 +2862,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PagebuilderMenu_vue__ = __webpack_require__("./resources/assets/js/components/Pagebuilder/PagebuilderMenu.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3217,7 +3236,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.delete-button[data-v-5fa816ef] {\n  color:red;\n  /* border-left: 2px solid red; */\n  margin: 0.5rem 0;\n  text-align: center;\n}\n.grip-button[data-v-5fa816ef] {\n  color: rgb(30,30,30);\n  /* border-right: 2px solid rgb(30,30,30); */\n  margin: 0.5rem 0;\n  text-align: center;\n}\n.module-icons-left[data-v-5fa816ef] {\n  position: absolute;\n  top: 0;\n  left: -30px;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  opacity: 0;\n  width: 40px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n.module-icons-right[data-v-5fa816ef] {\n  position: absolute;\n  top: 0;\n  right: -30px;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  opacity: 0;\n  width: 40px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\nsection[data-v-5fa816ef] {\n  position: relative;\n}\n.reveal-left[data-v-5fa816ef] {\n  opacity: 1;\n  left: -43px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n.reveal-right[data-v-5fa816ef] {\n  opacity: 1;\n  right: -40px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n", ""]);
+exports.push([module.i, "\n.module-icons-left[data-v-5fa816ef] {\n  position: absolute;\n  top: 0;\n  left: -30px;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  opacity: 0;\n  width: 40px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n.module-icons-right[data-v-5fa816ef] {\n  position: absolute;\n  top: 0;\n  right: -30px;\n  bottom: 0;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  opacity: 0;\n  width: 40px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n.reveal-left[data-v-5fa816ef] {\n  opacity: 1;\n  left: -42px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n.reveal-right[data-v-5fa816ef] {\n  opacity: 1;\n  right: -42px;\n  -webkit-transition: 0.15s all ease-in;\n  transition: 0.15s all ease-in;\n}\n", ""]);
 
 // exports
 
@@ -3247,7 +3266,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.pagebuilder-dragging {\n  background-color: rgba(255, 255, 255, .3);\n  border: 2px dashed rgba(21, 200, 167, 1);\n  border-radius: 5px;\n  padding: 40px;\n}\n.pagebuilder-dragging .pagebuilder-menu-wrapper {\n  display: none;\n}\n.section-item{\n  border-left: 3px solid rgba(21, 200, 167, 1);\n  background-color: rgba(21, 200, 167, 0.05);\n}\n.ghost {\n  -webkit-transition: 0.2s all ease;\n  transition: 0.2s all ease;\n  background-color: rgba(21, 200, 167, 1);\n  height: 10px;\n  border-radius: 5px;\n  width: 100%;\n}\n.ghost > * {\n  display:none;\n}\n.hide-icons {\n  opacity: 0 !important;\n}\n.sortable-drag > * {\n  opacity: 0.5 !important;\n}\n.drag-cursor {\n  cursor: url('/chief-assets/back/img/move.svg') 12 12, auto !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.pagebuilder-dragging {\n  background-color: rgba(255, 255, 255, .3);\n  border: 2px dashed rgba(21, 200, 167, 1);\n  border-radius: 5px;\n  padding: 40px;\n}\n.pagebuilder-dragging .pagebuilder-menu-wrapper {\n  display: none;\n}\n.ghost {\n  -webkit-transition: 0.2s all ease;\n  transition: 0.2s all ease;\n  background-color: rgba(21, 200, 167, 1);\n  height: 10px;\n  border-radius: 5px;\n  width: 100%;\n}\n.ghost > * {\n  display:none;\n}\n.hide-icons {\n  opacity: 0 !important;\n}\n.sortable-drag > * {\n  opacity: 0.5 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -32141,21 +32160,24 @@ var render = function() {
           class: _vm.typeclass
         },
         [
-          _c(
-            "div",
-            { staticClass: "alert__copy inline" },
-            [_vm._t("default")],
-            2
-          ),
+          _c("div", { staticClass: "inline" }, [_vm._t("default")], 2),
           _vm._v(" "),
-          _c("span", {
-            staticClass: "alert__btn icon icon-x",
-            on: {
-              click: function($event) {
-                _vm.isVisible = false
+          _c(
+            "span",
+            {
+              staticClass: "alert__btn",
+              on: {
+                click: function($event) {
+                  _vm.isVisible = false
+                }
               }
-            }
-          })
+            },
+            [
+              _c("svg", { attrs: { width: "18", height: "18" } }, [
+                _c("use", { attrs: { "xlink:href": "#x" } })
+              ])
+            ]
+          )
         ]
       )
     ]
@@ -32183,210 +32205,260 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "pagebuilder-menu show-on-hover center-y" }, [
-    _c("span", {
-      directives: [
+  return _c(
+    "div",
+    {
+      staticClass:
+        "absolute flex justify-start items-center w-full h-8 show-on-hover center-y",
+      staticStyle: { "z-index": "1", bottom: "-24px", left: "-14px" }
+    },
+    [
+      _c(
+        "span",
         {
-          name: "show",
-          rawName: "v-show",
-          value: !_vm.active,
-          expression: "!active"
-        }
-      ],
-      staticClass: "block icon icon-plus-circle menu-trigger",
-      on: {
-        click: function($event) {
-          _vm.active = true
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("span", {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.active,
-          expression: "active"
-        }
-      ],
-      staticClass: "block icon icon-minus-circle",
-      on: {
-        click: function($event) {
-          _vm.active = false
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.active,
-            expression: "active"
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.active,
+              expression: "!active"
+            }
+          ],
+          staticClass: "block menu-trigger cursor-pointer",
+          on: {
+            click: function($event) {
+              _vm.active = true
+            }
           }
-        ],
-        staticClass:
-          "pagebuilder-menu-items bg-white squished --raised rounded flex inline-group-l"
-      },
-      [
-        _c("div", { staticClass: "flex flex-col" }, [
-          _c("p", { staticClass: "stack-xs" }, [_vm._v("Creëer een ...")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "inline-group-s" }, [
-            _c("div", { staticClass: "left pointer" }, [
+        },
+        [
+          _c("svg", { attrs: { width: "24", height: "24" } }, [
+            _c("use", { attrs: { "xlink:href": "#plus" } })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.active,
+              expression: "active"
+            }
+          ],
+          staticClass: "block cursor-pointer",
+          on: {
+            click: function($event) {
+              _vm.active = false
+            }
+          }
+        },
+        [
+          _c("svg", { attrs: { width: "24", height: "24" } }, [
+            _c("use", { attrs: { "xlink:href": "#min" } })
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.active,
+              expression: "active"
+            }
+          ],
+          staticClass:
+            "pagebuilder-menu-items float-right ml-4 relative bg-white inset --raised rounded flex inline-group-l"
+        },
+        [
+          _c("div", { staticClass: "flex flex-col" }, [
+            _c("p", { staticClass: "stack-xs" }, [_vm._v("Creëer een ...")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "inline-group-s" }, [
+              _c("div", { staticClass: "float-left cursor-pointer" }, [
+                _c(
+                  "span",
+                  {
+                    staticClass: "label label-o--secondary center-y",
+                    attrs: { title: "pagina titel toevoegen" },
+                    on: {
+                      click: function($event) {
+                        _vm.addingNewPagetitleSectionAfter(_vm.section.sort)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
+                        staticClass: "mr-2",
+                        attrs: { width: "18", height: "18" }
+                      },
+                      [_c("use", { attrs: { "xlink:href": "#align-left" } })]
+                    ),
+                    _vm._v(
+                      "\n                        Titel\n                    "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
               _c(
-                "span",
+                "div",
                 {
-                  staticClass: "label label-o--secondary center-y",
-                  attrs: { title: "pagina titel toevoegen" },
+                  staticClass: "float-left cursor-pointer",
                   on: {
                     click: function($event) {
-                      _vm.addingNewPagetitleSectionAfter(_vm.section.sort)
+                      _vm.addingNewTextSectionAfter(_vm.section.sort)
                     }
                   }
                 },
                 [
-                  _c("i", { staticClass: "icon icon-align-left" }),
-                  _vm._v(
-                    "\n                        Titel\n                    "
+                  _c(
+                    "span",
+                    {
+                      staticClass: "label label-o--secondary center-y",
+                      attrs: { title: "tekst / afbeelding toevoegen" }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { width: "18", height: "18" }
+                        },
+                        [_c("use", { attrs: { "xlink:href": "#align-left" } })]
+                      ),
+                      _vm._v(
+                        "\n                        Tekstblok\n                    "
+                      )
+                    ]
                   )
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "left pointer",
-                on: {
-                  click: function($event) {
-                    _vm.addingNewTextSectionAfter(_vm.section.sort)
-                  }
-                }
-              },
-              [_vm._m(0)]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex flex-col" }, [
-          _c("p", { staticClass: "stack-xs" }, [_vm._v("Koppel een ...")]),
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "inline-group-s" }, [
-            _c(
-              "div",
-              {
-                staticClass: "left pointer",
-                on: {
-                  click: function($event) {
-                    _vm.addingModuleSectionAfter(_vm.section.sort)
-                  }
-                }
-              },
-              [_vm._m(1)]
-            ),
+          _c("div", { staticClass: "flex flex-col" }, [
+            _c("p", { staticClass: "stack-xs" }, [_vm._v("Koppel een ...")]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "left pointer",
-                on: {
-                  click: function($event) {
-                    _vm.addingPageSectionAfter(_vm.section.sort)
+            _c("div", { staticClass: "inline-group-s" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "float-left cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.addingModuleSectionAfter(_vm.section.sort)
+                    }
                   }
-                }
-              },
-              [_vm._m(2)]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "left pointer",
-                on: {
-                  click: function($event) {
-                    _vm.addingPageSetSectionAfter(_vm.section.sort)
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "label label-o--secondary center-y",
+                      attrs: { title: "vast blok selecteren" }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { width: "18", height: "18" }
+                        },
+                        [_c("use", { attrs: { "xlink:href": "#layout" } })]
+                      ),
+                      _vm._v(
+                        "\n                        Module\n                    "
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "float-left cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.addingPageSectionAfter(_vm.section.sort)
+                    }
                   }
-                }
-              },
-              [_vm._m(3)]
-            )
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "label label-o--secondary center-y",
+                      attrs: { title: "pagina selecteren" }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { width: "18", height: "18" }
+                        },
+                        [_c("use", { attrs: { "xlink:href": "#layout" } })]
+                      ),
+                      _vm._v(
+                        "\n                        Pagina\n                    "
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "float-left cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.addingPageSetSectionAfter(_vm.section.sort)
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "label label-o--secondary center-y",
+                      attrs: { title: "pagina groep selecteren" }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "mr-2",
+                          attrs: { width: "18", height: "18" }
+                        },
+                        [_c("use", { attrs: { "xlink:href": "#layout" } })]
+                      ),
+                      _vm._v(
+                        "\n                        Paginagroep\n                    "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
-        ])
-      ]
-    )
-  ])
+        ]
+      )
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      {
-        staticClass: "label label-o--secondary center-y",
-        attrs: { title: "tekst / afbeelding toevoegen" }
-      },
-      [
-        _c("i", { staticClass: "icon icon-align-left" }),
-        _vm._v("\n                        Tekstblok\n                    ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      {
-        staticClass: "label label-o--secondary center-y",
-        attrs: { title: "vast blok selecteren" }
-      },
-      [
-        _c("i", { staticClass: "icon icon-layout" }),
-        _vm._v("\n                        Module\n                    ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      {
-        staticClass: "label label-o--secondary center-y",
-        attrs: { title: "pagina selecteren" }
-      },
-      [
-        _c("i", { staticClass: "icon icon-layout" }),
-        _vm._v("\n                        Pagina\n                    ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      {
-        staticClass: "label label-o--secondary center-y",
-        attrs: { title: "pagina groep selecteren" }
-      },
-      [
-        _c("i", { staticClass: "icon icon-layout" }),
-        _vm._v("\n                        Paginagroep\n                    ")
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -32568,7 +32640,7 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn --remove-padding inline-s",
+              staticClass: "btn p-0 inline-s",
               attrs: { type: "button" },
               on: {
                 mousedown: function($event) {
@@ -32579,7 +32651,9 @@ var render = function() {
             },
             [
               _vm._t("modalBtn", [
-                _c("span", { staticClass: "icon icon-trash" }),
+                _c("svg", { attrs: { width: "18", height: "18" } }, [
+                  _c("use", { attrs: { "xlink:href": "#trash" } })
+                ]),
                 _vm._v(" "),
                 _c("span", [_vm._v("Verwijder")])
               ])
@@ -32592,7 +32666,7 @@ var render = function() {
         ? _c(
             "button",
             {
-              staticClass: "btn --remove-padding inline-s",
+              staticClass: "btn p-0 inline-s",
               on: {
                 mousedown: function($event) {
                   $event.preventDefault()
@@ -32602,7 +32676,9 @@ var render = function() {
             },
             [
               _vm._t("removeBtn", [
-                _c("span", { staticClass: "icon icon-trash" })
+                _c("svg", { attrs: { width: "18", height: "18" } }, [
+                  _c("use", { attrs: { "xlink:href": "#trash" } })
+                ])
               ])
             ],
             2
@@ -32630,7 +32706,11 @@ var render = function() {
                 }
               },
               [
-                _c("span", { staticClass: "icon icon-trash inline-xs" }),
+                _c(
+                  "svg",
+                  { staticClass: "mr-1", attrs: { width: "18", height: "18" } },
+                  [_c("use", { attrs: { "xlink:href": "#x" } })]
+                ),
                 _vm._v("Definitief verwijderen\n            ")
               ]
             ),
@@ -32682,7 +32762,13 @@ var render = function() {
     ? _c(
         "div",
         [
-          _vm._t("icon", [_c("i", { staticClass: "icon icon-alert-circle" })]),
+          _vm._t("icon", [
+            _c("span", [
+              _c("svg", { attrs: { width: "18", height: "18" } }, [
+                _c("use", { attrs: { "xlink:href": "#alert-circle" } })
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("span", {
             domProps: { textContent: _vm._s(_vm.localErrors.get(_vm.field)) }
@@ -32718,13 +32804,13 @@ var render = function() {
     "section",
     {
       staticClass:
-        "{section.id} border-l-2 bg-white border-primary-500 stack block inset relative rounded-r",
+        "{section.id} border-l-2 bg-grey-100 border-primary-500 stack block inset relative rounded-r",
       on: { mouseenter: _vm.mouseEnter, mouseleave: _vm.mouseLeave }
     },
     [
       _vm.title
         ? _c("h3", {
-            staticClass: "pagebuilder-section-title",
+            staticClass: "text-primary-500 mb-0 pb-2 font-normal",
             domProps: { textContent: _vm._s(_vm.title) }
           })
         : _vm._e(),
@@ -32754,32 +32840,45 @@ var render = function() {
       _vm._v(" "),
       _c("pagebuilder-menu", { attrs: { section: _vm.section } }),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "module-icons-left" }, [
+        _c(
+          "span",
+          {
+            staticClass:
+              "grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move"
+          },
+          [
+            _c("svg", { attrs: { width: "18", height: "18" } }, [
+              _c("use", { attrs: { "xlink:href": "#menu" } })
+            ])
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "module-icons-right" }, [
-        _c("span", {
-          staticClass: "delete-button icon icon-trash inset-xs",
-          on: {
-            click: function($event) {
-              _vm.removeThisSection(_vm.section.sort)
+        _c(
+          "span",
+          {
+            staticClass:
+              "delete-button inset-xs flex justify-center text-error text-center my-2 cursor-pointer",
+            on: {
+              click: function($event) {
+                _vm.removeThisSection(_vm.section.sort)
+              }
             }
-          }
-        })
+          },
+          [
+            _c("svg", { attrs: { width: "18", height: "18" } }, [
+              _c("use", { attrs: { "xlink:href": "#trash" } })
+            ])
+          ]
+        )
       ])
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "module-icons-left" }, [
-      _c("span", { staticClass: "grip-button icon icon-menu inset-xs" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -32804,13 +32903,14 @@ var render = function() {
   return _c(
     "section",
     {
-      staticClass: "section-item stack block inset relative",
+      staticClass:
+        "{section.id} border-l-2 bg-grey-100 border-primary-500 stack block inset relative rounded-r",
       on: { mouseenter: _vm.mouseEnter, mouseleave: _vm.mouseLeave }
     },
     [
       _vm.title
         ? _c("h3", {
-            staticClass: "pagebuilder-section-title",
+            staticClass: "text-primary-500 mb-0 pb-2 font-normal",
             domProps: { textContent: _vm._s(_vm.title) }
           })
         : _vm._e(),
@@ -32921,32 +33021,45 @@ var render = function() {
       _vm._v(" "),
       _c("pagebuilder-menu", { attrs: { section: _vm.section } }),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "module-icons-left" }, [
+        _c(
+          "span",
+          {
+            staticClass:
+              "grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move"
+          },
+          [
+            _c("svg", { attrs: { width: "18", height: "18" } }, [
+              _c("use", { attrs: { "xlink:href": "#menu" } })
+            ])
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "module-icons-right" }, [
-        _c("span", {
-          staticClass: "delete-button icon icon-trash inset-xs",
-          on: {
-            click: function($event) {
-              _vm.removeThisSection(_vm.section.sort)
+        _c(
+          "span",
+          {
+            staticClass:
+              "delete-button inset-xs flex justify-center text-error text-center my-2 cursor-pointer",
+            on: {
+              click: function($event) {
+                _vm.removeThisSection(_vm.section.sort)
+              }
             }
-          }
-        })
+          },
+          [
+            _c("svg", { attrs: { width: "18", height: "18" } }, [
+              _c("use", { attrs: { "xlink:href": "#trash" } })
+            ])
+          ]
+        )
       ])
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "module-icons-left" }, [
-      _c("span", { staticClass: "grip-button icon icon-menu inset-xs" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 if (false) {
@@ -32993,10 +33106,12 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("div", { staticClass: "modal-content" }, [
-            _c("div", { staticClass: "panel panel-default" }, [
+            _c("div", { staticClass: "panel" }, [
               _c("div", { staticClass: "inset" }, [
                 _c("div", { staticClass: "modal-header" }, [
-                  _c("h3", [_vm._v(_vm._s(_vm.title))])
+                  _c("h3", { staticClass: "uppercase" }, [
+                    _vm._v(_vm._s(_vm.title))
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [_vm._t("default")], 2)
@@ -33007,7 +33122,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "modal-footer inset center-y inline-group bg-grey-lightest"
+                        "modal-footer inset center-y inline-group bg-grey-100"
                     },
                     [
                       _vm._t("footer", [
@@ -33033,7 +33148,11 @@ var render = function() {
           _c(
             "button",
             { staticClass: "modal-close", on: { click: _vm.close } },
-            [_c("i", { staticClass: "icon icon-x" })]
+            [
+              _c("svg", { attrs: { width: "18", height: "18" } }, [
+                _c("use", { attrs: { "xlink:href": "#x" } })
+              ])
+            ]
           )
         ]
       )
@@ -33069,10 +33188,7 @@ var render = function() {
       _vm.sections.length < 1
         ? _c(
             "div",
-            {
-              staticClass: "relative stack",
-              staticStyle: { "border-left": "3px solid transparent" }
-            },
+            { staticClass: "relative stack border-l-3 border-transparent" },
             [
               _c(
                 "span",
@@ -33099,8 +33215,8 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "pagebuilder-menu-wrapper relative stack inset-s",
-          staticStyle: { "border-left": "3px solid transparent" }
+          staticClass:
+            "pagebuilder-menu-wrapper relative stack border-l-3 border-transparent inset-s"
         },
         [_c("pagebuilder-menu", { attrs: { section: { sort: -1 } } })],
         1
@@ -33128,7 +33244,7 @@ var render = function() {
             [
               section.type === "module"
                 ? _c("module-section", {
-                    staticClass: "stack item",
+                    staticClass: "stack",
                     class: section.type,
                     attrs: {
                       sectionKey: "modules",
@@ -33142,7 +33258,7 @@ var render = function() {
               _vm._v(" "),
               section.type === "page"
                 ? _c("module-section", {
-                    staticClass: "stack item",
+                    staticClass: "stack",
                     class: section.type,
                     attrs: {
                       sectionKey: "modules",
@@ -33156,7 +33272,7 @@ var render = function() {
               _vm._v(" "),
               section.type === "pageset"
                 ? _c("module-section", {
-                    staticClass: "stack item",
+                    staticClass: "stack",
                     class: section.type,
                     attrs: {
                       sectionKey: "pagesets",
@@ -33170,7 +33286,7 @@ var render = function() {
               _vm._v(" "),
               section.type === "text"
                 ? _c("text-section", {
-                    staticClass: "stack item",
+                    staticClass: "stack",
                     class: section.type,
                     attrs: {
                       section: section,
@@ -33184,7 +33300,7 @@ var render = function() {
               _vm._v(" "),
               section.type === "pagetitle"
                 ? _c("text-section", {
-                    staticClass: "stack item",
+                    staticClass: "stack",
                     class: section.type,
                     attrs: {
                       section: section,
@@ -33271,8 +33387,7 @@ var render = function() {
             ? _c(
                 "ul",
                 {
-                  staticClass:
-                    "flex w-full border-b border-grey-200 inline-group-s",
+                  staticClass: "flex w-full border-b border-grey-200 mb-6",
                   attrs: { role: "tablist" }
                 },
                 _vm._l(_vm.tabs, function(tab) {
@@ -33284,7 +33399,7 @@ var render = function() {
                         "tabname",
                         [
                           _c("a", {
-                            staticClass: "block squished-s --bottomline",
+                            staticClass: "block squished --bottomline",
                             class: { active: tab.isActive },
                             attrs: {
                               href: tab.hash,
@@ -33313,7 +33428,7 @@ var render = function() {
         { tabs: _vm.tabs }
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "clearfix" }, [_vm._t("default")], 2)
+      _c("div", [_vm._t("default")], 2)
     ],
     2
   )

@@ -1,13 +1,16 @@
 <template>
     <transition name="modal" mode="in-out" appear>
         <div v-show="isVisible" :class="typeclass">
-            <div class="alert__copy inline">
+            <div class="inline">
                 <slot></slot>
             </div>
-            <span class="alert__btn icon icon-x" @click="isVisible = false"></span>
+            <span class="alert__btn" @click="isVisible = false">
+            	<svg width="18" height="18"><use xlink:href="#x"/></svg>
+			</span>
         </div>
     </transition>
 </template>
+
 <script>
     export default {
 	    props: {

@@ -1,7 +1,7 @@
 .navigation-list {
     @apply m-0;
-    li {
-        @apply leading-none text-grey-500;
+    li:not(.no-hover) {
+        @apply text-grey-500;
         @extend .squished, .--bottomline;
 
         > a:not(.label) {
@@ -36,5 +36,24 @@
             width: 30%;
             height: 2px;
         }
+    }
+}
+
+.--raised {
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,0.05), 0 4px 25px 0px rgba(0,0,0,0.06), 0 8px 10px -5px rgba(0,0,0,0.06);
+}
+
+.--link-with-bg {
+    @apply whitespace-no-wrap rounded;
+    &:hover {
+        @apply text-primary-600 bg-primary-300;
+    }
+}
+
+.clearfix {
+    &:before,
+    &:after{
+        content: " ";
+        display: table;
     }
 }

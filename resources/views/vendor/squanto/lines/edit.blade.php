@@ -36,7 +36,7 @@
         <section class="formgroup">
             <div class="row gutter-xl">
                 <div class="formgroup-info column-5">
-                    <h2 class="formgroup-label">Key</h2>
+                    <h2>Key</h2>
                     <p>
                         <span class="subtle">Unique identifier for usage in your view files. e.g. about.button.label or homepage.intro.text. The first segment of this key determines the page where this element will be stored under.</span>
                     </p>
@@ -54,7 +54,7 @@
         <section class="formgroup">
             <div class="row gutter-xl">
                 <div class="formgroup-info column-5">
-                    <h2 class="formgroup-label">Label</h2>
+                    <h2>Label</h2>
                     <p>
                         <span class="subtle">Benaming van deze vertaling en optionele extra omschrijving van de vertaallijn. (enkel zichtbaar in admin)</span>
                     </p>
@@ -73,7 +73,7 @@
         <section class="formgroup">
             <div class="row gutter-xl">
                 <div class="formgroup-info column-5">
-                    <h2 class="formgroup-label">Fieldtype</h2>
+                    <h2>Fieldtype</h2>
                     <p></p>
                 </div>
                 <div class="formgroup-input column-7">
@@ -102,7 +102,7 @@
         <section class="formgroup">
             <div class="row gutter-xl">
                 <div class="formgroup-info column-5">
-                    <h2 class="formgroup-label">Fieldtype</h2>
+                    <h2>Fieldtype</h2>
                     <p></p>
                 </div>
                 <div class="formgroup-input column-7">

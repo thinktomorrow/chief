@@ -1,0 +1,58 @@
+.alert {
+    @apply z-50 flex rounded-none border-none;
+  
+    &.alert__btn {
+        transition: 0.3s all ease;
+        @apply cursor-pointer rounded-none;
+    }
+
+    &:hover {
+      @apply cursor-pointer;
+      @extend .--raised;
+    }
+
+}
+  
+$alertColors: (
+    primary: #13C6A6,
+    secondary: #4360A8,
+    success: #2fca74,
+    warning: #f5b848,
+    error: #ed4d4d,
+    information: #2083fe,
+);
+
+  
+@each $alert, $color in $alertColors {
+
+    .alert--#{$alert}{
+        background-color: $color;
+        @apply text-white;
+    
+        a {
+            @apply text-white no-underline;
+        }
+  
+        .alert__btn {
+            @apply text-white;
+
+            &:hover {
+                color: darken($color, 30%);
+            }
+        }
+    }
+
+    .alert-o--#{$alert}{
+        color: $color;
+        border: 1px solid darken($color, 10%);
+        @apply bg-white;
+
+        .alert__btn {
+            color:  $color;
+            &:hover {
+                color: darken($color, 30%);
+            }
+        }
+    }
+  
+}

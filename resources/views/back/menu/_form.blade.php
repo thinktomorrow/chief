@@ -31,7 +31,7 @@
 <section class="formgroup">
     <div class="row gutter-l">
         <div class="formgroup-info column-4">
-            <h2 class="formgroup-label">Link</h2>
+            <h2>Link</h2>
         </div>
         <div class="formgroup-input column-8">
 

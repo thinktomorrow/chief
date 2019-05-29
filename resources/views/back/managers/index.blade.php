@@ -25,7 +25,7 @@
     @endif
 
     @if((($managers->isEmpty() && !collect(request()->query())->isEmpty()) || (!$managers->isEmpty())) && (!$modelManager::filters()->isEmpty() || $modelManager::sections()->has('sidebar')))
-        <div class="row gutter">
+        <div class="row gutter stack">
             <div class="column-9">
                 <div class="row gutter-s">
                     @foreach($managers as $manager)

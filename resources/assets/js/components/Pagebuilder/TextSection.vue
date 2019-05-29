@@ -1,6 +1,7 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="section-item stack block inset relative">
-        <h3 class="pagebuilder-section-title" v-if="title" v-text="title"></h3>
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="{section.id} border-l-2 bg-grey-100 border-primary-500 stack block inset relative rounded-r">
+        
+        <h3 class="text-primary-500 mb-0 pb-2 font-normal" v-if="title" v-text="title"></h3>
 
         <div class="to-minimize">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
@@ -39,11 +40,15 @@
         <pagebuilder-menu :section="section"></pagebuilder-menu>
 
         <div class="module-icons-left">
-            <span class="grip-button icon icon-menu inset-xs"></span>
+            <span class="grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move">
+                <svg width="18" height="18"><use xlink:href="#menu"/></svg>
+            </span>
         </div>
 
         <div class="module-icons-right">
-            <span class="delete-button icon icon-trash inset-xs" @click="removeThisSection(section.sort)"></span>
+            <span class="delete-button inset-xs flex justify-center text-error text-center my-2 cursor-pointer" @click="removeThisSection(section.sort)">
+                <svg width="18" height="18"><use xlink:href="#trash"/></svg>
+            </span>
         </div>
 
     </section>

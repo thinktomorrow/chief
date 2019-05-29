@@ -7,6 +7,10 @@ h1, h1:not(:last-child) {
     @apply text-3xl mb-2;
 }
 
+h1.mb-0, h2.mb-0, h3.mb-0 {
+    @apply mb-0;
+}
+
 h1, h2, h3, h4, h5 {
     @apply font-bold text-grey-700;
 }

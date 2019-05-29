@@ -28,22 +28,22 @@
             definedlinks: '{{ route('chief.api.internal-links') }}',
             customClasses: [
                 {
-                    title: '<span class="icon icon-droplet"></span> link als knop',
+                    title: '<span><svg width="18" height="18"><use xlink:href="#droplet"/></svg></span> link als knop',
                     'class': 'btn btn-default',
                     tags: ['a'],
                 },
                 {
-                    title: '<span class="icon icon-droplet"></span> link als primaire knop',
+                    title: '<span><svg width="18" height="18"><use xlink:href="#droplet"/></svg></span> link als primaire knop',
                     'class': 'btn btn-primary',
                     tags: ['a'],
                 },
                 {
-                    title: '<span class="icon icon-droplet"></span> link as secundaire knop',
+                    title: '<span><svg width="18" height="18"><use xlink:href="#droplet"/></svg></span> link as secundaire knop',
                     'class': 'btn btn-secondary',
                     tags: ['a'],
                 },
                 {
-                    title: '<span class="icon icon-droplet"></span> geen knop weergave',
+                    title: '<span><svg width="18" height="18"><use xlink:href="#droplet"/></svg></span> geen knop weergave',
                     'class': '',
                     tags: ['a'],
                 },

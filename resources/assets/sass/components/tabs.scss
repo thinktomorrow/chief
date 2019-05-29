@@ -1,59 +1,33 @@
-// .tabs-nav {
-//     @apply border-b-1 border-primary-500;
-//     li {
-//         @apply inline-block;
-//     }
-// }
+.translation-tabs-nav {
+    a {
+        @apply cursor-pointer -mb-px inline-block rounded-none border border-grey-200 no-underline;
 
-// .tabs {
-//     width:100%;
-//     display:inline-block;
-// }
-// .clearfix{
-//     &:before,
-//     &:after{
-//         content: " ";
-//         display: table;
-//     }
-// }
+        .flag {
+            @apply opacity-25;
+        }
+        &:hover {
+            background: config('theme.colors.grey.50');
+            .flag{
+                @apply opacity-100;
+            }
+        }
+        .tabs-name{
+            @apply text-grey-300;
+        }
+        &.tab-error{
+            @apply border border-error text-error;
+        }
+    }
 
-// // THIS IS VERY SPECIFIC FOR TRANSLATION TAB NAVIGATION
-// .translation-tabs-nav {
-//     a{
-//         cursor: pointer;
-//         margin-bottom: -1px;
-//         display:inline-block;
-//         border-radius:none;
-//         border: 1px solid $color-border;
-//         text-decoration:none;
-//         .flag{
-//             opacity: 0.3;
-//         }
-//         &:hover {
-//             background: $color-body;
-//             .flag{
-//                 opacity: 1;
-//             }
-//         }
-//         .tabs-name{
-//             color: $color-subtle;
-//         }
-//         &.tab-error{
-//             border: 1px solid $color-error;
-//             color: $color-error;
-//         }
-//     }
-
-//     a.active, a.active:hover {
-//         background:$color-body;
-//         color:$color-emphasis;
-//         border: 1px solid $color-border;
-//         .flag{
-//             @extend .inline-s;
-//             opacity: 1;
-//         }
-//         .tabs-name{
-//             color: inherit;
-//         }
-//     }
-// }
+    a.active, a.active:hover {
+        background: config('theme.colors.grey.50');
+        @apply text-grey-500 border border-grey-200;
+        .flag{
+            @apply opacity-100;
+            @extend .inline-s;
+        }
+        .tabs-name{
+            color: inherit;
+        }
+    }
+}

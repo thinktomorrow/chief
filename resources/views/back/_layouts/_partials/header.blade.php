@@ -7,7 +7,7 @@
 
                     <h1>{!! $title ?? '' !!}</h1>
                     
-                    {!! isset($subtitle) ? '<div class="font-s">'.$subtitle.'</div>' : '' !!}
+                    {!! isset($subtitle) ? $subtitle : '' !!}
 
                     {{ $extra ??  '' }}
 

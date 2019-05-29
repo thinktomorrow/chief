@@ -1,8 +1,8 @@
 <div class="s-column-6 m-column-4 inset-xs">
-    <div class="row bg-white inset-s panel panel-default" style="height:100%">
+    <div class="row bg-white panel panel-default inset-s" style="height: 100%">
         <div class="column">
             @if($manager->can('edit'))
-                <a class="text-black bold" href="{{ $manager->route('edit') }}">
+                <a class="text-black font-bold" href="{{ $manager->route('edit') }}">
                     {!! $manager->details()->title !!}
                 </a>
             @else
@@ -11,7 +11,7 @@
 
             @if($manager->details()->subtitle)
                 <div>
-                    <span class="text-subtle">{!! $manager->details()->subtitle !!}</span>
+                    <span class="text-grey-300">{!! $manager->details()->subtitle !!}</span>
                 </div>
             @endif
             @if($manager->details()->intro)
@@ -20,9 +20,9 @@
                 </div>
             @endif
         </div>
-        <div class="column-4 text-right">
-            {!! $manager->details()->context !!}
+        <div class="column-4 text-right flex flex-col justify-between items-end">
             @include('chief::back.managers._partials.context-menu')
+            {!! $manager->details()->context !!}
         </div>
     </div>
 </div>

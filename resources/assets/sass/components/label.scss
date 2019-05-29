@@ -38,9 +38,9 @@ $labelColors: (
     }
 
     .label-o--#{$label}{
-      background-color: transparent;
       color: $color;
       border: 1px solid $color;
+      @apply bg-transparent;
     }
 
 }

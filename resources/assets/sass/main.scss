@@ -20,12 +20,17 @@
 // @import 'custom/pagebuilder';
 
 @import './general/typography.scss';
-@import './general/utilities.scss';
 
 @import './components/label.scss';
 @import './components/button.scss';
 @import './components/dropdown.scss';
 @import './components/tabs.scss';
+@import './components/pagebuilder.scss';
+@import './components/modal.scss';
+@import './components/alert.scss';
+@import './components/form.scss';
+@import './components/redactor.scss';
+@import './components/panel.scss';
 
 @tailwind utilities;
 
@@ -36,4 +41,6 @@
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';
 @import '../../../node_modules/warpaint/src/sass/_space/responsive';
 @import '../../../node_modules/warpaint/src/sass/_base/states';
+
+@import './general/utilities.scss';
 

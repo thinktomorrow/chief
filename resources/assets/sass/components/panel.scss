@@ -1,0 +1,35 @@
+.panel {
+    @apply border border-grey-100 rounded;
+    .card-image {
+        height: 250px;
+        @apply w-full bg-center bg-cover bg-no-repeat;
+    }
+    &.panel-card{
+        max-width: 500px;
+    }
+}
+
+$panelColors: (
+    primary: #13C6A6,
+    secondary: #4360A8,
+    success: #2fca74,
+    warning: #f5b848,
+    error: #ed4d4d,
+    information: #2083fe,
+);
+
+@each $panel, $color in $panelColors {
+    .panel-#{$panel}{
+        border-color: rgba($color, 0.75);
+        .panel-footer,
+        .panel-header{
+            background-color: rgba($color, 0.75);
+            @apply text-white;
+        }
+        &.panel--raised{
+            box-shadow: 0 16px 26px -10px rgba($color, 0.56),
+            0 4px 25px 0px rgba(black, 0.12),
+            0 8px 10px -5px rgba($color, 0.2)
+        }
+    }
+}

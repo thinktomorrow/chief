@@ -27,7 +27,7 @@
         @include('squanto::_formtabs')
 
         <!-- hide form button but keep it so input enters still work for submission of form -->
-        <button class="btn btn-success --hidden" type="submit"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
+        <button class="btn btn-success hidden" type="submit"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
 
     </form>
 

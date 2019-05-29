@@ -1,0 +1,102 @@
+.modal {
+    transition: opacity .4s ease;
+    @apply fixed bottom-0 left-0 right-0 top-0 flex justify-center items-center overflow-hidden z-20;
+}
+
+.modal-backdrop {
+    background-color: rgba(0,0,0,.1);
+    @apply absolute bottom-0 left-0 right-0 top-0;
+}
+
+.modal-content {
+    max-height: calc(100vh - 2rem);
+    max-width: 640px;
+    z-index: 1;
+    text-align: left;
+    @apply mx-auto my-0;
+
+    .panel{
+        transition: all .3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+        @apply bg-white;
+    }
+}
+
+.modal-close {
+    right: 20px;
+    top: 20px;
+    width: 40px;
+    height: 40px;
+    transition: transform 200ms cubic-bezier(.694, .0482, .335, 1);
+    @apply bg-transparent select-none border-none rounded-full cursor-pointer inline-block outline-none fixed text-white;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.sidebar {
+
+    .modal-content {
+        max-height: none;
+        @apply my-0 ml-auto -mr-px h-full 
+    }
+
+    .panel {
+        @apply float-right min-h-full rounded-none;
+    }
+
+    .modal-close {
+        left: 20px;
+        @apply right-auto;
+    }
+}
+
+/**
+* Automatically applied by vue by the <transition="modal"> wrapper
+*/
+.modal-enter, .modal-leave-active{
+    @apply opacity-0;
+}
+
+.modal-enter .panel,
+.modal-leave-active .panel{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+/**
+* Automatically applied by vue by the <transition="modal"> wrapper
+*/
+.sidebar-enter, .sidebar-leave-active{
+    @apply opacity-0;
+}
+
+.sidebar-enter .panel,
+.sidebar-leave .panel{
+    transform: translate3d(100%, 0, 0);
+}
+
+.sidebar-enter-active .panel,
+.sidebar-leave-active .panel{
+    transform: translate3d(100%, 0, 0);
+}
+
+.sidebar-large{
+
+    .modal-content{
+        width: 50%;
+        min-width: 350px;
+    }
+
+    .panel{
+        @apply w-full;
+    }
+}
+
+.sidebar-topbar{
+    width: 51%;
+    margin-left: -11px;
+    z-index: 1;
+    @apply fixed top-0 p-3 border border-grey-100 bg-white
+}

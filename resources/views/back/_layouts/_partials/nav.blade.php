@@ -34,7 +34,7 @@
 
             <ul class="navigation-list flex float-right items-center h-full">
                 @role('developer')
-                    <li><a class="label label-secondary" target="_blank" href="/spirit">Spirit</a></li>
+                    <li class="no-hover px-6"><a class="label label-secondary" target="_blank" href="/spirit">Spirit</a></li>
                 @endrole
                 @if(\Illuminate\Support\Facades\Gate::check('view-user') || \Illuminate\Support\Facades\Gate::check('view-role') || \Illuminate\Support\Facades\Gate::check('view-audit') || \Illuminate\Support\Facades\Gate::check('update-setting'))
                     <li>

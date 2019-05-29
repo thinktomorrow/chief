@@ -14,7 +14,7 @@
         <section class="formgroup">
             <div class="row gutter-xl">
                 <div class="formgroup-info column-5">
-                    <h2 class="formgroup-label">Key</h2>
+                    <h2>Key</h2>
                         <span class="subtle">Unique identifier for usage in your view files. e.g. about.button.label or homepage.intro.text. The first segment of this key determines the page where this element will be stored under.</span>
                 </div>
                 <div class="formgroup-input column-7">
@@ -32,7 +32,7 @@
                 <section class="formgroup">
                     <div class="row gutter-xl">
                         <div class="formgroup-info column-5">
-                            <h2 class="formgroup-label">{{ $locale }} value</h2>
+                            <h2>{{ $locale }} value</h2>
                         </div>
                         <div class="formgroup-input column-7">
 
