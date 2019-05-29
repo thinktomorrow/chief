@@ -12,9 +12,9 @@ trait ManagesMedia
 {
     public function uploadMedia(Fields $fields, Request $request)
     {
-        $files = array_merge($request->get('files', []), $request->file('files', []));
+        $files = array_merge_recursive($request->get('files', []), $request->file('files', []));
         $filesOrder = $request->get('filesOrder', []);
-
+        
         app(UploadMedia::class)->fromUploadComponent($this->model, $files, $filesOrder);
     }
 
