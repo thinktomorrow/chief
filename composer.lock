@@ -2244,16 +2244,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.5.0",
+            "version": "3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "3bee85adf8e19e3bc0cafab56599a442014a9169"
+                "reference": "50d20d27a8cd052c60e04149f73e309f2c23a4d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/3bee85adf8e19e3bc0cafab56599a442014a9169",
-                "reference": "3bee85adf8e19e3bc0cafab56599a442014a9169",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/50d20d27a8cd052c60e04149f73e309f2c23a4d9",
+                "reference": "50d20d27a8cd052c60e04149f73e309f2c23a4d9",
                 "shasum": ""
             },
             "require": {
@@ -2312,7 +2312,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-04-15T11:01:50+00:00"
+            "time": "2019-05-28T08:22:16+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -3226,7 +3226,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
