@@ -1,5 +1,6 @@
 let mix = require('laravel-mix');
 const tailwindcss = require('tailwindcss')
+require('laravel-mix-purgecss');
 
 mix.setPublicPath(path.normalize('public/chief-assets/back'))
 	.js('resources/assets/js/main.js', 'public/chief-assets/back/js')
@@ -16,6 +17,15 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 			tailwindcss('./resources/assets/sass/tailwind.js'),
 		]
 	})
+
+    .purgeCss({
+        folders: [
+            'resources/assets/',
+            'resources/views/',
+            'app',
+            'src'
+        ],
+    })
 
     /**
 	 * Redactor wysiswyg

@@ -3,6 +3,8 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Fixed: remove own module on page now works.
+- Fixed: apply permissions on archive/publish buttons
+- Fixed: removing document and uploading works at the same time.
 
 ## 0.2.13 - 2019-05-23
 - Fixed: Find published page where the slug matches one of the application base url segments. 
