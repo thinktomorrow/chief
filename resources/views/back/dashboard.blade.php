@@ -24,8 +24,10 @@
                         <div class="panel panel-default --raised bg-white">
                             <div class="panel-body inset">
                                 <div class="stack">
-                                    <h1 class="--remove-margin">{{ $manager->findAllManaged()->count() }}</h1>
-                                    <p>{{ $manager->details()->plural }}</p>
+                                    <div class="flex items-center mb-4">
+                                        <h1 class="mb-0 mr-2">{{ $manager->findAllManaged()->count() }}</h1>
+                                        <p>{{ $manager->details()->plural }}</p>
+                                    </div>
                                     <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                                 </div>
                             </div>

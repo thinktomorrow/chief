@@ -20,7 +20,7 @@
                 </div>
             @endif
         </div>
-        <div class="column-4 text-right flex flex-col justify-between items-end">
+        <div class="column-3 text-right flex flex-col justify-between items-end">
             @include('chief::back.managers._partials.context-menu')
             {!! $manager->details()->context !!}
         </div>

@@ -2,10 +2,19 @@
     $page = $manager->model();
 ?>
 
+<section class="row formgroup stack gutter-l">
+        <div class="column-4">
+            <h2 class="uppercase">Eigen modules</h2>
+        </div>
+    
+        <p class="column">
+            Hier vind je alle modules (blokken) die specifiek zijn voor deze pagina. 
+            Je kan deze op de pagina plaatsen door ze te selecteren in de <a href="#pagina">pagina tab</a>
+        </p>
+</section>
+
 <div class="stack">
-    <h2>Eigen modules</h2>
-    <p>Hier vind je alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina plaatsen door
-        ze te selecteren in de <a href="#pagina">pagina tab</a></p>
+    
     @if($page->modules->isEmpty())
         <div class="center-center stack-xl">
             <div>
@@ -32,6 +41,7 @@
             </a>
         </div>
     @endif
+
 </div>
 
 @push('portals')

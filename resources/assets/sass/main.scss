@@ -20,6 +20,7 @@
 // @import 'custom/pagebuilder';
 
 @import './general/typography.scss';
+@import './general/animations.scss';
 
 @import './components/label.scss';
 @import './components/button.scss';
@@ -31,6 +32,7 @@
 @import './components/form.scss';
 @import './components/redactor.scss';
 @import './components/panel.scss';
+@import './components/translation.scss';
 
 @tailwind utilities;
 
