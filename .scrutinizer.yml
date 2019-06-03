@@ -26,6 +26,7 @@ tools:
 build:
   environment:
     php: 7.2.13
+    node: 0.8.9
   nodes:
     analysis:
       tests:
