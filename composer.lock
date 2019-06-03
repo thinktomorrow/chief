@@ -2244,16 +2244,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.6.0",
+            "version": "3.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "50d20d27a8cd052c60e04149f73e309f2c23a4d9"
+                "reference": "c1113b5eb9235ff465e6108f4d911da8fcbbbfaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/50d20d27a8cd052c60e04149f73e309f2c23a4d9",
-                "reference": "50d20d27a8cd052c60e04149f73e309f2c23a4d9",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/c1113b5eb9235ff465e6108f4d911da8fcbbbfaf",
+                "reference": "c1113b5eb9235ff465e6108f4d911da8fcbbbfaf",
                 "shasum": ""
             },
             "require": {
@@ -2312,7 +2312,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-05-28T08:22:16+00:00"
+            "time": "2019-05-29T06:52:22+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
