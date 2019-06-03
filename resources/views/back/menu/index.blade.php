@@ -19,7 +19,7 @@
                 <div class="column-3 text-right">
                     <options-dropdown class="inline-block">
                         <div class="inset-s" v-cloak>
-                            <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="block squished-s --link-with-bg">Beheren</a>
+                            <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="block squished --link-with-bg">Beheren</a>
                         </div>
                     </options-dropdown>
                 </div>

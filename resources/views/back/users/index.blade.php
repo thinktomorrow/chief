@@ -33,7 +33,7 @@
                         <div style="margin-left:auto;">
                             <options-dropdown class="inline-block">
                                 <div class="inset-s" v-cloak>
-                                    <a class="block squished-s --link-with-bg" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
+                                    <a class="block squished --link-with-bg" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
                                 </div>
                             </options-dropdown>
                         </div>
