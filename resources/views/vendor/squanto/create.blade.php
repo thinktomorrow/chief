@@ -47,7 +47,7 @@
 
             <div class="stack text-right inline-group-s">
                 <a class="subtle" id="remove-faq-toggle" href="{{ URL::previous() }}"> cancel</a>
-                <button class="btn btn-success btn-lg" type="submit"> Add translation line</button>
+                <button class="btn btn-primary btn-lg" type="submit"> Add translation line</button>
             </div>
     </form>
 

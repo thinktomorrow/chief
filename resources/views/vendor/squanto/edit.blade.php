@@ -16,7 +16,7 @@
     @can('create-squanto')
         <a href="{{ route('squanto.lines.create', $page->id) }}" class="btn btn-default"><i class="fa fa-plus"></i> add new line</a>
     @endcan
-    <button data-submit-form="translationForm" class="btn btn-success"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
+    <button data-submit-form="translationForm" class="btn btn-primary"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
 @endcomponent
 
 @section('content')
@@ -27,7 +27,7 @@
         @include('squanto::_formtabs')
 
         <!-- hide form button but keep it so input enters still work for submission of form -->
-        <button class="btn btn-success hidden" type="submit"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
+        <button class="btn btn-primary hidden" type="submit"><i class="fa fa-check"></i>Wijzigingen opslaan</button>
 
     </form>
 

@@ -137,7 +137,7 @@
                     Hou er rekening mee dat alle toegepaste vertalingen van de site zullen verdwijnen.
                 </p>
             </delete>
-            <button class="btn btn-success" type="submit"><i class="fa fa-check"></i> Bewaar aanpassingen</button>
+            <button class="btn btn-primary" type="submit"><i class="fa fa-check"></i> Bewaar aanpassingen</button>
         </div>
 
     </form>
