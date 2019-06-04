@@ -17,9 +17,20 @@ class UrlSlugFields extends Fields
         return $fields;
     }
 
-    public static function wildcardAliases(): array
+    public function toJson(): string
     {
+        return json_encode($this->toArray());
+    }
 
+    public function toArray(): array
+    {
+        $array = [];
+
+        foreach($this->all() as $field) {
+            $array[] = $field->toArray();
+        }
+
+        return $array;
     }
 
     /**

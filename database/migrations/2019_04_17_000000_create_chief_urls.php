@@ -41,10 +41,13 @@ class CreateChiefUrls extends Migration
     private function migrateSlugs()
     {
         foreach(Page::all() as $page){
+
+            $managedAsWildcard = (count($page->availableLocales()) < 2) ? 1 : 0;
+
             foreach($page->translations as $translation){
                 UrlRecord::create([
                     'locale'              => $translation->locale,
-                    'managed_as_wildcard' => 0,
+                    'managed_as_wildcard' => $managedAsWildcard,
                     'slug'                => $translation->slug,
                     'model_type'          => $page->getMorphClass(),
                     'model_id'            => $page->id,
