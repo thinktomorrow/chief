@@ -50,4 +50,16 @@ class UrlSlugField extends InputField
     {
         return ($this->baseUrlSegment && 0 === strpos($value, $this->baseUrlSegment));
     }
+
+    public function toArray(): array
+    {
+        return array_merge($this->values, [
+            'key' => $this->key,
+            'prepend' => $this->prepend,
+            'label' => $this->label,
+            'placeholder' => $this->placeholder,
+            'description' => $this->description,
+            'value' => $this->value(),
+        ]);
+    }
 }

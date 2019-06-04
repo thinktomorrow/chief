@@ -388,7 +388,7 @@ class PageBuildTest extends TestCase
         $module->page_id = $this->page->id;
         $module->save();
         $managers = app(Managers::class);
-        $pagebuilderField = $managers->findByKey('articles')->manage($this->page)->fields()->offsetGet(0);
+        $pagebuilderField = $managers->findByKey('articles')->manage($this->page)->fields()->first();
 
         $this->assertCount(1, $pagebuilderField->availableModules);
     }
