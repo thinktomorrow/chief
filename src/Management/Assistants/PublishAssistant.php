@@ -8,8 +8,8 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 
 class PublishAssistant implements Assistant
 {

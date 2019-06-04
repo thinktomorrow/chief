@@ -91,7 +91,7 @@ class PageManager extends AbstractManager implements Manager
                                          'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
                                      ])
                                      ->label('De titel van je '.$this->model->labelSingular ?? 'pagina')
-                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.<br> Deze zal gebruikt worden als interne titel en slug van de nieuwe pagina.'),
+                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),

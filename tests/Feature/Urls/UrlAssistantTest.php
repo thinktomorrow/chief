@@ -293,6 +293,27 @@ class UrlAssistantTest extends TestCase
     }
 
     /** @test */
+    function updating_wildcard_to_empty_string_removes_wildcards()
+    {
+        config()->set('translatable.locales',['nl','fr']);
+        $this->asAdmin()->post($this->manager->route('store'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => 'foobar-wildcard',
+            ],
+        ]);
+        $this->assertCount(2,UrlRecord::all());
+
+        $product = ProductFake::orderBy('id','DESC')->first();
+        $this->asAdmin()->put($this->manager->manage($product)->route('update'), [
+            'url-slugs' => [
+                UrlAssistant::WILDCARD => '',
+            ],
+        ]);
+
+        $this->assertCount(0,UrlRecord::all());
+    }
+
+    /** @test */
     function it_can_update_to_root_slug()
     {
         $this->createAndChangeUrlSlug('foobar','/');

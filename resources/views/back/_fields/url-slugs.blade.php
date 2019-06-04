@@ -1,12 +1,15 @@
 <section class="row formgroup stack gutter-l bg-white">
     <div class="column-4">
-        @if($field->label)
-            <h2 class="formgroup-label"><label for="{{ $key }}">{{ ucfirst($field->label) }}</label></h2>
-        @endif
-
-        @if($field->description)
-            <p>{!! $field->description !!}</p>
-        @endif
+        <h2 class="formgroup-label">Link naar de pagina</h2>
+        <p>Bepaal hier welke link er gebruikt wordt voor deze pagina.</p>
+        <p>
+            {{--@foreach($fields->urlPreviews() as $urlPreview)--}}
+                {{--<span>--}}
+                    {{--<span>{{ $urlPreview->prepend }}</span>--}}
+                    {{--<span>{{ $urlPreview->slug }}</span>--}}
+                {{--</span>--}}
+            {{--@endforeach--}}
+        </p>
     </div>
     <div class="formgroup-input column-8">
 
@@ -23,6 +26,10 @@
             @endif
         @endforeach
         <error class="caption text-warning" field="url-slugs" :errors="errors.all()"></error>
+
+        <h3>De gekozen link bestaat reeds!</h3>
+            <input type="text">
+        <button>aanpassen</button>
 
     </div>
 </section>

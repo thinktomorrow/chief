@@ -2,38 +2,46 @@
 
 namespace Thinktomorrow\Chief\Urls;
 
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 
 class UrlSlugFields extends Fields
 {
     public static function fromModel(ProvidesUrl $model)
     {
-        $fields = self::initEmptyFields($model);
+        $fields = self::initEmptyFields($model->availableLocales(), $model);
 
         self::fillWithExistingValues($model, $fields);
 
         return $fields;
     }
 
+    public static function wildcardAliases(): array
+    {
+
+    }
+
     /**
+     * @param array $locales
      * @param ProvidesUrl $model
      * @return UrlSlugFields
      */
-    private static function initEmptyFields(ProvidesUrl $model): self
+    private static function initEmptyFields(array $locales, ProvidesUrl $model): self
     {
-        $wildCardField = UrlSlugWildcardField::make('url-slugs.' . UrlAssistant::WILDCARD)
+        // Add wildcard field as default
+        $fields = new static([ $wildCardField = UrlSlugField::make('url-slugs.' . UrlAssistant::WILDCARD)
             ->name('url-slugs[' . UrlAssistant::WILDCARD . ']')
-            ->label('Default link')
-            ->description('Standaard link die altijd van toepassing is indien er geen taalspecifieke link voorhanden is. Laat deze leeg indien je deze link in bepaalde talen niet wilt beschikbaar maken.');
+            ->label('')
+        ]);
 
-        $fields = new static([$wildCardField]);
+        if (count($locales) < 2) return $fields;
 
-        if ( ! static::expectsLocalizedSlugs($model)) return $fields;
+        // Add description to wildcard field only when there are locale values.
+        $wildCardField->label('Default link')
+                      ->description('Standaard link die altijd van toepassing is indien er geen taalspecifieke link voorhanden is. Laat deze leeg indien je deze link in bepaalde talen niet wilt beschikbaar maken.');
 
-        foreach ($model->availableLocales() as $locale) {
+        foreach ($locales as $locale) {
             $fields['url-slugs.' . $locale] = UrlSlugField::make('url-slugs.' . $locale)
                                                 ->setBaseUrlSegment($model->baseUrlSegment($locale))
                                                 ->prepend($model->resolveUrl($locale, $model->baseUrlSegment($locale)) .'/')
@@ -42,17 +50,6 @@ class UrlSlugFields extends Fields
         }
 
         return $fields;
-    }
-
-    /**
-     * Does the admin need the option to define different url slugs per locale?
-     *
-     * @param TranslatableContract $model
-     * @return bool
-     */
-    private static function expectsLocalizedSlugs(TranslatableContract $model): bool
-    {
-        return ($model->availableLocales() > 1);
     }
 
     /**
