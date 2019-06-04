@@ -18,6 +18,7 @@ class UploadMediaTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        config()->set('app.fallback_locale', 'nl');
 
         $this->setUpDefaultAuthorization();
 
@@ -122,6 +123,35 @@ class UploadMediaTest extends TestCase
         // Assert Image is no longer there
         $this->assertFalse($page->fresh()->hasFile(MediaType::HERO));
         $this->assertCount(0, $page->fresh()->getAllFiles());
+    }
+
+    /** @test */
+    public function an_asset_can_be_removed_and_uploaded()
+    {
+
+        $page = Single::create();
+        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+
+        // Assert Image is there
+        $this->assertTrue($page->hasFile(MediaType::HERO));
+        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+
+        // Remove asset
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), [
+                'files' => [
+                    MediaType::HERO => [
+                        'delete' => [
+                            $page->getAllFiles(MediaType::HERO)->first()->id,
+                        ],
+                        'new' => [
+                            UploadedFile::fake()->image('image.png')
+                        ]
+                    ],
+                ],
+            ]);
+
+        $this->assertCount(1, $page->fresh()->getAllFiles());
     }
 
     /** @test */

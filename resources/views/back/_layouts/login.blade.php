@@ -17,7 +17,7 @@
     </section>
   </main>
   <footer>
-    <p>&copy; {{ date('Y') }} &bull; <a href="mailto:chief@thinktomorrow.be">chief@thinktomorrow.be</a> </p>
+    <p>&copy; {{ date('Y') }} &bull; <a href="mailto:chief@thinktomorrow.be">chief@thinktomorrow.be</a> &bull; <a href="https://getchief.be" target="_blank"> Chief SMS.</a> </p>
   </footer>
 
     @yield('admin.footerscripts')

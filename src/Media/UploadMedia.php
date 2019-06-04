@@ -26,12 +26,10 @@ class UploadMedia
 
         // We allow for more memory consumption because the gd decoding can require a lot of memory when parsing large images.
         ini_set('memory_limit', '256M');
-
         foreach ($files_by_type as $type => $files) {
             $this->validateFileUploads($files);
 
             $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
-
             $this->addFiles($model, $type, $files, $files_order);
             $this->replaceFiles($model, $files);
             $this->removeFiles($model, $files);
@@ -116,7 +114,9 @@ class UploadMedia
     private function removeFiles(HasMedia $model, array $files)
     {
         if (isset($files['delete']) && is_array($files['delete']) && !empty($files['delete'])) {
-            $model->assets()->whereIn('id', $files['delete'])->delete();
+            foreach($model->assets()->whereIn('id', $files['delete'])->get() as $asset){
+                $asset->delete();
+            }
         }
     }
 
