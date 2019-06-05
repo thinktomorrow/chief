@@ -19,6 +19,9 @@
     <div class="row gutter-s">
         @foreach($page->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
             @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+            @push('portal')
+                @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+            @endpush
         @endforeach
     </div>
 
@@ -33,5 +36,4 @@
 
 @push('portals')
     @include('chief::back.modules._partials.create-modal', ['page_id' => $page->id])
-    @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
 @endpush
