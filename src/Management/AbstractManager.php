@@ -166,8 +166,10 @@ abstract class AbstractManager
     {
         $fields = $this->fields();
 
-        foreach($this->assistants() as $assistant){
-            if( ! method_exists($assistant, 'fields')) continue;
+        foreach ($this->assistants() as $assistant) {
+            if (! method_exists($assistant, 'fields')) {
+                continue;
+            }
 
             $fields = $fields->merge($assistant->fields());
         }

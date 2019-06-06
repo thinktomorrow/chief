@@ -73,8 +73,8 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     {
         $this->constructWithSnippets();
 
-        if(!isset($this->baseViewPath)) {
-            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.pages','pages');
+        if (!isset($this->baseViewPath)) {
+            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.pages', 'pages');
         }
 
         parent::__construct($attributes);
@@ -156,15 +156,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     /** @inheritdoc */
     public function url(string $locale = null): string
     {
-        if(!$locale) $locale = app()->getLocale();
+        if (!$locale) {
+            $locale = app()->getLocale();
+        }
 
-        try{
+        try {
             $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 
             return $this->resolveUrl($locale, [$slug]);
-        }
-        catch(UrlRecordNotFound $e)
-        {
+        } catch (UrlRecordNotFound $e) {
             return '';
         }
     }

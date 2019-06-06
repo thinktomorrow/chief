@@ -28,9 +28,8 @@ trait Viewable
     {
         try {
             return view($this->viewPath(), $this->viewData())->render();
-        }
-        catch(NotFoundView $e) {
-            if(config('thinktomorrow.chief.strict')){
+        } catch (NotFoundView $e) {
+            if (config('thinktomorrow.chief.strict')) {
                 throw $e;
             }
         }
@@ -56,13 +55,15 @@ trait Viewable
      */
     public function viewKey(): string
     {
-        if(property_exists($this, 'viewKey') && isset($this->viewKey)) return $this->viewKey;
+        if (property_exists($this, 'viewKey') && isset($this->viewKey)) {
+            return $this->viewKey;
+        }
 
-        if($this instanceof MorphableContract){
+        if ($this instanceof MorphableContract) {
             return $this->morphKey();
         }
 
-        if(config('thinktomorrow.chief.strict')) {
+        if (config('thinktomorrow.chief.strict')) {
             throw new NotFoundViewKey('Missing view key. Please add a [viewKey] property to ' . get_class($this));
         };
 

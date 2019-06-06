@@ -31,11 +31,13 @@ class UrlSlugField extends InputField
 
     private function rawSlugValue(): string
     {
-        if(!$this->urlRecord) return '';
+        if (!$this->urlRecord) {
+            return '';
+        }
 
         $slug = $this->urlRecord->slug;
 
-        if($this->startsWithBaseUrlSegment($slug)){
+        if ($this->startsWithBaseUrlSegment($slug)) {
             $slug = trim(substr($slug, strlen($this->baseUrlSegment)), '/');
         }
 

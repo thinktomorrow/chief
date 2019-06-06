@@ -25,7 +25,7 @@ class UrlAssistant implements Assistant
     {
         $this->manager  = $manager;
 
-        if(! $manager->model() instanceof ProvidesUrl){
+        if (! $manager->model() instanceof ProvidesUrl) {
             throw new \Exception('UrlAssistant requires the model interfaced by ' . ProvidesUrl::class . '.');
         }
 

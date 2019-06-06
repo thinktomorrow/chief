@@ -25,7 +25,7 @@ class UrlSlugFields extends Fields
     {
         $array = [];
 
-        foreach($this->all() as $field) {
+        foreach ($this->all() as $field) {
             $array[] = $field->toArray();
         }
 
@@ -63,8 +63,9 @@ class UrlSlugFields extends Fields
         })->sortBy('locale');
 
         foreach ($records as $record) {
-
-            if(!isset($fields['url-slugs.'.$record->locale])) continue;
+            if (!isset($fields['url-slugs.'.$record->locale])) {
+                continue;
+            }
 
             $fields['url-slugs.'.$record->locale]
                 ->setUrlRecord($record)

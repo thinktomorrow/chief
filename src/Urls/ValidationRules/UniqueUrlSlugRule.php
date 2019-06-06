@@ -27,7 +27,7 @@ class UniqueUrlSlugRule implements Rule
      */
     public function passes($attribute, $slugs)
     {
-        foreach($slugs as $locale => $slug) {
+        foreach ($slugs as $locale => $slug) {
             if (UrlRecord::existsIgnoringRedirects($slug, $locale, $this->ignoredModel)) {
                 session()->flash('unique_url_slug_validation', [
                     'locale'       => $locale,

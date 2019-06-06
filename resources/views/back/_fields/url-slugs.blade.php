@@ -31,11 +31,7 @@
             data: function(){
                 return {
                     fields: this.initialfields,
-                    showLocalizedFields: this.hasLocalizedValues(),
                 };
-            },
-            mounted: function(){
-
             },
             methods: {
                 check: _.debounce(function(field){
@@ -44,10 +40,7 @@
                     }).then(function({data}){
                         field.hint = data.hint;
                     });
-                }, 700),
-                hasLocalizedValues: function(){
-                    return false;
-                }
+                }, 600)
             }
 
         });

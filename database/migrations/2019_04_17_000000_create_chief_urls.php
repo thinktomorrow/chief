@@ -39,8 +39,8 @@ class CreateChiefUrls extends Migration
 
     private function migrateSlugs()
     {
-        foreach(Page::all() as $page){
-            foreach($page->translations as $translation){
+        foreach (Page::all() as $page) {
+            foreach ($page->translations as $translation) {
                 UrlRecord::create([
                     'locale'              => $translation->locale,
                     'slug'                => $translation->slug,

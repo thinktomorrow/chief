@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Common\Helpers;
 
 class Memoize
 {
-    static $cache = [];
+    public static $cache = [];
 
     private $baseKey;
 
@@ -16,9 +16,9 @@ class Memoize
     public function run(\Closure $closure, array $parameters = [])
     {
         // construct cachekey
-        $cachekey = $this->baseKey.':'.md5(implode('',$parameters));
+        $cachekey = $this->baseKey.':'.md5(implode('', $parameters));
 
-        if(isset(static::$cache[$cachekey])){
+        if (isset(static::$cache[$cachekey])) {
             return static::$cache[$cachekey];
         }
 

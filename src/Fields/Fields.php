@@ -24,7 +24,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     public function first(): ?Field
     {
-        if(!$this->any()) return null;
+        if (!$this->any()) {
+            return null;
+        }
 
         return reset($this->fields);
     }
@@ -46,8 +48,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     public function validate(array $data)
     {
-        foreach($this->fields as $field){
-             $field->validator($data)->validate();
+        foreach ($this->fields as $field) {
+            $field->validator($data)->validate();
         }
     }
 
@@ -142,8 +144,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     {
         $keyedFields = [];
 
-        foreach($fields as $field)
-        {
+        foreach ($fields as $field) {
             $keyedFields[$field->key] = $field;
         }
 
@@ -155,5 +156,4 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         array_map(function (Field $field) {
         }, $fields);
     }
-
 }

@@ -56,8 +56,8 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     {
         $this->constructWithSnippets();
 
-        if(!isset($this->baseViewPath)) {
-            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.modules','modules');
+        if (!isset($this->baseViewPath)) {
+            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.modules', 'modules');
         }
 
         parent::__construct($attributes);
