@@ -23,12 +23,6 @@ class SaveUrlSlugs
 
         foreach($slugs as $locale => $slug){
 
-            if($locale == UrlAssistant::WILDCARD){
-
-                $this->saveWildcardSlug($this->remainingLocales($slugs), $slug);
-                continue;
-            }
-
             if(!$slug){
                 $this->deleteRecord($locale);
                 continue;
@@ -38,34 +32,15 @@ class SaveUrlSlugs
         }
     }
 
-    /**
-     * Wildcard slug is created for all passed locales
-     *
-     * @param array $locales
-     * @param string $slug
-     */
-    private function saveWildcardSlug(array $locales, ?string $slug)
+    private function deleteRecord(string $locale)
     {
-        foreach($locales as $locale)
-        {
-            if(!$slug) {
-                $this->deleteRecord($locale, true);
-                continue;
-            }
-
-            $this->saveRecord($locale, $this->prependBaseUrlSegment($slug, $locale), true);
-        }
+        return $this->saveRecord($locale, null);
     }
 
-    private function deleteRecord(string $locale, bool $onlyWildcards = false)
-    {
-        return $this->saveRecord($locale, null, $onlyWildcards);
-    }
-
-    private function saveRecord(string $locale, ?string $slug, bool $savingAsWildcard = false)
+    private function saveRecord(string $locale, ?string $slug)
     {
         // Existing ones for this locale?
-        $recordsWithSameLocale = $this->existingRecords->filter(function($record) use($locale, $savingAsWildcard){
+        $nonRedirectsWithSameLocale = $this->existingRecords->filter(function($record) use($locale){
             return (
                 $record->locale == $locale &&
                 !$record->isRedirect()
@@ -74,34 +49,34 @@ class SaveUrlSlugs
 
         // In the case where we have any redirects that match the given slug, we need to
         // remove the redirect record in favour of the newly added one.
-        $this->deleteIdenticalRedirects($this->existingRecords, $locale, $slug, $savingAsWildcard);
+        $this->deleteIdenticalRedirects($this->existingRecords, $locale, $slug);
+
+        // Also delete any redirects that match this locale and slug but are related to another model
+        $this->deleteIdenticalRedirects(UrlRecord::where('slug',$slug)->where('locale',$locale)->get(), $locale, $slug);
 
         // If slug entry is left empty, all existing records will be deleted
         if(!$slug){
-            $recordsWithSameLocale->filter(function($existingRecord) use($savingAsWildcard){
-                return ($existingRecord->isManagedAsWildcard() === $savingAsWildcard);
-            })->each(function($existingRecord){
+            $nonRedirectsWithSameLocale->each(function($existingRecord){
                 $existingRecord->delete();
             });
         }
-        elseif($recordsWithSameLocale->isEmpty()){
-            $this->createRecord($locale, $slug, $savingAsWildcard);
+        elseif($nonRedirectsWithSameLocale->isEmpty()){
+            $this->createRecord($locale, $slug);
         }
         else{
             // Only replace the existing records that differ from the current passed slugs
-            $recordsWithSameLocale->each(function($existingRecord) use($slug, $savingAsWildcard){
+            $nonRedirectsWithSameLocale->each(function($existingRecord) use($slug){
                 if($existingRecord->slug != $slug){
-                    $existingRecord->replace(['slug' => $slug, 'managed_as_wildcard' => $savingAsWildcard]);
+                    $existingRecord->replaceAndRedirect(['slug' => $slug]);
                 }
             });
         }
     }
 
-    private function createRecord($locale, $slug, bool $managedAsWildcard = false)
+    private function createRecord($locale, $slug)
     {
         UrlRecord::create([
             'locale'              => $locale,
-            'managed_as_wildcard' => $managedAsWildcard,
             'slug'                => $slug,
             'model_type'          => $this->model->getMorphClass(),
             'model_id'            => $this->model->id,
@@ -112,14 +87,12 @@ class SaveUrlSlugs
      * @param $existingRecords
      * @param $locale
      * @param $slug
-     * @param bool $managedAsWildcard
      */
-    private function deleteIdenticalRedirects($existingRecords, $locale, $slug, bool $managedAsWildcard = false): void
+    private function deleteIdenticalRedirects($existingRecords, $locale, $slug): void
     {
-        $existingRecords->filter(function ($record) use ($locale, $managedAsWildcard) {
+        $existingRecords->filter(function ($record) use ($locale) {
             return (
                 $record->locale == $locale &&
-                $managedAsWildcard === $record->isManagedAsWildcard() &&
                 $record->isRedirect()
             );
         })->each(function ($existingRecord) use ($slug) {
@@ -127,28 +100,6 @@ class SaveUrlSlugs
                 $existingRecord->delete();
             }
         });
-    }
-
-    /**
-     * List all locales that are not passed a specific slug
-     *
-     * @param array $slugs
-     * @return array
-     */
-    private function remainingLocales(array $slugs): array
-    {
-        $remainingLocales = $this->model->availableLocales();
-
-        foreach ($slugs as $locale => $slug) {
-            if ($slug && $locale !== UrlAssistant::WILDCARD) {
-                if(false !== ($index = array_search($locale, $remainingLocales)))
-                {
-                    unset($remainingLocales[$index]);
-                }
-            }
-        }
-
-        return array_values($remainingLocales);
     }
 
     /**

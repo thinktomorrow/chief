@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductWithBaseSegments;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class PageUrlTest extends TestCase
 {
@@ -42,21 +41,6 @@ class PageUrlTest extends TestCase
 
         app()->setLocale('nl');
         $this->assertEquals(url('/producten/foobar'), $model->url() );
-        $this->assertEquals(url('/producten/foobar'), $model->url('nl') );
-        $this->assertEquals(url('/products/foobar'), $model->url('en') );
-    }
-
-    /** @test */
-    function when_having_a_general_url_a_page_can_still_have_a_localised_base_segment()
-    {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
-            'url-slugs' => [
-                UrlAssistant::WILDCARD => 'foobar',
-            ],
-        ]));
-
-        $model = ProductWithBaseSegments::first();
-
         $this->assertEquals(url('/producten/foobar'), $model->url('nl') );
         $this->assertEquals(url('/products/foobar'), $model->url('en') );
     }

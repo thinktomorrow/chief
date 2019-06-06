@@ -17,7 +17,6 @@ class CreateChiefUrls extends Migration
             $table->string('slug');
             $table->string('model_type');
             $table->integer('model_id')->unsigned();
-            $table->boolean('managed_as_wildcard')->default(0);
             $table->timestamps();
 
             $table->unique(['locale', 'slug']);
@@ -41,13 +40,9 @@ class CreateChiefUrls extends Migration
     private function migrateSlugs()
     {
         foreach(Page::all() as $page){
-
-            $managedAsWildcard = (count($page->availableLocales()) < 2) ? 1 : 0;
-
             foreach($page->translations as $translation){
                 UrlRecord::create([
                     'locale'              => $translation->locale,
-                    'managed_as_wildcard' => $managedAsWildcard,
                     'slug'                => $translation->slug,
                     'model_type'          => $page->getMorphClass(),
                     'model_id'            => $page->id,

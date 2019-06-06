@@ -67,11 +67,10 @@ class UrlRecord extends Model
                      ->get();
     }
 
-    public function replace(array $values): UrlRecord
+    public function replaceAndRedirect(array $values): UrlRecord
     {
         $newRecord = static::create(array_merge([
             'locale'              => $this->locale,
-            'managed_as_wildcard' => $this->isManagedAsWildCard(),
             'model_type'          => $this->model_type,
             'model_id'            => $this->model_id,
         ], $values));
@@ -91,15 +90,6 @@ class UrlRecord extends Model
         $this->save();
 
         return null;
-    }
-
-    /**
-     * Is this an url that is applicable to all locales?
-     * @return bool
-     */
-    public function isManagedAsWildCard(): bool
-    {
-        return !!$this->managed_as_wildcard;
     }
 
     public function isRedirect(): bool

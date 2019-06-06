@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Urls\ValidationRules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class UniqueUrlSlugRule implements Rule

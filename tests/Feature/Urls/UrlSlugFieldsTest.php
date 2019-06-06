@@ -58,7 +58,7 @@ class UrlSlugFieldsTest extends TestCase
 
         $fields = UrlSlugFields::fromModel($model);
 
-        $this->assertCount(3, $fields->all()); // Always have wildcard + specific locales
+        $this->assertCount(2, $fields->all());
 
         $nlField = $fields['url-slugs.nl'];
         $enField = $fields['url-slugs.en'];
@@ -84,7 +84,7 @@ class UrlSlugFieldsTest extends TestCase
 
         $fields = UrlSlugFields::fromModel($model);
 
-        $this->assertCount(3, $fields->all()); // Always have wildcard + specific locales
+        $this->assertCount(2, $fields->all());
 
         $nlField = $fields['url-slugs.nl'];
         $enField = $fields['url-slugs.en'];
@@ -94,21 +94,6 @@ class UrlSlugFieldsTest extends TestCase
 
         $this->assertEquals('foobar', $nlField->value());
         $this->assertEquals('foobar', $enField->value());
-    }
-
-    /** @test */
-    function when_having_a_general_url_a_page_can_still_have_a_localised_base_segment()
-    {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
-            'url-slugs' => [
-                UrlAssistant::WILDCARD => 'foobar',
-            ],
-        ]));
-
-        $model = ProductWithBaseSegments::first();
-
-        $this->assertEquals(url('/producten/foobar'), $model->url('nl') );
-        $this->assertEquals(url('/products/foobar'), $model->url('en') );
     }
 
     /** @test */
@@ -131,32 +116,21 @@ class UrlSlugFieldsTest extends TestCase
     }
 
     /** @test */
-    function the_base_segment_should_not_be_included_in_the_wildcard()
+    function the_base_segment_should_not_be_included_in_the_slug_value()
     {
         $model = ProductWithBaseSegments::create();
         $response = $this->asAdmin()->put($this->manager->manage($model)->route('update'), $this->validUpdatePageParams([
             'url-slugs' => [
-                UrlAssistant::WILDCARD => 'link-wildcard',
                 'nl' => 'link-nl',
-                'en' => '',
             ],
         ]));
 
         $fields = UrlSlugFields::fromModel($model->fresh());
 
-        $this->assertCount(3, $fields->all()); // Always have wildcard + specific locales
-
-        $wildcardField = $fields['url-slugs.'.UrlAssistant::WILDCARD];
         $nlField = $fields['url-slugs.nl'];
-        $enField = $fields['url-slugs.en'];
 
-        $this->assertEquals('', $wildcardField->prepend);
         $this->assertEquals(route('pages.show','producten').'/', $nlField->prepend);
-        $this->assertEquals(route('pages.show','products').'/', $enField->prepend);
-
-        $this->assertEquals('link-wildcard', $wildcardField->value());
         $this->assertEquals('link-nl', $nlField->value());
-        $this->assertEquals('', $enField->value());
     }
 
     /** @test */

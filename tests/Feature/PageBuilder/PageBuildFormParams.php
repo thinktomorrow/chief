@@ -32,7 +32,7 @@ trait PageBuildFormParams
                ]
             ],
             'url-slugs' => [
-                UrlAssistant::WILDCARD => 'slug',
+                'nl' => 'slug',
             ],
         ];
 

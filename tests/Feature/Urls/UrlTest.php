@@ -55,7 +55,7 @@ class UrlTest extends TestCase
     function when_adding_new_url_it_sets_existing_url_as_redirect()
     {
         $existing = UrlRecord::create(['locale' => 'fr', 'slug' => 'foo/bar', 'model_type' => 'foobar', 'model_id' => '1']);
-        $new = $existing->replace([
+        $new = $existing->replaceAndRedirect([
             'locale' => 'nl',
             'slug' => 'foo/bar',
         ]);

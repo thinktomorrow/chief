@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Urls;
 
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 
 class UrlSlugFields extends Fields
 {
@@ -40,17 +39,7 @@ class UrlSlugFields extends Fields
      */
     private static function initEmptyFields(array $locales, ProvidesUrl $model): self
     {
-        // Add wildcard field as default
-        $fields = new static([ $wildCardField = UrlSlugField::make('url-slugs.' . UrlAssistant::WILDCARD)
-            ->name('url-slugs[' . UrlAssistant::WILDCARD . ']')
-            ->label('')
-        ]);
-
-        if (count($locales) < 2) return $fields;
-
-        // Add description to wildcard field only when there are locale values.
-        $wildCardField->label('Default link')
-                      ->description('Standaard link die altijd van toepassing is indien er geen taalspecifieke link voorhanden is. Laat deze leeg indien je deze link in bepaalde talen niet wilt beschikbaar maken.');
+        $fields = new static([]);
 
         foreach ($locales as $locale) {
             $fields['url-slugs.' . $locale] = UrlSlugField::make('url-slugs.' . $locale)
@@ -74,13 +63,6 @@ class UrlSlugFields extends Fields
         })->sortBy('locale');
 
         foreach ($records as $record) {
-
-            if ($record->isManagedAsWildCard()) {
-                $fields['url-slugs.' . UrlAssistant::WILDCARD]
-                    ->setUrlRecord($record)
-                    ->setBaseUrlSegment($model->baseUrlSegment($record->locale));
-                continue;
-            }
 
             if(!isset($fields['url-slugs.'.$record->locale])) continue;
 

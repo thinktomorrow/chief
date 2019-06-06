@@ -15,14 +15,6 @@ use Thinktomorrow\Chief\Management\Manager;
 
 class UrlAssistant implements Assistant
 {
-    /**
-     * Identifier for the locale wildcard. This is used in the
-     * form submission to assign a slug to 'all locales'.
-     *
-     * @var string
-     */
-    const WILDCARD = '_all_';
-
     private $manager;
 
     private $model;
@@ -66,7 +58,6 @@ class UrlAssistant implements Assistant
                     ],
                     [],
                     [
-                        'url-slugs.'.self::WILDCARD => 'link',
                         'url-slugs.*' => 'taalspecifieke link',
                     ])
                 ->view('chief::back._fields.url-slugs')
