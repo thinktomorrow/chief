@@ -11,6 +11,8 @@ class UniqueUrlSlugRule implements Rule
     /** @var Model */
     private $ignoredModel;
 
+    private $failedDetails = [];
+
     public function __construct(Model $ignoredModel = null)
     {
         $this->ignoredModel = $ignoredModel;
@@ -26,16 +28,16 @@ class UniqueUrlSlugRule implements Rule
     public function passes($attribute, $slugs)
     {
         foreach($slugs as $locale => $slug) {
-            if ($locale == '_all_') {
-                $locale = null;
-            }
-
             if (UrlRecord::existsIgnoringRedirects($slug, $locale, $this->ignoredModel)) {
                 session()->flash('unique_url_slug_validation', [
                     'locale'       => $locale,
                     'slug'         => $slug,
                     'ignoredModel' => $this->ignoredModel,
                 ]);
+
+                $this->failedDetails['slug'] = $slug;
+                $this->failedDetails['locale'] = $locale;
+
                 return false;
             }
         }
@@ -50,6 +52,6 @@ class UniqueUrlSlugRule implements Rule
      */
     public function message()
     {
-        return 'De link wordt al door een andere pagina gebruikt.';
+        return 'De \''.$this->failedDetails['slug'].'\' link wordt in het '.$this->failedDetails['locale'].' al door een andere pagina gebruikt.';
     }
 }

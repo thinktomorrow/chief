@@ -46,7 +46,7 @@ class UrlSlugFields extends Fields
                                                 ->setBaseUrlSegment($model->baseUrlSegment($locale))
                                                 ->prepend($model->resolveUrl($locale, $model->baseUrlSegment($locale)) .'/')
                                                 ->name('url-slugs[' . $locale . ']')
-                                                ->label($locale . ' link');
+                                                ->label($locale);
         }
 
         return $fields;
