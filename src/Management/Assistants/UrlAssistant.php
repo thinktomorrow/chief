@@ -12,7 +12,6 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class UrlAssistant implements Assistant
 {
@@ -50,7 +49,11 @@ class UrlAssistant implements Assistant
 
     public function route($verb): ?string
     {
-        // store new url
+        $routes = [
+            'check' => route('chief.back.assistants.url.check', [$this->manager->details()->key, $this->manager->model()->id]),
+        ];
+
+        return $routes[$verb] ?? null;
     }
 
     public function fields(): Fields

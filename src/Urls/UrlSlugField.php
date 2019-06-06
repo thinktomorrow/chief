@@ -60,6 +60,8 @@ class UrlSlugField extends InputField
             'placeholder' => $this->placeholder,
             'description' => $this->description,
             'value' => $this->value(),
+            'locale' => $this->locale,
+            'hint' => null, // Hint placeholder to show url hint when it already exists
         ]);
     }
 }

@@ -63,6 +63,8 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * MANAGER ASSISTANT ROUTES
      * -----------------------------------------------------------------
      */
+    Route::post('check-url/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@checkSlugExists')->name('chief.back.assistants.url.check')->where('id', '[0-9]+');
+
     Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
     Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@draft')->name('chief.back.assistants.draft')->where('id', '[0-9]+');
 

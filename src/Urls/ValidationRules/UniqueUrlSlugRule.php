@@ -31,7 +31,7 @@ class UniqueUrlSlugRule implements Rule
                 $locale = null;
             }
 
-            if (UrlRecord::exists($locale, $slug, $this->ignoredModel)) {
+            if (UrlRecord::existsIgnoringRedirects($slug, $locale, $this->ignoredModel)) {
                 session()->flash('unique_url_slug_validation', [
                     'locale'       => $locale,
                     'slug'         => $slug,

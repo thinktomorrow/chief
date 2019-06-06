@@ -108,7 +108,7 @@ class UrlAssistantTest extends TestCase
             'url-slugs' => ['nl' => 'foobar'],
         ]);
 
-        $this->assertTrue(UrlRecord::exists('nl','foobar'));
+        $this->assertTrue(UrlRecord::exists('foobar', 'nl'));
 
         $response = $this->asAdmin()->post($this->manager->route('store'), [
             'url-slugs' => ['nl' => 'foobar'],

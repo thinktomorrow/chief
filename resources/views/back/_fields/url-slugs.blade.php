@@ -1,4 +1,4 @@
-<url-slugs inline-template :initialfields='@json($fields->toArray())' :conflictingfields='@json($fields->toArray())'>
+<url-slugs inline-template :initialfields='@json($fields->toArray())' checkurl="{{ $manager->assistant('url')->route('check') }}">
     <section class="row formgroup stack gutter-l bg-white">
         <div class="column-4">
             <h2 class="formgroup-label">Link naar de pagina</h2>
@@ -15,17 +15,9 @@
                 <label :for="field.key" v-text="field.label"></label>
                 <div class="input-addon stack-xs">
                     <div v-if="field.prepend" class="addon inset-s" v-text="field.prepend"></div>
-                    <input v-model="field.value" type="text" :name="field.name" :id="field.key" class="input inset-s" :placeholder="field.placeholder">
+                    <input @keyup="check(field)" v-model="field.value" type="text" :name="field.name" :id="field.key" class="input inset-s" :placeholder="field.placeholder">
                 </div>
-                <p class="text-subtle" v-if="field.description" v-html="field.description"></p>
-            </div>
-
-            <div class="stack bg-error inset" v-for="field in fields">
-                <label :for="field.key" v-text="field.label"></label>
-                <div class="input-addon stack-xs">
-                    <div v-if="field.prepend" class="addon inset-s" v-text="field.prepend"></div>
-                    <input v-model="field.value" type="text" :name="field.name" :id="field.key" class="input inset-s" :placeholder="field.placeholder">
-                </div>
+                <p class="text-error" v-if="field.hint" v-html="field.hint"></p>
                 <p class="text-subtle" v-if="field.description" v-html="field.description"></p>
             </div>
 
@@ -33,11 +25,10 @@
     </section>
 </url-slugs>
 
-
 @push('custom-components')
     <script>
         Vue.component('url-slugs',{
-            props: ['initialfields'],
+            props: ['initialfields', 'checkurl'],
             data: function(){
                 return {
                     fields: this.initialfields,
@@ -48,6 +39,13 @@
 
             },
             methods: {
+                check: _.debounce(function(field){
+                    window.axios.post(this.checkurl, {
+                        slug: field.value
+                    }).then(function({data}){
+                        field.hint = data.hint;
+                    });
+                }, 700),
                 hasLocalizedValues: function(){
                     return false;
                 }

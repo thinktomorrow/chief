@@ -107,10 +107,22 @@ class UrlRecord extends Model
         return !!($this->redirect_id);
     }
 
-    public static function exists($locale, $slug, Model $ignoredModel = null): bool
+    public static function existsIgnoringRedirects($slug, string $locale = null, Model $ignoredModel = null): bool
     {
-        $builder = static::where('locale', $locale)
-                        ->where('slug', $slug);
+        return static::exists($slug, $locale, $ignoredModel, false);
+    }
+
+    public static function exists($slug, string $locale = null, Model $ignoredModel = null, bool $includeRedirects = true): bool
+    {
+        $builder = static::where('slug', $slug);
+
+        if($locale) {
+            $builder->where('locale', $locale);
+        }
+
+        if( ! $includeRedirects){
+            $builder->whereNull('redirect_id');
+        }
 
         if($ignoredModel){
             $builder->whereNotIn('id', function($query) use($ignoredModel){
