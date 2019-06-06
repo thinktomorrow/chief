@@ -21,9 +21,8 @@ class SaveUrlSlugs
     {
         $this->existingRecords = UrlRecord::getByModel($this->model);
 
-        foreach($slugs as $locale => $slug){
-
-            if(!$slug){
+        foreach ($slugs as $locale => $slug) {
+            if (!$slug) {
                 $this->deleteRecord($locale);
                 continue;
             }
@@ -40,7 +39,7 @@ class SaveUrlSlugs
     private function saveRecord(string $locale, ?string $slug)
     {
         // Existing ones for this locale?
-        $nonRedirectsWithSameLocale = $this->existingRecords->filter(function($record) use($locale){
+        $nonRedirectsWithSameLocale = $this->existingRecords->filter(function ($record) use ($locale) {
             return (
                 $record->locale == $locale &&
                 !$record->isRedirect()
@@ -52,21 +51,19 @@ class SaveUrlSlugs
         $this->deleteIdenticalRedirects($this->existingRecords, $locale, $slug);
 
         // Also delete any redirects that match this locale and slug but are related to another model
-        $this->deleteIdenticalRedirects(UrlRecord::where('slug',$slug)->where('locale',$locale)->get(), $locale, $slug);
+        $this->deleteIdenticalRedirects(UrlRecord::where('slug', $slug)->where('locale', $locale)->get(), $locale, $slug);
 
         // If slug entry is left empty, all existing records will be deleted
-        if(!$slug){
-            $nonRedirectsWithSameLocale->each(function($existingRecord){
+        if (!$slug) {
+            $nonRedirectsWithSameLocale->each(function ($existingRecord) {
                 $existingRecord->delete();
             });
-        }
-        elseif($nonRedirectsWithSameLocale->isEmpty()){
+        } elseif ($nonRedirectsWithSameLocale->isEmpty()) {
             $this->createRecord($locale, $slug);
-        }
-        else{
+        } else {
             // Only replace the existing records that differ from the current passed slugs
-            $nonRedirectsWithSameLocale->each(function($existingRecord) use($slug){
-                if($existingRecord->slug != $slug){
+            $nonRedirectsWithSameLocale->each(function ($existingRecord) use ($slug) {
+                if ($existingRecord->slug != $slug) {
                     $existingRecord->replaceAndRedirect(['slug' => $slug]);
                 }
             });

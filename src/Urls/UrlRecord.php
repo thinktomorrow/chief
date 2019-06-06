@@ -22,14 +22,16 @@ class UrlRecord extends Model
     public static function findBySlug(string $slug, string $locale): UrlRecord
     {
         // Clear the input from any trailing slashes.
-        if($slug != '/'){ $slug = trim($slug,'/'); }
+        if ($slug != '/') {
+            $slug = trim($slug, '/');
+        }
 
         $record = static::where('slug', $slug)
                         ->where('locale', $locale)
                         ->orderBy('redirect_id', 'ASC')
                         ->first();
 
-        if(!$record){
+        if (!$record) {
             throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for locale ['.$locale.'].');
         }
 
@@ -53,7 +55,7 @@ class UrlRecord extends Model
             ->orderBy('redirect_id', 'ASC')
             ->first();
 
-        if(!$record){
+        if (!$record) {
             throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for locale ['.$locale.'].');
         }
 
@@ -82,7 +84,7 @@ class UrlRecord extends Model
 
     public function redirectTo(self $record = null): ?UrlRecord
     {
-        if(!$record){
+        if (!$record) {
             return $this->isRedirect() ? static::find($this->redirect_id) : null;
         }
 
@@ -106,16 +108,16 @@ class UrlRecord extends Model
     {
         $builder = static::where('slug', $slug);
 
-        if($locale) {
+        if ($locale) {
             $builder->where('locale', $locale);
         }
 
-        if( ! $includeRedirects){
+        if (! $includeRedirects) {
             $builder->whereNull('redirect_id');
         }
 
-        if($ignoredModel){
-            $builder->whereNotIn('id', function($query) use($ignoredModel){
+        if ($ignoredModel) {
+            $builder->whereNotIn('id', function ($query) use ($ignoredModel) {
                 $query->select('id')
                       ->from('chief_urls')
                       ->where('model_type', '=', $ignoredModel->getMorphClass())

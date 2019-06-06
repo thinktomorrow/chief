@@ -24,8 +24,8 @@ class Set extends Collection implements ViewableContract
     {
         $this->viewKey = $viewKey;
 
-        if(!isset($this->baseViewPath)) {
-            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.sets','sets');
+        if (!isset($this->baseViewPath)) {
+            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.sets', 'sets');
         }
 
         $this->constructWithSnippets();
@@ -40,11 +40,13 @@ class Set extends Collection implements ViewableContract
 
     public function renderView(): string
     {
-        if($result = $this->baseRenderView()){ return $result; }
+        if ($result = $this->baseRenderView()) {
+            return $result;
+        }
 
         // If no view has been created for this page collection, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We don't consider the 'content' attribute to be a default as we do for module.
-        return $this->map(function ($item){
+        return $this->map(function ($item) {
             return ($this->viewParent && $item instanceof ViewableContract)
                 ? $item->setViewParent($this->viewParent)->renderView()
                 : ($item->content ?? '');

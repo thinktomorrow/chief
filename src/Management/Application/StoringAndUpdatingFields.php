@@ -20,7 +20,9 @@ trait StoringAndUpdatingFields
         foreach ($manager->fieldsWithAssistantFields() as $field) {
 
             // Custom save methods
-            if($this->detectCustomSaveMethods($manager, $field)) continue;
+            if ($this->detectCustomSaveMethods($manager, $field)) {
+                continue;
+            }
 
             // Media fields are treated separately
             if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
@@ -49,8 +51,7 @@ trait StoringAndUpdatingFields
         $saveMethodName = 'save'. ucfirst(camel_case($field->key())) . 'Field';
 
         // Custom save method on assistant
-        foreach($manager->assistants() as $assistant)
-        {
+        foreach ($manager->assistants() as $assistant) {
             if (method_exists($assistant, $saveMethodName)) {
                 $this->saveAssistantMethods[$field->key] = ['field' => $field, 'method' => $saveMethodName, 'assistant' => $assistant];
                 return true;

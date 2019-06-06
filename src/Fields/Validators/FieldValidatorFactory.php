@@ -19,15 +19,15 @@ class FieldValidatorFactory
 
     public function create(Field $field, array $data): Validator
     {
-        if(!$field->hasValidation()){
+        if (!$field->hasValidation()) {
             return new NullValidator();
         }
 
-        if($field->validation instanceof Validator){
+        if ($field->validation instanceof Validator) {
             return $field->validation;
         }
 
-        if($field->validation instanceof \Closure){
+        if ($field->validation instanceof \Closure) {
             $closure = $field->validation;
             return $closure($this->validatorFactory, $data);
         }
@@ -37,7 +37,7 @@ class FieldValidatorFactory
 
     private function composeValidatorFromRules(Field $field, array $data): Validator
     {
-        if(!is_array($field->validation) || !isset($field->validation[0])){
+        if (!is_array($field->validation) || !isset($field->validation[0])) {
             throw new \Exception('Invalid validation given. Rules should be passed as non-associative array.');
         }
 

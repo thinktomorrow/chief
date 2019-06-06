@@ -37,9 +37,11 @@ class UrlController extends Controller
      */
     private function hint(string $slug, bool $exists): string
     {
-        if(!$exists) return '';
+        if (!$exists) {
+            return '';
+        }
 
-        $urlRecord = UrlRecord::where('slug',$slug)->first();
+        $urlRecord = UrlRecord::where('slug', $slug)->first();
 
         return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" href="' . $this->editUrlOfExistingModel($urlRecord) . '">pas de andere pagina aan</a>.';
     }

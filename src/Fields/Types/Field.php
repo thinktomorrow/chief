@@ -27,7 +27,7 @@ class Field
     public function validation(...$arguments)
     {
         // If a Closure or Validator is passed, we do not want to pass it as an array.
-        if(count($arguments) == 1 && !is_array($arguments)){
+        if (count($arguments) == 1 && !is_array($arguments)) {
             $this->values['validation'] = reset($arguments);
 
             return $this;
@@ -92,7 +92,7 @@ class Field
      */
     public function view(string $view = null)
     {
-        if($view){
+        if ($view) {
             $this->values['view'] = $view;
             return $this;
         }
@@ -102,7 +102,7 @@ class Field
 
     public function viewData(array $viewData = [])
     {
-        if($viewData){
+        if ($viewData) {
             $this->values['viewData'] = $viewData;
             return $this;
         }

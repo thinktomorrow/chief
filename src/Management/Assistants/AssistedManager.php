@@ -24,7 +24,7 @@ trait AssistedManager
     {
         $assistants = [];
 
-        foreach($this->assistants as $assistant){
+        foreach ($this->assistants as $assistant) {
             $assistants[] = $this->assistant($assistant);
         }
 

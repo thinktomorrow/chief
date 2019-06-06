@@ -14,38 +14,44 @@ class ChiefResponse extends Response
 {
     public static function fromRequest(Request $request = null, $locale = null)
     {
-        if(!$request) $request = request();
-        if(!$locale) $locale = app()->getLocale();
+        if (!$request) {
+            $request = request();
+        }
+        if (!$locale) {
+            $locale = app()->getLocale();
+        }
 
         return static::fromSlug($request->path(), $locale);
     }
 
     public static function fromSlug(string $slug, $locale = null)
     {
-        if(!$locale) $locale = app()->getLocale();
+        if (!$locale) {
+            $locale = app()->getLocale();
+        }
 
-        try{
+        try {
             $urlRecord = UrlRecord::findBySlug($slug, $locale);
 
             $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
 
-            if($urlRecord->isRedirect()){
+            if ($urlRecord->isRedirect()) {
                 return static::createRedirect($model->url($locale));
             }
 
-            if(method_exists($model, 'isPublished') && ! $model->isPublished()){
+            if (method_exists($model, 'isPublished') && ! $model->isPublished()) {
 
                 /** When admin is logged in and this request is in preview mode, we allow the view */
-                if( ! PreviewMode::fromRequest()->check()){
+                if (! PreviewMode::fromRequest()->check()) {
                     throw new NotFoundHttpException('Model found for request ['. $slug .'] but it is not published.');
                 }
             }
 
             return new static($model->renderView(), 200);
-        }
-        catch(UrlRecordNotFound | NotFoundMorphKey $e)
-        {
-            if(config('thinktomorrow.chief.strict')){ throw $e; }
+        } catch (UrlRecordNotFound | NotFoundMorphKey $e) {
+            if (config('thinktomorrow.chief.strict')) {
+                throw $e;
+            }
         }
 
         throw new NotFoundHttpException('No url or model found for request ['. $slug .'] for locale ['.$locale.'].');
