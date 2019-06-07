@@ -3,30 +3,29 @@
 namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldsTab;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
 use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Details\Details;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class PageManager extends AbstractManager implements Manager
 {
-    /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
-    private $uniqueSlug;
-
     /** @var PageBuilderField */
     private $pageBuilderField;
 
@@ -102,7 +101,10 @@ class PageManager extends AbstractManager implements Manager
             InputField::make('seo_keywords')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
-                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.')
+                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
+            MediaField::make('seo_image')
+                ->label('Zoekmachine foto')
+                ->description('foto die bij het delen van deze pagina getoont word. (afmeting: 1200x627px)')
         );
     }
 
@@ -126,7 +128,7 @@ class PageManager extends AbstractManager implements Manager
     {
         if ($key == 'create') {
             return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
-                return $field->key == 'title';
+                return in_array($field->key,['title']);
             }));
         }
 
@@ -134,7 +136,7 @@ class PageManager extends AbstractManager implements Manager
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('inhoud'),
             new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
-            new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords']),
+            new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ]);
     }
 
@@ -173,16 +175,23 @@ class PageManager extends AbstractManager implements Manager
     public function storeRequest(Request $request): Request
     {
         $trans = [];
+        $urls = $request->get('url-slugs', []);
+
         foreach ($request->get('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
             }
 
             $trans[$locale] = $this->addDefaultShortDescription($translation);
+
+            // Automatically add an url for this locale based on the given title
+            if(!isset($urls[$locale]) && isset($translation['title'])) {
+                $urls[$locale] = Str::slug($translation['title']);
+            }
         }
 
         // Merge with request...
-        return $request->merge(['trans' => $trans]);
+        return $request->merge(['trans' => $trans, 'url-slugs' => $urls]);
     }
 
     public function updateRequest(Request $request): Request

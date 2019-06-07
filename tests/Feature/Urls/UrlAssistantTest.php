@@ -36,7 +36,7 @@ class UrlAssistantTest extends TestCase
     }
 
     /** @test */
-    function it_adds_an_url_on_creation()
+    function it_automatically_adds_an_url_on_creation()
     {
         $this->asAdmin()->post($this->manager->route('store'), [
             'url-slugs' => ['nl' => 'foobar'],
@@ -73,9 +73,11 @@ class UrlAssistantTest extends TestCase
         ]));
 
         $urlRecordNl = UrlRecord::findBySlug('producten/foobar', 'nl');
+        $urlRecordEn = UrlRecord::findBySlug('products/nouveau-title', 'en');
 
-        $this->assertEquals(1, UrlRecord::count());
+        $this->assertEquals(2, UrlRecord::count());
         $this->assertEquals('nl', $urlRecordNl->locale);
+        $this->assertEquals('en', $urlRecordEn->locale);
     }
 
     /** @test */

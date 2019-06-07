@@ -1,8 +1,8 @@
 <url-slugs inline-template :initialfields='@json($fields->toArray())' checkurl="{{ $manager->assistant('url')->route('check') }}">
     <section class="row formgroup stack gutter-l bg-white">
         <div class="column-4">
-            <h2 class="formgroup-label">Link naar de pagina</h2>
-            <p>Bepaal hier welke link er gebruikt wordt voor deze pagina.</p>
+            <h2 class="formgroup-label">Pagina link</h2>
+            <p>Bepaal hier de link voor deze pagina. Oude links worden automatisch doorgestuurd.</p>
         </div>
         <div class="formgroup-input column-8">
 

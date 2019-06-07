@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Added: add seo_image to page seo tab
 - Fixed: remove own module on page now works.
 - Fixed: apply permissions on archive/publish buttons
 - Fixed: removing document and uploading works at the same time.
