@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\PageManager;

@@ -1,11 +1,9 @@
 <hr>
 @if($manager->can('update') && $manager->isAssistedBy('archive'))
     @if(! $manager->assistant('archive')->isArchived())
-        <a data-submit-form="archiveForm-{{ $manager->details()->id }}" class="block squished-s text-warning --link-with-bg">Archiveer</a>
-        <form class="--hidden" id="archiveForm-{{ $manager->details()->id }}" action="{{ $manager->assistant('archive')->route('archive') }}" method="POST">
-            {{ csrf_field() }}
-            <button type="submit">Archiveer</button>
-        </form>
+        <a v-cloak @click="showModal('archive-manager-<?= str_slug($manager->assistant('archive')->route('archive')); ?>')" class="block squished-s text-warning --link-with-bg">
+            Archiveer
+        </a>
     @else
         <a data-submit-form="unarchiveForm-{{ $manager->details()->id }}" class="block squished-s text-warning --link-with-bg">Herstel</a>
 

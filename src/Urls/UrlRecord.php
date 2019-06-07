@@ -47,7 +47,7 @@ class UrlRecord extends Model
      * @return UrlRecord
      * @throws UrlRecordNotFound
      */
-    public static function findByModel(Model $model, string $locale = null): UrlRecord
+    public static function findByModel(Model $model, string $locale): UrlRecord
     {
         $record = static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)

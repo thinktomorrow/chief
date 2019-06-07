@@ -36,8 +36,20 @@ class ChiefResponse extends Response
             $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
 
             if ($urlRecord->isRedirect()) {
+
+                // If model is not found, it probably means it is archived or removed
+                // So we detect the model based on the redirect target url.
+                if(!$model){
+                    $targetUrlRecord = $urlRecord->redirectTo();
+                    $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
+
+                    return static::createRedirect($targetModel->url($locale));
+                }
+
                 return static::createRedirect($model->url($locale));
             }
+
+
 
             if (method_exists($model, 'isPublished') && ! $model->isPublished()) {
 

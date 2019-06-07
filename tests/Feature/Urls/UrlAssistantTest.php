@@ -7,7 +7,6 @@ use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductManagerWithUrlAssistant;
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
@@ -301,15 +300,21 @@ class UrlAssistantTest extends TestCase
     }
 
     /** @test */
-    function when_archiving_a_model_it_gives_the_option_to_redirect_the_archived_url()
-    {
-
-    }
-
-    /** @test */
     function it_can_store_the_archived_url_as_redirect()
     {
+        $this->createAndChangeUrlSlug('foobar','foobar-updated');
+        $product = ProductFake::orderBy('id','DESC')->first();
 
+        $this->createAndChangeUrlSlug('foobar-2','foobar-updated-2');
+        $product2 = ProductFake::orderBy('id','DESC')->first();
+
+        $response = $this->asAdmin()
+            ->post(route('chief.back.assistants.archive', ['products', $product->id]), [
+                'redirect_id' => $product2->flatReference()->get(),
+            ]);
+
+        $this->assertEquals($product2->id, UrlRecord::findBySlug('foobar-updated', 'nl')->redirectTo()->model_id);
+        $this->assertEquals($product2->id, UrlRecord::findBySlug('foobar-updated-2', 'nl')->model_id);
     }
 
     /** @test */

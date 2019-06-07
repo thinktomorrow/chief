@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -94,5 +95,25 @@ class ChiefResponseTest extends TestCase
         UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar', 'nl');
+    }
+
+    /** @test */
+    function it_can_redirect_an_archived_url()
+    {
+        Route::get('{slug}', function () { })->name('pages.show');
+
+        $model = ProductPageFake::create();
+        $model2 = ProductPageFake::create();
+        $model->archive();
+
+        $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
+        $record2 = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar/new', 'model_type' => $model2->morphKey(), 'model_id' => $model2->id]);
+
+        $record->redirectTo($record2);
+
+        $response = ChiefResponse::fromSlug('foo/bar', 'en');
+
+        $this->assertEquals(301, $response->getStatusCode());
+        $this->assertTrue($response->isRedirect('http://localhost/foo/bar/new'));
     }
 }

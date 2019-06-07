@@ -2,13 +2,18 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls\Fakes;
 
+use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
-class ProductFake extends ManagedModelFake implements ProvidesUrl
+class ProductFake extends ManagedModelFake implements ProvidesUrl, ProvidesFlatReference
 {
+    use Archivable;
+
     public $translationModel = ManagedModelFakeTranslation::class;
     public $translationForeignKey = 'managed_model_fake_id';
 
@@ -41,5 +46,38 @@ class ProductFake extends ManagedModelFake implements ProvidesUrl
         $routeName = config('thinktomorrow.chief.routes.pages-show', 'pages.show');
 
         return route($routeName, $parameters);
+    }
+
+    /**
+     * Composite key consisting of the type of class combined with the
+     * model id. Both are joined with an @ symbol. This is used as
+     * identifier of the instance mostly in selections.
+     */
+    public function flatReference(): FlatReference
+    {
+        return new FlatReference(static::class, $this->id);
+    }
+
+    /**
+     * Label that identifies the flat reference with a human readable string.
+     * This is mostly used in the interface of the admin panel.
+     *
+     * @return string
+     */
+    public function flatReferenceLabel(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * Label that identifies the grouping under which this reference should belong.
+     * This is a categorization used to group select options and other listings.
+     * It also combines similar models together in the view rendering.
+     *
+     * @return string
+     */
+    public function flatReferenceGroup(): string
+    {
+        return 'product-fakes';
     }
 }

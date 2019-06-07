@@ -26,6 +26,7 @@ class ManagedModelFake extends Model implements TranslatableContract, HasMedia
             $table->string('title')->nullable();
             $table->string('custom_column')->nullable();
             $table->boolean('published')->default(0);
+            $table->dateTime('archived_at')->nullable();
             $table->timestamps();
         });
     }
