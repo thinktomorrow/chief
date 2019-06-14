@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.28",
-    "expect": "^23.6.0",
+    "expect": "^24.8.0",
     "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.0.4",
