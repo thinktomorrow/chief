@@ -40,5 +40,8 @@
     "vue-multiselect": "^2.0.3",
     "vuedraggable": "^2.16.0",
     "warpaint": "^0.0.10"
+  },
+  "engine": {
+    "node": ">=8.9"
   }
 }
