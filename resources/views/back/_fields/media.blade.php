@@ -2,6 +2,7 @@
     // TODO: this should be optimized performance wise since we fetch every file every time...
     $files = $manager->getFieldValue($field);
     $files = $files[$key] ?? [];
+    $name = $name ?? $key;
 ?>
 
 <filesupload group="{{ $key }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
@@ -13,13 +14,13 @@
                 <slim group="{{ $key }}" :options="{
                     id: item.id,
                     filename: item.filename,
-                    url:item.url,
+                    url: item.url,
                     file: item.file,
                     label: 'Drop hier uw afbeelding',
                 }"></slim>
             </div>
             <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="column-3">
-                <div class="thumb thumb-new" id="file-drop-area-{{ $key }}"
+                <div class="thumb thumb-new" id="file-drop-area-{{ $name }}"
                      :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                      @dragover.prevent="handleDraggingOver"
                      @dragleave.prevent="handleDraggingLeave"

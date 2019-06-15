@@ -2,6 +2,7 @@
     // TODO: this should be optimized performance wise since we fetch every file every time...
     $files = $manager->getFieldValue($field);
     $files = $files[$key] ?? [];
+    $name = $name ?? $key;
 ?>
 
 @foreach($files as $document)
