@@ -90,7 +90,7 @@ class ModuleManager extends AbstractManager implements Manager
         return new Fields([
             InputField::make('slug')
                 ->label('Interne benaming')
-                ->validation('required'),
+                ->validation('required', ['slug' => 'Interne titel is verplicht']),
             InputField::make('title')
                 ->translatable($this->model->availableLocales())
                 ->label('titel'),
@@ -117,7 +117,7 @@ class ModuleManager extends AbstractManager implements Manager
         if (request()->get('deleteconfirmation') !== 'DELETE') {
             throw new DeleteAborted();
         }
-        
+
         app(DeleteModule::class)->handle($this->model->id);
     }
 
