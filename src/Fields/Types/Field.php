@@ -51,7 +51,6 @@ class Field
                             ->rules($rules);
             }
         }
-
         return ['rules' => $rules, 'messages' => $messages, 'customAttributes' => $customAttributes];
     }
 

@@ -20,7 +20,7 @@
             >
             </chief-multiselect>
 
-            <error class="caption text-warning" field="morph_key" :errors="errors.all()"></error>
+            <error class="caption text-warning" field="module_key" :errors="errors.all()"></error>
 
         </div>
 
