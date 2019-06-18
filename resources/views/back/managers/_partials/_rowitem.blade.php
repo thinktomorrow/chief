@@ -1,7 +1,10 @@
 <div class="s-column-6 m-column-4 inset-xs">
     <div class="row bg-white inset-s panel panel-default" style="height:100%">
         <div class="column">
-            <div>{{$manager->details()->singular}}</div>
+            @if($manager->model() instanceof Thinktomorrow\Chief\Modules\Module)
+                <div>{{$manager->details()->singular}}</div>
+            @endif
+
             @if($manager->can('edit'))
                 <a class="text-black bold" href="{{ $manager->route('edit') }}">
                     {!! $manager->details()->title !!}
