@@ -16,6 +16,7 @@
         init: function(app){
             this.app = app;
             this.toolbar = app.toolbar;
+            this.lang = app.lang;
             this.block = app.block;
         },
 
