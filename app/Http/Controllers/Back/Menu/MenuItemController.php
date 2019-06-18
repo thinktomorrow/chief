@@ -17,6 +17,8 @@ class MenuItemController extends Controller
 {
     public function create($menutype)
     {
+        $this->authorize('create-page');
+
         $menuitem            = new MenuItem;
         $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
@@ -35,6 +37,8 @@ class MenuItemController extends Controller
 
     public function store(MenuRequest $request)
     {
+        $this->authorize('create-page');
+
         $menu = app(CreateMenu::class)->handle($request);
 
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
@@ -42,6 +46,8 @@ class MenuItemController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update-page');
+
         $menuitem = MenuItem::findOrFail($id);
         $menuitem->injectTranslationForForm();
 
@@ -75,6 +81,8 @@ class MenuItemController extends Controller
 
     public function update(MenuRequest $request, $id)
     {
+        $this->authorize('update-page');
+
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangepast');
@@ -82,6 +90,8 @@ class MenuItemController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete-page');
+
         $menuItem = app(DeleteMenu::class)->handle($id);
 
         if ($menuItem) {
