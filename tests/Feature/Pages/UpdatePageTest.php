@@ -26,9 +26,9 @@ class UpdatePageTest extends TestCase
         // Create a dummy page up front based on the expected validPageParams
         $this->page = Single::create([
             'title:nl' => 'new title',
-            'slug:nl'  => 'new-slug',
+            'slug:nl' => 'new-slug',
             'title:en' => 'nouveau title',
-            'slug:en'  => 'nouveau-slug',
+            'slug:en' => 'nouveau-slug',
         ]);
 
         // For our project context we expect the page detail route to be known

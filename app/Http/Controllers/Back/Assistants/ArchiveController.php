@@ -31,11 +31,11 @@ class ArchiveController extends Controller
     public function archive($key, $id)
     {
         $manager = $this->managers->findByKey($key, $id);
-        
+
         $manager->assistant('archive')
-            ->guard('archive')
-            ->archive();
-        
+                        ->guard('archive')
+                        ->archive();
+
         return redirect()->back()->with('messages.success', $manager->details()->title .' is gearchiveerd.');
     }
 
@@ -44,8 +44,8 @@ class ArchiveController extends Controller
         $manager = $this->managers->findByKey($key, $id);
 
         $manager->assistant('archive')
-                ->guard('unarchive')
-                ->unarchive();
+            ->guard('unarchive')
+            ->unarchive();
 
         return redirect()->to($manager->route('index'))->with('messages.success', $manager->details()->title .' is hersteld.');
     }

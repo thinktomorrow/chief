@@ -76,7 +76,6 @@ class ArchiveAssistant implements Assistant
 
     public function route($verb): ?string
     {
-
         $routes = [
             'index' => route('chief.back.assistants.archive-index', [$this->manager->details()->key]),
         ];
@@ -95,26 +94,7 @@ class ArchiveAssistant implements Assistant
 
     public function can($verb): bool
     {
-        try {
-            $this->authorize($verb);
-        } catch (NotAllowedManagerRoute $e) {
-            return false;
-        }
-
         return !is_null($this->route($verb));
-    }
-
-    /**
-     * @param $verb
-     * @throws NotAllowedManagerRoute
-     */
-    private function authorize($verb)
-    {
-        $permission = 'archive-page';
-
-        if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
-            throw NotAllowedManagerRoute::notAllowedPermission($permission, $this->manager);
-        }
     }
 
     public function guard($verb): Assistant
