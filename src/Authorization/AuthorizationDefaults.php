@@ -18,7 +18,7 @@ class AuthorizationDefaults
         return collect([
 
             // full access, even to application logic stuff
-            'developer' => ['role', 'user', 'page', 'disable-user', 'update-you', 'squanto', 'view-audit', 'update-setting'],
+            'developer' => ['role', 'user', 'page', 'disable-user', 'update-you', 'squanto', 'view-audit', 'update-setting', 'archive-page'],
 
             // Manages everything, including users
             'admin' => ['user', 'page', 'disable-user', 'update-you', 'view-squanto', 'update-squanto', 'view-audit', 'update-setting'],
@@ -46,6 +46,7 @@ class AuthorizationDefaults
             'view-page',
             'create-page',
             'update-page',
+            'archive-page',
             'delete-page',
 
             'view-squanto',

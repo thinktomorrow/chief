@@ -23,9 +23,18 @@ class ArchivePageTest extends TestCase
     }
 
     /** @test */
+    public function it_cant_archive_a_page_without_permission()
+    {
+        $this->asAdminWithoutRole()
+            ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
+
+        $this->assertCount(0, Page::archived()->get());
+    }
+
+    /** @test */
     public function it_can_archive_a_page()
     {
-        $this->asAdmin()
+        $this->asDeveloper()
             ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
         // Archived page is not included in default retrieval
@@ -38,7 +47,7 @@ class ArchivePageTest extends TestCase
     {
         $this->page->publish();
 
-        $this->asAdmin()
+        $this->asDeveloper()
             ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
         $this->assertCount(0, Page::all());

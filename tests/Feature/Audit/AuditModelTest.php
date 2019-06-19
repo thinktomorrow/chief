@@ -2,17 +2,18 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
+use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Audit\Audit;
 use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Audit\Audit;
 
 class AuditModelTest extends TestCase
 {
@@ -98,7 +99,7 @@ class AuditModelTest extends TestCase
 
         $page = factory(Page::class)->create(['published' => true])->first();
 
-        $this->actingAs($user, 'chief')
+        $response = $this->actingAs($user, 'chief')
              ->post(route('chief.back.assistants.archive', ['singles', $page->id]));
 
         $activity = Audit::getAllActivityFor($page);

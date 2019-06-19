@@ -67,6 +67,8 @@ class ModuleManager extends AbstractManager implements Manager
             $permission = 'view-page';
         } elseif (in_array($verb, ['create','store'])) {
             $permission = 'create-page';
+        }elseif (in_array($verb, ['archive'])) {
+            $permission = 'archive-page';
         } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }

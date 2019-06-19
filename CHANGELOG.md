@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Added: added archive permissions to protect archive routes
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab

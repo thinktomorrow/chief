@@ -1,5 +1,5 @@
 <hr>
-@if($manager->can('update') && $manager->isAssistedBy('archive'))
+@if($manager->isAssistedBy('archive') && $manager->assistant('archive')->can('archive'))
     @if(! $manager->assistant('archive')->isArchived())
         <a data-submit-form="archiveForm-{{ $manager->details()->id }}" class="block squished-s text-warning --link-with-bg">Archiveer</a>
         <form class="--hidden" id="archiveForm-{{ $manager->details()->id }}" action="{{ $manager->assistant('archive')->route('archive') }}" method="POST">
