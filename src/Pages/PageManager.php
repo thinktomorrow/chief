@@ -103,6 +103,7 @@ class PageManager extends AbstractManager implements Manager
                 ->label('Zoekmachine sleutelwoorden')
                 ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
             MediaField::make('seo_image')
+                ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
                 ->description('foto die bij het delen van deze pagina getoont word. (afmeting: 1200x627px)')
         );

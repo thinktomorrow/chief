@@ -17931,7 +17931,7 @@ $R.add('class', 'video.component', {
     // Data attribute load
     window.addEventListener('load', function()
     {
-        $R('[data-redactor]');
+        $R('[data-redactor]', { lang: 'nl' });
     });
 
 }());
