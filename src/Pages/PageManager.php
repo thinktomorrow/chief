@@ -129,7 +129,7 @@ class PageManager extends AbstractManager implements Manager
     {
         if ($key == 'create') {
             return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
-                return in_array($field->key,['title']);
+                return in_array($field->key, ['title']);
             }));
         }
 
@@ -186,7 +186,7 @@ class PageManager extends AbstractManager implements Manager
             $trans[$locale] = $this->addDefaultShortDescription($translation);
 
             // Automatically add an url for this locale based on the given title
-            if(!isset($urls[$locale]) && isset($translation['title'])) {
+            if (!isset($urls[$locale]) && isset($translation['title'])) {
                 $urls[$locale] = Str::slug($translation['title']);
             }
         }
