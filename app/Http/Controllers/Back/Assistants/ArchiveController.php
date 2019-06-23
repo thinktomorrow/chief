@@ -35,17 +35,16 @@ class ArchiveController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        if($redirectReference = $request->get('redirect_id'))
-        {
+        if ($redirectReference = $request->get('redirect_id')) {
             $model = FlatReferenceFactory::fromString($redirectReference)->instance();
 
             $targetRecords = UrlRecord::getByModel($model);
 
             // Ok now get all urls from this model and point them to the new records
-            foreach(UrlRecord::getByModel($manager->model()) as $urlRecord) {
-                if($targetRecord = $targetRecords->first(function($record) use($urlRecord){
+            foreach (UrlRecord::getByModel($manager->model()) as $urlRecord) {
+                if ($targetRecord = $targetRecords->first(function ($record) use ($urlRecord) {
                     return ($record->locale == $urlRecord->locale && !$record->isRedirect());
-                })){
+                })) {
                     $urlRecord->redirectTo($targetRecord);
                 }
             }

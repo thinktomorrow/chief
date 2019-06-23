@@ -39,7 +39,7 @@ class ChiefResponse extends Response
 
                 // If model is not found, it probably means it is archived or removed
                 // So we detect the model based on the redirect target url.
-                if(!$model){
+                if (!$model) {
                     $targetUrlRecord = $urlRecord->redirectTo();
                     $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
 
