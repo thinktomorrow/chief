@@ -5,7 +5,7 @@ use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Authorization\Permission;
 use Illuminate\Console\Command;
 
-class GenerateRoleCommand extends Command
+class GenerateRole extends Command
 {
     protected $signature = 'chief:role 
                                 {name : the role name e.g. admin, editor.}

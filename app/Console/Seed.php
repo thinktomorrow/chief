@@ -2,12 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
-use Illuminate\Database\Eloquent\Factory as ModelFactory;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Console\Command;
 
-class Seed extends BaseCommand
+class Seed extends Command
 {
     protected $signature = 'chief:seed 
                             {seeder=DatabaseSeeder : the classname of the seeder. }

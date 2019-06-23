@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\Pages\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Thinktomorrow\Chief\App\Console\BaseCommand;
 use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Sortable;
 use Thinktomorrow\Chief\Pages\Page;
 
-class GeneratePage extends BaseCommand
+class GeneratePage extends Command
 {
     protected $signature = 'chief:page 
                             {name : the name for the page model in singular.}

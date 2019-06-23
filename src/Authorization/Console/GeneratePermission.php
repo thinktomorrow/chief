@@ -5,7 +5,7 @@ use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Authorization\Permission;
 use Illuminate\Console\Command;
 
-class GeneratePermissionCommand extends Command
+class GeneratePermission extends Command
 {
     protected $signature = 'chief:permission 
                                 {name : the permission scope e.g. post, user.}

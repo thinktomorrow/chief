@@ -2,13 +2,17 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
+use Illuminate\Console\Command;
+use Thinktomorrow\Chief\Authorization\Console\AuthorizationCommandHelpers;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 use Illuminate\Database\Eloquent\Factory as ModelFactory;
 use Illuminate\Support\Facades\Artisan;
 
-class RefreshDatabase extends BaseCommand
+class RefreshDatabase extends Command
 {
+    use AuthorizationCommandHelpers;
+
     protected $signature = 'chief:refresh {--force}';
     protected $description = 'This will clear the entire database and reseed with development defaults';
 

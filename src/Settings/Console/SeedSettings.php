@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Settings\Console;
 
-use Thinktomorrow\Chief\App\Console\BaseCommand;
+use Illuminate\Console\Command;
 use Thinktomorrow\Chief\Settings\Setting;
 
-class SeedSettings extends BaseCommand
+class SeedSettings extends Command
 {
     protected $signature   = 'chief:settings';
     protected $description = 'Seed the database with the settings from the config.';

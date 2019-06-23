@@ -1,12 +1,10 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Console;
+namespace Thinktomorrow\Chief\Authorization\Console;
 
-use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Users\User;
-use Illuminate\Console\Command;
 
-abstract class BaseCommand extends Command
+trait AuthorizationCommandHelpers
 {
     protected function createUser(string $firstname, string $lastname, string $email, string $password, $roles = [])
     {

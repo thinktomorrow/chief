@@ -15,17 +15,17 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\App\Console\CreateAdmin;
+use Thinktomorrow\Chief\Authorization\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
-use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\Authorization\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
-use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
-use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
+use Thinktomorrow\Chief\Authorization\Console\GenerateRole;
+use Thinktomorrow\Chief\Authorization\Console\GeneratePermission;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -82,8 +82,8 @@ class ChiefServiceProvider extends ServiceProvider
             // Bind our commands to the container
             $this->app->bind('command.chief:refresh', RefreshDatabase::class);
             $this->app->bind('command.chief:seed', Seed::class);
-            $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
-            $this->app->bind('command.chief:role', GenerateRoleCommand::class);
+            $this->app->bind('command.chief:permission', GeneratePermission::class);
+            $this->app->bind('command.chief:role', GenerateRole::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
             $this->app->bind('command.chief:settings', SeedSettings::class);

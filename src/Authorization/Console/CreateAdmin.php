@@ -1,12 +1,15 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Console;
+namespace Thinktomorrow\Chief\Authorization\Console;
 
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 
-class CreateAdmin extends BaseCommand
+class CreateAdmin extends Command
 {
+    use AuthorizationCommandHelpers;
+
     protected $signature = 'chief:admin {--dev}';
     protected $description = 'Create a new chief admin user';
 
