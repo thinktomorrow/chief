@@ -14,7 +14,7 @@
     @foreach($field->locales as $locale)
         @include($viewpath, [
             'key'   => 'trans.'.$locale.'.'.$field->key,
-            'name' => 'trans['.$locale.']['.$field->key.']',
+            'name'  => 'trans['.$locale.']['.$field->key.']',
             'field' => $field
         ])
     @endforeach

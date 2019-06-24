@@ -26,15 +26,14 @@ trait ManagesMedia
                 $images[$field->key] = [];
             }
         }
-        
+
         // There should be a function on assettrait to fetch all assets regardless of locale
         foreach ($model->assets->groupBy('pivot.type') as $type => $assetsByType) {
             foreach ($assetsByType as $asset) {
-                $images[$type][] = (object)[
+                $images[$type][$asset->pivot->locale] = (object)[
                     'id'       => $asset->id,
                     'filename' => $asset->getFilename(),
-                    'url'      => $asset->getFileUrl(),
-                    'locale'   => $asset->pivot->locale
+                    'url'      => $asset->getFileUrl()
                 ];
             }
         }

@@ -1,9 +1,11 @@
 <?php
     // TODO: this should be optimized performance wise since we fetch every file every time...
     $files = $manager->getFieldValue($field);
-    if(isset($name))
+    if(isset($locale))
     {
-        $files = $files[substr($key, 9)] ?? [];
+        $files = [$files[$field->name][$locale]] ?? [];
+    }else{
+        $files = $files[$key] ?? [];
     }
     $name = $name ?? $key;
 ?>

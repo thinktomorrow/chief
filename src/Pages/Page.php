@@ -133,7 +133,16 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function mediaUrls($type = null): Collection
     {
-        return $this->getAllFiles($type)->map->getFileUrl();
+        // TODO getallfiles should actually get all files...
+        // What was the creator of the assetlibrary package thinking. It sure wasn't me... I promise...
+        $assets = $this->getAllFiles($type, app()->getLocale())->map->getFileUrl();
+
+        if($assets->first() == null)
+        {
+            $assets = $this->getAllFiles($type)->map->getFileUrl();
+        }
+
+        return $assets;
     }
 
     public function mediaUrl($type = null): ?string

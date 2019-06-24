@@ -62,9 +62,9 @@ class EditManagerTest extends TestCase
         $this->assertEquals([
             'avatar' => [
                 (object)[
-                    'id' => $asset->id,
-                    'filename' => $asset->getFilename(),
-                    'url' => $asset->getFileUrl(),
+                    'id'        => $asset->id,
+                    'filename'  => $asset->getFilename(),
+                    'url'       => $asset->getFileUrl(),
                 ]
             ]
         ], $this->manager->getFieldValue('avatar'));
