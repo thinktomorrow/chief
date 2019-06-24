@@ -1,7 +1,10 @@
 <?php
     // TODO: this should be optimized performance wise since we fetch every file every time...
     $files = $manager->getFieldValue($field);
-    $files = $files[$key] ?? [];
+    if(isset($name))
+    {
+        $files = $files[substr($key, 9)] ?? [];
+    }
     $name = $name ?? $key;
 ?>
 

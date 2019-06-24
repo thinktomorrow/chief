@@ -54,12 +54,18 @@ class UploadMedia
 
     private function addFile(HasMedia $model, string $type, array &$files_order, $file)
     {
+        $locale = null;
+        if(strpos($type, '.') !== FALSE ){
+            $locale = substr($type, 6, 2);
+            $type = substr($type, 9);   
+        }
+
         if (is_string($file)) {
             $image_name = json_decode($file)->output->name;
-            $asset      = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
+            $asset      = $this->addAsset(json_decode($file)->output->image, $type, $locale, $image_name, $model);
         } else {
             $image_name = $file->getClientOriginalName();
-            $asset      = $this->addAsset($file, $type, null, $image_name, $model);
+            $asset      = $this->addAsset($file, $type, $locale, $image_name, $model);
         }
 
         // New files are passed with their filename (instead of their id)

@@ -14,7 +14,6 @@ trait ManagesMedia
     {
         $files = array_merge_recursive($request->get('files', []), $request->file('files', []));
         $filesOrder = $request->get('filesOrder', []);
-        
         app(UploadMedia::class)->fromUploadComponent($this->model, $files, $filesOrder);
     }
 
@@ -27,13 +26,15 @@ trait ManagesMedia
                 $images[$field->key] = [];
             }
         }
-
-        foreach ($model->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
+        
+        // There should be a function on assettrait to fetch all assets regardless of locale
+        foreach ($model->assets->groupBy('pivot.type') as $type => $assetsByType) {
             foreach ($assetsByType as $asset) {
                 $images[$type][] = (object)[
                     'id'       => $asset->id,
                     'filename' => $asset->getFilename(),
                     'url'      => $asset->getFileUrl(),
+                    'locale'   => $asset->pivot->locale
                 ];
             }
         }

@@ -178,7 +178,7 @@ class UploadMediaTest extends TestCase
     public function it_can_upload_image_with_uppercased_extension()
     {
         // Currently uploaded a xxx.JPEG fails retrieval as the source by Slim
-        // TODO: this is something that should be provided by Assetlibrary
+        // TODO: this is something that should be provided by Assetlibrary 
         $this->markTestIncomplete();
 
         $page = Single::create();
