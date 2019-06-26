@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Authorization\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
-use Thinktomorrow\Chief\Authorization\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
@@ -85,7 +84,6 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:permission', GeneratePermission::class);
             $this->app->bind('command.chief:role', GenerateRole::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
-            $this->app->bind('command.chief:developer', CreateDeveloper::class);
             $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [

@@ -22,7 +22,8 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: don't show tabs when there is just one language in menubuilder. Case: "Of kies een eigen link."
 - Added: added seo_keywords validation on length
 - Removed: `app\Console\BaseCommand` and provide same methods via an `\Thinktomorrow\Chief\Authorization\Console\AuthorizationCommandHelpers` trait.
-- Changed: moved `CreateAdmin` and `CreateDeveloper` commands to the `\Thinktomorrow\Chief\Authorization\Console\` namespace.
+- Removed: `chief:developer` artisan command as it can be replaced by running `php artisan chief:admin --dev`.
+- Changed: moved `CreateAdmin` to the `\Thinktomorrow\Chief\Authorization\Console\` namespace.
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab
