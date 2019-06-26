@@ -1,9 +1,22 @@
 ;(function($R){
 
     $R.add('plugin', 'redactorColumns', {
+        translations: {
+    		en: {
+    			"columns": "Columns",
+    			"columns-2": "2 columns",
+    			"columns-3": "2 columns",
+            },
+            nl: {
+                "columns": "Kolommen",
+    			"columns-2": "2 kolommen",
+    			"columns-3": "2 kolommen",
+            }
+        },
         init: function(app){
             this.app = app;
             this.toolbar = app.toolbar;
+            this.lang = app.lang;
             this.block = app.block;
         },
 
@@ -11,10 +24,10 @@
         start: function(){
 
             var dropdown = {};
-            var $button = this.toolbar.addButton('column', { title: 'Columns' });
+            var $button = this.toolbar.addButton('column', { title: this.lang.get('columns') });
 
-            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
-            dropdown.three = { title: '3 columns', api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
+            dropdown.two = { title: this.lang.get('columns-2'), api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
+            dropdown.three = { title: this.lang.get('columns-3'), api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
 
             $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#grid"/></svg></span>');
             $button.setDropdown(dropdown);

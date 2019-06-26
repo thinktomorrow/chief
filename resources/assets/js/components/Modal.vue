@@ -3,7 +3,7 @@
         <div v-show="isVisible" class="modal" :class="typedclass">
             <div class="modal-backdrop" @click="close"></div>
             <div class="modal-content">
-                <div class="panel">
+                <div class="panel border border-grey-100 rounded">
                     <div class="inset">
                         <div class="modal-header">
                             <h3 class="uppercase">{{ title }}</h3>

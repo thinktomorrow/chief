@@ -29,7 +29,7 @@
 
 @section('content')
 
-    <form method="POST" action="{{ route('squanto.lines.update',$line->id) }}" role="form" class="form-horizontal">
+    <form method="POST" action="{{ route('squanto.lines.update',$line->id) }}" role="form">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="PUT">
 

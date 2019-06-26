@@ -20,7 +20,7 @@
 @endcomponent
 
 @section('content')
-    <form id="translationForm" method="POST" action="{{ route('squanto.update',$page->id) }}" role="form" class="form-horizontal">
+    <form id="translationForm" method="POST" action="{{ route('squanto.update',$page->id) }}" role="form">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="PUT">
 

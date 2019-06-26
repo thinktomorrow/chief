@@ -20,11 +20,86 @@
 	}
 }
 
-.btn-primary {
-	@apply text-white bg-primary-500;
+.btn-round {
+    @apply rounded-lg;
 }
 
-.btn-secondary {
-	@apply text-white bg-secondary-500;
+.btn-icon {
+	@apply inline-flex justify-center items-center;
+    & > *:first-child{
+        @apply mr-4;
+    }
 }
+
+$buttonColors: (
+    primary: (#13C6A6, white),
+    secondary: (#4360A8, white),
+    success: (#2fca74, white),
+    error: (#ed4d4d, white),
+    warning: (#f5b848, white),
+    information: (#2083fe, white),
+);
+
+@each $name, $colors in $buttonColors{
+
+    $bgcolor: nth($colors, 1);
+    $fontcolor: nth($colors, 2);
+
+    .btn-group-#{$name},
+    .btn-#{$name}{
+        background-color: $bgcolor;
+        color: $fontcolor;
+        border: 1px solid $bgcolor;
+        box-shadow: 0 5px 10px 0 rgba($bgcolor,.09);
+
+        &:hover, &:focus, &:active, &.active{
+            color: $fontcolor;
+            background-color: lighten($bgcolor, 3%);
+            border: 1px solid lighten($bgcolor, 3%);
+            box-shadow: 0 14px 26px -12px rgba($bgcolor, 0),
+            0 4px 23px 0px rgba(black, 0.2),
+            0 8px 10px -5px rgba($bgcolor, 0.2)
+        }
+	}
+	
+    .btn-o-#{$name}{
+		@apply bg-transparent;
+        color: $bgcolor;
+        border: 1px solid $bgcolor;
+        &:hover, &:focus, &:active, &.active{
+            background-color: $bgcolor;
+            color: $fontcolor;
+            box-shadow: 0 14px 26px -12px rgba($bgcolor, 0),
+            0 4px 23px 0px rgba(black, 0.2),
+            0 8px 10px -5px rgba($bgcolor, 0.2)
+        }
+    }
+
+    .btn-group-#{$name} .btn-group-btn{
+        &:first-child{
+            border-right: 1px solid $bgcolor;
+        }
+    }
+}
+
+// SPLIT BUTTONS
+// Buttons are not floated to allow for flex behaviour but this means that there should be no
+// space between the button elements to avoid an empty space in between.
+.btn-group {
+	@apply inline-block;
+
+    .btn{
+        line-height: 1.5;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .btn-group-last, .btn-group-last .btn{
+        border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
+
 

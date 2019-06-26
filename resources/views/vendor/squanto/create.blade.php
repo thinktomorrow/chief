@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <form method="POST" action="{{ route('squanto.lines.store') }}" role="form" class="form-horizontal">
+    <form method="POST" action="{{ route('squanto.lines.store') }}" role="form">
         {{ csrf_field() }}
 
         <section class="formgroup">

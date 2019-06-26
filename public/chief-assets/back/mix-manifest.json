@@ -1,9 +1,9 @@
 {
-    "/js/main.js": "/js/main.js?id=d2724bce34f85345330b",
-    "/css/main.css": "/css/main.css?id=cc5781ca21c2d4670639",
-    "/css/login.css": "/css/login.css?id=8b411b68fae475567ada",
-    "/js/native.js": "/js/native.js?id=a0eee65e0a7c3a2ff9b6",
-    "/js/vendors/redactor.js": "/js/vendors/redactor.js?id=d8cad82595be7b8fd466",
+    "/js/main.js": "/js/main.js?id=eeba52bb19ead89625f2",
+    "/css/login.css": "/css/login.css?id=f9479b72c09982b0d97c",
+    "/js/native.js": "/js/native.js?id=d8ff804ef5ff4b179fe3",
+    "/js/vendors/redactor.js": "/js/vendors/redactor.js?id=537048b7ba728b6ae11f",
     "/js/vendors/slim.kickstart.min.js": "/js/vendors/slim.kickstart.min.js?id=e5ef1948c4c668ba1188",
-    "/css/vendors/slim.min.css": "/css/vendors/slim.min.css?id=f56b065aa610c65c2064"
+    "/css/vendors/slim.min.css": "/css/vendors/slim.min.css?id=f56b065aa610c65c2064",
+    "/css/main.css": "/css/main.css?id=214f2564c9ac412d494b"
 }

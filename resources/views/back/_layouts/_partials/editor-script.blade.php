@@ -9,6 +9,7 @@
             @endif
             formatting: ['h2', 'h3', 'p', 'blockquote'],
             imageResizable: true,
+            lang: 'nl',
             imagePosition: true,
             imageFigure: false,
             @if( ! \Thinktomorrow\Chief\Snippets\SnippetCollection::appearsEmpty())

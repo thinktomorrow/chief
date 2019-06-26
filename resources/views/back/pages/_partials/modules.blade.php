@@ -26,20 +26,23 @@
     @endif
     
     @if(!$page->modules->isEmpty())
+
         <div class="row gutter-s stack">
             @foreach($page->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
                 @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                @push('portals')
+                    @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                @endpush
             @endforeach
         </div>
     
-    
         <div class="stack">
             <a @click="showModal('create-module')" class="btn btn-primary">
-            <i class="icon icon-plus"></i>
-            Voeg een module toe
+                <i class="icon icon-plus"></i>
+                Voeg een module toe
             </a>
         </div>
+        
     @endif
 
 </div>

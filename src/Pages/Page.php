@@ -55,7 +55,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $translationModel      = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
     protected $translatedAttributes  = [
-        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords'
+        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords', 'seo_image'
     ];
 
     public $table          = "pages";

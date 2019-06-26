@@ -17931,10 +17931,11 @@ $R.add('class', 'video.component', {
     // Data attribute load
     window.addEventListener('load', function()
     {
-        $R('[data-redactor]');
+        $R('[data-redactor]', { lang: 'nl' });
     });
 
 }());
+
 (function($R)
 {
     $R.add('plugin', 'alignment', {
@@ -18075,9 +18076,22 @@ $R.add('class', 'video.component', {
 ;(function($R){
 
     $R.add('plugin', 'redactorColumns', {
+        translations: {
+    		en: {
+    			"columns": "Columns",
+    			"columns-2": "2 columns",
+    			"columns-3": "2 columns",
+            },
+            nl: {
+                "columns": "Kolommen",
+    			"columns-2": "2 kolommen",
+    			"columns-3": "2 kolommen",
+            }
+        },
         init: function(app){
             this.app = app;
             this.toolbar = app.toolbar;
+            this.lang = app.lang;
             this.block = app.block;
         },
 
@@ -18085,10 +18099,10 @@ $R.add('class', 'video.component', {
         start: function(){
 
             var dropdown = {};
-            var $button = this.toolbar.addButton('column', { title: 'Columns' });
+            var $button = this.toolbar.addButton('column', { title: this.lang.get('columns') });
 
-            dropdown.two = { title: '2 columns', api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
-            dropdown.three = { title: '3 columns', api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
+            dropdown.two = { title: this.lang.get('columns-2'), api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
+            dropdown.three = { title: this.lang.get('columns-3'), api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
 
             $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#grid"/></svg></span>');
             $button.setDropdown(dropdown);
@@ -18107,6 +18121,7 @@ $R.add('class', 'video.component', {
     });
 
 })(Redactor);
+
 (function($R)
 {
     $R.add('plugin', 'rich-links', {
@@ -18565,4 +18580,74 @@ $R.add('class', 'video.component', {
             this.insertion.insertRaw(html);
 		}
     });
+})(Redactor);
+(function($R)
+{
+    $R.lang['nl'] = {
+        "format": "Format",
+        "image": "Afbeelding",
+        "file": "Bestand",
+        "link": "Link",
+        "bold": "Vet",
+        "italic": "Cursief",
+        "deleted": "Doorstreept",
+        "underline": "Onderstreept",
+        "superscript": "Superscript",
+        "subscript": "Subscript",
+        "bold-abbr": "B",
+        "italic-abbr": "I",
+        "deleted-abbr": "S",
+        "underline-abbr": "U",
+        "superscript-abbr": "Sup",
+        "subscript-abbr": "Sub",
+        "lists": "Lijsten",
+        "link-insert": "Link invoegen",
+        "link-edit": "Link Bewerken",
+        "link-in-new-tab": "Open link in nieuw tabblad",
+        "unlink": "Ontkoppelen",
+        "cancel": "Annuleren",
+        "close": "Afsluiten",
+        "insert": "Invoegen",
+        "save": "Opslaan",
+        "delete": "Verwijder",
+        "text": "Tekst",
+        "edit": "Bewerken",
+        "title": "Titel",
+        "paragraph": "Normale tekst",
+        "quote": "Citaat",
+        "code": "Code",
+        "heading1": "Koptekst 1",
+        "heading2": "Koptekst 2",
+        "heading3": "Koptekst 3",
+        "heading4": "Koptekst 4",
+        "heading5": "Koptekst 5",
+        "heading6": "Koptekst 6",
+        "filename": "Bestandsnaam",
+        "optional": "Optioneel",
+        "unorderedlist": "Ongeordende lijst",
+        "orderedlist": "Geordende lijst",
+        "outdent": "Uitspringen",
+        "indent": "Inspringen",
+        "horizontalrule": "Streep",
+        "upload": "Upload",
+        "upload-label": "Sleep je bestand hier of klik om te uploaden",
+        "upload-change-label": "Sleep een foto hier om te veranderen",
+        "accessibility-help-label": "RTF editor",
+        "caption": "Caption",
+        "bulletslist": "Bullets",
+        "numberslist": "Nummers",
+        "image-position": "Positie",
+        "none": "Geen",
+        "left": "Links",
+        "right": "Rechts",
+        "center": "Centreer",
+        "undo": "Undo",
+        "redo": "Redo",
+        "video-html-code": "Video Embed Code of Youtube/Vimeo Link",
+        "align": "Uitlijnen",
+        "align-left": "Links uitlijnen",
+        "align-center": "Midden uitlijnen",
+        "align-right": "Rechts uitlijnen",
+        "align-justify": "Justify uitlijnen"
+    };
 })(Redactor);

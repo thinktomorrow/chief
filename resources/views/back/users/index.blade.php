@@ -11,7 +11,7 @@
     <div class="row gutter">
         @foreach($users as $user)
             <div class="s-column-6 m-column-4 inset-xs">
-                <div class="row bg-white inset-s panel panel-default" style="height:100%">
+                <div class="row bg-white inset-s border border-grey-100 rounded" style="height:100%">
                     <div>
                         @if(!chiefAdmin()->can('update-user') || ($user->hasRole('developer') && !chiefAdmin()->hasRole('developer')) )
                             <span>{{ $user->fullname }}</span>

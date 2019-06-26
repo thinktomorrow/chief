@@ -10,6 +10,8 @@ class MenuController extends Controller
 {
     public function index()
     {
+        $this->authorize('view-page');
+
         $menus = Menu::all();
 
         // If there is only one menu, we will show the menu immediately.
@@ -24,6 +26,8 @@ class MenuController extends Controller
 
     public function show($type)
     {
+        $this->authorize('view-page');
+
         $menu = Menu::find($type);
 
         return view('chief::back.menu.show', [

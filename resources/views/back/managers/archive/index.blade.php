@@ -13,7 +13,7 @@
 @endcomponent
 
 @section('content')
-    <div class="row gutter-s">
+    <div class="row gutter stack">
         @foreach($managers as $manager)
             @include('chief::back.managers.archive._rowitem')
             @include('chief::back.managers._partials.delete-modal')

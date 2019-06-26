@@ -173,7 +173,7 @@
         </div>
         <div class="stack">
 
-            <div class="panel panel-default bg-white">
+            <div class="border border-grey-100 rounded bg-white">
                 <div class="inset-s" style="border-bottom:1px solid #f5f5f5">
                     <span class="bold">Huidige sortering op dit niveau:</span>
                 </div>

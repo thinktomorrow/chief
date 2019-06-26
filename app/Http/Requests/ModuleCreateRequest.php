@@ -35,8 +35,15 @@ class ModuleCreateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'module_key' => 'type',
-            'slug'      => 'interne link',
+            'module_key'    => 'type',
+            'slug'          => 'interne titel',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required'    => 'Gelieve een :attribute in te geven, aub.',
         ];
     }
 }

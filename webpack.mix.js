@@ -29,7 +29,8 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 		'resources/assets/js/redactor-plugins/rich-links.js',
 		'resources/assets/js/redactor-plugins/custom-classes.js',
 		'resources/assets/js/redactor-plugins/video/video.js',
-		'resources/assets/js/redactor-plugins/clips/clips.js',
+        'resources/assets/js/redactor-plugins/clips/clips.js',
+        'resources/assets/js/vendors/redactor/_langs/nl.js'
 	], 'public/chief-assets/back/js/vendors/redactor.js')
 
 	/**

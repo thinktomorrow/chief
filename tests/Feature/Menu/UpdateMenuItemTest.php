@@ -24,7 +24,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create();
 
-        $response = $this->asAdminWithoutRole()->get(route('chief.back.menuitem.edit', $menuitem->id));
+        $response = $this->asAdmin()->get(route('chief.back.menuitem.edit', $menuitem->id));
         $response->assertViewIs('chief::back.menu.edit')
                  ->assertStatus(200);
     }
@@ -71,7 +71,7 @@ class UpdateMenuItemTest extends TestCase
         $newpage    = factory(Page::class)->create();
         $menuitem   = factory(MenuItem::class)->create(['type' => 'internal', 'page_id' => $page->flatReference()->get()]);
 
-        $response = $this->asAdminWithoutRole()
+        $response = $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'type'           => 'internal',
                 'page_id'        => $newpage->flatReference()->get(),
@@ -90,7 +90,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $response = $this->asAdminWithoutRole()
+        $response = $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'https://thinktomorrow.be/contact']));
 
         $response->assertStatus(302);
@@ -105,7 +105,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $this->asAdminWithoutRole()
+        $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => '/contact']));
 
         $this->assertCount(1, MenuItem::all());
@@ -117,7 +117,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $this->asAdminWithoutRole()
+        $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams(['type' => 'custom', 'trans.nl.url' => 'contact/']));
 
         $this->assertCount(1, MenuItem::all());
@@ -127,13 +127,10 @@ class UpdateMenuItemTest extends TestCase
     /** @test */
     public function a_menuitem_can_be_nested()
     {
-        // Reference here cause we need it twice
-        $defaultAdmin = factory(User::class)->make();
-
         $parent = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
         $child = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com']);
 
-        $response = $this->actingAs($defaultAdmin, 'chief')
+        $response = $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $child->id), $this->validParams([
                 'allow_parent' => true,
                 'parent_id'    => $parent->id
@@ -146,7 +143,7 @@ class UpdateMenuItemTest extends TestCase
         $this->assertEquals($parent->id, MenuItem::find(2)->parent->id); // Hardcoded assumption that newly created has id of 2
 
         // If item can be set to top level again
-        $this->actingAs($defaultAdmin, 'chief')
+        $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $child->id), $this->validParams([
                 'allow_parent' => false,
             ]));
@@ -158,14 +155,11 @@ class UpdateMenuItemTest extends TestCase
     /** @test */
     public function a_menuitem_can_be_sorted()
     {
-        // Reference here cause we need it twice
-        $defaultAdmin = factory(User::class)->make();
-
         $secondItem = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 2]);
         $firstItem  = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 1]);
         $thirdItem  = factory(MenuItem::class)->create(['type' => 'custom', 'label:nl' => 'foobar', 'url:nl' => 'http://google.com', 'order' => 3]);
 
-        $response = $this->actingAs($defaultAdmin, 'chief')
+        $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $secondItem->id), $this->validParams([
                 'order' => 1,
             ]));
@@ -182,7 +176,7 @@ class UpdateMenuItemTest extends TestCase
     {
         $menuitem   = factory(MenuItem::class)->create(['type' => 'custom', 'url:nl' => 'http://google.com']);
 
-        $this->asAdminWithoutRole()
+        $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'trans.nl.label' => 'new label',
                 'trans.nl.url'   => 'thinktomorrow.be',
@@ -226,7 +220,7 @@ class UpdateMenuItemTest extends TestCase
 
         // Inside our logic the page should be existing. If not, the creation is aborted but we do not
         // show this response to the interface since this is rather a hack then expected behaviour.
-        $this->asAdminWithoutRole()
+        $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'type'           => 'internal',
                 'trans.nl.label' => 'updated label',
