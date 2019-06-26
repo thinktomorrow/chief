@@ -24,21 +24,36 @@ class UploadMedia
             return;
         }
 
-        // We allow for more memory consumption because the gd decoding can require a lot of memory when parsing large images.
-        ini_set('memory_limit', '256M');
+        //TODO check if trans key is present, if so we're saving translatable media
+
         foreach ($files_by_type as $type => $files) {
-            $this->validateFileUploads($files);
+            if(key_exists('trans', $files))
+            {
+                foreach($files['trans'] as $locale => $files)
+                {
+                    $this->validateFileUploads($files);
 
-            $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
-            $this->addFiles($model, $type, $files, $files_order);
-            $this->replaceFiles($model, $files);
-            $this->removeFiles($model, $files);
+                    $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
+                    $this->addFiles($model, $type, $files, $files_order, $locale);
+                    $this->replaceFiles($model, $files);
+                    $this->removeFiles($model, $files);
 
-            $model->sortFiles($type, $files_order);
+                    $model->sortFiles($type, $files_order);
+                }
+            }else{
+                $this->validateFileUploads($files);
+
+                $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
+                $this->addFiles($model, $type, $files, $files_order);
+                $this->replaceFiles($model, $files);
+                $this->removeFiles($model, $files);
+
+                $model->sortFiles($type, $files_order);
+            }
         }
     }
 
-    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order)
+    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order, string $locale = null)
     {
         if (isset($files['new']) && is_array($files['new']) && !empty($files['new'])) {
             foreach ($files['new'] as $file) {
@@ -47,19 +62,13 @@ class UploadMedia
                     continue;
                 }
 
-                $this->addFile($model, $type, $files_order, $file);
+                $this->addFile($model, $type, $files_order, $file, $locale);
             }
         }
     }
 
-    private function addFile(HasMedia $model, string $type, array &$files_order, $file)
+    private function addFile(HasMedia $model, string $type, array &$files_order, $file, $locale = null)
     {
-        $locale = null;
-        if(strpos($type, '.') !== FALSE ){
-            $locale = substr($type, 6, 2);
-            $type = substr($type, 9);   
-        }
-
         if (is_string($file)) {
             $image_name = json_decode($file)->output->name;
             $asset      = $this->addAsset(json_decode($file)->output->image, $type, $locale, $image_name, $model);

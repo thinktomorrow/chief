@@ -66,7 +66,6 @@
                 },
                 _handleItem: function (item) {
                     var file = item;
-                    console.log(file);
 
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();

@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
+use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 
 class UploadMediaTest extends TestCase
 {
@@ -178,7 +179,7 @@ class UploadMediaTest extends TestCase
     public function it_can_upload_image_with_uppercased_extension()
     {
         // Currently uploaded a xxx.JPEG fails retrieval as the source by Slim
-        // TODO: this is something that should be provided by Assetlibrary 
+        // TODO: this is something that should be provided by Assetlibrary
         $this->markTestIncomplete();
 
         $page = Single::create();
@@ -195,5 +196,101 @@ class UploadMediaTest extends TestCase
             ]));
 
         $this->assertEquals('tt-favicon.png', $page->getFilename(MediaType::HERO));
+    }
+
+    /** @test */
+    public function it_can_upload_translatable_images()
+    {
+        app(Register::class)->register('singles', PageManager::class, Single::class);
+        $page = Single::create();
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    'seo_image' => [
+                        'trans' => [
+                            'nl' => [
+                                'new' => [
+                                    $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                                ]
+                            ],
+                            'en' => [
+                                'new' => [
+                                    $this->dummySlimImagePayload('tt-favicon-en.png'),
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]));
+
+        $this->assertEquals('tt-favicon-nl.png', $page->getFilename('seo_image', 'nl'));
+        $this->assertEquals('tt-favicon-en.png', $page->getFilename('seo_image', 'en'));
+    }
+
+    /** @test */
+    public function it_can_replace_translatable_images()
+    {
+        app(Register::class)->register('singles', PageManager::class, Single::class);
+        $page = Single::create();
+        $page->addFile(UploadedFile::fake()->image('image.png'), 'seo_image', 'nl');
+
+        $existing_asset_nl = $page->getAllFiles('seo_image', 'nl')->first();
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    'seo_image' => [
+                        'trans' => [
+                            'nl' => [
+                                'replace' => [
+                                    $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                                ]
+                            ],
+                            'en' => [
+                                'new' => [
+                                    $this->dummySlimImagePayload('tt-favicon-en.png'),
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]));
+
+        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'nl'));
+        $this->assertEquals('tt-favicon-en.png', $page->fresh()->getFilename('seo_image', 'en'));
+    }
+
+    /** @test */
+    public function it_can_remove_translatable_images()
+    {
+        app(Register::class)->register('singles', PageManager::class, Single::class);
+        $page = Single::create();
+        $page->addFile(UploadedFile::fake()->image('image.png'), 'seo_image', 'en');
+
+        $existing_asset_en = $page->getAllFiles('seo_image', 'en')->first();
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    'seo_image' => [
+                        'trans' => [
+                            'nl' => [
+                                'new' => [
+                                    $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                                ]
+                            ],
+                            'en' => [
+                                'delete' => [
+                                    $existing_asset_en->id,
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]));
+
+        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'nl'));
+        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'en'));
     }
 }

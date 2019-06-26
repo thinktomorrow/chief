@@ -22,6 +22,7 @@ use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Fields\Types\DocumentField;
 
 class PageManager extends AbstractManager implements Manager
 {
@@ -122,7 +123,7 @@ class PageManager extends AbstractManager implements Manager
             MediaField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
-                ->description('foto die bij het delen van deze pagina getoont word. (afmeting: 1200x627px)'),
+                ->description('foto die bij het delen van deze pagina getoond wordt. (afmeting: 1200x627px)'),
         ]);
     }
 

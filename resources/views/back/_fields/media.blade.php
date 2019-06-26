@@ -3,14 +3,18 @@
     $files = $manager->getFieldValue($field);
     if(isset($locale))
     {
-        $files = [$files[$field->name][$locale]] ?? [];
+        $files = $files[$field->name][$locale] ?? [];
+        $files = [$files];
+        $name = $field->name.'-'.$locale;
+        $key = 'files['.$field->name.'][trans]['.$locale.']';
     }else{
         $files = $files[$key] ?? [];
+        $name = $field->name;
+        $key = 'files['.$field->name.']';
     }
-    $name = $name ?? $key;
 ?>
 
-<filesupload group="{{ $key }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
+<filesupload group="{{ $name }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
     <div id="filegroup-{{ $key }}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
@@ -33,7 +37,7 @@
                     <!-- allow to click for upload -->
                     <input v-if="checkSupport" type="file" @change="handleFileSelect" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <!-- if not supported, a file can still be passed along -->
-                    <input v-else type="file" name="files[{{ $key }}][]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
+                    <input v-else type="file" name="{{ $key }}[]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <span class="icon icon-plus"></span>
                 </div>
             </div>
