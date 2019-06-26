@@ -8,7 +8,7 @@
 @endchiefheader
 
 @section('content')
-    <div class="row gutter">
+    <div class="row gutter stack">
         @foreach($users as $user)
             <div class="s-column-6 m-column-4 inset-xs">
                 <div class="row bg-white inset-s border border-grey-100 rounded" style="height:100%">
