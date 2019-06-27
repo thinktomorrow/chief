@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use config;
+use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -102,6 +104,8 @@ class ChiefServiceProvider extends ServiceProvider
 
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
+
+        $this->autoloadRoute();
     }
 
     public function register()
@@ -168,5 +172,19 @@ class ChiefServiceProvider extends ServiceProvider
             'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
             'role'       => \Thinktomorrow\Chief\Authorization\Role::class,
         ];
+    }
+
+    private function autoloadRoute()
+    {
+        if (true !== config('thinktomorrow.chief.route.autoload')) return;
+
+        app()->booted(function () {
+
+            $routeName = config('thinktomorrow.chief.route.name');
+
+            Route::get('{slug?}', function ($slug = '/') use($routeName) {
+                return ChiefResponse::fromSlug($slug);
+            })->name($routeName)->where('slug', '(.*)?');
+        });
     }
 }

@@ -24,7 +24,7 @@ class ChiefResponseTest extends TestCase
             'REQUEST_URI' => '/foo/bar',
         ]);
 
-       $response = ChiefResponse::fromRequest($request);
+       $response = ChiefResponse::fromSlug('foo/bar');
 
        $this->assertInstanceOf(Response::class, $response);
        $this->assertInstanceOf(ChiefResponse::class, $response);
@@ -40,7 +40,7 @@ class ChiefResponseTest extends TestCase
             'REQUEST_URI' => 'xxx',
         ]);
 
-        ChiefResponse::fromRequest($request);
+        ChiefResponse::fromSlug('xxx');
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class ChiefResponseTest extends TestCase
             'REQUEST_URI' => 'foo/bar',
         ]);
 
-        ChiefResponse::fromRequest($request);
+        ChiefResponse::fromSlug('foo/bar');
     }
 
     /** @test */
@@ -71,7 +71,7 @@ class ChiefResponseTest extends TestCase
             'REQUEST_URI' => 'foo/bar',
         ]);
 
-        ChiefResponse::fromRequest($request);
+        ChiefResponse::fromSlug('foo/bar');
     }
 
     /** @test */

@@ -106,8 +106,7 @@ trait TestHelpers
         $this->setUpDefaultAuthorization();
 
         // Setup expected page routes
-        Route::get('/', function () { return ChiefResponse::fromSlug('/'); })->name('pages.home');
-        Route::get('{slug}', function ($slug) { return ChiefResponse::fromSlug($slug); })->name('pages.show');
+        Route::get('{slug?}', function ($slug = '/') { return ChiefResponse::fromSlug($slug); })->name('pages.show');
     }
 
     protected function setUpDefaultAuthorization()

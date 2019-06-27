@@ -31,7 +31,10 @@
                     @foreach($managers as $manager)
                         @include('chief::back.managers._partials._rowitem')
                         @include('chief::back.managers._partials.delete-modal')
-                        @include('chief::back.managers._partials.archive-modal')
+
+                        @if($manager->isAssistedBy('archive'))
+                            @include('chief::back.managers._partials.archive-modal')
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -64,7 +67,9 @@
             @foreach($managers as $manager)
                 @include('chief::back.managers._partials._rowitem')
                 @include('chief::back.managers._partials.delete-modal')
-                @include('chief::back.managers._partials.archive-modal')
+                @if($manager->isAssistedBy('archive'))
+                    @include('chief::back.managers._partials.archive-modal')
+                @endif
             @endforeach
         </div>
 
