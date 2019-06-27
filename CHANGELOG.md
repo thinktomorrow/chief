@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Removed: Homepage setting and `chief-settings.homepage` config value
+- Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.routes.autoload` value to false.
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab

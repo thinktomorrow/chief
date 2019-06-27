@@ -43,7 +43,7 @@ class ProductFake extends ManagedModelFake implements ProvidesUrl, ProvidesFlatR
      */
     public function resolveUrl(string $locale = null, $parameters = null): string
     {
-        $routeName = config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+        $routeName = config('thinktomorrow.chief.routes.name');
 
         return route($routeName, $parameters);
     }

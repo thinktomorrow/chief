@@ -171,9 +171,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function resolveUrl(string $locale = null, $parameters = null): string
     {
-        $routeName = Homepage::is($this)
-            ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
-            : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+        $routeName = config('thinktomorrow.chief.routes.name');
 
         return $this->resolveRoute($routeName, $parameters, $locale);
     }

@@ -22,18 +22,24 @@ return [
         'path'      => 'src/',
     ],
 
-    /**
-     * Definitions of the few route names that the chief backend uses to interact with the frontend.
-     *
-     * The `pages.show` serves as a catch all for displaying all Chief managed pages.
-     * This catch-all route will point to a generic PagesController that directs the request
-     * to the proper published page.
-     *
-     * `pages.home` makes the distinction with other pages in that it is accessible on the root url.
-     */
     'routes' => [
-        'pages-show' => 'pages.show',
-        'pages-home' => 'pages.home',
+        /**
+         * By default Chief will load up the page route. Since this is a catch-all route, it will be loaded last.
+         * If this conflicts with your project, set this value to false so you can handle the routing manually.
+         * The following route snippet is a good starting point:
+         *
+         *      Route::get('{slug?}', function($slug = '/'){
+         *          return ChiefResponse::fromSlug($slug);
+         *      })->name('pages.show')->where('slug', '(.*)?');
+         *
+         */
+        'autoload' => true,
+
+        /**
+         * Naming of the route that the chief system will use to interact with the frontend.
+         * This route serves as a catch all for displaying all Chief managed pages.
+         */
+        'name' => 'pages.show',
     ],
 
     /**
