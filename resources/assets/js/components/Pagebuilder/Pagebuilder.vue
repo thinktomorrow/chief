@@ -1,7 +1,7 @@
 <template>
     <div id="pagebuilder">
 
-        <div v-if="sections.length < 1" class="relative stack" style="border-left:3px solid transparent;">
+        <div v-if="sections.length < 1" class="relative stack border-l-3 border-transparent">
             <span class="btn btn-primary squished" @click="addNewTextSectionAfter(-1)">
                 <span class="icon icon-zap icon-fw"></span>
                 <span>Tijd om een eerste stuk tekst toe te voegen</span>
@@ -9,7 +9,7 @@
         </div>
 
         <!-- top menu -->
-        <div class="pagebuilder-menu-wrapper relative stack inset-s" style="border-left:3px solid transparent;">
+        <div class="pagebuilder-menu-wrapper relative stack border-l-3 border-transparent inset-s">
             <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
         </div>
 
@@ -32,7 +32,7 @@
                     v-bind:options="modules"
                     placeholder="Selecteer een module"
                     title="module"
-                    class="stack item" :class="section.type"></module-section>
+                    class="stack" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'page'"
                     sectionKey="modules"
@@ -40,7 +40,7 @@
                     v-bind:options="pages"
                     placeholder="Selecteer een pagina"
                     title="pagina"
-                    class="stack item" :class="section.type"></module-section>
+                    class="stack" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'pageset'"
                     sectionKey="pagesets"
@@ -48,7 +48,7 @@
                     v-bind:options="pagesets"
                     placeholder="Selecteer een pagina groep"
                     title="pagina groep"
-                    class="stack item" :class="section.type"></module-section>
+                    class="stack" :class="section.type"></module-section>
 
                 <text-section v-if="section.type === 'text'"
                     v-bind:section="section"
@@ -56,7 +56,7 @@
                     :single="true"
                     :editor="true"
                     title="Pagina text"
-                    class="stack item" :class="section.type"></text-section>
+                    class="stack" :class="section.type"></text-section>
 
                 <text-section v-if="section.type === 'pagetitle'"
                     v-bind:section="section"
@@ -64,7 +64,7 @@
                     :single="true"
                     :editor="false"
                     title="Pagina titel"
-                    class="stack item" :class="section.type"></text-section>
+                    class="stack" :class="section.type"></text-section>
 
             </div>
 
@@ -283,11 +283,6 @@
         display: none;
     }
 
-    .section-item{
-        border-left: 3px solid rgba(21, 200, 167, 1);
-        background-color: rgba(21, 200, 167, 0.05);
-    }
-
     .ghost {
         transition: 0.2s all ease;
         background-color: rgba(21, 200, 167, 1);
@@ -306,10 +301,6 @@
 
     .sortable-drag > * {
         opacity: 0.5 !important;
-    }
-
-    .drag-cursor {
-        cursor: url('/chief-assets/back/img/move.svg') 12 12, auto !important;
     }
 
 </style>

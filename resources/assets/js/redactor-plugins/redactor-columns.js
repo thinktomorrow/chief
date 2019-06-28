@@ -29,7 +29,7 @@
             dropdown.two = { title: this.lang.get('columns-2'), api: 'plugin.redactorColumns.setAsTable', args: [6,6] };
             dropdown.three = { title: this.lang.get('columns-3'), api: 'plugin.redactorColumns.setAsTable', args: [4,4,4] };
 
-            $button.setIcon('<i class="icon icon-grid"></i>');
+            $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#grid"/></svg></span>');
             $button.setDropdown(dropdown);
         },
 

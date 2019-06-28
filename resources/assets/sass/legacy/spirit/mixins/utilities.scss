@@ -1,17 +1,6 @@
 // Utility classes
-.block { display: block; }
-.inline-block { display: inline-block; }
-.inline { display: inline; }
-.flex { display: flex; }
-
-.flex-col { flex-direction: column; }
-
-.bold { font-weight: bold; }
-.italic { font-style: italic; }
-
 .pull-right{ float: right; }
 .pull-left{ float: left; }
-.fixed{ position: fixed; }
 
 // Fixate something in the bottom: e.g. alert notification box
 .fixed--bottom-right{
@@ -65,10 +54,3 @@
   }
 }
 
-.cursor-pointer{
-  cursor: pointer;
-}
-
-.min-h-screen{
-  min-height: 100vh;
-}

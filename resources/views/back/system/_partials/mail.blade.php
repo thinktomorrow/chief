@@ -1,6 +1,6 @@
 <section class="row formgroup gutter-l">
     <div class="column-5">
-        <h2 class="formgroup-label">Systeem e-mail</h2>
+        <h2>Systeem e-mail</h2>
         <p>
             Dit e-mail adres wordt door het systeem gebruikt voor bv. auto-replies, wachtwoord-reset mails, ...
         </p>
@@ -11,7 +11,7 @@
 </section>
 <section class="row formgroup gutter-l">
     <div class="column-5">
-        <h2 class="formgroup-label">Naam afzender</h2>
+        <h2>Naam afzender</h2>
         <p>
             De afzender naam wordt door het systeem gebruikt in de standaard communicatie bv. auto-replies, wachtwoord-reset mail, ...
         </p>

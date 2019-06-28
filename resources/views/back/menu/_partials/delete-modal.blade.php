@@ -9,6 +9,6 @@
     </form>
 
     <div slot="modal-action-buttons" v-cloak>
-        <button data-submit-form="deleteForm-menuitem-{{$menuitem->id}}" class="btn btn-o-tertiary inline-s" type="button"><span class="icon icon-trash"></span> verwijderen</button>
+        <button data-submit-form="deleteForm-menuitem-{{$menuitem->id}}" class="btn btn-o-error inline-s" type="button"><span class="icon icon-trash"></span> verwijderen</button>
     </div>
 </modal>

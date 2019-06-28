@@ -7,46 +7,46 @@
         <div id="clone-16">
             <div class="alert squished alert--success --raised stack-s">
                 <span class="icon icon-cart icon-fw"></span>
-                <span class="alert__copy column">Success: Artikelname is verwijderd uit het winkelmandje</span>
+                <span class="column">Success: Artikelname is verwijderd uit het winkelmandje</span>
                 <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
             </div>
             <div class="alert squished alert-o--success --raised stack-s">
                 <span class="icon icon-cart icon-fw"></span>
-                <span class="alert__copy column">Success: Artikelname is verwijderd uit het winkelmandje</span>
+                <span class="column">Success: Artikelname is verwijderd uit het winkelmandje</span>
                 <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
             </div>
         </div>
 
         <div class="alert squished alert--warning --raised stack-s">
             <span class="icon icon-construction icon-fw"></span>
-            <span class="alert__copy column">Warning: Product is verwijderd uit het winkelmandje</span>
+            <span class="column">Warning: Product is verwijderd uit het winkelmandje</span>
             <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
         </div>
         <div class="alert squished alert-o--warning --raised stack-s">
             <span class="icon icon-construction icon-fw"></span>
-            <span class="alert__copy column">Warning: Product is verwijderd uit het winkelmandje</span>
+            <span class="column">Warning: Product is verwijderd uit het winkelmandje</span>
             <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
         </div>
 
         <div class="alert squished alert--error --raised stack-s">
             <span class="icon icon-warning icon-fw"></span>
-            <span class="alert__copy column">Error: Je doet iets fout</span>
+            <span class="column">Error: Je doet iets fout</span>
             <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
         </div>
         <div class="alert squished alert-o--error --raised stack-s">
             <span class="icon icon-warning icon-fw"></span>
-            <span class="alert__copy column">Error: Je doet iets fout</span>
+            <span class="column">Error: Je doet iets fout</span>
             <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
         </div>
 
         <div class="alert squished alert--information --raised stack-s">
             <span class="icon icon-rocket icon-fw"></span>
-            <span class="alert__copy column">Info: Marsmannetjes bestaan niet</span>
+            <span class="column">Info: Marsmannetjes bestaan niet</span>
             <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
         </div>
         <div class="alert squished alert-o--information --raised stack-s">
             <span class="icon icon-rocket icon-fw"></span>
-            <span class="alert__copy column">Info: Marsmannetjes bestaan niet</span>
+            <span class="column">Info: Marsmannetjes bestaan niet</span>
             <span class="alert__btn center-center"><i class="icon icon-cross icon-fw"></i></span>
         </div>
 

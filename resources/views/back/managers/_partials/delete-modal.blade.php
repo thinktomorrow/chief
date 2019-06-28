@@ -5,7 +5,7 @@
         @method('DELETE')
         @csrf
         <div v-cloak>
-            <h2 class="formgroup-label">Verwijder {{ $manager->details()->title }}</h2>
+            <h2>Verwijder {{ $manager->details()->title }}</h2>
             <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
             <div class="input-group stack column-6">
                 <input data-delete-confirmation name="deleteconfirmation" placeholder="DELETE" type="text" class="input inset-s" autocomplete="off">
@@ -14,6 +14,6 @@
     </form>
 
     <div v-cloak slot="modal-action-buttons">
-        <button type="button" class="btn btn-o-tertiary stack" data-submit-form="delete-manager-form-{{ $managedModelId }}">Ja, verwijder</button>
+        <button type="button" class="btn btn-o-error stack" data-submit-form="delete-manager-form-{{ $managedModelId }}">Ja, verwijder</button>
     </div>
 </modal>

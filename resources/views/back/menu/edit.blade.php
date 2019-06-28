@@ -6,7 +6,10 @@
     @slot('title', 'Menu item bewerken.')
     @slot('subtitle')
         <div class="inline-block">
-            <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+            <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}">
+                <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg> 
+                Terug naar het menu overzicht
+            </a>
         </div>
     @endslot
         <span class="btn btn-link inline-block inline-s" @click="showModal('delete-menuitem-{{$menuitem->id}}')">

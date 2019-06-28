@@ -14,7 +14,7 @@
         @foreach($settings as $setting)
             <section class="row formgroup gutter-xs">
                 <div class="column-5">
-                    <h2 class="formgroup-label">{{ $setting->field->label }}</h2>
+                    <h2>{{ $setting->field->label }}</h2>
                     <p class="caption">{{ $setting->field->description }}</p>
                 </div>
                 <div class="column-7">

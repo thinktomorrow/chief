@@ -31,7 +31,7 @@
 <section class="formgroup">
     <div class="row gutter-l">
         <div class="formgroup-info column-4">
-            <h2 class="formgroup-label">Link</h2>
+            <h2>Link</h2>
         </div>
         <div class="formgroup-input column-8">
 
@@ -173,7 +173,7 @@
         </div>
         <div class="stack">
 
-            <div class="panel panel-default bg-white">
+            <div class="border border-grey-100 rounded bg-white">
                 <div class="inset-s" style="border-bottom:1px solid #f5f5f5">
                     <span class="bold">Huidige sortering op dit niveau:</span>
                 </div>

@@ -1,6 +1,6 @@
 <section class="row formgroup gutter-l">
     <div class="column-5">
-        <h2 class="formgroup-label">Facebook</h2>
+        <h2>Facebook</h2>
         <p>
             Als je de Facebook URL deelt die je hebt ingegeven in het tabblad "Social" dan wordt deze weergegeven als een card. De gegevens die je hier invult, zorgen voor de structuur van de Facebook card.
         </p>
@@ -55,7 +55,7 @@
 
 <section class="row formgroup gutter-l">
     <div class="column-5">
-        <h2 class="formgroup-label">Twitter</h2>
+        <h2>Twitter</h2>
         <p>
             Als je de Twitter URL deelt die je hebt ingegeven in het tabblad "Social" dan wordt deze weergegeven als een card. De gegevens die je hier invult, zorgen voor de structuur van de Twitter card.
         </p>

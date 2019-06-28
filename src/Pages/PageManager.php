@@ -148,7 +148,7 @@ class PageManager extends AbstractManager implements Manager
             return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
+                ->set('context', '<span>' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
         }
 
         return parent::details();
