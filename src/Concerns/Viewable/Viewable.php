@@ -93,8 +93,6 @@ trait Viewable
             'parent' => $this->viewParent,
         ];
 
-        // TODO: add className as variable next to generic model: e.g. Event class should pass variable $event.
-
         /** @deprecated since 0.3 in favor of generic 'model' variable */
         if ($this instanceof Page) {
             $viewData['page'] = $this;

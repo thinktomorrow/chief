@@ -45,7 +45,7 @@ return [
     /**
      * Here you define the base view path for your pages, modules and sets. All module
      * views will be relative to this location. A sensible default has been set.
-     * Note that is only is effect when not providing a custom viewPath.
+     * Note that is only in effect when not providing a custom viewPath().
      */
     'base-view-paths' => [
         'pages'   => 'pages',

@@ -208,8 +208,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /**
-     * PUBLISHABLE OVERRIDES BECAUSE OF ARCHIVED STATE IS SET ELSEWHERE.
-     * IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
+     * We override the publishable trait defaults because Page needs
+     * to be concerned with the archived state as well.
+     *
+     * TODO: IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
      */
     public function isPublished()
     {
