@@ -79,7 +79,10 @@
                 }
             },
             toggle(event){
+                
+                // Prevents click event to trigger closeDropdownClickEvent on creation
                 if(event) event.stopImmediatePropagation();
+
                 if(!this.isActive) {
                     this.open();
                 } else {
