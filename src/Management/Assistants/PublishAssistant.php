@@ -100,20 +100,16 @@ class PublishAssistant implements Assistant
         return $this;
     }
 
-    public function previewUrl(): string
+    public function hasPreviewUrl(): bool
     {
-        if (! $this->model instanceof ProvidesUrl) {
-            throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
-        }
-
-        return $this->model->previewUrl();
+        return $this->model instanceof ProvidesUrl;
     }
 
     public function publicationStatusAsLabel($plain = false)
     {
         $label = $this->publicationStatusAsPlainLabel();
 
-        if ($plain) {
+        if ($plain ||  ! $this->hasPreviewUrl()) {
             return $label;
         }
 
@@ -143,5 +139,14 @@ class PublishAssistant implements Assistant
         }
 
         return '-';
+    }
+
+    public function previewUrl(): string
+    {
+        if (!$this->hasPreviewUrl()) {
+            throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
+        }
+
+        return $this->model->previewUrl();
     }
 }
