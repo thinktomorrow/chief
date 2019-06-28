@@ -37,6 +37,10 @@ class UrlSlugField extends InputField
 
         $slug = $this->urlRecord->slug;
 
+        // If this is a '/' slug, it indicates the homepage for this locale. In this case,
+        // we wont be trimming the slash
+        if($slug === '/') return $slug;
+
         if ($this->startsWithBaseUrlSegment($slug)) {
             $slug = trim(substr($slug, strlen($this->baseUrlSegment)), '/');
         }
@@ -62,8 +66,8 @@ class UrlSlugField extends InputField
             'placeholder' => $this->placeholder,
             'description' => $this->description,
             'value' => $this->value(),
-            'locale' => $this->locale,
             'hint' => null, // Hint placeholder to show url hint when it already exists
+            'is_homepage' => ($this->value() === '/'),
         ]);
     }
 }
