@@ -63,9 +63,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
 
-    /** @deprecated since 0.2 */
-    protected $pagebuilder = true;
-
     protected $baseViewPath;
     protected static $baseUrlSegment = '/';
 
@@ -194,25 +191,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             return static::$baseUrlSegment;
         }
 
-        // When an array, we try to locale the expected segment by locale
+        // When an array, we try to locate the expected segment by locale
         $key = $locale ?? app()->getlocale();
 
         if (isset(static::$baseUrlSegment[$key])) {
             return static::$baseUrlSegment[$key];
         }
 
-        // Fall back to last entry in case no match is found
-        $reversedSegments = array_reverse(static::$baseUrlSegment);
-        return reset($reversedSegments);
-    }
-
-    /**
-     * @deprecated since 0.2.8: use url() instead
-     * @return string
-     */
-    public function menuUrl(): string
-    {
-        return $this->url();
+        // Fall back to first entry in case no match is found
+        return reset(static::$baseUrlSegment);
     }
 
     public function menuLabel(): string
@@ -282,14 +269,5 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         }
 
         return '-';
-    }
-
-    /**
-     * @deprecated will no longer be used in later versions >= 0.4
-     * @return bool
-     */
-    public function hasPagebuilder()
-    {
-        return $this->pagebuilder;
     }
 }
