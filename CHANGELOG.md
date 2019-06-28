@@ -1,7 +1,11 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## unreleased
+## 0.3.0 - 2019...
+- Removed: deprecated `Page::menuUrl()` in favor of `Page::url()`.
+- Removed: `Page::hasPagebuilder()` and `Page::pagebuilder` property.
+- Removed: Homepage setting and `chief-settings.homepage` config value
+- Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.route.autoload` value to false.
 - Removed: Homepage setting and `chief-settings.homepage` config value
 - Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.routes.autoload` value to false.
 

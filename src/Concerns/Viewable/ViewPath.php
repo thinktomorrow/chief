@@ -60,6 +60,8 @@ class ViewPath
             return $viewPath;
         }
 
-        throw new NotFoundView('Viewfile not found for ['.get_class($this->viewable).']. Try adding one with path: '.$basePath.$guessedViewName);
+        if (! view()->exists($basePath.'show')){
+            throw new NotFoundView('Viewfile not found for ['.get_class($this->viewable).']. Make sure the default view ['.$basePath.'show] exists.');
+        }
     }
 }

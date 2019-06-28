@@ -12,18 +12,6 @@ use Thinktomorrow\Chief\Concerns\Publishable\PreviewMode;
 
 class ChiefResponse extends Response
 {
-//    public static function fromRequest(Request $request = null, $locale = null)
-//    {
-//        if (!$request) {
-//            $request = request();
-//        }
-//        if (!$locale) {
-//            $locale = app()->getLocale();
-//        }
-//
-//        return static::fromSlug($request->path(), $locale);
-//    }
-
     public static function fromSlug(string $slug, $locale = null)
     {
         if (!$locale) {

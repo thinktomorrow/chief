@@ -22,7 +22,7 @@ return [
         'path'      => 'src/',
     ],
 
-    'routes' => [
+    'route' => [
         /**
          * By default Chief will load up the page route. Since this is a catch-all route, it will be loaded last.
          * If this conflicts with your project, set this value to false so you can handle the routing manually.
@@ -45,7 +45,7 @@ return [
     /**
      * Here you define the base view path for your pages, modules and sets. All module
      * views will be relative to this location. A sensible default has been set.
-     * Note that is only is effect when not providing a custom viewPath.
+     * Note that is only in effect when not providing a custom viewPath().
      */
     'base-view-paths' => [
         'pages'   => 'pages',
@@ -129,10 +129,6 @@ return [
      * By default a standard input field is used.
      */
     'settingFields' => [
-        // TODO: callable can be removed when we set everything up in a service provider
-        'homepage' => function () {
-            return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
-        },
         'contact.email' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.email')
                         ->label('Webmaster email')
                         ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),

@@ -63,9 +63,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
 
-    /** @deprecated since 0.2 */
-    protected $pagebuilder = true;
-
     protected $baseViewPath;
     protected static $baseUrlSegment = '/';
 
@@ -171,7 +168,7 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
 
     public function resolveUrl(string $locale = null, $parameters = null): string
     {
-        $routeName = config('thinktomorrow.chief.routes.name');
+        $routeName = config('thinktomorrow.chief.route.name');
 
         return $this->resolveRoute($routeName, $parameters, $locale);
     }
@@ -194,25 +191,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             return static::$baseUrlSegment;
         }
 
-        // When an array, we try to locale the expected segment by locale
+        // When an array, we try to locate the expected segment by locale
         $key = $locale ?? app()->getlocale();
 
         if (isset(static::$baseUrlSegment[$key])) {
             return static::$baseUrlSegment[$key];
         }
 
-        // Fall back to last entry in case no match is found
-        $reversedSegments = array_reverse(static::$baseUrlSegment);
-        return reset($reversedSegments);
-    }
-
-    /**
-     * @deprecated since 0.2.8: use url() instead
-     * @return string
-     */
-    public function menuUrl(): string
-    {
-        return $this->url();
+        // Fall back to first entry in case no match is found
+        return reset(static::$baseUrlSegment);
     }
 
     public function menuLabel(): string
@@ -221,8 +208,10 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /**
-     * PUBLISHABLE OVERRIDES BECAUSE OF ARCHIVED STATE IS SET ELSEWHERE.
-     * IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
+     * We override the publishable trait defaults because Page needs
+     * to be concerned with the archived state as well.
+     *
+     * TODO: IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
      */
     public function isPublished()
     {
@@ -282,14 +271,5 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         }
 
         return '-';
-    }
-
-    /**
-     * @deprecated will no longer be used in later versions >= 0.4
-     * @return bool
-     */
-    public function hasPagebuilder()
-    {
-        return $this->pagebuilder;
     }
 }
