@@ -78,7 +78,8 @@
                     document.removeEventListener("click", this.closeDropdownClickEvent, false);
                 }
             },
-            toggle(){
+            toggle(event){
+                if(event) event.stopImmediatePropagation();
                 if(!this.isActive) {
                     this.open();
                 } else {
