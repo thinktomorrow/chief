@@ -46,8 +46,13 @@ class PublishManagerTest extends TestCase
     /** @test */
     public function admin_can_draft_a_model()
     {
+        $page = Page::first();
+        $page->publish();
+
+        $this->assertCount(1, Page::published()->get());
+
         $this->asAdmin()
-            ->post($this->fake->route('draft'));
+            ->post($this->fake->assistant('publish')->route('draft'));
 
         $this->assertTrue(Page::first()->isDraft());
     }

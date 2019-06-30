@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
@@ -62,6 +64,21 @@ class ManagersTest extends TestCase
         $this->fake = new ManagerFake(app(Register::class)->first());
 
         $response = $this->fake->route('update');
+    }
+
+    /** @test */
+    public function only_authenticated_can_view_managers_index()
+    {
+        $this->setUpDefaultAuthorization();
+        Route::get('pages/{slug}', function () {
+        })->name('pages.show');
+
+        $page = factory(Page::class)->create(['published' => false]);
+
+        $response = $this->asAdmin()
+            ->get(route('chief.back.managers.index', ['singles', $page->id]));
+        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.managers.index');
     }
 
     private function getProtectedModelProperty($instance)

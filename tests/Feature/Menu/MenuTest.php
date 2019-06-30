@@ -290,4 +290,40 @@ class MenuTest extends TestCase
     {
         $this->assertCount(1, Menu::all());
     }
+
+    /** @test */
+    public function admin_can_view_the_menu_index()
+    {
+        $this->setUpDefaultAuthorization();
+        config()->set('thinktomorrow.chief.menus.footer', [
+            'label' => 'Hoofdnavigatie',
+            'view'  => 'front.menus.main'
+            ]);
+
+        $response = $this->asAdmin()->get(route('chief.back.menus.index'));
+        $response->assertViewIs('chief::back.menu.index')
+                 ->assertStatus(200);
+    }
+
+    /** @test */
+    public function menu_index_route_shows_menu_show_if_there_is_only_one_menu()
+    {
+        $this->setUpDefaultAuthorization();
+
+        $response = $this->asAdmin()->get(route('chief.back.menus.index'));
+        $response->assertViewIs('chief::back.menu.show')
+                 ->assertStatus(200);
+    }
+
+    /** @test */
+    public function admin_can_view_the_menu_show()
+    {
+        $this->setUpDefaultAuthorization();
+
+        $menu = Menu::all()->first();
+
+        $response = $this->asAdmin()->get(route('chief.back.menus.show', $menu->key()));
+        $response->assertViewIs('chief::back.menu.show')
+                 ->assertStatus(200);
+    }
 }
