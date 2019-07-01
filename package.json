@@ -19,7 +19,7 @@
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
     "module": "^1.2.5",
-    "sass": "^1.21.0",
+    "sass": "^1.22.1",
     "sass-loader": "^7.1.0",
     "vue-server-renderer": "^2.5.22",
     "vue-template-compiler": "^2.6.10"
