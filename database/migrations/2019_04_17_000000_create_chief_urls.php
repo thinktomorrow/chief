@@ -25,11 +25,6 @@ class CreateChiefUrls extends Migration
 
         // Migrate the slugs
         $this->migrateSlugs();
-
-        // Remove slugs from db.
-        Schema::table('page_translations', function (Blueprint $table) {
-            $table->dropColumn('slug');
-        });
     }
 
     public function down()
