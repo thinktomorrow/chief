@@ -5,9 +5,9 @@ use Thinktomorrow\Chief\Media\MediaType;
 return [
 
     /**
-     * A request can encounter non-critical errors like non found urls or views. When such an error occurs
-     * in strict mode, your app will halt and showcase these errors. You should set this to true while
-     * in development. We recommend to disable strict mode in production to suppress these errors.
+     * When chief is in strict mode, it exposes potential errors and warnings in your application.
+     * Non-critical errors like non found urls or views. When such an error occurs in strict mode,
+     * your app will throw an exception. Strict mode is by default only enabled in development.
      */
     'strict' => env('APP_DEBUG', false),
 

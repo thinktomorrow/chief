@@ -4,8 +4,19 @@ All Notable changes to the `chief` application template will be documented in th
 ## 0.3.0 - 2019...
 - Removed: deprecated `Page::menuUrl()` in favor of `Page::url()`.
 - Removed: `Page::hasPagebuilder()` and `Page::pagebuilder` property.
+- Removed: `Page::findBySlug()` and `Page::findPublishedBySlug()`.
 - Removed: Homepage setting and `chief-settings.homepage` config value
+- Removed: `ActsAsChild::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
+- Removed: `ActsAsParent::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
 - Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.route.autoload` value to false.
+- Added: `ViewableContract` to identify models that should be rendered on the site.
+- Changed: `ProvidesUrl` contract to identify models that should be retrievable by direct url.
+- Added: Manager assistant `UrlAssistant` which takes care of the page urls.
+- Added: changing page url keep old url as 301 redirect to the new one
+- Added: when archiving a page another page can now be set as redirect
+- Added: improved field validation design
+- Added: `Manager::fieldsWithAssistantFields()` which also include any assistant fields. This is mostly used internally.
+
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab
