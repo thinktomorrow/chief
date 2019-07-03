@@ -1,7 +1,7 @@
 <options-dropdown class="inline-block">
     <div class="inset-s" v-cloak>
 
-        @if($manager->isAssistedBy('publish'))
+        @if($manager->isAssistedBy('publish') && $manager->assistant('publish')->hasPreviewUrl())
             <a class="block p-3 --link-with-bg" href="{!! $manager->assistant('publish')->previewUrl() !!}" target="_blank">Bekijk preview</a>
         @endif
 

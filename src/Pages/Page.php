@@ -174,9 +174,9 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     }
 
     /** @inheritdoc */
-    public function previewUrl(string $locale = null, bool $useFallback = true): string
+    public function previewUrl(string $locale = null): string
     {
-        return $this->url($locale, $useFallback).'?preview-mode';
+        return $this->url($locale).'?preview-mode';
     }
 
 

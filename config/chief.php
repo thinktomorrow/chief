@@ -5,8 +5,9 @@ use Thinktomorrow\Chief\Media\MediaType;
 return [
 
     /**
-     * When in development, we would like to have more errors and avoid silent fails which is
-     * something that is appreciated in production but not in failure driven development. :)
+     * When chief is in strict mode, it exposes potential errors and warnings in your application.
+     * Non-critical errors like non found urls or views. When such an error occurs in strict mode,
+     * your app will throw an exception. Strict mode is by default only enabled in development.
      */
     'strict' => env('APP_DEBUG', false),
 
@@ -24,28 +25,29 @@ return [
 
     'route' => [
         /**
-         * By default Chief will load up the page route. Since this is a catch-all route, it will be loaded last.
-         * If this conflicts with your project, set this value to false so you can handle the routing manually.
-         * The following route snippet is a good starting point:
+         * By default Chief will add the pages.show routing to your app. Since this is a catch-all route, it will be loaded last.
+         * If this conflicts with your project, set the autoload value to false. In this case you are responsible for handling the routing.
+         * Use the following route snippet as a starting point:
          *
          *      Route::get('{slug?}', function($slug = '/'){
-         *          return ChiefResponse::fromSlug($slug);
+         *          return \Thinktomorrow\Chief\Urls\ChiefResponse::fromSlug($slug);
          *      })->name('pages.show')->where('slug', '(.*)?');
          *
          */
         'autoload' => true,
 
         /**
-         * Naming of the route that the chief system will use to interact with the frontend.
-         * This route serves as a catch all for displaying all Chief managed pages.
+         * Route name for the route that chief uses to listen and interact with
+         * a page request. It is set to `pages.show` but if this conflicts
+         * with your project naming conventions, you can change it here.
          */
         'name' => 'pages.show',
     ],
 
     /**
-     * Here you define the base view path for your pages, modules and sets. All module
-     * views will be relative to this location. A sensible default has been set.
-     * Note that is only in effect when not providing a custom viewPath().
+     * The Viewable::viewPath() method gives the view path for that specific model.
+     * By default, we provide some sensible defaults for pages, modules and sets.
+     * Here you define the relative base view path for these resp. models.
      */
     'base-view-paths' => [
         'pages'   => 'pages',
