@@ -3,7 +3,11 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use config;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
@@ -105,6 +109,7 @@ class ChiefServiceProvider extends ServiceProvider
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
 
+        $this->autoloadMiddleware();
         $this->autoloadRoute();
     }
 
@@ -188,5 +193,15 @@ class ChiefServiceProvider extends ServiceProvider
               ->where('slug', '(.*)?')
               ->middleware('web');
         });
+    }
+
+    private function autoloadMiddleware()
+    {
+        app(Router::class)->middlewareGroup('web-chief', [
+            AuthenticateChiefSession::class,
+        ]);
+
+        app(Router::class)->aliasMiddleware('chief-guest', ChiefRedirectIfAuthenticated::class);
+        app(Router::class)->aliasMiddleware('chief-validate-invite', ChiefValidateInvite::class);
     }
 }
