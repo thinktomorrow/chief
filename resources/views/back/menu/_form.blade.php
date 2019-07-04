@@ -76,6 +76,7 @@
                         <strong>Of kies een eigen link.</strong>
 
                         <div v-if="type == 'custom'" class="stack-xs input-group-prefix relative">
+                            @if(count($menuitem->availableLocales()) > 1)
                             <tabs v-cloak>
                                 @foreach($menuitem->availableLocales() as $locale)
                                     <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.label')}">
@@ -85,6 +86,13 @@
                                     </tab>
                                 @endforeach
                             </tabs>
+                            @else
+                                @foreach($menuitem->availableLocales() as $locale)
+                                        <input type="text" name="trans[{{ $locale }}][url]" id="trans-{{ $locale }}-url" placeholder="e.g. https://google.com" value="{{ old('trans.'.$locale.'.url', $menuitem->getTranslationfor('url', $locale)) }}"
+                                            class="input inset-s">
+                                        <error class="caption text-warning" field="trans.{{ $locale }}.url" :errors="errors.get('trans.{{ $locale }}')"></error>
+                                @endforeach
+                            @endif
                         </div>
                     </label>
 

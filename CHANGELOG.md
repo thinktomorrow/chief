@@ -18,6 +18,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Added: `Manager::fieldsWithAssistantFields()` which also include any assistant fields. This is mostly used internally.
 - Removed: Homepage setting and `chief-settings.homepage` config value
 - Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.routes.autoload` value to false.
+- Changed: don't show tabs when there is just one language in menubuilder. Case: "Of kies een eigen link."
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab
