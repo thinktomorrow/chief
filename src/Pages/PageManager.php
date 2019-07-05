@@ -23,6 +23,8 @@ use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\Urls\UrlSlugFields;
 
 class PageManager extends AbstractManager implements Manager
 {
@@ -134,9 +136,12 @@ class PageManager extends AbstractManager implements Manager
         }
 
         return new FieldArrangement($this->fieldsWithAssistantFields(), [
-            new FieldsTab('pagina', ['sections']),
+            new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
+                'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
+            ]),
             new RemainingFieldsTab('inhoud'),
-            new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
+            new FieldsTab('pagina', ['sections']),
+            new FieldsTab('modules', [], 'chief::back.pages._partials.modules'),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ]);
     }
@@ -147,7 +152,7 @@ class PageManager extends AbstractManager implements Manager
         if ($this->model->id) {
             return parent::details()
                 ->set('title', $this->model->title)
-                ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
+                ->set('intro', 'Aangepast ' . $this->model->updated_at->format('d/m/Y H:i'))
                 ->set('context', '<span class="inline-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
         }
 
