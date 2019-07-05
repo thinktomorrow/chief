@@ -8,6 +8,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Removed: Homepage setting and `chief-settings.homepage` config value
 - Removed: `ActsAsChild::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
 - Removed: `ActsAsParent::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
+- Removed: Honeypot middleware and helper.
 - Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.route.autoload` value to false.
 - Added: `ViewableContract` to identify models that should be rendered on the site.
 - Changed: `ProvidesUrl` contract to identify models that should be retrievable by direct url.

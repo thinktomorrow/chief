@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Http;
 
-use Thinktomorrow\Chief\App\Http\Middleware\Honeypot;
 use Thinktomorrow\Chief\App\Http\Middleware\OptimizeImages;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -58,6 +57,5 @@ class Kernel extends HttpKernel
         'can'               => \Illuminate\Auth\Middleware\Authorize::class,
         'throttle'          => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'optimizeImages'    => OptimizeImages::class,
-        'honeypot'          => Honeypot::class,
     ];
 }
