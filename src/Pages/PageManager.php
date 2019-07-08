@@ -159,14 +159,14 @@ class PageManager extends AbstractManager implements Manager
         return parent::details();
     }
 
-    public function saveFields(): Manager
+    public function saveFields(Request $request)
     {
         // Store the morph_key upon creation
         if (! $this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
-        return parent::saveFields();
+        parent::saveFields($request);
     }
 
     public function delete()

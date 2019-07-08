@@ -79,6 +79,7 @@ class UrlSlugField extends InputField
             'baseUrlSegment' => $this->baseUrlSegment,
             'hint' => null, // Hint placeholder to show url hint when it already exists
             'is_homepage' => ($this->value() === '/'),
+            'show' => !!$this->value(),// show input field or not
         ]);
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fields\Validators\FieldValidatorFactory;
 
 class Field
@@ -81,6 +82,16 @@ class Field
         }
 
         return $value;
+    }
+
+    public function getFieldValue(Model $model, $locale = null)
+    {
+        // If string is passed, we use this to find the proper field
+        if ($this->isTranslatable() && $locale) {
+            return $model->getTranslationFor($this->column(), $locale);
+        }
+
+        return $model->{$this->column()};
     }
 
     /**

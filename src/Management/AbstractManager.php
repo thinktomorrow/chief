@@ -7,8 +7,8 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\Types\Field;
-use Thinktomorrow\Chief\Fields\Types\FieldType;
+use Thinktomorrow\Chief\Fields\RenderingFields;
+use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
@@ -18,14 +18,15 @@ use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 abstract class AbstractManager
 {
-    use HasDetails,
+    use RenderingFields,
+        SavingFields,
+        HasDetails,
         HasSections,
         ManagesMedia,
         ManagesPagebuilder,
         TranslatableCommand,
         AssistedManager;
 
-    protected $queued_translations = [];
     protected $translation_columns = [];
 
     protected $model;
@@ -191,102 +192,9 @@ abstract class AbstractManager
         return new FieldArrangement($this->fieldsWithAssistantFields());
     }
 
-    public function getFieldValue($field, $default = null)
-    {
-        // If string is passed, we use this to find the proper field
-        if (is_string($field)) {
-            foreach ($this->fieldsWithAssistantFields()->all() as $possibleField) {
-                if ($possibleField->key() == $field) {
-                    $field = $possibleField;
-                    break;
-                }
-            }
-
-            if (is_string($field)) {
-
-                // Could be translatable field
-                if ($this->isTranslatableKey($field)) {
-                    $attribute = substr($field, strrpos($field, '.') + 1);
-                    $locale = substr($field, strlen('trans.'), 2);
-
-                    return $this->model->getTranslationFor($attribute, $locale);
-                }
-
-                return $default;
-            }
-        }
-
-        // Is it a media field
-        // An array grouped by type is returned. Each media array has an id, filename and path.
-        if ($field->ofType(FieldType::MEDIA)) {
-            return $this->populateMedia($this->model);
-        }
-
-        if ($field->ofType(FieldType::DOCUMENT)) {
-            return $this->populateDocuments($this->model);
-        }
-
-        return $this->model->{$field->column()};
-    }
-
-    private function isTranslatableKey(string $key): bool
-    {
-        return 0 === strpos($key, 'trans.');
-    }
-
-    public function setField(Field $field, Request $request)
-    {
-        // Is field set as translatable?
-        if ($field->isTranslatable()) {
-            if (!$this->requestContainsTranslations($request)) {
-                return;
-            }
-
-            // Make our media fields able to be translatable as well...
-            if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
-                throw new \Exception('Cannot process the ' . $field->key . ' media field. Currently no support for translatable media files. We should fix this!');
-            }
-
-            // Okay so this is a bit odd but since all translations are expected to be inside the trans
-            // array, we can add all these translations at once. Just make sure to keep track of the
-            // keys since this is what our translation engine requires as well for proper update.
-            $this->queued_translations = $request->get('trans');
-            $this->translation_columns[] = $field->column();
-
-            return;
-        }
-
-        // By default we assume the key matches the attribute / column naming
-        $this->model->{$field->column()} = $request->get($field->key());
-    }
-
-    public function saveFields(): Manager
-    {
-        $this->model->save();
-
-        // Translations
-        if (!empty($this->queued_translations)) {
-            $this->saveTranslations($this->queued_translations, $this->model, $this->translation_columns);
-        }
-
-        return (new static($this->registration))->manage($this->model);
-    }
-
-
-
     public function delete()
     {
         $this->model->delete();
-    }
-
-    public function renderField(Field $field)
-    {
-        return view($field->view(), array_merge([
-            'field'           => $field,
-            'key'             => $field->key, // As parameter so that it can be altered for translatable values
-            'manager'         => $this,
-            'formElementView' => $field->formElementView(),
-        ]), $field->viewData())->render();
     }
 
     public static function filters(): Filters

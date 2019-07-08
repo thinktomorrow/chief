@@ -7,15 +7,24 @@
         <div class="formgroup-input column-8">
 
             <div class="stack" v-for="field in fields">
-                <label v-if="fields.length > 1" :for="field.key" v-text="field.label"></label>
-                <div class="input-addon stack-xs">
-                    <div v-if="field.prepend" class="addon inset-s" v-text="getPrepend(field)"></div>
-                    <input @keyup="onSlugChange(field)" v-model="field.value" type="text" :name="field.name" :id="field.key" class="input inset-s" :placeholder="field.placeholder">
+                <div v-if="field.show">
+                    <label v-if="fields.length > 1" :for="field.key" v-text="field.label"></label>
+                    <div class="input-addon stack-xs">
+                        <div v-if="field.prepend" class="addon inset-s" v-text="getPrepend(field)"></div>
+                        <input @keyup="onSlugChange(field)" v-model="field.value" type="text" :name="field.name" :id="field.key" class="input inset-s" :placeholder="field.placeholder">
+                    </div>
+                    <div class="text-subtle font-s">
+                        <span class="inline-block label label--primary" v-if="field.is_homepage">homepage</span>
+                        <a class="inline-block" v-if="field.value" target="_blank" :href="field.prepend + field.value + '?preview-mode'">Bekijk op site</a>
+                        <p class="inline-block right text-error" v-if="field.hint" v-html="field.hint"></p>
+                    </div>
                 </div>
-                <div class="text-subtle font-s">
-                    <span class="inline-block label label--primary" v-if="field.is_homepage">homepage</span>
-                    <a class="inline-block" v-if="field.value" target="_blank" :href="field.prepend + field.value + '?preview-mode'">Bekijk op site</a>
-                    <p class="inline-block right text-error" v-if="field.hint" v-html="field.hint"></p>
+                <div v-else>
+                    <label v-text="field.label"></label>
+                    <div class="text-subtle font-s">
+                        Geen link.
+                        <a class="inline-block" @click="showLinkInput(field)">voeg een link toe.</a>
+                    </div>
                 </div>
 
                 <p class="text-subtle" v-if="field.description" v-html="field.description"></p>
@@ -48,6 +57,9 @@
                     field.is_homepage = (field.value == '/');
 
                     this._checkUniqueness(field);
+                },
+                showLinkInput: function(field){
+                    field.show = true;
                 },
                 _checkUniqueness: _.debounce(function(field){
 

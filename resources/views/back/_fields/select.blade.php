@@ -1,7 +1,7 @@
 <chief-multiselect
         name="{{ $key }}"
         :options='@json($field->options)'
-        selected='@json(old($key, $field->selected ?? $manager->getFieldValue($key)))'
+        selected='@json(old($key, $field->selected ?? $manager->fieldValue($field, $locale ?? null)))'
         :multiple='@json(!!$field->multiple)'
 >
 </chief-multiselect>

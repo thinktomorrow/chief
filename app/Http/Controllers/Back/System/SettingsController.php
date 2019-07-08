@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Settings\Application\UpdateSetting;
+use Thinktomorrow\Chief\Settings\SettingFields;
 
 class SettingsController extends Controller
 {
@@ -13,9 +13,11 @@ class SettingsController extends Controller
     {
         $this->authorize('update-setting');
 
-        $settings = Setting::all();
+        $fields = SettingFields::defaults();
 
-        return view('chief::back.system.settings', compact('settings'));
+        return view('chief::back.system.settings', [
+            'fields' => $fields
+        ]);
     }
 
     public function update(Request $request)

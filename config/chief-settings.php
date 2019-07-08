@@ -20,7 +20,6 @@ return [
      * couple of frontend places such as the mail footer.
      */
     'client' => [
-        'name' => 'Think Tomorrow',
         'app_name' => 'Chief',
     ]
 ];

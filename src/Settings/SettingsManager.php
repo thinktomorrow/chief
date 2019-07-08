@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Settings;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 class SettingsManager
@@ -34,7 +35,7 @@ class SettingsManager
 
     public static function configValues(): array
     {
-        return array_dot(config('thinktomorrow.chief-settings'));
+        return Arr::dot(config('thinktomorrow.chief-settings'));
     }
 
     private function fetch()
