@@ -6,6 +6,7 @@
     Copyright (c) 2009-2018, Imperavi LLC.
     License: http://imperavi.com/redactor/license/
 */
+
 @keyframes fadeIn {
   from {
     opacity: 0; }
@@ -1350,3 +1351,4 @@
 
 .redactor-body-fullscreen #redactor-modal {
   z-index: 1099; }
+

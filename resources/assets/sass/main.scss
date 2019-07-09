@@ -3,22 +3,6 @@
 @tailwind base;
 @tailwind components;
 
-// @import 'spirit';
-
-// // THESE CUSTOM CLASSES SHOULD BE REDUCED TO A MINIMUM. IT SHOULD BELONG TO THE CHIEF-THEME BY DEFAULT
-// // CUSTOM FOLDER IS MEANT FOR THE PROJECT SPECIFIC CLASSES FOR THE ADMIN
-// @import "custom/typography";
-// @import "custom/nav";
-// @import "custom/form";
-// @import "custom/general";
-// @import "custom/thumb";
-// @import 'custom/_mediagallery';
-// @import 'custom/_users';
-// @import 'custom/_roles';
-// @import 'custom/_images';
-// @import 'custom/_translations';
-// @import 'custom/pagebuilder';
-
 @import './general/typography.scss';
 @import './general/animations.scss';
 
@@ -35,8 +19,9 @@
 
 @tailwind utilities;
 
-// VENDOR CLASSES
+/* purgecss start ignore */
 @import '../js/vendors/redactor/redactor.css';
+/* purgecss end ignore */
 
 // STATES & HELPER CLASSES (WARPAINT)
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';
