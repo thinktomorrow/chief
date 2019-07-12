@@ -109,32 +109,25 @@ class PublishAssistant implements Assistant
     {
         $label = $this->publicationStatusAsPlainLabel();
 
-        if ($plain ||  ! $this->hasPreviewUrl()) {
-            return $label;
+        $class = $this->isPublished() ? 'text-success' : 'text-error';
+
+        $statusAsLabel = '<span class="'. $class .'"><em>' . $label . '</em></span>';
+
+        if(!$plain && $this->hasPreviewUrl())
+        {
+            $statusAsLabel =  '<a href="'.$this->previewUrl().'" target="_blank">'. $statusAsLabel .'</a>';
         }
 
-        if ($this->isPublished()) {
-            return '<a href="'.$this->previewUrl().'" target="_blank"><em>'.$label.'</em></a>';
-        }
-
-        if ($this->isDraft()) {
-            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>'.$label.'</em></a>';
-        }
-
-        return '<span><em>'.$label.'</em></span>';
+        return $statusAsLabel;
     }
 
     private function publicationStatusAsPlainLabel()
     {
         if ($this->isPublished()) {
             return 'online';
-        }
-
-        if ($this->isDraft()) {
+        }elseif ($this->isDraft()) {
             return 'offline';
-        }
-
-        if ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+        }elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
             return 'gearchiveerd';
         }
 
@@ -144,7 +137,7 @@ class PublishAssistant implements Assistant
     public function previewUrl(): string
     {
         if (!$this->hasPreviewUrl()) {
-            throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
+            return '';
         }
 
         return $this->model->previewUrl();
