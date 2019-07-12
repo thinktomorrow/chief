@@ -102,7 +102,7 @@ class PublishAssistant implements Assistant
 
     public function hasPreviewUrl(): bool
     {
-        return $this->model instanceof ProvidesUrl;
+        return $this->model instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
     }
 
     public function publicationStatusAsLabel($plain = false)
@@ -136,10 +136,6 @@ class PublishAssistant implements Assistant
 
     public function previewUrl(): string
     {
-        if (!$this->hasPreviewUrl()) {
-            return '';
-        }
-
         return $this->model->previewUrl();
     }
 }
