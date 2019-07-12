@@ -1,5 +1,4 @@
 let mix = require('laravel-mix');
-const tailwindcss = require('tailwindcss')
 require('laravel-mix-purgecss');
 
 mix.setPublicPath(path.normalize('public/chief-assets/back'))
@@ -11,11 +10,18 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 	.version()
 
 	.options({
-		// Webpack setting to ignore sass loader to follow url() paths
-		processCssUrls: false,
 		postCss: [
-			tailwindcss('./resources/assets/sass/tailwind.js'),
-		]
+			require('tailwindcss')('./resources/assets/sass/tailwind.js'),
+			require('autoprefixer')({
+                browsers: ['last 40 versions'],
+			}),
+		],
+
+		autoprefixer: true,
+
+        // Webpack setting to ignore sass loader to follow url() paths
+		processCssUrls: false,
+	
 	})
 
     .purgeCss({
@@ -24,7 +30,8 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
             'resources/views/',
             'app',
             'src'
-        ],
+		],
+		whitelistPatterns: [/re-icon-/]
     })
 
     /**
