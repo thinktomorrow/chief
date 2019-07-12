@@ -1,6 +1,11 @@
 let mix = require('laravel-mix');
 
-mix.setPublicPath(path.normalize('public/chief-assets/back'))
+mix.webpackConfig({
+	watchOptions: {
+		ignored: /node_modules/
+	}
+})
+	.setPublicPath(path.normalize('public/chief-assets/back'))
 	.js('resources/assets/js/main.js', 'public/chief-assets/back/js')
 	.js('resources/assets/js/native.js', 'public/chief-assets/back/js')
 	.sass('resources/assets/sass/main.scss', 'public/chief-assets/back/css')

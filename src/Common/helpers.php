@@ -49,7 +49,7 @@ if (!function_exists('chief_cached_asset')) {
 if (!function_exists('chiefSetting')) {
     function chiefSetting($key = null, $default = null)
     {
-        $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
+        $manager = app(\Thinktomorrow\Chief\Settings\Settings::class);
 
         if (is_null($key)) {
             return $manager;

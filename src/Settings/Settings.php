@@ -3,13 +3,22 @@
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
-class SettingsManager
+class Settings extends Collection
 {
     private $values;
 
-    public function get($key, $default = null)
+    /**
+     *
+     */
+    public static function init()
+    {
+        $configValues = static::configValues();
+    }
+
+    public function get($key, $locale = null, $default = null)
     {
         $this->fetch();
 
@@ -33,7 +42,7 @@ class SettingsManager
         $this->values[$key] = $value;
     }
 
-    public static function configValues(): array
+    private static function configValues(): array
     {
         return Arr::dot(config('thinktomorrow.chief-settings'));
     }

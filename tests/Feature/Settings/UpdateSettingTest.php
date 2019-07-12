@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Settings\Setting;
-use Thinktomorrow\Chief\Settings\SettingsManager;
+use Thinktomorrow\Chief\Settings\Settings;
 
 class UpdateSettingTest extends TestCase
 {
@@ -16,7 +16,7 @@ class UpdateSettingTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        resolve(SettingsManager::class)->fresh();
+        resolve(Settings::class)->fresh();
     }
 
     /** @test */

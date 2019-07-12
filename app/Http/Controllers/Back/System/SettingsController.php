@@ -5,18 +5,24 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Settings\Application\UpdateSetting;
-use Thinktomorrow\Chief\Settings\SettingFields;
+use Thinktomorrow\Chief\Settings\SettingFieldsManager;
 
 class SettingsController extends Controller
 {
+    /** @var SettingFieldsManager */
+    private $settingFieldsManager;
+
+    public function __construct(SettingFieldsManager $settingFieldsManager)
+    {
+        $this->settingFieldsManager = $settingFieldsManager;
+    }
+
     public function edit()
     {
         $this->authorize('update-setting');
 
-        $fields = SettingFields::defaults();
-
         return view('chief::back.system.settings', [
-            'fields' => $fields
+            'manager' => $this->settingFieldsManager,
         ]);
     }
 

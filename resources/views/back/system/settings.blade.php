@@ -12,8 +12,8 @@
         {{ csrf_field() }}
         <input name="_method" type="hidden" value="PUT">
 
-        @foreach($fields as $field)
-            {!! Thinktomorrow\Chief\Settings\SettingFields::renderField($field) !!}
+        @foreach($manager->fields() as $field)
+            {!! $manager->renderField($field) !!}
         @endforeach
 
     </form>
