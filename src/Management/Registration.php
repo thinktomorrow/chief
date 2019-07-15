@@ -13,7 +13,7 @@ class Registration
     {
         $this->validate($managerClass, $modelClass);
 
-        $this->key = $modelClass::registrationKey();
+        $this->key = $modelClass::managedModelKey();
         $this->managerClass = $managerClass;
         $this->modelClass = $modelClass;
         $this->tags = $tags;

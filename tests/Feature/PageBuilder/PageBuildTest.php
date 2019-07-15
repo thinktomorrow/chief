@@ -26,7 +26,7 @@ class PageBuildTest extends TestCase
         $this->setUpDefaultAuthorization();
         config()->set('app.fallback_locale', 'nl');
 
-        app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
+        app(Register::class)->register(PageManager::class, ArticlePageFake::class);
 
         // Create a dummy page up front based on the expected validPageParams
         $this->page = ArticlePageFake::create([
@@ -111,7 +111,7 @@ class PageBuildTest extends TestCase
     {
         config()->set('app.fallback_locale', 'nl');
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -139,7 +139,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -165,7 +165,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -194,7 +194,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -219,7 +219,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -246,7 +246,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -268,7 +268,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -289,7 +289,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -311,7 +311,7 @@ class PageBuildTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],
@@ -333,7 +333,7 @@ class PageBuildTest extends TestCase
         $this->page->adoptChild($text_module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [
                     [
                         'slug' => 'text-1',
@@ -388,7 +388,7 @@ class PageBuildTest extends TestCase
         $module->page_id = $this->page->id;
         $module->save();
         $managers = app(Managers::class);
-        $pagebuilderField = $managers->findByKey('articles')->manage($this->page)->fields()->first();
+        $pagebuilderField = $managers->findByKey('articles_fake')->manage($this->page)->fields()->first();
 
         $this->assertCount(1, $pagebuilderField->availableModules);
     }

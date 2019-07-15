@@ -8,4 +8,6 @@ use Thinktomorrow\Chief\Modules\Module;
 
 class NewsletterModuleFake extends Module
 {
+    protected static $managedModelKey = 'newsletters_fake';
+
 }

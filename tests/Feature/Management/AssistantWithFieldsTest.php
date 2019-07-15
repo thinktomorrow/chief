@@ -4,16 +4,17 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Fields\Types\Field;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Management\Assistants\Assistant;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Management\Assistants\Assistant;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class AssistantFieldsTest extends TestCase
 {
@@ -24,12 +25,12 @@ class AssistantFieldsTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
-        app(Register::class)->register('foo', ProductManagerWithAssistantFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ProductManagerWithAssistantFake::class, ManagedModelFakeFirst::class);
 
-        $this->manager = app(Managers::class)->findByKey('foo');
+        $this->manager = app(Managers::class)->findByKey('managed_model_first');
 
         $this->setUpDefaultAuthorization();
     }
@@ -47,7 +48,7 @@ class AssistantFieldsTest extends TestCase
         AssistantSaveMethodVerification::unset();
 
         $this->asAdmin()
-            ->put($this->manager->manage(ManagedModelFake::create())->route('update'), [
+            ->put($this->manager->manage(ManagedModelFakeFirst::create())->route('update'), [
                 'assistant-input' => 'foobar',
             ]);
 

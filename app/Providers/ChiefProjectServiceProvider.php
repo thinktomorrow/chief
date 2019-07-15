@@ -18,8 +18,8 @@ class ChiefProjectServiceProvider extends ServiceProvider
         // Out of the box morphables - the key 'singles' is the page's default morphKey.
         Relation::morphMap([
             'singles'   => Single::class,
-//            'text'      => TextModule::class,
-//            'pagetitle' => PagetitleModule::class,
+            'text'      => TextModule::class,
+            'pagetitle' => PagetitleModule::class,
         ]);
 
         // singles - text - pagetitle

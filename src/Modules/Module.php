@@ -61,13 +61,13 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
         parent::__construct($attributes);
     }
 
-    public static function registrationKey(): string
+    public static function managedModelKey(): string
     {
-        if(isset(static::$registrationKey)){
-            return static::$registrationKey;
+        if(isset(static::$managedModelKey)){
+            return static::$managedModelKey;
         }
 
-        throw new \Exception('Missing required static property \'registrationKey\' on ' . static::class. '.');
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
     }
 
     /**

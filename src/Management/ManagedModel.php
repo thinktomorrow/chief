@@ -4,5 +4,5 @@ namespace Thinktomorrow\Chief\Management;
 
 interface ManagedModel
 {
-    public static function registrationKey(): string;
+    public static function managedModelKey(): string;
 }

@@ -33,9 +33,6 @@ abstract class AbstractManager
     /** @var Register */
     protected $registration;
 
-    /** @var string */
-    protected $key;
-
     public function __construct(Registration $registration)
     {
         $this->registration = $registration;

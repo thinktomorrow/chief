@@ -18,7 +18,7 @@ class DeleteModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
+        app(Register::class)->register(ModuleManager::class, NewsletterModuleFake::class);
     }
 
     /** @test */
@@ -28,7 +28,7 @@ class DeleteModuleTest extends TestCase
         $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
 
         $this->asAdmin()
-            ->delete(route('chief.back.managers.delete', ['newsletter', $module->id]), [
+            ->delete(route('chief.back.managers.delete', ['newsletters_fake', $module->id]), [
                 'deleteconfirmation' => 'DELETE',
             ]);
 
@@ -47,7 +47,7 @@ class DeleteModuleTest extends TestCase
         $this->assertEquals(1, Relation::count());
 
         $this->asAdmin()
-            ->delete(route('chief.back.managers.delete', ['newsletter', $module->id]), [
+            ->delete(route('chief.back.managers.delete', ['newsletters_fake', $module->id]), [
             'deleteconfirmation' => 'DELETE',
         ]);
 

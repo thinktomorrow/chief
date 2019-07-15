@@ -29,8 +29,8 @@ class SnippetParserTest extends TestCase
         config()->set('app.fallback_locale', 'nl');
 
         /** @var Register */
-        app(Register::class)->register('articles', ArticlePageManager::class, ArticlePageFake::class);
-        app(Register::class)->register('newsletters', ModuleManager::class, NewsletterModuleFake::class);
+        app(Register::class)->register(ArticlePageManager::class, ArticlePageFake::class);
+        app(Register::class)->register(ModuleManager::class, NewsletterModuleFake::class);
 
         // Default not enable snippet loading
         $this->app['config']->set('thinktomorrow.chief.withSnippets', false);
@@ -118,7 +118,7 @@ class SnippetParserTest extends TestCase
         $page = ArticlePageFake::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $page->id]), $this->validUpdatePageParams([
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',
@@ -136,7 +136,7 @@ class SnippetParserTest extends TestCase
         $page = ArticlePageFake::create();
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $page->id]), $this->validUpdatePageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -157,7 +157,7 @@ class SnippetParserTest extends TestCase
         $module = NewsletterModuleFake::create(['slug' => 'new-slug']);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['newsletters', $module->id]), $this->validUpdateModuleParams([
+            ->put(route('chief.back.managers.update', ['newsletters_fake', $module->id]), $this->validUpdateModuleParams([
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',
