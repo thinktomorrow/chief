@@ -1,24 +1,32 @@
 @import 'warpaint';
-@import 'spirit';
 
-// THESE CUSTOM CLASSES SHOULD BE REDUCED TO A MINIMUM. IT SHOULD BELONG TO THE CHIEF-THEME BY DEFAULT
-// CUSTOM FOLDER IS MEANT FOR THE PROJECT SPECIFIC CLASSES FOR THE ADMIN
-@import "custom/typography";
-@import "custom/nav";
-@import "custom/form";
-@import "custom/general";
-@import "custom/thumb";
-@import 'custom/_mediagallery';
-@import 'custom/_users';
-@import 'custom/_roles';
-@import 'custom/_images';
-@import 'custom/_translations';
-@import 'custom/pagebuilder';
+@tailwind base;
+@tailwind components;
 
-// VENDOR CLASSES
+@import './general/typography.scss';
+@import './general/animations.scss';
+
+@import './components/label.scss';
+@import './components/button.scss';
+@import './components/dropdown.scss';
+@import './components/tabs.scss';
+@import './components/pagebuilder.scss';
+@import './components/modal.scss';
+@import './components/alert.scss';
+@import './components/form.scss';
+@import './components/redactor.scss';
+@import './components/translation.scss';
+
+@tailwind utilities;
+
+/* purgecss start ignore */
 @import '../js/vendors/redactor/redactor.css';
+/* purgecss end ignore */
 
 // STATES & HELPER CLASSES (WARPAINT)
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';
 @import '../../../node_modules/warpaint/src/sass/_space/responsive';
 @import '../../../node_modules/warpaint/src/sass/_base/states';
+
+@import './general/utilities.scss';
+

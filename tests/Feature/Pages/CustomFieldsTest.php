@@ -23,9 +23,9 @@ class CustomFieldsTest extends TestCase
         ArticlePageWithCategories::migrateUp();
         Category::migrateUp();
 
-        app(Register::class)->register('articles', ArticlePageWithCategoriesManager::class, ArticlePageWithCategories::class);
+        app(Register::class)->register(ArticlePageWithCategoriesManager::class, ArticlePageWithCategories::class);
 
-        $this->asAdmin()->post(route('chief.back.managers.store', 'articles'), $this->validPageParams());
+        $this->asAdmin()->post(route('chief.back.managers.store', 'articles_with_category_fake'), $this->validPageParams());
 
         $this->page = ArticlePageWithCategories::first();
     }
@@ -36,7 +36,7 @@ class CustomFieldsTest extends TestCase
     {
         $this->disableExceptionHandling();
         $response = $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles_with_category_fake', $this->page->id]), $this->validUpdatePageParams([
                 'custom' => 'foobar'
             ]));
 
@@ -52,7 +52,7 @@ class CustomFieldsTest extends TestCase
         $category3 = Category::create(['title' => 'derde category']);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles_with_category_fake', $this->page->id]), $this->validUpdatePageParams([
                 'categories' => [$category1->id, $category3->id]
             ]));
 

@@ -24,7 +24,7 @@ class PageSetTest extends TestCase
         $this->setUpDefaultAuthorization();
         config()->set('app.fallback_locale', 'nl');
 
-        app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
+        app(Register::class)->register(PageManager::class, ArticlePageFake::class);
 
         $this->app['config']->set('thinktomorrow.chief.sets', [
             'foobar'   => [
@@ -49,7 +49,7 @@ class PageSetTest extends TestCase
         $pageset_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5], 'foobar'));
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.pagesets'      => [
                     $pageset_ref->flatReference()->get()
                 ],
@@ -69,7 +69,7 @@ class PageSetTest extends TestCase
         $this->page->adoptChild($stored_pageset_ref, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.pagesets'      => [
                     $stored_pageset_ref->flatReference()->get()
                 ],
@@ -91,7 +91,7 @@ class PageSetTest extends TestCase
         $this->assertCount(1, $this->page->fresh()->children());
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [],
                 'sections.text.remove'  => [],

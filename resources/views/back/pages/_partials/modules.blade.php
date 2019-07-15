@@ -14,9 +14,10 @@
         </div>
     </div>
 @endif
-
+    
 @if(!$page->modules->isEmpty())
-    <div class="row gutter-s">
+
+    <div class="row gutter-s stack">
         @foreach($page->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
             @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
             @push('portals')
@@ -25,14 +26,14 @@
         @endforeach
     </div>
 
-
     <div class="stack">
         <a @click="showModal('create-module')" class="btn btn-primary">
-        <i class="icon icon-plus"></i>
-        Voeg een module toe
+            <i class="icon icon-plus"></i>
+            Voeg een module toe
         </a>
     </div>
 @endif
+
 
 @push('portals')
     @include('chief::back.modules._partials.create-modal', ['page_id' => $page->id])

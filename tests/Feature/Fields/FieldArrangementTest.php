@@ -2,18 +2,18 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldsTab;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
-use Thinktomorrow\Chief\Fields\Types\Field;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithFieldTabs;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Fields\Types\Field;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithFieldTabs;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class FieldArrangementTest extends TestCase
 {
@@ -24,14 +24,14 @@ class FieldArrangementTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
-        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->model = ManagedModelFakeFirst::create(['title' => 'Foobar', 'custom_column' => 'custom']);
         $this->manager = (new ManagerFake(app(Register::class)->first()))->manage($this->model);
     }
 
@@ -91,7 +91,7 @@ class FieldArrangementTest extends TestCase
     /** @test */
     public function fields_can_be_arranged_by_tabs()
     {
-        app(Register::class)->register('fakes', ManagerFakeWithFieldTabs::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFakeWithFieldTabs::class, ManagedModelFakeFirst::class);
         $manager = (new ManagerFakeWithFieldTabs(app(Register::class)->first()))->manage($this->model);
         $arrangement = $manager->fieldArrangement();
 

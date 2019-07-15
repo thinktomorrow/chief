@@ -22,7 +22,7 @@ class PageTranslationsTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
 
         // Create a dummy page up front based on the expected validPageParams
         $this->page = Single::create([

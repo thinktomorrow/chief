@@ -1,4 +1,4 @@
-.show-on-hover{
+.show-on-hover {
   .menu-trigger{
     visibility:hidden;
   }
@@ -15,19 +15,18 @@
     top: 50%; right: 0;
     z-index: -1;
     border-top: 1px dashed $color-border;
-
 }
 
 .pagebuilder-menu{
-  position: absolute;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width:100%;
-  bottom: -24px;
-  left: -15px;
-  height:2rem; // Maintain position with floating items
-  z-index: 1;
+  // position: absolute;
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: center;
+  // width:100%;
+  // bottom: -24px;
+  // left: -15px;
+  // height:2rem; // Maintain position with floating items
+  // z-index: 1;
 
   .block.icon{
      font-size: 2rem;

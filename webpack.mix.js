@@ -1,4 +1,5 @@
 let mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 mix.webpackConfig({
 	watchOptions: {
@@ -14,9 +15,29 @@ mix.webpackConfig({
 	.version()
 
 	.options({
-		// Webpack setting to ignore sass loader to follow url() paths
-		processCssUrls: false
+		postCss: [
+			require('tailwindcss')('./resources/assets/sass/tailwind.js'),
+			require('autoprefixer')({
+                browsers: ['last 40 versions'],
+			}),
+		],
+
+		autoprefixer: true,
+
+        // Webpack setting to ignore sass loader to follow url() paths
+		processCssUrls: false,
+	
 	})
+
+    .purgeCss({
+        folders: [
+            'resources/assets/',
+            'resources/views/',
+            'app',
+            'src'
+		],
+		whitelistPatterns: [/re-icon-/]
+    })
 
     /**
 	 * Redactor wysiswyg

@@ -6,7 +6,7 @@
 ?>
 
 @foreach($files as $document)
-    <div class="panel panel-default inset-s stack-s center-y bg-white" id="asset-{{$document->id}}">
+    <div class="border border-grey-100 rounded inset-s stack-s center-y bg-white" id="asset-{{$document->id}}">
         <div>
             <strong>{{ $document->getFilename() }}</strong>
             <br>

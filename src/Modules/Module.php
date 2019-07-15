@@ -3,10 +3,9 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Concerns\Viewable\NotFoundView;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
-use Thinktomorrow\Chief\Concerns\Viewable\ViewPath;
+use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
@@ -26,7 +24,7 @@ use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, MorphableContract, ViewableContract
+class Module extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsChild, MorphableContract, ViewableContract
 {
     use Morphable,
         AssetTrait,
@@ -61,6 +59,15 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
         }
 
         parent::__construct($attributes);
+    }
+
+    public static function managedModelKey(): string
+    {
+        if(isset(static::$managedModelKey)){
+            return static::$managedModelKey;
+        }
+
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
     }
 
     /**

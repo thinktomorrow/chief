@@ -22,7 +22,7 @@ class UploadMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('singles', UploadMediaManager::class, Single::class);
+        app(Register::class)->register(UploadMediaManager::class, Single::class);
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');

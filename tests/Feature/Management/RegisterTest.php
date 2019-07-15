@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\Management\NonRegisteredManager;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
+use Thinktomorrow\Chief\Management\NonRegisteredManager;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeSecond;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class RegisterTest extends TestCase
 {
@@ -17,7 +18,7 @@ class RegisterTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
     }
 
@@ -25,9 +26,9 @@ class RegisterTest extends TestCase
     public function it_can_register_a_manager()
     {
         $register = new Register();
-        $register->register('foo', ManagerFake::class, ManagedModelFake::class);
+        $register->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
-        $this->assertEquals('foo', $register->first()->key());
+        $this->assertEquals('managed_model_first', $register->first()->key());
     }
 
     /** @test */
@@ -35,12 +36,10 @@ class RegisterTest extends TestCase
     {
         $managerRegister = new Register();
 
-        $managerRegister->register('one', ManagerFake::class, ManagedModelFake::class);
-        $managerRegister->register('two', ManagerFake::class, ManagedModelFake::class);
-        $managerRegister->register('three', ManagerFake::class, ManagedModelFake::class);
-        $managerRegister->register('four', ManagerFake::class, ManagedModelFake::class);
+        $managerRegister->register(ManagerFake::class, ManagedModelFakeFirst::class);
+        $managerRegister->register(ManagerFake::class, ManagedModelFakeSecond::class);
 
-        $this->assertCount(4, $managerRegister->all());
+        $this->assertCount(2, $managerRegister->all());
     }
 
     /** @test */
@@ -48,7 +47,7 @@ class RegisterTest extends TestCase
     {
         $this->expectException(\TypeError::class);
 
-        (new Register())->register('foo', null, ManagedModelFake::class);
+        (new Register())->register(null, ManagedModelFakeFirst::class);
     }
 
     /** @test */
@@ -56,7 +55,7 @@ class RegisterTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new Register())->register('foo', 'bar', ManagedModelFake::class);
+        (new Register())->register('bar', ManagedModelFake::class);
     }
 
     /** @test */
@@ -64,7 +63,7 @@ class RegisterTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new Register())->register('foo', ManagedModelFake::class, ManagedModelFake::class);
+        (new Register())->register(ManagedModelFake::class, ManagedModelFake::class);
     }
 
     /** @test */
@@ -72,35 +71,35 @@ class RegisterTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        (new Register())->register('foo', ManagerFake::class, 'bar');
+        (new Register())->register(ManagerFake::class, 'bar');
     }
 
     /** @test */
     public function it_can_filter_by_class()
     {
         $register = new Register();
-        $register->register('one', ManagerFake::class, ManagedModelFake::class);
-        $register->register('two', ManagerFakeWithValidation::class, ManagedModelFake::class);
+        $register->register(ManagerFake::class, ManagedModelFakeFirst::class);
+        $register->register(ManagerFakeWithValidation::class, ManagedModelFakeSecond::class);
 
         $this->assertCount(1, $register->filterByClass(ManagerFake::class)->all());
-        $this->assertEquals('two', $register->filterByClass(ManagerFakeWithValidation::class)->first()->key());
+        $this->assertEquals('managed_model_second', $register->filterByClass(ManagerFakeWithValidation::class)->first()->key());
 
         $this->assertCount(1, $register->rejectByClass(ManagerFake::class)->all());
-        $this->assertEquals('one', $register->rejectByClass(ManagerFakeWithValidation::class)->first()->key());
+        $this->assertEquals('managed_model_first', $register->rejectByClass(ManagerFakeWithValidation::class)->first()->key());
     }
 
     /** @test */
     public function it_can_filter_by_model()
     {
         $register = new Register();
-        $register->register('one', ManagerFake::class, ManagedModelFake::class);
-        $register->register('two', ManagerFakeWithValidation::class, ManagedModelFakeTranslation::class);
+        $register->register(ManagerFake::class, ManagedModelFakeFirst::class);
+        $register->register(ManagerFakeWithValidation::class, ManagedModelFakeTranslation::class);
 
-        $this->assertCount(1, $register->filterByModel(ManagedModelFake::class)->all());
-        $this->assertEquals('two', $register->filterByModel(ManagedModelFakeTranslation::class)->first()->key());
+        $this->assertCount(1, $register->filterByModel(ManagedModelFakeFirst::class)->all());
+        $this->assertEquals('managed_model_trans', $register->filterByModel(ManagedModelFakeTranslation::class)->first()->key());
 
-        $this->assertCount(1, $register->rejectByModel(ManagedModelFake::class)->all());
-        $this->assertEquals('one', $register->rejectByModel(ManagedModelFakeTranslation::class)->first()->key());
+        $this->assertCount(1, $register->rejectByModel(ManagedModelFakeFirst::class)->all());
+        $this->assertEquals('managed_model_first', $register->rejectByModel(ManagedModelFakeTranslation::class)->first()->key());
     }
 
     /** @test */
@@ -109,7 +108,7 @@ class RegisterTest extends TestCase
         $this->expectException(NonRegisteredManager::class);
 
         $register = new Register();
-        $register->register('one', ManagerFake::class, ManagedModelFake::class);
+        $register->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
         $register->filterByClass(ManagerFakeWithValidation::class)->all();
     }
@@ -119,12 +118,12 @@ class RegisterTest extends TestCase
     {
         $managerRegister = new Register();
 
-        $managerRegister->register('one', ManagerFake::class, ManagedModelFake::class);
-        $managerRegister->register('one', ManagerFakeWithValidation::class, ManagedModelFake::class);
+        $managerRegister->register(ManagerFake::class, ManagedModelFakeFirst::class);
+        $managerRegister->register(ManagerFakeWithValidation::class, ManagedModelFakeFirst::class);
 
         $this->assertCount(1, $managerRegister->all());
         $this->assertEquals([
-            'one' => new Registration('one', ManagerFakeWithValidation::class, ManagedModelFake::class)
+            'managed_model_first' => new Registration(ManagerFakeWithValidation::class, ManagedModelFakeFirst::class)
         ], $managerRegister->all());
     }
 }

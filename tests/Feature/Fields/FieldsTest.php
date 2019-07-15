@@ -3,12 +3,13 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Fields;
 
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 
 class FieldsTest extends TestCase
 {
@@ -67,8 +68,8 @@ class FieldsTest extends TestCase
     {
         $this->app['view']->addNamespace('test-views', __DIR__ . '/stubs/views');
 
-        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
-        $manager = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()));
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
+        $manager = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()));
 
         $render = $manager->renderField(
             InputField::make('input-one')->view('test-views::custom-field')

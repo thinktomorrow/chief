@@ -22,7 +22,7 @@ class UpdatePageTest extends TestCase
 
         $this->setUpChiefEnvironment();
 
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
 
         // Create a dummy page up front based on the expected validPageParams
         $this->page = Single::create([
@@ -42,9 +42,10 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]))
-            ->assertViewIs('chief::back.managers.edit')
-            ->assertStatus(200);
+        $response = $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]));
+
+        $response->assertViewIs('chief::back.managers.edit');
+        $response->assertStatus(200);
     }
 
     /** @test */

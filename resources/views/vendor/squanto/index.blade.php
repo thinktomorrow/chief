@@ -13,7 +13,7 @@
 
 @section('content')
     <section class="formgroup stack">
-        <h2 class="formgroup-label"><span class="inline-xs">Algemene teksten</span></h2>
+        <h2><span class="inline-xs">Algemene teksten</span></h2>
         <div class="row gutter">
             @foreach($pages->reject(function($page){ return in_array($page->key,[]); }) as $page)
                 @include('squanto::_rowitem')

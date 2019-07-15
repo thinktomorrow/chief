@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
@@ -31,7 +32,7 @@ use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
+class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -75,6 +76,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         }
 
         parent::__construct($attributes);
+    }
+
+    public static function managedModelKey(): string
+    {
+        if(isset(static::$managedModelKey)){
+            return static::$managedModelKey;
+        }
+
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
     }
 
     /**

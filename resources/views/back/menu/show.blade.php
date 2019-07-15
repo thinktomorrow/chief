@@ -7,7 +7,10 @@
 
     @if(Thinktomorrow\Chief\Menu\Menu::all()->count() > 1)
         @slot('subtitle')
-            <a class="center-y" href="{{ route('chief.back.menus.index') }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+            <a class="center-y" href="{{ route('chief.back.menus.index') }}">
+                <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg>
+                Terug naar het menu overzicht
+            </a>
         @endslot
     @endif
     <div class="inline-group-s">

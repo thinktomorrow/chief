@@ -1,5 +1,5 @@
 <div class="column-3">
-    <div class="panel panel-default bg-white">
+    <div class="border border-grey-100 rounded bg-white">
         <div class="inset-s">
             <a href="{{ route('squanto.edit',$page->id) }}">
                 {{ $page->label }}

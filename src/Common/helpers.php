@@ -11,19 +11,6 @@ if (!function_exists('chiefAdmin')) {
 }
 
 /**
- * Form fields for honeypot protection on form submissions
- * return HtmlString which does not force you to use blade escaping tags.
- */
-if (!function_exists('honeypot_fields')) {
-    function honeypot_fields()
-    {
-        return new \Illuminate\Support\HtmlString('<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>');
-    }
-}
-
-
-
-/**
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
  */
