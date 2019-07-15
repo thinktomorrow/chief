@@ -15,5 +15,9 @@
             {!! $manager->renderField($field) !!}
         @endforeach
 
+        <div class="stack text-right">
+            <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
+        </div>
+
     </form>
 @stop

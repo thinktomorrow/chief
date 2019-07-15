@@ -2,54 +2,43 @@
 
 namespace Thinktomorrow\Chief\Settings;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 
 class Settings extends Collection
 {
-    private $values;
-
-    /**
-     *
-     */
-    public static function init()
+    public static function configValues(): array
     {
-        $configValues = static::configValues();
+        return config('thinktomorrow.chief-settings');
     }
 
     public function get($key, $locale = null, $default = null)
     {
         $this->fetch();
 
-        if (! isset($this->values[$key])) {
+        if (! isset($this->items[$key])) {
             return $default;
         }
         
-        if (is_array($this->values[$key])) {
-            if ($this->values[$key]['value'] == null) {
+        if (is_array($this->items[$key])) {
+            if ($this->items[$key]['value'] == null) {
                 return $default;
             }
 
-            return $this->values[$key]['value'];
+            return $this->items[$key]['value'];
         }
 
-        return $this->values[$key];
+        return $this->items[$key];
     }
 
     public function set($key, $value)
     {
-        $this->values[$key] = $value;
-    }
-
-    private static function configValues(): array
-    {
-        return Arr::dot(config('thinktomorrow.chief-settings'));
+        $this->items[$key] = $value;
     }
 
     private function fetch()
     {
-        if ($this->values) {
+        if ($this->items) {
             return;
         }
 
@@ -59,12 +48,12 @@ class Settings extends Collection
             ? Setting::all()->pluck('value', 'key')->toArray()
             : [];
 
-        $this->values = array_merge($config_values, $database_values);
+        $this->items = array_merge($config_values, $database_values);
     }
 
     public function fresh()
     {
-        $this->values = null;
+        $this->items = null;
 
         return $this;
     }

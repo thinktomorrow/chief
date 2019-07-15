@@ -30,10 +30,10 @@ class SettingsController extends Controller
     {
         $this->authorize('update-setting');
 
-        app(UpdateSetting::class)->handle(
-            $request->get('settings')
-        );
+        $this->settingFieldsManager->fields()->validate($request->all());
 
-        return redirect()->route('chief.back.settings.edit')->with('messages.success', 'Settings zijn aangepast!');
+        $this->settingFieldsManager->saveFields($request);
+
+        return redirect()->route('chief.back.settings.edit')->with('messages.success', 'De settings zijn aangepast!');
     }
 }
