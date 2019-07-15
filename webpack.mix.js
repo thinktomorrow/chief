@@ -13,7 +13,7 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
 		postCss: [
 			require('tailwindcss')('./resources/assets/sass/tailwind.js'),
 			require('autoprefixer')({
-                browsers: ['last 40 versions'],
+                overrideBrowserslist: ['last 40 versions'],
 			}),
 		],
 

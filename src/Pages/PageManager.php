@@ -101,6 +101,7 @@ class PageManager extends AbstractManager implements Manager
                 ->label('Zoekmachine omschrijving')
                 ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
             InputField::make('seo_keywords')
+                ->validation('max:250')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
                 ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
