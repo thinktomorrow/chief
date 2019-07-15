@@ -24,9 +24,9 @@ class UrlSlugFieldsTest extends TestCase
         parent::setUp();
         $this->setUpChiefEnvironment();
 
-        app(Register::class)->register('products', PageManager::class, ProductWithBaseSegments::class);
+        app(Register::class)->register(PageManager::class, ProductWithBaseSegments::class);
 
-        $this->manager = app(Managers::class)->findByKey('products');
+        $this->manager = app(Managers::class)->findByKey('products_with_base');
 
     }
 
@@ -139,5 +139,3 @@ class UrlSlugFieldsTest extends TestCase
 
     }
 }
-
-

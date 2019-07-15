@@ -29,7 +29,7 @@ class UrlAssistantTest extends TestCase
         ProductFake::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
-        app(Register::class)->register('products', ProductManagerWithUrlAssistant::class, ProductFake::class);
+        app(Register::class)->register(ProductManagerWithUrlAssistant::class, ProductFake::class);
 
         $this->manager = app(Managers::class)->findByKey('products');
     }
@@ -64,8 +64,8 @@ class UrlAssistantTest extends TestCase
     /** @test */
     function the_updated_slug_is_prepended_with_the_basesegment()
     {
-        app(Register::class)->register('products', PageManager::class, ProductWithBaseSegments::class);
-        $manager = app(Managers::class)->findByKey('products');
+        app(Register::class)->register(PageManager::class, ProductWithBaseSegments::class);
+        $manager = app(Managers::class)->findByKey('products_with_base');
 
         $this->asAdmin()->post($manager->route('store'), $this->validPageParams([
             'url-slugs' => ['nl' => 'foobar'],

@@ -21,7 +21,7 @@ class AuditModelTest extends TestCase
         parent::setUp();
         $this->setUpChiefEnvironment();
 
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
     }
 
     /** @test */
@@ -30,7 +30,7 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $page       = Page::first();
         $activity   = Audit::getAllActivityFor($page);
@@ -47,12 +47,12 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams());
+            ->put(route('chief.back.managers.update', [Single::managedModelKey(), $page->id]), $this->validUpdatePageParams());
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -68,12 +68,12 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams(['published' => false]));
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams(['published' => false]));
 
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.managers.delete', ['singles', $page->id]), ['deleteconfirmation' => 'DELETE']);
+             ->delete(route('chief.back.managers.delete', [Single::managedModelKey(), $page->id]), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -91,7 +91,7 @@ class AuditModelTest extends TestCase
         $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->post(route('chief.back.assistants.archive', ['singles', $page->id]));
+             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -109,7 +109,7 @@ class AuditModelTest extends TestCase
         Auth::guard('chief')->login($user);
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $article = Page::first();
         $activity = $article->activity->first();
@@ -127,7 +127,7 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.index'));
@@ -149,7 +149,7 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.show', $user->id));

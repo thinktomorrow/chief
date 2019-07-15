@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Sets\Set;
+use Thinktomorrow\Chief\Management\ManagedModel;
 
 trait Viewable
 {
@@ -59,8 +60,8 @@ trait Viewable
             return $this->viewKey;
         }
 
-        if ($this instanceof MorphableContract) {
-            return $this->morphKey();
+        if ($this instanceof ManagedModel) {
+            return $this->managedModelKey();
         }
 
         if (config('thinktomorrow.chief.strict')) {

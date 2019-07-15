@@ -2,17 +2,19 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls\Fakes;
 
-use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
-use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
+use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
-class ProductFake extends ManagedModelFake implements ProvidesUrl, ProvidesFlatReference
+class ProductFake extends ManagedModelFakeFirst implements ProvidesUrl, ProvidesFlatReference
 {
     use Archivable;
+
+    protected static $managedModelKey = 'products';
 
     public $translationModel = ManagedModelFakeTranslation::class;
     public $translationForeignKey = 'managed_model_fake_id';

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management;
 
+use Illuminate\Support\Arr;
+
 class Register
 {
     /** @var array */
@@ -16,9 +18,9 @@ class Register
         }
     }
 
-    public function register($key, $class, $model, array $tags = [])
+    public function register($class, $model, array $tags = [])
     {
-        $this->push(new Registration($key, $class, $model, $tags));
+        $this->push(new Registration($class, $model, $tags));
 
         return $this;
     }
@@ -35,7 +37,7 @@ class Register
 
     public function first(): Registration
     {
-        return array_first($this->registrations);
+        return Arr::first($this->registrations);
     }
 
     /**
