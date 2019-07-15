@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fields;
 use ArrayIterator;
 use Thinktomorrow\Chief\Fields\Types\Field;
 
-class Fields implements \ArrayAccess, \IteratorAggregate
+class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /** @var array */
     private $fields;
@@ -155,5 +155,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     {
         array_map(function (Field $field) {
         }, $fields);
+    }
+
+    public function count()
+    {
+        return count($this->fields);
     }
 }

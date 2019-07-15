@@ -16,6 +16,25 @@ class UrlSlugFields extends Fields
         return $fields;
     }
 
+    public static function redirectsFromModel(ProvidesUrl $model)
+    {
+        $records = MemoizedUrlRecord::getByModel($model)->reject(function ($record) {
+            return !$record->isRedirect();
+        })->sortByDesc('created_at');
+
+        $fields = new static([]);
+
+        foreach ($records as $record) {
+            $key = 'redirects-'.$record->locale.'-'.$record->slug;
+            $fields[$key] = UrlSlugField::make($key)
+                ->setUrlRecord($record)
+                ->setBaseUrlSegment($model->baseUrlSegment($record->locale))
+                ->prepend($model->resolveUrl($record->locale, $model->baseUrlSegment($record->locale)) . '/');
+        }
+
+        return $fields;
+    }
+
     public function toJson(): string
     {
         return json_encode($this->toArray());

@@ -17,6 +17,11 @@ class UrlSlugField extends InputField
         return $this;
     }
 
+    public function getUrlRecordId(): int
+    {
+        return $this->urlRecord->id;
+    }
+
     public function setBaseUrlSegment($baseUrlSegment = null)
     {
         $this->baseUrlSegment = $baseUrlSegment;
@@ -27,6 +32,11 @@ class UrlSlugField extends InputField
     public function value()
     {
         return old($this->key, $this->rawSlugValue());
+    }
+
+    public function fullUrl(): string
+    {
+        return $this->prepend.$this->value();
     }
 
     private function rawSlugValue(): string
@@ -66,6 +76,7 @@ class UrlSlugField extends InputField
             'placeholder' => $this->placeholder,
             'description' => $this->description,
             'value' => $this->value(),
+            'baseUrlSegment' => $this->baseUrlSegment,
             'hint' => null, // Hint placeholder to show url hint when it already exists
             'is_homepage' => ($this->value() === '/'),
         ]);

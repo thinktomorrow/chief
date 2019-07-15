@@ -1,5 +1,5 @@
 <url-slugs inline-template :initialfields='@json($fields->toArray())' checkurl="{{ $manager->assistant('url')->route('check') }}">
-    <section class="row formgroup stack gutter-l bg-white">
+    <section class="row formgroup stack gutter-l">
         <div class="column-4">
             <h2 class="formgroup-label">Pagina link</h2>
             <p>Bepaal hier de link voor deze pagina. Oude links worden automatisch doorgestuurd. Geef een '/' als link om een pagina als homepage te maken.</p>
@@ -58,7 +58,7 @@
                     }
 
                     window.axios.post(this.checkurl, {
-                        slug: field.value
+                        slug: field.baseUrlSegment+'/'+field.value
                     }).then(function({data}){
                         field.hint = data.hint;
                     });
