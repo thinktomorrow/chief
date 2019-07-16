@@ -24,9 +24,9 @@ class UpdateSettingTest extends TestCase
     {
         $this->disableExceptionHandling();
 
-        factory(Setting::class)->create([
-            'key'   => 'foo',
-            'value' => 'old foo'
+        Setting::create([
+            'key'   => 'homepage',
+            'value' => 'old homepage'
         ]);
 
         $this->asAdmin()

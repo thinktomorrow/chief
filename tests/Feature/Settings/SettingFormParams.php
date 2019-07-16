@@ -8,9 +8,7 @@ trait SettingFormParams
     protected function validSettingParams($overrides = [])
     {
         $params = [
-            'settings' => [
-                'foo' =>  'updated foo',
-            ]
+            'homepage' =>  'updated homepage',
         ];
 
         foreach ($overrides as $key => $value) {
@@ -23,9 +21,7 @@ trait SettingFormParams
     protected function validUpdateSettingParams($overrides = [])
     {
         $params = [
-            'settings' => [
-                'foo' => 'updated foo',
-            ]
+            'homepage' => 'updated homepage',
         ];
 
         foreach ($overrides as $key => $value) {
@@ -37,7 +33,7 @@ trait SettingFormParams
 
     protected function assertUpdatedSettingValues($setting)
     {
-        $this->assertEquals('foo', $setting->key);
-        $this->assertEquals('updated foo', $setting->value);
+        $this->assertEquals('homepage', $setting->key);
+        $this->assertEquals('updated homepage', $setting->value);
     }
 }

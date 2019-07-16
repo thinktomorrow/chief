@@ -16,16 +16,19 @@ class Settings extends Collection
     {
         $this->fetch();
 
-        if (! isset($this->items[$key])) {
+        if (!isset($this->items[$key])) {
             return $default;
         }
-        
+
         if (is_array($this->items[$key])) {
-            if ($this->items[$key]['value'] == null) {
+
+            if(!$locale) $locale = app()->getLocale();
+
+            if ($this->items[$key] == null || !isset($this->items[$key][$locale])) {
                 return $default;
             }
 
-            return $this->items[$key]['value'];
+            return $this->items[$key][$locale] ?? $default;
         }
 
         return $this->items[$key];

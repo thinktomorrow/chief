@@ -34,15 +34,15 @@ if (!function_exists('chief_cached_asset')) {
 }
 
 if (!function_exists('chiefSetting')) {
-    function chiefSetting($key = null, $default = null)
+    function chiefSetting($key = null, $locale = null, $default = null)
     {
-        $manager = app(\Thinktomorrow\Chief\Settings\Settings::class);
+        $settings = app(\Thinktomorrow\Chief\Settings\Settings::class);
 
         if (is_null($key)) {
-            return $manager;
+            return $settings;
         }
         
-        return $manager->get($key, $default);
+        return $settings->get($key, $locale, $default);
     }
 }
 

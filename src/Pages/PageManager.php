@@ -136,12 +136,12 @@ class PageManager extends AbstractManager implements Manager
         }
 
         return new FieldArrangement($this->fieldsWithAssistantFields(), [
+            new FieldsTab('pagina', ['sections']),
+            new FieldsTab('modules', [], 'chief::back.pages._partials.modules'),
+            new RemainingFieldsTab('inhoud'),
             new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
                 'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
             ]),
-            new RemainingFieldsTab('inhoud'),
-            new FieldsTab('pagina', ['sections']),
-            new FieldsTab('modules', [], 'chief::back.pages._partials.modules'),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ]);
     }

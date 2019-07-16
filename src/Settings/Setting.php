@@ -3,13 +3,21 @@
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Concerns\Translatable\StraightTranslatable;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class Setting extends Model
 {
+//    use StraightTranslatable;
+//
+//    protected $translatableAttribute = 'value';
+
     public $table = 'settings';
     public $timestamps = false;
     public $guarded = [];
+    public $casts = [
+        'value' => 'json',
+    ];
 
     private static $fieldsFromConfig;
 

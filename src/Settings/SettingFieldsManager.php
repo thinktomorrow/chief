@@ -27,6 +27,7 @@ class SettingFieldsManager extends Fields implements FieldManager
     {
         return new Fields([
             SelectField::make('homepage')
+                ->name('homepage[:locale]')
                 ->options(UrlRecord::allOnlineModels())
                 ->translatable(config('translatable.locales'))
                 ->grouped(),
@@ -50,7 +51,6 @@ class SettingFieldsManager extends Fields implements FieldManager
 
     public function saveFields(Request $request)
     {
-        ddd($request->all());
         foreach($this->fields() as $key => $field)
         {
             if(!$setting = Setting::where('key', $key)->first()) {
@@ -65,4 +65,6 @@ class SettingFieldsManager extends Fields implements FieldManager
             $setting->update(['value' => $request->get($key, '')]);
         }
     }
+
+    // A changed homepage needs to be reflected in the urls as well in order to be active.
 }
