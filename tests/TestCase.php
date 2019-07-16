@@ -13,7 +13,6 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
-use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
 use Thinktomorrow\Chief\Common\Helpers\Memoize;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
@@ -37,9 +36,6 @@ abstract class TestCase extends OrchestraTestCase
             ActivitylogServiceProvider::class,
 
             ChiefServiceProvider::class,
-
-            // Demo is used for our preview testing
-            DemoServiceProvider::class,
         ];
     }
 
