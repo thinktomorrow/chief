@@ -27,10 +27,10 @@ trait HasDetails
         return new Details(
             $id,
             $key,
-            $labelSingular,
-            $labelPlural,
+            $labelSingular.'',
+            $labelPlural.'',
             $internal_label,
-            $title
+            $title.''
         );
     }
 }

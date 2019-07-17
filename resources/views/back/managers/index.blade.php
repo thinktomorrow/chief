@@ -27,7 +27,7 @@
             <p>Nog geen {{ $modelManager->details()->singular }} toegevoegd. Je hebt echter niet de nodige rechten om er een toe te voegen.</p>
         @endif
     @else
-        <div class="row gutter">
+        <div class="row gutter stack">
             <div class="column-9">
                 <div class="row gutter-s">
                     @if($managers->isEmpty())
@@ -64,8 +64,9 @@
 
                 @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
                     @if( ! $archiveAssistant->findAll()->isEmpty())
-                        <div class="center-x">
-                            <a class="squished-s" href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
+                        <h3>Gearchiveerde items</h3>
+                        <div class="stack-xs">
+                            <a href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
                         </div>
                     @endif
                 @endif

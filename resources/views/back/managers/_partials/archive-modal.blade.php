@@ -22,6 +22,6 @@
     </form>
 
     <div v-cloak slot="modal-action-buttons">
-        <button type="button" class="btn btn-o-tertiary stack" data-submit-form="archive-manager-form-{{ $managedModelId }}">Archiveer</button>
+        <button type="button" class="btn btn-o-error stack" data-submit-form="archive-manager-form-{{ $managedModelId }}">Archiveer</button>
     </div>
 </modal>

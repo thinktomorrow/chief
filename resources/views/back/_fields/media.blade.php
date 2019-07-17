@@ -20,19 +20,16 @@
                 }"></slim>
             </div>
             <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="column-3">
-                <div class="border-2 border-dashed border-grey-400 flex h-24 items-center justify-center rounded shadow-md w-9/12" id="file-drop-area-{{ $name }}"
+                <div class="thumb thumb-new" id="file-drop-area-{{ $name }}"
                      :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                      @dragover.prevent="handleDraggingOver"
                      @dragleave.prevent="handleDraggingLeave"
                      @drop.prevent="handleDrop">
                     <!-- allow to click for upload -->
-                    <input v-if="checkSupport" type="file" class="absolute cursor-pointer opacity-0" @change="handleFileSelect" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
+                    <input v-if="checkSupport" type="file" @change="handleFileSelect" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <!-- if not supported, a file can still be passed along -->
-                    <input v-else type="file" class="absolute cursor-pointer opacity-0" name="files[{{ $key }}][]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
-                    {{-- <span class="icon icon-plus"></span> --}}
-                    <div>
-                        <svg width="18" height="18"><use xlink:href="#plus"/></svg>
-                    </div>
+                    <input v-else type="file" name="files[{{ $key }}][]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
+                    <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                 </div>
             </div>
         </div>
