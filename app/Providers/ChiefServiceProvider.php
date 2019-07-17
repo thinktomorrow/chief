@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Authorization\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
-use Thinktomorrow\Chief\Pages\Console\GeneratePage;
+use Thinktomorrow\Chief\Setup\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Pages\Console;
+namespace Thinktomorrow\Chief\Setup\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

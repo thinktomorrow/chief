@@ -1,0 +1,14 @@
+<?php
+
+namespace ##NAMESPACE##;
+
+use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Pages\PageManager;
+
+class ##CLASSNAME## extends PageManager
+{
+    public function fields(): Fields
+    {
+        return parent::fields();
+    }
+}

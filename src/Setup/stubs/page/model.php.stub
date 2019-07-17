@@ -1,0 +1,23 @@
+<?php
+
+namespace ##NAMESPACE##;
+
+##IMPORTS##
+class ##CLASSNAME## extends Page
+{
+    ##PROPERTIES##
+//    public $labelSingular = 'product';
+//    public $labelPlural = 'producten';
+
+    // protected static $managedModelKey = 'products';
+    //
+    //    protected static $baseUrlSegment = [
+    //        'nl' => 'producten',
+    //        'en' => 'products',
+    //    ];
+    //
+    //    protected $translatedAttributes  = [
+    //        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description',
+    //        'hero_title', 'hero_description',
+    //    ];
+}

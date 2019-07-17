@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Thinktomorrow\Chief\Pages\Console\GeneratePage;
+use Thinktomorrow\Chief\Setup\Console\GeneratePage;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class GeneratePageCommandTest extends TestCase

@@ -12,10 +12,10 @@ return [
     'strict' => env('APP_DEBUG', false),
 
     /**
-     * Domain settings.
+     * Setup settings.
      *
      * Here you should set your primary location for your models
-     * This is used in a couple of places such as the generator tools. Make
+     * This is used for the generator tools. Make
      * sure to set in your composer.json as a PSR-4 autoloaded namespace.
      */
     'domain'      => [
