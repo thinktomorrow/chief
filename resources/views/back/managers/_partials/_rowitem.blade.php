@@ -1,9 +1,9 @@
-<div class="s-column-6 m-column-4 inset-xs">
+<div class="s-column-6 m-column-6 inset-xs">
     <div class="row bg-white border border-grey-100 rounded inset-s" style="height: 100%">
         <div class="column">
             @if($manager->can('edit'))
-                <a class="text-black font-bold" href="{{ $manager->route('edit') }}">
-                    {!! $manager->details()->title !!}
+                <a href="{{ $manager->route('edit') }}">
+                    <h3>{!! $manager->details()->title !!}</h3>
                 </a>
             @else
                 <span class="text-black font-bold">{!! $manager->details()->title !!}</span>
@@ -14,7 +14,7 @@
                 </div>
             @endif
             @if($manager->details()->intro)
-                <div class="stack-s font-s">
+                <div class="stack-s text-sm">
                     {!! $manager->details()->intro !!}
                 </div>
             @endif

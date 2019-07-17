@@ -1,8 +1,8 @@
 <template>
     <div>
         <slot name="tabnav" :tabs="tabs">
-            <ul v-if="!hideNav" role="tablist" class="flex w-full border-b border-grey-200 mb-6">
-                <li v-for="tab in tabs" role="presentation">
+            <ul v-if="!hideNav" role="tablist" class="flex w-full border-b border-grey-100 mb-6">
+                <li v-for="tab in tabs" role="presentation" class="font-bold">
                     <slot name="tabname" :tab="tab">
                         <a v-html="tab.name"
                            @click="selectTab(tab)"
@@ -10,7 +10,7 @@
                            :aria-controls="tab.hash"
                            :aria-selected="tab.isActive"
                            role="tab"
-                           class="block squished --bottomline"
+                           class="block squished text-grey-500 --bottomline"
                            :class="{'active': tab.isActive }"
                         ></a>
                     </slot>

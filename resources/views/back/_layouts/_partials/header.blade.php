@@ -1,14 +1,16 @@
 @section('header')
-    <header class="bg-white border-b border-grey-200">
+    <header class="bg-white border-b border-secondary-200">
         <div class="container">
-            <div class="row stack justify-between">
+            @if(isset($subtitle))
+                <div class="row stack">
+                    <div>{!! $subtitle !!}</div>
+                </div>
+            @endif
+            <div class="row stack flex justify-between">
 
-                <div class="squished-s">
+                <div>
 
-                    <h1>{!! $title ?? '' !!}</h1>
-                    
-                    {!! isset($subtitle) ? $subtitle : '' !!}
-
+                    <h1>{!! $title ?? '' !!} </h1>
                     {{ $extra ??  '' }}
 
                 </div>

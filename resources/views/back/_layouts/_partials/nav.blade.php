@@ -1,6 +1,6 @@
-<nav class="bg-white border-b border-grey-200">
+<nav class="bg-white border-b border-secondary-200">
     <div class="container">
-        <div class="row justify-between">
+        <div class="stack-xs row justify-between">
 
             <ul class="navigation-list flex items-center">
 
@@ -33,9 +33,9 @@
             </ul>
 
             <ul class="navigation-list flex float-right items-center h-full">
-                @role('developer')
-                    <li class="no-hover px-6"><a class="label label-secondary" target="_blank" href="/spirit">Spirit</a></li>
-                @endrole
+                {{-- @role('developer')
+                    <li class="no-hover px-6"><a class="label label-primary" target="_blank" href="/spirit">Spirit</a></li>
+                @endrole --}}
                 @if(\Illuminate\Support\Facades\Gate::check('view-user') || \Illuminate\Support\Facades\Gate::check('view-role') || \Illuminate\Support\Facades\Gate::check('view-audit') || \Illuminate\Support\Facades\Gate::check('update-setting'))
                     <li>
                         <dropdown>

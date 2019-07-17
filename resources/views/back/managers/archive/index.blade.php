@@ -13,10 +13,12 @@
 @endcomponent
 
 @section('content')
-    <div class="row gutter stack">
-        @foreach($managers as $manager)
-            @include('chief::back.managers.archive._rowitem')
-            @include('chief::back.managers._partials.delete-modal')
-        @endforeach
+    <div class="stack">
+        <div class="row gutter-l stack">
+            @foreach($managers as $manager)
+                @include('chief::back.managers.archive._rowitem')
+                @include('chief::back.managers._partials.delete-modal')
+            @endforeach
+        </div>
     </div>
 @stop

@@ -109,9 +109,15 @@ class PublishAssistant implements Assistant
     {
         $label = $this->publicationStatusAsPlainLabel();
 
-        $class = $this->isPublished() ? 'text-success' : 'text-error';
+        if($this->isPublished()) {
+            $class = 'text-success';
+        } elseif ($this->isDraft()) {
+            $class = 'text-error';
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+            $class = 'text-warning';
+        }
 
-        $statusAsLabel = '<span class="'. $class .'"><em>' . $label . '</em></span>';
+        $statusAsLabel = '<span class="font-bold '. $class .'"><em>' . $label . '</em></span>';
 
         if(!$plain && $this->hasPreviewUrl())
         {

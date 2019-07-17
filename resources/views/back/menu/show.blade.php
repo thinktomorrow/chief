@@ -14,9 +14,9 @@
         @endslot
     @endif
     <div class="inline-group-s">
-        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary row center-y">
-            <i class="icon icon-plus"></i>
-            Voeg een menu-item toe
+        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-secondary squished-s inline-flex items-center">
+            <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+            <span>Voeg een menu-item toe</span>
         </a>
     </div>
 @endcomponent
@@ -25,8 +25,9 @@
 
     @if($menuItems->isEmpty() )
         <div class="center-center stack-xl">
-            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary squished-l">
-                <i class="icon icon-zap icon-fw"></i>Voeg een menu-item toe
+            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-secondary squished-s inline-flex items-center">
+                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                <span>Voeg een menu-item toe</span>
             </a>
         </div>
     @else

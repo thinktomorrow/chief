@@ -2,9 +2,7 @@
     <div class="row bg-white border border-grey-100 rounded inset-s" style="height: 100%">
         <div class="column">
 
-            <span class="text-black font-bold">
-                {!! $manager->details()->title !!}
-            </span>
+            <h3>{!! $manager->details()->title !!}</h3>
 
             @if($manager->details()->subtitle)
                 <div>
@@ -26,9 +24,7 @@
 
         <div class="column-3 text-right flex flex-col justify-between items-end">
             @include('chief::back.managers.archive.context-menu')
-            <span class="text-warning">
-                {!! $manager->details()->context !!}
-            </span>
+            <span>{!! $manager->details()->context !!}</span>
         </div>
 
     </div>

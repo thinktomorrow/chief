@@ -2,8 +2,7 @@
 .thumb {
     min-height: 80px;
     min-width: 80px;
-    box-shadow: 1px 5px 28px -10px config('theme.colors.grey.300');
-    @apply flex justify-center items-center h-full w-full rounded-lg;
+    @apply flex justify-center items-center h-full w-full rounded-lg shadow-lg;
 
     /* SLIM CROPPER OVERRIDES */
     .slim {
