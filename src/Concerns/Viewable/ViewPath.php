@@ -61,7 +61,7 @@ class ViewPath
         }
 
         if (! view()->exists($basePath.'show')) {
-            throw new NotFoundView('Viewfile not found for ['.get_class($this->viewable).']. Make sure the default view ['.$basePath.'show] exists.');
+            throw new NotFoundView('Viewfile not found for ['.get_class($this->viewable).']. Make sure the view ['.$basePath.$guessedViewName.'] or the default view ['.$basePath.'show] exists.');
         }
     }
 }
