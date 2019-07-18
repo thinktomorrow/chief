@@ -9,7 +9,7 @@
         @foreach($redirects as $redirect)
             <url-redirect inline-template removeurl="{{ route('chief.back.assistants.url.remove-redirect',$redirect->getUrlRecordId()) }}">
                 <div v-show="!this.removed" class="bg-white panel inset-s stack-s">
-                    <span class="text-error" style="float:right; padding:2px 5px;" @click="remove">
+                    <span class="text-error cursor-pointer" style="float:right; padding:2px 5px;" @click="remove">
                         <svg class="fill-current" width="18" height="18"><use xlink:href="#trash"/></svg>
                     </span>
                     <div>{{ $redirect->fullUrl() }}</div>
