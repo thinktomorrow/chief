@@ -51,7 +51,7 @@ class Field
 
     public function name(string $name = null)
     {
-        if(!is_null($name)) {
+        if (!is_null($name)) {
             $this->values['name'] = $name;
 
             return $this;
@@ -86,7 +86,7 @@ class Field
     {
         $name = $this->name();
 
-        if(strpos($name, ':locale')) {
+        if (strpos($name, ':locale')) {
             return preg_replace('#(:locale)#', $locale, $name);
         }
 

@@ -80,7 +80,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
     public static function managedModelKey(): string
     {
-        if(isset(static::$managedModelKey)){
+        if (isset(static::$managedModelKey)) {
             return static::$managedModelKey;
         }
 

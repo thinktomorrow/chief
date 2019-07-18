@@ -74,7 +74,7 @@ class UrlRecord extends Model
         return static::where('model_type', $model->getMorphClass())
             ->where('model_id', $model->id)
             ->where('locale', $locale)
-            ->where('redirect_id','<>', null)
+            ->where('redirect_id', '<>', null)
             ->orderBy('redirect_id', 'ASC')
             ->first();
     }

@@ -35,8 +35,10 @@ class Memoize
 
     private function convertToCachableParameters(array $parameters)
     {
-        foreach($parameters as $key => $value) {
-            if($value instanceof Model) $parameters[$key] = get_class($value) . '@' . $value->id;
+        foreach ($parameters as $key => $value) {
+            if ($value instanceof Model) {
+                $parameters[$key] = get_class($value) . '@' . $value->id;
+            }
         }
 
         return $parameters;

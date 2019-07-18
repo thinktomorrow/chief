@@ -63,7 +63,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
 
     public static function managedModelKey(): string
     {
-        if(isset(static::$managedModelKey)){
+        if (isset(static::$managedModelKey)) {
             return static::$managedModelKey;
         }
 

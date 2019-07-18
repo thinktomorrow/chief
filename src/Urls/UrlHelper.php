@@ -15,20 +15,19 @@ class UrlHelper
      */
     public static function allOnlineModels(bool $onlySingles = false): array
     {
-        return chiefMemoize('all-online-models', function () use($onlySingles) {
-
+        return chiefMemoize('all-online-models', function () use ($onlySingles) {
             $builder = UrlRecord::whereNull('redirect_id')->select('model_type', 'model_id')->groupBy('model_type', 'model_id');
 
-            if($onlySingles) {
+            if ($onlySingles) {
                 $builder->where('model_type', 'singles');
             }
 
-            $liveUrlRecords = $builder->get()->mapToGroups(function($record) {
+            $liveUrlRecords = $builder->get()->mapToGroups(function ($record) {
                 return [$record->model_type => $record->model_id];
             });
 
             // Get model for each of these records...
-            $models = $liveUrlRecords->map(function($record, $key){
+            $models = $liveUrlRecords->map(function ($record, $key) {
                 return Morphables::instance($key)->find($record->toArray());
             })->each->reject(function ($model) {
                 // Invalid references to archived or removed models where url record still exists.

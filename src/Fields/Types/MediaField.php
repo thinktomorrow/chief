@@ -30,7 +30,7 @@ class MediaField extends Field
     {
         $images = [$this->key() => []];
 
-        foreach($model->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
+        foreach ($model->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
             foreach ($assetsByType as $asset) {
                 $images[$type][] = (object)[
                     'id'       => $asset->id,

@@ -57,9 +57,8 @@ class SettingFieldsManager extends Fields implements FieldManager
     {
         $existingHomepageValue = [];
 
-        foreach($this->fields() as $key => $field)
-        {
-            if(!$setting = Setting::where('key', $key)->first()) {
+        foreach ($this->fields() as $key => $field) {
+            if (!$setting = Setting::where('key', $key)->first()) {
                 Setting::create([
                     'key' => $key,
                     'value' => $request->get($key, ''),
@@ -68,7 +67,7 @@ class SettingFieldsManager extends Fields implements FieldManager
                 continue;
             }
 
-            if($key === Setting::HOMEPAGE) {
+            if ($key === Setting::HOMEPAGE) {
                 $existingHomepageValue = $setting->value;
             }
 
@@ -76,7 +75,7 @@ class SettingFieldsManager extends Fields implements FieldManager
         }
 
         // A changed homepage needs to be reflected in the urls as well in order to respond to incoming requests.
-        if($request->filled(Setting::HOMEPAGE)) {
+        if ($request->filled(Setting::HOMEPAGE)) {
             app(ChangeHomepage::class)->onSettingChanged($existingHomepageValue);
         }
     }

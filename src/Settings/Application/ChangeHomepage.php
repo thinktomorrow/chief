@@ -28,13 +28,12 @@ class ChangeHomepage
 //            }
 //        }
 
-        foreach($flatReferences as $locale => $flatReferenceString) {
-
-            if(!$flatReferenceString) {
+        foreach ($flatReferences as $locale => $flatReferenceString) {
+            if (!$flatReferenceString) {
 
 // TODO: when empty we'll remove the entry, we'll also want to revert to last redirect.
 
-                if(isset($existingValues[$locale])) {
+                if (isset($existingValues[$locale])) {
                     $flatReferenceInstance = FlatReferenceFactory::fromString(($existingValues[$locale]));
                     (new RevertUrlSlug($flatReferenceInstance->instance()))->handle($locale);
 
@@ -53,7 +52,7 @@ class ChangeHomepage
     {
         $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
 
-        if(!$homepage = Setting::findByKey(Setting::HOMEPAGE)){
+        if (!$homepage = Setting::findByKey(Setting::HOMEPAGE)) {
             $homepage = Setting::create(['key' => Setting::HOMEPAGE, 'value' => []]);
         }
 

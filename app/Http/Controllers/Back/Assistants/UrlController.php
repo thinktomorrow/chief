@@ -39,11 +39,11 @@ class UrlController extends Controller
     {
         $urlRecord = UrlRecord::find($id);
 
-        if(!$urlRecord) {
+        if (!$urlRecord) {
             return response()->json(['No url record found by id ' . $id], 500);
         }
 
-        if( ! $urlRecord->isRedirect()) {
+        if (! $urlRecord->isRedirect()) {
             return response()->json(['Url with id '.$id.' is not a redirect'], 500);
         }
 
@@ -67,7 +67,7 @@ class UrlController extends Controller
 
         $urlRecord = UrlRecord::where('slug', $slug)->first();
 
-        if($urlRecord->isRedirect()){
+        if ($urlRecord->isRedirect()) {
             return 'Deze link bestaat reeds als redirect. Deze redirect zal bijgevolg worden verwijderd.';
         }
         return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" href="' . $this->editUrlOfExistingModel($urlRecord) . '">pas de andere pagina aan</a>.';
