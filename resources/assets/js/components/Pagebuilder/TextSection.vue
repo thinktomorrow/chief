@@ -1,9 +1,9 @@
 <template>
     <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="{section.id} shadow border-l-2 bg-secondary-100 border-primary-500 stack block inset relative rounded-r">
         
-        <h3 class="text-primary-500 mb-0 pb-2 font-bold" v-if="title" v-text="title"></h3>
+        <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
-        <div class="to-minimize">
+        <div class="to-minimize mt-2">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][type]'" :value="section.type">

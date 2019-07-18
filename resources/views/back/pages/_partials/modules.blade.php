@@ -2,7 +2,7 @@
     $page = $manager->model();
 ?>
 
-<div class="stack-l form-group">
+<div class="stack-l formgroup">
     <h2>Pagina modules</h2>
     <p>Hier vind je alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina plaatsen door
         ze te selecteren in de <a href="#pagina">pagina tab</a></p>

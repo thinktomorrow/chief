@@ -6,7 +6,7 @@
     @slot('title', $modelManager->details()->plural)
     <div class="inline-group-s">
         @if($modelManager->can('create'))
-            <a href="{{ $modelManager->route('create') }}" class="btn btn-secondary squished-s inline-flex items-center">
+            <a href="{{ $modelManager->route('create') }}" class="btn btn-secondary inline-flex items-center">
                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
                 <span>Voeg een {{ $modelManager->details()->singular }} toe</span>
             </a>
@@ -24,7 +24,7 @@
 
                     @if($modelManager->can('create'))
                         <div class="stack">
-                            <a href="{{ $modelManager->route('create') }}" class="btn btn-secondary squished-s inline-flex items-center">
+                            <a href="{{ $modelManager->route('create') }}" class="btn btn-primary inline-flex items-center">
                                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
                                 <span>Tijd om een {{ $modelManager->details()->singular }} toe te voegen</span>
                             </a>
