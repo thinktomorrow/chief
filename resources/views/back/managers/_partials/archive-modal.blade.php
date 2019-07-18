@@ -4,7 +4,7 @@
     <form action="{{ $manager->assistant('archive')->route('archive') }}" method="POST" id="archive-manager-form-{{ $managedModelId }}">
         @csrf
         <div v-cloak>
-            <h2 class="formgroup-label">Archiveer de pagina {{ $manager->details()->title }}</h2>
+            <h2 class="formgroup-label">Archiveer de pagina: {{ $manager->details()->title }}</h2>
             <p>Dit haalt de pagina van de site. Geef hier aan naar welke pagina de links mogen doorlinken.</p>
             <div class="input-group stack column-6">
                 <chief-multiselect
