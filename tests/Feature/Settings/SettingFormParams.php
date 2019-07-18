@@ -3,18 +3,18 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
+use Illuminate\Support\Arr;
+
 trait SettingFormParams
 {
     protected function validSettingParams($overrides = [])
     {
         $params = [
-            'settings' => [
-                'foo' =>  'updated foo',
-            ]
+            'app_name' =>  'updated app_name',
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;
@@ -23,13 +23,11 @@ trait SettingFormParams
     protected function validUpdateSettingParams($overrides = [])
     {
         $params = [
-            'settings' => [
-                'foo' => 'updated foo',
-            ]
+            'homepage' => 'updated app_name',
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;
@@ -37,7 +35,7 @@ trait SettingFormParams
 
     protected function assertUpdatedSettingValues($setting)
     {
-        $this->assertEquals('foo', $setting->key);
-        $this->assertEquals('updated foo', $setting->value);
+        $this->assertEquals('app_name', $setting->key);
+        $this->assertEquals('updated app_name', $setting->value);
     }
 }

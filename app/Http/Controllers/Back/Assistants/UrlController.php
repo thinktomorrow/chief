@@ -22,11 +22,16 @@ class UrlController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $exists = UrlRecord::exists($request->slug, null, $manager->model());
+        // Trim slashes if any
+        $slug = ($request->slug !== '/')
+                ? trim($request->slug, '/')
+                : $request->slug;
+
+        $exists = UrlRecord::exists($slug, null, $manager->model());
 
         return response()->json([
             'exists' => $exists,
-            'hint' => $this->hint($request->slug, $exists),
+            'hint' => $this->hint($slug, $exists),
         ]);
     }
 
@@ -34,11 +39,11 @@ class UrlController extends Controller
     {
         $urlRecord = UrlRecord::find($id);
 
-        if(!$urlRecord) {
+        if (!$urlRecord) {
             return response()->json(['No url record found by id ' . $id], 500);
         }
 
-        if( ! $urlRecord->isRedirect()) {
+        if (! $urlRecord->isRedirect()) {
             return response()->json(['Url with id '.$id.' is not a redirect'], 500);
         }
 
@@ -62,7 +67,7 @@ class UrlController extends Controller
 
         $urlRecord = UrlRecord::where('slug', $slug)->first();
 
-        if($urlRecord->isRedirect()){
+        if ($urlRecord->isRedirect()) {
             return 'Deze link bestaat reeds als redirect. Deze redirect zal bijgevolg worden verwijderd.';
         }
         return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" href="' . $this->editUrlOfExistingModel($urlRecord) . '">pas de andere pagina aan</a>.';

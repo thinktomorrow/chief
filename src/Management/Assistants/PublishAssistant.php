@@ -109,7 +109,7 @@ class PublishAssistant implements Assistant
     {
         $label = $this->publicationStatusAsPlainLabel();
 
-        if($this->isPublished()) {
+        if ($this->isPublished()) {
             $class = 'text-success';
         } elseif ($this->isDraft()) {
             $class = 'text-error';
@@ -119,8 +119,7 @@ class PublishAssistant implements Assistant
 
         $statusAsLabel = '<span class="font-bold '. $class .'"><em>' . $label . '</em></span>';
 
-        if(!$plain && $this->hasPreviewUrl())
-        {
+        if (!$plain && $this->hasPreviewUrl()) {
             $statusAsLabel =  '<a href="'.$this->previewUrl().'" target="_blank">'. $statusAsLabel .'</a>';
         }
 
@@ -131,9 +130,9 @@ class PublishAssistant implements Assistant
     {
         if ($this->isPublished()) {
             return 'online';
-        }elseif ($this->isDraft()) {
+        } elseif ($this->isDraft()) {
             return 'offline';
-        }elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
             return 'gearchiveerd';
         }
 

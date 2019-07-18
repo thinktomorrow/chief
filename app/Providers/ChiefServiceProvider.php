@@ -20,7 +20,6 @@ use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
-use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
@@ -76,7 +75,6 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
-                'command.chief:settings',
             ]);
 
             // Bind our commands to the container
@@ -86,7 +84,6 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
-            $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()
@@ -181,13 +178,14 @@ class ChiefServiceProvider extends ServiceProvider
 
     private function autoloadRoute()
     {
-        if (true !== config('thinktomorrow.chief.route.autoload')) return;
+        if (true !== config('thinktomorrow.chief.route.autoload')) {
+            return;
+        }
 
         app()->booted(function () {
-
             $routeName = config('thinktomorrow.chief.route.name');
 
-            Route::get('{slug?}', function ($slug = '/') use($routeName) {
+            Route::get('{slug?}', function ($slug = '/') use ($routeName) {
                 return ChiefResponse::fromSlug($slug);
             })->name($routeName)
               ->where('slug', '(.*)?')

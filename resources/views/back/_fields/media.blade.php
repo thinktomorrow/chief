@@ -1,6 +1,6 @@
 <?php
     // TODO: this should be optimized performance wise since we fetch every file every time...
-    $files = $manager->getFieldValue($field);
+    $files = $manager->fieldValue($field, $locale ?? null);
     $files = $files[$key] ?? [];
     $name = $name ?? $key;
 ?>

@@ -125,23 +125,4 @@ return [
      * manage this by calling the 'withSnippets()' method on a Page or Module object.
      */
     'withSnippets' => true,
-
-    /**
-     * Define specific setting fields.
-     * By default a standard input field is used.
-     */
-    'settingFields' => [
-        'contact.email' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.email')
-                        ->label('Webmaster email')
-                        ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
-        'contact.name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.name')
-                        ->label('Webmaster naam')
-                        ->description('Voor en achternaam van de webmaster.'),
-        'client.app_name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('client.app_name')
-                        ->label('Site naam')
-                        ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
-        'client.name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('client.name')
-                        ->label('Organisatie')
-                        ->description('Naam van uw bedrijf. Dit wordt getoond in o.a. de mail communicatie.'),
-    ],
 ];

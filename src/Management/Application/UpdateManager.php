@@ -7,8 +7,6 @@ use Thinktomorrow\Chief\Management\Manager;
 
 class UpdateManager
 {
-    use StoringAndUpdatingFields;
-
     public function handle(Manager $manager, Request $request)
     {
         $manager->guard('update');
@@ -21,10 +19,7 @@ class UpdateManager
             $manager->beforeUpdate($request);
         }
 
-        $this->handleFields($manager, $request);
-
-        // Handle any custom save methods
-        $this->handleCustomSaves($manager, $request);
+        $manager->saveFields($request);
 
         if (method_exists($manager, 'afterUpdate')) {
             $manager->afterUpdate($request);

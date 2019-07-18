@@ -49,7 +49,9 @@ class UrlSlugField extends InputField
 
         // If this is a '/' slug, it indicates the homepage for this locale. In this case,
         // we wont be trimming the slash
-        if($slug === '/') return $slug;
+        if ($slug === '/') {
+            return $slug;
+        }
 
         if ($this->startsWithBaseUrlSegment($slug)) {
             $slug = trim(substr($slug, strlen($this->baseUrlSegment)), '/');
@@ -79,6 +81,7 @@ class UrlSlugField extends InputField
             'baseUrlSegment' => $this->baseUrlSegment,
             'hint' => null, // Hint placeholder to show url hint when it already exists
             'is_homepage' => ($this->value() === '/'),
+            'show' => !!$this->value(),// show input field or not
         ]);
     }
 }

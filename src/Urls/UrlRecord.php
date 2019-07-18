@@ -69,6 +69,16 @@ class UrlRecord extends Model
                      ->get();
     }
 
+    public static function findRecentRedirect(Model $model, string $locale): ?self
+    {
+        return static::where('model_type', $model->getMorphClass())
+            ->where('model_id', $model->id)
+            ->where('locale', $locale)
+            ->where('redirect_id', '<>', null)
+            ->orderBy('redirect_id', 'ASC')
+            ->first();
+    }
+
     public function replaceAndRedirect(array $values): UrlRecord
     {
         $newRecord = static::create(array_merge([
@@ -97,6 +107,11 @@ class UrlRecord extends Model
     public function isRedirect(): bool
     {
         return !!($this->redirect_id);
+    }
+
+    public function isHomepage(): bool
+    {
+        return $this->slug === '/';
     }
 
     public static function existsIgnoringRedirects($slug, string $locale = null, Model $ignoredModel = null): bool

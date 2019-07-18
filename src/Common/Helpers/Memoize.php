@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Common\Helpers;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Memoize
 {
     public static $cache = [];
@@ -15,8 +17,9 @@ class Memoize
 
     public function run(\Closure $closure, array $parameters = [])
     {
-        // construct cachekey
-        $cachekey = $this->baseKey.':'.md5(implode('', $parameters));
+        $cachableParameters = $this->convertToCachableParameters($parameters);
+
+        $cachekey = $this->baseKey.':'.md5(implode('', $cachableParameters));
 
         if (isset(static::$cache[$cachekey])) {
             return static::$cache[$cachekey];
@@ -28,5 +31,16 @@ class Memoize
     public static function clear()
     {
         static::$cache = [];
+    }
+
+    private function convertToCachableParameters(array $parameters)
+    {
+        foreach ($parameters as $key => $value) {
+            if ($value instanceof Model) {
+                $parameters[$key] = get_class($value) . '@' . $value->id;
+            }
+        }
+
+        return $parameters;
     }
 }

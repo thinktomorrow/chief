@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -27,7 +27,6 @@ class UrlSlugFieldsTest extends TestCase
         app(Register::class)->register(PageManager::class, ProductWithBaseSegments::class);
 
         $this->manager = app(Managers::class)->findByKey('products_with_base');
-
     }
 
     /** @test */
