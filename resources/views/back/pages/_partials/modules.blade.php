@@ -7,10 +7,11 @@
     <p>Hier vind je alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina plaatsen door
         ze te selecteren in de <a href="#pagina">pagina tab</a></p>
     @if($page->modules->isEmpty())
-        <div class="center-center stack-xl">
+        <div class="stack-l">
             <div>
                 <a @click="showModal('create-module')" class="btn btn-primary inline-flex items-center">
-                <i class="icon icon-zap icon-fw"></i> Voeg een eerste module toe specifiek voor deze pagina.
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                    <span>Voeg een eerste module toe specifiek voor deze pagina.</span>
                 </a>
             </div>
         </div>
@@ -28,7 +29,7 @@
         </div>
     
         <div class="stack">
-            <a @click="showModal('create-module')" class="btn btn-primary inline-flex items-center">
+            <a @click="showModal('create-module')" class="btn btn-secondary inline-flex items-center">
                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
                 <span>Voeg een module toe</span>
             </a>

@@ -8,8 +8,8 @@
     @if(Thinktomorrow\Chief\Menu\Menu::all()->count() > 1)
         @slot('subtitle')
             <a class="center-y" href="{{ route('chief.back.menus.index') }}">
-                <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg>
-                Terug naar het menu overzicht
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+                {{-- Terug naar het menu overzicht --}}
             </a>
         @endslot
     @endif
@@ -24,8 +24,8 @@
 @section('content')
 
     @if($menuItems->isEmpty() )
-        <div class="center-center stack-xl">
-            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-secondary inline-flex items-center">
+        <div class="stack-l">
+            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary inline-flex items-center">
                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
                 <span>Voeg een menu-item toe</span>
             </a>

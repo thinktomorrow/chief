@@ -15,10 +15,11 @@
     @section('content')
 
         @if($modules->isEmpty())
-            <div class="center-center stack-xl">
+            <div class="stack-l">
                 <div>
                     <a @click="showModal('create-module')" class="btn btn-primary inline-flex items-center">
-                        <i class="icon icon-zap icon-fw"></i> Voeg jouw eerste module toe.
+                        <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                        <span>Voeg jouw eerste module toe.</span>
                     </a>
                     <p class="stack">
                         <strong>Wat zijn modules nu eigenlijk?</strong><br>

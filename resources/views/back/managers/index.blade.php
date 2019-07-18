@@ -66,9 +66,8 @@
             @if( $modelManager::filters()->any() )
                 <div class="mb-8">
                     <h3>Filtering</h3>
-                    <form class="stack-s" method="GET">
+                    <form method="GET">
                         {!! $modelManager::filters()->render() !!}
-
                         <div class="stack-xs">
                             <button class="btn btn-primary squished-xs" type="submit">Filter</button>
                         </div>
