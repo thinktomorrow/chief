@@ -5,7 +5,7 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Vaste modules')
         <div class="inline-group-s">
-            <a @click="showModal('create-module')" class="btn btn-primary squished-s inline-flex items-center">
+            <a @click="showModal('create-module')" class="btn btn-primary inline-flex items-center">
                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
                 <span>Voeg een module toe</span>
             </a>
@@ -17,7 +17,7 @@
         @if($modules->isEmpty())
             <div class="center-center stack-xl">
                 <div>
-                    <a @click="showModal('create-module')" class="btn btn-primary squished-s">
+                    <a @click="showModal('create-module')" class="btn btn-primary inline-flex items-center">
                         <i class="icon icon-zap icon-fw"></i> Voeg jouw eerste module toe.
                     </a>
                     <p class="stack">

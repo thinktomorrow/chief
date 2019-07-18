@@ -1,41 +1,37 @@
-.formgroup{
+.formgroup {
 
     /* override the default gutter margin-bottom */
     .formgroup-info, .formgroup-input{
-        margin-bottom:0;
+        @apply mb-0;
     }
 
-    h2{
-        font-size:1em;
-        text-transform: uppercase;
+    h2 {
+        @apply text-lg uppercase;
     }
 }
 
 // Field addons (prepend or appending fixed content in input field)
 .input-addon {
 
-    display: flex;
+    @apply flex;
 
-    .input{
-        flex: 1;
+    .input {
+        @apply flex-1;
 
         &:not(:first-child) {
-            border-left: 0;
+            @apply border-l-0;
         }
         &:not(:last-child) {
-            border-right: 0;
+            @apply border-r-0;
         }
     }
 
-    .addon{
-        background-color: #f4f6f5;
-        border: 1px solid #dadada;
-        color: #666666;
+    .addon {
         font: inherit;
-        font-weight: normal;
+        @apply bg-white border border-grey-100 text-grey-400 font-normal;
     }
 
-    .input:first-child, .addon:first-child{
+    .input:first-child, .addon:first-child {
         border-radius: 5px 0 0 5px;
     }
 

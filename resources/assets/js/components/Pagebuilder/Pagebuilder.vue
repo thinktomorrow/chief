@@ -2,7 +2,7 @@
     <div id="pagebuilder">
 
         <div v-if="sections.length < 1" class="relative stack border-l-3 border-transparent">
-            <a class="btn btn-primary squished-s inline-flex items-center" @click="addNewTextSectionAfter(-1)">
+            <a class="btn btn-primary inline-flex items-center" @click="addNewTextSectionAfter(-1)">
                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
                 <span>Tijd om een eerste stuk tekst toe te voegen</span>
             </a>

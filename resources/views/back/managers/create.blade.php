@@ -7,8 +7,8 @@
     @slot('subtitle')
         <div class="inline-block">
             <a class="center-y" href="{{ $manager->route('index') }}">
-                <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg>
-                Terug naar alle {{ $manager->details()->plural }}
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+                {{-- Terug naar alle {{ $manager->details()->plural }} --}}
             </a>
         </div>
     @endslot
