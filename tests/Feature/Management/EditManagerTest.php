@@ -73,4 +73,15 @@ class EditManagerTest extends TestCase
             ]
         ], $fieldValue);
     }
+
+    /** @test */
+    public function it_cant_edit_a_softdeleted_model()
+    {
+        $this->model->delete();
+
+        //use the static url here otherwise the existingmodel function errors before this triggers.
+        $response = $this->asAdmin()->get('admin/manage/managed_model_first/1/edit');
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.dashboard'));
+    }
 }

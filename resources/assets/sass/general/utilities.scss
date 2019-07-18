@@ -1,8 +1,8 @@
 .navigation-list {
-    @apply m-0;
+    @apply m-0 font-bold;
     li:not(.no-hover) {
         @apply text-grey-500;
-        @extend .squished, .--bottomline;
+        @extend .squished;
 
         > a:not(.label) {
             @apply text-grey-500;
@@ -34,7 +34,7 @@
         &:after{
             left: 50%;
             width: 30%;
-            height: 2px;
+            height: 1px;
         }
     }
 }

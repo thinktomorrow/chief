@@ -4,12 +4,13 @@ namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ChiefResponseTest extends TestCase
 {
@@ -72,6 +73,19 @@ class ChiefResponseTest extends TestCase
         ]);
 
         ChiefResponse::fromSlug('foo/bar');
+    }
+
+    /** @test */
+    function if_the_page_is_not_published_admin_can_view_with_preview_mode()
+    {
+        $model = ProductPageFake::create();
+        $model->draft();
+
+        UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
+
+        $response = $this->asAdmin()->get('foo/bar?preview-mode');
+
+        $response->assertSuccessful();
     }
 
     /** @test */

@@ -12,7 +12,11 @@ h1.mb-0, h2.mb-0, h3.mb-0 {
 }
 
 h1, h2, h3, h4, h5 {
-    @apply font-bold text-grey-700;
+    @apply font-bold text-grey-500;
+}
+
+h3 {
+    @apply text-lg;
 }
 
 p, body {

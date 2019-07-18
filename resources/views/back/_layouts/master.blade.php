@@ -6,7 +6,7 @@
 
         @include('chief::back._layouts._partials.svg-symbols')
     
-        <main id="main" class="bg-grey-50 min-h-screen">
+        <main id="main" class="bg-secondary-50 min-h-screen">
             @include('chief::back._layouts._partials.nav')
             @yield('header')
     

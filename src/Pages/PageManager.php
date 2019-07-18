@@ -101,6 +101,7 @@ class PageManager extends AbstractManager implements Manager
                 ->label('Zoekmachine omschrijving')
                 ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
             InputField::make('seo_keywords')
+                ->validation('max:250')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
                 ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
@@ -153,7 +154,7 @@ class PageManager extends AbstractManager implements Manager
             return parent::details()
                 ->set('title', $this->model->title)
                 ->set('intro', 'Aangepast ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
+                ->set('context', '<span class="inline-xs stack-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
         }
 
         return parent::details();

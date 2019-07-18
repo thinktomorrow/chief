@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-    <div class="row gutter stack-l">
-        <div class="column-4 stretched-xl">
+    <div class="row gutter-l stack-l">
+        <div class="column-4 stack-xl">
             <h1>Welkom op je dashboard, {{ Auth::user()->firstname }}</h1>
             <p>Don't try to follow trends. Create them</p>
         </div>
-        <div class="gutter column-8 inset right">
+        <div class="gutter column-8 right">
             @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page', 'dashboard']) as $manager)
 
                 @if(!$manager->can('index')) @continue @endif
@@ -25,10 +25,10 @@
                             <div class="inset">
                                 <div class="stack">
                                     <div class="flex items-center mb-4">
-                                        <h1 class="mb-0 mr-2">{{ $manager->findAllManaged()->count() }}</h1>
-                                        <p>{{ $manager->details()->plural }}</p>
+                                        <h1 class="mb-0 mr-4">{{ $manager->findAllManaged()->count() }}</h1>
+                                        <p>{{ $manager->findAllManaged()->count() == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
                                     </div>
-                                    <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
+                                    <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                                 </div>
                             </div>
                         </div>

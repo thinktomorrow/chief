@@ -3,7 +3,7 @@
     @apply bg-white mt-6 border-transparent border rounded overflow-hidden;
 
     a {
-        @apply whitespace-no-wrap rounded block p-3 leading-none;
+        @apply whitespace-no-wrap rounded block p-3 leading-none font-normal;
         &:hover {
             @apply bg-primary-100;
         }

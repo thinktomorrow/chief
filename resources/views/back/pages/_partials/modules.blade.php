@@ -8,7 +8,7 @@
 @if($page->modules->isEmpty())
     <div class="center-center stack-xl">
         <div>
-            <a @click="showModal('create-module')" class="btn btn-primary squished">
+            <a @click="showModal('create-module')" class="btn btn-primary squished-s">
             <i class="icon icon-zap icon-fw"></i> Voeg een eerste module toe specifiek voor deze pagina.
             </a>
         </div>
@@ -27,9 +27,9 @@
     </div>
 
     <div class="stack">
-        <a @click="showModal('create-module')" class="btn btn-primary">
-            <i class="icon icon-plus"></i>
-            Voeg een module toe
+        <a @click="showModal('create-module')" class="btn btn-primary squished-s inline-flex items-center">
+            <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+            <span>Voeg een module toe</span>
         </a>
     </div>
 @endif
