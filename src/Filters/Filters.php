@@ -36,7 +36,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate
     public function anyApplied(): bool
     {
         foreach ($this->all() as $filter) {
-            if(request()->filled($filter->name)) {
+            if (request()->filled($filter->name)) {
                 return true;
             }
         }

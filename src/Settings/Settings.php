@@ -21,8 +21,9 @@ class Settings extends Collection
         }
 
         if (is_array($this->items[$key])) {
-
-            if(!$locale) $locale = app()->getLocale();
+            if (!$locale) {
+                $locale = app()->getLocale();
+            }
 
             if ($this->items[$key] == null || !isset($this->items[$key][$locale])) {
                 return $default;

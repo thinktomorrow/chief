@@ -140,15 +140,17 @@ class SaveUrlSlugs
 
     private function deleteIdenticalRecords($existingRecords): void
     {
-        if($this->strict) return;
+        if ($this->strict) {
+            return;
+        }
 
         // The old homepage url should be removed since this is no longer in effect.
         // In case of any redirect to this old homepage, the last used redirect is now back in effect.
-        $existingRecords->reject(function($existingRecord){
+        $existingRecords->reject(function ($existingRecord) {
             return (
                 $existingRecord->model_type == $this->model->getMorphClass() &&
                 $existingRecord->model_id == $this->model->id);
-        })->each(function($existingRecord){
+        })->each(function ($existingRecord) {
 
             // TODO: if there is a redirect to this page, we'll take this one as the new url
             $existingRecord->delete();

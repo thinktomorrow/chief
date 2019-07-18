@@ -23,19 +23,16 @@ class RevertUrlSlug
 
     public function handle(string $locale): void
     {
-        try{
+        try {
             $currentUrlRecord = UrlRecord::findByModel($this->model, $locale);
 
-            if($recentRedirect = UrlRecord::findRecentRedirect($this->model, $locale)){
-
+            if ($recentRedirect = UrlRecord::findRecentRedirect($this->model, $locale)) {
                 $recentRedirectSlug = $recentRedirect->slug;
                 $recentRedirect->delete();
 
                 $currentUrlRecord->replaceAndRedirect(['slug' => $recentRedirectSlug]);
             }
-        }
-        catch(UrlRecordNotFound $e)
-        {
+        } catch (UrlRecordNotFound $e) {
             // No url present so nothing to do here...
         }
     }

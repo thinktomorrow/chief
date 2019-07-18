@@ -178,13 +178,14 @@ class ChiefServiceProvider extends ServiceProvider
 
     private function autoloadRoute()
     {
-        if (true !== config('thinktomorrow.chief.route.autoload')) return;
+        if (true !== config('thinktomorrow.chief.route.autoload')) {
+            return;
+        }
 
         app()->booted(function () {
-
             $routeName = config('thinktomorrow.chief.route.name');
 
-            Route::get('{slug?}', function ($slug = '/') use($routeName) {
+            Route::get('{slug?}', function ($slug = '/') use ($routeName) {
                 return ChiefResponse::fromSlug($slug);
             })->name($routeName)
               ->where('slug', '(.*)?')

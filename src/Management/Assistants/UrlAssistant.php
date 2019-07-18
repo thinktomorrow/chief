@@ -73,9 +73,9 @@ class UrlAssistant implements Assistant
 
         // Push update to homepage setting value
         // TODO: we should just fetch the homepages and push that instead...
-        UrlRecord::getByModel($this->model)->reject(function($record) {
+        UrlRecord::getByModel($this->model)->reject(function ($record) {
             return ($record->isRedirect() || !$record->isHomepage());
-        })->each(function($record){
+        })->each(function ($record) {
             app(ChangeHomepage::class)->onUrlChanged($record);
         });
     }
