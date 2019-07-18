@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fields\Validators\FieldValidatorFactory;
 
 class Field
@@ -48,6 +49,17 @@ class Field
         return app(FieldValidatorFactory::class)->create($this, $data);
     }
 
+    public function name(string $name = null)
+    {
+        if (!is_null($name)) {
+            $this->values['name'] = $name;
+
+            return $this;
+        }
+
+        return $this->values['name'] ?? $this->key();
+    }
+
     public function translatable(array $locales = [])
     {
         $this->values['locales'] = $locales;
@@ -70,6 +82,17 @@ class Field
         return false;
     }
 
+    public function translateName($locale)
+    {
+        $name = $this->name();
+
+        if (strpos($name, ':locale')) {
+            return preg_replace('#(:locale)#', $locale, $name);
+        }
+
+        return 'trans['.$locale.']['.$name.']';
+    }
+
     public static function translateValue($value, $locale = null)
     {
         if (!$locale || !is_array($value)) {
@@ -81,6 +104,16 @@ class Field
         }
 
         return $value;
+    }
+
+    public function getFieldValue(Model $model, $locale = null)
+    {
+        // If string is passed, we use this to find the proper field
+        if ($this->isTranslatable() && $locale) {
+            return $model->getTranslationFor($this->column(), $locale);
+        }
+
+        return $model->{$this->column()};
     }
 
     /**

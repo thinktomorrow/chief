@@ -29,7 +29,7 @@ class UrlSlugFields extends Fields
             $fields[$key] = UrlSlugField::make($key)
                 ->setUrlRecord($record)
                 ->setBaseUrlSegment($model->baseUrlSegment($record->locale))
-                ->prepend($model->resolveUrl($record->locale, $model->baseUrlSegment($record->locale)) . '/');
+                ->prepend($model->resolveUrl($record->locale, $model->baseUrlSegment($record->locale)) .'/');
         }
 
         return $fields;
@@ -77,7 +77,7 @@ class UrlSlugFields extends Fields
      */
     private static function fillWithExistingValues(ProvidesUrl $model, self $fields): void
     {
-        $records = MemoizedUrlRecord::getByModel($model)->reject(function ($record) {
+        $records = UrlRecord::getByModel($model)->reject(function ($record) {
             return $record->isRedirect();
         })->sortBy('locale');
 

@@ -11,11 +11,16 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
+use Thinktomorrow\Chief\Relations\ActingAsParent;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 
-class ManagedModelFakeFirst extends Model implements  ManagedModel, TranslatableContract, HasMedia
+class ManagedModelFakeFirst extends Model implements  ManagedModel, TranslatableContract, HasMedia, ActsAsParent
 {
-    use Translatable, \Dimsav\Translatable\Translatable, AssetTrait, Publishable;
+    use Translatable,
+        \Dimsav\Translatable\Translatable,
+        AssetTrait,
+        Publishable,
+        ActingAsParent;
 
     public $table = 'fake_managed_models';
     public $translatedAttributes = ['title_trans', 'content_trans', 'slug'];
