@@ -2,7 +2,7 @@
 	line-height: inherit;
 	text-overflow: ellipsis;
 	-webkit-appearance: none;
-	transition: 0.3s all ease;
+	transition: 0.2s all ease;
 	@apply whitespace-no-wrap align-middle outline-none px-4 py-2 inline-block no-underline cursor-pointer rounded;
 }
 
@@ -49,13 +49,13 @@ $buttonColors: (
     .btn-#{$name}{
         background-color: $bgcolor;
         color: $fontcolor;
-        border: 1px solid $bgcolor;
+        box-shadow: 0px 2px 0px 0px darken($bgcolor, 10%);
 
         &:hover, &:focus, &:active, &.active{
             color: $fontcolor;
             background-color: lighten($bgcolor, 3%);
-            border: 1px solid lighten($bgcolor, 3%);
-            @apply shadow-lg;
+            transform: translateY(2px);
+            box-shadow: 0px 2px 0px 0px transparent;
         }
 	}
 	
