@@ -3,8 +3,10 @@
 namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
-use Thinktomorrow\Chief\Urls\SaveUrlSlugs;
+use Thinktomorrow\Chief\Urls\Application\SaveUrlSlugs;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Urls\UrlSlugFields;
 use Thinktomorrow\Chief\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
@@ -68,6 +70,14 @@ class UrlAssistant implements Assistant
     public function saveUrlSlugsField(Field $field, Request $request)
     {
         (new SaveUrlSlugs($this->model))->handle($request->get('url-slugs', []));
+
+        // Push update to homepage setting value
+        // TODO: we should just fetch the homepages and push that instead...
+        UrlRecord::getByModel($this->model)->reject(function($record) {
+            return ($record->isRedirect() || !$record->isHomepage());
+        })->each(function($record){
+            app(ChangeHomepage::class)->onUrlChanged($record);
+        });
     }
 
     public function can($verb): bool

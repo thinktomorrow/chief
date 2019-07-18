@@ -3,14 +3,11 @@
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Concerns\Translatable\StraightTranslatable;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class Setting extends Model
 {
-//    use StraightTranslatable;
-//
-//    protected $translatableAttribute = 'value';
+    const HOMEPAGE = 'homepage';
 
     public $table = 'settings';
     public $timestamps = false;
@@ -20,6 +17,11 @@ class Setting extends Model
     ];
 
     private static $fieldsFromConfig;
+
+    public static function findByKey(string $key)
+    {
+        return static::where('key', $key)->first();
+    }
 
     public function getFieldAttribute()
     {

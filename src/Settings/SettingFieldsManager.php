@@ -9,6 +9,8 @@ use Thinktomorrow\Chief\Fields\RenderingFields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
+use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
+use Thinktomorrow\Chief\Urls\UrlHelper;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class SettingFieldsManager extends Fields implements FieldManager
@@ -28,10 +30,12 @@ class SettingFieldsManager extends Fields implements FieldManager
         return new Fields([
             SelectField::make('homepage')
                 ->name('homepage[:locale]')
-                ->options(UrlRecord::allOnlineModels())
+                ->options(UrlHelper::allOnlineSingles())
                 ->translatable(config('translatable.locales'))
-                ->grouped(),
-            InputField::make('client_app_name')
+                ->grouped()
+                ->label('Homepagina')
+                ->description('Geef hier de homepagina voor de site op.'),
+            InputField::make('app_name')
                 ->label('Site naam')
                 ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
             InputField::make('contact_email')
@@ -51,6 +55,8 @@ class SettingFieldsManager extends Fields implements FieldManager
 
     public function saveFields(Request $request)
     {
+        $existingHomepageValue = [];
+
         foreach($this->fields() as $key => $field)
         {
             if(!$setting = Setting::where('key', $key)->first()) {
@@ -62,9 +68,16 @@ class SettingFieldsManager extends Fields implements FieldManager
                 continue;
             }
 
+            if($key === Setting::HOMEPAGE) {
+                $existingHomepageValue = $setting->value;
+            }
+
             $setting->update(['value' => $request->get($key, '')]);
         }
-    }
 
-    // A changed homepage needs to be reflected in the urls as well in order to be active.
+        // A changed homepage needs to be reflected in the urls as well in order to respond to incoming requests.
+        if($request->filled(Setting::HOMEPAGE)) {
+            app(ChangeHomepage::class)->onSettingChanged($existingHomepageValue);
+        }
+    }
 }

@@ -2,7 +2,7 @@
     <section class="row formgroup stack gutter-l">
         <div class="column-4">
             <h2 class="formgroup-label">Pagina link</h2>
-            <p>Bepaal hier de link voor deze pagina. Oude links worden automatisch doorgestuurd. Geef een '/' als link om een pagina als homepage te maken.</p>
+            <p>Bepaal hier de link voor deze pagina. Oude links worden automatisch opgevangen.</p>
         </div>
         <div class="formgroup-input column-8">
 
@@ -69,8 +69,10 @@
                         return;
                     }
 
+                    let value = field.baseUrlSegment+'/'+field.value;
+
                     window.axios.post(this.checkurl, {
-                        slug: field.baseUrlSegment+'/'+field.value
+                        slug: value.replace(/\/\//, '')
                     }).then(function({data}){
                         field.hint = data.hint;
                     });

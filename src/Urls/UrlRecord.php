@@ -3,9 +3,6 @@
 namespace Thinktomorrow\Chief\Urls;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
-use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 
 class UrlRecord extends Model
 {
@@ -72,6 +69,16 @@ class UrlRecord extends Model
                      ->get();
     }
 
+    public static function findRecentRedirect(Model $model, string $locale): ?self
+    {
+        return static::where('model_type', $model->getMorphClass())
+            ->where('model_id', $model->id)
+            ->where('locale', $locale)
+            ->where('redirect_id','<>', null)
+            ->orderBy('redirect_id', 'ASC')
+            ->first();
+    }
+
     public function replaceAndRedirect(array $values): UrlRecord
     {
         $newRecord = static::create(array_merge([
@@ -102,6 +109,11 @@ class UrlRecord extends Model
         return !!($this->redirect_id);
     }
 
+    public function isHomepage(): bool
+    {
+        return $this->slug === '/';
+    }
+
     public static function existsIgnoringRedirects($slug, string $locale = null, Model $ignoredModel = null): bool
     {
         return static::exists($slug, $locale, $ignoredModel, false);
@@ -129,25 +141,5 @@ class UrlRecord extends Model
         }
 
         return ($builder->count() > 0);
-    }
-
-    public static function allOnlineModels(): array
-    {
-        return chiefMemoize('all-online-models', function () {
-
-            $liveUrlRecords = static::whereNull('redirect_id')->select('model_type', 'model_id')->groupBy('model_type', 'model_id')->get()->mapToGroups(function($record) {
-                return [$record->model_type => $record->model_id];
-            });
-
-            // Get model for each of these records...
-            $models = $liveUrlRecords->map(function($record, $key){
-                return Morphables::instance($key)->find($record->toArray());
-            })->each->reject(function ($model) {
-                // Invalid references to archived or removed models where url record still exists.
-                return is_null($model);
-            })->flatten();
-
-            return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
-        });
     }
 }

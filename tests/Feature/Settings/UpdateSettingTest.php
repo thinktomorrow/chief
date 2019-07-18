@@ -25,8 +25,8 @@ class UpdateSettingTest extends TestCase
         $this->disableExceptionHandling();
 
         Setting::create([
-            'key'   => 'homepage',
-            'value' => 'old homepage'
+            'key'   => 'app_name',
+            'value' => 'old app_name'
         ]);
 
         $this->asAdmin()

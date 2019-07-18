@@ -17,5 +17,5 @@ return [
      * This is mainly a backend thing but it can occur in a
      * couple of frontend places such as the mail footer.
      */
-    'client_app_name' => 'Chief',
+    'app_name' => 'Chief',
 ];

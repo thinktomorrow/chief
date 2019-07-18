@@ -22,11 +22,16 @@ class UrlController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $exists = UrlRecord::exists($request->slug, null, $manager->model());
+        // Trim slashes if any
+        $slug = ($request->slug !== '/')
+                ? trim($request->slug, '/')
+                : $request->slug;
+
+        $exists = UrlRecord::exists($slug, null, $manager->model());
 
         return response()->json([
             'exists' => $exists,
-            'hint' => $this->hint($request->slug, $exists),
+            'hint' => $this->hint($slug, $exists),
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\Urls\UrlHelper;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class ViewServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(['chief::back.managers._partials.archive-modal'], function ($view) {
-            $view->with('targetModels', UrlRecord::allOnlineModels());
+            $view->with('targetModels', UrlHelper::allOnlineModels());
         });
     }
 

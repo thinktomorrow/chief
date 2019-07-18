@@ -1,12 +1,15 @@
 <?php
 
-namespace Thinktomorrow\Chief\Urls;
+namespace Thinktomorrow\Chief\Urls\Application;
 
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class SaveUrlSlugs
 {
+    /** @var bool */
+    private $strict = true;
+
     /** @var ProvidesUrl */
     private $model;
 
@@ -15,6 +18,20 @@ class SaveUrlSlugs
     public function __construct(ProvidesUrl $model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * Saving urls slugs in strict mode prevents identical urls to be automatically removed.
+     * When set to false, this would remove the identical url records.
+     *
+     * @param bool $strict
+     * @return $this
+     */
+    public function strict(bool $strict = true)
+    {
+        $this->strict = $strict;
+
+        return $this;
     }
 
     public function handle(array $slugs): void
@@ -46,28 +63,29 @@ class SaveUrlSlugs
             );
         });
 
-        // In the case where we have any redirects that match the given slug, we need to
-        // remove the redirect record in favour of the newly added one.
-        $this->deleteIdenticalRedirects($this->existingRecords, $locale, $slug);
-
-        // Also delete any redirects that match this locale and slug but are related to another model
-        $this->deleteIdenticalRedirects(UrlRecord::where('slug', $slug)->where('locale', $locale)->get(), $locale, $slug);
-
         // If slug entry is left empty, all existing records will be deleted
         if (!$slug) {
             $nonRedirectsWithSameLocale->each(function ($existingRecord) {
                 $existingRecord->delete();
             });
-        } elseif ($nonRedirectsWithSameLocale->isEmpty()) {
-            $this->createRecord($locale, $slug);
-        } else {
-            // Only replace the existing records that differ from the current passed slugs
-            $nonRedirectsWithSameLocale->each(function ($existingRecord) use ($slug) {
-                if ($existingRecord->slug != $slug) {
-                    $existingRecord->replaceAndRedirect(['slug' => $slug]);
-                }
-            });
+
+            return;
         }
+
+        $this->cleanupExistingRecords($locale, $slug);
+
+        // If slug entry is left empty, all existing records will be deleted
+        if ($nonRedirectsWithSameLocale->isEmpty()) {
+            $this->createRecord($locale, $slug);
+            return;
+        }
+
+        // Only replace the existing records that differ from the current passed slugs
+        $nonRedirectsWithSameLocale->each(function ($existingRecord) use ($slug) {
+            if ($existingRecord->slug != $slug) {
+                $existingRecord->replaceAndRedirect(['slug' => $slug]);
+            }
+        });
     }
 
     private function createRecord($locale, $slug)
@@ -81,6 +99,27 @@ class SaveUrlSlugs
     }
 
     /**
+     * @param string $locale
+     * @param string|null $slug
+     */
+    private function cleanupExistingRecords(string $locale, string $slug): void
+    {
+        // In the case where we have any redirects that match the given slug, we need to
+        // remove the redirect record in favour of the newly added one.
+        $this->deleteIdenticalRedirects($this->existingRecords, $locale, $slug);
+
+        $sameExistingRecords = UrlRecord::where('slug', $slug)->where('locale', $locale)->get();
+
+        // Also delete any redirects that match this locale and slug but are related to another model
+        $this->deleteIdenticalRedirects($sameExistingRecords, $locale, $slug);
+
+        // Also delete any urls that match this locale and slug but are related to another model
+        $this->deleteIdenticalRecords($sameExistingRecords);
+    }
+
+    /**
+     * Remove any redirects owned by this model that equal the new slug.
+     *
      * @param $existingRecords
      * @param $locale
      * @param $slug
@@ -96,6 +135,23 @@ class SaveUrlSlugs
             if ($existingRecord->slug == $slug) {
                 $existingRecord->delete();
             }
+        });
+    }
+
+    private function deleteIdenticalRecords($existingRecords): void
+    {
+        if($this->strict) return;
+
+        // The old homepage url should be removed since this is no longer in effect.
+        // In case of any redirect to this old homepage, the last used redirect is now back in effect.
+        $existingRecords->reject(function($existingRecord){
+            return (
+                $existingRecord->model_type == $this->model->getMorphClass() &&
+                $existingRecord->model_id == $this->model->id);
+        })->each(function($existingRecord){
+
+            // TODO: if there is a redirect to this page, we'll take this one as the new url
+            $existingRecord->delete();
         });
     }
 
