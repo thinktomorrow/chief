@@ -21,6 +21,8 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.routes.autoload` value to false.
 - Changed: don't show tabs when there is just one language in menubuilder. Case: "Of kies een eigen link."
 - Added: added seo_keywords validation on length
+- Changed: construct on archivable trait to inizialize to prevent issues with $dates field setting
+- Removed: $dates on page since these fields are all set through traits
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab

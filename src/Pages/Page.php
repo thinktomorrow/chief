@@ -61,7 +61,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
     public $table          = "pages";
     protected $guarded     = [];
-    protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
 
     protected $baseViewPath;
