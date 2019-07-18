@@ -7,8 +7,8 @@
     @slot('subtitle')
         <div class="inline-block">
             <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}">
-                <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg> 
-                Terug naar het menu overzicht
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg> 
+                {{-- Terug naar het menu overzicht --}}
             </a>
         </div>
     @endslot

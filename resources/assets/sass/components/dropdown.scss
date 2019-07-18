@@ -1,6 +1,5 @@
 .dropdown-box {
-    box-shadow: 0 16px 26px -10px rgba(#000, 0.56), 0 4px 25px 0px rgba(#000, 0.12), 0 8px 10px -5px rgba(#000, 0.2);
-    @apply bg-white mt-6 border-transparent border rounded overflow-hidden;
+    @apply bg-white mt-6 border-transparent border rounded overflow-hidden shadow-xl;
 
     a {
         @apply whitespace-no-wrap rounded block p-3 leading-none font-normal;

@@ -6,8 +6,8 @@
     @slot('title', $modelManager->details()->singular .' archief')
     @slot('subtitle')
         <a class="center-y" href="{{ $modelManager->route('index') }}">
-            <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg>
-            Terug naar alle {{ $modelManager->details()->plural }}
+            <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+            {{-- Terug naar alle {{ $modelManager->details()->plural }} --}}
         </a>
     @endslot
 @endcomponent
