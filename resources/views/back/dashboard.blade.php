@@ -39,3 +39,7 @@
         </div>
     </div>
 @stop
+
+@section('chief-footer')
+    @include('chief::back._layouts._partials.chief-footer')
+@stop
