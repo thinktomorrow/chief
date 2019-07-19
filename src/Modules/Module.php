@@ -45,7 +45,6 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
     public $useTranslationFallback = true;
     public $table = "modules";
     protected $guarded = [];
-    protected $dates = ['deleted_at'];
     protected $with = ['translations'];
 
     protected $baseViewPath;

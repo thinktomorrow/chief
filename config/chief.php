@@ -56,13 +56,13 @@ return [
     ],
 
     /**
-     * By default all models are available as children. Here we define which models are explicitly disallowed.
+     * Here we define which models are available as children.
      *
      * This reflects itself in the select options of the page builder. Make note that this has no effect on already
      * created relations, only new ones. After changing this value, make sure you flush the cached relations.
      */
     'relations'   => [
-        'blacklist' => [
+        'children' => [
             // \Thinktomorrow\Chief\Pages\Page::class,
         ],
     ],
