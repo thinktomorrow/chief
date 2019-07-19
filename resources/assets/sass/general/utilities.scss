@@ -1,15 +1,15 @@
 .navigation-list {
-    @apply m-0 font-bold;
+    @apply m-0;
     li:not(.no-hover) {
-        @apply text-grey-500;
+        @apply text-grey-600;
         @extend .squished;
 
         > a:not(.label) {
-            @apply text-grey-500;
+            @apply text-grey-600;
         }
         
         &:hover, &:hover > a:not(.label) {
-            @apply text-primary-500;
+            @apply text-primary-600;
         }
     }
 }

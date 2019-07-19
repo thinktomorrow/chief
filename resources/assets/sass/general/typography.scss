@@ -1,10 +1,11 @@
 html, body {
+    font-family: 'Magra', sans-serif;
     font-size: 14px;
-    @apply font-sans;
+    @apply tracking-wide font-normal;
 }
 
 h1, h1:not(:last-child) {
-    @apply text-3xl mb-2;
+    @apply text-3xl;
 }
 
 h1.mb-0, h2.mb-0, h3.mb-0 {
@@ -12,7 +13,11 @@ h1.mb-0, h2.mb-0, h3.mb-0 {
 }
 
 h1, h2, h3, h4, h5 {
-    @apply font-bold text-grey-500;
+    @apply font-bold text-grey-600 tracking-normal;
+}
+
+h2 {
+    @apply text-xl;
 }
 
 h3 {
