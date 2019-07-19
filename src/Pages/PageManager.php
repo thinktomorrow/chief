@@ -152,7 +152,7 @@ class PageManager extends AbstractManager implements Manager
         // For existing model
         if ($this->model->id) {
             return parent::details()
-                ->set('title', $this->model->title)
+                ->set('title', ucfirst($this->model->title))
                 ->set('intro', 'Aangepast ' . $this->model->updated_at->format('d/m/Y H:i'))
                 ->set('context', '<span class="inline-xs stack-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
         }

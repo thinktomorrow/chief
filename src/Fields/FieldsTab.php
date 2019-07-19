@@ -36,7 +36,7 @@ class FieldsTab
 
     public function title(): string
     {
-        return $this->title;
+        return ucfirst($this->title);
     }
 
     /**
