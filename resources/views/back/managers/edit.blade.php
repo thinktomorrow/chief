@@ -38,7 +38,7 @@
             @include('chief::back.managers._partials.archive-modal')
         @endif
 
-        <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
+        <form id="updateForm" class="mt-3" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
             <input type="hidden" name="_method" value="PUT">
