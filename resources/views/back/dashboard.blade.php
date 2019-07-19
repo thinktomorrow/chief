@@ -21,15 +21,13 @@
 
                 @if($manager->findAllManaged()->count() > 0)
                     <div class="column-6">
-                        <div class="border border-grey-100 rounded --raised bg-white">
+                        <div class="rounded bg-white shadow">
                             <div class="inset">
-                                <div class="stack">
-                                    <div class="flex items-center mb-4">
-                                        <span class="text-4xl font-bold inline-block mr-4" style="leading-none">{{ $manager->findAllManaged()->count() }}</span>
-                                        <p class="mt-2">{{ $manager->findAllManaged()->count() == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
-                                    </div>
-                                    <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
+                                <div class="flex items-center mb-4">
+                                    <span class="text-4xl font-bold inline-block mr-4" style="leading-none">{{ $manager->findAllManaged()->count() }}</span>
+                                    <p class="mt-2 text-lg">{{ $manager->findAllManaged()->count() == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
                                 </div>
+                                <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                             </div>
                         </div>
                     </div>
