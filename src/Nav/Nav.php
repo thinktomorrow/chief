@@ -147,7 +147,7 @@ class Nav
         $items = '';
         foreach ($this->items as $item) {
             $items .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
-            $items .= $item->title();
+            $items .= ucfirst($item->title());
             $items .= '</a>';
         }
 

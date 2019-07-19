@@ -10,7 +10,7 @@
                 <div class="flex items-center">
                     <h1 class="flex items-center mb-0">
                         <span>{!! $subtitle ?? '' !!}</span>
-                        <span>{!! $title ?? '' !!}</span>
+                        <span>{!! ucfirst($title) ?? '' !!}</span>
                     </h1>
                     {{ $extra ??  '' }}
                 </div>
