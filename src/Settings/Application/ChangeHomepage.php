@@ -20,27 +20,17 @@ class ChangeHomepage
             ? $setting->value
             : array_fill_keys(config('translatable.locales'), $setting->value);
 
-        // Filter out empty values
-//        foreach($flatReferences as $locale => $flatReferenceString)
-//        {
-//            if(!$flatReferenceString) {
-//                unset($flatReferences[$locale]);
-//            }
-//        }
+        $this->assertNoEmptyValues($flatReferences);
 
         foreach ($flatReferences as $locale => $flatReferenceString) {
-            if (!$flatReferenceString) {
 
-// TODO: when empty we'll remove the entry, we'll also want to revert to last redirect.
+            // If existing value has changed, we'll need to revert this previous value
+            if(isset($existingValues[$locale])){
+                if($flatReferenceString != $existingValues[$locale]) {
 
-                if (isset($existingValues[$locale])) {
                     $flatReferenceInstance = FlatReferenceFactory::fromString(($existingValues[$locale]));
                     (new RevertUrlSlug($flatReferenceInstance->instance()))->handle($locale);
-
-                    continue;
                 }
-
-                // Find the previous value so can alter it...
             }
 
             $flatReferenceInstance = FlatReferenceFactory::fromString($flatReferenceString);
@@ -58,5 +48,14 @@ class ChangeHomepage
 
         $homepage->value = array_merge($homepage->value, [$urlRecord->locale => $model->flatReference()->get()]);
         $homepage->save();
+    }
+
+    private function assertNoEmptyValues(array $flatReferences)
+    {
+        foreach ($flatReferences as $locale => $flatReferenceString) {
+            if (!$flatReferenceString) {
+                throw new \InvalidArgumentException('Homepage setting value cannot be empty. Value for locale ' . $locale . ' is missing.');
+            }
+        }
     }
 }

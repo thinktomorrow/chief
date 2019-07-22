@@ -102,7 +102,6 @@ class HomepageTest extends TestCase
         $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
                 'nl' => $model->flatReference()->get(),
-                'en' => null,
             ]
         ]);
 
@@ -125,10 +124,22 @@ class HomepageTest extends TestCase
     }
 
     /** @test */
+    function passing_homepage_setting_to_null_is_not_allowed()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->disableExceptionHandling();
+        $this->asAdmin()->put(route('chief.back.settings.update'), [
+            'homepage' => [
+                'nl' => 'flatreference@1',
+                'en' => null,
+            ]
+        ]);
+    }
+
+    /** @test */
     function when_setting_homepage_to_another_url_the_previous_one_is_reset_to_its_recent_redirect()
     {
-        $this->disableExceptionHandling();
-
         // Create page with url
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
             'url-slugs' => [
@@ -138,6 +149,7 @@ class HomepageTest extends TestCase
         ]));
 
         $model = ProductFake::first();
+        $other = ProductFake::create();
 
         $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
@@ -146,18 +158,24 @@ class HomepageTest extends TestCase
             ]
         ]);
 
+        $this->assertEquals(4, UrlRecord::count());
+        $this->assertEquals('/', UrlRecord::findByModel($model,'nl')->slug);
+        $this->assertEquals('/', UrlRecord::findByModel($model,'en')->slug);
+        $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
+        $this->assertTrue(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
+
         $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
-                'nl' => $model->flatReference()->get(),
-                'en' => null,
+                'nl' => $other->flatReference()->get(),
+                'en' => $other->flatReference()->get(),
             ]
         ]);
 
-        $this->assertNull(chiefSetting('homepage', 'en'));
-
-        // Assert existing url record is kept the same
-        $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
-        $this->assertFalse(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
+        $this->assertEquals(4, UrlRecord::count());
+        $this->assertEquals('/', UrlRecord::findByModel($other,'nl')->slug);
+        $this->assertEquals('/', UrlRecord::findByModel($other,'en')->slug);
+        $this->assertEquals('foobar', UrlRecord::findByModel($model,'nl')->slug);
+        $this->assertEquals('foobar', UrlRecord::findByModel($model,'en')->slug);
     }
 
     /** @test */

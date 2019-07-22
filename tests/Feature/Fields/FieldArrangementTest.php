@@ -51,7 +51,7 @@ class FieldArrangementTest extends TestCase
 
         $arrangement = $arrangement->addTab(new FieldsTab('second-tab'), 0);
 
-        $this->assertEquals('second-tab', $arrangement->tabs()[0]->title());
+        $this->assertEquals('Second-tab', $arrangement->tabs()[0]->title());
     }
 
     /** @test */
