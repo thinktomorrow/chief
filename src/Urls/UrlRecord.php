@@ -107,9 +107,11 @@ class UrlRecord extends Model
     // Remove all urls that came after this one
     public function revert()
     {
-        if(!$this->isRedirect()) return;
+        if (!$this->isRedirect()) {
+            return;
+        }
 
-        if($record = static::where('id', $this->redirect_id)->first()) {
+        if ($record = static::where('id', $this->redirect_id)->first()) {
             $record->revert();
             $record->delete();
         }

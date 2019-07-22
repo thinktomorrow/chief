@@ -25,9 +25,8 @@ class ChangeHomepage
         foreach ($flatReferences as $locale => $flatReferenceString) {
 
             // If existing value has changed, we'll need to revert this previous value
-            if(isset($existingValues[$locale])){
-                if($flatReferenceString != $existingValues[$locale]) {
-
+            if (isset($existingValues[$locale])) {
+                if ($flatReferenceString != $existingValues[$locale]) {
                     $flatReferenceInstance = FlatReferenceFactory::fromString(($existingValues[$locale]));
                     (new RevertUrlSlug($flatReferenceInstance->instance()))->handle($locale);
                 }
