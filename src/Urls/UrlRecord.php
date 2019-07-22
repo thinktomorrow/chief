@@ -75,7 +75,7 @@ class UrlRecord extends Model
             ->where('model_id', $model->id)
             ->where('locale', $locale)
             ->where('redirect_id', '<>', null)
-            ->orderBy('redirect_id', 'ASC')
+            ->orderBy('updated_at','DESC')
             ->first();
     }
 
@@ -111,13 +111,15 @@ class UrlRecord extends Model
             return;
         }
 
-        if ($record = static::where('id', $this->redirect_id)->first()) {
+        // Remove this redirect relation so it's no longer cascading when main url is getting deleted.
+        $redirect_id = $this->redirect_id;
+        $this->redirect_id = null;
+        $this->save();
+
+        if ($record = static::where('id', $redirect_id)->first()) {
             $record->revert();
             $record->delete();
         }
-
-        $this->redirect_id = null;
-        $this->save();
     }
 
     public function isRedirect(): bool

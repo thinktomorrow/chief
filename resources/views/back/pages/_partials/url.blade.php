@@ -4,7 +4,7 @@
 
 @if(count($redirects) > 0)
     <h3>Redirects</h3>
-    <p>Dit zijn alle links die doorlinken naar deze pagina. </p>
+    <p>Dit zijn alle oude links die worden doorgelinkt naar deze pagina. </p>
     <div>
         @foreach($redirects as $redirect)
             <url-redirect inline-template removeurl="{{ route('chief.back.assistants.url.remove-redirect',$redirect->getUrlRecordId()) }}">

@@ -32,6 +32,7 @@ class SettingFieldsManager extends Fields implements FieldManager
                 ->name('homepage[:locale]')
                 ->options(UrlHelper::allOnlineSingles())
                 ->translatable(config('translatable.locales'))
+                ->validation('required')
                 ->grouped()
                 ->label('Homepagina')
                 ->description('Geef hier de homepagina voor de site op.'),

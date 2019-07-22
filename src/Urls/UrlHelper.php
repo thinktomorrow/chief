@@ -29,9 +29,9 @@ class UrlHelper
             // Get model for each of these records...
             $models = $liveUrlRecords->map(function ($record, $key) {
                 return Morphables::instance($key)->find($record->toArray());
-            })->each->reject(function ($model) {
+            })->map->reject(function ($model) {
                 // Invalid references to archived or removed models where url record still exists.
-                return is_null($model);
+                return is_null($model) || !$model->isPublished();
             })->flatten();
 
             return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
