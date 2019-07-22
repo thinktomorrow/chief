@@ -65,16 +65,19 @@ abstract class AbstractManager
     {
         $model = $this->registration->model();
 
-        if ($apply_filters) {
-            $builder = (new $model)->query();
-            $this->filters()->apply($builder);
+        $builder = (new $model)->query();
 
-            $results = $builder->get();
-        } else {
-            $results = $model::all();
+        if ($apply_filters) {
+            $this->filters()->apply($builder);
         }
 
-        return $results->map(function ($model) {
+        if($this->isAssistedBy('publish')) {
+            $builder->orderBy('published','DESC');
+        }
+
+        $builder->orderBy('updated_at','DESC');
+
+        return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
     }
