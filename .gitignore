@@ -1,6 +1,8 @@
 ##########################################
 # CODING
 ##########################################
+/database/testing.sqlite
+/database/testing.sqlite-journal
 _migration/uploads
 /storage/debugbar
 /storage
