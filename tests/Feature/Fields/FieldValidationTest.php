@@ -56,10 +56,10 @@ class FieldValidationTest extends TestCase
     }
 
     /** @test */
-    public function a_name_with_an_asterisk_will_have_the_locales_replacing_the_asterisk()
+    public function a_name_with_a_placeholder_will_have_the_locales_replacing_the_asterisk()
     {
         $field = InputField::make('content_trans')
-            ->name('foo.*.bar')
+            ->name('foo.:locale.bar')
             ->validation('required|max:200')
             ->translatable(['nl', 'fr']);
 

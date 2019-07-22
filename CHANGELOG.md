@@ -10,6 +10,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Removed: `ActsAsParent::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
 - Removed: Honeypot middleware and helper.
 - Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.route.autoload` value to false.
+- Changed: The locale placeholder has changed from '*' to ':locale'. This is used in a field name value to dynamically fill in each locale. e.g. descriptions[:locale] will be composed to descriptions[nl], descriptions[en], ...
 - Added: `ViewableContract` to identify models that should be rendered on the site.
 - Changed: `ProvidesUrl` contract to identify models that should be retrievable by direct url.
 - Added: Manager assistant `UrlAssistant` which takes care of the page urls.
