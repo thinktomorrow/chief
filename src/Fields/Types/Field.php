@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Thinktomorrow\Chief\Fields\LocalizedFieldValidationRules;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fields\Validators\FieldValidatorFactory;
 
 class Field
 {
@@ -19,44 +21,43 @@ class Field
 
         $this->values['key'] = $this->values['column'] = $this->values['name'] = $this->values['label'] = $key;
         $this->values['locales'] = [];
+        $this->values['viewData'] = [];
         $this->values['type'] = $fieldType->get();
     }
 
-    public function validation($rules = [], array $messages = [], array $attributes = [])
+    public function validation(...$arguments)
     {
-        $this->values['validation'] = ['rules' => $rules, 'messages' => $messages, 'customAttributes' => $attributes];
+        // If a Closure or Validator is passed, we do not want to pass it as an array.
+        if (count($arguments) == 1 && !is_array($arguments)) {
+            $this->values['validation'] = reset($arguments);
+
+            return $this;
+        }
+
+        $this->values['validation'] = $arguments;
 
         return $this;
-    }
-
-    /**
-     * @param array $data - request data payload
-     * @return array|null
-     */
-    public function getValidation(array $data = [])
-    {
-        if (! $this->hasValidation()) {
-            return null;
-        }
-
-        list('rules' => $rules, 'messages' => $messages, 'customAttributes' => $customAttributes) = $this->values['validation'];
-
-        // Normalize rules: If no attribute is passed for the rule, we use the field name.
-        if (!is_array($rules) || isset($rules[0])) {
-            $rules = [$this->values['name'] => (is_array($rules) ? reset($rules) : $rules)];
-
-            if ($this->isTranslatable()) {
-                $rules = (new LocalizedFieldValidationRules($this->locales))
-                            ->influenceByPayload($data)
-                            ->rules($rules);
-            }
-        }
-        return ['rules' => $rules, 'messages' => $messages, 'customAttributes' => $customAttributes];
     }
 
     public function hasValidation(): bool
     {
         return (isset($this->values['validation']) && !empty($this->values['validation']));
+    }
+
+    public function validator(array $data): Validator
+    {
+        return app(FieldValidatorFactory::class)->create($this, $data);
+    }
+
+    public function name(string $name = null)
+    {
+        if (!is_null($name)) {
+            $this->values['name'] = $name;
+
+            return $this;
+        }
+
+        return $this->values['name'] ?? $this->key();
     }
 
     public function translatable(array $locales = [])
@@ -81,6 +82,17 @@ class Field
         return false;
     }
 
+    public function translateName($locale)
+    {
+        $name = $this->name();
+
+        if (strpos($name, ':locale')) {
+            return preg_replace('#(:locale)#', $locale, $name);
+        }
+
+        return 'trans['.$locale.']['.$name.']';
+    }
+
     public static function translateValue($value, $locale = null)
     {
         if (!$locale || !is_array($value)) {
@@ -92,6 +104,54 @@ class Field
         }
 
         return $value;
+    }
+
+    public function getFieldValue(Model $model, $locale = null)
+    {
+        // If string is passed, we use this to find the proper field
+        if ($this->isTranslatable() && $locale) {
+            return $model->getTranslationFor($this->column(), $locale);
+        }
+
+        return $model->{$this->column()};
+    }
+
+    /**
+     * The view path to the full formgroup for this field.
+     *
+     * @param string|null $view
+     * @param array $viewData
+     * @return $this|mixed|null|string
+     */
+    public function view(string $view = null)
+    {
+        if ($view) {
+            $this->values['view'] = $view;
+            return $this;
+        }
+
+        return $this->__get('view') ?? 'chief::back._fields.formgroup';
+    }
+
+    public function viewData(array $viewData = [])
+    {
+        if ($viewData) {
+            $this->values['viewData'] = $viewData;
+            return $this;
+        }
+
+        return $this->__get('viewData');
+    }
+
+    /**
+     * In case of the default formgroup rendering, there is also made use of
+     * the form input element, which is targeted as a specific view as well
+     *
+     * @return string
+     */
+    public function formElementView(): string
+    {
+        return 'chief::back._fields.'.$this->fieldType->get();
     }
 
     public function __get($key)

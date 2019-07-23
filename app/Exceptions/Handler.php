@@ -102,6 +102,6 @@ class Handler extends ExceptionHandler
 
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->guest($exception->redirectTo() ?? '/');
+            : redirect()->guest(method_exists($exception, 'redirectTo') ? $exception->redirectTo() : '/');
     }
 }

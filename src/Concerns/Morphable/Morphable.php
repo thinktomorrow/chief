@@ -11,7 +11,7 @@ trait Morphable
     {
         /**
          * In case of a hydrated instance, we will take the key from database since in many cases the data
-         * is correct but still just into a generic Page class (and not the expected class)
+         * is correct but hydrated into a generic Page class and not yet the expected class
          * so we want to use the proper morph identification at those moments
          */
         if ($this->morph_key) {

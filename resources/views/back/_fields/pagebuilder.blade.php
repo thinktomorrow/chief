@@ -1,4 +1,4 @@
-<section class="formgroup stack">
+<section class="formgroup stack-l">
     <page-builder
             :locales='@json($field->locales)'
             :default-sections='@json($field->sections)'

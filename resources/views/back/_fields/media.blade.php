@@ -1,6 +1,9 @@
 <?php
     // TODO: this should be optimized performance wise since we fetch every file every time...
-    $files = $manager->getFieldValue($field);
+    $files = $manager->fieldValue($field, $locale ?? null);
+    $files = $files[$key] ?? [];
+    $name = $name ?? $key;
+
     if(isset($locale))
     {
         $files = $files[$field->name][$locale] ?? [];
@@ -15,7 +18,7 @@
 ?>
 
 <filesupload group="{{ $name }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
-    <div id="filegroup-{{ $key }}" :class="{'sorting-mode' : reorder}">
+    <div id="filegroup-{{ $name }}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
@@ -38,7 +41,7 @@
                     <input v-if="checkSupport" type="file" @change="handleFileSelect" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <!-- if not supported, a file can still be passed along -->
                     <input v-else type="file" name="{{ $key }}[]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
-                    <span class="icon icon-plus"></span>
+                    <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                 </div>
             </div>
         </div>

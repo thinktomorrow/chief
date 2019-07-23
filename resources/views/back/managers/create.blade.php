@@ -2,12 +2,14 @@
 
 @section('page-title',$manager->details()->title)
 
-
 @component('chief::back._layouts._partials.header')
     @slot('title', $manager->details()->title)
     @slot('subtitle')
         <div class="inline-block">
-            <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
+            <a class="center-y" href="{{ $manager->route('index') }}">
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+                {{-- Terug naar alle {{ $manager->details()->plural }} --}}
+            </a>
         </div>
     @endslot
 

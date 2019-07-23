@@ -1,0 +1,44 @@
+// Vue transition fade effect
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+  
+  
+  /**
+   * Animations taken from animate.css
+   * @ref: https://daneden.github.io/animate.css/
+   */
+  .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+  
+  .animation-delayed, .animation-delayed-2 {
+    animation-delay: 2s
+  }
+  
+  .animation-delayed-3 {
+    animation-delay: 3s
+  }
+  
+  .animation-delayed-4 {
+    animation-delay: 4s
+  }
+  
+  @keyframes fadeOutDown {
+    from {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+  }
+  
+  .fadeOutDown {
+    animation-name: fadeOutDown;
+  }

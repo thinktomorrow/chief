@@ -46,11 +46,6 @@ class StoredSetReference extends Model implements ActsAsChild
         return $reference;
     }
 
-    public function viewkey(): string
-    {
-        return $this->key;
-    }
-
     public function flatReference(): FlatReference
     {
         return new FlatReference(static::class, $this->id);

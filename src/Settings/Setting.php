@@ -7,11 +7,21 @@ use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class Setting extends Model
 {
+    const HOMEPAGE = 'homepage';
+
     public $table = 'settings';
     public $timestamps = false;
     public $guarded = [];
+    public $casts = [
+        'value' => 'json',
+    ];
 
     private static $fieldsFromConfig;
+
+    public static function findByKey(string $key)
+    {
+        return static::where('key', $key)->first();
+    }
 
     public function getFieldAttribute()
     {

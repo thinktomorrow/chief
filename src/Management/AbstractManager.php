@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Fields\Types\Field;
-use Thinktomorrow\Chief\Fields\Types\FieldType;
+use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\RenderingFields;
+use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
@@ -17,23 +18,21 @@ use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 abstract class AbstractManager
 {
-    use HasDetails,
+    use RenderingFields,
+        SavingFields,
+        HasDetails,
         HasSections,
         ManagesMedia,
         ManagesPagebuilder,
         TranslatableCommand,
         AssistedManager;
 
-    protected $queued_translations = [];
     protected $translation_columns = [];
 
     protected $model;
 
     /** @var Register */
     protected $registration;
-
-    /** @var string */
-    protected $key;
 
     public function __construct(Registration $registration)
     {
@@ -66,16 +65,19 @@ abstract class AbstractManager
     {
         $model = $this->registration->model();
 
-        if ($apply_filters) {
-            $builder = (new $model)->query();
-            $this->filters()->apply($builder);
+        $builder = (new $model)->query();
 
-            $results = $builder->get();
-        } else {
-            $results = $model::all();
+        if ($apply_filters) {
+            $this->filters()->apply($builder);
         }
 
-        return $results->map(function ($model) {
+        if ($this->isAssistedBy('publish')) {
+            $builder->orderBy('published', 'DESC');
+        }
+
+        $builder->orderBy('updated_at', 'DESC');
+
+        return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
     }
@@ -83,6 +85,11 @@ abstract class AbstractManager
     public function model()
     {
         return $this->model;
+    }
+
+    public function hasExistingModel(): bool
+    {
+        return ($this->model && $this->model->exists);
     }
 
     /**
@@ -93,7 +100,7 @@ abstract class AbstractManager
      */
     protected function existingModel()
     {
-        if (!$this->model ||! $this->model->exists) {
+        if (!$this->hasExistingModel()) {
             throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
 
@@ -145,6 +152,32 @@ abstract class AbstractManager
         return $this;
     }
 
+    public function fields(): Fields
+    {
+        return new Fields();
+    }
+
+    /**
+     * Enrich the manager fields with any of the assistant specified fields
+     *
+     * @return Fields
+     * @throws \Exception
+     */
+    public function fieldsWithAssistantFields(): Fields
+    {
+        $fields = $this->fields();
+
+        foreach ($this->assistants() as $assistant) {
+            if (! method_exists($assistant, 'fields')) {
+                continue;
+            }
+
+            $fields = $fields->merge($assistant->fields());
+        }
+
+        return $fields;
+    }
+
     /**
      * This determines the arrangement of the manageable fields
      * on the create and edit forms. By default, all fields
@@ -152,115 +185,16 @@ abstract class AbstractManager
      *
      * @param null $key pinpoint to a specific field arrangement e.g. for create page.
      * @return FieldArrangement
+     * @throws \Exception
      */
     public function fieldArrangement($key = null): FieldArrangement
     {
-        return new FieldArrangement($this->fields());
+        return new FieldArrangement($this->fieldsWithAssistantFields());
     }
-
-    public function getFieldValue($field, $default = null)
-    {
-        // If string is passed, we use this to find the proper field
-        if (is_string($field)) {
-            foreach ($this->fields()->all() as $possibleField) {
-                if ($possibleField->key() == $field) {
-                    $field = $possibleField;
-                    break;
-                }
-            }
-
-            if (is_string($field)) {
-
-                // Could be translatable field
-                if ($this->isTranslatableKey($field)) {
-                    $attribute = substr($field, strrpos($field, '.') + 1);
-                    $locale = substr($field, strlen('trans.'), 2);
-
-                    return $this->model->getTranslationFor($attribute, $locale);
-                }
-
-                return $default;
-            }
-        }
-
-        // Is it a media field
-        // An array grouped by type is returned. Each media array has an id, filename and path.
-        if ($field->ofType(FieldType::MEDIA)) {
-            return $this->populateMedia($this->model);
-        }
-
-        if ($field->ofType(FieldType::DOCUMENT)) {
-            return $this->populateDocuments($this->model);
-        }
-
-        return $this->model->{$field->column()};
-    }
-
-    private function isTranslatableKey(string $key): bool
-    {
-        return 0 === strpos($key, 'trans.');
-    }
-
-    public function setField(Field $field, Request $request)
-    {
-        // Is field set as translatable?
-        if ($field->isTranslatable()) {
-            if (!$this->requestContainsTranslations($request)) {
-                return;
-            }
-
-            // Make our media fields able to be translatable as well...
-            if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
-                throw new \Exception('Cannot process the ' . $field->key . ' media field. Currently no support for translatable media files. We should fix this!');
-            }
-
-            // Okay so this is a bit odd but since all translations are expected to be inside the trans
-            // array, we can add all these translations at once. Just make sure to keep track of the
-            // keys since this is what our translation engine requires as well for proper update.
-            $this->queued_translations = $request->get('trans');
-            $this->translation_columns[] = $field->column();
-
-            return;
-        }
-
-        // By default we assume the key matches the attribute / column naming
-        $this->model->{$field->column()} = $request->get($field->key());
-    }
-
-    public function saveFields(): Manager
-    {
-        $this->model->save();
-
-        // Translations
-        if (!empty($this->queued_translations)) {
-            $this->saveTranslations($this->queued_translations, $this->model, $this->translation_columns);
-        }
-
-        return (new static($this->registration))->manage($this->model);
-    }
-
-
 
     public function delete()
     {
         $this->model->delete();
-    }
-
-    public function renderField(Field $field)
-    {
-        $path = $field->ofType(FieldType::PAGEBUILDER)
-            ? 'chief::back._fields.pagebuilder'
-            : 'chief::back._fields.formgroup';
-
-        // form element view path
-        $viewpath = 'chief::back._fields.' . $field->type;
-
-        return view($path, [
-            'field'    => $field,
-            'key'      => $field->key, // As parameter so that it can be altered for translatable values
-            'manager'  => $this,
-            'viewpath' => $viewpath,
-        ])->render();
     }
 
     public static function filters(): Filters

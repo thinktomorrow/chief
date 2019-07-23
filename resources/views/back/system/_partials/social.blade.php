@@ -1,6 +1,6 @@
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Facebook</h2>
+        <h2>Facebook</h2>
     </div>
     <div class="formgroup-input column-7 relative">
         <span class="icon icon-facebook" style="position: absolute; left: -2rem; top: 1rem;"></span>
@@ -9,7 +9,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Instagram</h2>
+        <h2>Instagram</h2>
     </div>
     <div class="formgroup-input column-7 relative">
         <span class="icon icon-instagram" style="position: absolute; left: -2rem; top: 1rem;"></span>
@@ -18,7 +18,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Twitter</h2>
+        <h2>Twitter</h2>
     </div>
     <div class="formgroup-input column-7 relative">
         <span class="icon icon-twitter" style="position: absolute; left: -2rem; top: 1rem;"></span>
@@ -27,7 +27,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Youtube</h2>
+        <h2>Youtube</h2>
     </div>
     <div class="formgroup-input column-7 relative">
         <span class="icon icon-play" style="position: absolute; left: -2rem; top: 1rem;"></span>
@@ -36,7 +36,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">LinkedIn</h2>
+        <h2>LinkedIn</h2>
     </div>
     <div class="formgroup-input column-7 relative">
         <span style="position: absolute; left: -2rem; top: 0.8rem; border: 1px solid black; padding: 0 4px; border-radius: 5px;">in</span>

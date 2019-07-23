@@ -20,19 +20,19 @@ class InvitationPresenter
             return '';
         }
 
-        $flair = 'label--primary';
+        $flair = 'label-primary';
 
         switch ($this->invitation->state()) {
             case InvitationState::REVOKED:
-                $flair = 'label--error';
+                $flair = 'label-error';
                 break;
             case InvitationState::DENIED:
             case InvitationState::EXPIRED:
-                $flair = 'label--warning';
+                $flair = 'label-warning';
                 break;
             case InvitationState::PENDING:
             case InvitationState::NONE:
-                $flair = 'label--primary';
+                $flair = 'label-primary';
                 break;
         }
 

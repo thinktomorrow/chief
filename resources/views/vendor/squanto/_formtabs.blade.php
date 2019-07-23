@@ -18,13 +18,13 @@
             @php $tab = (object)$tab; @endphp
 
             <template slot="tabnav" slot-scope="rows">
-                    <nav class="tabs-nav inline-group-s stack sticky bg-grey-lightest" style="top:6.8rem;">
+                    <nav class="flex w-full border-b border-grey-200 mb-6" style="top:6.8rem;">
                         <a v-for="tab in rows.tabs"
                            :href="tab.hash"
                            :aria-controls="tab.hash"
                            :aria-selected="tab.isActive"
                            role="tab"
-                           class="inline-block squished-s --bottomline"
+                           class="block squished --bottomline"
                            :class="{'active': tab.isActive }"
                         >
                             <span class="tabs-name" v-text="tab.name"></span>
@@ -36,7 +36,7 @@
 
                 <div class="column translation-sidemenu">
                     @if(count($groupedLines) > 2)
-                        <ul class="sticky" style="top:9rem;">
+                        <ul style="top:9rem;">
                             <?php $id = 1 ?>
                             @foreach($groupedLines as $group => $lines)
                                 @if($group != 'general')

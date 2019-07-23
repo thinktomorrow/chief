@@ -8,10 +8,10 @@
 @endchiefheader
 
 @section('content')
-    <div class="row gutter">
+    <div class="row gutter stack">
         @foreach($users as $user)
             <div class="s-column-6 m-column-4 inset-xs">
-                <div class="row bg-white inset-s panel panel-default" style="height:100%">
+                <div class="row bg-white inset-s border border-grey-100 rounded" style="height:100%">
                     <div>
                         @if(!chiefAdmin()->can('update-user') || ($user->hasRole('developer') && !chiefAdmin()->hasRole('developer')) )
                             <span>{{ $user->fullname }}</span>
@@ -33,7 +33,7 @@
                         <div style="margin-left:auto;">
                             <options-dropdown class="inline-block">
                                 <div class="inset-s" v-cloak>
-                                    <a class="block squished-s --link-with-bg" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
+                                    <a class="block squished --link-with-bg" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
                                 </div>
                             </options-dropdown>
                         </div>

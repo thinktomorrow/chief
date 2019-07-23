@@ -9,25 +9,25 @@
 @stop
 
 @section('content')
-    <div class="row gutter stack-l">
-        <div class="column-4 stretched-xl">
-            <h1>Welkom op je dashboard, {{ Auth::user()->firstname }}</h1>
+    <div class="row gutter-l stack-l">
+        <div class="column-4 stack-xl">
+            <span class="font-bold text-5xl text-grey-500 leading-none mb-4 block">Welkom op je dashboard, {{ Auth::user()->firstname }}</span class="font-bold text-5xl leading-none mb-4 block">
             <p>Don't try to follow trends. Create them</p>
         </div>
-        <div class="gutter column-8 inset right">
+        <div class="gutter column-8 right">
             @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page', 'dashboard']) as $manager)
 
                 @if(!$manager->can('index')) @continue @endif
 
                 @if($manager->findAllManaged()->count() > 0)
                     <div class="column-6">
-                        <div class="panel panel-default --raised bg-white">
-                            <div class="panel-body inset">
-                                <div class="stack">
-                                    <h1 class="--remove-margin">{{ $manager->findAllManaged()->count() }}</h1>
-                                    <p>{{ $manager->details()->plural }}</p>
-                                    <a class="btn btn-secondary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
+                        <div class="rounded bg-white shadow">
+                            <div class="inset">
+                                <div class="flex items-center mb-4">
+                                    <span class="text-4xl font-bold inline-block mr-4" style="leading-none">{{ $manager->findAllManaged()->count() }}</span>
+                                    <p class="mt-2 text-lg">{{ $manager->findAllManaged()->count() == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
                                 </div>
+                                <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                             </div>
                         </div>
                     </div>
@@ -36,4 +36,8 @@
             @endforeach
         </div>
     </div>
+@stop
+
+@section('chief-footer')
+    @include('chief::back._layouts._partials.chief-footer')
 @stop

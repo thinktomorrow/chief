@@ -2,10 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategories;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategoriesManager;
 use Thinktomorrow\Chief\Tests\Fakes\Category;
@@ -20,29 +18,25 @@ class CustomFieldsTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->setUpChiefEnvironment();
 
         ArticlePageWithCategories::migrateUp();
         Category::migrateUp();
 
-        $this->setUpDefaultAuthorization();
+        app(Register::class)->register(ArticlePageWithCategoriesManager::class, ArticlePageWithCategories::class);
 
-        app(Register::class)->register('articles', ArticlePageWithCategoriesManager::class, ArticlePageWithCategories::class);
-
-        $this->asAdmin()->post(route('chief.back.managers.store', 'articles'), $this->validPageParams());
+        $this->asAdmin()->post(route('chief.back.managers.store', 'articles_with_category_fake'), $this->validPageParams());
 
         $this->page = ArticlePageWithCategories::first();
-
-        // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
     }
 
 
     /** @test */
     public function it_can_edit_a_page_with_a_custom_field()
     {
+        $this->disableExceptionHandling();
         $response = $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles_with_category_fake', $this->page->id]), $this->validUpdatePageParams([
                 'custom' => 'foobar'
             ]));
 
@@ -58,7 +52,7 @@ class CustomFieldsTest extends TestCase
         $category3 = Category::create(['title' => 'derde category']);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validUpdatePageParams([
+            ->put(route('chief.back.managers.update', ['articles_with_category_fake', $this->page->id]), $this->validUpdatePageParams([
                 'categories' => [$category1->id, $category3->id]
             ]));
 

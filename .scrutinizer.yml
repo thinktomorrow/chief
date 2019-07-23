@@ -32,15 +32,16 @@ build:
       tests:
         override:
           - php-scrutinizer-run
-
-    tests-and-coverage:
+    coverage:
+      requires:
+       - branch: master
+       - is_pull_request: true
       tests:
-          override:
-              -
-                  command: 'vendor/bin/phpunit --coverage-clover=build/logs/clover.xml --configuration phpunit.xml'
-                  coverage:
-                      file: 'build/logs/clover.xml'
-                      format: 'clover'
+        override:
+            - command: 'vendor/bin/phpunit --coverage-clover=build/logs/clover.xml --configuration phpunit.xml'
+              coverage:
+                file: 'build/logs/clover.xml'
+                format: 'clover'
 checks:
     php:
         code_rating: true

@@ -129,7 +129,7 @@ class UploadMedia
     private function removeFiles(HasMedia $model, array $files)
     {
         if (isset($files['delete']) && is_array($files['delete']) && !empty($files['delete'])) {
-            foreach($model->assets()->whereIn('id', $files['delete'])->get() as $asset){
+            foreach ($model->assets()->whereIn('id', $files['delete'])->get() as $asset) {
                 $asset->delete();
             }
         }

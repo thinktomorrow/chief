@@ -23,10 +23,6 @@ class DeletePage
             // Remove Page specific modules
             Module::where('page_id', $page->id)->delete();
 
-            //Add random string to slug to avoid unique problems with softdeleted pages.
-            $page->slug .= 'deleted-'.str_random(8);
-            $page->save();
-
             $page->delete();
 
             Audit::activity()

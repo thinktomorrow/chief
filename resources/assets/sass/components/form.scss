@@ -1,0 +1,102 @@
+.formgroup {
+
+    /* override the default gutter margin-bottom */
+    .formgroup-info, .formgroup-input{
+        @apply mb-0;
+    }
+}
+
+// Field addons (prepend or appending fixed content in input field)
+.input-addon {
+
+    @apply flex;
+
+    .input {
+        @apply flex-1;
+
+        &:not(:first-child) {
+            @apply border-l-0;
+        }
+        &:not(:last-child) {
+            @apply border-r-0;
+        }
+    }
+
+    .addon {
+        font: inherit;
+        @apply bg-white border border-grey-100 text-grey-400 font-normal;
+    }
+
+    .input:first-child, .addon:first-child {
+        border-radius: 5px 0 0 5px;
+    }
+
+    .input:last-child, .addon:last-child{
+        border-radius: 0 5px 5px 0;
+    }
+}
+
+// Reset input submit
+input[type="submit"]{
+    @apply cursor-pointer border-none outline-none p-0;
+}
+
+textarea,
+input[type='text'],
+input[type='email'],
+input[type='url'],
+input[type='number'],
+input[type='search'],
+input[type='phone'],
+input[type='password'],
+input[type='file'],
+.custom-file-input {
+    font-family: config('theme.fontFamily.sans');
+    @apply w-full rounded border border-grey-200;
+
+    &:focus{
+        box-shadow: 0 1px 5px -1px config('theme.colors.grey.200');
+        @apply outline-none border border-grey-200;
+    }
+    &::placeholder{
+        @apply text-grey-200;
+    }
+}
+
+// SEARCH
+.search-wrapper{
+    @apply relative;
+    &:after{
+        font-family: 'linearicons';
+        content: '\e86f';
+        top: 50%;
+        transform: translateY(-50%);
+        @apply block absolute;
+    }
+}
+
+
+// ERRORS AND VALIDS
+.valid{
+    @apply text-success;
+    textarea,
+    input[type='text'],
+    input[type='email'],
+    input[type='url'],
+    input[type='password']{
+        @apply text-success border border-success;
+    }
+}
+.error{
+    @apply text-error;
+    textarea,
+    input[type='text'],
+    input[type='email'],
+    input[type='url'],
+    input[type='password']{
+        @apply text-error border border-error;
+    }
+    .input-prefix{
+        @apply text-error;
+    }
+}

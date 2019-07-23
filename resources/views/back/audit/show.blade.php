@@ -7,7 +7,7 @@
 @endcomponent
 
 @section('content')
-    <div class="treeview stack-l">
+    <div class="stack-l">
         <div class="row">
             <div class="column-3 center-y">
                 <strong>Activity</strong>

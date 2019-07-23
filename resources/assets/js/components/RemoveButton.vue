@@ -1,15 +1,15 @@
 <template>
     <span>
-        <button type="button" v-if="modal" @mousedown.prevent="open(modalId)" class="btn --remove-padding inline-s">
+        <button type="button" v-if="modal" @mousedown.prevent="open(modalId)" class="btn p-0 inline-s">
             <slot name="modalBtn">
-                <span class="icon icon-trash"></span>
+                <svg width="18" height="18"><use xlink:href="#trash"/></svg>
                 <span>Verwijder</span>
             </slot>
         </button>
 
-        <button class="btn --remove-padding inline-s" v-if="!modal" @mousedown.prevent="remove()">
+        <button class="btn p-0 inline-s" v-if="!modal" @mousedown.prevent="remove()">
             <slot name="removeBtn">
-                <span class="icon icon-trash"></span>
+                <svg width="18" height="18"><use xlink:href="#trash"/></svg>
             </slot>
         </button>
 
@@ -19,7 +19,7 @@
 
             <div slot="footer">
                 <button class="modal-delete btn btn-error inline" @click.prevent="remove()">
-                    <span class="icon icon-trash inline-xs"></span>Definitief verwijderen
+                    <svg width="18" height="18" class="mr-1"><use xlink:href="#x"/></svg>Definitief verwijderen
                 </button>
                 <a @click="close(modalId)" class="btn btn-link"><slot name='modal-close-btn'>Annuleer</slot></a>
             </div>

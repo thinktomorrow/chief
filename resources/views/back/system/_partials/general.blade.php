@@ -1,6 +1,6 @@
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Site titel</h2>
+        <h2>Site titel</h2>
         <p class="caption">Deze titel wordt gebruikt als SEO-titel.</p>
     </div>
     <div class="column-7">
@@ -9,7 +9,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Korte omschrijving</h2>
+        <h2>Korte omschrijving</h2>
         <p class="caption">Deze omschrijving wordt gebruikt als SEO-omschrijving.</p>
     </div>
     <div class="column-7">
@@ -18,7 +18,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-5">
-        <h2 class="formgroup-label">Startpagina</h2>
+        <h2>Startpagina</h2>
         <p class="caption">Kies hier de landingspagina van de website.</p>
     </div>
     <div class="column-7">
