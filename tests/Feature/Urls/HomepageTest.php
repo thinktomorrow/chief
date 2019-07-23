@@ -4,13 +4,10 @@ namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductManagerWithUrlAssistant;
-use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductWithBaseSegments;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
@@ -40,7 +37,10 @@ class HomepageTest extends TestCase
         $model = ProductFake::create([]);
 
         $this->asAdmin()->put(route('chief.back.settings.update'), [
-            'homepage' => $model->flatReference()->get(),
+            'homepage' => [
+                'nl' => $model->flatReference()->get(),
+                'en' => $model->flatReference()->get(),
+            ],
         ]);
 
         $this->assertEquals($model->flatReference()->get(), chiefSetting('homepage'));
@@ -62,7 +62,10 @@ class HomepageTest extends TestCase
         $model = ProductFake::first();
 
         $this->asAdmin()->put(route('chief.back.settings.update'), [
-            'homepage' => $model->flatReference()->get(),
+            'homepage' => [
+                'nl' => $model->flatReference()->get(),
+                'en' => $model->flatReference()->get(),
+            ],
         ]);
 
         $this->assertEquals($model->flatReference()->get(), chiefSetting('homepage'));
@@ -98,10 +101,12 @@ class HomepageTest extends TestCase
         ]));
 
         $model = ProductFake::first();
+        $other = ProductFake::create();
 
         $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
                 'nl' => $model->flatReference()->get(),
+                'en' => $other->flatReference()->get(),
             ]
         ]);
 
@@ -116,7 +121,7 @@ class HomepageTest extends TestCase
         $this->assertTrue($redirectUrlRecord->isRedirect());
         $this->assertEquals($homepageUrlRecord->id, $redirectUrlRecord->redirect_id);
 
-        $this->assertNull(chiefSetting('homepage', 'en'));
+        $this->assertEquals($other->flatReference()->get() , chiefSetting('homepage', 'en'));
 
         // Assert existing url record is kept the same
         $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
@@ -126,15 +131,14 @@ class HomepageTest extends TestCase
     /** @test */
     function passing_homepage_setting_to_null_is_not_allowed()
     {
-        $this->expectException(\InvalidArgumentException::class);
-
-        $this->disableExceptionHandling();
-        $this->asAdmin()->put(route('chief.back.settings.update'), [
+        $response = $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
                 'nl' => 'flatreference@1',
                 'en' => null,
             ]
         ]);
+
+        $response->assertSessionHasErrors('homepage.en');
     }
 
     /** @test */

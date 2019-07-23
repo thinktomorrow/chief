@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Settings\Settings;
@@ -22,8 +23,6 @@ class UpdateSettingTest extends TestCase
     /** @test */
     public function update_a_setting()
     {
-        $this->disableExceptionHandling();
-
         Setting::create([
             'key'   => 'app_name',
             'value' => 'old app_name'

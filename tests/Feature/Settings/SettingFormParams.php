@@ -4,12 +4,16 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
 use Illuminate\Support\Arr;
+use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 
 trait SettingFormParams
 {
     protected function validSettingParams($overrides = [])
     {
+        $model = ProductPageFake::create();
+
         $params = [
+            'homepage' => ['nl' => $model->flatReference()->get(), 'en' => $model->flatReference()->get()],
             'app_name' =>  'updated app_name',
         ];
 
@@ -23,7 +27,7 @@ trait SettingFormParams
     protected function validUpdateSettingParams($overrides = [])
     {
         $params = [
-            'homepage' => 'updated app_name',
+            'app_name' => 'updated app_name',
         ];
 
         foreach ($overrides as $key => $value) {
