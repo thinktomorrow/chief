@@ -71,11 +71,11 @@ abstract class AbstractManager
             $this->filters()->apply($builder);
         }
 
-        if($this->isAssistedBy('publish')) {
-            $builder->orderBy('published','DESC');
+        if ($this->isAssistedBy('publish')) {
+            $builder->orderBy('published', 'DESC');
         }
 
-        $builder->orderBy('updated_at','DESC');
+        $builder->orderBy('updated_at', 'DESC');
 
         return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
