@@ -75,7 +75,7 @@ class UrlRecord extends Model
             ->where('model_id', $model->id)
             ->where('locale', $locale)
             ->where('redirect_id', '<>', null)
-            ->orderBy('updated_at','DESC')
+            ->orderBy('updated_at', 'DESC')
             ->first();
     }
 
