@@ -1,7 +1,7 @@
 <template>
     <div v-if="localErrors.has(field)">
         <slot name="icon">
-            <i class="icon icon-alert-circle"></i>
+            <span><svg width="18" height="18"><use xlink:href="#alert-circle"/></svg></span>
         </slot>
         <span v-text="localErrors.get(field)"></span>
     </div>

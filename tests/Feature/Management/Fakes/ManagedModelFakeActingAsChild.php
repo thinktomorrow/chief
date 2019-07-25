@@ -5,13 +5,13 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Relations\PresentForParent;
 
-class ManagedModelFakeActingAsChild extends Model implements ActsAsChild, PresentForParent
+class ManagedModelFakeActingAsChild extends Model implements ActsAsChild, ViewableContract
 {
     use ActingAsChild;
 
@@ -59,13 +59,43 @@ class ManagedModelFakeActingAsChild extends Model implements ActsAsChild, Presen
         return 'customs';
     }
 
-    public function presentForParent(ActsAsParent $parent): string
+    public function viewKey(): string
+    {
+        return 'managed-model-fakes';
+    }
+
+    /**
+     * This is the full path reference for this model's view file. This is the relative to your view folder
+     * e.g. key 'articles.show'. A sensible default is set and determined based on the viewKey value.
+     *
+     * @return string
+     */
+    public function viewPath(): string
+    {
+        return '';
+    }
+
+    /**
+     * Renders the view for this model. It makes use of the viewPath to get the proper
+     * view and is responsible for passed the expected view data parameters.
+     *
+     * @return string
+     */
+    public function renderView(): string
     {
         return 'ManagedModelFakeActingAsChild presentation as child';
     }
 
-    public function viewKey(): string
+    /**
+     * Sets the models parent for the current view path and rendering.
+     * In case the model is rendered within a related parent view, this affects
+     * the way the view is determined as well as the passed data parameters.
+     *
+     * @param ActsAsParent $parent
+     * @return mixed
+     */
+    public function setViewParent(ActsAsParent $parent): ViewableContract
     {
-        return 'managed-model-fakes';
+        return $this;
     }
 }

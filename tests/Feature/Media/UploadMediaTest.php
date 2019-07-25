@@ -22,7 +22,7 @@ class UploadMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('singles', UploadMediaManager::class, Single::class);
+        app(Register::class)->register(UploadMediaManager::class, Single::class);
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
@@ -31,8 +31,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded()
     {
-        $this->disableExceptionHandling();
-        $page = Single::create(['slug' => 'test']);
+        $page = Single::create();
 
         config()->set(['app.fallback_locale' => 'nl']);
 

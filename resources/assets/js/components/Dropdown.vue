@@ -1,5 +1,5 @@
 <template>
-    <div ref="parent">
+    <div ref="parent" class="cursor-pointer">
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
         <transition name="fade">
             <div v-show="isActive" style="z-index: 1;">
@@ -78,7 +78,11 @@
                     document.removeEventListener("click", this.closeDropdownClickEvent, false);
                 }
             },
-            toggle(){
+            toggle(event){
+                
+                // Prevents click event to trigger closeDropdownClickEvent on creation
+                if(event) event.stopImmediatePropagation();
+
                 if(!this.isActive) {
                     this.open();
                 } else {

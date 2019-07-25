@@ -25,9 +25,11 @@ class LocalizedFieldValidationRules
 
                 // If it contains an asterisk, we'll replace that, else by default
                 // prepend the name with the expected trans.<locale>. string
-                $localizedAttr = (false !== strpos($attr, '*'))
-                    ? str_replace('*', $locale, $attr)
+                $localizedAttr = (false !== strpos($attr, ':locale'))
+                    ? str_replace(':locale', $locale, $attr)
                     : 'trans.' . $locale . '.' . $attr;
+
+                $localizedAttr = $this->replaceBracketsByDots($localizedAttr);
 
                 $localizedRules[$localizedAttr] = $rule;
             }
@@ -62,5 +64,10 @@ class LocalizedFieldValidationRules
         }
 
         return $this;
+    }
+
+    private function replaceBracketsByDots(string $localizedAttr): string
+    {
+        return str_replace(['[', ']'], ['.', ''], $localizedAttr);
     }
 }

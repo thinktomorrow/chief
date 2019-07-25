@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -16,13 +15,9 @@ class CreatePageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->setUpChiefEnvironment();
 
-        $this->setUpDefaultAuthorization();
-
-        app(Register::class)->register('singles', PageManager::class, Single::class);
-
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
+        app(Register::class)->register(PageManager::class, Single::class);
     }
 
     /** @test */
@@ -67,70 +62,5 @@ class CreatePageTest extends TestCase
             route('chief.back.managers.index', 'singles'),
             route('chief.back.managers.store', 'singles')
         );
-    }
-
-    /** @test */
-    public function slug_must_be_unique()
-    {
-        $page = factory(Page::class)->create([
-                'title:nl'  => 'titel nl',
-                'slug:nl'   => 'foobarnl'
-            ]);
-
-        $this->assertCount(1, Page::all());
-
-        $response = $this->asAdmin()
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams([
-                    'trans.nl.title'  => 'foobarnl',
-                    'trans.en.title'  => 'foobaren',
-                ])
-            );
-
-        $response->assertStatus(302);
-
-        $pages = Page::all();
-        $this->assertCount(2, $pages);
-        $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
-    }
-
-    /** @test */
-    public function slug_must_be_unique_even_with_translations()
-    {
-        $page = factory(Page::class)->create([
-                'title:nl'  => 'titel nl',
-                'slug:nl'   => 'foobar'
-            ]);
-
-        $this->assertCount(1, Page::all());
-
-        $response = $this->asAdmin()
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams([
-                    'trans.nl.slug'  => 'foobar',
-                    'trans.en.slug'  => 'foobar',
-                ])
-            );
-        $response->assertStatus(302);
-
-        $pages = Page::all();
-        $this->assertCount(2, $pages);
-        $this->assertNotEquals($pages->first()->slug, $pages->last()->slug);
-    }
-
-    /** @test */
-    public function uses_title_as_slug_if_slug_is_empty()
-    {
-        $response = $this->asAdmin()
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams([
-                    'trans.nl.title'    => 'foobar',
-                    'trans.nl.slug'     => '',
-                    'trans.en.title'    => 'foobar',
-                    'trans.en.slug'     => '',
-                ])
-            );
-        $response->assertStatus(302);
-
-        $pages = Page::all();
-        $this->assertCount(1, $pages);
-        $this->assertNotNull($pages->first()->slug);
     }
 }

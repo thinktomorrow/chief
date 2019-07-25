@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Fields;
 
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class FieldValidatorTest extends TestCase
 {
@@ -17,21 +17,21 @@ class FieldValidatorTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFakeWithValidation::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFakeWithValidation::class, ManagedModelFakeFirst::class);
 
-        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = (new ManagerFakeWithValidation(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
+        $this->model = ManagedModelFakeFirst::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->fake = (new ManagerFakeWithValidation(app(Register::class)->filterByKey('managed_model_first')->first()))->manage($this->model);
     }
 
     /** @test */
     public function a_required_field_can_be_validated()
     {
-        $this->assertValidation(new ManagedModelFake(), 'title', $this->payload(['title' => '']),
+        $this->assertValidation(new ManagedModelFakeFirst(), 'title', $this->payload(['title' => '']),
             $this->fake->route('edit'),
             $this->fake->route('update'),
             1, 'put'
@@ -43,7 +43,7 @@ class FieldValidatorTest extends TestCase
     {
         config()->set('app.fallback_locale', 'nl');
 
-        $this->assertValidation(new ManagedModelFake(), 'trans.nl.title_trans', $this->payload(['trans.nl.title_trans' => '']),
+        $this->assertValidation(new ManagedModelFakeFirst(), 'trans.nl.title_trans', $this->payload(['trans.nl.title_trans' => '']),
             $this->fake->route('edit'),
             $this->fake->route('update'),
             1, 'put'

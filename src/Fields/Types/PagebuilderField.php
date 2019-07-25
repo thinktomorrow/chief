@@ -8,7 +8,7 @@ class PagebuilderField extends Field
 {
     public static function make(string $key)
     {
-        return new static(new FieldType(FieldType::PAGEBUILDER), $key);
+        return (new static(new FieldType(FieldType::PAGEBUILDER), $key))->view('chief::back._fields.pagebuilder');
     }
 
     /**

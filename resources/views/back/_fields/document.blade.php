@@ -1,12 +1,12 @@
 <?php
     // TODO: this should be optimized performance wise since we fetch every file every time...
-    $files = $manager->getFieldValue($field);
+    $files = $manager->fieldValue($field, $locale ?? null);
     $files = $files[$key] ?? [];
     $name = $name ?? $key;
 ?>
 
 @foreach($files as $document)
-    <div class="panel panel-default inset-s stack-s center-y bg-white" id="asset-{{$document->id}}">
+    <div class="border border-grey-100 rounded inset-s stack-s center-y bg-white" id="asset-{{$document->id}}">
         <div>
             <strong>{{ $document->getFilename() }}</strong>
             <br>

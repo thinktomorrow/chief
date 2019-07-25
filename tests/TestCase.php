@@ -13,11 +13,10 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
-use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
+use Thinktomorrow\Chief\Common\Helpers\Memoize;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Spatie\Activitylog\ActivitylogServiceProvider;
-use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -37,9 +36,6 @@ abstract class TestCase extends OrchestraTestCase
             ActivitylogServiceProvider::class,
 
             ChiefServiceProvider::class,
-
-            // Demo is used for our preview testing
-            DemoServiceProvider::class,
         ];
     }
 
@@ -61,6 +57,9 @@ abstract class TestCase extends OrchestraTestCase
 
         // Load database before overriding the config values but after the basic app setup
         $this->setUpDatabase();
+
+        // Clear out any memoized values
+        Memoize::clear();
     }
 
     protected function resolveApplicationHttpKernel($app)

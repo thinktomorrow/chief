@@ -4,10 +4,12 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\BaseUrlSegment;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\ResolvesRoute;
-use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Management\ManagedModel;
+use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Audit\AuditTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,8 +17,6 @@ use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Relations\PresentForParent;
-use Thinktomorrow\Chief\Relations\PresentingForParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
@@ -30,8 +30,9 @@ use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
+use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
-class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, PresentForParent, ProvidesUrl
+class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -46,31 +47,43 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         Archivable,
         AuditTrait,
         ActingAsParent,
-        PresentingForParent,
         ActingAsChild,
         WithSnippets,
-        ResolvesRoute;
+        ResolvingRoute,
+        Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel      = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
     protected $translatedAttributes  = [
-        'slug', 'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords', 'seo_image'
+        'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords', 'seo_image'
     ];
 
     public $table          = "pages";
     protected $guarded     = [];
-    protected $dates       = ['deleted_at', 'archived_at'];
     protected $with        = ['translations'];
-    protected $pagebuilder = true;
 
+    protected $baseViewPath;
     protected static $baseUrlSegment = '/';
 
     public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
 
+        if (!isset($this->baseViewPath)) {
+            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.pages', 'pages');
+        }
+
         parent::__construct($attributes);
+    }
+
+    public static function managedModelKey(): string
+    {
+        if (isset(static::$managedModelKey)) {
+            return static::$managedModelKey;
+        }
+
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
     }
 
     /**
@@ -100,11 +113,6 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
     public function modules()
     {
         return $this->hasMany(Module::class, 'page_id')->where('morph_key', '<>', 'text');
-    }
-
-    public function viewkey(): string
-    {
-        return $this->morphKey();
     }
 
     public function flatReference(): FlatReference
@@ -146,53 +154,43 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return static::published()->find($id);
     }
 
-    public static function findBySlug($slug)
-    {
-        return ($trans = PageTranslation::findBySlug($slug)) ? static::find($trans->page_id) : null;
-    }
-
-    public static function findPublishedBySlug($slug)
-    {
-        $translationModel = (new static)->translationModel;
-
-        // First slug segment could be the base url segment so check that first
-        $slugWithoutBaseSegment = BaseUrlSegment::strip($slug);
-
-        return (($trans = $translationModel::findBySlug($slug)) || ($trans = $translationModel::findBySlug($slugWithoutBaseSegment))) ? static::findPublished($trans->page_id) : null;
-    }
-
     public function scopeSortedByCreated($query)
     {
         $query->orderBy('created_at', 'DESC');
     }
 
     /** @inheritdoc */
-    public function url($locale = null): string
+    public function url(string $locale = null): string
     {
-        $slug = $locale ? optional($this->getTranslation($locale))->slug : $this->slug;
-
-        if (!$slug) {
-            return '';
+        if (!$locale) {
+            $locale = app()->getLocale();
         }
 
-        $parameters = trim($this->baseUrlSegment($locale) . '/' . $slug, '/');
+        try {
+            $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 
-        $routeName = Homepage::is($this)
-                        ? config('thinktomorrow.chief.routes.pages-home', 'pages.home')
-                        : config('thinktomorrow.chief.routes.pages-show', 'pages.show');
+            return $this->resolveUrl($locale, [$slug]);
+        } catch (UrlRecordNotFound $e) {
+            return '';
+        }
+    }
+
+    public function resolveUrl(string $locale = null, $parameters = null): string
+    {
+        $routeName = config('thinktomorrow.chief.route.name');
 
         return $this->resolveRoute($routeName, $parameters, $locale);
     }
 
     /** @inheritdoc */
-    public function previewUrl($locale = null): string
+    public function previewUrl(string $locale = null): string
     {
         return $this->url($locale).'?preview-mode';
     }
 
 
     /** @inheritdoc */
-    public static function baseUrlSegment($locale = null): string
+    public static function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
             return '/';
@@ -202,25 +200,15 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
             return static::$baseUrlSegment;
         }
 
-        // When an array, we try to locale the expected segment by locale
+        // When an array, we try to locate the expected segment by locale
         $key = $locale ?? app()->getlocale();
 
         if (isset(static::$baseUrlSegment[$key])) {
             return static::$baseUrlSegment[$key];
         }
 
-        // Fall back to last entry in case no match is found
-        $reversedSegments = array_reverse(static::$baseUrlSegment);
-        return reset($reversedSegments);
-    }
-
-    /**
-     * @deprecated since 0.2.8: use url() instead
-     * @return string
-     */
-    public function menuUrl(): string
-    {
-        return $this->url();
+        // Fall back to first entry in case no match is found
+        return reset(static::$baseUrlSegment);
     }
 
     public function menuLabel(): string
@@ -228,31 +216,11 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         return $this->title ?? '';
     }
 
-    public function view()
-    {
-        $viewPaths = [
-            'front.'.$this->morphKey().'.show',
-            'front.pages.'.$this->morphKey().'.show',
-            'front.pages.show',
-            'pages.show',
-        ];
-
-        foreach ($viewPaths as $viewPath) {
-            if (! view()->exists($viewPath)) {
-                continue;
-            }
-
-            return view($viewPath, [
-                'page' => $this,
-            ]);
-        }
-
-        throw new NotFoundView('Frontend view could not be determined for page. Make sure to at least provide a default view for pages. This can be either [pages.show] or [front.pages.show].');
-    }
-
     /**
-     * PUBLISHABLE OVERRIDES BECAUSE OF ARCHIVED STATE IS SET ELSEWHERE.
-     * IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
+     * We override the publishable trait defaults because Page needs
+     * to be concerned with the archived state as well.
+     *
+     * TODO: IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
      */
     public function isPublished()
     {
@@ -312,10 +280,5 @@ class Page extends Model implements TranslatableContract, HasMedia, ActsAsParent
         }
 
         return '-';
-    }
-
-    public function hasPagebuilder()
-    {
-        return $this->pagebuilder;
     }
 }

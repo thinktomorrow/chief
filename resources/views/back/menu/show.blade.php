@@ -7,13 +7,16 @@
 
     @if(Thinktomorrow\Chief\Menu\Menu::all()->count() > 1)
         @slot('subtitle')
-            <a class="center-y" href="{{ route('chief.back.menus.index') }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+            <a class="center-y" href="{{ route('chief.back.menus.index') }}">
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+                {{-- Terug naar het menu overzicht --}}
+            </a>
         @endslot
     @endif
     <div class="inline-group-s">
-        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary row center-y">
-            <i class="icon icon-plus"></i>
-            Voeg een menu-item toe
+        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-secondary inline-flex items-center">
+            <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+            <span>Voeg een menu-item toe</span>
         </a>
     </div>
 @endcomponent
@@ -21,9 +24,10 @@
 @section('content')
 
     @if($menuItems->isEmpty() )
-        <div class="center-center stack-xl">
-            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary squished-l">
-                <i class="icon icon-zap icon-fw"></i>Voeg een menu-item toe
+        <div class="stack-l">
+            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary inline-flex items-center">
+                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                <span>Voeg een menu-item toe</span>
             </a>
         </div>
     @else

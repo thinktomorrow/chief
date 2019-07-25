@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Pages\Page;
 
 class ArticlePageWithCategories extends Page
 {
+    protected static $managedModelKey = "articles_with_category_fake";
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'article_category', 'article_id', 'category_id');

@@ -1,0 +1,14 @@
+.dropdown-box {
+    @apply bg-white mt-6 border-transparent border rounded overflow-hidden shadow-xl;
+
+    a {
+        @apply whitespace-no-wrap rounded block p-3 leading-none font-normal;
+        &:hover {
+            @apply bg-primary-100;
+        }
+    }
+}
+  
+.dropdown-backdrop {
+    @apply fixed top-0 right-0 bottom-0 left-0 bg-transparent;
+}

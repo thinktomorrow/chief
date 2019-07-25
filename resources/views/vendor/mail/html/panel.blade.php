@@ -1,9 +1,9 @@
-<table class="panel" width="100%" cellpadding="0" cellspacing="0">
+<table class="border border-grey-100 rounded" width="100%" cellpadding="0" cellspacing="0">
     <tr>
-        <td class="panel-content">
+        <td>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr>
-                    <td class="panel-item">
+                    <td>
                         {{ Illuminate\Mail\Markdown::parse($slot) }}
                     </td>
                 </tr>

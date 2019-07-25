@@ -4,9 +4,11 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
@@ -97,6 +99,14 @@ trait TestHelpers
         $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $author;
+    }
+
+    protected function setUpChiefEnvironment()
+    {
+        $this->setUpDefaultAuthorization();
+
+        // Setup expected page routes
+        Route::get('{slug?}', function ($slug = '/') { return ChiefResponse::fromSlug($slug); })->name('pages.show');
     }
 
     protected function setUpDefaultAuthorization()

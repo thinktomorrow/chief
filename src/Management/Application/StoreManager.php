@@ -3,29 +3,23 @@
 namespace Thinktomorrow\Chief\Management\Application;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\FieldValidator;
 use Thinktomorrow\Chief\Management\Manager;
 
 class StoreManager
 {
-    use StoringAndUpdatingFields;
-
     public function handle(Manager $manager, Request $request): Manager
     {
         $manager->guard('store');
 
         $request = $manager->storeRequest($request);
 
-        app(FieldValidator::class)->validate($manager->fields(), $request);
+        $manager->fieldsWithAssistantFields()->validate($request->all());
 
         if (method_exists($manager, 'beforeStore')) {
             $manager->beforeStore($request);
         }
 
-        $this->handleFields($manager, $request);
-
-        // Handle off any custom save methods
-        $this->handleCustomSaves($manager, $request);
+        $manager->saveFields($request);
 
         if (method_exists($manager, 'afterStore')) {
             $manager->afterStore($request);

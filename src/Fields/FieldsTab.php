@@ -31,12 +31,12 @@ class FieldsTab
         $this->view = $view;
         $this->viewData = $viewData;
 
-        $this->fields = [];
+        $this->fields = new Fields();
     }
 
     public function title(): string
     {
-        return $this->title;
+        return ucfirst($this->title);
     }
 
     /**
@@ -47,7 +47,7 @@ class FieldsTab
     {
         foreach ($fields->all() as $field) {
             if ($this->contains($field)) {
-                $this->fields[] = $field;
+                $this->fields = $this->fields->add($field);
             }
         }
 
@@ -59,12 +59,7 @@ class FieldsTab
         return in_array($field->key, $this->fieldKeys);
     }
 
-    /**
-     * Return the fields for this tab.
-     *
-     * @return array
-     */
-    public function fields(): array
+    public function fields(): Fields
     {
         return $this->fields;
     }

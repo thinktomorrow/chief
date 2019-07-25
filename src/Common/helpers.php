@@ -11,19 +11,6 @@ if (!function_exists('chiefAdmin')) {
 }
 
 /**
- * Form fields for honeypot protection on form submissions
- * return HtmlString which does not force you to use blade escaping tags.
- */
-if (!function_exists('honeypot_fields')) {
-    function honeypot_fields()
-    {
-        return new \Illuminate\Support\HtmlString('<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>');
-    }
-}
-
-
-
-/**
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
  */
@@ -47,15 +34,15 @@ if (!function_exists('chief_cached_asset')) {
 }
 
 if (!function_exists('chiefSetting')) {
-    function chiefSetting($key = null, $default = null)
+    function chiefSetting($key = null, $locale = null, $default = null)
     {
-        $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
+        $settings = app(\Thinktomorrow\Chief\Settings\Settings::class);
 
         if (is_null($key)) {
-            return $manager;
+            return $settings;
         }
         
-        return $manager->get($key, $default);
+        return $settings->get($key, $locale, $default);
     }
 }
 
@@ -292,5 +279,20 @@ if (!function_exists('ddd')) {
             print_r("[dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "]\n");
         }
         return dd($var, ...$moreVars);
+    }
+}
+
+if (!function_exists('chiefMemoize')) {
+    /**
+     * Memoize a function
+     *
+     * @param $key
+     * @param Closure $closure
+     * @param array $parameters
+     * @return mixed
+     */
+    function chiefMemoize($key, \Closure $closure, array $parameters = [])
+    {
+        return (new \Thinktomorrow\Chief\Common\Helpers\Memoize($key))->run($closure, $parameters);
     }
 }

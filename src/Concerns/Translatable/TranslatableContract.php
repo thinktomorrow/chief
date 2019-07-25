@@ -15,4 +15,6 @@ interface TranslatableContract
     public function getUsedLocales();
 
     public function getNonUsedLocales();
+
+    public static function availableLocales();
 }

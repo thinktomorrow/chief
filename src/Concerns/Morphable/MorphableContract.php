@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Concerns\Morphable;
 interface MorphableContract
 {
     /**
-     * Unique identifier of the collection this item belongs to. This refers to
-     * the key as set in the config chief > collections > pages / modules
+     * Unique identifier of the collection this item belongs to. This refers to the class name or to
+     * the morph key as set by the \Illuminate\Database\Eloquent\Relations\Relation::morphMap().
      *
      * @return string|null
      */

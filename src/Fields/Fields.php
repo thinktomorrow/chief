@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Fields;
 use ArrayIterator;
 use Thinktomorrow\Chief\Fields\Types\Field;
 
-class Fields implements \ArrayAccess, \IteratorAggregate
+class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /** @var array */
     private $fields;
@@ -14,12 +14,21 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     {
         $this->validateFields($fields);
 
-        $this->fields = $fields;
+        $this->fields = $this->convertToKeyedArray($fields);
     }
 
     public function all(): array
     {
         return $this->fields;
+    }
+
+    public function first(): ?Field
+    {
+        if (!$this->any()) {
+            return null;
+        }
+
+        return reset($this->fields);
     }
 
     public function any(): bool
@@ -34,9 +43,14 @@ class Fields implements \ArrayAccess, \IteratorAggregate
 
     public function keys(): array
     {
-        return array_map(function (Field $field) {
-            return $field->key();
-        }, $this->fields);
+        return array_keys($this->fields);
+    }
+
+    public function validate(array $data)
+    {
+        foreach ($this->fields as $field) {
+            $field->validator($data)->validate();
+        }
     }
 
     public function filterBy($key, $value = null)
@@ -44,7 +58,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         $fields = [];
 
         foreach ($this->fields as $i => $field) {
-            if (is_callable($key)) {
+            if ($key instanceof \Closure) {
                 if (true == $key($field)) {
                     $fields[] = $field;
                 }
@@ -66,17 +80,14 @@ class Fields implements \ArrayAccess, \IteratorAggregate
         return new static($fields);
     }
 
-    private function validateFields(array $fields)
+    public function add(Field ...$fields): Fields
     {
-        array_map(function (Field $field) {
-        }, $fields);
+        return new Fields(array_merge($this->fields, $fields));
     }
 
-    public function add(Field ...$field)
+    public function merge(Fields $fields): Fields
     {
-        $this->fields = array_merge($this->fields, $field);
-
-        return $this;
+        return new Fields(array_merge($this->fields, $fields->all()));
     }
 
     public function remove($keys = null)
@@ -127,5 +138,27 @@ class Fields implements \ArrayAccess, \IteratorAggregate
     public function getIterator()
     {
         return new ArrayIterator($this->fields);
+    }
+
+    private function convertToKeyedArray(array $fields): array
+    {
+        $keyedFields = [];
+
+        foreach ($fields as $field) {
+            $keyedFields[$field->key] = $field;
+        }
+
+        return $keyedFields;
+    }
+
+    private function validateFields(array $fields)
+    {
+        array_map(function (Field $field) {
+        }, $fields);
+    }
+
+    public function count()
+    {
+        return count($this->fields);
     }
 }

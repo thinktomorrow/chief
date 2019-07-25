@@ -30,9 +30,9 @@ class FieldArrangement
         return new static($this->fields, $tabs);
     }
 
-    public function fields(): array
+    public function fields(): Fields
     {
-        return $this->fields->all();
+        return $this->fields;
     }
 
     public function tabs(): array
