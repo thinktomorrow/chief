@@ -10,10 +10,10 @@
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input v-if="id" type="file" :name="'files['+group+'][replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
-                            <input v-else type="file" :name="'files['+group+'][new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
+                            <input v-if="id" type="file" :name="group+'[replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
+                            <input v-else type="file" :name="group+'[new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                         </div>
-                        <input v-if="deletion" type="hidden" :name="'files['+group+'][delete][]'" :value="id"/>
+                        <input v-if="deletion" type="hidden" :name="group+'[delete][]'" :value="id"/>
                     </div>
                 `,
             data: function () {
@@ -30,7 +30,6 @@
 
                 this.options.didRemove = this.markForDeletion;
                 this.options.didLoad = this.onLoad;
-
                 this.instance = new Slim(this.$el.childNodes[0], this.options);
 
                 // If a file instance is passed, we want to directly load the file into our cropper

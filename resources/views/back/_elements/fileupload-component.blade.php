@@ -21,9 +21,12 @@
                 };
             },
             created: function () {
-                this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
-                this.fileInput     = this.fileDropArea.querySelector('input');
-                this.fileInputName = this.fileInput.name;
+                /** */
+                if(this.items.length < 1) {
+                    // this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
+                    // this.fileInput     = this.fileDropArea.querySelector('input');
+                    // this.fileInputName = this.fileInput.name;
+                }
 
                 /**
                  * When a new image is loaded, we want to reorder our files so
@@ -66,7 +69,6 @@
                 },
                 _handleItem: function (item) {
                     var file = item;
-                    console.log(file);
 
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();

@@ -9,7 +9,8 @@ use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeSecond;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
@@ -19,19 +20,19 @@ class ManagersTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
     }
 
     /** @test */
     public function it_can_find_a_manager_by_key()
     {
-        app(Register::class)->register('foo', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
         /** @var Managers $managers */
         $managers = app(Managers::class);
 
-        $this->assertInstanceOf(ManagerFake::class, $managers->findByKey('foo'));
+        $this->assertInstanceOf(ManagerFake::class, $managers->findByKey('managed_model_first'));
     }
 
     /** @test */
@@ -41,17 +42,17 @@ class ManagersTest extends TestCase
             'products' => ManagerFakeWithValidation::class,
         ]);
 
-        app(Register::class)->register('foo', ManagerFake::class, ManagedModelFake::class);
-        app(Register::class)->register('bar', ManagerFakeWithValidation::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
+        app(Register::class)->register(ManagerFakeWithValidation::class, ManagedModelFakeSecond::class);
 
-        ManagedModelFake::create(['id' => 1]);
+        ManagedModelFakeFirst::create(['id' => 1]);
 
         /** @var Managers $managers */
         $managers = app(Managers::class);
 
-        $this->assertInstanceOf(ManagerFakeWithValidation::class, $managers->findByKey('bar', 1));
+        $this->assertInstanceOf(ManagerFakeWithValidation::class, $managers->findByKey('managed_model_second', 1));
 
-        $this->assertEquals(1, $this->getProtectedModelProperty($managers->findByKey('bar', 1))->id);
+        $this->assertEquals(1, $this->getProtectedModelProperty($managers->findByKey('managed_model_second', 1))->id);
     }
 
     /** @test */
@@ -60,7 +61,7 @@ class ManagersTest extends TestCase
         $this->disableExceptionHandling();
         $this->expectException(NonExistingRecord::class);
 
-        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
         $this->fake = new ManagerFake(app(Register::class)->first());
 
         $response = $this->fake->route('update');

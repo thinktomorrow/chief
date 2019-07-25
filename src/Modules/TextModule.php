@@ -6,6 +6,8 @@ use Thinktomorrow\Chief\Fields\Types\HtmlField;
 
 class TextModule extends Module
 {
+    protected static $managedModelKey = 'text';
+
     public static function defaultTranslatableFields(): array
     {
         return [

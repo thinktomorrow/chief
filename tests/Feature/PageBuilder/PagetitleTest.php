@@ -24,14 +24,12 @@ class PagetitleTest extends TestCase
         $this->setUpDefaultAuthorization();
         config()->set('app.fallback_locale', 'nl');
 
-        app(Register::class)->register('articles', PageManager::class, ArticlePageFake::class);
+        app(Register::class)->register(PageManager::class, ArticlePageFake::class);
 
         // Create a dummy page up front based on the expected validPageParams
         $this->page = ArticlePageFake::create([
             'title:nl' => 'new title',
-            'slug:nl' => 'new-slug',
             'title:en' => 'nouveau title',
-            'slug:en' => 'nouveau-slug',
         ]);
 
         // For our project context we expect the page detail route to be known
@@ -43,7 +41,7 @@ class PagetitleTest extends TestCase
     public function it_can_add_a_pagetitle_module()
     {
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
                         'slug' => 'text-1',
@@ -72,7 +70,7 @@ class PagetitleTest extends TestCase
 
         // Replace text module content
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [
@@ -98,7 +96,7 @@ class PagetitleTest extends TestCase
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['articles', $this->page->id]), $this->validPageParams([
+            ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [],
                 'sections.text.replace' => [
                     [

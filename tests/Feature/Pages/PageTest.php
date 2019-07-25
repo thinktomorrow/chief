@@ -19,33 +19,6 @@ class PageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_find_by_slug()
-    {
-        $page = factory(Page::class)->create([
-            'slug'      => 'foobar',
-            'published' => 0
-        ]);
-
-        $this->assertEquals($page->id, Page::findBySlug('foobar')->id);
-    }
-
-    /** @test */
-    public function it_can_find_published_by_slug()
-    {
-        factory(Page::class)->create([
-            'slug' => 'foobar',
-            'published' => 1
-        ]);
-        factory(Page::class)->create([
-            'slug' => 'barfoo',
-            'published' => 0
-        ]);
-
-        $this->assertNotNull(Page::findPublishedBySlug('foobar'));
-        $this->assertNull(Page::findPublishedBySlug('barfoo'));
-    }
-
-    /** @test */
     public function it_can_find_sorted_by_recent()
     {
         factory(Page::class)->create([

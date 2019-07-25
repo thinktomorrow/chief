@@ -1,14 +1,20 @@
 @section('header')
-    <header class="sticky sticky-bar">
+    <header class="bg-white border-b border-secondary-200">
         <div class="container">
-            <div class="row stack">
-                <div class="column squished-s">
-                    <h1 class="--remove-margin">
-                        {!! $title ?? '' !!}
+            {{-- @if(isset($subtitle))
+                <div class="row stack">
+                    <div>{!! $subtitle !!}</div>
+                </div>
+            @endif --}}
+            <div class="row stack flex justify-between">
+                <div class="flex items-center">
+                    <h1 class="flex items-center mb-0">
+                        <span>{!! $subtitle ?? '' !!}</span>
+                        <span>{!! ucfirst($title) ?? '' !!}</span>
                     </h1>
-                    {!! isset($subtitle) ? '<div class="font-s">'.$subtitle.'</div>' : '' !!}
                     {{ $extra ??  '' }}
                 </div>
+
                 <div class="text-right center-y">
                     {{ $slot }}
                 </div>

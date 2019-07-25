@@ -8,13 +8,13 @@
 
 @section('content')
 
-    <form method="POST" action="{{ route('squanto.lines.store') }}" role="form" class="form-horizontal">
+    <form method="POST" action="{{ route('squanto.lines.store') }}" role="form">
         {{ csrf_field() }}
 
         <section class="formgroup">
             <div class="row gutter-xl">
                 <div class="formgroup-info column-5">
-                    <h2 class="formgroup-label">Key</h2>
+                    <h2>Key</h2>
                         <span class="subtle">Unique identifier for usage in your view files. e.g. about.button.label or homepage.intro.text. The first segment of this key determines the page where this element will be stored under.</span>
                 </div>
                 <div class="formgroup-input column-7">
@@ -32,7 +32,7 @@
                 <section class="formgroup">
                     <div class="row gutter-xl">
                         <div class="formgroup-info column-5">
-                            <h2 class="formgroup-label">{{ $locale }} value</h2>
+                            <h2>{{ $locale }} value</h2>
                         </div>
                         <div class="formgroup-input column-7">
 
@@ -47,7 +47,7 @@
 
             <div class="stack text-right inline-group-s">
                 <a class="subtle" id="remove-faq-toggle" href="{{ URL::previous() }}"> cancel</a>
-                <button class="btn btn-success btn-lg" type="submit"> Add translation line</button>
+                <button class="btn btn-primary btn-lg" type="submit"> Add translation line</button>
             </div>
     </form>
 

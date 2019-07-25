@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class UpdateManagerTest extends TestCase
 {
@@ -17,15 +17,15 @@ class UpdateManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
-        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
+        $this->model = ManagedModelFakeFirst::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()))->manage($this->model);
     }
 
     /** @test */

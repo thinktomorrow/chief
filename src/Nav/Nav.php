@@ -119,7 +119,7 @@ class Nav
         $output = '';
 
         foreach ($this->items as $item) {
-            $output .= '<a class="block nav-item ' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
+            $output .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
             $output .= $title ?? ucfirst($item->title());
             $output .= '</a>';
         }
@@ -146,8 +146,8 @@ class Nav
 
         $items = '';
         foreach ($this->items as $item) {
-            $items .= '<a class="block squished --link-with-bg ' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
-            $items .= $item->title();
+            $items .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
+            $items .= ucfirst($item->title());
             $items .= '</a>';
         }
 

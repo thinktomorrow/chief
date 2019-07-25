@@ -14,7 +14,7 @@
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
         @if(isset($label))
-            <h2 class="formgroup-label">{{ $label }}</h2>
+            <h2>{{ $label }}</h2>
         @endif
         @if(isset($description))
             <p class="caption">{!! $description !!}</p>

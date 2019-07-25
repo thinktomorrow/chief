@@ -49,7 +49,6 @@ class MenuTest extends TestCase
     public function it_can_reference_an_internal_page()
     {
         $page   = factory(Page::class)->create([
-            'slug'      => 'foobar',
             'published' => 1
         ]);
 
@@ -123,7 +122,6 @@ class MenuTest extends TestCase
     {
         $page = factory(Page::class)->create([
             'morph_key' => 'singles',
-            'slug'      => 'foobar',
             'published' => 1
         ]);
 
@@ -271,7 +269,6 @@ class MenuTest extends TestCase
     public function it_can_get_menu_by_type()
     {
         $page   = factory(Page::class)->create([
-            'slug'      => 'foobar',
             'published' => 1
         ]);
 

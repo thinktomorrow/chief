@@ -93,32 +93,11 @@ class MorphablePageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_find_morphKey_published_by_slug()
-    {
-        ArticlePageFake::create([
-            'morph_key' => 'articles',
-            'title:nl' => 'title',
-            'slug:nl' => 'foobar',
-            'published' => 1
-        ]);
-        ArticlePageFake::create([
-            'morph_key' => 'articles',
-            'title:nl' => 'title',
-            'slug:nl' => 'barfoo',
-            'published' => 0
-        ]);
-
-        $this->assertNotNull(ArticlePageFake::findPublishedBySlug('foobar'));
-        $this->assertNull(ArticlePageFake::findPublishedBySlug('barfoo'));
-    }
-
-    /** @test */
     public function it_returns_the_right_morphKey_with_the_eloquent_find_methods()
     {
         $article = ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',
-            'slug:nl' => 'foobar',
             'published' => 1
         ]);
 
@@ -127,19 +106,17 @@ class MorphablePageTest extends TestCase
     }
 
     /** @test */
-    public function it_returns_the_right_morphKey_model_by_slug()
+    public function it_returns_the_right_morphKey_model()
     {
         $this->disableExceptionHandling();
 
         ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',
-            'slug:nl' => 'foobar',
             'published' => 1
         ]);
 
-        $this->assertInstanceOf(ArticlePageFake::class, Page::findBySlug('foobar'));
-        $this->assertInstanceOf(ArticlePageFake::class, Page::findPublishedBySlug('foobar'));
+        $this->assertInstanceOf(ArticlePageFake::class, Page::first());
     }
 }
 

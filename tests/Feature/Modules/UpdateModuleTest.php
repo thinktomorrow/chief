@@ -20,7 +20,7 @@ class UpdateModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
+        app(Register::class)->register(ModuleManager::class, NewsletterModuleFake::class);
 
         $this->module = NewsletterModuleFake::create([
             'slug' => 'new-slug',
@@ -30,7 +30,7 @@ class UpdateModuleTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->asAdmin()->get(route('chief.back.managers.edit', ['newsletter', $this->module->id]))
+        $this->asAdmin()->get(route('chief.back.managers.edit', ['newsletters_fake', $this->module->id]))
             ->assertViewIs('chief::back.managers.edit')
             ->assertStatus(200);
     }
@@ -38,7 +38,7 @@ class UpdateModuleTest extends TestCase
     /** @test */
     public function guests_cannot_view_the_edit_form()
     {
-        $this->get(route('chief.back.managers.edit', ['newsletter', $this->module->id]))
+        $this->get(route('chief.back.managers.edit', ['newslnewsletters_fakeetter', $this->module->id]))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
 
@@ -50,7 +50,7 @@ class UpdateModuleTest extends TestCase
     {
         $this->disableExceptionHandling();
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['newsletter', $this->module->id]), $this->validUpdateModuleParams());
+            ->put(route('chief.back.managers.update', ['newsletters_fake', $this->module->id]), $this->validUpdateModuleParams());
 
         $this->assertUpdatedModuleValues($this->module->fresh());
     }
@@ -59,8 +59,8 @@ class UpdateModuleTest extends TestCase
     public function when_updating_module_slug_is_required()
     {
         $this->assertValidation(new Module(), 'slug', $this->validUpdateModuleParams(['slug' => '']),
-            route('chief.back.managers.edit', ['newsletter', $this->module->id]),
-            route('chief.back.managers.update', ['newsletter', $this->module->id]),
+            route('chief.back.managers.edit', ['newsletters_fake', $this->module->id]),
+            route('chief.back.managers.update', ['newsletters_fake', $this->module->id]),
             1, 'PUT'
         );
     }
@@ -71,7 +71,7 @@ class UpdateModuleTest extends TestCase
         $otherModule = NewsletterModuleFake::create(['slug' => 'other-slug']);
 
         $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['newsletter', $this->module->id]), $this->validUpdateModuleParams([
+            ->put(route('chief.back.managers.update', ['newsletters_fake', $this->module->id]), $this->validUpdateModuleParams([
                 'slug'  => 'other-slug',
             ]));
 

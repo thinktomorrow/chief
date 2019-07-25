@@ -3,6 +3,9 @@
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
+use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -11,32 +14,26 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
-use Thinktomorrow\Chief\Relations\PresentForParent;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Relations\PresentingForParent;
 use Dimsav\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Module extends Model implements TranslatableContract, HasMedia, ActsAsChild, MorphableContract, PresentForParent
+class Module extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsChild, MorphableContract, ViewableContract
 {
-    use PresentingForParent {
-        presentForParent as presentRawValueForParent;
-    }
-
     use Morphable,
         AssetTrait,
         Translatable,
         BaseTranslatable,
         SoftDeletes,
         ActingAsChild,
-        WithSnippets;
+        WithSnippets,
+        Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;
@@ -48,14 +45,28 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public $useTranslationFallback = true;
     public $table = "modules";
     protected $guarded = [];
-    protected $dates = ['deleted_at'];
     protected $with = ['translations'];
+
+    protected $baseViewPath;
 
     public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
 
+        if (!isset($this->baseViewPath)) {
+            $this->baseViewPath = config('thinktomorrow.chief.base-view-paths.modules', 'modules');
+        }
+
         parent::__construct($attributes);
+    }
+
+    public static function managedModelKey(): string
+    {
+        if (isset(static::$managedModelKey)) {
+            return static::$managedModelKey;
+        }
+
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
     }
 
     /**
@@ -70,17 +81,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public function page()
     {
         return $this->belongsTo(Page::class, 'page_id');
-    }
-
-    public function presentForParent(ActsAsParent $parent): string
-    {
-        $value = $this->presentRawValueForParent($parent);
-
-        if ($this->withSnippets && $this->shouldParseWithSnippets($value)) {
-            $value = $this->parseWithSnippets($value);
-        }
-
-        return $value;
     }
 
     /**
@@ -182,11 +182,6 @@ class Module extends Model implements TranslatableContract, HasMedia, ActsAsChil
     public static function findBySlug($slug)
     {
         return static::where('slug', $slug)->first();
-    }
-
-    public function viewkey(): string
-    {
-        return $this->morphKey();
     }
 
     public function flatReference(): FlatReference

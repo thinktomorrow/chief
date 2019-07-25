@@ -30,9 +30,9 @@ trait ManagesPagebuilder
         $sections = $request->get('sections', []);
 
         $modules = $sections['modules'] ?? [];
-        $text = $sections['text'] ?? [];
-        $sets = $sections['pagesets'] ?? [];
-        $order = $sections['order'] ?? [];
+        $text    = $sections['text'] ?? [];
+        $sets    = $sections['pagesets'] ?? [];
+        $order   = $sections['order'] ?? [];
 
         UpdateSections::forModel($this->model, $modules, $text, $sets, $order)
             ->updateModules()
@@ -45,9 +45,9 @@ trait ManagesPagebuilder
     protected function createPagebuilderField(): PagebuilderField
     {
         $model = $this->model;
-        
+
         $availableChildren = AvailableChildren::forParent($model);
-        
+
         $modules = $availableChildren->onlyModules()->reject(function ($module) use ($model) {
             return $module->page_id != null && $module->page_id != $model->id;
         });
