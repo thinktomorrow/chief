@@ -1,8 +1,6 @@
 <?php
-    // TODO: this should be optimized performance wise since we fetch every file every time...
     $files = $manager->fieldValue($field, $locale ?? null);
-    $files = $files[$key] ?? [];
-    $name = $name ?? $key;
+    $name = $name ?? $field->name();
 ?>
 
 @foreach($files as $document)
@@ -22,11 +20,11 @@
             <svg onclick="removeFile({{$document->id}})" width="18" height="18"><use xlink:href="#x"/></svg>
         </div>
     </div>
-    <input type="hidden" id="removeFile-{{$document->id}}" name="files[{{ $key }}][delete][]" {{ $field->multiple ? 'multiple' : '' }}/>
+    <input type="hidden" id="removeFile-{{$document->id}}" name="{{ $name }}[delete][]" {{ $field->multiple ? 'multiple' : '' }}/>
 @endforeach
 
 <label for="">Voeg document toe:</label>
-<input type="file" name="files[{{ $key }}][new][]" {{ $field->multiple ? 'multiple' : '' }} style="opacity:1; position:static;"/>
+<input type="file" name="{{ $name }}[new][]" {{ $field->multiple ? 'multiple' : '' }} style="opacity:1; position:static;"/>
 
 @push('custom-scripts')
 <script>

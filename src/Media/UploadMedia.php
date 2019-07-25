@@ -49,20 +49,6 @@ class UploadMedia
         }
     }
 
-    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order, string $locale = null)
-    {
-        if (isset($files['new']) && is_array($files['new']) && !empty($files['new'])) {
-            foreach ($files['new'] as $file) {
-                // new but removed files are passed as null, just leave them alone!
-                if (!$file) {
-                    continue;
-                }
-
-                $this->addFile($model, $type, $files_order, $file, $locale);
-            }
-        }
-    }
-
     private function addFile(HasMedia $model, string $type, array &$files_order, $file, $locale = null)
     {
         if (is_string($file)) {
@@ -102,31 +88,53 @@ class UploadMedia
         return $asset;
     }
 
+    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order, string $locale = null)
+    {
+        $this->handleFiles('new', $model, $type, $files, $files_order, $locale);
+    }
+
     /**
      * @param HasMedia $model
      * @param array $files
-     * @return array
      */
     private function replaceFiles(HasMedia $model, array $files)
     {
-        if (isset($files['replace']) && is_array($files['replace']) && !empty($files['replace'])) {
-            foreach ($files['replace'] as $id => $file) {
-                // Existing files are passed as null, just leave them alone!
+        $this->handleFiles('replace', $model, null, $files, []);
+    }
+
+    /**
+     * @param HasMedia $model
+     * @param array $files
+     */
+    private function removeFiles(HasMedia $model, array $files)
+    {
+        $this->handleFiles('delete', $model, null, $files, []);
+    }
+
+    private function handleFiles(string $action, HasMedia $model, string $type = null, array $files, array $files_order = [], string $locale = null)
+    {
+        if (isset($files[$action]) && is_array($files[$action]) && !empty($files[$action])) {
+            if($action == 'delete')
+            {
+                foreach ($model->assets()->whereIn('id', $files[$action])->get() as $asset) {
+                    $asset->delete();
+                }
+            }
+
+            foreach ($files[$action] as $id => $file) {
+
                 if (!$file) {
                     continue;
                 }
 
-                $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
-                $model->replaceAsset($id, $asset->id);
-            }
-        }
-    }
-
-    private function removeFiles(HasMedia $model, array $files)
-    {
-        if (isset($files['delete']) && is_array($files['delete']) && !empty($files['delete'])) {
-            foreach ($model->assets()->whereIn('id', $files['delete'])->get() as $asset) {
-                $asset->delete();
+                if($action == 'new')
+                {
+                    $this->addFile($model, $type, $files_order, $file, $locale);
+                }elseif($action == 'replace')
+                {
+                    $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
+                    $model->replaceAsset($id, $asset->id);
+                }
             }
         }
     }

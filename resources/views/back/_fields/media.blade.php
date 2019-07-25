@@ -1,6 +1,6 @@
 <?php
     $files = $manager->fieldValue($field, $locale ?? null);
-    $name = $field->name();
+    $name = $name ?? $field->name();
 ?>
 
 <filesupload group="{{ $name }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>

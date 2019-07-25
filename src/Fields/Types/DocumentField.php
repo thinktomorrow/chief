@@ -21,6 +21,17 @@ class DocumentField extends Field
         return $this;
     }
 
+    public function translateName($locale)
+    {
+        $name = $this->name();
+
+        if (strpos($name, ':locale')) {
+            return preg_replace('#(:locale)#', $locale, $name);
+        }
+
+        return 'files['.$name.']['.$locale.']';
+    }
+
     public function getFieldValue(Model $model, $locale = null)
     {
         return $this->getMedia($model, $locale);
@@ -28,14 +39,16 @@ class DocumentField extends Field
 
     private function getMedia(HasMedia $model, $locale = null)
     {
-        $documents = [$this->key() => []];
+        $documents = [];
 
-        foreach ($model->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
-            foreach ($assetsByType as $asset) {
-                $documents[$type][] = $asset;
-            }
+        $builder = $model->assets()->where('asset_pivots.type', $this->key());
+
+        if($locale) {
+            $builder = $builder->where('asset_pivots.locale', $locale);
         }
-
+        foreach ($builder->get() as $asset) {
+            $documents[] = $asset;
+        }
         return $documents;
     }
 }
