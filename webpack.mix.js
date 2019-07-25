@@ -36,7 +36,7 @@ mix.webpackConfig({
             'app',
             'src'
 		],
-		whitelistPatterns: [/re-icon-/]
+		whitelistPatterns: [/re-icon-/, /redactor-/]
     })
 
     /**
