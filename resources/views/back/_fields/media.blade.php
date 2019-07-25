@@ -1,5 +1,6 @@
 <?php
     $files = $manager->fieldValue($field, $locale ?? null);
+    $name = $field->name();
 ?>
 
 <filesupload group="{{ $name }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
@@ -30,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <a v-if="{{ json_encode($field->multiple) }} == true" class="btn btn-subtle" @click.prevent="toggleReorder">
+        <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder">
             @{{ reorder ? 'Gedaan met herschikken' : 'Herschik afbeeldingen' }}
         </a>
         <input type="hidden" name="filesOrder[{{ $key }}]" :value="filesOrder">

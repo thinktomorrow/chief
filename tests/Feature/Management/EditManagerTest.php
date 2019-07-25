@@ -34,9 +34,9 @@ class EditManagerTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->asAdmin()->get($this->manager->route('edit'))
-            ->assertViewIs('chief::back.managers.edit')
-            ->assertStatus(200);
+        $response = $this->asAdmin()->get($this->manager->route('edit'));
+        $response->assertViewIs('chief::back.managers.edit');
+        $response->assertStatus(200);
     }
 
     /** @test */
@@ -63,12 +63,10 @@ class EditManagerTest extends TestCase
 
         $this->assertCount(1, $fieldValue);
         $this->assertEquals([
-            'avatar' => [
-                'nl' => (object)[
-                    'id'        => $asset->id,
-                    'filename'  => $asset->getFilename(),
-                    'url'       => $asset->getFileUrl(),
-                ]
+            (object)[
+                'id'        => $asset->id,
+                'filename'  => $asset->getFilename(),
+                'url'       => $asset->getFileUrl(),
             ]
         ], $fieldValue);
     }

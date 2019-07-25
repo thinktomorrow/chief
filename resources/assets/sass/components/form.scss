@@ -51,8 +51,7 @@ input[type='phone'],
 input[type='password'],
 input[type='file'],
 .custom-file-input {
-    font-family: config('theme.fontFamily.sans');
-    @apply w-full rounded border border-grey-200;
+    @apply w-full rounded border border-grey-200 font-sans;
 
     &:focus{
         box-shadow: 0 1px 5px -1px config('theme.colors.grey.200');

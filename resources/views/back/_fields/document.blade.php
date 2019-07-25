@@ -15,11 +15,11 @@
             </span>
         </div>
 
-        <div style="margin-left:auto;">
+        <div style="margin-left:auto;" class="pr-2">
             <a href="{{ url($document->getFileUrl()) }}" target="_blank">Bekijk document</a>
         </div>
         <div>
-            <span class="icon-x" onclick="removeFile({{$document->id}})"></span>
+            <svg onclick="removeFile({{$document->id}})" width="18" height="18"><use xlink:href="#x"/></svg>
         </div>
     </div>
     <input type="hidden" id="removeFile-{{$document->id}}" name="files[{{ $key }}][delete][]" {{ $field->multiple ? 'multiple' : '' }}/>

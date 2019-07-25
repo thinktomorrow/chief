@@ -82,3 +82,25 @@
 .slim-result .out{
     opacity: 0.2 !important;
 }
+
+
+.sorting-mode{
+    .thumb-new{
+        @apply hidden;
+    }
+}
+
+[draggable="true"]{
+    @apply relative;
+
+    &:after{
+        @apply absolute top-0 left-0 w-full h-full;
+
+        content:"";
+        background-color:rgba(255,255,255,.4);
+    }
+
+    .slim-btn-group, .slim-file-hopper, .slim-status, .slim-upload-status, .slim-drip{
+        @apply invisible;
+    }
+}
