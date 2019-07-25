@@ -28,8 +28,7 @@ class UrlSlugFields extends Fields
             $key = 'redirects-'.$record->locale.'-'.$record->slug;
             $fields[$key] = UrlSlugField::make($key)
                 ->setUrlRecord($record)
-                ->setBaseUrlSegment($model->baseUrlSegment($record->locale))
-                ->prepend($model->resolveUrl($record->locale, $model->baseUrlSegment($record->locale)) . ($record->slug != '/' ? '/' : ''));
+                ->setFullUrl($model->resolveUrl($record->locale, $record->slug));
         }
 
         return $fields;
