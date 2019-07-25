@@ -129,7 +129,6 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function an_asset_can_be_removed_and_uploaded()
     {
-
         $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
 
@@ -153,25 +152,6 @@ class UploadMediaTest extends TestCase
             ]);
 
         $this->assertCount(1, $page->fresh()->getAllFiles());
-    }
-
-    /** @test */
-    public function assets_can_be_sorted()
-    {
-        $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
-        $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO);
-
-        $images = $page->fresh()->getAllFiles(MediaType::HERO);
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'filesOrder' => [
-                    MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
-                ]
-            ]));
-
-        $this->assertEquals([$images->last()->id, $images->first()->id], $page->fresh()->getAllFiles(MediaType::HERO)->pluck('id')->toArray());
     }
 
     /** @test */
@@ -200,23 +180,21 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function it_can_upload_translatable_images()
     {
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
         $page = Single::create();
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     'seo_image' => [
-                        'trans' => [
-                            'nl' => [
-                                'new' => [
-                                    $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                                ]
-                            ],
-                            'en' => [
-                                'new' => [
-                                    $this->dummySlimImagePayload('tt-favicon-en.png'),
-                                ]
+                        'nl' => [
+                            'new' => [
+                                $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                            ]
+                        ],
+                        'en' => [
+                            'new' => [
+                                $this->dummySlimImagePayload('tt-favicon-en.png'),
                             ]
                         ]
                     ]
@@ -230,7 +208,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function it_can_replace_translatable_images()
     {
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
         $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), 'seo_image', 'nl');
 
@@ -240,16 +218,14 @@ class UploadMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     'seo_image' => [
-                        'trans' => [
-                            'nl' => [
-                                'replace' => [
-                                    $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                                ]
-                            ],
-                            'en' => [
-                                'new' => [
-                                    $this->dummySlimImagePayload('tt-favicon-en.png'),
-                                ]
+                        'nl' => [
+                            'replace' => [
+                                $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                            ]
+                        ],
+                        'en' => [
+                            'new' => [
+                                $this->dummySlimImagePayload('tt-favicon-en.png'),
                             ]
                         ]
                     ]
@@ -263,7 +239,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function it_can_remove_translatable_images()
     {
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
         $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), 'seo_image', 'en');
 
@@ -273,16 +249,14 @@ class UploadMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     'seo_image' => [
-                        'trans' => [
-                            'nl' => [
-                                'new' => [
-                                    $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                                ]
-                            ],
-                            'en' => [
-                                'delete' => [
-                                    $existing_asset_en->id,
-                                ]
+                        'nl' => [
+                            'new' => [
+                                $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                            ]
+                        ],
+                        'en' => [
+                            'delete' => [
+                                $existing_asset_en->id,
                             ]
                         ]
                     ]
@@ -291,5 +265,56 @@ class UploadMediaTest extends TestCase
 
         $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'nl'));
         $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'en'));
+    }
+
+    /** @test */
+    public function assets_can_be_sorted()
+    {
+        $this->disableExceptionHandling();
+        $page = Single::create();
+        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+        $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO);
+
+        $images = $page->fresh()->getAllFiles(MediaType::HERO);
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'filesOrder' => [
+                    MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
+                ]
+            ]));
+
+        $assetIds = $page->fresh()->getAllFiles(MediaType::HERO)->pluck('id')->toArray();
+
+        $this->assertEquals([$images->last()->id, $images->first()->id], $assetIds);
+    }
+
+    /** @test */
+    public function localized_assets_can_be_sorted()
+    {
+        $page = Single::create();
+        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+        $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
+        $page->addFile(UploadedFile::fake()->image('image3.png'), MediaType::HERO, 'en');
+        $page->addFile(UploadedFile::fake()->image('image4.png'), MediaType::HERO, 'en');
+
+        $images = $page->assets()->get();
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'filesOrder' => [
+                    MediaType::HERO => [
+                        'nl' => $images[1]->id . ',' . $images[0]->id,
+                        'en' => $images[3]->id . ',' . $images[2]->id
+                    ],
+                ]
+            ]));
+
+        $newImagesSorted = $page->fresh()->assets()->get();
+
+        $this->assertEquals($images[1]->id, $newImagesSorted[0]->id);
+        $this->assertEquals($images[0]->id, $newImagesSorted[1]->id);
+        $this->assertEquals($images[3]->id, $newImagesSorted[2]->id);
+        $this->assertEquals($images[2]->id, $newImagesSorted[3]->id);
     }
 }

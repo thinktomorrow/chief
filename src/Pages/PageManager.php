@@ -109,8 +109,7 @@ class PageManager extends AbstractManager implements Manager
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
                 ->description('foto die bij het delen van deze pagina getoont word. (afmeting: 1200x627px)')
-            );
-        ]);
+        );
     }
 
     public static function filters(): Filters

@@ -12,43 +12,39 @@ class UploadMedia
     /**
      * Upload from base64encoded files, usually
      * coming from slim upload component
+     *
+     * @param HasMedia $model
+     * @param array $files_by_type
+     * @param array $files_order_by_type
      */
     public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
     {
+        $files_by_type = $this->sanitizeFilesParameter($files_by_type);
+        $files_order_by_type = $this->sanitizeFilesOrderParameter($files_order_by_type);
+        $this->validateParameters($files_by_type, $files_order_by_type);
+
         // When no files are uploaded, we still would like to sort our assets duh
         if (empty($files_by_type)) {
-            foreach ($files_order_by_type as $type => $files_order) {
-                $model->sortFiles($type, explode(',', $files_order));
+            foreach($files_order_by_type as $type => $fileIdsCollection){
+                $this->sortFiles($model, $type, $fileIdsCollection);
             }
 
             return;
         }
 
-        //TODO check if trans key is present, if so we're saving translatable media
-
         foreach ($files_by_type as $type => $files) {
-            if(key_exists('trans', $files))
+
+            foreach($files as $locale => $files)
             {
-                foreach($files['trans'] as $locale => $files)
-                {
-                    $this->validateFileUploads($files);
-
-                    $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
-                    $this->addFiles($model, $type, $files, $files_order, $locale);
-                    $this->replaceFiles($model, $files);
-                    $this->removeFiles($model, $files);
-
-                    $model->sortFiles($type, $files_order);
-                }
-            }else{
                 $this->validateFileUploads($files);
 
-                $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
-                $this->addFiles($model, $type, $files, $files_order);
+                $fileIdsCollection = $files_order_by_type[$type] ?? [];
+
+                $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
                 $this->replaceFiles($model, $files);
                 $this->removeFiles($model, $files);
 
-                $model->sortFiles($type, $files_order);
+                $this->sortFiles($model, $type, $fileIdsCollection);
             }
         }
     }
@@ -166,6 +162,105 @@ class UploadMedia
                     }
                 }
             }
+        }
+    }
+
+    private function validateParameters(array $files_by_type, array $files_order_by_type)
+    {
+        $actions = ['new', 'replace', 'delete'];
+
+        foreach($files_by_type as $type => $files)
+        {
+            foreach($files as $locale => $_files){
+                if(!in_array($locale, config('translatable.locales'))) {
+                    throw new \InvalidArgumentException('Corrupt file payload. key is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
+                }
+
+                if(!is_array($_files)) {
+                    throw new \InvalidArgumentException('A valid files entry should be an array of files, key with either [new, replace or delete]. Instead a ' . gettype($_files) . ' is given.');
+                }
+
+                foreach($_files as $action => $file) {
+                    if(!in_array($action, $actions)) {
+                        throw new \InvalidArgumentException('A valid files entry should have a key of either ['.implode(',', $actions).']. Instead ' . $action . ' is given.');
+                    }
+                }
+            }
+        }
+
+        foreach($files_order_by_type as $type => $fileIdsCollection)
+        {
+            foreach($fileIdsCollection as $locale => $commaSeparatedFileIds){
+
+                if(!in_array($locale, config('translatable.locales'))) {
+                    throw new \InvalidArgumentException('Corrupt file payload. key for the file order is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
+                }
+            }
+        }
+    }
+
+    private function sanitizeFilesParameter(array $files_by_type): array
+    {
+        $defaultLocale = config('app.fallback_locale');
+
+        foreach($files_by_type as $type => $files)
+        {
+            foreach($files as $locale => $_files){
+                if(!in_array($locale, config('translatable.locales'))) {
+                    unset($files_by_type[$type][$locale]);
+
+                    if(!isset($files_by_type[$type][$defaultLocale])) {
+                        $files_by_type[$type][$defaultLocale] = [];
+                    }
+
+                    $files_by_type[$type][$defaultLocale][$locale] = $_files;
+                }
+            }
+        }
+
+        return $files_by_type;
+    }
+
+    private function sanitizeFilesOrderParameter(array $files_order_by_type): array
+    {
+        $defaultLocale = config('app.fallback_locale');
+
+        foreach($files_order_by_type as $type => $fileIdsCollection)
+        {
+            if(!is_array($fileIdsCollection)) {
+                $fileIdsCollection = [$defaultLocale => $fileIdsCollection];
+                $files_order_by_type[$type] = $fileIdsCollection;
+            }
+
+            foreach($fileIdsCollection as $locale => $commaSeparatedFileIds){
+                $files_order_by_type[$type][$locale] = explode(',', $commaSeparatedFileIds);
+            }
+        }
+
+        return $files_order_by_type;
+    }
+
+    private function sortFiles(HasMedia $model, string $type, array $fileIdsCollection)
+    {
+        $sortedFileIds = [];
+
+        foreach($fileIdsCollection as $locale => $fileIds) {
+            $sortedFileIds = array_merge($sortedFileIds, $fileIds);
+        }
+
+        $this->sortingAssetsByType($model, $type, $sortedFileIds);
+    }
+
+    private function sortingAssetsByType(HasMedia $model, $type, array $sortedAssetIds)
+    {
+        $assets = $model->assets()->where('asset_pivots.type', $type)->get();
+
+        foreach($assets as $asset)
+        {
+            $pivot = $asset->pivot;
+            $pivot->order = array_search($asset->id, $sortedAssetIds);
+
+            $pivot->save();
         }
     }
 }

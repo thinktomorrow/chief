@@ -21,6 +21,17 @@ class MediaField extends Field
         return $this;
     }
 
+    public function translateName($locale)
+    {
+        $name = $this->name();
+
+        if (strpos($name, ':locale')) {
+            return preg_replace('#(:locale)#', $locale, $name);
+        }
+
+        return 'files['.$name.']['.$locale.']';
+    }
+
     public function getFieldValue(Model $model, $locale = null)
     {
         return $this->getMedia($model, $locale);
@@ -28,16 +39,20 @@ class MediaField extends Field
 
     private function getMedia(HasMedia $model, $locale = null)
     {
-        $images = [$this->key() => []];
+        $images = [];
 
-        foreach ($model->getAllFiles()->groupBy('pivot.type') as $type => $assetsByType) {
-            foreach ($assetsByType as $asset) {
-                $images[$type][] = (object)[
-                    'id'       => $asset->id,
-                    'filename' => $asset->getFilename(),
-                    'url'      => $asset->getFileUrl(),
-                ];
-            }
+        $builder = $model->assets()->where('asset_pivots.type', $this->key());
+
+        if($locale) {
+            $builder = $builder->where('asset_pivots.locale', $locale);
+        }
+
+        foreach ($builder->get() as $asset) {
+            $images[] = (object)[
+                'id'       => $asset->id,
+                'filename' => $asset->getFilename(),
+                'url'      => $asset->getFileUrl(),
+            ];
         }
 
         return $images;
