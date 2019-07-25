@@ -25,7 +25,7 @@ class UploadMedia
 
         // When no files are uploaded, we still would like to sort our assets duh
         if (empty($files_by_type)) {
-            foreach($files_order_by_type as $type => $fileIdsCollection){
+            foreach ($files_order_by_type as $type => $fileIdsCollection) {
                 $this->sortFiles($model, $type, $fileIdsCollection);
             }
 
@@ -33,9 +33,7 @@ class UploadMedia
         }
 
         foreach ($files_by_type as $type => $files) {
-
-            foreach($files as $locale => $files)
-            {
+            foreach ($files as $locale => $files) {
                 $this->validateFileUploads($files);
 
                 $fileIdsCollection = $files_order_by_type[$type] ?? [];
@@ -114,24 +112,20 @@ class UploadMedia
     private function handleFiles(string $action, HasMedia $model, string $type = null, array $files, array $files_order = [], string $locale = null)
     {
         if (isset($files[$action]) && is_array($files[$action]) && !empty($files[$action])) {
-            if($action == 'delete')
-            {
+            if ($action == 'delete') {
                 foreach ($model->assets()->whereIn('id', $files[$action])->get() as $asset) {
                     $asset->delete();
                 }
             }
 
             foreach ($files[$action] as $id => $file) {
-
                 if (!$file) {
                     continue;
                 }
 
-                if($action == 'new')
-                {
+                if ($action == 'new') {
                     $this->addFile($model, $type, $files_order, $file, $locale);
-                }elseif($action == 'replace')
-                {
+                } elseif ($action == 'replace') {
                     $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
                     $model->replaceAsset($id, $asset->id);
                 }
@@ -177,30 +171,27 @@ class UploadMedia
     {
         $actions = ['new', 'replace', 'delete'];
 
-        foreach($files_by_type as $type => $files)
-        {
-            foreach($files as $locale => $_files){
-                if(!in_array($locale, config('translatable.locales'))) {
+        foreach ($files_by_type as $type => $files) {
+            foreach ($files as $locale => $_files) {
+                if (!in_array($locale, config('translatable.locales'))) {
                     throw new \InvalidArgumentException('Corrupt file payload. key is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
                 }
 
-                if(!is_array($_files)) {
+                if (!is_array($_files)) {
                     throw new \InvalidArgumentException('A valid files entry should be an array of files, key with either [new, replace or delete]. Instead a ' . gettype($_files) . ' is given.');
                 }
 
-                foreach($_files as $action => $file) {
-                    if(!in_array($action, $actions)) {
+                foreach ($_files as $action => $file) {
+                    if (!in_array($action, $actions)) {
                         throw new \InvalidArgumentException('A valid files entry should have a key of either ['.implode(',', $actions).']. Instead ' . $action . ' is given.');
                     }
                 }
             }
         }
 
-        foreach($files_order_by_type as $type => $fileIdsCollection)
-        {
-            foreach($fileIdsCollection as $locale => $commaSeparatedFileIds){
-
-                if(!in_array($locale, config('translatable.locales'))) {
+        foreach ($files_order_by_type as $type => $fileIdsCollection) {
+            foreach ($fileIdsCollection as $locale => $commaSeparatedFileIds) {
+                if (!in_array($locale, config('translatable.locales'))) {
                     throw new \InvalidArgumentException('Corrupt file payload. key for the file order is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
                 }
             }
@@ -211,13 +202,12 @@ class UploadMedia
     {
         $defaultLocale = config('app.fallback_locale');
 
-        foreach($files_by_type as $type => $files)
-        {
-            foreach($files as $locale => $_files){
-                if(!in_array($locale, config('translatable.locales'))) {
+        foreach ($files_by_type as $type => $files) {
+            foreach ($files as $locale => $_files) {
+                if (!in_array($locale, config('translatable.locales'))) {
                     unset($files_by_type[$type][$locale]);
 
-                    if(!isset($files_by_type[$type][$defaultLocale])) {
+                    if (!isset($files_by_type[$type][$defaultLocale])) {
                         $files_by_type[$type][$defaultLocale] = [];
                     }
 
@@ -233,14 +223,13 @@ class UploadMedia
     {
         $defaultLocale = config('app.fallback_locale');
 
-        foreach($files_order_by_type as $type => $fileIdsCollection)
-        {
-            if(!is_array($fileIdsCollection)) {
+        foreach ($files_order_by_type as $type => $fileIdsCollection) {
+            if (!is_array($fileIdsCollection)) {
                 $fileIdsCollection = [$defaultLocale => $fileIdsCollection];
                 $files_order_by_type[$type] = $fileIdsCollection;
             }
 
-            foreach($fileIdsCollection as $locale => $commaSeparatedFileIds){
+            foreach ($fileIdsCollection as $locale => $commaSeparatedFileIds) {
                 $files_order_by_type[$type][$locale] = explode(',', $commaSeparatedFileIds);
             }
         }
@@ -252,7 +241,7 @@ class UploadMedia
     {
         $sortedFileIds = [];
 
-        foreach($fileIdsCollection as $locale => $fileIds) {
+        foreach ($fileIdsCollection as $locale => $fileIds) {
             $sortedFileIds = array_merge($sortedFileIds, $fileIds);
         }
 
@@ -263,8 +252,7 @@ class UploadMedia
     {
         $assets = $model->assets()->where('asset_pivots.type', $type)->get();
 
-        foreach($assets as $asset)
-        {
+        foreach ($assets as $asset) {
             $pivot = $asset->pivot;
             $pivot->order = array_search($asset->id, $sortedAssetIds);
 

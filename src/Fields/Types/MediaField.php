@@ -43,7 +43,7 @@ class MediaField extends Field
 
         $builder = $model->assets()->where('asset_pivots.type', $this->key());
 
-        if($locale) {
+        if ($locale) {
             $builder = $builder->where('asset_pivots.locale', $locale);
         }
 

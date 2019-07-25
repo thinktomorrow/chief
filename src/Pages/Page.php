@@ -145,8 +145,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         // What was the creator of the assetlibrary package thinking. It sure wasn't me... I promise...
         $assets = $this->getAllFiles($type, app()->getLocale())->map->getFileUrl();
 
-        if($assets->first() == null)
-        {
+        if ($assets->first() == null) {
             $assets = $this->getAllFiles($type)->map->getFileUrl();
         }
 
