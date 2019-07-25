@@ -30,7 +30,7 @@
   "dependencies": {
     "axios": "^0.19",
     "cross-env": "^5.1",
-    "es6-promise": "^4.2.5",
+    "es6-promise": "^4.2.8",
     "laravel-mix": "^4.0.16",
     "laravel-mix-purgecss": "^4.1.0",
     "lodash": "^4.17.15",
