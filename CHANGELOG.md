@@ -34,7 +34,8 @@ All Notable changes to the `chief` application template will be documented in th
 - Deprecated: `Page::hasPagebuilder()` since no longer used. Scheduled to be removed in version 0.4.
 - Changed: grouping of child pages as a collection is no longer based on the view key as a grouping id. Rather the `flatReferenceGroup()` value is used instead.
 - Changed: Fields::add() is made immutable so it no longer changes current collection but returns a new Fields instance.
-
+- Changed: replace htmlawed with HtmlPurifier
+- Added: Html sanitization on updatesections
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab

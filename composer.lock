@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a57ff0265d7f955fe54b2acf23b76b9",
+    "content-hash": "ad4050d6708a16a7f137b9de6b3a8ac4",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -666,6 +666,53 @@
                 "parser"
             ],
             "time": "2019-03-17T18:48:37+00:00"
+        },
+        {
+            "name": "ezyang/htmlpurifier",
+            "version": "v4.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ezyang/htmlpurifier.git",
+                "reference": "83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7",
+                "reference": "83ab08bc1af7d808a9e0fbf024f1c24bfd73c0a7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "dev-master#72de02a7b80c6bb8864ef9bf66d41d2f58f826bd"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "HTMLPurifier": "library/"
+                },
+                "files": [
+                    "library/HTMLPurifier.composer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Edward Z. Yang",
+                    "email": "admin@htmlpurifier.org",
+                    "homepage": "http://ezyang.com"
+                }
+            ],
+            "description": "Standards compliant HTML filter written in PHP",
+            "homepage": "http://htmlpurifier.org/",
+            "keywords": [
+                "html"
+            ],
+            "time": "2019-07-14T18:58:38+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -4067,20 +4114,21 @@
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.5.5",
+            "version": "0.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "ea3ea61105a7ef8800f478f52772a9dcbc02628f"
+                "reference": "162ed2a11492e0257f7c19368fdd379c6b3c462e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/ea3ea61105a7ef8800f478f52772a9dcbc02628f",
-                "reference": "ea3ea61105a7ef8800f478f52772a9dcbc02628f",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/162ed2a11492e0257f7c19368fdd379c6b3c462e",
+                "reference": "162ed2a11492e0257f7c19368fdd379c6b3c462e",
                 "shasum": ""
             },
             "require": {
                 "dimsav/laravel-translatable": "~9.2",
+                "ezyang/htmlpurifier": "^4.11",
                 "illuminate/contracts": "~5.6|~5.7",
                 "illuminate/database": "~5.6|~5.7",
                 "illuminate/support": "~5.6|~5.7",
@@ -4113,9 +4161,9 @@
             "authors": [
                 {
                     "name": "Ben Cavens",
+                    "role": "Developer",
                     "email": "cavensben@gmail.com",
-                    "homepage": "http://thinktomorrow.be",
-                    "role": "Developer"
+                    "homepage": "http://thinktomorrow.be"
                 }
             ],
             "description": "Text manager for static laravel translations during and after development",
@@ -4124,7 +4172,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2019-03-01T10:03:17+00:00"
+            "time": "2019-07-26T13:25:34+00:00"
         },
         {
             "name": "thinktomorrow/url",

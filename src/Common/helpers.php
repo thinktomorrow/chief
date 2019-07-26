@@ -145,15 +145,13 @@ if (!function_exists('cleanupString')) {
  * Takes an input and cleans up unwanted / malicious HTML
  *
  * @param 	string 	$value
- * @param 	string 	$whitelist - if false no tagstripping will occur - other than htmLawed
+ * @param 	string 	$whitelist - if false no tagstripping will occur - other than HTMLPurifier
  * @return 	string
  */
 if (!function_exists('cleanupHTML')) {
     function cleanupHTML($value, $whitelist = null)
     {
-        if (!function_exists('cleanupHTML')) {
-            require_once __DIR__ . '/vendors/htmlLawed.php';
-        }
+       
         if (is_null($whitelist)) {
             $whitelist = '<code><span><div><label><a><br><p><b><i><del><strike><u><img><video><audio><iframe><object><embed><param><blockquote><mark><cite><small><ul><ol><li><hr><dl><dt><dd><sup><sub><big><pre><code><figure><figcaption><strong><em><table><tr><td><th><tbody><thead><tfoot><h1><h2><h3><h4><h5><h6>';
         }
@@ -166,11 +164,15 @@ if (!function_exists('cleanupHTML')) {
         if (false !== $whitelist) {
             $value = strip_tags($value, $whitelist);
         }
-        // cleanup HTML and any unwanted attributes
-        $value = htmLawed($value);
+        // // cleanup HTML and any unwanted attributes
+        $purifier = new HTMLPurifier();
+        $value = $purifier->purify( $value );
 
-        // Undo the encoding performed by htmlLawed.
-        $value = str_replace('&amp;', '&', $value);
+        /**
+         * htmlPurifier converts characters to their encode equivalents. This is something
+         * that we need to reverse after the htmlPurifier cleanup.
+         */
+        $value  = str_replace('&amp;', '&', $value);
 
         return $value;
     }

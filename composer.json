@@ -8,6 +8,7 @@
         "php": "^7.2.0",
         "dimsav/laravel-translatable": "^9.0",
         "doctrine/dbal": "^2.5",
+        "ezyang/htmlpurifier": "^4.11",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "~5.6.39|~5.7.0|~5.8.0",
         "laravel/tinker": "^1.0",
@@ -15,8 +16,8 @@
         "spatie/laravel-permission": "^2.20",
         "thinktomorrow/assetlibrary": "~0.5.0",
         "thinktomorrow/squanto": "^0.5.5",
-        "thinktomorrow/vine": "~0.2.1",
-        "thinktomorrow/url": "~1.0.0"
+        "thinktomorrow/url": "~1.0.0",
+        "thinktomorrow/vine": "~0.2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.1",
@@ -33,7 +34,6 @@
             "Thinktomorrow\\Chief\\" : "src/"
         },
         "files": [
-            "src/Common/vendors/htmlLawed.php",
             "src/Common/helpers.php"
         ]
     },
