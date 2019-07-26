@@ -12,7 +12,8 @@ trait ManagesMedia
     {
         $files = array_merge_recursive($request->get('files', []), $request->file('files', []));
         $filesOrder = $request->get('filesOrder', []);
-        
+
+        /** @var UploadMedia */
         app(UploadMedia::class)->fromUploadComponent($this->model, $files, $filesOrder);
     }
 }
