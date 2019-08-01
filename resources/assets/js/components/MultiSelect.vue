@@ -337,10 +337,21 @@
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style type="text/css">
+
+    .multiselect {
+        font-size: 14px !important;
+    }
 
     .multiselect--active {
         z-index: 11; /* Place above other components, such as redactor toolbar */
+    }
+
+    .multiselect__placeholder {
+        color: #BEB4BB;
+        margin: 0; padding: 0;  
+        line-height: 20px;
     }
 
     .multiselect__tag{
@@ -356,7 +367,8 @@
     }
 
     input[type="text"].multiselect__input {
-        padding: 1px 0 0 5px;
+        padding: 0; margin: 0;
+        font-size: 14px;
     }
 
 </style>

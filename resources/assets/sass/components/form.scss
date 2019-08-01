@@ -51,14 +51,14 @@ input[type='phone'],
 input[type='password'],
 input[type='file'],
 .custom-file-input {
-    @apply w-full rounded border border-grey-200 font-sans;
+    @apply w-full rounded border border-grey-200;
 
     &:focus{
         box-shadow: 0 1px 5px -1px config('theme.colors.grey.200');
         @apply outline-none border border-grey-200;
     }
     &::placeholder{
-        @apply text-grey-200;
+        @apply text-grey-300 opacity-100;
     }
 }
 

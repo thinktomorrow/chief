@@ -5,53 +5,38 @@
 @endsection
 
 @section('content')
-    <div class="reset-wrapper">
-        <div class="reset-block">
 
-        <h1>Reset uw wachtwoord</h1>
+    <div class="container min-h-screen flex items-center">
+		<div class="row w-full justify-center my-32">
+			<div class="xs-column-12 s-column-10 m-column-6 l-column-4">
+                    
+                <h1 class="mb-8">Reset uw wachtwoord</h1>
 
-        @if($errors and count($errors) > 0)
-            <div class="message error">
-                @foreach($errors->all() as $error)
-                    <span class="lnr lnr-warning mr5"></span>{{ $error }}<br>
-                @endforeach
-            </div>
-        @endif
+                <form class="block stack" role="form" method="POST" action="{{ route('chief.back.password.request') }}">
+
+                    {{ csrf_field() }}
+
+                    <input type="hidden" name="token" value="{{ $token }}">
 
 
-        <form class="login-form" role="form" method="POST" action="{{ route('chief.back.password.request') }}">
-                    <div class="form-wrapper">
-            {{ csrf_field() }}
+                    <div class="stack">
+                        <input type="email" class="inset-s" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}">
+                    </div>
 
-            <input type="hidden" name="token" value="{{ $token }}">
+                    <div class="stack">
+                        <input type="password" class="inset-s" name="password" placeholder="Nieuw wachtwoord" id="password">
+                    </div>
 
-            <div class="squished">
-                <div class="input-group-prefix relative">
-                    <span class="input-prefix"><span class="lnr lnr-envelope"></span></span>
-                    <input type="email" class="validate[required]" name="email" placeholder="E-mail" id="identity" value="{{ old('email') }}">
-                </div>
-            </div>
+                    <div class="stack">
+                        <input type="password" class="inset-s" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Reset mijn wachtwoord</button>
 
-            <div class="squished">
-                <div class="input-group-prefix relative">
-                    <span class="input-prefix"><span class="lnr lnr-keyboard"></span></span>
-                    <input type="password" class="validate[required]" name="password" placeholder="Nieuw wachtwoord" id="password">
-                </div>
-            </div>
+                </form>
 
-            <div class="squished">
-                <div class="input-group-prefix relative">
-                    <span class="input-prefix"><span class="lnr lnr-keyboard"></span></span>
-                    <input type="password" class="validate[required]" name="password_confirmation" placeholder="Herhaal wachtwoord" id="password-confirm">
-                </div>
-            </div>
-
-            <div class="squished">
-                <button type="submit" class="btn btn-block submitForm">Reset mijn wachtwoord</button>
-            </div>
+			</div>
         </div>
-
-        </form>
     </div>
-</div>
+
 @endsection
