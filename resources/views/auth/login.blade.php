@@ -1,4 +1,4 @@
-@extends('chief::back._layouts.login')
+@extends('chief::back._layouts.solo')
 
 @section('title')
   	Login

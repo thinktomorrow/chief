@@ -4,7 +4,7 @@
 
 @chiefheader
     @slot('title', 'Gebruikers')
-    <a href="{{ route('chief.back.users.create') }}" class="btn btn-link text-primary">Nodig een nieuwe gebruiker uit.</a>
+    <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe gebruiker uit.</a>
 @endchiefheader
 
 @section('content')
@@ -18,12 +18,16 @@
                         @else
                             <a href="{{ route('chief.back.users.edit', $user->id) }}">{{ $user->fullname }}</a>
                         @endif
-                        <div class="inline-block font-s">
+
+                        <div class="inline-block font-s ml-2">
+                            {{-- @if(!$user->isEnabled())
+                                <div class="label label-error">geblokkeerd</div>
+                            @endif --}}
                             {!! $user->present()->enabledAsLabel() !!}
                             {!! optional(optional($user->invitation)->present())->stateAsLabel() !!}
                         </div>
 
-                        <div class="font-s text-subtle">
+                        <div class="font-s text-grey-300">
                             <?= implode(', ', $user->roleNames()) ?>
                         </div>
 
@@ -43,6 +47,6 @@
         @endforeach
     </div>
     <div class="stack inset-xs text-center">
-        <a href="{{ route('chief.back.users.create') }}" class="btn btn-link text-primary">+ Nodig een nieuwe gebruiker uit.</a>
+        <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe gebruiker uit.</a>
     </div>
 @endsection

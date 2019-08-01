@@ -17,12 +17,12 @@ class UserPresenter
     public function enabledAsLabel(): string
     {
         // Avoid showing enabled state if there is an invitation pending
-        if ($this->user->invitation) {
-            return '';
+        if ($this->user->invitation && $this->user->invitation->state() == 'pending') {
+            return '<span class="label label-primary">Uitgenodigd</span>';
         }
 
         return $this->user->isEnabled()
             ? ''
-            : '<span class="label label-error">Gebruiker is geblokkeerd.</span>';
+            : '<span class="label label-error">Geblokkeerd</span>';
     }
 }

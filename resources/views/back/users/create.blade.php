@@ -4,7 +4,7 @@
 
 @chiefheader
 	@slot('title', 'Nieuwe gebruiker')
-	<button data-submit-form="createForm" type="button" class="btn btn-o-primary">Stuur uitnodiging</button>
+	<button data-submit-form="createForm" type="button" class="btn btn-primary">Stuur uitnodiging</button>
 @endchiefheader
 
 @section('content')

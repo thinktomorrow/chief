@@ -4,27 +4,29 @@
 
 @chiefheader
 	@slot('title', $user->fullname)
-	<div class="inline-group">
+	<div class="inline-group flex items-center">
 		{!! $user->present()->enabledAsLabel() !!}
 		@if($user->isEnabled())
-			<button data-submit-form="updateForm" type="button" class="btn btn-o-primary">Bewaar</button>
+			<button data-submit-form="updateForm" type="button" class="btn btn-primary">Bewaar</button>
 		@endif
 		<options-dropdown class="inline-block">
-			<div v-cloak>
+			<div v-cloak class="dropdow-box inset-s">
 				<div>
 					<a class="block inset-s" href="{{ route('chief.back.invites.resend', $user->id) }}">Stuur nieuwe uitnodiging</a>
 				</div>
 				<hr>
-				<div class="inset-s font-s">
+				<div>
 					@if($user->isEnabled())
-						<form method="POST" action="{{ route('chief.back.users.disable', $user->id) }}">
+						<form method="POST" action="{{ route('chief.back.users.disable', $user->id) }}" class="mb-0">
 							{{ csrf_field() }}
-							<p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <input type="submit" class="text-error" value="blokkeren">.</p>
+							{{-- <p>Om {{ $user->firstname }} tijdelijk de toegang <br>te ontnemen, kan je de account <input type="submit" class="text-error" value="blokkeren">.</p> --}}
+							<a><input type="submit" class="text-error" value="{{ $user->firstname }} blokkeren"></a>
 						</form>
 					@else
-						<form method="POST" action="{{ route('chief.back.users.enable', $user->id) }}">
+						<form method="POST" action="{{ route('chief.back.users.enable', $user->id) }}" class="mb-0">
 							{{ csrf_field() }}
-							<p>{{ $user->firstname }} is momenteel geblokkeerd. <br> <input type="submit" class="text-primary" value="Verleen opnieuw toegang">.</p>
+							{{-- <p>{{ $user->firstname }} is momenteel geblokkeerd. <br> <input type="submit" class="text-primary" value="Verleen opnieuw toegang">.</p> --}}
+							<a><input type="submit" class="text-warning" value="{{ $user->firstname }} deblokkeren"></a>
 						</form>
 					@endif
 				</div>
