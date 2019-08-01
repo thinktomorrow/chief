@@ -19,9 +19,9 @@
                 </h1>
 
                 @if($errors and count($errors) > 0)
-                    <div class="message error">
+                    <div class="label label-error stack">
                         @foreach($errors->all() as $error)
-                            <span class="lnr lnr-warning mr5"></span> {{ $error }}<br>
+                            {{ $error }}<br>
                         @endforeach
                     </div>
                 @endif
@@ -30,11 +30,11 @@
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="PUT">
 
-                    <div class="stack-s">
-                        <input class="inset-s mb-2" type="password" name="password" placeholder="wachtwoord" id="password" value="{{ old('password') }}">
+                    <div class="stack">
+                        <input class="inset-s" type="password" name="password" placeholder="wachtwoord" id="password" value="{{ old('password') }}">
                     </div>
-                    <div class="stack-s">
-                        <input class="inset-s mb-2" type="password" name="password_confirmation" placeholder="herhaal wachtwoord" id="password-confirm">
+                    <div class="stack">
+                        <input class="inset-s" type="password" name="password_confirmation" placeholder="herhaal wachtwoord" id="password-confirm">
                     </div>
 
                     @if($new_password)

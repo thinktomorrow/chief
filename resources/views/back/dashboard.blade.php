@@ -12,7 +12,7 @@
     <div class="row gutter-l stack-l">
         <div class="column-4 stack-xl">
             <span class="font-bold text-5xl text-grey-500 leading-none mb-4 block">Welkom op je dashboard, {{ Auth::user()->firstname }}</span class="font-bold text-5xl leading-none mb-4 block">
-            <p>Don't try to follow trends. Create them</p>
+            <p>Don't try to follow trends. Create them.</p>
         </div>
         <div class="gutter column-8 right">
             @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page', 'dashboard']) as $manager)
