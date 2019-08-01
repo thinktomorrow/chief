@@ -75,7 +75,10 @@ abstract class AbstractManager
             $builder->orderBy('published', 'DESC');
         }
 
-        $builder->orderBy('updated_at', 'DESC');
+        // if model has no timestamps, updated_at doesn't exist
+        if ($this->model()->timestamps) {
+            $builder->orderBy('updated_at', 'DESC');
+        }
 
         return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
