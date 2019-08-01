@@ -16,7 +16,7 @@
     @can('create-squanto')
         <a href="{{ route('squanto.lines.create', $page->id) }}" class="btn btn-primary inline-flex items-center">
             <svg width="18" height="18" class="mr-2"><use xlink:href="#add"/></svg>
-            <span>add new line</span>
+            <span>Nieuwe vertaling toevoegen</span>
         </a>
     @endcan
     <button data-submit-form="translationForm" class="btn btn-primary"><i class="fa fa-check"></i>Wijzigingen opslaan</button>

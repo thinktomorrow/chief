@@ -354,6 +354,12 @@
         line-height: 20px;
     }
 
+    .multiselect__single {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+    }
+
     .multiselect__tag{
         background-color: hsla(125, 48%, 40%, 1);
     }

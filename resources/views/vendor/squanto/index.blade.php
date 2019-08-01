@@ -9,7 +9,7 @@
     @can('create-squanto')
         <a href="{{ route('squanto.lines.create') }}" class="btn btn-primary inline-flex items-center">
             <svg width="18" height="18" class="mr-2"><use xlink:href="#add"/></svg>
-            <span>add new line</span>
+            <span>Nieuwe vertaling toevoegen</span>
         </a>
     @endcan
 @endcomponent

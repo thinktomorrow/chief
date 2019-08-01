@@ -42,7 +42,7 @@ class ArchiveAssistant implements Assistant
 
     public function archivedAt(): Carbon
     {
-        return $this->model->archived_at;
+        return new Carbon($this->model->archived_at);
     }
 
     public function archive()
