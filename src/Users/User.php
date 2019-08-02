@@ -36,7 +36,7 @@ class User extends Authenticatable implements HasMedia
 
     public function invitation()
     {
-        return $this->hasOne(Invitation::class, 'invitee_id');
+        return $this->hasMany(Invitation::class, 'invitee_id');
     }
 
     public function roleNames()
