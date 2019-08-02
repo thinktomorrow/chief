@@ -14,8 +14,8 @@ class ModuleTest extends TestCase
     /** @test */
     public function it_can_find_a_module_by_slug()
     {
-        $module = Module::create(['slug' => 'foobar']);
+        $module = Module::create(['internal_title' => 'foobar']);
 
-        $this->assertEquals($module->id, Module::findBySlug('foobar')->id);
+        $this->assertEquals($module->id, Module::findByInternalTitle('foobar')->id);
     }
 }

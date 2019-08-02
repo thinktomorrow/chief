@@ -11,7 +11,7 @@ trait ModuleFormParams
     {
         $params = [
             'morph_key' => NewsletterModuleFake::class,
-            'slug' => 'new-slug',
+            'internal_title' => 'new-slug',
         ];
 
         foreach ($overrides as $key => $value) {
@@ -25,7 +25,7 @@ trait ModuleFormParams
     {
         $params = [
             'morph_key' => NewsletterModuleFake::class,
-            'slug' => 'updated-slug',
+            'internal_title' => 'updated-slug',
             'trans' => [
                 'nl' => [
                     'content' => 'aangepaste content',
@@ -46,12 +46,12 @@ trait ModuleFormParams
     protected function assertNewModuleValues($module)
     {
         $this->assertEquals(NewsletterModuleFake::class, $module->morph_key);
-        $this->assertEquals('new-slug', $module->slug);
+        $this->assertEquals('new-slug', $module->internal_title);
     }
 
     protected function assertUpdatedModuleValues($module)
     {
-        $this->assertEquals('updated-slug', $module->slug);
+        $this->assertEquals('updated-slug', $module->internal_title);
 
         $this->assertEquals('aangepaste content', $module->{'content:nl'});
         $this->assertEquals('updated content', $module->{'content:en'});

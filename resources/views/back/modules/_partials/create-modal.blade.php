@@ -26,10 +26,10 @@
 
         <div class="stack-s">
             <label for="slugField">Interne titel</label>
-            <input type="text" name="slug" id="slugField" class="input inset-s" placeholder="e.g. nieuwsbrief, contacteer-ons, homepage-banner" value="{{ old('slug') }}">
+            <input type="text" name="internal_title" id="slugField" class="input inset-s" placeholder="e.g. nieuwsbrief, contacteer-ons, homepage-banner" value="{{ old('slug') }}">
         </div>
 
-        <error class="caption text-warning" field="slug" :errors="errors.all()"></error>
+        <error class="caption text-warning" field="internal_title" :errors="errors.all()"></error>
 
     </form>
 

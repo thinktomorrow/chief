@@ -26,10 +26,9 @@ class ModulesController extends Controller
         $manager = app(Managers::class)->findByKey($request->module_key);
 
         $manager->guard('edit');
-
         $module = app(CreateModule::class)->handle(
             $request->get('module_key'),
-            $request->get('slug'),
+            $request->get('internal_title'),
             $request->get('page_id')
         );
 

@@ -65,8 +65,8 @@ class PresentRelationsTest extends TestCase
     public function consecutive_modules_are_always_rendered_on_their_own()
     {
         $parent = ParentFake::create();
-        $child = NewsletterModuleFake::create(['slug' => 'newsletter-1', 'content' => 'nieuwsbrief-1']);
-        $child2 = NewsletterModuleFake::create(['slug' => 'newsletter-2', 'content' => 'nieuwsbrief-2']);
+        $child = NewsletterModuleFake::create(['internal_title' => 'newsletter-1', 'content' => 'nieuwsbrief-1']);
+        $child2 = NewsletterModuleFake::create(['internal_title' => 'newsletter-2', 'content' => 'nieuwsbrief-2']);
 
         $parent->adoptChild($child);
         $parent->adoptChild($child2);

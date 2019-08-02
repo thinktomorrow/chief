@@ -48,7 +48,7 @@ class CreateModuleTest extends TestCase
     /** @test */
     public function when_creating_module_slug_is_required()
     {
-        $this->assertValidation(new Module(), 'slug', $this->validModuleParams(['slug' => '']),
+        $this->assertValidation(new Module(), 'internal_title', $this->validModuleParams(['internal_title' => '']),
             route('chief.back.managers.index', 'newsletters_fake'),
             route('chief.back.managers.store', 'newsletters_fake')
         );
@@ -57,13 +57,13 @@ class CreateModuleTest extends TestCase
     /** @test */
     public function internal_title_is_not_required_to_be_unique()
     {
-        Module::create(['slug' => 'foobar']);
+        Module::create(['internal_title' => 'foobar']);
 
         $this->assertCount(1, Module::all());
 
         $response = $this->asAdmin()
             ->post(route('chief.back.managers.store', 'newsletters_fake'), $this->validModuleParams([
-                'slug'  => 'foobar',
+                'internal_title'  => 'foobar',
                 'morph_key' => 'newsletter',
             ])
         );

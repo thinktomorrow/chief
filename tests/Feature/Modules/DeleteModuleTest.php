@@ -25,7 +25,7 @@ class DeleteModuleTest extends TestCase
     public function it_can_delete_modules()
     {
         $this->disableExceptionHandling();
-        $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'other-slug']);
 
         $this->asAdmin()
             ->delete(route('chief.back.managers.delete', ['newsletters_fake', $module->id]), [
@@ -41,7 +41,7 @@ class DeleteModuleTest extends TestCase
     {
         $page = factory(Page::class)->create();
 
-        $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'other-slug']);
         $page->adoptChild($module);
 
         $this->assertEquals(1, Relation::count());

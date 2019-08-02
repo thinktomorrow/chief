@@ -46,10 +46,10 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_fetch_all_sections_in_order()
     {
-        $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $module    = TextModule::create(['internal_title' => 'eerste-text', 'content:nl' => 'eerste text']);
         $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
-        $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
-        $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
+        $module2   = TextModule::create(['internal_title' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $module3   = NewsletterModuleFake::create(['internal_title' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
         $this->page->adoptChild($module, ['sort' => 0]);
         $this->page->adoptChild($module2, ['sort' => 2]);
@@ -65,11 +65,11 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_fetch_all_sections_with_multiple_pages_in_order()
     {
-        $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $module    = TextModule::create(['internal_title' => 'eerste-text', 'content:nl' => 'eerste text']);
         $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
         $thirdPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
-        $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
-        $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
+        $module2   = TextModule::create(['internal_title' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $module3   = NewsletterModuleFake::create(['internal_title' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
         $this->page->adoptChild($module, ['sort' => 0]);
         $this->page->adoptChild($module2, ['sort' => 2]);
@@ -89,7 +89,7 @@ class PageBuildTest extends TestCase
     {
         $page2 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-1', 'published' => true]);
         $page3 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-2', 'published' => true]);
-        $module = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'module-text']);
+        $module = TextModule::create(['internal_title' => 'tweede-text', 'content:nl' => 'module-text']);
         $page4 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-3', 'published' => true]);
         $this->page->adoptChild($page2, ['sort' => 1]);
         $this->page->adoptChild($page3, ['sort' => 2]);
@@ -114,7 +114,7 @@ class PageBuildTest extends TestCase
             ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
-                        'slug' => 'text-1',
+                        'internal_title' => 'text-1',
                         'trans' => [
                             'nl' => [
                                 'content' => 'new content',
@@ -134,7 +134,7 @@ class PageBuildTest extends TestCase
     public function it_can_replace_a_text_module()
     {
         // Add first text module
-        $module = TextModule::create(['slug' => 'eerste-text']);
+        $module = TextModule::create(['internal_title' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
@@ -161,7 +161,7 @@ class PageBuildTest extends TestCase
     public function it_removes_a_text_module_when_its_completely_empty()
     {
         // Add first text module
-        $module = TextModule::create(['slug' => 'eerste-text']);
+        $module = TextModule::create(['internal_title' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
@@ -190,7 +190,7 @@ class PageBuildTest extends TestCase
     public function it_removes_a_text_module_when_it_only_contains_empty_paragraph_tag()
     {
         // Add first text module
-        $module = TextModule::create(['slug' => 'eerste-text']);
+        $module = TextModule::create(['internal_title' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
@@ -215,7 +215,7 @@ class PageBuildTest extends TestCase
     public function it_does_not_remove_a_text_module_when_its_not_completely_empty()
     {
         // Add first text module
-        $module = TextModule::create(['slug' => 'eerste-text']);
+        $module = TextModule::create(['internal_title' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
@@ -242,7 +242,7 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_add_an_existing_module()
     {
-        $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
 
         // Replace text module content
         $this->asAdmin()
@@ -263,7 +263,7 @@ class PageBuildTest extends TestCase
     /** @test */
     public function adding_existing_module_does_not_change_anything()
     {
-        $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
@@ -306,7 +306,7 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_remove_modules()
     {
-        $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
@@ -326,9 +326,9 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_set_the_order()
     {
-        $text_module = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
+        $text_module = TextModule::create(['internal_title' => 'eerste-text', 'content:nl' => 'eerste text']);
         $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text']);
-        $newsletter = NewsletterModuleFake::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
+        $newsletter = NewsletterModuleFake::create(['internal_title' => 'tweede-text', 'content:nl' => 'tweede text']);
 
         $this->page->adoptChild($text_module, ['sort' => 0]);
 
@@ -336,7 +336,7 @@ class PageBuildTest extends TestCase
             ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new'     => [
                     [
-                        'slug' => 'text-1',
+                        'internal_title' => 'text-1',
                         'trans' => [
                             'nl' => [
                                 'content' => 'new text',
@@ -372,7 +372,7 @@ class PageBuildTest extends TestCase
         $this->assertEquals([
             $otherPage->flatReference()->get(),
             $newsletter->flatReference()->get(),
-            TextModule::findBySlug('text-1')->flatReference()->get(),
+            TextModule::findByInternalTitle('text-1')->flatReference()->get(),
             $text_module->flatReference()->get()],
             (new FlatReferenceCollection($this->page->children()->all()))->toFlatReferences()->all());
     }
@@ -380,11 +380,11 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_only_has_general_or_own_modules()
     {
-        $module = Module::create(['slug' => 'foobar']);
+        $module = Module::create(['internal_title' => 'foobar']);
         $module->page_id = $this->page->id++;
         $module->save();
 
-        $module = Module::create(['slug' => 'foobar 2']);
+        $module = Module::create(['internal_title' => 'foobar 2']);
         $module->page_id = $this->page->id;
         $module->save();
         $managers = app(Managers::class);

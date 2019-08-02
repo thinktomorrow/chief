@@ -20,7 +20,7 @@ class ModuleManager extends AbstractManager implements Manager
     {
         $modelDetails = parent::details();
         $modelDetails = $modelDetails->set('plural', $this->model->isPageSpecific() ? 'eigen modules' : 'vaste modules');
-        $modelDetails = $modelDetails->set('title', $this->model->slug);
+        $modelDetails = $modelDetails->set('title', $this->model->internal_title);
 
         return $modelDetails;
     }
@@ -88,9 +88,9 @@ class ModuleManager extends AbstractManager implements Manager
     public function fields(): Fields
     {
         return new Fields([
-            InputField::make('slug')
+            InputField::make('internal_title')
                 ->label('Interne benaming')
-                ->validation('required', ['slug' => 'Interne titel is verplicht']),
+                ->validation('required', ['internal_title' => 'Interne titel is verplicht']),
             InputField::make('title')
                 ->translatable($this->model->availableLocales())
                 ->label('titel'),

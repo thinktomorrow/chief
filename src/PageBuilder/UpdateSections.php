@@ -31,11 +31,11 @@ class UpdateSections
 
     private function __construct(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
-        $this->model = $model;
+        $this->model               = $model;
         $this->relation_references = $relation_references;
-        $this->text_modules = $text_modules;
-        $this->set_refs = $set_refs;
-        $this->sorting = $sorting;
+        $this->text_modules        = $text_modules;
+        $this->set_refs            = $set_refs;
+        $this->sorting             = $sorting;
     }
 
     public static function forModel(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
@@ -110,7 +110,7 @@ class UpdateSections
             if (isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
                 $module = app(CreateModule::class)->handle(
                     (new PagetitleModule)->morphKey(),
-                    $text_module['slug'],
+                    $text_module['internal_title'],
                     $this->model->id
                 );
             }
@@ -119,7 +119,7 @@ class UpdateSections
             else {
                 $module = app(CreateModule::class)->handle(
                     (new TextModule)->morphKey(),
-                    $text_module['slug'],
+                    $text_module['internal_title'],
                     $this->model->id
                 );
             }
@@ -128,10 +128,10 @@ class UpdateSections
             $this->model->adoptChild($module, ['sort' => 0]);
 
             // Add content
-            app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
+            app(UpdateModule::class)->handle($module->id, $module->internal_title, $text_module['trans'], [], []);
 
             // Change slug representation in sorting to proper flat reference
-            $index = (false !== $key = array_search($module->slug, $this->sorting)) ? $key : null;
+            $index = (false !== $key = array_search($module->internal_title, $this->sorting)) ? $key : null;
             $this->sorting[$index] = $module->flatReference()->get();
         }
 
@@ -164,7 +164,7 @@ class UpdateSections
             }
             
             // Replace content
-            app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
+            app(UpdateModule::class)->handle($module->id, $module->internal_title, $text_module['trans'], [], []);
         }
 
         return $this;

@@ -27,16 +27,16 @@ class ModuleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'module_key' => 'required',
-            'slug'      => 'required|unique:modules,slug',
+            'module_key'     => 'required',
+            'internal_title' => 'required|unique:modules,internal_title',
         ];
     }
 
     public function attributes()
     {
         return [
-            'module_key'    => 'type',
-            'slug'          => 'interne titel',
+            'module_key'     => 'type',
+            'internal_title' => 'interne titel',
         ];
     }
 

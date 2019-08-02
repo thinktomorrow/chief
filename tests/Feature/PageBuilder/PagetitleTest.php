@@ -44,7 +44,7 @@ class PagetitleTest extends TestCase
             ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
                 'sections.text.new' => [
                     [
-                        'slug' => 'text-1',
+                        'internal_title' => 'text-1',
                         'type' => 'pagetitle',
                         'trans' => [
                             'nl' => [
@@ -65,7 +65,7 @@ class PagetitleTest extends TestCase
     public function it_can_replace_a_pagetitle_module()
     {
         // Add first text module
-        $module = PagetitleModule::create(['slug' => 'eerste-pagetitle']);
+        $module = PagetitleModule::create(['internal_title' => 'eerste-pagetitle']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         // Replace text module content
@@ -92,7 +92,7 @@ class PagetitleTest extends TestCase
     public function it_removes_a_pagetitle_module_when_its_completely_empty()
     {
         // Add first text module
-        $module = TextModule::create(['slug' => 'eerste-text']);
+        $module = TextModule::create(['internal_title' => 'eerste-text']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->asAdmin()
@@ -120,7 +120,7 @@ class PagetitleTest extends TestCase
     /** @test */
     public function it_displays_pagetitle()
     {
-        $module = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste titel']);
+        $module = TextModule::create(['internal_title' => 'eerste-text', 'content:nl' => 'eerste titel']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
         $this->assertEquals('eerste titel', $this->page->renderChildren());

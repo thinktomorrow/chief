@@ -12,13 +12,13 @@ class UpdateModule
 {
     use TranslatableCommand;
 
-    public function handle($id, string $slug, array $translations, array $files, array $files_order): Module
+    public function handle($id, string $internal_title, array $translations, array $files, array $files_order): Module
     {
         try {
             DB::beginTransaction();
 
             $module = Module::findOrFail($id);
-            $module->slug = $slug;
+            $module->internal_title = $internal_title;
             $module->save();
 
             $this->saveModuleTranslations($module, $translations);

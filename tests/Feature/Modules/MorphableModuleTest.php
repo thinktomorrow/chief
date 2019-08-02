@@ -26,7 +26,7 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function a_module_can_be_divided_by_morph_key()
     {
-        Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar']);
+        Module::create(['morph_key' => NewsletterModuleFake::class, 'internal_title' => 'foobar']);
 
         $this->assertCount(1, NewsletterModuleFake::all());
         $this->assertCount(0, OtherModuleFake::all());
@@ -39,7 +39,7 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function a_module_can_be_retrieved_by_morph_key()
     {
-        Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar']);
+        Module::create(['morph_key' => NewsletterModuleFake::class, 'internal_title' => 'foobar']);
 
         $this->assertNotNull(NewsletterModuleFake::first());
         $this->assertNull(OtherModuleFake::first());
@@ -51,7 +51,7 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function generic_module_class_always_ignores_the_morph_key()
     {
-        Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar']);
+        Module::create(['morph_key' => NewsletterModuleFake::class, 'internal_title' => 'foobar']);
 
         $this->assertNotNull(Module::first());
     }
@@ -60,7 +60,7 @@ class MorphableModuleTest extends TestCase
     public function morph_key_utilises_the_laravel_morph_map()
     {
         Relation::morphMap(['newsletter' => NewsletterModuleFake::class]);
-        Module::create(['morph_key' => 'newsletter', 'slug' => 'foobar']);
+        Module::create(['morph_key' => 'newsletter', 'internal_title' => 'foobar']);
 
         $this->assertCount(1, Module::morphable('newsletter')->get());
     }
@@ -68,7 +68,7 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function it_can_create_instance_from_flat_reference()
     {
-        $module = NewsletterModuleFake::create(['slug' => 'foobar']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'foobar']);
 
         $instance = $module->flatReference()->instance();
 
@@ -79,7 +79,7 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function morph_key_can_be_scoped_on_runtime()
     {
-        Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar']);
+        Module::create(['morph_key' => NewsletterModuleFake::class, 'internal_title' => 'foobar']);
 
         $this->assertNotNull(Module::morphable(NewsletterModuleFake::class)->first());
         $this->assertNull(Module::morphable('others')->first());
@@ -90,7 +90,7 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function it_returns_the_right_morphable_with_the_eloquent_find_methods()
     {
-        $module = NewsletterModuleFake::create(['slug' => 'foobar',]);
+        $module = NewsletterModuleFake::create(['internal_title' => 'foobar',]);
 
         $this->assertInstanceOf(NewsletterModuleFake::class, Module::find($module->id));
         $this->assertInstanceOf(NewsletterModuleFake::class, Module::findOrFail($module->id));
@@ -99,8 +99,8 @@ class MorphableModuleTest extends TestCase
     /** @test */
     public function it_returns_the_right_morphable_model_by_slug()
     {
-        NewsletterModuleFake::create(['slug' => 'foobar']);
+        NewsletterModuleFake::create(['internal_title' => 'foobar']);
 
-        $this->assertInstanceOf(NewsletterModuleFake::class, Module::findBySlug('foobar'));
+        $this->assertInstanceOf(NewsletterModuleFake::class, Module::findByInternalTitle('foobar'));
     }
 }

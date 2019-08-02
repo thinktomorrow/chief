@@ -179,9 +179,9 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
         return $key ? array_pluck($types, $key) : $types;
     }
 
-    public static function findBySlug($slug)
+    public static function findByInternalTitle($internal_title)
     {
-        return static::where('slug', $slug)->first();
+        return static::where('internal_title', $internal_title)->first();
     }
 
     public function flatReference(): FlatReference
@@ -191,7 +191,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
 
     public function flatReferenceLabel(): string
     {
-        return $this->slug ?? '';
+        return $this->internal_title ?? '';
     }
 
     public function flatReferenceGroup(): string

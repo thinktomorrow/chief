@@ -122,7 +122,7 @@ class SnippetParserTest extends TestCase
                 'trans' => [
                     'nl' => [
                         'title' => 'foobar',
-                        'slug' => 'foobar-slug',
+                        'internal_title' => 'foobar-slug',
                         'content' => 'foo [[snippet-stub]] bar',
                     ],
                 ],
@@ -139,7 +139,7 @@ class SnippetParserTest extends TestCase
             ->put(route('chief.back.managers.update', ['articles_fake', $page->id]), $this->validUpdatePageParams([
                 'sections.text.new' => [
                     [
-                        'slug' => 'text-1',
+                        'internal_title' => 'text-1',
                         'trans' => [
                             'nl' => [
                                 'content' => 'foo [[snippet-stub]] bar',
@@ -154,7 +154,7 @@ class SnippetParserTest extends TestCase
 
     private function addSnippetToModule()
     {
-        $module = NewsletterModuleFake::create(['slug' => 'new-slug']);
+        $module = NewsletterModuleFake::create(['internal_title' => 'new-slug']);
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['newsletters_fake', $module->id]), $this->validUpdateModuleParams([
