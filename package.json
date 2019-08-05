@@ -23,7 +23,7 @@
     "module": "^1.2.5",
     "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
-    "tailwindcss": "^1.0.5",
+    "tailwindcss": "^1.0.6",
     "vue-server-renderer": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   },
