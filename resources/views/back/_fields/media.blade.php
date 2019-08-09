@@ -9,7 +9,7 @@
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
                  @dragenter.prevent="handleSortingEnter">
-                <slim group="{{ $name }}" :options="{
+                <slim group="{{ 'files['. $name .']' }}" :options="{
                     id: item.id,
                     filename: item.filename,
                     url: item.url,
@@ -26,7 +26,7 @@
                     <!-- allow to click for upload -->
                     <input v-if="checkSupport" type="file" @change="handleFileSelect" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <!-- if not supported, a file can still be passed along -->
-                    <input v-else type="file" name="{{ $name }}[]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
+                    <input v-else type="file" name="{{ 'files['. $name .']' }}[]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                 </div>
             </div>
