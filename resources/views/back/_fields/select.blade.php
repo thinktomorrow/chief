@@ -1,4 +1,4 @@
-@if($field->grouped())
+@if($field->isGrouped())
     <chief-multiselect
             name="{{ isset($locale) ? $field->translateName($locale) : $field->name() }}"
             :options='@json($field->options)'
