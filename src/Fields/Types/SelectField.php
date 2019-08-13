@@ -24,6 +24,11 @@ class SelectField extends Field
         return $this;
     }
 
+    public function isGrouped()
+    {
+        return isset($this->values['grouped']);
+    }
+
     public function selected($values)
     {
         $this->values['selected'] = $values;

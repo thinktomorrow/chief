@@ -24,7 +24,6 @@
                                 <div class="label label-error">geblokkeerd</div>
                             @endif --}}
                             {!! $user->present()->enabledAsLabel() !!}
-                            {!! optional(optional($user->invitation)->present())->stateAsLabel() !!}
                         </div>
 
                         <div class="font-s text-grey-300">

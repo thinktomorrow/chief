@@ -125,14 +125,14 @@ class AcceptInviteTest extends TestCase
     {
         Notification::fake();
 
-        $invitee = new User();
-        $invitee->email = 'email';
+        $invitee            = new User();
+        $invitee->email     = 'email';
         $invitee->firstname = 'firstname';
-        $invitee->lastname = 'lastname';
+        $invitee->lastname  = 'lastname';
         $invitee->save();
 
         app(InviteUser::class)->handle($invitee, $this->inviter);
-        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response = $this->get($invitee->fresh()->invitation->last()->acceptUrl());
         $response->assertRedirect(route('chief.back.password.edit'));
 
         // Assert we are logged in
@@ -151,14 +151,14 @@ class AcceptInviteTest extends TestCase
         $invitee->save();
 
         app(InviteUser::class)->handle($invitee, $this->inviter);
-        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response = $this->get($invitee->fresh()->invitation->last()->acceptUrl());
         $response->assertRedirect(route('chief.back.password.edit'));
 
         // Log out so we access link again as 'other' user
         auth()->guard('chief')->logout();
 
         // Click invite link again
-        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response = $this->get($invitee->fresh()->invitation->last()->acceptUrl());
         $response->assertRedirect(route('invite.expired'));
 
         // Assert we are not logged in
@@ -177,14 +177,14 @@ class AcceptInviteTest extends TestCase
         $invitee->save();
 
         app(InviteUser::class)->handle($invitee, $this->inviter);
-        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response = $this->get($invitee->fresh()->invitation->last()->acceptUrl());
         $response->assertRedirect(route('chief.back.password.edit'));
 
         // Assert we are logged in
         $this->assertTrue(auth()->guard('chief')->check());
 
         // Click invite link again
-        $response = $this->get($invitee->fresh()->invitation->acceptUrl());
+        $response = $this->get($invitee->fresh()->invitation->last()->acceptUrl());
         $response->assertRedirect(route('chief.back.password.edit'));
 
         // Assert we are still logged in
