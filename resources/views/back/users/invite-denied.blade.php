@@ -5,7 +5,7 @@
 @section('content')
     <div class="container min-h-screen flex items-center">
         <div class="row w-full justify-center my-32">
-            <div class="xs-column-12 s-column-10 m-column-6 l-column-4">
+            <div class="xs-column-12 s-column-10 m-column-6 l-column-4 relative z-20">
 
                 <h1 class="mb-8">Jouw uitnodiging is afgewezen.</h1>
 
