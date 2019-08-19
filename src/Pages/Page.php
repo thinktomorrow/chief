@@ -25,7 +25,7 @@ use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
-use Dimsav\Translatable\Translatable as BaseTranslatable;
+use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
@@ -216,7 +216,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         }
 
         $fallback_locale = config('app.fallback_locale');
-dump($fallback_locale);
         if (isset(static::$baseUrlSegment[$fallback_locale])) {
             return static::$baseUrlSegment[$fallback_locale];
         }

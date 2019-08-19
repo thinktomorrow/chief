@@ -3,7 +3,7 @@
 
     ul {
         list-style: none;
-        top: 100px;
+        top: 50px;
         text-align: left;
     }
 
@@ -27,10 +27,10 @@
 
 .tab-block{
     .tab-content{
+        scroll-behavior: smooth;
         @apply w-full;
         .section-divider {
             @apply relative py-3 px-4 uppercase font-bold border-b border-grey-200 bg-grey-200;
-
             .divider-locale {
                 right: 1rem;
                 top: 50%;

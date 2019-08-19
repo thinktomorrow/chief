@@ -6,7 +6,7 @@
     "type": "chief-cms",
     "require": {
         "php": "^7.2.0",
-        "dimsav/laravel-translatable": "^9.0",
+        "astrotomic/laravel-translatable": "^11.3",
         "doctrine/dbal": "^2.5",
         "ezyang/htmlpurifier": "^4.11",
         "fideloper/proxy": "^4.0",
@@ -15,7 +15,7 @@
         "spatie/laravel-activitylog": "^3.0",
         "spatie/laravel-permission": "^2.20",
         "thinktomorrow/assetlibrary": "~0.5.0",
-        "thinktomorrow/squanto": "^0.5.5",
+        "thinktomorrow/squanto": "0.6",
         "thinktomorrow/url": "~1.0.0",
         "thinktomorrow/vine": "~0.2.1"
     },

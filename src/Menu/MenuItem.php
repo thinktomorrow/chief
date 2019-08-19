@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
 
-use Dimsav\Translatable\Translatable as BaseTranslatable;
+use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Concerns\Morphable\GlobalMorphableScope;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphables;

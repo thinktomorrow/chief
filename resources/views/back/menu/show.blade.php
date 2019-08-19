@@ -23,6 +23,7 @@
 
 @section('content')
 
+
     @if($menuItems->isEmpty() )
         <div class="stack-l">
             <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary inline-flex items-center">
@@ -31,10 +32,10 @@
             </a>
         </div>
     @else
-        <div class="treeview stack-l">
-            <div class="row">
+        <div class="stack-l container">
+            <div class="row opacity-50">
                 <div class="column center-y">
-                    <strong>Label</strong>
+                    <strong>Menu label</strong>
                 </div>
                 <div class="column-4 center-y">
                     <strong>Link</strong>
@@ -42,33 +43,29 @@
                 <div class="column-2"></div>
             </div>
             @foreach($menuItems as $menuItem)
-
-                <hr class="separator stack-s">
+                <section class="relative bg-white border border-grey-100 rounded inset-s bg-white stack-s">
 
                 @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
 
-                <div class="stack-s">
                     @foreach($menuItem->children as $child)
                         @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 
-                        <div class="stack-xs">
 
                             @foreach($child->children as $subchild)
-
+    
                                 @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
 
                                 @foreach($child->children as $subchild)
+        
                                     @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
+                                
                                 @endforeach
 
                             @endforeach
 
-                        </div>
-
                     @endforeach
 
-                </div>
-
+                </section>
             @endforeach
         </div>
     @endif

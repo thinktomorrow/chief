@@ -17,13 +17,13 @@ class Monitor
     {
         foreach(static::$checks as $check => $notifier)
         {
-            $checker = (new $check);
-            $notifier = (new $notifier);
-            
-            if(!$checker->check())
-            {
-                return $notifier->notify($checker->notify());
+            $checkInstance = app($check);
+
+            if(!$checkInstance->check()) {
+                app($notifier)->onFailure($checkInstance);
+            } else {
+                app($notifier)->onSuccess($checkInstance);
             }
-        } 
+        }
     }
 }
