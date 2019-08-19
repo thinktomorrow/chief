@@ -37,6 +37,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: replace htmlawed with HtmlPurifier
 - Added: Html sanitization on updatesections
 - Fixed: selectfield return empty array instead of array with null value
+- Added: healthmonitor homepage set check
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab
