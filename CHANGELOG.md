@@ -36,6 +36,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: Fields::add() is made immutable so it no longer changes current collection but returns a new Fields instance.
 - Changed: replace htmlawed with HtmlPurifier
 - Added: Html sanitization on updatesections
+- Fixed: selectfield return empty array instead of array with null value
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab
