@@ -2,18 +2,14 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use config;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
@@ -23,8 +19,12 @@ use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
+use Thinktomorrow\Chief\HealthMonitor\Middleware\MonitorMiddleware;
+use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -197,6 +197,7 @@ class ChiefServiceProvider extends ServiceProvider
     {
         app(Router::class)->middlewareGroup('web-chief', [
             AuthenticateChiefSession::class,
+            MonitorMiddleware::class,
         ]);
 
         app(Router::class)->aliasMiddleware('chief-guest', ChiefRedirectIfAuthenticated::class);

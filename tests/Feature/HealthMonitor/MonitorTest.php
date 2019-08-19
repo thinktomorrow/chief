@@ -3,8 +3,9 @@
 namespace Thinktomorrow\Chief\Tests\Feature\HealthMonitor;
 
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Settings\Setting;
+use Thinktomorrow\Chief\Settings\Settings;
 use Thinktomorrow\Chief\HealthMonitor\Monitor;
-use Thinktomorrow\Chief\HealthMonitor\Checks\HomepageCheck;
 
 class MonitorTest extends TestCase
 {
@@ -19,6 +20,14 @@ class MonitorTest extends TestCase
     public function the_homepagecheck_notifies_if_no_homepage_is_set()
     {
         Monitor::check();
-        $this->assertEquals('Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in hier: <a href="http://localhost/admin/settings">Settings</a>', session('alertbarmessage'));
+        $this->assertNotEmpty(session('alertbarmessage'));
+
+        // Now set a homepage
+        Setting::create(['key' => Setting::HOMEPAGE, 'value' => 'test']);
+
+        $this->app->singleton(Settings::class, function ($app) { return new Settings(); });
+
+        Monitor::check();
+        $this->assertEmpty(session('alertbarmessage'));
     }
 }

@@ -216,7 +216,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         }
 
         $fallback_locale = config('app.fallback_locale');
-dump($fallback_locale);
         if (isset(static::$baseUrlSegment[$fallback_locale])) {
             return static::$baseUrlSegment[$fallback_locale];
         }
