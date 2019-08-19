@@ -1,7 +1,11 @@
 @extends('chief::back._layouts.solo')
 
 @section('title')
+    @if($new_password)
+    Maak een wachtwoord aan
+    @else
     Wijzig jouw wachtwoord
+    @endif
 @endsection
 
 @section('content')
