@@ -9,7 +9,6 @@
     @slot('subtitle')
         <a class="center-y" href="{{ route('squanto.index') }}">
             <svg width="18" height="18" class="mr-2"><use xlink:href="#arrow-left"/></svg>
-            Terug naar teksten
         </a>
     @endslot
 

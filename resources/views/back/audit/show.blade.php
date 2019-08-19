@@ -25,7 +25,7 @@
                 <strong>Timestamp</strong>
             </div>
         </div>
-        <section class="bg-white border border-grey-100 rounded inset-s stack-s">
+        <section class="bg-white border border-grey-100 rounded inset-s stack-s" style="height:100%;">
         @foreach($activity as $event)
             <div class="row border-b border-grey-100 py-2">
                 <div class="column-3 center-y">
