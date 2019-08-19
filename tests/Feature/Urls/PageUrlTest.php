@@ -66,7 +66,6 @@ class PageUrlTest extends TestCase
     /** @test */
     function the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
             'url-slugs' => [
                 'nl' => 'foobar',
@@ -76,30 +75,7 @@ class PageUrlTest extends TestCase
 
         $model = ProductWithBaseSegments::first();
 
-        config('app.fallback_locale', 'nl');
-        app()->setLocale('fr');
-
-        $this->assertEquals(url('/producten/foobar'), $model->url() ); // fr takes nl because this is the fallback
-        $this->assertEquals(url('/producten/foobar'), $model->url('nl') );
-        $this->assertEquals(url('/products/foobar'), $model->url('en') );
-    }
-
-    /** @test */
-    function if_no_locale_for_the_base_url_segment_found_no_base_url_segment_is_used()
-    {
-        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
-            'url-slugs' => [
-                'nl' => 'foobar',
-                'en' => 'foobar',
-            ],
-        ]));
-
-        $model = ProductWithBaseSegments::first();
-
-        app()->setLocale('nl');
-        $this->assertEquals(url('/producten/foobar'), $model->url() );
-        $this->assertEquals(url('/producten/foobar'), $model->url('nl') );
-        $this->assertEquals(url('/products/foobar'), $model->url('en') );
+        $this->assertEquals('products', $model->baseUrlSegment('fr') );
     }
 
 }
