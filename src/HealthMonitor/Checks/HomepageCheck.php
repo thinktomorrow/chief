@@ -17,6 +17,6 @@ class HomepageCheck implements HealthCheck
 
     public static function notify()
     {
-        return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in hier: <a href="'. route('chief.back.settings.edit') .'">Settings</a>';
+        return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in hier: <a href="'. route('chief.back.settings.edit') .'" class="text-secondary-800 underline hover:text-white">Settings</a>';
     }
 }
