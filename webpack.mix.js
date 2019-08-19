@@ -29,15 +29,15 @@ mix.webpackConfig({
 	
 	})
 
-    .purgeCss({
-        folders: [
-            'resources/assets/',
-            'resources/views/',
-            'app',
-            'src'
-		],
-		whitelistPatterns: [/re-icon-/, /redactor-/]
-    })
+    // .purgeCss({
+    //     folders: [
+    //         'resources/assets/',
+    //         'resources/views/',
+    //         'app',
+    //         'src'
+	// 	],
+	// 	whitelistPatterns: [/re-icon-/, /redactor-/]
+    // })
 
     /**
 	 * Redactor wysiswyg

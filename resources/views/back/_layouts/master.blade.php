@@ -1,7 +1,7 @@
 <html>
     
     @include('chief::back._layouts._partials.head')
-
+    
     <body>
 
         @include('chief::back._elements.healthbar')

@@ -50,10 +50,24 @@
     }
 }
 
+.color-inherit{
+    color: inherit;
+}
+
 .clearfix {
     &:before,
     &:after{
         content: " ";
         display: table;
     }
+}
+
+.indent-1{
+    @apply ml-1 border-l border-primary-800 text-primary-800;
+}
+.indent-2{
+    @apply ml-4 border-l border-primary-600 text-primary-600;
+}
+.indent-3{
+    @apply ml-8 border-l border-primary-400 text-primary-400;
 }
