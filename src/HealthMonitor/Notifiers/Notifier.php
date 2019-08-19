@@ -6,5 +6,5 @@ namespace Thinktomorrow\Chief\HealthMonitor\Notifiers;
 
 interface Notifier
 {
-    public static function notify(string $message);
+    public static function notify(string $message, bool $checked);
 }

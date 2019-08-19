@@ -19,11 +19,8 @@ class Monitor
         {
             $checker = (new $check);
             $notifier = (new $notifier);
-            
-            if(!$checker->check())
-            {
-                return $notifier->notify($checker->notify());
-            }
+
+            return $notifier->notify($checker->notify(), $checker->check());
         } 
     }
 }

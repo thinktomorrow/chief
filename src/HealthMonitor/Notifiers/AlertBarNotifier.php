@@ -6,8 +6,13 @@ namespace Thinktomorrow\Chief\HealthMonitor\Notifiers;
 
 class AlertBarNotifier implements Notifier
 {
-    public static function notify(string$message)
+    public static function notify(string $message, bool $checked)
     {
-        session(['alertbarmessage' => $message]);
+        if(! $checked)
+        {
+            session(['alertbarmessage' => $message]);
+        }else{
+            session()->forget('alertbarmessage');
+        }
     }
 }
