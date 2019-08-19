@@ -2,8 +2,12 @@
     <div class="row bg-white border border-grey-100 rounded inset-s" style="height: 100%">
         <div class="column">
             @if($manager->can('edit'))
-                <a href="{{ $manager->route('edit') }}">
-                    <h3>{!! $manager->details()->title !!}</h3>
+                <a href="{{ $manager->route('edit') }}" class="flex items-center">
+                    <h3 class="mb-0">{!! $manager->details()->title !!}</h3>
+                    <span class="label label-tertiary flex items-center">
+                        <svg width="14" height="14" class="fill-current"><use xlink:href="#home"/></svg>
+                        {{-- <span class="ml-2 text-sm">homepage</span> --}}
+                    </span>
                 </a>
             @else
                 <span class="text-black font-bold">{!! $manager->details()->title !!}</span>

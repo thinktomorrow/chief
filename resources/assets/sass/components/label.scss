@@ -24,6 +24,13 @@
   @apply text-secondary-500 border border-secondary-500 bg-transparent;
 }
 
+.label-tertiary {
+  @apply bg-tertiary-500 border border-tertiary-500 text-grey-600;
+  &::before{
+    border-color: transparent config('theme.colors.tertiary.500') transparent transparent;
+  }
+}
+
 .label-success {
   @apply bg-success border border-success text-white;
   &::before{

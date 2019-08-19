@@ -44,7 +44,7 @@
                         </div>
 
                     @else
-
+                        
                         @foreach($managers as $manager)
                             @include('chief::back.managers._partials._rowitem')
                             @include('chief::back.managers._partials.delete-modal')
