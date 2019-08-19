@@ -19,9 +19,10 @@ class Monitor
         {
             $checkInstance = app($check);
 
-            if(!$checkInstance->check())
-            {
-                app($notifier)->notify($checkInstance->message());
+            if(!$checkInstance->check()) {
+                app($notifier)->onFailure($checkInstance);
+            } else {
+                app($notifier)->onSuccess($checkInstance);
             }
         }
     }
