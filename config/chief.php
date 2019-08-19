@@ -105,4 +105,6 @@ return [
      * manage this by calling the 'withSnippets()' method on a Page or Module object.
      */
     'withSnippets' => true,
+
+    'editor' => 'quill',
 ];

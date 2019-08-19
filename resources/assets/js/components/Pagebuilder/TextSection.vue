@@ -10,7 +10,7 @@
 
             <!-- show multiple locales in tab -->
             <tabs v-if="locales.length > 1">
-                <tab
+                <tab v-if="textEditor == 'redactor'"
                     v-for="(locale, key) in locales"
                     :key="key"
                     :id="locale+'-text'"
@@ -23,16 +23,45 @@
                         v-html="renderInitialContent(locale)">
                     </textarea>
                 </tab>
+                <tab v-else-if="textEditor == 'quill'"
+                    v-for="(locale, key) in locales"
+                    :key="key"
+                    :id="locale+'-text'"
+                    :name="locale"
+                    v-cloak>
+                    <div 
+                        class="inset-s bg-white" 
+                        :id="'editor-'+locales[0]+'-'+_uid"
+                        v-html="renderInitialContent(locales[0])">
+                    </div>
+                    <input 
+                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
+                        :type="'hidden'"
+                        :value="text_content"
+                    >
+                </tab>
             </tabs>
 
             <!-- show single locale not in tabbed format -->
             <template v-if="locales.length == 1">
-                <textarea
+                <textarea v-if="textEditor == 'redactor'"
                         :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
                         :id="'editor-'+locales[0]+'-'+_uid"
                         class="inset-s" cols="30" :rows="single ? 1 : 10"
                         v-html="renderInitialContent(locales[0])">
                 </textarea>
+                <div v-else-if="textEditor == 'quill'">
+                    <div 
+                        class="inset-s bg-white" 
+                        :id="'editor-'+locales[0]+'-'+_uid"
+                        v-html="renderInitialContent(locales[0])">
+                    </div>
+                    <input 
+                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
+                        :type="'hidden'"
+                        :value="text_content"
+                    >
+                </div>
             </template>
 
         </div>
@@ -64,9 +93,10 @@
         props: {
             'section': { type: Object },
             'title': {},
-            'locales': { default: function(){ return [] }, type: Array},
+            'locales': { default: function() { return [] }, type: Array},
             // Allow redactor editor
             'editor': { default: true, type: Boolean },
+            'textEditor': { default: function() { return "" }, type: String },
             // Single line for edit or multiple lines
             'single': { default: false, type: Boolean },
         },
@@ -74,6 +104,7 @@
             return {
                 new_or_replace_key: this.section.id ? 'replace' : 'new',
                 show_menu: false,
+                text_content: "",
             }
         },
         mounted(){
@@ -81,10 +112,18 @@
             if(this.editor) {
                 for(var key in this.locales) {
                     if( ! this.locales.hasOwnProperty(key)) continue;
-
-                    window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
-                        // options
-                    });
+                    if(this.textEditor == 'redactor') {
+                       window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                            // options
+                        }); 
+                    } else if (this.textEditor == 'quill') {
+                        var quill = new Quill('#editor-' + this.locales[0] + '-' + this._uid, {
+                            theme: 'snow'
+                        });
+                        quill.on('text-change', () => {
+                            this.text_content = quill.root.innerHTML;
+                        });
+                    }
                 }
             }
 
@@ -97,7 +136,7 @@
 
                 let content = this.section['trans'][locale].content;
                 if(!content) return '';
-
+    
                 return content;
             },
             removeThisSection(position){

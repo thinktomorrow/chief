@@ -55,6 +55,7 @@
                     v-bind:locales="locales"
                     :single="true"
                     :editor="true"
+                    :text-editor="textEditor"
                     title="Pagina text"
                     class="stack" :class="section.type"></text-section>
 
@@ -100,6 +101,7 @@
             'modules' : { default: function(){ return [] }, type: Array},
             'pages' : { default: function(){ return [] }, type: Array},
             'pagesets' : { default: function(){ return [] }, type: Array},
+            'textEditor': { default: function() { return "" }, type: String},
         },
         data(){
             return {
