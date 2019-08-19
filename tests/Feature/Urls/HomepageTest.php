@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
+use Thinktomorrow\Chief\Settings\Homepage;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
@@ -197,6 +198,26 @@ class HomepageTest extends TestCase
 
         $this->assertEquals($model->flatReference()->get(), chiefSetting('homepage', 'nl'));
         $this->assertNull(chiefSetting('homepage', 'en'));
+    }
+
+    /** @test */
+    function helper_can_check_if_page_is_homepage()
+    {
+        // Set default homepage
+        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
+            'url-slugs' => [
+                'nl' => '/',
+                'en' => 'foobar',
+            ],
+        ]));
+
+        $model = ProductFake::first();
+        $other = ProductFake::create();
+
+        $this->assertTrue(Homepage::is($model));
+        $this->assertFalse(Homepage::is($model, 'en'));
+
+        $this->assertFalse(Homepage::is($other));
     }
 
 }
