@@ -11,6 +11,7 @@ class PeriodPageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        AgendaPageFake::migrateUp();
     }
 
     /** @test */
