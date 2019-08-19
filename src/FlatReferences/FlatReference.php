@@ -48,6 +48,11 @@ class FlatReference
         return (get_class($this) === get_class($other) && $this->get() === $other->get());
     }
 
+    public function is(string $flatReferenceString): bool
+    {
+        return $this->get() === $flatReferenceString;
+    }
+
     public function __toString()
     {
         return $this->get();
