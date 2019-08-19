@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\HealthMonitor\Checks;
 
 interface HealthCheck
 {
-    public static function check();
+    public function check(): bool;
 
-    public static function notify();
+    public function message(): string;
 }
