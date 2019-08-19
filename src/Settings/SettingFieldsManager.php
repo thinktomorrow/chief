@@ -68,7 +68,7 @@ class SettingFieldsManager extends Fields implements FieldManager
                 continue;
             }
 
-            if ($key === Setting::HOMEPAGE) {
+            if ($key === Setting::HOMEPAGE && is_array($setting->value)) {
                 $existingHomepageValue = $setting->value;
             }
 

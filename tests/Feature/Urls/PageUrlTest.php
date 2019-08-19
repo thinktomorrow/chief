@@ -62,4 +62,20 @@ class PageUrlTest extends TestCase
         app()->setLocale('en');
         $this->assertEquals(url('/products/foobar'), $model->url() );
     }
+
+    /** @test */
+    function the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
+    {
+        $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
+            'url-slugs' => [
+                'nl' => 'foobar',
+                'en' => 'foobar',
+            ],
+        ]));
+
+        $model = ProductWithBaseSegments::first();
+
+        $this->assertEquals('products', $model->baseUrlSegment('fr') );
+    }
+
 }

@@ -4,6 +4,8 @@
 
     <body>
 
+        @include('chief::back._elements.healthbar')
+
         @include('chief::back._layouts._partials.svg-symbols')
     
         <main id="main" class="bg-secondary-50 min-h-screen relative">
