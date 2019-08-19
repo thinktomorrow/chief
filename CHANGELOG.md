@@ -38,6 +38,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Added: Html sanitization on updatesections
 - Fixed: selectfield return empty array instead of array with null value
 - Added: healthmonitor homepage set check
+- Removed: migration columns start_at, end_at and featured from table pages.
 
 ## 0.2.14 - 2019-6-18
 - Added: add seo_image to page seo tab
