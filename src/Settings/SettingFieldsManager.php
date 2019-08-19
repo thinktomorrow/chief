@@ -30,7 +30,7 @@ class SettingFieldsManager extends Fields implements FieldManager
         return new Fields([
             SelectField::make('homepage')
                 ->name('homepage[:locale]')
-                ->options(UrlHelper::allOnlineSingles())
+                ->options(UrlHelper::allOnlineModels())
                 ->translatable(config('translatable.locales'))
                 ->validation('required')
                 ->grouped()
