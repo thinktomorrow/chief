@@ -1,7 +1,5 @@
 <?php
 
-use Thinktomorrow\Chief\Media\MediaType;
-
 return [
 
     /**
@@ -87,24 +85,6 @@ return [
             'label' => 'Hoofdnavigatie',
             'view'  => 'front.menus.main'
         ]
-    ],
-
-    /**
-     * Set of mediatypes used for each collection.
-     * Default set of mediatypes that is available for every collection
-     */
-    'mediatypes' => [
-
-        'default' => [
-            (object) [
-                'type' => MediaType::HERO,
-                'limit' => 1,
-            ],
-            (object) [
-                'type' => MediaType::THUMB,
-                'limit' => 1,
-            ]
-        ],
     ],
 
     /**
