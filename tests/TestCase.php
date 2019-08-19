@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
-use Dimsav\Translatable\TranslatableServiceProvider;
+use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\PermissionServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;

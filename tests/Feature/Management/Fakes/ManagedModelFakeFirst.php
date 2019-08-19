@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\Relations\ActsAsParent;
 class ManagedModelFakeFirst extends Model implements  ManagedModel, TranslatableContract, HasMedia, ActsAsParent
 {
     use Translatable,
-        \Dimsav\Translatable\Translatable,
+        \Astrotomic\Translatable\Translatable,
         AssetTrait,
         Publishable,
         ActingAsParent;
