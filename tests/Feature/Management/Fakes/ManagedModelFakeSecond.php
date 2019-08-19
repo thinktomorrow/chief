@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
 class ManagedModelFakeSecond extends Model implements  ManagedModel, TranslatableContract, HasMedia
 {
-    use Translatable, \Dimsav\Translatable\Translatable, AssetTrait, Publishable;
+    use Translatable, \Astrotomic\Translatable\Translatable, AssetTrait, Publishable;
 
     public $table = 'fake_managed_models';
     public $translatedAttributes = ['title_trans', 'content_trans', 'slug'];

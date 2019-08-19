@@ -19,7 +19,7 @@ use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Dimsav\Translatable\Translatable as BaseTranslatable;
+use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
