@@ -13,11 +13,12 @@
 <script>
     var editors = document.querySelectorAll('[data-editor]');
     for(var i = 0; i < editors.length; i++) {
-        var quill = new Quill(editors[i], {
+        const quill = new Quill(editors[i], {
             theme: 'snow'
         });
+        const editorInput = document.getElementsByName(quill.container.id)[0];
+        editorInput.value = quill.root.innerHTML;
         quill.on('text-change', function() {
-            var editorInput = document.getElementsByName(quill.container.id)[0];
             editorInput.value = quill.root.innerHTML;
         });
     }   

@@ -33,12 +33,13 @@
                         <div 
                             class="inset-s bg-white" 
                             :id="'editor-'+locale+'-'+_uid"
+                            :lang="locales[key]"
                             v-html="renderInitialContent(locale)">
                         </div>
                         <input 
                             :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
                             :type="'hidden'"
-                            :value="text_content"
+                            :value="text_content[key].value"
                         >
                     </tab>
                 </div>
@@ -58,10 +59,10 @@
                         :id="'editor-'+locales[0]+'-'+_uid"
                         v-html="renderInitialContent(locales[0])">
                     </div>
-                    <input 
+                    <input
                         :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
                         :type="'hidden'"
-                        :value="text_content"
+                        :value="text_content[0].value"
                     >
                 </div>
             </template>
@@ -106,11 +107,15 @@
             return {
                 new_or_replace_key: this.section.id ? 'replace' : 'new',
                 show_menu: false,
-                text_content: "",
+                text_content: this.locales.map(locale => { 
+                    return {
+                        locale,
+                        value: this.section['trans'][locale] ? this.section['trans'][locale].content : '',
+                    }
+                }),
             }
         },
         mounted(){
-
             if(this.editor) {
                 for(var key in this.locales) {
                     if( ! this.locales.hasOwnProperty(key)) continue;
@@ -119,12 +124,16 @@
                             // options
                         }); 
                     } else if (this.textEditor == 'quill') {
-                        var quill = new Quill('#editor-' + this.locales[0] + '-' + this._uid, {
+                        this.text_content[key].value = this.renderInitialContent(this.locales[key]);
+                        const quill = new Quill('#editor-' + this.locales[key] + '-' + this._uid, {
                             theme: 'snow'
                         });
-                        this.text_content = this.renderInitialContent(this.locales[0]);
                         quill.on('text-change', () => {
-                            this.text_content = quill.root.innerHTML;
+                            for(let i = 0; i < this.text_content.length; i++) {
+                                if(this.text_content[i].locale == quill.container.lang) {
+                                    this.text_content[i].value = quill.root.innerHTML;
+                                }
+                            }
                         });
                     }
                 }
