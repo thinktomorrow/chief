@@ -8,7 +8,10 @@ class FieldType
 {
     const INPUT = 'input';   // oneliner text (input)
     const TEXT = 'text';    // Plain text (textarea)
+    const NUMBER = 'number'; // number
+    const RANGE = 'range'; // range slider
     const DATE = 'date';    // Timestamp input
+    const PHONENUMBER = 'phonenumber';    // Timestamp input
     const HTML = 'html';    // Html text (wysiwyg)
     const SELECT = 'select';  // Select options
     const MEDIA = 'media';  // media file (slim uploader)
@@ -26,6 +29,9 @@ class FieldType
         if (!in_array($type, [
             static::INPUT,
             static::TEXT,
+            static::NUMBER,
+            static::PHONENUMBER,
+            static::RANGE,
             static::HTML,
             static::SELECT,
             static::DATE,

@@ -43,15 +43,18 @@ input[type="submit"]{
 
 textarea,
 input[type='text'],
+input[type='date'],
 input[type='email'],
 input[type='url'],
+input[type='tel'],
 input[type='number'],
 input[type='search'],
 input[type='phone'],
 input[type='password'],
 input[type='file'],
 .custom-file-input {
-    @apply w-full rounded border border-grey-200;
+    min-width: 100px;
+    @apply rounded border border-grey-200;
 
     &:focus{
         box-shadow: 0 1px 5px -1px config('theme.colors.grey.200');
@@ -60,6 +63,19 @@ input[type='file'],
     &::placeholder{
         @apply text-grey-300 opacity-100;
     }
+}
+
+textarea,
+input[type='text'],
+input[type='range'],
+input[type='email'],
+input[type='url'], 
+input[type='search'],
+input[type='phone'],
+input[type='password'],
+input[type='file'],
+.custom-file-input {
+    @apply w-full;
 }
 
 // SEARCH

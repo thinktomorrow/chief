@@ -5969,15 +5969,17 @@ input[type=submit] {
 
 textarea,
 input[type=text],
+input[type=date],
 input[type=email],
 input[type=url],
+input[type=tel],
 input[type=number],
 input[type=search],
 input[type=phone],
 input[type=password],
 input[type=file],
 .custom-file-input {
-  width: 100%;
+  min-width: 100px;
   -webkit-border-radius: 0.25rem;
           border-radius: 0.25rem;
   border-width: 1px;
@@ -5986,8 +5988,10 @@ input[type=file],
 
 textarea:focus,
 input[type=text]:focus,
+input[type=date]:focus,
 input[type=email]:focus,
 input[type=url]:focus,
+input[type=tel]:focus,
 input[type=number]:focus,
 input[type=search]:focus,
 input[type=phone]:focus,
@@ -6003,8 +6007,10 @@ input[type=file]:focus,
 
 textarea::-webkit-input-placeholder,
 input[type=text]::-webkit-input-placeholder,
+input[type=date]::-webkit-input-placeholder,
 input[type=email]::-webkit-input-placeholder,
 input[type=url]::-webkit-input-placeholder,
+input[type=tel]::-webkit-input-placeholder,
 input[type=number]::-webkit-input-placeholder,
 input[type=search]::-webkit-input-placeholder,
 input[type=phone]::-webkit-input-placeholder,
@@ -6017,8 +6023,10 @@ input[type=file]::-webkit-input-placeholder,
 
 textarea::-moz-placeholder,
 input[type=text]::-moz-placeholder,
+input[type=date]::-moz-placeholder,
 input[type=email]::-moz-placeholder,
 input[type=url]::-moz-placeholder,
+input[type=tel]::-moz-placeholder,
 input[type=number]::-moz-placeholder,
 input[type=search]::-moz-placeholder,
 input[type=phone]::-moz-placeholder,
@@ -6031,8 +6039,10 @@ input[type=file]::-moz-placeholder,
 
 textarea:-ms-input-placeholder,
 input[type=text]:-ms-input-placeholder,
+input[type=date]:-ms-input-placeholder,
 input[type=email]:-ms-input-placeholder,
 input[type=url]:-ms-input-placeholder,
+input[type=tel]:-ms-input-placeholder,
 input[type=number]:-ms-input-placeholder,
 input[type=search]:-ms-input-placeholder,
 input[type=phone]:-ms-input-placeholder,
@@ -6045,8 +6055,10 @@ input[type=file]:-ms-input-placeholder,
 
 textarea::-ms-input-placeholder,
 input[type=text]::-ms-input-placeholder,
+input[type=date]::-ms-input-placeholder,
 input[type=email]::-ms-input-placeholder,
 input[type=url]::-ms-input-placeholder,
+input[type=tel]::-ms-input-placeholder,
 input[type=number]::-ms-input-placeholder,
 input[type=search]::-ms-input-placeholder,
 input[type=phone]::-ms-input-placeholder,
@@ -6059,8 +6071,10 @@ input[type=file]::-ms-input-placeholder,
 
 textarea::placeholder,
 input[type=text]::placeholder,
+input[type=date]::placeholder,
 input[type=email]::placeholder,
 input[type=url]::placeholder,
+input[type=tel]::placeholder,
 input[type=number]::placeholder,
 input[type=search]::placeholder,
 input[type=phone]::placeholder,
@@ -6069,6 +6083,19 @@ input[type=file]::placeholder,
 .custom-file-input::placeholder {
   color: #BEB4BB;
   opacity: 1;
+}
+
+textarea,
+input[type=text],
+input[type=range],
+input[type=email],
+input[type=url],
+input[type=search],
+input[type=phone],
+input[type=password],
+input[type=file],
+.custom-file-input {
+  width: 100%;
 }
 
 .search-wrapper {

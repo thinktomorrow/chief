@@ -1,4 +1,10 @@
-@if($field->prepend)
+@if($field->append && $field->prepend)
+    <div class="input-addon">
+        <div class="addon inset-s">{!! $field->translateValue($field->prepend, $locale ?? null) !!}</div>
+        <input type="text" name="{{ $name ?? $key }}" id="{{ $key }}" class="input inset-s" placeholder="{{ $field->placeholder ?? '' }}" value="{{ old($key, $manager->fieldValue($field, $locale ?? null)) }}">
+        <div class="addon inset-s">{!! $field->translateValue($field->append, $locale ?? null) !!}</div>
+    </div>
+@elseif($field->prepend)
     <div class="input-addon">
         <div class="addon inset-s">{!! $field->translateValue($field->prepend, $locale ?? null) !!}</div>
         <input type="text" name="{{ $name ?? $key }}" id="{{ $key }}" class="input inset-s" placeholder="{{ $field->placeholder ?? '' }}" value="{{ old($key, $manager->fieldValue($field, $locale ?? null)) }}">
