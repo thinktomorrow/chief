@@ -14,20 +14,18 @@ class CreateAdmin extends BaseCommand
     {
         $this->settingPermissionsAndRoles();
 
-        $anticipations       = $this->getAnticipations();
-        $anticipatedLastname = null;
         $firstname           = null;
         $lastname            = null;
 
         while (!$firstname) {
-            $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
+            $firstname = $this->ask('firstname');
         }
         
         while (!$lastname) {
-            $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
+            $lastname = $this->ask('lastname');
         }
 
-        $email = $this->ask('email', str_slug($firstname).'@thinktomorrow.be');
+        $email = $this->ask('email');
 
         $password = $this->askPassword();
 
@@ -53,32 +51,5 @@ class CreateAdmin extends BaseCommand
         });
         
         $this->info('Default permissions and roles');
-    }
-
-    /**
-     * We assume we are creating users for ourselves so we make this a bit easier to do
-     * @return array
-     */
-    private function getAnticipations()
-    {
-        $anticipations = [
-            [
-                'firstname' => 'Ben',
-                'lastname'  => 'Cavens',
-                'email'     => 'ben@thinktomorrow.be',
-            ],
-            [
-                'firstname' => 'Philippe',
-                'lastname'  => 'Damen',
-                'email'     => 'philippe@thinktomorrow.be',
-            ],
-            [
-                'firstname' => 'Johnny',
-                'lastname'  => 'Berkmans',
-                'email'     => 'johnny@thinktomorrow.be',
-            ],
-        ];
-
-        return $anticipations;
-    }
+    }   
 }
