@@ -1,5 +1,5 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="{section.id} shadow border-l-2 bg-secondary-100 border-primary-500 stack block inset relative rounded-r">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border-l-2 bg-secondary-100 border-primary-500 stack block inset relative rounded-r">
         
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
@@ -31,11 +31,11 @@
                     v-cloak>
                     <div 
                         class="inset-s bg-white" 
-                        :id="'editor-'+locales[0]+'-'+_uid"
-                        v-html="renderInitialContent(locales[0])">
+                        :id="'editor-'+locale+'-'+_uid"
+                        v-html="renderInitialContent(locale)">
                     </div>
                     <input 
-                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
+                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
                         :type="'hidden'"
                         :value="text_content"
                     >

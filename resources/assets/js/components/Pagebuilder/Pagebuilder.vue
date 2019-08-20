@@ -64,6 +64,7 @@
                     v-bind:locales="locales"
                     :single="true"
                     :editor="false"
+                    :text-editor="textEditor"
                     title="Pagina titel"
                     class="stack" :class="section.type"></text-section>
 
