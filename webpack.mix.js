@@ -54,14 +54,7 @@ mix.webpackConfig({
         'resources/assets/js/redactor-plugins/clips/clips.js',
         'resources/assets/js/vendors/redactor/_langs/nl.js'
 	], 'public/chief-assets/back/js/vendors/redactor.js')
-
-	/**
-	 * Slim cropper resources.
-	 * Please note that copied files also get versioned! its a win :)
-	 */
-	.copy('resources/assets/js/vendors/slim/slim.kickstart.min.js', 'public/chief-assets/back/js/vendors')
-    .copy('resources/assets/js/vendors/slim/slim.min.css', 'public/chief-assets/back/css/vendors')
-
+	
 	/**
 	 * Copy fonts
 	 */
