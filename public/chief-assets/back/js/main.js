@@ -5436,7 +5436,7 @@ var render = function() {
     "section",
     {
       staticClass:
-        "{section.id} shadow border-l-2 bg-secondary-100 border-primary-500 stack block inset relative rounded-r",
+        "{section.id} shadow border bg-white border-grey-100 stack block inset relative rounded",
       on: { mouseenter: _vm.mouseEnter, mouseleave: _vm.mouseLeave }
     },
     [
@@ -5792,7 +5792,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "absolute flex justify-start items-center w-full h-8 show-on-hover center-y",
+        "absolute flex justify-center items-center w-full h-8 center-y",
       staticStyle: { "z-index": "1", bottom: "-24px", left: "-14px" }
     },
     [
@@ -5807,7 +5807,8 @@ var render = function() {
               expression: "!active"
             }
           ],
-          staticClass: "block menu-trigger cursor-pointer",
+          staticClass:
+            "block menu-trigger cursor-pointer mx-auto bg-white rounded p-2",
           on: {
             click: function($event) {
               _vm.active = true
@@ -5832,7 +5833,8 @@ var render = function() {
               expression: "active"
             }
           ],
-          staticClass: "block cursor-pointer",
+          staticClass:
+            "block menu-trigger cursor-pointer mx-auto bg-white rounded p-2",
           on: {
             click: function($event) {
               _vm.active = false
@@ -5858,7 +5860,8 @@ var render = function() {
             }
           ],
           staticClass:
-            "pagebuilder-menu-items float-right ml-4 relative bg-white inset --raised rounded flex inline-group-l"
+            "ml-6 pagebuilder-menu-items float-right absolute bg-white inset --raised rounded flex inline-group-l",
+          staticStyle: { transform: "translateX(50%)" }
         },
         [
           _c("div", { staticClass: "flex flex-col" }, [
@@ -5869,7 +5872,7 @@ var render = function() {
                 _c(
                   "span",
                   {
-                    staticClass: "label label-o--secondary center-y",
+                    staticClass: "btn btn-o-secondary squished-xs center-y",
                     attrs: { title: "pagina titel toevoegen" },
                     on: {
                       click: function($event) {
@@ -5909,7 +5912,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "label label-o--secondary center-y",
+                      staticClass: "btn btn-o-secondary squished-xs center-y",
                       attrs: { title: "tekst / afbeelding toevoegen" }
                     },
                     [
@@ -5949,7 +5952,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "label label-o--secondary center-y",
+                      staticClass: "btn btn-o-secondary squished-xs center-y",
                       attrs: { title: "vast blok selecteren" }
                     },
                     [
@@ -5983,7 +5986,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "label label-o--secondary center-y",
+                      staticClass: "btn btn-o-secondary squished-xs center-y",
                       attrs: { title: "pagina selecteren" }
                     },
                     [
@@ -6017,7 +6020,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "label label-o--secondary center-y",
+                      staticClass: "btn btn-o-secondary squished-xs center-y",
                       attrs: { title: "pagina groep selecteren" }
                     },
                     [
@@ -6069,7 +6072,7 @@ var render = function() {
     "section",
     {
       staticClass:
-        "shadow border-l-2 bg-secondary-100 border-primary-500 stack block inset relative rounded-r",
+        "shadow border bg-white border-grey-100 stack block inset relative rounded",
       on: { mouseenter: _vm.mouseEnter, mouseleave: _vm.mouseLeave }
     },
     [

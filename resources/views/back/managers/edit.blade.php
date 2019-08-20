@@ -47,12 +47,6 @@
                     'fieldArrangement' => $manager->fieldArrangement('edit')
                 ])
 
-            @if($manager->can('update'))
-                <div class="stack text-right">
-                    <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-                </div>
-            @endif
-
         </form>
     </div>
 @stop

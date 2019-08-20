@@ -1,5 +1,5 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border-l-2 bg-secondary-100 border-primary-500 stack block inset relative rounded-r">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 stack block inset relative rounded">
         
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
