@@ -105,4 +105,11 @@ return [
      * manage this by calling the 'withSnippets()' method on a Page or Module object.
      */
     'withSnippets' => true,
+
+    /**
+     * Select the editor for the html fields. This is used for the html fields
+     * in the forms as well as in the pagebuilder. Available options are:
+     * 'quill' and 'redactor'. By default the free quill editor is set.
+     */
+    'editor' => 'quill',
 ];

@@ -2807,6 +2807,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2848,6 +2849,12 @@ __webpack_require__.r(__webpack_exports__);
         return [];
       },
       type: Array
+    },
+    'textEditor': {
+      "default": function _default() {
+        return "";
+      },
+      type: String
     }
   },
   data: function data() {
@@ -3183,6 +3190,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3204,6 +3240,12 @@ __webpack_require__.r(__webpack_exports__);
       "default": true,
       type: Boolean
     },
+    'textEditor': {
+      "default": function _default() {
+        return "";
+      },
+      type: String
+    },
     // Single line for edit or multiple lines
     'single': {
       "default": false,
@@ -3213,15 +3255,28 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       new_or_replace_key: this.section.id ? 'replace' : 'new',
-      show_menu: false
+      show_menu: false,
+      text_content: ""
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     if (this.editor) {
       for (var key in this.locales) {
         if (!this.locales.hasOwnProperty(key)) continue;
-        window.$R('#editor-' + this.locales[key] + '-' + this._uid, {// options
-        });
+
+        if (this.textEditor == 'redactor') {
+          window.$R('#editor-' + this.locales[key] + '-' + this._uid, {// options
+          });
+        } else if (this.textEditor == 'quill') {
+          var quill = new Quill('#editor-' + this.locales[0] + '-' + this._uid, {
+            theme: 'snow'
+          });
+          quill.on('text-change', function () {
+            _this.text_content = quill.root.innerHTML;
+          });
+        }
       }
     }
   },
@@ -5557,6 +5612,7 @@ var render = function() {
                       locales: _vm.locales,
                       single: true,
                       editor: true,
+                      "text-editor": _vm.textEditor,
                       title: "Pagina text"
                     }
                   })
@@ -5980,31 +6036,76 @@ var render = function() {
             ? _c(
                 "tabs",
                 _vm._l(_vm.locales, function(locale, key) {
-                  return _c(
-                    "tab",
-                    { key: key, attrs: { id: locale + "-text", name: locale } },
-                    [
-                      _c("textarea", {
-                        staticClass: "inset-s",
-                        attrs: {
-                          name:
-                            "sections[text][" +
-                            _vm.new_or_replace_key +
-                            "][" +
-                            _vm._uid +
-                            "][trans][" +
-                            locale +
-                            "][content]",
-                          id: "editor-" + locale + "-" + _vm._uid,
-                          cols: "30",
-                          rows: _vm.single ? 1 : 10
+                  return _vm.textEditor == "redactor"
+                    ? _c(
+                        "tab",
+                        {
+                          key: key,
+                          attrs: { id: locale + "-text", name: locale }
                         },
-                        domProps: {
-                          innerHTML: _vm._s(_vm.renderInitialContent(locale))
-                        }
+                        [
+                          _c("textarea", {
+                            staticClass: "inset-s",
+                            attrs: {
+                              name:
+                                "sections[text][" +
+                                _vm.new_or_replace_key +
+                                "][" +
+                                _vm._uid +
+                                "][trans][" +
+                                locale +
+                                "][content]",
+                              id: "editor-" + locale + "-" + _vm._uid,
+                              cols: "30",
+                              rows: _vm.single ? 1 : 10
+                            },
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.renderInitialContent(locale)
+                              )
+                            }
+                          })
+                        ]
+                      )
+                    : _vm.textEditor == "quill"
+                    ? _vm._l(_vm.locales, function(locale, key) {
+                        return _c(
+                          "tab",
+                          {
+                            key: key,
+                            attrs: { id: locale + "-text", name: locale }
+                          },
+                          [
+                            _c("div", {
+                              staticClass: "inset-s bg-white",
+                              attrs: {
+                                id: "editor-" + _vm.locales[0] + "-" + _vm._uid
+                              },
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.renderInitialContent(_vm.locales[0])
+                                )
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              attrs: {
+                                name:
+                                  "sections[text][" +
+                                  _vm.new_or_replace_key +
+                                  "][" +
+                                  _vm._uid +
+                                  "][trans][" +
+                                  _vm.locales[0] +
+                                  "][content]",
+                                type: "hidden"
+                              },
+                              domProps: { value: _vm.text_content }
+                            })
+                          ]
+                        )
                       })
-                    ]
-                  )
+                    : _vm._e()
                 }),
                 1
               )
@@ -6012,25 +6113,58 @@ var render = function() {
           _vm._v(" "),
           _vm.locales.length == 1
             ? [
-                _c("textarea", {
-                  staticClass: "inset-s",
-                  attrs: {
-                    name:
-                      "sections[text][" +
-                      _vm.new_or_replace_key +
-                      "][" +
-                      _vm._uid +
-                      "][trans][" +
-                      _vm.locales[0] +
-                      "][content]",
-                    id: "editor-" + _vm.locales[0] + "-" + _vm._uid,
-                    cols: "30",
-                    rows: _vm.single ? 1 : 10
-                  },
-                  domProps: {
-                    innerHTML: _vm._s(_vm.renderInitialContent(_vm.locales[0]))
-                  }
-                })
+                _vm.textEditor == "redactor"
+                  ? _c("textarea", {
+                      staticClass: "inset-s",
+                      attrs: {
+                        name:
+                          "sections[text][" +
+                          _vm.new_or_replace_key +
+                          "][" +
+                          _vm._uid +
+                          "][trans][" +
+                          _vm.locales[0] +
+                          "][content]",
+                        id: "editor-" + _vm.locales[0] + "-" + _vm._uid,
+                        cols: "30",
+                        rows: _vm.single ? 1 : 10
+                      },
+                      domProps: {
+                        innerHTML: _vm._s(
+                          _vm.renderInitialContent(_vm.locales[0])
+                        )
+                      }
+                    })
+                  : _vm.textEditor == "quill"
+                  ? _c("div", [
+                      _c("div", {
+                        staticClass: "inset-s bg-white",
+                        attrs: {
+                          id: "editor-" + _vm.locales[0] + "-" + _vm._uid
+                        },
+                        domProps: {
+                          innerHTML: _vm._s(
+                            _vm.renderInitialContent(_vm.locales[0])
+                          )
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: {
+                          name:
+                            "sections[text][" +
+                            _vm.new_or_replace_key +
+                            "][" +
+                            _vm._uid +
+                            "][trans][" +
+                            _vm.locales[0] +
+                            "][content]",
+                          type: "hidden"
+                        },
+                        domProps: { value: _vm.text_content }
+                      })
+                    ])
+                  : _vm._e()
               ]
             : _vm._e()
         ],
