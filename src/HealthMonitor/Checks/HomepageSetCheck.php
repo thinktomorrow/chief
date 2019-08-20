@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\HealthMonitor\Checks;
 
 use Thinktomorrow\Chief\Settings\Setting;
 
-class HomepageCheck implements HealthCheck
+class HomepageSetCheck implements HealthCheck
 {
     public function check(): bool
     {
