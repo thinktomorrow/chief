@@ -14,8 +14,8 @@
                     </div>
                     <div v-if="showFooter" class="modal-footer inset center-y inline-group bg-grey-100">
                         <slot name="footer">
-                            <a @click="close" class="btn btn-o-primary"><slot name='modal-close-btn'>Annuleer</slot></a>
                             <slot name='modal-action-buttons'></slot>
+                            <a @click="close" class="btn btn-secondary"><slot name='modal-close-btn'>Annuleer</slot></a>
                         </slot>
                     </div>
                 </div>
