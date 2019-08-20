@@ -18,7 +18,7 @@
 					<div>
 			
 						@if($errors and count($errors) > 0)
-							<div class="label label-error stack">
+							<div class="label label-warning stack">
 								@foreach($errors->all() as $error)
 									{{ $error }}<br>
 								@endforeach
