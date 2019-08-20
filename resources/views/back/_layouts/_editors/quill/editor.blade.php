@@ -3,6 +3,13 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 @endpush
 
+<style>
+    .ql-container, .ql-editor {
+        height: auto;
+        min-height: 8rem;
+    }
+</style>
+
 <script>
     var editors = document.querySelectorAll('[data-editor]');
     for(var i = 0; i < editors.length; i++) {

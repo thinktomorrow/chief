@@ -24,7 +24,7 @@
                         </textarea>
                     </tab>
                 </div>
-                <div v-else-if="textEditor == 'quill'">
+                <div v-else-if="textEditor == 'quill'" class="w-full">
                     <tab v-for="(locale, key) in locales"
                         :key="key"
                         :id="locale+'-text'"
@@ -52,7 +52,7 @@
                         class="inset-s" cols="30" :rows="single ? 1 : 10"
                         v-html="renderInitialContent(locales[0])">
                 </textarea>
-                <div v-else-if="textEditor == 'quill'">
+                <div v-else-if="textEditor == 'quill'" class="w-full">
                     <div 
                         class="inset-s bg-white" 
                         :id="'editor-'+locales[0]+'-'+_uid"
