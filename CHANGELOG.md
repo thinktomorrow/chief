@@ -38,6 +38,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Added: Fields::merge() method which can be passed another Fields object. A Field value with the same key will overwrite the existing one.
 - Added: Html sanitization on updatesections
 - Added: healthmonitor homepage set check
+- Added: editor option in chief config to select html editor of choice. Default to quill.
 - Deprecated: `Page::hasPagebuilder()` since no longer used. Scheduled to be removed in version 0.4.
 
 ## 0.2.14 - 2019-6-18
