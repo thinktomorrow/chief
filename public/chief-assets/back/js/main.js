@@ -5153,17 +5153,17 @@ var render = function() {
                     },
                     [
                       _vm._t("footer", [
+                        _vm._t("modal-action-buttons"),
+                        _vm._v(" "),
                         _c(
                           "a",
                           {
-                            staticClass: "btn btn-o-primary",
+                            staticClass: "btn btn-secondary",
                             on: { click: _vm.close }
                           },
                           [_vm._t("modal-close-btn", [_vm._v("Annuleer")])],
                           2
-                        ),
-                        _vm._v(" "),
-                        _vm._t("modal-action-buttons")
+                        )
                       ])
                     ],
                     2

@@ -5,7 +5,10 @@
         @csrf
         <div v-cloak>
             <h2 class="formgroup-label">Archiveer de pagina: {{ $manager->details()->title }}</h2>
-            <p>Dit haalt de pagina van de site. Geef hier aan naar welke pagina de links mogen doorlinken.</p>
+            <p>
+                Opgelet, dit haalt deze pagina van de site en bezoekers krijgen een 404-pagina te zien.<br>
+                Je kan ook kiezen om door te linken naar een andere pagina. Stel die pagina hieronder in.
+            </p>
             <div class="input-group stack column-6">
                 <chief-multiselect
                         name="redirect_id"
@@ -22,6 +25,6 @@
     </form>
 
     <div v-cloak slot="modal-action-buttons">
-        <button type="button" class="btn btn-o-error stack" data-submit-form="archive-manager-form-{{ $managedModelId }}">Archiveer</button>
+        <button type="button" class="btn btn-link" data-submit-form="archive-manager-form-{{ $managedModelId }}">Archiveer</button>
     </div>
 </modal>
