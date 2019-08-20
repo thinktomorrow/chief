@@ -6,9 +6,11 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Management\Application\UnarchiveManagedModel;
 
 class ArchiveAssistant implements Assistant
 {
@@ -47,24 +49,16 @@ class ArchiveAssistant implements Assistant
 
     public function archive()
     {
-        $this->model->archive();
+        $this->guard('archive');
 
-        Audit::activity()
-            ->performedOn($this->model)
-            ->log('archived');
+        app(ArchiveManagedModel::class)->handle($this->model);
     }
 
     public function unarchive()
     {
-        $this->model->unarchive();
+        $this->guard('unarchive');
 
-        if ($this->manager->isAssistedBy('publish')) {
-            $this->model->draft();
-        }
-
-        Audit::activity()
-            ->performedOn($this->model)
-            ->log('unarchived');
+        app(UnArchiveManagedModel::class)->handle($this->model);
     }
 
     public function findAll(): Collection

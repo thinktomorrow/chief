@@ -4,9 +4,11 @@ namespace Thinktomorrow\Chief\Pages;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
@@ -24,15 +26,15 @@ use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
+use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
-class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
+class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl, StatefulContract
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -293,5 +295,22 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         }
 
         return '-';
+    }
+
+    public function state(): string
+    {
+        return $this->state;
+    }
+
+    public function changeState($state)
+    {
+        // Ignore change to current state - it should not trigger events either
+        if ($state === $this->state()) {
+            return;
+        }
+
+        PageState::assertNewState($this, $state);
+
+        $this->state = $state;
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\Concerns\Morphable\NotFoundMorphKey;
-use Thinktomorrow\Chief\Concerns\Publishable\PreviewMode;
+use Thinktomorrow\Chief\States\Publishable\PreviewMode;
 
 class ChiefResponse extends Response
 {

@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;

@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Common;
 
-use Thinktomorrow\Chief\Common\State\StateException;
-use Thinktomorrow\Chief\Common\State\StatefulContract;
-use Thinktomorrow\Chief\Common\State\StateMachine;
+use Thinktomorrow\Chief\States\State\StateException;
+use Thinktomorrow\Chief\States\State\StatefulContract;
+use Thinktomorrow\Chief\States\State\StateMachine;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class StateMachineTest extends TestCase

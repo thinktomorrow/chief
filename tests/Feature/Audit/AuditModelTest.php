@@ -65,6 +65,7 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_delete_events_on_pages()
     {
+        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')

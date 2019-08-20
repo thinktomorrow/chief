@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Pages\Console;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Sortable;
 use Thinktomorrow\Chief\Pages\Page;
 

@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Users\Invites;
 
-use Thinktomorrow\Chief\Common\State\StateMachine;
+use Thinktomorrow\Chief\States\State\StateMachine;
 
 class InvitationState extends StateMachine
 {

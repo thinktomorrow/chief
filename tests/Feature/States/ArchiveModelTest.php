@@ -1,12 +1,16 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Pages;
+namespace Thinktomorrow\Chief\Tests\Feature\States;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
+use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
+use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 
-class ArchivePageTest extends TestCase
+class ArchiveModelTest extends TestCase
 {
     private $page;
 
@@ -16,14 +20,14 @@ class ArchivePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->page = factory(Page::class)->create(['published' => false]);
+        $this->page = ProductPageFake::create()->fresh();
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
     }
 
     /** @test */
-    public function only_authenticated_can_view_archive_index()
+    public function an_admin_can_view_archive_index()
     {
         $response = $this->asAdmin()
             ->get(route('chief.back.assistants.archive-index', ['singles', $this->page->id]));
@@ -31,7 +35,6 @@ class ArchivePageTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewIs('chief::back.managers.archive.index');
     }
-
 
     /** @test */
     public function it_can_archive_a_page()
@@ -42,33 +45,20 @@ class ArchivePageTest extends TestCase
         // Archived page is not included in default retrieval
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withArchived()->get());
+
+        $this->assertEquals(PageState::ARCHIVED, $this->page->fresh()->state());
     }
 
     /** @test */
-    public function a_published_page_can_be_archived()
+    public function it_cannot_archive_a_deleted_page()
     {
-        $this->page->publish();
+        app(ArchiveManagedModel::class)->handle($this->page);
+        app(DeleteManagedModel::class)->handle($this->page);
 
         $this->asAdmin()
             ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 
-        $this->assertCount(0, Page::all());
-        $this->assertCount(1, Page::withArchived()->get());
-    }
-
-    /** @test */
-    public function an_archived_page_unarchived_is_put_in_draft()
-    {
-        $this->page->publish();
-        $this->page->archive();
-
-        $this->assertCount(0, Page::all());
-
-        $this->asAdmin()
-            ->post(route('chief.back.assistants.unarchive', ['singles', $this->page->id]));
-
-        $this->assertCount(1, Page::all());
-        $this->assertTrue(Page::first()->isDraft());
-
+        $this->assertEquals(PageState::DELETED, $this->page->fresh()->state());
+        $this->assertTrue($this->page->fresh()->trashed());
     }
 }

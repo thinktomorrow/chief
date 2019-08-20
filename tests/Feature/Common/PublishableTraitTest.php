@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 
 /**
  * Class ValidationTraitDummyClass
