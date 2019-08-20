@@ -15,15 +15,11 @@
 @import './components/modal.scss';
 @import './components/alert.scss';
 @import './components/form.scss';
-@import './components/redactor.scss';
 @import './components/translation.scss';
 @import './components/thumb.scss';
 
 @tailwind utilities;
 
-/* purgecss start ignore */
-@import '../js/vendors/redactor/redactor.css';
-/* purgecss end ignore */
 
 // STATES & HELPER CLASSES (WARPAINT)
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';

@@ -13,8 +13,11 @@ class HomepageAccessibleCheck implements HealthCheck
         return $this->get_http_response_code(Homepage::url()) == 200;
     }
 
-    private function get_http_response_code(string $url) {
-        if($url =='') return false;
+    private function get_http_response_code(string $url)
+    {
+        if ($url =='') {
+            return false;
+        }
 
         // Avoid ssl errors: SSL operation failed with code 1
         stream_context_set_default([

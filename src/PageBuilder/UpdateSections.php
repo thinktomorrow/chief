@@ -155,10 +155,9 @@ class UpdateSections
                 continue;
             }
            
-            foreach($text_module['trans'] as $locale => $content)
-            {
+            foreach ($text_module['trans'] as $locale => $content) {
                 $purifier = new HTMLPurifier();
-                $sanitized_text = $purifier->purify( $content['content'] );
+                $sanitized_text = $purifier->purify($content['content']);
 
                 $text_module['trans'][$locale]['content'] = $sanitized_text;
             }

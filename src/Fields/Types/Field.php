@@ -51,16 +51,20 @@ class Field
 
     public function required(): bool
     {
-        if(!$this->hasValidation()) return false;
+        if (!$this->hasValidation()) {
+            return false;
+        }
 
-        foreach($this->values['validation'] as $rule){
-            if(false !== strpos($rule, 'required')) return true;
+        foreach ($this->values['validation'] as $rule) {
+            if (false !== strpos($rule, 'required')) {
+                return true;
+            }
         };
 
         return false;
     }
 
-    public function optional(): bool 
+    public function optional(): bool
     {
         return ! $this->required();
     }

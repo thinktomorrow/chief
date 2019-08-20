@@ -12,7 +12,7 @@ class Homepage
     {
         $homepageValue = chiefSetting(Setting::HOMEPAGE, $locale);
 
-        if(!$homepageValue || !is_object($model) || !$model instanceof ProvidesFlatReference) {
+        if (!$homepageValue || !is_object($model) || !$model instanceof ProvidesFlatReference) {
             return false;
         }
 
@@ -21,8 +21,7 @@ class Homepage
 
     public static function url($locale = null): string
     {
-        if($id = chiefSetting(Setting::HOMEPAGE, $locale))
-        {
+        if ($id = chiefSetting(Setting::HOMEPAGE, $locale)) {
             return FlatReferenceFactory::fromString($id)->instance()->url($locale);
         }
         return '';
