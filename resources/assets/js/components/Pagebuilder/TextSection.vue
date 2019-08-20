@@ -10,41 +10,43 @@
 
             <!-- show multiple locales in tab -->
             <tabs v-if="locales.length > 1">
-                <tab v-if="textEditor == 'redactor'"
-                    v-for="(locale, key) in locales"
-                    :key="key"
-                    :id="locale+'-text'"
-                    :name="locale"
-                    v-cloak>
-                    <textarea
-                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
-                        :id="'editor-'+locale+'-'+_uid"
-                        class="inset-s" cols="30" :rows="single ? 1 : 10"
-                        v-html="renderInitialContent(locale)">
-                    </textarea>
-                </tab>
-                <tab v-else-if="textEditor == 'quill'"
-                    v-for="(locale, key) in locales"
-                    :key="key"
-                    :id="locale+'-text'"
-                    :name="locale"
-                    v-cloak>
-                    <div 
-                        class="inset-s bg-white" 
-                        :id="'editor-'+locale+'-'+_uid"
-                        v-html="renderInitialContent(locale)">
-                    </div>
-                    <input 
-                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
-                        :type="'hidden'"
-                        :value="text_content"
-                    >
-                </tab>
+                <div v-if="textEditor == 'redactor' || editor == false">
+                    <tab v-for="(locale, key) in locales"
+                        :key="key"
+                        :id="locale+'-text'"
+                        :name="locale"
+                        v-cloak>
+                        <textarea
+                            :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
+                            :id="'editor-'+locale+'-'+_uid"
+                            class="inset-s" cols="30" :rows="single ? 1 : 10"
+                            v-html="renderInitialContent(locale)">
+                        </textarea>
+                    </tab>
+                </div>
+                <div v-else-if="textEditor == 'quill'">
+                    <tab v-for="(locale, key) in locales"
+                        :key="key"
+                        :id="locale+'-text'"
+                        :name="locale"
+                        v-cloak>
+                        <div 
+                            class="inset-s bg-white" 
+                            :id="'editor-'+locale+'-'+_uid"
+                            v-html="renderInitialContent(locale)">
+                        </div>
+                        <input 
+                            :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
+                            :type="'hidden'"
+                            :value="text_content"
+                        >
+                    </tab>
+                </div>
             </tabs>
 
             <!-- show single locale not in tabbed format -->
             <template v-if="locales.length == 1">
-                <textarea v-if="textEditor == 'redactor'"
+                <textarea v-if="textEditor == 'redactor' || editor == false"
                         :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
                         :id="'editor-'+locales[0]+'-'+_uid"
                         class="inset-s" cols="30" :rows="single ? 1 : 10"
@@ -113,13 +115,14 @@
                 for(var key in this.locales) {
                     if( ! this.locales.hasOwnProperty(key)) continue;
                     if(this.textEditor == 'redactor') {
-                       window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                        window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
                             // options
                         }); 
                     } else if (this.textEditor == 'quill') {
                         var quill = new Quill('#editor-' + this.locales[0] + '-' + this._uid, {
                             theme: 'snow'
                         });
+                        this.text_content = this.renderInitialContent(this.locales[0]);
                         quill.on('text-change', () => {
                             this.text_content = quill.root.innerHTML;
                         });
