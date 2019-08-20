@@ -60,6 +60,11 @@ class Field
         return false;
     }
 
+    public function optional(): bool 
+    {
+        return ! $this->required();
+    }
+
     public function name(string $name = null)
     {
         if (!is_null($name)) {

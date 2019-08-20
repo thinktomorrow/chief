@@ -25,7 +25,7 @@ class FlatReference
      */
     public function instance(): Model
     {
-        return (new $this->className)->findOrFail($this->id);
+        return (new $this->className)->withoutGlobalScopes()->findOrFail($this->id);
     }
 
     public function id()

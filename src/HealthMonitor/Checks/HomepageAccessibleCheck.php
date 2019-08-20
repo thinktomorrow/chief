@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\HealthMonitor\Checks;
 
-use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Settings\Homepage;
 
 class HomepageAccessibleCheck implements HealthCheck
@@ -14,10 +13,18 @@ class HomepageAccessibleCheck implements HealthCheck
         return $this->get_http_response_code(Homepage::url()) == 200;
     }
 
-    private function get_http_response_code($theURL) {
-        if($theURL =='') return false;
-        
-        $headers = get_headers($theURL);
+    private function get_http_response_code(string $url) {
+        if($url =='') return false;
+
+        // Avoid ssl errors: SSL operation failed with code 1
+        stream_context_set_default([
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ]);
+
+        $headers = get_headers($url);
         return substr($headers[0], 9, 3);
     }
 

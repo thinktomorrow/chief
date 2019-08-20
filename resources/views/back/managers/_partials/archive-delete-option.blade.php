@@ -1,4 +1,4 @@
-<hr>
+<div class="border-t border-grey-100">
 @if($manager->can('update') && $manager->isAssistedBy('archive'))
     @if(! $manager->assistant('archive')->isArchived())
         <a v-cloak @click="showModal('archive-manager-<?= str_slug($manager->assistant('archive')->route('archive')); ?>')" class="block p-3 text-warning --link-with-bg">
@@ -24,3 +24,4 @@
         Verwijderen
     </a>
 @endif
+</div>
