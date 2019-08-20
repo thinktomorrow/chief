@@ -2,10 +2,28 @@
     <div id="pagebuilder">
 
         <div v-if="sections.length < 1" class="relative stack border-l-3 border-transparent">
-            <a class="btn btn-primary inline-flex items-center" @click="addNewTextSectionAfter(-1)">
-                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
-                <span>Tijd om een eerste stuk tekst toe te voegen</span>
-            </a>
+            <div class="inset flex inline-group-l">
+            <div class="w-1/3">
+                <p class="stack-xs">Start met ...</p>
+                <a class="btn btn-primary inline-flex items-center" @click="addNewPagetitleSectionAfter(-1)">
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                    <span>een paginatitel</span>
+                </a>
+                <a class="btn btn-primary inline-flex items-center" @click="addNewTextSectionAfter(-1)">
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                    <span>een tekstblok</span>
+                </a>
+            </div>
+            <div class="w-auto">
+                <p class="stack-xs">Of koppel een ...</p>
+                <a class="btn btn-primary inline-flex items-center" @click="addModuleSectionAfter(-1)">
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+                    <span>eerste module</span>
+                </a>
+
+            </div>  
+            </div>  
+
         </div>
 
         <!-- top menu -->
