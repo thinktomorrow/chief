@@ -49,6 +49,22 @@ class Field
         return app(FieldValidatorFactory::class)->create($this, $data);
     }
 
+    public function required(): bool
+    {
+        if(!$this->hasValidation()) return false;
+
+        foreach($this->values['validation'] as $rule){
+            if(false !== strpos($rule, 'required')) return true;
+        };
+
+        return false;
+    }
+
+    public function optional(): bool 
+    {
+        return ! $this->required();
+    }
+
     public function name(string $name = null)
     {
         if (!is_null($name)) {

@@ -86,4 +86,14 @@ class FieldValidationTest extends TestCase
             'trans.nl.foobar' => ['required','max:200'],
         ], $rules);
     }
+
+    /** @test */
+    public function it_can_check_if_a_field_is_optional()
+    {
+        $field = InputField::make('content_trans');
+        $this->assertFalse($field->required());
+
+        $field = InputField::make('content_trans')->validation('required');
+        $this->assertTrue($field->required());
+    }
 }
