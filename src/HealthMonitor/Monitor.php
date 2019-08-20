@@ -17,11 +17,10 @@ class Monitor
 
     public static function check()
     {
-        foreach(static::$checks as $check => $notifier)
-        {
+        foreach (static::$checks as $check => $notifier) {
             $checkInstance = app($check);
 
-            if(!$checkInstance->check()) {
+            if (!$checkInstance->check()) {
                 app($notifier)->onFailure($checkInstance);
                 return;
             } else {

@@ -50,7 +50,9 @@ class UploadMedia
 
     private function addFiles(HasMedia $model, string $type, array $files, array &$files_order, string $locale = null)
     {
-        if(!$this->actionExists($files, 'new')) return;
+        if (!$this->actionExists($files, 'new')) {
+            return;
+        }
 
         foreach ($files['new'] as $id => $file) {
             if (!$file) {
@@ -68,7 +70,9 @@ class UploadMedia
      */
     private function replaceFiles(HasMedia $model, array $files)
     {
-        if(!$this->actionExists($files, 'replace')) return;
+        if (!$this->actionExists($files, 'replace')) {
+            return;
+        }
 
         foreach ($files['replace'] as $id => $file) {
             if (!$file) {
@@ -86,7 +90,9 @@ class UploadMedia
      */
     private function removeFiles(HasMedia $model, array $files)
     {
-        if(!$this->actionExists($files, 'delete')) return;
+        if (!$this->actionExists($files, 'delete')) {
+            return;
+        }
 
         foreach ($model->assets()->whereIn('id', $files['delete'])->get() as $asset) {
             $asset->delete();
