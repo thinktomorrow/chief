@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Common\State\StateException;
+use Thinktomorrow\Chief\States\State\StateException;
 
 class InviteUser
 {

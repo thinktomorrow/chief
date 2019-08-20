@@ -8,8 +8,10 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Management\Application\PublishManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Management\Application\UnpublishManagedModel;
 
 class PublishAssistant implements Assistant
 {
@@ -53,20 +55,16 @@ class PublishAssistant implements Assistant
 
     public function publish()
     {
-        $this->model->publish();
+        $this->guard('publish');
 
-        Audit::activity()
-            ->performedOn($this->model)
-            ->log('published');
+        app(PublishManagedModel::class)->handle($this->model);
     }
 
-    public function draft()
+    public function unpublish()
     {
-        $this->model->draft();
+        $this->guard('unpublish');
 
-        Audit::activity()
-            ->performedOn($this->model)
-            ->log('draft');
+        app(UnpublishManagedModel::class)->handle($this->model);
     }
 
     public function findAll(): Collection
@@ -80,7 +78,7 @@ class PublishAssistant implements Assistant
     {
         $modelRoutes = [
             'publish'   => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
-            'draft'     => route('chief.back.assistants.draft', [$this->manager->details()->key, $this->manager->model()->id]),
+            'unpublish'     => route('chief.back.assistants.unpublish', [$this->manager->details()->key, $this->manager->model()->id]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -108,6 +106,7 @@ class PublishAssistant implements Assistant
     public function publicationStatusAsLabel($plain = false)
     {
         $label = $this->publicationStatusAsPlainLabel();
+        $class = '';
 
         if ($this->isPublished()) {
             $class = 'text-success';

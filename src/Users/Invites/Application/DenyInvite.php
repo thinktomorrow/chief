@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Users\Invites\Application;
 use Thinktomorrow\Chief\Users\Invites\Events\InviteDenied;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Common\State\StateException;
+use Thinktomorrow\Chief\States\State\StateException;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
 
 class DenyInvite

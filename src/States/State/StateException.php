@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Common\State;
+namespace Thinktomorrow\Chief\States\State;
 
 class StateException extends \Exception
 {

@@ -52,7 +52,7 @@ class PublishManagerTest extends TestCase
         $this->assertCount(1, Page::published()->get());
 
         $this->asAdmin()
-            ->post($this->fake->assistant('publish')->route('draft'));
+            ->post($this->fake->assistant('publish')->route('unpublish'));
 
         $this->assertTrue(Page::first()->isDraft());
     }

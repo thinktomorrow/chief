@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
-use Thinktomorrow\Chief\Management\Application\DeleteManager;
+use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
 use Thinktomorrow\Chief\Management\Application\UpdateManager;
 
 class ManagersController extends Controller
@@ -90,7 +90,11 @@ class ManagersController extends Controller
         $manager = $this->managers->findByKey($key, $id);
 
         try {
-            app(DeleteManager::class)->handle($manager, $request);
+
+            $manager->guard('delete');
+
+            app(DeleteManagedModel::class)->handle($manager->model());
+
         } catch (DeleteAborted $e) {
             return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
         }

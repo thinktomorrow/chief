@@ -5,6 +5,8 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\States\PageStatePresenter;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Filters\Filters;
@@ -153,8 +155,8 @@ class PageManager extends AbstractManager implements Manager
         if ($this->model->id) {
             return parent::details()
                 ->set('title', ucfirst($this->model->title))
-                ->set('intro', 'Aangepast ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-xs stack-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
+                ->set('intro', PageStatePresenter::fromModel($this->model)->render())
+                ->set('context', '');
         }
 
         return parent::details();

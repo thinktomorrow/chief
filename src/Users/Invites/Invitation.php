@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Users\Invites;
 
-use Thinktomorrow\Chief\Common\State\StatefulContract;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;

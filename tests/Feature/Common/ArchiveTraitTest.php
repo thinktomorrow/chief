@@ -9,8 +9,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\Archivable\Archivable;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 
 class ArchivableTest extends TestCase
 {

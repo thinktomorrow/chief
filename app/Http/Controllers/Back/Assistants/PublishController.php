@@ -20,21 +20,17 @@ class PublishController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $manager->assistant('publish')
-                ->guard('publish')
-                ->publish();
+        $manager->assistant('publish')->publish();
 
         return redirect()->back()->with('messages.success', $manager->details()->title .' is gepubliceerd. <a href="' . $manager->assistant('publish')->previewUrl() . '" target="_blank">Bekijk de pagina online</a>.');
     }
 
-    public function draft(Request $request, $key, $id)
+    public function unpublish(Request $request, $key, $id)
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        $manager->assistant('publish')
-                ->guard('draft')
-                ->draft();
+        $manager->assistant('publish')->unpublish();
 
-        return redirect()->back();
+        return redirect()->back()->with('messages.success', $manager->details()->title .' is terug offline gehaald.');
     }
 }
