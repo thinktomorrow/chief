@@ -38,7 +38,7 @@
                     <div class="row gutter-s">
                         @foreach($module_group as $module)
                             @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                            @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                            @include('chief::back.managers._modals.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
                         @endforeach
                     </div>
                 </div>

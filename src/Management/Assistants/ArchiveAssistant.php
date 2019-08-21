@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
@@ -30,6 +30,10 @@ class ArchiveAssistant implements Assistant
     {
         $this->manager  = $manager;
         $this->model    = $manager->model();
+
+        if(!$this->model instanceof StatefulContract){
+            throw new \InvalidArgumentException('ArchiveAssistant requires the model to implement the StatefulContract.');
+        }
     }
 
     public static function key(): string

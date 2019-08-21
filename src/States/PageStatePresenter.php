@@ -24,14 +24,23 @@ class PageStatePresenter
         return new static($model, new PageState($model));
     }
 
-    public function render(): string
+    public function label(): string
     {
         $class = $this->pageState->isOnline() ? 'text-success' : 'text-warning';
 
-        return '<span class="inline-xs stack-s '.$class.'">' . $this->label() . '</span>';
+        return '<span class="inline-xs stack-s '.$class.'">' . $this->stateAsLabel() . '</span>';
     }
 
-    private function label()
+    /**
+     * Allowed transitions starting from this state
+     * @return array
+     */
+    public function transitions(): array
+    {
+        return $this->pageState->allowedTransitions();
+    }
+
+    private function stateAsLabel()
     {
         $state = $this->model->state();
 

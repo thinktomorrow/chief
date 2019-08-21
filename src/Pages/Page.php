@@ -299,7 +299,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
     public function state(): string
     {
-        return $this->state;
+        return $this->current_state ?? PageState::DRAFT; // On first creation the state is not yet injected.
     }
 
     public function changeState($state)
@@ -311,6 +311,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
         PageState::assertNewState($this, $state);
 
-        $this->state = $state;
+        $this->current_state = $state;
     }
 }

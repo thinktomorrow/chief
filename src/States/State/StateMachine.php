@@ -85,6 +85,19 @@ abstract class StateMachine
         return false;
     }
 
+    public function allowedTransitions(): array
+    {
+        $transitions = [];
+
+        foreach($this->transitions as $transitionKey => $transition){
+            if (false !== array_search($this->statefulContract->state(), $transition['from'])) {
+                $transitions[] = $transitionKey;
+            }
+        }
+
+        return $transitions;
+    }
+
     private function validateTransitions()
     {
         foreach ($this->transitions as $transitionKey => $transition) {

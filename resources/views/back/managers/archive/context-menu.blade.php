@@ -1,17 +1,10 @@
 <options-dropdown class="inline-block">
     <div class="inset-s" v-cloak>
 
-        <a data-submit-form="unarchiveForm-{{ $manager->details()->id }}" class="block p-3 text-warning --link-with-bg">Herstel</a>
-
-        <form class="hidden" id="unarchiveForm-{{ $manager->details()->id }}" action="{{ $manager->assistant('archive')->route('unarchive') }}" method="POST">
-            {{ csrf_field() }}
-            <button type="submit">Herstel</button>
-        </form>
-
-        @if($manager->can('delete'))
-            <a v-cloak @click="showModal('delete-manager-<?= Illuminate\Support\Str::slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
-                Verwijderen
-            </a>
+        @if($manager->can('update'))
+            @foreach(\Thinktomorrow\Chief\States\PageStatePresenter::fromModel($manager->model())->transitions() as $transition)
+                @include('chief::back.managers._transitions.'.$transition)
+            @endforeach
         @endif
 
     </div>

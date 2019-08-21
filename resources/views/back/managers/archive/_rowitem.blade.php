@@ -14,12 +14,12 @@
                 <div>
                     In archief sinds {{ $manager->assistant('archive')->archivedAt()->format('d/m/Y H:i') }}
                 </div>
-                
+
                 <div>
                     {!! $manager->details()->intro !!}
                 </div>
             </div>
-            
+
         </div>
 
         <div class="column-3 text-right flex flex-col justify-between items-end">
