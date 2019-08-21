@@ -1,12 +1,11 @@
 <template>
-    <div class="absolute flex justify-center items-center w-full h-8 center-y" style="z-index:1;bottom:-24px;left:-14px">
-        
-        <span v-show="!active" @click="active = true" class="block menu-trigger cursor-pointer mx-auto bg-white rounded p-2">
-            <svg width="24" height="24"><use xlink:href="#plus"/></svg>
+    <div class="absolute flex justify-center items-center w-full h-8 how-on-hover center-y" style="z-index:1;bottom:-24px;left:-14px">
+        <span v-show="!active" @click="active = true" class="block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600">
+            <svg width="24" height="24" class="fill-current"><use xlink:href="#plus"/></svg>
         </span>
 
-        <span v-show="active" @click="active = false" class="block menu-trigger cursor-pointer mx-auto bg-white rounded p-2">
-            <svg width="24" height="24"><use xlink:href="#min"/></svg>
+        <span v-show="active" @click="active = false" class="block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600">
+            <svg width="24" height="24" class="fill-current"><use xlink:href="#min"/></svg>
         </span>
 
         <div v-show="active" class="ml-6 pagebuilder-menu-items float-right absolute bg-white inset --raised rounded flex inline-group-l" style="transform: translateX(50%);">

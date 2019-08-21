@@ -2827,6 +2827,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -3044,7 +3045,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -5792,7 +5792,7 @@ var render = function() {
     "div",
     {
       staticClass:
-        "absolute flex justify-center items-center w-full h-8 center-y",
+        "absolute flex justify-center items-center w-full h-8 how-on-hover center-y",
       staticStyle: { "z-index": "1", bottom: "-24px", left: "-14px" }
     },
     [
@@ -5808,7 +5808,7 @@ var render = function() {
             }
           ],
           staticClass:
-            "block menu-trigger cursor-pointer mx-auto bg-white rounded p-2",
+            "block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600",
           on: {
             click: function($event) {
               _vm.active = true
@@ -5816,9 +5816,14 @@ var render = function() {
           }
         },
         [
-          _c("svg", { attrs: { width: "24", height: "24" } }, [
-            _c("use", { attrs: { "xlink:href": "#plus" } })
-          ])
+          _c(
+            "svg",
+            {
+              staticClass: "fill-current",
+              attrs: { width: "24", height: "24" }
+            },
+            [_c("use", { attrs: { "xlink:href": "#plus" } })]
+          )
         ]
       ),
       _vm._v(" "),
@@ -5834,7 +5839,7 @@ var render = function() {
             }
           ],
           staticClass:
-            "block menu-trigger cursor-pointer mx-auto bg-white rounded p-2",
+            "block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600",
           on: {
             click: function($event) {
               _vm.active = false
@@ -5842,9 +5847,14 @@ var render = function() {
           }
         },
         [
-          _c("svg", { attrs: { width: "24", height: "24" } }, [
-            _c("use", { attrs: { "xlink:href": "#min" } })
-          ])
+          _c(
+            "svg",
+            {
+              staticClass: "fill-current",
+              attrs: { width: "24", height: "24" }
+            },
+            [_c("use", { attrs: { "xlink:href": "#min" } })]
+          )
         ]
       ),
       _vm._v(" "),
