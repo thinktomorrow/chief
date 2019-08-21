@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\HealthMonitor\Checks;
 
-use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Settings\Homepage;
 
 class HomepageAccessibleCheck implements HealthCheck

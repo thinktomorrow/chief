@@ -32,9 +32,9 @@
                     @else
                         <p>Nog geen {{ $modelManager->details()->singular }} toegevoegd. Je hebt echter niet de nodige rechten om er een toe te voegen.</p>
                     @endif
-                    
+
                 @else
-        
+
                     @if($managers->isEmpty())
 
                         <div class="stack">
@@ -44,17 +44,13 @@
                         </div>
 
                     @else
-                        
+
                         @foreach($managers as $manager)
                             @include('chief::back.managers._partials._rowitem')
-                            @include('chief::back.managers._partials.delete-modal')
-                            @if($manager->isAssistedBy('archive'))
-                                @include('chief::back.managers._partials.archive-modal')
-                            @endif
                         @endforeach
 
                     @endif
-                
+
                 @endif
 
             </div>

@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Management\Application\PublishManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
@@ -31,6 +32,10 @@ class PublishAssistant implements Assistant
     {
         $this->manager = $manager;
         $this->model = $manager->model();
+
+        if(!$this->model instanceof StatefulContract){
+            throw new \InvalidArgumentException('PublishAssistant requires the model to implement the StatefulContract.');
+        }
     }
 
     public static function key(): string

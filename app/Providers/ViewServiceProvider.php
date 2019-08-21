@@ -12,7 +12,7 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        View::composer(['chief::back.managers._partials.archive-modal'], function ($view) {
+        View::composer(['chief::back.managers._modals.archive-modal'], function ($view) {
             $viewData = $view->getData();
 
             $ignoredModel = (isset($viewData['manager']))
