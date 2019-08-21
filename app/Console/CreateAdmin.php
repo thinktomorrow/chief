@@ -51,5 +51,5 @@ class CreateAdmin extends BaseCommand
         });
         
         $this->info('Default permissions and roles');
-    }   
+    }
 }
