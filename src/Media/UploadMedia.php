@@ -22,6 +22,7 @@ class UploadMedia
     {
         $files_by_type = $this->sanitizeFilesParameter($files_by_type);
         $files_order_by_type = $this->sanitizeFilesOrderParameter($files_order_by_type);
+        
         $this->validateParameters($files_by_type, $files_order_by_type);
 
         // When no files are uploaded, we still would like to sort our assets duh
