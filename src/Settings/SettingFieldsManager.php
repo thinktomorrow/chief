@@ -38,12 +38,14 @@ class SettingFieldsManager extends Fields implements FieldManager
                 ->description('Geef hier de homepagina voor de site op.'),
             InputField::make('app_name')
                 ->label('Site naam')
+                ->validation('required')
                 ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
             InputField::make('contact_email')
-                ->validation('email')
+                ->validation('required|email')
                 ->label('Webmaster email')
                 ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
             InputField::make('contact_name')
+                ->validation('required')
                 ->label('Webmaster naam')
                 ->description('Voor en achternaam van de webmaster.'),
         ]);
