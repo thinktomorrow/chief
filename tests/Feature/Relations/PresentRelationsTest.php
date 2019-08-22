@@ -31,7 +31,7 @@ class PresentRelationsTest extends TestCase
     public function a_parent_can_present_all_its_children()
     {
         $parent = ParentFake::create();
-        $child = ChildFake::create();
+        $child  = ChildFake::create();
         $child2 = ChildFake::create();
         $parent->adoptChild($child);
         $parent->adoptChild($child2);

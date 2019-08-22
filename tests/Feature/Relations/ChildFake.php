@@ -2,16 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
-use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
-use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Management\ManagedModel;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 
-class ChildFake extends Model implements ActsAsChild, ViewableContract
+class ChildFake extends Model implements ManagedModel, ActsAsChild, ViewableContract
 {
     use ActingAsChild, Viewable;
 
@@ -43,6 +44,11 @@ class ChildFake extends Model implements ActsAsChild, ViewableContract
     }
 
     public function flatReferenceGroup(): string
+    {
+        return 'childfakes';
+    }
+
+    public static function managedModelKey(): string
     {
         return 'childfakes';
     }
