@@ -28,10 +28,10 @@ class UpdateSettingTest extends TestCase
             'value' => 'old app_name'
         ]);
 
-        $this->asAdmin()
-            ->put(route('chief.back.settings.update'), $this->validSettingParams())
-            ->assertStatus(302)
-            ->assertRedirect(route('chief.back.settings.edit'));
+        $response = $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams());
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.settings.edit'));
 
         $this->assertUpdatedSettingValues(Setting::first());
     }

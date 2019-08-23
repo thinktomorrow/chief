@@ -11,7 +11,6 @@ use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Urls\UrlHelper;
-use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class SettingFieldsManager extends Fields implements FieldManager
 {
