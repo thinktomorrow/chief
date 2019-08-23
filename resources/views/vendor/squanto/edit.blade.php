@@ -36,11 +36,6 @@
 
 @stop
 
-@push('custom-styles')
-    <!-- make redactor available for any components. -->
-    <script src="/chief-assets/back/js/vendors/redactor.js"></script>
-@endpush
-
 @push('custom-scripts-after-vue')
     @include('squanto::editor-script')
 @endpush

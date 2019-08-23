@@ -2,19 +2,20 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Settings\Homepage;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
+use Thinktomorrow\Chief\Tests\Feature\Settings\SettingFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductManagerWithUrlAssistant;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class HomepageTest extends TestCase
 {
-    use PageFormParams;
+    use PageFormParams, SettingFormParams;
 
     /** @var Manager */
     private $manager;
@@ -37,12 +38,12 @@ class HomepageTest extends TestCase
     {
         $model = ProductFake::create([]);
 
-        $this->asAdmin()->put(route('chief.back.settings.update'), [
+        $response = $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $model->flatReference()->get(),
                 'en' => $model->flatReference()->get(),
-            ],
-        ]);
+            ]
+        ]));
 
         $this->assertEquals($model->flatReference()->get(), chiefSetting('homepage'));
         $this->assertEquals($model->flatReference()->className(), UrlRecord::findBySlug('/', 'nl')->model_type);
@@ -62,12 +63,12 @@ class HomepageTest extends TestCase
 
         $model = ProductFake::first();
 
-        $this->asAdmin()->put(route('chief.back.settings.update'), [
+        $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $model->flatReference()->get(),
                 'en' => $model->flatReference()->get(),
             ],
-        ]);
+        ]));
 
         $this->assertEquals($model->flatReference()->get(), chiefSetting('homepage'));
 
@@ -104,12 +105,12 @@ class HomepageTest extends TestCase
         $model = ProductFake::first();
         $other = ProductFake::create();
 
-        $this->asAdmin()->put(route('chief.back.settings.update'), [
+        $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $model->flatReference()->get(),
                 'en' => $other->flatReference()->get(),
             ]
-        ]);
+        ]));
 
         $this->assertEquals($model->flatReference()->get(), chiefSetting('homepage'));
 
@@ -156,12 +157,12 @@ class HomepageTest extends TestCase
         $model = ProductFake::first();
         $other = ProductFake::create();
 
-        $this->asAdmin()->put(route('chief.back.settings.update'), [
+        $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $model->flatReference()->get(),
                 'en' => $model->flatReference()->get(),
-            ]
-        ]);
+            ],
+        ]));
 
         $this->assertEquals(4, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($model,'nl')->slug);
@@ -169,12 +170,12 @@ class HomepageTest extends TestCase
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
 
-        $this->asAdmin()->put(route('chief.back.settings.update'), [
+        $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams([
             'homepage' => [
                 'nl' => $other->flatReference()->get(),
                 'en' => $other->flatReference()->get(),
             ]
-        ]);
+        ]));
 
         $this->assertEquals(4, UrlRecord::count());
         $this->assertEquals('/', UrlRecord::findByModel($other,'nl')->slug);

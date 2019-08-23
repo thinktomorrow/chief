@@ -15,6 +15,8 @@ trait SettingFormParams
         $params = [
             'homepage' => ['nl' => $model->flatReference()->get(), 'en' => $model->flatReference()->get()],
             'app_name' =>  'updated app_name',
+            'contact_email' => 'valid@mail.com',
+            'contact_name' => 'foobar'
         ];
 
         foreach ($overrides as $key => $value) {

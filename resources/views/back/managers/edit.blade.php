@@ -47,20 +47,9 @@
                     'fieldArrangement' => $manager->fieldArrangement('edit')
                 ])
 
-            @if($manager->can('update'))
-                <div class="stack text-right">
-                    <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-                </div>
-            @endif
-
         </form>
     </div>
 @stop
-
-@push('custom-styles')
-    <!-- make redactor available for any components. -->
-    <script src="/chief-assets/back/js/vendors/redactor.js"></script>
-@endpush
 
 @push('custom-scripts-after-vue')
     @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('upload')])
