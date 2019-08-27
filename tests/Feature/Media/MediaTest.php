@@ -3,10 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 
 class MediaTest extends TestCase
 {
@@ -30,6 +31,8 @@ class MediaTest extends TestCase
         $this->assertTrue($page->hasFile(MediaType::HERO));
         $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
     }
+
+   
 
     /** @test */
     public function it_can_add_image_via_wysiwyg_editor()

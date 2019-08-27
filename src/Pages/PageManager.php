@@ -32,7 +32,7 @@ class PageManager extends AbstractManager implements Manager
     private $pageBuilderField;
 
     protected $assistants = [
-        'url' => UrlAssistant::class,
+        'url'     => UrlAssistant::class,
         'archive' => ArchiveAssistant::class,
         'publish' => PublishAssistant::class,
     ];

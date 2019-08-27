@@ -5,12 +5,15 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
 
 class UploadMediaTest extends TestCase
 {
@@ -24,6 +27,7 @@ class UploadMediaTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         app(Register::class)->register(UploadMediaManager::class, Single::class);
+        app(Register::class)->register(UploadMediaModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
@@ -50,6 +54,29 @@ class UploadMediaTest extends TestCase
 
         $this->assertTrue($page->fresh()->hasFile(MediaType::HERO));
         $this->assertCount(1, $page->fresh()->getAllFiles(MediaType::HERO));
+    }
+
+    /** @test */
+    public function a_new_asset_can_be_uploaded_to_a_module()
+    {
+        $module = Module::create(['slug' => 'foobar module']);
+
+        config()->set(['app.fallback_locale' => 'nl']);
+
+        // Upload asset
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['mediamodule', $module->id]), [
+                'files' => [
+                    MediaType::HERO => [
+                        'new' => [
+                            $this->dummySlimImagePayload(),
+                        ]
+                    ]
+                ]
+            ]);
+
+        $this->assertTrue($module->fresh()->hasFile(MediaType::HERO));
+        $this->assertCount(1, $module->fresh()->getAllFiles(MediaType::HERO));
     }
 
     /** @test */

@@ -23,13 +23,24 @@ class MediaField extends Field
 
     public function translateName($locale)
     {
-        $name = $this->name();
+        $name = parent::name();
 
         if (strpos($name, ':locale')) {
             return preg_replace('#(:locale)#', $locale, $name);
         }
 
         return 'files['.$name.']['.$locale.']';
+    }
+
+    public function name(string $name = null)
+    {
+        if (!is_null($name)) {
+            $this->values['name'] = $name;
+
+            return $this;
+        }
+
+        return 'files['. ($this->values['name'] ?? $this->key() ).']';
     }
 
     public function getFieldValue(Model $model, $locale = null)

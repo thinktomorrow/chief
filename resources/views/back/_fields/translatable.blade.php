@@ -14,9 +14,8 @@
     @foreach($field->locales as $locale)
         @include($formElementView, [
             'key'   => 'trans.'.$locale.'.'.$field->key,
-            'name' => $field->translateName($locale),
+            'name'  => $field->translateName($locale),
             'field' => $field
         ])
     @endforeach
 @endif
-
