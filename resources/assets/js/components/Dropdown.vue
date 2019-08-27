@@ -2,7 +2,7 @@
     <div ref="parent" class="cursor-pointer">
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
         <transition name="fade">
-            <div v-show="isActive" style="z-index: 1;">
+            <div v-show="isActive" style="z-index: 2;">
                 <slot :toggle="toggle"></slot>
             </div>
         </transition>
