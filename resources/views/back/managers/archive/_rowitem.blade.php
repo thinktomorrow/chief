@@ -23,11 +23,11 @@
         </div>
 
         <div class="column-3 text-right flex flex-col justify-between items-end">
-            @include('chief::back.managers.archive.context-menu')
+            @if($manager->can('update'))
+                @include('chief::back.managers.archive.context-menu')
+            @endif
             <span>{!! $manager->details()->context !!}</span>
         </div>
 
     </div>
 </div>
-
-

@@ -29,7 +29,9 @@
             @endif
         </div>
         <div class="column-3 text-right flex flex-col justify-between items-end">
-            @include('chief::back.managers._partials.context-menu')
+            @if($manager->can('update'))
+                @include('chief::back.managers._partials.context-menu')
+            @endif
             {!! $manager->details()->context !!}
         </div>
     </div>
