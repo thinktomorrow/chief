@@ -1,8 +1,10 @@
 @push('custom-styles')
-    <link rel="stylesheet" href="{{ chief_cached_asset('/chief-assets/back/css/vendors/slim.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ chief_cached_asset('/chief-assets/back/css/vendors/slim.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
 @endpush
 @push('custom-scripts')
-    <script src="{{ chief_cached_asset('/chief-assets/back/js/vendors/slim.kickstart.min.js') }}"></script>
+    {{-- <script src="{{ chief_cached_asset('/chief-assets/back/js/vendors/slim.kickstart.min.js') }}"></script> --}}
+    <script src="{{ asset('/assets/back/js/vendor/slim.js') }}"></script>
     <script>
         Vue.component('slim', {
             props: ['options', 'group'],

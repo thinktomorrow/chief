@@ -35,7 +35,5 @@ Stickyfill.add(document.querySelectorAll('.sticky'));
 // Promise polyfill for support of IE9 and below
 import Es6Promise from 'es6-promise';
 
-Es6Promise.polyfill()
-
-Vue.config.devtools = true
+Es6Promise.polyfill();
 
