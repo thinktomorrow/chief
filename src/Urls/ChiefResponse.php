@@ -31,13 +31,17 @@ class ChiefResponse extends Response
                     $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
 
                     if(!$targetModel) {
-                        throw new \DomainException('Corrupt target model for this url request. Model by reference ['.$targetUrlRecord->model_type.'@'.$targetUrlRecord->model_id.'] is not found or has been deleted.');
+                        throw new \DomainException('Corrupt target model for this url request. Model by reference ['.$targetUrlRecord->model_type.'@'.$targetUrlRecord->model_id.'] has probably been archived or deleted.');
                     }
 
                     return static::createRedirect($targetModel->url($locale));
                 }
 
                 return static::createRedirect($model->url($locale));
+            }
+
+            if(!$model) {
+                throw new \DomainException('Corrupt target model for this url request. Model by reference ['.$urlRecord->model_type.'@'.$urlRecord->model_id.'] has probably been archived or deleted.');
             }
 
             if (method_exists($model, 'isPublished') && ! $model->isPublished()) {
