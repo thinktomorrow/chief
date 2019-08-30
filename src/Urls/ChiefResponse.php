@@ -30,6 +30,10 @@ class ChiefResponse extends Response
                     $targetUrlRecord = $urlRecord->redirectTo();
                     $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
 
+                    if(!$targetModel) {
+                        throw new \DomainException('Corrupt target model for this url request. Model by reference ['.$targetUrlRecord->model_type.'@'.$targetUrlRecord->model_id.'] is not found or has been deleted.');
+                    }
+
                     return static::createRedirect($targetModel->url($locale));
                 }
 
