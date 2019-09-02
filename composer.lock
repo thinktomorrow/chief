@@ -2313,16 +2313,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.7.1",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "84072ceb7406913aaf783dcebe173ce1681d25ed"
+                "reference": "171454362805d6b50b95dbc79136172abfc3c732"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/84072ceb7406913aaf783dcebe173ce1681d25ed",
-                "reference": "84072ceb7406913aaf783dcebe173ce1681d25ed",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/171454362805d6b50b95dbc79136172abfc3c732",
+                "reference": "171454362805d6b50b95dbc79136172abfc3c732",
                 "shasum": ""
             },
             "require": {
@@ -2361,15 +2361,15 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
-                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be"
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian De Deyne",
-                    "role": "Developer",
                     "email": "sebastian@spatie.be",
-                    "homepage": "https://spatie.be"
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 }
             ],
             "description": "A very simple activity logger to monitor the users of your website or application",
@@ -2381,7 +2381,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-07-24T07:41:20+00:00"
+            "time": "2019-08-28T13:00:32+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -2447,9 +2447,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
-                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://murze.be"
+                    "homepage": "https://murze.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Associate files with Eloquent models",
@@ -2565,9 +2565,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
-                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be"
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Convert a pdf to an image",
@@ -5094,18 +5094,18 @@
             "authors": [
                 {
                     "name": "Arne Blankerts",
-                    "role": "Developer",
-                    "email": "arne@blankerts.de"
+                    "email": "arne@blankerts.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Heuer",
-                    "role": "Developer",
-                    "email": "sebastian@phpeople.de"
+                    "email": "sebastian@phpeople.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "Developer",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "Developer"
                 }
             ],
             "description": "Library for handling version information and constraints",
@@ -5376,8 +5376,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
