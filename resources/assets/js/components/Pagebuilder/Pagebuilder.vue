@@ -49,7 +49,7 @@
                     v-bind:section="section"
                     v-bind:options="modules"
                     placeholder="Selecteer een module"
-                    title="module"
+                    title="Module"
                     class="stack" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'page'"
@@ -57,7 +57,7 @@
                     v-bind:section="section"
                     v-bind:options="pages"
                     placeholder="Selecteer een pagina"
-                    title="pagina"
+                    title="Pagina"
                     class="stack" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'pageset'"
@@ -65,7 +65,7 @@
                     v-bind:section="section"
                     v-bind:options="pagesets"
                     placeholder="Selecteer een pagina groep"
-                    title="pagina groep"
+                    title="Pagina groep"
                     class="stack" :class="section.type"></module-section>
 
                 <text-section v-if="section.type === 'text'"
