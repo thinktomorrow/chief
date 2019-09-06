@@ -99,15 +99,15 @@
             "authors": [
                 {
                     "name": "Tom Witkowski",
-                    "role": "Developer",
                     "email": "dev.gummibeer@gmail.com",
-                    "homepage": "https://gummibeer.de"
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
                 },
                 {
                     "name": "Dimitrios Savvopoulos",
-                    "role": "Developer",
                     "email": "ds@dimsav.com",
-                    "homepage": "http://dimsav.com"
+                    "homepage": "http://dimsav.com",
+                    "role": "Developer"
                 }
             ],
             "description": "A Laravel package for multilingual models",
@@ -2313,28 +2313,28 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.7.2",
+            "version": "3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "171454362805d6b50b95dbc79136172abfc3c732"
+                "reference": "89bbdbea8f085d72ba7513af989e2e54366f5794"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/171454362805d6b50b95dbc79136172abfc3c732",
-                "reference": "171454362805d6b50b95dbc79136172abfc3c732",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/89bbdbea8f085d72ba7513af989e2e54366f5794",
+                "reference": "89bbdbea8f085d72ba7513af989e2e54366f5794",
                 "shasum": ""
             },
             "require": {
-                "illuminate/config": "~5.8.0",
-                "illuminate/database": "~5.8.0",
-                "illuminate/support": "~5.8.0",
+                "illuminate/config": "5.8.*|^6.0",
+                "illuminate/database": "5.8.*|^6.0",
+                "illuminate/support": "5.8.*|^6.0",
                 "php": "^7.2",
                 "spatie/string": "^2.1"
             },
             "require-dev": {
                 "ext-json": "*",
-                "orchestra/testbench": "~3.8.0",
+                "orchestra/testbench": "3.8.*|^4.0",
                 "phpunit/phpunit": "^7.5|^8.0",
                 "scrutinizer/ocular": "^1.5"
             },
@@ -2370,6 +2370,12 @@
                     "email": "sebastian@spatie.be",
                     "homepage": "https://spatie.be",
                     "role": "Developer"
+                },
+                {
+                    "name": "Tom Witkowski",
+                    "email": "dev.gummibeer@gmail.com",
+                    "homepage": "https://gummibeer.de",
+                    "role": "Developer"
                 }
             ],
             "description": "A very simple activity logger to monitor the users of your website or application",
@@ -2381,7 +2387,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-08-28T13:00:32+00:00"
+            "time": "2019-09-04T09:20:42+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -2515,9 +2521,9 @@
             "authors": [
                 {
                     "name": "Freek Van der Herten",
-                    "role": "Developer",
                     "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be"
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Permission handling for Laravel 5.4 and up",
@@ -2667,9 +2673,9 @@
             "authors": [
                 {
                     "name": "Alex Vanderbist",
-                    "role": "Developer",
                     "email": "alex@spatie.be",
-                    "homepage": "https://spatie.be"
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Easily create, use and destroy temporary directories",
@@ -4098,8 +4104,8 @@
             "authors": [
                 {
                     "name": "Philippe Damen",
-                    "role": "Developer",
-                    "email": "mr.deleeuw@gmail.com"
+                    "email": "mr.deleeuw@gmail.com",
+                    "role": "Developer"
                 }
             ],
             "description": "An extension on top of Spatie/laravel-medialibrary which provides extra functionalities",
@@ -5432,8 +5438,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "FilterIterator implementation that filters files based on a list of suffixes.",
@@ -5474,8 +5480,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Simple template engine.",
@@ -5523,8 +5529,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Utility class for timing",
@@ -5653,8 +5659,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "The PHP Unit Testing framework.",
@@ -6230,8 +6236,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Collection of value objects that represent the types of the PHP type system",
@@ -6273,8 +6279,8 @@
             "authors": [
                 {
                     "name": "Sebastian Bergmann",
-                    "role": "lead",
-                    "email": "sebastian@phpunit.de"
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
