@@ -2,7 +2,7 @@
     <div ref="parent" class="cursor-pointer">
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
         <transition name="fade">
-            <div v-show="isActive" style="z-index: 2;">
+            <div v-show="isActive" class="absolute" style="z-index: 2;">
                 <slot :toggle="toggle"></slot>
             </div>
         </transition>
@@ -61,7 +61,7 @@
             open(){
 
                 if(this.isActive) return;
-                
+
                 if(!this.popper && !this.isClosing){
                     this.isActive = true;
                     Eventbus.$emit('open-dropdown',this._uid);
@@ -79,7 +79,7 @@
                 }
             },
             toggle(event){
-                
+
                 // Prevents click event to trigger closeDropdownClickEvent on creation
                 if(event) event.stopImmediatePropagation();
 
