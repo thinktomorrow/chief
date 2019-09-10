@@ -19,7 +19,9 @@ class ViewServiceProvider extends ServiceProvider
                 ? $viewData['manager']->model()
                 : null;
 
-            $view->with('targetModels', UrlHelper::allOnlineModels(false, $ignoredModel));
+            $onlineModels = UrlHelper::allOnlineModels(false, $ignoredModel);
+
+            $view->with('targetModels', $onlineModels);
         });
     }
 

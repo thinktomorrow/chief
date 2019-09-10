@@ -2,16 +2,16 @@
 
 namespace Thinktomorrow\Chief\Urls;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 
 class UrlHelper
 {
     /**
-     * Internal api for fetching all models that have an active url
+     * Internal api for fetching all models that have an active url.
+     * This will return a grouped values array ready for select fields
      *
      * @param bool $onlySingles
      * @param Model|null $ignoredModel
@@ -19,7 +19,27 @@ class UrlHelper
      */
     public static function allOnlineModels(bool $onlySingles = false, Model $ignoredModel = null): array
     {
-        return chiefMemoize('all-online-models', function () use ($onlySingles, $ignoredModel) {
+        $models = static::onlineModels($onlySingles, $ignoredModel);
+
+        return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
+    }
+
+    public static function allOnlineSingles()
+    {
+        return static::allOnlineModels(true);
+    }
+
+    /**
+     * Fetch all models that have an active url. Here we check on the ignored model
+     * after retrieval from database so our memoized cache gets optimal usage.
+     *
+     * @param bool $onlySingles
+     * @param Model|null $ignoredModel
+     * @return Collection
+     */
+    private static function onlineModels(bool $onlySingles = false, Model $ignoredModel = null): Collection
+    {
+        $models = chiefMemoize('all-online-models', function () use ($onlySingles) {
             $builder = UrlRecord::whereNull('redirect_id')
                 ->select('model_type', 'model_id')
                 ->groupBy('model_type', 'model_id');
@@ -28,33 +48,22 @@ class UrlHelper
                 $builder->where('model_type', 'singles');
             }
 
-            if ($ignoredModel) {
-                $builder->whereNotIn('id', function ($query) use ($ignoredModel) {
-                    $query->select('id')
-                        ->from('chief_urls')
-                        ->where('model_type', '=', $ignoredModel->getMorphClass())
-                        ->where('model_id', '=', $ignoredModel->id);
-                });
-            }
-
-            $liveUrlRecords = $builder->get()->mapToGroups(function ($record) {
+            return $builder->get()->mapToGroups(function ($record) {
                 return [$record->model_type => $record->model_id];
-            });
-
-            // Get model for each of these records...
-            $models = $liveUrlRecords->map(function ($record, $key) {
+            })->map(function ($record, $key) {
                 return Morphables::instance($key)->find($record->toArray());
             })->map->reject(function ($model) {
-                // Invalid references to archived or removed models where url record still exists.
-                return is_null($model) || !$model->isPublished();
+                return is_null($model) || !$model->isPublished(); // Invalid references to archived or removed models where url record still exists.
             })->flatten();
 
-            return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
-        }, [$onlySingles, $ignoredModel]);
-    }
+        }, [$onlySingles]);
 
-    public static function allOnlineSingles()
-    {
-        return static::allOnlineModels(true);
+        if($ignoredModel) {
+            $models = $models->reject(function($model) use($ignoredModel){
+                return (get_class($model) === get_class($ignoredModel) && $model->id === $ignoredModel->id);
+            });
+        }
+
+        return $models;
     }
 }

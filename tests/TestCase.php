@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
+use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Support\Facades\DB;
@@ -60,6 +61,7 @@ abstract class TestCase extends OrchestraTestCase
 
         // Clear out any memoized values
         Memoize::clear();
+        MemoizedUrlRecord::clearCachedRecords();
     }
 
     protected function resolveApplicationHttpKernel($app)
