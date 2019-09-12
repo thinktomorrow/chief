@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: fixed bug with set viewkey
 - Fixed: required on settings
 - Fixed: layout issue with dropdown which would push wrapping element down
+- Fixed: image uploads
 - Changed: optimize url record retrieval for large datasets with a simple memoization.
 - Changed: small changes to pagebuilder and removed redactor
 
