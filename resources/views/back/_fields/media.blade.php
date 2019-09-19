@@ -1,10 +1,12 @@
 <?php
     $files = $manager->fieldValue($field, $locale ?? null);
-    $name = $name ?? $field->name();
+    $locale = $locale ?? app()->getLocale();
+    $name = $name ?? $field->translateName($locale);
+    $slug = $field->sluggifyName();
 ?>
 
-<filesupload group="{{ $name }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
-    <div id="filegroup-{{ $name }}" :class="{'sorting-mode' : reorder}">
+<filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
+<div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
@@ -18,7 +20,7 @@
                 }"></slim>
             </div>
             <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="column-3">
-                <div class="thumb thumb-new" id="file-drop-area-{{ $name }}"
+                <div class="thumb thumb-new" id="file-drop-area-{{ $slug }}"
                      :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                      @dragover.prevent="handleDraggingOver"
                      @dragleave.prevent="handleDraggingLeave"
@@ -34,6 +36,6 @@
         <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder">
             @{{ reorder ? 'Gedaan met herschikken' : 'Herschik afbeeldingen' }}
         </a>
-        <input type="hidden" name="filesOrder[{{ $key }}]" :value="filesOrder">
+        <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
     </div>
 </filesupload>

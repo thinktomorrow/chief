@@ -22,30 +22,30 @@ class UploadMedia
     {
         $files_by_type = $this->sanitizeFilesParameter($files_by_type);
         $files_order_by_type = $this->sanitizeFilesOrderParameter($files_order_by_type);
-        
         $this->validateParameters($files_by_type, $files_order_by_type);
 
         // When no files are uploaded, we still would like to sort our assets duh
         if (empty($files_by_type)) {
-            foreach ($files_order_by_type as $type => $fileIdsCollection) {
-                $this->sortFiles($model, $type, $fileIdsCollection);
+            foreach($files_order_by_type as $type => $files)
+            {
+                $this->sortFiles($model, $type, $files);
             }
 
             return;
         }
 
-        foreach ($files_by_type as $type => $files) {
-            foreach ($files as $locale => $files) {
+        foreach ($files_by_type as $type => $files_by_locale) {
+            foreach ($files_by_locale as $locale => $files) {
                 $this->validateFileUploads($files);
-
+                
                 $fileIdsCollection = $files_order_by_type[$type] ?? [];
-
+                
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
                 $this->replaceFiles($model, $files);
                 $this->removeFiles($model, $files);
 
-                $this->sortFiles($model, $type, $fileIdsCollection);
             }
+            $this->sortFiles($model, $type, $fileIdsCollection ?? []);
         }
     }
 
@@ -60,7 +60,7 @@ class UploadMedia
                 continue;
             }
 
-            $this->addFile($model, $type, $files_order, $file, $locale);
+            $this->addFile($model, $type, $file, $files_order, $locale);
         }
     }
 
@@ -105,7 +105,7 @@ class UploadMedia
         return (isset($files[$action]) && is_array($files[$action]) && !empty($files[$action]));
     }
 
-    private function addFile(HasMedia $model, string $type, array &$files_order, $file, $locale = null)
+    private function addFile(HasMedia $model, string $type, $file, array &$files_order, $locale = null)
     {
         if (is_string($file)) {
             $image_name = json_decode($file)->output->name;
@@ -118,7 +118,7 @@ class UploadMedia
         // New files are passed with their filename (instead of their id)
         // For new files we will replace the filename with the id.
         if (false !== ($key = array_search($image_name, $files_order))) {
-            $files_order[$key] = $asset->id;
+            $files_order[$key] = (string) $asset->id;
         }
     }
 
@@ -181,7 +181,6 @@ class UploadMedia
     private function validateParameters(array $files_by_type, array $files_order_by_type)
     {
         $actions = ['new', 'replace', 'delete'];
-
         foreach ($files_by_type as $type => $files) {
             foreach ($files as $locale => $_files) {
                 if (!in_array($locale, config('translatable.locales'))) {
@@ -196,14 +195,6 @@ class UploadMedia
                     if (!in_array($action, $actions)) {
                         throw new \InvalidArgumentException('A valid files entry should have a key of either ['.implode(',', $actions).']. Instead ' . $action . ' is given.');
                     }
-                }
-            }
-        }
-
-        foreach ($files_order_by_type as $type => $fileIdsCollection) {
-            foreach ($fileIdsCollection as $locale => $commaSeparatedFileIds) {
-                if (!in_array($locale, config('translatable.locales'))) {
-                    throw new \InvalidArgumentException('Corrupt file payload. key for the file order is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
                 }
             }
         }
@@ -230,36 +221,20 @@ class UploadMedia
         return $files_by_type;
     }
 
-    private function sanitizeFilesOrderParameter(array $files_order_by_type): array
+    private function sanitizeFilesOrderParameter(array $files_order_by_locale): array
     {
-        $defaultLocale = config('app.fallback_locale');
-
-        foreach ($files_order_by_type as $type => $fileIdsCollection) {
-            if (!is_array($fileIdsCollection)) {
-                $fileIdsCollection = [$defaultLocale => $fileIdsCollection];
-                $files_order_by_type[$type] = $fileIdsCollection;
-            }
-
-            foreach ($fileIdsCollection as $locale => $commaSeparatedFileIds) {
-                $files_order_by_type[$type][$locale] = explode(',', $commaSeparatedFileIds);
+        foreach ($files_order_by_locale as $locale => $fileIdsCollection) {
+            foreach ($fileIdsCollection as $type => $commaSeparatedFileIds) {
+                $type = str_replace("files-", "", $type);
+                $files_order_by_type[$type][] = explode(',', $commaSeparatedFileIds);
+                $files_order_by_type[$type] = collect($files_order_by_type)->flatten()->unique()->toArray();
             }
         }
 
-        return $files_order_by_type;
+        return $files_order_by_type ?? $files_order_by_locale;
     }
 
-    private function sortFiles(HasMedia $model, string $type, array $fileIdsCollection)
-    {
-        $sortedFileIds = [];
-
-        foreach ($fileIdsCollection as $locale => $fileIds) {
-            $sortedFileIds = array_merge($sortedFileIds, $fileIds);
-        }
-
-        $this->sortingAssetsByType($model, $type, $sortedFileIds);
-    }
-
-    private function sortingAssetsByType(HasMedia $model, $type, array $sortedAssetIds)
+    private function sortFiles(HasMedia $model, $type, array $sortedAssetIds)
     {
         $assets = $model->assets()->where('asset_pivots.type', $type)->get();
 

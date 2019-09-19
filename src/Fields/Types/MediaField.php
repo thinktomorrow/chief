@@ -39,8 +39,12 @@ class MediaField extends Field
 
             return $this;
         }
-
         return 'files['. ($this->values['name'] ?? $this->key() ).']';
+    }
+
+    public function sluggifyName()
+    {
+        return trim(str_replace(['[', ']'],'-',$this->name()), '-');
     }
 
     public function getFieldValue(Model $model, $locale = null)

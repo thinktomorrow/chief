@@ -2,22 +2,26 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
-use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
-use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
-use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\PermissionServiceProvider;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Thinktomorrow\Chief\App\Exceptions\Handler;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Http\Kernel;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
-use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Thinktomorrow\Chief\Common\Helpers\Memoize;
-use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Spatie\Permission\PermissionServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
+use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Spatie\Activitylog\ActivitylogServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
+use Astrotomic\Translatable\TranslatableServiceProvider;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Image;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -102,6 +106,13 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
         $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Audit\Audit::class);
+
+        $app['config']->set('medialibrary.image_generators', [
+            Image::class,
+            Webp::class,
+            Svg::class,
+            Video::class,
+        ]);
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
         $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);
