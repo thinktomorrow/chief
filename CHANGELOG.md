@@ -8,6 +8,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: image uploads
 - Changed: optimize url record retrieval for large datasets with a simple memoization.
 - Changed: small changes to pagebuilder and removed redactor
+- Changed: BREAKING - FindAllManaged function on manager has been removed in favor of indexCollection
 
 ## 0.3.0 - 2019-8-20
 - Fixed: translatable media is now saved properly

@@ -24,6 +24,16 @@ trait TestHelpers
             Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
         });
 
+        TestResponse::macro('assertViewVariableInstanceOf', function ($value, $instance) {
+            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
+            Assert::assertInstanceOf($instance, $this->getOriginalContent()->getData()[$value]);
+        });
+
+        TestResponse::macro('assertViewVariableCountIs', function ($count, $value) {
+            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
+            Assert::assertCount($count, $this->getOriginalContent()->getData()[$value]);
+        });
+
         TestResponse::macro('assertContains', function ($value) {
             Assert::assertRegExp("/$value/mi", $this->getContent());
         });

@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Management;
 
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
@@ -34,6 +36,9 @@ abstract class AbstractManager
     /** @var Register */
     protected $registration;
 
+    protected $pageCount = 20;
+    protected $paginated = true;
+
     public function __construct(Registration $registration)
     {
         $this->registration = $registration;
@@ -61,16 +66,35 @@ abstract class AbstractManager
         return (new static($this->registration))->manage($modelInstance);
     }
 
-    public function findAllManaged($apply_filters = false): Collection
+    public function indexCollection()
     {
         $model = $this->registration->model();
 
         $builder = (new $model)->query();
 
-        if ($apply_filters) {
-            $this->filters()->apply($builder);
-        }
+        $this->filters()->apply($builder);
 
+        $builder = $this->indexBuilder($builder);
+
+        $builder = $this->indexSorting($builder);
+        
+        if($this->paginated)
+        {
+            return $this->indexPagination($builder);
+        }
+        
+        return $builder->get()->map(function ($model) {
+            return (new static($this->registration))->manage($model);
+        });
+    }
+
+    protected function indexBuilder(Builder $builder): Builder
+    {
+        return $builder;
+    }
+
+    protected function indexSorting(Builder $builder): Builder
+    {
         if ($this->isAssistedBy('publish')) {
             $builder->orderBy('published', 'DESC');
         }
@@ -80,9 +104,18 @@ abstract class AbstractManager
             $builder->orderBy('updated_at', 'DESC');
         }
 
-        return $builder->get()->map(function ($model) {
+        return $builder;
+    }
+
+    protected function indexPagination($builder): Paginator
+    {
+        $paginator = $builder->paginate($this->pageCount);
+
+        $modifiedCollection = $builder->paginate($this->pageCount)->getCollection()->transform(function ($model) {
             return (new static($this->registration))->manage($model);
         });
+
+        return $paginator->setCollection($modifiedCollection);
     }
 
     public function model()
