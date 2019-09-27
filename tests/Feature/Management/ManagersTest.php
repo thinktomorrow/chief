@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -12,6 +13,7 @@ use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeSecond;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithValidation;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerWithPaginationFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class ManagersTest extends TestCase
@@ -80,6 +82,26 @@ class ManagersTest extends TestCase
             ->get(route('chief.back.managers.index', ['singles', $page->id]));
         $response->assertStatus(200);
         $response->assertViewIs('chief::back.managers.index');
+    }
+
+    /** @test */
+    public function managers_index_is_paginated()
+    {
+        $this->disableExceptionHandling();
+        $this->setUpDefaultAuthorization();
+
+        app(Register::class)->register(ManagerWithPaginationFake::class, ManagedModelFakeFirst::class);
+
+        ManagedModelFakeFirst::create(['id' => 1]);
+        ManagedModelFakeFirst::create(['id' => 2]);
+
+        $response = $this->asAdmin()
+            ->get(route('chief.back.managers.index', ['managed_model_first', 1]));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.managers.index');
+        $response->assertViewVariableCountIs(1, 'managers');
+        $response->assertViewVariableInstanceOf('managers', LengthAwarePaginator::class);
     }
 
     private function getProtectedModelProperty($instance)

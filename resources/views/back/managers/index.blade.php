@@ -1,3 +1,4 @@
+
 @extends('chief::back._layouts.master')
 
 @section('page-title', $modelManager->details()->plural)
@@ -58,6 +59,9 @@
                 @endif
 
             </div>
+            @if($managers instanceof Illuminate\Contracts\Pagination\Paginator)
+                {{ $managers->links('chief::back.managers.pagination') }}
+            @endif
 
         </div>
 

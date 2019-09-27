@@ -4,13 +4,15 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
-use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Management\Assistants\Assistant;
+use Illuminate\Database\Eloquent\Builder;
+use Thinktomorrow\Chief\Fields\FieldManager;
+use Illuminate\Contracts\Pagination\Paginator;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
+use Thinktomorrow\Chief\Management\Assistants\Assistant;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 interface Manager extends FieldManager
@@ -44,10 +46,9 @@ interface Manager extends FieldManager
      * Get all managed models wrapped in a Manager
      * E.g. used for the index.
      *
-     * @param bool $apply_filters
-     * @return Collection of ManagedModel
+     * @return Collection of ManagedModel or Paginator
      */
-    public function findAllManaged($apply_filters = false): Collection;
+    public function indexCollection();
 
     /**
      * Retrieve the managed model instance
