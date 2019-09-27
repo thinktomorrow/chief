@@ -78,8 +78,7 @@ abstract class AbstractManager
 
         $builder = $this->indexSorting($builder);
         
-        if($this->paginated)
-        {
+        if ($this->paginated) {
             return $this->indexPagination($builder);
         }
         
