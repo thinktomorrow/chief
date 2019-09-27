@@ -39,7 +39,8 @@ class MediaField extends Field
 
             return $this;
         }
-        return 'files['. ($this->values['name'] ?? $this->key() ).']';
+
+        return 'files['. ($this->values['name'] ?? $this->key()).']';
     }
 
     public function sluggifyName()

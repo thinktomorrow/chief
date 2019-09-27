@@ -36,6 +36,7 @@ mix.webpackConfig({
             'app',
             'src'
 		],
+		whitelistPatterns: [/slim-/]
     })
 
 	
