@@ -29,8 +29,7 @@ class UploadMedia
 
         // When no files are uploaded, we still would like to sort our assets duh
         if (empty($files_by_type)) {
-            foreach($files_order_by_type as $type => $files)
-            {
+            foreach ($files_order_by_type as $type => $files) {
                 $this->sortFiles($model, $type, $files);
             }
 
@@ -46,7 +45,6 @@ class UploadMedia
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
                 $this->replaceFiles($model, $files);
                 $this->removeFiles($model, $files);
-
             }
             $this->sortFiles($model, $type, $fileIdsCollection ?? []);
         }
