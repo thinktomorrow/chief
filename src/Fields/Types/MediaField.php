@@ -45,7 +45,7 @@ class MediaField extends Field
 
     public function sluggifyName()
     {
-        return trim(str_replace(['[', ']'],'-',$this->name()), '-');
+        return trim(str_replace(['[', ']'], '-', $this->name()), '-');
     }
 
     public function getFieldValue(Model $model, $locale = null)
