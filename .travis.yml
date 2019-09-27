@@ -28,7 +28,7 @@ env:
 before_script:
   - travis_retry composer self-update
   - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist --dev
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
-  - php vendor/bin/phpunit --no-coverage
+  - vendor/bin/phpunit --no-coverage
