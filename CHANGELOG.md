@@ -6,9 +6,11 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: required on settings
 - Fixed: layout issue with dropdown which would push wrapping element down
 - Fixed: image uploads
+- Fixed: image sorting
 - Changed: optimize url record retrieval for large datasets with a simple memoization.
 - Changed: small changes to pagebuilder and removed redactor
 - Changed: increased max timeout and memorylimit for image upload/conversions
+
 
 ## 0.3.0 - 2019-8-20
 - Fixed: translatable media is now saved properly
