@@ -41,7 +41,7 @@
     "vue": "^2.6.10",
     "vue-loader": "^15.7.1",
     "vue-multiselect": "^2.1.6",
-    "vuedraggable": "^2.23.0",
+    "vuedraggable": "^2.23.1",
     "warpaint": "^0.0.10"
   },
   "engine": {
