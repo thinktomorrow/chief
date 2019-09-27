@@ -82,6 +82,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
+        $this->disableExceptionHandling();
         $page = Single::create();
 
         config()->set(['app.fallback_locale' => 'nl']);
@@ -90,14 +91,16 @@ class UploadMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::DOCUMENT => [
-                        'new' => [
-                            UploadedFile::fake()->create('fake.pdf')
+                        'nl' => [
+                            'new' => [
+                                UploadedFile::fake()->create('fake.pdf')
+                            ]
                         ]
                     ]
                 ]
             ]));
 
-        $this->assertTrue($page->hasFile(MediaType::DOCUMENT));
+        $this->assertTrue($page->fresh()->hasFile(MediaType::DOCUMENT));
         $this->assertCount(1, $page->getAllFiles(MediaType::DOCUMENT));
     }
 
@@ -307,7 +310,9 @@ class UploadMediaTest extends TestCase
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'filesOrder' => [
-                    MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
+                    'nl' => [
+                        'files-'.MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
+                    ]
                 ]
             ]));
 
@@ -319,6 +324,7 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function localized_assets_can_be_sorted()
     {
+        $this->disableExceptionHandling();
         $page = Single::create();
         $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
         $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
@@ -326,14 +332,16 @@ class UploadMediaTest extends TestCase
         $page->addFile(UploadedFile::fake()->image('image4.png'), MediaType::HERO, 'en');
 
         $images = $page->assets()->get();
-
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'filesOrder' => [
-                    MediaType::HERO => [
-                        'nl' => $images[1]->id . ',' . $images[0]->id,
-                        'en' => $images[3]->id . ',' . $images[2]->id
+                'filesOrder' => 
+                [
+                    'nl' => [
+                        'files-' . MediaType::HERO => $images[1]->id . ',' . $images[0]->id,
                     ],
+                    'en' => [
+                        'files-' . MediaType::HERO => $images[3]->id . ',' . $images[2]->id
+                    ]
                 ]
             ]));
 
