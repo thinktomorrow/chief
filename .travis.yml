@@ -31,4 +31,4 @@ before_script:
   - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist --dev
 
 script:
-  - vendor/bin/phpunit --no-coverage
+  - php vendor/bin/phpunit --no-coverage
