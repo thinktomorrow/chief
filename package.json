@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "axios": "^0.19",
-    "cross-env": "^5.1",
+    "cross-env": "^6.0",
     "es6-promise": "^4.2.8",
     "laravel-mix": "^4.1.4",
     "laravel-mix-purgecss": "^4.1.0",
