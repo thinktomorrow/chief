@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MemoizedUrlRecord extends UrlRecord
 {
-    static $cachedRecords;
+    public static $cachedRecords;
 
     public static function clearCachedRecords()
     {
@@ -24,7 +24,7 @@ class MemoizedUrlRecord extends UrlRecord
      */
     public static function findByModel(Model $model, string $locale = null): UrlRecord
     {
-        if(!static::$cachedRecords) {
+        if (!static::$cachedRecords) {
             static::$cachedRecords = parent::all();
         }
 

@@ -55,11 +55,10 @@ class UrlHelper
             })->map->reject(function ($model) {
                 return is_null($model) || !$model->isPublished(); // Invalid references to archived or removed models where url record still exists.
             })->flatten();
-
         }, [$onlySingles]);
 
-        if($ignoredModel) {
-            $models = $models->reject(function($model) use($ignoredModel){
+        if ($ignoredModel) {
+            $models = $models->reject(function ($model) use ($ignoredModel) {
                 return (get_class($model) === get_class($ignoredModel) && $model->id === $ignoredModel->id);
             });
         }
