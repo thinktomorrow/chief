@@ -9,6 +9,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: optimize url record retrieval for large datasets with a simple memoization.
 - Changed: small changes to pagebuilder and removed redactor
 - Changed: BREAKING - FindAllManaged function on manager has been removed in favor of indexCollection
+- Changed: increased max timeout and memorylimit for image upload/conversions
 
 ## 0.3.0 - 2019-8-20
 - Fixed: translatable media is now saved properly

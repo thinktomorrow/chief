@@ -20,6 +20,9 @@ class UploadMedia
      */
     public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
     {
+        ini_set('max_execution_time', '60');
+        ini_set('memory_limit', '256M');
+        
         $files_by_type = $this->sanitizeFilesParameter($files_by_type);
         $files_order_by_type = $this->sanitizeFilesOrderParameter($files_order_by_type);
         
