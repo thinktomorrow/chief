@@ -33,8 +33,8 @@
                 </div>
             </div>
         </div>
-        <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder">
-            @{{ reorder ? 'Gedaan met herschikken' : 'Herschik afbeeldingen' }}
+        <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-link">
+            @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
         </a>
         <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
     </div>
