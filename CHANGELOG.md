@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## unreleased
+## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey
 - Fixed: required on settings
 - Fixed: layout issue with dropdown which would push wrapping element down
