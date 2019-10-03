@@ -22,7 +22,7 @@ class MenuRequest extends FormRequest
         return Auth::guard('chief')->user();
     }
 
-    protected function validationData()
+    public function validationData()
     {
         $data = parent::validationData();
 

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Fields;
 
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
@@ -77,7 +78,7 @@ class FieldValidatorTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

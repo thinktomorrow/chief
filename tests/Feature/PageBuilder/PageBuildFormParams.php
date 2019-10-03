@@ -3,6 +3,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 
 trait PageBuildFormParams
@@ -37,7 +38,7 @@ trait PageBuildFormParams
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

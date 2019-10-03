@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Media;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\AssetLibrary\Models\Asset;
@@ -152,7 +153,7 @@ class UploadMedia
     {
         $extension = substr($filename, strrpos($filename, '.') + 1);
         $filename  = substr($filename, 0, strrpos($filename, '.'));
-        $filename  = str_slug($filename) . '.' . $extension;
+        $filename  = Str::slug($filename) . '.' . $extension;
 
         return $filename;
     }

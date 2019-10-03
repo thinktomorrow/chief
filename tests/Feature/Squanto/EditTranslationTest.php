@@ -2,10 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Squanto;
 
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Squanto\Domain\Line;
 use Thinktomorrow\Squanto\Domain\Page;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 
 class EditTranslationTest extends TestCase
 {
@@ -45,7 +46,7 @@ class EditTranslationTest extends TestCase
     {
         $response = $this->asAdmin()
             ->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
-
+        ddd($response);
         $response->assertStatus(302);
         $response->assertRedirect(route('squanto.edit', $this->squantoPage->id));
 
@@ -79,7 +80,7 @@ class EditTranslationTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

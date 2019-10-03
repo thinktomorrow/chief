@@ -1,7 +1,8 @@
 <?php
 
-use Thinktomorrow\Chief\Users\User;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Settings\Setting;
 
@@ -12,7 +13,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'firstname' => $faker->firstName,
         'lastname'  => $faker->lastName,
         'email'     => $faker->email,
-        'password'  => $password ?: bcrypt(str_random(8)),
+        'password'  => $password ?: bcrypt(Str::random(8)),
     ];
 });
 

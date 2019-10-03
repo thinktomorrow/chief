@@ -2,10 +2,8 @@
 
 namespace Thinktomorrow\Chief\Modules;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
-use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
-use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,12 +13,15 @@ use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
+use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
@@ -197,7 +198,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
     public function flatReferenceGroup(): string
     {
         $classKey = get_class($this);
-        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : Str::singular($classKey);
 
         return $labelSingular;
     }

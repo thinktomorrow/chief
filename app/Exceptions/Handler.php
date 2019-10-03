@@ -3,10 +3,11 @@
 namespace Thinktomorrow\Chief\App\Exceptions;
 
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -96,7 +97,7 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        if (!empty($exception->guards()) && array_first($exception->guards()) == 'chief') {
+        if (!empty($exception->guards()) && Arr::first($exception->guards()) == 'chief') {
             return redirect()->guest(route('chief.back.login'));
         }
 

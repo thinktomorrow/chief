@@ -1,7 +1,7 @@
 <div class="border-t border-grey-100">
 @if($manager->can('update') && $manager->isAssistedBy('archive'))
     @if(! $manager->assistant('archive')->isArchived())
-        <a v-cloak @click="showModal('archive-manager-<?= str_slug($manager->assistant('archive')->route('archive')); ?>')" class="block p-3 text-warning --link-with-bg">
+        <a v-cloak @click="showModal('archive-manager-<?= Illuminate\Support\Str::slug($manager->assistant('archive')->route('archive')); ?>')" class="block p-3 text-warning --link-with-bg">
             Archiveer
         </a>
     @else
@@ -13,14 +13,14 @@
         </form>
 
         @if($manager->can('delete'))
-            <a v-cloak @click="showModal('delete-manager-<?= str_slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
+            <a v-cloak @click="showModal('delete-manager-<?= Illuminate\Support\Str::slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
                 Verwijderen
             </a>
         @endif
     @endif
 
 @elseif($manager->can('delete'))
-    <a v-cloak @click="showModal('delete-manager-<?= str_slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
+    <a v-cloak @click="showModal('delete-manager-<?= Illuminate\Support\Str::slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
         Verwijderen
     </a>
 @endif

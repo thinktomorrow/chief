@@ -1,4 +1,4 @@
-<?php $managedModelId = str_slug($manager->route('delete')); ?>
+<?php $managedModelId = Illuminate\Support\Str::slug($manager->route('delete')); ?>
 
 <modal id="delete-manager-{{ $managedModelId }}" class="large-modal" title=''>
     <form action="{{ $manager->route('delete') }}" method="POST" id="delete-manager-form-{{ $managedModelId }}" slot>

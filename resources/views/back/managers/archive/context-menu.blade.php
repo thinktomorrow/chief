@@ -9,7 +9,7 @@
         </form>
 
         @if($manager->can('delete'))
-            <a v-cloak @click="showModal('delete-manager-<?= str_slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
+            <a v-cloak @click="showModal('delete-manager-<?= Illuminate\Support\Str::slug($manager->route('delete')); ?>')" class="block p-3 text-error --link-with-bg">
                 Verwijderen
             </a>
         @endif

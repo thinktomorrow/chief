@@ -75,33 +75,35 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function getEnvironmentSetUp($app)
     {
+        $this->recurse_copy($this->getStubDirectory(), $this->getTempDirectory());
         $app['path.base'] = realpath(__DIR__ . '/../');
 
         $app['config']->set('permission.table_names', [
-            'roles' => 'roles',
-            'permissions' => 'permissions',
+            'roles'                 => 'roles',
+            'permissions'           => 'permissions',
             'model_has_permissions' => 'model_has_permissions',
-            'model_has_roles' => 'model_has_roles',
-            'role_has_permissions' => 'role_has_permissions',
+            'model_has_roles'       => 'model_has_roles',
+            'role_has_permissions'  => 'role_has_permissions',
         ]);
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('auth.defaults', [
-            'guard' => 'xxx',
+            'guard'     => 'xxx',
             'passwords' => 'chief',
         ]);
 
         // Connection is defined in the phpunit config xml
         $app['config']->set('database.connections.testing', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
-            'prefix' => '',
+            'prefix'   => '',
         ]);
 
         // For our tests is it required to have 2 languages: nl and en.
         $app['config']->set('app.locale', 'nl'); // Default locale is considered nl
         $app['config']->set('translatable.locales', ['nl', 'en']);
         $app['config']->set('squanto.template', 'chief::back._layouts.master');
+        $app['config']->set('squanto', require $this->getTempDirectory('config/squanto.php'));
 
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
@@ -164,5 +166,15 @@ abstract class TestCase extends OrchestraTestCase
     protected function getResponseData($response, $key)
     {
         return $response->getOriginalContent()->getData()[$key];
+    }
+
+    private function getStubDirectory($dir = null)
+    {
+        return __DIR__.'/stubs/' . $dir;
+    }
+
+    private function getTempDirectory($dir = null)
+    {
+        return __DIR__.'/tmp/' . $dir;
     }
 }

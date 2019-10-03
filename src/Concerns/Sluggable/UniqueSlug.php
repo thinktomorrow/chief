@@ -19,7 +19,7 @@ class UniqueSlug
         $this->blacklist = $blacklist;
 
         $this->slugResolver = function ($slug) {
-            return str_slug($slug);
+            return Illuminate\Support\Str::slug($slug);
         };
     }
 
