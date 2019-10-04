@@ -18,7 +18,7 @@ class FieldType
     const DOCUMENT = 'document';  // documents
     const RADIO = 'radio';  // media file (slim uploader)
     const PAGEBUILDER = 'pagebuilder';  // the most special field there is...
-    const PAGE = 'page'; // select a page (also a special field)
+    const PAGE = 'select'; // select a page (also a special field)
 
     /**
      * @var string
