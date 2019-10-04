@@ -10,7 +10,7 @@
         "doctrine/dbal": "^2.5",
         "ezyang/htmlpurifier": "^4.11",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "~6.0",
+        "laravel/framework": "~5.7|~5.8|~6.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^3.0",
         "spatie/laravel-permission": "^3.0",

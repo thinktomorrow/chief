@@ -22,6 +22,13 @@ return [
     'cache_path' => __DIR__.'/../cached',
 
     /**
+     * Master template filepath.
+     * This is relative to the default viewpath.
+     * @var string
+     */
+    'template' => 'chief::back._layouts.master',
+
+    /**
      * Path where the laravel language files are stored
      * @var string
      */
