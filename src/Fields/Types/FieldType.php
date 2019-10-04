@@ -20,6 +20,7 @@ class FieldType
     const CHECKBOX = 'checkbox';  // checkbox select
     const PAGEBUILDER = 'pagebuilder';  // the most special field there is...
     const FRAGMENT = 'fragment';
+    const PAGE = 'page'; // select a page (also a special field)
 
     /** @var string */
     private $type;
@@ -38,8 +39,28 @@ class FieldType
 
     public static function fromString(string $type): self
     {
+<<<<<<< HEAD
         return new static($type);
     }
+=======
+        if (!in_array($type, [
+            static::INPUT,
+            static::TEXT,
+            static::NUMBER,
+            static::PHONENUMBER,
+            static::RANGE,
+            static::HTML,
+            static::SELECT,
+            static::DATE,
+            static::MEDIA,
+            static::DOCUMENT,
+            static::RADIO,
+            static::PAGEBUILDER,
+            static::PAGE
+        ])) {
+            throw new \Exception('Invalid type identifier given [' . $type . '].');
+        }
+>>>>>>> Page field setup
 
     public function get(): string
     {
