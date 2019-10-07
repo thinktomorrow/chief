@@ -2369,16 +2369,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.8.0",
+            "version": "3.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "89bbdbea8f085d72ba7513af989e2e54366f5794"
+                "reference": "dac271a93e52f1d97f0587ae2fa25a04954707a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/89bbdbea8f085d72ba7513af989e2e54366f5794",
-                "reference": "89bbdbea8f085d72ba7513af989e2e54366f5794",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/dac271a93e52f1d97f0587ae2fa25a04954707a2",
+                "reference": "dac271a93e52f1d97f0587ae2fa25a04954707a2",
                 "shasum": ""
             },
             "require": {
@@ -2443,7 +2443,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-09-04T09:20:42+00:00"
+            "time": "2019-10-06T13:07:23+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -4230,9 +4230,9 @@
             "authors": [
                 {
                     "name": "Ben Cavens",
-                    "role": "Developer",
                     "email": "cavensben@gmail.com",
-                    "homepage": "http://thinktomorrow.be"
+                    "homepage": "http://thinktomorrow.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Text manager for static laravel translations during and after development",
@@ -4613,8 +4613,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "role": "Developer",
-                    "homepage": "https://github.com/filp"
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
                 }
             ],
             "description": "php error handling for cool kids",
