@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed6de419908629fcc05a1c022dbd0535",
+    "content-hash": "eae63b7234a33088ca64cd10278b61ea",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4183,16 +4183,16 @@
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.6.0",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "453ed0ad8d311df85f6ae952b0416f4b42ab5455"
+                "reference": "ed3330d771e4344001fbd3d548a356161cbf210c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/453ed0ad8d311df85f6ae952b0416f4b42ab5455",
-                "reference": "453ed0ad8d311df85f6ae952b0416f4b42ab5455",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/ed3330d771e4344001fbd3d548a356161cbf210c",
+                "reference": "ed3330d771e4344001fbd3d548a356161cbf210c",
                 "shasum": ""
             },
             "require": {
@@ -4230,9 +4230,9 @@
             "authors": [
                 {
                     "name": "Ben Cavens",
-                    "role": "Developer",
                     "email": "cavensben@gmail.com",
-                    "homepage": "http://thinktomorrow.be"
+                    "homepage": "http://thinktomorrow.be",
+                    "role": "Developer"
                 }
             ],
             "description": "Text manager for static laravel translations during and after development",
@@ -4241,7 +4241,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2019-08-19T15:13:13+00:00"
+            "time": "2019-10-01T07:27:37+00:00"
         },
         {
             "name": "thinktomorrow/url",
@@ -4613,8 +4613,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "role": "Developer",
-                    "homepage": "https://github.com/filp"
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
                 }
             ],
             "description": "php error handling for cool kids",
