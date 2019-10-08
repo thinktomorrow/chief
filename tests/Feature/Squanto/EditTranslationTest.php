@@ -46,7 +46,6 @@ class EditTranslationTest extends TestCase
     {
         $response = $this->asAdmin()
             ->put(route('squanto.update', $this->squantoPage->id), $this->validParams());
-        ddd($response);
         $response->assertStatus(302);
         $response->assertRedirect(route('squanto.edit', $this->squantoPage->id));
 
