@@ -19,15 +19,6 @@ class CreateJobsTable extends Migration
 
             $table->index(['queue', 'reserved_at']);
         });
-
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
-        });
     }
 
     public function down()

@@ -11,7 +11,6 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Spatie\Permission\PermissionServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
-use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Spatie\Activitylog\ActivitylogServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;

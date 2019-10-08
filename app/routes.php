@@ -37,7 +37,7 @@ Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chief']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'web-chief', 'auth:chief']], function () {
 
     // Dashboard
     Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
