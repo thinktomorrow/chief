@@ -17,7 +17,13 @@ class AddPageStates extends Migration
 
         Schema::table('pages', function(Blueprint $table){
             $table->dropColumn('archived_at');
+        });
+
+        Schema::table('pages', function(Blueprint $table){
             $table->dropColumn('published');
+        });
+
+        Schema::table('pages', function(Blueprint $table){
             $table->dropColumn('publication');
         });
     }

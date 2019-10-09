@@ -41,7 +41,7 @@ class PageState extends StateMachine
             'to'   => self::DRAFT,
         ],
         'delete' => [
-            'from' => [self::ARCHIVED],
+            'from' => [self::ARCHIVED, self::DRAFT],
             'to'   => self::DELETED,
         ],
     ];

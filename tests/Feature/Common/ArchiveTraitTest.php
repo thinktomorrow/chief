@@ -8,11 +8,13 @@ use Illuminate\Support\Carbon;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Thinktomorrow\Chief\States\Publishable\Publishable;
 
-class ArchivableTest extends TestCase
+class ArchiveTraitTest extends TestCase
 {
     use ChiefDatabaseTransactions;
 
@@ -88,19 +90,29 @@ class ArchivableTest extends TestCase
  * Class ValidationTraitDummyClass
  * @package Thinktomorrow\Chief\Models
  */
-class ArchivableTraitDummyClass extends Model
+class ArchivableTraitDummyClass extends Model implements StatefulContract
 {
     use Archivable, Publishable;
 
-    public $archived = false;
+    public $current_state = PageState::ARCHIVED;
 
     protected $table = 'dummy';
 
     public static function migrateUp()
     {
         Schema::create('dummy', function (Blueprint $table) {
-            $table->timestamp('archived_at')->default(null)->nullable();
+            $table->string('current_state')->default(PageState::PUBLISHED)->nullable();
             $table->timestamps();
         });
+    }
+
+    public function state(): string
+    {
+        return $this->current_state;
+    }
+
+    public function changeState($state)
+    {
+        $this->current_state = $state;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -89,7 +90,7 @@ class AuditModelTest extends TestCase
     {
         $user = $this->developer();
 
-        $page = factory(Page::class)->create(['published' => true])->first();
+        $page = factory(Page::class)->create(['current_state' => PageState::PUBLISHED])->first();
 
         $this->actingAs($user, 'chief')
              ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
