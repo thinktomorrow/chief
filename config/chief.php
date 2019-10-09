@@ -111,5 +111,5 @@ return [
      * in the forms as well as in the pagebuilder. Available options are:
      * 'quill' and 'redactor'. By default the free quill editor is set.
      */
-    'editor' => 'redactor',
+    'editor' => 'quill',
 ];
