@@ -2,9 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Authorization\Role;
 
 class UpdateRoleTest extends TestCase
 {
@@ -17,8 +18,8 @@ class UpdateRoleTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         // Create a new role first
-        $role = Role::create(['name' => array_get($this->validParams(), 'name')]);
-        $role->givePermissionTo(array_get($this->validParams(), 'permission_names'));
+        $role = Role::create(['name' => Arr::get($this->validParams(), 'name')]);
+        $role->givePermissionTo(Arr::get($this->validParams(), 'permission_names'));
         $this->newRole = $role;
     }
 
@@ -118,7 +119,7 @@ class UpdateRoleTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

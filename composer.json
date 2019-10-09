@@ -10,12 +10,12 @@
         "doctrine/dbal": "^2.5",
         "ezyang/htmlpurifier": "^4.11",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "~5.7.0|~5.8.0",
+        "laravel/framework": "~5.7|~5.8|~6.0",
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^3.0",
-        "spatie/laravel-permission": "^2.20",
-        "thinktomorrow/assetlibrary": "~0.5.0",
-        "thinktomorrow/squanto": "0.6",
+        "spatie/laravel-permission": "^2.0|^3.0",
+        "thinktomorrow/assetlibrary": "~0.5.3",
+        "thinktomorrow/squanto": "~0.7.0",
         "thinktomorrow/url": "~1.0.0",
         "thinktomorrow/vine": "~0.2.1"
     },
@@ -25,7 +25,7 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "^1.1",
         "nunomaduro/collision": "^3.0",
-        "orchestra/testbench": "3.7.*|3.8.*",
+        "orchestra/testbench": "3.7.*|3.8.*|4.0",
         "phpunit/phpunit": "~7.5|~8.0"
     },
     "autoload": {

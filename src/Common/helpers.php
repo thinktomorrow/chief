@@ -61,7 +61,7 @@ if (!function_exists('str_slug_slashed')) {
         $parts = explode('/', $title);
 
         foreach ($parts as $i => $part) {
-            $parts[$i] = str_slug($part, $separator, $language);
+            $parts[$i] = Illuminate\Support\Str::slug($part, $separator, $language);
         }
 
         return implode('/', $parts);
