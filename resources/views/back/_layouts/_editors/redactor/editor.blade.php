@@ -26,7 +26,9 @@
                     }
                 }
             },
-            imageUpload: '{{ $imageUploadUrl }}',
+            @if(isset($imageUploadUrl) && (!isset($disableImageUpload) || !$disableImageUpload))
+                imageUpload: '{{ $imageUploadUrl }}',
+            @endif
             definedlinks: '{{ route('chief.api.internal-links') }}',
             customClasses: [
                 {

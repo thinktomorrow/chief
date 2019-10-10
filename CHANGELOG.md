@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 
 ## 0.3.3 - 2019-09-30
