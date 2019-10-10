@@ -40,6 +40,12 @@ return [
          * with your project naming conventions, you can change it here.
          */
         'name' => 'pages.show',
+
+        /**
+         * Here you can set the general prefix for all the chief admin routes.
+         * This is set to a sensible default '/admin'.
+         */
+        'prefix' => 'admin',
     ],
 
     /**
