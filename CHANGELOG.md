@@ -1,6 +1,9 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## Unreleased
+- Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
+
 ## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey
 - Fixed: required on settings
