@@ -1,0 +1,121 @@
+.custom-indicators {
+    @apply leading-normal;
+    .label-content {
+        margin-left: 3rem;
+    }
+    input[type=radio],
+    input[type=checkbox] {
+        z-index: -1;
+        @apply absolute opacity-0;
+    }
+}
+.custom-checkbox{
+    @apply border-4;
+    &::before {
+        content: "";
+        font-family: 'spirit';
+        @apply text-white leading-none;
+    }
+}
+.custom-checkbox,
+.custom-radiobutton {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: 0.2s ease-in-out all;
+    @apply block float-left mr-2 pointer-events-none select-none border-grey-300 border-2;
+    &::after{
+        content: '';
+        font-size: 0rem;
+        transition: 0.2s ease-in-out all;
+        text-align: center;
+        @apply block w-full h-full bg-white leading-normal;
+    }
+}
+.custom-radiobutton {
+    border-radius: 50%;
+    &::after{
+        border-radius: 50%;
+    }
+}
+
+// RADIOS AND CHECKBOXES
+.custom-indicators.disabled {
+    @apply cursor-not-allowed opacity-50;
+    .custom-radiobutton, .custom-checkbox{
+        @apply bg-grey-300;
+    }
+}
+
+input[type=radio]:checked ~ .custom-radiobutton {
+    @apply border-primary-500 border-4;
+}
+
+input[type=checkbox]:checked ~ .custom-checkbox {
+    @apply bg-primary-500 border-primary-500;
+    &::before{
+        content: "\E91F";
+        font-family: 'spirit';
+    }
+}
+// SWITCHES
+
+.switch {
+    @apply hidden;
+    // add default box-sizing for this scope
+    &:after,
+    &:before,
+    & + .switch-btn {
+        box-sizing: border-box;
+        &::selection {
+            background: none;
+        }
+    }
+    + .switch-btn {
+        @apply outline-none block w-3 h-6 relative cursor-pointer select-none;
+        &:after,
+        &:before {
+            @apply relative block w-1/2 h-full;
+        }
+
+        &:after {
+            @apply left-0;
+        }
+
+        &:before {
+            @apply hidden;
+        }
+    }
+
+    &:checked + .switch-btn:after {
+        left: 50%;
+    }
+}
+
+
+
+.switch-primary,
+.switch-secondary,
+.switch-tertiary {
+    + .switch-btn {
+        border-radius: 1.5rem;
+        transition: all .4s ease;
+        @apply bg-grey-50 p-1;
+        &:after {
+            border-radius: 50%;
+            transition: all .2s ease;
+            @apply bg-white;
+        }
+    }
+}
+
+$color-name: primary secondary;
+$colors: #17B890 #F29178;
+
+@each $block in $color-name {
+    $i: index($color-name, $block);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .switch-#{$block}:checked + .switch-btn {
+        background: $color;
+    }
+}
