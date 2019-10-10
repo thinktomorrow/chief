@@ -118,4 +118,9 @@ return [
      * 'quill' and 'redactor'. By default the free quill editor is set.
      */
     'editor' => 'quill',
+
+    'healthMonitor' => [
+        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageSetCheck::class,
+        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageAccessibleCheck::class,
+    ]
 ];
