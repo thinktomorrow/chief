@@ -18,8 +18,7 @@ Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => funct
  * NON-AUTHENTICATED ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => config('thinktomorrow.chief.route.prefix','admin'), 'middleware' => ['web']], function () {
-
+Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
     Route::get('login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('chief.back.login')->middleware('web');
     Route::post('login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@login')->name('chief.back.login.store')->middleware('web');
 
@@ -33,7 +32,6 @@ Route::group(['prefix' => config('thinktomorrow.chief.route.prefix','admin'), 'm
     Route::get('invite/expired', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@expired')->name('invite.expired')->middleware('web');
     Route::get('invite/{token}/accept', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@accept')->name('invite.accept')->middleware('web');
     Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@deny')->name('invite.deny')->middleware('web');
-
 });
 
 /**
@@ -41,7 +39,7 @@ Route::group(['prefix' => config('thinktomorrow.chief.route.prefix','admin'), 'm
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => config('thinktomorrow.chief.route.prefix','admin'), 'middleware' => ['web', 'web-chief', 'auth:chief']], function () {
+Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web', 'web-chief', 'auth:chief']], function () {
 
     // Dashboard
     Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
