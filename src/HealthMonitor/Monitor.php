@@ -22,21 +22,19 @@ class Monitor
         foreach ($this->checks as $check) {
             $checkInstance = app($check);
             
-            if(! $checkInstance instanceof HealthCheck){
+            if (! $checkInstance instanceof HealthCheck) {
                 throw new InvalidClassException('Checks must implement Healthcheck interface.');
             }
 
             $notifiers = $checkInstance->notifiers();
 
             if (!$checkInstance->check()) {
-                foreach($notifiers as $notifier)
-                {
+                foreach ($notifiers as $notifier) {
                     app($notifier)->onFailure($checkInstance);
                 }
                 return;
             } else {
-                foreach($notifiers as $notifier)
-                {
+                foreach ($notifiers as $notifier) {
                     app($notifier)->onSuccess($checkInstance);
                 }
             }
