@@ -14,7 +14,7 @@
                     <span>een tekstblok</span>
                 </a>
             </div>
-            <div class="w-auto">
+            <div class="w-auto" v-if='modules.length > 0'>
                 <p class="stack-xs">Of koppel een ...</p>
                 <a class="btn btn-primary inline-flex items-center" @click="addModuleSectionAfter(-1)">
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
@@ -28,7 +28,7 @@
 
         <!-- top menu -->
         <div class="pagebuilder-menu-wrapper relative stack border-l-3 border-transparent inset-s">
-            <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
+            <pagebuilder-menu :section="{ sort: -1 }" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
         </div>
 
         <draggable :value="sortedSections" 
