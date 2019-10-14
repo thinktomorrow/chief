@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf0083de439d39eaa10d7dd403c7e62d",
+    "content-hash": "f8056fc4b485a4b044b4a676de6f2df2",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4613,8 +4613,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "role": "Developer",
-                    "homepage": "https://github.com/filp"
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
                 }
             ],
             "description": "php error handling for cool kids",
@@ -4967,29 +4967,29 @@
         },
         {
             "name": "orchestra/testbench",
-            "version": "v4.0.0",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchestral/testbench.git",
-                "reference": "bde8b826bde3bd39a2a87e6cd328501e19c60cc9"
+                "reference": "cbfb79054bb7cf1fc713acc03504aac92aafe6a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchestral/testbench/zipball/bde8b826bde3bd39a2a87e6cd328501e19c60cc9",
-                "reference": "bde8b826bde3bd39a2a87e6cd328501e19c60cc9",
+                "url": "https://api.github.com/repos/orchestral/testbench/zipball/cbfb79054bb7cf1fc713acc03504aac92aafe6a1",
+                "reference": "cbfb79054bb7cf1fc713acc03504aac92aafe6a1",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^6.0",
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench-core": "^4.0",
+                "laravel/framework": "^6.2",
+                "mockery/mockery": "^1.2.3",
+                "orchestra/testbench-core": "^4.2",
                 "php": ">=7.2",
-                "phpunit/phpunit": "^8.0"
+                "phpunit/phpunit": "^8.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "5.0-dev"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5013,7 +5013,7 @@
                 "orchestral",
                 "testing"
             ],
-            "time": "2019-09-03T20:02:19+00:00"
+            "time": "2019-10-11T01:58:15+00:00"
         },
         {
             "name": "orchestra/testbench-core",
