@@ -9,4 +9,9 @@ interface HealthCheck
     public function check(): bool;
 
     public function message(): string;
+
+    /**
+     * @return Thinktomorrow\Chief\HealthMonitor\Notifiers\Notifier[]
+     */
+    public function notifiers(): array;
 }
