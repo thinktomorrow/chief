@@ -1,9 +1,9 @@
 <template>
     <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="{section.id} shadow border bg-white border-grey-100 stack block inset relative rounded">
-        
+
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
-        <div class="row to-minimize">
+        <div class="row to-minimize center-y justify-between">
             <div class="column-6">
                 <chief-multiselect
                     :name="'sections['+sectionKey+']['+_uid+']'"
@@ -18,6 +18,7 @@
                 >
                 </chief-multiselect>
             </div>
+            <a :href="editUrl" target="_blank" class="ml-2 right">bewerk</a>
         </div>
 
         <pagebuilder-menu :section="section"></pagebuilder-menu>
@@ -51,7 +52,8 @@
             'section': { type: Object },
             'options' : { default: function(){ return [] }, type: Array },
             'placeholder': { default: 'Selecteer een module'},
-            'title': {}
+            'title': {},
+            'editUrl': { required: true, type: String }
         },
         data(){
             return {
@@ -75,7 +77,7 @@
                 else if( typeof valuesForSelect[0] == "undefined"){
                     this.section.id = null;
                 }
-                
+
                 return true;
             });
 
@@ -88,11 +90,11 @@
             },
             mouseEnter(){
                 this.$el.getElementsByClassName('module-icons-left')[0].classList.add('reveal-left');
-                this.$el.getElementsByClassName('module-icons-right')[0].classList.add('reveal-right');   
+                this.$el.getElementsByClassName('module-icons-right')[0].classList.add('reveal-right');
             },
             mouseLeave(){
                 this.$el.getElementsByClassName('module-icons-left')[0].classList.remove('reveal-left');
-                this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');    
+                this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');
             }
         }
     }
@@ -109,7 +111,7 @@
     opacity: 0;
     width: 40px;
     transition: 0.15s all ease-in;
-}   
+}
 .module-icons-right {
     position: absolute;
     top: 0;
@@ -121,7 +123,7 @@
     opacity: 0;
     width: 40px;
     transition: 0.15s all ease-in;
-}   
+}
 .reveal-left {
     opacity: 1;
     left: -42px;

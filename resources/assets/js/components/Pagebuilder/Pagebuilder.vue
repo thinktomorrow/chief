@@ -21,8 +21,8 @@
                     <span>eerste module</span>
                 </a>
 
-            </div>  
-            </div>  
+            </div>
+            </div>
 
         </div>
 
@@ -31,7 +31,7 @@
             <pagebuilder-menu :section="{ sort: -1 }" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
         </div>
 
-        <draggable :value="sortedSections" 
+        <draggable :value="sortedSections"
         v-on:start="minimizeSections"
         v-on:end="changeSectionLocation"
         :options="{
@@ -50,6 +50,7 @@
                     v-bind:options="modules"
                     placeholder="Selecteer een module"
                     title="Module"
+                    :editUrl="section.editUrl"
                     class="stack" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'page'"
@@ -58,6 +59,7 @@
                     v-bind:options="pages"
                     placeholder="Selecteer een pagina"
                     title="Pagina"
+                    :editUrl="section.editUrl"
                     class="stack" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'pageset'"
@@ -89,7 +91,7 @@
             </div>
 
         </draggable>
-        
+
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
                 <option v-bind:key="section.key" selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
@@ -183,13 +185,13 @@
                 for(var i = 0; i < this.sections.length; i++) {
                     if(i > oldIndex) this.sections[i].sort--;
                     else if(i === oldIndex && !isHigherIndex) this.sections[i].sort--;
-                }      
+                }
 
                 // Calculate indices of elements after newindex
                 for(var i = 0; i < this.sections.length; i++) {
                     if(i > newIndex) this.sections[i].sort++;
                     else if(i === newIndex && !isHigherIndex) this.sections[i].sort++;
-                }        
+                }
 
                 this.maximizeSections();
 
@@ -205,7 +207,7 @@
                         var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
                         allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
                     }
-                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
+                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";
                 }
 
                 pagebuilder.classList.add('pagebuilder-dragging');
@@ -222,8 +224,8 @@
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var titleText = allSections[i].getElementsByTagName('h3')[0];
                         titleText.innerHTML = titleText.innerHTML.substring(0, titleText.innerHTML.indexOf(' - '));
-                    } 
-                } 
+                    }
+                }
 
                 pagebuilder.classList.remove('pagebuilder-dragging');
                 document.querySelector('body').classList.remove('drag-cursor');

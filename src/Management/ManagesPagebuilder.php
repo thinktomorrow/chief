@@ -71,6 +71,7 @@ trait ManagesPagebuilder
                 'key'        => $section->flatReference()->get(),
                 'type'       => $this->guessPagebuilderSectionType($section),
                 'slug'       => $section->slug,
+                'editUrl'    => app(Managers::class)->findByModel($section)->route('edit'),
                 'sort'       => $index,
                 'trans'      => $section->trans ?? [],
             ];
