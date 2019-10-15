@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 

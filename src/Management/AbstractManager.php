@@ -180,7 +180,7 @@ abstract class AbstractManager
         {
             $this->$method($verb);
         }
-        
+
         return !is_null($this->route($verb));
     }
 

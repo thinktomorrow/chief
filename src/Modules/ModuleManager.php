@@ -27,6 +27,7 @@ class ModuleManager extends AbstractManager implements Manager
 
     public function route($verb): ?string
     {
+
         /**
          * Page specific modules are expected to be found and managed in the context of a certain page.
          * Therefore the index of these modules is at the modules tab of this page model.
