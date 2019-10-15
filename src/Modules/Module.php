@@ -71,12 +71,26 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
     }
 
     /**
-     * Enlist all available managed modules.
+     * Enlist all available managed modules for creation.
      * @return Collection of ManagedModelDetails
      */
-    public static function available(): Collection
+    public static function availableForCreate(): Collection
     {
-        return app(Managers::class)->findDetailsByTag('module');
+        $managers = app(Managers::class)->findByTag('module')->filter(function($manager){
+            return $manager->can('create');
+        })->map(function($manager){
+            return $manager->details();
+        });
+
+        return $managers;
+    }
+
+    /**
+     * Return true if there is at least one registered module
+     */
+    public static function atLeastOneRegistered(): bool
+    {
+        return app(Managers::class)->hasRegistered('module');
     }
 
     public function page()

@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.2.0",
         "astrotomic/laravel-translatable": "^11.3",
+        "barryvdh/laravel-debugbar": "^3.2",
         "doctrine/dbal": "^2.5",
         "ezyang/htmlpurifier": "^4.11",
         "fideloper/proxy": "^4.0",
@@ -16,11 +17,11 @@
         "spatie/laravel-permission": "^2.0|^3.0",
         "thinktomorrow/assetlibrary": "~0.5.3",
         "thinktomorrow/squanto": "~0.7.0",
+        "thinktomorrow/trap": "^0.1.2",
         "thinktomorrow/url": "~1.0.0",
         "thinktomorrow/vine": "~0.2.1"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.1",
         "filp/whoops": "^2.1",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "^1.1",

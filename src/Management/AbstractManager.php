@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Management;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
@@ -48,6 +47,8 @@ abstract class AbstractManager
 
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
+
+        $this->bootTraitMethod('can');
     }
 
     public function manage($model): Manager
@@ -175,6 +176,11 @@ abstract class AbstractManager
 
     public function can($verb): bool
     {
+        foreach($this->bootedcan as $method)
+        {
+            $this->$method($verb);
+        }
+        
         return !is_null($this->route($verb));
     }
 
@@ -270,6 +276,22 @@ abstract class AbstractManager
     {
         if (!$this->model) {
             throw new \DomainException('Model class should be set for this manager. Please set the model property default via the constructor or by extending the setupDefaults method.');
+        }
+    }
+
+    public function bootTraitMethod(string $baseMethod)
+    {
+        $class = static::class;
+
+        $this->{'booted'.$baseMethod} = [];
+        
+        foreach (class_uses_recursive($class) as $trait) {
+             
+            $method = class_basename($trait) . ucfirst($baseMethod);
+            
+            if (method_exists($class, $method) && ! in_array($method, $this->{'booted'.$baseMethod})) {
+                $this->{'booted'.$baseMethod}[] = lcfirst($method);
+            }
         }
     }
 }

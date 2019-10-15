@@ -52,11 +52,11 @@ class ModuleManager extends AbstractManager implements Manager
     {
         try {
             $this->authorize($verb);
+
+            return parent::can($verb);
         } catch (NotAllowedManagerRoute $e) {
             return false;
         }
-
-        return parent::can($verb);
     }
 
     private function authorize($verb)

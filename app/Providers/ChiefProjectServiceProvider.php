@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
+use Thinktomorrow\Chief\Modules\Nomad;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Pages\PageManager;

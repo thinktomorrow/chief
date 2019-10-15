@@ -51,6 +51,8 @@ class ManagersController extends Controller
 
         $manager = app(StoreManager::class)->handle($modelManager, $request);
 
+        $manager->guard('store');
+
         return redirect()->to($manager->route('edit'))
                          ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is toegevoegd');
     }
