@@ -76,9 +76,9 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
      */
     public static function availableForCreate(): Collection
     {
-        $managers = app(Managers::class)->findByTag('module')->filter(function($manager){
+        $managers = app(Managers::class)->findByTag('module')->filter(function ($manager) {
             return $manager->can('create');
-        })->map(function($manager){
+        })->map(function ($manager) {
             return $manager->details();
         });
 

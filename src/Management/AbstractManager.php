@@ -176,8 +176,7 @@ abstract class AbstractManager
 
     public function can($verb): bool
     {
-        foreach($this->bootedcan as $method)
-        {
+        foreach ($this->bootedcan as $method) {
             $this->$method($verb);
         }
         
@@ -286,7 +285,6 @@ abstract class AbstractManager
         $this->{'booted'.$baseMethod} = [];
         
         foreach (class_uses_recursive($class) as $trait) {
-             
             $method = class_basename($trait) . ucfirst($baseMethod);
             
             if (method_exists($class, $method) && ! in_array($method, $this->{'booted'.$baseMethod})) {
