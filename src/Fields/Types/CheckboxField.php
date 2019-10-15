@@ -4,11 +4,11 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-class RadioField extends Field
+class CheckboxField extends Field
 {
     public static function make(string $key)
     {
-        return new static(new FieldType(FieldType::RADIO), $key);
+        return new static(new FieldType(FieldType::CHECKBOX), $key);
     }
 
     public function options(array $values)
