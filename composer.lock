@@ -2370,16 +2370,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.9.0",
+            "version": "3.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "dac271a93e52f1d97f0587ae2fa25a04954707a2"
+                "reference": "659738573f8607191afbd2b794db8669a5b20951"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/dac271a93e52f1d97f0587ae2fa25a04954707a2",
-                "reference": "dac271a93e52f1d97f0587ae2fa25a04954707a2",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/659738573f8607191afbd2b794db8669a5b20951",
+                "reference": "659738573f8607191afbd2b794db8669a5b20951",
                 "shasum": ""
             },
             "require": {
@@ -2444,7 +2444,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2019-10-06T13:07:23+00:00"
+            "time": "2019-10-15T07:39:07+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -4613,8 +4613,8 @@
             "authors": [
                 {
                     "name": "Filipe Dobreira",
-                    "homepage": "https://github.com/filp",
-                    "role": "Developer"
+                    "role": "Developer",
+                    "homepage": "https://github.com/filp"
                 }
             ],
             "description": "php error handling for cool kids",

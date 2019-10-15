@@ -19,6 +19,11 @@ class DeleteModule
 
             Relation::deleteRelationsOf($module->getMorphClass(), $module->id);
 
+            // Mark the slug as deleted to avoid any conflict with newly created modules with the same slug.
+            $module->update([
+                'slug' => $module->slug . $this->appendDeleteMarker(),
+            ]);
+
             $module->delete();
 
             DB::commit();
@@ -26,5 +31,10 @@ class DeleteModule
             DB::rollBack();
             throw $e;
         }
+    }
+
+    private function appendDeleteMarker(): string
+    {
+        return '_DELETED_' . time();
     }
 }
