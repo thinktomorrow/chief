@@ -1,8 +1,14 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unreleased
+## unreleased
+- Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
+- Added: selected module in pagebuilder now displays an edit link
+- Added: Checkbox field
+- Changed: Healthmonitor checks are now defined in the chief.php config file.
+- Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
 - Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
+- Fixed: Slug of deleted module is now allowed to be reused. This used to give an unique validation constraint.
 
 ## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey

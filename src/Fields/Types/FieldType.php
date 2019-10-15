@@ -16,44 +16,33 @@ class FieldType
     const SELECT = 'select';  // Select options
     const MEDIA = 'media';  // media file (slim uploader)
     const DOCUMENT = 'document';  // documents
-    const RADIO = 'radio';  // media file (slim uploader)
+    const RADIO = 'radio';  // radio select
+    const CHECKBOX = 'checkbox';  // checkbox select
     const PAGEBUILDER = 'pagebuilder';  // the most special field there is...
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
+    /**
+     * FieldType constructor.
+     * Type is not validated against the default available set.
+     * A developer can choose to set any string as a fieldType.
+     *
+     * @param string $type
+     */
     public function __construct(string $type)
     {
-        if (!in_array($type, [
-            static::INPUT,
-            static::TEXT,
-            static::NUMBER,
-            static::PHONENUMBER,
-            static::RANGE,
-            static::HTML,
-            static::SELECT,
-            static::DATE,
-            static::MEDIA,
-            static::DOCUMENT,
-            static::RADIO,
-            static::PAGEBUILDER,
-        ])) {
-            throw new \Exception('Invalid type identifier given [' . $type . '].');
-        }
-
         $this->type = $type;
     }
 
-    public static function fromString(string $type)
+    public static function fromString(string $type): self
     {
         $class = 'Thinktomorrow\Chief\Fields\Types\\' . ucfirst($type . 'Field');
 
         return new $class(new static($type));
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->type;
     }

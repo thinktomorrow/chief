@@ -21,7 +21,9 @@
                                     <a class="{{ isActiveUrl('admin/menus*') ? 'active' : '' }}" href="{{ route('chief.back.menus.index') }}">Menu</a>
                                 @endcan
                                 @can('view-page')
-                                    <a class="{{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Vaste modules</a>
+                                    @if(! \Thinktomorrow\Chief\Modules\Module::available()->values()->isEmpty())
+                                        <a class="{{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Vaste modules</a>
+                                    @endif
                                 @endcan
                                 @can('view-squanto')
                                     <a class="{{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>

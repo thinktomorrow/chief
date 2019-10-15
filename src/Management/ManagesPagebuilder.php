@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Sets\StoredSetReference;
 use Thinktomorrow\Chief\PageBuilder\UpdateSections;
 use Thinktomorrow\Chief\Relations\AvailableChildren;
 use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
+use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
@@ -71,6 +72,7 @@ trait ManagesPagebuilder
                 'key'        => $section->flatReference()->get(),
                 'type'       => $this->guessPagebuilderSectionType($section),
                 'slug'       => $section->slug,
+                'editUrl'    => $this->findEditUrl($section),
                 'sort'       => $index,
                 'trans'      => $section->trans ?? [],
             ];
@@ -82,6 +84,23 @@ trait ManagesPagebuilder
                                 ->availablePages($available_pages)
                                 ->availableModules($available_modules)
                                 ->availableSets($available_sets);
+    }
+
+    /**
+     * @param $model
+     * @return string|null
+     */
+    private function findEditUrl($model): ?string
+    {
+        if (! $model instanceof ManagedModel) {
+            return null;
+        }
+
+        try {
+            return app(Managers::class)->findByModel($model)->route('edit');
+        } catch (NonRegisteredManager $e) {
+            return null;
+        }
     }
 
     /**
