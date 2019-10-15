@@ -92,14 +92,15 @@ trait ManagesPagebuilder
      */
     private function findEditUrl($model): ?string
     {
-        if(! $model instanceof ManagedModel) return null;
-
-        try{
-            return app(Managers::class)->findByModel($model)->route('edit');
-        } catch(NonRegisteredManager $e){
+        if (! $model instanceof ManagedModel) {
             return null;
         }
 
+        try {
+            return app(Managers::class)->findByModel($model)->route('edit');
+        } catch (NonRegisteredManager $e) {
+            return null;
+        }
     }
 
     /**
