@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Fields\FieldsTab;
 use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Urls\UrlSlugFields;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
@@ -17,14 +18,14 @@ use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
-use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
+use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
+use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Urls\UrlSlugFields;
 
 class PageManager extends AbstractManager implements Manager
 {
@@ -136,15 +137,20 @@ class PageManager extends AbstractManager implements Manager
             }));
         }
 
-        return new FieldArrangement($this->fieldsWithAssistantFields(), [
+        $tabs = [
             new FieldsTab('pagina', ['sections']),
-            new FieldsTab('modules', [], 'chief::back.pages._partials.modules'),
             new RemainingFieldsTab('algemeen'),
             new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
                 'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
             ]),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
-        ]);
+        ];
+
+        if (! Module::available()->values()->isEmpty()) {
+            array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
+        }
+
+        return new FieldArrangement($this->fieldsWithAssistantFields(), $tabs);
     }
 
     public function details(): Details
