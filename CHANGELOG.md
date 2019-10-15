@@ -8,6 +8,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link
+- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 
 ## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey
