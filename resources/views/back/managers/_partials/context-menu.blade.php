@@ -5,7 +5,7 @@
             <a class="block p-3 --link-with-bg" href="{!! $manager->assistant('publish')->previewUrl() !!}" target="_blank">Bekijk preview</a>
         @endif
 
-        @if($manager->can('edit') && \Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.managers.edit')
+        @if($manager->can('edit') && request()->fullUrl() !== $manager->route('edit'))
             <a href="{{ $manager->route('edit') }}" class="block p-3 --link-with-bg">Aanpassen</a>
         @endif
 

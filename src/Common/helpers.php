@@ -41,7 +41,7 @@ if (!function_exists('chiefSetting')) {
         if (is_null($key)) {
             return $settings;
         }
-        
+
         return $settings->get($key, $locale, $default);
     }
 }
@@ -217,7 +217,7 @@ if (!function_exists('isActiveUrl')) {
             return !!preg_match("#$pattern#", request()->path());
         }
 
-        return ($name == request()->path());
+        return ($name == request()->path() || $name == request()->fullUrl());
     }
 }
 
