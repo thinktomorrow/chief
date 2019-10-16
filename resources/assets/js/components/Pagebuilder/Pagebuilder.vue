@@ -43,7 +43,6 @@
         }">
 
             <div v-for="section in sortedSections" v-bind:key="section.key">
-
                 <module-section v-if="section.type === 'module'"
                     sectionKey="modules"
                     v-bind:section="section"
@@ -51,7 +50,7 @@
                     placeholder="Selecteer een module"
                     title="Module"
                     :editUrl="section.editUrl"
-                    class="stack" :class="section.type"></module-section>
+                    class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'page'"
                     sectionKey="modules"
@@ -60,7 +59,7 @@
                     placeholder="Selecteer een pagina"
                     title="Pagina"
                     :editUrl="section.editUrl"
-                    class="stack" :class="section.type"></module-section>
+                    class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'pageset'"
                     sectionKey="pagesets"
@@ -68,7 +67,7 @@
                     v-bind:options="pagesets"
                     placeholder="Selecteer een pagina groep"
                     title="Pagina groep"
-                    class="stack" :class="section.type"></module-section>
+                    class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <text-section v-if="section.type === 'text'"
                     v-bind:section="section"
@@ -77,7 +76,7 @@
                     :editor="true"
                     :text-editor="textEditor"
                     title="Pagina text"
-                    class="stack" :class="section.type"></text-section>
+                    class="mt-8 mb-2" :class="section.type"></text-section>
 
                 <text-section v-if="section.type === 'pagetitle'"
                     v-bind:section="section"
@@ -86,8 +85,11 @@
                     :editor="false"
                     :text-editor="textEditor"
                     title="Pagina titel"
-                    class="stack" :class="section.type"></text-section>
-
+                    class="mt-8 mb-2" :class="section.type"></text-section>
+                    
+                <div class="pagebuilder-menu-wrapper relative border-l-3 border-transparent pb-1">
+                    <pagebuilder-menu :section="section" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
+                </div>            
             </div>
 
         </draggable>
