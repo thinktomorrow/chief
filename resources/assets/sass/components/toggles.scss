@@ -1,0 +1,41 @@
+.custom-indicators {
+    @apply leading-normal;
+    input[type=radio],
+    input[type=checkbox] {
+        z-index: -1;
+        @apply absolute opacity-0;
+    }
+}
+
+.custom-checkbox,
+.custom-radiobutton {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: 0.2s ease-in-out all;
+    border-radius: 50%;
+    @apply block float-left mr-2 pointer-events-none select-none border-grey-300 border-2;
+    &::after{
+        content: '';
+        font-size: 0rem;
+        transition: 0.2s ease-in-out all;
+        text-align: center;
+        border-radius: 50%;
+        @apply block w-full h-full bg-white leading-normal;
+    }
+}
+
+// RADIOS AND CHECKBOXES
+.custom-indicators.disabled {
+    @apply cursor-not-allowed opacity-50;
+    .custom-radiobutton, .custom-checkbox{
+        @apply bg-grey-300;
+    }
+}
+
+input[type=radio]:checked ~ .custom-radiobutton {
+    @apply border-primary-500 border-4;
+}
+
+input[type=checkbox]:checked ~ .custom-checkbox {
+    @apply border-primary-500 border-4;
+}

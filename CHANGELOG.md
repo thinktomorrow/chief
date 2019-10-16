@@ -4,6 +4,7 @@ All Notable changes to the `chief` application template will be documented in th
 ## unreleased
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link
+- Added: Checkbox field
 - Changed: Healthmonitor checks are now defined in the chief.php config file.
 - Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
 - Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
