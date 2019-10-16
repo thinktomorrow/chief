@@ -1,5 +1,5 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="{section.id} shadow border bg-white border-grey-100 stack block inset relative rounded">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 block inset relative rounded">
 
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
@@ -20,8 +20,6 @@
             </div>
             <a :href="editUrl" target="_blank" class="ml-2 right">bewerk</a>
         </div>
-
-        <pagebuilder-menu :section="section"></pagebuilder-menu>
 
         <div class="module-icons-left">
             <span class="grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move">
