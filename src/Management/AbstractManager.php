@@ -287,8 +287,7 @@ abstract class AbstractManager
             'can'
         ];
 
-        foreach($methods as $baseMethod)
-        {
+        foreach ($methods as $baseMethod) {
             static::$booted[$baseMethod] = [];
         
             foreach (class_uses_recursive($class) as $trait) {
