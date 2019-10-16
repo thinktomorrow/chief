@@ -9,6 +9,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
 - Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
 - Fixed: Slug of deleted module is now allowed to be reused. This used to give an unique validation constraint.
+- Fixed: isActiveUrl helper method can now check for full url
 
 ## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey
