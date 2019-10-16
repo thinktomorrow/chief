@@ -37,6 +37,7 @@ abstract class AbstractManager
 
     protected $pageCount = 20;
     protected $paginated = true;
+    protected static $booted    = [];
 
     public function __construct(Registration $registration)
     {
@@ -48,7 +49,7 @@ abstract class AbstractManager
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
 
-        $this->bootTraitMethod('can');
+        static::bootTraitMethods();
     }
 
     public function manage($model): Manager
@@ -176,7 +177,7 @@ abstract class AbstractManager
 
     public function can($verb): bool
     {
-        foreach ($this->bootedcan as $method) {
+        foreach (static::$booted['can'] as $method) {
             $this->$method($verb);
         }
 
@@ -278,17 +279,24 @@ abstract class AbstractManager
         }
     }
 
-    public function bootTraitMethod(string $baseMethod)
+    public static function bootTraitMethods()
     {
         $class = static::class;
 
-        $this->{'booted'.$baseMethod} = [];
+        $methods = [
+            'can'
+        ];
+
+        foreach($methods as $baseMethod)
+        {
+            static::$booted[$baseMethod] = [];
         
-        foreach (class_uses_recursive($class) as $trait) {
-            $method = class_basename($trait) . ucfirst($baseMethod);
-            
-            if (method_exists($class, $method) && ! in_array($method, $this->{'booted'.$baseMethod})) {
-                $this->{'booted'.$baseMethod}[] = lcfirst($method);
+            foreach (class_uses_recursive($class) as $trait) {
+                $method = class_basename($trait) . ucfirst($baseMethod);
+                
+                if (method_exists($class, $method) && ! in_array($method, static::$booted[$baseMethod])) {
+                    static::$booted[$baseMethod][] = lcfirst($method);
+                }
             }
         }
     }

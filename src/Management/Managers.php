@@ -95,7 +95,7 @@ class Managers
         });
     }
 
-    public function hasRegistered($tag)
+    public function anyRegisteredByTag($tag)
     {
         return ! empty($this->register->filterByTag($tag)->all());
     }
