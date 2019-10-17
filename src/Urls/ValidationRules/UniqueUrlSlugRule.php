@@ -34,7 +34,6 @@ class UniqueUrlSlugRule implements Rule
     public function passes($attribute, $slugs)
     {
         foreach ($slugs as $locale => $slug) {
-
             $slug = $slug ? BaseUrlSegment::prepend($this->model, $slug, $locale) : null;
 
             if (UrlRecord::existsIgnoringRedirects($slug, $locale, $this->ignoredModel)) {
