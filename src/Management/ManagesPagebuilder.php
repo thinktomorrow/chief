@@ -4,7 +4,6 @@
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -13,7 +12,6 @@ use Thinktomorrow\Chief\Sets\StoredSetReference;
 use Thinktomorrow\Chief\PageBuilder\UpdateSections;
 use Thinktomorrow\Chief\Relations\AvailableChildren;
 use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
-use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 

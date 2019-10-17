@@ -56,7 +56,7 @@ class UrlAssistant implements Assistant
             InputField::make('url-slugs')
                 ->validation(
                     [
-                        'url-slugs' => ['array', 'min:1', new UniqueUrlSlugRule(($this->model && $this->model->exists) ? $this->model : null),],
+                        'url-slugs' => ['array', 'min:1', new UniqueUrlSlugRule($this->model, ($this->model->exists) ? $this->model : null),],
                     ],
                     [],
                     [
