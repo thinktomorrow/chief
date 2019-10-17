@@ -12,6 +12,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: isActiveUrl helper method can now check for full url
 - Fixed: show edit link in context menu in modules tab on page editpage
 - Fixed: deleting a page now also deletes related url records.
+- Fixed: issue where long pagetitle would overflow the admin header
 
 ## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey
