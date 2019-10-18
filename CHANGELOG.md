@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link
 - Added: Checkbox field
+- Added: Laravel 6 support
 - Changed: Healthmonitor checks are now defined in the chief.php config file.
 - Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
 - Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
@@ -12,7 +13,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: isActiveUrl helper method can now check for full url
 - Fixed: show edit link in context menu in modules tab on page editpage
 - Fixed: deleting a page now also deletes related url records.
-- Fixed: issue where unique url validation didn't took the base url segment into account.
+- Fixed: issue where unique url validation didn't take the base url segment into account.
 - Fixed: issue where long pagetitle would overflow the admin header
 
 ## 0.3.3 - 2019-09-30
