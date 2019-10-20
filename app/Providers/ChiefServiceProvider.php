@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
 use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
@@ -47,6 +49,11 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Project defaults
         (new ChiefProjectServiceProvider($this->app))->boot();
+
+        $this->app->singleton(
+            ExceptionHandler::class,
+            Handler::class
+        );
 
         $this->loadRoutesFrom(__DIR__ . '/../routes.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
