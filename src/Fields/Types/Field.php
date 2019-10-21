@@ -14,6 +14,7 @@ class Field
     private $fieldType;
 
     protected $values = [];
+    protected $fieldCallable = null;
 
     public function __construct(FieldType $fieldType, string $key)
     {
@@ -23,6 +24,7 @@ class Field
         $this->values['locales'] = [];
         $this->values['viewData'] = [];
         $this->values['type'] = $fieldType->get();
+        $this->valueResolver($this->defaultValueResolver());
     }
 
     public function validation(...$arguments)
@@ -83,6 +85,7 @@ class Field
     public function translatable(array $locales = [])
     {
         $this->values['locales'] = $locales;
+
         return $this;
     }
 
@@ -126,14 +129,30 @@ class Field
         return $value;
     }
 
+    
+    public function valueResolver(callable $callable)
+    {
+        $this->fieldCallable = $callable;
+
+        return $this;
+    }
+
     public function getFieldValue(Model $model, $locale = null)
     {
-        // If string is passed, we use this to find the proper field
-        if ($this->isTranslatable() && $locale) {
-            return $model->getTranslationFor($this->column(), $locale);
-        }
+        return call_user_func_array($this->fieldCallable, [$model, $locale]);
+    }
 
-        return $model->{$this->column()};
+    private function defaultValueResolver(): callable
+    {
+        return function($model, $locale)
+        {
+            // If string is passed, we use this to find the proper field
+            if ($this->isTranslatable() && $locale) {
+                return $model->getTranslationFor($this->column(), $locale);
+            }
+    
+            return $model->{$this->column()};
+        };
     }
 
     /**
