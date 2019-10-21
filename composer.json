@@ -16,6 +16,7 @@
         "spatie/laravel-permission": "^2.0|^3.0",
         "thinktomorrow/assetlibrary": "~0.5.3",
         "thinktomorrow/squanto": "~0.7.0",
+        "thinktomorrow/trap": "^0.1.2",
         "thinktomorrow/url": "~1.0.0",
         "thinktomorrow/vine": "~0.2.1"
     },

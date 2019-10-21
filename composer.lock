@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de774b930f8ca9a8b551fa9f8270d76a",
+    "content-hash": "ed7f448941d2889d276c3f1308cfd279",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4242,6 +4242,55 @@
                 "thinktomorrow"
             ],
             "time": "2019-10-08T12:17:11+00:00"
+        },
+        {
+            "name": "thinktomorrow/trap",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thinktomorrow/trap.git",
+                "reference": "6a47a87aabb01fb9ce6a04e016bb23412532a78a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thinktomorrow/trap/zipball/6a47a87aabb01fb9ce6a04e016bb23412532a78a",
+                "reference": "6a47a87aabb01fb9ce6a04e016bb23412532a78a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2",
+                "symfony/var-dumper": "^4.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Thinktomorrow\\Trap\\": "src"
+                },
+                "files": [
+                    "src/Trap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A dump helper with extra functionality",
+            "homepage": "https://github.com/thinktomorrow/trap",
+            "keywords": [
+                "dd",
+                "think tomorrow",
+                "trap",
+                "vardump"
+            ],
+            "time": "2019-10-10T14:14:52+00:00"
         },
         {
             "name": "thinktomorrow/url",
