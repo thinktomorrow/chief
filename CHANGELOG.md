@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## Unreleased
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
+- Fixed: Multiselect placeholders were looking buggy. Now they don't.
 
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
