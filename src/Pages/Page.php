@@ -135,9 +135,9 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
     public function flatReferenceGroup(): string
     {
         $classKey = get_class($this);
-        if(property_exists($this, 'labelSingular')){
+        if (property_exists($this, 'labelSingular')) {
             $labelSingular =  $this->labelSingular;
-        }else{
+        } else {
             $labelSingular = Str::singular($classKey);
         }
 
