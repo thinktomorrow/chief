@@ -14,7 +14,7 @@ use Thinktomorrow\Chief\Audit\Audit;
 
 class AuditModelTest extends TestCase
 {
-    use ChiefDatabaseTransactions, PageFormParams;
+    use PageFormParams;
 
     public function setUp(): void
     {

@@ -14,7 +14,9 @@ class Field
     private $fieldType;
 
     protected $values = [];
-    protected $fieldCallable = null;
+
+    /** @var callable */
+    protected $valueResolver;
 
     public function __construct(FieldType $fieldType, string $key)
     {
@@ -24,6 +26,7 @@ class Field
         $this->values['locales'] = [];
         $this->values['viewData'] = [];
         $this->values['type'] = $fieldType->get();
+
         $this->valueResolver($this->defaultValueResolver());
     }
 
@@ -116,41 +119,38 @@ class Field
         return 'trans['.$locale.']['.$name.']';
     }
 
-    public static function translateValue($value, $locale = null)
+    public static function translateValue($values, $locale = null)
     {
-        if (!$locale || !is_array($value)) {
-            return $value;
+        if (!$locale || !is_array($values)) {
+            return $values;
         }
 
-        if ($locale && isset($value[$locale])) {
-            return $value[$locale];
+        if ($locale && isset($values[$locale])) {
+            return $values[$locale];
         }
 
-        return $value;
-    }
-
-    
-    public function valueResolver(callable $callable)
-    {
-        $this->fieldCallable = $callable;
-
-        return $this;
+        return $values;
     }
 
     public function getFieldValue(Model $model, $locale = null)
     {
-        return call_user_func_array($this->fieldCallable, [$model, $locale]);
+        return call_user_func_array($this->valueResolver, [$model, $locale]);
+    }
+
+    public function valueResolver(callable $callable)
+    {
+        $this->valueResolver = $callable;
+
+        return $this;
     }
 
     private function defaultValueResolver(): callable
     {
-        return function($model, $locale)
-        {
-            // If string is passed, we use this to find the proper field
+        return function(Model $model, $locale) {
             if ($this->isTranslatable() && $locale) {
                 return $model->getTranslationFor($this->column(), $locale);
             }
-    
+
             return $model->{$this->column()};
         };
     }
