@@ -15,7 +15,6 @@ class FieldTest extends TestCase
     /** @test */
     function it_can_get_the_existing_value()
     {
-        $this->disableExceptionHandling();
         $model = ArticleFake::create(['title:en' => 'existing title']);
         $field = InputField::make('title')->translatable(['nl','en']);
 
@@ -31,6 +30,16 @@ class FieldTest extends TestCase
 
         $this->assertEquals('existing title', $field->getFieldValue($model, 'nl'));
         $this->assertNull($field->getFieldValue($model, 'en'));
+    }
+
+    /** @test */
+    function it_can_resolve_value_with_custom_function()
+    {
+        $field = InputField::make('title')->valueResolver(function(){
+            return 'custom value';
+        });
+
+        $this->assertEquals('custom value', $field->getFieldValue(ArticleFake::create()));
     }
 
     /** @test */
