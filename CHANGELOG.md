@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## Unreleased
+- Added: function valueResolver on field to customize how a value is retrieved from the database
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
 - Fixed: Multiselect placeholders were looking buggy. Now they don't.
 

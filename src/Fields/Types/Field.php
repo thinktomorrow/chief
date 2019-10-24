@@ -15,6 +15,9 @@ class Field
 
     protected $values = [];
 
+    /** @var callable */
+    protected $valueResolver;
+
     public function __construct(FieldType $fieldType, string $key)
     {
         $this->fieldType = $fieldType;
@@ -23,6 +26,8 @@ class Field
         $this->values['locales'] = [];
         $this->values['viewData'] = [];
         $this->values['type'] = $fieldType->get();
+
+        $this->valueResolver($this->defaultValueResolver());
     }
 
     public function validation(...$arguments)
@@ -83,6 +88,7 @@ class Field
     public function translatable(array $locales = [])
     {
         $this->values['locales'] = $locales;
+
         return $this;
     }
 
@@ -113,27 +119,40 @@ class Field
         return 'trans['.$locale.']['.$name.']';
     }
 
-    public static function translateValue($value, $locale = null)
+    public static function translateValue($values, $locale = null)
     {
-        if (!$locale || !is_array($value)) {
-            return $value;
+        if (!$locale || !is_array($values)) {
+            return $values;
         }
 
-        if ($locale && isset($value[$locale])) {
-            return $value[$locale];
+        if ($locale && isset($values[$locale])) {
+            return $values[$locale];
         }
 
-        return $value;
+        return $values;
     }
 
     public function getFieldValue(Model $model, $locale = null)
     {
-        // If string is passed, we use this to find the proper field
-        if ($this->isTranslatable() && $locale) {
-            return $model->getTranslationFor($this->column(), $locale);
-        }
+        return call_user_func_array($this->valueResolver, [$model, $locale]);
+    }
 
-        return $model->{$this->column()};
+    public function valueResolver(callable $callable)
+    {
+        $this->valueResolver = $callable;
+
+        return $this;
+    }
+
+    private function defaultValueResolver(): callable
+    {
+        return function (Model $model, $locale) {
+            if ($this->isTranslatable() && $locale) {
+                return $model->getTranslationFor($this->column(), $locale);
+            }
+
+            return $model->{$this->column()};
+        };
     }
 
     /**
