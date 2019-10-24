@@ -146,7 +146,7 @@ class Field
 
     private function defaultValueResolver(): callable
     {
-        return function(Model $model, $locale) {
+        return function (Model $model, $locale) {
             if ($this->isTranslatable() && $locale) {
                 return $model->getTranslationFor($this->column(), $locale);
             }
