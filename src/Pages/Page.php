@@ -2,14 +2,9 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Management\ManagedModel;
-use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
-use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
-use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Audit\AuditTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -19,18 +14,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
+use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
-use Astrotomic\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
 use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
+use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
-use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
 class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
 {
@@ -134,7 +135,11 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
     public function flatReferenceGroup(): string
     {
         $classKey = get_class($this);
-        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+        if (property_exists($this, 'labelSingular')) {
+            $labelSingular =  $this->labelSingular;
+        } else {
+            $labelSingular = Str::singular($classKey);
+        }
 
         return $labelSingular;
     }

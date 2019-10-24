@@ -1,7 +1,7 @@
 <div>
     @foreach($field->options as $value => $label)
         <label class="block stack-xs custom-indicators" for="{{ $key.'-'.$value }}">
-            <input {{ old($key, $field->selected) == $value ? 'checked="checked"':'' }}
+            <input {{ in_array($value, (array)old($key, $field->selected)) ? 'checked="checked"':'' }}
             name="{{ $key }}[]"
                    value="{{ $value }}"
                    id="{{ $key.'-'.$value }}"
