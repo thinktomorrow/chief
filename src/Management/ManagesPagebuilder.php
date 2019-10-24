@@ -4,7 +4,6 @@
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -71,6 +70,7 @@ trait ManagesPagebuilder
                 'key'        => $section->flatReference()->get(),
                 'type'       => $this->guessPagebuilderSectionType($section),
                 'slug'       => $section->slug,
+                'editUrl'    => $this->findEditUrl($section),
                 'sort'       => $index,
                 'trans'      => $section->trans ?? [],
             ];
@@ -82,6 +82,23 @@ trait ManagesPagebuilder
                                 ->availablePages($available_pages)
                                 ->availableModules($available_modules)
                                 ->availableSets($available_sets);
+    }
+
+    /**
+     * @param $model
+     * @return string|null
+     */
+    private function findEditUrl($model): ?string
+    {
+        if (! $model instanceof ManagedModel) {
+            return null;
+        }
+
+        try {
+            return app(Managers::class)->findByModel($model)->route('edit');
+        } catch (NonRegisteredManager $e) {
+            return null;
+        }
     }
 
     /**

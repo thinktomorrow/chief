@@ -34,4 +34,14 @@ class PageTest extends TestCase
 
         $this->assertTrue($pages->first()->created_at->gt($pages->last()->created_at));
     }
+
+    /** @test */
+    public function if_no_labelsingular_is_set_it_takes_singular_classname()
+    {
+        $page = factory(Page::class)->create([
+            'published'     => 0,
+        ]);
+
+        $this->assertEquals('Thinktomorrow\Chief\Pages\Page', $page->flatReferenceGroup());
+    }
 }

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Urls\Application;
 
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\BaseUrlSegment;
 
 class SaveUrlSlugs
 {
@@ -164,11 +165,6 @@ class SaveUrlSlugs
      */
     private function prependBaseUrlSegment(string $slug, $locale): string
     {
-        $slugWithBaseSegment = $this->model->baseUrlSegment($locale) . '/' . $slug;
-        $slugWithBaseSegment = trim($slugWithBaseSegment, '/');
-
-        // If slug with base segment is empty string, it means that the passed slug was probably a "/" character.
-        // so we'll want to return it in case the base segment is not added.
-        return $slugWithBaseSegment ?: '/';
+        return BaseUrlSegment::prepend($this->model, $slug, $locale);
     }
 }

@@ -138,15 +138,20 @@ class PageManager extends AbstractManager implements Manager
             }));
         }
 
-        return new FieldArrangement($this->fieldsWithAssistantFields(), [
+        $tabs = [
             new FieldsTab('pagina', ['sections']),
-            new FieldsTab('modules', [], 'chief::back.pages._partials.modules'),
             new RemainingFieldsTab('algemeen'),
             new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
                 'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
             ]),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
-        ]);
+        ];
+
+        if (! Module::available()->values()->isEmpty()) {
+            array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
+        }
+
+        return new FieldArrangement($this->fieldsWithAssistantFields(), $tabs);
     }
 
     public function details(): Details

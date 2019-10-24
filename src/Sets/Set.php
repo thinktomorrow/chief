@@ -95,7 +95,7 @@ class Set extends Collection implements ViewableContract
     public function paginate($perPage = 12, $currentPage = null): Paginator
     {
         $currentPage = $currentPage ?? request()->get('page', 1);
-        $path = request()->path();
+        $path = '/'.request()->path();
         $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
 
         return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->count(), $perPage, $currentPage))->setPath($path);

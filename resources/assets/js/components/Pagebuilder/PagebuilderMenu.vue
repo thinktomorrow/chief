@@ -32,26 +32,26 @@
 
             </div>
 
-            <div class="flex flex-col">
+            <div class="flex flex-col" v-if="modulescount+pagescount+setscount > 0">
 
                 <p class="stack-xs">Koppel een ...</p>
 
                 <div class="inline-group-s">
-                    <div class="float-left cursor-pointer" @click="addingModuleSectionAfter(section.sort)">
+                    <div class="float-left cursor-pointer" v-if="modulescount > 0" @click="addingModuleSectionAfter(section.sort)">
                         <span title="vast blok selecteren" class="btn btn-o-secondary squished-xs center-y">
                             <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
                             Module
                         </span>
                     </div>
 
-                    <div class="float-left cursor-pointer" @click="addingPageSectionAfter(section.sort)">
+                    <div class="float-left cursor-pointer" v-if="pagescount > 0" @click="addingPageSectionAfter(section.sort)">
                         <span title="pagina selecteren" class="btn btn-o-secondary squished-xs center-y">
                             <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
                             Pagina
                         </span>
                     </div>
 
-                    <div class="float-left cursor-pointer" @click="addingPageSetSectionAfter(section.sort)">
+                    <div class="float-left cursor-pointer" v-if="setscount > 0" @click="addingPageSetSectionAfter(section.sort)">
                         <span title="pagina groep selecteren" class="btn btn-o-secondary squished-xs center-y">
                             <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
                             Paginagroep
@@ -67,7 +67,7 @@
 <script>
 
     export default{
-        props:['section'],
+        props:['section', 'modulescount', 'setscount', 'pagescount'],
         data(){
             return {
                 active: false,

@@ -24,7 +24,6 @@ class DeleteModuleTest extends TestCase
     /** @test */
     public function it_can_delete_modules()
     {
-        $this->disableExceptionHandling();
         $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
 
         $this->asAdmin()
@@ -34,6 +33,7 @@ class DeleteModuleTest extends TestCase
 
         $this->assertCount(0, Module::all());
         $this->assertCount(1, Module::onlyTrashed()->get());
+        $this->assertStringStartsWith('other-slug_DELETED_', Module::onlyTrashed()->first()->slug);
     }
 
     /** @test */

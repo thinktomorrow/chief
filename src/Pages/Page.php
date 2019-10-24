@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\States\PageState;
@@ -136,7 +137,11 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
     public function flatReferenceGroup(): string
     {
         $classKey = get_class($this);
-        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+        if (property_exists($this, 'labelSingular')) {
+            $labelSingular =  $this->labelSingular;
+        } else {
+            $labelSingular = Str::singular($classKey);
+        }
 
         return $labelSingular;
     }

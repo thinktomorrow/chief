@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Sets;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Sets\Set;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
@@ -115,5 +117,33 @@ class PageSetTest extends TestCase
 
         // Parameter of 2 for query limit is passed.
         $this->assertCount(2, $set_ref->toSet());
+    }
+
+    /** @test */
+    public function it_can_be_paginated()
+    {
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+
+        $set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5], 'foobar'));
+        $paginatedSet = $set_ref->toSet()->paginate(1);
+
+        $this->assertInstanceOf(LengthAwarePaginator::class, $paginatedSet);
+        $this->assertCount(1, $paginatedSet);
+    }
+
+    /** @test */
+    public function it_can_be_simple_paginated()
+    {
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+
+        $set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5], 'foobar'));
+        $paginatedSet = $set_ref->toSet()->simplePaginate(1);
+
+        $this->assertInstanceOf(Paginator::class, $paginatedSet);
+        $this->assertCount(1, $paginatedSet);
     }
 }

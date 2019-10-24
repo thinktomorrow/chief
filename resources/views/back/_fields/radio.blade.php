@@ -7,7 +7,7 @@
                        value="{{ $value }}"
                        id="{{ $key.'-'.$value }}"
                        type="radio">
-                <span class="custom-radiobutton --primary"></span>
+                <span class="custom-radiobutton"></span>
                 <strong>{{ $label }}</strong>
             </label>
         @endforeach

@@ -18,7 +18,7 @@ class MonitorMiddleware
     public function handle($request, Closure $next)
     {
         if ($request->isMethod('get')) {
-            Monitor::check();
+            app(Monitor::class)->check();
         }
 
         return $next($request);

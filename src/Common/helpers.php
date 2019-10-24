@@ -41,7 +41,7 @@ if (!function_exists('chiefSetting')) {
         if (is_null($key)) {
             return $settings;
         }
-        
+
         return $settings->get($key, $locale, $default);
     }
 }
@@ -217,7 +217,7 @@ if (!function_exists('isActiveUrl')) {
             return !!preg_match("#$pattern#", request()->path());
         }
 
-        return ($name == request()->path());
+        return ($name == request()->path() || $name == request()->fullUrl());
     }
 }
 
@@ -267,19 +267,6 @@ if (!function_exists('addQueryToUrl')) {
         $query = urldecode(http_build_query(array_merge($current_query, $query_params)));
 
         return $baseurl . '?' . $query . $fragment;
-    }
-}
-
-if (!function_exists('ddd')) {
-    function ddd($var, ...$moreVars)
-    {
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        if (php_sapi_name() == 'cli') {
-            print_r("\e[1;30m dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "\e[40m\n");
-        } else {
-            print_r("[dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "]\n");
-        }
-        return dd($var, ...$moreVars);
     }
 }
 
