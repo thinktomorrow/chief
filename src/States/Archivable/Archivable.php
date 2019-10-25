@@ -18,12 +18,12 @@ trait Archivable
 
     public function scopeArchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where('state', PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where('current_state', PageState::ARCHIVED);
     }
 
     public function scopeUnarchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where('state','<>', PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where('current_state','<>', PageState::ARCHIVED);
     }
 
     public function scopeWithArchived($query)

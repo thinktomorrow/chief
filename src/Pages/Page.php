@@ -236,38 +236,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         return $this->title ?? '';
     }
 
-    /**
-     * We override the publishable trait defaults because Page needs
-     * to be concerned with the archived state as well.
-     *
-     * TODO: IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
-     */
-    public function isPublished()
-    {
-        return (!!$this->published && is_null($this->archived_at));
-    }
-
-    public function isDraft()
-    {
-        return (!$this->published && is_null($this->archived_at));
-    }
-
-    public function publish()
-    {
-        $this->published = 1;
-        $this->archived_at = null;
-
-        $this->save();
-    }
-
-    public function draft()
-    {
-        $this->published = 0;
-        $this->archived_at = null;
-
-        $this->save();
-    }
-
     public function statusAsLabel()
     {
         if ($this->isPublished()) {

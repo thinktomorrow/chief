@@ -24,6 +24,7 @@ class DeleteModuleTest extends TestCase
     /** @test */
     public function it_can_delete_modules()
     {
+        $this->disableExceptionHandling();
         $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
 
         $this->asAdmin()

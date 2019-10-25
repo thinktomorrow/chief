@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;

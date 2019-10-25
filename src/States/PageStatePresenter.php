@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\States;
 
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\States\State\StatefulContract;
 
 class PageStatePresenter

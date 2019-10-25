@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\States\PageStatePresenter;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
@@ -179,6 +179,8 @@ class PageManager extends AbstractManager implements Manager
 
     public function delete()
     {
+        $this->guard('delete');
+
         if (request()->get('deleteconfirmation') !== 'DELETE') {
             throw new DeleteAborted();
         }

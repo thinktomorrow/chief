@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 
@@ -41,7 +42,9 @@ class DeleteModelTest extends TestCase
         app(ArchiveManagedModel::class)->handle($this->page);
 
         $this->asAdmin()
-            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]));
+            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]),[
+                'deleteconfirmation' => 'DELETE',
+            ]);
 
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withTrashed()->get());

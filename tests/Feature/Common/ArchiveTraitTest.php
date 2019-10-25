@@ -4,20 +4,16 @@ namespace Thinktomorrow\Chief\Tests\Feature\Common;
 
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\States\State\StatefulContract;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Thinktomorrow\Chief\States\Publishable\Publishable;
 
 class ArchiveTraitTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     /**
      * @var FeaturableTraitDummyClass
      */
@@ -27,8 +23,6 @@ class ArchiveTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDatabase();
-
         $this->dummy = new ArchivableTraitDummyClass();
         ArchivableTraitDummyClass::migrateUp();
     }
@@ -36,15 +30,13 @@ class ArchiveTraitTest extends TestCase
     /** @test */
     public function it_can_check_if_the_model_is_archived()
     {
-        $result = $this->dummy->isArchived();
-
-        $this->assertFalse($result);
+        $this->assertTrue($this->dummy->isArchived());
     }
 
     /** @test */
     public function it_can_archive_the_model()
     {
-        $this->dummy->archive();
+        $this->dummy->changeState(PageState::ARCHIVED);
 
         $this->assertEquals(1, $this->dummy->isArchived());
     }
@@ -52,7 +44,7 @@ class ArchiveTraitTest extends TestCase
     /** @test */
     public function it_can_unarchive_the_model()
     {
-        $this->dummy->unarchive();
+        $this->dummy->changeState(PageState::DRAFT);
 
         $this->assertEquals(1, !$this->dummy->isArchived());
     }
@@ -60,28 +52,12 @@ class ArchiveTraitTest extends TestCase
     /** @test */
     public function it_can_get_archived_pages()
     {
-        factory(Page::class)->create(['archived_at' => Carbon::now()]);
-        factory(Page::class)->create(['archived_at' => null]);
-        factory(Page::class)->create(['archived_at' => Carbon::now()]);
+        factory(Page::class)->create(['current_state' => PageState::ARCHIVED]);
+        factory(Page::class)->create(['current_state' => PageState::ARCHIVED]);
+        factory(Page::class)->create(['current_state' => PageState::DRAFT]);
 
         $this->assertCount(2, Page::archived()->get());
         $this->assertCount(1, Page::unarchived()->get());
-    }
-
-    /** @test */
-    public function it_works_as_expected_alongside_publishable()
-    {
-        factory(Page::class)->create(['archived_at' => Carbon::now(), 'published' => 1]);
-        factory(Page::class)->create(['archived_at' => null, 'published' => 1]);
-        factory(Page::class)->create(['archived_at' => null, 'published' => 0]);
-        factory(Page::class)->create(['archived_at' => null, 'published' => 0]);
-        factory(Page::class)->create(['archived_at' => Carbon::now(), 'published' => 0]);
-
-        $this->assertCount(2, Page::archived()->get());
-        $this->assertCount(3, Page::get());
-        $this->assertCount(1, Page::published()->get());
-        $this->assertCount(2, Page::drafted()->get());
-        $this->assertCount(5, Page::withArchived()->get());
     }
 }
 
@@ -92,7 +68,7 @@ class ArchiveTraitTest extends TestCase
  */
 class ArchivableTraitDummyClass extends Model implements StatefulContract
 {
-    use Archivable, Publishable;
+    use Archivable;
 
     public $current_state = PageState::ARCHIVED;
 

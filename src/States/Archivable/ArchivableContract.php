@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Thinktomorrow\Chief\States\Archivable;
-
 
 interface ArchivableContract
 {

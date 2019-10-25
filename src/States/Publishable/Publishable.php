@@ -2,16 +2,18 @@
 
 namespace Thinktomorrow\Chief\States\Publishable;
 
+use Thinktomorrow\Chief\States\PageState;
+
 trait Publishable
 {
-    public function isPublished()
+    public function isPublished(): bool
     {
-        return (!!$this->published);
+        return $this->state() === PageState::PUBLISHED;
     }
 
-    public function isDraft()
+    public function isDraft(): bool
     {
-        return (!$this->published);
+        return $this->state() === PageState::DRAFT;
     }
 
     public function scopePublished($query)
@@ -21,33 +23,16 @@ trait Publishable
             return;
         }
 
-        $query->where('published', 1);
+        $query->where('current_state', PageState::PUBLISHED);
     }
 
     public function scopeDrafted($query)
     {
-        $query->where('published', 0);
-    }
-
-    public function publish()
-    {
-        $this->published = 1;
-        $this->save();
-    }
-
-    public function draft()
-    {
-        $this->published = 0;
-        $this->save();
+        $query->where('current_state', PageState::DRAFT);
     }
 
     public static function getAllPublished()
     {
         return self::published()->get();
-    }
-
-    public function scopeSortedByPublished($query)
-    {
-        return $query->orderBy('published', 'DESC');
     }
 }

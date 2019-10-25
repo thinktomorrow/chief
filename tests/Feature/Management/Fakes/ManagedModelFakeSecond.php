@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\States\PageState;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
@@ -37,7 +38,7 @@ class ManagedModelFakeSecond extends Model implements  ManagedModel, Translatabl
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('custom_column')->nullable();
-            $table->boolean('published')->default(0);
+            $table->string('current_state')->default(PageState::DRAFT);
             $table->dateTime('archived_at')->nullable();
             $table->timestamps();
         });

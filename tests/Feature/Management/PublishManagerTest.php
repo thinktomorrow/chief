@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Management\Exceptions\MissingAssistant;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
@@ -25,7 +26,7 @@ class PublishManagerTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->page = factory(Page::class)->create(['published' => false]);
+        $this->page = factory(Page::class)->create();
         $this->fake = (new PublishedManagerFake(app(Register::class)->filterByKey('singles')->first()))->manage($this->page);
 
         Route::get('statics/{slug}', function () {
@@ -47,7 +48,8 @@ class PublishManagerTest extends TestCase
     public function admin_can_draft_a_model()
     {
         $page = Page::first();
-        $page->publish();
+        $page->changeState(PageState::PUBLISHED);
+        $page->save();
 
         $this->assertCount(1, Page::published()->get());
 

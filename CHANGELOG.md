@@ -4,6 +4,8 @@ All Notable changes to the `chief` application template will be documented in th
 ## Unreleased
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
 
+- Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
+
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link

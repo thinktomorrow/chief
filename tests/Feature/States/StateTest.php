@@ -27,18 +27,18 @@ class StateTest extends TestCase
         $this->assertEquals('draft', $this->page->state());
 
         $this->machine->apply('publish');
-        $this->assertEquals('published', $this->page->state());
+        $this->assertEquals(PageState::PUBLISHED, $this->page->state());
 
         $this->machine->apply('archive');
-        $this->assertEquals('archived', $this->page->state());
+        $this->assertEquals(PageState::ARCHIVED, $this->page->state());
     }
 
     /** @test */
-    public function it_cannot_change_to_invalid_state_directly()
+    public function it_cannot_change_to_invalid_state()
     {
         $this->expectException(StateException::class);
 
-        $this->page->changeState('foobar');
+        $this->machine->apply('foobar');
     }
 
     /** @test */
@@ -54,7 +54,7 @@ class StateTest extends TestCase
     {
         $this->expectException(StateException::class);
 
-        $this->machine->apply('delete');
+        $this->machine->apply('unpublish');
     }
 
     /** @test */

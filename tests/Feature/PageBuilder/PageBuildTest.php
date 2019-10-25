@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Management\Managers;
@@ -50,7 +51,7 @@ class PageBuildTest extends TestCase
     public function it_can_fetch_all_sections_in_order()
     {
         $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'current_state' => PageState::PUBLISHED]);
         $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
         $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
@@ -69,8 +70,8 @@ class PageBuildTest extends TestCase
     public function it_can_fetch_all_sections_with_multiple_pages_in_order()
     {
         $module    = TextModule::create(['slug' => 'eerste-text', 'content:nl' => 'eerste text']);
-        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
-        $thirdPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'published' => true]);
+        $otherPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'current_state' => PageState::PUBLISHED]);
+        $thirdPage = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article text', 'current_state' => PageState::PUBLISHED]);
         $module2   = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'tweede text']);
         $module3   = NewsletterModuleFake::create(['slug' => 'newsletter', 'content:nl' => 'nieuwsbrief']);
 
@@ -90,10 +91,10 @@ class PageBuildTest extends TestCase
     /** @test */
     public function all_types_are_grouped_together_but_only_when_sorted_directly_after_each_other()
     {
-        $page2 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-1', 'published' => true]);
-        $page3 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-2', 'published' => true]);
+        $page2 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-1', 'current_state' => PageState::PUBLISHED]);
+        $page3 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-2', 'current_state' => PageState::PUBLISHED]);
         $module = TextModule::create(['slug' => 'tweede-text', 'content:nl' => 'module-text']);
-        $page4 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-3', 'published' => true]);
+        $page4 = ArticlePageFake::create(['title:nl' => 'artikel title', 'content:nl' => 'article-text-3', 'current_state' => PageState::PUBLISHED]);
         $this->page->adoptChild($page2, ['sort' => 1]);
         $this->page->adoptChild($page3, ['sort' => 2]);
         $this->page->adoptChild($module, ['sort' => 3]);

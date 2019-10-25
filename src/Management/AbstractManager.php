@@ -16,6 +16,7 @@ use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
+use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 abstract class AbstractManager
@@ -77,11 +78,11 @@ abstract class AbstractManager
         $builder = $this->indexBuilder($builder);
 
         $builder = $this->indexSorting($builder);
-        
+
         if ($this->paginated) {
             return $this->indexPagination($builder);
         }
-        
+
         return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
@@ -95,7 +96,7 @@ abstract class AbstractManager
     protected function indexSorting(Builder $builder): Builder
     {
         if ($this->isAssistedBy('publish')) {
-            $builder->orderBy('published', 'DESC');
+            $builder->orderBy('published_at', 'DESC');
         }
 
         // if model has no timestamps, updated_at doesn't exist
@@ -229,7 +230,9 @@ abstract class AbstractManager
 
     public function delete()
     {
-        $this->model->delete();
+        $this->guard('delete');
+
+        app(DeleteManagedModel::class)->handle($this->model);
     }
 
     public static function filters(): Filters

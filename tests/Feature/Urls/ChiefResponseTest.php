@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -17,8 +18,7 @@ class ChiefResponseTest extends TestCase
     /** @test */
     function it_returns_response_by_request()
     {
-        $model = ProductPageFake::create();
-        $model->publish();
+        $model = ProductPageFake::create(['current_state' => PageState::PUBLISHED]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
         $request = new Request([],[],[],[],[],[
@@ -63,8 +63,7 @@ class ChiefResponseTest extends TestCase
     {
         $this->expectException(NotFoundHttpException::class);
 
-        $model = ProductPageFake::create();
-        $model->draft();
+        $model = ProductPageFake::create(['current_state' => PageState::DRAFT]);
 
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
@@ -78,8 +77,7 @@ class ChiefResponseTest extends TestCase
     /** @test */
     function if_the_page_is_not_published_admin_can_view_with_preview_mode()
     {
-        $model = ProductPageFake::create();
-        $model->draft();
+        $model = ProductPageFake::create(['current_state' => PageState::DRAFT]);
 
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
@@ -91,8 +89,7 @@ class ChiefResponseTest extends TestCase
     /** @test */
     function it_can_find_a_model_for_a_localized_request()
     {
-        $model = ProductPageFake::create();
-        $model->publish();
+        $model = ProductPageFake::create(['current_state' => PageState::PUBLISHED]);
         $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar', 'en');
@@ -104,8 +101,7 @@ class ChiefResponseTest extends TestCase
     {
         $this->expectException(NotFoundHttpException::class);
 
-        $model = ProductPageFake::create();
-        $model->publish();
+        $model = ProductPageFake::create(['current_state' => PageState::PUBLISHED]);
         UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
         $response = ChiefResponse::fromSlug('foo/bar', 'nl');
@@ -116,9 +112,8 @@ class ChiefResponseTest extends TestCase
     {
         Route::get('{slug}', function () { })->name('pages.show');
 
-        $model = ProductPageFake::create();
-        $model2 = ProductPageFake::create();
-        $model->archive();
+        $model = ProductPageFake::create(['current_state' => PageState::ARCHIVED]);
+        $model2 = ProductPageFake::create(['current_state' => PageState::PUBLISHED]);
 
         $record = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
         $record2 = UrlRecord::create(['locale' => 'en', 'slug' => 'foo/bar/new', 'model_type' => $model2->morphKey(), 'model_id' => $model2->id]);

@@ -13,6 +13,8 @@ use Thinktomorrow\Chief\Management\Manager;
 
 class ManagerFake extends AbstractManager implements Manager
 {
+
+
     public function fields(): Fields
     {
         return parent::fields()->add(

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\States\PageState;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
@@ -98,7 +99,7 @@ class MorphablePageTest extends TestCase
         $article = ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',
-            'published' => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, Page::find($article->id));
@@ -113,7 +114,7 @@ class MorphablePageTest extends TestCase
         ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',
-            'published' => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, Page::first());

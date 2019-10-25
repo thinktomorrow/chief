@@ -90,11 +90,7 @@ class ManagersController extends Controller
         $manager = $this->managers->findByKey($key, $id);
 
         try {
-
-            $manager->guard('delete');
-
-            app(DeleteManagedModel::class)->handle($manager->model());
-
+            $manager->delete();
         } catch (DeleteAborted $e) {
             return redirect()->back()->with('messages.warning', $manager->details()->singular . ' is niet verwijderd.');
         }
