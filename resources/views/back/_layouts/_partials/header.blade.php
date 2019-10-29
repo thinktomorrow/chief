@@ -1,11 +1,6 @@
 @section('header')
     <header class="bg-white border-b border-secondary-200">
         <div class="container">
-            {{-- @if(isset($subtitle))
-                <div class="row stack">
-                    <div>{!! $subtitle !!}</div>
-                </div>
-            @endif --}}
             <div class="row stack flex justify-between">
                 <div class="column-9">
                     <h1 class="flex items-center mb-0">
@@ -15,7 +10,7 @@
                     {{ $extra ??  '' }}
                 </div>
 
-                <div class="column-3 text-right center-y">
+                <div class="column-3 text-right justify-end center-y">
                     {{ $slot }}
                 </div>
             </div>
