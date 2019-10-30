@@ -35,9 +35,9 @@ abstract class AbstractManager
     /** @var Register */
     protected $registration;
 
-    protected $pageCount = 20;
-    protected $paginated = true;
-    protected static $booted    = [];
+    protected $pageCount                 = 20;
+    protected $paginated                 = true;
+    protected static $bootedTraitMethods = [];
 
     public function __construct(Registration $registration)
     {
@@ -177,7 +177,7 @@ abstract class AbstractManager
 
     public function can($verb): bool
     {
-        foreach (static::$booted['can'] as $method) {
+        foreach (static::$bootedTraitMethods['can'] as $method) {
             $this->$method($verb);
         }
 
@@ -288,13 +288,13 @@ abstract class AbstractManager
         ];
 
         foreach ($methods as $baseMethod) {
-            static::$booted[$baseMethod] = [];
+            static::$bootedTraitMethods[$baseMethod] = [];
         
             foreach (class_uses_recursive($class) as $trait) {
                 $method = class_basename($trait) . ucfirst($baseMethod);
                 
-                if (method_exists($class, $method) && ! in_array($method, static::$booted[$baseMethod])) {
-                    static::$booted[$baseMethod][] = lcfirst($method);
+                if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
+                    static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
                 }
             }
         }
