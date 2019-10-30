@@ -47,11 +47,11 @@ class PageManager extends AbstractManager implements Manager
     {
         try {
             $this->authorize($verb);
+
+            return parent::can($verb);
         } catch (NotAllowedManagerRoute $e) {
             return false;
         }
-
-        return parent::can($verb);
     }
 
     /**
@@ -69,7 +69,7 @@ class PageManager extends AbstractManager implements Manager
         } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }
-
+        
         if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
             throw NotAllowedManagerRoute::notAllowedPermission($permission, $this);
         }
@@ -145,8 +145,7 @@ class PageManager extends AbstractManager implements Manager
             ]),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ];
-
-        if (! Module::available()->values()->isEmpty()) {
+        if (Module::atLeastOneRegistered()) {
             array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
         }
 

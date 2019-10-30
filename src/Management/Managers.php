@@ -95,6 +95,11 @@ class Managers
         });
     }
 
+    public function anyRegisteredByTag($tag)
+    {
+        return ! empty($this->register->filterByTag($tag)->all());
+    }
+
     /**
      * @param $registration
      * @param $id

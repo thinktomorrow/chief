@@ -11,6 +11,5 @@
 
         @include('chief::back.managers._partials.publish-option')
         @include('chief::back.managers._partials.archive-delete-option')
-
     </div>
 </options-dropdown>

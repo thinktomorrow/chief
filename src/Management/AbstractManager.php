@@ -35,8 +35,9 @@ abstract class AbstractManager
     /** @var Register */
     protected $registration;
 
-    protected $pageCount = 20;
-    protected $paginated = true;
+    protected $pageCount                 = 20;
+    protected $paginated                 = true;
+    protected static $bootedTraitMethods = [];
 
     public function __construct(Registration $registration)
     {
@@ -47,6 +48,8 @@ abstract class AbstractManager
 
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
+
+        static::bootTraitMethods();
     }
 
     public function manage($model): Manager
@@ -174,6 +177,10 @@ abstract class AbstractManager
 
     public function can($verb): bool
     {
+        foreach (static::$bootedTraitMethods['can'] as $method) {
+            $this->$method($verb);
+        }
+
         return !is_null($this->route($verb));
     }
 
@@ -269,6 +276,27 @@ abstract class AbstractManager
     {
         if (!$this->model) {
             throw new \DomainException('Model class should be set for this manager. Please set the model property default via the constructor or by extending the setupDefaults method.');
+        }
+    }
+
+    public static function bootTraitMethods()
+    {
+        $class = static::class;
+
+        $methods = [
+            'can'
+        ];
+
+        foreach ($methods as $baseMethod) {
+            static::$bootedTraitMethods[$baseMethod] = [];
+        
+            foreach (class_uses_recursive($class) as $trait) {
+                $method = class_basename($trait) . ucfirst($baseMethod);
+                
+                if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
+                    static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
+                }
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
             <chief-multiselect
                     id="morphKeyField"
                     name="module_key"
-                    :options='@json(\Thinktomorrow\Chief\Modules\Module::available()->values()->toArray())'
+                    :options='@json(\Thinktomorrow\Chief\Modules\Module::availableForCreation()->values()->toArray())'
                     selected='@json(old('module_key'))'
                     labelkey="singular"
                     valuekey="key"

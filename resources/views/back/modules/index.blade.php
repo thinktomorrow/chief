@@ -4,12 +4,14 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Vaste modules')
-        <div class="inline-group-s">
-            <a @click="showModal('create-module')" class="btn btn-secondary inline-flex items-center">
-                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
-                <span>Voeg een module toe</span>
-            </a>
-        </div>
+        @if(! \Thinktomorrow\Chief\Modules\Module::anyAvailableForCreation())
+            <div class="inline-group-s">
+                <a @click="showModal('create-module')" class="btn btn-secondary inline-flex items-center">
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+                    <span>Voeg een module toe</span>
+                </a>
+            </div>
+        @endif
     @endcomponent
 
     @section('content')

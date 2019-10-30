@@ -28,7 +28,7 @@ class ModuleCreateRequest extends FormRequest
     {
         return [
             'module_key' => 'required',
-            'slug'      => 'required|unique:modules,slug',
+            'slug'       => 'required|unique:modules,slug',
         ];
     }
 
@@ -44,6 +44,7 @@ class ModuleCreateRequest extends FormRequest
     {
         return [
             'required'    => 'Gelieve een :attribute in te geven, aub.',
+            'unique'      => 'De naam van een module moet uniek zijn.'
         ];
     }
 }
