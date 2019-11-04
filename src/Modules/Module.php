@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Management\Managers;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
@@ -15,17 +14,18 @@ use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Module extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsChild, MorphableContract, ViewableContract
+class Module extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsChild, MorphableContract, ViewableContract
 {
     use Morphable,
         AssetTrait,

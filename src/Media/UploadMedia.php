@@ -4,9 +4,12 @@ namespace Thinktomorrow\Chief\Media;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Thinktomorrow\AssetLibrary\Models\Asset;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\SortAssets;
+use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
+use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 
 class UploadMedia
 {
@@ -14,12 +17,12 @@ class UploadMedia
      * Upload from base64encoded files, usually
      * coming from slim upload component
      *
-     * @param HasMedia $model
+     * @param HasAsset $model
      * @param array $files_by_type
      * @param array $files_order_by_type
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      */
-    public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
+    public function fromUploadComponent(HasAsset $model, array $files_by_type, array $files_order_by_type)
     {
         ini_set('memory_limit', '256M');
         
@@ -30,7 +33,7 @@ class UploadMedia
         // When no files are uploaded, we still would like to sort our assets duh
         if (empty($files_by_type)) {
             foreach ($files_order_by_type as $type => $files) {
-                $this->sortFiles($model, $type, $files);
+                app(SortAssets::class)->handle($model, $type, $files);
             }
 
             return;
@@ -41,16 +44,15 @@ class UploadMedia
                 $this->validateFileUploads($files);
                 
                 $fileIdsCollection = $files_order_by_type[$type] ?? [];
-                
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
                 $this->replaceFiles($model, $files);
                 $this->removeFiles($model, $files);
             }
-            $this->sortFiles($model, $type, $fileIdsCollection ?? []);
+            app(SortAssets::class)->handle($model, $type, $fileIdsCollection ?? []);
         }
     }
 
-    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order, string $locale = null)
+    private function addFiles(HasAsset $model, string $type, array $files, array &$files_order, string $locale = null)
     {
         if (!$this->actionExists($files, 'new')) {
             return;
@@ -66,11 +68,11 @@ class UploadMedia
     }
 
     /**
-     * @param HasMedia $model
+     * @param HasAsset $model
      * @param array $files
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      */
-    private function replaceFiles(HasMedia $model, array $files)
+    private function replaceFiles(HasAsset $model, array $files)
     {
         if (!$this->actionExists($files, 'replace')) {
             return;
@@ -82,23 +84,21 @@ class UploadMedia
             }
 
             $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
-            $model->replaceAsset($id, $asset->id);
+            app(ReplaceAsset::class)->handle($model, $id, $asset->id);
         }
     }
 
     /**
-     * @param HasMedia $model
+     * @param HasAsset $model
      * @param array $files
      */
-    private function removeFiles(HasMedia $model, array $files)
+    private function removeFiles(HasAsset $model, array $files)
     {
         if (!$this->actionExists($files, 'delete')) {
             return;
         }
 
-        foreach ($model->assets()->whereIn('id', $files['delete'])->get() as $asset) {
-            $asset->delete();
-        }
+        app(DeleteAsset::class)->delete($files['delete']);
     }
 
     private function actionExists(array $files, string $action)
@@ -106,43 +106,20 @@ class UploadMedia
         return (isset($files[$action]) && is_array($files[$action]) && !empty($files[$action]));
     }
 
-    private function addFile(HasMedia $model, string $type, $file, array &$files_order, $locale = null)
+    private function addFile(HasAsset $model, string $type, $file, array &$files_order, $locale = null)
     {
         if (is_string($file)) {
             $image_name = json_decode($file)->output->name;
-            $asset      = $this->addAsset(json_decode($file)->output->image, $type, $locale, $image_name, $model);
+            $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
         } else {
             $image_name = $file->getClientOriginalName();
-            $asset      = $this->addAsset($file, $type, $locale, $image_name, $model);
+            $asset      = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
         }
-
         // New files are passed with their filename (instead of their id)
         // For new files we will replace the filename with the id.
         if (false !== ($key = array_search($image_name, $files_order))) {
             $files_order[$key] = (string) $asset->id;
         }
-    }
-
-    /**
-     * Note: this is a replication of the AssetTrait::addFile() with the exception
-     * that we want to return the asset in order to retrieve the id. This is
-     * currently not available via the AssetTrait.
-     */
-    private function addAsset($file, $type = '', $locale = null, $filename = null, HasMedia $model)
-    {
-        $filename = $this->sluggifyFilename($filename);
-
-        if (is_string($file)) {
-            $asset = AssetUploader::uploadFromBase64($file, $filename);
-        } else {
-            $asset = AssetUploader::upload($file, $filename);
-        }
-
-        if ($asset instanceof Asset) {
-            $asset->attachToModel($model, $type, $locale);
-        }
-
-        return $asset;
     }
 
     /**
@@ -233,17 +210,5 @@ class UploadMedia
         }
 
         return $files_order_by_type ?? $files_order_by_locale;
-    }
-
-    private function sortFiles(HasMedia $model, $type, array $sortedAssetIds)
-    {
-        $assets = $model->assets()->where('asset_pivots.type', $type)->get();
-
-        foreach ($assets as $asset) {
-            $pivot = $asset->pivot;
-            $pivot->order = array_search($asset->id, $sortedAssetIds);
-
-            $pivot->save();
-        }
     }
 }

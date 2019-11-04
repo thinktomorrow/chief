@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e7f88da4e4a35ecb633124fedc2b3e8",
+    "content-hash": "be2afb19b415f86a5be2a0b10c512c1e",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4251,25 +4251,19 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.5.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "2b26efa41989ef1c3b59713e658a410e1f608bc6"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/2b26efa41989ef1c3b59713e658a410e1f608bc6",
-                "reference": "2b26efa41989ef1c3b59713e658a410e1f608bc6",
-                "shasum": ""
+                "type": "path",
+                "url": "/Users/philippedamen/projects/assetlibrary",
+                "reference": "fc0d5980377f970bf681451362b8dadf51557e58"
             },
             "require": {
                 "php": ">=7.2.0",
-                "spatie/laravel-medialibrary": "~7.12"
+                "spatie/laravel-medialibrary": "~7.14"
             },
             "require-dev": {
-                "orchestra/testbench": "3.7.*|3.8.*|4.0",
-                "phpunit/phpunit": "~7.5|~8.0"
+                "orchestra/testbench": "3.7.*|3.8.*|4.3.*",
+                "phpunit/phpunit": "~7.5|8.4.1"
             },
             "type": "library",
             "extra": {
@@ -4284,10 +4278,26 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Thinktomorrow\\AssetLibrary\\": "src"
+                    "Thinktomorrow\\AssetLibrary\\": "src/",
+                    "Thinktomorrow\\AssetLibraryMigrate\\": "migrate/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Thinktomorrow\\AssetLibrary\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ],
+                "check-style": [
+                    "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+                ],
+                "fix-style": [
+                    "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -4309,7 +4319,9 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2019-10-08T14:00:45+00:00"
+            "transport-options": {
+                "symlink": true
+            }
         },
         {
             "name": "thinktomorrow/squanto",
@@ -6490,7 +6502,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "thinktomorrow/assetlibrary": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -15,7 +15,7 @@
         "laravel/tinker": "^1.0",
         "spatie/laravel-activitylog": "^3.0",
         "spatie/laravel-permission": "^2.0|^3.0",
-        "thinktomorrow/assetlibrary": "~0.5.3",
+        "thinktomorrow/assetlibrary": "@dev",
         "thinktomorrow/squanto": "~0.7.0",
         "thinktomorrow/trap": "^0.1.2",
         "thinktomorrow/url": "~1.0.0",
@@ -56,5 +56,14 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "local": {
+            "type": "path",
+            "url": "/Users/philippedamen/projects/assetlibrary",
+            "options": {
+                "symlink": true
+            }
+        }
+    }
 }

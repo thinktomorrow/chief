@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Media;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
+use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 
 class UploadPagesMediaController extends Controller
 {
@@ -36,10 +36,11 @@ class UploadPagesMediaController extends Controller
                 ], 500);
             }
 
-            $asset->attachToModel($model, MediaType::CONTENT);
+            //TODO wiwysig uploads should be uploaded for the correct locale
+            app(AddAsset::class)->add($model, $asset, MediaType::CONTENT, 'nl');
 
             $responseContent['file-'.$asset->id] = [
-                'url' => $asset->getFileUrl(),
+                'url' => $asset->url(),
                 'id' => $asset->id,
             ];
         }

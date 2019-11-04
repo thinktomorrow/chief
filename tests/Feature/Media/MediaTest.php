@@ -7,6 +7,7 @@ use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 
 class MediaTest extends TestCase
@@ -16,9 +17,9 @@ class MediaTest extends TestCase
     {
         $fake = ArticlePageFake::create([]);
 
-        $fake->addFile(UploadedFile::fake()->image('image.png'), 'images');
+        app(AddAsset::class)->add($fake, UploadedFile::fake()->image('image.png'), 'images', 'nl');
 
-        $this->assertCount(1, $fake->assets);
+        $this->assertCount(1, $fake->assets());
     }
 
     /** @test */
@@ -26,17 +27,15 @@ class MediaTest extends TestCase
     {
         $page = Page::create(['morph_key' => 'singles']);
 
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
 
-        $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertCount(1, $page->assets(MediaType::HERO));
     }
-
-   
 
     /** @test */
     public function it_can_add_image_via_wysiwyg_editor()
     {
+        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         $article = ArticlePageFake::create();
@@ -46,15 +45,14 @@ class MediaTest extends TestCase
                 UploadedFile::fake()->image('image.png')
             ],
         ]);
-        $this->assertTrue($article->hasFile(MediaType::CONTENT));
 
-        $assets = $article->getAllFiles(MediaType::CONTENT, 'nl');
+        $assets = $article->assets(MediaType::CONTENT, 'nl');
         $this->assertCount(1, $assets);
 
         $response->assertStatus(201)
                  ->assertJson([
                         "file-".$assets->first()->id => [
-                            "url" => $article->getFileUrl(MediaType::CONTENT),
+                            "url" => $article->asset(MediaType::CONTENT)->url(),
                             "id" => $assets->first()->id,
                         ]
                  ]);

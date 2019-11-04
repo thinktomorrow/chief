@@ -87,7 +87,7 @@ class UpdateManagerTest extends TestCase
                 ],
             ]);
 
-        $this->assertEquals('tt-favicon.png', $this->model->getFilename('hero'));
+        $this->assertEquals('tt-favicon.png', $this->model->asset('hero')->filename());
     }
 
     /** @test */
@@ -105,7 +105,7 @@ class UpdateManagerTest extends TestCase
                 ],
             ]);
 
-        $this->assertEquals('tt-document.pdf', $this->model->getFilename('doc'));
+        $this->assertEquals('tt-document.pdf', $this->model->asset('doc')->filename());
     }
 
     /** @test */
@@ -127,7 +127,7 @@ class UpdateManagerTest extends TestCase
                 ],
             ]);
 
-        $this->assertEquals('tt-favicon.png', $this->model->getFilename('hero'));
-        $this->assertEquals('tt-document.pdf', $this->model->getFilename('doc'));
+        $this->assertEquals('tt-favicon.png', $this->model->asset('hero')->filename());
+        $this->assertEquals('tt-document.pdf', $this->model->asset('doc')->filename());
     }
 }

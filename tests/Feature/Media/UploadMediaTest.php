@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
@@ -52,8 +53,7 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
-        $this->assertTrue($page->fresh()->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->fresh()->getAllFiles(MediaType::HERO));
+        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
     }
 
     /** @test */
@@ -75,8 +75,7 @@ class UploadMediaTest extends TestCase
                 ]
             ]);
 
-        $this->assertTrue($module->fresh()->hasFile(MediaType::HERO));
-        $this->assertCount(1, $module->fresh()->getAllFiles(MediaType::HERO));
+        $this->assertCount(1, $module->fresh()->assets(MediaType::HERO));
     }
 
     /** @test */
@@ -100,17 +99,16 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
-        $this->assertTrue($page->fresh()->hasFile(MediaType::DOCUMENT));
-        $this->assertCount(1, $page->getAllFiles(MediaType::DOCUMENT));
+        $this->assertCount(1, $page->assets(MediaType::DOCUMENT));
     }
 
     /** @test */
     public function an_asset_can_be_replaced()
     {
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
 
-        $existing_asset = $page->getAllFiles(MediaType::HERO)->first();
+        $existing_asset = $page->assets(MediaType::HERO)->first();
 
         // Replace asset
         $this->asAdmin()
@@ -125,19 +123,19 @@ class UploadMediaTest extends TestCase
             ]));
 
         // Assert replacement took place
-        $this->assertCount(1, $page->fresh()->getAllFiles(MediaType::HERO));
-        $this->assertStringContainsString('tt-favicon.png', $page->fresh()->getFileUrl(MediaType::HERO));
+        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
+
+        $this->assertStringContainsString('tt-favicon.png', $page->fresh()->asset(MediaType::HERO, 'nl')->filename());
     }
 
     /** @test */
     public function an_asset_can_be_removed()
     {
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
 
         // Assert Image is there
-        $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertCount(1, $page->assets(MediaType::HERO));
 
         // Remove asset
         $response = $this->asAdmin()
@@ -145,26 +143,24 @@ class UploadMediaTest extends TestCase
                 'files' => [
                     MediaType::HERO => [
                         'delete' => [
-                            $page->getAllFiles(MediaType::HERO)->first()->id,
+                            $page->assets(MediaType::HERO)->first()->id,
                         ]
                     ]
                 ]
             ]));
 
         // Assert Image is no longer there
-        $this->assertFalse($page->fresh()->hasFile(MediaType::HERO));
-        $this->assertCount(0, $page->fresh()->getAllFiles());
+        $this->assertCount(0, $page->fresh()->assets());
     }
 
     /** @test */
     public function an_asset_can_be_removed_and_uploaded()
     {
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
 
         // Assert Image is there
-        $this->assertTrue($page->hasFile(MediaType::HERO));
-        $this->assertCount(1, $page->getAllFiles(MediaType::HERO));
+        $this->assertCount(1, $page->assets(MediaType::HERO));
 
         // Remove asset
         $response = $this->asAdmin()
@@ -172,7 +168,7 @@ class UploadMediaTest extends TestCase
                 'files' => [
                     MediaType::HERO => [
                         'delete' => [
-                            $page->getAllFiles(MediaType::HERO)->first()->id,
+                            $page->assets(MediaType::HERO)->first()->id,
                         ],
                         'new' => [
                             UploadedFile::fake()->image('image.png')
@@ -181,7 +177,7 @@ class UploadMediaTest extends TestCase
                 ],
             ]);
 
-        $this->assertCount(1, $page->fresh()->getAllFiles());
+        $this->assertCount(1, $page->fresh()->assets());
     }
 
     /** @test */
@@ -204,7 +200,7 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
-        $this->assertEquals('tt-favicon.png', $page->getFilename(MediaType::HERO));
+        $this->assertEquals('tt-favicon.png', $page->asset(MediaType::HERO)->filename());
     }
 
     /** @test */
@@ -231,8 +227,8 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
-        $this->assertEquals('tt-favicon-nl.png', $page->getFilename('seo_image', 'nl'));
-        $this->assertEquals('tt-favicon-en.png', $page->getFilename('seo_image', 'en'));
+        $this->assertEquals('tt-favicon-nl.png', $page->asset('seo_image', 'nl')->filename());
+        $this->assertEquals('tt-favicon-en.png', $page->asset('seo_image', 'en')->filename());
     }
 
     /** @test */
@@ -240,9 +236,9 @@ class UploadMediaTest extends TestCase
     {
         app(Register::class)->register(PageManager::class, Single::class);
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), 'seo_image', 'nl');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), 'seo_image', 'nl');
 
-        $existing_asset_nl = $page->getAllFiles('seo_image', 'nl')->first();
+        $existing_asset_nl = $page->assets('seo_image', 'nl')->first();
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
@@ -262,8 +258,8 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
-        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'nl'));
-        $this->assertEquals('tt-favicon-en.png', $page->fresh()->getFilename('seo_image', 'en'));
+        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->asset('seo_image', 'nl')->filename());
+        $this->assertEquals('tt-favicon-en.png', $page->fresh()->asset('seo_image', 'en')->filename());
     }
 
     /** @test */
@@ -271,9 +267,9 @@ class UploadMediaTest extends TestCase
     {
         app(Register::class)->register(PageManager::class, Single::class);
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), 'seo_image', 'en');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), 'seo_image', 'en');
 
-        $existing_asset_en = $page->getAllFiles('seo_image', 'en')->first();
+        $existing_asset_en = $page->assets('seo_image', 'en')->first();
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
@@ -292,9 +288,9 @@ class UploadMediaTest extends TestCase
                     ]
                 ]
             ]));
-
-        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'nl'));
-        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->getFilename('seo_image', 'en'));
+        
+        $this->assertEquals('tt-favicon-nl.png', $page->refresh()->asset('seo_image', 'nl')->filename());
+        $this->assertEquals('tt-favicon-nl.png', $page->asset('seo_image', 'en')->filename());
     }
 
     /** @test */
@@ -302,10 +298,10 @@ class UploadMediaTest extends TestCase
     {
         $this->disableExceptionHandling();
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO);
-        $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO);
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
 
-        $images = $page->fresh()->getAllFiles(MediaType::HERO);
+        $images = $page->fresh()->assets(MediaType::HERO);
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
@@ -316,7 +312,7 @@ class UploadMediaTest extends TestCase
                 ]
             ]));
 
-        $assetIds = $page->fresh()->getAllFiles(MediaType::HERO)->pluck('id')->toArray();
+        $assetIds = $page->fresh()->assets(MediaType::HERO)->pluck('id')->toArray();
 
         $this->assertEquals([$images->last()->id, $images->first()->id], $assetIds);
     }
@@ -326,30 +322,33 @@ class UploadMediaTest extends TestCase
     {
         $this->disableExceptionHandling();
         $page = Single::create();
-        $page->addFile(UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-        $page->addFile(UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
-        $page->addFile(UploadedFile::fake()->image('image3.png'), MediaType::HERO, 'en');
-        $page->addFile(UploadedFile::fake()->image('image4.png'), MediaType::HERO, 'en');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image3.png'), MediaType::HERO, 'en');
+        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image4.png'), MediaType::HERO, 'en');
 
-        $images = $page->assets()->get();
+        $nl_images = $page->assets(MediaType::HERO, 'nl');
+        $en_images = $page->assets(MediaType::HERO, 'en');
+
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'filesOrder' => 
                 [
                     'nl' => [
-                        'files-' . MediaType::HERO => $images[1]->id . ',' . $images[0]->id,
+                        'files-' . MediaType::HERO => $nl_images[1]->id . ',' . $nl_images[0]->id,
                     ],
                     'en' => [
-                        'files-' . MediaType::HERO => $images[3]->id . ',' . $images[2]->id
+                        'files-' . MediaType::HERO => $en_images[3]->id . ',' . $en_images[2]->id
                     ]
                 ]
             ]));
 
-        $newImagesSorted = $page->fresh()->assets()->get();
+        $nl_newImagesSorted = $page->refresh()->assets(MediaType::HERO, 'nl');
+        $en_newImagesSorted = $page->assets(MediaType::HERO, 'en');
 
-        $this->assertEquals($images[1]->id, $newImagesSorted[0]->id);
-        $this->assertEquals($images[0]->id, $newImagesSorted[1]->id);
-        $this->assertEquals($images[3]->id, $newImagesSorted[2]->id);
-        $this->assertEquals($images[2]->id, $newImagesSorted[3]->id);
+        $this->assertEquals($nl_images[1]->id, $nl_newImagesSorted[0]->id);
+        $this->assertEquals($nl_images[0]->id, $nl_newImagesSorted[1]->id);
+        $this->assertEquals($en_images[3]->id, $en_newImagesSorted[2]->id);
+        $this->assertEquals($en_images[2]->id, $en_newImagesSorted[3]->id);
     }
 }
