@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Media;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 

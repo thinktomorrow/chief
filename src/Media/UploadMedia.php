@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\SortAssets;
-use Thinktomorrow\AssetLibrary\Application\DeleteAsset;
+use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 
@@ -98,7 +98,7 @@ class UploadMedia
             return;
         }
 
-        app(DeleteAsset::class)->delete($files['delete']);
+        app(DetachAsset::class)->detach($model, $files['delete']); 
     }
 
     private function actionExists(array $files, string $action)

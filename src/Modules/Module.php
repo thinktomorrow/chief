@@ -178,7 +178,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 
     public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        return $this->getAllFiles($type)->map->getFileUrl($size);
+        return $this->assets($type)->map->url($size);
     }
 
     public function mediaUrl($type = null, $size = 'full'): ?string

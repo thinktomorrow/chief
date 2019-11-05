@@ -5,7 +5,8 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Media;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Media\MediaType;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class UploadModulesMediaController extends Controller
@@ -36,10 +37,10 @@ class UploadModulesMediaController extends Controller
                 ], 500);
             }
 
-            $asset->attachToModel($model, MediaType::CONTENT);
+            app(AddAsset::class)->add($model, $asset, MediaType::CONTENT, 'nl');
 
             $responseContent['file-'.$asset->id] = [
-                'url' => $asset->getFileUrl(),
+                'url' => $asset->url(),
                 'id' => $asset->id,
             ];
         }
