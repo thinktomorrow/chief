@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## Unreleased
 - Added: function valueResolver on field to customize how a value is retrieved from the database
+- Added: `Field::default()` method to set default field value.
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
 - Fixed: Multiselect placeholders were looking buggy. Now they don't.
 
