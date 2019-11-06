@@ -38,7 +38,7 @@ class UpdateModuleTest extends TestCase
     /** @test */
     public function guests_cannot_view_the_edit_form()
     {
-        $this->get(route('chief.back.managers.edit', ['newslnewsletters_fakeetter', $this->module->id]))
+        $this->get(route('chief.back.managers.edit', ['newsletters_fake', $this->module->id]))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
 

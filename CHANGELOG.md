@@ -10,6 +10,7 @@ All Notable changes to the `chief` application template will be documented in th
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link
+- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 - Added: Checkbox field
 - Added: Laravel 6 support
 - Changed: Healthmonitor checks are now defined in the chief.php config file.

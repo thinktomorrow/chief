@@ -36,7 +36,6 @@
         </div>
     @endif
     
-    
     @push('portals')
         @include('chief::back.modules._partials.create-modal', ['page_id' => $page->id])
     @endpush

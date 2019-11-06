@@ -13,7 +13,6 @@
 
     export default{
         created(){
-
             Eventbus.$on('open-dropdown',(id) => {
                 if(this._uid == id){
                     this.toggle();

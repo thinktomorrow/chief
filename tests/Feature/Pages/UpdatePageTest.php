@@ -2,13 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Modules\ModuleManager;
+use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Fakes\NomadicModuleManager;
 
 class UpdatePageTest extends TestCase
 {
@@ -42,8 +44,9 @@ class UpdatePageTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $response = $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]));
+        app(Register::class)->register(ModuleManager::class, MediaModule::class, ['module']);
 
+        $response = $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]));
         $response->assertViewIs('chief::back.managers.edit');
         $response->assertStatus(200);
     }

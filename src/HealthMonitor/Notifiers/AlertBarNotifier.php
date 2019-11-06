@@ -10,11 +10,10 @@ class AlertBarNotifier implements Notifier
 {
     public function onFailure(HealthCheck $healthCheck)
     {
-        session()->put('alertbarmessage', $healthCheck->message());
+        session()->flash('alertbarmessage', $healthCheck->message());
     }
 
     public function onSuccess(HealthCheck $healthCheck)
     {
-        session()->forget('alertbarmessage');
     }
 }
