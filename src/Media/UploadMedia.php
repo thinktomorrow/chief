@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Media;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\SortAssets;
@@ -25,7 +26,6 @@ class UploadMedia
     public function fromUploadComponent(HasAsset $model, array $files_by_type, array $files_order_by_type)
     {
         ini_set('memory_limit', '256M');
-        
         $files_by_type = $this->sanitizeFilesParameter($files_by_type);
         $files_order_by_type = $this->sanitizeFilesOrderParameter($files_order_by_type);
         $this->validateParameters($files_by_type, $files_order_by_type);
@@ -44,6 +44,7 @@ class UploadMedia
                 $this->validateFileUploads($files);
                 
                 $fileIdsCollection = $files_order_by_type[$type] ?? [];
+
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
                 $this->replaceFiles($model, $files);
                 $this->removeFiles($model, $files);
@@ -62,7 +63,7 @@ class UploadMedia
             if (!$file) {
                 continue;
             }
-
+            
             $this->addFile($model, $type, $file, $files_order, $locale);
         }
     }
@@ -108,17 +109,25 @@ class UploadMedia
 
     private function addFile(HasAsset $model, string $type, $file, array &$files_order, $locale = null)
     {
+
         if (is_string($file)) {
             $image_name = json_decode($file)->output->name;
             $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
         } else {
-            $image_name = $file->getClientOriginalName();
-            $asset      = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
-        }
-        // New files are passed with their filename (instead of their id)
-        // For new files we will replace the filename with the id.
-        if (false !== ($key = array_search($image_name, $files_order))) {
-            $files_order[$key] = (string) $asset->id;
+            if($file instanceof UploadedFile)
+            {
+                $image_name = $file->getClientOriginalName();
+                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
+
+                // New files are passed with their filename (instead of their id)
+                // For new files we will replace the filename with the id.
+                if (false !== ($key = array_search($image_name, $files_order))) {
+                    $files_order[$key] = (string) $asset->id;
+                }
+            }else{
+                $file       = Asset::findOrFail($file);
+                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale);
+            }
         }
     }
 
