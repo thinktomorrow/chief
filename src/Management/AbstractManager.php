@@ -79,11 +79,11 @@ abstract class AbstractManager
         $builder = $this->indexBuilder($builder);
 
         $builder = $this->indexSorting($builder);
-        
+
         if ($this->paginated) {
             return $this->indexPagination($builder);
         }
-        
+
         return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
@@ -178,6 +178,7 @@ abstract class AbstractManager
     public function can($verb): bool
     {
         foreach (static::$bootedTraitMethods['can'] as $method) {
+            if(!method_exists($this, $method)) continue;
             $this->$method($verb);
         }
 
@@ -289,10 +290,10 @@ abstract class AbstractManager
 
         foreach ($methods as $baseMethod) {
             static::$bootedTraitMethods[$baseMethod] = [];
-        
+
             foreach (class_uses_recursive($class) as $trait) {
                 $method = class_basename($trait) . ucfirst($baseMethod);
-                
+
                 if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
                     static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
                 }
