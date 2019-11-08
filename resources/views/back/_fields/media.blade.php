@@ -6,7 +6,7 @@
 ?>
 
 <filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
-<div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
+    <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
@@ -19,7 +19,7 @@
                     label: 'Drop hier uw afbeelding',
                 }"></slim>
             </div>
-            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="column-3">
+            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="flex">
                 <div class="thumb thumb-new" id="file-drop-area-{{ $slug }}"
                      :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                      @dragover.prevent="handleDraggingOver"
@@ -31,8 +31,13 @@
                     <input v-else type="file" name="{{ $name }}[]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                 </div>
+                <div class="thumb thumb-new" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
+                    <span><svg width="18" height="18"><use xlink:href="#alert-circle"/></svg></span>
+                </div>
             </div>
         </div>
+        <mediagallery group="{{ $slug }}" locale="{{$locale}}">
+        </mediagallery>
         <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-link">
             @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
         </a>

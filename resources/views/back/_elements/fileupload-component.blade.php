@@ -40,6 +40,16 @@
                     }, 1500);
                 });
 
+                Eventbus.$on('mediagallery-loaded-' + this.group, function (asset){
+
+                    self.items.push({
+                        filename: asset.filename,
+                        id: asset.id,
+                        url: asset.url
+                    });
+                    self.updateFilesOrder();
+                })
+
             },
             mounted: function () {
                 this.updateFilesOrder();
@@ -73,7 +83,6 @@
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();
                     }
-
                     this.items.push({file: file});
                 },
                 checkSupport: function () {

@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;

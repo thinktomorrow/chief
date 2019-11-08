@@ -28,6 +28,8 @@ Vue.component('alert', require('./components/Alert.vue').default);
 Vue.component('delete', require('./components/RemoveButton.vue').default);
 Vue.component('error', require('./components/Error.vue').default);
 Vue.component('page-builder', require('./components/Pagebuilder/Pagebuilder.vue').default);
+Vue.component('mediagallery', require('./components/MediaGallery.vue').default);
+
 
 // sticky polyfill init
 Stickyfill.add(document.querySelectorAll('.sticky'));
@@ -36,4 +38,3 @@ Stickyfill.add(document.querySelectorAll('.sticky'));
 import Es6Promise from 'es6-promise';
 
 Es6Promise.polyfill();
-

@@ -11,6 +11,7 @@ use Thinktomorrow\AssetLibrary\Application\SortAssets;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\AssetLibrary\Exceptions\AssetUploadException;
 
 class UploadMedia
 {
@@ -38,7 +39,6 @@ class UploadMedia
 
             return;
         }
-
         foreach ($files_by_type as $type => $files_by_locale) {
             foreach ($files_by_locale as $locale => $files) {
                 $this->validateFileUploads($files);
@@ -60,6 +60,7 @@ class UploadMedia
         }
 
         foreach ($files['new'] as $id => $file) {
+
             if (!$file) {
                 continue;
             }
@@ -109,8 +110,7 @@ class UploadMedia
 
     private function addFile(HasAsset $model, string $type, $file, array &$files_order, $locale = null)
     {
-
-        if (is_string($file)) {
+        if (isset(json_decode($file)->output)) {
             $image_name = json_decode($file)->output->name;
             $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
         } else {
@@ -125,8 +125,12 @@ class UploadMedia
                     $files_order[$key] = (string) $asset->id;
                 }
             }else{
-                $file       = Asset::findOrFail($file);
-                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale);
+                try{
+                    $file   = Asset::findOrFail($file);
+                    $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
+                }catch(AssetUploadException $e)
+                {
+                }
             }
         }
     }
