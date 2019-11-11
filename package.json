@@ -37,7 +37,7 @@
     "sortablejs": "^1.10.1",
     "stickyfilljs": "^2.1.0",
     "vue": "^2.6.10",
-    "vue-loader": "^15.7.1",
+    "vue-loader": "^15.7.2",
     "vue-multiselect": "^2.1.6",
     "vuedraggable": "^2.23.2",
     "warpaint": "^0.0.10"
