@@ -109,7 +109,6 @@ class UploadMedia
 
     private function addFile(HasAsset $model, string $type, $file, array &$files_order, $locale = null)
     {
-
         if (isset(json_decode($file)->output)) {
             $image_name = json_decode($file)->output->name;
             $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
