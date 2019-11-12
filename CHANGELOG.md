@@ -3,13 +3,14 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## Unreleased
 - Added: function valueResolver on field to customize how a value is retrieved from the database
+- Added: `Field::default()` method to set default field value.
+- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
 - Fixed: Multiselect placeholders were looking buggy. Now they don't.
 
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link
-- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 - Added: Checkbox field
 - Added: Laravel 6 support
 - Changed: Healthmonitor checks are now defined in the chief.php config file.

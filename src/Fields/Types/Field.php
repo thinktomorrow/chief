@@ -18,6 +18,13 @@ class Field
     /** @var callable */
     protected $valueResolver;
 
+    /**
+     * Fixed default value.
+     * This default value is trumped by the existing model value.
+     * @var mixed
+     */
+    protected $default = null;
+
     public function __construct(FieldType $fieldType, string $key)
     {
         $this->fieldType = $fieldType;
@@ -134,7 +141,11 @@ class Field
 
     public function getFieldValue(Model $model, $locale = null)
     {
-        return call_user_func_array($this->valueResolver, [$model, $locale]);
+        $value = call_user_func_array($this->valueResolver, [$model, $locale]);
+
+        if(is_null($value)) return $this->default;
+
+        return $value;
     }
 
     public function valueResolver(callable $callable)
@@ -153,6 +164,13 @@ class Field
 
             return $model->{$this->column()};
         };
+    }
+
+    public function default($default)
+    {
+        $this->default = $default;
+
+        return $this;
     }
 
     /**
