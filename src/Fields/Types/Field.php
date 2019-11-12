@@ -143,7 +143,9 @@ class Field
     {
         $value = call_user_func_array($this->valueResolver, [$model, $locale]);
 
-        if(is_null($value)) return $this->default;
+        if (is_null($value)) {
+            return $this->default;
+        }
 
         return $value;
     }

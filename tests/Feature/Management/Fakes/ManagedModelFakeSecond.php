@@ -5,14 +5,14 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Management\ManagedModel;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class ManagedModelFakeSecond extends Model implements  ManagedModel, TranslatableContract, HasMedia
+class ManagedModelFakeSecond extends Model implements  ManagedModel, TranslatableContract, HasAsset
 {
     use Translatable, \Astrotomic\Translatable\Translatable, AssetTrait, Publishable;
 

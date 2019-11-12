@@ -7,6 +7,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
 - Fixed: Multiselect placeholders were looking buggy. Now they don't.
+- Changed: updated Assetlibrary to 0.6
 
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.

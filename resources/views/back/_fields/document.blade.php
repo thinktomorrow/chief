@@ -8,7 +8,7 @@
     <div class="border border-grey-100 rounded inset-s stack-s center-y bg-white" id="asset-{{$document->id}}">
 
         <div>
-            <strong>{{ $document->getFilename() }}</strong>
+            <strong>{{ $document->filename() }}</strong>
             <br>
             <span class="text-grey-300">
                 {{ $document->getExtensionType() }} | {{ $document->getSize() }}
@@ -16,7 +16,7 @@
         </div>
 
         <div class="pr-2 ml-auto">
-            <a href="{{ url($document->getFileUrl()) }}" target="_blank">Bekijk document</a>
+            <a href="{{ url($document->url()) }}" target="_blank">Bekijk document</a>
         </div>
 
         <div>
@@ -58,4 +58,3 @@
 
     </script>
 @endpush
-

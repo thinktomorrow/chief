@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e7f88da4e4a35ecb633124fedc2b3e8",
+    "content-hash": "d80a97e80b918f64c163a787033e5cda",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4261,25 +4261,25 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.5.3",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "2b26efa41989ef1c3b59713e658a410e1f608bc6"
+                "reference": "eb60d280c481ac09f74321219c09d3f6c2b5e6c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/2b26efa41989ef1c3b59713e658a410e1f608bc6",
-                "reference": "2b26efa41989ef1c3b59713e658a410e1f608bc6",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/eb60d280c481ac09f74321219c09d3f6c2b5e6c2",
+                "reference": "eb60d280c481ac09f74321219c09d3f6c2b5e6c2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.0",
-                "spatie/laravel-medialibrary": "~7.12"
+                "spatie/laravel-medialibrary": "~7.14"
             },
             "require-dev": {
-                "orchestra/testbench": "3.7.*|3.8.*|4.0",
-                "phpunit/phpunit": "~7.5|~8.0"
+                "orchestra/testbench": "3.7.*|3.8.*|4.3.*",
+                "phpunit/phpunit": "~7.5|8.4.1"
             },
             "type": "library",
             "extra": {
@@ -4294,7 +4294,8 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Thinktomorrow\\AssetLibrary\\": "src"
+                    "Thinktomorrow\\AssetLibrary\\": "src/",
+                    "Thinktomorrow\\AssetLibraryMigrate\\": "migrate/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4319,7 +4320,7 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2019-10-08T14:00:45+00:00"
+            "time": "2019-11-06T10:03:04+00:00"
         },
         {
             "name": "thinktomorrow/squanto",

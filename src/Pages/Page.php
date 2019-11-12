@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Audit\AuditTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,7 +17,7 @@ use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
@@ -30,10 +29,11 @@ use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
+class Page extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -146,12 +146,10 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
     public function mediaUrls($type = null): Collection
     {
-        // TODO getallfiles should actually get all files...
-        // What was the creator of the assetlibrary package thinking. It sure wasn't me... I promise...
-        $assets = $this->getAllFiles($type, app()->getLocale())->map->getFileUrl();
+        $assets = $this->assets($type, app()->getLocale())->map->url();
 
         if ($assets->first() == null) {
-            $assets = $this->getAllFiles($type)->map->getFileUrl();
+            $assets = $this->assets($type)->map->url();
         }
 
         return $assets;

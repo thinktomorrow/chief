@@ -178,7 +178,9 @@ abstract class AbstractManager
     public function can($verb): bool
     {
         foreach (static::$bootedTraitMethods['can'] as $method) {
-            if(!method_exists($this, $method)) continue;
+            if (!method_exists($this, $method)) {
+                continue;
+            }
             $this->$method($verb);
         }
 
