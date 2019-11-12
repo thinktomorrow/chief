@@ -109,7 +109,7 @@ class PageManager extends AbstractManager implements Manager
             MediaField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
-                ->description('foto die bij het delen van deze pagina getoont word. (afmeting: 1200x627px)')
+                ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
         );
     }
 
