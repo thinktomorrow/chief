@@ -16,6 +16,9 @@ use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Relations\Relation;
 
 abstract class AbstractManager
 {
@@ -238,6 +241,14 @@ abstract class AbstractManager
 
     public function delete()
     {
+        if($this->model instanceof ActsAsChild) {
+            $this->model->detachAllParentRelations();
+        }
+
+        if($this->model instanceof ActsAsParent) {
+            $this->model->detachAllChildRelations();
+        }
+
         $this->model->delete();
     }
 

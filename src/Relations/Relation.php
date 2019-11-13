@@ -108,4 +108,28 @@ class Relation extends Model
             $relation->delete();
         }
     }
+
+    public static function deleteAllChildRelationsOf($type, $id)
+    {
+        $relations = static::where(function ($query) use ($type, $id) {
+            return $query->where('parent_type', $type)
+                ->where('parent_id', $id);
+        })->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
+    }
+
+    public static function deleteAllParentRelationsOf($type, $id)
+    {
+        $relations = static::where(function ($query) use ($type, $id) {
+            return $query->where('child_type', $type)
+                ->where('child_id', $id);
+        })->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
+    }
 }
