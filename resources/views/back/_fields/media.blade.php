@@ -19,7 +19,7 @@
                     label: 'Drop hier uw afbeelding',
                 }"></slim>
             </div>
-            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="flex">
+            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1">
                 <div class="thumb thumb-new" id="file-drop-area-{{ $slug }}"
                      :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                      @dragover.prevent="handleDraggingOver"
@@ -31,8 +31,8 @@
                     <input v-else type="file" name="{{ $name }}[]" {{ $field->multiple ? 'multiple' : '' }} accept="image/*"/>
                     <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                 </div>
-                <div class="thumb thumb-new" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
-                    <span><svg width="18" height="18"><use xlink:href="#alert-circle"/></svg></span>
+                <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
+                    <span>Of kies uit je galerij</span>
                 </div>
             </div>
         </div>

@@ -3,10 +3,10 @@
     $R.add('plugin', 'chief-mediagallery', {
         translations: {
     		en: {
-    			"choose": "Choose"
+    			"choose": "Gallery"
             },
             nl: {
-                "choose": "Selecteer"
+                "choose": "Galerij"
             }
         },
         init: function(app)
@@ -37,7 +37,7 @@
             
             $wrapper = $R.dom('<div>');
             $wrapper.css({
-    			overflow: 'auto',
+    			'overflow-y': 'scroll',
     			height: '300px',
     			'line-height': 1
 			});
@@ -46,10 +46,10 @@
             $body.append($tab);
 
             this.$box = $R.dom('<div>');
-            this.$box.addClass('gutter-s row');
+            this.$box.addClass('row');
 
             $wrapper.append(this.$box);
-            $tab.append($R.dom('<div>').addClass("btn btn-primary").append('Laad meer').on('click', this.loadMore.bind(this)))
+            $tab.append($R.dom('<div>').addClass("btn btn-primary mt-3").append('Laad meer afbeeldingen').on('click', this.loadMore.bind(this)))
 
 			$R.ajax.get({
         		url: '/admin/api/media',
@@ -64,7 +64,7 @@
                 if (typeof obj !== 'object') continue;
             
                 var $div = $R.dom('<div>')
-                $div.addClass("column-3 border rounded border-transparent hover:border-grey-100 hover:bg-grey-50");
+                $div.addClass("column-3 border rounded border-transparent hover:border-grey-100 hover:bg-grey-50 p-2");
 
                 var $img = $R.dom('<img>');
                 var url = (obj.thumb) ? obj.thumb : obj.url;
@@ -74,7 +74,8 @@
                 $img.css({
                     width: '96px',
                     height: '72px',
-                    margin: '0 4px 2px 0',
+                    'max-height': '75px',
+                    margin: '0 auto',
                     cursor: 'pointer'
                 });
 
