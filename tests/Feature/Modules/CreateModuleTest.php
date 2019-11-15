@@ -18,19 +18,19 @@ class CreateModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
+        app(Register::class)->register(ModuleManager::class, NewsletterModuleFake::class);
     }
 
     /** @test */
     public function creating_a_new_module()
     {
         $response = $this->asAdmin()
-            ->post(route('chief.back.managers.store', 'newsletter'), $this->validModuleParams());
+            ->post(route('chief.back.managers.store', 'newsletters_fake'), $this->validModuleParams());
 
         $module = Module::first();
 
         $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.managers.edit', ['newsletter', $module->id]));
+        $response->assertRedirect(route('chief.back.managers.edit', ['newsletters_fake', $module->id]));
 
         $this->assertCount(1, Module::all());
         $this->assertNewModuleValues($module);
@@ -39,7 +39,7 @@ class CreateModuleTest extends TestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_module()
     {
-        $response = $this->post(route('chief.back.managers.store', 'newsletter'), $this->validModuleParams());
+        $response = $this->post(route('chief.back.managers.store', 'newsletters_fake'), $this->validModuleParams());
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, Module::all());
@@ -49,8 +49,8 @@ class CreateModuleTest extends TestCase
     public function when_creating_module_slug_is_required()
     {
         $this->assertValidation(new Module(), 'slug', $this->validModuleParams(['slug' => '']),
-            route('chief.back.managers.index', 'newsletter'),
-            route('chief.back.managers.store', 'newsletter')
+            route('chief.back.managers.index', 'newsletters_fake'),
+            route('chief.back.managers.store', 'newsletters_fake')
         );
     }
 
@@ -62,7 +62,7 @@ class CreateModuleTest extends TestCase
         $this->assertCount(1, Module::all());
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.managers.store', 'newsletter'), $this->validModuleParams([
+            ->post(route('chief.back.managers.store', 'newsletters_fake'), $this->validModuleParams([
                 'slug'  => 'foobar',
                 'morph_key' => 'newsletter',
             ])

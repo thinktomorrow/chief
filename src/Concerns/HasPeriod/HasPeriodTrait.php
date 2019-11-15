@@ -11,11 +11,9 @@ trait HasPeriodTrait
         static::addGlobalScope(new SortPeriodDateScope);
     }
 
-    public function __construct(array $attributes = [])
+    public function initializeHasPeriodTrait()
     {
         $this->dates = array_merge($this->dates, ['start_at', 'end_at']);
-
-        parent::__construct($attributes);
     }
 
     public function scopePassed($query)

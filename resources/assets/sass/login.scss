@@ -1,5 +1,3 @@
-$color-primary: #13c6a6;
-
 /*
  |
  | LOGIN.CSS
@@ -9,180 +7,135 @@ $color-primary: #13c6a6;
  |  adminbeheerders als de gebruikers.
  |
 */
+
+$color-primary: #13C6A6;
+
 ::-moz-selection {
-  background-color: $color-primary;
-  color: #FFF;
+  @apply bg-primary-500 text-white;
 }
 ::selection {
-  background-color: $color-primary;
-  color: #FFF;
+  @apply bg-primary-500 text-white;
 }
 
 body {
-  width: 100%;
-  height: 100vh;
   font-family: "Roboto", sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  font-size: 14px;
+  @apply w-full h-screen m-0;
 }
 
 a {
-  color: #353535;
-  text-decoration: none;
+  @apply text-grey-700 no-underline;
 }
 
 a:hover {
-  color: $color-primary;
+  @apply text-primary-500;
 }
 
 main {
-  width: 100%;
-  height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  @apply w-full h-full flex;
 }
 
 aside {
   background: $color-primary url("../img/logo.svg") no-repeat center center;
   background-size: 100%;
-  width: 60%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: flex-end;
+  @apply w-4/5 flex items-end;
 }
 
 section {
-  padding: 45px;
   -webkit-box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
   box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
-  padding-left: 120px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  overflow-y: auto;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: 100%;
+  @apply flex justify-start items-center overflow-y-auto w-full pl-24 pr-8 py-8;
 }
 
 .login-wrapper {
   max-width: 400px;
-  width: 100%;
+  @apply w-full;
 }
 
 .input-group-prefix {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+  @apply relative inline-block w-full;
 }
 
 .input-group-prefix span.lnr {
-  position: absolute;
   bottom: 33px;
+  @apply absolute;
 }
 
 .form label {
-  float: left;
-  padding: 0 0 10px 0;
+  @apply float-left py-2;
 }
 
 .form input[type=text]:focus,
 .form input[type=email]:focus,
 .form input[type=password]:focus {
-  border-bottom: 1px solid #353535;
+  @apply border-b border-grey-700;
 }
 
 .form input[type=text],
 .form input[type=email],
 .form input[type=password] {
   font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #ffffff;
-  width: 100%;
-  border: 0;
-  margin: 0 0 15px;
-  padding: 15px 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   font-size: 14px;
-  border-bottom: 1px solid #E4E4DD;
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
+  @apply outline-none bg-white w-full border-t-0 border-l-0 border-r-0 border-b border-grey-50 mb-4 py-4 px-8;
+}
+
+.form input[type=checkbox] {
+  @apply mr-4;
 }
 
 .form button {
   font-family: "Roboto", sans-serif;
-  outline: 0;
-  background: #353535;
-  width: 50%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
   font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 50px;
-  margin: 15px 0;
+  @apply outline-none w-1/2 bg-grey-700 border-none text-white font-bold cursor-pointer rounded-full p-4 my-4;
 }
 
 .form button:hover {
-  -webkit-transform: translateY(-3px);
-  transform: translateY(-3px);
   -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: 0.3s all ease;
 }
 
 .form button:hover, .form button:active, .form button:focus {
-  background: $color-primary;
+  @apply bg-primary-500;
 }
 
 .form .error {
-  color: #e74c3c;
+  @apply text-error;
 }
 
 .form .succes {
-  color: #97c93c;
+  @apply text-success;
 }
 
 .form .message {
-  margin: 15px 0;
-  display: block;
+  @apply block my-4;
 }
 
 .form .message a {
-  color: $color-primary;
-  text-decoration: none;
+  @apply text-primary-500 no-underline;
 }
 
 .form .register-form {
-  display: none;
+  @apply hidden;
 }
 
 footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  text-align: center;
-  padding: 15px;
+  @apply absolute bottom-0 right-0 text-center px-4 py-2;
 }
 
 /*TOGGLE PWD*/
 .showHideInput {
-  display: none;
+  @apply hidden;
 }
 
 .showHideLabel {
-  position: absolute;
   right: 55px;
   margin-top: -50px;
+  @apply absolute;
 }

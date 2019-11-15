@@ -2,23 +2,29 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Illuminate\Routing\Router;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
-use Thinktomorrow\Chief\Settings\Console\SeedSettings;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
+use Thinktomorrow\Chief\HealthMonitor\Middleware\MonitorMiddleware;
+use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -32,6 +38,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new MacrosServiceProvider($this->app))->boot();
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
+        (new ViewServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
@@ -68,7 +75,6 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
-                'command.chief:settings',
             ]);
 
             // Bind our commands to the container
@@ -78,7 +84,6 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
-            $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()
@@ -104,9 +109,13 @@ class ChiefServiceProvider extends ServiceProvider
         Validator::extendImplicit('image_required',
             'Thinktomorrow\Chief\Fields\ImageRequiredValidator@validate',
             'Foto :attribute is verplicht.');
+            
         Validator::extend('chief_dimensions',
             'Thinktomorrow\Chief\Fields\MediaDimensionsValidator@validate',
             'Er was iets fout met de afmeting van de foto :attribute.');
+            
+        $this->autoloadMiddleware();
+        $this->autoloadRoute();
     }
 
     public function register()
@@ -124,6 +133,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
+        (new ViewServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();
@@ -172,5 +182,33 @@ class ChiefServiceProvider extends ServiceProvider
             'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
             'role'       => \Thinktomorrow\Chief\Authorization\Role::class,
         ];
+    }
+
+    private function autoloadRoute()
+    {
+        if (true !== config('thinktomorrow.chief.route.autoload')) {
+            return;
+        }
+
+        app()->booted(function () {
+            $routeName = config('thinktomorrow.chief.route.name');
+
+            Route::get('{slug?}', function ($slug = '/') use ($routeName) {
+                return ChiefResponse::fromSlug($slug);
+            })->name($routeName)
+              ->where('slug', '(.*)?')
+              ->middleware('web');
+        });
+    }
+
+    private function autoloadMiddleware()
+    {
+        app(Router::class)->middlewareGroup('web-chief', [
+            AuthenticateChiefSession::class,
+            MonitorMiddleware::class,
+        ]);
+
+        app(Router::class)->aliasMiddleware('chief-guest', ChiefRedirectIfAuthenticated::class);
+        app(Router::class)->aliasMiddleware('chief-validate-invite', ChiefValidateInvite::class);
     }
 }

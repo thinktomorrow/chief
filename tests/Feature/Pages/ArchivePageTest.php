@@ -23,6 +23,17 @@ class ArchivePageTest extends TestCase
     }
 
     /** @test */
+    public function only_authenticated_can_view_archive_index()
+    {
+        $response = $this->asAdmin()
+            ->get(route('chief.back.assistants.archive-index', ['singles', $this->page->id]));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('chief::back.managers.archive.index');
+    }
+
+
+    /** @test */
     public function it_can_archive_a_page()
     {
         $this->asAdmin()
@@ -43,5 +54,21 @@ class ArchivePageTest extends TestCase
 
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withArchived()->get());
+    }
+
+    /** @test */
+    public function an_archived_page_unarchived_is_put_in_draft()
+    {
+        $this->page->publish();
+        $this->page->archive();
+
+        $this->assertCount(0, Page::all());
+
+        $this->asAdmin()
+            ->post(route('chief.back.assistants.unarchive', ['singles', $this->page->id]));
+
+        $this->assertCount(1, Page::all());
+        $this->assertTrue(Page::first()->isDraft());
+
     }
 }

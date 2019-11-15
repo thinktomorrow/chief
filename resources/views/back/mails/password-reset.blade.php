@@ -5,12 +5,12 @@
 @endsection
 
 @section('title')
-    Maak een nieuw Chief wachtwoord aan voor {{ chiefSetting('client.app_name') }}.
+    Maak een nieuw Chief wachtwoord aan voor {{ chiefSetting('app_name') }}.
 @endsection
 
 @section('content')
     <tr>
-        <td bgcolor="#ffffff" align="left" style="padding: 0px 50px 25px 50px; color: #808080; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
+        <td bgcolor="#ffffff" align="left" style="padding: 0px 50px 25px 50px; color: #5C4456; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
             <p style="margin: 0; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 21px;">
                 Je hebt zonet een nieuw wachtwoord aangevraagd.<br>
                 Klik op volgende link op een nieuw wachtwoord aan te maken:

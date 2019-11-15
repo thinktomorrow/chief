@@ -38,10 +38,10 @@
         /* ANDROID CENTER FIX */
         div[style*="margin: 16px 0;"] { margin: 0 !important; }
 
-        .button{ border:1px solid #e8e8e8; background-color: #13c6a6; color: #FFFFFF; transition: 0.15s all ease-in-out;}
-        .button:hover{ border:1px solid #15997A; background-color: #15997A; color: #FFFFFF; }
-        ::selection{ background-color: #13c6a6; color: #FFFFFF; }
-        ::-moz-selection{ background-color: #13c6a6; color: #FFFFFF; }
+        .button{ background-color: #A2E3D3; color: #5C4456; transition: 0.15s all ease-in-out;}
+        .button:hover{ background-color: #5DCDB1; color: #5C4456; }
+        ::selection{ background-color: #17B890; color: #5C4456; }
+        ::-moz-selection{ background-color: #17B890; color: #5C4456; }
     </style>
 </head>
 
@@ -72,7 +72,7 @@
         <td bgcolor="#f5f5f5" align="center" style="padding: 0px 10px 0px 10px;">
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
                 <tr>
-                    <td bgcolor="#ffffff" align="center" valign="top" style="border-top: 1px solid #e8e8e8; border-left: 1px solid #e8e8e8; border-right: 1px solid #e8e8e8; padding: 20px 20px 20px 20px; border-radius: 6px 6px 0px 0px">
+                    <td bgcolor="#ffffff" align="center" valign="top" style="border-top: 1px solid #EFECEE; border-left: 1px solid #EFECEE; border-right: 1px solid #EFECEE; padding: 20px 20px 20px 20px; border-radius: 6px 6px 0px 0px">
                     </td>
                 </tr>
             </table>
@@ -82,10 +82,10 @@
     <!-- HERO -->
     <tr>
         <td bgcolor="#f5f5f5" align="center" style="padding: 0px 10px 0px 10px;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; border-left: 1px solid #e8e8e8; border-right: 1px solid #e8e8e8;" >
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; border-left: 1px solid #EFECEE; border-right: 1px solid #EFECEE;" >
                 <tr>
-                    <td bgcolor="#ffffff" align="left" valign="top" style="padding: 25px 50px 25px 50px; color: #13c6a6; font-family: Helvetica, Arial, sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 1px; line-height: 24px;">
-                        <h1 style="font-size: 24px; font-weight: 200; margin: 0;">@yield('title')</h1>
+                    <td bgcolor="#ffffff" align="left" valign="top" style="padding: 25px 50px 25px 50px; color: #17B890; font-family: Helvetica, Arial, sans-serif; font-size: 32px; font-weight: 400; letter-spacing: 1px; line-height: 24px;">
+                        <h1 style="font-size: 24px; font-weight: 700; margin: 0;">@yield('title')</h1>
                     </td>
                 </tr>
             </table>
@@ -94,7 +94,7 @@
     <!-- COPY BLOCK -->
     <tr>
         <td bgcolor="#f5f5f5" align="center" style="padding: 0px 10px 0px 10px;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; border-left: 1px solid #e8e8e8; border-right: 1px solid #e8e8e8;" >
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; border-left: 1px solid #EFECEE; border-right: 1px solid #EFECEE;" >
                 @yield('content')
             </table>
         </td>
@@ -104,7 +104,7 @@
         <td bgcolor="#f5f5f5" align="center" style="padding: 0px 10px 0px 10px;">
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
                 <tr>
-                    <td bgcolor="#ffffff" align="center" valign="top" style="border-bottom: 1px solid #e8e8e8; border-left: 1px solid #e8e8e8; border-right: 1px solid #e8e8e8; padding: 20px 20px 20px 20px; border-radius: 0px 0px 6px 6px">
+                    <td bgcolor="#ffffff" align="center" valign="top" style="border-bottom: 1px solid #EFECEE; border-left: 1px solid #EFECEE; border-right: 1px solid #EFECEE; padding: 20px 20px 20px 20px; border-radius: 0px 0px 6px 6px">
                     </td>
                 </tr>
             </table>
@@ -115,8 +115,8 @@
         <td bgcolor="#f5f5f5" align="center" style="padding: 0px 10px 0px 10px;">
             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
                 <tr>
-                    <td bgcolor="#f5f5f5" align="left" style="padding: 30px 30px 30px 30px; color: #13c6a6; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px; text-align: center" >
-                        <p style="margin: 0; padding:0;">&copy; {{ date('Y')}} • <a href="{{ url('') }}" target="_blank" style="color: #13c6a6;">{{ chiefSetting('client.app_name') }}</a></p>
+                    <td bgcolor="#f5f5f5" align="left" style="padding: 30px 30px 30px 30px; color: #17B890; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px; text-align: center" >
+                        <p style="margin: 0; padding:0;">&copy; {{ date('Y')}} • <a href="{{ url('') }}" target="_blank" style="color: #17B890;">{{ chiefSetting('app_name') }}</a></p>
                     </td>
                 </tr>
                 </td>

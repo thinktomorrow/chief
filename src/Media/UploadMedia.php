@@ -2,121 +2,131 @@
 
 namespace Thinktomorrow\Chief\Media;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Thinktomorrow\AssetLibrary\Models\Asset;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\SortAssets;
+use Thinktomorrow\AssetLibrary\Application\DetachAsset;
+use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 
 class UploadMedia
 {
     /**
      * Upload from base64encoded files, usually
      * coming from slim upload component
+     *
+     * @param HasAsset $model
+     * @param array $files_by_type
+     * @param array $files_order_by_type
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      */
-    public function fromUploadComponent(HasMedia $model, array $files_by_type, array $files_order_by_type)
+    public function fromUploadComponent(HasAsset $model, array $files_by_type, array $files_order_by_type)
     {
+        ini_set('memory_limit', '256M');
+
+        $files_by_type = $this->sanitizeFilesParameter($files_by_type);
+        $files_order_by_type = $this->sanitizeFilesOrderParameter($files_order_by_type);
+        $this->validateParameters($files_by_type, $files_order_by_type);
+
         // When no files are uploaded, we still would like to sort our assets duh
         if (empty($files_by_type)) {
-            foreach ($files_order_by_type as $type => $files_order) {
-                $model->sortFiles($type, explode(',', $files_order));
+            foreach ($files_order_by_type as $type => $files) {
+                app(SortAssets::class)->handle($model, $type, $files);
             }
 
             return;
         }
 
-        // We allow for more memory consumption because the gd decoding can require a lot of memory when parsing large images.
-        ini_set('memory_limit', '256M');
+        foreach ($files_by_type as $type => $files_by_locale) {
+            foreach ($files_by_locale as $locale => $files) {
+                $this->validateFileUploads($files);
+                
+                $fileIdsCollection = $files_order_by_type[$type] ?? [];
 
-        foreach ($files_by_type as $type => $files) {
-            $this->validateFileUploads($files);
-
-            $files_order = isset($files_order_by_type[$type]) ? explode(',', $files_order_by_type[$type]) : [];
-
-            $this->addFiles($model, $type, $files, $files_order);
-            $this->replaceFiles($model, $files);
-            $this->removeFiles($model, $files);
-
-            $model->sortFiles($type, $files_order);
-        }
-    }
-
-    private function addFiles(HasMedia $model, string $type, array $files, array &$files_order)
-    {
-        if (isset($files['new']) && is_array($files['new']) && !empty($files['new'])) {
-            foreach ($files['new'] as $file) {
-                // new but removed files are passed as null, just leave them alone!
-                if (!$file) {
-                    continue;
-                }
-
-                $this->addFile($model, $type, $files_order, $file);
+                $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
+                $this->replaceFiles($model, $files);
+                $this->removeFiles($model, $files);
             }
+            app(SortAssets::class)->handle($model, $type, $fileIdsCollection ?? []);
         }
     }
 
-    private function addFile(HasMedia $model, string $type, array &$files_order, $file)
+    private function addFiles(HasAsset $model, string $type, array $files, array &$files_order, string $locale = null)
     {
-        if (is_string($file)) {
-            $image_name = json_decode($file)->output->name;
-            $asset      = $this->addAsset(json_decode($file)->output->image, $type, null, $image_name, $model);
-        } else {
-            $image_name = $file->getClientOriginalName();
-            $asset      = $this->addAsset($file, $type, null, $image_name, $model);
+        if (!$this->actionExists($files, 'new')) {
+            return;
         }
 
-        // New files are passed with their filename (instead of their id)
-        // For new files we will replace the filename with the id.
-        if (false !== ($key = array_search($image_name, $files_order))) {
-            $files_order[$key] = $asset->id;
+        foreach ($files['new'] as $id => $file) {
+            if (!$file) {
+                continue;
+            }
+            
+            $this->addFile($model, $type, $file, $files_order, $locale);
         }
     }
 
     /**
-     * Note: this is a replication of the AssetTrait::addFile() with the exception
-     * that we want to return the asset in order to retrieve the id. This is
-     * currently not available via the AssetTrait.
-     */
-    private function addAsset($file, $type = '', $locale = null, $filename = null, HasMedia $model)
-    {
-        $filename = $this->sluggifyFilename($filename);
-
-        if (is_string($file)) {
-            $asset = AssetUploader::uploadFromBase64($file, $filename);
-        } else {
-            $asset = AssetUploader::upload($file, $filename);
-        }
-
-        if ($asset instanceof Asset) {
-            $asset->attachToModel($model, $type, $locale);
-        }
-
-        return $asset;
-    }
-
-    /**
-     * @param HasMedia $model
+     * @param HasAsset $model
      * @param array $files
-     * @return array
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      */
-    private function replaceFiles(HasMedia $model, array $files)
+    private function replaceFiles(HasAsset $model, array $files)
     {
-        if (isset($files['replace']) && is_array($files['replace']) && !empty($files['replace'])) {
-            foreach ($files['replace'] as $id => $file) {
-                // Existing files are passed as null, just leave them alone!
-                if (!$file) {
-                    continue;
-                }
+        if (!$this->actionExists($files, 'replace')) {
+            return;
+        }
 
-                $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
-                $model->replaceAsset($id, $asset->id);
+        foreach ($files['replace'] as $id => $file) {
+            if (!$file) {
+                continue;
             }
+
+            $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
+            app(ReplaceAsset::class)->handle($model, $id, $asset->id);
         }
     }
 
-    private function removeFiles(HasMedia $model, array $files)
+    /**
+     * @param HasAsset $model
+     * @param array $files
+     */
+    private function removeFiles(HasAsset $model, array $files)
     {
-        if (isset($files['delete']) && is_array($files['delete']) && !empty($files['delete'])) {
-            $model->assets()->whereIn('id', $files['delete'])->delete();
+        if (!$this->actionExists($files, 'delete')) {
+            return;
+        }
+
+        app(DetachAsset::class)->detach($model, $files['delete']);
+    }
+
+    private function actionExists(array $files, string $action)
+    {
+        return (isset($files[$action]) && is_array($files[$action]) && !empty($files[$action]));
+    }
+
+    private function addFile(HasAsset $model, string $type, $file, array &$files_order, $locale = null)
+    {
+        if (isset(json_decode($file)->output)) {
+            $image_name = json_decode($file)->output->name;
+            $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
+        } else {
+            if ($file instanceof UploadedFile) {
+                $image_name = $file->getClientOriginalName();
+                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
+
+                // New files are passed with their filename (instead of their id)
+                // For new files we will replace the filename with the id.
+                if (false !== ($key = array_search($image_name, $files_order))) {
+                    $files_order[$key] = (string) $asset->id;
+                }
+            } else {
+                $file       = Asset::findOrFail($file);
+                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale);
+            }
         }
     }
 
@@ -128,7 +138,7 @@ class UploadMedia
     {
         $extension = substr($filename, strrpos($filename, '.') + 1);
         $filename  = substr($filename, 0, strrpos($filename, '.'));
-        $filename  = str_slug($filename) . '.' . $extension;
+        $filename  = Str::slug($filename) . '.' . $extension;
 
         return $filename;
     }
@@ -152,5 +162,61 @@ class UploadMedia
                 }
             }
         }
+    }
+
+    private function validateParameters(array $files_by_type, array $files_order_by_type)
+    {
+        $actions = ['new', 'replace', 'delete'];
+        foreach ($files_by_type as $type => $files) {
+            foreach ($files as $locale => $_files) {
+                if (!in_array($locale, config('translatable.locales'))) {
+                    throw new \InvalidArgumentException('Corrupt file payload. key is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
+                }
+
+                if (!is_array($_files)) {
+                    throw new \InvalidArgumentException('A valid files entry should be an array of files, key with either [new, replace or delete]. Instead a ' . gettype($_files) . ' is given.');
+                }
+
+                foreach ($_files as $action => $file) {
+                    if (!in_array($action, $actions)) {
+                        throw new \InvalidArgumentException('A valid files entry should have a key of either ['.implode(',', $actions).']. Instead ' . $action . ' is given.');
+                    }
+                }
+            }
+        }
+    }
+
+    private function sanitizeFilesParameter(array $files_by_type): array
+    {
+        $defaultLocale = config('app.fallback_locale');
+
+        foreach ($files_by_type as $type => $files) {
+            foreach ($files as $locale => $_files) {
+                if (!in_array($locale, config('translatable.locales'))) {
+                    unset($files_by_type[$type][$locale]);
+
+                    if (!isset($files_by_type[$type][$defaultLocale])) {
+                        $files_by_type[$type][$defaultLocale] = [];
+                    }
+
+                    $files_by_type[$type][$defaultLocale][$locale] = $_files;
+                }
+            }
+        }
+
+        return $files_by_type;
+    }
+
+    private function sanitizeFilesOrderParameter(array $files_order_by_locale): array
+    {
+        foreach ($files_order_by_locale as $locale => $fileIdsCollection) {
+            foreach ($fileIdsCollection as $type => $commaSeparatedFileIds) {
+                $type = str_replace("files-", "", $type);
+                $files_order_by_type[$type][] = explode(',', $commaSeparatedFileIds);
+                $files_order_by_type[$type] = collect($files_order_by_type)->flatten()->unique()->toArray();
+            }
+        }
+
+        return $files_order_by_type ?? $files_order_by_locale;
     }
 }

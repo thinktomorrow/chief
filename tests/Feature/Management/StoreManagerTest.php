@@ -2,11 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class StoreManagerTest extends TestCase
 {
@@ -16,14 +17,14 @@ class StoreManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
-        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()));
+        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()));
     }
 
     /** @test */
@@ -34,7 +35,7 @@ class StoreManagerTest extends TestCase
                 'title' => 'foobar-created',
             ]);
 
-        $this->assertEquals('foobar-created', ManagedModelFake::first()->title);
+        $this->assertEquals('foobar-created', ManagedModelFakeFirst::first()->title);
     }
 
     /** @test */
@@ -45,7 +46,7 @@ class StoreManagerTest extends TestCase
                 'custom' => 'custom-created',
             ]);
 
-        $this->assertEquals('custom-created', ManagedModelFake::first()->custom_column);
+        $this->assertEquals('custom-created', ManagedModelFakeFirst::first()->custom_column);
     }
 
     /** @test */
@@ -64,7 +65,7 @@ class StoreManagerTest extends TestCase
                 ],
             ]);
 
-        $first = ManagedModelFake::first();
+        $first = ManagedModelFakeFirst::first();
 
         $this->assertEquals('title-nl-created', $first->title_trans);
         $this->assertEquals('content-nl-created', $first->content_trans);
@@ -88,6 +89,6 @@ class StoreManagerTest extends TestCase
                 ],
             ]);
 
-        $this->assertEquals('tt-favicon.png', ManagedModelFake::first()->getFilename('hero'));
+        $this->assertEquals('tt-favicon.png', ManagedModelFakeFirst::first()->asset('hero')->filename());
     }
 }

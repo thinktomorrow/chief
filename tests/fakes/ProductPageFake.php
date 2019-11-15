@@ -9,4 +9,9 @@ use Thinktomorrow\Chief\Pages\Page;
 class ProductPageFake extends Page
 {
     protected static $baseUrlSegment = 'products';
+
+    public function renderView(): string
+    {
+        return 'product-page-fake-content';
+    }
 }

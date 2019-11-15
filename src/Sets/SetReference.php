@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
@@ -69,7 +70,7 @@ class SetReference implements ProvidesFlatReference
     public function toSet(): Set
     {
         // Reconstitute the action - optional @ ->defaults to the name of the set e.g. @upcoming
-        list($class, $method) = $this->parseAction($this->action, camel_case($this->key));
+        list($class, $method) = $this->parseAction($this->action, Str::camel($this->key));
 
         $this->validateAction($class, $method);
 

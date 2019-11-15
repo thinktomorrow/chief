@@ -1,0 +1,73 @@
+.navigation-list {
+    @apply m-0;
+    li:not(.no-hover) {
+        @apply text-grey-600;
+        @extend .squished;
+
+        > a:not(.label) {
+            @apply text-grey-600;
+        }
+        
+        &:hover, &:hover > a:not(.label) {
+            @apply text-primary-600;
+        }
+    }
+}
+
+/* Nice bottom border hover effect; mostly used for navigation */
+.--bottomline {
+    transition: 0.3s all ease;
+    @apply no-underline relative;
+  
+    &:after{
+      content:"";
+      bottom: -1px;
+      transform: translateX(-50%);
+      transition: .26s cubic-bezier(0.69, 0.14, 0.05, 1.31);
+
+      @apply block absolute h-0 left-0 w-0 bg-primary-500;
+    }
+  
+    &:hover, &.active{
+        @apply text-primary-500 no-underline;
+
+        &:after{
+            left: 50%;
+            width: 30%;
+            height: 1px;
+        }
+    }
+}
+
+.--raised {
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,0.05), 0 4px 25px 0px rgba(0,0,0,0.06), 0 8px 10px -5px rgba(0,0,0,0.06);
+}
+
+.--link-with-bg {
+    @apply whitespace-no-wrap rounded;
+    &:hover {
+        @apply text-primary-600 bg-primary-300;
+    }
+}
+
+.color-inherit{
+    color: inherit;
+}
+
+.clearfix {
+    &:before,
+    &:after{
+        content: " ";
+        display: table;
+    }
+}
+
+.indent-1{
+    @apply ml-1 border-l border-primary-800 text-primary-800;
+}
+.indent-2{
+    @apply ml-4 border-l border-primary-600 text-primary-600;
+}
+.indent-3{
+    @apply ml-8 border-l border-primary-400 text-primary-400;
+}

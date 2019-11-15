@@ -18,22 +18,22 @@ class DeleteModuleTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('newsletter', ModuleManager::class, NewsletterModuleFake::class);
+        app(Register::class)->register(ModuleManager::class, NewsletterModuleFake::class);
     }
 
     /** @test */
     public function it_can_delete_modules()
     {
-        $this->disableExceptionHandling();
         $module = NewsletterModuleFake::create(['slug' => 'other-slug']);
 
         $this->asAdmin()
-            ->delete(route('chief.back.managers.delete', ['newsletter', $module->id]), [
+            ->delete(route('chief.back.managers.delete', ['newsletters_fake', $module->id]), [
                 'deleteconfirmation' => 'DELETE',
             ]);
 
         $this->assertCount(0, Module::all());
         $this->assertCount(1, Module::onlyTrashed()->get());
+        $this->assertStringStartsWith('other-slug_DELETED_', Module::onlyTrashed()->first()->slug);
     }
 
     /** @test */
@@ -47,7 +47,7 @@ class DeleteModuleTest extends TestCase
         $this->assertEquals(1, Relation::count());
 
         $this->asAdmin()
-            ->delete(route('chief.back.managers.delete', ['newsletter', $module->id]), [
+            ->delete(route('chief.back.managers.delete', ['newsletters_fake', $module->id]), [
             'deleteconfirmation' => 'DELETE',
         ]);
 

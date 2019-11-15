@@ -2,8 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdateYouTest extends TestCase
 {
@@ -93,7 +94,7 @@ class UpdateYouTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

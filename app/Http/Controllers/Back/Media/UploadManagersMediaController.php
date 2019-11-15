@@ -4,9 +4,9 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Media;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Media\MediaType;
-use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class UploadManagersMediaController extends Controller
@@ -33,12 +33,11 @@ class UploadManagersMediaController extends Controller
     public function store(string $key, $id, Request $request)
     {
         $uploads = $request->file('file');
-
-        $model = $this->managers->findByKey($key, $id)->model();
+        $model   = $this->managers->findByKey($key, $id)->model();
 
         if (empty($uploads)) {
             return response()->json([
-                'error' => true,
+                'error'    => true,
                 'messages' => 'Geen afbeelding opgeladen.',
             ], 500);
         }
@@ -48,16 +47,16 @@ class UploadManagersMediaController extends Controller
         foreach ($uploads as $upload) {
             if (! $asset = AssetUploader::upload($upload)) {
                 return response()->json([
-                    'error' => true,
+                    'error'    => true,
                     'messages' => 'Afbeelding kan niet worden opgeladen.',
                 ], 500);
             }
 
-            $asset->attachToModel($model, MediaType::CONTENT);
+            app(AddAsset::class)->add($model, $asset, MediaType::CONTENT, $request->input('locale', app()->getLocale()));
 
             $responseContent['file-'.$asset->id] = [
-                'url' => $asset->getFileUrl(),
-                'id' => $asset->id,
+                'url' => $asset->url(),
+                'id'  => $asset->id,
             ];
         }
 

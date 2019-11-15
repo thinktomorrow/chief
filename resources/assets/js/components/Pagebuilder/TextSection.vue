@@ -1,49 +1,84 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="section-item stack block inset relative">
-        <h3 class="pagebuilder-section-title" v-if="title" v-text="title"></h3>
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 block inset relative rounded">
+        
+        <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
-        <div class="to-minimize">
+        <div class="to-minimize mt-2">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][type]'" :value="section.type">
 
             <!-- show multiple locales in tab -->
             <tabs v-if="locales.length > 1">
-                <tab
-                    v-for="(locale, key) in locales"
-                    :key="key"
-                    :id="locale+'-text'"
-                    :name="locale"
-                    v-cloak>
-                    <textarea
-                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
-                        :id="'editor-'+locale+'-'+_uid"
-                        class="inset-s" cols="30" :rows="single ? 1 : 10"
-                        v-html="renderInitialContent(locale)">
-                    </textarea>
-                </tab>
+                <div v-if="textEditor == 'redactor' || editor == false">
+                    <tab v-for="(locale, key) in locales"
+                        :key="key"
+                        :id="locale+'-text'"
+                        :name="locale"
+                        v-cloak>
+                        <textarea
+                            :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
+                            :id="'editor-'+locale+'-'+_uid"
+                            class="inset-s" cols="30" :rows="single ? 1 : 10"
+                            v-html="renderInitialContent(locale)">
+                        </textarea>
+                    </tab>
+                </div>
+                <div v-else-if="textEditor == 'quill'" class="w-full">
+                    <tab v-for="(locale, key) in locales"
+                        :key="key"
+                        :id="locale+'-text'"
+                        :name="locale"
+                        v-cloak>
+                        <div 
+                            class="inset-s bg-white" 
+                            :id="'editor-'+locale+'-'+_uid"
+                            :lang="locales[key]"
+                            v-html="renderInitialContent(locale)">
+                        </div>
+                        <input 
+                            :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
+                            :type="'hidden'"
+                            :value="text_content[key].value"
+                        >
+                    </tab>
+                </div>
             </tabs>
 
             <!-- show single locale not in tabbed format -->
             <template v-if="locales.length == 1">
-                <textarea
+                <textarea v-if="textEditor == 'redactor' || editor == false"
                         :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
                         :id="'editor-'+locales[0]+'-'+_uid"
                         class="inset-s" cols="30" :rows="single ? 1 : 10"
                         v-html="renderInitialContent(locales[0])">
                 </textarea>
+                <div v-else-if="textEditor == 'quill'" class="w-full">
+                    <div 
+                        class="inset-s bg-white" 
+                        :id="'editor-'+locales[0]+'-'+_uid"
+                        v-html="renderInitialContent(locales[0])">
+                    </div>
+                    <input
+                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
+                        :type="'hidden'"
+                        :value="text_content[0].value"
+                    >
+                </div>
             </template>
 
         </div>
 
-        <pagebuilder-menu :section="section"></pagebuilder-menu>
-
         <div class="module-icons-left">
-            <span class="grip-button icon icon-menu inset-xs"></span>
+            <span class="grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move">
+                <svg width="18" height="18"><use xlink:href="#menu"/></svg>
+            </span>
         </div>
 
         <div class="module-icons-right">
-            <span class="delete-button icon icon-trash inset-xs" @click="removeThisSection(section.sort)"></span>
+            <span class="delete-button inset-xs flex justify-center text-error text-center my-2 cursor-pointer" @click="removeThisSection(section.sort)">
+                <svg width="18" height="18"><use xlink:href="#trash"/></svg>
+            </span>
         </div>
 
     </section>
@@ -59,9 +94,10 @@
         props: {
             'section': { type: Object },
             'title': {},
-            'locales': { default: function(){ return [] }, type: Array},
+            'locales': { default: function() { return [] }, type: Array},
             // Allow redactor editor
             'editor': { default: true, type: Boolean },
+            'textEditor': { default: function() { return "" }, type: String },
             // Single line for edit or multiple lines
             'single': { default: false, type: Boolean },
         },
@@ -69,17 +105,35 @@
             return {
                 new_or_replace_key: this.section.id ? 'replace' : 'new',
                 show_menu: false,
+                text_content: this.locales.map(locale => { 
+                    return {
+                        locale,
+                        value: this.section['trans'][locale] ? this.section['trans'][locale].content : '',
+                    }
+                }),
             }
         },
         mounted(){
-
             if(this.editor) {
                 for(var key in this.locales) {
                     if( ! this.locales.hasOwnProperty(key)) continue;
-
-                    window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
-                        // options
-                    });
+                    if(this.textEditor == 'redactor') {
+                        window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
+                            // options
+                        }); 
+                    } else if (this.textEditor == 'quill') {
+                        this.text_content[key].value = this.renderInitialContent(this.locales[key]);
+                        const quill = new Quill('#editor-' + this.locales[key] + '-' + this._uid, {
+                            theme: 'snow'
+                        });
+                        quill.on('text-change', () => {
+                            for(let i = 0; i < this.text_content.length; i++) {
+                                if(this.text_content[i].locale == quill.container.lang) {
+                                    this.text_content[i].value = quill.root.innerHTML;
+                                }
+                            }
+                        });
+                    }
                 }
             }
 
@@ -92,7 +146,7 @@
 
                 let content = this.section['trans'][locale].content;
                 if(!content) return '';
-
+    
                 return content;
             },
             removeThisSection(position){

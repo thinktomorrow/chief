@@ -4,16 +4,16 @@ namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Management\Assistants\Assistant;
+use Thinktomorrow\Chief\Fields\FieldManager;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
+use Thinktomorrow\Chief\Management\Assistants\Assistant;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
-interface Manager
+interface Manager extends FieldManager
 {
     /**
      * Set the specific model to be managed.
@@ -30,6 +30,8 @@ interface Manager
 
     public function assistant(string $assistant): Assistant;
 
+    public function assistants(): array;
+
     /**
      * Find an instance by id wrapped in a Manager
      *
@@ -42,9 +44,9 @@ interface Manager
      * Get all managed models wrapped in a Manager
      * E.g. used for the index.
      *
-     * @return Collection of ManagedModel
+     * @return Collection of ManagedModel or Paginator
      */
-    public function findAllManaged($apply_filters = false): Collection;
+    public function indexCollection();
 
     /**
      * Retrieve the managed model instance
@@ -52,26 +54,29 @@ interface Manager
      */
     public function model();
 
+    /**
+     * Assert that the model already exists (in database)
+     * @return bool
+     */
+    public function hasExistingModel(): bool;
+
     public function route($verb): ?string;
 
     public function can($verb): bool;
 
     /**
      * @param $verb
+     * @return Manager
      * @throws NotAllowedManagerRoute
      */
     public function guard($verb): self;
 
     /**
-     * The set of fields that should be manageable for a certain model.
-     *
-     * Additionally, you should:
-     * 1. Make sure to setup the proper migrations and
-     * 2. For a translatable field you should add this field to the $translatedAttributes property of the model as well.
+     * The manager fields enriched with any of the assistant specified fields.
      *
      * @return Fields
      */
-    public function fields(): Fields;
+    public function fieldsWithAssistantFields(): Fields;
 
     /**
      * This determines the arrangement of the manageable fields
@@ -89,18 +94,6 @@ interface Manager
      * @return Filters
      */
     public static function filters(): Filters;
-
-    /**
-     * @param Field|string $field
-     * @return mixed
-     */
-    public function getFieldValue($field);
-
-    public function setField(Field $field, Request $request);
-
-    public function saveFields(): Manager;
-
-    public function renderField(Field $field);
 
     /**
      * Action to execute deletion of the model.

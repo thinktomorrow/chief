@@ -3,6 +3,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
+use Illuminate\Support\Arr;
+use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
+
 trait PageBuildFormParams
 {
     protected function validPageParams($overrides = [])
@@ -26,13 +29,16 @@ trait PageBuildFormParams
             ],
             'trans' => [
                'nl' => [
-                   'title'=> 'slug',
+                   'title'=> 'title',
                ]
-            ]
+            ],
+            'url-slugs' => [
+                'nl' => 'slug',
+            ],
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

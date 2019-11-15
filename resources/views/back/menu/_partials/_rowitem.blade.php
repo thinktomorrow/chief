@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="column center-y {{ isset($level) ? 'indent-'.$level : '' }}">
+<div class="row hover:bg-grey-50 px-2">
+    <div class="column center-y py-2 {{ isset($level) ? 'indent-'.$level : '' }} ">
         {{--<i class="icon icon-menu inline text-border tree-parent"></i>--}}
         @if(isset($level) && $level > 0)
             <span class="icon icon-arrow-right text-border inline-s tree-parent"></span>
@@ -8,7 +8,7 @@
         @if($item->auto_generated)
             {{ $item->label }}
         @else
-            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}">{{ $item->label }}</a>
+            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="color-inherit">{{ $item->label }}</a>
             @if($item->hidden_in_menu)
                 &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
             @elseif($item->draft)
@@ -22,7 +22,7 @@
 
     <div class="column-4 center-y">
         @if($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_INTERNAL)
-            <a class="label label--primary" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
+            <a class="label label-primary" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
         @elseif($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_NOLINK)
             -
         @else
@@ -30,7 +30,7 @@
         @endif
     </div>
 
-    <div class="column-2 text-right">
+    <div class="column-2 text-right py-2">
         @if(!$item->auto_generated)
             <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="">Aanpassen</a>
         @endif

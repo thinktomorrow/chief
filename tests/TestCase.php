@@ -2,22 +2,25 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
-use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
-use Dimsav\Translatable\TranslatableServiceProvider;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\PermissionServiceProvider;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Thinktomorrow\Chief\App\Exceptions\Handler;
-use Illuminate\Cookie\Middleware\EncryptCookies;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thinktomorrow\Chief\App\Http\Kernel;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
-use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
-use Thinktomorrow\Chief\App\Providers\DemoServiceProvider;
-use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Thinktomorrow\Chief\Common\Helpers\Memoize;
+use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Spatie\Permission\PermissionServiceProvider;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Spatie\Activitylog\ActivitylogServiceProvider;
-use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
+use Astrotomic\Translatable\TranslatableServiceProvider;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Image;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 
 abstract class TestCase extends OrchestraTestCase
 {
@@ -37,9 +40,6 @@ abstract class TestCase extends OrchestraTestCase
             ActivitylogServiceProvider::class,
 
             ChiefServiceProvider::class,
-
-            // Demo is used for our preview testing
-            DemoServiceProvider::class,
         ];
     }
 
@@ -61,6 +61,10 @@ abstract class TestCase extends OrchestraTestCase
 
         // Load database before overriding the config values but after the basic app setup
         $this->setUpDatabase();
+
+        // Clear out any memoized values
+        Memoize::clear();
+        MemoizedUrlRecord::clearCachedRecords();
     }
 
     protected function resolveApplicationHttpKernel($app)
@@ -70,37 +74,59 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function getEnvironmentSetUp($app)
     {
+        $this->recurse_copy($this->getStubDirectory(), $this->getTempDirectory());
         $app['path.base'] = realpath(__DIR__ . '/../');
 
+        $app->bind('path.public', function () {
+            return $this->getTempDirectory();
+        });
+        
         $app['config']->set('permission.table_names', [
-            'roles' => 'roles',
-            'permissions' => 'permissions',
+            'roles'                 => 'roles',
+            'permissions'           => 'permissions',
             'model_has_permissions' => 'model_has_permissions',
-            'model_has_roles' => 'model_has_roles',
-            'role_has_permissions' => 'role_has_permissions',
+            'model_has_roles'       => 'model_has_roles',
+            'role_has_permissions'  => 'role_has_permissions',
         ]);
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('auth.defaults', [
-            'guard' => 'xxx',
+            'guard'     => 'xxx',
             'passwords' => 'chief',
         ]);
 
         // Connection is defined in the phpunit config xml
         $app['config']->set('database.connections.testing', [
-            'driver' => 'sqlite',
+            'driver'   => 'sqlite',
             'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
-            'prefix' => '',
+            'prefix'   => '',
         ]);
 
         // For our tests is it required to have 2 languages: nl and en.
         $app['config']->set('app.locale', 'nl'); // Default locale is considered nl
         $app['config']->set('translatable.locales', ['nl', 'en']);
         $app['config']->set('squanto.template', 'chief::back._layouts.master');
+        $app['config']->set('squanto', require $this->getTempDirectory('config/squanto.php'));
 
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
         $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Audit\Audit::class);
+
+        $app['config']->set('filesystems.disks.public', [
+            'driver' => 'local',
+            'root' => $this->getMediaDirectory(),
+        ]);
+        $app['config']->set('filesystems.disks.secondMediaDisk', [
+            'driver' => 'local',
+            'root' => $this->getTempDirectory('media2'),
+        ]);
+
+        $app['config']->set('medialibrary.image_generators', [
+            Image::class,
+            Webp::class,
+            Svg::class,
+            Video::class,
+        ]);
 
         // Override the guest middleware since this is overloaded by Orchestra testbench itself
         $app->bind(\Orchestra\Testbench\Http\Middleware\RedirectIfAuthenticated::class, ChiefRedirectIfAuthenticated::class);
@@ -152,5 +178,20 @@ abstract class TestCase extends OrchestraTestCase
     protected function getResponseData($response, $key)
     {
         return $response->getOriginalContent()->getData()[$key];
+    }
+
+    private function getStubDirectory($dir = null)
+    {
+        return __DIR__.'/stubs/' . $dir;
+    }
+
+    private function getTempDirectory($dir = null)
+    {
+        return __DIR__.'/tmp/' . $dir;
+    }
+
+    public function getMediaDirectory($suffix = '')
+    {
+        return $this->getTempDirectory().'/media'.($suffix == '' ? '' : '/'.$suffix);
     }
 }

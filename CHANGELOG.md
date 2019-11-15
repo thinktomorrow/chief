@@ -3,7 +3,91 @@ All Notable changes to the `chief` application template will be documented in th
 
 ## unreleased
 - Added: You can now validate image uploads with image_required and chief_dimensions validation rules
+- Added: function valueResolver on field to customize how a value is retrieved from the database
+- Added: `Field::default()` method to set default field value.
+- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
+- Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
+- Fixed: Multiselect placeholders were looking buggy. Now they don't.
+- Fixed: issue where deleting a model would not delete any existing relations.
+- Changed: updated Assetlibrary to 0.6
+
+## 0.3.4 - 2019-10-18
+- Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
+- Added: selected module in pagebuilder now displays an edit link
+- Added: Checkbox field
+- Added: Laravel 6 support
+- Changed: Healthmonitor checks are now defined in the chief.php config file.
+- Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
+- Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
+- Fixed: Slug of deleted module is now allowed to be reused. This used to give an unique validation constraint.
+- Fixed: isActiveUrl helper method can now check for full url
+- Fixed: show edit link in context menu in modules tab on page editpage
+- Fixed: deleting a page now also deletes related url records.
+- Fixed: issue where unique url validation didn't take the base url segment into account.
+- Fixed: issue where long pagetitle would overflow the admin header
+
+## 0.3.3 - 2019-09-30
+- Fixed: fixed bug with set viewkey
+- Fixed: required on settings
+- Fixed: layout issue with dropdown which would push wrapping element down
+- Fixed: image uploads
+- Fixed: image sorting
+- Changed: optimize url record retrieval for large datasets with a simple memoization.
+- Changed: small changes to pagebuilder and removed redactor
+- Changed: BREAKING - FindAllManaged function on manager has been removed in favor of indexCollection
+- Changed: increased max timeout and memorylimit for image upload/conversions
+
+
+## 0.3.0 - 2019-8-20
+- Fixed: translatable media is now saved properly
+- Fixed: selectfield return empty array instead of array with null value
+- Removed: Homepage setting and `chief-settings.homepage` config value
+- Removed: deprecated `Page::menuUrl()` in favor of `Page::url()`.
+- Removed: `Page::hasPagebuilder()` and `Page::pagebuilder` property.
+- Removed: `Page::findBySlug()` and `Page::findPublishedBySlug()`.
+- Removed: Homepage setting and `chief-settings.homepage` config value
+- Removed: `ActsAsChild::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
+- Removed: `ActsAsParent::viewKey()` contract method requirement. This is now the responsibility of the `ViewableContract`.
+- Removed: Honeypot middleware and helper.
+- Removed: migration columns start_at, end_at and featured from table pages.
+- Removed: $dates on page and module since these fields are all set through traits
+- Removed: relation.blacklist in config/chief.php
+- Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.route.autoload` value to false.
+- Changed: The locale placeholder has changed from '*' to ':locale'. This is used in a field name value to dynamically fill in each locale. e.g. descriptions[:locale] will be composed to descriptions[nl], descriptions[en], ...
+- Changed: `ProvidesUrl` contract to identify models that should be retrievable by direct url.
+- Changed: By default the chief route `pages.show` is autoloaded by the package. This can be opted out by setting the `chief.routes.autoload` value to false.
+- Changed: don't show tabs when there is just one language in menubuilder. Case: "Of kies een eigen link."
+- Changed: construct on archivable trait to inizialize to prevent issues with $dates field setting
+- Changed: grouping of child pages as a collection is no longer based on the view key as a grouping id. Rather the `flatReferenceGroup()` value is used instead.
+- Changed: Fields::add() is made immutable so it no longer changes current collection but returns a new Fields instance.
+- Changed: replace htmlawed with HtmlPurifier
+- Added: `ViewableContract` to identify models that should be rendered on the site.
+- Added: Manager assistant `UrlAssistant` which takes care of the page urls.
+- Added: changing page url keep old url as 301 redirect to the new one
+- Added: when archiving a page another page can now be set as redirect
+- Added: improved field validation design
+- Added: `Manager::fieldsWithAssistantFields()` which also include any assistant fields. This is mostly used internally.
+- Added: added seo_keywords validation on length
+- Added: relation.children in config/chief.php
+- Added: config setting `strict` to display any non-fatal errors which are otherwise silently ignored. Defaults to correspond with the project's APP_DEBUG value.
+- Added: Assistants can now add their own field to the manager edit form via a `Assistant::fields(): Fields` method.
+- Added: Assistants can handle the saving of this field via a custom method following the same naming convention for custom save methods on the manager. e.g. saveExampleField
+- Added: Fields::merge() method which can be passed another Fields object. A Field value with the same key will overwrite the existing one.
+- Added: Html sanitization on updatesections
+- Added: healthmonitor homepage set check
+- Added: editor option in chief config to select html editor of choice. Default to quill.
+- Deprecated: `Page::hasPagebuilder()` since no longer used. Scheduled to be removed in version 0.4.
+
+## 0.2.14 - 2019-6-18
+- Added: add seo_image to page seo tab
+>>>>>>> master
 - Fixed: remove own module on page now works.
+- Fixed: apply permissions on archive/publish buttons
+- Fixed: removing document and uploading works at the same time.
+- Fixed: media/document fields can be translatable
+- Fixed: text field wysiwyg dutch translations added
+- Fixed: fixed error translations for module creation and menuitem creation
+- Fixed: CRUD for menu's now enforce the page permissions
 
 ## 0.2.13 - 2019-05-23
 - Fixed: Find published page where the slug matches one of the application base url segments. 

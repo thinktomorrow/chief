@@ -1,10 +1,21 @@
 @extends('chief::back._layouts.solo')
 
+@section('title')
+    Er ging iets fout
+@endsection
+
 @section('content')
-    <h2>Er ging iets fout. Het development team is op de hoogte gesteld en werkt hier zo snel mogelijk aan.</h2>
-    <a href="{{ url('/admin') }}">
-    <button>
-        Ga terug
-    </button>
-    </a>
+
+    <div class="container min-h-screen flex items-center">
+        <div class="row w-full justify-center my-32">
+            <div class="xs-column-12 s-column-10 m-column-6 l-column-4 relative z-20">
+                {{-- //TODO: enhance with custom error mssg from laravel --}}
+                <h1 class="mb-8">Er ging iets fout. Het development team is op de hoogte gesteld en werkt hier zo snel mogelijk aan.</h2>
+
+                <a class="btn btn-primary" href="{{ url('/admin') }}">Ga terug</a>
+
+            </div>
+        </div>
+    </div>
+
 @endsection

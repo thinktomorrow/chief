@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class DeletePage
 {
@@ -23,16 +24,15 @@ class DeletePage
             // Remove Page specific modules
             Module::where('page_id', $page->id)->delete();
 
-            //Add random string to slug to avoid unique problems with softdeleted pages.
-            $page->slug .= 'deleted-'.str_random(8);
-            $page->save();
+            // Remove Page specific urls
+            UrlRecord::getByModel($page)->each->delete();
 
             $page->delete();
 
             Audit::activity()
                 ->performedOn($page)
                 ->log('deleted');
-            
+
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();

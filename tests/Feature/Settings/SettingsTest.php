@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Settings\Setting;
+use Thinktomorrow\Chief\Settings\Settings;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class SettingsTest extends TestCase
@@ -43,15 +44,15 @@ class SettingsTest extends TestCase
     /** @test */
     public function if_value_is_null_the_default_is_used()
     {
-        $this->app['config']->set('thinktomorrow.chief-settings.homepage.value', null);
+        $this->app['config']->set('thinktomorrow.chief-settings.homepage', null);
 
-        $this->assertEquals('foobar', chiefSetting('homepage', 'foobar'));
+        $this->assertEquals('foobar', chiefSetting('homepage', null, 'foobar'));
     }
 
     /** @test */
     public function unknown_setting_returns_default()
     {
-        $this->assertEquals('foobar', chiefSetting('xxx', 'foobar'));
+        $this->assertEquals('foobar', chiefSetting('xxx', null, 'foobar'));
     }
 
     /** @test */
@@ -65,6 +66,18 @@ class SettingsTest extends TestCase
         $setting->save();
 
         $this->assertEquals('baz', chiefSetting()->fresh()->get('foo'));
+    }
+
+    /** @test */
+    public function it_can_store_new_translatable_settings_value()
+    {
+        Setting::create(['key' => 'foo', 'value' => [
+            'nl' => 'nl value',
+            'en' => 'en value',
+        ]]);
+
+        $this->assertEquals('nl value', chiefSetting('foo'));
+        $this->assertEquals('en value', chiefSetting('foo', 'en'));
     }
 
     /** @test */

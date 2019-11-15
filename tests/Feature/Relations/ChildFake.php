@@ -2,18 +2,19 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
-use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\Chief\Relations\ActsAsChild;
-use Thinktomorrow\Chief\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Relations\PresentForParent;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Management\ManagedModel;
+use Thinktomorrow\Chief\Relations\ActingAsChild;
+use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 
-class ChildFake extends Model implements ActsAsChild, PresentForParent
+class ChildFake extends Model implements ManagedModel, ActsAsChild, ViewableContract
 {
-    use ActingAsChild;
+    use ActingAsChild, Viewable;
 
     public $table = 'fake_children';
     public $timestamps = false;
@@ -27,9 +28,9 @@ class ChildFake extends Model implements ActsAsChild, PresentForParent
         });
     }
 
-    public function presentForParent(ActsAsParent $parent): string
+    public function renderView(): string
     {
-        return '<div>child '.$this->id.' view for parent '.$parent->id.'</div>';
+        return '<div>child '.$this->id.' view for parent '.$this->viewParent->id.'</div>';
     }
 
     public function flatReference(): FlatReference
@@ -44,10 +45,10 @@ class ChildFake extends Model implements ActsAsChild, PresentForParent
 
     public function flatReferenceGroup(): string
     {
-        return (string) $this->name;
+        return 'childfakes';
     }
 
-    public function viewKey(): string
+    public static function managedModelKey(): string
     {
         return 'childfakes';
     }

@@ -20,7 +20,8 @@
         [v-cloak].v-loading{display:block !important;}
         [v-cloak]{ display:none; }
     </style>
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Magra:400,700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
 
     @stack('custom-styles')

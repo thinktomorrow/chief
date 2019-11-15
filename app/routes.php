@@ -18,26 +18,28 @@ Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => funct
  * NON-AUTHENTICATED ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::get('admin/login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('chief.back.login')->middleware('web');
-Route::post('admin/login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@login')->name('chief.back.login.store')->middleware('web');
+Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
+    Route::get('login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@showLoginForm')->name('chief.back.login')->middleware('web');
+    Route::post('login', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginController@login')->name('chief.back.login.store')->middleware('web');
 
-// Password Reset Routes...
-Route::get('admin/password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('chief.back.password.request')->middleware('web');
-Route::post('admin/password/email', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('chief.back.password.email')->middleware('web');
-Route::get('admin/password/reset/{token}', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('chief.back.password.reset')->middleware('web');
-Route::post('admin/password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@reset')->name('chief.back.password.reset.store')->middleware('web');
+    // Password Reset Routes...
+    Route::get('password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('chief.back.password.request')->middleware('web');
+    Route::post('password/email', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('chief.back.password.email')->middleware('web');
+    Route::get('password/reset/{token}', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('chief.back.password.reset')->middleware('web');
+    Route::post('password/reset', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\ResetPasswordController@reset')->name('chief.back.password.reset.store')->middleware('web');
 
-// Invitation routes...
-Route::get('invite/expired', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@expired')->name('invite.expired')->middleware('web');
-Route::get('invite/{token}/accept', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@accept')->name('invite.accept')->middleware('web');
-Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@deny')->name('invite.deny')->middleware('web');
+    // Invitation routes...
+    Route::get('invite/expired', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@expired')->name('invite.expired')->middleware('web');
+    Route::get('invite/{token}/accept', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@accept')->name('invite.accept')->middleware('web');
+    Route::get('invite/{token}/deny', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\InviteController@deny')->name('invite.deny')->middleware('web');
+});
 
 /**
  * -----------------------------------------------------------------
  * ADMIN ROUTES
  * -----------------------------------------------------------------
  */
-Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chief']], function () {
+Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web', 'web-chief', 'auth:chief']], function () {
 
     // Dashboard
     Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
@@ -63,6 +65,9 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * MANAGER ASSISTANT ROUTES
      * -----------------------------------------------------------------
      */
+    Route::post('check-url/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@checkSlugExists')->name('chief.back.assistants.url.check')->where('id', '[0-9]+');
+    Route::delete('remove-redirect/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@removeRedirect')->name('chief.back.assistants.url.remove-redirect')->where('id', '[0-9]+');
+
     Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
     Route::post('draft/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@draft')->name('chief.back.assistants.draft')->where('id', '[0-9]+');
 
@@ -91,8 +96,6 @@ Route::group(['prefix' => 'admin','middleware' => ['web', 'web-chief', 'auth:chi
      * EDITOR API & MEDIA MANAGEMENT (used by editor)
      * -----------------------------------------------------------------
      */
-    Route::post('pages/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadPagesMediaController@store')->name('pages.media.upload');
-    Route::post('modules/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadModulesMediaController@store')->name('modules.media.upload');
     Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('chief.back.managers.media.upload');
     Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
 

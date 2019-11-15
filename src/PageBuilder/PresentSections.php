@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\PageBuilder;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Relations\PresentForParent;
 use Thinktomorrow\Chief\Sets\Set;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
 
@@ -75,13 +75,13 @@ class PresentSections
                 continue;
             }
 
-            $this->addChildToCollection($i, $child);
+            $this->addModelToCollection($i, $child);
         }
 
-        return $this->sets->values()->map(function (PresentForParent $child) {
+        return $this->sets->values()->map(function (ViewableContract $child) {
             return ($this->withSnippets && method_exists($child, 'withSnippets'))
-                ? $child->withSnippets()->presentForParent($this->parent)
-                : $child->presentForParent($this->parent);
+                ? $child->withSnippets()->setViewParent($this->parent)->renderView()
+                : $child->setViewParent($this->parent)->renderView();
         });
     }
 
@@ -91,14 +91,15 @@ class PresentSections
         $this->current_type = null;
     }
 
-    private function addChildToCollection($index, ActsAsChild $child)
+    private function addModelToCollection($index, ActsAsChild $model)
     {
         // Only published pages you fool!
-        if (method_exists($child, 'isPublished') && ! $child->isPublished()) {
+        // TODO: check for assistant instead of method existence
+        if (method_exists($model, 'isPublished') && ! $model->isPublished()) {
             return;
         }
 
-        $key = $child->viewkey();
+        $key = $model->viewKey();
 
         // Set the current collection to the model key identifier: for pages this is the collection key, for
         // other managed models this is the registered key.
@@ -111,7 +112,7 @@ class PresentSections
             $this->current_index = $index;
         }
 
-        $this->pushToSet($child, $key);
+        $this->pushToSet($model, $key);
     }
 
     private function pushToSet($model, string $setKey)

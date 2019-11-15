@@ -7,7 +7,6 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use \Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Fields\Types\InputField;
 
 class DetachedPageFake extends Page
 {

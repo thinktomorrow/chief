@@ -23,7 +23,7 @@
         >
         </multiselect>
         <select v-if="name" style="display:none;" :name="(multiple) ? name + '[]' : name" :multiple="multiple">
-            <template v-if="Object.keys(valuesAsSelectedOptions).length">
+            <template v-if="Object.keys(valuesAsSelectedOptions).length > 0">
                 <option selected="selected" v-for="(label, index) in valuesAsSelectedOptions"
                         :value="index"
                         :key="index"
@@ -31,7 +31,6 @@
                 ></option>
             </template>
             <template v-else>
-                <option selected="selected" value=""></option>
             </template>
         </select>
     </div>
@@ -80,7 +79,6 @@
         },
         computed: {
             valuesAsSelectedOptions(){
-
                 if(this.value === null) return [];
 
                 if( this.isPrimitive(this.value) ){
@@ -125,7 +123,6 @@
 
                 if(this.isObject(oldValue) && JSON.stringify(oldValue) === JSON.stringify(newValue)) return;
                 if(!this.isObject(oldValue) && newValue == oldValue) return;
-
                 this.value = this.defaultValue();
             },
 
@@ -150,8 +147,8 @@
                         convertedOptions.push({
                             'id' : key,
                             'label' : options[key]
-                        })
-;                    });
+                        });
+                    });
                     options = convertedOptions;
                 }
 
@@ -229,13 +226,12 @@
             },
             // Pluck specific value from objects by key
             pluck(values, key, value){
-
                 if(!values || this.isPrimitive(values)){
                     return values;
                 }
 
                 if(!value) value = key;
-
+                
                 if(Array.isArray(values))
                 {
                     let result = {};
@@ -306,7 +302,7 @@
             },
             isSingleValueListing(options)
             {
-                if(!this.isArray(options) || typeof options[0] == "undefined") return false;
+                if(! this.isArray(options) || typeof options[0] == "undefined") return false;
 
                 if(! this.isPrimitive(options[0])) return false;
 
@@ -337,10 +333,27 @@
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style type="text/css">
+
+    .multiselect {
+        font-size: 14px !important;
+    }
 
     .multiselect--active {
         z-index: 11; /* Place above other components, such as redactor toolbar */
+    }
+
+    .multiselect__placeholder {
+        color: #BEB4BB;
+        margin: 0; padding: 0;  
+        line-height: 20px;
+    }
+
+    .multiselect__single {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
     }
 
     .multiselect__tag{
@@ -356,7 +369,8 @@
     }
 
     input[type="text"].multiselect__input {
-        padding: 1px 0 0 5px;
+        padding: 0; margin: 0;
+        font-size: 14px;
     }
 
 </style>

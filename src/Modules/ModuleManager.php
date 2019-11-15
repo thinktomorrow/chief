@@ -27,6 +27,7 @@ class ModuleManager extends AbstractManager implements Manager
 
     public function route($verb): ?string
     {
+
         /**
          * Page specific modules are expected to be found and managed in the context of a certain page.
          * Therefore the index of these modules is at the modules tab of this page model.
@@ -52,11 +53,11 @@ class ModuleManager extends AbstractManager implements Manager
     {
         try {
             $this->authorize($verb);
+
+            return parent::can($verb);
         } catch (NotAllowedManagerRoute $e) {
             return false;
         }
-
-        return parent::can($verb);
     }
 
     private function authorize($verb)
@@ -90,7 +91,7 @@ class ModuleManager extends AbstractManager implements Manager
         return new Fields([
             InputField::make('slug')
                 ->label('Interne benaming')
-                ->validation('required'),
+                ->validation('required', ['slug' => 'Interne titel is verplicht']),
             InputField::make('title')
                 ->translatable($this->model->availableLocales())
                 ->label('titel'),
@@ -100,14 +101,14 @@ class ModuleManager extends AbstractManager implements Manager
         ]);
     }
 
-    public function saveFields(): Manager
+    public function saveFields(Request $request)
     {
         // Store the morph_key upon creation
         if (! $this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
-        return parent::saveFields();
+        parent::saveFields($request);
     }
 
     public function delete()
@@ -117,7 +118,7 @@ class ModuleManager extends AbstractManager implements Manager
         if (request()->get('deleteconfirmation') !== 'DELETE') {
             throw new DeleteAborted();
         }
-        
+
         app(DeleteModule::class)->handle($this->model->id);
     }
 

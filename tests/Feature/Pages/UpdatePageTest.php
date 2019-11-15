@@ -2,12 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Modules\ModuleManager;
+use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Fakes\NomadicModuleManager;
 
 class UpdatePageTest extends TestCase
 {
@@ -19,29 +22,33 @@ class UpdatePageTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDefaultAuthorization();
+        $this->setUpChiefEnvironment();
 
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
 
         // Create a dummy page up front based on the expected validPageParams
         $this->page = Single::create([
             'title:nl' => 'new title',
-            'slug:nl' => 'new-slug',
             'title:en' => 'nouveau title',
-            'slug:en' => 'nouveau-slug',
         ]);
 
-        // For our project context we expect the page detail route to be known
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
+        UrlRecord::create([
+            'locale' => 'nl',  'slug' => 'new-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
+        ]);
+
+        UrlRecord::create([
+            'locale' => 'en',  'slug' => 'nouveau-slug', 'model_type' => $this->page->getMorphClass(), 'model_id' => $this->page->id,
+        ]);
     }
 
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]))
-            ->assertViewIs('chief::back.managers.edit')
-            ->assertStatus(200);
+        app(Register::class)->register(ModuleManager::class, MediaModule::class, ['module']);
+
+        $response = $this->asAdmin()->get(route('chief.back.managers.edit', ['singles', $this->page->id]));
+        $response->assertViewIs('chief::back.managers.edit');
+        $response->assertStatus(200);
     }
 
     /** @test */
@@ -78,40 +85,6 @@ class UpdatePageTest extends TestCase
     }
 
     /** @test */
-    public function slug_is_forced_as_unique()
-    {
-        factory(Page::class)->create([
-            'trans.nl.title'  => 'titel nl',
-            'trans.nl.slug'   => 'slug-nl'
-        ]);
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']));
-
-        $this->assertNull(session('errors'));
-
-        $this->assertEquals('slug-nl-1', $this->page->fresh()->slug);
-    }
-
-    /** @test */
-    public function slugcheck_takes_archived_into_account_as_well()
-    {
-        $otherPage = factory(Page::class)->create([
-            'trans.nl.title'  => 'titel nl',
-            'trans.nl.slug'   => 'slug-nl'
-        ]);
-
-        $otherPage->archive();
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams(['trans.nl.slug' => 'slug-nl']));
-
-        $this->assertNull(session('errors'));
-
-        $this->assertEquals('slug-nl-1', $this->page->fresh()->slug);
-    }
-
-    /** @test */
     public function only_fallback_locale_is_required()
     {
         config()->set('app.fallback_locale', 'nl');
@@ -120,7 +93,6 @@ class UpdatePageTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
                 'trans.en'  => [
                     'title' => '',
-                    'slug' => '',
                 ],
             ])
         );
@@ -134,47 +106,5 @@ class UpdatePageTest extends TestCase
     function emptying_all_fields_of_a_translation_removes_the_translation()
     {
         $this->markTestIncomplete();
-    }
-
-    /** @test */
-    public function slug_uses_title_if_its_empty()
-    {
-        $page = factory(Page::class)->create([
-            'trans.nl.title'  => 'foobar nl',
-            'trans.nl.slug'   => 'titel-nl'
-        ]);
-
-        $response = $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'trans.nl'  => [
-                    'title' => 'foobar nl',
-                    'slug'  => '',
-                ],
-            ])
-        );
-
-        $response->assertStatus(302);
-
-        $this->assertEquals('foobar-nl', $page->fresh()->slug);
-    }
-
-    /** @test */
-    public function slug_can_contain_slashes()
-    {
-        $page = factory(Page::class)->create([
-            'trans.nl.title'  => 'foobar nl',
-            'trans.nl.slug'   => 'titel-nl'
-        ]);
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'trans.nl'  => [
-                    'title' => 'foobar nl',
-                    'slug'  => 'articles/foobar',
-                ],
-            ])
-        );
-
-        $this->assertEquals('articles/foobar', $page->fresh()->slug);
     }
 }

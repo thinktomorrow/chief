@@ -19,33 +19,6 @@ class PageTest extends TestCase
     }
 
     /** @test */
-    public function it_can_find_by_slug()
-    {
-        $page = factory(Page::class)->create([
-            'slug'      => 'foobar',
-            'published' => 0
-        ]);
-
-        $this->assertEquals($page->id, Page::findBySlug('foobar')->id);
-    }
-
-    /** @test */
-    public function it_can_find_published_by_slug()
-    {
-        factory(Page::class)->create([
-            'slug' => 'foobar',
-            'published' => 1
-        ]);
-        factory(Page::class)->create([
-            'slug' => 'barfoo',
-            'published' => 0
-        ]);
-
-        $this->assertNotNull(Page::findPublishedBySlug('foobar'));
-        $this->assertNull(Page::findPublishedBySlug('barfoo'));
-    }
-
-    /** @test */
     public function it_can_find_sorted_by_recent()
     {
         factory(Page::class)->create([
@@ -60,5 +33,15 @@ class PageTest extends TestCase
         $pages = Page::sortedByCreated()->get();
 
         $this->assertTrue($pages->first()->created_at->gt($pages->last()->created_at));
+    }
+
+    /** @test */
+    public function if_no_labelsingular_is_set_it_takes_singular_classname()
+    {
+        $page = factory(Page::class)->create([
+            'published'     => 0,
+        ]);
+
+        $this->assertEquals('Thinktomorrow\Chief\Pages\Page', $page->flatReferenceGroup());
     }
 }

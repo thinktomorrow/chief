@@ -1,7 +1,7 @@
-<div class="column-3">
-    <div class="panel panel-default bg-white">
-        <div class="inset-s">
-            <a href="{{ route('squanto.edit',$page->id) }}">
+<div class="s-column-4 inset-xs">
+    <div class="row bg-white border border-grey-100 rounded inset-s">
+        <div class="column">
+            <a href="{{ route('squanto.edit',$page->id) }}" class="text-grey-500">
                 {{ $page->label }}
             </a>
 
@@ -15,19 +15,19 @@
                         <?php $id = 1 ?>
                         @foreach($page->groupedlines as $group => $lines)
                             @if($group != 'general')
-                                <a class="text-subtle" href="{{ route('squanto.edit',$page->id) . '#section' . $id++ .'-nl' }}" ><span>{{ $group }}</span></a>
+                                <a class="text-grey-500" href="{{ route('squanto.edit',$page->id) . '#section' . $id++ .'-nl' }}" ><span>{{ $group }}</span>
+                                    @if(! $loop->last )
+                                    ,
+                                    @endif</a>
                             @endif
                         @endforeach
                 </div>
             @endif
         </div>
 
-        <hr style="margin:0;">
-
-        <div class="inset-s font-s">
-
+        <div class="column-3 text-right inset-s">
             <a href="{{ route('squanto.edit',$page->id) }}">
-                Bewerken
+                Aanpassen
             </a>
         </div>
     </div>

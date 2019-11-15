@@ -7,30 +7,35 @@
 
     @if(Thinktomorrow\Chief\Menu\Menu::all()->count() > 1)
         @slot('subtitle')
-            <a class="center-y" href="{{ route('chief.back.menus.index') }}"><span class="icon icon-arrow-left"></span> Terug naar het menu overzicht</a>
+            <a class="center-y" href="{{ route('chief.back.menus.index') }}">
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+                {{-- Terug naar het menu overzicht --}}
+            </a>
         @endslot
     @endif
     <div class="inline-group-s">
-        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary row center-y">
-            <i class="icon icon-plus"></i>
-            Voeg een menu-item toe
+        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-secondary inline-flex items-center">
+            <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+            <span>Voeg een menu-item toe</span>
         </a>
     </div>
 @endcomponent
 
 @section('content')
 
+
     @if($menuItems->isEmpty() )
-        <div class="center-center stack-xl">
-            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary squished-l">
-                <i class="icon icon-zap icon-fw"></i>Voeg een menu-item toe
+        <div class="stack-l">
+            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary inline-flex items-center">
+                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                <span>Voeg een menu-item toe</span>
             </a>
         </div>
     @else
-        <div class="treeview stack-l">
-            <div class="row">
+        <div class="stack-l container">
+            <div class="row opacity-50">
                 <div class="column center-y">
-                    <strong>Label</strong>
+                    <strong>Menu label</strong>
                 </div>
                 <div class="column-4 center-y">
                     <strong>Link</strong>
@@ -38,33 +43,29 @@
                 <div class="column-2"></div>
             </div>
             @foreach($menuItems as $menuItem)
-
-                <hr class="separator stack-s">
+                <section class="relative bg-white border border-grey-100 rounded inset-s bg-white stack-s">
 
                 @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
 
-                <div class="stack-s">
                     @foreach($menuItem->children as $child)
                         @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 
-                        <div class="stack-xs">
 
                             @foreach($child->children as $subchild)
-
+    
                                 @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
 
                                 @foreach($child->children as $subchild)
+        
                                     @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
+                                
                                 @endforeach
 
                             @endforeach
 
-                        </div>
-
                     @endforeach
 
-                </div>
-
+                </section>
             @endforeach
         </div>
     @endif

@@ -4,11 +4,6 @@ namespace Thinktomorrow\Chief\Relations;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Sets\SetReference;
-use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class Relation extends Model
 {
@@ -105,6 +100,30 @@ class Relation extends Model
             return $query->where('parent_type', $type)
                          ->where('parent_id', $id);
         })->orWhere(function ($query) use ($type, $id) {
+            return $query->where('child_type', $type)
+                ->where('child_id', $id);
+        })->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
+    }
+
+    public static function deleteAllChildRelationsOf($type, $id)
+    {
+        $relations = static::where(function ($query) use ($type, $id) {
+            return $query->where('parent_type', $type)
+                ->where('parent_id', $id);
+        })->get();
+
+        foreach ($relations as $relation) {
+            $relation->delete();
+        }
+    }
+
+    public static function deleteAllParentRelationsOf($type, $id)
+    {
+        $relations = static::where(function ($query) use ($type, $id) {
             return $query->where('child_type', $type)
                 ->where('child_id', $id);
         })->get();

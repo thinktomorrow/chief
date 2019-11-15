@@ -5,7 +5,7 @@
 @chiefheader
 @slot('title', 'Bewerk jouw profiel')
 <div class="inline-group">
-    <button data-submit-form="updateForm" type="button" class="btn btn-o-primary">Bewaar</button>
+    <button data-submit-form="updateForm" type="button" class="btn btn-primary">Bewaar</button>
 </div>
 @endchiefheader
 
@@ -17,7 +17,7 @@
 
         @include('chief::back.you._form')
 
-        <button type="submit" class="btn btn-primary right">Bewaar</button>
+        <button type="submit" class="btn btn-primary right">Bewaar aanpassingen</button>
     </form>
 
 @endsection

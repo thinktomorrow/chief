@@ -1,48 +1,57 @@
 @extends('chief::back._layouts.solo')
 
 @section('title')
+    @if($new_password)
+    Maak een wachtwoord aan
+    @else
     Wijzig jouw wachtwoord
+    @endif
 @endsection
 
 @section('content')
 
-        <div class="stack">
-            <h1>
-                @if($new_password)
-                    Maak een wachtwoord aan
-                @else
-                    Wijzig jouw wachtwoord
-                @endif
-            </h1>
+    <div class="container min-h-screen flex items-center">
+		<div class="row w-full justify-center my-32">
+			<div class="xs-column-12 s-column-10 m-column-6 l-column-4 relative z-20">
 
-            @if($errors and count($errors) > 0)
-                <div class="message error">
-                    @foreach($errors->all() as $error)
-                        <span class="lnr lnr-warning mr5"></span> {{ $error }}<br>
-                    @endforeach
-                </div>
-            @endif
+                <h1 class="mb-8">
+                    @if($new_password)
+                        Maak een wachtwoord aan
+                    @else
+                        Wijzig jouw wachtwoord
+                    @endif
+                </h1>
 
-            <form class="block login-form stack" role="form" method="POST" action="{{ route('chief.back.password.update') }}">
-                {{ csrf_field() }}
-                <input type="hidden" name="_method" value="PUT">
-
-                <div class="stack-s">
-                    <input class="input inset-s" type="password" name="password" placeholder="wachtwoord" id="password" value="{{ old('password') }}">
-                </div>
-                <div class="stack-s">
-                    <input class="input inset-s" type="password" name="password_confirmation" placeholder="herhaal wachtwoord" id="password-confirm">
-                </div>
-
-                @if($new_password)
-                    <input class="btn btn-primary squished" type="submit" value="Maak wachtwoord aan">
-                @else
-                    <input class="btn btn-primary squished inline-s" type="submit" value="Wijzig wachtwoord">
-                    <a href="{{ url()->previous() }}">Annuleer</a>
+                @if($errors and count($errors) > 0)
+                    <div class="label label-error stack">
+                        @foreach($errors->all() as $error)
+                            {{ $error }}<br>
+                        @endforeach
+                    </div>
                 @endif
 
+                <form class="block stack" role="form" method="POST" action="{{ route('chief.back.password.update') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="PUT">
 
-            </form>
+                    <div class="stack">
+                        <input class="inset-s" type="password" name="password" placeholder="wachtwoord" id="password" value="{{ old('password') }}">
+                    </div>
+                    <div class="stack">
+                        <input class="inset-s" type="password" name="password_confirmation" placeholder="herhaal wachtwoord" id="password-confirm">
+                    </div>
+
+                    @if($new_password)
+						<button type="submit" class="btn btn-primary">Maak wachtwoord aan</button>
+                    @else
+						<button type="submit" class="btn btn-primary mr-4">Wijzig wachtwoord</button>
+                        <a href="{{ url()->previous() }}">Annuleer</a>
+                    @endif
+
+
+                </form>
+			</div>
         </div>
+    </div>
 
 @endsection

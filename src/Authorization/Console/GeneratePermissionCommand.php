@@ -1,9 +1,11 @@
 <?php
 namespace Thinktomorrow\Chief\Authorization\Console;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Illuminate\Console\Command;
 use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Authorization\Permission;
-use Illuminate\Console\Command;
 
 class GeneratePermissionCommand extends Command
 {
@@ -24,8 +26,8 @@ class GeneratePermissionCommand extends Command
 
     private function getNameArgument()
     {
-        return str_slug(
-            strtolower(str_singular($this->argument('name')))
+        return Str::slug(
+            strtolower(Str::singular($this->argument('name')))
         );
     }
 

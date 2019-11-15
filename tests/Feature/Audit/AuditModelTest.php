@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -16,28 +14,23 @@ use Thinktomorrow\Chief\Audit\Audit;
 
 class AuditModelTest extends TestCase
 {
-    use ChiefDatabaseTransactions, PageFormParams;
+    use PageFormParams;
 
     public function setUp(): void
     {
         parent::setUp();
+        $this->setUpChiefEnvironment();
 
-        $this->setUpDefaultAuthorization();
-
-        app(Register::class)->register('singles', PageManager::class, Single::class);
-
-        Route::get('pages/{slug}', function () {
-        })->name('pages.show');
+        app(Register::class)->register(PageManager::class, Single::class);
     }
 
     /** @test */
     public function it_logs_create_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $response = $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $page       = Page::first();
         $activity   = Audit::getAllActivityFor($page);
@@ -51,16 +44,15 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_edit_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams());
+            ->put(route('chief.back.managers.update', [Single::managedModelKey(), $page->id]), $this->validUpdatePageParams());
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -76,12 +68,12 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams(['published' => false]));
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams(['published' => false]));
 
         $page = Page::first();
 
         $response = $this->actingAs($user, 'chief')
-             ->delete(route('chief.back.managers.delete', ['singles', $page->id]), ['deleteconfirmation' => 'DELETE']);
+             ->delete(route('chief.back.managers.delete', [Single::managedModelKey(), $page->id]), ['deleteconfirmation' => 'DELETE']);
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -99,7 +91,7 @@ class AuditModelTest extends TestCase
         $page = factory(Page::class)->create(['published' => true])->first();
 
         $this->actingAs($user, 'chief')
-             ->post(route('chief.back.assistants.archive', ['singles', $page->id]));
+             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -117,7 +109,7 @@ class AuditModelTest extends TestCase
         Auth::guard('chief')->login($user);
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $article = Page::first();
         $activity = $article->activity->first();
@@ -135,7 +127,7 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.index'));
@@ -157,7 +149,7 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
-            ->post(route('chief.back.managers.store', 'singles'), $this->validPageParams());
+            ->post(route('chief.back.managers.store', Single::managedModelKey()), $this->validPageParams());
 
         $response = $this->actingAs($user, 'chief')
             ->get(route('chief.back.audit.show', $user->id));

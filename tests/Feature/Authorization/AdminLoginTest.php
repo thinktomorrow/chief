@@ -95,7 +95,6 @@ class AdminLoginTest extends TestCase
 
         $response->assertViewIs('chief::back.dashboard')
             ->assertStatus(200);
-
         $this->assertInstanceOf(User::class, Auth::guard('chief')->user());
         $this->assertFalse(session()->has('errors'));
     }

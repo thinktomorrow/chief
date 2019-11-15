@@ -2,13 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
-use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithoutDelete;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithoutDelete;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class DeleteManagerTest extends TestCase
 {
@@ -19,22 +20,20 @@ class DeleteManagerTest extends TestCase
     {
         parent::setUp();
 
-        ManagedModelFake::migrateUp();
+        ManagedModelFakeFirst::migrateUp();
         ManagedModelFakeTranslation::migrateUp();
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register('fakes', ManagerFake::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
 
-        $this->model = ManagedModelFake::create(['title' => 'Foobar', 'custom_column' => 'custom']);
-        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('fakes')->first()))->manage($this->model);
+        $this->model = ManagedModelFakeFirst::create(['title' => 'Foobar', 'custom_column' => 'custom']);
+        $this->fake = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()))->manage($this->model);
     }
 
     /** @test */
     public function it_can_delete_a_model()
     {
-        $this->disableExceptionHandling();
-
         $this->asAdmin()
             ->delete($this->fake->route('delete'));
 
@@ -47,12 +46,29 @@ class DeleteManagerTest extends TestCase
         $this->disableExceptionHandling();
         $this->expectException(NotAllowedManagerRoute::class);
 
-        app(Register::class)->register('fakes', ManagerFakeWithoutDelete::class, ManagedModelFake::class);
+        app(Register::class)->register(ManagerFakeWithoutDelete::class, ManagedModelFakeFirst::class);
         (new ManagerFakeWithoutDelete(app(Register::class)->first()))->manage($this->model);
 
         $this->asAdmin()
-            ->delete('/admin/manage/fakes/1'); // We force the url since it is not provided by the manager
+            ->delete('/admin/manage/managed_model_first/1'); // We force the url since it is not provided by the manager
 
         $this->assertNotNull($this->model->fresh());
+    }
+
+    /** @test */
+    public function it_deletes_any_relation_entries_as_well()
+    {
+        $this->disableExceptionHandling();
+        $childModel = ManagedModelFakeFirst::create(['title' => 'Child model']);
+        $this->model->adoptChild($childModel);
+
+        $this->assertEquals(1, Relation::count());
+
+        $this->asAdmin()
+            ->delete($this->fake->route('delete'));
+
+        $this->assertNull($this->model->fresh());
+        $this->assertEquals(0, Relation::count());
+
     }
 }

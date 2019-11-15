@@ -13,7 +13,6 @@ class ModulesController extends Controller
     public function index()
     {
         $this->authorize('view-page');
-
         $modules = Module::withoutPageSpecific()->orderBy('morph_key')->get()->groupBy('morph_key');
 
         return view('chief::back.modules.index', [
@@ -25,7 +24,7 @@ class ModulesController extends Controller
     {
         $manager = app(Managers::class)->findByKey($request->module_key);
 
-        $manager->guard('edit');
+        $manager->guard('store');
 
         $module = app(CreateModule::class)->handle(
             $request->get('module_key'),

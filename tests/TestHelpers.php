@@ -4,9 +4,11 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Authorization\Permission;
 use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
@@ -20,6 +22,16 @@ trait TestHelpers
     {
         TestResponse::macro('assertViewIsPassed', function ($value) {
             Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
+        });
+
+        TestResponse::macro('assertViewVariableInstanceOf', function ($value, $instance) {
+            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
+            Assert::assertInstanceOf($instance, $this->getOriginalContent()->getData()[$value]);
+        });
+
+        TestResponse::macro('assertViewVariableCountIs', function ($count, $value) {
+            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
+            Assert::assertCount($count, $this->getOriginalContent()->getData()[$value]);
         });
 
         TestResponse::macro('assertContains', function ($value) {
@@ -99,6 +111,14 @@ trait TestHelpers
         return $author;
     }
 
+    protected function setUpChiefEnvironment()
+    {
+        $this->setUpDefaultAuthorization();
+
+        // Setup expected page routes
+        Route::get('{slug?}', function ($slug = '/') { return ChiefResponse::fromSlug($slug); })->name('pages.show');
+    }
+
     protected function setUpDefaultAuthorization()
     {
         AuthorizationDefaults::permissions()->each(function ($permissionName) {
@@ -141,4 +161,20 @@ trait TestHelpers
     {
         return UploadedFile::fake()->create($name, $sizeInKilobytes);
     }
+
+    private function recurse_copy($src, $dst) { 
+        $dir = opendir($src); 
+        @mkdir($dst); 
+        while(false !== ( $file = readdir($dir)) ) { 
+            if (( $file != '.' ) && ( $file != '..' )) { 
+                if ( is_dir($src . '/' . $file) ) { 
+                    $this->recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+                } 
+                else { 
+                    copy($src . '/' . $file,$dst . '/' . $file); 
+                } 
+            } 
+        } 
+        closedir($dir); 
+    } 
 }

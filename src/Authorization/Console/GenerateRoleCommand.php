@@ -1,9 +1,10 @@
 <?php
 namespace Thinktomorrow\Chief\Authorization\Console;
 
+use Illuminate\Support\Str;
+use Illuminate\Console\Command;
 use Thinktomorrow\Chief\Authorization\Role;
 use Thinktomorrow\Chief\Authorization\Permission;
-use Illuminate\Console\Command;
 
 class GenerateRoleCommand extends Command
 {
@@ -24,7 +25,7 @@ class GenerateRoleCommand extends Command
 
     private function getNameArgument()
     {
-        return strtolower(str_singular($this->argument('name')));
+        return strtolower(Str::singular($this->argument('name')));
     }
 
     private function assignPermissionsToRole(Role $role)

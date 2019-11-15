@@ -4,16 +4,16 @@ namespace Thinktomorrow\Chief\Users;
 
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Concerns\Enablable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasAsset
 {
-    use Notifiable, HasRoles, HasMediaTrait, Enablable;
+    use Notifiable, HasRoles, AssetTrait, Enablable;
 
     public $table = 'chief_users';
     protected $guard_name = 'chief';
@@ -36,7 +36,7 @@ class User extends Authenticatable implements HasMedia
 
     public function invitation()
     {
-        return $this->hasOne(Invitation::class, 'invitee_id');
+        return $this->hasMany(Invitation::class, 'invitee_id');
     }
 
     public function roleNames()

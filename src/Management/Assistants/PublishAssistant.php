@@ -8,8 +8,8 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Concerns\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 
 class PublishAssistant implements Assistant
 {
@@ -100,48 +100,47 @@ class PublishAssistant implements Assistant
         return $this;
     }
 
-    public function previewUrl(): string
+    public function hasPreviewUrl(): bool
     {
-        if (! $this->model instanceof ProvidesUrl) {
-            throw new \Exception('Managed model ' . get_class($this->model) . ' should implement ' . ProvidesUrl::class);
-        }
-
-        return $this->model->previewUrl();
+        return $this->model instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
     }
 
     public function publicationStatusAsLabel($plain = false)
     {
         $label = $this->publicationStatusAsPlainLabel();
 
-        if ($plain) {
-            return $label;
-        }
-
         if ($this->isPublished()) {
-            return '<a href="'.$this->previewUrl().'" target="_blank"><em>'.$label.'</em></a>';
+            $class = 'text-success';
+        } elseif ($this->isDraft()) {
+            $class = 'text-error';
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+            $class = 'text-warning';
         }
 
-        if ($this->isDraft()) {
-            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>'.$label.'</em></a>';
+        $statusAsLabel = '<span class="font-bold '. $class .'"><em>' . $label . '</em></span>';
+
+        if (!$plain && $this->hasPreviewUrl()) {
+            $statusAsLabel =  '<a href="'.$this->previewUrl().'" target="_blank">'. $statusAsLabel .'</a>';
         }
 
-        return '<span><em>'.$label.'</em></span>';
+        return $statusAsLabel;
     }
 
     private function publicationStatusAsPlainLabel()
     {
         if ($this->isPublished()) {
             return 'online';
-        }
-
-        if ($this->isDraft()) {
+        } elseif ($this->isDraft()) {
             return 'offline';
-        }
-
-        if ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
             return 'gearchiveerd';
         }
 
         return '-';
+    }
+
+    public function previewUrl(): string
+    {
+        return $this->model->previewUrl();
     }
 }

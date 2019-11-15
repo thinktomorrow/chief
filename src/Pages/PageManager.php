@@ -2,35 +2,38 @@
 
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\FieldsTab;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Fields\FieldsTab;
+use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Urls\UrlSlugFields;
+use Thinktomorrow\Chief\Fields\Types\TextField;
+use Thinktomorrow\Chief\Fields\FieldArrangement;
+use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Management\Registration;
+use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
+use Thinktomorrow\Chief\Management\Details\Details;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
+use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
-use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Management\Registration;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
 
 class PageManager extends AbstractManager implements Manager
 {
-    /** @var \Thinktomorrow\Chief\Concerns\Sluggable\UniqueSlug */
-    private $uniqueSlug;
-
     /** @var PageBuilderField */
     private $pageBuilderField;
 
     protected $assistants = [
+        'url'     => UrlAssistant::class,
         'archive' => ArchiveAssistant::class,
         'publish' => PublishAssistant::class,
     ];
@@ -38,21 +41,17 @@ class PageManager extends AbstractManager implements Manager
     public function __construct(Registration $registration)
     {
         parent::__construct($registration);
-
-        $this->uniqueSlug = UniqueSlug::make(new PageTranslation)->slugResolver(function ($value) {
-            return str_slug_slashed($value);
-        });
     }
 
     public function can($verb): bool
     {
         try {
             $this->authorize($verb);
+
+            return parent::can($verb);
         } catch (NotAllowedManagerRoute $e) {
             return false;
         }
-
-        return parent::can($verb);
     }
 
     /**
@@ -87,26 +86,14 @@ class PageManager extends AbstractManager implements Manager
      */
     public function fields(): Fields
     {
-        return new Fields([
+        return parent::fields()->add(
             $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
                                      ->validation('required-fallback-locale|max:200', [], [
                                          'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
                                      ])
                                      ->label('De titel van je '.$this->model->labelSingular ?? 'pagina')
-                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.<br> Deze zal gebruikt worden als interne titel en slug van de nieuwe pagina.'),
-            InputField::make('slug')
-                ->translatable($this->model->availableLocales())
-                ->validation($this->model->id
-                    ? 'required-fallback-locale|unique:page_translations,slug,' . $this->model->id . ',page_id'
-                    : 'required-fallback-locale|unique:page_translations,slug', [], [
-                    'trans.'.config('app.fallback_locale', 'nl').'.slug' => 'slug'
-                ])
-                ->label('Link')
-                ->description('De unieke url verwijzing naar deze pagina.')
-                ->prepend(collect($this->model->availableLocales())->mapWithKeys(function ($locale) {
-                    return [$locale => url($this->model->baseUrlSegment($locale)).'/'];
-                })->all()),
+                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),
@@ -115,10 +102,15 @@ class PageManager extends AbstractManager implements Manager
                 ->label('Zoekmachine omschrijving')
                 ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
             InputField::make('seo_keywords')
+                ->validation('max:250')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
                 ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
-        ]);
+            MediaField::make('seo_image')
+                ->translatable($this->model->availableLocales())
+                ->label('Zoekmachine foto')
+                ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
+        );
     }
 
     public static function filters(): Filters
@@ -140,17 +132,24 @@ class PageManager extends AbstractManager implements Manager
     public function fieldArrangement($key = null): FieldArrangement
     {
         if ($key == 'create') {
-            return new FieldArrangement($this->fields()->filterBy(function ($field) {
-                return $field->key == 'title';
+            return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
+                return in_array($field->key, ['title']);
             }));
         }
 
-        return new FieldArrangement($this->fields(), [
+        $tabs = [
             new FieldsTab('pagina', ['sections']),
-            new RemainingFieldsTab('inhoud'),
-            new FieldsTab('eigen modules', [], 'chief::back.pages._partials.modules'),
-            new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords']),
-        ]);
+            new RemainingFieldsTab('algemeen'),
+            new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
+                'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
+            ]),
+            new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
+        ];
+        if (Module::atLeastOneRegistered()) {
+            array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
+        }
+
+        return new FieldArrangement($this->fieldsWithAssistantFields(), $tabs);
     }
 
     public function details(): Details
@@ -158,22 +157,22 @@ class PageManager extends AbstractManager implements Manager
         // For existing model
         if ($this->model->id) {
             return parent::details()
-                ->set('title', $this->model->title)
-                ->set('intro', 'laatst aangepast op ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
+                ->set('title', ucfirst($this->model->title))
+                ->set('intro', 'Aangepast ' . $this->model->updated_at->format('d/m/Y H:i'))
+                ->set('context', '<span class="inline-xs stack-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
         }
 
         return parent::details();
     }
 
-    public function saveFields(): Manager
+    public function saveFields(Request $request)
     {
         // Store the morph_key upon creation
-        if (! $this->model->morph_key) {
+        if ($this->model instanceof MorphableContract && ! $this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
-        return parent::saveFields();
+        parent::saveFields($request);
     }
 
     public function delete()
@@ -188,17 +187,23 @@ class PageManager extends AbstractManager implements Manager
     public function storeRequest(Request $request): Request
     {
         $trans = [];
+        $urls = $request->get('url-slugs', []);
+
         foreach ($request->get('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
             }
 
-            $translation = $this->enforceUniqueSlug($request->get('trans'), $locale, $this->model);
             $trans[$locale] = $this->addDefaultShortDescription($translation);
+
+            // Automatically add an url for this locale based on the given title
+            if (!isset($urls[$locale]) && isset($translation['title'])) {
+                $urls[$locale] = Str::slug($translation['title']);
+            }
         }
 
         // Merge with request...
-        return $request->merge(['trans' => $trans]);
+        return $request->merge(['trans' => $trans, 'url-slugs' => $urls]);
     }
 
     public function updateRequest(Request $request): Request
@@ -214,7 +219,6 @@ class PageManager extends AbstractManager implements Manager
                 continue;
             }
 
-            $translation = $this->enforceUniqueSlug($request->get('trans'), $locale, $this->model);
             $trans[$locale] = $this->addDefaultShortDescription($translation);
         }
 
@@ -234,16 +238,6 @@ class PageManager extends AbstractManager implements Manager
         Audit::activity()
             ->performedOn($this->model)
             ->log('edited');
-    }
-
-    private function enforceUniqueSlug(array $translations, string $locale, Page $page): array
-    {
-        $translation = $translations[$locale];
-
-        $translation['slug']    = $translation['slug'] ?? $translation['title'];
-        $translation['slug']    = $this->uniqueSlug->get($translation['slug'], $page->getTranslation($locale));
-
-        return $translation;
     }
 
     /**

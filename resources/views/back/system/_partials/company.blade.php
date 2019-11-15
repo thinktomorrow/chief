@@ -1,6 +1,6 @@
 <section class="row formgroup gutter-xs">
     <div class="column-4">
-        <h2 class="formgroup-label">Bedrijfsnaam</h2>
+        <h2>Bedrijfsnaam</h2>
     </div>
     <div class="formgroup-input column-8">
         <input type="text" name="company-name" id="company-name" class="input inset-s" placeholder="Bedrijfsnaam">
@@ -8,7 +8,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-4">
-        <h2 class="formgroup-label">Adres</h2>
+        <h2>Adres</h2>
     </div>
     <div class="formgroup-input column-8">
         <div class="row gutter">
@@ -50,7 +50,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-4">
-        <h2 class="formgroup-label">Telefoonnummer</h2>
+        <h2>Telefoonnummer</h2>
     </div>
     <div class="formgroup-input column-8">
         <input type="text" name="company-telephone" id="company-telephone" class="input inset-s" placeholder="Telefoonnummer">
@@ -58,7 +58,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-4">
-        <h2 class="formgroup-label">GSM-nummer</h2>
+        <h2>GSM-nummer</h2>
     </div>
     <div class="formgroup-input column-8">
         <input type="text" name="company-cellphone" id="company-cellphone" class="input inset-s" placeholder="GSM-nummer">
@@ -66,7 +66,7 @@
 </section>
 <section class="row formgroup gutter-xs">
     <div class="column-4">
-        <h2 class="formgroup-label">E-mail</h2>
+        <h2>E-mail</h2>
     </div>
     <div class="formgroup-input column-8">
         <input type="text" name="company-mail" id="company-mail" class="input inset-s" placeholder="E-mail">
@@ -75,7 +75,7 @@
 
 <section class="row formgroup gutter-xs">
     <div class="column-4">
-        <h2 class="formgroup-label">BTW-nummer</h2>
+        <h2>BTW-nummer</h2>
     </div>
     <div class="formgroup-input column-8">
         <input type="text" name="company-vat" id="company-vat" class="input inset-s" placeholder="BTW-nummer">

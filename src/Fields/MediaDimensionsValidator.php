@@ -6,6 +6,7 @@ class MediaDimensionsValidator
 {
     public function validate($attribute, $values, $params, $validator)
     {
+        trap($values);
         $params = array_reduce($params, function ($result, $item) {
             [$key, $value] = array_pad(explode('=', $item, 2), 2, null);
 

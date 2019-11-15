@@ -2,9 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Settings\Setting;
-use Thinktomorrow\Chief\Settings\SettingsManager;
+use Thinktomorrow\Chief\Settings\Settings;
 
 class UpdateSettingTest extends TestCase
 {
@@ -16,23 +17,21 @@ class UpdateSettingTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        resolve(SettingsManager::class)->fresh();
+        resolve(Settings::class)->fresh();
     }
 
     /** @test */
     public function update_a_setting()
     {
-        $this->disableExceptionHandling();
-
-        factory(Setting::class)->create([
-            'key'   => 'foo',
-            'value' => 'old foo'
+        Setting::create([
+            'key'   => 'app_name',
+            'value' => 'old app_name'
         ]);
 
-        $this->asAdmin()
-            ->put(route('chief.back.settings.update'), $this->validSettingParams())
-            ->assertStatus(302)
-            ->assertRedirect(route('chief.back.settings.edit'));
+        $response = $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams());
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('chief.back.settings.edit'));
 
         $this->assertUpdatedSettingValues(Setting::first());
     }

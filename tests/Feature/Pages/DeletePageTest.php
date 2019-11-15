@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -19,7 +20,7 @@ class DeletePageTest extends TestCase
         $this->setUpDefaultAuthorization();
 
         $this->page = factory(Page::class)->create(['published' => false]);
-        app(Register::class)->register('singles', PageManager::class, Single::class);
+        app(Register::class)->register(PageManager::class, Single::class);
     }
 
     /** @test */
@@ -32,6 +33,44 @@ class DeletePageTest extends TestCase
 
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::onlyTrashed()->get());
+    }
+
+    /** @test */
+    public function it_can_delete_all_page_urls_and_redirects()
+    {
+        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $this->page->morphKey(), 'model_id' => $this->page->id]);
+        $record2 = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar/new', 'model_type' => $this->page->morphKey(), 'model_id' => $this->page->id]);
+        $record->redirectTo($record2);
+
+        $this->assertCount(2, UrlRecord::all());
+
+        $this->asAdmin()
+            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]), [
+                'deleteconfirmation' => 'DELETE'
+            ]);
+
+        $this->assertCount(0, Page::all());
+        $this->assertCount(1, Page::onlyTrashed()->get());
+        $this->assertCount(0, UrlRecord::all());
+    }
+
+    /** @test */
+    public function url_redirecting_to_other_page_is_kept_alive()
+    {
+        $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $this->page->morphKey(), 'model_id' => $this->page->id]);
+        $record2 = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar/new', 'model_type' => $this->page->morphKey(), 'model_id' => $this->page->id]);
+        $record->redirectTo($record2);
+
+        $this->assertCount(2, UrlRecord::all());
+
+        $this->asAdmin()
+            ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]), [
+                'deleteconfirmation' => 'DELETE'
+            ]);
+
+        $this->assertCount(0, Page::all());
+        $this->assertCount(1, Page::onlyTrashed()->get());
+        $this->assertCount(0, UrlRecord::all());
     }
 
     /** @test */

@@ -25,12 +25,17 @@ class FlatReference
      */
     public function instance(): Model
     {
-        return (new $this->className)->findOrFail($this->id);
+        return (new $this->className)->withoutGlobalScopes()->findOrFail($this->id);
     }
 
     public function id()
     {
         return $this->id;
+    }
+
+    public function className(): string
+    {
+        return $this->className;
     }
 
     public function get(): string
@@ -41,6 +46,11 @@ class FlatReference
     public function equals($other): bool
     {
         return (get_class($this) === get_class($other) && $this->get() === $other->get());
+    }
+
+    public function is(string $flatReferenceString): bool
+    {
+        return $this->get() === $flatReferenceString;
     }
 
     public function __toString()

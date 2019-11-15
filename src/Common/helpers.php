@@ -11,19 +11,6 @@ if (!function_exists('chiefAdmin')) {
 }
 
 /**
- * Form fields for honeypot protection on form submissions
- * return HtmlString which does not force you to use blade escaping tags.
- */
-if (!function_exists('honeypot_fields')) {
-    function honeypot_fields()
-    {
-        return new \Illuminate\Support\HtmlString('<div style="display:none;"><input type="text" name="your_name"/><input type="hidden" name="_timer" value="'.time().'" /></div>');
-    }
-}
-
-
-
-/**
  * Retrieve the public asset with a version stamp.
  * This allows for browsercache out of the box
  */
@@ -47,15 +34,15 @@ if (!function_exists('chief_cached_asset')) {
 }
 
 if (!function_exists('chiefSetting')) {
-    function chiefSetting($key = null, $default = null)
+    function chiefSetting($key = null, $locale = null, $default = null)
     {
-        $manager = app(\Thinktomorrow\Chief\Settings\SettingsManager::class);
+        $settings = app(\Thinktomorrow\Chief\Settings\Settings::class);
 
         if (is_null($key)) {
-            return $manager;
+            return $settings;
         }
-        
-        return $manager->get($key, $default);
+
+        return $settings->get($key, $locale, $default);
     }
 }
 
@@ -74,7 +61,7 @@ if (!function_exists('str_slug_slashed')) {
         $parts = explode('/', $title);
 
         foreach ($parts as $i => $part) {
-            $parts[$i] = str_slug($part, $separator, $language);
+            $parts[$i] = Illuminate\Support\Str::slug($part, $separator, $language);
         }
 
         return implode('/', $parts);
@@ -158,15 +145,12 @@ if (!function_exists('cleanupString')) {
  * Takes an input and cleans up unwanted / malicious HTML
  *
  * @param 	string 	$value
- * @param 	string 	$whitelist - if false no tagstripping will occur - other than htmLawed
+ * @param 	string 	$whitelist - if false no tagstripping will occur - other than HTMLPurifier
  * @return 	string
  */
 if (!function_exists('cleanupHTML')) {
     function cleanupHTML($value, $whitelist = null)
     {
-        if (!function_exists('cleanupHTML')) {
-            require_once __DIR__ . '/vendors/htmlLawed.php';
-        }
         if (is_null($whitelist)) {
             $whitelist = '<code><span><div><label><a><br><p><b><i><del><strike><u><img><video><audio><iframe><object><embed><param><blockquote><mark><cite><small><ul><ol><li><hr><dl><dt><dd><sup><sub><big><pre><code><figure><figcaption><strong><em><table><tr><td><th><tbody><thead><tfoot><h1><h2><h3><h4><h5><h6>';
         }
@@ -179,11 +163,15 @@ if (!function_exists('cleanupHTML')) {
         if (false !== $whitelist) {
             $value = strip_tags($value, $whitelist);
         }
-        // cleanup HTML and any unwanted attributes
-        $value = htmLawed($value);
+        // // cleanup HTML and any unwanted attributes
+        $purifier = new HTMLPurifier();
+        $value = $purifier->purify($value);
 
-        // Undo the encoding performed by htmlLawed.
-        $value = str_replace('&amp;', '&', $value);
+        /**
+         * htmlPurifier converts characters to their encode equivalents. This is something
+         * that we need to reverse after the htmlPurifier cleanup.
+         */
+        $value  = str_replace('&amp;', '&', $value);
 
         return $value;
     }
@@ -229,7 +217,7 @@ if (!function_exists('isActiveUrl')) {
             return !!preg_match("#$pattern#", request()->path());
         }
 
-        return ($name == request()->path());
+        return ($name == request()->path() || $name == request()->fullUrl());
     }
 }
 
@@ -282,15 +270,17 @@ if (!function_exists('addQueryToUrl')) {
     }
 }
 
-if (!function_exists('ddd')) {
-    function ddd($var, ...$moreVars)
+if (!function_exists('chiefMemoize')) {
+    /**
+     * Memoize a function
+     *
+     * @param $key
+     * @param Closure $closure
+     * @param array $parameters
+     * @return mixed
+     */
+    function chiefMemoize($key, \Closure $closure, array $parameters = [])
     {
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        if (php_sapi_name() == 'cli') {
-            print_r("\e[1;30m dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "\e[40m\n");
-        } else {
-            print_r("[dumped at: " . str_replace(base_path(), '', $trace[0]['file']). ", line: " . $trace[0]['line'] . "]\n");
-        }
-        return dd($var, ...$moreVars);
+        return (new \Thinktomorrow\Chief\Common\Helpers\Memoize($key))->run($closure, $parameters);
     }
 }

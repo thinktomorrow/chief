@@ -2,10 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Authorization;
 
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
-use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
 
 class CreateRoleTest extends TestCase
 {
@@ -107,7 +108,7 @@ class CreateRoleTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

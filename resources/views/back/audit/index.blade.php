@@ -7,8 +7,8 @@
 @endcomponent
 
 @section('content')
-    <div class="treeview stack-l">
-        <div class="row">
+    <div class="stack-l">
+        <div class="row px-4">
             <div class="column-3 center-y">
                 <strong>Activity</strong>
             </div>
@@ -22,8 +22,9 @@
                 <strong>Timestamp</strong>
             </div>
         </div>
+        <section class="bg-white border border-grey-100 rounded inset-s stack-s">
         @foreach($activity as $event)
-            <div class="row">
+        <div class="row border-b border-grey-100 py-2">
                 <div class="column-3 center-y">
                     {{ $event->description }}
                 </div>
@@ -42,6 +43,7 @@
                 </div>
             </div>
         @endforeach
+        <section>
     </div>
 
 @stop

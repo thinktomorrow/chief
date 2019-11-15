@@ -7,11 +7,14 @@
     @slot('title', $manager->details()->title)
     @slot('subtitle')
         <div class="inline-block">
-            <a class="center-y" href="{{ $manager->route('index') }}"><span class="icon icon-arrow-left"></span> Terug naar alle {{ $manager->details()->plural }}</a>
+            <a class="center-y" href="{{ $manager->route('index') }}">
+                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
+                {{-- Terug naar alle {{ $manager->details()->plural }} --}}
+            </a>
         </div>
     @endslot
 
-    <div class="inline-group-s">
+    <div class="inline-group-s flex items-center">
 
         @if($manager->isAssistedBy('publish'))
             {!! $manager->assistant('publish')->publicationStatusAsLabel() !!}
@@ -30,7 +33,12 @@
 
         <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
         @include('chief::back.managers._partials.delete-modal')
-        <form id="updateForm" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
+
+        @if($manager->isAssistedBy('archive'))
+            @include('chief::back.managers._partials.archive-modal')
+        @endif
+
+        <form id="updateForm" class="mt-3" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
             <input type="hidden" name="_method" value="PUT">
@@ -39,20 +47,9 @@
                     'fieldArrangement' => $manager->fieldArrangement('edit')
                 ])
 
-            @if($manager->can('update'))
-                <div class="stack text-right">
-                    <button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>
-                </div>
-            @endif
-
         </form>
     </div>
 @stop
-
-@push('custom-styles')
-    <!-- make redactor available for any components. -->
-    <script src="/chief-assets/back/js/vendors/redactor.js"></script>
-@endpush
 
 @push('custom-scripts-after-vue')
     @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('upload')])

@@ -4,7 +4,6 @@
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -30,9 +29,9 @@ trait ManagesPagebuilder
         $sections = $request->get('sections', []);
 
         $modules = $sections['modules'] ?? [];
-        $text = $sections['text'] ?? [];
-        $sets = $sections['pagesets'] ?? [];
-        $order = $sections['order'] ?? [];
+        $text    = $sections['text'] ?? [];
+        $sets    = $sections['pagesets'] ?? [];
+        $order   = $sections['order'] ?? [];
 
         UpdateSections::forModel($this->model, $modules, $text, $sets, $order)
             ->updateModules()
@@ -45,9 +44,9 @@ trait ManagesPagebuilder
     protected function createPagebuilderField(): PagebuilderField
     {
         $model = $this->model;
-        
+
         $availableChildren = AvailableChildren::forParent($model);
-        
+
         $modules = $availableChildren->onlyModules()->reject(function ($module) use ($model) {
             return $module->page_id != null && $module->page_id != $model->id;
         });
@@ -71,6 +70,7 @@ trait ManagesPagebuilder
                 'key'        => $section->flatReference()->get(),
                 'type'       => $this->guessPagebuilderSectionType($section),
                 'slug'       => $section->slug,
+                'editUrl'    => $this->findEditUrl($section),
                 'sort'       => $index,
                 'trans'      => $section->trans ?? [],
             ];
@@ -82,6 +82,23 @@ trait ManagesPagebuilder
                                 ->availablePages($available_pages)
                                 ->availableModules($available_modules)
                                 ->availableSets($available_sets);
+    }
+
+    /**
+     * @param $model
+     * @return string|null
+     */
+    private function findEditUrl($model): ?string
+    {
+        if (! $model instanceof ManagedModel) {
+            return null;
+        }
+
+        try {
+            return app(Managers::class)->findByModel($model)->route('edit');
+        } catch (NonRegisteredManager $e) {
+            return null;
+        }
     }
 
     /**

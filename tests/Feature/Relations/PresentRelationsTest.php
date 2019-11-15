@@ -17,13 +17,13 @@ class PresentRelationsTest extends TestCase
     }
 
     /** @test */
-    public function a_child_can_be_presented()
+    public function a_child_can_be_rendered()
     {
         $parent = ParentFake::create();
         $child = ChildFake::create();
         $parent->adoptChild($child);
 
-        $render = $child->presentForParent($parent, $child->relationWithParent($parent));
+        $render = $child->setViewParent($parent)->renderView();
         $this->assertEquals('<div>child '.$child->id.' view for parent '.$parent->id.'</div>', $render);
     }
 
@@ -31,22 +31,21 @@ class PresentRelationsTest extends TestCase
     public function a_parent_can_present_all_its_children()
     {
         $parent = ParentFake::create();
-        $child = ChildFake::create();
+        $child  = ChildFake::create();
         $child2 = ChildFake::create();
         $parent->adoptChild($child);
         $parent->adoptChild($child2);
 
         $render = $parent->presentChildren();
 
-        // They are not 2 separate array items since they are treated by the ParseChildrenForPresentation class as 'non-modules'
-        // which means they are set together as if they are a collection... Not sure if this is totally expected behaviour...
+        // Both pages are grouped together as if they are a collection.
         $this->assertEquals(collect([
             '<div>child '.$child->id.' view for parent '.$parent->id.'</div><div>child '.$child2->id.' view for parent '.$parent->id.'</div>'
         ]), $render);
     }
 
     /** @test */
-    public function consecutive_models_of_the_same_class_are_presented_as_a_collection()
+    public function consecutive_models_of_the_same_class_are_rendered_as_a_collection()
     {
         ManagedModelFakeActingAsChild::migrateUp();
 
@@ -63,7 +62,7 @@ class PresentRelationsTest extends TestCase
     }
 
     /** @test */
-    public function consecutive_modules_are_always_presented_on_their_own()
+    public function consecutive_modules_are_always_rendered_on_their_own()
     {
         $parent = ParentFake::create();
         $child = NewsletterModuleFake::create(['slug' => 'newsletter-1', 'content' => 'nieuwsbrief-1']);

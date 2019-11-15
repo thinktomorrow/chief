@@ -9,6 +9,6 @@
 
 @section('content')
 	@foreach($roles as $role)
-		<a class="block stack panel panel-default inset-s" href="{{ route('chief.back.roles.edit', $role->id) }}">{{ $role->name }}</a>
+		<a class="block stack border border-grey-100 rounded inset-s" href="{{ route('chief.back.roles.edit', $role->id) }}">{{ $role->name }}</a>
 	@endforeach
 @stop

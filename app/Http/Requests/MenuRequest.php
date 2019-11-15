@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 class MenuRequest extends FormRequest
 {
     use TranslatableCommand;
-    
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,7 +22,7 @@ class MenuRequest extends FormRequest
         return Auth::guard('chief')->user();
     }
 
-    protected function validationData()
+    public function validationData()
     {
         $data = parent::validationData();
 
@@ -39,7 +39,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         $translations = $this->request->get('trans', []);
-        
+
         $rules['type']            = 'required|in:custom,internal,collection,nolink';
         $rules['page_id']         = 'required_if:type,internal';
         $rules['collection_type'] = 'required_if:type,collection';
@@ -77,6 +77,7 @@ class MenuRequest extends FormRequest
     {
         return [
             'required_if' => 'Gelieve nog een :attribute te kiezen, aub.',
+            'required'    => 'Gelieve een :attribute in te geven, aub.',
             'url'         => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
         ];
     }

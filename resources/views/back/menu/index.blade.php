@@ -7,21 +7,20 @@
 @endcomponent
 
 @section('content')
-    <div class="stack-l">
+    <div class="row gutter stack">
         @foreach($menus as $menu)
 
-            <div class="row bg-white inset panel panel-default stack">
-                <div class="column-9">
-                    <a class="text-black bold" href="{{ route('chief.back.menus.show', $menu->key()) }}">
-                        {{ $menu->label() }}
-                    </a>
-                </div>
-                <div class="column-3 text-right">
-                    <options-dropdown class="inline-block">
-                        <div class="inset-s" v-cloak>
-                            <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="block squished-s --link-with-bg">Beheren</a>
-                        </div>
-                    </options-dropdown>
+            <div class="s-column-4 m-column-4 inset-xs">
+                <div class="row bg-white border border-grey-100 rounded inset-s center-y">
+                    <div class="column">
+                        <a class="text-grey-600 bold" href="{{ route('chief.back.menus.show', $menu->key()) }}">
+                            {{ $menu->label() }}
+                        </a>
+                    </div>
+                    <div class="column-4 text-right flex flex-col justify-between items-end">
+                        <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="hover:underline">Beheren</a>
+
+                    </div>
                 </div>
             </div>
         @endforeach

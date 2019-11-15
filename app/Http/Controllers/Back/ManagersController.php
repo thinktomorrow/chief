@@ -26,7 +26,7 @@ class ManagersController extends Controller
 
         $manager->guard('index');
 
-        $managers = $manager->findAllManaged(true);
+        $managers = $manager->indexCollection();
 
         return view('chief::back.managers.index', [
             'modelManager' => $manager,
@@ -49,7 +49,11 @@ class ManagersController extends Controller
     {
         $modelManager = $this->managers->findByKey($key);
 
+        $modelManager->guard('store');
+
         $manager = app(StoreManager::class)->handle($modelManager, $request);
+
+        $manager->guard('edit');
 
         return redirect()->to($manager->route('edit'))
                          ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" is toegevoegd');

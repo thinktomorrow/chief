@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
+use HTMLPurifier;
+use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
-use Thinktomorrow\Chief\Modules\PagetitleModule;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 
 class UpdateSections
 {
@@ -153,7 +154,14 @@ class UpdateSections
                 $this->removeTextualModule($module);
                 continue;
             }
+           
+            foreach ($text_module['trans'] as $locale => $content) {
+                $purifier = new HTMLPurifier();
+                $sanitized_text = $purifier->purify($content['content']);
 
+                $text_module['trans'][$locale]['content'] = $sanitized_text;
+            }
+            
             // Replace content
             app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
         }

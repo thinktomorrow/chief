@@ -20,10 +20,8 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./app</directory>
-            <directory suffix=".php">./chief-core</directory>
             <directory suffix=".php">./src</directory>
             <exclude>
-                <file>./src/Demo/Http/routes/demoRoutes.php</file>
                 <file>./app/routes.php</file>
             </exclude>
         </whitelist>
@@ -32,8 +30,9 @@
         <log type="coverage-html" target="./report" lowUpperBound="50" highLowerBound="80" />
     </logging>
     <php>
-        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+        <env name="APP_KEY" value="base64:qS0gL9WK3DppyaiXy79dURhU+ecb6k9aryqyOmpHjF8="/>
         <env name="APP_ENV" value="testing"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>

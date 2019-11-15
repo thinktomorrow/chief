@@ -17,6 +17,3 @@
         {!! $manager->renderField($field) !!}
     @endforeach
 @endif
-
-
-

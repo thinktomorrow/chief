@@ -9,14 +9,14 @@ class Registration
     private $modelClass;
     private $tags;
 
-    public function __construct(string $key, string $managerClass, string $modelClass, array $tags = [])
+    public function __construct(string $managerClass, string $modelClass, array $tags = [])
     {
-        $this->key = $key;
-        $this->managerClass = $managerClass;
-        $this->modelClass = $modelClass;
-        $this->tags = $tags;
+        $this->validate($managerClass, $modelClass);
 
-        $this->validate();
+        $this->key          = $modelClass::managedModelKey();
+        $this->managerClass = $managerClass;
+        $this->modelClass   = $modelClass;
+        $this->tags         = $tags;
     }
 
     public static function fromArray(array $registration)
@@ -72,19 +72,24 @@ class Registration
         return $this->$key == $value;
     }
 
-    private function validate()
+    private function validate($managerClass, $modelClass)
     {
-        if (!class_exists($this->managerClass)) {
-            throw new \InvalidArgumentException('Manager class ['.$this->managerClass.'] is an invalid class reference. Please make sure the class exists.');
+        if (!class_exists($managerClass)) {
+            throw new \InvalidArgumentException('Manager class ['.$managerClass.'] is an invalid class reference. Please make sure the class exists.');
         }
 
-        if (!class_exists($this->modelClass)) {
-            throw new \InvalidArgumentException('Model class ['.$this->modelClass.'] is an invalid model reference. Please make sure the class exists.');
+        if (!class_exists($modelClass)) {
+            throw new \InvalidArgumentException('Model class ['.$modelClass.'] is an invalid model reference. Please make sure the class exists.');
         }
 
-        $manager = new \ReflectionClass($this->managerClass);
+        $manager = new \ReflectionClass($managerClass);
         if (! $manager->implementsInterface(Manager::class)) {
-            throw new \InvalidArgumentException('Class ['.$this->managerClass.'] is expected to implement the ['.Manager::class.'] contract.');
+            throw new \InvalidArgumentException('Class ['.$managerClass.'] is expected to implement the ['.Manager::class.'] contract.');
+        }
+
+        $model = new \ReflectionClass($modelClass);
+        if (! $model->implementsInterface(ManagedModel::class)) {
+            throw new \InvalidArgumentException('Class ['.$modelClass.'] is expected to implement the ['.ManagedModel::class.'] contract.');
         }
     }
 }

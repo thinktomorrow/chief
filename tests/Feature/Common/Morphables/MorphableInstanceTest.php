@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageTranslation;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -89,7 +88,6 @@ class MorphableInstanceTest extends TestCase
         Page::create([
             'morph_key' => 'articles',
             'title:nl'   => 'new title',
-            'slug:nl'    => 'new-slug',
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, PageTranslation::first()->page()->first());

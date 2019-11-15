@@ -2,7 +2,7 @@
     <script>
 
         Vue.component('filesupload', {
-            props: ['preselected', 'group'],
+            props: ['preselected', 'group', 'locale'],
             data: function () {
                 return {
                     isDraggingOver: false,
@@ -21,9 +21,12 @@
                 };
             },
             created: function () {
-                this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
-                this.fileInput     = this.fileDropArea.querySelector('input');
-                this.fileInputName = this.fileInput.name;
+                /** */
+                if(this.items.length < 1) {
+                    // this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
+                    // this.fileInput     = this.fileDropArea.querySelector('input');
+                    // this.fileInputName = this.fileInput.name;
+                }
 
                 /**
                  * When a new image is loaded, we want to reorder our files so
@@ -66,7 +69,6 @@
                 },
                 _handleItem: function (item) {
                     var file = item;
-                    console.log(file);
 
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();
@@ -88,16 +90,14 @@
                 updateFilesOrder: function () {
                     this.filesOrder = [];
 
-                    var draggableItems = document.querySelectorAll('#filegroup-'+ this.group +' .draggable-item');
-
+                    var draggableItems = document.querySelectorAll('#filegroup-'+ this.group +'-'+ this.locale + ' .draggable-item');
                     for (var i = 0; i < draggableItems.length; i++) {
                         var itemId = draggableItems[i].getAttribute('data-item-id');
 
                         // Newly added items do not have an id yet, so the filename is passed
                         // to we are still able to identify their order upon saving.
                         if (!itemId) {
-                            var input = draggableItems[i].querySelector('input[name="files['+this.group+'][new][]"]');
-
+                            var input = draggableItems[i].querySelector('input[name="files[' + this.group.replace('files-', '') + '][' + this.locale + '][new][]"]');
                             // Possible reason is that loading of new file takes too long and we tried
                             // to sort the files before it finished loading
                             if (!input || !input.value) return;
