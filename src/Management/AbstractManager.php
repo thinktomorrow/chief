@@ -241,11 +241,11 @@ abstract class AbstractManager
 
     public function delete()
     {
-        if($this->model instanceof ActsAsChild) {
+        if ($this->model instanceof ActsAsChild) {
             $this->model->detachAllParentRelations();
         }
 
-        if($this->model instanceof ActsAsParent) {
+        if ($this->model instanceof ActsAsParent) {
             $this->model->detachAllChildRelations();
         }
 
