@@ -7,15 +7,15 @@
     <script src="{{ asset('/assets/back/js/vendor/slim.js') }}"></script>
     <script>
         Vue.component('slim', {
-            props: ['options', 'group'],
+            props: ['options', 'name', 'group'],
             template: `
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input v-if="id" type="file" :name="group+'[replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
-                            <input v-else type="file" :name="group+'[new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
+                            <input v-if="id" type="file" :name="name+'[replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
+                            <input v-else type="file" :name="name+'[new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                         </div>
-                        <input v-if="deletion" type="hidden" :name="group+'[delete][]'" :value="id"/>
+                        <input v-if="deletion" type="hidden" :name="name+'[delete][]'" :value="id"/>
                     </div>
                 `,
             data: function () {
@@ -28,11 +28,23 @@
                     deletion: false,
                 }
             },
+            created: function () {
+                var self = this;
+                Eventbus.$on('rerender-slim-' + this.group, function () {
+                    setTimeout(function () {
+                        self.id = self.options.id,
+                        self.url = self.options.url,
+                        self.filename = self.options.filename,
+    
+                        self.instance.load(self.options.url);
+                    }, 500);
+                });
+            },
             mounted: function () {
-
                 this.options.didRemove = this.markForDeletion;
                 this.options.didLoad = this.onLoad;
                 this.instance = new Slim(this.$el.childNodes[0], this.options);
+
 
                 // If a file instance is passed, we want to directly load the file into our cropper
                 if (this.file) this.instance.load(this.file);
@@ -48,7 +60,7 @@
                     // Unmark for deletion
                     this.deletion = false;
 
-                    Eventbus.$emit('files-loaded-' + this.group,{});
+                    Eventbus.$emit('files-loaded-' + this.name,{});
 
                     // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                     return true;

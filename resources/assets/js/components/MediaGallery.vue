@@ -24,7 +24,7 @@
 				</div>
 			</div>
 
-			<input type="hidden" :name="'files[' + group.replace('files-', '') + ']' + '['+ locale +'][new]['+ selected +']'" :value="selected" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
+			<!-- <input type="hidden" :name="'files[' + group.replace('files-', '') + ']' + '['+ locale +'][new]['+ selected +']'" :value="selected" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" /> -->
 		
 		</div>
 
@@ -44,7 +44,8 @@
 		props: {
 			group: {required: true, default: ''},
 			locale: {required: true, default: ''},
-			limit: {required: false, default: 12}
+			limit: {required: false, default: 12},
+			replace: {required: false, default: ''}
 		},
 		data(){
             return {
@@ -90,7 +91,7 @@
 
 				this.selected = asset.id;
 				Eventbus.$emit('close-modal', this.id)
-				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset)
+				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset, this.replace)
 			}
 		}
 	}

@@ -11,13 +11,17 @@
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
                  @dragenter.prevent="handleSortingEnter">
-                <slim group="{{ $name }}" :options="{
+                <slim name="{{ $name }}" group="{{ $slug }}" :options="{
                     id: item.id,
                     filename: item.filename,
                     url: item.url,
                     file: item.file,
                     label: 'Drop hier uw afbeelding',
                 }"></slim>
+                <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
+                    <span>Of kies uit je galerij</span>
+                </div>
+                <mediagallery group="{{ $slug }}" locale="{{$locale}}" :replace="item.id"></mediagallery>
             </div>
             <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1">
                 <div class="thumb thumb-new" id="file-drop-area-{{ $slug }}"
@@ -34,10 +38,10 @@
                 <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
                     <span>Of kies uit je galerij</span>
                 </div>
+                <mediagallery group="{{ $slug }}" locale="{{$locale}}"></mediagallery>
             </div>
         </div>
-        <mediagallery group="{{ $slug }}" locale="{{$locale}}">
-        </mediagallery>
+
         <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-link">
             @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
         </a>

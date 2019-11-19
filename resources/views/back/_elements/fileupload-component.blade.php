@@ -40,13 +40,22 @@
                     }, 1500);
                 });
 
-                Eventbus.$on('mediagallery-loaded-' + this.group, function (asset){
+                Eventbus.$on('mediagallery-loaded-' + this.group, function (asset, replace){
+                    if(replace){
+                        self.items = [{
+                            filename: asset.filename,
+                            id: asset.id,
+                            url: asset.url
+                        }];
+                        Eventbus.$emit('rerender-slim-' + self.group);
+                    }else{
+                        self.items.push({
+                            filename: asset.filename,
+                            id: asset.id,
+                            url: asset.url
+                        });
+                    }
 
-                    self.items.push({
-                        filename: asset.filename,
-                        id: asset.id,
-                        url: asset.url
-                    });
                     self.updateFilesOrder();
                 })
 
