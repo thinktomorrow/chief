@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unreleased
+## 0.4.0 - 2019-11-19
 - Added: function valueResolver on field to customize how a value is retrieved from the database
 - Added: `Field::default()` method to set default field value.
 - Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
