@@ -11,13 +11,13 @@
             <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
                  @dragenter.prevent="handleSortingEnter">
-                <slim name="{{ $name }}" group="{{ $slug }}" :options="{
-                    id: item.id,
-                    filename: item.filename,
-                    url: item.url,
-                    file: item.file,
-                    label: 'Drop hier uw afbeelding',
-                }"></slim>
+                    <slim name="{{ $name }}" group="{{ $slug }}" :options="{
+                        id: item.id,
+                        filename: item.filename,
+                        url: item.url,
+                        file: item.file,
+                        label: 'Drop hier uw afbeelding',
+                    }"></slim>
                 <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
                     <span>Of kies uit je galerij</span>
                 </div>
