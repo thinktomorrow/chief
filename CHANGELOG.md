@@ -1,6 +1,9 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## unreleased - yyy-mm-dd
+- Fixed: preserve old input after failed validation for input field
+
 ## 0.4.0 - 2019-11-19
 - Added: function valueResolver on field to customize how a value is retrieved from the database
 - Added: `Field::default()` method to set default field value.
