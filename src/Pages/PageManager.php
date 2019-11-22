@@ -145,7 +145,8 @@ class PageManager extends AbstractManager implements Manager
             ]),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ];
-        if (Module::atLeastOneRegistered()) {
+
+        if (Module::anyAvailableForCreation()) {
             array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
         }
 
