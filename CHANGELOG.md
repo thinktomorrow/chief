@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased - yyy-mm-dd
+- Added: extra parent and request parameters for query set methods.
 - Fixed: preserve old input after failed validation for input field
 - Fixed: dont show modules tab on page edit page when there aren't any modules that can be created 
 

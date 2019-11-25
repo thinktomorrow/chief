@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 class SetReference implements ProvidesFlatReference
 {
@@ -67,14 +68,17 @@ class SetReference implements ProvidesFlatReference
      *
      * @return Set
      */
-    public function toSet(): Set
+    public function toSet(ActsAsParent $parent): Set
     {
         // Reconstitute the action - optional @ ->defaults to the name of the set e.g. @upcoming
         list($class, $method) = $this->parseAction($this->action, Str::camel($this->key));
 
         $this->validateAction($class, $method);
 
-        $result = call_user_func_array([app($class),$method], $this->parameters);
+        $result = call_user_func_array([app($class),$method], array_merge($this->parameters, [
+            'parent' => $parent,
+            'request' => request(),
+        ]));
 
         if (! $result instanceof Set && $result instanceof Collection) {
             return new Set($result->all(), $this->key);

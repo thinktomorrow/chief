@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Sets;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Illuminate\Contracts\Pagination\Paginator;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
@@ -33,9 +34,9 @@ class Set extends Collection implements ViewableContract
         parent::__construct($items);
     }
 
-    public static function fromReference(SetReference $setReference): Set
+    public static function fromReference(SetReference $setReference, ActsAsParent $parent): Set
     {
-        return $setReference->toSet();
+        return $setReference->toSet($parent);
     }
 
     public function renderView(): string
