@@ -42,11 +42,16 @@
 
                 Eventbus.$on('mediagallery-loaded-' + this.group, function (asset, replace){
                     if(replace){
-                        self.items = [{
+                        self.items = self.items.filter(function(item){
+                            return item.id != replace;
+                        });
+
+                        self.items.push({
                             filename: asset.filename,
                             id: asset.id,
                             url: asset.url
-                        }];
+                        });
+
                         Eventbus.$emit('rerender-slim-' + self.group);
                     }else{
                         self.items.push({
@@ -54,6 +59,8 @@
                             id: asset.id,
                             url: asset.url
                         });
+                        Eventbus.$emit('rerender-slim-' + self.group);
+
                     }
 
                     self.updateFilesOrder();
@@ -175,7 +182,7 @@
                 findAncestor: function (el, sel) {
                     while ((el = el.parentElement) && !((el.matches || el.matchesSelector).call(el, sel)));
                     return el;
-                },
+                }
             },
         });
     </script>

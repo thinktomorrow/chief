@@ -24,8 +24,7 @@
 				</div>
 			</div>
 
-			<!-- <input type="hidden" :name="'files[' + group.replace('files-', '') + ']' + '['+ locale +'][new]['+ selected +']'" :value="selected" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" /> -->
-		
+			<input v-if="selected" type="hidden" :name="'files[' + group.replace('files-', '') + ']' + '['+ locale +'][new]['+ selected +']'" :value="selected" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
 		</div>
 
 		<div @click="loadMore()" class="flex justify-center w-full" v-if="assets.length > 0" slot="footer">
@@ -56,7 +55,10 @@
         },
 	    computed: {
 		    id: function() {
-			    return 'mediagallery-' + this.group + '-' + this.locale
+				var id = 'mediagallery-' + this.group + '-' + this.locale;
+				if(this.replace) id += '-'+ this.replace;
+
+			    return id;
 			}
 		},
 		created() {

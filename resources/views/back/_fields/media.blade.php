@@ -18,7 +18,7 @@
                         file: item.file,
                         label: 'Drop hier uw afbeelding',
                     }"></slim>
-                <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
+                <div class="btn btn-link" @click="showModal('mediagallery-{{ $slug }}-{{$locale}}-'+item.id)">
                     <span>Of kies uit je galerij</span>
                 </div>
                 <mediagallery group="{{ $slug }}" locale="{{$locale}}" :replace="item.id"></mediagallery>
