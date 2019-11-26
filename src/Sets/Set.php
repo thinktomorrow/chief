@@ -21,7 +21,10 @@ class Set extends Collection implements ViewableContract
     protected $baseViewPath;
     protected $viewKey;
 
-    public function __construct($items = [], string $viewKey)
+    /** @var array */
+    private $settings;
+
+    public function __construct($items = [], string $viewKey, array $settings = [])
     {
         $this->viewKey = $viewKey;
 
@@ -32,6 +35,7 @@ class Set extends Collection implements ViewableContract
         $this->constructWithSnippets();
 
         parent::__construct($items);
+        $this->settings = $settings;
     }
 
     public static function fromReference(SetReference $setReference, ActsAsParent $parent): Set
@@ -76,13 +80,13 @@ class Set extends Collection implements ViewableContract
      * @param null $currentPage
      * @return Paginator
      */
-    public function simplePaginate($perPage = 12, $currentPage = null): Paginator
+    public function simplePaginate($perPage = null, $currentPage = null): Paginator
     {
         $currentPage = $currentPage ?? request()->get('page', 1);
         $path = request()->path();
         $items = array_slice($this->all(), ($currentPage - 1) * $perPage);
 
-        return (new \Illuminate\Pagination\Paginator($items, $perPage, $currentPage))->setPath($path);
+        return (new \Illuminate\Pagination\Paginator($items, $perPage ?? $this->paginateSetting('perPage', '12'), $currentPage))->setPath($path);
     }
 
     /**
@@ -93,12 +97,19 @@ class Set extends Collection implements ViewableContract
      * @param null $currentPage
      * @return Paginator
      */
-    public function paginate($perPage = 12, $currentPage = null): Paginator
+    public function paginate($perPage = null, $currentPage = null): Paginator
     {
         $currentPage = $currentPage ?? request()->get('page', 1);
         $path = '/'.request()->path();
         $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
 
-        return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->count(), $perPage, $currentPage))->setPath($path);
+        return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->paginateSetting('total', $this->count()), $perPage ?? $this->paginateSetting('perPage', '12'), $currentPage))->setPath($path);
+    }
+
+    private function paginateSetting($key, $default = null)
+    {
+        if(!isset($this->settings['paginate']) || !isset($this->settings['paginate'][$key])) return $default;
+
+        return $this->settings['paginate'][$key];
     }
 }

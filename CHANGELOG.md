@@ -5,6 +5,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Added: extra parent and request parameters for query set methods.
 - Fixed: preserve old input after failed validation for input field
 - Fixed: dont show modules tab on page edit page when there aren't any modules that can be created 
+- Fixed: issue where `Set::paginate()` would perform a second db query to fetch all results, even when total count was already known.
 
 ## 0.4.0 - 2019-11-19
 - Added: function valueResolver on field to customize how a value is retrieved from the database

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
@@ -80,6 +82,15 @@ class SetReference implements ProvidesFlatReference
 
         if (! $result instanceof Set && $result instanceof Collection) {
             return new Set($result->all(), $this->key);
+        }
+
+        if (! $result instanceof Set && $result instanceof Paginator) {
+            return new Set($result->all(), $this->key, [
+                'paginate' => [
+                    'total' => $result->total(),
+                    'perPage' => $result->perPage(),
+                ]
+            ]);
         }
 
         return $result;
