@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
@@ -75,16 +76,45 @@ class SetReference implements ProvidesFlatReference
 
         $this->validateAction($class, $method);
 
-        $result = call_user_func_array([app($class),$method], array_merge($this->parameters, [
-            'parent' => $parent,
-            'request' => request(),
-        ]));
+        $result = call_user_func_array([app($class),$method], $this->parameters($class, $method, $parent));
 
         if (! $result instanceof Set && $result instanceof Collection) {
             return new Set($result->all(), $this->key);
         }
 
         return $result;
+    }
+
+    /**
+     * Only pass the extra parameters when they are expected, otherwise this will conflict with any
+     * base eloquent methods such as all() which have a fixed columns parameter.
+     *
+     * @param ActsAsParent $parent
+     */
+    protected function parameters(string $class, string $method, ActsAsParent $parent): array
+    {
+        try{
+            $parameters = $this->parameters;
+
+            $reflection = new \ReflectionClass($class);
+            foreach($reflection->getMethod($method)->getParameters() as $parameter){
+                if($parameter->getType() && $parameter->getType()->getName() == ActsAsParent::class){
+                    $parameters[] = $parent;
+                }
+                if($parameter->getType() && $parameter->getType()->getName() == Request::class){
+                    $parameters[] = request();
+                }
+            }
+
+            return $parameters;
+        }
+        catch(\Exception $e) {
+            if (config('thinktomorrow.chief.strict')) {
+                throw $e;
+            }
+
+            return $this->parameters;
+        }
     }
 
     public function store()
