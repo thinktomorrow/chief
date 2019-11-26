@@ -23,8 +23,6 @@
 					</div>
 				</div>
 			</div>
-
-			<input v-if="selected" type="hidden" :name="'files[' + group.replace('files-', '') + ']' + '['+ locale +'][new]['+ selected +']'" :value="selected" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
 		</div>
 
 		<div @click="loadMore()" class="flex justify-center w-full" v-if="assets.length > 0" slot="footer">
@@ -55,10 +53,7 @@
         },
 	    computed: {
 		    id: function() {
-				var id = 'mediagallery-' + this.group + '-' + this.locale;
-				if(this.replace) id += '-'+ this.replace;
-
-			    return id;
+			    return 'mediagallery-' + this.group + '-' + this.locale;
 			}
 		},
 		created() {
@@ -92,8 +87,8 @@
 				var input = document.querySelector('input[name="files[' + this.group.replace('files-', '') + '][' + this.locale + '][new][]"]');
 
 				this.selected = asset.id;
-				Eventbus.$emit('close-modal', this.id)
-				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset, this.replace)
+				Eventbus.$emit('close-modal', this.id);
+				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset);
 			}
 		}
 	}

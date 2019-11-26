@@ -18,6 +18,7 @@
                     filesOrder: [],
                     reorder: false,
                     sortSource: null,
+                    multiple: false,
                 };
             },
             created: function () {
@@ -40,32 +41,34 @@
                     }, 1500);
                 });
 
-                Eventbus.$on('mediagallery-loaded-' + this.group, function (asset, replace){
-                    if(replace){
-                        self.items = self.items.filter(function(item){
-                            return item.id != replace;
-                        });
+                Eventbus.$on('file-deletion-' + this.group, function(id) {
+                    self.items.forEach((item, itemId) => {
+                        if(item.id == id) {
+                            item.deleted = true;
+                            self.items.splice(itemId, 1, item);
+                        }
+                    })
+                });
 
-                        self.items.push({
-                            filename: asset.filename,
-                            id: asset.id,
-                            url: asset.url
-                        });
-
-                        Eventbus.$emit('rerender-slim-' + self.group);
-                    }else{
-                        self.items.push({
-                            filename: asset.filename,
-                            id: asset.id,
-                            url: asset.url
-                        });
-                        Eventbus.$emit('rerender-slim-' + self.group);
-
-                    }
+                Eventbus.$on('mediagallery-loaded-' + this.group, function (asset){
+                    self.items.push({
+                        filename: asset.filename,
+                        id: asset.id,
+                        url: asset.url,
+                        newUpload: true,
+                    });
 
                     self.updateFilesOrder();
                 })
 
+            },
+            computed: {
+                hasValidUpload: function(){
+                    var result = this.items.map(function(item){
+                        return item.deleted;
+                    });
+                    return result.includes(undefined);
+                }
             },
             mounted: function () {
                 this.updateFilesOrder();

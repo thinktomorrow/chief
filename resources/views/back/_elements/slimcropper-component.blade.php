@@ -12,7 +12,8 @@
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input v-if="id" type="file" :name="name+'[replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
+                            <input v-if="id && !newUpload" type="file" :name="name+'[replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
+                            <input v-if="newUpload" type="hidden" :name="name+'[new]['+ id +']'" :value="id" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                             <input v-else type="file" :name="name+'[new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                         </div>
                         <input v-if="deletion" type="hidden" :name="name+'[delete][]'" :value="id"/>
@@ -26,41 +27,35 @@
                     filename: this.options.filename || null,
                     instance: null,
                     deletion: false,
+                    newUpload: false
                 }
-            },
-            created: function () {
-                var self = this;
-                Eventbus.$on('rerender-slim-' + this.group, function () {
-                    setTimeout(function () {
-                        self.id = self.options.id,
-                        self.url = self.options.url,
-                        self.filename = self.options.filename,
-    
-                        self.instance.load(self.options.url);
-                    }, 500);
-                });
             },
             mounted: function () {
                 this.options.didRemove = this.markForDeletion;
                 this.options.didLoad = this.onLoad;
+                this.newUpload = this.options.newUpload;
                 this.instance = new Slim(this.$el.childNodes[0], this.options);
 
 
                 // If a file instance is passed, we want to directly load the file into our cropper
-                if (this.file) this.instance.load(this.file);
+                if (this.file) {
+                    this.instance.load(this.file);
+                }
             },
             methods: {
                 markForDeletion: function (e) {
                     // If event contains a reference to an image,
                     // this is a replace action and not a delete one
                     this.deletion = true;
+                    
+                    Eventbus.$emit('file-deletion-' + this.group, this.id);
                 },
                 onLoad: function () {
 
                     // Unmark for deletion
                     this.deletion = false;
 
-                    Eventbus.$emit('files-loaded-' + this.name,{});
+                    Eventbus.$emit('files-loaded-' + this.group,{});
 
                     // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                     return true;

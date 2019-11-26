@@ -126,7 +126,8 @@ class UploadMedia
                 }
             }else{
                 try{
-                    $file   = Asset::findOrFail($file);
+                    $file   = Asset::find($file);
+                    if(!$file) return;
                     $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
                 }catch(AssetUploadException $e)
                 {
