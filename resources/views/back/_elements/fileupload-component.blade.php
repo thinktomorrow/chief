@@ -18,7 +18,6 @@
                     filesOrder: [],
                     reorder: false,
                     sortSource: null,
-                    multiple: false,
                 };
             },
             created: function () {
