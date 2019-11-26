@@ -104,22 +104,21 @@ class SetReference implements ProvidesFlatReference
      */
     protected function parameters(string $class, string $method, ActsAsParent $parent): array
     {
-        try{
+        try {
             $parameters = $this->parameters;
 
             $reflection = new \ReflectionClass($class);
-            foreach($reflection->getMethod($method)->getParameters() as $parameter){
-                if($parameter->getType() && $parameter->getType()->getName() == ActsAsParent::class){
+            foreach ($reflection->getMethod($method)->getParameters() as $parameter) {
+                if ($parameter->getType() && $parameter->getType()->getName() == ActsAsParent::class) {
                     $parameters[] = $parent;
                 }
-                if($parameter->getType() && $parameter->getType()->getName() == Request::class){
+                if ($parameter->getType() && $parameter->getType()->getName() == Request::class) {
                     $parameters[] = request();
                 }
             }
 
             return $parameters;
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             if (config('thinktomorrow.chief.strict')) {
                 throw $e;
             }
