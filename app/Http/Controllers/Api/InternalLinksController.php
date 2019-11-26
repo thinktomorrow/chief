@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Pages\Page;
 
 class InternalLinksController extends Controller
@@ -13,7 +12,7 @@ class InternalLinksController extends Controller
     {
         // Fetch the links for specific locale
         if ($request->has('locale')) {
-            app()->setLocale($request->get('locale'));
+            app()->setLocale($request->input('locale', app()->getLocale()));
         }
 
         $links = Page::all()->map(function ($page) {
