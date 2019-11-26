@@ -108,7 +108,9 @@ class Set extends Collection implements ViewableContract
 
     private function paginateSetting($key, $default = null)
     {
-        if(!isset($this->settings['paginate']) || !isset($this->settings['paginate'][$key])) return $default;
+        if (!isset($this->settings['paginate']) || !isset($this->settings['paginate'][$key])) {
+            return $default;
+        }
 
         return $this->settings['paginate'][$key];
     }
