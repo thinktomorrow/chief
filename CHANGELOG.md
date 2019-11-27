@@ -1,6 +1,9 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## unreleased - yyyy-mm-dd
+- Removed: htmlpurifier which caused inconsistent saving of text module
+
 ## 0.4.1 - 2019-11-26
 - Added: extra parent and request parameters for query set methods.
 - Fixed: preserve old input after failed validation for input field
