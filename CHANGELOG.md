@@ -6,6 +6,7 @@ All Notable changes to the `chief` application template will be documented in th
 - Fixed: issue where updating url could result in a duplicate db entry
 - Fixed: Redactor rich links suggestions now show urls for the current selected locale
 - Removed: htmlpurifier which caused inconsistent saving of text module
+- Removed: dropped support for laravel 5.7
 
 ## 0.4.1 - 2019-11-26
 - Added: extra parent and request parameters for query set methods.
