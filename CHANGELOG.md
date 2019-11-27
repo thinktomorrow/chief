@@ -1,6 +1,9 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## unreleased
+- Fixed: issue where module add button didn't show for developer account
+
 ## 0.4.2 - 2019-11-27
 - Fixed: modulemanager route function to work with laravel 6.6 
 - Fixed: issue where updating url could result in a duplicate db entry
