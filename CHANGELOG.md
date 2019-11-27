@@ -2,6 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased - yyyy-mm-dd
+- Fixed: issue where updating url could result in a duplicate db entry
+- Fixed: Redactor rich links suggestions now show urls for the current selected locale
 - Removed: htmlpurifier which caused inconsistent saving of text module
 
 ## 0.4.1 - 2019-11-26

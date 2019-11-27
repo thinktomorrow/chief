@@ -10,7 +10,7 @@
     <div class="col-lg-9 bs-component">
 
         @if($line->editInEditor())
-            <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="input inset-s" data-editor rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
+            <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="input inset-s" data-editor data-locale="{{ $locale ?? app()->getLocale() }}" rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
         @elseif($line->editInTextarea())
             <textarea name="trans[{{ $locale }}][{{ $line->id }}]" id="{{ $locale }}-{{ $line->id }}-inputValue" class="input inset-s" rows="5">{!! old('trans['.$locale.']['.$line->id.']',$line->getValue($locale,false)) !!}</textarea>
         @else
