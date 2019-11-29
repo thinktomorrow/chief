@@ -29,32 +29,29 @@
 
 @endforeach
 
-<div data-document-upload>
-    <label for="document-upload" class="btn btn-secondary mr-4">
+<div data-document-upload data-locale="{{ $locale }}">
+    <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
         Document uploaden
     </label>
     <span class="text-secondary-500"></span>
 </div>
-<input id="document-upload" onchange="inputValueToLabel(event)" type="file" name="{{ $name }}[new][]" {{ $field->multiple ? 'multiple' : '' }} class="hidden">
+<input id="document-upload-{{$locale}}" onchange="
+    (function(){
+        var fileName = document.querySelector('[data-document-upload][data-locale=\'{{ $locale }}\']').getElementsByTagName('span')[0],
+            label = document.querySelector('[data-document-upload][data-locale=\'{{ $locale }}\']').getElementsByTagName('label')[0],
+            valuePathArray = event.target.value.split('\\'),
+            value = valuePathArray[valuePathArray.length - 1];
+
+        fileName.innerHTML = value;
+        label.innerHTML = event.target.value === '' ? label.innerHTML : 'Een ander document uploaden';
+    })();" 
+    type="file" name="{{ $name }}[new][]" {{ $field->multiple ? 'multiple' : '' }} class="hidden">
 
 @push('custom-scripts')
     <script>
-
-        function removeFile(id)
-        {
+        function removeFile(id) {
             document.getElementById('removeFile-'+id).value = id;
             document.getElementById('asset-'+id).remove();
         }
-
-        function inputValueToLabel(e) {
-            var fileName = document.querySelector('[data-document-upload]').getElementsByTagName('span')[0],
-                label = document.querySelector('[data-document-upload]').getElementsByTagName('label')[0],
-                valuePathArray = e.target.value.split('\\'),
-                value = valuePathArray[valuePathArray.length - 1];
-
-            fileName.innerHTML = value;
-            label.innerHTML = e.target.value === "" ? label.innerHTML : "Een ander document uploaden";
-        }
-
     </script>
 @endpush
