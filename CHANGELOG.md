@@ -1,15 +1,35 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## Unreleased
+## unreleased
+- Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback 
+- Fixed: issue where module add button didn't show for developer account
+
+## 0.4.2 - 2019-11-27
+- Fixed: modulemanager route function to work with laravel 6.6 
+- Fixed: issue where updating url could result in a duplicate db entry
+- Fixed: Redactor rich links suggestions now show urls for the current selected locale
+- Removed: htmlpurifier which caused inconsistent saving of text module
+- Removed: dropped support for laravel 5.7
+
+## 0.4.1 - 2019-11-26
+- Added: extra parent and request parameters for query set methods.
+- Fixed: preserve old input after failed validation for input field
+- Fixed: dont show modules tab on page edit page when there aren't any modules that can be created 
+- Fixed: issue where `Set::paginate()` would perform a second db query to fetch all results, even when total count was already known.
+
+## 0.4.0 - 2019-11-19
 - Added: function valueResolver on field to customize how a value is retrieved from the database
+- Added: `Field::default()` method to set default field value.
+- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 - Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
 - Fixed: Multiselect placeholders were looking buggy. Now they don't.
+- Fixed: issue where deleting a model would not delete any existing relations.
+- Changed: updated Assetlibrary to 0.6
 
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
 - Added: selected module in pagebuilder now displays an edit link
-- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
 - Added: Checkbox field
 - Added: Laravel 6 support
 - Changed: Healthmonitor checks are now defined in the chief.php config file.

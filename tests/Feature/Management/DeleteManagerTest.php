@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
@@ -33,8 +34,6 @@ class DeleteManagerTest extends TestCase
     /** @test */
     public function it_can_delete_a_model()
     {
-        $this->disableExceptionHandling();
-
         $this->asAdmin()
             ->delete($this->fake->route('delete'));
 
@@ -54,5 +53,22 @@ class DeleteManagerTest extends TestCase
             ->delete('/admin/manage/managed_model_first/1'); // We force the url since it is not provided by the manager
 
         $this->assertNotNull($this->model->fresh());
+    }
+
+    /** @test */
+    public function it_deletes_any_relation_entries_as_well()
+    {
+        $this->disableExceptionHandling();
+        $childModel = ManagedModelFakeFirst::create(['title' => 'Child model']);
+        $this->model->adoptChild($childModel);
+
+        $this->assertEquals(1, Relation::count());
+
+        $this->asAdmin()
+            ->delete($this->fake->route('delete'));
+
+        $this->assertNull($this->model->fresh());
+        $this->assertEquals(0, Relation::count());
+
     }
 }

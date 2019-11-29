@@ -16,6 +16,9 @@ use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Relations\Relation;
 
 abstract class AbstractManager
 {
@@ -79,11 +82,11 @@ abstract class AbstractManager
         $builder = $this->indexBuilder($builder);
 
         $builder = $this->indexSorting($builder);
-        
+
         if ($this->paginated) {
             return $this->indexPagination($builder);
         }
-        
+
         return $builder->get()->map(function ($model) {
             return (new static($this->registration))->manage($model);
         });
@@ -178,6 +181,9 @@ abstract class AbstractManager
     public function can($verb): bool
     {
         foreach (static::$bootedTraitMethods['can'] as $method) {
+            if (!method_exists($this, $method)) {
+                continue;
+            }
             $this->$method($verb);
         }
 
@@ -235,6 +241,14 @@ abstract class AbstractManager
 
     public function delete()
     {
+        if ($this->model instanceof ActsAsChild) {
+            $this->model->detachAllParentRelations();
+        }
+
+        if ($this->model instanceof ActsAsParent) {
+            $this->model->detachAllChildRelations();
+        }
+
         $this->model->delete();
     }
 
@@ -289,10 +303,10 @@ abstract class AbstractManager
 
         foreach ($methods as $baseMethod) {
             static::$bootedTraitMethods[$baseMethod] = [];
-        
+
             foreach (class_uses_recursive($class) as $trait) {
                 $method = class_basename($trait) . ucfirst($baseMethod);
-                
+
                 if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
                     static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
                 }

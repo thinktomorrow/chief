@@ -37,14 +37,21 @@ class ModuleManager extends AbstractManager implements Manager
         }
 
         $routes = [
-            'index'   => route('chief.back.modules.index'),
+            'index'   => route('chief.back.modules.index', [$this->registration->key()]),
             'create'  => route('chief.back.managers.create', [$this->registration->key()]),
-            'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
-            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),
-            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->model->id]),
-            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
-            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->model->id])
+            'store'   => route('chief.back.managers.store', [$this->registration->key()]),
         ];
+
+        if (array_key_exists($verb, $routes)) {
+            return $routes[$verb] ?? null;
+        }
+
+        $routes = array_merge($routes, [
+            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
+            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
+            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
+            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id])
+        ]);
 
         return $routes[$verb] ?? null;
     }

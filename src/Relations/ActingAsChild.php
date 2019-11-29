@@ -43,6 +43,11 @@ trait ActingAsChild
             ->first();
     }
 
+    public function detachAllParentRelations()
+    {
+        Relation::deleteAllParentRelationsOf($this->getMorphClass(), $this->getKey());
+    }
+
     private function attachParent($parent_type, $parent_id, array $attributes = [])
     {
         Relation::firstOrCreate([

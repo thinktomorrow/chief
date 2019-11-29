@@ -64,7 +64,7 @@ class PresentSections
     {
         foreach ($this->children as $i => $child) {
             if ($child instanceof StoredSetReference) {
-                $this->addSetToCollection($i, $child->toSet());
+                $this->addSetToCollection($i, $child->toSet($this->parent));
                 continue;
             }
 

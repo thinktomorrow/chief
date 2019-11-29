@@ -43,6 +43,27 @@ class FieldTest extends TestCase
     }
 
     /** @test */
+    public function it_can_set_the_default_value()
+    {
+        $field = InputField::make('title')->default('default value');
+        $this->assertEquals('default value', $field->getFieldValue(ArticleFake::create()));
+
+        $field = InputField::make('title')->default('default-value')->valueResolver(function(){
+            return 'custom value';
+        });
+    }
+
+    /** @test */
+    public function model_value_trumps_the_default_value()
+    {
+        $field = InputField::make('title')->default('default-value')->valueResolver(function(){
+            return 'custom value';
+        });
+
+        $this->assertEquals('custom value', $field->getFieldValue(ArticleFake::create()));
+    }
+
+    /** @test */
     public function it_can_have_a_custom_view()
     {
         $this->app['view']->addNamespace('test-views', __DIR__ . '/stubs/views');

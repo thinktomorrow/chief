@@ -1,5 +1,5 @@
 <div class="s-column-6 m-column-6 inset-xs">
-    <div class="row bg-white border border-grey-100 rounded inset-s" style="height: 100%">
+    <div class="row bg-white border border-grey-100 rounded inset-s relative" style="height: 100%">
         <div class="column">
             @if($manager->can('edit'))
                 <a href="{{ $manager->route('edit') }}" class="flex items-center">
@@ -32,6 +32,10 @@
             @if($manager->can('update'))
                 @include('chief::back.managers._partials.context-menu')
             @endif
+            @if(!$manager->details()->context && $manager->isAssistedBy('publish'))
+                {!! $manager->assistant('publish')->publicationStatusAsLabel() !!}
+            @endif
+
             {!! $manager->details()->context !!}
         </div>
     </div>

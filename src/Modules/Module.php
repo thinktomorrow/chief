@@ -85,9 +85,9 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
         return $managers;
     }
 
-    public static function anyAvailableForCreation()
+    public static function anyAvailableForCreation(): bool
     {
-        return static::availableForCreation()->isEmpty();
+        return !static::availableForCreation()->isEmpty();
     }
 
     /**

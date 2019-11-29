@@ -100,7 +100,7 @@ class UploadMedia
             return;
         }
 
-        app(DetachAsset::class)->detach($model, $files['delete']); 
+        app(DetachAsset::class)->detach($model, $files['delete']);
     }
 
     private function actionExists(array $files, string $action)
@@ -114,8 +114,7 @@ class UploadMedia
             $image_name = json_decode($file)->output->name;
             $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
         } else {
-            if($file instanceof UploadedFile)
-            {
+            if ($file instanceof UploadedFile) {
                 $image_name = $file->getClientOriginalName();
                 $asset      = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
 
