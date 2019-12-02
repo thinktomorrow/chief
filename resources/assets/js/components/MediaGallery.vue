@@ -2,7 +2,7 @@
 	<modal :id="id" class="large-modal" type="modal">
 
 		<div v-if="!isLoading || assets.length > 1" class="row mb-4">
-			<h2>Kies een afbeelding ...</h2>
+			<h2>Kies een bestaande afbeelding</h2>
 		</div>
 
 		<div data-overflow-scroll class="row overflow-scroll justify-center max-h-3/4">
@@ -12,15 +12,15 @@
 			</div>
 
 			<div v-for="(asset, i) in assets" v-bind:key="asset.id" @click="select(asset)" class="column-3 border rounded border-transparent hover:bg-grey-50 p-2 cursor-pointer">
-				<div class="bg-grey-100 flex items-center justify-center h-32 mb-4 rounded">
+				<div class="bg-grey-100 flex items-center justify-center h-32 mb-2 rounded">
 					<img :id="'media-gallery-image-'+i" :src="asset.url" :alt="asset.filename" class="max-h-full">
 				</div>
 				<div>
-					<p class="font-bold">{{ asset.filename }}</p>
-					<div class="flex justify-between">
-						<p class="block text-grey-400 mb-2">{{ asset.dimensions }}</p>
-						<p class="block text-grey-400 mb-2">{{ asset.size }}</p>
-					</div>
+                    <p :title="asset.filename" class="font-bold" style="text-overflow: ellipsis; overflow:hidden; width:100%; white-space:nowrap;">{{ asset.filename }}</p>
+                    <div class="flex justify-between">
+                        <p class="block text-grey-400 mb-2">{{ asset.dimensions }}</p>
+                        <p class="block text-grey-400 mb-2">{{ asset.size }}</p>
+                    </div>
 				</div>
 			</div>
 		</div>
@@ -68,7 +68,7 @@
 				}
         	});
 		},
-		methods: { 
+		methods: {
 			loadMore: function() {
 				this.isLoading = true;
 				axios.get(`/admin/api/media?offset=${this.assets.length}&limit=${this.limit}`).then((response) => {
@@ -84,8 +84,6 @@
 				})
 			},
 			select: function(asset) {
-				var input = document.querySelector('input[name="files[' + this.group.replace('files-', '') + '][' + this.locale + '][new][]"]');
-
 				this.selected = asset.id;
 				Eventbus.$emit('close-modal', this.id);
 				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset);
