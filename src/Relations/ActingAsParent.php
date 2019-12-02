@@ -72,6 +72,11 @@ trait ActingAsParent
             ->update(['sort' => $sort]);
     }
 
+    public function detachAllChildRelations()
+    {
+        Relation::deleteAllChildRelationsOf($this->getMorphClass(), $this->getKey());
+    }
+
     private function attachChild($child_type, $child_id, array $attributes = [])
     {
         Relation::firstOrCreate([

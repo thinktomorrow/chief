@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 class SetReference implements ProvidesFlatReference
 {
@@ -67,20 +71,60 @@ class SetReference implements ProvidesFlatReference
      *
      * @return Set
      */
-    public function toSet(): Set
+    public function toSet(ActsAsParent $parent): Set
     {
         // Reconstitute the action - optional @ ->defaults to the name of the set e.g. @upcoming
         list($class, $method) = $this->parseAction($this->action, Str::camel($this->key));
 
         $this->validateAction($class, $method);
 
-        $result = call_user_func_array([app($class),$method], $this->parameters);
+        $result = call_user_func_array([app($class),$method], $this->parameters($class, $method, $parent));
 
         if (! $result instanceof Set && $result instanceof Collection) {
             return new Set($result->all(), $this->key);
         }
 
+        if (! $result instanceof Set && $result instanceof Paginator) {
+            return new Set($result->all(), $this->key, [
+                'paginate' => [
+                    'total' => $result->total(),
+                    'perPage' => $result->perPage(),
+                ]
+            ]);
+        }
+
         return $result;
+    }
+
+    /**
+     * Only pass the extra parameters when they are expected, otherwise this will conflict with any
+     * base eloquent methods such as all() which have a fixed columns parameter.
+     *
+     * @param ActsAsParent $parent
+     */
+    protected function parameters(string $class, string $method, ActsAsParent $parent): array
+    {
+        try {
+            $parameters = $this->parameters;
+
+            $reflection = new \ReflectionClass($class);
+            foreach ($reflection->getMethod($method)->getParameters() as $parameter) {
+                if ($parameter->getType() && $parameter->getType()->getName() == ActsAsParent::class) {
+                    $parameters[] = $parent;
+                }
+                if ($parameter->getType() && $parameter->getType()->getName() == Request::class) {
+                    $parameters[] = request();
+                }
+            }
+
+            return $parameters;
+        } catch (\Exception $e) {
+            if (config('thinktomorrow.chief.strict')) {
+                throw $e;
+            }
+
+            return $this->parameters;
+        }
     }
 
     public function store()

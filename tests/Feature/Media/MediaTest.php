@@ -39,10 +39,11 @@ class MediaTest extends TestCase
 
         $article = ArticlePageFake::create();
 
-        $response = $this->asAdmin()->post(route('pages.media.upload', $article->id), [
+        $response = $this->asAdmin()->post(route('chief.back.managers.media.upload', ['singles', $article->id]), [
             'file' => [
                 UploadedFile::fake()->image('image.png')
             ],
+            'locale' => 'nl'
         ]);
 
         $assets = $article->assets(MediaType::CONTENT, 'nl');

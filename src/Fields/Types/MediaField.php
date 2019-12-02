@@ -56,8 +56,11 @@ class MediaField extends Field
     private function getMedia(HasAsset $model, $locale = null)
     {
         $images = [];
+        $locale = $locale ?? app()->getLocale();
 
-        $assets = $model->assets($this->key(), $locale ?? app()->getLocale());
+        $assets = $model->assetRelation->where('pivot.type', $this->key())->filter(function($asset) use($locale){
+            return $asset->pivot->locale == $locale;
+        })->sortBy('pivot.order');
 
         foreach ($assets as $asset) {
             $images[] = (object)[

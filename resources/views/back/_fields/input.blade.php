@@ -15,7 +15,7 @@
         <div class="addon inset-s">{!! $field::translateValue($field->append, $locale ?? null) !!}</div>
     </div>
 @else
-    <input type="text" name="{{ $name ?? $key }}" id="{{ $key }}" class="input inset-s" placeholder="{{ $field->placeholder ?? '' }}" value="{{ $manager->fieldValue($field, $locale ?? null) }}">
+    <input type="text" name="{{ $name ?? $key }}" id="{{ $key }}" class="input inset-s" placeholder="{{ $field->placeholder ?? '' }}" value="{{ old($key,$manager->fieldValue($field, $locale ?? null)) }}">
 @endif
 
 <error class="caption text-warning" field="{{ $key }}" :errors="errors.all()"></error>

@@ -81,7 +81,7 @@ class UrlRecord extends Model
 
     public function replaceAndRedirect(array $values): UrlRecord
     {
-        $newRecord = static::create(array_merge([
+        $newRecord = static::firstOrCreate(array_merge([
             'locale'              => $this->locale,
             'model_type'          => $this->model_type,
             'model_id'            => $this->model_id,

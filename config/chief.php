@@ -126,5 +126,5 @@ return [
     'healthMonitor' => [
         Thinktomorrow\Chief\HealthMonitor\Checks\HomepageSetCheck::class,
         Thinktomorrow\Chief\HealthMonitor\Checks\HomepageAccessibleCheck::class,
-    ]
+    ],
 ];

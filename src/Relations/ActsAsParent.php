@@ -16,4 +16,6 @@ interface ActsAsParent
     public function presentChildren(): StandardCollection;
 
     public function relationWithChild(ActsAsChild $child): Relation;
+
+    public function detachAllChildRelations();
 }
