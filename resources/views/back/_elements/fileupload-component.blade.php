@@ -34,7 +34,13 @@
                  * to assert the slim loading event has finished.
                  */
                 var self = this;
-                Eventbus.$on('files-loaded-' + this.group, function () {
+                Eventbus.$on('files-loaded-' + this.group, function (id) {
+                    self.items.forEach((item, itemId) => {
+                        if(item.id == id) {
+                            item.deleted = false;
+                            self.items.splice(itemId, 1, item);
+                        }
+                    })
                     setTimeout(function () {
                         self.updateFilesOrder();
                     }, 1500);
@@ -43,8 +49,12 @@
                 Eventbus.$on('file-deletion-' + this.group, function(id) {
                     self.items.forEach((item, itemId) => {
                         if(item.id == id) {
-                            item.deleted = true;
-                            self.items.splice(itemId, 1, item);
+                            if(item.newUpload == true) {
+                                self.items.splice(itemId, 1);
+                            }else{
+                                item.deleted = true;
+                                self.items.splice(itemId, 1, item);
+                            }
                         }
                     })
                 });
@@ -66,7 +76,7 @@
                     var result = this.items.map(function(item){
                         return item.deleted;
                     });
-                    return result.includes(undefined);
+                    return result.includes(undefined) || result.includes(false);
                 }
             },
             mounted: function () {

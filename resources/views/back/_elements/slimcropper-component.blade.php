@@ -55,7 +55,7 @@
                     // Unmark for deletion
                     this.deletion = false;
 
-                    Eventbus.$emit('files-loaded-' + this.group,{});
+                    Eventbus.$emit('files-loaded-' + this.group, this.id);
 
                     // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                     return true;
