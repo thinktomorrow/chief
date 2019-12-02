@@ -3940,16 +3940,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.4.0",
+            "version": "v4.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "75ad33d9b6f25325ebc396d68ad86fd74bcfbb06"
+                "reference": "51c0135ef3f44c5803b33dc60e96bf4f77752726"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/75ad33d9b6f25325ebc396d68ad86fd74bcfbb06",
-                "reference": "75ad33d9b6f25325ebc396d68ad86fd74bcfbb06",
+                "url": "https://api.github.com/repos/symfony/process/zipball/51c0135ef3f44c5803b33dc60e96bf4f77752726",
+                "reference": "51c0135ef3f44c5803b33dc60e96bf4f77752726",
                 "shasum": ""
             },
             "require": {
@@ -3985,7 +3985,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2019-10-28T20:30:34+00:00"
+            "time": "2019-11-28T13:33:56+00:00"
         },
         {
             "name": "symfony/routing",
@@ -4332,16 +4332,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.6.2",
+            "version": "0.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "00c58a0840744ede85e5ad1aa2a24878a43dddd9"
+                "reference": "974d84f8e9d194b84dd9ac94722439beda615f24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/00c58a0840744ede85e5ad1aa2a24878a43dddd9",
-                "reference": "00c58a0840744ede85e5ad1aa2a24878a43dddd9",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/974d84f8e9d194b84dd9ac94722439beda615f24",
+                "reference": "974d84f8e9d194b84dd9ac94722439beda615f24",
                 "shasum": ""
             },
             "require": {
@@ -4391,7 +4391,7 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2019-11-13T13:57:40+00:00"
+            "time": "2019-11-29T13:54:31+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
