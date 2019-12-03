@@ -67,6 +67,8 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     protected $baseViewPath;
     protected static $baseUrlSegment = '/';
 
+    protected static $cachedUrls = [];
+
     public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
@@ -176,11 +178,17 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         if (!$locale) {
             $locale = app()->getLocale();
         }
-
         try {
+
+            $memoizedKey = $this->getMorphClass().'-'.$this->id.'-'.$locale;
+
+            if(isset(static::$cachedUrls[$memoizedKey])) {
+                return static::$cachedUrls[$memoizedKey];
+            }
+
             $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 
-            return $this->resolveUrl($locale, [$slug]);
+            return static::$cachedUrls[$memoizedKey] = $this->resolveUrl($locale, [$slug]);
         } catch (UrlRecordNotFound $e) {
             return '';
         }

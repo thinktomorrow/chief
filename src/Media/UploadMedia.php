@@ -42,7 +42,7 @@ class UploadMedia
         foreach ($files_by_type as $type => $files_by_locale) {
             foreach ($files_by_locale as $locale => $files) {
                 $this->validateFileUploads($files);
-                
+
                 $fileIdsCollection = $files_order_by_type[$type] ?? [];
 
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
@@ -64,7 +64,7 @@ class UploadMedia
             if (!$file) {
                 continue;
             }
-            
+
             $this->addFile($model, $type, $file, $files_order, $locale);
         }
     }
