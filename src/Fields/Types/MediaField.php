@@ -58,7 +58,7 @@ class MediaField extends Field
         $images = [];
         $locale = $locale ?? app()->getLocale();
 
-        $assets = $model->assetRelation->where('pivot.type', $this->key())->filter(function($asset) use($locale){
+        $assets = $model->assetRelation->where('pivot.type', $this->key())->filter(function ($asset) use ($locale) {
             return $asset->pivot->locale == $locale;
         })->sortBy('pivot.order');
 

@@ -184,10 +184,9 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
             $locale = app()->getLocale();
         }
         try {
-
             $memoizedKey = $this->getMorphClass().'-'.$this->id.'-'.$locale;
 
-            if(isset(static::$cachedUrls[$memoizedKey])) {
+            if (isset(static::$cachedUrls[$memoizedKey])) {
                 return static::$cachedUrls[$memoizedKey];
             }
 
