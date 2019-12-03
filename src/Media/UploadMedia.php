@@ -47,7 +47,7 @@ class UploadMedia
 
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
                 $this->replaceFiles($model, $files);
-                $this->removeFiles($model, $files);
+                $this->removeFiles($model, $files, $type, $locale);
             }
             app(SortAssets::class)->handle($model, $type, $fileIdsCollection ?? []);
         }
@@ -93,13 +93,18 @@ class UploadMedia
      * @param HasAsset $model
      * @param array $files
      */
-    private function removeFiles(HasAsset $model, array $files)
+    private function removeFiles(HasAsset $model, array $files, string $type, string $locale)
     {
         if (!$this->actionExists($files, 'delete')) {
             return;
         }
 
-        app(DetachAsset::class)->detach($model, $files['delete']);
+        foreach ($files['delete'] as $id => $file) {
+            if (!$file) {
+                continue;
+            }
+            app(DetachAsset::class)->detach($model, $file, $type, $locale);
+        }
     }
 
     private function actionExists(array $files, string $action)

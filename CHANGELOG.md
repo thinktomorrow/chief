@@ -1,6 +1,18 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## unreleased
+- Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback 
+- Fixed: issue where module add button didn't show for developer account
+- Fixed: slow loading of admin index pages due to overuse of `Page::url()` method
+
+## 0.4.2 - 2019-11-27
+- Fixed: modulemanager route function to work with laravel 6.6 
+- Fixed: issue where updating url could result in a duplicate db entry
+- Fixed: Redactor rich links suggestions now show urls for the current selected locale
+- Removed: htmlpurifier which caused inconsistent saving of text module
+- Removed: dropped support for laravel 5.7
+
 ## 0.4.1 - 2019-11-26
 - Added: extra parent and request parameters for query set methods.
 - Fixed: preserve old input after failed validation for input field

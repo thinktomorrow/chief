@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
-use HTMLPurifier;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
@@ -154,14 +153,11 @@ class UpdateSections
                 $this->removeTextualModule($module);
                 continue;
             }
-           
-            foreach ($text_module['trans'] as $locale => $content) {
-                $purifier = new HTMLPurifier();
-                $sanitized_text = $purifier->purify($content['content']);
 
-                $text_module['trans'][$locale]['content'] = $sanitized_text;
+            foreach ($text_module['trans'] as $locale => $content) {
+                $text_module['trans'][$locale]['content'] = $content['content'];
             }
-            
+
             // Replace content
             app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
         }
@@ -217,12 +213,12 @@ class UpdateSections
     private function isTextCompletelyEmpty($trans): bool
     {
         $is_completely_empty = true;
-        
+
         foreach ($trans as $locale => $lines) {
             foreach ($lines as $key => $line) {
                 $stripped_line = $this->stripTagsBlacklist($line, ['p', 'br']);
                 $stripped_line = trim($stripped_line);
-    
+
                 if ($stripped_line) {
                     $is_completely_empty = false;
                     break;
