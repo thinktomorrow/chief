@@ -69,6 +69,11 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
 
     protected static $cachedUrls = [];
 
+    public static function clearCachedUrls()
+    {
+        static::$cachedUrls = null;
+    }
+
     public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
@@ -179,10 +184,9 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
             $locale = app()->getLocale();
         }
         try {
-
             $memoizedKey = $this->getMorphClass().'-'.$this->id.'-'.$locale;
 
-            if(isset(static::$cachedUrls[$memoizedKey])) {
+            if (isset(static::$cachedUrls[$memoizedKey])) {
                 return static::$cachedUrls[$memoizedKey];
             }
 

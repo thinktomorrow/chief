@@ -99,7 +99,12 @@ class UploadMedia
             return;
         }
 
-        app(DetachAsset::class)->detach($model, $files['delete'], $type, $locale);
+        foreach ($files['delete'] as $id => $file) {
+            if (!$file) {
+                continue;
+            }
+            app(DetachAsset::class)->detach($model, $file, $type, $locale);
+        }
     }
 
     private function actionExists(array $files, string $action)
