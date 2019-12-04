@@ -60,7 +60,6 @@ class UploadMedia
         }
 
         foreach ($files['new'] as $id => $file) {
-
             if (!$file) {
                 continue;
             }
@@ -128,15 +127,15 @@ class UploadMedia
                 if (false !== ($key = array_search($image_name, $files_order))) {
                     $files_order[$key] = (string) $asset->id;
                 }
-            }else{
-                try{
-                    
+            } else {
+                try {
                     $file   = Asset::find($file);
-                    if(!$file) return;
+                    if (!$file) {
+                        return;
+                    }
 
                     $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
-                }catch(AssetUploadException $e)
-                {
+                } catch (AssetUploadException $e) {
                 }
             }
         }
