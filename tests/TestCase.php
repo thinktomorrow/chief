@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Thinktomorrow\Chief\Common\Helpers\Memoize;
@@ -65,6 +66,7 @@ abstract class TestCase extends OrchestraTestCase
         // Clear out any memoized values
         Memoize::clear();
         MemoizedUrlRecord::clearCachedRecords();
+        Page::clearCachedUrls();
     }
 
     protected function resolveApplicationHttpKernel($app)

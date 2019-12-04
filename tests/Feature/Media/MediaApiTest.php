@@ -56,6 +56,9 @@ class MediaApiTest extends TestCase
         $asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
         $asset2 = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
 
+        $asset->created_at = Carbon::now()->addHour();
+        $asset->save();
+
         $response = $this->asAdmin()->get(route('chief.api.media'). "?limit=1");
 
         $response->assertStatus(200)
@@ -87,8 +90,8 @@ class MediaApiTest extends TestCase
         $asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
         $asset2 = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
 
-        $asset->created_at = Carbon::now()->addHour();
-        $asset->save();
+        $asset2->created_at = Carbon::now()->addHour();
+        $asset2->save();
 
         $response = $this->asAdmin()->get(route('chief.api.media'). "?limit=1");
 
