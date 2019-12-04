@@ -29,7 +29,7 @@
     <input type="hidden" id="removeFile-{{$document->id}}" name="{{ $name }}[delete][]" {{ $field->multiple ? 'multiple' : '' }}/>
 @endforeach
 
-<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) ? 'hidden' : ''}}">
+<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->multiple ? 'hidden' : ''}}">
     <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
         Document uploaden
     </label>
