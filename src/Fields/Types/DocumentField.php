@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\AssetLibrary\HasAsset;
 
 class DocumentField extends Field
 {
@@ -37,16 +37,13 @@ class DocumentField extends Field
         return $this->getMedia($model, $locale);
     }
 
-    private function getMedia(HasMedia $model, $locale = null)
+    private function getMedia(HasAsset $model, $locale = null)
     {
         $documents = [];
 
-        $builder = $model->assets()->where('asset_pivots.type', $this->key());
+        $builder = $model->assets($this->key(), $locale);
 
-        if ($locale) {
-            $builder = $builder->where('asset_pivots.locale', $locale);
-        }
-        foreach ($builder->get() as $asset) {
+        foreach ($builder as $asset) {
             $documents[] = $asset;
         }
         return $documents;

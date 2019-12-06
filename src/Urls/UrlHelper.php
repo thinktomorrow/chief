@@ -37,7 +37,7 @@ class UrlHelper
      * @param Model|null $ignoredModel
      * @return Collection
      */
-    private static function onlineModels(bool $onlySingles = false, Model $ignoredModel = null): Collection
+    public static function onlineModels(bool $onlySingles = false, Model $ignoredModel = null): Collection
     {
         $models = chiefMemoize('all-online-models', function () use ($onlySingles) {
             $builder = UrlRecord::whereNull('redirect_id')

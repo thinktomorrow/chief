@@ -53,7 +53,6 @@ input[type='phone'],
 input[type='password'],
 input[type='file'],
 .custom-file-input {
-    min-width: 100px;
     @apply rounded border border-grey-200;
 
     &:focus{
@@ -63,6 +62,11 @@ input[type='file'],
     &::placeholder{
         @apply text-grey-300 opacity-100;
     }
+}
+
+input[type='tel'],
+input[type='date'] {
+    min-width: 100px;
 }
 
 textarea,

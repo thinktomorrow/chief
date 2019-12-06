@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Exceptions\Handler;
 use Thinktomorrow\Chief\Common\Helpers\Memoize;
@@ -65,6 +66,7 @@ abstract class TestCase extends OrchestraTestCase
         // Clear out any memoized values
         Memoize::clear();
         MemoizedUrlRecord::clearCachedRecords();
+        Page::clearCachedUrls();
     }
 
     protected function resolveApplicationHttpKernel($app)
@@ -77,6 +79,10 @@ abstract class TestCase extends OrchestraTestCase
         $this->recurse_copy($this->getStubDirectory(), $this->getTempDirectory());
         $app['path.base'] = realpath(__DIR__ . '/../');
 
+        $app->bind('path.public', function () {
+            return $this->getTempDirectory();
+        });
+        
         $app['config']->set('permission.table_names', [
             'roles'                 => 'roles',
             'permissions'           => 'permissions',
@@ -107,6 +113,15 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
         $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Audit\Audit::class);
+
+        $app['config']->set('filesystems.disks.public', [
+            'driver' => 'local',
+            'root' => $this->getMediaDirectory(),
+        ]);
+        $app['config']->set('filesystems.disks.secondMediaDisk', [
+            'driver' => 'local',
+            'root' => $this->getTempDirectory('media2'),
+        ]);
 
         $app['config']->set('medialibrary.image_generators', [
             Image::class,
@@ -175,5 +190,10 @@ abstract class TestCase extends OrchestraTestCase
     private function getTempDirectory($dir = null)
     {
         return __DIR__.'/tmp/' . $dir;
+    }
+
+    public function getMediaDirectory($suffix = '')
+    {
+        return $this->getTempDirectory().'/media'.($suffix == '' ? '' : '/'.$suffix);
     }
 }

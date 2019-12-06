@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Thinktomorrow\AssetLibrary\HasAsset;
 
 class MediaField extends Field
 {
@@ -53,21 +53,20 @@ class MediaField extends Field
         return $this->getMedia($model, $locale);
     }
 
-    private function getMedia(HasMedia $model, $locale = null)
+    private function getMedia(HasAsset $model, $locale = null)
     {
         $images = [];
+        $locale = $locale ?? app()->getLocale();
 
-        $builder = $model->assets()->where('asset_pivots.type', $this->key());
+        $assets = $model->assetRelation->where('pivot.type', $this->key())->filter(function ($asset) use ($locale) {
+            return $asset->pivot->locale == $locale;
+        })->sortBy('pivot.order');
 
-        if ($locale) {
-            $builder = $builder->where('asset_pivots.locale', $locale);
-        }
-
-        foreach ($builder->get() as $asset) {
+        foreach ($assets as $asset) {
             $images[] = (object)[
                 'id'       => $asset->id,
-                'filename' => $asset->getFilename(),
-                'url'      => $asset->getFileUrl(),
+                'filename' => $asset->filename(),
+                'url'      => $asset->url(),
             ];
         }
 

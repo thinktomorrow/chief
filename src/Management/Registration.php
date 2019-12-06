@@ -13,10 +13,10 @@ class Registration
     {
         $this->validate($managerClass, $modelClass);
 
-        $this->key = $modelClass::managedModelKey();
+        $this->key          = $modelClass::managedModelKey();
         $this->managerClass = $managerClass;
-        $this->modelClass = $modelClass;
-        $this->tags = $tags;
+        $this->modelClass   = $modelClass;
+        $this->tags         = $tags;
     }
 
     public static function fromArray(array $registration)

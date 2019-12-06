@@ -15,7 +15,6 @@ use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Audit\AuditTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,7 +22,7 @@ use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
@@ -31,11 +30,12 @@ use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
 use Thinktomorrow\Chief\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
-class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl, StatefulContract
+class Page extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl, StatefulContract
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
@@ -68,6 +68,13 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
     protected $baseViewPath;
     protected static $baseUrlSegment = '/';
+
+    protected static $cachedUrls = [];
+
+    public static function clearCachedUrls()
+    {
+        static::$cachedUrls = null;
+    }
 
     public function __construct(array $attributes = [])
     {
@@ -148,12 +155,10 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
 
     public function mediaUrls($type = null): Collection
     {
-        // TODO getallfiles should actually get all files...
-        // What was the creator of the assetlibrary package thinking. It sure wasn't me... I promise...
-        $assets = $this->getAllFiles($type, app()->getLocale())->map->getFileUrl();
+        $assets = $this->assets($type, app()->getLocale())->map->url();
 
         if ($assets->first() == null) {
-            $assets = $this->getAllFiles($type)->map->getFileUrl();
+            $assets = $this->assets($type)->map->url();
         }
 
         return $assets;
@@ -180,11 +185,16 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         if (!$locale) {
             $locale = app()->getLocale();
         }
-
         try {
+            $memoizedKey = $this->getMorphClass().'-'.$this->id.'-'.$locale;
+
+            if (isset(static::$cachedUrls[$memoizedKey])) {
+                return static::$cachedUrls[$memoizedKey];
+            }
+
             $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 
-            return $this->resolveUrl($locale, [$slug]);
+            return static::$cachedUrls[$memoizedKey] = $this->resolveUrl($locale, [$slug]);
         } catch (UrlRecordNotFound $e) {
             return '';
         }

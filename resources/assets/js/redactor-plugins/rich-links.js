@@ -33,8 +33,12 @@
             }
             else
             {
+                var $url = this.opts.definedlinks;
+                if(this.opts.locale) {
+                    $url += '?locale=' + this.opts.locale;
+                }
                 $R.ajax.get({
-                    url: this.opts.definedlinks,
+                    url: $url,
                     success: this._build.bind(this)
                 });
             }

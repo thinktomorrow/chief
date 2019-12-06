@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Management;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
@@ -16,8 +15,9 @@ use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
-use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 abstract class AbstractManager
 {
@@ -39,6 +39,7 @@ abstract class AbstractManager
 
     protected $pageCount = 20;
     protected $paginated = true;
+    protected static $bootedTraitMethods = [];
 
     public function __construct(Registration $registration)
     {
@@ -49,6 +50,8 @@ abstract class AbstractManager
 
         // Check if key and model are present since the model should be set by the manager itself
         $this->validateConstraints();
+
+        static::bootTraitMethods();
     }
 
     public function manage($model): Manager
@@ -176,6 +179,13 @@ abstract class AbstractManager
 
     public function can($verb): bool
     {
+        foreach (static::$bootedTraitMethods['can'] as $method) {
+            if (!method_exists($this, $method)) {
+                continue;
+            }
+            $this->$method($verb);
+        }
+
         return !is_null($this->route($verb));
     }
 
@@ -232,7 +242,15 @@ abstract class AbstractManager
     {
         $this->guard('delete');
 
-        app(DeleteManagedModel::class)->handle($this->model);
+        if ($this->model instanceof ActsAsChild) {
+            $this->model->detachAllParentRelations();
+        }
+
+        if ($this->model instanceof ActsAsParent) {
+            $this->model->detachAllChildRelations();
+        }
+
+        $this->model->delete();
     }
 
     public static function filters(): Filters
@@ -273,6 +291,27 @@ abstract class AbstractManager
     {
         if (!$this->model) {
             throw new \DomainException('Model class should be set for this manager. Please set the model property default via the constructor or by extending the setupDefaults method.');
+        }
+    }
+
+    public static function bootTraitMethods()
+    {
+        $class = static::class;
+
+        $methods = [
+            'can'
+        ];
+
+        foreach ($methods as $baseMethod) {
+            static::$bootedTraitMethods[$baseMethod] = [];
+
+            foreach (class_uses_recursive($class) as $trait) {
+                $method = class_basename($trait) . ucfirst($baseMethod);
+
+                if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
+                    static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
+                }
+            }
         }
     }
 }

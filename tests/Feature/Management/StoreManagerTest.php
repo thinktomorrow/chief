@@ -89,6 +89,6 @@ class StoreManagerTest extends TestCase
                 ],
             ]);
 
-        $this->assertEquals('tt-favicon.png', ManagedModelFakeFirst::first()->getFilename('hero'));
+        $this->assertEquals('tt-favicon.png', ManagedModelFakeFirst::first()->asset('hero')->filename());
     }
 }

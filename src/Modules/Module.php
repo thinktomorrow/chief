@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Management\Managers;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
@@ -15,17 +14,18 @@ use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
-class Module extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsChild, MorphableContract, ViewableContract
+class Module extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsChild, MorphableContract, ViewableContract
 {
     use Morphable,
         AssetTrait,
@@ -71,12 +71,31 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
     }
 
     /**
-     * Enlist all available managed modules.
+     * Enlist all available managed modules for creation.
      * @return Collection of ManagedModelDetails
      */
-    public static function available(): Collection
+    public static function availableForCreation(): Collection
     {
-        return app(Managers::class)->findDetailsByTag('module');
+        $managers = app(Managers::class)->findByTag('module')->filter(function ($manager) {
+            return $manager->can('create');
+        })->map(function ($manager) {
+            return $manager->details();
+        });
+
+        return $managers;
+    }
+
+    public static function anyAvailableForCreation(): bool
+    {
+        return !static::availableForCreation()->isEmpty();
+    }
+
+    /**
+     * Return true if there is at least one registered module
+     */
+    public static function atLeastOneRegistered(): bool
+    {
+        return app(Managers::class)->anyRegisteredByTag('module');
     }
 
     public function page()
@@ -159,7 +178,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasMed
 
     public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        return $this->getAllFiles($type)->map->getFileUrl($size);
+        return $this->assets($type)->map->url($size);
     }
 
     public function mediaUrl($type = null, $size = 'full'): ?string

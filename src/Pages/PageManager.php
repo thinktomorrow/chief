@@ -48,11 +48,11 @@ class PageManager extends AbstractManager implements Manager
     {
         try {
             $this->authorize($verb);
+
+            return parent::can($verb);
         } catch (NotAllowedManagerRoute $e) {
             return false;
         }
-
-        return parent::can($verb);
     }
 
     /**
@@ -110,7 +110,7 @@ class PageManager extends AbstractManager implements Manager
             MediaField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
-                ->description('foto die bij het delen van deze pagina getoont word. (afmeting: 1200x627px)')
+                ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
         );
     }
 
@@ -147,7 +147,7 @@ class PageManager extends AbstractManager implements Manager
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ];
 
-        if (! Module::available()->values()->isEmpty()) {
+        if (Module::anyAvailableForCreation()) {
             array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
         }
 

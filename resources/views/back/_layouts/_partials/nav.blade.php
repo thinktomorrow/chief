@@ -21,7 +21,7 @@
                                     <a class="{{ isActiveUrl('admin/menus*') ? 'active' : '' }}" href="{{ route('chief.back.menus.index') }}">Menu</a>
                                 @endcan
                                 @can('view-page')
-                                    @if(! \Thinktomorrow\Chief\Modules\Module::available()->values()->isEmpty())
+                                    @if(\Thinktomorrow\Chief\Modules\Module::atLeastOneRegistered())
                                         <a class="{{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Vaste modules</a>
                                     @endif
                                 @endcan

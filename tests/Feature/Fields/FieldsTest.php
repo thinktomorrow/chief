@@ -61,19 +61,4 @@ class FieldsTest extends TestCase
         $this->assertCount(2, $mergedFields->all());
         $this->assertEquals(['input-one','input-two'],$mergedFields->keys());
     }
-
-    /** @test */
-    public function it_can_have_a_custom_view()
-    {
-        $this->app['view']->addNamespace('test-views', __DIR__ . '/stubs/views');
-
-        app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
-        $manager = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()));
-
-        $render = $manager->renderField(
-            InputField::make('input-one')->view('test-views::custom-field')
-        );
-
-        $this->assertEquals('this is a custom field view',$render);
-    }
 }

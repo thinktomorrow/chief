@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 /**
  * @property $id
@@ -28,9 +29,9 @@ class StoredSetReference extends Model implements ActsAsChild
     /**
      * Run the query and collect the resulting pages into a Set object.
      */
-    public function toSet()
+    public function toSet(ActsAsParent $parent)
     {
-        return Set::fromReference($this->toReference());
+        return Set::fromReference($this->toReference(), $parent);
     }
 
     public function toReference(): SetReference
