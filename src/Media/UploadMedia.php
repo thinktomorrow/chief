@@ -2,16 +2,17 @@
 
 namespace Thinktomorrow\Chief\Media;
 
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\SortAssets;
+use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\AssetLibrary\Exceptions\AssetUploadException;
 
 class UploadMedia
 {
@@ -128,15 +129,17 @@ class UploadMedia
                     $files_order[$key] = (string) $asset->id;
                 }
             } else {
-                try {
-                    $file   = Asset::find($file);
-                    if (!$file) {
-                        return;
-                    }
-
-                    $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
-                } catch (AssetUploadException $e) {
+                $file   = Asset::find($file);
+                if (!$file) {
+                    return;
                 }
+
+                if($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($file))
+                {
+                    throw new DuplicateAssetException();
+                }
+
+                $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
             }
         }
     }

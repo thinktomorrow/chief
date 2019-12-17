@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
-use Thinktomorrow\Chief\Relations\Relation;
 
 abstract class AbstractManager
 {

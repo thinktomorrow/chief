@@ -292,7 +292,7 @@ class UploadMediaTest extends TestCase
                     ]
                 ]
             ]));
-        
+
         $this->assertEquals('tt-favicon-nl.png', $page->refresh()->asset('seo_image', 'nl')->filename());
         $this->assertEquals('tt-favicon-nl.png', $page->asset('seo_image', 'en')->filename());
     }
@@ -336,7 +336,7 @@ class UploadMediaTest extends TestCase
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'filesOrder' => 
+                'filesOrder' =>
                 [
                     'nl' => [
                         'files-' . MediaType::HERO => $nl_images[1]->id . ',' . $nl_images[0]->id,
@@ -378,7 +378,33 @@ class UploadMediaTest extends TestCase
 
         $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
     }
-    
+
+    /** @test */
+    public function an_existing_asset_can_not_be_added_more_than_once()
+    {
+        $page = Single::create();
+        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
+
+        $response = $this->asAdmin()->followingRedirects()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'new' => [
+                            $existing_asset->id,
+                            $existing_asset->id,
+                        ]
+                    ]
+                ]
+            ]));
+
+        $response->assertSee('Een van de fotos die je uploadde bestond al.');
+
+        // Assert replacement took place
+        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
+
+        $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
+    }
+
     /** @test */
     public function an_existing_asset_can_be_added_as_translation()
     {

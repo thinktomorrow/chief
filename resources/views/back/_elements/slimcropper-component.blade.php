@@ -43,12 +43,11 @@
                 }
             },
             methods: {
-                markForDeletion: function (e) {
-                    // If event contains a reference to an image,
-                    // this is a replace action and not a delete one
+                markForDeletion: function (e, target) {
                     this.deletion = true;
-                    
-                    Eventbus.$emit('file-deletion-' + this.group, this.id);
+                    var self = this;
+
+                    Eventbus.$emit('file-deletion-' + this.group, {id: self.id, newImage: target});
                 },
                 onLoad: function () {
 

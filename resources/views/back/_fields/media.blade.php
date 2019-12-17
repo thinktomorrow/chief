@@ -39,7 +39,7 @@
             <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
                 <span>Voeg bestaande toe uit je galerij</span>
             </div>
-            <mediagallery group="{{ $slug }}" locale="{{$locale}}"></mediagallery>
+            <mediagallery group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
         </div>
 
         <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-link">

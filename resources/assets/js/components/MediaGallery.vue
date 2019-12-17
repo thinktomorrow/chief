@@ -42,7 +42,8 @@
 			group: {required: true, default: ''},
 			locale: {required: true, default: ''},
 			limit: {required: false, default: 12},
-			replace: {required: false, default: ''}
+            replace: {required: false, default: ''},
+            uploaded: {required: true, default: []}
 		},
 		data(){
             return {
@@ -59,8 +60,8 @@
 		created() {
 			Eventbus.$on('open-modal',(id) => {
 				if(this.id == id && !this.assets.length){
-					axios.get(`/admin/api/media?limit=${this.limit}`).then((response) => {
-						this.assets = response.data;
+					axios.get(`/admin/api/media?limit=${this.limit}&excluded=${this.uploaded}`).then((response) => {
+                        this.assets = response.data;
 						this.isLoading = false;
 					}).catch((errors) => {
 						alert('error');
@@ -71,8 +72,8 @@
 		methods: {
 			loadMore: function() {
 				this.isLoading = true;
-				axios.get(`/admin/api/media?offset=${this.assets.length}&limit=${this.limit}`).then((response) => {
-					this.assets = [...this.assets, ...response.data];
+				axios.get(`/admin/api/media?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}`).then((response) => {
+                    this.assets = [...this.assets, ...response.data];
 					this.isLoading = false;
 					let image = document.getElementById(`media-gallery-image-${this.assets.length-this.limit-1}`);
 					setTimeout(() => {
@@ -84,7 +85,8 @@
 				})
 			},
 			select: function(asset) {
-				this.selected = asset.id;
+                this.selected = asset.id;
+                this.assets.splice(item => item.id == this.selected);
 				Eventbus.$emit('close-modal', this.id);
 				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset);
 			}

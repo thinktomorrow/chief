@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
@@ -83,10 +84,13 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        app(UpdateManager::class)->handle($manager, $request);
+        try{
+            app(UpdateManager::class)->handle($manager, $request);
+        }catch(DuplicateAssetException $e){
+            return redirect()->to($manager->route('edit'))->with('messages.error', 'Een van de fotos die je uploadde bestond al.');
+        }
 
-        return redirect()->to($manager->route('edit'))
-                         ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" werd aangepast');
+        return redirect()->to($manager->route('edit'))->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" werd aangepast');
     }
 
     public function delete(string $key, $id, Request $request)

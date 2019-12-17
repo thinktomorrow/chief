@@ -12,10 +12,13 @@ class MediaGalleryController extends Controller
     {
         $limit  = 9;
         $offset = 0;
+        $excluded = [];
 
         $limit  = $request->query()['limit'] ?? $limit;
         $offset = $request->query()['offset'] ?? $offset;
-        $links = Asset::orderBy('created_at', 'DESC')->offset($offset)->limit($limit)->get()->map(function ($asset) {
+        $excluded = isset($request->query()['excluded']) ? explode(",", $request->query()['excluded']) : $excluded;
+
+        $links = Asset::orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->offset($offset)->limit($limit)->get()->map(function ($asset) {
             return [
                 "id"         => $asset->id,
                 "url"        => $asset->url(),

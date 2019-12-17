@@ -46,15 +46,25 @@
                     }, 1500);
                 });
 
-                Eventbus.$on('file-deletion-' + this.group, function(id) {
+                Eventbus.$on('file-deletion-' + this.group, function(obj){
+                    var id = obj.id;
                     self.items.forEach((item, itemId) => {
                         if(item.id == id) {
-                            if(item.newUpload == true) {
-                                self.items.splice(itemId, 1);
-                            }else{
-                                item.deleted = true;
-                                self.items.splice(itemId, 1, item);
-                            }
+                            /**
+                             * This timeout function is required since the newImage object we received from slim 
+                             * has a name property but this isn't filled in immediatly so we wait a little bit
+                             */
+                            setTimeout(function () {
+                                var imageName = obj.newImage._data.input.name;
+                                if(item.newUpload == true) {
+                                    if(imageName == null){
+                                        self.items.splice(itemId, 1);
+                                    }
+                                }else{
+                                    item.deleted = true;
+                                    self.items.splice(itemId, 1, item);
+                                }
+                            }, 200);
                         }
                     })
                 });
