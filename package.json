@@ -34,7 +34,7 @@
     "lodash": "^4.17.15",
     "npmlog": "^4.1.2",
     "popper.js": "^1.16.0",
-    "sortablejs": "^1.10.1",
+    "sortablejs": "^1.10.2",
     "stickyfilljs": "^2.1.0",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.2",
