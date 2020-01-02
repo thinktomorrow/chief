@@ -95,6 +95,17 @@ class Managers
         });
     }
 
+    public function allAssistantClassNames(): Collection
+    {
+        $assistants = collect();
+
+        foreach($this->all() as $manager) {
+            $assistants = $assistants->merge($manager->assistants(false));
+        }
+
+        return $assistants->unique();
+    }
+
     public function anyRegisteredByTag($tag)
     {
         return ! empty($this->register->filterByTag($tag)->all());

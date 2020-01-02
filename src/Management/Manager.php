@@ -32,6 +32,8 @@ interface Manager extends FieldManager
 
     public function assistants(): array;
 
+    public function addAssistant(string $assistantClass);
+
     /**
      * Find an instance by id wrapped in a Manager
      *

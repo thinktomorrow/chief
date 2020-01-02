@@ -95,7 +95,7 @@ class ArchiveAssistant implements Assistant
         return !is_null($this->route($verb));
     }
 
-    public function guard($verb): Assistant
+    private function guard($verb): Assistant
     {
         if (! $this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);

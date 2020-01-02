@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\States\State\StateException;
 
-class StateTest extends TestCase
+class PageStateTest extends TestCase
 {
     private $page;
     private $machine;

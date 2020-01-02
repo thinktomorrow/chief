@@ -84,9 +84,4 @@ class UrlAssistant implements Assistant
     {
         return true;
     }
-
-    public function guard($verb): Assistant
-    {
-        return $this;
-    }
 }

@@ -82,8 +82,8 @@ class PublishAssistant implements Assistant
     public function route($verb): ?string
     {
         $modelRoutes = [
-            'publish'   => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
-            'unpublish'     => route('chief.back.assistants.unpublish', [$this->manager->details()->key, $this->manager->model()->id]),
+            'publish' => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
+            'unpublish' => route('chief.back.assistants.unpublish', [$this->manager->details()->key, $this->manager->model()->id]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -94,7 +94,7 @@ class PublishAssistant implements Assistant
         return !is_null($this->route($verb));
     }
 
-    public function guard($verb): Assistant
+    private function guard($verb): Assistant
     {
         if (! $this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);

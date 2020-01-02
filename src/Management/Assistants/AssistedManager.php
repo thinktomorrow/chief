@@ -12,56 +12,82 @@ trait AssistedManager
     /**
      * Check if this manager is assisted by a certain assistant
      *
-     * @param string $assistant
+     * @param string $assistantKey
      * @return bool
      */
-    public function isAssistedBy(string $assistant): bool
+    public function isAssistedBy(string $assistantKey): bool
     {
-        return !! $this->getAssistantClass($assistant);
+        return !! $this->getAssistantClass($assistantKey);
     }
 
-    public function assistants(): array
+    /**
+     * @param bool $asInstances
+     * @return array
+     * @throws \Exception
+     */
+    public function assistants($asInstances = true): array
     {
         $assistants = [];
 
         foreach ($this->assistants as $assistant) {
-            $assistants[] = $this->assistant($assistant);
+            $assistants[] = $asInstances ? $this->assistant($assistant) : $assistant;
         }
 
         return $assistants;
     }
 
+    public function assistantsAsClassNames()
+    {
+        return $this->assistants(false);
+    }
+
     /**
      * Instantiate the assistant
      *
-     * @param string $assistant
+     * @param string $assistantKey
      * @return Assistant
      * @throws \Exception
      */
-    public function assistant(string $assistant): Assistant
+    public function assistant(string $assistantKey): Assistant
     {
-        if (! $this->isAssistedBy($assistant)) {
-            throw new MissingAssistant('No assistant [' . $assistant . '] present on manager ' . get_class($this));
+        if (! $this->isAssistedBy($assistantKey)) {
+            throw new MissingAssistant('No assistant [' . $assistantKey . '] registered on manager ' . get_class($this));
         }
 
-        $instance = app($this->getAssistantClass($assistant));
+        $instance = app($this->getAssistantClass($assistantKey));
         $instance->manager($this);
 
         return $instance;
     }
 
-    private function getAssistantClass($assistant): ?string
+    /**
+     * Get assistant class by key or assistant classname
+     *
+     * @param string $assistantKey
+     * @return string|null
+     */
+    private function getAssistantClass(string $assistantKey): ?string
     {
-        if (in_array($assistant, $this->assistants)) {
-            return $assistant;
-        }
-
         foreach ($this->assistants as $class) {
-            if ($assistant == $class::key()) {
+            if ($assistantKey == $class::key()) {
                 return $class;
             }
         }
 
+        // Alternatively, check if the passed argument is the assistant class name
+        if (in_array($assistantKey, $this->assistants)) {
+            return $assistantKey;
+        }
+
         return null;
+    }
+
+    public function addAssistant(string $assistantClass)
+    {
+        if(false === array_search($assistantClass, $this->assistants)) {
+            $this->assistants[] = $assistantClass;
+        }
+
+        return $this;
     }
 }
