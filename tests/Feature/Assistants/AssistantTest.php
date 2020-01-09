@@ -2,11 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Assistants;
 
+use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Routing\Route;
-use Illuminate\Routing\Router;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Illuminate\Routing\RouteCollection;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
@@ -54,32 +53,16 @@ class AssistantTest extends TestCase
     }
 
     /** @test */
-    function an_assistant_route_is_always_registered_under_chief_middleware()
+    function an_assistant_route_is_delegated_to_the_expected_assistant_method()
     {
-        $this->disableExceptionHandling();
         $manager = $this->setupManager();
 
         $route = $manager->assistant('favorite')->route('dummy-favorite');
 
+        /** @var TestResponse $response */
         $response = $this->asAdmin()->post($route);
 
-//        $this->assertEquals()
-    }
-
-    /** @test */
-    function it_can_handle_an_assistant_specific_request()
-    {
-        // TEMP
-        FavoriteAssistant::registerRoutes();
-
-        $article = ArticlePageFake::create();
-        $manager = (new ArticlePageManager(new Registration(ArticlePageManager::class, ArticlePageFake::class)))->manage($article);
-
-        $manager->addAssistant(FavoriteAssistant::class);
-
-        $route = $manager->assistant('favorite')->route('favorite');
-        trap($route);
-        trap($manager->assistants());
+        $response->assertSuccessful();
     }
 
     /**
@@ -91,7 +74,6 @@ class AssistantTest extends TestCase
 
         $article = ArticlePageFake::create();
         $manager = (new ArticlePageManager(new Registration(ArticlePageManager::class, ArticlePageFake::class)))->manage($article);
-        $manager->addAssistant(FavoriteAssistant::class);
 
         return $manager;
     }

@@ -36,9 +36,9 @@ Route::delete('remove-redirect/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\
 Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
 Route::post('unpublish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@unpublish')->name('chief.back.assistants.unpublish')->where('id', '[0-9]+');
 
-Route::get('archive/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@index')->name('chief.back.assistants.archive-index');
-Route::post('archive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');
-Route::post('unarchive/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\ArchiveController@unarchive')->name('chief.back.assistants.unarchive')->where('id', '[0-9]+');
+Route::get('archive/{key}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@index')->name('chief.back.assistants.archive-index');
+Route::post('archive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');
+Route::post('unarchive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@unarchive')->name('chief.back.assistants.unarchive')->where('id', '[0-9]+');
 
 /**
 * -----------------------------------------------------------------

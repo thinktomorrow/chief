@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\States\State\StatefulContract;

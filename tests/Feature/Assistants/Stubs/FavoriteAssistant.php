@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Assistants\Stubs;
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Assistants\Assistant;
-use Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController;
 
 class FavoriteAssistant implements Assistant
 {
@@ -33,5 +32,10 @@ class FavoriteAssistant implements Assistant
     public function can($verb): bool
     {
         return true;
+    }
+
+    public function favorize(Request $request)
+    {
+        $this->manager->model()->favorite = true;
     }
 }

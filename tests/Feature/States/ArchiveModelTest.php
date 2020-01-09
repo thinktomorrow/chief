@@ -29,8 +29,8 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function an_admin_can_view_archive_index()
     {
-        $response = $this->asAdmin()
-            ->get(route('chief.back.assistants.archive-index', ['singles', $this->page->id]));
+        $this->disableExceptionHandling();
+        $response = $this->asAdmin()->get(route('chief.back.assistants.archive-index', ['singles', 'archive']));
 
         $response->assertStatus(200);
         $response->assertViewIs('chief::back.managers.archive.index');
@@ -39,6 +39,7 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_can_archive_a_page()
     {
+        $this->disableExceptionHandling();
         $this->asAdmin()
             ->post(route('chief.back.assistants.archive', ['singles', $this->page->id]));
 

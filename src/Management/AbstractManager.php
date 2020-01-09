@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\RenderingFields;
 use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
+use Thinktomorrow\Chief\Management\Assistants\ManagesAssistants;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
@@ -28,7 +28,7 @@ abstract class AbstractManager
         ManagesMedia,
         ManagesPagebuilder,
         TranslatableCommand,
-        AssistedManager;
+        ManagesAssistants;
 
     protected $translation_columns = [];
 

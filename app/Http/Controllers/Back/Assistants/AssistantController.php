@@ -16,11 +16,23 @@ class AssistantController extends Controller
         $this->managers = $managers;
     }
 
+    /**
+     * Each assistant route expects 3 dynamics url segment. This is expected to be in the following sequence:
+     * key (manager key), id (managed model id) and assistant as the assistant identifier.
+     *
+     * e.g. assistant-route-call/{key}/{id}/{assistant}
+     *
+     * @param string $method
+     * @param array $parameters
+     * @return mixed
+     */
     public function __call($method, $parameters)
     {
         $managerKey = $parameters[0];
         $modelId = $parameters[1];
-        $assistantKey = $parameters[2];
+
+        // If there is no third parameter passed, we assume the assistantKey is given.
+        $assistantKey = (!isset($parameters[2])) ? $modelId : $parameters[2];
 
         $manager = $this->managers->findByKey($managerKey, $modelId);
 

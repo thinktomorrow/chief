@@ -88,6 +88,7 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_archive_events_on_pages()
     {
+        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $page = factory(Page::class)->create(['current_state' => PageState::PUBLISHED])->first();
