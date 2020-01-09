@@ -25,8 +25,9 @@ class InternalLinksController extends Controller
         $links = $onlineModels->reject(function (ProvidesUrl $model) {
             return !$model->url();
         })->map(function ($model) {
+            $name = (method_exists($model, 'menuLabel') && $model->menuLabel()) ? $model->menuLabel() : (isset($model->title) ? $model->title : $model->url());
             return [
-                'name' => (method_exists($model, 'menuLabel') && $model->menuLabel()) ? $model->menuLabel() : (isset($model->title) ? $model->title : $model->url()),
+                'name' => $name ??  $model->url(),
                 'url' => $model->url(),
             ];
         });
