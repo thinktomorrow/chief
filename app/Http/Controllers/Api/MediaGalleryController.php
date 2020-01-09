@@ -20,7 +20,7 @@ class MediaGalleryController extends Controller
 
         $links = Asset::orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->offset($offset)->limit($limit)->get()->reject(function($asset){
             return $asset->getExtensionType() != 'image';
-        })->map(function ($asset) {
+        })->values()->map(function ($asset) {
             return [
                 "id"         => $asset->id,
                 "url"        => $asset->url(),
