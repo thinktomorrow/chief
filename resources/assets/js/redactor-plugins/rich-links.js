@@ -93,7 +93,7 @@
 
             if (formData.text !== '')
             {
-                data = { url: data.url, text: data.text };
+                data = { url: data.url };
             }
 
             this.$form.setData(data);
