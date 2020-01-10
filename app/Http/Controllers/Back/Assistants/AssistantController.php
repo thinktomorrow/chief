@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants;
 
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -22,25 +23,34 @@ class AssistantController extends Controller
      *
      * e.g. assistant-route-call/{key}/{id}/{assistant}
      *
+     * @param Request $request
+     * @param string $assistant
      * @param string $method
-     * @param array $parameters
+     * @param string $manager
+     * @param null $model
      * @return mixed
      */
-    public function __call($method, $parameters)
+    public function view(Request $request, string $assistant, string $method, string $manager, $model = null)
     {
-        $managerKey = $parameters[0];
-        $modelId = $parameters[1];
+        $manager = $this->managers->findByKey($manager, $model);
 
-        // If there is no third parameter passed, we assume the assistantKey is given.
-        $assistantKey = (!isset($parameters[2])) ? $modelId : $parameters[2];
-
-        $manager = $this->managers->findByKey($managerKey, $modelId);
-
-        return $this->forwardCallToAssistant($manager, $assistantKey, $method);
+        return $this->forwardRequestToAssistant($request, $manager, $assistant, $method);
     }
 
-    private function forwardCallToAssistant(Manager $manager, string $assistantKey, string $method)
+    public function update(Request $request, string $assistant, string $method, string $manager, $model)
     {
-        return $manager->assistant($assistantKey)->$method(request());
+        $manager = $this->managers->findByKey($manager, $model);
+
+        return $this->forwardRequestToAssistant($request, $manager, $assistant, $method);
+    }
+
+    private function forwardRequestToAssistant(Request $request, Manager $manager, string $assistantKey, string $method)
+    {
+        // If the given method is not related to this route, we'll abort to make sure no unintented method calls are being made
+        if(is_null($manager->assistant($assistantKey)->route($method))) {
+            throw new \InvalidArgumentException("Assistant $assistantKey does not allow method $method to be called via route. Consider adding this method as route key.");
+        }
+
+        return $manager->assistant($assistantKey)->$method($request);
     }
 }

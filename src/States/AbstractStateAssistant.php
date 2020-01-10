@@ -18,7 +18,7 @@ abstract class AbstractStateAssistant
     public function manager(Manager $manager)
     {
         $this->manager  = $manager;
-        $this->model    = $manager->model();
+        $this->model    = $manager->existingModel();
 
         if(!$this->model instanceof StatefulContract){
             throw new \InvalidArgumentException(static::class . ' requires the model to implement the ' . StatefulContract::class);

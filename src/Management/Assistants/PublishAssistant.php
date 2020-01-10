@@ -30,7 +30,7 @@ class PublishAssistant implements Assistant
     public function manager(Manager $manager)
     {
         $this->manager = $manager;
-        $this->model = $manager->model();
+        $this->model = $manager->existingModel();
 
         if(!$this->model instanceof StatefulContract){
             throw new \InvalidArgumentException('PublishAssistant requires the model to implement the StatefulContract.');

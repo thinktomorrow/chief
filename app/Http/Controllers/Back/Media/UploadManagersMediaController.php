@@ -33,7 +33,7 @@ class UploadManagersMediaController extends Controller
     public function store(string $key, $id, Request $request)
     {
         $uploads = $request->file('file');
-        $model   = $this->managers->findByKey($key, $id)->model();
+        $model   = $this->managers->findByKey($key, $id)->existingModel();
 
         if (empty($uploads)) {
             return response()->json([

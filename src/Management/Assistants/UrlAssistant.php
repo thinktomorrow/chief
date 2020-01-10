@@ -27,11 +27,11 @@ class UrlAssistant implements Assistant
     {
         $this->manager  = $manager;
 
-        if (! $manager->model() instanceof ProvidesUrl) {
+        if (! $manager->existingModel() instanceof ProvidesUrl) {
             throw new \Exception('UrlAssistant requires the model interfaced by ' . ProvidesUrl::class . '.');
         }
 
-        $this->model = $manager->model();
+        $this->model = $manager->existingModel();
 
         $this->urlRecords = MemoizedUrlRecord::getByModel($this->model);
     }

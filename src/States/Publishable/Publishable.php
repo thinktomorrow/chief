@@ -8,12 +8,12 @@ trait Publishable
 {
     public function isPublished(): bool
     {
-        return $this->state() === PageState::PUBLISHED;
+        return $this->stateOf(PageState::KEY) === PageState::PUBLISHED;
     }
 
     public function isDraft(): bool
     {
-        return $this->state() === PageState::DRAFT;
+        return $this->stateOf(PageState::KEY) === PageState::DRAFT;
     }
 
     public function scopePublished($query)
@@ -23,16 +23,16 @@ trait Publishable
             return;
         }
 
-        $query->where('current_state', PageState::PUBLISHED);
+        $query->where(PageState::KEY, PageState::PUBLISHED);
     }
 
     public function scopeDrafted($query)
     {
-        $query->where('current_state', PageState::DRAFT);
+        $query->where(PageState::KEY, PageState::DRAFT);
     }
 
     public static function getAllPublished()
     {
-        return self::published()->get();
+        return static::published()->get();
     }
 }

@@ -7,6 +7,9 @@ use Thinktomorrow\Chief\States\State\StatefulContract;
 
 class PageState extends StateMachine
 {
+    // column key that refers to the current state in db
+    const KEY = 'current_state';
+
     // Offline states
     const DRAFT = 'draft';
     const ARCHIVED = 'archived';
@@ -46,14 +49,14 @@ class PageState extends StateMachine
         ],
     ];
 
-    public function __construct(StatefulContract $order)
+    public function __construct(StatefulContract $page)
     {
-        parent::__construct($order);
+        parent::__construct($page, static::KEY);
     }
 
     public function isOffline(): bool
     {
-        return in_array($this->statefulContract->state(), [
+        return in_array($this->statefulContract->stateOf(static::KEY), [
             static::DRAFT,
             static::ARCHIVED,
             static::DELETED,
@@ -62,7 +65,7 @@ class PageState extends StateMachine
 
     public function isOnline(): bool
     {
-        return in_array($this->statefulContract->state(), [
+        return in_array($this->statefulContract->stateOf(static::KEY), [
             static::PUBLISHED,
         ]);
     }

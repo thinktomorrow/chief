@@ -280,20 +280,20 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         return '-';
     }
 
-    public function state(): string
+    public function stateOf($key): string
     {
-        return $this->current_state ?? PageState::DRAFT; // On first creation the state is not yet injected.
+        return $this->$key;
     }
 
-    public function changeState($state)
+    public function changeStateOf($key, $state)
     {
         // Ignore change to current state - it should not trigger events either
-        if ($state === $this->state()) {
+        if ($state === $this->stateOf($key)) {
             return;
         }
 
-        PageState::assertNewState($this, $state);
+        PageState::assertNewState($this, $key, $state);
 
-        $this->current_state = $state;
+        $this->$key = $state;
     }
 }

@@ -16,6 +16,12 @@ use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 interface Manager extends FieldManager
 {
     /**
+     * Identifies this type of manager. This is the key that is set upon registration of the manager.
+     * @return string
+     */
+    public function managerKey(): string;
+
+    /**
      * Set the specific model to be managed.
      *
      * Either give a specific model to manage or if no parameter passed,
@@ -49,10 +55,16 @@ interface Manager extends FieldManager
     public function indexCollection();
 
     /**
-     * Retrieve the managed model instance
-     * @return mixed
+     * Static class name of the model class.
+     * @return string
      */
-    public function model();
+    public function modelClass(): string;
+
+    /**
+     * Retrieve the managed model instance
+     * @return ManagedModel
+     */
+    public function existingModel(): ManagedModel;
 
     /**
      * Assert that the model already exists (in database)

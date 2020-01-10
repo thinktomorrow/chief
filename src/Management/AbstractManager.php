@@ -54,6 +54,11 @@ abstract class AbstractManager
         static::bootTraitMethods();
     }
 
+    public function managerKey(): string
+    {
+        return $this->registration->key();
+    }
+
     public function manage($model): Manager
     {
         $this->model = $model;
@@ -63,18 +68,16 @@ abstract class AbstractManager
 
     public function findManaged($id): Manager
     {
-        $model = $this->registration->model();
-
-        $modelInstance = $model::where('id', $id)->withoutGlobalScopes()->first();
+        $modelInstance = $this->modelClass()::where('id', $id)->withoutGlobalScopes()->first();
 
         return (new static($this->registration))->manage($modelInstance);
     }
 
     public function indexCollection()
     {
-        $model = $this->registration->model();
+        $modelClass = $this->modelClass();
 
-        $builder = (new $model)->query();
+        $builder = (new $modelClass)->query();
 
         $this->filters()->apply($builder);
 
@@ -103,7 +106,7 @@ abstract class AbstractManager
         }
 
         // if model has no timestamps, updated_at doesn't exist
-        if ($this->model()->timestamps) {
+        if (($class = $this->modelClass()) && (new $class)->timestamps) {
             $builder->orderBy('updated_at', 'DESC');
         }
 
@@ -121,29 +124,23 @@ abstract class AbstractManager
         return $paginator->setCollection($modifiedCollection);
     }
 
-    public function model()
+    public function modelClass(): string
     {
-        return $this->model;
+        return $this->registration->model();
     }
 
-    public function hasExistingModel(): bool
-    {
-        return ($this->model && $this->model->exists);
-    }
-
-    /**
-     * If the model exists return it otherwise
-     * throws a nonExistingRecord exception;
-     *
-     * @throws NonExistingRecord
-     */
-    protected function existingModel()
+    public function existingModel(): ManagedModel
     {
         if (!$this->hasExistingModel()) {
             throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
 
         return $this->model;
+    }
+
+    public function hasExistingModel(): bool
+    {
+        return ($this->model && $this->model->exists);
     }
 
     /**

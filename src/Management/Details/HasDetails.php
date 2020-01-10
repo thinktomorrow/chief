@@ -13,16 +13,22 @@ trait HasDetails
      */
     public function details(): Details
     {
+        $className = ($this->modelClass());
+        $genericModelInstance = new $className;
+
         // Generic model details
-        // might be able to remove this as id isnt general info
-        $id = Str::slug($this->registration->key().'-'.$this->model->id);
+        $id = Str::slug($this->registration->key(). ($this->hasExistingModel() ? '-'. $this->existingModel()->id : ''));
         $key = $this->registration->key();
-        $labelSingular = property_exists($this->model, 'labelSingular') ? $this->model->labelSingular : Str::singular($key);
-        $labelPlural = property_exists($this->model, 'labelPlural') ? $this->model->labelPlural : Str::plural($key);
-        $internal_label = contract($this->model, ProvidesFlatReference::class) ? $this->model->flatReferenceLabel() : $key;
+        $labelSingular = property_exists($genericModelInstance, 'labelSingular') ? $genericModelInstance->labelSingular : Str::singular($key);
+        $labelPlural = property_exists($genericModelInstance, 'labelPlural') ? $genericModelInstance->labelPlural : Str::plural($key);
+        $internal_label = ($this->hasExistingModel() && contract($this->model, ProvidesFlatReference::class))
+            ? $this->existingModel()->flatReferenceLabel()
+            : $key;
 
         // Manager index and header info
-        $title = $this->model->title ?? ($this->model->id ? $labelSingular . ' ' . $this->model->id : $labelSingular);
+        $title = ($this->hasExistingModel() && $this->existingModel()->title)
+            ? $this->existingModel()->title
+            : $labelSingular;
 
         return new Details(
             $id,

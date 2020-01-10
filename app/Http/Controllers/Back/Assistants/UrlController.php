@@ -27,7 +27,7 @@ class UrlController extends Controller
                 ? trim($request->slug, '/')
                 : $request->slug;
 
-        $exists = UrlRecord::exists($slug, null, $manager->model());
+        $exists = UrlRecord::exists($slug, null, $manager->existingModel());
 
         return response()->json([
             'exists' => $exists,

@@ -41,7 +41,7 @@ class PageStatePresenter
 
     private function stateAsLabel()
     {
-        $state = $this->model->state();
+        $state = $this->model->stateOf($this->pageState::KEY);
 
         $labels = [
             PageState::DRAFT => 'offline',

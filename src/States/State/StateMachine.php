@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\States\State;
 
@@ -10,18 +10,23 @@ abstract class StateMachine
      * @var array
      */
     protected $states = [];
-    protected $transitions = [];
 
     /**
-     * @var StatefulContract
+     * Transitions from one state to other(s)
+     * @var array
      */
+    protected $transitions = [];
+
+    /** @var StatefulContract */
     protected $statefulContract;
 
-    public function __construct(StatefulContract $statefulContract)
+    /** @var string */
+    private $stateKey;
+
+    public function __construct(StatefulContract $statefulContract, string $stateKey)
     {
-        // TODO: add event dispatcher cause here we want to add loads of events no?
-        // NO! WE SHOULD BETTER TO THIS ON THE AGGREGATE
         $this->statefulContract = $statefulContract;
+        $this->stateKey = $stateKey;
 
         $this->validateTransitions();
     }
@@ -33,29 +38,30 @@ abstract class StateMachine
             throw StateException::invalidTransitionKey($transition, $this);
         }
 
-        if (!in_array($this->statefulContract->state(), $this->transitions[$transition]['from'])) {
-            throw StateException::invalidTransition($transition, $this->statefulContract->state(), $this);
+        if (!in_array($this->statefulContract->stateOf($this->stateKey), $this->transitions[$transition]['from'])) {
+            throw StateException::invalidTransition($transition, $this->statefulContract->stateOf($this->stateKey), $this);
         }
 
         $state = $this->transitions[$transition]['to'];
 
-        $this->statefulContract->changeState($state);
+        $this->statefulContract->changeStateOf($this->stateKey, $state);
     }
 
     /**
      * assert the integrity of the new state.
      *
      * @param StatefulContract $statefulContract
+     * @param string $stateKey
      * @param $state
      *
      * @throws StateException
      */
-    public static function assertNewState(StatefulContract $statefulContract, $state)
+    public static function assertNewState(StatefulContract $statefulContract, string $stateKey, $state)
     {
-        $machine = new static($statefulContract);
+        $machine = new static($statefulContract, $stateKey);
 
         if (!$machine->canTransitionTo($state)) {
-            throw StateException::invalidState($state, $statefulContract->state(), $machine);
+            throw StateException::invalidState($state, $statefulContract->stateOf($stateKey), $machine);
         }
     }
 
@@ -73,7 +79,7 @@ abstract class StateMachine
         }
 
         foreach ($this->transitions as $transition) {
-            if (!in_array($this->statefulContract->state(), $transition['from'])) {
+            if (!in_array($this->statefulContract->stateOf($this->stateKey), $transition['from'])) {
                 continue;
             }
 
@@ -90,7 +96,7 @@ abstract class StateMachine
         $transitions = [];
 
         foreach($this->transitions as $transitionKey => $transition){
-            if (false !== array_search($this->statefulContract->state(), $transition['from'])) {
+            if (false !== array_search($this->statefulContract->stateOf($this->stateKey), $transition['from'])) {
                 $transitions[] = $transitionKey;
             }
         }
@@ -101,7 +107,7 @@ abstract class StateMachine
     private function validateTransitions()
     {
         foreach ($this->transitions as $transitionKey => $transition) {
-            if (!isset($transition['from']) || !isset($transition['to']) || !is_array($transition['from'])) {
+            if (!array_key_exists('from', $transition) || !array_key_exists('to',$transition) || !is_array($transition['from'])) {
                 throw StateException::malformedTransition($transitionKey, $this);
             }
 

@@ -30,15 +30,18 @@ Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesCon
 * MANAGER ASSISTANT ROUTES
 * -----------------------------------------------------------------
 */
+Route::get('assist-view/{assistant}/{method}/{manager}/{model?}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@view')->name('chief.back.assistants.view')->where('model', '[0-9]+');
+Route::post('assist-update/{assistant}/{method}/{manager}/{model}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@update')->name('chief.back.assistants.update')->where('model', '[0-9]+');
+
 Route::post('check-url/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@checkSlugExists')->name('chief.back.assistants.url.check')->where('id', '[0-9]+');
 Route::delete('remove-redirect/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@removeRedirect')->name('chief.back.assistants.url.remove-redirect')->where('id', '[0-9]+');
 
-Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
-Route::post('unpublish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@unpublish')->name('chief.back.assistants.unpublish')->where('id', '[0-9]+');
-
-Route::get('archive/{key}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@index')->name('chief.back.assistants.archive-index');
-Route::post('archive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');
-Route::post('unarchive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@unarchive')->name('chief.back.assistants.unarchive')->where('id', '[0-9]+');
+//Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
+//Route::post('unpublish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@unpublish')->name('chief.back.assistants.unpublish')->where('id', '[0-9]+');
+//
+//Route::get('archive/{key}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@index')->name('chief.back.assistants.archive-index');
+//Route::post('archive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');
+//Route::post('unarchive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@unarchive')->name('chief.back.assistants.unarchive')->where('id', '[0-9]+');
 
 /**
 * -----------------------------------------------------------------

@@ -157,7 +157,7 @@ class PageManager extends AbstractManager implements Manager
     public function details(): Details
     {
         // For existing model
-        if ($this->model->id) {
+        if ($this->model && $this->model->id) {
             return parent::details()
                 ->set('title', ucfirst($this->model->title))
                 ->set('intro', PageStatePresenter::fromModel($this->model)->label())
