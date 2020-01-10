@@ -35,16 +35,18 @@
             </div>
         </div>
 
-        <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1 || !hasValidUpload">
-            <div class="btn btn-link" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
-                <span>Voeg bestaande toe uit je galerij</span>
+        <div class="flex mt-4">
+            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1 || !hasValidUpload">
+                <div class="btn btn-primary mr-4" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
+                    <span>Voeg bestaande toe uit je galerij</span>
+                </div>
+                <mediagallery group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
             </div>
-            <mediagallery group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
+    
+            <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-primary">
+                @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
+            </a>
+            <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
         </div>
-
-        <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-link">
-            @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
-        </a>
-        <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
     </div>
 </filesupload>

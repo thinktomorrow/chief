@@ -38,7 +38,7 @@
             $wrapper = $R.dom('<div>');
             $wrapper.css({
     			'overflow-y': 'scroll',
-    			height: '300px',
+    			height: '340px',
     			'line-height': 1
 			});
             
@@ -66,23 +66,34 @@
                 var $div = $R.dom('<div>')
                 $div.addClass("column-3 border rounded border-transparent hover:border-grey-100 hover:bg-grey-50 p-2");
 
+                var $imgContainer = $R.dom('<div>');
+                $imgContainer.addClass("flex items-center justify-center");
+                $imgContainer.css({
+                    width: '100%',
+                    height: '75px',
+                    margin: '0 0 10px 0',
+                    cursor: 'pointer',
+                    overflow: 'hidden'
+                });
+
                 var $img = $R.dom('<img>');
                 var url = (obj.thumb) ? obj.thumb : obj.url;
-
                 $img.attr('src', url);
                 $img.attr('data-params', encodeURI(JSON.stringify(obj)));
                 $img.css({
-                    width: '96px',
-                    height: '72px',
-                    'max-height': '75px',
-                    margin: '0 auto',
                     cursor: 'pointer'
                 });
 
                 $img.on('click', this._insert.bind(this));
 
-                $div.append($img);
-                $div.append($R.dom('<p>').append(obj.filename));
+                $div.append($imgContainer)
+                $imgContainer.append($img);
+                $div.append($R.dom('<p>')
+                .css({ 
+                    margin: '0 0 6px 0', 
+                    wordBreak: 'break-word'
+                })
+                .append(obj.filename));
                 $div.append($R.dom('<strong>').append(obj.size));
 
 				this.$box.append($div);
