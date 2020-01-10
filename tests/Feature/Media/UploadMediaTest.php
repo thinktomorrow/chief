@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\AssetLibrary\Asset;
+use InvalidArgumentException;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -12,9 +12,7 @@ use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
-use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
 
@@ -50,6 +48,29 @@ class UploadMediaTest extends TestCase
                     MediaType::HERO => [
                         'new' => [
                             $this->dummySlimImagePayload(),
+                        ]
+                    ]
+                ]
+            ]));
+
+        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
+    }
+
+    /** @test */
+    public function uploading_a_new_asset_and_an_invalid_asset_doesnt_throw_an_error()
+    {
+        $page = Single::create();
+
+        config()->set(['app.fallback_locale' => 'nl']);
+
+        // Upload asset
+        $response = $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'files' => [
+                    MediaType::HERO => [
+                        'new' => [
+                            $this->dummySlimImagePayload(),
+                            null
                         ]
                     ]
                 ]
@@ -105,109 +126,6 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    public function an_asset_can_be_replaced()
-    {
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-
-        $existing_asset = $page->assets(MediaType::HERO)->first();
-
-        // Replace asset
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    MediaType::HERO => [
-                        'replace' => [
-                            $existing_asset->id => $this->dummySlimImagePayload(),
-                        ]
-                    ]
-                ]
-            ]));
-
-        // Assert replacement took place
-        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
-        $this->assertCount(2, Asset::all());
-
-        $this->assertStringContainsString('tt-favicon.png', $page->fresh()->asset(MediaType::HERO, 'nl')->filename());
-    }
-
-    /** @test */
-    public function an_asset_can_be_removed()
-    {
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-
-        // Assert Image is there
-        $this->assertCount(1, $page->assets(MediaType::HERO));
-
-        // Remove asset
-        $response = $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    MediaType::HERO => [
-                        'delete' => [
-                            $page->assets(MediaType::HERO)->first()->id,
-                        ]
-                    ]
-                ]
-            ]));
-
-        // Assert Image is no longer there
-        $this->assertCount(0, $page->fresh()->assets());
-        $this->assertCount(1, Asset::all());
-    }
-
-    /** @test */
-    public function an_asset_can_be_removed_and_uploaded()
-    {
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-
-        // Assert Image is there
-        $this->assertCount(1, $page->assets(MediaType::HERO));
-
-        // Remove asset
-        $response = $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), [
-                'files' => [
-                    MediaType::HERO => [
-                        'delete' => [
-                            $page->assets(MediaType::HERO)->first()->id,
-                        ],
-                        'new' => [
-                            UploadedFile::fake()->image('image.png')
-                        ]
-                    ],
-                ],
-            ]);
-
-        $this->assertCount(1, $page->fresh()->assets());
-    }
-
-    /** @test */
-    public function it_can_upload_image_with_uppercased_extension()
-    {
-        // Currently uploaded a xxx.JPEG fails retrieval as the source by Slim
-        // TODO: this is something that should be provided by Assetlibrary
-        $this->markTestIncomplete();
-
-        $page = Single::create();
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    MediaType::HERO => [
-                        'new' => [
-                            $this->dummySlimImagePayload('tt-favicon.PNG'),
-                        ]
-                    ]
-                ]
-            ]));
-
-        $this->assertEquals('tt-favicon.png', $page->asset(MediaType::HERO)->filename());
-    }
-
-    /** @test */
     public function it_can_upload_translatable_images()
     {
         app(Register::class)->register(PageManager::class, Single::class);
@@ -236,257 +154,28 @@ class UploadMediaTest extends TestCase
     }
 
     /** @test */
-    public function it_can_replace_translatable_images()
-    {
-        app(Register::class)->register(PageManager::class, Single::class);
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), 'seo_image', 'nl');
-
-        $existing_asset_nl = $page->assets('seo_image', 'nl')->first();
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    'seo_image' => [
-                        'nl' => [
-                            'replace' => [
-                                $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                            ]
-                        ],
-                        'en' => [
-                            'new' => [
-                                $this->dummySlimImagePayload('tt-favicon-en.png'),
-                            ]
-                        ]
-                    ]
-                ]
-            ]));
-
-        $this->assertEquals('tt-favicon-nl.png', $page->fresh()->asset('seo_image', 'nl')->filename());
-        $this->assertEquals('tt-favicon-en.png', $page->fresh()->asset('seo_image', 'en')->filename());
-    }
-
-    /** @test */
-    public function it_can_remove_translatable_images()
-    {
-        app(Register::class)->register(PageManager::class, Single::class);
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), 'seo_image', 'en');
-
-        $existing_asset_en = $page->assets('seo_image', 'en')->first();
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    'seo_image' => [
-                        'nl' => [
-                            'new' => [
-                                $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                            ]
-                        ],
-                        'en' => [
-                            'delete' => [
-                                $existing_asset_en->id,
-                            ]
-                        ]
-                    ]
-                ]
-            ]));
-
-        $this->assertEquals('tt-favicon-nl.png', $page->refresh()->asset('seo_image', 'nl')->filename());
-        $this->assertEquals('tt-favicon-nl.png', $page->asset('seo_image', 'en')->filename());
-    }
-
-    /** @test */
-    public function assets_can_be_sorted()
+    public function uploading_an_asset_for_invalid_locale_throws_error()
     {
         $this->disableExceptionHandling();
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('A valid files entry should have a key of either [new,replace,delete]. Instead mew is given.');
+
         $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
 
-        $images = $page->fresh()->assets(MediaType::HERO);
+        config()->set(['app.fallback_locale' => 'nl']);
 
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'filesOrder' => [
-                    'nl' => [
-                        'files-'.MediaType::HERO => $images->last()->id . ',' . $images->first()->id,
-                    ]
-                ]
-            ]));
-
-        $assetIds = $page->fresh()->assets(MediaType::HERO)->pluck('id')->toArray();
-
-        $this->assertEquals([$images->last()->id, $images->first()->id], $assetIds);
-    }
-
-    /** @test */
-    public function localized_assets_can_be_sorted()
-    {
-        $this->disableExceptionHandling();
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image3.png'), MediaType::HERO, 'en');
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image4.png'), MediaType::HERO, 'en');
-
-        $nl_images = $page->assets(MediaType::HERO, 'nl');
-        $en_images = $page->assets(MediaType::HERO, 'en');
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'filesOrder' =>
-                [
-                    'nl' => [
-                        'files-' . MediaType::HERO => $nl_images[1]->id . ',' . $nl_images[0]->id,
-                    ],
-                    'en' => [
-                        'files-' . MediaType::HERO => $en_images[3]->id . ',' . $en_images[2]->id
-                    ]
-                ]
-            ]));
-
-        $nl_newImagesSorted = $page->refresh()->assets(MediaType::HERO, 'nl');
-        $en_newImagesSorted = $page->assets(MediaType::HERO, 'en');
-
-        $this->assertEquals($nl_images[1]->id, $nl_newImagesSorted[0]->id);
-        $this->assertEquals($nl_images[0]->id, $nl_newImagesSorted[1]->id);
-        $this->assertEquals($en_images[3]->id, $en_newImagesSorted[2]->id);
-        $this->assertEquals($en_images[2]->id, $en_newImagesSorted[3]->id);
-    }
-
-    /** @test */
-    public function an_existing_asset_can_be_added()
-    {
-        $page = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    MediaType::HERO => [
-                        'new' => [
-                            $existing_asset->id,
-                        ]
-                    ]
-                ]
-            ]));
-
-        // Assert replacement took place
-        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
-
-        $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
-    }
-
-    /** @test */
-    public function an_existing_asset_can_not_be_added_more_than_once()
-    {
-        $page = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
-
-        $response = $this->asAdmin()->followingRedirects()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    MediaType::HERO => [
-                        'new' => [
-                            $existing_asset->id,
-                            $existing_asset->id,
-                        ]
-                    ]
-                ]
-            ]));
-
-        $response->assertSee('Een van de fotos die je uploadde bestond al.');
-
-        // Assert replacement took place
-        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
-
-        $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
-    }
-
-    /** @test */
-    public function an_existing_asset_can_be_added_as_translation()
-    {
-        $page = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
-
-        $this->asAdmin()
+        // Upload asset
+        $response = $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
                         'en' => [
-                            'new' => [
-                                $existing_asset->id
+                            'mew' => [
+                                $this->dummySlimImagePayload(),
                             ]
                         ]
                     ]
                 ]
             ]));
-
-        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO, 'en'));
-
-        $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'en')->url());
-    }
-
-    /** @test */
-    public function it_can_link_an_asset_to_multiple_pages()
-    {
-        $page = Single::create();
-        $page2 = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
-                    MediaType::HERO => [
-                        'en' => [
-                            'new' => [
-                                $existing_asset->id
-                            ]
-                        ]
-                    ]
-                ]
-            ]));
-
-        $this->asAdmin()
-            ->put(route('chief.back.managers.update', ['singles', $page2->id]), $this->validUpdatePageParams([
-                'trans' => [
-                    'nl' => [
-                        'slug' => 'page 2'
-                    ]
-                ],
-                'url-slugs' => [
-                    'nl' => 'slug',
-                    'en' => 'slug',
-                ],
-                'files' => [
-                    MediaType::HERO => [
-                        'en' => [
-                            'new' => [
-                                $existing_asset->id
-                            ]
-                        ]
-                    ]
-                ]
-            ]));
-
-        $this->assertCount(1, $page->refresh()->assets(MediaType::HERO, 'en'));
-        $this->assertCount(1, $page2->refresh()->assets(MediaType::HERO, 'en'));
-
-        $this->assertEquals($existing_asset->url(), $page->asset(MediaType::HERO, 'en')->url());
-        $this->assertEquals($existing_asset->url(), $page2->asset(MediaType::HERO, 'en')->url());
-    }
-
-    /** @test */
-    public function removing_a_model_with_asset_unlinks_the_asset()
-    {
-        $page = Single::create();
-        app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
-
-        $this->asAdmin()
-            ->delete('/admin/manage/singles/'.$page->id);
-
-        $this->assertCount(1, Asset::all());
     }
 }
