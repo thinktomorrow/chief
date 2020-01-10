@@ -134,8 +134,7 @@ class UploadMedia
                     return;
                 }
 
-                if($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($file))
-                {
+                if ($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($file)) {
                     throw new DuplicateAssetException();
                 }
 
