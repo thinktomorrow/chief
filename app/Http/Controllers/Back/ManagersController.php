@@ -84,9 +84,9 @@ class ManagersController extends Controller
     {
         $manager = $this->managers->findByKey($key, $id);
 
-        try{
+        try {
             app(UpdateManager::class)->handle($manager, $request);
-        }catch(DuplicateAssetException $e){
+        } catch (DuplicateAssetException $e) {
             return redirect()->to($manager->route('edit'))->with('messages.error', 'Een van de fotos die je uploadde bestond al.');
         }
 
