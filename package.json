@@ -40,7 +40,8 @@
     "vue-loader": "^15.7.2",
     "vue-multiselect": "^2.1.6",
     "vuedraggable": "^2.23.2",
-    "warpaint": "^0.0.10"
+    "warpaint": "^0.0.10",
+    "equalizeheight": "^0.1.3"
   },
   "engine": {
     "node": ">=8.9"

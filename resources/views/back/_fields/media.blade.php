@@ -6,20 +6,21 @@
 ?>
 
 <filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
-<div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
+    <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
-            <div v-for="item in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
+            <div v-for="(item, index) in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
-                 @dragenter.prevent="handleSortingEnter">
-                <slim group="{{ $name }}" :options="{
-                    id: item.id,
-                    filename: item.filename,
-                    url: item.url,
-                    file: item.file,
-                    label: 'Drop hier uw afbeelding',
-                }"></slim>
+                 @dragenter.prevent="handleSortingEnter" v-show="!item.deleted || ({{ json_encode($field->multiple) }} != true && !hasValidUpload && index == 0)">
+                    <slim name="{{ $name }}" group="{{ $slug }}" :options="{
+                        id: item.id,
+                        filename: item.filename,
+                        url: item.url,
+                        file: item.file,
+                        label: 'Drop hier uw afbeelding',
+                        newUpload: item.newUpload,
+                    }"></slim>
             </div>
-            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1" class="column-3">
+            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1">
                 <div class="thumb thumb-new" id="file-drop-area-{{ $slug }}"
                      :class="{ 'is-dropped' : isDropped, 'is-dragging-over' : isDraggingOver }"
                      @dragover.prevent="handleDraggingOver"
@@ -33,9 +34,19 @@
                 </div>
             </div>
         </div>
-        <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-link">
-            @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
-        </a>
-        <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
+
+        <div class="flex mt-4">
+            <div v-if="{{ json_encode($field->multiple) }} == true || items.length < 1 || !hasValidUpload">
+                <div class="btn btn-primary mr-4" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
+                    <span>Voeg bestaande toe uit je galerij</span>
+                </div>
+                <mediagallery group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
+            </div>
+    
+            <a v-if="{{ json_encode($field->multiple) }} == true" @click.prevent="toggleReorder" class="btn btn-primary">
+                @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
+            </a>
+            <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
+        </div>
     </div>
 </filesupload>

@@ -2,6 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## unreleased
+- Added: Functionality to upload existing assets.
 - Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback 
 - Fixed: issue where module add button didn't show for developer account
 - Fixed: slow loading of admin index pages due to overuse of `Page::url()` method

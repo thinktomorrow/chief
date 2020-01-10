@@ -73,6 +73,8 @@
         Eventbus.$emit('open-modal', id, options);
     };
 
+    Vue.prototype.showModal = window.showModal;
+
     window.closeModal = function(id){
         Eventbus.$emit('close-modal',id);
     };
