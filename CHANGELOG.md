@@ -1,7 +1,9 @@
 # Changelog
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## unreleased
+## 0.4.4 - 2020-01-13
+
+- Fixed: modal.vue close button doesnt submit forms anymore
 
 ## 0.4.3 - 2020-01-10
 - Added: Functionality to upload existing assets.
