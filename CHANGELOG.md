@@ -4,6 +4,11 @@ principles.
 
 ## unreleased
 
+## 0.4.5 - 2020-01-14
+
+- Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
+- Fixed: image filter for mediagallery api call now correctly offsets without counting non-images.
+
 ## 0.4.4 - 2020-01-13
 
 - Fixed: modal.vue close button doesnt submit forms anymore

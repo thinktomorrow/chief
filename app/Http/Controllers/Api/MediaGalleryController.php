@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Asset;
+use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class MediaGalleryController extends Controller
@@ -18,9 +19,9 @@ class MediaGalleryController extends Controller
         $offset = $request->query()['offset'] ?? $offset;
         $excluded = isset($request->query()['excluded']) ? explode(",", $request->query()['excluded']) : $excluded;
 
-        $links = Asset::orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->offset($offset)->limit($limit)->get()->reject(function ($asset) {
-            return $asset->getExtensionType() != 'image';
-        })->values()->map(function ($asset) {
+        $links = Asset::with('media')->orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->whereHas('media', function(Builder $query) {
+            $query->where('mime_type', 'LIKE', '%image%');
+        })->offset($offset)->limit($limit)->get()->map(function ($asset) {
             return [
                 "id"         => $asset->id,
                 "url"        => $asset->url(),
