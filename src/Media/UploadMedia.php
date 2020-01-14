@@ -64,7 +64,6 @@ class UploadMedia
             if ($file) {
                 $this->addFile($model, $type, $file, $files_order, $locale);
             }
-
         }
     }
 
@@ -133,7 +132,6 @@ class UploadMedia
 
                     $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
                 }
-
             }
         }
     }
