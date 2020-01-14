@@ -11,17 +11,12 @@ use Thinktomorrow\Chief\Users\User;
 class Audit extends Activity
 {
     public $with = ['causer'];
-    
+
     public static function activity(string $logName = null): ActivityLogger
     {
         $defaultLogName = config('activitylog.default_log_name');
-        
-        return app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
-    }
 
-    public static function getActivityFor(Model $subject)
-    {
-        return self::forSubject($subject)->get();
+        return app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
     }
 
     public static function getAllActivityFor(Model $subject)
@@ -43,16 +38,5 @@ class Audit extends Activity
     public static function getActivity()
     {
         return self::all()->sortByDesc('created_at');
-    }
-
-    public function getTitle()
-    {
-        try {
-            $title = (new $this->subject_type)->collectionDetails()->singular;
-        } catch (\Exception $e) {
-            $title = $this->subject_type;
-        }
-
-        return $title;
     }
 }

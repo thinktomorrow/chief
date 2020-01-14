@@ -1,7 +1,20 @@
 # Changelog
-All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
+principles.
 
 ## unreleased
+
+## 0.4.5 - 2020-01-14
+
+- Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
+- Fixed: image filter for mediagallery api call now correctly offsets without counting non-images.
+
+## 0.4.4 - 2020-01-13
+
+- Fixed: modal.vue close button doesnt submit forms anymore
+
+## 0.4.3 - 2020-01-10
+- Added: Functionality to upload existing assets.
 - Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback 
 - Fixed: issue where module add button didn't show for developer account
 - Fixed: slow loading of admin index pages due to overuse of `Page::url()` method

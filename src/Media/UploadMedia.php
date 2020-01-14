@@ -8,6 +8,7 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\SortAssets;
+use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
@@ -42,7 +43,7 @@ class UploadMedia
         foreach ($files_by_type as $type => $files_by_locale) {
             foreach ($files_by_locale as $locale => $files) {
                 $this->validateFileUploads($files);
-                
+
                 $fileIdsCollection = $files_order_by_type[$type] ?? [];
 
                 $this->addFiles($model, $type, $files, $fileIdsCollection, $locale);
@@ -60,11 +61,9 @@ class UploadMedia
         }
 
         foreach ($files['new'] as $id => $file) {
-            if (!$file) {
-                continue;
+            if ($file) {
+                $this->addFile($model, $type, $file, $files_order, $locale);
             }
-            
-            $this->addFile($model, $type, $file, $files_order, $locale);
         }
     }
 
@@ -80,12 +79,10 @@ class UploadMedia
         }
 
         foreach ($files['replace'] as $id => $file) {
-            if (!$file) {
-                continue;
+            if ($file) {
+                $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
+                app(ReplaceAsset::class)->handle($model, $id, $asset->id);
             }
-
-            $asset = AssetUploader::uploadFromBase64(json_decode($file)->output->image, json_decode($file)->output->name);
-            app(ReplaceAsset::class)->handle($model, $id, $asset->id);
         }
     }
 
@@ -100,10 +97,9 @@ class UploadMedia
         }
 
         foreach ($files['delete'] as $id => $file) {
-            if (!$file) {
-                continue;
+            if ($file) {
+                app(DetachAsset::class)->detach($model, $file, $type, $locale);
             }
-            app(DetachAsset::class)->detach($model, $file, $type, $locale);
         }
     }
 
@@ -128,8 +124,14 @@ class UploadMedia
                     $files_order[$key] = (string) $asset->id;
                 }
             } else {
-                $file       = Asset::findOrFail($file);
-                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale);
+                $file   = Asset::find($file);
+                if ($file) {
+                    if ($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($file)) {
+                        throw new DuplicateAssetException();
+                    }
+
+                    $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
+                }
             }
         }
     }
@@ -173,14 +175,6 @@ class UploadMedia
         $actions = ['new', 'replace', 'delete'];
         foreach ($files_by_type as $type => $files) {
             foreach ($files as $locale => $_files) {
-                if (!in_array($locale, config('translatable.locales'))) {
-                    throw new \InvalidArgumentException('Corrupt file payload. key is expected to be a valid locale [' . implode(',', config('translatable.locales', [])). ']. Instead [' . $locale . '] is given.');
-                }
-
-                if (!is_array($_files)) {
-                    throw new \InvalidArgumentException('A valid files entry should be an array of files, key with either [new, replace or delete]. Instead a ' . gettype($_files) . ' is given.');
-                }
-
                 foreach ($_files as $action => $file) {
                     if (!in_array($action, $actions)) {
                         throw new \InvalidArgumentException('A valid files entry should have a key of either ['.implode(',', $actions).']. Instead ' . $action . ' is given.');

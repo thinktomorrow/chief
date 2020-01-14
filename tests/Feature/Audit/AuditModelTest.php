@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
@@ -94,6 +93,24 @@ class AuditModelTest extends TestCase
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')->post($manager->assistant('archive')->route('archive'));
+
+        $activity = Audit::getAllActivityFor($page);
+
+        $this->assertCount(1, $activity);
+        $this->assertEquals('archived', $activity->last()->description);
+        $this->assertEquals($user->id, $activity->last()->causer_id);
+        $this->assertEquals('singles', $activity->last()->subject_type);
+    }
+
+    /** @test */
+    public function it_can_get_activity_by_subject()
+    {
+        $user = $this->developer();
+
+        $page = factory(Page::class)->create(['published' => true])->first();
+
+        $this->actingAs($user, 'chief')
+             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
 
         $activity = Audit::getAllActivityFor($page);
 

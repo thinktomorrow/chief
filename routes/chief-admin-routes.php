@@ -66,6 +66,7 @@ Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\
 */
 Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('chief.back.managers.media.upload');
 Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
+Route::get('api/media', 'Thinktomorrow\Chief\App\Http\Controllers\Api\MediaGalleryController@index')->name('chief.api.media');
 
 /**
 * -----------------------------------------------------------------

@@ -34,12 +34,60 @@
                  * to assert the slim loading event has finished.
                  */
                 var self = this;
-                Eventbus.$on('files-loaded-' + this.group, function () {
+                Eventbus.$on('files-loaded-' + this.group, function (id) {
+                    self.items.forEach((item, itemId) => {
+                        if(item.id == id) {
+                            item.deleted = false;
+                            self.items.splice(itemId, 1, item);
+                        }
+                    })
                     setTimeout(function () {
                         self.updateFilesOrder();
                     }, 1500);
                 });
 
+                Eventbus.$on('file-deletion-' + this.group, function(obj){
+                    var id = obj.id;
+                    self.items.forEach((item, itemId) => {
+                        if(item.id == id) {
+                            /**
+                             * This timeout function is required since the newImage object we received from slim 
+                             * has a name property but this isn't filled in immediatly so we wait a little bit
+                             */
+                            setTimeout(function () {
+                                var imageName = obj.newImage._data.input.name;
+                                if(item.newUpload == true) {
+                                    if(imageName == null){
+                                        self.items.splice(itemId, 1);
+                                    }
+                                }else{
+                                    item.deleted = true;
+                                    self.items.splice(itemId, 1, item);
+                                }
+                            }, 200);
+                        }
+                    })
+                });
+
+                Eventbus.$on('mediagallery-loaded-' + this.group, function (asset){
+                    self.items.push({
+                        filename: asset.filename,
+                        id: asset.id,
+                        url: asset.url,
+                        newUpload: true,
+                    });
+
+                    self.updateFilesOrder();
+                })
+
+            },
+            computed: {
+                hasValidUpload: function(){
+                    var result = this.items.map(function(item){
+                        return item.deleted;
+                    });
+                    return result.includes(undefined) || result.includes(false);
+                }
             },
             mounted: function () {
                 this.updateFilesOrder();
@@ -73,7 +121,6 @@
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();
                     }
-
                     this.items.push({file: file});
                 },
                 checkSupport: function () {
@@ -157,7 +204,7 @@
                 findAncestor: function (el, sel) {
                     while ((el = el.parentElement) && !((el.matches || el.matchesSelector).call(el, sel)));
                     return el;
-                },
+                }
             },
         });
     </script>

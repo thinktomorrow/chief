@@ -18,6 +18,7 @@
 @import './components/translation.scss';
 @import './components/thumb.scss';
 @import './components/toggles.scss';
+@import './components/redactor.scss';
 
 @tailwind utilities;
 
@@ -28,4 +29,3 @@
 @import '../../../node_modules/warpaint/src/sass/_base/states';
 
 @import './general/utilities.scss';
-
