@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\States;
+namespace Thinktomorrow\Chief\Tests\Feature\States\PageState;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\States\PageState;

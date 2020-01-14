@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\States;
+namespace Thinktomorrow\Chief\Tests\Feature\States\PageState;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Page;

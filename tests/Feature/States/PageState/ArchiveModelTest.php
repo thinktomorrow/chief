@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\States;
+namespace Thinktomorrow\Chief\Tests\Feature\States\PageState;
 
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Page;
@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 class ArchiveModelTest extends TestCase
 {
     private $page;
+    private $pageManager;
 
     protected function setUp(): void
     {
@@ -23,6 +24,8 @@ class ArchiveModelTest extends TestCase
 
         $this->page = ProductPageFake::create()->fresh();
 
+        $this->pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
+
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
     }
@@ -30,9 +33,7 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function an_admin_can_view_archive_index()
     {
-        $pageManager = app(Managers::class)->findByKey('singles');
-
-        $response = $this->asAdmin()->get($pageManager->assistant('archive')->route('index'));
+        $response = $this->asAdmin()->get($this->pageManager->assistant('archive')->route('index'));
 
         $response->assertStatus(200);
         $response->assertViewIs('chief::back.managers.archive.index');
@@ -41,9 +42,7 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_can_archive_a_page()
     {
-        $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
-
-        $this->asAdmin()->post($pageManager->assistant('archive')->route('archive'));
+        $this->asAdmin()->post($this->pageManager->assistant('archive')->route('archive'));
 
         // Archived page is not included in default retrieval
         $this->assertCount(0, Page::all());
@@ -57,8 +56,7 @@ class ArchiveModelTest extends TestCase
     {
         app(ArchiveManagedModel::class)->handle($this->page);
 
-        $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
-        $this->asAdmin()->post($pageManager->assistant('archive')->route('unarchive'));
+        $this->asAdmin()->post($this->pageManager->assistant('archive')->route('unarchive'));
 
         $this->assertEquals(PageState::DRAFT, $this->page->fresh()->stateOf(PageState::KEY));
     }
@@ -66,12 +64,10 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_cannot_archive_a_deleted_page()
     {
-        $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
-
         app(ArchiveManagedModel::class)->handle($this->page);
         app(DeleteManagedModel::class)->handle($this->page);
 
-        $this->asAdmin()->post($pageManager->assistant('archive')->route('archive'));
+        $this->asAdmin()->post($this->pageManager->assistant('archive')->route('archive'));
 
         $this->assertEquals(PageState::DELETED, $this->page->fresh()->stateOf(PageState::KEY));
         $this->assertTrue($this->page->fresh()->trashed());
@@ -80,12 +76,10 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_cannot_unarchive_a_deleted_page()
     {
-        $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
-
         app(ArchiveManagedModel::class)->handle($this->page);
         app(DeleteManagedModel::class)->handle($this->page);
 
-        $this->asAdmin()->post($pageManager->assistant('archive')->route('unarchive'));
+        $this->asAdmin()->post($this->pageManager->assistant('archive')->route('unarchive'));
 
         $this->assertEquals(PageState::DELETED, $this->page->fresh()->stateOf(PageState::KEY));
         $this->assertTrue($this->page->fresh()->trashed());

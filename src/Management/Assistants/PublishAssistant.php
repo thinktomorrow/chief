@@ -81,8 +81,8 @@ class PublishAssistant implements Assistant
     public function route($verb): ?string
     {
         $modelRoutes = [
-            'publish' => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
-            'unpublish' => route('chief.back.assistants.unpublish', [$this->manager->details()->key, $this->manager->model()->id]),
+            'publish' => route('chief.back.assistants.update', [$this->key(), 'publish', $this->manager->details()->key, $this->model->id]),
+            'unpublish' => route('chief.back.assistants.update', [$this->key(), 'unpublish', $this->manager->details()->key, $this->model->id]),
         ];
 
         return $modelRoutes[$verb] ?? null;
