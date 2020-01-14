@@ -68,8 +68,6 @@ class UpdateRoleTest extends TestCase
     /** @test */
     public function when_updating_role_name_is_required()
     {
-        //$this->disableExceptionHandling();
-
         $this->assertValidation(new Role(), 'name', $this->validUpdateParams(['name' => '']),
             route('chief.back.roles.index'),
             route('chief.back.roles.update', $this->newRole->id),

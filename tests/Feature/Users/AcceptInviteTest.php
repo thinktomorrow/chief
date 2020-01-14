@@ -2,13 +2,16 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
+use Thinktomorrow\Squanto\Domain\PageKey;
 
 class AcceptInviteTest extends TestCase
 {
@@ -26,7 +29,7 @@ class AcceptInviteTest extends TestCase
         $this->inviter = $this->developer();
 
         $this->invitation = Invitation::make($this->invitee->id, $this->inviter->id);
-        $this->invitation->changeState('pending');
+        $this->invitation->changeStateOf(InvitationState::KEY, 'pending');
 
         // Fake password so we can login with a known value
         $this->invitee->password = Hash::make('password');
@@ -98,7 +101,7 @@ class AcceptInviteTest extends TestCase
     public function accept_url_should_not_be_processed_when_invitation_is_revoked()
     {
         // Force invitation state on revoked
-        $this->invitation->changeState('revoked');
+        $this->invitation->changeStateOf(InvitationState::KEY, 'revoked');
 
         $response = $this->get($this->invitation->acceptUrl());
         $response->assertRedirect(route('invite.expired'));

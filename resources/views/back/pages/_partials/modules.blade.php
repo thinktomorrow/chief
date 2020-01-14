@@ -1,5 +1,5 @@
 <?php
-    $page = $manager->model();
+    $page = $manager->existingModel();
 ?>
 
 <div class="stack-l formgroup">

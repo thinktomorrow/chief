@@ -53,7 +53,6 @@ class HomepageTest extends TestCase
     /** @test */
     function when_setting_single_homepage_all_urls_are_changed()
     {
-        $this->disableExceptionHandling();
         // Create page with url
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
             'url-slugs' => [

@@ -311,7 +311,7 @@ class UrlAssistantTest extends TestCase
         $product2 = ProductFake::orderBy('id','DESC')->first();
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.assistants.archive', ['products', $product->id]), [
+            ->post($this->manager->manage($product)->assistant('archive')->route('archive'), [
                 'redirect_id' => $product2->flatReference()->get(),
             ]);
 

@@ -93,7 +93,6 @@ class UpdateManagerTest extends TestCase
     /** @test */
     public function it_can_upload_a_document()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()
             ->put($this->fake->route('update'), [
                 'files' => [

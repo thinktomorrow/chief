@@ -33,7 +33,6 @@ class MorphablePageTest extends TestCase
     /** @test */
     public function a_page_can_be_divided_by_morphKey()
     {
-        $this->disableExceptionHandling();
         factory(Page::class)->create(['morph_key' => 'articles']);
 
         $this->assertCount(1, ArticlePageFake::all());
@@ -109,8 +108,6 @@ class MorphablePageTest extends TestCase
     /** @test */
     public function it_returns_the_right_morphKey_model()
     {
-        $this->disableExceptionHandling();
-
         ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',

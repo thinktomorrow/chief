@@ -83,7 +83,6 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function a_new_asset_can_be_uploaded_as_regular_file()
     {
-        $this->disableExceptionHandling();
         $page = Single::create();
 
         config()->set(['app.fallback_locale' => 'nl']);
@@ -292,7 +291,7 @@ class UploadMediaTest extends TestCase
                     ]
                 ]
             ]));
-        
+
         $this->assertEquals('tt-favicon-nl.png', $page->refresh()->asset('seo_image', 'nl')->filename());
         $this->assertEquals('tt-favicon-nl.png', $page->asset('seo_image', 'en')->filename());
     }
@@ -300,7 +299,6 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function assets_can_be_sorted()
     {
-        $this->disableExceptionHandling();
         $page = Single::create();
         app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
         app(AddAsset::class)->add($page, UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
@@ -324,7 +322,6 @@ class UploadMediaTest extends TestCase
     /** @test */
     public function localized_assets_can_be_sorted()
     {
-        $this->disableExceptionHandling();
         $page = Single::create();
         app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
         app(AddAsset::class)->add($page, UploadedFile::fake()->image('image2.png'), MediaType::HERO, 'nl');
@@ -336,7 +333,7 @@ class UploadMediaTest extends TestCase
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'filesOrder' => 
+                'filesOrder' =>
                 [
                     'nl' => [
                         'files-' . MediaType::HERO => $nl_images[1]->id . ',' . $nl_images[0]->id,
@@ -378,7 +375,7 @@ class UploadMediaTest extends TestCase
 
         $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
     }
-    
+
     /** @test */
     public function an_existing_asset_can_be_added_as_translation()
     {

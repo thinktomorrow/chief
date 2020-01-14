@@ -6,6 +6,8 @@ use Thinktomorrow\Chief\States\State\StateMachine;
 
 class InvitationState extends StateMachine
 {
+    const KEY = 'state';
+
     /**
      * Possible states of the invitation process:
      *
@@ -57,6 +59,6 @@ class InvitationState extends StateMachine
 
     public function __construct(Invitation $invitation)
     {
-        parent::__construct($invitation);
+        parent::__construct($invitation, static::KEY);
     }
 }

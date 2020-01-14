@@ -43,8 +43,6 @@ class InviteUserTest extends TestCase
     {
         Notification::fake();
 
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()
                          ->post(route('chief.back.users.store'), $this->validParams());
 
@@ -55,7 +53,7 @@ class InviteUserTest extends TestCase
         $newUser = User::findByEmail('new@example.com');
 
         $this->assertNewValues($newUser);
-        $this->assertEquals(InvitationState::PENDING, $newUser->invitation->last()->state());
+        $this->assertEquals(InvitationState::PENDING, $newUser->invitation->last()->stateOf(InvitationState::KEY));
 
         Notification::assertSentTo(new AnonymousNotifiable(), InvitationMail::class);
     }

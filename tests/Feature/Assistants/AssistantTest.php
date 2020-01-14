@@ -44,7 +44,7 @@ class AssistantTest extends TestCase
     {
         $manager = $this->setupManager();
 
-        $route = $manager->assistant('favorite')->route('dummy-favorite');
+        $route = $manager->assistant('favorite')->route('favorize');
 
         $response = $this->post($route);
 
@@ -57,7 +57,7 @@ class AssistantTest extends TestCase
     {
         $manager = $this->setupManager();
 
-        $route = $manager->assistant('favorite')->route('dummy-favorite');
+        $route = $manager->assistant('favorite')->route('favorize');
 
         /** @var TestResponse $response */
         $response = $this->asAdmin()->post($route);

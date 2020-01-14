@@ -68,16 +68,14 @@ abstract class AbstractManager
 
     public function findManaged($id): Manager
     {
-        $modelInstance = $this->modelClass()::where('id', $id)->withoutGlobalScopes()->first();
+        $modelInstance = $this->modelInstance()::where('id', $id)->withoutGlobalScopes()->first();
 
         return (new static($this->registration))->manage($modelInstance);
     }
 
     public function indexCollection()
     {
-        $modelClass = $this->modelClass();
-
-        $builder = (new $modelClass)->query();
+        $builder = ($this->modelInstance())->query();
 
         $this->filters()->apply($builder);
 
@@ -106,7 +104,7 @@ abstract class AbstractManager
         }
 
         // if model has no timestamps, updated_at doesn't exist
-        if (($class = $this->modelClass()) && (new $class)->timestamps) {
+        if ($this->modelInstance()->timestamps) {
             $builder->orderBy('updated_at', 'DESC');
         }
 
@@ -124,9 +122,11 @@ abstract class AbstractManager
         return $paginator->setCollection($modifiedCollection);
     }
 
-    public function modelClass(): string
+    public function modelInstance(): ManagedModel
     {
-        return $this->registration->model();
+        $class = $this->registration->model();
+
+        return new $class;
     }
 
     public function existingModel(): ManagedModel
@@ -210,12 +210,12 @@ abstract class AbstractManager
     {
         $fields = $this->fields();
 
-        foreach ($this->assistants() as $assistant) {
-            if (! method_exists($assistant, 'fields')) {
+        foreach ($this->assistantsAsClassNames() as $assistantClass) {
+            if (! method_exists($assistantClass, 'fields')) {
                 continue;
             }
 
-            $fields = $fields->merge($assistant->fields());
+            $fields = $fields->merge($this->assistant($assistantClass)->fields());
         }
 
         return $fields;

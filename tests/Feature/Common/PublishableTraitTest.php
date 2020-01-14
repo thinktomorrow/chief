@@ -24,12 +24,12 @@ class PublishableTraitDummyClass extends Model implements StatefulContract
         //
     }
 
-    public function state(): string
+    public function stateOf($key): string
     {
         return $this->current_state;
     }
 
-    public function changeState($state)
+    public function changeStateOf($key, $state)
     {
         $this->current_state = $state;
     }
@@ -64,7 +64,7 @@ class PublishableTraitTest extends TestCase
     /** @test */
     public function it_can_publish_the_model()
     {
-        $this->dummy->changeState(PageState::PUBLISHED);
+        $this->dummy->changeStateOf(PageState::KEY, PageState::PUBLISHED);
 
         $this->assertTrue($this->dummy->isPublished());
     }
@@ -72,8 +72,8 @@ class PublishableTraitTest extends TestCase
     /** @test */
     public function it_can_draft_the_model()
     {
-        $this->dummy->changeState(PageState::PUBLISHED);
-        $this->dummy->changeState(PageState::DRAFT);
+        $this->dummy->changeStateOf(PageState::KEY, PageState::PUBLISHED);
+        $this->dummy->changeStateOf(PageState::KEY, PageState::DRAFT);
 
         $this->assertTrue($this->dummy->isDraft());
     }

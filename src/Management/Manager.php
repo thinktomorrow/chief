@@ -55,10 +55,12 @@ interface Manager extends FieldManager
     public function indexCollection();
 
     /**
-     * Static class name of the model class.
-     * @return string
+     * An empty, default instance of the managed model.
+     * This is an instance that is newed up without being persisted.
+     *
+     * @return ManagedModel
      */
-    public function modelClass(): string;
+    public function modelInstance(): ManagedModel;
 
     /**
      * Retrieve the managed model instance

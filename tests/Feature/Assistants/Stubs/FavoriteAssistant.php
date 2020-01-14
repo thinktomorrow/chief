@@ -22,11 +22,14 @@ class FavoriteAssistant implements Assistant
 
     public function route($verb): ?string
     {
-        if($verb == 'dummy-favorite') return route('dummy.favorite', [
-            $this->manager->details()->key,
-            $this->manager->model()->id,
+        if($verb == 'favorize') return route('dummy.favorite', [
             $this->key(),
+            'favorize',
+            $this->manager->managerKey(),
+            $this->manager->existingModel()->id
         ]);
+
+        return null;
     }
 
     public function can($verb): bool
@@ -36,6 +39,6 @@ class FavoriteAssistant implements Assistant
 
     public function favorize(Request $request)
     {
-        $this->manager->model()->favorite = true;
+        $this->manager->existingModel()->favorite = true;
     }
 }

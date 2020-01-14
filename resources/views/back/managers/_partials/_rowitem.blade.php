@@ -4,7 +4,7 @@
             @if($manager->can('edit'))
                 <a href="{{ $manager->route('edit') }}" class="flex items-center">
                     <h3 class="mb-0">{!! $manager->details()->title !!}</h3>
-                    @if(\Thinktomorrow\Chief\Settings\Homepage::is($manager->model()))
+                    @if(\Thinktomorrow\Chief\Settings\Homepage::is($manager->existingModel()))
                         <span class="label label-tertiary flex items-center ml-2">
                             <svg width="14" height="14" class="fill-current"><use xlink:href="#home"/></svg>
                             <span class="ml-2 text-sm">homepage</span>
@@ -24,7 +24,7 @@
                     {!! $manager->details()->intro !!}
                 </div>
             @endif
-            @if($manager->model() instanceof Thinktomorrow\Chief\Modules\Module)
+            @if($manager->existingModel() instanceof Thinktomorrow\Chief\Modules\Module)
                 <div class="stack-s">{{$manager->details()->singular}}</div>
             @endif
         </div>

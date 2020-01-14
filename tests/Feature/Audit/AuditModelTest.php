@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
@@ -66,7 +67,6 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_delete_events_on_pages()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')
@@ -88,13 +88,12 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_archive_events_on_pages()
     {
-        $this->disableExceptionHandling();
+        $page = factory(Page::class)->create(['current_state' => PageState::PUBLISHED])->first();
+        $manager = app(Managers::class)->findByKey('singles')->manage($page);
+
         $user = $this->developer();
 
-        $page = factory(Page::class)->create(['current_state' => PageState::PUBLISHED])->first();
-
-        $this->actingAs($user, 'chief')
-             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
+        $this->actingAs($user, 'chief')->post($manager->assistant('archive')->route('archive'));
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -126,7 +125,6 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_show_events()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')

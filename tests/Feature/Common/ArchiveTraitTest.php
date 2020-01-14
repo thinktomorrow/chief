@@ -11,6 +11,7 @@ use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Thinktomorrow\Chief\States\Publishable\Publishable;
+use Thinktomorrow\Squanto\Domain\PageKey;
 
 class ArchiveTraitTest extends TestCase
 {
@@ -36,7 +37,7 @@ class ArchiveTraitTest extends TestCase
     /** @test */
     public function it_can_archive_the_model()
     {
-        $this->dummy->changeState(PageState::ARCHIVED);
+        $this->dummy->changeStateOf(PageState::KEY, PageState::ARCHIVED);
 
         $this->assertEquals(1, $this->dummy->isArchived());
     }
@@ -44,7 +45,7 @@ class ArchiveTraitTest extends TestCase
     /** @test */
     public function it_can_unarchive_the_model()
     {
-        $this->dummy->changeState(PageState::DRAFT);
+        $this->dummy->changeStateOf(PageState::KEY, PageState::DRAFT);
 
         $this->assertEquals(1, !$this->dummy->isArchived());
     }
@@ -82,12 +83,12 @@ class ArchivableTraitDummyClass extends Model implements StatefulContract
         });
     }
 
-    public function state(): string
+    public function stateOf($key): string
     {
         return $this->current_state;
     }
 
-    public function changeState($state)
+    public function changeStateOf($key, $state)
     {
         $this->current_state = $state;
     }

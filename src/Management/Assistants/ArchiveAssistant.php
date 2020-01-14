@@ -35,7 +35,7 @@ class ArchiveAssistant implements Assistant
 
     public function manager(Manager $manager)
     {
-        $this->manager  = $manager;
+        $this->manager = $manager;
     }
 
     public function isArchived(): bool
@@ -50,7 +50,7 @@ class ArchiveAssistant implements Assistant
 
     public function findAllArchived(): Collection
     {
-        return $this->manager->modelClass()::archived()->get()->map(function ($model) {
+        return $this->manager->modelInstance()::archived()->get()->map(function ($model) {
             return $this->managers->findByModel($model);
         });
     }

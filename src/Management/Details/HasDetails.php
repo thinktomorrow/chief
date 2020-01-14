@@ -13,8 +13,7 @@ trait HasDetails
      */
     public function details(): Details
     {
-        $className = ($this->modelClass());
-        $genericModelInstance = new $className;
+        $genericModelInstance = $this->modelInstance();
 
         // Generic model details
         $id = Str::slug($this->registration->key(). ($this->hasExistingModel() ? '-'. $this->existingModel()->id : ''));

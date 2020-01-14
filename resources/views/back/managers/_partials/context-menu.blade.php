@@ -10,8 +10,8 @@
         @endif
 
         @if($manager->can('update'))
-            @if($manager->model() instanceof \Thinktomorrow\Chief\States\State\StatefulContract)
-                @foreach(\Thinktomorrow\Chief\States\PageStatePresenter::fromModel($manager->model())->transitions() as $transition)
+            @if($manager->existingModel() instanceof \Thinktomorrow\Chief\States\State\StatefulContract)
+                @foreach(\Thinktomorrow\Chief\States\PageStatePresenter::fromModel($manager->existingModel())->transitions() as $transition)
                     @include('chief::back.managers._transitions.'.$transition)
                 @endforeach
             @else

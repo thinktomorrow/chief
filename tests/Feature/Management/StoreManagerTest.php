@@ -77,7 +77,6 @@ class StoreManagerTest extends TestCase
     /** @test */
     public function it_can_create_a_media_field()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()
             ->post($this->fake->route('store'), [
                 'files' => [

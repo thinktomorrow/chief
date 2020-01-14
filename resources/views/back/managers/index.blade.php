@@ -78,7 +78,7 @@
             {!! $modelManager::sections()->sidebar !!}
 
             @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
-                @if( ! $archiveAssistant->findAll()->isEmpty())
+                @if( ! $archiveAssistant->findAllArchived()->isEmpty())
                     <div class="stack-s">
                         <a href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
                     </div>

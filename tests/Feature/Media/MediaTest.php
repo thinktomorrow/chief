@@ -35,7 +35,6 @@ class MediaTest extends TestCase
     /** @test */
     public function it_can_add_image_via_wysiwyg_editor()
     {
-        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         $article = ArticlePageFake::create();

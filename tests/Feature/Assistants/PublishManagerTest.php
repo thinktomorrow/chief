@@ -48,7 +48,7 @@ class PublishManagerTest extends TestCase
     public function admin_can_draft_a_model()
     {
         $page = Page::first();
-        $page->changeState(PageState::PUBLISHED);
+        $page->changeStateOf(PageState::KEY, PageState::PUBLISHED);
         $page->save();
 
         $this->assertCount(1, Page::published()->get());

@@ -62,14 +62,14 @@ class Invitation extends Model implements StatefulContract
         );
     }
 
-    public function state(): string
+    public function stateOf($key): string
     {
-        return $this->state;
+        return $this->$key;
     }
 
-    public function changeState($state)
+    public function changeStateOf($key, $state)
     {
-        $this->state = $state;
+        $this->$key = $state;
         $this->save();
     }
 

@@ -89,7 +89,7 @@ class DeletePageTest extends TestCase
     /** @test */
     public function a_published_page_cannot_be_deleted()
     {
-        $this->page->changeState(PageState::PUBLISHED);
+        $this->page->changeStateOf(PageState::KEY, PageState::PUBLISHED);
         $this->page->save();
 
         $this->asAdmin()

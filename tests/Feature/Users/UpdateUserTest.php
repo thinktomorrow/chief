@@ -27,8 +27,6 @@ class UpdateUserTest extends TestCase
     /** @test */
     public function full_admin_can_see_the_edit_view()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()->get(route('chief.back.users.edit', $this->newUser->id));
         $response->assertViewIs('chief::back.users.edit')
                  ->assertStatus(200);

@@ -58,7 +58,6 @@ class DeleteManagerTest extends TestCase
     /** @test */
     public function it_deletes_any_relation_entries_as_well()
     {
-        $this->disableExceptionHandling();
         $childModel = ManagedModelFakeFirst::create(['title' => 'Child model']);
         $this->model->adoptChild($childModel);
 

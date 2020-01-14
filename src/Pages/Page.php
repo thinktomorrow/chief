@@ -282,7 +282,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
 
     public function stateOf($key): string
     {
-        return $this->$key;
+        return $this->$key ?? PageState::DRAFT;
     }
 
     public function changeStateOf($key, $state)

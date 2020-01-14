@@ -7,17 +7,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\States\State\StatefulContract;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Management\Application\PublishManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Management\Application\UnpublishManagedModel;
 
 class PublishAssistant implements Assistant
 {
     private $manager;
-
-    private $model;
 
     /** @var Managers */
     private $managers;
@@ -30,11 +27,6 @@ class PublishAssistant implements Assistant
     public function manager(Manager $manager)
     {
         $this->manager = $manager;
-        $this->model = $manager->existingModel();
-
-        if(!$this->model instanceof StatefulContract){
-            throw new \InvalidArgumentException('PublishAssistant requires the model to implement the StatefulContract.');
-        }
     }
 
     public static function key(): string
@@ -44,36 +36,40 @@ class PublishAssistant implements Assistant
 
     public function isPublished(): bool
     {
-        return $this->model->isPublished();
+        return $this->manager->existingModel()->isPublished();
     }
 
     public function isDraft(): bool
     {
-        return $this->model->isDraft();
+        return $this->manager->existingModel()->isDraft();
     }
 
     public function publishedAt(): Carbon
     {
-        return $this->model->Published_at;
+        return $this->manager->existingModel()->published_at;
     }
 
     public function publish()
     {
         $this->guard('publish');
 
-        app(PublishManagedModel::class)->handle($this->model);
+        app(PublishManagedModel::class)->handle($this->manager->existingModel());
+
+        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title .' is online gezet.');
     }
 
     public function unpublish()
     {
         $this->guard('unpublish');
 
-        app(UnpublishManagedModel::class)->handle($this->model);
+        app(UnpublishManagedModel::class)->handle($this->manager->existingModel());
+
+        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title .' is offline gehaald.');
     }
 
     public function findAll(): Collection
     {
-        return $this->model->published()->get()->map(function ($model) {
+        return $this->manager->existingModel()->published()->get()->map(function ($model) {
             return $this->managers->findByModel($model);
         });
     }
@@ -81,8 +77,8 @@ class PublishAssistant implements Assistant
     public function route($verb): ?string
     {
         $modelRoutes = [
-            'publish' => route('chief.back.assistants.update', [$this->key(), 'publish', $this->manager->details()->key, $this->model->id]),
-            'unpublish' => route('chief.back.assistants.update', [$this->key(), 'unpublish', $this->manager->details()->key, $this->model->id]),
+            'publish' => route('chief.back.assistants.update', [$this->key(), 'publish', $this->manager->details()->key, $this->manager->existingModel()->id]),
+            'unpublish' => route('chief.back.assistants.update', [$this->key(), 'unpublish', $this->manager->details()->key, $this->manager->existingModel()->id]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -104,7 +100,7 @@ class PublishAssistant implements Assistant
 
     public function hasPreviewUrl(): bool
     {
-        return $this->model instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
+        return $this->manager->existingModel() instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
     }
 
     public function publicationStatusAsLabel($plain = false)
@@ -144,6 +140,6 @@ class PublishAssistant implements Assistant
 
     public function previewUrl(): string
     {
-        return $this->model->previewUrl();
+        return $this->manager->existingModel()->previewUrl();
     }
 }

@@ -33,7 +33,8 @@ class PublishModelTest extends TestCase
     {
         $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
 
-        $this->asAdmin()->post($pageManager->assistant('publish')->route('publish'));
+        $response = $this->asAdmin()->post($pageManager->assistant('publish')->route('publish'));
+        $response->assertStatus(302)->assertRedirect($pageManager->route('edit'));
 
         $this->assertEquals(PageState::PUBLISHED, $this->page->fresh()->stateOf(PageState::KEY));
     }
@@ -45,7 +46,8 @@ class PublishModelTest extends TestCase
 
         $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
 
-        $this->asAdmin()->post($pageManager->assistant('publish')->route('unpublish'));
+        $response = $this->asAdmin()->post($pageManager->assistant('publish')->route('unpublish'));
+        $response->assertStatus(302)->assertRedirect($pageManager->route('edit'));
 
         $this->assertEquals(PageState::DRAFT, $this->page->fresh()->stateOf(PageState::KEY));
     }

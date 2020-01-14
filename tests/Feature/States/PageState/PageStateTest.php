@@ -24,13 +24,13 @@ class PageStateTest extends TestCase
     /** @test */
     public function it_can_apply_transition()
     {
-        $this->assertEquals('draft', $this->page->state());
+        $this->assertEquals('draft', $this->page->stateOf(PageState::KEY));
 
         $this->machine->apply('publish');
-        $this->assertEquals(PageState::PUBLISHED, $this->page->state());
+        $this->assertEquals(PageState::PUBLISHED, $this->page->stateOf(PageState::KEY));
 
         $this->machine->apply('archive');
-        $this->assertEquals(PageState::ARCHIVED, $this->page->state());
+        $this->assertEquals(PageState::ARCHIVED, $this->page->stateOf(PageState::KEY));
     }
 
     /** @test */
@@ -44,9 +44,9 @@ class PageStateTest extends TestCase
     /** @test */
     public function it_ignores_change_to_current_state()
     {
-        $this->assertEquals('draft', $this->page->state());
-        $this->page->changeState('draft');
-        $this->assertEquals('draft', $this->page->state());
+        $this->assertEquals('draft', $this->page->stateOf(PageState::KEY));
+        $this->page->changeStateOf(PageState::KEY, 'draft');
+        $this->assertEquals('draft', $this->page->stateOf(PageState::KEY));
     }
 
     /** @test */

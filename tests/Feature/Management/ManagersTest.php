@@ -71,7 +71,6 @@ class ManagersTest extends TestCase
     /** @test */
     public function only_authenticated_can_view_managers_index()
     {
-        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
@@ -87,7 +86,6 @@ class ManagersTest extends TestCase
     /** @test */
     public function managers_index_is_paginated()
     {
-        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         app(Register::class)->register(ManagerWithPaginationFake::class, ManagedModelFakeFirst::class);

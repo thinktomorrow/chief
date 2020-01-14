@@ -32,7 +32,7 @@ class DeleteModelTest extends TestCase
         $this->asAdmin()
             ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]));
 
-        $this->assertEquals(PageState::DRAFT, $this->page->fresh()->state());
+        $this->assertEquals(PageState::DRAFT, $this->page->fresh()->stateOf(PageState::KEY));
         $this->assertFalse($this->page->fresh()->trashed());
     }
 
@@ -49,7 +49,7 @@ class DeleteModelTest extends TestCase
         $this->assertCount(0, Page::all());
         $this->assertCount(1, Page::withTrashed()->get());
 
-        $this->assertEquals(PageState::DELETED, $this->page->fresh()->state());
+        $this->assertEquals(PageState::DELETED, $this->page->fresh()->stateOf(PageState::KEY));
         $this->assertTrue($this->page->fresh()->trashed());
     }
 }

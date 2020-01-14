@@ -16,13 +16,13 @@ class InvitationPresenter
 
     public function stateAsLabel(): string
     {
-        if ($this->invitation->state() == InvitationState::ACCEPTED) {
+        if ($this->invitation->stateOf(InvitationState::KEY) == InvitationState::ACCEPTED) {
             return '';
         }
 
         $flair = 'label-primary';
 
-        switch ($this->invitation->state()) {
+        switch ($this->invitation->stateOf(InvitationState::KEY)) {
             case InvitationState::REVOKED:
                 $flair = 'label-error';
                 break;
@@ -36,6 +36,6 @@ class InvitationPresenter
                 break;
         }
 
-        return '<span class="label '.$flair.'">uitnodiging '.$this->invitation->state().'</span>';
+        return '<span class="label '.$flair.'">uitnodiging '.$this->invitation->stateOf(InvitationState::KEY).'</span>';
     }
 }

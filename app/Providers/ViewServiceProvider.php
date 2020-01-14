@@ -16,7 +16,7 @@ class ViewServiceProvider extends ServiceProvider
             $viewData = $view->getData();
 
             $ignoredModel = (isset($viewData['manager']))
-                ? $viewData['manager']->model()
+                ? $viewData['manager']->existingModel()
                 : null;
 
             $onlineModels = UrlHelper::allOnlineModels(false, $ignoredModel);

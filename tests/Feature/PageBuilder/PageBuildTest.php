@@ -310,7 +310,6 @@ class PageBuildTest extends TestCase
     /** @test */
     public function it_can_remove_modules()
     {
-        $this->disableExceptionHandling();
         $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
