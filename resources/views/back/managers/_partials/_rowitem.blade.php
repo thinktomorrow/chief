@@ -1,6 +1,6 @@
 <div class="s-column-6 m-column-6 inset-xs">
     <div class="row bg-white border border-grey-100 rounded inset-s relative" style="height: 100%">
-        <div class="column">
+        <div class="column flex flex-col justify-between">
             @if($manager->can('edit'))
                 <a href="{{ $manager->route('edit') }}" class="flex items-center">
                     <h3 class="mb-0">{!! $manager->details()->title !!}</h3>
@@ -28,12 +28,9 @@
                 <div class="stack-s">{{$manager->details()->singular}}</div>
             @endif
         </div>
-        <div class="column-3 text-right flex flex-col justify-between items-end">
+        <div class="column-1 text-right flex flex-col justify-between items-end">
             @if($manager->can('update'))
                 @include('chief::back.managers._partials.context-menu')
-            @endif
-            @if(!$manager->details()->context && $manager->isAssistedBy('publish'))
-                {!! $manager->assistant('publish')->publicationStatusAsLabel() !!}
             @endif
 
             {!! $manager->details()->context !!}

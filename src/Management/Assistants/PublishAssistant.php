@@ -129,7 +129,7 @@ class PublishAssistant implements Assistant
             $class = 'text-warning';
         }
 
-        $statusAsLabel = '<span class="font-bold ' . $class . '"><em>' . $label . '</em></span>';
+        $statusAsLabel = '<span class="' . $class . '">' . $label . '</span>';
 
         if (!$plain && $this->hasPreviewUrl()) {
             $statusAsLabel = '<a href="' . $this->previewUrl() . '" target="_blank">' . $statusAsLabel . '</a>';
