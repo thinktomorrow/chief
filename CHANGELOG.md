@@ -3,9 +3,13 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+**This release requires a migration to implement the new page state logic.**
 - Added: A generic `AssistantController` as a default dispatcher for assistant actions. Default assistants `ArchiveAssistant` and `PublishAssistant` now utilise the default `chief.back.assistants.update` and `chief.back.assistants.view` which points to this controller.
 - Added: config option `admin-filepath` that can be used to add custom chief routes. The routes defined in this file will only be accessible on authenticated sessions.
+- Added: `PageState` object which represents the page state: draft, published, archived or deleted. This is visible in the database as a current_state column.
+- Changed: the underlying StateMachine now allows to manage multiple states for one model.
 - Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
+- Assistants now need to implement the `Thinktomorrow\Chief\Management\Assistants\Assistant` contract.
 - Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
 - Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
 - Removed: tinker package.

@@ -18,10 +18,13 @@ class AssistantController extends Controller
     }
 
     /**
-     * Each assistant route expects 3 dynamics url segment. This is expected to be in the following sequence:
-     * key (manager key), id (managed model id) and assistant as the assistant identifier.
+     * Each assistant route expects 4 dynamics url segments. This is expected to be in the following sequence:
+     * - assistant as the assistant identifier,
+     * - method as the assistant::method.
+     * - manager as the manager key
+     * - model as the model id
      *
-     * e.g. assistant-route-call/{key}/{id}/{assistant}
+     * e.g. assistant-route-call/{assistant}/{method}/{manager}/{model}
      *
      * @param Request $request
      * @param string $assistant
