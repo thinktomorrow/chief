@@ -159,7 +159,7 @@ class PageManager extends AbstractManager implements Manager
         // For existing model
         if ($this->model && $this->model->id) {
             return parent::details()
-                ->set('title', ucfirst($this->model->title))
+                ->set('title', $this->model->title ? ucfirst($this->model->title) : '')
                 ->set('intro', PageStatePresenter::fromModel($this->model)->label())
                 ->set('context', '');
         }
