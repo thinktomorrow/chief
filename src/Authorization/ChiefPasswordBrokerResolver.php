@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Authorization;
 
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
-use Illuminate\Auth\Passwords\PasswordBroker;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
 

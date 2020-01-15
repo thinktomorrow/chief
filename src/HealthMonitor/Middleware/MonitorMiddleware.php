@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\HealthMonitor\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\HealthMonitor\Monitor;
 
 class MonitorMiddleware

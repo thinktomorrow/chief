@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class UpdateMenu

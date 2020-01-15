@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Filters;
 
 use ArrayIterator;
-use Closure;
 use Illuminate\Database\Eloquent\Builder;
 
 class Filters implements \ArrayAccess, \IteratorAggregate

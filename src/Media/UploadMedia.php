@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media;
 
@@ -8,7 +8,6 @@ use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\SortAssets;
-use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;

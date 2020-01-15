@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Settings;
 
-use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
 

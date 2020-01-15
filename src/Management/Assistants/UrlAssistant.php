@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
-use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Urls\UrlSlugFields;

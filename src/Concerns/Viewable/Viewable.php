@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Concerns\Viewable;
 
-use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Relations\ActsAsParent;

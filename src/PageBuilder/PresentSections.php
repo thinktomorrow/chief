@@ -1,10 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
-use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;

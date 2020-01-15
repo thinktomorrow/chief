@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Pages;
 
@@ -14,7 +14,6 @@ use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Audit\AuditTrait;
 use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,7 +47,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         Publishable,
         Featurable,
         Archivable,
-        AuditTrait,
         ActingAsParent,
         ActingAsChild,
         WithSnippets,

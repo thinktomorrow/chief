@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Media\UploadMedia;
-use Thinktomorrow\Chief\Models\UniqueSlug;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class UpdateModule

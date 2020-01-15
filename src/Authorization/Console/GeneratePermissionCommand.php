@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Authorization\Console;
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Thinktomorrow\Chief\Authorization\Role;

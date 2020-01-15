@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
@@ -25,11 +23,12 @@ class DocumentField extends Field
     {
         $name = $this->name();
 
-        if (strpos($name, ':locale')) {
+        if (strpos($name, ':locale'))
+        {
             return preg_replace('#(:locale)#', $locale, $name);
         }
 
-        return 'files['.$name.']['.$locale.']';
+        return 'files[' . $name . '][' . $locale . ']';
     }
 
     public function getFieldValue(Model $model, $locale = null)
@@ -43,9 +42,11 @@ class DocumentField extends Field
 
         $builder = $model->assets($this->key(), $locale);
 
-        foreach ($builder as $asset) {
+        foreach ($builder as $asset)
+        {
             $documents[] = $asset;
         }
+
         return $documents;
     }
 }
