@@ -18,6 +18,8 @@ trait RenderingFields
 
     public function fieldValue(Field $field, $locale = null)
     {
+        if(!isset($this->model)) return null;
+
         return $field->getFieldValue($this->model, $locale);
     }
 }

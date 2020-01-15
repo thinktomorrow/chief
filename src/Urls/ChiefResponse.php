@@ -11,6 +11,11 @@ use Thinktomorrow\Chief\States\Publishable\PreviewMode;
 
 class ChiefResponse extends Response
 {
+    final public function __construct($content = '', int $status = 200, array $headers = [])
+    {
+        parent::__construct($content, $status, $headers);
+    }
+
     public static function fromSlug(string $slug, $locale = null)
     {
         if (!$locale) {

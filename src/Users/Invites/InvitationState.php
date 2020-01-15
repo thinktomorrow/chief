@@ -56,9 +56,4 @@ class InvitationState extends StateMachine
             'to' => self::DENIED,
         ],
     ];
-
-    public function __construct(Invitation $invitation)
-    {
-        parent::__construct($invitation, static::KEY);
-    }
 }

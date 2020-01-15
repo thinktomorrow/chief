@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Urls\UrlHelper;
 
-class SettingFieldsManager extends Fields implements FieldManager
+class SettingFieldsManager implements FieldManager
 {
     use RenderingFields;
 

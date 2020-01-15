@@ -6,7 +6,7 @@ class PreviewMode
 {
     private $active;
 
-    public function __construct(bool $active)
+    final public function __construct(bool $active)
     {
         $this->active = $active;
     }

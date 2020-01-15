@@ -28,7 +28,7 @@ class FieldType
      *
      * @param string $type
      */
-    public function __construct(string $type)
+    final public function __construct(string $type)
     {
         $this->type = $type;
     }

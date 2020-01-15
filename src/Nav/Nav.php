@@ -12,7 +12,7 @@ class Nav
     /** @var array */
     private $items;
 
-    private function __construct(NavItem ...$items)
+    final private function __construct(NavItem ...$items)
     {
         $this->items = $items;
     }

@@ -39,11 +39,11 @@ class NotAllowedManagerRoute extends AuthorizationException
 
     public static function notAllowedVerb($verb, Manager $manager)
     {
-        throw new static('Not allowed to '.$verb.' a model. '.ucfirst($verb).' route is not allowed by the ' . $manager->details()->key.' manager.');
+        throw new self('Not allowed to '.$verb.' a model. '.ucfirst($verb).' route is not allowed by the ' . $manager->details()->key.' manager.');
     }
 
     public static function notAllowedPermission($permission, Manager $manager)
     {
-        throw new static('Not allowed permission for '.$permission.' on a model as managed by the ' . $manager->details()->key.' manager.');
+        throw new self('Not allowed permission for '.$permission.' on a model as managed by the ' . $manager->details()->key.' manager.');
     }
 }

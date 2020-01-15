@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Modules;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
@@ -50,7 +51,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 
     protected $baseViewPath;
 
-    public function __construct(array $attributes = [])
+    final public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
 
@@ -142,7 +143,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
     {
         $translatableFields = array_merge(static::defaultTranslatableFields(), static::customTranslatableFields());
 
-        return $key ? array_pluck($translatableFields, $key) : $translatableFields;
+        return $key ? Arr::pluck($translatableFields, $key) : $translatableFields;
     }
 
     /**
@@ -196,7 +197,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 //            ]
         ];
 
-        return $key ? array_pluck($types, $key) : $types;
+        return $key ? Arr::pluck($types, $key) : $types;
     }
 
     public static function findBySlug($slug)

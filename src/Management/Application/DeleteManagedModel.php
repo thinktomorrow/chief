@@ -22,7 +22,7 @@ class DeleteManagedModel
 
             // For stateful transitions we will apply this deletion as a state
             if($model instanceof StatefulContract) {
-                (new PageState($model))->apply('delete');
+                (new PageState($model, PageState::KEY))->apply('delete');
                 $model->save();
             }
 

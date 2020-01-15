@@ -10,7 +10,7 @@ class UnarchiveManagedModel
 {
     public function handle(ManagedModel $model)
     {
-        (new PageState($model))->apply('unarchive');
+        (new PageState($model, PageState::KEY))->apply('unarchive');
         $model->save();
 
         Audit::activity()

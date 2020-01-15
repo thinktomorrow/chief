@@ -12,7 +12,7 @@ class PageStatePresenter
     /** @var PageState */
     private $pageState;
 
-    public function __construct(StatefulContract $model, PageState $pageState)
+    final public function __construct(StatefulContract $model, PageState $pageState)
     {
         $this->model = $model;
         $this->pageState = $pageState;
@@ -20,7 +20,7 @@ class PageStatePresenter
 
     public static function fromModel(StatefulContract $model)
     {
-        return new static($model, new PageState($model));
+        return new static($model, new PageState($model, PageState::KEY));
     }
 
     public function label(): string

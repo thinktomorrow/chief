@@ -74,7 +74,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         static::$cachedUrls = null;
     }
 
-    public function __construct(array $attributes = [])
+    final public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
 

@@ -12,7 +12,7 @@ class FilterType
      */
     private $type;
 
-    public function __construct(string $type)
+    final public function __construct(string $type)
     {
         if (!in_array($type, [
             static::INPUT,

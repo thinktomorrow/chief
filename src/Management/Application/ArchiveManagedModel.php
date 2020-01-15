@@ -10,7 +10,7 @@ class ArchiveManagedModel
 {
     public function handle(ManagedModel $model)
     {
-        (new PageState($model))->apply('archive');
+        (new PageState($model, PageState::KEY))->apply('archive');
         $model->save();
 
         Audit::activity()

@@ -23,7 +23,7 @@ abstract class StateMachine
     /** @var string */
     private $stateKey;
 
-    public function __construct(StatefulContract $statefulContract, string $stateKey)
+    final public function __construct(StatefulContract $statefulContract, string $stateKey)
     {
         $this->statefulContract = $statefulContract;
         $this->stateKey = $stateKey;

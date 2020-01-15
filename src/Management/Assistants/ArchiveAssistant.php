@@ -80,7 +80,7 @@ class ArchiveAssistant implements Assistant
     private function guard($verb): Assistant
     {
         if(!$this->manager->existingModel() instanceof StatefulContract){
-            throw new \InvalidArgumentException('ArchiveAssistant requires the model to implement the StatefulContract. ['.get_class($this->model).'] given instead.');
+            throw new \InvalidArgumentException('ArchiveAssistant requires the model to implement the StatefulContract. ['.get_class($this->manager->existingModel()).'] given instead.');
         }
 
         if (! $this->can($verb)) {

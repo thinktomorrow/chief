@@ -10,7 +10,7 @@ class FieldArrangement
     /** @var array */
     private $tabs;
 
-    public function __construct(Fields $fields, array $tabs = [])
+    final public function __construct(Fields $fields, array $tabs = [])
     {
         $this->fields = $fields;
 

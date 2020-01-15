@@ -16,7 +16,7 @@ class ViewPath
     /** @var string */
     private $viewBasePath;
 
-    private function __construct(ViewableContract $viewable, ActsAsParent $parent = null, string $viewBasePath = null)
+    final private function __construct(ViewableContract $viewable, ActsAsParent $parent = null, string $viewBasePath = null)
     {
         $this->viewable = $viewable;
         $this->parent = $parent;

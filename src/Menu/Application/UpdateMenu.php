@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Menu\Application;
 
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;

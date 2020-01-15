@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class UpdateSections
 {
@@ -28,7 +29,7 @@ class UpdateSections
     /** @var array */
     private $sorting;
 
-    private function __construct(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
+    final private function __construct(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
         $this->model = $model;
         $this->relation_references = $relation_references;

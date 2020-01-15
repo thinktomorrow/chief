@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Pages\PageTranslation;
 
 /**
  * Overrides the eloquent model instantiation to account for proper morphable object creation.

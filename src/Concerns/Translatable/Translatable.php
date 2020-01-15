@@ -101,7 +101,7 @@ trait Translatable
     public static function availableLocales()
     {
         // This is a method expected from the dimsav package
-        return (new static())->getLocalesHelper()->all();
+        return (new self())->getLocalesHelper()->all();
     }
 
     /**

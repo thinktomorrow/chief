@@ -9,7 +9,7 @@ class Registration
     private $modelClass;
     private $tags;
 
-    public function __construct(string $managerClass, string $modelClass, array $tags = [])
+    final public function __construct(string $managerClass, string $modelClass, array $tags = [])
     {
         $this->validate($managerClass, $modelClass);
 

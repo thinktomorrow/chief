@@ -10,7 +10,7 @@ class UnpublishManagedModel
 {
     public function handle(ManagedModel $model)
     {
-        (new PageState($model))->apply('unpublish');
+        (new PageState($model, PageState::KEY))->apply('unpublish');
         $model->save();
 
         Audit::activity()

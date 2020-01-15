@@ -10,7 +10,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     /** @var array */
     private $fields;
 
-    public function __construct(array $fields = [])
+    final public function __construct(array $fields = [])
     {
         $this->validateFields($fields);
 

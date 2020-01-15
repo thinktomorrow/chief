@@ -5,6 +5,12 @@ namespace Thinktomorrow\Chief\Relations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $child_type
+ * @property string $child_id
+ * @property string $parent_type
+ * @property string $parent_id
+ */
 class Relation extends Model
 {
     public $timestamps = false;

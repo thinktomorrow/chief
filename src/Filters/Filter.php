@@ -12,7 +12,7 @@ abstract class Filter
 
     protected $values = [];
 
-    public function __construct(FilterType $filterType, string $key)
+    final public function __construct(FilterType $filterType, string $key)
     {
         $this->filterType = $filterType;
 

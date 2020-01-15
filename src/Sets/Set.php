@@ -22,7 +22,7 @@ class Set extends Collection implements ViewableContract
     /** @var array */
     private $settings;
 
-    public function __construct($items = [], string $viewKey, array $settings = [])
+    final public function __construct(array $items, string $viewKey, array $settings = [])
     {
         $this->viewKey = $viewKey;
 

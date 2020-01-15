@@ -36,7 +36,7 @@ class SnippetCollection extends Collection
             }
         }
 
-        return static::$loadedSnippets = new static($files->map(function (SplFileInfo $file) {
+        return static::$loadedSnippets = new self($files->map(function (SplFileInfo $file) {
             $path = $file->getRealPath();
 
             if (0 === strpos($path, resource_path('views')) && false !== strpos($file->getBasename(), '.blade.php')) {

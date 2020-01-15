@@ -15,7 +15,7 @@ class AcceptInvite
         try {
             DB::beginTransaction();
 
-            (new InvitationState($invitation))->apply('accept');
+            (new InvitationState($invitation, InvitationState::KEY))->apply('accept');
 
             event(new InviteAccepted($invitation->id));
 

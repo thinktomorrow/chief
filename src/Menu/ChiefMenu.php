@@ -9,7 +9,7 @@ class ChiefMenu
     private $collection;
     private $includeHidden = false;
 
-    public function __construct(NodeCollection $collection)
+    final public function __construct(NodeCollection $collection)
     {
         $this->collection = $collection;
     }

@@ -39,11 +39,6 @@ class PageManager extends AbstractManager implements Manager
         'publish' => PublishAssistant::class,
     ];
 
-    public function __construct(Registration $registration)
-    {
-        parent::__construct($registration);
-    }
-
     public function can($verb): bool
     {
         try {

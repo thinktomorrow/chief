@@ -9,7 +9,7 @@ class Register
     /** @var array */
     private $registrations = [];
 
-    public function __construct(array $registrations = [])
+    final public function __construct(array $registrations = [])
     {
         foreach ($registrations as $registration) {
             $this->push($registration);

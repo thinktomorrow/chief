@@ -15,7 +15,7 @@ class Menu
     /** @var string */
     private $view_path;
 
-    public function __construct(string $key, string $label, string $view_path)
+    final public function __construct(string $key, string $label, string $view_path)
     {
         $this->label = $label;
         $this->view_path = $view_path;

@@ -24,7 +24,7 @@ class SetReference implements ProvidesFlatReference
     /** @var string */
     private $label;
 
-    public function __construct(string $key, string $action, array $parameters = [], string $label = null)
+    final public function __construct(string $key, string $action, array $parameters = [], string $label = null)
     {
         $this->key = $key;
         $this->action = $action;

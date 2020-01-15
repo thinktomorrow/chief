@@ -23,7 +23,7 @@ class Field
      */
     protected $default = null;
 
-    public function __construct(FieldType $fieldType, string $key)
+    final public function __construct(FieldType $fieldType, string $key)
     {
         $this->fieldType = $fieldType;
 

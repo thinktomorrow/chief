@@ -41,7 +41,7 @@ abstract class AbstractManager
     protected $paginated = true;
     protected static $bootedTraitMethods = [];
 
-    public function __construct(Registration $registration)
+    final public function __construct(Registration $registration)
     {
         $this->registration = $registration;
 

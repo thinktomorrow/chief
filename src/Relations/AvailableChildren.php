@@ -16,7 +16,7 @@ class AvailableChildren
     /** @var Collection */
     private $collection;
 
-    private function __construct(ActsAsParent $parent)
+    final private function __construct(ActsAsParent $parent)
     {
         $this->parent = $parent;
     }

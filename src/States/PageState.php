@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\States;
 
 use Thinktomorrow\Chief\States\State\StateMachine;
-use Thinktomorrow\Chief\States\State\StatefulContract;
 
 class PageState extends StateMachine
 {
@@ -48,11 +47,6 @@ class PageState extends StateMachine
             'to'   => self::DELETED,
         ],
     ];
-
-    public function __construct(StatefulContract $page)
-    {
-        parent::__construct($page, static::KEY);
-    }
 
     public function isOffline(): bool
     {

@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 
 class UrlSlugFields extends Fields
 {
-    public static function fromModel(ProvidesUrl $model)
+    final public static function fromModel(ProvidesUrl $model)
     {
         $fields = self::initEmptyFields($model->availableLocales(), $model);
 

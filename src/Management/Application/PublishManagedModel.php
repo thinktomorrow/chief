@@ -10,7 +10,7 @@ class PublishManagedModel
 {
     public function handle(ManagedModel $model)
     {
-        (new PageState($model))->apply('publish');
+        (new PageState($model, PageState::KEY))->apply('publish');
         $model->save();
 
         Audit::activity()
