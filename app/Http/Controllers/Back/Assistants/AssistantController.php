@@ -33,16 +33,16 @@ class AssistantController extends Controller
      * @param null $model
      * @return mixed
      */
-    public function view(Request $request, string $assistant, string $method, string $manager, $model = null)
+    public function view(Request $request, string $assistant, string $method, string $managerKey, $model = null)
     {
-        $manager = $this->managers->findByKey($manager, $model);
+        $manager = $this->managers->findByKey($managerKey, $model);
 
         return $this->forwardRequestToAssistant($request, $manager, $assistant, $method);
     }
 
-    public function update(Request $request, string $assistant, string $method, string $manager, $model)
+    public function update(Request $request, string $assistant, string $method, string $managerKey, $model)
     {
-        $manager = $this->managers->findByKey($manager, $model);
+        $manager = $this->managers->findByKey($managerKey, $model);
 
         return $this->forwardRequestToAssistant($request, $manager, $assistant, $method);
     }

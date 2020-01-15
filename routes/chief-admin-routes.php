@@ -36,13 +36,6 @@ Route::post('assist-update/{assistant}/{method}/{manager}/{model}', 'Thinktomorr
 Route::post('check-url/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@checkSlugExists')->name('chief.back.assistants.url.check')->where('id', '[0-9]+');
 Route::delete('remove-redirect/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@removeRedirect')->name('chief.back.assistants.url.remove-redirect')->where('id', '[0-9]+');
 
-//Route::post('publish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@publish')->name('chief.back.assistants.publish')->where('id', '[0-9]+');
-//Route::post('unpublish/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\PublishController@unpublish')->name('chief.back.assistants.unpublish')->where('id', '[0-9]+');
-//
-//Route::get('archive/{key}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@index')->name('chief.back.assistants.archive-index');
-//Route::post('archive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@archive')->name('chief.back.assistants.archive')->where('id', '[0-9]+');
-//Route::post('unarchive/{key}/{id}/{assistant}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@unarchive')->name('chief.back.assistants.unarchive')->where('id', '[0-9]+');
-
 /**
 * -----------------------------------------------------------------
 * MENU MANAGEMENT
@@ -80,7 +73,6 @@ Route::get('logout', 'Thinktomorrow\Chief\App\Http\Controllers\Auth\LoginControl
 Route::get('users', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@index')->name('chief.back.users.index');
 Route::post('users', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@store')->name('chief.back.users.store');
 Route::get('users/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@create')->name('chief.back.users.create');
-//    Route::delete('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@destroy')->name('chief.back.users.destroy');
 Route::put('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@update')->name('chief.back.users.update');
 Route::get('users/{user}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@show')->name('chief.back.users.show');
 Route::get('users/{user}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Users\UserController@edit')->name('chief.back.users.edit');
