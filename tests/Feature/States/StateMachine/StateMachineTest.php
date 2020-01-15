@@ -18,7 +18,7 @@ class StateMachineTest extends TestCase
 
         $this->statefulStub = new StatefulStub();
 
-        $this->onlineStateMachine = new OnlineStateMachineStub($this->statefulStub);
+        $this->onlineStateMachine = new OnlineStateMachineStub($this->statefulStub, 'online');
     }
 
     /** @test */

@@ -18,7 +18,7 @@ class PageStateTest extends TestCase
 
         $this->page = ProductPageFake::create()->fresh();
 
-        $this->machine = new PageState($this->page);
+        $this->machine = new PageState($this->page, PageState::KEY);
     }
 
     /** @test */

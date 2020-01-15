@@ -6,11 +6,6 @@ use Thinktomorrow\Chief\States\State\StateMachine;
 
 class OnlineStateMachineStub extends StateMachine
 {
-    public function __construct(StatefulStub $statefulStub)
-    {
-        parent::__construct($statefulStub, 'online');
-    }
-
     protected $states = [
         true, // online
         false, // offline
