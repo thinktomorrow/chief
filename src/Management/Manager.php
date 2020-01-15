@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management;
 
@@ -10,10 +10,10 @@ use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
-use Thinktomorrow\Chief\Management\Assistants\Assistant;
+use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
-interface Manager extends FieldManager
+interface Manager extends FieldManager, AssistedManager
 {
     /**
      * Identifies this type of manager. This is the key that is set upon registration of the manager.
@@ -31,12 +31,6 @@ interface Manager extends FieldManager
      * @return Manager
      */
     public function manage($model): Manager;
-
-    public function isAssistedBy(string $assistant): bool;
-
-    public function assistant(string $assistant): Assistant;
-
-    public function assistants(): array;
 
     /**
      * Find an instance by id wrapped in a Manager

@@ -28,6 +28,7 @@ class ChiefResponse extends Response
                 // So we detect the model based on the redirect target url.
                 if (!$model) {
                     $targetUrlRecord = $urlRecord->redirectTo();
+
                     $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
 
                     if (!$targetModel) {

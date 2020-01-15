@@ -53,7 +53,7 @@ class UrlAssistant implements Assistant
                         'url-slugs.*' => 'taalspecifieke link',
                     ])
                 ->view('chief::back._fields.url-slugs')
-                ->viewData(['fields' => UrlSlugFields::fromModel($this->manager->modelInstance()) ]),
+                ->viewData(['fields' => UrlSlugFields::fromModel($this->manager->hasExistingModel() ? $this->manager->existingModel() : $this->manager->modelInstance()) ]),
         ]);
     }
 
