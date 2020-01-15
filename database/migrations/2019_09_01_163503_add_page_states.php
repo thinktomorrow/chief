@@ -16,31 +16,27 @@ class AddPageStates extends Migration
 
         $this->convertOldStates();
 
-        Schema::table('pages', function(Blueprint $table){
+        Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('archived_at');
         });
 
-        Schema::table('pages', function(Blueprint $table){
+        Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('published');
         });
 
-        Schema::table('pages', function(Blueprint $table){
+        Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('publication');
         });
     }
 
     private function convertOldStates()
     {
-        foreach(Page::withoutGlobalScopes()->get() as $page)
-        {
-            if($page->archived_at != null)
-            {
+        foreach (Page::withoutGlobalScopes()->get() as $page) {
+            if ($page->archived_at != null) {
                 $page->current_state = PageState::ARCHIVED;
-
-            }elseif($page->published)
-            {
+            } elseif ($page->published) {
                 $page->current_state = PageState::PUBLISHED;
-            }else{
+            } else {
                 $page->current_state = PageState::DRAFT;
             }
             $page->save();

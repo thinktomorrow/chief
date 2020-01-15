@@ -21,7 +21,7 @@ class DeleteManagedModel
             DB::beginTransaction();
 
             // For stateful transitions we will apply this deletion as a state
-            if($model instanceof StatefulContract) {
+            if ($model instanceof StatefulContract) {
                 (new PageState($model, PageState::KEY))->apply('delete');
                 $model->save();
             }
@@ -29,17 +29,17 @@ class DeleteManagedModel
             Relation::deleteRelationsOf($model->getMorphClass(), $model->id);
 
             // Mark the slug as deleted to avoid any conflict with newly created modules with the same slug.
-            if($model instanceof Module) {
+            if ($model instanceof Module) {
                 $model->update([
                     'slug' => $model->slug . $this->appendDeleteMarker(),
                 ]);
             }
 
-            if($model instanceof ProvidesUrl){
+            if ($model instanceof ProvidesUrl) {
                 UrlRecord::getByModel($model)->each->delete();
             }
 
-            if($model instanceof Page){
+            if ($model instanceof Page) {
                 Module::where('page_id', $model->id)->delete();
             }
 
