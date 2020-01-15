@@ -47,7 +47,7 @@ class AssistantController extends Controller
     private function forwardRequestToAssistant(Request $request, Manager $manager, string $assistantKey, string $method)
     {
         // If the given method is not related to this route, we'll abort to make sure no unintented method calls are being made
-        if(is_null($manager->assistant($assistantKey)->route($method))) {
+        if (is_null($manager->assistant($assistantKey)->route($method))) {
             throw new \InvalidArgumentException("Assistant $assistantKey does not allow method $method to be called via route. Consider adding this method as route key.");
         }
 

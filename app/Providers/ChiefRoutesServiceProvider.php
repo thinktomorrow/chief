@@ -31,13 +31,12 @@ class ChiefRoutesServiceProvider extends ServiceProvider
     private function loadAdminRoutes()
     {
         Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web', 'web-chief', 'auth:chief']], function () {
-
             $this->loadRoutesFrom(__DIR__.'/../../routes/chief-admin-routes.php');
 
             // Add project specific chief routing...
             $projectChiefRoutePath = config('thinktomorrow.chief.route.admin-filepath', null);
 
-            if($projectChiefRoutePath && file_exists($projectChiefRoutePath)) {
+            if ($projectChiefRoutePath && file_exists($projectChiefRoutePath)) {
                 $this->loadRoutesFrom($projectChiefRoutePath);
             }
         });

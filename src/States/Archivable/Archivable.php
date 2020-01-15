@@ -23,7 +23,7 @@ trait Archivable
 
     public function scopeUnarchived($query)
     {
-        $query->withoutGlobalScope(ArchiveScope::class)->where(PageState::KEY,'<>', PageState::ARCHIVED);
+        $query->withoutGlobalScope(ArchiveScope::class)->where(PageState::KEY, '<>', PageState::ARCHIVED);
     }
 
     public function scopeWithArchived($query)

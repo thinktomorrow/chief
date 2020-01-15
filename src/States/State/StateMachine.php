@@ -95,7 +95,7 @@ abstract class StateMachine
     {
         $transitions = [];
 
-        foreach($this->transitions as $transitionKey => $transition){
+        foreach ($this->transitions as $transitionKey => $transition) {
             if (false !== array_search($this->statefulContract->stateOf($this->stateKey), $transition['from'])) {
                 $transitions[] = $transitionKey;
             }
@@ -107,7 +107,7 @@ abstract class StateMachine
     private function validateTransitions()
     {
         foreach ($this->transitions as $transitionKey => $transition) {
-            if (!array_key_exists('from', $transition) || !array_key_exists('to',$transition) || !is_array($transition['from'])) {
+            if (!array_key_exists('from', $transition) || !array_key_exists('to', $transition) || !is_array($transition['from'])) {
                 throw StateException::malformedTransition($transitionKey, $this);
             }
 
