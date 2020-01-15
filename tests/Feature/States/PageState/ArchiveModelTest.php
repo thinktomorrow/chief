@@ -9,7 +9,6 @@ use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
-use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 
 class ArchiveModelTest extends TestCase
 {
@@ -54,7 +53,7 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_can_unarchive_an_archived_page()
     {
-        app(ArchiveManagedModel::class)->handle($this->page);
+        $this->pageManager->assistant('archive')->archive(request());
 
         $this->asAdmin()->post($this->pageManager->assistant('archive')->route('unarchive'));
 
@@ -64,7 +63,7 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_cannot_archive_a_deleted_page()
     {
-        app(ArchiveManagedModel::class)->handle($this->page);
+        $this->pageManager->assistant('archive')->archive(request());
         app(DeleteManagedModel::class)->handle($this->page);
 
         $this->asAdmin()->post($this->pageManager->assistant('archive')->route('archive'));
@@ -76,7 +75,7 @@ class ArchiveModelTest extends TestCase
     /** @test */
     public function it_cannot_unarchive_a_deleted_page()
     {
-        app(ArchiveManagedModel::class)->handle($this->page);
+        $this->pageManager->assistant('archive')->archive(request());
         app(DeleteManagedModel::class)->handle($this->page);
 
         $this->asAdmin()->post($this->pageManager->assistant('archive')->route('unarchive'));

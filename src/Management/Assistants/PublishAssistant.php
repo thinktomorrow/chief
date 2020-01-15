@@ -4,12 +4,12 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Management\Application\PublishManagedModel;
-use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Management\Application\UnpublishManagedModel;
 
 class PublishAssistant implements Assistant
 {
@@ -52,18 +52,28 @@ class PublishAssistant implements Assistant
     {
         $this->guard('publish');
 
-        app(PublishManagedModel::class)->handle($this->manager->existingModel());
+        PageState::make($this->manager->existingModel())->apply('publish');
+        $this->manager->existingModel()->save();
 
-        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title .' is online gezet.');
+        Audit::activity()
+            ->performedOn($this->manager->existingModel())
+            ->log('published');
+
+        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title . ' is online gezet.');
     }
 
     public function unpublish()
     {
         $this->guard('unpublish');
 
-        app(UnpublishManagedModel::class)->handle($this->manager->existingModel());
+        PageState::make($this->manager->existingModel())->apply('unpublish');
+        $this->manager->existingModel()->save();
 
-        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title .' is offline gehaald.');
+        Audit::activity()
+            ->performedOn($this->manager->existingModel())
+            ->log('unpublished');
+
+        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title . ' is offline gehaald.');
     }
 
     public function findAll(): Collection
@@ -76,8 +86,12 @@ class PublishAssistant implements Assistant
     public function route($verb): ?string
     {
         $modelRoutes = [
-            'publish' => route('chief.back.assistants.update', [$this->key(), 'publish', $this->manager->details()->key, $this->manager->existingModel()->id]),
-            'unpublish' => route('chief.back.assistants.update', [$this->key(), 'unpublish', $this->manager->details()->key, $this->manager->existingModel()->id]),
+            'publish' => route('chief.back.assistants.update', [
+                $this->key(), 'publish', $this->manager->details()->key, $this->manager->existingModel()->id
+            ]),
+            'unpublish' => route('chief.back.assistants.update', [
+                $this->key(), 'unpublish', $this->manager->details()->key, $this->manager->existingModel()->id
+            ]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -90,7 +104,8 @@ class PublishAssistant implements Assistant
 
     private function guard($verb): Assistant
     {
-        if (! $this->can($verb)) {
+        if (!$this->can($verb))
+        {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
         }
 
@@ -107,18 +122,22 @@ class PublishAssistant implements Assistant
         $label = $this->publicationStatusAsPlainLabel();
         $class = '';
 
-        if ($this->isPublished()) {
+        if ($this->isPublished())
+        {
             $class = 'text-success';
-        } elseif ($this->isDraft()) {
+        } elseif ($this->isDraft())
+        {
             $class = 'text-error';
-        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived())
+        {
             $class = 'text-warning';
         }
 
-        $statusAsLabel = '<span class="font-bold '. $class .'"><em>' . $label . '</em></span>';
+        $statusAsLabel = '<span class="font-bold ' . $class . '"><em>' . $label . '</em></span>';
 
-        if (!$plain && $this->hasPreviewUrl()) {
-            $statusAsLabel =  '<a href="'.$this->previewUrl().'" target="_blank">'. $statusAsLabel .'</a>';
+        if (!$plain && $this->hasPreviewUrl())
+        {
+            $statusAsLabel = '<a href="' . $this->previewUrl() . '" target="_blank">' . $statusAsLabel . '</a>';
         }
 
         return $statusAsLabel;
@@ -126,11 +145,14 @@ class PublishAssistant implements Assistant
 
     private function publicationStatusAsPlainLabel()
     {
-        if ($this->isPublished()) {
+        if ($this->isPublished())
+        {
             return 'online';
-        } elseif ($this->isDraft()) {
+        } elseif ($this->isDraft())
+        {
             return 'offline';
-        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived())
+        {
             return 'gearchiveerd';
         }
 

@@ -5,13 +5,13 @@ namespace Thinktomorrow\Chief\Management\Assistants;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
-use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Management\Application\UnarchiveManagedModel;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class ArchiveAssistant implements Assistant
@@ -118,7 +118,14 @@ class ArchiveAssistant implements Assistant
             }
         }
 
-        app(ArchiveManagedModel::class)->handle($this->manager->existingModel());
+        // Set state to archived
+        PageState::make($this->manager->existingModel())->apply('archive');
+        $this->manager->existingModel()->save();
+
+        // Log archive activity
+        Audit::activity()
+            ->performedOn($this->manager->existingModel())
+            ->log('archived');
 
         return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title .' is gearchiveerd.');
     }
@@ -127,7 +134,14 @@ class ArchiveAssistant implements Assistant
     {
         $this->guard('unarchive');
 
-        app(UnArchiveManagedModel::class)->handle($this->manager->existingModel());
+        // Set state to archived
+        PageState::make($this->manager->existingModel())->apply('unarchive');
+        $this->manager->existingModel()->save();
+
+        // Log archive activity
+        Audit::activity()
+            ->performedOn($this->manager->existingModel())
+            ->log('unarchived');
 
         return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title .' is hersteld.');
     }

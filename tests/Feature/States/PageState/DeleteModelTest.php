@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\States\PageState;
-use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
-use Thinktomorrow\Chief\Management\Application\ArchiveManagedModel;
 
 class DeleteModelTest extends TestCase
 {
@@ -39,7 +37,8 @@ class DeleteModelTest extends TestCase
     /** @test */
     public function it_can_delete_an_archived_page()
     {
-        app(ArchiveManagedModel::class)->handle($this->page);
+        $this->page->changeStateOf(PageState::KEY, PageState::ARCHIVED);
+        $this->page->save();
 
         $this->asAdmin()
             ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]),[
