@@ -103,24 +103,6 @@ class AuditModelTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_activity_by_subject()
-    {
-        $user = $this->developer();
-
-        $page = factory(Page::class)->create(['published' => true])->first();
-
-        $this->actingAs($user, 'chief')
-             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
-
-        $activity = Audit::getAllActivityFor($page);
-
-        $this->assertCount(1, $activity);
-        $this->assertEquals('archived', $activity->last()->description);
-        $this->assertEquals($user->id, $activity->last()->causer_id);
-        $this->assertEquals('singles', $activity->last()->subject_type);
-    }
-
-    /** @test */
     public function it_logs_create_events_on_other_models()
     {
         $this->markTestIncomplete();
