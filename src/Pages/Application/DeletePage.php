@@ -29,7 +29,7 @@ class DeletePage
             // Remove Page specific urls
             UrlRecord::getByModel($page)->each->delete();
 
-            (new PageState($page, PageState::KEY))->apply('delete');
+            PageState::make($page)->apply('delete');
             $page->save();
 
             $page->delete();

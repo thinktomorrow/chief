@@ -3,14 +3,20 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: A generic `AssistantController` as a default dispatcher for assistant actions. Default assistants `ArchiveAssistant` and `PublishAssistant` now utilise the default `chief.back.assistants.update` and `chief.back.assistants.view` which points to this controller.
+- Added: config option `admin-filepath` that can be used to add custom chief routes. The routes defined in this file will only be accessible on authenticated sessions.
+- Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
+- Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
+- Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
+- Removed: tinker package.
+- Fixed: chief error now returns expected 500 status instead of 200.
+- Fixed: phpstan released lots of static analysis bugs which have been solved.
 
 ## 0.4.5 - 2020-01-14
-
 - Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
 - Fixed: image filter for mediagallery api call now correctly offsets without counting non-images.
 
 ## 0.4.4 - 2020-01-13
-
 - Fixed: modal.vue close button doesnt submit forms anymore
 
 ## 0.4.3 - 2020-01-10
@@ -41,8 +47,6 @@ principles.
 - Fixed: Multiselect placeholders were looking buggy. Now they don't.
 - Fixed: issue where deleting a model would not delete any existing relations.
 - Changed: updated Assetlibrary to 0.6
-
-- Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
 
 ## 0.3.4 - 2019-10-18
 - Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.

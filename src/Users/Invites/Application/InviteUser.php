@@ -18,7 +18,7 @@ class InviteUser
 
             $invitation = Invitation::make((string) $invitee->id, (string) $inviter->id);
 
-            (new InvitationState($invitation, InvitationState::KEY))->apply('invite');
+            InvitationState::make($invitation)->apply('invite');
 
             event(new UserInvited($invitation->id));
 

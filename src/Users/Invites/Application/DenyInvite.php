@@ -15,7 +15,7 @@ class DenyInvite
         try {
             DB::beginTransaction();
 
-            (new InvitationState($invitation, InvitationState::KEY))->apply('deny');
+            InvitationState::make($invitation)->apply('deny');
 
             event(new InviteDenied($invitation->id));
 

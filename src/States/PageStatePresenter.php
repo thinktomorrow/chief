@@ -20,7 +20,7 @@ class PageStatePresenter
 
     public static function fromModel(StatefulContract $model)
     {
-        return new static($model, new PageState($model, PageState::KEY));
+        return new static($model, PageState::make($model));
     }
 
     public function label(): string

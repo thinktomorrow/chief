@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Users\Invites;
 
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\States\State\StateMachine;
 
 class InvitationState extends StateMachine
@@ -56,4 +57,9 @@ class InvitationState extends StateMachine
             'to' => self::DENIED,
         ],
     ];
+
+    public static function make(StatefulContract $model)
+    {
+        return new static($model, static::KEY);
+    }
 }

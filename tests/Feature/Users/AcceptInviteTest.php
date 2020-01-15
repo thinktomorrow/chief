@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Thinktomorrow\Chief\States\PageState;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
@@ -11,7 +9,6 @@ use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
-use Thinktomorrow\Squanto\Domain\PageKey;
 
 class AcceptInviteTest extends TestCase
 {
