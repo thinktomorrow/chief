@@ -99,7 +99,7 @@ class Managers
     {
         $assistants = collect();
 
-        foreach($this->all() as $manager) {
+        foreach ($this->all() as $manager) {
             $assistants = $assistants->merge($manager->assistants(false));
         }
 

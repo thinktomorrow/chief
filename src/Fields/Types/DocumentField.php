@@ -23,8 +23,7 @@ class DocumentField extends Field
     {
         $name = $this->name();
 
-        if (strpos($name, ':locale'))
-        {
+        if (strpos($name, ':locale')) {
             return preg_replace('#(:locale)#', $locale, $name);
         }
 
@@ -42,8 +41,7 @@ class DocumentField extends Field
 
         $builder = $model->assets($this->key(), $locale);
 
-        foreach ($builder as $asset)
-        {
+        foreach ($builder as $asset) {
             $documents[] = $asset;
         }
 

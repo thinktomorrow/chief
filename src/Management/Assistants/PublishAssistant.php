@@ -104,8 +104,7 @@ class PublishAssistant implements Assistant
 
     private function guard($verb): Assistant
     {
-        if (!$this->can($verb))
-        {
+        if (!$this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
         }
 
@@ -122,21 +121,17 @@ class PublishAssistant implements Assistant
         $label = $this->publicationStatusAsPlainLabel();
         $class = '';
 
-        if ($this->isPublished())
-        {
+        if ($this->isPublished()) {
             $class = 'text-success';
-        } elseif ($this->isDraft())
-        {
+        } elseif ($this->isDraft()) {
             $class = 'text-error';
-        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived())
-        {
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
             $class = 'text-warning';
         }
 
         $statusAsLabel = '<span class="font-bold ' . $class . '"><em>' . $label . '</em></span>';
 
-        if (!$plain && $this->hasPreviewUrl())
-        {
+        if (!$plain && $this->hasPreviewUrl()) {
             $statusAsLabel = '<a href="' . $this->previewUrl() . '" target="_blank">' . $statusAsLabel . '</a>';
         }
 
@@ -145,14 +140,11 @@ class PublishAssistant implements Assistant
 
     private function publicationStatusAsPlainLabel()
     {
-        if ($this->isPublished())
-        {
+        if ($this->isPublished()) {
             return 'online';
-        } elseif ($this->isDraft())
-        {
+        } elseif ($this->isDraft()) {
             return 'offline';
-        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived())
-        {
+        } elseif ($this->manager->isAssistedBy('archive') && $this->manager->assistant('archive')->isArchived()) {
             return 'gearchiveerd';
         }
 
