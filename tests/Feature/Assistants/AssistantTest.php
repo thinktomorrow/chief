@@ -19,12 +19,6 @@ class AssistantTest extends TestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
-
-//        $this->page = factory(Page::class)->create();
-//        $this->fake = (new PublishedManagerFake(app(Register::class)->filterByKey('singles')->first()))->manage($this->page);
-//
-//        Route::get('statics/{slug}', function () {
-//        })->name('pages.show');
     }
 
     /** @test */
