@@ -4,6 +4,8 @@ principles.
 
 ## unreleased
 
+- Fixed: show context menu on edit page if even without update permission
+
 ## 0.4.5 - 2020-01-14
 
 - Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
