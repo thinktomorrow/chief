@@ -1,6 +1,6 @@
 <?php
     $files = $manager->fieldValue($field, $locale ?? null);
-    $name = $name ?? $field->name();
+    $name = $name ?? $field->getName();
     $locale = $locale ?? app()->getLocale();
 ?>
 
@@ -26,7 +26,7 @@
 
     </div>
 
-    <input type="hidden" id="removeFile-{{$document->id}}" name="{{ $name }}[delete][]" {{ $field->multiple ? 'multiple' : '' }}/>
+    <input type="hidden" id="removeFile-{{$document->id}}" name="{{ $name }}[delete][]" {{ $field->allowMultiple() ? 'multiple' : '' }}/>
 @endforeach
 
 <div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->multiple ? 'hidden' : ''}}">
@@ -35,7 +35,7 @@
     </label>
     <span class="text-secondary-500"></span>
 </div>
-<input id="document-upload-{{$locale}}" onchange="inputValueToLabel(event, '{{$locale}}')" type="file" name="{{ $name }}[new][]" {{ $field->multiple ? 'multiple' : '' }} class="hidden">
+<input id="document-upload-{{$locale}}" onchange="inputValueToLabel(event, '{{$locale}}')" type="file" name="{{ $name }}[new][]" {{ $field->allowMultiple() ? 'multiple' : '' }} class="hidden">
 
 @push('custom-scripts')
     <script>

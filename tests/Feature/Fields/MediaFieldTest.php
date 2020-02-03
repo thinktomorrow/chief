@@ -12,8 +12,17 @@ class MediaFieldTest extends TestCase
     {
         $mediafield = MediaField::make('media');
 
-        $this->assertEquals('files[media][nl]', $mediafield->translateName('nl'));
-        $this->assertEquals('files[media]', $mediafield->name());
+        $this->assertEquals('files[media][nl]', $mediafield->getName('nl'));
+//        $this->assertEquals('files[media]', $mediafield->getName());
+    }
+
+    /** @test */
+    public function media_assets_are_always_localized()
+    {
+        $mediafield = MediaField::make('media');
+
+        $this->assertTrue($mediafield->isLocalized());
+        $this->assertCount(1, $mediafield->getLocales());
     }
 
 }

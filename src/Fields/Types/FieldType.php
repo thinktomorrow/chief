@@ -35,14 +35,28 @@ class FieldType
 
     public static function fromString(string $type): self
     {
-        $class = 'Thinktomorrow\Chief\Fields\Types\\' . ucfirst($type . 'Field');
-
-        return new $class(new static($type));
+        return new static($type);
     }
 
     public function get(): string
     {
         return $this->type;
+    }
+
+    public function equalsAny(array $types): bool
+    {
+        foreach ($types as $type) {
+            if ($this->equals( FieldType::fromString($type) )) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function equals($type): bool
+    {
+        return ((string) $type === (string) $this->type && static::class === get_class($type));
     }
 
     public function __toString()

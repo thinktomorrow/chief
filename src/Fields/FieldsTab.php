@@ -56,7 +56,7 @@ class FieldsTab
 
     public function contains(Field $field): bool
     {
-        return in_array($field->key, $this->fieldKeys);
+        return in_array($field->getKey(), $this->fieldKeys);
     }
 
     public function fields(): Fields

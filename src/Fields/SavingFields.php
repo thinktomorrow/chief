@@ -36,7 +36,7 @@ trait SavingFields
             }
 
             // Custom set methods - default is the generic setField() method.
-            $methodName = 'set'. ucfirst(Str::camel($field->key())) . 'Field';
+            $methodName = 'set'. ucfirst(Str::camel($field->getKey())) . 'Field';
             (method_exists($this, $methodName))
                 ? $this->$methodName($field, $request)
                 : $this->setField($field, $request);
@@ -53,19 +53,19 @@ trait SavingFields
 
     protected function detectCustomSaveMethods(Field $field): bool
     {
-        $saveMethodName = 'save'. ucfirst(Str::camel($field->key())) . 'Field';
+        $saveMethodName = 'save'. ucfirst(Str::camel($field->getKey())) . 'Field';
 
         // Custom save method on assistant
         foreach ($this->assistants() as $assistant) {
             if (method_exists($assistant, $saveMethodName)) {
-                $this->saveAssistantMethods[$field->key()] = ['field' => $field, 'method' => $saveMethodName, 'assistant' => $assistant];
+                $this->saveAssistantMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethodName, 'assistant' => $assistant];
                 return true;
             }
         }
 
         // Custom save method on manager class
         if (method_exists($this, $saveMethodName)) {
-            $this->saveMethods[$field->key()] = ['field' => $field, 'method' => $saveMethodName];
+            $this->saveMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethodName];
             return true;
         }
 
@@ -95,20 +95,20 @@ trait SavingFields
 
             // Make our media fields able to be translatable as well...
             if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
-                throw new \Exception('Cannot process the ' . $field->key . ' media field. Currently no support for translatable media files. We should fix this!');
+                throw new \Exception('Cannot process the ' . $field->getKey() . ' media field. Currently no support for translatable media files. We should fix this!');
             }
 
             // Okay so this is a bit odd but since all translations are expected to be inside the trans
             // array, we can add all these translations at once. Just make sure to keep track of the
             // keys since this is what our translation engine requires as well for proper update.
             $this->queued_translations = $request->get('trans');
-            $this->translation_columns[] = $field->column();
+            $this->translation_columns[] = $field->getColumn();
 
             return;
         }
 
         // By default we assume the key matches the attribute / column naming
-        $this->model->{$field->column()} = $request->get($field->key());
+        $this->model->{$field->getColumn()} = $request->get($field->getKey());
     }
 
     private function saveQueuedFields()

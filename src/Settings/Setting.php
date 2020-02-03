@@ -33,7 +33,7 @@ class Setting extends Model
                 $field = call_user_func($field);
             }
 
-            if ($field->key != $this->key) {
+            if ($field->getKey() != $this->key) {
                 continue;
             }
 

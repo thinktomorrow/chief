@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\Types\DocumentField;
 use Thinktomorrow\Chief\Fields\Types\Field;
+use Thinktomorrow\Chief\Fields\Types\DocumentField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\Chief\Management\AbstractManager;
@@ -27,6 +27,6 @@ class ManagerFake extends AbstractManager implements Manager
 
     public function setCustomField(Field $field, Request $request)
     {
-        $this->model->custom_column = $request->get($field->key());
+        $this->model->custom_column = $request->get($field->getKey());
     }
 }

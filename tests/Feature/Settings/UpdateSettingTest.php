@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 
-use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Settings\Settings;

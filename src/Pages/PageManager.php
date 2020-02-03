@@ -129,7 +129,7 @@ class PageManager extends AbstractManager implements Manager
     {
         if ($key == 'create') {
             return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
-                return in_array($field->key, ['title']);
+                return in_array($field->getKey(), ['title']);
             }));
         }
 
@@ -152,10 +152,10 @@ class PageManager extends AbstractManager implements Manager
     public function details(): Details
     {
         // For existing model
-        if ($this->model && $this->model->id) {
+        if ($this->hasExistingModel()) {
             return parent::details()
-                ->set('title', $this->model->title ? ucfirst($this->model->title) : '')
-                ->set('intro', PageStatePresenter::fromModel($this->model)->label())
+                ->set('title', $this->existingModel()->title ? ucfirst($this->existingModel()->title) : '')
+                ->set('intro', PageStatePresenter::fromModel($this->existingModel())->label())
                 ->set('context', '');
         }
 

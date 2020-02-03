@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Management;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -99,7 +100,7 @@ abstract class AbstractManager
 
     protected function indexSorting(Builder $builder): Builder
     {
-        if ($this->isAssistedBy('publish')) {
+        if ($this->isAssistedBy('publish') && Schema::hasColumn($this->modelInstance()->getTable(), 'published_at')) {
             $builder->orderBy('published_at', 'DESC');
         }
 

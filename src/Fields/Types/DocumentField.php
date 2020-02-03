@@ -2,12 +2,11 @@
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\HasAsset;
 
-class DocumentField extends Field
+class DocumentField extends MediaField implements Field
 {
-    public static function make(string $key)
+    public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::DOCUMENT), $key);
     }
@@ -19,27 +18,27 @@ class DocumentField extends Field
         return $this;
     }
 
-    public function translateName($locale)
-    {
-        $name = $this->name();
+//    public function translateName($locale)
+//    {
+//        $name = $this->name();
+//
+//        if (strpos($name, ':locale')) {
+//            return preg_replace('#(:locale)#', $locale, $name);
+//        }
+//
+//        return 'files[' . $name . '][' . $locale . ']';
+//    }
 
-        if (strpos($name, ':locale')) {
-            return preg_replace('#(:locale)#', $locale, $name);
-        }
-
-        return 'files[' . $name . '][' . $locale . ']';
-    }
-
-    public function getFieldValue(Model $model, $locale = null)
-    {
-        return $this->getMedia($model, $locale);
-    }
+//    public function getFieldValue(Model $model, $locale = null)
+//    {
+//        return $this->getMedia($model, $locale);
+//    }
 
     private function getMedia(HasAsset $model, $locale = null)
     {
         $documents = [];
 
-        $builder = $model->assets($this->key(), $locale);
+        $builder = $model->assets($this->getKey(), $locale);
 
         foreach ($builder as $asset) {
             $documents[] = $asset;

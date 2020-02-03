@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Fields\Validators;
+namespace Thinktomorrow\Chief\Fields\Validation;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\MessageBag;

@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-class NumberField extends Field
+class NumberField extends AbstractField implements Field
 {
-    public static function make(string $key)
+    public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::NUMBER), $key);
     }

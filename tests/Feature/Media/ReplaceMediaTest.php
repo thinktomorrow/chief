@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Pages\Media;
+namespace Thinktomorrow\Chief\Tests\Feature\Media;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;

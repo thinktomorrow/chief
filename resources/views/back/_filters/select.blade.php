@@ -7,7 +7,7 @@
         name="{{ $filter->name }}"
         :options='@json($filter->options)'
         selected='@json(old($filter->name, $filter->selected ?? $filter->default))'
-        :multiple='@json(!!$filter->multiple)'
+        :multiple='@json(!!$filter->allowMultiple())'
     >
     </chief-multiselect>
 

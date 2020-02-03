@@ -49,7 +49,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function validate(array $data)
     {
         foreach ($this->fields as $field) {
-            $field->validator($data)->validate();
+            $field->getValidator($data)->validate();
         }
     }
 
@@ -66,13 +66,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
                 continue;
             }
 
+            $method = 'get'.ucfirst($key);
+
             // Reject from list if value does not match expected one
-            if ($value && $value == $field->$key) {
+            if ($value && $value == $field->$method()) {
                 $fields[] = $field;
             }
 
             // Reject from list if key returns null (key not present on field)
-            elseif (!$value && !is_null($field->$key)) {
+            elseif (!$value && !is_null($field->$method())) {
                 $fields[] = $field;
             }
         }
@@ -101,7 +103,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         }
 
         foreach ($this->fields as $k => $field) {
-            if (in_array($field->key, $keys)) {
+            if (in_array($field->getKey(), $keys)) {
                 unset($this->fields[$k]);
             }
         }
@@ -144,8 +146,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $keyedFields = [];
 
+        /** @var Field */
         foreach ($fields as $field) {
-            $keyedFields[$field->key] = $field;
+            $keyedFields[$field->getKey()] = $field;
         }
 
         return $keyedFields;

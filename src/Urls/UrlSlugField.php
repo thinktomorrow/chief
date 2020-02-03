@@ -2,9 +2,11 @@
 
 namespace Thinktomorrow\Chief\Urls;
 
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 
-class UrlSlugField extends InputField
+class UrlSlugField extends InputField implements Field
 {
     private $urlRecord;
 
@@ -31,7 +33,7 @@ class UrlSlugField extends InputField
         return $this;
     }
 
-    public function value()
+    public function getValue(Model $model = null, ?string $locale = null)
     {
         return old($this->key, $this->rawSlugValue());
     }
@@ -40,7 +42,7 @@ class UrlSlugField extends InputField
     {
         return $this->fullUrl
             ? $this->fullUrl
-            : $this->prepend.$this->value();
+            : $this->prepend.$this->getValue();
     }
 
     public function setFullUrl(string $fullUrl)
@@ -82,17 +84,17 @@ class UrlSlugField extends InputField
 
     public function toArray(): array
     {
-        return array_merge($this->values, [
+        return [
             'key' => $this->key,
             'prepend' => $this->prepend,
             'label' => $this->label,
             'placeholder' => $this->placeholder,
             'description' => $this->description,
-            'value' => $this->value(),
+            'value' => $this->getValue(),
             'baseUrlSegment' => $this->baseUrlSegment,
             'hint' => null, // Hint placeholder to show url hint when it already exists
-            'is_homepage' => ($this->value() === '/'),
-            'show' => !!$this->value(),// show input field or not
-        ]);
+            'is_homepage' => ($this->getValue() === '/'),
+            'show' => !!$this->getValue(),// show input field or not
+        ];
     }
 }

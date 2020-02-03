@@ -394,6 +394,6 @@ class PageBuildTest extends TestCase
         $managers = app(Managers::class);
         $pagebuilderField = $managers->findByKey('articles_fake')->manage($this->page)->fields()->first();
 
-        $this->assertCount(1, $pagebuilderField->availableModules);
+        $this->assertCount(1, $pagebuilderField->getAvailableModules());
     }
 }

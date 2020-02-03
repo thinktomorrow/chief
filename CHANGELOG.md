@@ -16,6 +16,17 @@ principles.
 - Fixed: chief error now returns expected 500 status instead of 200.
 - Fixed: phpstan released lots of static analysis bugs which have been solved.
 
+
+### Field changes
+- Added: introduced a `Field` interface for stricter Field usage throughout the application. 
+- Added: `Field::getPlaceholder()` is added to retrieve a placeholder value.
+- Removed: `Field::getFieldValue()` is removed. Use the new `Field::getValue(Model $model = null, ?string $locale = null)` method instead.
+- Removed: `Field::key()` is now only used to set a custom key.  To retrieve the key use the `Field::getKey()` method.
+- Removed: `Field::name()` is now only used to set a custom name.  To retrieve the name use the `Field::getName()` method.
+- Removed: `Field::column()` is now only used to set a custom column.  To retrieve the column use the `Field::getColumn()` method.
+- Removed: `Field::default()` method is removed. From now on, use `Field::value(string $value)` to set the default value.
+- Changed: `Field::multiple()` is only used to set the multiple state. To retrieve this value, it is replaced by `Field::allowMultiple()`.
+
 ## 0.4.5 - 2020-01-14
 - Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
 - Fixed: image filter for mediagallery api call now correctly offsets without counting non-images.

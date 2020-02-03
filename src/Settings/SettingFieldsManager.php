@@ -4,9 +4,9 @@ namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\RenderingFields;
-use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
@@ -28,7 +28,7 @@ class SettingFieldsManager implements FieldManager
     {
         return new Fields([
             SelectField::make('homepage')
-                ->name('homepage[:locale]')
+                ->name('homepage.:locale')
                 ->options(UrlHelper::allOnlineModels())
                 ->translatable(config('translatable.locales'))
                 ->validation('required')

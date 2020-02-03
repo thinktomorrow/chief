@@ -5,48 +5,40 @@ namespace Thinktomorrow\Chief\Fields\Types;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\HasAsset;
 
-class MediaField extends Field
+class MediaField extends AbstractField implements Field
 {
-    public static function make(string $key)
+    protected $allowMultiple = false;
+
+    public static function make(string $key): Field
     {
-        return new static(new FieldType(FieldType::MEDIA), $key);
+        // All media are set to be localized - as expected by asset library
+        return (new static(new FieldType(FieldType::MEDIA), $key))
+                ->locales([config('app.fallback_locale', 'nl')]);
     }
 
     public function multiple($flag = true)
     {
-        $this->values['multiple'] = $flag;
+        $this->allowMultiple = $flag;
 
         return $this;
     }
 
-    public function translateName($locale)
+    public function allowMultiple(): bool
     {
-        $name = parent::name();
-
-        if (strpos($name, ':locale')) {
-            return preg_replace('#(:locale)#', $locale, $name);
-        }
-
-        return 'files['.$name.']['.$locale.']';
+        return $this->allowMultiple;
     }
 
-    public function name(string $name = null)
+    protected function getLocalizedNameFormat(): string
     {
-        if (!is_null($name)) {
-            $this->values['name'] = $name;
-
-            return $this;
-        }
-
-        return 'files['. ($this->values['name'] ?? $this->key()).']';
+        return 'files.:name.:locale';
     }
 
     public function sluggifyName()
     {
-        return trim(str_replace(['[', ']'], '-', $this->name()), '-');
+        return trim(str_replace(['[', ']'], '-', $this->getName()), '-');
     }
 
-    public function getFieldValue(Model $model, $locale = null)
+    public function getValue(Model $model = null, string $locale = null)
     {
         return $this->getMedia($model, $locale);
     }
@@ -56,7 +48,7 @@ class MediaField extends Field
         $images = [];
         $locale = $locale ?? app()->getLocale();
 
-        $assets = $model->assetRelation->where('pivot.type', $this->key())->filter(function ($asset) use ($locale) {
+        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
             return $asset->pivot->locale == $locale;
         })->sortBy('pivot.order');
 

@@ -37,7 +37,7 @@ class UpdateModule
         // TODO: this should come from the manager->fields() as fieldgroup
         $translatableColumns = [];
         foreach ($module::translatableFields() as $translatableField) {
-            $translatableColumns[] = $translatableField->column();
+            $translatableColumns[] = $translatableField->getColumn();
         }
 
         $this->saveTranslations($translations, $module, array_merge([

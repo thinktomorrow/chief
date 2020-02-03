@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-class TextField extends Field
+class TextField extends AbstractField implements Field
 {
-    public static function make(string $key)
+    public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::TEXT), $key);
     }

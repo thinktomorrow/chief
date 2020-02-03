@@ -16,9 +16,8 @@ class FieldsFilterTest extends TestCase
             InputField::make('input-two'),
         ]);
 
-        // Explicitly check for 'key' because this is also a reserved callable in php: key();
         $this->assertCount(1, $fields->filterBy('key', 'input-one'));
-        $this->assertEquals('input-one', $fields->filterBy('key', 'input-one')->first()->key);
+        $this->assertEquals('input-one', $fields->filterBy('key', 'input-one')->first()->getKey());
     }
 
     /** @test */
@@ -30,7 +29,7 @@ class FieldsFilterTest extends TestCase
         ]);
 
         $this->assertCount(1, $fields->filterBy('name', 'input-one'));
-        $this->assertEquals('input-one', $fields->filterBy('name', 'input-one')->first()->key);
+        $this->assertEquals('input-one', $fields->filterBy('name', 'input-one')->first()->getKey());
     }
 
     /** @test */
@@ -41,9 +40,9 @@ class FieldsFilterTest extends TestCase
             InputField::make('input-two'),
         ]);
 
-        $filtered = $fields->filterBy(function($field){ return $field->name == 'input-one';  });
+        $filtered = $fields->filterBy(function($field){ return $field->getName() == 'input-one';  });
 
         $this->assertCount(1, $filtered);
-        $this->assertEquals('input-one', $filtered->first()->key);
+        $this->assertEquals('input-one', $filtered->first()->getKey());
     }
 }

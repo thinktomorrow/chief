@@ -8,20 +8,16 @@ trait RenderingFields
 {
     public function renderField(Field $field)
     {
-        return view($field->view(), array_merge([
+        return view($field->getView(), array_merge([
             'field'           => $field,
-            'key'             => $field->key(), // As parameter so that it can be altered for translatable values
+            'key'             => $field->getKey(), // As parameter so that it can be altered for translatable values
             'manager'         => $this,
-            'formElementView' => $field->formElementView(),
-        ]), $field->viewData())->render();
+            'formElementView' => $field->getElementView(),
+        ]), $field->getViewData())->render();
     }
 
     public function fieldValue(Field $field, $locale = null)
     {
-        if (!isset($this->model)) {
-            return null;
-        }
-
-        return $field->getFieldValue($this->model, $locale);
+        return $field->getValue($this->model, $locale);
     }
 }

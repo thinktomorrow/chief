@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Urls\UrlRecord;
@@ -10,7 +11,6 @@ use Thinktomorrow\Chief\Urls\UrlSlugFields;
 use Thinktomorrow\Chief\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\Manager;
 

@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Settings;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Settings\Setting;
-use Thinktomorrow\Chief\Settings\Settings;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class SettingsTest extends TestCase
@@ -89,7 +88,7 @@ class SettingsTest extends TestCase
         ]);
 
         $this->assertInstanceOf(InputField::class, $setting->field);
-        $this->assertEquals('Foo', $setting->field->label);
+        $this->assertEquals('Foo', $setting->field->getLabel());
     }
 
     /** @test */

@@ -17,16 +17,16 @@ class FieldValidationTest extends TestCase
     }
 
     /** @test */
-    public function a_field_can_generate_translatable_validation_rules()
+    public function a_field_can_generate_locales_validation_rules()
     {
         $field = InputField::make('content_trans')
             ->validation('required|max:200')
-            ->translatable(['nl', 'fr']);
+            ->locales(['nl', 'fr']);
 
         $this->assertEquals([
             'trans.nl.content_trans' => ['required','max:200'],
             'trans.fr.content_trans' => ['required','max:200'],
-        ], $field->validator([])->getRules());
+        ], $field->getValidator([])->getRules());
     }
 
     /** @test */
@@ -35,12 +35,12 @@ class FieldValidationTest extends TestCase
         $field = InputField::make('content_trans')
             ->name('foobar')
             ->validation('required|max:200')
-            ->translatable(['nl', 'fr']);
+            ->locales(['nl', 'fr']);
 
         $this->assertEquals([
             'trans.nl.foobar' => ['required','max:200'],
             'trans.fr.foobar' => ['required','max:200'],
-        ], $field->validator([])->getRules());
+        ], $field->getValidator([])->getRules());
     }
 
     /** @test */
@@ -48,25 +48,25 @@ class FieldValidationTest extends TestCase
     {
         $field = InputField::make('content_trans')
             ->validation(['foobar' => 'required|max:200'])
-            ->translatable(['nl', 'fr']);
+            ->locales(['nl', 'fr']);
 
         $this->assertEquals([
             'foobar' => ['required','max:200'],
-        ], $field->validator([])->getRules());
+        ], $field->getValidator([])->getRules());
     }
 
     /** @test */
-    public function a_name_with_a_placeholder_will_have_the_locales_replacing_the_asterisk()
+    public function a_name_that_already_has_a_locale_placeholder_will_use_this_name_as_localized_format()
     {
         $field = InputField::make('content_trans')
             ->name('foo.:locale.bar')
             ->validation('required|max:200')
-            ->translatable(['nl', 'fr']);
+            ->locales(['nl', 'fr']);
 
         $this->assertEquals([
             'foo.nl.bar' => ['required','max:200'],
             'foo.fr.bar' => ['required','max:200'],
-        ], $field->validator([])->getRules());
+        ], $field->getValidator([])->getRules());
     }
 
     /** @test */
@@ -75,9 +75,9 @@ class FieldValidationTest extends TestCase
         $field = InputField::make('content_trans')
             ->name('foobar')
             ->validation('required|max:200')
-            ->translatable(['nl', 'fr']);
+            ->locales(['nl', 'fr']);
 
-        $rules = $field->validator(['trans' => [
+        $rules = $field->getValidator(['trans' => [
             'nl' => ['foobar' => 'entry'],
             'fr' => ['foobar' => null],
         ]])->getRules();
