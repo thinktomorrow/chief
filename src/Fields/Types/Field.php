@@ -24,9 +24,9 @@ interface Field
 
     public function getLabel(): ?string;
     public function getDescription(): ?string;
-    public function getPrepend(): ?string;
-    public function getAppend(): ?string;
-    public function getPlaceholder(): ?string;
+    public function getPrepend(?string $locale = null): ?string;
+    public function getAppend(?string $locale = null): ?string;
+    public function getPlaceholder(?string $locale = null): ?string;
 
     public function getValidation();
     public function hasValidation(): bool;
