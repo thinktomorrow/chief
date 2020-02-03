@@ -15,29 +15,22 @@ interface Field
     public function getName(string $locale = null): string;
     public function getValue(Model $model = null, string $locale = null);
 
-    // LOCALIZATION
-    public function locales(array $locales): Field;
     public function getLocales(): array;
     public function isLocalized(): bool;
 
-    // VIEW
     public function getView(): string;
     public function getElementView(): string;
     public function getViewData(): array;
 
-    // PRESENTATIONAL DATA
     public function getLabel(): ?string;
     public function getDescription(): ?string;
     public function getPrepend(): ?string;
     public function getAppend(): ?string;
     public function getPlaceholder(): ?string;
 
-    // VALIDATION
     public function getValidation();
     public function hasValidation(): bool;
     public function getValidator(array $data): Validator;
     public function required(): bool;
     public function optional(): bool;
-
-
 }
