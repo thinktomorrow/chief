@@ -5,6 +5,7 @@ principles.
 ## unreleased
 
 - Fixed: show context menu on edit page if even without update permission
+- Fixed: disabled vue from compiling mustache brackets in textareas
 
 ## 0.4.5 - 2020-01-14
 
