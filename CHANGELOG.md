@@ -6,6 +6,7 @@ principles.
 
 - Fixed: show context menu on edit page if even without update permission
 - Fixed: disabled vue from compiling mustache brackets in textareas
+- Added: added audit logs for menu items
 
 ## 0.4.5 - 2020-01-14
 

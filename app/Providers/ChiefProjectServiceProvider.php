@@ -2,14 +2,15 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Menu\MenuItem;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Pages\Single;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ChiefProjectServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,7 @@ class ChiefProjectServiceProvider extends ServiceProvider
     {
         // Out of the box morphables - the key 'singles' is the page's default morphKey.
         Relation::morphMap([
+            'menuitem'  => MenuItem::class,
             'singles'   => Single::class,
             'text'      => TextModule::class,
             'pagetitle' => PagetitleModule::class,

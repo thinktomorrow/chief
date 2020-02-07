@@ -3,15 +3,16 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Management\Managers;
 
 class MenuItemController extends Controller
 {
@@ -40,6 +41,10 @@ class MenuItemController extends Controller
         $this->authorize('create-page');
 
         $menu = app(CreateMenu::class)->handle($request);
+
+        Audit::activity()
+            ->performedOn($menu)
+            ->log('created');
 
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
@@ -70,6 +75,7 @@ class MenuItemController extends Controller
             return $page->hidden_in_menu == true;
         }))->toArray();
 
+
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => $pages,
@@ -85,6 +91,10 @@ class MenuItemController extends Controller
 
         $menu = app(UpdateMenu::class)->handle($id, $request);
 
+        Audit::activity()
+            ->performedOn($menu)
+            ->log('updated');
+
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangepast');
     }
 
@@ -96,6 +106,10 @@ class MenuItemController extends Controller
 
         if ($menuItem) {
             $message = 'Het item werd verwijderd.';
+
+            Audit::activity()
+                ->performedOn($menuItem)
+                ->log('deleted');
 
             return redirect()->route('chief.back.menus.show', $menuItem->menuType())->with('messages.warning', $message);
         } else {
