@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\States\PageStatePresenter;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
@@ -15,8 +16,6 @@ use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
@@ -102,7 +101,7 @@ class PageManager extends AbstractManager implements Manager
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
                 ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
-            MediaField::make('seo_image')
+            ImageField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
                 ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')

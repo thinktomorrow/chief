@@ -7,14 +7,14 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Modules\ModuleManager;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Fields\Types\ImageField;
 
 class UploadMediaModuleManager extends ModuleManager
 {
     public function fields(): Fields
     {
         return new Fields([
-            MediaField::make(MediaType::HERO)
+            ImageField::make(MediaType::HERO)
         ]);
     }
 }

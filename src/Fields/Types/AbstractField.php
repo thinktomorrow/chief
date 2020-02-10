@@ -6,7 +6,7 @@ use Thinktomorrow\Chief\Fields\FieldName;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fields\Validation\ValidationNames;
-use Thinktomorrow\Chief\Fields\Validation\FieldValidatorFactory;
+use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 
 abstract class AbstractField
 {
@@ -67,7 +67,7 @@ abstract class AbstractField
         $this->viewData([]);
         $this->locales([]);
 
-        $this->valueResolver($this->defaultValueResolver());
+        $this->valueResolver($this->defaultEloquentValueResolver());
     }
 
     public function getType(): FieldType
@@ -217,7 +217,7 @@ abstract class AbstractField
         return $this;
     }
 
-    public function getValue(Model $model = null, ?string $locale = null)
+    public function getValue($model = null, ?string $locale = null)
     {
         return call_user_func_array($this->valueResolver, [$model, $locale]);
     }
@@ -235,7 +235,7 @@ abstract class AbstractField
      *
      * @return \Closure
      */
-    private function defaultValueResolver(): \Closure
+    private function defaultEloquentValueResolver(): \Closure
     {
         return function (Model $model = null, $locale = null) {
 
@@ -249,14 +249,14 @@ abstract class AbstractField
         };
     }
 
-    public function validation(...$validation): Field
+    public function validation($rules, array $messages = [], array $attributes = []): Field
     {
-        $this->validation = $validation;
+        $this->validation = new ValidationParameters($rules, $messages, $attributes ?: [$this->getLabel()]);
 
         return $this;
     }
 
-    public function getValidation()
+    public function getValidationParameters(): ValidationParameters
     {
         return $this->validation;
     }
@@ -266,22 +266,19 @@ abstract class AbstractField
         return isset($this->validation);
     }
 
-    public function getValidator(array $data): Validator
-    {
-        return app(FieldValidatorFactory::class)->create($this, $data);
-    }
-
     public function required(): bool
     {
         if (!$this->hasValidation()) {
             return false;
         }
 
-        foreach ($this->getValidation() as $rule) {
-            if (false !== strpos($rule, 'required')) {
-                return true;
-            }
-        };
+        if($this->getValidationParameters() instanceof ValidationParameters) {
+            foreach ($this->getValidationParameters()->getRules() as $rule) {
+                if (false !== strpos($rule, 'required')) {
+                    return true;
+                }
+            };
+        }
 
         return false;
     }

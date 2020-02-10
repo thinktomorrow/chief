@@ -85,7 +85,7 @@ class FieldArrangementTest extends TestCase
         $this->assertCount(6, $arrangement->fields());
         $this->assertEquals('title', $arrangement->fields()->keys()[0]);
         $this->assertEquals('avatar', $arrangement->fields()->keys()[4]);
-        $this->assertEquals('doc', $arrangement->fields()->keys()[5]);
+        $this->assertEquals('hero', $arrangement->fields()->keys()[5]);
     }
 
     /** @test */

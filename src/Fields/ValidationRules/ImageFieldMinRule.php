@@ -1,0 +1,57 @@
+<?php declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\Fields\ValidationRules;
+
+use Thinktomorrow\Chief\Media\Application\MediaRequest;
+
+class ImageFieldMinRule extends AbstractMediaFieldRule
+{
+    public function validate($attribute, $value, $params, $validator): bool
+    {
+        $value = $this->normalizePayload($value);
+
+        foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
+            foreach($value[$type] as $file) {
+                if($file && false !== $this->validateMin($attribute, $file, $params)) {
+                    return true;
+                }
+            }
+        }
+
+        $validator->setCustomMessages([
+            'imagefield_min' => 'De :attribute is te klein en dient groter te zijn dan ' . implode(',',$params) .'Kb.',
+        ]);
+
+        if(!isset($validator->customAttributes[$attribute])) {
+            $validator->addCustomAttributes([
+                $attribute => 'afbeelding',
+            ]);
+        }
+
+
+        return false;
+    }
+
+    public function validateMin($attribute, $value, $parameters)
+    {
+        $this->requireParameterCount(1, $parameters, 'min');
+
+        return $this->getSize($attribute, $value) >= $parameters[0];
+    }
+
+    /**
+     * A method required by the validateMax method
+     *
+     * @param $attribute
+     * @param $value
+     * @return float|int
+     */
+    protected function getSize($attribute, $value)
+    {
+        $inputData = json_decode($value)->input;
+
+        // size in Kilobytes (slim component already provides a size that, due to the way slim stored this,
+        //  we need reduce to kilobytes by dividing 1000 instead of the expected 1024.
+        return $inputData->size / 1000;
+    }
+}

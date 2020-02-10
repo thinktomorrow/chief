@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
@@ -80,9 +81,11 @@ class UpdateManagerTest extends TestCase
             ->put($this->fake->route('update'), [
                 'files' => [
                     'hero' => [
-                        'new' => [
-                            $this->dummySlimImagePayload('tt-favicon.png'),
-                        ]
+                        'nl' => [
+                            'new' => [
+                                UploadedFile::fake()->image('tt-favicon.png'),
+                            ]
+                        ],
                     ]
                 ],
             ]);
@@ -97,15 +100,17 @@ class UpdateManagerTest extends TestCase
         $this->asAdmin()
             ->put($this->fake->route('update'), [
                 'files' => [
-                    'doc' => [
-                        'new' => [
-                            $this->dummyDocument('tt-document.pdf'),
-                        ]
+                    'hero' => [
+                        'nl' => [
+                            'new' => [
+                                $this->dummyUploadedFile('tt-document.pdf'),
+                            ]
+                        ],
                     ]
                 ],
             ]);
 
-        $this->assertEquals('tt-document.pdf', $this->model->asset('doc')->filename());
+        $this->assertEquals('tt-document.pdf', $this->model->asset('hero')->filename());
     }
 
     /** @test */
@@ -115,19 +120,16 @@ class UpdateManagerTest extends TestCase
             ->put($this->fake->route('update'), [
                 'files' => [
                     'hero' => [
-                        'new' => [
-                            $this->dummySlimImagePayload('tt-favicon.png'),
-                        ]
+                        'nl' => [
+                            'new' => [
+                                UploadedFile::fake()->image('tt-favicon.png'),
+                                $this->dummyUploadedFile('tt-document.pdf'),
+                            ]
+                        ],
                     ],
-                    'doc' => [
-                        'new' => [
-                            $this->dummyDocument('tt-document.pdf'),
-                        ]
-                    ]
                 ],
             ]);
 
-        $this->assertEquals('tt-favicon.png', $this->model->asset('hero')->filename());
-        $this->assertEquals('tt-document.pdf', $this->model->asset('doc')->filename());
+        $this->assertCount(2, $this->model->assets('hero'));
     }
 }

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
+use Thinktomorrow\Chief\Fields\Types\FileField;
+use Thinktomorrow\Chief\Fields\Types\ImageField;
+use Thinktomorrow\Chief\Fields\Types\DocumentField;
+use Thinktomorrow\Chief\Media\Application\FileFieldHandler;
+use Thinktomorrow\Chief\Media\Application\ImageFieldHandler;
 
 trait SavingFields
 {
@@ -24,16 +29,16 @@ trait SavingFields
                 continue;
             }
 
-            // Media fields are treated separately
-            if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
-                if (! isset($this->saveMethods['_files'])) {
-                    $this->saveMethods['_files'] = ['field' => new Fields([$field]), 'method' => 'uploadMedia'];
-                    continue;
-                }
-
-                $this->saveMethods['_files']['field'][] = $field;
-                continue;
-            }
+//            // Media fields are treated separately
+//            if ($field->ofType(FieldType::FILE, FieldType::IMAGE, FieldType::DOCUMENT)) {
+//                if (! isset($this->saveMethods['_files'])) {
+//                    $this->saveMethods['_files'] = ['field' => new Fields([$field]), 'method' => 'uploadMedia'];
+//                    continue;
+//                }
+//
+//                $this->saveMethods['_files']['field'][] = $field;
+//                continue;
+//            }
 
             // Custom set methods - default is the generic setField() method.
             $methodName = 'set'. ucfirst(Str::camel($field->getKey())) . 'Field';
@@ -53,20 +58,22 @@ trait SavingFields
 
     protected function detectCustomSaveMethods(Field $field): bool
     {
-        $saveMethodName = 'save'. ucfirst(Str::camel($field->getKey())) . 'Field';
+        $saveMethodByKey = 'save'. ucfirst(Str::camel($field->getKey())) . 'Field';
+        $saveMethodByType = 'save'. ucfirst(Str::camel($field->getType()->get())) . 'Fields';
 
-        // Custom save method on assistant
-        foreach ($this->assistants() as $assistant) {
-            if (method_exists($assistant, $saveMethodName)) {
-                $this->saveAssistantMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethodName, 'assistant' => $assistant];
+        foreach([$saveMethodByKey, $saveMethodByType] as $saveMethod){
+
+            foreach ($this->assistants() as $assistant) {
+                if (method_exists($assistant, $saveMethod)) {
+                    $this->saveAssistantMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethod, 'assistant' => $assistant];
+                    return true;
+                }
+            }
+
+            if (method_exists($this, $saveMethod)) {
+                $this->saveMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethod];
                 return true;
             }
-        }
-
-        // Custom save method on manager class
-        if (method_exists($this, $saveMethodName)) {
-            $this->saveMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethodName];
-            return true;
         }
 
         return false;
@@ -94,7 +101,7 @@ trait SavingFields
             }
 
             // Make our media fields able to be translatable as well...
-            if ($field->ofType(FieldType::MEDIA, FieldType::DOCUMENT)) {
+            if ($field->ofType(FieldType::FILE, FieldType::IMAGE, FieldType::DOCUMENT)) {
                 throw new \Exception('Cannot process the ' . $field->getKey() . ' media field. Currently no support for translatable media files. We should fix this!');
             }
 
@@ -121,5 +128,20 @@ trait SavingFields
         }
 
         return (new static($this->registration))->manage($this->model);
+    }
+
+    public function saveFileFields(FileField $field, Request $request)
+    {
+        app(FileFieldHandler::class)->handle($this->model, $field, $request);
+    }
+
+    public function saveImageFields(ImageField $field, Request $request)
+    {
+        app(ImageFieldHandler::class)->handle($this->model, $field, $request);
+    }
+
+    public function saveDocumentFields(DocumentField $field, Request $request)
+    {
+        app(FileFieldHandler::class)->handle($this->model, $field, $request);
     }
 }

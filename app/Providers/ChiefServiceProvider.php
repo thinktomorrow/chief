@@ -32,6 +32,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
         (new ViewServiceProvider($this->app))->boot();
+        (new ValidationServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
@@ -116,6 +117,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
         (new ViewServiceProvider($this->app))->register();
+        (new ValidationServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();

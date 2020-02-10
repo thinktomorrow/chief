@@ -8,33 +8,11 @@ class DocumentField extends MediaField implements Field
 {
     public static function make(string $key): Field
     {
-        return new static(new FieldType(FieldType::DOCUMENT), $key);
+        return (new static(new FieldType(FieldType::DOCUMENT), $key))
+            ->locales([config('app.fallback_locale', 'nl')]);
     }
 
-    public function multiple($flag = true)
-    {
-        $this->values['multiple'] = $flag;
-
-        return $this;
-    }
-
-//    public function translateName($locale)
-//    {
-//        $name = $this->name();
-//
-//        if (strpos($name, ':locale')) {
-//            return preg_replace('#(:locale)#', $locale, $name);
-//        }
-//
-//        return 'files[' . $name . '][' . $locale . ']';
-//    }
-
-//    public function getFieldValue(Model $model, $locale = null)
-//    {
-//        return $this->getMedia($model, $locale);
-//    }
-
-    private function getMedia(HasAsset $model, $locale = null)
+    protected function getMedia(HasAsset $model, ?string $locale = null)
     {
         $documents = [];
 

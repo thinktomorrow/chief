@@ -111,11 +111,12 @@ class UploadMedia
     {
         if (is_string($file) && isset(json_decode($file)->output)) {
             $image_name = json_decode($file)->output->name;
-            $asset      = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
+            $asset = app(AddAsset::class)->add($model, json_decode($file)->output->image, $type, $locale, $this->sluggifyFilename($image_name));
         } else {
             if ($file instanceof UploadedFile) {
                 $image_name = $file->getClientOriginalName();
-                $asset      = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
+
+                $asset = app(AddAsset::class)->add($model, $file, $type, $locale, $this->sluggifyFilename($image_name));
 
                 // New files are passed with their filename (instead of their id)
                 // For new files we will replace the filename with the id.

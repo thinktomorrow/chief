@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
+use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
 
@@ -27,7 +27,7 @@ class RemoveMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(UploadMediaManager::class, Single::class);
+        app(Register::class)->register(FileFieldManager::class, Single::class);
         app(Register::class)->register(UploadMediaModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {

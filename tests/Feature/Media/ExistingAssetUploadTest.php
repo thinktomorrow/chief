@@ -5,12 +5,13 @@ namespace Thinktomorrow\Chief\Tests\Feature\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\Chief\Tests\Fakes\UploadMediaManager;
+use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
 
@@ -25,7 +26,7 @@ class ExistingAssetUploadTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(UploadMediaManager::class, Single::class);
+        app(Register::class)->register(FileFieldManager::class, Single::class);
         app(Register::class)->register(UploadMediaModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {
@@ -35,21 +36,24 @@ class ExistingAssetUploadTest extends TestCase
     /** @test */
     public function an_existing_asset_can_be_added()
     {
+        $this->disableExceptionHandling();
         $page = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
+        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
-                        'new' => [
-                            $existing_asset->id,
+                        'nl' => [
+                            'new' => [
+                                $existing_asset->id,
+                            ]
                         ]
                     ]
                 ]
             ]));
-
-        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
+trap($page->fresh()->assets(MediaType::HERO));
+        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO, 'nl'));
 
         $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
     }

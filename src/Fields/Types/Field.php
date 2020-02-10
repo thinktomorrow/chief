@@ -2,8 +2,7 @@
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Validation\Validator;
+use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 
 interface Field
 {
@@ -13,7 +12,7 @@ interface Field
 
     public function getColumn(): string;
     public function getName(string $locale = null): string;
-    public function getValue(Model $model = null, string $locale = null);
+    public function getValue($model = null, string $locale = null);
 
     public function getLocales(): array;
     public function isLocalized(): bool;
@@ -28,9 +27,9 @@ interface Field
     public function getAppend(?string $locale = null): ?string;
     public function getPlaceholder(?string $locale = null): ?string;
 
-    public function getValidation();
+    public function getValidationNames(): array;
+    public function getValidationParameters(): ValidationParameters;
     public function hasValidation(): bool;
-    public function getValidator(array $data): Validator;
     public function required(): bool;
     public function optional(): bool;
 }

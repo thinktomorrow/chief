@@ -20,6 +20,7 @@ principles.
 ### Field changes
 - Added: introduced a `Field` interface for stricter Field usage throughout the application. 
 - Added: `Field::getPlaceholder()` is added to retrieve a placeholder value.
+- Removed: `MediaField` is removed and is now an abstract class. Replace with `ImageField` instead.
 - Removed: `Field::getFieldValue()` is removed. Use the new `Field::getValue(Model $model = null, ?string $locale = null)` method instead.
 - Removed: `Field::key()` is now only used to set a custom key.  To retrieve the key use the `Field::getKey()` method.
 - Removed: `Field::name()` is now only used to set a custom name.  To retrieve the name use the `Field::getName()` method.

@@ -3,26 +3,25 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Fields;
 
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\Fields\Types\FileField;
+use Thinktomorrow\Chief\Fields\Types\ImageField;
 
 class MediaFieldTest extends TestCase
 {
     /** @test */
     public function it_prepends_name_with_files()
     {
-        $mediafield = MediaField::make('media');
-
-        $this->assertEquals('files[media][nl]', $mediafield->getName('nl'));
-//        $this->assertEquals('files[media]', $mediafield->getName());
+        $this->assertEquals('files[media][nl]', FileField::make('media')->getName('nl'));
+        $this->assertEquals('images[media][nl]', ImageField::make('media')->getName('nl'));
     }
 
     /** @test */
     public function media_assets_are_always_localized()
     {
-        $mediafield = MediaField::make('media');
+        $imageField = ImageField::make('media');
 
-        $this->assertTrue($mediafield->isLocalized());
-        $this->assertCount(1, $mediafield->getLocales());
+        $this->assertTrue($imageField->isLocalized());
+        $this->assertCount(1, $imageField->getLocales());
     }
 
 }

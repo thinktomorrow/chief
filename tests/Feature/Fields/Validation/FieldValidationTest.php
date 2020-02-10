@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Fields;
 
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Fields\Validation\FieldValidator;
 
 class FieldValidationTest extends TestCase
 {
@@ -13,7 +14,6 @@ class FieldValidationTest extends TestCase
         $field = InputField::make('content_trans');
 
         $this->assertFalse($field->hasValidation());
-        $this->assertNull($field->getValidation());
     }
 
     /** @test */
@@ -23,10 +23,12 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->locales(['nl', 'fr']);
 
+        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, []]);
+
         $this->assertEquals([
             'trans.nl.content_trans' => ['required','max:200'],
             'trans.fr.content_trans' => ['required','max:200'],
-        ], $field->getValidator([])->getRules());
+        ], $validator->getRules());
     }
 
     /** @test */
@@ -37,10 +39,12 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->locales(['nl', 'fr']);
 
+        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, []]);
+
         $this->assertEquals([
             'trans.nl.foobar' => ['required','max:200'],
             'trans.fr.foobar' => ['required','max:200'],
-        ], $field->getValidator([])->getRules());
+        ], $validator->getRules());
     }
 
     /** @test */
@@ -50,9 +54,11 @@ class FieldValidationTest extends TestCase
             ->validation(['foobar' => 'required|max:200'])
             ->locales(['nl', 'fr']);
 
+        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, []]);
+
         $this->assertEquals([
             'foobar' => ['required','max:200'],
-        ], $field->getValidator([])->getRules());
+        ], $validator->getRules());
     }
 
     /** @test */
@@ -63,10 +69,12 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->locales(['nl', 'fr']);
 
+        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, []]);
+
         $this->assertEquals([
             'foo.nl.bar' => ['required','max:200'],
             'foo.fr.bar' => ['required','max:200'],
-        ], $field->getValidator([])->getRules());
+        ], $validator->getRules());
     }
 
     /** @test */
@@ -77,14 +85,14 @@ class FieldValidationTest extends TestCase
             ->validation('required|max:200')
             ->locales(['nl', 'fr']);
 
-        $rules = $field->getValidator(['trans' => [
+        $validator = $this->invokePrivateMethod(app(FieldValidator::class), 'createValidator', [$field, ['trans' => [
             'nl' => ['foobar' => 'entry'],
             'fr' => ['foobar' => null],
-        ]])->getRules();
+        ]]]);
 
         $this->assertEquals([
             'trans.nl.foobar' => ['required','max:200'],
-        ], $rules);
+        ], $validator->getRules());
     }
 
     /** @test */

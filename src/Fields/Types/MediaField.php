@@ -1,20 +1,14 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\HasAsset;
 
-class MediaField extends AbstractField implements Field
+abstract class MediaField extends AbstractField implements Field
 {
-    protected $allowMultiple = false;
+    protected $customValidationRules = [];
 
-    public static function make(string $key): Field
-    {
-        // All media are set to be localized - as expected by asset library
-        return (new static(new FieldType(FieldType::MEDIA), $key))
-                ->locales([config('app.fallback_locale', 'nl')]);
-    }
+    protected $allowMultiple = false;
 
     public function multiple($flag = true)
     {
@@ -33,33 +27,19 @@ class MediaField extends AbstractField implements Field
         return 'files.:name.:locale';
     }
 
-    public function sluggifyName()
+    public function validation($rules, array $messages = [], array $attributes = []): Field
     {
-        return trim(str_replace(['[', ']'], '-', $this->getName()), '-');
+        parent::validation($rules, $messages, $attributes);
+
+        $this->validation = $this->validation->customizeRules($this->customValidationRules);
+
+        return $this;
     }
 
-    public function getValue(Model $model = null, string $locale = null)
+    public function getValue($model = null, string $locale = null)
     {
         return $this->getMedia($model, $locale);
     }
 
-    private function getMedia(HasAsset $model, $locale = null)
-    {
-        $images = [];
-        $locale = $locale ?? app()->getLocale();
-
-        $assets = $model->assetRelation->where('pivot.type', $this->getKey())->filter(function ($asset) use ($locale) {
-            return $asset->pivot->locale == $locale;
-        })->sortBy('pivot.order');
-
-        foreach ($assets as $asset) {
-            $images[] = (object)[
-                'id'       => $asset->id,
-                'filename' => $asset->filename(),
-                'url'      => $asset->url(),
-            ];
-        }
-
-        return $images;
-    }
+    abstract protected function getMedia(HasAsset $model, ?string $locale = null);
 }

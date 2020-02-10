@@ -4,6 +4,8 @@ namespace Thinktomorrow\Chief\Fields\Types;
 
 class SelectField extends AbstractField implements Field
 {
+    protected $allowMultiple = false;
+
     public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::SELECT), $key);
@@ -35,10 +37,15 @@ class SelectField extends AbstractField implements Field
         return $this;
     }
 
-    public function multiple($value = true)
+    public function multiple($flag = true)
     {
-        $this->values['multiple'] = $value;
+        $this->allowMultiple = $flag;
 
         return $this;
+    }
+
+    public function allowMultiple(): bool
+    {
+        return $this->allowMultiple;
     }
 }

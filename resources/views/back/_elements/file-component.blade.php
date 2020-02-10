@@ -10,7 +10,7 @@
                             <input v-if="id" type="file" :name="'files['+group+'][replace]['+id+']'" />
                             <input v-else type="file" :name="'files['+group+'][new][]'" />
                         </div>
-                        <input v-if="deletion" type="hidden" :name="'files['+group+'][delete][]'" :value="id"/>
+                        <input v-if="deletion" type="hidden" :name="'files['+group+'][detach][]'" :value="id"/>
                     </div>
                 `,
         data: function () {

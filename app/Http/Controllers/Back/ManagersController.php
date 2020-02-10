@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
-use Thinktomorrow\Chief\Management\Application\DeleteManagedModel;
 use Thinktomorrow\Chief\Management\Application\UpdateManager;
 
 class ManagersController extends Controller

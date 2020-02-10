@@ -16,7 +16,7 @@
                             <input style="margin-bottom:0" v-if="newUpload" type="hidden" :name="name+'[new]['+ id +']'" :value="id" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                             <input style="margin-bottom:0" v-else type="file" :name="name+'[new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
                         </div>
-                        <input v-if="deletion" type="hidden" :name="name+'[delete][]'" :value="id"/>
+                        <input v-if="deletion" type="hidden" :name="name+'[detach][]'" :value="id"/>
                     </div>
                 `,
             data: function () {
