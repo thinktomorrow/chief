@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Fields;
+namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Tests\TestCase;

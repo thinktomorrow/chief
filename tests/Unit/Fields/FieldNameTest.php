@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Fields;
+namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Fields\Types\Field;
@@ -106,11 +106,4 @@ class FieldNameTest extends TestCase
         $this->assertEquals('foo[nl][title]', $field->getName('nl'));
         $this->assertEquals('foo[en][title]', $field->getName('en'));
     }
-
-    //- name() behoudt name,
-//- name() is dan ook voor localized enkel indien de :locale placeholder aanwezig is anders wordt ook localizedformat gebruikt
-//- zonder name() is name standaard de key maar localized is automatisch naar trans.nl.key
-//- localizedformat kan worden aangepast en is dan enkel van toepassing wanneer name() niet is gezet
-//- validationnames is gebaseerd op het format name of indien localized: localizedFormat
-
 }

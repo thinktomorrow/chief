@@ -1,14 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Fields;
+namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 
 class FieldsTest extends TestCase
 {

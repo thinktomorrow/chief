@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Fields;
+namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Carbon\Carbon;
 use Thinktomorrow\Chief\Tests\TestCase;

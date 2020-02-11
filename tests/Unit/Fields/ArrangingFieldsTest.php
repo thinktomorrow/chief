@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Management;
+namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithFieldTabs;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
-class FieldArrangementTest extends TestCase
+class ArrangingFieldsTest extends TestCase
 {
     private $manager;
     private $model;
