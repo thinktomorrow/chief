@@ -42,11 +42,11 @@ trait ValidatesExistingAssetAttributes
         $this->requireParameterCount(1, $parameters, 'dimensions');
         [$width, $height] = $sizeDetails;
 
-        return $this->lowlevelDimensionsCheck($width, $height, $parameters);
+        return $this->dimensionsCheck($width, $height, $parameters);
     }
 
     /** Taken from the Laravel ValidatedAttributes::validateDimensions */
-    private function lowlevelDimensionsCheck($width, $height, $parameters): bool
+    protected function dimensionsCheck($width, $height, $parameters): bool
     {
         $parameters = $this->parseNamedParameters($parameters);
 

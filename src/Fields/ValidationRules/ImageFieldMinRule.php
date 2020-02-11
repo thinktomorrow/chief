@@ -34,6 +34,10 @@ class ImageFieldMinRule extends AbstractMediaFieldRule
 
     public function validateMin($attribute, $value, $parameters)
     {
+        if($this->refersToExistingAsset($value)) {
+            return $this->validateAssetMin($this->existingAsset($value), $parameters);
+        }
+
         $this->requireParameterCount(1, $parameters, 'min');
 
         return $this->getSize($attribute, $value) >= $parameters[0];

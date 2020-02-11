@@ -294,7 +294,7 @@ abstract class AbstractField
             ->payload($payload)
             ->replace('locale', $this->getLocales())
             ->replace('name', [$this->getName()])
-            ->removeKeysContaining(['files.*.detach'])
+            ->removeKeysContaining(['files.*.detach', 'images.*.detach'])
             ->get();
     }
 

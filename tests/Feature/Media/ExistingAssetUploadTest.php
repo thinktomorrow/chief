@@ -10,6 +10,7 @@ use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Fakes\ImageFieldManager;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
@@ -34,9 +35,8 @@ class ExistingAssetUploadTest extends TestCase
     }
 
     /** @test */
-    public function an_existing_asset_can_be_added()
+    public function an_existing_file_can_be_added()
     {
-        $this->disableExceptionHandling();
         $page = Single::create();
         $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
 
@@ -52,7 +52,33 @@ class ExistingAssetUploadTest extends TestCase
                     ]
                 ]
             ]));
-trap($page->fresh()->assets(MediaType::HERO));
+
+        $this->assertCount(1, $page->fresh()->assets(MediaType::HERO));
+
+        $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
+    }
+
+    /** @test */
+    public function an_existing_image_can_be_added()
+    {
+        app(Register::class)->register(ImageFieldManager::class, Single::class);
+
+        $page = Single::create();
+        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
+                'images' => [
+                    MediaType::HERO => [
+                        'nl' => [
+                            'new' => [
+                                $existing_asset->id,
+                            ]
+                        ]
+                    ]
+                ]
+            ]));
+
         $this->assertCount(1, $page->fresh()->assets(MediaType::HERO, 'nl'));
 
         $this->assertEquals($existing_asset->url(), $page->fresh()->asset(MediaType::HERO, 'nl')->url());
@@ -62,17 +88,20 @@ trap($page->fresh()->assets(MediaType::HERO));
     /** @test */
     public function an_existing_asset_can_not_be_added_more_than_once()
     {
+        $this->disableExceptionHandling();
         $page = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
+        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
 
         $response = $this->asAdmin()->followingRedirects()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
-                        'new' => [
-                            $existing_asset->id,
-                            $existing_asset->id,
-                        ]
+                        'nl' => [
+                            'new' => [
+                                $existing_asset->id,
+                                $existing_asset->id,
+                            ]
+                        ],
                     ]
                 ]
             ]));
@@ -85,10 +114,10 @@ trap($page->fresh()->assets(MediaType::HERO));
     }
 
     /** @test */
-    public function an_existing_asset_can_be_added_as_translation()
+    public function an_existing_asset_can_be_localized()
     {
         $page = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
+        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 800, 800));
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([

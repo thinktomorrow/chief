@@ -32,24 +32,26 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
         return false;
     }
 
+    public function validateDimensions($attribute, $value, $parameters)
+    {
+        if($this->refersToExistingAsset($value)) {
+            return $this->validateAssetDimensions($this->existingAsset($value), $parameters);
+        }
+
+        return $this->validateSlimOutputDimensions($attribute, $value, $parameters);
+    }
+
     /**
      * Override Laravel validateDimensions to focus on the ImageField specifics
      */
-    public function validateDimensions($attribute, $value, $parameters)
+    private function validateSlimOutputDimensions($attribute, $value, $parameters)
     {
         $file = json_decode($value)->output;
 
         $width = $file->width;
         $height = $file->height;
 
-        $parameters = $this->parseNamedParameters($parameters);
-
-        if ($this->failsBasicDimensionChecks($parameters, $width, $height) ||
-            $this->failsRatioCheck($parameters, $width, $height)) {
-            return false;
-        }
-
-        return true;
+        return $this->dimensionsCheck($width, $height, $parameters);
     }
 
     /**

@@ -7,7 +7,6 @@ namespace Thinktomorrow\Chief\Tests\Fakes;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Fields\Types\FileField;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 
 class ImageFieldManager extends PageManager

@@ -34,6 +34,10 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
 
     public function validateMax($attribute, $value, $parameters)
     {
+        if($this->refersToExistingAsset($value)) {
+            return $this->validateAssetMax($this->existingAsset($value), $parameters);
+        }
+
         $this->requireParameterCount(1, $parameters, 'max');
 
         return $this->getSize($attribute, $value) <= $parameters[0];

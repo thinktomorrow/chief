@@ -1,5 +1,6 @@
 <?php
 $files = $manager->fieldValue($field, $locale ?? null);
+
 $name = $name ?? $field->getName();
 $locale = $locale ?? app()->getLocale();
 ?>
@@ -29,7 +30,7 @@ $locale = $locale ?? app()->getLocale();
     <input type="hidden" id="removeFile-{{$file->id}}" name="{{ $name }}[delete][]" {{ $field->allowMultiple() ? 'multiple' : '' }}/>
 @endforeach
 
-<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->multiple ? 'hidden' : ''}}">
+<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->allowMultiple() ? 'hidden' : ''}}">
     <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
         Document uploaden
     </label>

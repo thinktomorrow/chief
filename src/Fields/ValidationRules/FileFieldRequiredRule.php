@@ -26,7 +26,6 @@ class FileFieldRequiredRule extends AbstractMediaFieldRule
             ]);
         }
 
-
         return false;
     }
 }
