@@ -116,6 +116,8 @@ class ExistingAssetUploadTest extends TestCase
     /** @test */
     public function an_existing_asset_can_be_localized()
     {
+        config()->set('app.fallback_locale','en');
+
         $page = Single::create();
         $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 800, 800));
 
@@ -140,9 +142,11 @@ class ExistingAssetUploadTest extends TestCase
     /** @test */
     public function it_can_link_an_asset_to_multiple_pages()
     {
+        config()->set('app.fallback_locale','en');
+
         $page = Single::create();
         $page2 = Single::create();
-        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
+        $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 800, 800));
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([

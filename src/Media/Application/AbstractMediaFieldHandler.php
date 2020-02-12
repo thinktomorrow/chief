@@ -4,10 +4,14 @@ namespace Thinktomorrow\Chief\Media\Application;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 
 abstract class AbstractMediaFieldHandler
 {
@@ -20,11 +24,15 @@ abstract class AbstractMediaFieldHandler
     /** @var DetachAsset */
     protected $detachAsset;
 
-    final public function __construct(AddAsset $addAsset, ReplaceAsset $replaceAsset, DetachAsset $detachAsset)
+    /** @var AssetUploader */
+    protected $assetUploader;
+
+    final public function __construct(AddAsset $addAsset, ReplaceAsset $replaceAsset, DetachAsset $detachAsset, AssetUploader $assetUploader)
     {
         $this->replaceAsset = $replaceAsset;
         $this->addAsset = $addAsset;
         $this->detachAsset = $detachAsset;
+        $this->assetUploader = $assetUploader;
     }
 
     protected function mediaRequest(array $requests, MediaField $field, Request $request): MediaRequest
@@ -34,6 +42,11 @@ abstract class AbstractMediaFieldHandler
         foreach($requests as $requestData){
             foreach($requestData as $locale => $filesPerLocale) {
                 foreach($filesPerLocale as $action => $files) {
+
+                    if(!is_array($files) || !in_array($action, [MediaRequest::NEW, MediaRequest::REPLACE, MediaRequest::DETACH])) {
+                        throw new \InvalidArgumentException('Malformed request data. Files are expected to be passed in a localized array.');
+                    }
+
                     foreach($files as $k => $file) {
                         $mediaRequest->add($action, new MediaRequestInput(
                             $file, $locale, $field->getKey(), [
@@ -52,6 +65,24 @@ abstract class AbstractMediaFieldHandler
     protected function refersToExistingAsset($value): bool
     {
         return is_int($value);
+    }
+
+    /**
+     * @param HasAsset $model
+     * @param MediaRequestInput $mediaRequestInput
+     * @return Asset
+     * @throws DuplicateAssetException
+     * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
+     */
+    protected function newExistingAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
+    {
+        $existingAsset = Asset::find($mediaRequestInput->value());
+
+        if ($model->assetRelation()->where('asset_pivots.type', $mediaRequestInput->type())->where('asset_pivots.locale', $mediaRequestInput->locale())->get()->contains($existingAsset)) {
+            throw new DuplicateAssetException();
+        }
+
+        return $this->addAsset->add($model, $existingAsset, $mediaRequestInput->type(), $mediaRequestInput->locale());
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Media;
 
-use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
@@ -90,7 +89,7 @@ class ImageFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }
@@ -115,7 +114,7 @@ class ImageFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding is te groot en dient kleiner te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero is te groot en dient kleiner te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }
@@ -131,7 +130,7 @@ class ImageFieldTest extends TestCase
                     MediaType::HERO => [
                         'nl' => [
                             'new' => [
-                                $this->dummySmallSlimImagePayload('image.png', 'image/png', 120, 120),
+                                $this->dummySmallSlimImagePayload('image.png', 'image/png', 100, 100, 900),
                             ],
                             'replace' => [],
                         ],
@@ -140,7 +139,7 @@ class ImageFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding is te klein en dient groter te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero is te klein en dient groter te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }
@@ -148,6 +147,7 @@ class ImageFieldTest extends TestCase
     /** @test */
     function it_can_validate_a_mimetype()
     {
+//        $this->disableExceptionHandling();
         $page = Single::create();
 
         $response = $this->asAdmin()
@@ -165,7 +165,7 @@ class ImageFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding is niet het juiste bestandstype', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero is niet het juiste bestandstype', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }

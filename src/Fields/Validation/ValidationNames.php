@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Fields\Validation;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class ValidationNames
 {
@@ -10,6 +11,7 @@ class ValidationNames
     private $filters = [
         'replacePlaceholders',
         'removeEmptyTranslations',
+        'removeEmptyLocalizedFileEntries',
         'removeKeysToBeRemoved',
     ];
 
@@ -26,14 +28,14 @@ class ValidationNames
     private $keysToBeRemoved;
 
     /** @var string */
-    private $defaultLocale;
+    private $requiredLocale;
 
     final private function __construct(string $format)
     {
         $this->format = $format;
         $this->placeholders = $this->payload = $this->keysToBeRemoved = [];
 
-        $this->defaultLocale((string) config('app.fallback_locale', 'nl'));
+        $this->requiredLocale((string) config('app.fallback_locale', 'nl'));
     }
 
     public static function fromFormat(string $format)
@@ -66,9 +68,9 @@ class ValidationNames
         return $this;
     }
 
-    public function defaultLocale(string $defaultLocale): self
+    public function requiredLocale(string $requiredLocale): self
     {
-        $this->defaultLocale = $defaultLocale;
+        $this->requiredLocale = $requiredLocale;
 
         return $this;
     }
@@ -134,7 +136,7 @@ class ValidationNames
 
         // Remove locales that are considered empty in the request payload
         foreach ($this->payload['trans'] as $locale => $values) {
-            if ($locale == $this->defaultLocale || ! is_array_empty($values)) {
+            if ($locale == $this->requiredLocale || ! is_array_empty($values)) {
                 continue;
             }
 
@@ -143,6 +145,24 @@ class ValidationNames
                 if(Str::startsWith($key, 'trans.'.$locale)) {
                     unset($filteredKeys[$i]);
                 }
+            }
+        }
+
+        return $filteredKeys;
+    }
+
+    private function removeEmptyLocalizedFileEntries(array $keys): array
+    {
+        $filteredKeys = $keys;
+
+        foreach($filteredKeys as $i => $key) {
+            if (!Str::startsWith($key, ['images.', 'files.'])) continue;
+
+            $payload = Arr::get($this->payload, $key);
+
+            // If the payload is empty and this is not the entry for the required locale
+            if(!$payload && !Str::endsWith($key, '.'.$this->requiredLocale)) {
+                unset($filteredKeys[$i]);
             }
         }
 

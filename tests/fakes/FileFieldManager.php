@@ -14,7 +14,9 @@ class FileFieldManager extends PageManager
     public function fields(): Fields
     {
         return new Fields([
-            FileField::make(MediaType::HERO)->validation([
+            FileField::make(MediaType::HERO)
+                ->locales(['nl','en'])
+                ->validation([
                 'required',
                 'mimetypes:image/png,text/plain',
                 'dimensions:min_width=100,min_height=100',

@@ -68,7 +68,7 @@ class FieldValidationNamesTest extends TestCase
                     'en' => ['foo' => 'value', 'bar' => 'value'],
                 ]
             ])
-            ->defaultLocale('en');
+            ->requiredLocale('en');
 
         $this->assertEquals([
             'trans.en.foo',
@@ -99,6 +99,22 @@ class FieldValidationNamesTest extends TestCase
 
         $this->assertEquals([
             'foo',
+        ], $instance->get());
+    }
+
+    /** @test */
+    public function it_can_expand_the_names_for_given_locales()
+    {
+        $instance = ValidationNames::fromFormat('trans.:locale.:key')
+            ->replace('key', ['foo','bar'])
+            ->replace('locale', ['nl','en','fr'])
+            ->requiredLocale('nl');
+
+        $this->assertEquals([
+            'trans.en.foo',
+            'trans.fr.foo',
+            'trans.en.bar',
+            'trans.fr.bar',
         ], $instance->get());
     }
 }

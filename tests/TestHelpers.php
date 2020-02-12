@@ -155,9 +155,9 @@ trait TestHelpers
         return $method->invokeArgs($object, $parameters);
     }
 
-    protected function dummySmallSlimImagePayload($name = "tt-favicon.png", $mimetype = 'image/png', $width = 32, $height = 32)
+    protected function dummySmallSlimImagePayload($name = "tt-favicon.png", $mimetype = 'image/png', $width = 32, $height = 32, $size=5000)
     {
-        return '{"server":null,"meta":{},"input":{"name":"'.$name.'","type":"'.$mimetype.'","size":5000,"width":'.$width.',"height":'.$height.',"field":null},"output":{"name":"'.$name.'","type":"'.$mimetype.'","width":'.$width.',"height":'.$height.',"image":"data:'.$mimetype.';base64,iVBORw0KGgoAAAANSUhEUgAAA/gAAAE4AQMAAADVYspJAAAAA1BMVEUEAgSVKDOdAAAAPUlEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BicAAABWZX81AAAAABJRU5ErkJggg=="},"actions":{"rotation":null,"crop":{"x":0,"y":0,"height":'.$height.',"width":'.$width.',"type":"auto"},"size":null,"filters":{"sharpen":0},"minSize":{"width":0,"height":0}}}';
+        return '{"server":null,"meta":{},"input":{"name":"'.$name.'","type":"'.$mimetype.'","size":'.$size.',"width":'.$width.',"height":'.$height.',"field":null},"output":{"name":"'.$name.'","type":"'.$mimetype.'","width":'.$width.',"height":'.$height.',"image":"data:'.$mimetype.';base64,iVBORw0KGgoAAAANSUhEUgAAA/gAAAE4AQMAAADVYspJAAAAA1BMVEUEAgSVKDOdAAAAPUlEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BicAAABWZX81AAAAABJRU5ErkJggg=="},"actions":{"rotation":null,"crop":{"x":0,"y":0,"height":'.$height.',"width":'.$width.',"type":"auto"},"size":null,"filters":{"sharpen":0},"minSize":{"width":0,"height":0}}}';
     }
 
     protected function dummySlimImagePayload($name = "tt-favicon.png", $mimetype = 'image/png', $width = 32, $height = 32)

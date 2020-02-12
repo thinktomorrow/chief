@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Media\DuplicateAssetException;
 
 class ImageFieldHandler extends AbstractMediaFieldHandler
 {
@@ -26,43 +25,10 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
         // TODO: sort the assets as well... perhaps can this be done in the mediaRequest class???
     }
 
-//    private function mediaRequest(MediaField $field, Request $request): MediaRequest
-//    {
-//        $mediaRequest = new MediaRequest();
-//
-//        foreach($request->input('images.'.$field->getName(), []) as $locale => $filesPerLocale) {
-//
-//            foreach($filesPerLocale as $action => $files) {
-//                foreach($files as $k => $file) {
-//
-//                    // If the passed value is null, we do not want to process it.
-//                    if(!$file) continue;
-//
-//                    $mediaRequest->add($action, new MediaRequestInput(
-//                        $file, $locale, $field->getKey(), [
-//                            'index' => $k,
-//                            'existing_asset' => $this->refersToExistingAsset($file),
-//                        ] // index key is used for e.g. replace method to indicate the current asset id
-//                    ));
-//                }
-//            }
-//
-//        }
-//
-//        return $mediaRequest;
-//    }
-
     private function new(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
     {
         if($mediaRequestInput->metadata('existing_asset')) {
-
-            $existingAsset = Asset::find($mediaRequestInput->value());
-
-            if ($model->assetRelation()->where('asset_pivots.type', $mediaRequestInput->type())->where('asset_pivots.locale', $mediaRequestInput->locale())->get()->contains($existingAsset)) {
-                throw new DuplicateAssetException();
-            }
-
-            return $this->addAsset->add($model, $existingAsset, $mediaRequestInput->type(), $mediaRequestInput->locale());
+            return $this->newExistingAsset($model, $mediaRequestInput);
         }
 
         // Inputted value is expected to be a slim specific json string.
@@ -75,11 +41,11 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 
     private function replace(HasAsset $model, MediaRequestInput $mediaRequest): Asset
     {
-        $asset = $this->new($model, $mediaRequest);
+        $asset = $this->createNewAsset($model, $mediaRequest);
 
         $currentAssetId = $mediaRequest->metadata('index');
 
-        $this->replaceAsset->handle($model, $currentAssetId, $asset->id);
+        $this->replaceAsset->handle($model, $currentAssetId, $asset->id, $mediaRequest->type(), $mediaRequest->locale());
 
         return $asset;
     }
@@ -89,5 +55,19 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
         $assetId = $mediaRequest->value();
 
         $this->detachAsset->detach($model, $assetId, $mediaRequest->type(), $mediaRequest->locale());
+    }
+
+    protected function createNewAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
+    {
+        if($mediaRequestInput->metadata('existing_asset')) {
+            return Asset::find($mediaRequestInput->value());
+        }
+
+        // Inputted value is expected to be a slim specific json string.
+        $file = json_decode($mediaRequestInput->value())->output->image;
+
+        $filename = json_decode($mediaRequestInput->value())->output->name;
+
+        return $this->assetUploader->uploadFromBase64($file, $filename);
     }
 }

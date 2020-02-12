@@ -8,7 +8,7 @@ class ImageField extends MediaField implements Field
 {
     protected $customValidationRules = [
         'required'   => 'imagefield_required',
-//        'mimetypes'  => 'imagefield_mimetypes',
+        'mimetypes'  => 'imagefield_mimetypes',
         'dimensions' => 'imagefield_dimensions',
         'min'        => 'imagefield_min',
         'max'        => 'imagefield_max',

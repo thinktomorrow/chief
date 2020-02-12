@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldRequiredRule;
 use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldMimetypesRule;
 use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldRequiredRule;
 use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldDimensionsRule;
+use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldMimetypesRule;
 use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldDimensionsRule;
 
 class ValidationServiceProvider extends ServiceProvider
@@ -42,6 +43,7 @@ class ValidationServiceProvider extends ServiceProvider
         Validator::extend('filefield_max', FileFieldMaxRule::class.'@validate');
 
         Validator::extendImplicit('imagefield_required', ImageFieldRequiredRule::class.'@validate');
+        Validator::extend('imagefield_mimetypes', ImageFieldMimetypesRule::class.'@validate');
         Validator::extend('imagefield_dimensions', ImageFieldDimensionsRule::class.'@validate');
         Validator::extend('imagefield_max', ImageFieldMaxRule::class.'@validate');
         Validator::extend('imagefield_min', ImageFieldMinRule::class.'@validate');

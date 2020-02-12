@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Fields\ValidationRules;
 
-use Symfony\Component\HttpFoundation\File\File;
 use Thinktomorrow\Chief\Media\Application\MediaRequest;
 
 class FileFieldMinRule extends AbstractMediaFieldRule

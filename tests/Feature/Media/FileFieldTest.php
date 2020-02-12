@@ -27,6 +27,7 @@ class FileFieldTest extends TestCase
     /** @test */
     public function it_can_upload_a_file()
     {
+        $this->disableExceptionHandling();
         $page = Single::create();
 
         $response = $this->asAdmin()
@@ -92,7 +93,7 @@ class FileFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('files.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding heeft niet de juiste afmetingen', session()->get('errors')->first('files.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('files.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }
@@ -117,7 +118,7 @@ class FileFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('files.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }
@@ -142,7 +143,7 @@ class FileFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('files.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding is te klein en dient groter te zijn dan', session()->get('errors')->first('files.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero is te klein en dient groter te zijn dan', session()->get('errors')->first('files.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }
@@ -167,7 +168,7 @@ class FileFieldTest extends TestCase
             ]));
 
         $response->assertSessionHasErrors('files.images-hero.nl');
-        $this->assertStringContainsString('De afbeelding is niet het juiste bestandstype', session()->get('errors')->first('files.images-hero.nl'));
+        $this->assertStringContainsString('De images-hero is niet het juiste bestandstype', session()->get('errors')->first('files.images-hero.nl'));
 
         $this->assertCount(0, $page->assets(MediaType::HERO));
     }

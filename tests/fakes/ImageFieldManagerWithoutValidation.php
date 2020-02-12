@@ -9,18 +9,12 @@ use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 
-class ImageFieldManager extends PageManager
+class ImageFieldManagerWithoutValidation extends PageManager
 {
     public function fields(): Fields
     {
         return new Fields([
-            ImageField::make(MediaType::HERO)->validation([
-                'required',
-                'mimetypes:image/png',
-                'dimensions:min_width=100,min_height=100',
-                'max:2',
-                'min:1',
-            ])
+            ImageField::make(MediaType::HERO),
         ]);
     }
 }

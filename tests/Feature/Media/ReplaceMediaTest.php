@@ -15,6 +15,8 @@ use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
+use Thinktomorrow\Chief\Tests\Fakes\FileFieldManagerWithoutValidation;
+use Thinktomorrow\Chief\Tests\Fakes\ImageFieldManagerWithoutValidation;
 
 class ReplaceMediaTest extends TestCase
 {
@@ -27,7 +29,7 @@ class ReplaceMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(FileFieldManager::class, Single::class);
+        app(Register::class)->register(ImageFieldManagerWithoutValidation::class, Single::class);
         app(Register::class)->register(UploadMediaModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {
@@ -45,7 +47,7 @@ class ReplaceMediaTest extends TestCase
 
          $this->asAdmin()
              ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                 'files' => [
+                 'images' => [
                      'seo_image' => [
                          'nl' => [
                              'replace' => [
@@ -68,6 +70,7 @@ class ReplaceMediaTest extends TestCase
      /** @test */
     public function an_asset_can_be_replaced()
     {
+        $this->disableExceptionHandling();
         $page = Single::create();
         app(AddAsset::class)->add($page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
 
@@ -76,11 +79,13 @@ class ReplaceMediaTest extends TestCase
         // Replace asset
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
+                'images' => [
                     MediaType::HERO => [
-                        'replace' => [
-                            $existing_asset->id => $this->dummySlimImagePayload(),
-                        ]
+                        'nl' => [
+                            'replace' => [
+                                $existing_asset->id => $this->dummySlimImagePayload(),
+                            ]
+                        ],
                     ]
                 ]
             ]));
@@ -103,12 +108,14 @@ class ReplaceMediaTest extends TestCase
         // Replace asset
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
+                'images' => [
                     MediaType::HERO => [
-                        'replace' => [
-                            $existing_asset->id => $this->dummySlimImagePayload(),
-                            null => null
-                        ]
+                        'nl' => [
+                            'replace' => [
+                                $existing_asset->id => $this->dummySlimImagePayload(),
+                                null => null
+                            ]
+                        ],
                     ]
                 ]
             ]));

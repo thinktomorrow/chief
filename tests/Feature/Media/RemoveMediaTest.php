@@ -15,6 +15,7 @@ use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
+use Thinktomorrow\Chief\Tests\Fakes\FileFieldManagerWithoutValidation;
 
 class RemoveMediaTest extends TestCase
 {
@@ -27,7 +28,7 @@ class RemoveMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(FileFieldManager::class, Single::class);
+        app(Register::class)->register(FileFieldManagerWithoutValidation::class, Single::class);
         app(Register::class)->register(UploadMediaModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {
@@ -48,9 +49,11 @@ class RemoveMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
-                        'delete' => [
-                            $page->assets(MediaType::HERO)->first()->id,
-                        ]
+                        'nl' => [
+                            'detach' => [
+                                $page->assets(MediaType::HERO)->first()->id,
+                            ]
+                        ],
                     ]
                 ]
             ]));
@@ -74,10 +77,13 @@ class RemoveMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'files' => [
                     MediaType::HERO => [
-                        'delete' => [
-                            $page->assets(MediaType::HERO)->first()->id,
-                            null
-                        ]
+                        'nl' => [
+                            'detach' => [
+                                $page->assets(MediaType::HERO)->first()->id,
+                                null
+                            ]
+                        ],
+
                     ]
                 ]
             ]));
@@ -101,12 +107,14 @@ class RemoveMediaTest extends TestCase
             ->put(route('chief.back.managers.update', ['singles', $page->id]), [
                 'files' => [
                     MediaType::HERO => [
-                        'delete' => [
-                            $page->assets(MediaType::HERO)->first()->id,
+                        'nl' => [
+                            'detach' => [
+                                $page->assets(MediaType::HERO)->first()->id,
+                            ],
+                            'new' => [
+                                UploadedFile::fake()->image('image.png')
+                            ]
                         ],
-                        'new' => [
-                            UploadedFile::fake()->image('image.png')
-                        ]
                     ],
                 ],
             ]);
@@ -125,7 +133,7 @@ class RemoveMediaTest extends TestCase
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
-                'files' => [
+                'images' => [
                     'seo_image' => [
                         'nl' => [
                             'new' => [
@@ -133,7 +141,7 @@ class RemoveMediaTest extends TestCase
                             ]
                         ],
                         'en' => [
-                            'delete' => [
+                            'detach' => [
                                 $existing_asset_en->id,
                             ]
                         ]
