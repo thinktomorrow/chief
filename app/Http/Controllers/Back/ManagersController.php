@@ -86,7 +86,7 @@ class ManagersController extends Controller
         try {
             app(UpdateManager::class)->handle($manager, $request);
         } catch (DuplicateAssetException $e) {
-            return redirect()->to($manager->route('edit'))->with('messages.error', 'Een van de fotos die je uploadde bestond al.');
+            return redirect()->to($manager->route('edit'))->withErrors('Een van de fotos die je uploadde bestond al.');
         }
 
         return redirect()->to($manager->route('edit'))->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $manager->details()->title . '" werd aangepast');

@@ -67,6 +67,9 @@ abstract class TestCase extends OrchestraTestCase
         Memoize::clear();
         MemoizedUrlRecord::clearCachedRecords();
         Page::clearCachedUrls();
+
+        // Set nl as default locale for testing env
+        config()->set('app.fallback_locale', 'nl');
     }
 
     protected function resolveApplicationHttpKernel($app)

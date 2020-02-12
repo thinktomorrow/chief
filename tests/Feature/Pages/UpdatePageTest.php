@@ -9,7 +9,7 @@ use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
-use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
 
 class UpdatePageTest extends TestCase
 {

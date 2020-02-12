@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Media;
+namespace Thinktomorrow\Chief\Tests\Feature\MediaOld;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldManagerWithValidation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 
 class FileFieldTest extends TestCase
@@ -21,7 +21,7 @@ class FileFieldTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(FileFieldManager::class, Single::class);
+        app(Register::class)->register(FileFieldManagerWithValidation::class, Single::class);
     }
 
     /** @test */

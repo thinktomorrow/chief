@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Media;
+namespace Thinktomorrow\Chief\Tests\Feature\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Route;
@@ -8,13 +8,13 @@ use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\Chief\Tests\Fakes\FileFieldManager;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldManagerWithValidation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Tests\Fakes\UploadMediaModuleManager;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldModuleManager;
 
-class SortMediaTest extends TestCase
+class SortImageFieldValueTest extends TestCase
 {
     use PageFormParams;
 
@@ -25,8 +25,8 @@ class SortMediaTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(FileFieldManager::class, Single::class);
-        app(Register::class)->register(UploadMediaModuleManager::class, MediaModule::class);
+        app(Register::class)->register(FileFieldManagerWithValidation::class, Single::class);
+        app(Register::class)->register(ImageFieldModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
@@ -72,14 +72,14 @@ class SortMediaTest extends TestCase
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $page->id]), $this->validUpdatePageParams([
                 'filesOrder' =>
-                [
-                    'nl' => [
-                        'files-' . MediaType::HERO => $nl_images[1]->id . ',' . $nl_images[0]->id,
-                    ],
-                    'en' => [
-                        'files-' . MediaType::HERO => $en_images[3]->id . ',' . $en_images[2]->id
+                    [
+                        'nl' => [
+                            'files-' . MediaType::HERO => $nl_images[1]->id . ',' . $nl_images[0]->id,
+                        ],
+                        'en' => [
+                            'files-' . MediaType::HERO => $en_images[3]->id . ',' . $en_images[2]->id
+                        ]
                     ]
-                ]
             ]));
 
         $nl_newImagesSorted = $page->refresh()->assets(MediaType::HERO, 'nl');

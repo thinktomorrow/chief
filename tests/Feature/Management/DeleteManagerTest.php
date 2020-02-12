@@ -2,9 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
@@ -69,5 +73,16 @@ class DeleteManagerTest extends TestCase
         $this->assertNull($this->model->fresh());
         $this->assertEquals(0, Relation::count());
 
+    }
+
+    /** @test */
+    public function removing_a_model_with_asset_unlinks_the_asset()
+    {
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+
+        $this->asAdmin()
+            ->delete('/admin/manage/singles/'.$this->page->id);
+
+        $this->assertCount(1, Asset::all());
     }
 }

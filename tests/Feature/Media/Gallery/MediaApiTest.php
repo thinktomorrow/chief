@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Media;
+namespace Thinktomorrow\Chief\Tests\Feature\Media\Gallery;
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
@@ -9,11 +9,17 @@ use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 
 class MediaApiTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setUpDefaultAuthorization();
+
+    }
+
     /** @test */
     public function it_can_get_a_json_with_assets()
     {
-        $this->setUpDefaultAuthorization();
-
         $asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
 
         $response = $this->asAdmin()->get(route('chief.api.media'));
@@ -32,8 +38,6 @@ class MediaApiTest extends TestCase
     /** @test */
     public function it_can_limit_assets_fetched()
     {
-        $this->setUpDefaultAuthorization();
-
         AssetUploader::upload(UploadedFile::fake()->image('image.png'));
         AssetUploader::upload(UploadedFile::fake()->image('image.png'));
 
@@ -51,8 +55,6 @@ class MediaApiTest extends TestCase
     /** @test */
     public function it_can_paginate_with_limit_and_offset()
     {
-        $this->setUpDefaultAuthorization();
-
         $asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
         $asset2 = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
 
@@ -85,8 +87,6 @@ class MediaApiTest extends TestCase
     /** @test */
     public function it_fetches_the_most_recently_added_asset_first()
     {
-        $this->setUpDefaultAuthorization();
-
         $asset = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
         $asset2 = AssetUploader::upload(UploadedFile::fake()->image('image.png'));
 

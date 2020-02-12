@@ -49,7 +49,7 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 
         $currentAssetId = $mediaRequest->metadata('index');
 
-        $this->replaceAsset->handle($model, $currentAssetId, $asset->id);
+        $this->replaceAsset->handle($model, $currentAssetId, $asset->id, $mediaRequest->type(), $mediaRequest->locale());
     }
 
     private function detach(HasAsset $model, MediaRequestInput $mediaRequest)
@@ -58,18 +58,4 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 
         $this->detachAsset->detach($model, $assetId, $mediaRequest->type(), $mediaRequest->locale());
     }
-
-//    protected function createNewAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
-//    {
-//        if($mediaRequestInput->metadata('existing_asset')) {
-//            return Asset::find($mediaRequestInput->value());
-//        }
-//
-//        // Inputted value is expected to be a slim specific json string.
-//        $file = json_decode($mediaRequestInput->value())->output->image;
-//
-//        $filename = json_decode($mediaRequestInput->value())->output->name;
-//
-//        return $this->assetUploader->uploadFromBase64($file, $filename);
-//    }
 }

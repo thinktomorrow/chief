@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Fakes;
+namespace Thinktomorrow\Chief\Tests\Feature\Media\Fakes;
 
 use Thinktomorrow\Chief\Modules\Module;
 
