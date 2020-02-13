@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -54,6 +55,17 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof AuthorizationException) {
             return $this->unauthorized($request, $exception);
+        }
+
+        if($request->getMethod() == 'POST' && $exception instanceof PostTooLargeException) {
+            if($request->expectsJson()) {
+                return response()->json([
+                    'error' => true, // required by redactor
+                    'message' => $exception->getMessage(),
+                ], 200);
+            }
+
+            return redirect()->back()->withInput()->withErrors($exception->getMessage());
         }
 
         //could use some code cleanup
