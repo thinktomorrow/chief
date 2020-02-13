@@ -27,7 +27,7 @@ $locale = $locale ?? app()->getLocale();
 
     </div>
 
-    <input type="hidden" id="removeFile-{{$file->id}}" name="{{ $name }}[delete][]" {{ $field->allowMultiple() ? 'multiple' : '' }}/>
+    <input type="hidden" id="removeFile-{{$file->id}}" name="{{ $name }}[detach][]" {{ $field->allowMultiple() ? 'multiple' : '' }}/>
 @endforeach
 
 <div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->allowMultiple() ? 'hidden' : ''}}">

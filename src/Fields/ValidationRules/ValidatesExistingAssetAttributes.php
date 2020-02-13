@@ -9,6 +9,8 @@ trait ValidatesExistingAssetAttributes
 {
     protected function refersToExistingAsset($value): bool
     {
+        if(!is_string($value) && !is_int($value)) return false;
+
         // Check if id is passed first
         if(!preg_match('/^[1-9][0-9]*$/', $value)) return false;
 
@@ -18,17 +20,6 @@ trait ValidatesExistingAssetAttributes
     protected function existingAsset($value): ?Asset
     {
         return Asset::where('id', $value)->first();
-    }
-
-    private function isValidJson($string): bool
-    {
-        try {
-            json_decode($string);
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return (json_last_error() == JSON_ERROR_NONE);
     }
 
     protected function validateAssetDimensions(Asset $asset, $parameters)
