@@ -35,6 +35,7 @@ class DetachImageFieldValueTest extends TestCase
     /** @test */
     public function an_asset_can_be_removed()
     {
+        $this->disableExceptionHandling();
         $this->assertCount(1, $this->page->assets(MediaType::HERO));
 
         $this->detachImageRequest([
@@ -45,7 +46,7 @@ class DetachImageFieldValueTest extends TestCase
             ],
         ]);
 
-        $this->assertCount(0, $this->page->fresh()->assets());
+        $this->assertCount(0, $this->page->fresh()->assets(MediaType::HERO));
         $this->assertCount(1, Asset::all());
     }
 

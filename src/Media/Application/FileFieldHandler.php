@@ -7,7 +7,6 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Media\DuplicateAssetException;
 
 class FileFieldHandler extends AbstractMediaFieldHandler
 {
@@ -25,8 +24,7 @@ class FileFieldHandler extends AbstractMediaFieldHandler
             }
         }
 
-        // TODO: sort the assets as well... perhaps can this be done in the mediaRequest class???
-
+        $this->sort($model, $field, $request);
     }
 
     private function new(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset

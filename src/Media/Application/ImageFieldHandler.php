@@ -22,7 +22,7 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
             }
         }
 
-        // TODO: sort the assets as well... perhaps can this be done in the mediaRequest class???
+        $this->sort($model, $field, $request);
     }
 
     private function new(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset

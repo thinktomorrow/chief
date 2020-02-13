@@ -12,6 +12,7 @@ use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\AssetLibrary\Application\SortAssets;
 
 abstract class AbstractMediaFieldHandler
 {
@@ -27,11 +28,15 @@ abstract class AbstractMediaFieldHandler
     /** @var AssetUploader */
     protected $assetUploader;
 
-    final public function __construct(AddAsset $addAsset, ReplaceAsset $replaceAsset, DetachAsset $detachAsset, AssetUploader $assetUploader)
+    /** @var SortAssets */
+    protected $sortAssets;
+
+    final public function __construct(AddAsset $addAsset, ReplaceAsset $replaceAsset, DetachAsset $detachAsset, SortAssets $sortAssets, AssetUploader $assetUploader)
     {
-        $this->replaceAsset = $replaceAsset;
-        $this->addAsset = $addAsset;
-        $this->detachAsset = $detachAsset;
+        $this->replaceAsset  = $replaceAsset;
+        $this->addAsset      = $addAsset;
+        $this->detachAsset   = $detachAsset;
+        $this->sortAssets    = $sortAssets;
         $this->assetUploader = $assetUploader;
     }
 
@@ -115,5 +120,16 @@ abstract class AbstractMediaFieldHandler
         $filename = substr($filename, 0, strrpos($filename, '.'));
 
         return Str::slug($filename) . '.' . $extension;
+    }
+
+    protected function sort(HasAsset $model, MediaField $field, Request $request)
+    {
+        if($request->has('filesOrder'))
+        {
+            foreach($request->input('filesOrder') as $locale => $array)
+            {
+                $this->sortAssets->handle($model, explode(',', $array['files-'.$field->getKey()]), $field->getKey(), $locale);
+            }
+        }
     }
 }

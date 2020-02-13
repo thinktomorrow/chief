@@ -8,10 +8,10 @@ use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldManagerWithValidation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Feature\Media\fakes\OptionalImageFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldModuleManager;
 
 class SortImageFieldValueTest extends TestCase
@@ -25,7 +25,7 @@ class SortImageFieldValueTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(FileFieldManagerWithValidation::class, Single::class);
+        app(Register::class)->register(OptionalImageFieldManager::class, Single::class);
         app(Register::class)->register(ImageFieldModuleManager::class, MediaModule::class);
 
         Route::get('pages/{slug}', function () {
@@ -82,12 +82,10 @@ class SortImageFieldValueTest extends TestCase
                     ]
             ]));
 
-        $nl_newImagesSorted = $page->refresh()->assets(MediaType::HERO, 'nl');
-        $en_newImagesSorted = $page->assets(MediaType::HERO, 'en');
+        $nl_newImagesSorted = $page->refresh()->assets(MediaType::HERO, 'nl')->pluck('id')->toArray();
+        $en_newImagesSorted = $page->assets(MediaType::HERO, 'en')->pluck('id')->toArray();
 
-        $this->assertEquals($nl_images[1]->id, $nl_newImagesSorted[0]->id);
-        $this->assertEquals($nl_images[0]->id, $nl_newImagesSorted[1]->id);
-        $this->assertEquals($en_images[3]->id, $en_newImagesSorted[2]->id);
-        $this->assertEquals($en_images[2]->id, $en_newImagesSorted[3]->id);
+        $this->assertEquals([$nl_images[1]->id,$nl_images[0]->id], $nl_newImagesSorted);
+        $this->assertEquals([$en_images[3]->id, $en_images[2]->id], $en_newImagesSorted);
     }
 }
