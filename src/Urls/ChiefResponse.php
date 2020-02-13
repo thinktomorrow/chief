@@ -37,7 +37,7 @@ class ChiefResponse extends Response
                     $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
 
                     if (!$targetModel) {
-                        throw new \DomainException('Corrupt target model for this url request. Model by reference ['.$targetUrlRecord->model_type.'@'.$targetUrlRecord->model_id.'] has probably been archived or deleted.');
+                        throw new \DomainException('Corrupt target model for this url request. Model by reference [' . $targetUrlRecord->model_type . '@' . $targetUrlRecord->model_id . '] has probably been archived or deleted.');
                     }
 
                     return static::createRedirect($targetModel->url($locale));
@@ -47,14 +47,14 @@ class ChiefResponse extends Response
             }
 
             if (!$model) {
-                throw new \DomainException('Corrupt target model for this url request. Model by reference ['.$urlRecord->model_type.'@'.$urlRecord->model_id.'] has probably been archived or deleted.');
+                throw new \DomainException('Corrupt target model for this url request. Model by reference [' . $urlRecord->model_type . '@' . $urlRecord->model_id . '] has probably been archived or deleted.');
             }
 
-            if (method_exists($model, 'isPublished') && ! $model->isPublished()) {
+            if (method_exists($model, 'isPublished') && !$model->isPublished()) {
 
                 /** When admin is logged in and this request is in preview mode, we allow the view */
-                if (! PreviewMode::fromRequest()->check()) {
-                    throw new NotFoundHttpException('Model found for request ['. $slug .'] but it is not published.');
+                if (!PreviewMode::fromRequest()->check()) {
+                    throw new NotFoundHttpException('Model found for request [' . $slug . '] but it is not published.');
                 }
             }
 
@@ -65,7 +65,7 @@ class ChiefResponse extends Response
             }
         }
 
-        throw new NotFoundHttpException('No url or model found for request ['. $slug .'] for locale ['.$locale.'].');
+        throw new NotFoundHttpException('No url or model found for request [' . $slug . '] for locale [' . $locale . '].');
     }
 
     private static function createRedirect(string $url)

@@ -28,9 +28,9 @@ class Relation extends Model
     protected function setKeysForSaveQuery(Builder $query)
     {
         $query->where('parent_type', $this->getMorphClass())
-                ->where('parent_id', $this->getKey())
-                ->where('child_type', $this->child_type)
-                ->where('child_id', $this->child_id);
+            ->where('parent_id', $this->getKey())
+            ->where('child_type', $this->child_type)
+            ->where('child_id', $this->child_id);
 
         return $query;
     }
@@ -55,6 +55,7 @@ class Relation extends Model
         return $relations->map(function (Relation $relation) {
             $parent = $relation->parent;
             $parent->relation = $relation;
+
             return $parent;
         });
     }
@@ -62,9 +63,9 @@ class Relation extends Model
     public static function children($parent_type, $parent_id)
     {
         $relations = static::where('parent_type', $parent_type)
-                            ->where('parent_id', $parent_id)
-                            ->orderBy('sort', 'ASC')
-                            ->get();
+            ->where('parent_id', $parent_id)
+            ->orderBy('sort', 'ASC')
+            ->get();
 
         return $relations->map(function (Relation $relation) use ($parent_type, $parent_id) {
 
@@ -73,7 +74,7 @@ class Relation extends Model
                 if (!$relation->child()->withTrashed()->first()) {
 //                if ((!method_exists($childInstance, 'trashed')) || ! $childInstance->onlyTrashed()->find($relation->child_id)) {
                     // If we cannot retrieve it then he collection type is possibly off, this is a database inconsistency and should be addressed
-                    throw new \DomainException('Corrupt relation reference. Related child ['.$relation->child_type.'@'.$relation->child_id.'] could not be retrieved for parent [' . $parent_type.'@'.$parent_id.']. Make sure the morph key can resolve to a valid class.');
+                    throw new \DomainException('Corrupt relation reference. Related child [' . $relation->child_type . '@' . $relation->child_id . '] could not be retrieved for parent [' . $parent_type . '@' . $parent_id . ']. Make sure the morph key can resolve to a valid class.');
                 }
 
                 return null;
@@ -84,27 +85,27 @@ class Relation extends Model
             return $child;
         })
 
-        // In case of soft-deleted entries, this will be null and should be ignored. We make sure that keys are reset in case of removed child
-        ->reject(function ($child) {
-            return is_null($child);
-        })
-        ->values();
+            // In case of soft-deleted entries, this will be null and should be ignored. We make sure that keys are reset in case of removed child
+            ->reject(function ($child) {
+                return is_null($child);
+            })
+            ->values();
     }
 
     public function delete()
     {
         return static::where('parent_type', $this->parent_type)
-                ->where('parent_id', $this->parent_id)
-                ->where('child_type', $this->child_type)
-                ->where('child_id', $this->child_id)
-                ->delete();
+            ->where('parent_id', $this->parent_id)
+            ->where('child_type', $this->child_type)
+            ->where('child_id', $this->child_id)
+            ->delete();
     }
 
     public static function deleteRelationsOf($type, $id)
     {
         $relations = static::where(function ($query) use ($type, $id) {
             return $query->where('parent_type', $type)
-                         ->where('parent_id', $id);
+                ->where('parent_id', $id);
         })->orWhere(function ($query) use ($type, $id) {
             return $query->where('child_type', $type)
                 ->where('child_id', $id);

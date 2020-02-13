@@ -46,15 +46,15 @@ class InvitationState extends StateMachine
         ],
         'revoke' => [
             'from' => [self::PENDING, self::EXPIRED],
-            'to' => self::REVOKED,
+            'to'   => self::REVOKED,
         ],
         'accept' => [
             'from' => [self::PENDING],
-            'to' => self::ACCEPTED,
+            'to'   => self::ACCEPTED,
         ],
-        'deny' => [
+        'deny'   => [
             'from' => [self::PENDING],
-            'to' => self::DENIED,
+            'to'   => self::DENIED,
         ],
     ];
 

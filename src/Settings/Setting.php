@@ -55,7 +55,7 @@ class Setting extends Model
     private function defaultField()
     {
         return InputField::make($this->key)
-                    ->label(ucfirst(str_replace(['-','_','.'], ' ', $this->key)));
+            ->label(ucfirst(str_replace(['-', '_', '.'], ' ', $this->key)));
     }
 
     public static function refreshFieldsFromConfig()

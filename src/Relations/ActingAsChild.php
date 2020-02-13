@@ -51,10 +51,10 @@ trait ActingAsChild
     private function attachParent($parent_type, $parent_id, array $attributes = [])
     {
         Relation::firstOrCreate([
-            'parent_type'  => $parent_type,
-            'parent_id'    => $parent_id,
-            'child_type' => $this->getMorphClass(),
-            'child_id'   => $this->getKey(),
+            'parent_type' => $parent_type,
+            'parent_id'   => $parent_id,
+            'child_type'  => $this->getMorphClass(),
+            'child_id'    => $this->getKey(),
         ], $attributes);
     }
 

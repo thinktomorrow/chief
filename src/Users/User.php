@@ -26,7 +26,8 @@ class User extends Authenticatable implements HasAsset
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     public static function findByEmail(string $email)
@@ -56,7 +57,7 @@ class User extends Authenticatable implements HasAsset
 
     public function getFullnameAttribute()
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function isSquantoDeveloper()

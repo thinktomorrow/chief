@@ -41,7 +41,7 @@ trait SavingFields
 //            }
 
             // Custom set methods - default is the generic setField() method.
-            $methodName = 'set'. ucfirst(Str::camel($field->getKey())) . 'Field';
+            $methodName = 'set' . ucfirst(Str::camel($field->getKey())) . 'Field';
             (method_exists($this, $methodName))
                 ? $this->$methodName($field, $request)
                 : $this->setField($field, $request);
@@ -58,20 +58,25 @@ trait SavingFields
 
     protected function detectCustomSaveMethods(Field $field): bool
     {
-        $saveMethodByKey = 'save'. ucfirst(Str::camel($field->getKey())) . 'Field';
-        $saveMethodByType = 'save'. ucfirst(Str::camel($field->getType()->get())) . 'Fields';
+        $saveMethodByKey = 'save' . ucfirst(Str::camel($field->getKey())) . 'Field';
+        $saveMethodByType = 'save' . ucfirst(Str::camel($field->getType()->get())) . 'Fields';
 
-        foreach([$saveMethodByKey, $saveMethodByType] as $saveMethod){
+        foreach ([$saveMethodByKey, $saveMethodByType] as $saveMethod) {
 
             foreach ($this->assistants() as $assistant) {
                 if (method_exists($assistant, $saveMethod)) {
-                    $this->saveAssistantMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethod, 'assistant' => $assistant];
+                    $this->saveAssistantMethods[$field->getKey()] = ['field'     => $field,
+                                                                     'method'    => $saveMethod,
+                                                                     'assistant' => $assistant,
+                    ];
+
                     return true;
                 }
             }
 
             if (method_exists($this, $saveMethod)) {
                 $this->saveMethods[$field->getKey()] = ['field' => $field, 'method' => $saveMethod];
+
                 return true;
             }
         }

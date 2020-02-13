@@ -27,11 +27,12 @@ class PageStatePresenter
     {
         $class = $this->pageState->isOnline() ? 'text-success' : 'text-warning';
 
-        return '<span class="inline-xs stack-s '.$class.'">' . $this->stateAsLabel() . '</span>';
+        return '<span class="inline-xs stack-s ' . $class . '">' . $this->stateAsLabel() . '</span>';
     }
 
     /**
      * Allowed transitions starting from this state
+     *
      * @return array
      */
     public function transitions(): array
@@ -44,9 +45,9 @@ class PageStatePresenter
         $state = $this->model->stateOf($this->pageState::KEY);
 
         $labels = [
-            PageState::DRAFT => 'offline',
+            PageState::DRAFT     => 'offline',
             PageState::PUBLISHED => 'online',
-            PageState::ARCHIVED => 'archief',
+            PageState::ARCHIVED  => 'archief',
         ];
 
         return $labels[$state] ?? $state;

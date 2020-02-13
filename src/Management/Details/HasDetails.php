@@ -16,7 +16,7 @@ trait HasDetails
         $genericModelInstance = $this->modelInstance();
 
         // Generic model details
-        $id = Str::slug($this->registration->key(). ($this->hasExistingModel() ? '-'. $this->existingModel()->id : ''));
+        $id = Str::slug($this->registration->key() . ($this->hasExistingModel() ? '-' . $this->existingModel()->id : ''));
         $key = $this->registration->key();
         $labelSingular = property_exists($genericModelInstance, 'labelSingular') ? $genericModelInstance->labelSingular : Str::singular($key);
         $labelPlural = property_exists($genericModelInstance, 'labelPlural') ? $genericModelInstance->labelPlural : Str::plural($key);
@@ -32,10 +32,10 @@ trait HasDetails
         return new Details(
             $id,
             $key,
-            $labelSingular.'',
-            $labelPlural.'',
+            $labelSingular . '',
+            $labelPlural . '',
             $internal_label,
-            $title.''
+            $title . ''
         );
     }
 }

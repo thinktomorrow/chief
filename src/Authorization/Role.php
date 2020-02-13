@@ -46,6 +46,7 @@ class Role extends BaseRole implements RoleContract
 
             $this->permission = $temp;
         });
+
         return $this->permission;
     }
 }

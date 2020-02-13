@@ -33,7 +33,10 @@ class UrlAssistant implements Assistant
     public function route($verb): ?string
     {
         $routes = [
-            'check' => route('chief.back.assistants.url.check', [$this->manager->details()->key, $this->manager->existingModel()->id]),
+            'check' => route('chief.back.assistants.url.check', [
+                $this->manager->details()->key,
+                $this->manager->existingModel()->id,
+            ]),
         ];
 
         return $routes[$verb] ?? null;
@@ -45,14 +48,18 @@ class UrlAssistant implements Assistant
             InputField::make('url-slugs')
                 ->validation(
                     [
-                        'url-slugs' => ['array', 'min:1', new UniqueUrlSlugRule($this->manager->modelInstance(), $this->manager->hasExistingModel() ? $this->manager->existingModel() : null)],
+                        'url-slugs' => [
+                            'array',
+                            'min:1',
+                            new UniqueUrlSlugRule($this->manager->modelInstance(), $this->manager->hasExistingModel() ? $this->manager->existingModel() : null),
+                        ],
                     ],
                     [],
                     [
                         'url-slugs.*' => 'taalspecifieke link',
                     ])
                 ->view('chief::back._fields.url-slugs')
-                ->viewData(['fields' => UrlSlugFields::fromModel($this->manager->hasExistingModel() ? $this->manager->existingModel() : $this->manager->modelInstance()) ]),
+                ->viewData(['fields' => UrlSlugFields::fromModel($this->manager->hasExistingModel() ? $this->manager->existingModel() : $this->manager->modelInstance())]),
         ]);
     }
 
@@ -76,7 +83,7 @@ class UrlAssistant implements Assistant
 
     private function validateModel()
     {
-        if (! $this->manager->existingModel() instanceof ProvidesUrl) {
+        if (!$this->manager->existingModel() instanceof ProvidesUrl) {
             throw new \Exception('UrlAssistant requires the model interfaced by ' . ProvidesUrl::class . '.');
         }
     }

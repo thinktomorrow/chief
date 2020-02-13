@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
@@ -98,13 +98,13 @@ abstract class AbstractField
     public function getName(string $locale = null): string
     {
         return $this->fieldName()
-                    ->withBrackets()
-                    ->get($locale);
+            ->withBrackets()
+            ->get($locale);
     }
 
     protected function getValidationNameFormat(): string
     {
-        if($this->isLocalized()) {
+        if ($this->isLocalized()) {
             return $this->getLocalizedNameFormat();
         }
 
@@ -113,7 +113,7 @@ abstract class AbstractField
 
     protected function getLocalizedNameFormat(): string
     {
-        if(false !== strpos($this->name, ':locale')){
+        if (false !== strpos($this->name, ':locale')) {
             return $this->name;
         }
 
@@ -164,9 +164,9 @@ abstract class AbstractField
 
     public function prepend($prepend): Field
     {
-       $this->prepend = $prepend;
+        $this->prepend = $prepend;
 
-       return $this;
+        return $this;
     }
 
     public function getPrepend(?string $locale = null): ?string
@@ -206,9 +206,9 @@ abstract class AbstractField
     }
 
     /**
-     * @deprecated use value() instead
      * @param $default
      * @return $this
+     * @deprecated use value() instead
      */
     public function default($default)
     {
@@ -239,7 +239,9 @@ abstract class AbstractField
     {
         return function (Model $model = null, $locale = null) {
 
-            if(!$model) return $this->value;
+            if (!$model) {
+                return $this->value;
+            }
 
             if ($locale && $this->isLocalized()) {
                 return $model->getTranslationFor($this->getColumn(), $locale);
@@ -272,7 +274,7 @@ abstract class AbstractField
             return false;
         }
 
-        if($this->getValidationParameters() instanceof ValidationParameters) {
+        if ($this->getValidationParameters() instanceof ValidationParameters) {
             foreach ($this->getValidationParameters()->getRules() as $rule) {
                 if (false !== strpos($rule, 'required')) {
                     return true;
@@ -285,7 +287,7 @@ abstract class AbstractField
 
     public function optional(): bool
     {
-        return ! $this->required();
+        return !$this->required();
     }
 
     public function getValidationNames(array $payload = []): array
@@ -307,8 +309,8 @@ abstract class AbstractField
     }
 
     /**
-     * @deprecated use isLocalized() instead
      * @return bool
+     * @deprecated use isLocalized() instead
      */
     public function isTranslatable(): bool
     {
@@ -391,10 +393,12 @@ abstract class AbstractField
 
     public function getElementView(): string
     {
-        if($this->elementView) return $this->elementView;
+        if ($this->elementView) {
+            return $this->elementView;
+        }
 
         return $this->isLocalized()
             ? 'chief::back._fields.translatable'
-            : 'chief::back._fields.'.$this->type->get();
+            : 'chief::back._fields.' . $this->type->get();
     }
 }

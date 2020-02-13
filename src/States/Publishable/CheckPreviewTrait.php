@@ -10,6 +10,7 @@ trait CheckPreviewTrait
     {
         if (PreviewMode::fromRequest()->check()) {
             Session::now('note.default', 'U bekijkt een preview.');
+
             return true;
         } else {
             return false;

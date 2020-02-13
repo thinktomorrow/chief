@@ -54,15 +54,21 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
-    protected $translationModel      = PageTranslation::class;
+    protected $translationModel = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
-    protected $translatedAttributes  = [
-        'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords', 'seo_image'
+    protected $translatedAttributes = [
+        'title',
+        'content',
+        'short',
+        'seo_title',
+        'seo_description',
+        'seo_keywords',
+        'seo_image',
     ];
 
-    public $table          = "pages";
-    protected $guarded     = [];
-    protected $with        = ['translations'];
+    public $table = "pages";
+    protected $guarded = [];
+    protected $with = ['translations'];
 
     protected $baseViewPath;
     protected static $baseUrlSegment = '/';
@@ -91,7 +97,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
             return static::$managedModelKey;
         }
 
-        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class . '.');
     }
 
     /**
@@ -131,7 +137,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     public function flatReferenceLabel(): string
     {
         if ($this->exists) {
-            $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+            $status = !$this->isPublished() ? ' [' . $this->statusAsPlainLabel() . ']' : null;
 
             return $this->title ? $this->title . $status : '';
         }
@@ -143,7 +149,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     {
         $classKey = get_class($this);
         if (property_exists($this, 'labelSingular')) {
-            $labelSingular =  $this->labelSingular;
+            $labelSingular = $this->labelSingular;
         } else {
             $labelSingular = Str::singular($classKey);
         }
@@ -184,7 +190,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
             $locale = app()->getLocale();
         }
         try {
-            $memoizedKey = $this->getMorphClass().'-'.$this->id.'-'.$locale;
+            $memoizedKey = $this->getMorphClass() . '-' . $this->id . '-' . $locale;
 
             if (isset(static::$cachedUrls[$memoizedKey])) {
                 return static::$cachedUrls[$memoizedKey];
@@ -208,7 +214,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     /** @inheritdoc */
     public function previewUrl(string $locale = null): string
     {
-        return $this->url($locale).'?preview-mode';
+        return $this->url($locale) . '?preview-mode';
     }
 
 
@@ -247,11 +253,11 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     public function statusAsLabel()
     {
         if ($this->isPublished()) {
-            return '<a href="'.$this->url().'" target="_blank"><em>online</em></a>';
+            return '<a href="' . $this->url() . '" target="_blank"><em>online</em></a>';
         }
 
         if ($this->isDraft()) {
-            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>offline</em></a>';
+            return '<a href="' . $this->previewUrl() . '" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
         if ($this->isArchived()) {

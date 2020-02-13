@@ -25,7 +25,7 @@ class UrlSlugFields extends Fields
         $fields = new static([]);
 
         foreach ($records as $record) {
-            $key = 'redirects-'.$record->locale.'-'.$record->slug;
+            $key = 'redirects-' . $record->locale . '-' . $record->slug;
             $fields[$key] = UrlSlugField::make($key)
                 ->setUrlRecord($record)
                 ->setFullUrl($model->resolveUrl($record->locale, $record->slug));
@@ -61,10 +61,10 @@ class UrlSlugFields extends Fields
 
         foreach ($locales as $locale) {
             $fields['url-slugs.' . $locale] = UrlSlugField::make('url-slugs.' . $locale)
-                                                ->setBaseUrlSegment($model->baseUrlSegment($locale))
-                                                ->prepend($model->resolveUrl($locale, $model->baseUrlSegment($locale)) .'/')
-                                                ->name('url-slugs[' . $locale . ']')
-                                                ->label($locale);
+                ->setBaseUrlSegment($model->baseUrlSegment($locale))
+                ->prepend($model->resolveUrl($locale, $model->baseUrlSegment($locale)) . '/')
+                ->name('url-slugs[' . $locale . ']')
+                ->label($locale);
         }
 
         return $fields;
@@ -81,14 +81,14 @@ class UrlSlugFields extends Fields
         })->sortBy('locale');
 
         foreach ($records as $record) {
-            if (!isset($fields['url-slugs.'.$record->locale])) {
+            if (!isset($fields['url-slugs.' . $record->locale])) {
                 continue;
             }
 
-            $fields['url-slugs.'.$record->locale]
+            $fields['url-slugs.' . $record->locale]
                 ->setUrlRecord($record)
                 ->setBaseUrlSegment($model->baseUrlSegment($record->locale))
-                ->prepend($model->resolveUrl($record->locale, $model->baseUrlSegment($record->locale)) .'/');
+                ->prepend($model->resolveUrl($record->locale, $model->baseUrlSegment($record->locale)) . '/');
         }
     }
 }

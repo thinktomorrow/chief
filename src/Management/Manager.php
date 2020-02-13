@@ -17,6 +17,7 @@ interface Manager extends FieldManager, AssistedManager
 {
     /**
      * Identifies this type of manager. This is the key that is set upon registration of the manager.
+     *
      * @return string
      */
     public function managerKey(): string;
@@ -58,12 +59,14 @@ interface Manager extends FieldManager, AssistedManager
 
     /**
      * Retrieve the managed model instance
+     *
      * @return ManagedModel
      */
     public function existingModel(): ManagedModel;
 
     /**
      * Assert that the model already exists (in database)
+     *
      * @return bool
      */
     public function hasExistingModel(): bool;
@@ -105,6 +108,7 @@ interface Manager extends FieldManager, AssistedManager
 
     /**
      * Action to execute deletion of the model.
+     *
      * @return mixed
      */
     public function delete();

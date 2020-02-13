@@ -27,7 +27,7 @@ class PageState extends StateMachine
     ];
 
     protected $transitions = [
-        'publish' => [
+        'publish'   => [
             'from' => [self::DRAFT],
             'to'   => self::PUBLISHED,
         ],
@@ -35,7 +35,7 @@ class PageState extends StateMachine
             'from' => [self::PUBLISHED],
             'to'   => self::DRAFT,
         ],
-        'archive' => [
+        'archive'   => [
             'from' => [self::PUBLISHED, self::DRAFT],
             'to'   => self::ARCHIVED,
         ],
@@ -43,7 +43,7 @@ class PageState extends StateMachine
             'from' => [self::ARCHIVED],
             'to'   => self::DRAFT,
         ],
-        'delete' => [
+        'delete'    => [
             'from' => [self::ARCHIVED, self::DRAFT],
             'to'   => self::DELETED,
         ],

@@ -14,6 +14,7 @@ trait ActingAsParent
         if ($this->areChildRelationsLoaded()) {
             return $this->loadedChildRelations;
         }
+
         return $this->loadedChildRelations = $this->freshChildren();
     }
 

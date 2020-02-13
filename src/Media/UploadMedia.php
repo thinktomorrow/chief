@@ -121,16 +121,16 @@ class UploadMedia
                 // New files are passed with their filename (instead of their id)
                 // For new files we will replace the filename with the id.
                 if (false !== ($key = array_search($image_name, $files_order))) {
-                    $files_order[$key] = (string) $asset->id;
+                    $files_order[$key] = (string)$asset->id;
                 }
             } else {
-                $file   = Asset::find($file);
+                $file = Asset::find($file);
                 if ($file) {
                     if ($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($file)) {
                         throw new DuplicateAssetException();
                     }
 
-                    $asset  = app(AddAsset::class)->add($model, $file, $type, $locale);
+                    $asset = app(AddAsset::class)->add($model, $file, $type, $locale);
                 }
             }
         }
@@ -143,8 +143,8 @@ class UploadMedia
     private function sluggifyFilename($filename): string
     {
         $extension = substr($filename, strrpos($filename, '.') + 1);
-        $filename  = substr($filename, 0, strrpos($filename, '.'));
-        $filename  = Str::slug($filename) . '.' . $extension;
+        $filename = substr($filename, 0, strrpos($filename, '.'));
+        $filename = Str::slug($filename) . '.' . $extension;
 
         return $filename;
     }
@@ -177,7 +177,7 @@ class UploadMedia
             foreach ($files as $locale => $_files) {
                 foreach ($_files as $action => $file) {
                     if (!in_array($action, $actions)) {
-                        throw new \InvalidArgumentException('A valid files entry should have a key of either ['.implode(',', $actions).']. Instead ' . $action . ' is given.');
+                        throw new \InvalidArgumentException('A valid files entry should have a key of either [' . implode(',', $actions) . ']. Instead ' . $action . ' is given.');
                     }
                 }
             }

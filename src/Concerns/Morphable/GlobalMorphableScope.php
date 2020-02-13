@@ -23,8 +23,7 @@ class GlobalMorphableScope implements Scope
             }
 
             $builder->where('morph_key', '=', $model->morphKey());
-        }
-        /**
+        } /**
          * If query is performed on a model that has no morph key,
          * it is fine to ignore the morph scope altogether.
          */

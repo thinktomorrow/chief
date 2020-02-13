@@ -20,7 +20,7 @@ if (!function_exists('chief_cached_asset')) {
         $manifestPath = '/chief-assets/back';
 
         // Manifest expects each entry to start with a leading slash - we make sure to deduplicate the manifest path.
-        $entry = str_replace($manifestPath, '', '/'.ltrim($filepath, '/'));
+        $entry = str_replace($manifestPath, '', '/' . ltrim($filepath, '/'));
 
         try {
             // Paths should be given relative to the manifestpath so make sure to remove the basepath
@@ -28,7 +28,7 @@ if (!function_exists('chief_cached_asset')) {
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error($e);
 
-            return $manifestPath.$entry;
+            return $manifestPath . $entry;
         }
     }
 }
@@ -74,7 +74,7 @@ if (!function_exists('is_array_empty')) {
         $empty = true;
 
         foreach ($values as $value) {
-            if (! $value || !trim($value)) {
+            if (!$value || !trim($value)) {
                 continue;
             }
             $empty = false;
@@ -84,7 +84,7 @@ if (!function_exists('is_array_empty')) {
     }
 }
 
-if (! function_exists('contract')) {
+if (!function_exists('contract')) {
     function contract($instance, $contract)
     {
         return $instance instanceof $contract;
@@ -113,6 +113,7 @@ if (!function_exists('teaser')) {
             $text = cleanupHTML($text, $clean);
         }
         $teaser = substr($text, 0, $max);
+
         return strlen($text) <= $max ? $teaser : $teaser . $ending;
     }
 }
@@ -125,8 +126,8 @@ if (!function_exists('teaser')) {
  *
  * Takes an input and cleans up a regular string from unwanted input
  *
- * @param 	string 	$value
- * @return 	string
+ * @param string $value
+ * @return    string
  */
 if (!function_exists('cleanupString')) {
     function cleanupString($value)
@@ -144,9 +145,9 @@ if (!function_exists('cleanupString')) {
  *
  * Takes an input and cleans up unwanted / malicious HTML
  *
- * @param 	string 	$value
- * @param 	string 	$whitelist - if false no tagstripping will occur - other than HTMLPurifier
- * @return 	string
+ * @param string $value
+ * @param string $whitelist - if false no tagstripping will occur - other than HTMLPurifier
+ * @return    string
  */
 if (!function_exists('cleanupHTML')) {
     function cleanupHTML($value, $whitelist = null)
@@ -157,7 +158,7 @@ if (!function_exists('cleanupHTML')) {
         // Strip entire blocks of malicious code
         $value = preg_replace(array(
             '@<script[^>]*?>.*?</script>@si',
-            '@onclick=[^ ].*? @si'
+            '@onclick=[^ ].*? @si',
         ), '', $value);
         // strip unwanted tags via whitelist...
         if (false !== $whitelist) {
@@ -171,7 +172,7 @@ if (!function_exists('cleanupHTML')) {
          * htmlPurifier converts characters to their encode equivalents. This is something
          * that we need to reverse after the htmlPurifier cleanup.
          */
-        $value  = str_replace('&amp;', '&', $value);
+        $value = str_replace('&amp;', '&', $value);
 
         return $value;
     }
@@ -236,7 +237,12 @@ if (!function_exists('addQueryToUrl')) {
         $parsed_url = parse_url($url);
 
         $parsed_url = array_merge(array_fill_keys([
-            'scheme', 'host', 'port', 'path', 'query', 'fragment'
+            'scheme',
+            'host',
+            'port',
+            'path',
+            'query',
+            'fragment',
         ], null), $parsed_url, $overrides);
 
         $scheme = $parsed_url['scheme'] ? $parsed_url['scheme'] . '://' : null;

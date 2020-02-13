@@ -43,7 +43,7 @@ class UniqueSlug
         $i = 1;
 
         while (!$this->isSlugUnique($slug, $entity)) {
-            $slug = $originalslug.'-'.$i;
+            $slug = $originalslug . '-' . $i;
             $i++;
         }
 

@@ -10,9 +10,9 @@ class ImageFieldMimetypesRule extends AbstractMediaFieldRule
     {
         $value = $this->normalizePayload($value);
 
-        foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            foreach($value[$type] as $file) {
-                if($file && false == $this->validateMimetypes($attribute, $file, $params)) {
+        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
+            foreach ($value[$type] as $file) {
+                if ($file && false == $this->validateMimetypes($attribute, $file, $params)) {
 
                     $this->addCustomValidationMessage($attribute, $params, $validator);
 
@@ -26,7 +26,7 @@ class ImageFieldMimetypesRule extends AbstractMediaFieldRule
 
     public function validateMimetypes($attribute, $value, $parameters)
     {
-        if($this->refersToExistingAsset($value)) {
+        if ($this->refersToExistingAsset($value)) {
             return $this->validateAssetMimetypes($this->existingAsset($value), $parameters);
         }
 
@@ -41,7 +41,7 @@ class ImageFieldMimetypesRule extends AbstractMediaFieldRule
         $mimetype = json_decode($value)->output->type;
 
         return (in_array($mimetype, $parameters) ||
-            in_array(explode('/', $mimetype)[0].'/*', $parameters));
+            in_array(explode('/', $mimetype)[0] . '/*', $parameters));
     }
 
     /**

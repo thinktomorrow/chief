@@ -91,7 +91,7 @@ class UpdateSections
     private function removeExistingSets()
     {
         foreach ($this->model->children() as $instance) {
-            if (! $instance instanceof StoredSetReference) {
+            if (!$instance instanceof StoredSetReference) {
                 continue;
             }
             $this->model->rejectChild($instance);
@@ -113,9 +113,7 @@ class UpdateSections
                     $text_module['slug'],
                     $this->model->id
                 );
-            }
-
-            // Create page specific text module
+            } // Create page specific text module
             else {
                 $module = app(CreateModule::class)->handle(
                     (new TextModule)->morphKey(),
@@ -145,7 +143,7 @@ class UpdateSections
         }
 
         foreach ($this->text_modules['replace'] as $text_module) {
-            if (! $module = FlatReferenceFactory::fromString($text_module['id'])->instance()) {
+            if (!$module = FlatReferenceFactory::fromString($text_module['id'])->instance()) {
                 continue;
             }
 
@@ -168,7 +166,7 @@ class UpdateSections
 
     private function removeTextualModule($module)
     {
-        if (! $module instanceof TextModule && ! $module instanceof PagetitleModule) {
+        if (!$module instanceof TextModule && !$module instanceof PagetitleModule) {
             throw new \Exception('Invalid request to remove non textual module');
         }
 

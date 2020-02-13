@@ -11,10 +11,11 @@ class FileFieldMaxRule extends AbstractMediaFieldRule
     {
         $value = $this->normalizePayload($value);
 
-        foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            foreach($value[$type] as $file) {
-                if($file && false === $this->validateMax($attribute, $file, $params)) {
+        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
+            foreach ($value[$type] as $file) {
+                if ($file && false === $this->validateMax($attribute, $file, $params)) {
                     $this->addCustomValidationMessage($attribute, $params, $validator);
+
                     return false;
                 }
             }
@@ -25,7 +26,7 @@ class FileFieldMaxRule extends AbstractMediaFieldRule
 
     public function validateMax($attribute, $value, $parameters)
     {
-        if($this->refersToExistingAsset($value)) {
+        if ($this->refersToExistingAsset($value)) {
             return $this->validateAssetMax($this->existingAsset($value), $parameters);
         }
 
@@ -41,7 +42,7 @@ class FileFieldMaxRule extends AbstractMediaFieldRule
      */
     protected function getSize($attribute, $value)
     {
-        if(!$value instanceof File) {
+        if (!$value instanceof File) {
             throw new \InvalidArgumentException('Value is expected to be of type ' . File::class);
         }
 

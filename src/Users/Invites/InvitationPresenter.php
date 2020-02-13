@@ -36,6 +36,6 @@ class InvitationPresenter
                 break;
         }
 
-        return '<span class="label '.$flair.'">uitnodiging '.$this->invitation->stateOf(InvitationState::KEY).'</span>';
+        return '<span class="label ' . $flair . '">uitnodiging ' . $this->invitation->stateOf(InvitationState::KEY) . '</span>';
     }
 }

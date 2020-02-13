@@ -39,22 +39,29 @@ abstract class AbstractMediaFieldHandler
     {
         $mediaRequest = new MediaRequest();
 
-        foreach($requests as $requestData){
-            foreach($requestData as $locale => $filesPerLocale) {
-                foreach($filesPerLocale as $action => $files) {
+        foreach ($requests as $requestData) {
+            foreach ($requestData as $locale => $filesPerLocale) {
+                foreach ($filesPerLocale as $action => $files) {
 
-                    if(!is_array($files) || !in_array($action, [MediaRequest::NEW, MediaRequest::REPLACE, MediaRequest::DETACH])) {
+                    if (!is_array($files) || !in_array($action, [
+                            MediaRequest::NEW,
+                            MediaRequest::REPLACE,
+                            MediaRequest::DETACH,
+                        ])) {
                         throw new \InvalidArgumentException('Malformed request data. Files are expected to be passed in a localized array.');
                     }
 
-                    foreach($files as $k => $file) {
+                    foreach ($files as $k => $file) {
 
                         // The null entries in the 'replace' request are passed explicitly - the replace array contains all existing assets (ids as keys, null as value)
-                        if(is_null($file)) continue;
+                        if (is_null($file)) {
+                            continue;
+                        }
 
                         $mediaRequest->add($action, new MediaRequestInput(
                             $file, $locale, $field->getKey(), [
-                                'index' => $k, // index key is used for replace method to indicate the current asset id
+                                'index' => $k,
+                                // index key is used for replace method to indicate the current asset id
                                 'existing_asset' => $this->refersToExistingAsset($file),
                             ]
                         ));
@@ -68,10 +75,12 @@ abstract class AbstractMediaFieldHandler
 
     protected function refersToExistingAsset($value): bool
     {
-        if(!is_string($value) && !is_int($value)) return false;
+        if (!is_string($value) && !is_int($value)) {
+            return false;
+        }
 
         // check if passed value is an ID
-        return (bool) preg_match('/^[1-9][0-9]*$/', (string) $value);
+        return (bool)preg_match('/^[1-9][0-9]*$/', (string)$value);
     }
 
     /**
@@ -98,7 +107,9 @@ abstract class AbstractMediaFieldHandler
      */
     protected function sluggifyFilename(string $filename): string
     {
-        if(false === strpos($filename, '.')) return $filename;
+        if (false === strpos($filename, '.')) {
+            return $filename;
+        }
 
         $extension = substr($filename, strrpos($filename, '.') + 1);
         $filename = substr($filename, 0, strrpos($filename, '.'));

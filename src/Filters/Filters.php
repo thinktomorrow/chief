@@ -96,7 +96,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Filter) {
+        if (!$value instanceof Filter) {
             throw new \InvalidArgumentException('Passed value must be of type ' . Filter::class);
         }
 

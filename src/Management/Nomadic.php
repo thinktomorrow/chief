@@ -8,7 +8,7 @@ trait Nomadic
 {
     public function nomadicCan($verb)
     {
-        if (in_array($verb, ['create', 'store', 'delete']) && ! auth()->guard('chief')->user()->hasRole('developer')) {
+        if (in_array($verb, ['create', 'store', 'delete']) && !auth()->guard('chief')->user()->hasRole('developer')) {
             throw NotAllowedManagerRoute::notAllowedVerb($verb, $this);
         }
 

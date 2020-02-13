@@ -7,29 +7,44 @@ use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 interface Field
 {
     public function getType(): FieldType;
+
     public function ofType(...$type): bool;
+
     public function getKey(): string;
 
     public function getColumn(): string;
+
     public function getName(string $locale = null): string;
+
     public function getValue($model = null, string $locale = null);
 
     public function getLocales(): array;
+
     public function isLocalized(): bool;
 
     public function getView(): string;
+
     public function getElementView(): string;
+
     public function getViewData(): array;
 
     public function getLabel(): ?string;
+
     public function getDescription(): ?string;
+
     public function getPrepend(?string $locale = null): ?string;
+
     public function getAppend(?string $locale = null): ?string;
+
     public function getPlaceholder(?string $locale = null): ?string;
 
     public function getValidationNames(): array;
+
     public function getValidationParameters(): ValidationParameters;
+
     public function hasValidation(): bool;
+
     public function required(): bool;
+
     public function optional(): bool;
 }

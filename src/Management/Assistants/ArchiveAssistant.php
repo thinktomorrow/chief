@@ -57,7 +57,7 @@ class ArchiveAssistant implements Assistant
     public function route($verb): ?string
     {
         $routes = [
-            'index' => route('chief.back.assistants.view', [$this->key(),'index', $this->manager->managerKey()]),
+            'index' => route('chief.back.assistants.view', [$this->key(), 'index', $this->manager->managerKey()]),
         ];
 
         if (array_key_exists($verb, $routes)) {
@@ -65,8 +65,18 @@ class ArchiveAssistant implements Assistant
         }
 
         $modelRoutes = [
-            'archive'   => route('chief.back.assistants.update', [$this->key(), 'archive', $this->manager->managerKey(), $this->manager->existingModel()->id]),
-            'unarchive' => route('chief.back.assistants.update', [$this->key(), 'unarchive', $this->manager->managerKey(), $this->manager->existingModel()->id]),
+            'archive' => route('chief.back.assistants.update', [
+                $this->key(),
+                'archive',
+                $this->manager->managerKey(),
+                $this->manager->existingModel()->id,
+            ]),
+            'unarchive' => route('chief.back.assistants.update', [
+                $this->key(),
+                'unarchive',
+                $this->manager->managerKey(),
+                $this->manager->existingModel()->id,
+            ]),
         ];
 
         return isset($modelRoutes[$verb]) ? $modelRoutes[$verb] : null;
@@ -80,10 +90,10 @@ class ArchiveAssistant implements Assistant
     private function guard($verb): Assistant
     {
         if (!$this->manager->existingModel() instanceof StatefulContract) {
-            throw new \InvalidArgumentException('ArchiveAssistant requires the model to implement the StatefulContract. ['.get_class($this->manager->existingModel()).'] given instead.');
+            throw new \InvalidArgumentException('ArchiveAssistant requires the model to implement the StatefulContract. [' . get_class($this->manager->existingModel()) . '] given instead.');
         }
 
-        if (! $this->can($verb)) {
+        if (!$this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
         }
 
@@ -94,7 +104,7 @@ class ArchiveAssistant implements Assistant
     {
         return view('chief::back.managers.archive.index', [
             'modelManager' => $this->manager,
-            'managers' => $this->findAllArchived(),
+            'managers'     => $this->findAllArchived(),
         ]);
     }
 
@@ -127,7 +137,7 @@ class ArchiveAssistant implements Assistant
             ->performedOn($this->manager->existingModel())
             ->log('archived');
 
-        return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title .' is gearchiveerd.');
+        return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title . ' is gearchiveerd.');
     }
 
     public function unarchive()
@@ -143,6 +153,6 @@ class ArchiveAssistant implements Assistant
             ->performedOn($this->manager->existingModel())
             ->log('unarchived');
 
-        return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title .' is hersteld.');
+        return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title . ' is hersteld.');
     }
 }

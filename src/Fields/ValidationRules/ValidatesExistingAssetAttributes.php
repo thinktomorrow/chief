@@ -9,10 +9,14 @@ trait ValidatesExistingAssetAttributes
 {
     protected function refersToExistingAsset($value): bool
     {
-        if(!is_string($value) && !is_int($value)) return false;
+        if (!is_string($value) && !is_int($value)) {
+            return false;
+        }
 
         // Check if id is passed first
-        if(!preg_match('/^[1-9][0-9]*$/', (string) $value)) return false;
+        if (!preg_match('/^[1-9][0-9]*$/', (string)$value)) {
+            return false;
+        }
 
         return !is_null($this->existingAsset($value));
     }
@@ -26,7 +30,7 @@ trait ValidatesExistingAssetAttributes
     {
         $filepath = $asset->media->first()->getPath();
 
-        if (! $sizeDetails = @getimagesize($filepath)) {
+        if (!$sizeDetails = @getimagesize($filepath)) {
             return false;
         }
 
@@ -52,7 +56,7 @@ trait ValidatesExistingAssetAttributes
     protected function validateAssetMimetypes(Asset $asset, $parameters)
     {
         return (in_array($asset->getMimeType(), $parameters) ||
-            in_array(explode('/', $asset->getMimeType())[0].'/*', $parameters));
+            in_array(explode('/', $asset->getMimeType())[0] . '/*', $parameters));
     }
 
     protected function validateAssetMax(Asset $asset, $parameters)

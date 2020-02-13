@@ -66,14 +66,12 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
                 continue;
             }
 
-            $method = 'get'.ucfirst($key);
+            $method = 'get' . ucfirst($key);
 
             // Reject from list if value does not match expected one
             if ($value && $value == $field->$method()) {
                 $fields[] = $field;
-            }
-
-            // Reject from list if key returns null (key not present on field)
+            } // Reject from list if key returns null (key not present on field)
             elseif (!$value && !is_null($field->$method())) {
                 $fields[] = $field;
             }
@@ -119,13 +117,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function offsetGet($offset)
     {
         return (isset($this->fields[$offset]))
-                ? $this->fields[$offset]
-                : null;
+            ? $this->fields[$offset]
+            : null;
     }
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Field) {
+        if (!$value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
         }
 

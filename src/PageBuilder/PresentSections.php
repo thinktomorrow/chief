@@ -17,18 +17,21 @@ class PresentSections
 
     /**
      * Original collection of children
+     *
      * @var array
      */
     private $children;
 
     /**
      * Resulting sets
+     *
      * @var array
      */
     private $sets;
 
     /**
      * Keep track of current pageset index key
+     *
      * @var string
      */
     private $current_index = null;
@@ -36,6 +39,7 @@ class PresentSections
     /**
      * Keep track of current pageset type. This is mainly to bundle
      * individual selected pages together.
+     *
      * @var string
      */
     private $current_type = null;
@@ -94,7 +98,7 @@ class PresentSections
     {
         // Only published pages you fool!
         // TODO: check for assistant instead of method existence
-        if (method_exists($model, 'isPublished') && ! $model->isPublished()) {
+        if (method_exists($model, 'isPublished') && !$model->isPublished()) {
             return;
         }
 
@@ -105,8 +109,7 @@ class PresentSections
         if ($this->current_type == null || $this->current_type != $key) {
             $this->current_type = $key;
             $this->current_index = $index;
-        }
-        // If current pageset index is null, let's make sure it is set to the current index
+        } // If current pageset index is null, let's make sure it is set to the current index
         elseif (is_null($this->current_index)) {
             $this->current_index = $index;
         }

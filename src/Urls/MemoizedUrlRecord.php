@@ -36,7 +36,7 @@ class MemoizedUrlRecord extends UrlRecord
             ->first();
 
         if (!$record) {
-            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for locale ['.$locale.'].');
+            throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 
         return $record;

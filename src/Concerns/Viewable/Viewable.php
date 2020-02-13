@@ -36,7 +36,7 @@ trait Viewable
 
         // If no view has been created for this model, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We consider the 'content' attribute to be a default for our copy.
-        return isset($this->content) ? (string) $this->content : '';
+        return isset($this->content) ? (string)$this->content : '';
     }
 
     public function setViewParent(ActsAsParent $parent): ViewableContract

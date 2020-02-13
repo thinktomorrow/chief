@@ -13,11 +13,11 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
     {
         // Parse request ...
         $mediaRequest = $this->mediaRequest([
-            $request->input('images.'.$field->getName(), []),
+            $request->input('images.' . $field->getName(), []),
         ], $field, $request);
 
-        foreach([MediaRequest::NEW, MediaRequest::REPLACE, MediaRequest::DETACH] as $action) {
-            foreach($mediaRequest->getByKey($action) as $input) {
+        foreach ([MediaRequest::NEW, MediaRequest::REPLACE, MediaRequest::DETACH] as $action) {
+            foreach ($mediaRequest->getByKey($action) as $input) {
                 $this->$action($model, $input);
             }
         }
@@ -27,7 +27,7 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 
     private function new(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
     {
-        if($mediaRequestInput->metadata('existing_asset')) {
+        if ($mediaRequestInput->metadata('existing_asset')) {
             return $this->newExistingAsset($model, $mediaRequestInput);
         }
 
@@ -59,7 +59,7 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 
     protected function createNewAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
     {
-        if($mediaRequestInput->metadata('existing_asset')) {
+        if ($mediaRequestInput->metadata('existing_asset')) {
             return Asset::find($mediaRequestInput->value());
         }
 

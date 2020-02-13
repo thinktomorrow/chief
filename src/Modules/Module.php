@@ -41,7 +41,8 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
     protected $translationModel = ModuleTranslation::class;
     protected $translationForeignKey = 'module_id';
     protected $translatedAttributes = [
-        'title', 'content'
+        'title',
+        'content',
     ];
 
     public $useTranslationFallback = true;
@@ -68,11 +69,12 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
             return static::$managedModelKey;
         }
 
-        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class . '.');
     }
 
     /**
      * Enlist all available managed modules for creation.
+     *
      * @return Collection of ManagedModelDetails
      */
     public static function availableForCreation(): Collection

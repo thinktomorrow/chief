@@ -86,6 +86,6 @@ class Menu
             $menu[] = sprintf('<li><a href="%s">%s</a></li>', $item->url, $item->label);
         });
 
-        return '<ul>'.implode('', $menu).'</ul>';
+        return '<ul>' . implode('', $menu) . '</ul>';
     }
 }

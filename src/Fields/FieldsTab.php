@@ -17,6 +17,7 @@ class FieldsTab
 
     /**
      * array of fieldKeys of the fields which are accepted in this tab
+     *
      * @var array
      */
     private $fieldKeys;
@@ -66,6 +67,7 @@ class FieldsTab
 
     /**
      * Optional custom view to display this tab and its fields
+     *
      * @return string
      */
     public function view(): ?string

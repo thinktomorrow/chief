@@ -19,7 +19,7 @@ class FieldValidator
 
     public function handle(Fields $fields, array $payload)
     {
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             if ($field->hasValidation()) {
                 $this->createValidator($field, $payload)->validate();
             }
@@ -41,16 +41,18 @@ class FieldValidator
      */
     private function ruleMatrix(array $keys, array $values): array
     {
-        if(is_string(key($values))) {
+        if (is_string(key($values))) {
             return $values;
         }
 
-        return array_fill_keys($keys , $values);
+        return array_fill_keys($keys, $values);
     }
 
     private function matrix(array $keys, array $values): array
     {
-        if(empty($values)) return [];
+        if (empty($values)) {
+            return [];
+        }
 
         return array_fill_keys($keys, reset($values));
     }

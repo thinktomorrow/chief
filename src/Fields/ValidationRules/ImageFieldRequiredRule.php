@@ -10,8 +10,8 @@ class ImageFieldRequiredRule extends AbstractMediaFieldRule
     {
         $value = $this->normalizePayloadIncludingExistingMedia($value);
 
-        foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            if(is_array($value[$type]) && !empty($value[$type])) {
+        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
+            if (is_array($value[$type]) && !empty($value[$type])) {
                 return true;
             }
         }
@@ -20,7 +20,7 @@ class ImageFieldRequiredRule extends AbstractMediaFieldRule
             'imagefield_required' => 'De :attribute is verplicht.',
         ]);
 
-        if(!isset($validator->customAttributes[$attribute])) {
+        if (!isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

@@ -62,7 +62,7 @@ class SettingFieldsManager implements FieldManager
         foreach ($this->fields() as $key => $field) {
             if (!$setting = Setting::where('key', $key)->first()) {
                 Setting::create([
-                    'key' => $key,
+                    'key'   => $key,
                     'value' => $request->get($key, ''),
                 ]);
 

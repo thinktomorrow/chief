@@ -48,7 +48,7 @@ class FieldType
     public function equalsAny(array $types): bool
     {
         foreach ($types as $type) {
-            if ($this->equals( FieldType::fromString($type) )) {
+            if ($this->equals(FieldType::fromString($type))) {
                 return true;
             }
         }
@@ -58,7 +58,7 @@ class FieldType
 
     public function equals($type): bool
     {
-        return ((string) $type === (string) $this->type && static::class === get_class($type));
+        return ((string)$type === (string)$this->type && static::class === get_class($type));
     }
 
     public function __toString()

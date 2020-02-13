@@ -42,7 +42,7 @@ class UrlSlugField extends InputField implements Field
     {
         return $this->fullUrl
             ? $this->fullUrl
-            : $this->prepend.$this->getValue();
+            : $this->prepend . $this->getValue();
     }
 
     public function setFullUrl(string $fullUrl)
@@ -85,16 +85,16 @@ class UrlSlugField extends InputField implements Field
     public function toArray(): array
     {
         return [
-            'key' => $this->key,
-            'prepend' => $this->prepend,
-            'label' => $this->label,
-            'placeholder' => $this->placeholder,
-            'description' => $this->description,
-            'value' => $this->getValue(),
+            'key'            => $this->key,
+            'prepend'        => $this->prepend,
+            'label'          => $this->label,
+            'placeholder'    => $this->placeholder,
+            'description'    => $this->description,
+            'value'          => $this->getValue(),
             'baseUrlSegment' => $this->baseUrlSegment,
-            'hint' => null, // Hint placeholder to show url hint when it already exists
-            'is_homepage' => ($this->getValue() === '/'),
-            'show' => !!$this->getValue(),// show input field or not
+            'hint'           => null, // Hint placeholder to show url hint when it already exists
+            'is_homepage'    => ($this->getValue() === '/'),
+            'show'           => !!$this->getValue(),// show input field or not
         ];
     }
 }

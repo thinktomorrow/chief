@@ -61,7 +61,7 @@ class ValidationParameters
      */
     private static function normalizeToArray($values): array
     {
-        if(is_string($values)){
+        if (is_string($values)) {
             $values = explode('|', $values);
         }
 

@@ -82,6 +82,7 @@ class Managers
                 'group' => $item->details()->plural,
             ];
         })->toArray();
+
         // We remove the group key as we need to have non-assoc array for the multiselect options.
         return collect(array_values($managers));
     }
@@ -108,7 +109,7 @@ class Managers
 
     public function anyRegisteredByTag($tag)
     {
-        return ! empty($this->register->filterByTag($tag)->all());
+        return !empty($this->register->filterByTag($tag)->all());
     }
 
     /**

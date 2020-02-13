@@ -16,7 +16,7 @@ class InviteUser
         try {
             DB::beginTransaction();
 
-            $invitation = Invitation::make((string) $invitee->id, (string) $inviter->id);
+            $invitation = Invitation::make((string)$invitee->id, (string)$inviter->id);
 
             InvitationState::make($invitation)->apply('invite');
 

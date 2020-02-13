@@ -27,11 +27,11 @@ class FieldName
     {
         $name = $this->name;
 
-        if($locale) {
+        if ($locale) {
             $name = $this->getLocalized($name, $locale);
         }
 
-        if($this->withBrackets) {
+        if ($this->withBrackets) {
             $name = $this->replaceDotsByBrackets($name);
         }
 
@@ -56,7 +56,7 @@ class FieldName
 
     private function getLocalized(string $name, string $locale)
     {
-        if(isset($this->localizedFormat)) {
+        if (isset($this->localizedFormat)) {
             $name = str_replace(':name', $name, $this->localizedFormat);
         }
 
@@ -75,7 +75,9 @@ class FieldName
 
     private function replaceDotsByBrackets(string $value): string
     {
-        if(false === strpos($value, '.')) return $value;
+        if (false === strpos($value, '.')) {
+            return $value;
+        }
 
         $value = str_replace('.', '][', $value) . ']';
 

@@ -6,6 +6,7 @@ use InvalidArgumentException;
 
 /**
  * Trait Translatable
+ *
  * @author Ben Cavens
  *
  * Allows the entity to contain multiple translations
@@ -105,8 +106,8 @@ trait Translatable
     }
 
     /**
-     * @deprecated use availableLocales instead
      * @return \Illuminate\Config\Repository|mixed
+     * @deprecated use availableLocales instead
      */
     public static function getAvailableLocales()
     {
@@ -237,6 +238,7 @@ trait Translatable
             $this->persistTranslation($entity, $keys, $translation, $available_locale);
         }
     }
+
     /**
      * Check if certain locale input submission is left empty
      *
@@ -255,8 +257,10 @@ trait Translatable
                 $is_completely_empty = false;
             }
         }
+
         return $is_completely_empty;
     }
+
     /**
      * @param TranslatableContract $entity
      * @param array $keys

@@ -25,6 +25,7 @@ class UpdateModule
             app(UploadMedia::class)->fromUploadComponent($module, $files, $files_order);
 
             DB::commit();
+
             return $module->fresh();
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -41,7 +42,7 @@ class UpdateModule
         }
 
         $this->saveTranslations($translations, $module, array_merge([
-            'title'
+            'title',
         ], $translatableColumns));
     }
 }

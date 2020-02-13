@@ -155,9 +155,9 @@ abstract class AbstractManager
     public function route($verb): ?string
     {
         $routes = [
-            'index'   => route('chief.back.managers.index', [$this->registration->key()]),
-            'create'  => route('chief.back.managers.create', [$this->registration->key()]),
-            'store'   => route('chief.back.managers.store', [$this->registration->key()]),
+            'index'  => route('chief.back.managers.index', [$this->registration->key()]),
+            'create' => route('chief.back.managers.create', [$this->registration->key()]),
+            'store'  => route('chief.back.managers.store', [$this->registration->key()]),
         ];
 
         if (array_key_exists($verb, $routes)) {
@@ -166,10 +166,13 @@ abstract class AbstractManager
 
         //These routes expect the model to be persisted in the database
         $modelRoutes = [
-            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
-            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
-            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
-            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
+            'edit'   => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
+            'update' => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
+            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
+            'upload' => route('chief.back.managers.media.upload', [
+                $this->registration->key(),
+                $this->existingModel()->id,
+            ]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -189,7 +192,7 @@ abstract class AbstractManager
 
     public function guard($verb): Manager
     {
-        if (! $this->can($verb)) {
+        if (!$this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this);
         }
 
@@ -212,7 +215,7 @@ abstract class AbstractManager
         $fields = $this->fields();
 
         foreach ($this->assistantsAsClassNames() as $assistantClass) {
-            if (! method_exists($assistantClass, 'fields')) {
+            if (!method_exists($assistantClass, 'fields')) {
                 continue;
             }
 
@@ -297,7 +300,7 @@ abstract class AbstractManager
         $class = static::class;
 
         $methods = [
-            'can'
+            'can',
         ];
 
         foreach ($methods as $baseMethod) {
@@ -306,7 +309,7 @@ abstract class AbstractManager
             foreach (class_uses_recursive($class) as $trait) {
                 $method = class_basename($trait) . ucfirst($baseMethod);
 
-                if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
+                if (method_exists($class, $method) && !in_array($method, static::$bootedTraitMethods[$baseMethod])) {
                     static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
                 }
             }

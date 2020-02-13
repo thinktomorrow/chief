@@ -23,15 +23,15 @@ trait TranslatableController
             }
 
             foreach ($rules as $key => $rule) {
-                $translationrules['trans.' . $locale . '.'.$key] = $rule;
+                $translationrules['trans.' . $locale . '.' . $key] = $rule;
             }
 
             foreach ($attributes as $key => $attribute) {
-                $translationattributes['trans.' . $locale . '.'.$key] = $attribute;
+                $translationattributes['trans.' . $locale . '.' . $key] = $attribute;
             }
 
             foreach ($messages as $key => $message) {
-                $translationmessages['trans.' . $locale . '.'.$key] = $message;
+                $translationmessages['trans.' . $locale . '.' . $key] = $message;
             }
         }
 

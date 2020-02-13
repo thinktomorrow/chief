@@ -57,15 +57,15 @@ class PageManager extends AbstractManager implements Manager
     {
         $permission = 'update-page';
 
-        if (in_array($verb, ['index','show'])) {
+        if (in_array($verb, ['index', 'show'])) {
             $permission = 'view-page';
-        } elseif (in_array($verb, ['create','store'])) {
+        } elseif (in_array($verb, ['create', 'store'])) {
             $permission = 'create-page';
         } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }
 
-        if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
+        if (!auth()->guard('chief')->user()->hasPermissionTo($permission)) {
             throw NotAllowedManagerRoute::notAllowedPermission($permission, $this);
         }
     }
@@ -84,11 +84,11 @@ class PageManager extends AbstractManager implements Manager
         return parent::fields()->add(
             $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
-                                     ->validation('required-fallback-locale|max:200', [], [
-                                         'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
-                                     ])
-                                     ->label('De titel van je '.$this->model->labelSingular ?? 'pagina')
-                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
+                ->validation('required-fallback-locale|max:200', [], [
+                    'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',
+                ])
+                ->label('De titel van je ' . $this->model->labelSingular ?? 'pagina')
+                ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),
@@ -111,7 +111,7 @@ class PageManager extends AbstractManager implements Manager
     public static function filters(): Filters
     {
         return new Filters([
-            PublishedFilter::class
+            PublishedFilter::class,
         ]);
     }
 
@@ -136,7 +136,7 @@ class PageManager extends AbstractManager implements Manager
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('algemeen'),
             new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
-                'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
+                'redirects' => UrlSlugFields::redirectsFromModel($this->model),
             ]),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ];
@@ -164,7 +164,7 @@ class PageManager extends AbstractManager implements Manager
     public function saveFields(Request $request)
     {
         // Store the morph_key upon creation
-        if ($this->model instanceof MorphableContract && ! $this->model->morph_key) {
+        if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 

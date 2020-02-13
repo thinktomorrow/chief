@@ -19,7 +19,7 @@ class Memoize
     {
         $cachableParameters = $this->convertToCachableParameters($parameters);
 
-        $cachekey = $this->baseKey.':'.md5(implode('', $cachableParameters));
+        $cachekey = $this->baseKey . ':' . md5(implode('', $cachableParameters));
 
         if (isset(static::$cache[$cachekey])) {
             return static::$cache[$cachekey];

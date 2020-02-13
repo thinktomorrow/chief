@@ -27,8 +27,8 @@ class UniqueUrlSlugRule implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  bool $slugs
+     * @param string $attribute
+     * @param bool $slugs
      * @return bool
      */
     public function passes($attribute, $slugs)
@@ -60,6 +60,6 @@ class UniqueUrlSlugRule implements Rule
      */
     public function message()
     {
-        return 'De \''.$this->failedDetails['slug'].'\' link wordt in het '.$this->failedDetails['locale'].' al door een andere pagina gebruikt.';
+        return 'De \'' . $this->failedDetails['slug'] . '\' link wordt in het ' . $this->failedDetails['locale'] . ' al door een andere pagina gebruikt.';
     }
 }

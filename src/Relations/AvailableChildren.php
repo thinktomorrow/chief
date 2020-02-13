@@ -53,7 +53,7 @@ class AvailableChildren
     {
         // We want a regular collection, not the database one so we inject it into a regular one.
         $stored_sets = collect(StoredSetReference::all()->keyBy('key')->all());
-        $all_sets    = SetReference::all();
+        $all_sets = SetReference::all();
 
         return $all_sets
             ->merge($stored_sets);
@@ -87,6 +87,7 @@ class AvailableChildren
             // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
             $collection = collect(array_merge($collection->all(), (new $type())->all()->all()));
         }
+
         // Filter out our parent
         return $this->collection = $collection->reject(function ($item) {
             if ($item instanceof $this->parent) {

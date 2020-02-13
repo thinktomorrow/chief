@@ -10,9 +10,9 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
     {
         $value = $this->normalizePayload($value);
 
-        foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            foreach($value[$type] as $file) {
-                if($file && false === $this->validateMax($attribute, $file, $params)) {
+        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
+            foreach ($value[$type] as $file) {
+                if ($file && false === $this->validateMax($attribute, $file, $params)) {
 
                     $this->addCustomValidationMessage($attribute, $params, $validator);
 
@@ -26,7 +26,7 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
 
     public function validateMax($attribute, $value, $parameters)
     {
-        if($this->refersToExistingAsset($value)) {
+        if ($this->refersToExistingAsset($value)) {
             return $this->validateAssetMax($this->existingAsset($value), $parameters);
         }
 

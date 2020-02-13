@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\HealthMonitor\Checks;
 
@@ -16,7 +16,7 @@ class HomepageSetCheck implements HealthCheck
 
     public function message(): string
     {
-        return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in hier: <a href="'. route('chief.back.settings.edit') .'" class="text-secondary-800 underline hover:text-white">Settings</a>';
+        return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in hier: <a href="' . route('chief.back.settings.edit') . '" class="text-secondary-800 underline hover:text-white">Settings</a>';
     }
 
     public function notifiers(): array

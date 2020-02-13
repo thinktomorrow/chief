@@ -15,7 +15,7 @@ class FlatReferenceFactory
         $instance = app($className);
         $instance->{$instance->getKeyName()} = $id;
 
-        if (! method_exists($instance, 'flatReference')) {
+        if (!method_exists($instance, 'flatReference')) {
             throw new \InvalidArgumentException('Instance created from model reference [' . $reference . '] was expected to have a method of flatReference() but is has not.');
         }
 

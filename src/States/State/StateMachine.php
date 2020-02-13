@@ -13,6 +13,7 @@ abstract class StateMachine
 
     /**
      * Transitions from one state to other(s)
+     *
      * @var array
      */
     protected $transitions = [];

@@ -23,6 +23,7 @@ class Homepage
         if ($id = chiefSetting(Setting::HOMEPAGE, $locale)) {
             return FlatReferenceFactory::fromString($id)->instance()->url($locale);
         }
+
         return '';
     }
 }

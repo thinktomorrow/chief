@@ -62,7 +62,7 @@ class Details implements Arrayable
 
     public function __toString()
     {
-        return (string) $this->get('key');
+        return (string)$this->get('key');
     }
 
     /**

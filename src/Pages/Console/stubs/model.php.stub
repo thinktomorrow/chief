@@ -5,6 +5,7 @@ namespace ##NAMESPACE##;
 ##IMPORTS##
 class ##CLASSNAME## extends Page
 {
+
     ##TRAITS##
     ##PROPERTIES##
 }

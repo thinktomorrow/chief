@@ -16,16 +16,17 @@ class CreateMenu
     {
         try {
             DB::beginTransaction();
-            $menu                  = MenuItem::create();
-            $menu->type            = $request->get('type', null);
-            $menu->parent_id       = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
-            $menu->page_id         = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
-            $menu->menu_type       = $request->get('menu_type', 'main');
+            $menu = MenuItem::create();
+            $menu->type = $request->get('type', null);
+            $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
+            $menu->page_id = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
+            $menu->menu_type = $request->get('menu_type', 'main');
             $menu->collection_type = $request->get('collection_type');
             $menu->save();
 
             $this->saveTranslations($request->get('trans'), $menu, [
-                'label', 'url'
+                'label',
+                'url',
             ]);
 
             DB::commit();

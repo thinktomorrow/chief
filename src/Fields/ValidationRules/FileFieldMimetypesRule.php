@@ -10,10 +10,11 @@ class FileFieldMimetypesRule extends AbstractMediaFieldRule
     {
         $value = $this->normalizePayload($value);
 
-        foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            foreach($value[$type] as $file) {
-                if($file && false === $this->validateMimetypes($attribute, $file, $params)) {
+        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
+            foreach ($value[$type] as $file) {
+                if ($file && false === $this->validateMimetypes($attribute, $file, $params)) {
                     $this->addCustomValidationMessage($attribute, $params, $validator);
+
                     return false;
                 }
             }
@@ -24,7 +25,7 @@ class FileFieldMimetypesRule extends AbstractMediaFieldRule
 
     public function validateMimetypes($attribute, $value, $parameters)
     {
-        if($this->refersToExistingAsset($value)) {
+        if ($this->refersToExistingAsset($value)) {
             return $this->validateAssetMimetypes($this->existingAsset($value), $parameters);
         }
 
