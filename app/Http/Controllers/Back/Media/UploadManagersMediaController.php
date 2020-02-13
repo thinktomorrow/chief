@@ -39,7 +39,7 @@ class UploadManagersMediaController extends Controller
             return response()->json([
                 'error'    => true,
                 'messages' => 'Geen afbeelding opgeladen.',
-            ], 500);
+            ], 200);
         }
 
         $responseContent = [];
@@ -49,7 +49,7 @@ class UploadManagersMediaController extends Controller
                 return response()->json([
                     'error'    => true,
                     'messages' => 'Afbeelding kan niet worden opgeladen.',
-                ], 500);
+                ], 200);
             }
 
             app(AddAsset::class)->add($model, $asset, MediaType::CONTENT, $request->input('locale', app()->getLocale()));
