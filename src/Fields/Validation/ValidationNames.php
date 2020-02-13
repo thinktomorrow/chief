@@ -158,10 +158,10 @@ class ValidationNames
         foreach($filteredKeys as $i => $key) {
             if (!Str::startsWith($key, ['images.', 'files.'])) continue;
 
-            $payload = Arr::get($this->payload, $key);
+            $payload = Arr::get($this->payload, $key, '_notfound_');
 
             // If the payload is empty and this is not the entry for the required locale
-            if(!$payload && !Str::endsWith($key, '.'.$this->requiredLocale)) {
+            if($payload !== '_notfound_' && !$payload && !Str::endsWith($key, '.'.$this->requiredLocale)) {
                 unset($filteredKeys[$i]);
             }
         }

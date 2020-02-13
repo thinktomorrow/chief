@@ -6,7 +6,6 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
@@ -14,6 +13,8 @@ use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldManager;
 
 class ReplaceFileFieldValueTest extends TestCase
 {
+    const FILEFIELD_KEY = 'fake-file';
+
     use PageFormParams;
 
     private $page;
@@ -27,49 +28,49 @@ class ReplaceFileFieldValueTest extends TestCase
         app(Register::class)->register(FileFieldManager::class, Single::class);
 
         $this->page = Single::create();
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), static::FILEFIELD_KEY, 'nl');
     }
 
     /** @test */
     public function it_can_replace_localized_images()
     {
-        $existing_asset_nl = $this->page->assets(MediaType::HERO, 'nl')->first();
+        $existing_asset_nl = $this->page->assets(static::FILEFIELD_KEY, 'nl')->first();
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
-                'images' => [
-                    MediaType::HERO => [
+                'files' => [
+                    static::FILEFIELD_KEY => [
                         'nl' => [
                             'replace' => [
-                                $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                                $existing_asset_nl->id => UploadedFile::fake()->image('tt-favicon-nl.png'),
                             ]
                         ],
                         'en' => [
                             'new' => [
-                                $this->dummySlimImagePayload('tt-favicon-en.png'),
+                                UploadedFile::fake()->image('tt-favicon-en.png'),
                             ]
                         ]
                     ]
                 ]
             ]));
 
-        $this->assertEquals('tt-favicon-nl.png', $this->page->fresh()->asset(MediaType::HERO, 'nl')->filename());
-        $this->assertEquals('tt-favicon-en.png', $this->page->fresh()->asset(MediaType::HERO, 'en')->filename());
+        $this->assertEquals('tt-favicon-nl.png', $this->page->fresh()->asset(static::FILEFIELD_KEY, 'nl')->filename());
+        $this->assertEquals('tt-favicon-en.png', $this->page->fresh()->asset(static::FILEFIELD_KEY, 'en')->filename());
     }
 
     /** @test */
     public function an_asset_can_be_replaced()
     {
-        $existing_asset = $this->page->assets(MediaType::HERO)->first();
+        $existing_asset = $this->page->assets(static::FILEFIELD_KEY)->first();
 
         // Replace asset
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
-                'images' => [
-                    MediaType::HERO => [
+                'files' => [
+                    static::FILEFIELD_KEY => [
                         'nl' => [
                             'replace' => [
-                                $existing_asset->id => $this->dummySlimImagePayload(),
+                                $existing_asset->id => $this->dummyUploadedFile('tt-document.pdf'),
                             ]
                         ],
                     ]
@@ -77,24 +78,24 @@ class ReplaceFileFieldValueTest extends TestCase
             ]));
 
         // Assert replacement took place
-        $this->assertCount(1, $this->page->fresh()->assets(MediaType::HERO));
+        $this->assertCount(1, $this->page->fresh()->assets(static::FILEFIELD_KEY));
         $this->assertCount(2, Asset::all());
 
-        $this->assertStringContainsString('tt-favicon.png', $this->page->fresh()->asset(MediaType::HERO, 'nl')->filename());
+        $this->assertStringContainsString('tt-document.pdf', $this->page->fresh()->asset(static::FILEFIELD_KEY, 'nl')->filename());
     }
 
     /** @test */
     public function an_asset_can_be_replaced_alongside_invalid_values()
     {
-        $existing_asset = $this->page->assets(MediaType::HERO)->first();
+        $existing_asset = $this->page->assets(static::FILEFIELD_KEY)->first();
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
-                'images' => [
-                    MediaType::HERO => [
+                'files' => [
+                    static::FILEFIELD_KEY => [
                         'nl' => [
                             'replace' => [
-                                $existing_asset->id => $this->dummySlimImagePayload(),
+                                $existing_asset->id => UploadedFile::fake()->image('tt-favicon.png'),
                                 null => null
                             ]
                         ],
@@ -103,10 +104,10 @@ class ReplaceFileFieldValueTest extends TestCase
             ]));
 
         // Assert replacement took place
-        $this->assertCount(1, $this->page->fresh()->assets(MediaType::HERO));
+        $this->assertCount(1, $this->page->fresh()->assets(static::FILEFIELD_KEY));
         $this->assertCount(2, Asset::all());
 
-        $this->assertStringContainsString('tt-favicon.png', $this->page->fresh()->asset(MediaType::HERO, 'nl')->filename());
+        $this->assertStringContainsString('tt-favicon.png', $this->page->fresh()->asset(static::FILEFIELD_KEY, 'nl')->filename());
     }
 
 }

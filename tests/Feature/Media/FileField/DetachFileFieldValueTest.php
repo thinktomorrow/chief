@@ -6,16 +6,15 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Media\MediaType;
-use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldModuleManager;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldManager;
 
 class DetachFileFieldValueTest extends TestCase
 {
+    const FILEFIELD_KEY = 'fake-file';
+
     use PageFormParams;
 
     private $page;
@@ -28,20 +27,19 @@ class DetachFileFieldValueTest extends TestCase
 
         app(Register::class)->register(FileFieldManager::class, Single::class);
         $this->page = Single::create();
-
-        // Upload existing asset
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
     }
 
     /** @test */
     public function an_asset_can_be_removed()
     {
-        $this->assertCount(1, $this->page->assets(MediaType::HERO));
+        // Upload existing asset
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), static::FILEFIELD_KEY, 'nl');
+        $this->assertCount(1, $this->page->assets(static::FILEFIELD_KEY));
 
-        $this->detachImageRequest([
+        $this->detachFileRequest([
             'nl' => [
                 'detach' => [
-                    $this->page->assets(MediaType::HERO)->first()->id,
+                    $this->page->assets(static::FILEFIELD_KEY)->first()->id,
                 ]
             ],
         ]);
@@ -53,10 +51,13 @@ class DetachFileFieldValueTest extends TestCase
     /** @test */
     public function an_image_can_be_removed_alongside_invalid_values()
     {
-        $this->detachImageRequest([
+        // Upload existing asset
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), static::FILEFIELD_KEY, 'nl');
+
+        $this->detachFileRequest([
             'nl' => [
                 'detach' => [
-                    $this->page->assets(MediaType::HERO)->first()->id,
+                    $this->page->assets(static::FILEFIELD_KEY)->first()->id,
                     null
                 ]
             ],
@@ -69,36 +70,38 @@ class DetachFileFieldValueTest extends TestCase
     /** @test */
     public function an_asset_can_be_removed_and_uploaded()
     {
-        $this->detachImageRequest([
+        // Upload existing asset
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), static::FILEFIELD_KEY, 'nl');
+
+        $this->detachFileRequest([
             'nl' => [
                 'detach' => [
-                    $this->page->assets(MediaType::HERO)->first()->id,
+                    $this->page->assets(static::FILEFIELD_KEY)->first()->id,
                 ],
                 'new' => [
-                    $this->dummySlimImagePayload('image.jpg','image/jpeg'),
+                    UploadedFile::fake()->image('image.jpg'),
                 ]
             ],
         ]);
 
         $this->assertCount(1, $this->page->fresh()->assets());
-        $this->assertEquals('image.jpg', $this->page->refresh()->asset(MediaType::HERO, 'nl')->filename());
+        $this->assertEquals('image.jpg', $this->page->refresh()->asset(static::FILEFIELD_KEY, 'nl')->filename());
     }
 
     /** @test */
     public function it_can_remove_translatable_images()
     {
-        app(Register::class)->register(PageManager::class, Single::class);
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), 'seo_image', 'en');
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), static::FILEFIELD_KEY, 'en');
 
-        $existing_asset_en = $this->page->assets('seo_image', 'en')->first();
+        $existing_asset_en = $this->page->assets(static::FILEFIELD_KEY, 'en')->first();
 
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
-                'images' => [
-                    'seo_image' => [
+                'files' => [
+                    static::FILEFIELD_KEY => [
                         'nl' => [
                             'new' => [
-                                $this->dummySlimImagePayload('tt-favicon-nl.png'),
+                                UploadedFile::fake()->image('tt-favicon-nl.png'),
                             ]
                         ],
                         'en' => [
@@ -110,16 +113,16 @@ class DetachFileFieldValueTest extends TestCase
                 ]
             ]));
 
-        $this->assertEquals('tt-favicon-nl.png', $this->page->refresh()->asset('seo_image', 'nl')->filename());
-        $this->assertEquals('tt-favicon-nl.png', $this->page->asset('seo_image', 'en')->filename());
+        $this->assertEquals('tt-favicon-nl.png', $this->page->refresh()->asset(static::FILEFIELD_KEY, 'nl')->filename());
+        $this->assertEquals('tt-favicon-nl.png', $this->page->asset(static::FILEFIELD_KEY, 'en')->filename());
     }
 
-    private function detachImageRequest($payload)
+    private function detachFileRequest($payload)
     {
         return $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), [
-                'images' => [
-                    MediaType::HERO => $payload,
+                'files' => [
+                    static::FILEFIELD_KEY => $payload,
                 ],
             ]);
     }

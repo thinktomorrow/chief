@@ -8,7 +8,7 @@ class FileFieldRequiredRule extends AbstractMediaFieldRule
 {
     public function validate($attribute, $value, $params, $validator): bool
     {
-        $value = $this->normalizePayload($value);
+        $value = $this->normalizePayloadIncludingExistingMedia($value);
 
         foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
             if(is_array($value[$type]) && !empty($value[$type])) {

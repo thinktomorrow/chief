@@ -2,11 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Media\ImageField;
 
+use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Management\Register;
 use Illuminate\Foundation\Testing\TestResponse;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldManagerWithValidation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 
@@ -27,9 +29,9 @@ class ValidateImageFieldValueTest extends TestCase
     }
 
     /** @test */
-    function it_validates_a_required_file()
+    public function it_validates_a_required_file()
     {
-        $response = $this->newImageRequest(null);
+        $response = $this->newImageRequest([null]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
 
@@ -37,9 +39,27 @@ class ValidateImageFieldValueTest extends TestCase
     }
 
     /** @test */
-    function it_can_validate_the_dimensions()
+    public function it_passed_file_validation_when_there_are_already_images_for_model_present()
     {
-        $response = $this->newImageRequest($this->dummySlimImagePayload('image.png', 'image/png', 50, 50));
+        $response = $this->newImageRequest([], [
+            2 => null, // indicates there is already an asset on this model attached.
+        ]);
+
+        $response->assertSessionHasNoErrors();
+    }
+
+    /** @test */
+    public function it_should_not_validate_already_present_images()
+    {
+        $response = $this->newImageRequest([], [2 => null]);
+
+        $response->assertSessionHasNoErrors();
+    }
+
+    /** @test */
+    public function it_can_validate_the_dimensions()
+    {
+        $response = $this->newImageRequest([$this->dummySlimImagePayload('image.png', 'image/png', 50, 50)]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
         $this->assertStringContainsString('De images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
@@ -47,10 +67,25 @@ class ValidateImageFieldValueTest extends TestCase
         $this->assertCount(0, $this->page->assets(MediaType::HERO));
     }
 
+    public function it_can_validate_the_dimensions_on_a_replacing_image()
+    {
+        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('original-image.png'), static::FILEFIELD_KEY, 'nl');
+        $existing_asset_nl = $this->page->assets(static::FILEFIELD_KEY, 'nl')->first();
+
+        $response = $this->newImageRequest([], [
+            $existing_asset_nl->id => $this->dummySlimImagePayload('replacing-image.png', 'image/png', 50, 50)
+        ]);
+
+        $response->assertSessionHasErrors('images.images-hero.nl');
+        $this->assertStringContainsString('De images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
+
+        $this->assertEquals('original-image.png', $this->page->asset(MediaType::HERO)->filename());
+    }
+
     /** @test */
     public function it_can_validate_a_max_filesize()
     {
-        $response = $this->newImageRequest($this->dummyLargeSlimImagePayload('image.png', 'image/png', 1000, 800));
+        $response = $this->newImageRequest([$this->dummyLargeSlimImagePayload('image.png', 'image/png', 1000, 800)]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
         $this->assertStringContainsString('De images-hero is te groot en dient kleiner te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
@@ -61,7 +96,7 @@ class ValidateImageFieldValueTest extends TestCase
     /** @test */
     public function it_can_validate_a_min_filesize()
     {
-        $response = $this->newImageRequest($this->dummySmallSlimImagePayload('image.png', 'image/png', 100, 100, 900));
+        $response = $this->newImageRequest([$this->dummySmallSlimImagePayload('image.png', 'image/png', 100, 100, 900)]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
         $this->assertStringContainsString('De images-hero is te klein en dient groter te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
@@ -72,7 +107,7 @@ class ValidateImageFieldValueTest extends TestCase
     /** @test */
     public function it_can_validate_a_mimetype()
     {
-        $response = $this->newImageRequest($this->dummySlimImagePayload('image.jpg', 'image/jpg', 150, 150));
+        $response = $this->newImageRequest([$this->dummySlimImagePayload('image.jpg', 'image/jpg', 150, 150)]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
         $this->assertStringContainsString('De images-hero is niet het juiste bestandstype', session()->get('errors')->first('images.images-hero.nl'));
@@ -86,17 +121,15 @@ class ValidateImageFieldValueTest extends TestCase
 
     }
 
-    private function newImageRequest($file): TestResponse
+    private function newImageRequest($new, $replace = []): TestResponse
     {
         return $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
                 'images' => [
                     MediaType::HERO => [
                         'nl' => [
-                            'new' => [
-                                $file,
-                            ],
-                            'replace' => [],
+                            'new' => $new,
+                            'replace' => $replace,
                         ],
                     ]
                 ]

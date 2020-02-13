@@ -3,18 +3,14 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldModuleManager;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldManager;
 
 class DetachImageFieldValueTest extends TestCase

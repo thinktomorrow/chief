@@ -12,24 +12,16 @@ class ImageFieldMinRule extends AbstractMediaFieldRule
 
         foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
             foreach($value[$type] as $file) {
-                if($file && false !== $this->validateMin($attribute, $file, $params)) {
-                    return true;
+                if($file && false === $this->validateMin($attribute, $file, $params)) {
+
+                    $this->addCustomValidationMessage($attribute, $params, $validator);
+
+                    return false;
                 }
             }
         }
 
-        $validator->setCustomMessages([
-            'imagefield_min' => 'De :attribute is te klein en dient groter te zijn dan ' . implode(',',$params) .'Kb.',
-        ]);
-
-        if(!isset($validator->customAttributes[$attribute])) {
-            $validator->addCustomAttributes([
-                $attribute => 'afbeelding',
-            ]);
-        }
-
-
-        return false;
+        return true;
     }
 
     public function validateMin($attribute, $value, $parameters)
@@ -57,5 +49,23 @@ class ImageFieldMinRule extends AbstractMediaFieldRule
         // size in Kilobytes (slim component already provides a size that, due to the way slim stored this,
         //  we need reduce to kilobytes by dividing 1000 instead of the expected 1024.
         return $inputData->size / 1000;
+    }
+
+    /**
+     * @param $attribute
+     * @param $params
+     * @param $validator
+     */
+    private function addCustomValidationMessage($attribute, $params, $validator): void
+    {
+        $validator->setCustomMessages([
+            'imagefield_min' => 'De :attribute is te klein en dient groter te zijn dan ' . implode(',', $params) . 'Kb.',
+        ]);
+
+        if (!isset($validator->customAttributes[$attribute])) {
+            $validator->addCustomAttributes([
+                $attribute => 'afbeelding',
+            ]);
+        }
     }
 }

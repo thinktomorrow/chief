@@ -109,4 +109,25 @@ class ReplaceImageFieldValueTest extends TestCase
         $this->assertStringContainsString('tt-favicon.png', $this->page->fresh()->asset(MediaType::HERO, 'nl')->filename());
     }
 
+    /** @test */
+    public function an_replacing_asset_that_is_already_attached_is_passed_with_a_null_value()
+    {
+        $existing_asset = $this->page->assets(MediaType::HERO)->first();
+
+        $this->asAdmin()
+            ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
+                'images' => [
+                    MediaType::HERO => [
+                        'nl' => [
+                            'replace' => [
+                                $existing_asset->id => null
+                            ]
+                        ],
+                    ]
+                ]
+            ]));
+
+        $this->assertCount(1, $this->page->fresh()->assets(MediaType::HERO));
+    }
+
 }

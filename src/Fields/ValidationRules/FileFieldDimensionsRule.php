@@ -12,24 +12,14 @@ class FileFieldDimensionsRule extends AbstractMediaFieldRule
 
         foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
             foreach($value[$type] as $file) {
-                if($file && false !== $this->validateDimensions($attribute, $file, $params)) {
-                    return true;
+                if($file && false === $this->validateDimensions($attribute, $file, $params)) {
+                    $this->addCustomValidationMessage($attribute, $params, $validator);
+                    return false;
                 }
             }
         }
 
-        $validator->setCustomMessages([
-            'filefield_dimensions' => 'De :attribute heeft niet de juiste afmetingen: ' . implode(', ', $params),
-        ]);
-
-        if(!isset($validator->customAttributes[$attribute])) {
-            $validator->addCustomAttributes([
-                $attribute => 'afbeelding',
-            ]);
-        }
-
-
-        return false;
+        return true;
     }
 
     public function validateDimensions($attribute, $value, $parameters)
@@ -39,5 +29,23 @@ class FileFieldDimensionsRule extends AbstractMediaFieldRule
         }
 
         return parent::validateDimensions($attribute, $value, $parameters);
+    }
+
+    /**
+     * @param $attribute
+     * @param $params
+     * @param $validator
+     */
+    private function addCustomValidationMessage($attribute, $params, $validator): void
+    {
+        $validator->setCustomMessages([
+            'filefield_dimensions' => 'De :attribute heeft niet de juiste afmetingen: ' . implode(', ', $params),
+        ]);
+
+        if (!isset($validator->customAttributes[$attribute])) {
+            $validator->addCustomAttributes([
+                $attribute => 'afbeelding',
+            ]);
+        }
     }
 }

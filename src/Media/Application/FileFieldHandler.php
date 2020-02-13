@@ -45,11 +45,13 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 
     private function replace(HasAsset $model, MediaRequestInput $mediaRequest): Asset
     {
-        $asset = $this->add($model, $mediaRequest);
+        $asset = $this->createNewAsset($model, $mediaRequest);
 
         $currentAssetId = $mediaRequest->metadata('index');
 
         $this->replaceAsset->handle($model, $currentAssetId, $asset->id, $mediaRequest->type(), $mediaRequest->locale());
+
+        return $asset;
     }
 
     private function detach(HasAsset $model, MediaRequestInput $mediaRequest)
@@ -57,5 +59,19 @@ class FileFieldHandler extends AbstractMediaFieldHandler
         $assetId = $mediaRequest->value();
 
         $this->detachAsset->detach($model, $assetId, $mediaRequest->type(), $mediaRequest->locale());
+    }
+
+    protected function createNewAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
+    {
+        if($mediaRequestInput->metadata('existing_asset')) {
+            return Asset::find($mediaRequestInput->value());
+        }
+
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $mediaRequestInput->value();
+
+        $filename = $uploadedFile->getClientOriginalName();
+
+        return $this->assetUploader->upload($uploadedFile, $filename);
     }
 }

@@ -9,8 +9,8 @@ trait ValidatesExistingAssetAttributes
 {
     protected function refersToExistingAsset($value): bool
     {
-        // Faster check to see if there is an asset id passed or not.
-        if(is_string($value) && $this->isValidJson($value)) return false;
+        // Check if id is passed first
+        if(!preg_match('/^[1-9][0-9]*$/', $value)) return false;
 
         return !is_null($this->existingAsset($value));
     }

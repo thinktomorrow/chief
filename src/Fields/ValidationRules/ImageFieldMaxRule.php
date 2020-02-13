@@ -12,24 +12,16 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
 
         foreach([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
             foreach($value[$type] as $file) {
-                if($file && false !== $this->validateMax($attribute, $file, $params)) {
-                    return true;
+                if($file && false === $this->validateMax($attribute, $file, $params)) {
+
+                    $this->addCustomValidationMessage($attribute, $params, $validator);
+
+                    return false;
                 }
             }
         }
 
-        $validator->setCustomMessages([
-            'imagefield_max' => 'De :attribute is te groot en dient kleiner te zijn dan ' . implode(',',$params) .'Kb.',
-        ]);
-
-        if(!isset($validator->customAttributes[$attribute])) {
-            $validator->addCustomAttributes([
-                $attribute => 'afbeelding',
-            ]);
-        }
-
-
-        return false;
+        return true;
     }
 
     public function validateMax($attribute, $value, $parameters)
@@ -60,5 +52,23 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
     private function getBase64ImageSize($value)
     {
         return strlen(base64_decode($value));
+    }
+
+    /**
+     * @param $attribute
+     * @param $params
+     * @param $validator
+     */
+    private function addCustomValidationMessage($attribute, $params, $validator): void
+    {
+        $validator->setCustomMessages([
+            'imagefield_max' => 'De :attribute is te groot en dient kleiner te zijn dan ' . implode(',', $params) . 'Kb.',
+        ]);
+
+        if (!isset($validator->customAttributes[$attribute])) {
+            $validator->addCustomAttributes([
+                $attribute => 'afbeelding',
+            ]);
+        }
     }
 }

@@ -12,29 +12,22 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
 
         foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
             foreach ($value[$type] as $file) {
-                if ($file && false !== $this->validateDimensions($attribute, $file, $params)) {
-                    return true;
+
+                if ($file && false === $this->validateDimensions($attribute, $file, $params)) {
+
+                    $this->addCustomValidationMessage($attribute, $params, $validator);
+
+                    return false;
                 }
             }
         }
 
-        $validator->setCustomMessages([
-            'imagefield_dimensions' => 'De :attribute heeft niet de juiste afmetingen: ' . implode(', ', $this->humanReadableParams($params)),
-        ]);
-
-        if (!isset($validator->customAttributes[$attribute])) {
-            $validator->addCustomAttributes([
-                $attribute => 'afbeelding',
-            ]);
-        }
-
-
-        return false;
+        return true;
     }
 
     public function validateDimensions($attribute, $value, $parameters)
     {
-        if($this->refersToExistingAsset($value)) {
+        if ($this->refersToExistingAsset($value)) {
             return $this->validateAssetDimensions($this->existingAsset($value), $parameters);
         }
 
@@ -80,6 +73,24 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
         }
 
         return $humanReadableParams;
+    }
+
+    /**
+     * @param $attribute
+     * @param $params
+     * @param $validator
+     */
+    private function addCustomValidationMessage($attribute, $params, $validator): void
+    {
+        $validator->setCustomMessages([
+            'imagefield_dimensions' => 'De :attribute heeft niet de juiste afmetingen: ' . implode(', ', $this->humanReadableParams($params)),
+        ]);
+
+        if (!isset($validator->customAttributes[$attribute])) {
+            $validator->addCustomAttributes([
+                $attribute => 'afbeelding',
+            ]);
+        }
     }
 
 

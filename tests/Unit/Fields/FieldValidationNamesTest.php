@@ -107,7 +107,7 @@ class FieldValidationNamesTest extends TestCase
     {
         $instance = ValidationNames::fromFormat('trans.:locale.:key')
             ->replace('key', ['foo','bar'])
-            ->replace('locale', ['nl','en','fr'])
+            ->replace('locale', ['en','fr'])
             ->requiredLocale('nl');
 
         $this->assertEquals([

@@ -48,6 +48,10 @@ abstract class AbstractMediaFieldHandler
                     }
 
                     foreach($files as $k => $file) {
+
+                        // The null entries in the 'replace' request are passed explicitly - the replace array contains all existing assets (ids as keys, null as value)
+                        if(is_null($file)) continue;
+
                         $mediaRequest->add($action, new MediaRequestInput(
                             $file, $locale, $field->getKey(), [
                                 'index' => $k, // index key is used for replace method to indicate the current asset id
@@ -64,7 +68,8 @@ abstract class AbstractMediaFieldHandler
 
     protected function refersToExistingAsset($value): bool
     {
-        return is_int($value);
+        // check if passed value is an ID
+        return (bool) preg_match('/^[1-9][0-9]*$/', $value);
     }
 
     /**
