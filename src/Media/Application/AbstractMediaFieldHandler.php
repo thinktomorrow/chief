@@ -71,7 +71,7 @@ abstract class AbstractMediaFieldHandler
         if(!is_string($value) && !is_int($value)) return false;
 
         // check if passed value is an ID
-        return (bool) preg_match('/^[1-9][0-9]*$/', $value);
+        return (bool) preg_match('/^[1-9][0-9]*$/', (string) $value);
     }
 
     /**

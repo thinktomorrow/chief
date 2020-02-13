@@ -12,7 +12,7 @@ trait ValidatesExistingAssetAttributes
         if(!is_string($value) && !is_int($value)) return false;
 
         // Check if id is passed first
-        if(!preg_match('/^[1-9][0-9]*$/', $value)) return false;
+        if(!preg_match('/^[1-9][0-9]*$/', (string) $value)) return false;
 
         return !is_null($this->existingAsset($value));
     }
