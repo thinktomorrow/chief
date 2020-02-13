@@ -4,29 +4,10 @@ namespace Thinktomorrow\Chief\Fields\Types;
 
 class RangeField extends AbstractField implements Field
 {
+    use AllowsRange;
+
     public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::RANGE), $key);
-    }
-
-    public function steps(int $steps = 1)
-    {
-        $this->values['steps'] = $steps;
-
-        return $this;
-    }
-
-    public function max(int $max)
-    {
-        $this->values['max'] = $max;
-
-        return $this;
-    }
-
-    public function min(int $min)
-    {
-        $this->values['min'] = $min;
-
-        return $this;
     }
 }

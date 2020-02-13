@@ -6,21 +6,9 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 
 abstract class MediaField extends AbstractField implements Field
 {
+    use AllowsMultiple;
+
     protected $customValidationRules = [];
-
-    protected $allowMultiple = false;
-
-    public function multiple($flag = true)
-    {
-        $this->allowMultiple = $flag;
-
-        return $this;
-    }
-
-    public function allowMultiple(): bool
-    {
-        return $this->allowMultiple;
-    }
 
     protected function getLocalizedNameFormat(): string
     {
