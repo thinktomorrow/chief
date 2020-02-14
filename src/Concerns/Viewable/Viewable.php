@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Concerns\Viewable;
 
@@ -65,7 +67,7 @@ trait Viewable
 
         if (config('thinktomorrow.chief.strict')) {
             throw new NotFoundViewKey('Missing view key. Please add a [viewKey] property to ' . get_class($this));
-        };
+        }
 
         return '';
     }

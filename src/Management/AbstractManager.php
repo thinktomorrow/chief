@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management;
 
@@ -22,14 +24,14 @@ use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 abstract class AbstractManager
 {
-    use RenderingFields,
-        SavingFields,
-        HasDetails,
-        HasSections,
-        ManagesMedia,
-        ManagesPagebuilder,
-        TranslatableCommand,
-        ManagesAssistants;
+    use RenderingFields;
+    use SavingFields;
+    use HasDetails;
+    use HasSections;
+    use ManagesMedia;
+    use ManagesPagebuilder;
+    use TranslatableCommand;
+    use ManagesAssistants;
 
     protected $translation_columns = [];
 
@@ -127,7 +129,7 @@ abstract class AbstractManager
     {
         $class = $this->registration->model();
 
-        return new $class;
+        return new $class();
     }
 
     public function existingModel(): ManagedModel

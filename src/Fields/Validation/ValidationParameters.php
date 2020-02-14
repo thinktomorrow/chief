@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Validation;
 
@@ -40,7 +42,6 @@ class ValidationParameters
         $rules = $this->rules;
 
         foreach ($rules as $k => $rule) {
-
             $params = '';
 
             // Split up the rule and any parameters

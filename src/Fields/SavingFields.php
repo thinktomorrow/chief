@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields;
 
@@ -50,7 +52,6 @@ trait SavingFields
         $saveMethodByType = 'save' . ucfirst(Str::camel($field->getType()->get())) . 'Fields';
 
         foreach ([$saveMethodByKey, $saveMethodByType] as $saveMethod) {
-
             foreach ($this->assistants() as $assistant) {
                 if (method_exists($assistant, $saveMethod)) {
                     $this->saveAssistantMethods[$field->getKey()] = ['field'     => $field,

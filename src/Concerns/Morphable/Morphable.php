@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 trait Morphable
 {
-    use EloquentMorphableInstantiation,
-        EloquentMorphableCreation;
+    use EloquentMorphableInstantiation;
+    use EloquentMorphableCreation;
 
     public function morphKey(): ?string
     {

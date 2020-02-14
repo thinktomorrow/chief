@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\FlatReferences;
 
@@ -24,7 +26,7 @@ class FlatReference
      */
     public function instance(): Model
     {
-        return (new $this->className)->withoutGlobalScopes()->findOrFail($this->id);
+        return (new $this->className())->withoutGlobalScopes()->findOrFail($this->id);
     }
 
     public function id()

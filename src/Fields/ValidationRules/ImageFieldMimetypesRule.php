@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\ValidationRules;
 
@@ -13,7 +15,6 @@ class ImageFieldMimetypesRule extends AbstractMediaFieldRule
         foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
             foreach ($value[$type] as $file) {
                 if ($file && false == $this->validateMimetypes($attribute, $file, $params)) {
-
                     $this->addCustomValidationMessage($attribute, $params, $validator);
 
                     return false;

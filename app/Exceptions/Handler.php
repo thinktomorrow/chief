@@ -57,8 +57,8 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
-        if($request->getMethod() == 'POST' && $exception instanceof PostTooLargeException) {
-            if($request->expectsJson()) {
+        if ($request->getMethod() == 'POST' && $exception instanceof PostTooLargeException) {
+            if ($request->expectsJson()) {
                 return response()->json([
                     'error' => true, // required by redactor
                     'message' => $exception->getMessage(),

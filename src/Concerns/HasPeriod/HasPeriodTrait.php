@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Concerns\HasPeriod;
 
@@ -8,7 +10,7 @@ trait HasPeriodTrait
 {
     protected static function bootHasPeriodTrait()
     {
-        static::addGlobalScope(new SortPeriodDateScope);
+        static::addGlobalScope(new SortPeriodDateScope());
     }
 
     public function initializeHasPeriodTrait()
