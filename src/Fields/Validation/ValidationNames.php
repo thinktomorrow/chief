@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Validation;
 
@@ -87,7 +89,6 @@ class ValidationNames
         foreach ($this->placeholders as $placeholder => $replacements) {
             $newKeySet = [];
             foreach ($keys as $i => $key) {
-
                 if (count($replacements) < 1) {
                     $newKeySet[] = $key;
                     continue;

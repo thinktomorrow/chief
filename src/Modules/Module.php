@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Modules;
 
@@ -28,14 +30,14 @@ use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
 class Module extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsChild, MorphableContract, ViewableContract
 {
-    use Morphable,
-        AssetTrait,
-        Translatable,
-        BaseTranslatable,
-        SoftDeletes,
-        ActingAsChild,
-        WithSnippets,
-        Viewable;
+    use Morphable;
+    use AssetTrait;
+    use Translatable;
+    use BaseTranslatable;
+    use SoftDeletes;
+    use ActingAsChild;
+    use WithSnippets;
+    use Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;

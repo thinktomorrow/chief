@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
 
@@ -18,8 +20,9 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     const TYPE_CUSTOM = 'custom';
     const TYPE_NOLINK = 'nolink';
 
-    use Translatable,
-        BaseTranslatable;
+    use Translatable;
+
+    use BaseTranslatable;
 
     protected $translationModel = MenuItemTranslation::class;
     protected $translationForeignKey = 'menu_item_id';

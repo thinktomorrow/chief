@@ -19,7 +19,7 @@ class MenuItemController extends Controller
     {
         $this->authorize('create-page');
 
-        $menuitem            = new MenuItem;
+        $menuitem            = new MenuItem();
         $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
 

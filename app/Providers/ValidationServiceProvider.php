@@ -48,5 +48,4 @@ class ValidationServiceProvider extends ServiceProvider
         Validator::extend('imagefield_max', ImageFieldMaxRule::class.'@validate');
         Validator::extend('imagefield_min', ImageFieldMinRule::class.'@validate');
     }
-
 }

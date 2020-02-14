@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
@@ -109,14 +111,14 @@ class UpdateSections
             // Create pagetitle text module
             if (isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
                 $module = app(CreateModule::class)->handle(
-                    (new PagetitleModule)->morphKey(),
+                    (new PagetitleModule())->morphKey(),
                     $text_module['slug'],
                     $this->model->id
                 );
             } // Create page specific text module
             else {
                 $module = app(CreateModule::class)->handle(
-                    (new TextModule)->morphKey(),
+                    (new TextModule())->morphKey(),
                     $text_module['slug'],
                     $this->model->id
                 );

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
@@ -238,7 +240,6 @@ abstract class AbstractField
     private function defaultEloquentValueResolver(): \Closure
     {
         return function (Model $model = null, $locale = null) {
-
             if (!$model) {
                 return $this->value;
             }
@@ -279,7 +280,7 @@ abstract class AbstractField
                 if (false !== strpos($rule, 'required')) {
                     return true;
                 }
-            };
+            }
         }
 
         return false;

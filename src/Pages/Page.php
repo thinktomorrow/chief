@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Pages;
 
@@ -40,18 +42,29 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         getAttribute as getTranslatableAttribute;
     }
 
-    use Morphable,
-        AssetTrait,
-        Translatable,
-        SoftDeletes,
-        Publishable,
-        Featurable,
-        Archivable,
-        ActingAsParent,
-        ActingAsChild,
-        WithSnippets,
-        ResolvingRoute,
-        Viewable;
+    use Morphable;
+
+    use AssetTrait;
+
+    use Translatable;
+
+    use SoftDeletes;
+
+    use Publishable;
+
+    use Featurable;
+
+    use Archivable;
+
+    use ActingAsParent;
+
+    use ActingAsChild;
+
+    use WithSnippets;
+
+    use ResolvingRoute;
+
+    use Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = PageTranslation::class;

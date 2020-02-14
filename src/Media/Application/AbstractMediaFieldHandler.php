@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media\Application;
 
@@ -47,7 +49,6 @@ abstract class AbstractMediaFieldHandler
         foreach ($requests as $requestData) {
             foreach ($requestData as $locale => $filesPerLocale) {
                 foreach ($filesPerLocale as $action => $files) {
-
                     if (!is_array($files) || !in_array($action, [
                             MediaRequest::NEW,
                             MediaRequest::REPLACE,
@@ -126,7 +127,6 @@ abstract class AbstractMediaFieldHandler
     {
         if ($request->has('filesOrder')) {
             foreach ($request->input('filesOrder') as $locale => $fileIdInput) {
-
                 $fileIds = $this->getFileIdsFromInput($field->getKey(), $fileIdInput);
 
                 if (!empty($fileIds)) {
@@ -150,7 +150,9 @@ abstract class AbstractMediaFieldHandler
                 : ''
             );
 
-        if(!$values) return [];
+        if (!$values) {
+            return [];
+        }
 
         return explode(',', $values);
     }

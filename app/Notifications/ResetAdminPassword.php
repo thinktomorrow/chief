@@ -10,7 +10,8 @@ use Illuminate\Queue\SerializesModels;
 
 class ResetAdminPassword extends Notification implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $token;
 
