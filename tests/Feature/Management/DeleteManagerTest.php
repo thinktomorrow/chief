@@ -78,10 +78,10 @@ class DeleteManagerTest extends TestCase
     /** @test */
     public function removing_a_model_with_asset_unlinks_the_asset()
     {
-        app(AddAsset::class)->add($this->page, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+        app(AddAsset::class)->add($this->model, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
 
         $this->asAdmin()
-            ->delete('/admin/manage/singles/'.$this->page->id);
+            ->delete($this->fake->route('delete'));
 
         $this->assertCount(1, Asset::all());
     }

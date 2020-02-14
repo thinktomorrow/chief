@@ -46,13 +46,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return array_keys($this->fields);
     }
 
-    public function validate(array $data)
-    {
-        foreach ($this->fields as $field) {
-            $field->getValidator($data)->validate();
-        }
-    }
-
     public function filterBy($key, $value = null)
     {
         $fields = [];

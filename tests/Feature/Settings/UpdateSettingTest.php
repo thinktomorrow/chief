@@ -22,6 +22,7 @@ class UpdateSettingTest extends TestCase
     /** @test */
     public function update_a_setting()
     {
+        $this->disableExceptionHandling();
         Setting::create([
             'key'   => 'app_name',
             'value' => 'old app_name'

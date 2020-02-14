@@ -14,7 +14,7 @@ class FileFieldManagerWithValidation extends PageManager
     {
         return new Fields([
             FileField::make('fake-file')
-                ->locales(['nl','en'])
+                ->locales(['nl'])
                 ->validation([
                     'required',
                     'mimetypes:image/png,text/plain',

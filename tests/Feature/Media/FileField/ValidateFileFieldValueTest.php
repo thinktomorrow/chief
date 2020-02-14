@@ -129,30 +129,4 @@ class ValidateFileFieldValueTest extends TestCase
                 ]
             ]));
     }
-
-//    /** @test */
-//    public function it_can_add_image_via_wysiwyg_editor()
-//    {
-//        $this->setUpDefaultAuthorization();
-//
-//        $article = ArticlePageFake::create();
-//
-//        $response = $this->asAdmin()->post(route('chief.back.managers.media.upload', ['singles', $article->id]), [
-//            'file' => [
-//                UploadedFile::fake()->image('image.png')
-//            ],
-//            'locale' => 'nl'
-//        ]);
-//
-//        $assets = $article->assets(MediaType::CONTENT, 'nl');
-//        $this->assertCount(1, $assets);
-//
-//        $response->assertStatus(201)
-//            ->assertJson([
-//                "file-".$assets->first()->id => [
-//                    "url" => $article->asset(MediaType::CONTENT)->url(),
-//                    "id" => $assets->first()->id,
-//                ]
-//            ]);
-//    }
 }
