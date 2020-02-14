@@ -33,10 +33,10 @@ abstract class AbstractMediaFieldHandler
 
     final public function __construct(AddAsset $addAsset, ReplaceAsset $replaceAsset, DetachAsset $detachAsset, SortAssets $sortAssets, AssetUploader $assetUploader)
     {
-        $this->replaceAsset  = $replaceAsset;
-        $this->addAsset      = $addAsset;
-        $this->detachAsset   = $detachAsset;
-        $this->sortAssets    = $sortAssets;
+        $this->replaceAsset = $replaceAsset;
+        $this->addAsset = $addAsset;
+        $this->detachAsset = $detachAsset;
+        $this->sortAssets = $sortAssets;
         $this->assetUploader = $assetUploader;
     }
 
@@ -65,7 +65,7 @@ abstract class AbstractMediaFieldHandler
 
                         $mediaRequest->add($action, new MediaRequestInput(
                             $file, $locale, $field->getKey(), [
-                                'index' => $k,
+                                'index'          => $k,
                                 // index key is used for replace method to indicate the current asset id
                                 'existing_asset' => $this->refersToExistingAsset($file),
                             ]
@@ -124,12 +124,34 @@ abstract class AbstractMediaFieldHandler
 
     protected function sort(HasAsset $model, MediaField $field, Request $request)
     {
-        if($request->has('filesOrder'))
-        {
-            foreach($request->input('filesOrder') as $locale => $array)
-            {
-                $this->sortAssets->handle($model, explode(',', $array['files-'.$field->getKey()]), $field->getKey(), $locale);
+        if ($request->has('filesOrder')) {
+            foreach ($request->input('filesOrder') as $locale => $fileIdInput) {
+
+                $fileIds = $this->getFileIdsFromInput($field->getKey(), $fileIdInput);
+
+                if (!empty($fileIds)) {
+                    $this->sortAssets->handle($model, $fileIds, $field->getKey(), $locale);
+                }
             }
         }
+    }
+
+    /**
+     * @param string $key
+     * @param array $fileIdInput
+     * @return array
+     */
+    protected function getFileIdsFromInput(string $key, array $fileIdInput): array
+    {
+        $values = isset($fileIdInput[$key])
+            ? $fileIdInput[$key]
+            : (isset($fileIdInput['files-' . $key])
+                ? $fileIdInput['files-' . $key]
+                : ''
+            );
+
+        if(!$values) return [];
+
+        return explode(',', $values);
     }
 }

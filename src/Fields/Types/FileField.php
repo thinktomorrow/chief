@@ -22,14 +22,14 @@ class FileField extends MediaField implements Field
 
     protected function getMedia(HasAsset $model, ?string $locale = null)
     {
-        $documents = [];
+        $files = [];
 
         $builder = $model->assets($this->getKey(), $locale);
 
         foreach ($builder as $asset) {
-            $documents[] = $asset;
+            $files[] = $asset;
         }
 
-        return $documents;
+        return $files;
     }
 }

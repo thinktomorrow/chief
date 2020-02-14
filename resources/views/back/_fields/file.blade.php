@@ -1,4 +1,6 @@
 <?php
+
+/** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
 $files = $manager->fieldValue($field, $locale ?? null);
 
 $name = $name ?? $field->getName();
@@ -6,7 +8,6 @@ $locale = $locale ?? app()->getLocale();
 ?>
 
 @foreach($files as $file)
-
     <div class="border border-grey-100 rounded inset-s stack-s center-y bg-white" id="asset-{{$file->id}}">
 
         <div>
@@ -15,6 +16,13 @@ $locale = $locale ?? app()->getLocale();
             <span class="text-grey-300">
                 {{ $file->getExtensionType() }} | {{ $file->getSize() }}
             </span>
+
+            {{-- keep track of the existing files by adding them to the replace payload with a null value.
+            This is currently the way for the server to indicate existing files and prevents
+            the required validation to trigger unexpectedly. --}}
+            @if($file->id)
+                <input type="hidden" id="existingFile-{{$file->id}}-{{$locale}}" name="{{ $name }}[replace][{{$file->id}}]" />
+            @endif
         </div>
 
         <div class="pr-2 ml-auto">
@@ -44,6 +52,9 @@ $locale = $locale ?? app()->getLocale();
             document.getElementById('removeFile-'+id).value = id;
             document.getElementById('asset-'+id).remove();
             document.querySelector("[data-document-upload][data-locale='" + locale + "']").classList.remove('hidden');
+
+            // Remove entry in replace array as well.
+            document.getElementById("existingFile-"+id+"-"+locale).remove();
         }
 
         function inputValueToLabel(event, locale) {

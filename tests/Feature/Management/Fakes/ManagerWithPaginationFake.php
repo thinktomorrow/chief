@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
-use Thinktomorrow\Chief\Fields\Types\DocumentField;
+use Thinktomorrow\Chief\Fields\Types\FileField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\Management\AbstractManager;
@@ -21,7 +21,7 @@ class ManagerWithPaginationFake extends AbstractManager implements Manager
             InputField::make('title_trans')->translatable(['nl', 'fr']),
             InputField::make('content_trans')->translatable(['nl', 'fr']),
             ImageField::make('avatar'),
-            DocumentField::make('doc')
+            FileField::make('doc')
         );
     }
 }

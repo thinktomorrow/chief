@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FileField;
-use Thinktomorrow\Chief\Fields\Types\DocumentField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\Management\AbstractManager;

@@ -8,7 +8,6 @@ use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FieldType;
 use Thinktomorrow\Chief\Fields\Types\FileField;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
-use Thinktomorrow\Chief\Fields\Types\DocumentField;
 use Thinktomorrow\Chief\Media\Application\FileFieldHandler;
 use Thinktomorrow\Chief\Media\Application\ImageFieldHandler;
 
@@ -28,17 +27,6 @@ trait SavingFields
             if ($this->detectCustomSaveMethods($field)) {
                 continue;
             }
-
-//            // Media fields are treated separately
-//            if ($field->ofType(FieldType::FILE, FieldType::IMAGE, FieldType::DOCUMENT)) {
-//                if (! isset($this->saveMethods['_files'])) {
-//                    $this->saveMethods['_files'] = ['field' => new Fields([$field]), 'method' => 'uploadMedia'];
-//                    continue;
-//                }
-//
-//                $this->saveMethods['_files']['field'][] = $field;
-//                continue;
-//            }
 
             // Custom set methods - default is the generic setField() method.
             $methodName = 'set' . ucfirst(Str::camel($field->getKey())) . 'Field';
@@ -106,7 +94,7 @@ trait SavingFields
             }
 
             // Make our media fields able to be translatable as well...
-            if ($field->ofType(FieldType::FILE, FieldType::IMAGE, FieldType::DOCUMENT)) {
+            if ($field->ofType(FieldType::FILE, FieldType::IMAGE)) {
                 throw new \Exception('Cannot process the ' . $field->getKey() . ' media field. Currently no support for translatable media files. We should fix this!');
             }
 
@@ -143,10 +131,5 @@ trait SavingFields
     public function saveImageFields(ImageField $field, Request $request)
     {
         app(ImageFieldHandler::class)->handle($this->model, $field, $request);
-    }
-
-    public function saveDocumentFields(DocumentField $field, Request $request)
-    {
-        app(FileFieldHandler::class)->handle($this->model, $field, $request);
     }
 }

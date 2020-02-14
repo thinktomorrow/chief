@@ -16,16 +16,16 @@ principles.
 - Fixed: chief error now returns expected 500 status instead of 200.
 - Fixed: phpstan released lots of static analysis bugs which have been solved.
 
-
 ### Field changes
 - Added: introduced a `Field` interface for stricter Field usage throughout the application. 
 - Added: `Field::getPlaceholder()` is added to retrieve a placeholder value.
-- Removed: `MediaField` is removed and is now an abstract class. Replace with `ImageField` instead.
 - Removed: `Field::getFieldValue()` is removed. Use the new `Field::getValue(Model $model = null, ?string $locale = null)` method instead.
 - Removed: `Field::key()` is now only used to set a custom key.  To retrieve the key use the `Field::getKey()` method.
 - Removed: `Field::name()` is now only used to set a custom name.  To retrieve the name use the `Field::getName()` method.
 - Removed: `Field::column()` is now only used to set a custom column.  To retrieve the column use the `Field::getColumn()` method.
 - Removed: `Field::default()` method is removed. From now on, use `Field::value(string $value)` to set the default value.
+- Removed: `DocumentField` is removed. Replace its usage with `FileField` instead, which has the same behavior. It better reflects its nature because also images are allowed here.
+- Changed: `MediaField` is now an abstract class. Replace its usage with `ImageField` instead. This naming better reflects the image only aspect of this formfield.
 - Changed: `Field::multiple()` is only used to set the multiple state. To retrieve this value, it is replaced by `Field::allowMultiple()`.
 
 ## 0.4.5 - 2020-01-14
