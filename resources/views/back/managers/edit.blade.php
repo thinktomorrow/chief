@@ -22,8 +22,9 @@
 
         @if($manager->can('update'))
             <button data-submit-form="updateForm" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-            @include('chief::back.managers._partials.context-menu')
         @endif
+
+        @include('chief::back.managers._partials.context-menu')
     </div>
 
 @endcomponent
