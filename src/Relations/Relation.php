@@ -66,6 +66,7 @@ class Relation extends Model
     {
         $relations = static::where('parent_type', $parent_type)
             ->where('parent_id', $parent_id)
+            ->with('child')
             ->orderBy('sort', 'ASC')
             ->get();
 
