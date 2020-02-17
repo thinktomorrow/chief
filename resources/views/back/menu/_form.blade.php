@@ -153,23 +153,6 @@
     @endchiefformgroup
 @endif
 
-
-{{-- @chiefformgroup(['field' => 'collection_type'])
-    @slot('label', 'Onderliggende pagina groep')
-    @slot('description', 'Automatische oplijsting van een pagina groep.')
-    <chief-multiselect
-            name="collection_type"
-            :options='@json($collections)'
-            selected='@json(old('collection_type', $menuitem->collection_type))'
-            labelkey="group"
-            valuekey="id"
-            placeholder="kies een paginagroep"
-    >
-    </chief-multiselect>
-
-    <error class="caption text-warning" field="collection_type" :errors="errors.all()"></error>
-@endchiefformgroup --}}
-
 @if($menuitem->id && ! $menuitem->siblings()->isEmpty())
     @chiefformgroup(['field' => 'order'])
         @slot('label', 'Sortering')

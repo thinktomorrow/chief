@@ -24,12 +24,10 @@ class MenuItemController extends Controller
         $menuitem->menu_type = $menutype;
 
         $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
-        // $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
             'menuitem'         => $menuitem,
-            // 'collections'      => $collections,
             'internal_page_id' => null,
             'parents'          => $menuitems,
         ]);
@@ -63,9 +61,6 @@ class MenuItemController extends Controller
 
         $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
 
-        // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
-        // $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
-
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;
         }))->toArray();
@@ -73,7 +68,6 @@ class MenuItemController extends Controller
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => $pages,
-            // 'collections'      => $collections,
             'internal_page_id' => $internal_page_id,
             'parents'          => $menuitems,
         ]);
