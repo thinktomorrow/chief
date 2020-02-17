@@ -13,6 +13,7 @@ principles.
 - Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
 - Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
 - Removed: tinker package.
+- Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
 - Fixed: chief error now returns expected 500 status instead of 200.
 - Fixed: phpstan released lots of static analysis bugs which have been solved.
 

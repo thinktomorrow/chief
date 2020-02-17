@@ -154,7 +154,7 @@
 @endif
 
 
-@chiefformgroup(['field' => 'collection_type'])
+{{-- @chiefformgroup(['field' => 'collection_type'])
     @slot('label', 'Onderliggende pagina groep')
     @slot('description', 'Automatische oplijsting van een pagina groep.')
     <chief-multiselect
@@ -168,7 +168,7 @@
     </chief-multiselect>
 
     <error class="caption text-warning" field="collection_type" :errors="errors.all()"></error>
-@endchiefformgroup
+@endchiefformgroup --}}
 
 @if($menuitem->id && ! $menuitem->siblings()->isEmpty())
     @chiefformgroup(['field' => 'order'])

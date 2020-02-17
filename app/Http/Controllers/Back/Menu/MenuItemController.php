@@ -24,12 +24,12 @@ class MenuItemController extends Controller
         $menuitem->menu_type = $menutype;
 
         $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
-        $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
+        // $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
             'menuitem'         => $menuitem,
-            'collections'      => $collections,
+            // 'collections'      => $collections,
             'internal_page_id' => null,
             'parents'          => $menuitems,
         ]);
@@ -52,7 +52,7 @@ class MenuItemController extends Controller
         $menuitem->injectTranslationForForm();
 
         // Transpose selected page_id to the format <class>@<id>
-        // as expected by t9he select field.
+        // as expected by the select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
             //Archived and deleted pages can no longer be referenced in a menu item
@@ -64,7 +64,7 @@ class MenuItemController extends Controller
         $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
 
         // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
-        $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
+        // $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
 
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;
@@ -73,7 +73,7 @@ class MenuItemController extends Controller
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => $pages,
-            'collections'      => $collections,
+            // 'collections'      => $collections,
             'internal_page_id' => $internal_page_id,
             'parents'          => $menuitems,
         ]);

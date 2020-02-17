@@ -85,38 +85,6 @@ class MenuTest extends TestCase
     }
 
     /** @test */
-    public function it_can_reference_a_collection_of_pages()
-    {
-        factory(Page::class, 3)->create([
-            'morph_key'    => ArticlePageFake::class,
-            'current_state' => PageState::PUBLISHED,
-        ]);
-
-        // Sanity check
-        $this->assertCount(3, ArticlePageFake::all());
-
-        // Create main collection menu item - this will hold the collection as children
-        $mainMenuItem = MenuItem::create(['type' => 'collection', 'collection_type' => ArticlePageFake::class, 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com']);
-
-        // Retrieve the menu
-        $main = ChiefMenu::fromMenuItems()->items()->first();
-
-        $this->assertEquals(4, ChiefMenu::fromMenuItems()->items()->total());
-        $this->assertEquals(3, $main->children()->count());
-
-        // Make sure our labels and urls match
-        $this->assertEquals($mainMenuItem->label, $main->label);
-        $this->assertEquals($mainMenuItem->url, $main->url);
-
-        foreach (ArticlePageFake::all() as $k => $page) {
-            $item = $main->children()[$k];
-
-            $this->assertEquals($page->menuLabel(), $item->label);
-            $this->assertEquals($page->url(), $item->url);
-        }
-    }
-
-    /** @test */
     public function it_can_be_rendered_with_a_generic_api()
     {
         $page = factory(Page::class)->create([
@@ -131,11 +99,10 @@ class MenuTest extends TestCase
 
         MenuItem::create(['type' => 'internal', 'label:nl' => 'first item', 'page_id' => $page->id]);
         MenuItem::create(['type' => 'custom', 'label:nl' => 'second item', 'url:nl' => 'https://google.com']);
-        MenuItem::create(['type' => 'collection', 'collection_type' => ArticlePageFake::class, 'label:nl' => 'titel van articles', 'url:nl' => 'foobar.com/article-index']);
 
         $collection = ChiefMenu::fromMenuItems()->items();
 
-        $this->assertCount(3, $collection);
+        $this->assertCount(2, $collection);
         $check = 0;
         $collection->each(function ($node) use (&$check) {
             $this->assertNotNull($node->label);
@@ -143,7 +110,7 @@ class MenuTest extends TestCase
             $check++;
         });
 
-        $this->assertEquals(3, $check);
+        $this->assertEquals(2, $check);
     }
 
     /** @test */
