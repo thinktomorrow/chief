@@ -47,31 +47,49 @@ abstract class AbstractMediaFieldHandler
         $mediaRequest = new MediaRequest();
 
         foreach ($requests as $requestData) {
-            foreach ($requestData as $locale => $filesPerLocale) {
-                foreach ($filesPerLocale as $action => $files) {
-                    if (!is_array($files) || !in_array($action, [
-                            MediaRequest::NEW,
-                            MediaRequest::REPLACE,
-                            MediaRequest::DETACH,
-                        ])) {
-                        throw new \InvalidArgumentException('Malformed request data. Files are expected to be passed in a localized array.');
-                    }
+            foreach ($requestData as $locale => $values) {
+                foreach ($values as $key => $value) {
 
-                    foreach ($files as $k => $file) {
-
-                        // The null entries in the 'replace' request are passed explicitly - the replace array contains all existing assets (ids as keys, null as value)
-                        if (is_null($file)) {
-                            continue;
-                        }
-
-                        $mediaRequest->add($action, new MediaRequestInput(
-                            $file, $locale, $field->getKey(), [
-                                'index'          => $k,
-                                // index key is used for replace method to indicate the current asset id
-                                'existing_asset' => $this->refersToExistingAsset($file),
+                    // The null entries in the 'replace' request are passed explicitly - the replace array contains all existing assets (ids as keys, null as value)
+                    if (is_null($value)) {
+                        $mediaRequest->add(MediaRequest::DETACH, new MediaRequestInput(
+                            '', $locale, $field->getKey(), [
+                                'existing_id'    => $key,
+                                'value_as_assetid' => true,
                             ]
                         ));
+
+                        continue;
                     }
+
+                    $action = $this->looksLikeAnAssetID($key)
+                        ? MediaRequest::REPLACE
+                        : MediaRequest::NEW;
+
+//                    // If the value is the same as the original key and the asset already exists, we'll ignore this request.
+//                    if($key == $value && $keyRefersToExistingAsset && $valueRefersToExistingAsset) {
+//                        continue;
+//                    }
+
+                    $mediaRequest->add($action, new MediaRequestInput(
+                        $value, $locale, $field->getKey(), [
+                            'existing_id'    => $key,
+                            'value_as_assetid' => $this->looksLikeAnAssetID($value), // index key is used for replace method to indicate the current asset id
+                        ]
+                    ));
+
+//                    // Slim can push the ajax response object as value so we'll need to extract the id from this object
+//                    if(is_string($file) && ($slimPayload = json_decode($file)) && isset($slimPayload->id)) {
+//                        $file = $slimPayload->id;
+//                    }
+
+//                    $mediaRequest->add($action, new MediaRequestInput(
+//                        $file, $locale, $field->getKey(), [
+//                            'index'          => $k,
+//                            // index key is used for replace method to indicate the current asset id
+//                            'value_as_assetid' => $this->refersToExistingAsset($file),
+//                        ]
+//                    ));
                 }
             }
         }
@@ -79,7 +97,7 @@ abstract class AbstractMediaFieldHandler
         return $mediaRequest;
     }
 
-    protected function refersToExistingAsset($value): bool
+    protected function looksLikeAnAssetID($value): bool
     {
         if (!is_string($value) && !is_int($value)) {
             return false;
@@ -96,15 +114,15 @@ abstract class AbstractMediaFieldHandler
      * @throws DuplicateAssetException
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      */
-    protected function newExistingAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
+    protected function newExistingAsset(HasAsset $model, string $locale, string $type, $value): Asset
     {
-        $existingAsset = Asset::find($mediaRequestInput->value());
+        $existingAsset = Asset::find($value);
 
-        if ($model->assetRelation()->where('asset_pivots.type', $mediaRequestInput->type())->where('asset_pivots.locale', $mediaRequestInput->locale())->get()->contains($existingAsset)) {
+        if ($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($existingAsset)) {
             throw new DuplicateAssetException();
         }
 
-        return $this->addAsset->add($model, $existingAsset, $mediaRequestInput->type(), $mediaRequestInput->locale());
+        return $this->addAsset->add($model, $existingAsset, $type, $locale);
     }
 
     /**

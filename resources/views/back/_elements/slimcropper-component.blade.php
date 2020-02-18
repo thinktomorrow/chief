@@ -1,10 +1,8 @@
 @push('custom-styles')
-    {{-- <link rel="stylesheet" href="{{ chief_cached_asset('/chief-assets/back/css/vendors/slim.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
 @endpush
 @push('custom-scripts')
-    {{-- <script src="{{ chief_cached_asset('/chief-assets/back/js/vendors/slim.kickstart.min.js') }}"></script> --}}
-    <script src="{{ asset('/assets/back/js/vendor/slim.js') }}"></script>
+    <script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
     <script>
         Vue.component('slim', {
             props: ['options', 'name', 'group'],
@@ -12,42 +10,89 @@
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input style="margin-bottom:0" v-if="id && !newUpload" type="file" :name="name+'[replace]['+id+']'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif"/>
-                            <input style="margin-bottom:0" v-if="newUpload" type="hidden" :name="name+'[new]['+ id +']'" :value="id" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
-                            <input style="margin-bottom:0" v-else type="file" :name="name+'[new][]'" accept="image/jpeg, image/png, image/bmp, image/svg+xml, image/webp, image/gif" />
+                            <input ref="hiddenInput" style="margin-bottom:0;" type="hidden" :name="hiddenInputValue" />
+
+                            <input style="margin-bottom:0;" type="file" :name="name+'[]'" accept="image/*" />
                         </div>
-                        <input v-if="deletion" type="hidden" :name="name+'[detach][]'" :value="id"/>
                     </div>
                 `,
             data: function () {
                 return {
-                    id: this.options.id || null,
+                    existingId: this.options.id || null, // This is the existing asset id if any
+                    id: this.options.id || null, // This is the id of the newest linked asset.
                     url: this.options.url || null, // Already existing link
                     file: this.options.file || null, // Newly created file object
                     filename: this.options.filename || null,
                     instance: null,
                     deletion: false,
-                    newUpload: false
+                    addedFromGallery: false,
                 }
             },
             mounted: function () {
                 this.options.didRemove = this.markForDeletion;
                 this.options.didLoad = this.onLoad;
-                this.newUpload = this.options.newUpload;
-                this.instance = new Slim(this.$el.childNodes[0], this.options);
+                this.options.didTransform = this.onTransform;
+                this.addedFromGallery = this.options.addedFromGallery || false;
+                this.options.service = '/admin/api/assets/upload';
+                this.options.uploadBase64 = true;
 
+                this.instance = new Slim(this.$el.childNodes[0], this.options);
 
                 // If a file instance is passed, we want to directly load the file into our cropper
                 if (this.file) {
-                    this.instance.load(this.file);
+                    this.instance.load(this.file, () => {
+                        this.upload();
+                    });
+                }
+
+                // Mark element with the same id so serverside we know it needs to be 'replaced' with the same asset.
+                if(this.existingId) {
+                    this.$refs.hiddenInput.value = this.existingId;
+                }
+
+            },
+            computed: {
+                hiddenInputValue: function(){
+
+                    // Only required to indicate which references to watch for
+                    this.existingId; this.id;
+
+                    if(this.existingId) return this.name+'['+this.existingId+']';
+
+                    if(this.id) return this.name+'['+this.id+']';
+
+                    return this.name + '[]';
                 }
             },
             methods: {
+                upload: function(){
+                    this.instance.upload((error, data, response) => {
+
+                        if(error) {
+                            return console.error(error);
+                        }
+
+                        this.addedFromGallery = true;
+                        this.id = response.id;
+                        this.url = response.url;
+                        this.filename = response.filename;
+
+                        // Mark element for replacement with the newly uploaded asset
+                        this.$refs.hiddenInput.value = this.id;
+                    });
+                },
+
                 markForDeletion: function (e, target) {
                     this.deletion = true;
                     var self = this;
 
+                    // Mark element for deletion
+                    this.$refs.hiddenInput.value = null;
+
                     Eventbus.$emit('file-deletion-' + this.group, {id: self.id, newImage: target});
+                },
+                onTransform: function(){
+                    this.upload();
                 },
                 onLoad: function () {
 

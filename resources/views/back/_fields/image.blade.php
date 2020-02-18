@@ -5,7 +5,7 @@
     $slug = $field->getKey();
 ?>
 
-<filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
+<filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template async="/crazy-url">
     <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="(item, index) in items" class="column-3 draggable-item" :draggable="reorder" :data-item-id="item.id"
@@ -17,7 +17,7 @@
                         url: item.url,
                         file: item.file,
                         label: 'Drop hier uw afbeelding',
-                        newUpload: item.newUpload,
+                        addedFromGallery: item.addedFromGallery,
                     }"></slim>
             </div>
             <div v-if="{{ json_encode($field->allowMultiple()) }} == true || items.length < 1">

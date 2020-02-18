@@ -31,7 +31,7 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 
     private function new(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
     {
-        if ($mediaRequestInput->metadata('existing_asset')) {
+        if ($mediaRequestInput->metadata('value_as_assetid')) {
             return $this->newExistingAsset($model, $mediaRequestInput);
         }
 
@@ -43,27 +43,29 @@ class FileFieldHandler extends AbstractMediaFieldHandler
         return $this->addAsset->add($model, $uploadedFile, $mediaRequestInput->type(), $mediaRequestInput->locale(), $this->sluggifyFilename($filename));
     }
 
-    private function replace(HasAsset $model, MediaRequestInput $mediaRequest): Asset
+    private function replace(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
     {
-        $asset = $this->createNewAsset($model, $mediaRequest);
+        $asset = $mediaRequestInput->metadata('value_as_assetid')
+            ? $this->newExistingAsset($model, $mediaRequestInput)
+            : $this->createNewAsset($model, $mediaRequestInput);
 
-        $currentAssetId = $mediaRequest->metadata('index');
+        $currentAssetId = $mediaRequestInput->metadata('existing_id');
 
-        $this->replaceAsset->handle($model, $currentAssetId, $asset->id, $mediaRequest->type(), $mediaRequest->locale());
+        $this->replaceAsset->handle($model, $currentAssetId, $asset->id, $mediaRequestInput->type(), $mediaRequestInput->locale());
 
         return $asset;
     }
 
     private function detach(HasAsset $model, MediaRequestInput $mediaRequest)
     {
-        $assetId = $mediaRequest->value();
+        $assetId = $mediaRequest->metadata('existing_id');
 
         $this->detachAsset->detach($model, $assetId, $mediaRequest->type(), $mediaRequest->locale());
     }
 
     protected function createNewAsset(HasAsset $model, MediaRequestInput $mediaRequestInput): Asset
     {
-        if ($mediaRequestInput->metadata('existing_asset')) {
+        if ($mediaRequestInput->metadata('value_as_assetid')) {
             return Asset::find($mediaRequestInput->value());
         }
 
