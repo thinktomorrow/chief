@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\Urls;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Common\Helpers\Memoize;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 
@@ -24,6 +25,21 @@ class UrlHelper
         return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
     }
 
+    /**
+     * Internal api for fetching all models.
+     * This will return a grouped values array ready for select fields
+     *
+     * @param bool $onlySingles
+     * @param Model|null $ignoredModel
+     * @return array
+     */
+    public static function allModelsWithoutSelf(Model $ignoredModel = null): array
+    {
+        $models = static::models(false, $ignoredModel, false);
+
+        return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
+    }
+
     public static function allOnlineSingles()
     {
         return static::allOnlineModels(true);
@@ -39,7 +55,13 @@ class UrlHelper
      */
     public static function onlineModels(bool $onlySingles = false, Model $ignoredModel = null): Collection
     {
-        $models = chiefMemoize('all-online-models', function () use ($onlySingles) {
+        return self::models($onlySingles, $ignoredModel, true);
+    }
+
+
+    public static function models(bool $onlySingles = false, Model $ignoredModel = null, $online = true)
+    {
+        $models = chiefMemoize('all-online-models', function () use ($onlySingles, $online) {
             $builder = UrlRecord::whereNull('redirect_id')
                 ->select('model_type', 'model_id')
                 ->groupBy('model_type', 'model_id');
@@ -48,12 +70,15 @@ class UrlHelper
                 $builder->where('model_type', 'singles');
             }
 
-            return $builder->get()->mapToGroups(function ($record) {
+            return $builder->get()->mapToGroups(function ($record){
                 return [$record->model_type => $record->model_id];
-            })->map(function ($record, $key) {
+            })->map(function ($record, $key){
                 return Morphables::instance($key)->find($record->toArray());
-            })->map->reject(function ($model) {
-                return is_null($model) || !$model->isPublished(); // Invalid references to archived or removed models where url record still exists.
+            })->map->reject(function ($model) use($online){
+
+                if($online) return is_null($model) || !$model->isPublished(); // Invalid references to archived or removed models where url record still exists.
+
+                return is_null($model);
             })->flatten();
         }, [$onlySingles]);
 
@@ -65,4 +90,5 @@ class UrlHelper
 
         return $models;
     }
+
 }

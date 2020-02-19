@@ -32,7 +32,7 @@
                             {{ $event->description }}
                         </div>
                         <div class="column-3 center-y">
-                            {{ (new $event->subject_type)->getMorphClass() }}
+                            {{ $event->subject_type }}
                         </div>
                         <div class="column-3 center-y">
                             @if($event->causer)
