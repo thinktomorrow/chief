@@ -53,7 +53,7 @@ class AsyncUploadSlimMediaController extends Controller
                 'filename' => $asset->filename(),
                 'id'       => $asset->id,
             ], 201);
-        } catch(ValidationException $e) {
+        } catch (ValidationException $e) {
 
             // Extract first error
             $errors = $e->errors();
@@ -64,13 +64,12 @@ class AsyncUploadSlimMediaController extends Controller
                 'status' => 'failure',
                 'message' => $firstError,
             ], 422);
-        } catch(PostTooLargeException $e) {
+        } catch (PostTooLargeException $e) {
             return response()->json([
                 'error' => true, // required by redactor
                 'message' => 'Te groot bestand...',
             ], 500);
         }
-
     }
 
     protected function validateUpload(string $managerKey, string $fieldKey, string $locale, $imagePayload)

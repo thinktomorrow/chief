@@ -14,7 +14,7 @@ class FileFieldHandler extends AbstractMediaFieldHandler
 {
     public function handle(HasAsset $model, MediaField $field, Request $request): void
     {
-        foreach([$request->file('files.' . $field->getName(), []), $request->input('files.' . $field->getName(), [])] as $requestPayload) {
+        foreach ([$request->file('files.' . $field->getName(), []), $request->input('files.' . $field->getName(), [])] as $requestPayload) {
             foreach ($requestPayload as $locale => $values) {
                 $this->handlePayload($model, $field, $locale, $values);
             }
