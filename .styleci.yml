@@ -1,11 +1,6 @@
 preset: psr12
 risky: false
 
-# allow declare_script on top of file
-blank_line_before_declare: false
-blank_line_after_opening_tag: false
-declare_strict_types: true
-
 finder:
   exclude:
     - "tests"
