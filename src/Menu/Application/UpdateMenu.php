@@ -19,12 +19,11 @@ class UpdateMenu
 
             $request = $this->forceRemoveUrlWhenNoLinkIsRequested($request);
 
-            $menu = MenuItem::find($id);
-            $menu->type = $request->get('type', null);
+            $menu            = MenuItem::find($id);
+            $menu->type      = $request->get('type', null);
             $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
-            $menu->page_id = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
-            $menu->collection_type = $request->get('collection_type', null);
-            $menu->order        = $request->get('order', 0);
+            $menu->page_id   = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
+            $menu->order     = $request->get('order', 0);
 
             $this->reorderAgainstSiblings($menu);
             $menu->save();

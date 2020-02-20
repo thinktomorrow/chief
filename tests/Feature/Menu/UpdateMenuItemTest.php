@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Tests\TestCase;
