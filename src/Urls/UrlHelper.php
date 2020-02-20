@@ -70,13 +70,14 @@ class UrlHelper
                 $builder->where('model_type', 'singles');
             }
 
-            return $builder->get()->mapToGroups(function ($record){
+            return $builder->get()->mapToGroups(function ($record) {
                 return [$record->model_type => $record->model_id];
-            })->map(function ($record, $key){
+            })->map(function ($record, $key) {
                 return Morphables::instance($key)->find($record->toArray());
-            })->map->reject(function ($model) use($online){
-
-                if($online) return is_null($model) || !$model->isPublished(); // Invalid references to archived or removed models where url record still exists.
+            })->map->reject(function ($model) use ($online) {
+                if ($online) {
+                    return is_null($model) || !$model->isPublished();
+                } // Invalid references to archived or removed models where url record still exists.
 
                 return is_null($model);
             })->flatten();
@@ -90,5 +91,4 @@ class UrlHelper
 
         return $models;
     }
-
 }
