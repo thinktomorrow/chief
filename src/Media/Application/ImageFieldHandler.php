@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media\Application;
 
@@ -28,7 +30,7 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
         $value = json_decode($value);
 
         // Slim can sometimes sent us the ajax upload response instead of the asset id. Let's make sure this is being dealt with.
-        if(isset($value->id) && $this->looksLikeAnAssetId($value->id)) {
+        if (isset($value->id) && $this->looksLikeAnAssetId($value->id)) {
             return $this->newExistingAsset($model, $locale, $type, $value->id);
         }
 

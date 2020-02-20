@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media\Application;
 
@@ -45,7 +47,6 @@ abstract class AbstractMediaFieldHandler
     protected function handlePayload(HasAsset $model, MediaField $field, string $locale, $values)
     {
         foreach ($values as $key => $value) {
-
             $keyIsAttachedAssetId = $this->isKeyAnAttachedAssetId($model->assetRelation, $locale, $field->getKey(), $key);
 
             if ($this->shouldNotBeProcessed($value, $key, $keyIsAttachedAssetId)) {
@@ -58,7 +59,6 @@ abstract class AbstractMediaFieldHandler
              * means that a newly uploaded asses is deleted in the same request
              */
             if (is_null($value)) {
-
                 if ($keyIsAttachedAssetId) {
                     $this->detach($model, $locale, $field->getKey(), $key);
                 }
