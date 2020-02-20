@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
@@ -21,7 +20,6 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     const TYPE_NOLINK = 'nolink';
 
     use Translatable;
-
     use BaseTranslatable;
 
     protected $translationModel = MenuItemTranslation::class;
@@ -99,6 +97,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
 
         // Expose the collection items and populate them with the collection data
         foreach ($items as $k => $item) {
+
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
                 if ($page->isArchived()) {

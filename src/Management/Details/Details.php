@@ -23,12 +23,12 @@ class Details implements Arrayable
     public function __construct($id, string $key, string $singular, string $plural, string $internal_label, string $title)
     {
         // Default model details
-        $this->values['id'] = $id;
-        $this->values['key'] = $key;
-        $this->values['singular'] = $singular;
-        $this->values['plural'] = $plural;
+        $this->values['id']             = $id;
+        $this->values['key']            = $key;
+        $this->values['title']          = $title;
+        $this->values['plural']         = $plural;
+        $this->values['singular']       = $singular;
         $this->values['internal_label'] = $internal_label;
-        $this->values['title'] = $title;
     }
 
     public function get($attribute = null)

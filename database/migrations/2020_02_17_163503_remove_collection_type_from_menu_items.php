@@ -1,9 +1,8 @@
 <?php
 
-use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Thinktomorrow\Chief\States\PageState;
 use Illuminate\Database\Migrations\Migration;
 
 class RemoveCollectionTypeFromMenuItems extends Migration
@@ -13,6 +12,8 @@ class RemoveCollectionTypeFromMenuItems extends Migration
         Schema::table('menu_items', function (Blueprint $table) {
             $table->dropColumn('collection_type');
         });
+
+        DB::statement("ALTER TABLE menu_items MODIFY COLUMN type ENUM('internal', 'custom', 'nolink') NOT NULL");
     }
 
     public function down()

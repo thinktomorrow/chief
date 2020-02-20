@@ -40,9 +40,8 @@ class MenuRequest extends FormRequest
     {
         $translations = $this->request->get('trans', []);
 
-        $rules['type']            = 'required|in:custom,internal,collection,nolink';
+        $rules['type']            = 'required|in:custom,internal,nolink';
         $rules['page_id']         = 'required_if:type,internal';
-        $rules['collection_type'] = 'required_if:type,collection';
 
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {

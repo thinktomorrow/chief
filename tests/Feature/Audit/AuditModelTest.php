@@ -6,12 +6,13 @@ use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageManager;
+use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Audit\Audit;
 
 class AuditModelTest extends TestCase
 {
@@ -23,6 +24,10 @@ class AuditModelTest extends TestCase
         $this->setUpChiefEnvironment();
 
         app(Register::class)->register(PageManager::class, Single::class);
+
+        Relation::morphMap([
+            'singles' => Single::class,
+        ]);
     }
 
     /** @test */

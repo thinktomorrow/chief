@@ -26,8 +26,7 @@ class CreateMenu
             $menu->save();
 
             $this->saveTranslations($request->get('trans'), $menu, [
-                'label',
-                'url',
+                'label', 'url'
             ]);
 
             DB::commit();

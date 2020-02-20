@@ -31,6 +31,8 @@ principles.
 
 - Fixed: show context menu on edit page if even without update permission
 - Fixed: disabled vue from compiling mustache brackets in textareas
+- Added: added audit logs for menu items
+- Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
 
 ## 0.4.5 - 2020-01-14
 - Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
