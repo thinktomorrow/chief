@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +14,10 @@ class RemoveCollectionTypeFromMenuItems extends Migration
             $table->dropColumn('collection_type');
         });
 
-        DB::statement("ALTER TABLE menu_items MODIFY COLUMN type ENUM('internal', 'custom', 'nolink') NOT NULL");
+        if(App::environment() != 'testing')
+        {
+            DB::statement("ALTER TABLE menu_items MODIFY COLUMN 'type' ENUM('internal', 'custom', 'nolink') NOT NULL");
+        }
     }
 
     public function down()
