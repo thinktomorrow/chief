@@ -76,7 +76,6 @@
                         url: asset.url,
                         addedFromGallery: true,
                     });
-
                     self.updateFilesOrder();
                 })
 
@@ -189,7 +188,6 @@
                         this.updateFilesOrder();
                     }
                 },
-
                 isbefore: function (a, b) {
                     if (a.parentNode == b.parentNode) {
                         for (var cur = a; cur; cur = cur.previousSibling) {

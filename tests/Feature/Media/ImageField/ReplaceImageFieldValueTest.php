@@ -40,14 +40,10 @@ class ReplaceImageFieldValueTest extends TestCase
                 'images' => [
                     MediaType::HERO => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                            ]
+                            $existing_asset_nl->id => $this->dummySlimImagePayload('tt-favicon-nl.png'),
                         ],
                         'en' => [
-                            'new' => [
-                                $this->dummySlimImagePayload('tt-favicon-en.png'),
-                            ]
+                            $this->dummySlimImagePayload('tt-favicon-en.png'), // new
                         ]
                     ]
                 ]
@@ -68,9 +64,7 @@ class ReplaceImageFieldValueTest extends TestCase
                 'images' => [
                     MediaType::HERO => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset->id => $this->dummySlimImagePayload(),
-                            ]
+                            $existing_asset->id => $this->dummySlimImagePayload(),
                         ],
                     ]
                 ]
@@ -93,10 +87,8 @@ class ReplaceImageFieldValueTest extends TestCase
                 'images' => [
                     MediaType::HERO => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset->id => $this->dummySlimImagePayload(),
-                                null => null
-                            ]
+                            $existing_asset->id => $this->dummySlimImagePayload(),
+                            null => null
                         ],
                     ]
                 ]
@@ -110,7 +102,7 @@ class ReplaceImageFieldValueTest extends TestCase
     }
 
     /** @test */
-    public function an_replacing_asset_that_is_already_attached_is_passed_with_a_null_value()
+    public function an_replacing_asset_that_is_already_attached_is_passed_with_the_same_id_value()
     {
         $existing_asset = $this->page->assets(MediaType::HERO)->first();
 
@@ -119,9 +111,7 @@ class ReplaceImageFieldValueTest extends TestCase
                 'images' => [
                     MediaType::HERO => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset->id => null
-                            ]
+                            $existing_asset->id => $existing_asset->id
                         ],
                     ]
                 ]

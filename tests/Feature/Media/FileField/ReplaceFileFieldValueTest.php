@@ -41,14 +41,10 @@ class ReplaceFileFieldValueTest extends TestCase
                 'files' => [
                     static::FILEFIELD_KEY => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset_nl->id => UploadedFile::fake()->image('tt-favicon-nl.png'),
-                            ]
+                            $existing_asset_nl->id => UploadedFile::fake()->image('tt-favicon-nl.png'), // replace
                         ],
                         'en' => [
-                            'new' => [
-                                UploadedFile::fake()->image('tt-favicon-en.png'),
-                            ]
+                            UploadedFile::fake()->image('tt-favicon-en.png'), // New
                         ]
                     ]
                 ]
@@ -69,9 +65,7 @@ class ReplaceFileFieldValueTest extends TestCase
                 'files' => [
                     static::FILEFIELD_KEY => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset->id => $this->dummyUploadedFile('tt-document.pdf'),
-                            ]
+                            $existing_asset->id => $this->dummyUploadedFile('tt-document.pdf'),
                         ],
                     ]
                 ]
@@ -94,10 +88,8 @@ class ReplaceFileFieldValueTest extends TestCase
                 'files' => [
                     static::FILEFIELD_KEY => [
                         'nl' => [
-                            'replace' => [
-                                $existing_asset->id => UploadedFile::fake()->image('tt-favicon.png'),
-                                null => null
-                            ]
+                            $existing_asset->id => UploadedFile::fake()->image('tt-favicon.png'),
+                            null => null
                         ],
                     ]
                 ]

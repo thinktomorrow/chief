@@ -1,5 +1,23 @@
 @push('custom-styles')
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
+    <style type="text/css">
+
+        .slim-area{
+            min-height:80px;
+        }
+
+        .slim .slim-area .slim-upload-status[data-state=error] {
+            right: .5em;
+            left: .5em;
+            line-height: 1.1;
+            padding: .3em;
+            white-space: normal;
+        }
+
+        .thumb [data-state=empty] {
+            height: 80px;
+        }
+    </style>
 @endpush
 @push('custom-scripts')
     <script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
@@ -29,12 +47,21 @@
                 }
             },
             mounted: function () {
+                this.addedFromGallery = this.options.addedFromGallery || false;
+
                 this.options.didRemove = this.markForDeletion;
                 this.options.didLoad = this.onLoad;
                 this.options.didTransform = this.onTransform;
-                this.addedFromGallery = this.options.addedFromGallery || false;
+                this.options.labelLoading = '';
                 this.options.service = '/admin/api/assets/upload';
                 this.options.uploadBase64 = true;
+                this.options.push = true;
+                this.options.statusUploadSuccess = '<span class="slim-upload-status-icon"></span>';
+                this.options.didReceiveServerError = this.failed;
+                this.options.meta = {
+                    "managerKey" : "{{ $manager->managerKey() }}",
+                    "fieldKey" : this.group,
+                };
 
                 this.instance = new Slim(this.$el.childNodes[0], this.options);
 
@@ -61,7 +88,8 @@
 
                     if(this.id) return this.name+'['+this.id+']';
 
-                    return this.name + '[]';
+                    // New value should have a random key so it wont conflict with other keys
+                    return this.name + '[new_'+ this.randomString(6) +']';
                 }
             },
             methods: {
@@ -81,7 +109,12 @@
                         this.$refs.hiddenInput.value = this.id;
                     });
                 },
-
+                failed: function(error, defaultError) {
+                    if(error == 'fail') {
+                        error = 'Fout bij verwerking. Mogelijk is de afbeelding te groot.';
+                    }
+                    return "<span class='slim-upload-status-icon'></span>" + error;
+                },
                 markForDeletion: function (e, target) {
                     this.deletion = true;
                     var self = this;
@@ -104,6 +137,18 @@
                     // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                     return true;
                 },
+                randomString: function(length) {
+                    let result = '',
+                        i = 0;
+
+                    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+                    for (; i < length; i++ ) {
+                        result += characters.charAt(Math.floor(Math.random() * characters.length));
+                    }
+
+                    return result;
+                }
             },
         });
 

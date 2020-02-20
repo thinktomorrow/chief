@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
                 ], 200);
             }
 
-            return redirect()->back()->withInput()->withErrors($exception->getMessage());
+//            return redirect()->back()->withInput()->withErrors($exception->getMessage());
         }
 
         //could use some code cleanup

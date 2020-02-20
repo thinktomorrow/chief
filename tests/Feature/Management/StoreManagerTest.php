@@ -78,15 +78,12 @@ class StoreManagerTest extends TestCase
     /** @test */
     public function it_can_upload_a_file_field()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()
             ->post($this->fake->route('store'), [
                 'files' => [
                     'hero' => [
                         'nl' => [
-                            'new' => [
-                                UploadedFile::fake()->image('tt-favicon.png'),
-                            ]
+                            UploadedFile::fake()->image('tt-favicon.png'),
                         ]
                     ]
                 ],

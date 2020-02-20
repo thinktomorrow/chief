@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media\Application;
 
@@ -18,6 +16,8 @@ use Thinktomorrow\AssetLibrary\Application\SortAssets;
 
 abstract class AbstractMediaFieldHandler
 {
+    use ChecksExistingAssets;
+
     /** @var ReplaceAsset */
     protected $replaceAsset;
 
@@ -42,81 +42,87 @@ abstract class AbstractMediaFieldHandler
         $this->assetUploader = $assetUploader;
     }
 
-    protected function mediaRequest(array $requests, MediaField $field, Request $request): MediaRequest
+    protected function handlePayload(HasAsset $model, MediaField $field, string $locale, $values)
     {
-        $mediaRequest = new MediaRequest();
+        foreach ($values as $key => $value) {
 
-        foreach ($requests as $requestData) {
-            foreach ($requestData as $locale => $values) {
-                foreach ($values as $key => $value) {
+            $keyIsAttachedAssetId = $this->isKeyAnAttachedAssetId($model->assetRelation, $locale, $field->getKey(), $key);
 
-                    // The null entries in the 'replace' request are passed explicitly - the replace array contains all existing assets (ids as keys, null as value)
-                    if (is_null($value)) {
-                        $mediaRequest->add(MediaRequest::DETACH, new MediaRequestInput(
-                            '', $locale, $field->getKey(), [
-                                'existing_id'    => $key,
-                                'value_as_assetid' => true,
-                            ]
-                        ));
-
-                        continue;
-                    }
-
-                    $action = $this->looksLikeAnAssetID($key)
-                        ? MediaRequest::REPLACE
-                        : MediaRequest::NEW;
-
-//                    // If the value is the same as the original key and the asset already exists, we'll ignore this request.
-//                    if($key == $value && $keyRefersToExistingAsset && $valueRefersToExistingAsset) {
-//                        continue;
-//                    }
-
-                    $mediaRequest->add($action, new MediaRequestInput(
-                        $value, $locale, $field->getKey(), [
-                            'existing_id'    => $key,
-                            'value_as_assetid' => $this->looksLikeAnAssetID($value), // index key is used for replace method to indicate the current asset id
-                        ]
-                    ));
-
-//                    // Slim can push the ajax response object as value so we'll need to extract the id from this object
-//                    if(is_string($file) && ($slimPayload = json_decode($file)) && isset($slimPayload->id)) {
-//                        $file = $slimPayload->id;
-//                    }
-
-//                    $mediaRequest->add($action, new MediaRequestInput(
-//                        $file, $locale, $field->getKey(), [
-//                            'index'          => $k,
-//                            // index key is used for replace method to indicate the current asset id
-//                            'value_as_assetid' => $this->refersToExistingAsset($file),
-//                        ]
-//                    ));
-                }
+            if ($this->shouldNotBeProcessed($value, $key, $keyIsAttachedAssetId)) {
+                continue;
             }
-        }
 
-        return $mediaRequest;
+            /*
+             * when value is null, it means that the asset is queued for detachment
+             * is key isn't an attached asset reference, we ignore it because this
+             * means that a newly uploaded asses is deleted in the same request
+             */
+            if (is_null($value)) {
+
+                if ($keyIsAttachedAssetId) {
+                    $this->detach($model, $locale, $field->getKey(), $key);
+                }
+
+                continue;
+            }
+
+            // If key refers to an already existing asset, it is queued for replacement by a new one
+            if ($keyIsAttachedAssetId) {
+                $this->replace($model, $locale, $field->getKey(), $key, $value);
+                continue;
+            }
+
+            $this->new($model, $locale, $field->getKey(), $value);
+        }
     }
 
-    protected function looksLikeAnAssetID($value): bool
+    abstract protected function new(HasAsset $model, string $locale, string $type, $value): Asset;
+
+    protected function replace(HasAsset $model, string $locale, string $type, $currentAssetId, $value): Asset
     {
-        if (!is_string($value) && !is_int($value)) {
-            return false;
+        $asset = $this->looksLikeAnAssetId($value)
+            ? Asset::find($value)
+            : $this->createNewAsset($model, $locale, $type, $value);
+
+        $this->replaceAsset->handle($model, $currentAssetId, $asset->id, $type, $locale);
+
+        return $asset;
+    }
+
+    protected function detach(HasAsset $model, string $locale, string $type, $assetId)
+    {
+        $this->detachAsset->detach($model, $assetId, $type, $locale);
+    }
+
+    abstract protected function createNewAsset(HasAsset $model, string $locale, string $type, $value): Asset;
+
+    protected function shouldNotBeProcessed($value, $key, bool $keyIsAttachedAssetId): bool
+    {
+        // If the async upload is not finished yet and the user already uploads, the slim passes an "undefined" as value.
+        if ($value === "undefined") {
+            return true;
         }
 
-        // check if passed value is an ID
-        return (bool)preg_match('/^[1-9][0-9]*$/', (string)$value);
+        // Passed id => id that are the same, refer to an already attached asset so skip this.
+        if ($key == $value && $keyIsAttachedAssetId) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * @param HasAsset $model
-     * @param MediaRequestInput $mediaRequestInput
+     * @param string $locale
+     * @param string $type
+     * @param $assetId
      * @return Asset
      * @throws DuplicateAssetException
      * @throws \Spatie\MediaLibrary\Exceptions\FileCannotBeAdded
      */
-    protected function newExistingAsset(HasAsset $model, string $locale, string $type, $value): Asset
+    protected function newExistingAsset(HasAsset $model, string $locale, string $type, $assetId): Asset
     {
-        $existingAsset = Asset::find($value);
+        $existingAsset = Asset::find($assetId);
 
         if ($model->assetRelation()->where('asset_pivots.type', $type)->where('asset_pivots.locale', $locale)->get()->contains($existingAsset)) {
             throw new DuplicateAssetException();
@@ -159,7 +165,7 @@ abstract class AbstractMediaFieldHandler
      * @param array $fileIdInput
      * @return array
      */
-    protected function getFileIdsFromInput(string $key, array $fileIdInput): array
+    private function getFileIdsFromInput(string $key, array $fileIdInput): array
     {
         $values = isset($fileIdInput[$key])
             ? $fileIdInput[$key]
