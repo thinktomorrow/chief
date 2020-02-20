@@ -4,9 +4,16 @@ principles.
 
 ## unreleased
 **This release requires a migration to implement the new page state logic.**
+This release introduces a couple of important changes: 
+- There is now a new state logic for pages: archived, draft, published, deleted. These states are kept in one database column instead of being scattered around.
+- There is now proper image validation for the image and file fields. 
+- There is now async image upload available on the slim component.
+
 - Added: A generic `AssistantController` as a default dispatcher for assistant actions. Default assistants `ArchiveAssistant` and `PublishAssistant` now utilise the default `chief.back.assistants.update` and `chief.back.assistants.view` which points to this controller.
 - Added: config option `admin-filepath` that can be used to add custom chief routes. The routes defined in this file will only be accessible on authenticated sessions.
 - Added: `PageState` object which represents the page state: draft, published, archived or deleted. This is visible in the database as a current_state column.
+- Added: image validation rules: `required`, `dimensions`, `min`, `max`, `mimetypes`. Visit the [https://laravel.com/docs/6.x/validation#available-validation-rules](laravel documentation) on how to work with these.
+- Changed: Images in slim component are now being uploaded asynchronous to avoid server errors on request and file size.
 - Changed: the underlying StateMachine now allows to manage multiple states for one model.
 - Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
 - Assistants now need to implement the `Thinktomorrow\Chief\Management\Assistants\Assistant` contract.
@@ -30,7 +37,6 @@ principles.
 - Changed: `Field::multiple()` is only used to set the multiple state. To retrieve this value, it is replaced by `Field::allowMultiple()`.
 
 ## 0.4.6 - 2020-02-20
-
 - Fixed: show context menu on edit page if even without update permission
 - Fixed: disabled vue from compiling mustache brackets in textareas
 - Added: added audit logs for menu items
