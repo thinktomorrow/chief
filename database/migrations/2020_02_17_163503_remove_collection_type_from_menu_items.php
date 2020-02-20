@@ -14,8 +14,7 @@ class RemoveCollectionTypeFromMenuItems extends Migration
             $table->dropColumn('collection_type');
         });
 
-        if(App::environment() != 'testing')
-        {
+        if (App::environment() != 'testing') {
             DB::statement("ALTER TABLE menu_items MODIFY COLUMN 'type' ENUM('internal', 'custom', 'nolink') NOT NULL");
         }
     }
