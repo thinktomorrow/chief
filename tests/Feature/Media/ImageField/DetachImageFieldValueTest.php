@@ -40,9 +40,7 @@ class DetachImageFieldValueTest extends TestCase
 
         $this->detachImageRequest([
             'nl' => [
-                'detach' => [
-                    $this->page->assets(MediaType::HERO)->first()->id,
-                ]
+                $this->page->assets(MediaType::HERO)->first()->id => null,
             ],
         ]);
 
@@ -55,10 +53,8 @@ class DetachImageFieldValueTest extends TestCase
     {
         $this->detachImageRequest([
             'nl' => [
-                'detach' => [
-                    $this->page->assets(MediaType::HERO)->first()->id,
-                    null
-                ]
+                $this->page->assets(MediaType::HERO)->first()->id => null,
+                null
             ],
         ]);
 
@@ -71,12 +67,8 @@ class DetachImageFieldValueTest extends TestCase
     {
         $this->detachImageRequest([
             'nl' => [
-                'detach' => [
-                    $this->page->assets(MediaType::HERO)->first()->id,
-                ],
-                'new' => [
-                    $this->dummySlimImagePayload('image.jpg','image/jpeg'),
-                ]
+                $this->page->assets(MediaType::HERO)->first()->id => null,
+                $this->dummySlimImagePayload('image.jpg','image/jpeg'),
             ],
         ]);
 
@@ -97,14 +89,10 @@ class DetachImageFieldValueTest extends TestCase
                 'images' => [
                     'seo_image' => [
                         'nl' => [
-                            'new' => [
-                                $this->dummySlimImagePayload('tt-favicon-nl.png'),
-                            ]
+                            $this->dummySlimImagePayload('tt-favicon-nl.png'), // new
                         ],
                         'en' => [
-                            'detach' => [
-                                $existing_asset_en->id,
-                            ]
+                            $existing_asset_en->id => null,
                         ]
                     ]
                 ]

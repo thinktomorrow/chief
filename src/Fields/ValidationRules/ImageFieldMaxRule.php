@@ -8,17 +8,13 @@ use Thinktomorrow\Chief\Media\Application\MediaRequest;
 
 class ImageFieldMaxRule extends AbstractMediaFieldRule
 {
-    public function validate($attribute, $value, $params, $validator): bool
+    public function validate($attribute, $values, $params, $validator): bool
     {
-        $value = $this->normalizePayload($value);
+        foreach ($values as $key => $value) {
+            if ($value && false === $this->validateMax($attribute, $value, $params)) {
+                $this->addCustomValidationMessage($attribute, $params, $validator);
 
-        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            foreach ($value[$type] as $file) {
-                if ($file && false === $this->validateMax($attribute, $file, $params)) {
-                    $this->addCustomValidationMessage($attribute, $params, $validator);
-
-                    return false;
-                }
+                return false;
             }
         }
 

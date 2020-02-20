@@ -51,12 +51,12 @@
                     self.items.forEach((item, itemId) => {
                         if(item.id == id) {
                             /**
-                             * This timeout function is required since the newImage object we received from slim 
-                             * has a name property but this isn't filled in immediatly so we wait a little bit
+                             * This timeout function is required since the newImage object we received from slim
+                             * has a name property but this isn't filled in immediately so we wait a little bit
                              */
                             setTimeout(function () {
                                 var imageName = obj.newImage._data.input.name;
-                                if(item.newUpload == true) {
+                                if(item.addedFromGallery == true) {
                                     if(imageName == null){
                                         self.items.splice(itemId, 1);
                                     }
@@ -74,9 +74,8 @@
                         filename: asset.filename,
                         id: asset.id,
                         url: asset.url,
-                        newUpload: true,
+                        addedFromGallery: true,
                     });
-
                     self.updateFilesOrder();
                 })
 
@@ -189,7 +188,6 @@
                         this.updateFilesOrder();
                     }
                 },
-
                 isbefore: function (a, b) {
                     if (a.parentNode == b.parentNode) {
                         for (var cur = a; cur; cur = cur.previousSibling) {

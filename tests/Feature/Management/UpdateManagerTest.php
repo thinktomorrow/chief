@@ -82,9 +82,7 @@ class UpdateManagerTest extends TestCase
                 'files' => [
                     'hero' => [
                         'nl' => [
-                            'new' => [
-                                UploadedFile::fake()->image('tt-favicon.png'),
-                            ]
+                            UploadedFile::fake()->image('tt-favicon.png'),
                         ],
                     ]
                 ],
@@ -102,9 +100,7 @@ class UpdateManagerTest extends TestCase
                 'files' => [
                     'hero' => [
                         'nl' => [
-                            'new' => [
-                                $this->dummyUploadedFile('tt-document.pdf'),
-                            ]
+                            $this->dummyUploadedFile('tt-document.pdf'),
                         ],
                     ]
                 ],
@@ -121,10 +117,8 @@ class UpdateManagerTest extends TestCase
                 'files' => [
                     'hero' => [
                         'nl' => [
-                            'new' => [
-                                UploadedFile::fake()->image('tt-favicon.png'),
-                                $this->dummyUploadedFile('tt-document.pdf'),
-                            ]
+                            UploadedFile::fake()->image('tt-favicon.png'),
+                            $this->dummyUploadedFile('tt-document.pdf'),
                         ],
                     ],
                 ],

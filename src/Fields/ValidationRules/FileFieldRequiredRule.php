@@ -8,12 +8,10 @@ use Thinktomorrow\Chief\Media\Application\MediaRequest;
 
 class FileFieldRequiredRule extends AbstractMediaFieldRule
 {
-    public function validate($attribute, $value, $params, $validator): bool
+    public function validate($attribute, $values, $params, $validator): bool
     {
-        $value = $this->normalizePayloadIncludingExistingMedia($value);
-
-        foreach ([MediaRequest::NEW, MediaRequest::REPLACE] as $type) {
-            if (is_array($value[$type]) && !empty($value[$type])) {
+        foreach ($values as $key => $value) {
+            if (!is_null($value)) {
                 return true;
             }
         }

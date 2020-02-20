@@ -44,7 +44,21 @@ class AddImageFieldValueTest extends TestCase
     {
         $response = $this->newImageRequest([
             'nl' => [
-                'new' => [$this->dummySlimImagePayload('image.png', 'image/png', 150, 150)],
+                $this->dummySlimImagePayload('image.png', 'image/png', 150, 150),
+            ],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertCount(1, $this->page->assets(MediaType::HERO));
+    }
+
+    /** @test */
+    public function it_can_add_a_new_image_with_a_random_key()
+    {
+        $response = $this->newImageRequest([
+            'nl' => [
+                99 => $this->dummySlimImagePayload('image.png', 'image/png', 150, 150),
             ],
         ]);
 
@@ -56,8 +70,6 @@ class AddImageFieldValueTest extends TestCase
     /** @test */
     public function a_module_can_add_a_new_image()
     {
-        $this->disableExceptionHandling();
-
         app(Register::class)->register(ImageFieldModuleManager::class, MediaModule::class);
         $module = MediaModule::create(['slug' => 'fake-module']);
 
@@ -66,9 +78,7 @@ class AddImageFieldValueTest extends TestCase
                 'images' => [
                     MediaType::HERO => [
                         'nl' => [
-                            'new' => [
-                                $this->dummySlimImagePayload(),
-                            ]
+                            $this->dummySlimImagePayload(),
                         ],
                     ]
                 ]
@@ -84,7 +94,7 @@ class AddImageFieldValueTest extends TestCase
 
         $response = $this->newImageRequest([
             'nl' => [
-                'new' => [$existing_asset->id],
+                $existing_asset->id,
             ],
         ]);
 
@@ -124,7 +134,7 @@ class AddImageFieldValueTest extends TestCase
 
         $response = $this->newImageRequest([
             'nl' => [
-                'new' => [$existing_asset->id, $existing_asset->id],
+                $existing_asset->id, $existing_asset->id,
             ],
         ]);
 
@@ -141,14 +151,10 @@ class AddImageFieldValueTest extends TestCase
     {
         $this->newImageRequest([
             'nl' => [
-                'new' => [
-                    $this->dummySlimImagePayload('tt-favicon-nl.png', 'image/png', 800, 800),
-                ]
+                $this->dummySlimImagePayload('tt-favicon-nl.png', 'image/png', 800, 800),
             ],
             'en' => [
-                'new' => [
-                    $this->dummySlimImagePayload('tt-favicon-en.png', 'image/png', 800, 800),
-                ]
+                $this->dummySlimImagePayload('tt-favicon-en.png', 'image/png', 800, 800),
             ]
         ]);
 

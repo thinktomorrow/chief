@@ -44,11 +44,10 @@ class AddFileFieldValueTest extends TestCase
     /** @test */
     public function it_can_add_a_new_file()
     {
+        $this->disableExceptionHandling();
         $response = $this->newFileRequest([
             'nl' => [
-                'new' => [
-                    $this->dummyUploadedFile('tt-document.txt'),
-                ],
+                $this->dummyUploadedFile('tt-document.txt'),
             ],
         ]);
 
@@ -68,9 +67,7 @@ class AddFileFieldValueTest extends TestCase
                 'files' => [
                     static::FILEFIELD_KEY => [
                         'nl' => [
-                            'new' => [
-                                $this->dummyUploadedFile('tt-document.pdf'),
-                            ]
+                            $this->dummyUploadedFile('tt-document.pdf'),
                         ],
                     ]
                 ]
@@ -86,7 +83,7 @@ class AddFileFieldValueTest extends TestCase
 
         $response = $this->newFileRequest([
             'nl' => [
-                'new' => [$existing_asset->id],
+                $existing_asset->id,
             ],
         ]);
 
@@ -126,7 +123,8 @@ class AddFileFieldValueTest extends TestCase
 
         $response = $this->newFileRequest([
             'nl' => [
-                'new' => [$existing_asset->id, $existing_asset->id],
+                $existing_asset->id,
+                $existing_asset->id,
             ],
         ]);
 
@@ -141,17 +139,12 @@ class AddFileFieldValueTest extends TestCase
     /** @test */
     public function it_can_upload_translatable_files()
     {
-        $this->disableExceptionHandling();
         $this->newFileRequest([
             'nl' => [
-                'new' => [
-                    UploadedFile::fake()->image('tt-favicon-nl.png'),
-                ]
+                UploadedFile::fake()->image('tt-favicon-nl.png'),
             ],
             'en' => [
-                'new' => [
-                    UploadedFile::fake()->image('tt-favicon-en.png'),
-                ]
+                UploadedFile::fake()->image('tt-favicon-en.png'),
             ]
         ]);
 
