@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89570e588468c3c693d913c422e0e061",
+    "content-hash": "e192ade17ea02a0602152b884725d5a8",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4066,16 +4066,16 @@
         },
         {
             "name": "thinktomorrow/assetlibrary",
-            "version": "0.6.6",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/assetlibrary.git",
-                "reference": "935704d79104974377f8320cb2dfdc1840a5ba60"
+                "reference": "12eb9e24ec3b686e58666517089ea76a4ed016c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/935704d79104974377f8320cb2dfdc1840a5ba60",
-                "reference": "935704d79104974377f8320cb2dfdc1840a5ba60",
+                "url": "https://api.github.com/repos/thinktomorrow/assetlibrary/zipball/12eb9e24ec3b686e58666517089ea76a4ed016c1",
+                "reference": "12eb9e24ec3b686e58666517089ea76a4ed016c1",
                 "shasum": ""
             },
             "require": {
@@ -4083,7 +4083,7 @@
                 "spatie/laravel-medialibrary": "~7.17"
             },
             "require-dev": {
-                "orchestra/testbench": "3.7.*|3.8.*|4.4.*",
+                "orchestra/testbench": "3.7.*|3.8.*|4.4.*|4.6.*",
                 "phpunit/phpunit": "~7.5|8.4.1|~8.0"
             },
             "type": "library",
@@ -4125,7 +4125,7 @@
                 "php",
                 "thinktomorrow"
             ],
-            "time": "2020-01-21T15:57:50+00:00"
+            "time": "2020-02-13T10:35:11+00:00"
         },
         {
             "name": "thinktomorrow/squanto",
