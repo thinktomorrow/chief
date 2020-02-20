@@ -29,6 +29,8 @@ principles.
 - Changed: `MediaField` is now an abstract class. Replace its usage with `ImageField` instead. This naming better reflects the image only aspect of this formfield.
 - Changed: `Field::multiple()` is only used to set the multiple state. To retrieve this value, it is replaced by `Field::allowMultiple()`.
 
+## 0.4.6 - 2020-02-20
+
 - Fixed: show context menu on edit page if even without update permission
 - Fixed: disabled vue from compiling mustache brackets in textareas
 - Added: added audit logs for menu items
