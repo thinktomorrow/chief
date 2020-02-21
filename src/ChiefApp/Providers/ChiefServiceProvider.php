@@ -32,7 +32,7 @@ class ChiefServiceProvider extends ServiceProvider
     {
         $this->registerChiefGuard();
 
-        $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');
+        $this->app['view']->addNamespace('squanto', __DIR__ . '/../../../resources/views/vendor/squanto');
         $this->app['view']->addNamespace('squanto', base_path() . '/resources/views/vendor/thinktomorrow/chief/vendor/squanto');
 
         (new MacrosServiceProvider($this->app))->boot();
@@ -49,17 +49,17 @@ class ChiefServiceProvider extends ServiceProvider
         (new ChiefProjectServiceProvider($this->app))->boot();
 
         $this->loadRoutesFrom(__DIR__ . '/../routes.php');
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
-        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
+        $this->loadViewsFrom(__DIR__ . '/../../../resources/views', 'chief');
+        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../../../resources/lang', 'chief');
 
         $this->publishes([
-            __DIR__ . '/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
-            __DIR__ . '/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            __DIR__ . '/../../../config/chief.php' => config_path('thinktomorrow/chief.php'),
+            __DIR__ . '/../../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
         ], 'chief-config');
 
         $this->publishes([
-            __DIR__ . '/../../public/chief-assets' => public_path('/chief-assets'),
+            __DIR__ . '/../../../public/chief-assets' => public_path('/chief-assets'),
         ], 'chief-assets');
 
         // Register commands
@@ -112,8 +112,8 @@ class ChiefServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'thinktomorrow.chief');
-        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
+        $this->mergeConfigFrom(__DIR__ . '/../../../config/chief.php', 'thinktomorrow.chief');
+        $this->mergeConfigFrom(__DIR__ . '/../../../config/chief-settings.php', 'thinktomorrow.chief-settings');
 
         $this->setupEnvironmentProviders();
 
