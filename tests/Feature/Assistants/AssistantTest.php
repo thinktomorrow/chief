@@ -10,7 +10,6 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageManager;
-use Thinktomorrow\Chief\Tests\Feature\Assistants\Stubs\FavoriteAssistant;
 
 class AssistantTest extends TestCase
 {
@@ -30,7 +29,7 @@ class AssistantTest extends TestCase
         /** @var Route $registeredDummyRoute */
         $registeredDummyRoute = Arr::get(app('router')->getRoutes()->get('GET'), 'admin/dummy-route');
 
-        $this->assertEquals(['web','web-chief','auth:chief'], $registeredDummyRoute->gatherMiddleware());
+        $this->assertEquals(['web-chief','auth:chief'], $registeredDummyRoute->gatherMiddleware());
     }
 
     /** @test */

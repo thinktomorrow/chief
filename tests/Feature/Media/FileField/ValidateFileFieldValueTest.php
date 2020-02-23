@@ -57,7 +57,7 @@ class ValidateFileFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('files.'.static::FILEFIELD_KEY.'.nl');
-        $this->assertStringContainsString('De '.static::FILEFIELD_KEY.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
+        $this->assertStringContainsString(static::FILEFIELD_KEY.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
 
         $this->assertCount(0, $this->page->assets(static::FILEFIELD_KEY));
     }
@@ -73,7 +73,7 @@ class ValidateFileFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('files.'.static::FILEFIELD_KEY.'.nl');
-        $this->assertStringContainsString('De '.static::FILEFIELD_KEY.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
+        $this->assertStringContainsString(static::FILEFIELD_KEY.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
 
         $this->assertEquals('original-image.png', $this->page->asset(static::FILEFIELD_KEY)->filename());
     }
@@ -86,7 +86,7 @@ class ValidateFileFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('files.'.static::FILEFIELD_KEY.'.nl');
-        $this->assertStringContainsString('De '.static::FILEFIELD_KEY.' is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
+        $this->assertStringContainsString(static::FILEFIELD_KEY.' is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
 
         $this->assertCount(0, $this->page->assets(static::FILEFIELD_KEY));
     }
@@ -99,7 +99,7 @@ class ValidateFileFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('files.'.static::FILEFIELD_KEY.'.nl');
-        $this->assertStringContainsString('De '.static::FILEFIELD_KEY.' is te klein en dient groter te zijn dan', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
+        $this->assertStringContainsString(static::FILEFIELD_KEY.' is te klein en dient groter te zijn dan', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
 
         $this->assertCount(0, $this->page->assets(static::FILEFIELD_KEY));
     }
@@ -112,7 +112,7 @@ class ValidateFileFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('files.'.static::FILEFIELD_KEY.'.nl');
-        $this->assertStringContainsString('De '.static::FILEFIELD_KEY.' is niet het juiste bestandstype', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
+        $this->assertStringContainsString(static::FILEFIELD_KEY.' is niet het juiste bestandstype', session()->get('errors')->first('files.'.static::FILEFIELD_KEY.'.nl'));
 
         $this->assertCount(0, $this->page->assets(static::FILEFIELD_KEY));
     }

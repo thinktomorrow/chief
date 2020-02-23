@@ -56,7 +56,7 @@ class ValidateImageFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $this->page->assets(MediaType::HERO));
     }
@@ -71,7 +71,7 @@ class ValidateImageFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('images-hero heeft niet de juiste afmetingen', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertEquals('original-image.png', $this->page->asset(MediaType::HERO)->filename());
     }
@@ -84,7 +84,7 @@ class ValidateImageFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De images-hero is te groot en dient kleiner te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('images-hero is te groot en dient kleiner te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $this->page->assets(MediaType::HERO));
     }
@@ -97,7 +97,7 @@ class ValidateImageFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De images-hero is te klein en dient groter te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('images-hero is te klein en dient groter te zijn dan', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $this->page->assets(MediaType::HERO));
     }
@@ -110,7 +110,7 @@ class ValidateImageFieldValueTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('images.images-hero.nl');
-        $this->assertStringContainsString('De images-hero is niet het juiste bestandstype', session()->get('errors')->first('images.images-hero.nl'));
+        $this->assertStringContainsString('images-hero is niet het juiste bestandstype', session()->get('errors')->first('images.images-hero.nl'));
 
         $this->assertCount(0, $this->page->assets(MediaType::HERO));
     }

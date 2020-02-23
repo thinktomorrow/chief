@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Urls\ChiefResponse;
+use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\HealthMonitor\Middleware\MonitorMiddleware;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
@@ -63,7 +64,7 @@ class ChiefRoutesServiceProvider extends ServiceProvider
     {
         app(Router::class)->middlewareGroup('web-chief', [
             // The default laravel web middleware - except for the csrf token verification.
-            \App\Http\Middleware\EncryptCookies::class,
+            EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
