@@ -17,6 +17,7 @@ This release introduces a couple of important changes:
 - Changed: the underlying StateMachine now allows to manage multiple states for one model.
 - Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
 - Assistants now need to implement the `Thinktomorrow\Chief\Management\Assistants\Assistant` contract.
+- Removed: csrf token verification
 - Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
 - Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
 - Removed: tinker package.
