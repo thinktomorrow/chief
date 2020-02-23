@@ -58,7 +58,8 @@ Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\
 * -----------------------------------------------------------------
 */
 Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Media\UploadManagersMediaController@store')->name('chief.back.managers.media.upload');
-Route::post('api/assets/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Api\AsyncUploadSlimMediaController@upload')->name('chief.api.assets.upload');
+Route::post('api/assets/images/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Api\AsyncUploadSlimMediaController@upload')->name('chief.api.images.upload');
+Route::post('api/assets/files/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Api\AsyncUploadFileMediaController@upload')->name('chief.api.files.upload');
 Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
 Route::get('api/media', 'Thinktomorrow\Chief\App\Http\Controllers\Api\MediaGalleryController@index')->name('chief.api.media');
 

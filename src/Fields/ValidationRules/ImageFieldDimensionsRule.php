@@ -76,7 +76,7 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
-            'imagefield_dimensions' => 'De :attribute heeft niet de juiste afmetingen: ' . implode(', ', $this->humanReadableParams($params)),
+            'imagefield_dimensions' => ':attribute heeft niet de juiste afmetingen: ' . implode(', ', $this->humanReadableParams($params)),
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

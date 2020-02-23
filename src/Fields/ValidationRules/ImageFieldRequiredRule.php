@@ -17,7 +17,7 @@ class ImageFieldRequiredRule extends AbstractMediaFieldRule
         }
 
         $validator->setCustomMessages([
-            'imagefield_required' => 'De :attribute is verplicht.',
+            'imagefield_required' => ':attribute is verplicht.',
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

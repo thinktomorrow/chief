@@ -59,7 +59,7 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
-            'imagefield_max' => 'De :attribute is te groot en dient kleiner te zijn dan ' . implode(',', $params) . 'Kb.',
+            'imagefield_max' => ':attribute is te groot en dient kleiner te zijn dan ' . implode(',', $params) . 'Kb.',
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

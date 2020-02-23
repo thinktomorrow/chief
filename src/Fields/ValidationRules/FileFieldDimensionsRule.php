@@ -38,7 +38,7 @@ class FileFieldDimensionsRule extends AbstractMediaFieldRule
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
-            'filefield_dimensions' => 'De :attribute heeft niet de juiste afmetingen: ' . implode(', ', $params),
+            'filefield_dimensions' => ':attribute heeft niet de juiste afmetingen: ' . implode(', ', $params),
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

@@ -38,7 +38,7 @@ class FileFieldMimetypesRule extends AbstractMediaFieldRule
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
-            'filefield_mimetypes' => 'De :attribute is niet het juiste bestandstype. Volgende types zijn geldig: ' . implode(', ', $params),
+            'filefield_mimetypes' => ':attribute is niet het juiste bestandstype. Volgende types zijn geldig: ' . implode(', ', $params),
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

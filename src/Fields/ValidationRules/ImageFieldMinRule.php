@@ -54,7 +54,7 @@ class ImageFieldMinRule extends AbstractMediaFieldRule
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
-            'imagefield_min' => 'De :attribute is te klein en dient groter te zijn dan ' . implode(',', $params) . 'Kb.',
+            'imagefield_min' => ':attribute is te klein en dient groter te zijn dan ' . implode(',', $params) . 'Kb.',
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

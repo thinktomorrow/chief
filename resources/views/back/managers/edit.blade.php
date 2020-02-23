@@ -56,6 +56,7 @@
     @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('upload')])
 @endpush
 
-@include('chief::back._elements.file-component')
-@include('chief::back._elements.slimcropper-component')
-@include('chief::back._elements.fileupload-component')
+@include('chief::back._components.file-component')
+@include('chief::back._components.image-component')
+@include('chief::back._components.filesupload-component')
+@include('chief::back._components.imagesupload-component')

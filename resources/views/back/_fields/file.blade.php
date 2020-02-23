@@ -1,72 +1,78 @@
 <?php
-
-/** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
-$files = $manager->fieldValue($field, $locale ?? null);
-
-$name = $name ?? $field->getName();
-$locale = $locale ?? app()->getLocale();
+    /** @var \Thinktomorrow\AssetLibrary\Asset[] $files */
+    $files = $manager->fieldValue($field, $locale ?? null);
+    $locale = $locale ?? app()->getLocale();
+    $name = $name ?? $field->getName($locale);
+    $slug = $field->getKey();
 ?>
 
-@foreach($files as $file)
-    <div class="border border-grey-100 rounded inset-s stack-s center-y bg-white" id="asset-{{$file->id}}">
-
-        <div>
-            <strong>{{ $file->filename() }}</strong>
-            <br>
-            <span class="text-grey-300">
-                {{ $file->getExtensionType() }} | {{ $file->getSize() }}
-            </span>
-
-            {{-- keep track of the existing files by adding them to the replace payload with a null value.
-            This is currently the way for the server to indicate existing files and prevents
-            the required validation to trigger unexpectedly. --}}
-            @if($file->id)
-                <input type="hidden" id="existingFile-{{$file->id}}-{{$locale}}" name="{{ $name }}[replace][{{$file->id}}]" />
-            @endif
+<filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
+    <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
+        <div class="row gutter-s">
+            <div v-for="(item, index) in items" class="column-12 draggable-item" :draggable="reorder" :data-item-id="item.id"
+                 @dragstart="handleSortingStart"
+                 @dragenter.prevent="handleSortingEnter" v-show="!item.deleted || ({{ json_encode($field->allowMultiple()) }} != true && !hasValidUpload && index == 0)">
+                <file name="{{ $name }}" group="{{ $slug }}" locale="{{$locale}}" :options="{
+                        id: item.id,
+                        filename: item.filename,
+                        url: item.url,
+                        mimetype: item.mimetype || null,
+                        size: item.size || null,
+                        file: item.file,
+                        addedFromGallery: item.addedFromGallery,
+                    }"></file>
+            </div>
         </div>
+        <div class="flex mt-4">
+            <div v-if="{{ json_encode($field->allowMultiple()) }} == true || items.length < 1">
 
-        <div class="pr-2 ml-auto">
-            <a href="{{ url($file->url()) }}" target="_blank">Bekijk document</a>
+                <div data-document-upload data-locale="{{ $locale }}">
+                    <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
+                        Document uploaden
+                    </label>
+                    <span class="text-secondary-500"></span>
+                </div>
+                <input id="document-upload-{{$locale}}" @change="handleFileSelect" type="file" {{ $field->allowMultiple() ? 'multiple' : '' }} class="hidden">
+            </div>
+            <a v-if="{{ json_encode($field->allowMultiple()) }} == true && items.length > 1" @click.prevent="toggleReorder" class="btn btn-primary">
+                @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik bestanden' }}
+            </a>
+            <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
         </div>
-
-        <div>
-            <svg onclick="removeFile({{$file->id}}, '{{$locale}}')" width="18" height="18"><use xlink:href="#x"/></svg>
-        </div>
-
     </div>
+</filesupload>
 
-    <input type="hidden" id="removeFile-{{$file->id}}" name="{{ $name }}[detach][]" {{ $field->allowMultiple() ? 'multiple' : '' }}/>
-@endforeach
 
-<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->allowMultiple() ? 'hidden' : ''}}">
-    <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
-        Document uploaden
-    </label>
-    <span class="text-secondary-500"></span>
-</div>
-<input id="document-upload-{{$locale}}" onchange="inputValueToLabel(event, '{{$locale}}')" type="file" name="{{ $name }}[new][]" {{ $field->allowMultiple() ? 'multiple' : '' }} class="hidden">
 
-@push('custom-scripts')
-    <script>
-        function removeFile(id, locale) {
-            document.getElementById('removeFile-'+id).value = id;
-            document.getElementById('asset-'+id).remove();
-            document.querySelector("[data-document-upload][data-locale='" + locale + "']").classList.remove('hidden');
+{{--<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->allowMultiple() ? 'hidden' : ''}}">--}}
+{{--    <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">--}}
+{{--        Document uploaden--}}
+{{--    </label>--}}
+{{--    <span class="text-secondary-500"></span>--}}
+{{--</div>--}}
+{{--<input id="document-upload-{{$locale}}" onchange="inputValueToLabel(event, '{{$locale}}')" type="file" name="{{ $name }}[]" {{ $field->allowMultiple() ? 'multiple' : '' }} class="hidden">--}}
 
-            // Remove entry in replace array as well.
-            document.getElementById("existingFile-"+id+"-"+locale).remove();
-        }
+{{--@push('custom-scripts')--}}
+{{--    <script>--}}
+{{--        function removeFile(id, locale) {--}}
+{{--            document.getElementById('removeFile-'+id).value = id;--}}
+{{--            document.getElementById('asset-'+id).remove();--}}
+{{--            document.querySelector("[data-document-upload][data-locale='" + locale + "']").classList.remove('hidden');--}}
 
-        function inputValueToLabel(event, locale) {
-            var selector = document.querySelector("[data-document-upload][data-locale='" + locale + "']");
+{{--            // Remove entry in replace array as well.--}}
+{{--            document.getElementById("existingFile-"+id+"-"+locale).remove();--}}
+{{--        }--}}
 
-            var fileName = selector.getElementsByTagName('span')[0],
-                label = selector.getElementsByTagName('label')[0],
-                valuePathArray = event.target.value.split('\\'),
-                value = valuePathArray[valuePathArray.length - 1];
+{{--        function inputValueToLabel(event, locale) {--}}
+{{--            var selector = document.querySelector("[data-document-upload][data-locale='" + locale + "']");--}}
 
-            fileName.innerHTML = value;
-            label.innerHTML = event.target.value === '' ? label.innerHTML : 'Een ander document uploaden';
-        }
-    </script>
-@endpush
+{{--            var fileName = selector.getElementsByTagName('span')[0],--}}
+{{--                label = selector.getElementsByTagName('label')[0],--}}
+{{--                valuePathArray = event.target.value.split('\\'),--}}
+{{--                value = valuePathArray[valuePathArray.length - 1];--}}
+
+{{--            fileName.innerHTML = value;--}}
+{{--            label.innerHTML = event.target.value === '' ? label.innerHTML : 'Een ander document uploaden';--}}
+{{--        }--}}
+{{--    </script>--}}
+{{--@endpush--}}

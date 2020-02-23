@@ -38,7 +38,7 @@ class FileFieldMinRule extends AbstractMediaFieldRule
     private function addCustomValidationMessage($attribute, $params, $validator): void
     {
         $validator->setCustomMessages([
-            'filefield_min' => 'De :attribute is te klein en dient groter te zijn dan ' . implode(',', $params) . 'Kb.',
+            'filefield_min' => ':attribute is te klein en dient groter te zijn dan ' . implode(',', $params) . 'Kb.',
         ]);
 
         if (!isset($validator->customAttributes[$attribute])) {

@@ -1,7 +1,7 @@
 @push('custom-scripts')
     <script>
 
-        Vue.component('filesupload', {
+        Vue.component('imagesupload', {
             props: ['preselected', 'group', 'locale'],
             data: function () {
                 return {

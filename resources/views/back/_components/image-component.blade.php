@@ -28,7 +28,7 @@
                     <div class="thumb">
                         <div class="slim">
                             <img v-if="url" :src="url" :alt="filename">
-                            <input ref="hiddenInput" style="margin-bottom:0;" type="hidden" :name="hiddenInputValue" />
+                            <input ref="hiddenInput" style="margin-bottom:0;" type="hidden" :name="hiddenInputKey" />
 
                             <input style="margin-bottom:0;" type="file" :name="name+'[]'" accept="image/*" />
                         </div>
@@ -53,7 +53,7 @@
                 this.options.didLoad = this.onLoad;
                 this.options.didTransform = this.onTransform;
                 this.options.labelLoading = '';
-                this.options.service = '/admin/api/assets/upload';
+                this.options.service = '{{ route('chief.api.images.upload') }}';
                 this.options.uploadBase64 = true;
                 this.options.push = true;
                 this.options.statusUploadSuccess = '<span class="slim-upload-status-icon"></span>';
@@ -79,7 +79,7 @@
 
             },
             computed: {
-                hiddenInputValue: function(){
+                hiddenInputKey: function(){
 
                     // Only required to indicate which references to watch for
                     this.existingId; this.id;

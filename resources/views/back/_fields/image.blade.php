@@ -5,7 +5,7 @@
     $slug = $field->getKey();
 ?>
 
-<filesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template async="/crazy-url">
+<imagesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
     <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="(item, index) in items" class="column-4 draggable-item" :draggable="reorder" :data-item-id="item.id"
@@ -43,10 +43,10 @@
                 <mediagallery group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
             </div>
 
-            <a v-if="{{ json_encode($field->allowMultiple()) }} == true" @click.prevent="toggleReorder" class="btn btn-primary">
+            <a v-if="{{ json_encode($field->allowMultiple()) }} == true  && items.length > 1" @click.prevent="toggleReorder" class="btn btn-primary">
                 @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
             </a>
             <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
         </div>
     </div>
-</filesupload>
+</imagesupload>

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldName;
 use Thinktomorrow\Chief\Management\Managers;
@@ -13,7 +14,7 @@ use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Fields\Validation\FieldValidator;
 
-class AsyncUploadSlimMediaController extends Controller
+class AsyncUploadFileMediaController extends Controller
 {
     /** @var Managers */
     private $managers;
@@ -33,20 +34,20 @@ class AsyncUploadSlimMediaController extends Controller
      */
     public function upload(Request $request)
     {
-        $payload = $request->input('images', []);
-        $imagePayload = reset($payload);
-        $locale = key($imagePayload);
-        $imagePayload = json_decode(reset($imagePayload[$locale])); // With the async upload, only one item is uploaded at a time.
+        $uploadedFile = $request->file('file');
+        $locale = $request->input('locale');
+        $managerKey = $request->input('managerKey');
+        $fieldKey = $request->input('fieldKey');
 
         try {
             $this->validateUpload(
-                $imagePayload->meta->managerKey,
-                $imagePayload->meta->fieldKey,
+                $managerKey,
+                $fieldKey,
                 $locale,
-                $imagePayload
+                $uploadedFile,
             );
 
-            $asset = AssetUploader::uploadFromBase64($imagePayload->output->image, $imagePayload->output->name);
+            $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName());
 
             return response()->json([
                 'url'      => $asset->url(),
@@ -74,16 +75,16 @@ class AsyncUploadSlimMediaController extends Controller
         }
     }
 
-    protected function validateUpload(string $managerKey, string $fieldKey, string $locale, $imagePayload)
+    protected function validateUpload(string $managerKey, string $fieldKey, string $locale, UploadedFile $uploadedFile)
     {
         $manager = $this->managers->findByKey($managerKey);
         $field = $manager->fields()[$fieldKey];
 
-        // Convert this Slim request to an expected format for our validation rules.
+        // Convert this request to an expected format for our validation rules.
         // validation rules expects something as [images.avatar.nl => [payload]]
         $validationPayload = [];
         $dottedFieldName = FieldName::fromString($field->getName($locale))->get();
-        Arr::set($validationPayload, $dottedFieldName, [json_encode($imagePayload)]); // encode it back as a string just as a normal slim request
+        Arr::set($validationPayload, $dottedFieldName, [$uploadedFile]); // encode it back as a string just as a normal slim request
 
         $this->fieldValidator->handle(new Fields([$field]), $validationPayload);
     }
