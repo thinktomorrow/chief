@@ -30,7 +30,7 @@ class ChiefRoutesServiceProvider extends ServiceProvider
 
     private function loadAdminRoutes()
     {
-        Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web', 'web-chief', 'auth:chief']], function () {
+        Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () {
             $this->loadRoutesFrom(__DIR__.'/../../routes/chief-admin-routes.php');
 
             // Add project specific chief routing...
@@ -62,6 +62,14 @@ class ChiefRoutesServiceProvider extends ServiceProvider
     private function autoloadAdminMiddleware()
     {
         app(Router::class)->middlewareGroup('web-chief', [
+            // The default laravel web middleware - except for the csrf token verification.
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
+            // Chief specific middleware
             AuthenticateChiefSession::class,
             MonitorMiddleware::class,
         ]);
