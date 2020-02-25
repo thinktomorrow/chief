@@ -28,6 +28,8 @@
                                 @can('view-squanto')
                                     <a class="{{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>
                                 @endcan
+
+                                <a class="{{ isActiveUrl('admin/sitemap*') ? 'active' : '' }}" href="{{ route('chief.back.sitemap.index') }}">Sitemap</a>
                             </div>
                         </dropdown>
                     </li>

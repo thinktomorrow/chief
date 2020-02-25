@@ -84,7 +84,6 @@ class ChiefServiceProvider extends ServiceProvider
 
             // Bind our commands to the container
             $this->app->bind('command.chief:refresh', RefreshDatabase::class);
-            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
             $this->app->bind('command.chief:seed', Seed::class);
             $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
@@ -95,7 +94,16 @@ class ChiefServiceProvider extends ServiceProvider
                     'base_path' => base_path()
                 ]);
             });
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
+        }else{
+            $this->commands([
+                // Sitemap generation
+                'command.chief:sitemap',
+            ]);
+
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
         }
+
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');

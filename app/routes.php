@@ -60,6 +60,9 @@ Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), '
     Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
     Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
 
+    // Sitemap
+    Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SitemapController@index')->name('chief.back.sitemap.index');
+    Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SitemapController@generate')->name('chief.back.sitemap.generate');
     /**
      * -----------------------------------------------------------------
      * MANAGER ASSISTANT ROUTES
