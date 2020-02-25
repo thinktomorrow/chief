@@ -4,6 +4,8 @@ principles.
 
 ## unreleased
 
+- Added: generate sitemap command and schedule
+
 ## 0.4.6 - 2020-02-20
 
 - Fixed: show context menu on edit page if even without update permission

@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Illuminate\Console\Scheduling\Schedule;
 use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
@@ -75,10 +77,14 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
+
+                // Sitemap generation
+                'command.chief:sitemap',
             ]);
 
             // Bind our commands to the container
             $this->app->bind('command.chief:refresh', RefreshDatabase::class);
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
             $this->app->bind('command.chief:seed', Seed::class);
             $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
@@ -108,6 +114,11 @@ class ChiefServiceProvider extends ServiceProvider
 
         $this->autoloadMiddleware();
         $this->autoloadRoute();
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('chief:sitemap')->dailyAt('03:00');
+        });
     }
 
     public function register()

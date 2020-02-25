@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89570e588468c3c693d913c422e0e061",
+    "content-hash": "c1f85b94d8d2311a4e2c08d5564cf20a",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -729,24 +729,24 @@
         },
         {
             "name": "fideloper/proxy",
-            "version": "4.2.2",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fideloper/TrustedProxy.git",
-                "reference": "790194d5d3da89a713478875d2e2d05855a90a81"
+                "reference": "ec38ad69ee378a1eec04fb0e417a97cfaf7ed11a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/790194d5d3da89a713478875d2e2d05855a90a81",
-                "reference": "790194d5d3da89a713478875d2e2d05855a90a81",
+                "url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/ec38ad69ee378a1eec04fb0e417a97cfaf7ed11a",
+                "reference": "ec38ad69ee378a1eec04fb0e417a97cfaf7ed11a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "^5.0|^6.0|^7.0",
+                "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
                 "php": ">=5.4.0"
             },
             "require-dev": {
-                "illuminate/http": "^5.0|^6.0|^7.0",
+                "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
                 "mockery/mockery": "^1.0",
                 "phpunit/phpunit": "^6.0"
             },
@@ -779,7 +779,125 @@
                 "proxy",
                 "trusted proxy"
             ],
-            "time": "2019-12-20T13:11:11+00:00"
+            "time": "2020-02-22T01:51:47+00:00"
+        },
+        {
+            "name": "guzzlehttp/guzzle",
+            "version": "6.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/43ece0e75098b7ecd8d13918293029e555a50f82",
+                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/promises": "^1.0",
+                "guzzlehttp/psr7": "^1.6.1",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
+                "psr/log": "^1.1"
+            },
+            "suggest": {
+                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
+                "psr/log": "Required for using the Log middleware"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2019-12-23T11:57:10+00:00"
+        },
+        {
+            "name": "guzzlehttp/promises",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle promises library",
+            "keywords": [
+                "promise"
+            ],
+            "time": "2016-12-20T10:07:11+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1607,6 +1725,42 @@
             "time": "2020-02-07T15:25:46+00:00"
         },
         {
+            "name": "nicmart/tree",
+            "version": "v0.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicmart/Tree.git",
+                "reference": "0616b54bb49938e1a816141d7943db48ebf76938"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicmart/Tree/zipball/0616b54bb49938e1a816141d7943db48ebf76938",
+                "reference": "0616b54bb49938e1a816141d7943db48ebf76938",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tree\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolò Martini",
+                    "email": "nicmartnic@gmail.com"
+                }
+            ],
+            "description": "A basic but flexible php tree data structure and a fluent tree builder implementation.",
+            "time": "2015-08-20T20:50:35+00:00"
+        },
+        {
             "name": "opis/closure",
             "version": "3.5.1",
             "source": {
@@ -2065,16 +2219,16 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "3.9.2",
+            "version": "3.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "7779489a47d443f845271badbdcedfe4df8e06fb"
+                "reference": "7e1633a6964b48589b142d60542f9ed31bd37a92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/7779489a47d443f845271badbdcedfe4df8e06fb",
-                "reference": "7779489a47d443f845271badbdcedfe4df8e06fb",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/7e1633a6964b48589b142d60542f9ed31bd37a92",
+                "reference": "7e1633a6964b48589b142d60542f9ed31bd37a92",
                 "shasum": ""
             },
             "require": {
@@ -2148,7 +2302,122 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2019-12-17T08:18:51+00:00"
+            "time": "2020-02-21T04:36:14+00:00"
+        },
+        {
+            "name": "spatie/browsershot",
+            "version": "3.34.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/browsershot.git",
+                "reference": "483f62d03ea8cfc20091b9c2db1ed3f597d659f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/483f62d03ea8cfc20091b9c2db1ed3f597d659f1",
+                "reference": "483f62d03ea8cfc20091b9c2db1ed3f597d659f1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "spatie/image": "^1.5.3",
+                "spatie/temporary-directory": "^1.1",
+                "symfony/process": "^4.2|^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1|^7.5",
+                "spatie/phpunit-snapshot-assertions": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Browsershot\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://github.com/freekmurze",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert a webpage to an image or pdf using headless Chrome",
+            "homepage": "https://github.com/spatie/browsershot",
+            "keywords": [
+                "chrome",
+                "convert",
+                "headless",
+                "image",
+                "pdf",
+                "puppeteer",
+                "screenshot",
+                "webpage"
+            ],
+            "time": "2020-01-04T22:37:18+00:00"
+        },
+        {
+            "name": "spatie/crawler",
+            "version": "4.6.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/crawler.git",
+                "reference": "6f814a401cee20b24a1ffe53d8deddac90d1a42d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/crawler/zipball/6f814a401cee20b24a1ffe53d8deddac90d1a42d",
+                "reference": "6f814a401cee20b24a1ffe53d8deddac90d1a42d",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "guzzlehttp/psr7": "^1.4",
+                "nicmart/tree": "^0.2.7",
+                "php": "^7.1",
+                "spatie/browsershot": "^3.14",
+                "spatie/robots-txt": "^1.0.1",
+                "symfony/dom-crawler": "^4.0 || ^5.0",
+                "tightenco/collect": "^5.6|^6.0"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Crawler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be"
+                }
+            ],
+            "description": "Crawl all internal links found on a website",
+            "homepage": "https://github.com/spatie/crawler",
+            "keywords": [
+                "crawler",
+                "link",
+                "spatie",
+                "website"
+            ],
+            "time": "2020-01-31T10:51:58+00:00"
         },
         {
             "name": "spatie/image",
@@ -2256,16 +2525,16 @@
         },
         {
             "name": "spatie/laravel-activitylog",
-            "version": "3.9.2",
+            "version": "3.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-activitylog.git",
-                "reference": "6700a3bdfb7a12c9f53d1713d59249e3eca35090"
+                "reference": "0b16f4e5ac45c14312ffa8bf25db737d92de27cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/6700a3bdfb7a12c9f53d1713d59249e3eca35090",
-                "reference": "6700a3bdfb7a12c9f53d1713d59249e3eca35090",
+                "url": "https://api.github.com/repos/spatie/laravel-activitylog/zipball/0b16f4e5ac45c14312ffa8bf25db737d92de27cd",
+                "reference": "0b16f4e5ac45c14312ffa8bf25db737d92de27cd",
                 "shasum": ""
             },
             "require": {
@@ -2329,7 +2598,7 @@
                 "spatie",
                 "user"
             ],
-            "time": "2020-02-05T11:24:06+00:00"
+            "time": "2020-02-22T21:16:32+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -2486,6 +2755,65 @@
             "time": "2020-02-18T21:16:24+00:00"
         },
         {
+            "name": "spatie/laravel-sitemap",
+            "version": "5.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-sitemap.git",
+                "reference": "2351e0757c9d0ee6afc4908bf1bd528fb389a2bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-sitemap/zipball/2351e0757c9d0ee6afc4908bf1bd528fb389a2bb",
+                "reference": "2351e0757c9d0ee6afc4908bf1bd528fb389a2bb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.8.0|^6.0",
+                "nesbot/carbon": "^1.21|^2.0",
+                "php": "^7.2",
+                "spatie/crawler": "^4.1.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.8.0|^4.0",
+                "phpunit/phpunit": "^8.0",
+                "spatie/phpunit-snapshot-assertions": "^2.0.0",
+                "spatie/temporary-directory": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Sitemap\\SitemapServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Sitemap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Create and generate sitemaps with ease",
+            "homepage": "https://github.com/spatie/laravel-sitemap",
+            "keywords": [
+                "laravel-sitemap",
+                "spatie"
+            ],
+            "time": "2020-01-20T12:53:10+00:00"
+        },
+        {
             "name": "spatie/pdf-to-image",
             "version": "2.0.0",
             "source": {
@@ -2534,6 +2862,53 @@
                 "spatie"
             ],
             "time": "2020-01-08T00:13:23+00:00"
+        },
+        {
+            "name": "spatie/robots-txt",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/robots-txt.git",
+                "reference": "dbd8d2048114f81813a57d21da594dbde77fdac7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/robots-txt/zipball/dbd8d2048114f81813a57d21da594dbde77fdac7",
+                "reference": "dbd8d2048114f81813a57d21da594dbde77fdac7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Robots\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Determine if a page may be crawled from robots.txt and robots meta tags",
+            "homepage": "https://github.com/spatie/robots-txt",
+            "keywords": [
+                "robots-txt",
+                "spatie"
+            ],
+            "time": "2019-08-07T22:29:10+00:00"
         },
         {
             "name": "spatie/string",
@@ -2880,6 +3255,67 @@
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
             "time": "2020-01-25T12:44:29+00:00"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "v5.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "439c3c7be4daa569deef0dd1e30cf3562108d062"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/439c3c7be4daa569deef0dd1e30cf3562108d062",
+                "reference": "439c3c7be4daa569deef0dd1e30cf3562108d062",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "conflict": {
+                "masterminds/html5": "<2.6"
+            },
+            "require-dev": {
+                "masterminds/html5": "^2.6",
+                "symfony/css-selector": "^4.4|^5.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2020-01-04T14:08:26+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -4332,6 +4768,56 @@
             ],
             "description": "Render a datatree structure",
             "time": "2019-08-23T11:43:55+00:00"
+        },
+        {
+            "name": "tightenco/collect",
+            "version": "v6.16.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tightenco/collect.git",
+                "reference": "75e997d1803c2e979ce6f314a5df8a97a8af93b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tightenco/collect/zipball/75e997d1803c2e979ce6f314a5df8a97a8af93b0",
+                "reference": "75e997d1803c2e979ce6f314a5df8a97a8af93b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/var-dumper": "^3.4 || ^4.0 || ^5.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "nesbot/carbon": "^2.23.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Collect/Support/helpers.php",
+                    "src/Collect/Support/alias.php"
+                ],
+                "psr-4": {
+                    "Tightenco\\Collect\\": "src/Collect"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "Collect - Illuminate Collections as a separate package.",
+            "keywords": [
+                "collection",
+                "laravel"
+            ],
+            "time": "2020-02-18T17:25:13+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
