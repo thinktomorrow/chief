@@ -8,14 +8,12 @@
         <div class="inline-block">
             <a class="center-y" href="{{ $manager->route('index') }}">
                 <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-                {{-- Terug naar alle {{ $manager->details()->plural }} --}}
             </a>
         </div>
     @endslot
 
     <div class="inline-group-s">
         <button data-submit-form="createForm" type="button" class="btn btn-primary">Aanmaken</button>
-        {{--@include('chief::back.managers._partials.context-menu')--}}
     </div>
 
 @endcomponent
@@ -23,10 +21,6 @@
 @section('content')
 
     <div>
-
-        <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
-        {{--@include('chief::back.managers._partials.delete-modal')--}}
-
         <form id="createForm" method="POST" action="{{ $manager->route('store') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
@@ -66,4 +60,3 @@
 @include('chief::back._components.image-component')
 @include('chief::back._components.filesupload-component')
 @include('chief::back._components.imagesupload-component')
-

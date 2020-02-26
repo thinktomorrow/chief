@@ -31,14 +31,6 @@
 
 @section('content')
     <div>
-
-        <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
-        @include('chief::back.managers._modals.delete-modal')
-
-        @if($manager->isAssistedBy('archive'))
-            @include('chief::back.managers._modals.archive-modal')
-        @endif
-
         <form id="updateForm" class="mt-3" method="POST" action="{{ $manager->route('update') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
