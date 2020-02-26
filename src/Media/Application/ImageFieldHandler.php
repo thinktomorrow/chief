@@ -47,7 +47,6 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 
         // Slim can sometimes sent us the ajax upload response instead of the asset id. Let's make sure this is being dealt with.
         if (isset($value->id) && $this->looksLikeAnAssetId($value->id)) {
-            trap('goth ere');
             return $this->newExistingAsset($model, $locale, $type, $value->id);
         }
 
