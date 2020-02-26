@@ -54,7 +54,7 @@ class SettingFieldsManager implements FieldManager
 
     public function fieldValue(Field $field, $locale = null)
     {
-        return $this->settings->get($field->key(), $locale);
+        return $this->settings->get($field->getKey(), $locale);
     }
 
     public function saveFields(Request $request)
