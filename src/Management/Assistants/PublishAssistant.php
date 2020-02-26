@@ -61,7 +61,7 @@ class PublishAssistant implements Assistant
             ->performedOn($this->manager->existingModel())
             ->log('published');
 
-        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title . ' is online gezet.');
+        return redirect()->back()->with('messages.success', $this->manager->details()->title . ' is online gezet.');
     }
 
     public function unpublish()
@@ -75,7 +75,7 @@ class PublishAssistant implements Assistant
             ->performedOn($this->manager->existingModel())
             ->log('unpublished');
 
-        return redirect()->to($this->manager->route('edit'))->with('messages.success', $this->manager->details()->title . ' is offline gehaald.');
+        return redirect()->back()->with('messages.success', $this->manager->details()->title . ' is offline gehaald.');
     }
 
     public function findAll(): Collection
