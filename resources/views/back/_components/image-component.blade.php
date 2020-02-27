@@ -30,7 +30,7 @@
                             <img v-show="url" :src="url" :alt="filename">
                             <input ref="hiddenInput" style="margin-bottom:0;" type="hidden" :name="hiddenInputKey" />
 
-                            <input style="margin-bottom:0;" type="file" :name="name+'[]'" accept="image/*" />
+                            <input style="margin-bottom:0;" type="file" :name="name+'[]'" accept="image/jpeg, image/png, image/svg+xml, image/webp" />
                         </div>
                     </div>
                 `,

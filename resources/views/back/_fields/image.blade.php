@@ -29,7 +29,7 @@
                     <!-- allow to click for upload -->
                     <input v-if="checkSupport" type="file" @change="handleFileSelect" {{ $field->allowMultiple() ? 'multiple' : '' }} accept="image/*"/>
                     <!-- if not supported, a file can still be passed along -->
-                    <input v-else type="file" name="{{ $name }}[]" {{ $field->allowMultiple() ? 'multiple' : '' }} accept="image/*"/>
+                    <input v-else type="file" name="{{ $name }}[]" {{ $field->allowMultiple() ? 'multiple' : '' }} accept="image/jpeg, image/png, image/svg+xml, image/webp"/>
                     <span><svg width="18" height="18"><use xlink:href="#plus"/></svg></span>
                 </div>
             </div>
