@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
     <style type="text/css">
 
-        .slim-area{
+        .slim-error{
             min-height:80px;
         }
 
@@ -27,7 +27,7 @@
             template: `
                     <div class="thumb">
                         <div class="slim">
-                            <img v-if="url" :src="url" :alt="filename">
+                            <img v-show="url" :src="url" :alt="filename">
                             <input ref="hiddenInput" style="margin-bottom:0;" type="hidden" :name="hiddenInputKey" />
 
                             <input style="margin-bottom:0;" type="file" :name="name+'[]'" accept="image/*" />
