@@ -36,7 +36,7 @@
         </div>
 
         <div class="flex mt-4">
-            <div v-if="{{ json_encode($field->allowMultiple()) }} == true || items.length < 1 || !hasValidUpload">
+            <div v-if="({{ json_encode($field->allowMultiple()) }} == true || items.length < 1 || !hasValidUpload) && !reorder">
                 <div class="btn btn-primary mr-4" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
                     <span>Voeg bestaande toe uit je galerij</span>
                 </div>
