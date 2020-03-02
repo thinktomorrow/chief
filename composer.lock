@@ -59,16 +59,16 @@
         },
         {
             "name": "astrotomic/laravel-translatable",
-            "version": "v11.7.0",
+            "version": "11.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Astrotomic/laravel-translatable.git",
-                "reference": "889f8b91f28a8a72873099cf452945adbd03dc9f"
+                "reference": "d454ca5d73515a0878ed8b1f8df7e0510d351d2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/889f8b91f28a8a72873099cf452945adbd03dc9f",
-                "reference": "889f8b91f28a8a72873099cf452945adbd03dc9f",
+                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/d454ca5d73515a0878ed8b1f8df7e0510d351d2c",
+                "reference": "d454ca5d73515a0878ed8b1f8df7e0510d351d2c",
                 "shasum": ""
             },
             "require": {
@@ -119,7 +119,7 @@
                 "laravel",
                 "translation"
             ],
-            "time": "2020-01-28T11:49:28+00:00"
+            "time": "2020-02-27T11:09:11+00:00"
         },
         {
             "name": "barryvdh/laravel-debugbar",
