@@ -2,6 +2,10 @@
     <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
     <style type="text/css">
 
+        .slim{
+              max-height: 250px;
+        }
+
         .slim-error{
             min-height:80px;
         }
@@ -12,6 +16,11 @@
             line-height: 1.1;
             padding: .3em;
             white-space: normal;
+        }
+
+        .slim .slim-area .slim-result img{
+            height: 100%;
+            object-fit: cover;
         }
 
         .thumb [data-state=empty] {
