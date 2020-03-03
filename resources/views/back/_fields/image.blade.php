@@ -5,20 +5,57 @@
     $slug = $field->getKey();
 ?>
 
+@push('custom-styles')
+    <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
+    <style type="text/css">
+
+        .slim{
+            max-height: 250px;
+        }
+
+        .slim-error{
+            min-height:80px;
+        }
+
+        .slim .slim-area .slim-upload-status[data-state=error] {
+            right: .5em;
+            left: .5em;
+            line-height: 1.1;
+            padding: .3em;
+            white-space: normal;
+        }
+
+        .slim .slim-area .slim-result img{
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb [data-state=empty] {
+            height: 80px;
+        }
+    </style>
+@endpush
+@push('custom-scripts')
+    <script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
+@endpush
+
 <imagesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
     <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
             <div v-for="(item, index) in items" class="column-4 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
-                 @dragenter.prevent="handleSortingEnter" v-show="!item.deleted || ({{ json_encode($field->allowMultiple()) }} != true && !hasValidUpload && index == 0)">
-                    <slim name="{{ $name }}" group="{{ $slug }}" :options="{
-                        id: item.id,
-                        filename: item.filename,
-                        url: item.url,
-                        file: item.file,
-                        label: 'Drop hier uw afbeelding',
-                        addedFromGallery: item.addedFromGallery,
-                    }"></slim>
+                 @dragenter.prevent="handleSortingEnter"
+                 v-show="!item.deleted"
+            >
+                    <image-component :item="item" :key="index" @input="(newItem) => { items[index] = newItem; }" name="{{ $name }}" group="{{ $slug }}">
+                        <div class="thumb" slot-scope="{hiddenInputName, hiddenInputValue, name}">
+                            <div>
+                                <img v-show="item.url" :src="item.url" :alt="item.filename">
+                                <input style="margin-bottom:0;" type="hidden" :name="hiddenInputName" :value="hiddenInputValue" />
+                                <input style="margin-bottom:0;" type="file" :name="name+'[]'" accept="image/jpeg, image/png, image/svg+xml, image/webp" />
+                            </div>
+                        </div>
+                    </image-component>
             </div>
             <div v-if="{{ json_encode($field->allowMultiple()) }} == true || items.length < 1">
                 <div class="thumb thumb-new" id="file-drop-area-{{ $slug }}"

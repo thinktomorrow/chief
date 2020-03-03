@@ -8,7 +8,7 @@
                     isDraggingOver: false,
                     isDropped: false,
 
-                    items: this.preselected ? JSON.parse(this.preselected) : [],
+                    items: [],
 
                     fileDropArea: null,
                     fileInput: null,
@@ -21,12 +21,18 @@
                 };
             },
             created: function () {
-                /** */
-                if(this.items.length < 1) {
-                    // this.fileDropArea  = document.querySelector('#file-drop-area-' + this.group);
-                    // this.fileInput     = this.fileDropArea.querySelector('input');
-                    // this.fileInputName = this.fileInput.name;
-                }
+
+                const preselection = this.preselected ? JSON.parse(this.preselected) : [];
+
+                preselection.forEach((preselectedItem) => {
+                    this.items.push({
+                        id: preselectedItem.id,
+                        existingId: preselectedItem.id,
+                        filename: preselectedItem.filename,
+                        url: preselectedItem.url,
+                        deleted: false,
+                    });
+                });
 
                 /**
                  * When a new image is loaded, we want to reorder our files so
@@ -86,7 +92,7 @@
                         return item.deleted;
                     });
                     return result.includes(undefined) || result.includes(false);
-                }
+                },
             },
             mounted: function () {
                 this.updateFilesOrder();
@@ -120,7 +126,14 @@
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();
                     }
-                    this.items.push({file: file});
+                    this.items.push({
+                        id: null,
+                        existingId: null,
+                        filename: file.name,
+                        url: null,
+                        deleted: false,
+                        file: file, // contains the file object
+                    });
                 },
                 checkSupport: function () {
                     var div = document.createElement('div');
