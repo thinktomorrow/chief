@@ -67,9 +67,7 @@
 
                 // If a file instance is passed, we want to directly load the file into our cropper
                 if (this.file) {
-                    this.instance.load(this.file, () => {
-                        this.upload();
-                    });
+                    this.instance.load(this.file);
                 }
 
                 // Mark element with the same id so serverside we know it needs to be 'replaced' with the same asset.
@@ -95,7 +93,6 @@
             methods: {
                 upload: function(){
                     this.instance.upload((error, data, response) => {
-
                         if(error) {
                             return console.error(error);
                         }
@@ -123,9 +120,6 @@
                     this.$refs.hiddenInput.value = null;
 
                     Eventbus.$emit('file-deletion-' + this.group, {id: self.id, newImage: target});
-                },
-                onTransform: function(){
-                    this.upload();
                 },
                 onLoad: function () {
 
