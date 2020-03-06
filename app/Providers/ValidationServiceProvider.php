@@ -36,16 +36,16 @@ class ValidationServiceProvider extends ServiceProvider
 
     private function bootMediaValidationRules()
     {
-        Validator::extendImplicit('filefield_required', FileFieldRequiredRule::class.'@validate');
-        Validator::extend('filefield_mimetypes', FileFieldMimetypesRule::class.'@validate');
-        Validator::extend('filefield_dimensions', FileFieldDimensionsRule::class.'@validate');
-        Validator::extend('filefield_min', FileFieldMinRule::class.'@validate');
-        Validator::extend('filefield_max', FileFieldMaxRule::class.'@validate');
+        Validator::extendImplicit('filefield_required', FileFieldRequiredRule::class . '@validate');
+        Validator::extend('filefield_mimetypes', FileFieldMimetypesRule::class . '@validate');
+        Validator::extend('filefield_dimensions', FileFieldDimensionsRule::class . '@validate');
+        Validator::extend('filefield_min', FileFieldMinRule::class . '@validate');
+        Validator::extend('filefield_max', FileFieldMaxRule::class . '@validate');
 
-        Validator::extendImplicit('imagefield_required', ImageFieldRequiredRule::class.'@validate');
-        Validator::extend('imagefield_mimetypes', ImageFieldMimetypesRule::class.'@validate');
-        Validator::extend('imagefield_dimensions', ImageFieldDimensionsRule::class.'@validate');
-        Validator::extend('imagefield_max', ImageFieldMaxRule::class.'@validate');
-        Validator::extend('imagefield_min', ImageFieldMinRule::class.'@validate');
+        Validator::extendImplicit('imagefield_required', ImageFieldRequiredRule::class . '@validate');
+        Validator::extend('imagefield_mimetypes', ImageFieldMimetypesRule::class . '@validate');
+        Validator::extend('imagefield_dimensions', ImageFieldDimensionsRule::class . '@validate');
+        Validator::extend('imagefield_max', ImageFieldMaxRule::class . '@validate');
+        Validator::extend('imagefield_min', ImageFieldMinRule::class . '@validate');
     }
 }

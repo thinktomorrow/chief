@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/../_partials/header.php'); ?>
+<?php include(__DIR__ . '/../_partials/header.php'); ?>
 
 <section class="stack-l labels" id="labels">
   <h1>Labels</h1>
@@ -28,4 +28,4 @@
   <pre class="code-box" id="code-17"></pre>
 </section>
 
-<?php include(__DIR__.'/../_partials/footer.php'); ?>
+<?php include(__DIR__ . '/../_partials/footer.php'); ?>

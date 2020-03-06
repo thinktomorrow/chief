@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/_partials/header.php'); ?>
+<?php include(__DIR__ . '/_partials/header.php'); ?>
 
 <article class="stack-xl">
     <h1>What is Spirit?</h1>
@@ -40,6 +40,6 @@
 
 <a class="btn btn-o-tertiary btn-round --raised" href="https://github.com/thinktomorrow/spirit/archive/master.zip">SUMMON SPIRIT <i class="icon icon-fw icon-download"></i></a>
 
-<?php include(__DIR__.'/_partials/footer.php'); ?>
+<?php include(__DIR__ . '/_partials/footer.php'); ?>
 
 

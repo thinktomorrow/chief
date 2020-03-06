@@ -6,8 +6,8 @@
  * -----------------------------------------------------------------
  */
 Route::get('spirit/{section?}/{item?}', ['as' => 'spirit.index', 'uses' => function ($section = null, $item = null) {
-    if ($section && $item && view()->exists('chief::spirit.'.$section.'.'.$item)) {
-        return view('chief::spirit.'.$section.'.'.$item);
+    if ($section && $item && view()->exists('chief::spirit.' . $section . '.' . $item)) {
+        return view('chief::spirit.' . $section . '.' . $item);
     }
 
     return view('chief::spirit.home');

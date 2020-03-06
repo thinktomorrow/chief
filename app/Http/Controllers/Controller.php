@@ -26,7 +26,8 @@ class Controller extends BaseController
             [
                 'path'     => Paginator::resolveCurrentPath($pageName),
                 'pageName' => $pageName
-            ]);
+            ]
+        );
 
         return $paginator;
     }

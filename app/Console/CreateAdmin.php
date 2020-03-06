@@ -37,7 +37,7 @@ class CreateAdmin extends BaseCommand
 
         $this->createUser($firstname, $lastname, $email, $password, [$role]);
 
-        $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
+        $this->info($firstname . ' ' . $lastname . ' succesfully added as admin user.');
     }
 
     private function settingPermissionsAndRoles()

@@ -36,7 +36,7 @@
 <!-- End Google Tag Manager (noscript) -->
     <main class="row" id="main">
 
-        <?php include(__DIR__.'/sidebar.php'); ?>
+        <?php include(__DIR__ . '/sidebar.php'); ?>
 
         <?php
 

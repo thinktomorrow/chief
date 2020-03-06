@@ -21,7 +21,7 @@ class Seed extends BaseCommand
         }
 
         if (app()->environment() != 'local' && $this->option('force')) {
-            if (!$this->confirm('You are about to inject default seeding data in the '.app()->environment().' database! Are you sure?')) {
+            if (!$this->confirm('You are about to inject default seeding data in the ' . app()->environment() . ' database! Are you sure?')) {
                 $this->info('You are welcome. I have just saved your job.');
                 return;
             }
@@ -30,6 +30,6 @@ class Seed extends BaseCommand
         $seederClass = $this->argument('seeder');
         app($seederClass)->run();
 
-        $this->info($seederClass.' has run successfully.');
+        $this->info($seederClass . ' has run successfully.');
     }
 }

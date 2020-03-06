@@ -54,7 +54,7 @@ class UploadManagersMediaController extends Controller
 
             app(AddAsset::class)->add($model, $asset, MediaType::CONTENT, $request->input('locale', app()->getLocale()));
 
-            $responseContent['file-'.$asset->id] = [
+            $responseContent['file-' . $asset->id] = [
                 'url' => $asset->url(),
                 'id'  => $asset->id,
             ];
