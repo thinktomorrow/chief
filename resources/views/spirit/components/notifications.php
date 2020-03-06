@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/../_partials/header.php'); ?>
+<?php include(__DIR__ . '/../_partials/header.php'); ?>
 
     <section class="stack-l notifications" id="notifications">
         <h1>Notifications</h1>
@@ -53,4 +53,4 @@
         <pre class="code-box" id="code-16"></pre>
     </section>
 
-<?php include(__DIR__.'/../_partials/footer.php'); ?>
+<?php include(__DIR__ . '/../_partials/footer.php'); ?>

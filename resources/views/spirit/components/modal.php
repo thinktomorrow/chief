@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/../_partials/header.php'); ?>
+<?php include(__DIR__ . '/../_partials/header.php'); ?>
 
 <section class="stack-l components" id="modals">
     <h1>Modal</h1>
@@ -51,4 +51,4 @@
 
 </section>
 
-<?php include(__DIR__.'/../_partials/footer.php'); ?>
+<?php include(__DIR__ . '/../_partials/footer.php'); ?>

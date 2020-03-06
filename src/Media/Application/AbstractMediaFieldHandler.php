@@ -169,7 +169,8 @@ abstract class AbstractMediaFieldHandler
     {
         $values = isset($fileIdInput[$key])
             ? $fileIdInput[$key]
-            : (isset($fileIdInput['files-' . $key])
+            : (
+                isset($fileIdInput['files-' . $key])
                 ? $fileIdInput['files-' . $key]
                 : ''
             );

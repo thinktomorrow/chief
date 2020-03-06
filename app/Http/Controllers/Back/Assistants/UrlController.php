@@ -44,7 +44,7 @@ class UrlController extends Controller
         }
 
         if (! $urlRecord->isRedirect()) {
-            return response()->json(['Url with id '.$id.' is not a redirect'], 500);
+            return response()->json(['Url with id ' . $id . ' is not a redirect'], 500);
         }
 
         $urlRecord->delete();

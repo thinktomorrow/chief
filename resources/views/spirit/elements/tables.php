@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/../_partials/header.php'); ?>
+<?php include(__DIR__ . '/../_partials/header.php'); ?>
 
 <section class="stack-l tables" id="tables">
   <h1>Tables</h1>
@@ -130,4 +130,4 @@
   </table>
 </section>
 
-<?php include(__DIR__.'/../_partials/footer.php'); ?>
+<?php include(__DIR__ . '/../_partials/footer.php'); ?>
