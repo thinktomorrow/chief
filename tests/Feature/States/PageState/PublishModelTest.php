@@ -27,8 +27,10 @@ class PublishModelTest extends TestCase
     /** @test */
     public function it_can_publish_a_page()
     {
+        $this->disableExceptionHandling();
         $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
 
+        $this->asAdmin()->get($pageManager->route('edit'));
         $response = $this->asAdmin()->post($pageManager->assistant('publish')->route('publish'));
         $response->assertStatus(302)->assertRedirect($pageManager->route('edit'));
 
@@ -43,6 +45,7 @@ class PublishModelTest extends TestCase
 
         $pageManager = app(Managers::class)->findByKey('singles', $this->page->id);
 
+        $this->asAdmin()->get($pageManager->route('edit'));
         $response = $this->asAdmin()->post($pageManager->assistant('publish')->route('unpublish'));
         $response->assertStatus(302)->assertRedirect($pageManager->route('edit'));
 
