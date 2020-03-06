@@ -22,67 +22,18 @@
             },
             created: function () {
 
+                var self = this;
                 const preselection = this.preselected ? JSON.parse(this.preselected) : [];
 
                 preselection.forEach((preselectedItem) => {
-                    this.items.push({
-                        id: preselectedItem.id,
-                        existingId: preselectedItem.id,
-                        filename: preselectedItem.filename,
-                        url: preselectedItem.url,
-                        deleted: false,
-                    });
+                    self.addNewItem(preselectedItem.id, preselectedItem.filename, preselectedItem.url);
                 });
 
-                /**
-                 * When a new image is loaded, we want to reorder our files so
-                 * this new one is included in the list. We have a small delay
-                 * to assert the slim loading event has finished.
-                 */
-                var self = this;
-                Eventbus.$on('files-loaded-' + this.group, function (id) {
-                    self.items.forEach((item, itemId) => {
-                        if(item.id == id) {
-                            item.deleted = false;
-                            self.items.splice(itemId, 1, item);
-                        }
-                    })
-                    setTimeout(function () {
-                        self.updateFilesOrder();
-                    }, 1500);
-                });
-
-                Eventbus.$on('file-deletion-' + this.group, function(obj){
-                    var id = obj.id;
-                    self.items.forEach((item, itemId) => {
-                        if(item.id == id) {
-                            /**
-                             * This timeout function is required since the newImage object we received from slim
-                             * has a name property but this isn't filled in immediately so we wait a little bit
-                             */
-                            setTimeout(function () {
-                                var imageName = obj.newImage._data.input.name;
-                                if(item.addedFromGallery == true) {
-                                    if(imageName == null){
-                                        self.items.splice(itemId, 1);
-                                    }
-                                }else{
-                                    item.deleted = true;
-                                    self.items.splice(itemId, 1, item);
-                                }
-                            }, 200);
-                        }
-                    })
-                });
+                setTimeout(this.updateFilesOrder, 100);
 
                 Eventbus.$on('mediagallery-loaded-' + this.group, function (asset){
-                    self.items.push({
-                        filename: asset.filename,
-                        id: asset.id,
-                        url: asset.url,
-                        addedFromGallery: true,
-                    });
-                    self.updateFilesOrder();
+                    self.addNewItem(asset.id, asset.filename, asset.url);
+                    setTimeout(this.updateFilesOrder, 100);
                 })
 
             },
@@ -98,6 +49,16 @@
                 this.updateFilesOrder();
             },
             methods: {
+                addNewItem: function(id, filename, url, file){
+                    this.items.push({
+                        id: id,
+                        existingId: id,
+                        filename: filename,
+                        url: url,
+                        deleted: false,
+                        file: file, // original file object
+                    });
+                },
                 handleDraggingOver: function () {
                     this.isDraggingOver = true;
                 },
@@ -119,6 +80,8 @@
                     for (var i = 0; i < l; i++) {
                         this._handleItem(items[i]);
                     }
+
+                    setTimeout(() => this.updateFilesOrder(), 1500);
                 },
                 _handleItem: function (item) {
                     var file = item;
@@ -126,14 +89,8 @@
                     if (item.getAsFile && item.kind == 'file') {
                         file = item.getAsFile();
                     }
-                    this.items.push({
-                        id: null,
-                        existingId: null,
-                        filename: file.name,
-                        url: null,
-                        deleted: false,
-                        file: file, // contains the file object
-                    });
+
+                    this.addNewItem(null, file.name, null, file);
                 },
                 checkSupport: function () {
                     var div = document.createElement('div');
@@ -147,9 +104,11 @@
                  * Sorting methods
                  */
                 updateFilesOrder: function () {
+
                     this.filesOrder = [];
 
                     var draggableItems = document.querySelectorAll('#filegroup-'+ this.group +'-'+ this.locale + ' .draggable-item');
+
                     for (var i = 0; i < draggableItems.length; i++) {
                         var itemId = draggableItems[i].getAttribute('data-item-id');
 
@@ -183,6 +142,7 @@
                 },
                 handleSortingEnter: function (e) {
 
+                    if(!this.sortSource) return;
                     this.sortSource.style.opacity = '1';
 
                     // We need our draggable-item, not the child elements

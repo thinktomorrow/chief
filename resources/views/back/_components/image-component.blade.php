@@ -13,27 +13,20 @@
                 return {
                     hiddenInputValue: null,
                     instance: null,
-                    // deletion: false,
                     // addedFromGallery: false,
                 }
             },
             mounted: function () {
-                // this.addedFromGallery = this.options.addedFromGallery || false;
-
-                {{--this.options.didLoad = this.onLoad;--}}
-                {{--this.options.didTransform = this.onTransform;--}}
-                {{--this.options.labelLoading = '';--}}
-
-                {{--};--}}
-
                 this.instance = new Slim(this.$el.childNodes[0], {
 
-                    // labelLoading: '',
+                    label: 'geen afbeelding',
+                    labelLoading: '',
 
                     // Async upload settings
                     service: '{{ route('chief.api.images.upload') }}',
                     uploadBase64: true,
                     didUpload: this.didUpload,
+                    didLoad: this.didLoad,
                     didRemove: this.didRemove,
                     push: true,
                     statusUploadSuccess: '<span class="slim-upload-status-icon"></span>',
@@ -92,23 +85,32 @@
                         deleted: true,
                     });
                 },
-                onLoad: function () {
+                didLoad: function () {
 
-                    // Unmark for deletion
-                    // this.deletion = false;
-console.log('onload...');
-                    // Eventbus.$emit('files-loaded-' + this.group, this.id);
+                    // When swapping an existing image with another by clicking on the slim dropzone to upload a replacement image,
+                    // slim first emits a didRemove action. This is followed by the didLoad action so that's why we ensure
+                    // here that any image does not have the deleted flag.
+                    if(this.item.deleted) {
+                        this.updateItem({
+                            deleted: false,
+                        });
+                    }
 
                     // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                     return true;
                 },
                 updateItem(item){
-                    this.$emit('input', {...this.item, ...item});
+
+                    // Unknown bug: when updating the entire item as a whole to the parent component, the item object itself is not
+                    // being updated in this component. Looks like because we are doing a full swap (items[index] = newItem)
+                    // because updating a single property (items[index].filename = newItem.filename) seems to propagate like expected.
+                    for(const prop in item) {
+                        const value = item[prop];
+                        this.$emit('input', prop, value);
+                    }
                 },
                 randomString: function(length) {
-                    let result = '',
-                        i = 0;
-
+                    let result = '', i = 0;
                     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
                     for (; i < length; i++ ) {

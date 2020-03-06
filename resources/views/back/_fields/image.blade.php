@@ -14,7 +14,11 @@
         }
 
         .slim-error{
-            min-height:80px;
+            min-height:60px;
+        }
+
+        .slim-upload-status{
+            padding: .3em;
         }
 
         .slim .slim-area .slim-upload-status[data-state=error] {
@@ -42,12 +46,11 @@
 <imagesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
     <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
-            <div v-for="(item, index) in items" class="column-4 draggable-item" :draggable="reorder" :data-item-id="item.id"
+            <div v-for="(item, index) in items" :key="index" class="column-4 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
                  @dragenter.prevent="handleSortingEnter"
-                 v-show="!item.deleted"
             >
-                    <image-component :item="item" :key="index" @input="(newItem) => { items[index] = newItem; }" name="{{ $name }}" group="{{ $slug }}">
+                    <image-component :item="item" @input="(prop, value) => { items[index][prop] = value; }" name="{{ $name }}" group="{{ $slug }}">
                         <div class="thumb" slot-scope="{hiddenInputName, hiddenInputValue, name}">
                             <div>
                                 <img v-show="item.url" :src="item.url" :alt="item.filename">
