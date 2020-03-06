@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Fields;
 
 use ArrayIterator;
@@ -10,7 +12,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     /** @var array */
     private $fields;
 
-    public function __construct(array $fields = [])
+    final public function __construct(array $fields = [])
     {
         $this->validateFields($fields);
 
@@ -46,13 +48,6 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return array_keys($this->fields);
     }
 
-    public function validate(array $data)
-    {
-        foreach ($this->fields as $field) {
-            $field->validator($data)->validate();
-        }
-    }
-
     public function filterBy($key, $value = null)
     {
         $fields = [];
@@ -66,13 +61,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
                 continue;
             }
 
-            // Reject from list if value does not match expected one
-            if ($value && $value == $field->$key) {
-                $fields[] = $field;
-            }
+            $method = 'get' . ucfirst($key);
 
-            // Reject from list if key returns null (key not present on field)
-            elseif (!$value && !is_null($field->$key)) {
+            // Reject from list if value does not match expected one
+            if ($value && $value == $field->$method()) {
+                $fields[] = $field;
+            } // Reject from list if key returns null (key not present on field)
+            elseif (!$value && !is_null($field->$method())) {
                 $fields[] = $field;
             }
         }
@@ -101,7 +96,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         }
 
         foreach ($this->fields as $k => $field) {
-            if (in_array($field->key, $keys)) {
+            if (in_array($field->getKey(), $keys)) {
                 unset($this->fields[$k]);
             }
         }
@@ -117,13 +112,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function offsetGet($offset)
     {
         return (isset($this->fields[$offset]))
-                ? $this->fields[$offset]
-                : null;
+            ? $this->fields[$offset]
+            : null;
     }
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Field) {
+        if (!$value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
         }
 
@@ -144,8 +139,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $keyedFields = [];
 
+        /** @var Field */
         foreach ($fields as $field) {
-            $keyedFields[$field->key] = $field;
+            $keyedFields[$field->getKey()] = $field;
         }
 
         return $keyedFields;

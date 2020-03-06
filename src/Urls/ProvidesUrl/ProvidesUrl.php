@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls\ProvidesUrl;
 
 interface ProvidesUrl

@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Common;
 
-use Thinktomorrow\Chief\Common\State\StateException;
-use Thinktomorrow\Chief\Common\State\StatefulContract;
-use Thinktomorrow\Chief\Common\State\StateMachine;
+use Thinktomorrow\Chief\States\State\StateException;
+use Thinktomorrow\Chief\States\State\StatefulContract;
+use Thinktomorrow\Chief\States\State\StateMachine;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class StateMachineTest extends TestCase
@@ -17,7 +17,7 @@ class StateMachineTest extends TestCase
         parent::setUp();
 
         $this->dummyStatefulContract = new dummyStatefulContract();
-        $this->machine = new DummyStateMachine($this->dummyStatefulContract);
+        $this->machine = new DummyStateMachine($this->dummyStatefulContract, 'current_state');
     }
 
     /** @test */
@@ -31,7 +31,7 @@ class StateMachineTest extends TestCase
     {
         $this->expectException(StateException::class, 'malformed');
 
-        new MalformedStateMachine($this->dummyStatefulContract);
+        new MalformedStateMachine($this->dummyStatefulContract, 'current_state');
     }
 
     /** @test */
@@ -39,7 +39,7 @@ class StateMachineTest extends TestCase
     {
         $this->expectException(StateException::class, 'non existing');
 
-        new MissingStateMachine($this->dummyStatefulContract);
+        new MissingStateMachine($this->dummyStatefulContract, 'current_state');
     }
 
     /** @test */
@@ -62,23 +62,23 @@ class StateMachineTest extends TestCase
     public function it_can_apply_transition()
     {
         $dummyStatefulContract = new dummyStatefulContract();
-        $machine = new DummyStateMachine($dummyStatefulContract);
+        $machine = new DummyStateMachine($dummyStatefulContract, 'current_state');
 
-        $this->assertEquals('new', $dummyStatefulContract->state());
+        $this->assertEquals('new', $dummyStatefulContract->stateOf('current_state'));
 
         $machine->apply('create');
-        $this->assertEquals('pending', $dummyStatefulContract->state());
+        $this->assertEquals('pending', $dummyStatefulContract->stateOf('current_state'));
     }
 
     /** @test */
     public function it_can_reset_same_state()
     {
         $dummyStatefulContract = new dummyStatefulContract();
-        $machine = new DummyStateMachine($dummyStatefulContract);
+        $machine = new DummyStateMachine($dummyStatefulContract, 'current_state');
 
-        $this->assertEquals('new', $dummyStatefulContract->state());
-        $dummyStatefulContract->changeState('new');
-        $this->assertEquals('new', $dummyStatefulContract->state());
+        $this->assertEquals('new', $dummyStatefulContract->stateOf('current_state'));
+        $dummyStatefulContract->changeStateOf('current_state', 'new');
+        $this->assertEquals('new', $dummyStatefulContract->stateOf('current_state'));
     }
 }
 
@@ -140,14 +140,13 @@ class DummyStatefulContract implements StatefulContract
         $this->currentState = self::STATE_NEW;
     }
 
-    public function state(): string
+    public function stateOf($key): string
     {
         return $this->currentState;
     }
 
-    public function changeState($state)
+    public function changeStateOf($key, $state)
     {
-        // Validation occurs in state machine
         $this->currentState = $state;
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users;
+
+use Thinktomorrow\Chief\Users\Invites\InvitationState;
 
 class UserPresenter
 {
@@ -18,7 +22,7 @@ class UserPresenter
     {
         // Avoid showing enabled state if there is an invitation pending
         if ($this->user->invitation->last()) {
-            $state = $this->user->invitation->last()->state();
+            $state = $this->user->invitation->last()->stateOf(InvitationState::KEY);
             if ($state == 'pending') {
                 return '<span class="label label-primary">Uitgenodigd</span>';
             } elseif ($state == 'denied') {

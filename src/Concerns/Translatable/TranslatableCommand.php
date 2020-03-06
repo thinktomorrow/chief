@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\Translatable;
 
 trait TranslatableCommand
@@ -60,7 +62,7 @@ trait TranslatableCommand
                 continue;
             }
 
-            if (trim($translation[$key])) {
+            if ($translation[$key] && trim($translation[$key])) {
                 $is_completely_empty = false;
             }
         }

@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -62,11 +61,11 @@ class UrlSlugFieldsTest extends TestCase
         $nlField = $fields['url-slugs.nl'];
         $enField = $fields['url-slugs.en'];
 
-        $this->assertEquals(route('pages.show','producten').'/', $nlField->prepend);
-        $this->assertEquals(route('pages.show','products').'/', $enField->prepend);
+        $this->assertEquals(route('pages.show','producten').'/', $nlField->getPrepend());
+        $this->assertEquals(route('pages.show','products').'/', $enField->getPrepend());
 
-        $this->assertEquals('foobar', $nlField->value());
-        $this->assertEquals('foobar', $enField->value());
+        $this->assertEquals('foobar', $nlField->getValue());
+        $this->assertEquals('foobar', $enField->getValue());
     }
 
     /** @test */
@@ -88,11 +87,11 @@ class UrlSlugFieldsTest extends TestCase
         $nlField = $fields['url-slugs.nl'];
         $enField = $fields['url-slugs.en'];
 
-        $this->assertStringEndsWith('producten/', $nlField->prepend);
-        $this->assertStringEndsWith('products/', $enField->prepend);
+        $this->assertStringEndsWith('producten/', $nlField->getPrepend());
+        $this->assertStringEndsWith('products/', $enField->getPrepend());
 
-        $this->assertEquals('foobar', $nlField->value());
-        $this->assertEquals('foobar', $enField->value());
+        $this->assertEquals('foobar', $nlField->getValue());
+        $this->assertEquals('foobar', $enField->getValue());
     }
 
     /** @test */
@@ -128,8 +127,8 @@ class UrlSlugFieldsTest extends TestCase
 
         $nlField = $fields['url-slugs.nl'];
 
-        $this->assertEquals(route('pages.show','producten').'/', $nlField->prepend);
-        $this->assertEquals('link-nl', $nlField->value());
+        $this->assertEquals(route('pages.show','producten').'/', $nlField->getPrepend());
+        $this->assertEquals('link-nl', $nlField->getValue());
     }
 
     /** @test */

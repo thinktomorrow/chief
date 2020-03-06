@@ -1,27 +1,15 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-class RadioField extends Field
+class RadioField extends AbstractField implements Field
 {
-    public static function make(string $key)
+    use AllowsOptions;
+
+    public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::RADIO), $key);
-    }
-
-    public function options(array $values)
-    {
-        $this->values['options'] = $values;
-
-        return $this;
-    }
-
-    public function selected($values)
-    {
-        $this->values['selected'] = $values;
-
-        return $this;
     }
 }

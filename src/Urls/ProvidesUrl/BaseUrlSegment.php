@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls\ProvidesUrl;
 
 use Thinktomorrow\Chief\Management\Managers;
@@ -44,8 +46,8 @@ class BaseUrlSegment
         $managers = app(Managers::class)->all();
 
         foreach ($managers as $manager) {
-            if (contract($manager->model(), ProvidesUrl::class)) {
-                $segments[] = $manager->model()->baseUrlSegment();
+            if (contract($manager->existingModel(), ProvidesUrl::class)) {
+                $segments[] = $manager->existingModel()->baseUrlSegment();
             }
         }
 

@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media;
 
 class MediaType
 {
-    const HERO       = 'images-hero';
-    const THUMB      = 'images-thumb';
+    const HERO = 'images-hero';
+    const THUMB = 'images-thumb';
     const BACKGROUND = 'images-background';
-    const CONTENT    = 'images';
+    const CONTENT = 'images';
 
     const DOCUMENT = 'document';
 }

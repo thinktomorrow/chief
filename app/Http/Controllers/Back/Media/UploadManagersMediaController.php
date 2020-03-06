@@ -33,13 +33,13 @@ class UploadManagersMediaController extends Controller
     public function store(string $key, $id, Request $request)
     {
         $uploads = $request->file('file');
-        $model   = $this->managers->findByKey($key, $id)->model();
+        $model   = $this->managers->findByKey($key, $id)->existingModel();
 
         if (empty($uploads)) {
             return response()->json([
                 'error'    => true,
                 'messages' => 'Geen afbeelding opgeladen.',
-            ], 500);
+            ], 200);
         }
 
         $responseContent = [];
@@ -49,12 +49,12 @@ class UploadManagersMediaController extends Controller
                 return response()->json([
                     'error'    => true,
                     'messages' => 'Afbeelding kan niet worden opgeladen.',
-                ], 500);
+                ], 200);
             }
 
             app(AddAsset::class)->add($model, $asset, MediaType::CONTENT, $request->input('locale', app()->getLocale()));
 
-            $responseContent['file-'.$asset->id] = [
+            $responseContent['file-' . $asset->id] = [
                 'url' => $asset->url(),
                 'id'  => $asset->id,
             ];

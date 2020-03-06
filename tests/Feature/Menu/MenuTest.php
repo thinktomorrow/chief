@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\Menu;
 use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
@@ -48,9 +49,7 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_reference_an_internal_page()
     {
-        $page   = factory(Page::class)->create([
-            'published' => 1
-        ]);
+        $page   = factory(Page::class)->create(['current_state' => PageState::PUBLISHED]);
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
         $second = MenuItem::create(['label:nl' => 'second item', 'type' => 'internal', 'page_id' => $page->id, 'parent_id' => $first->id]);
@@ -64,7 +63,7 @@ class MenuTest extends TestCase
     {
         $page   = factory(Page::class, 3)->create([
             'morph_key'    => ArticlePageFake::class,
-            'published'     => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal']);
@@ -90,12 +89,12 @@ class MenuTest extends TestCase
     {
         $page = factory(Page::class)->create([
             'morph_key' => 'singles',
-            'published' => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         factory(Page::class, 3)->create([
             'morph_key'    => ArticlePageFake::class,
-            'published'     => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         MenuItem::create(['type' => 'internal', 'label:nl' => 'first item', 'page_id' => $page->id]);
@@ -186,7 +185,7 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_order_the_menu_items()
     {
-        $page = factory(Page::class)->create([]);
+        $page = factory(Page::class)->create(['current_state' => PageState::PUBLISHED]);
         app()->setLocale('nl');
         $first  = MenuItem::create(['label:nl' => 'first item']);
         $second = MenuItem::create(['label:nl' => 'second item', 'parent_id' => $first->id, 'order' => 2]);
@@ -209,15 +208,14 @@ class MenuTest extends TestCase
     /** @test */
     public function it_can_show_create_menu()
     {
-        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         factory(Page::class)->create([
-            'published'     => 0,
+            'current_state' => PageState::DRAFT,
             'created_at'    => Carbon::now()->subDays(3)
         ]);
         factory(Page::class)->create([
-            'published'     => 1,
+            'current_state' => PageState::PUBLISHED,
             'created_at'    => Carbon::now()->subDays(1)
         ]);
 
@@ -236,7 +234,7 @@ class MenuTest extends TestCase
     public function it_can_get_menu_by_type()
     {
         $page   = factory(Page::class)->create([
-            'published' => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         $first  = MenuItem::create(['label:nl' => 'first item', 'type' => 'internal', 'menu_type' => 'main']);

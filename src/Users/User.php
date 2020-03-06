@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users;
 
 use Spatie\Permission\Traits\HasRoles;
@@ -13,7 +15,10 @@ use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 
 class User extends Authenticatable implements HasAsset
 {
-    use Notifiable, HasRoles, AssetTrait, Enablable;
+    use Notifiable;
+    use HasRoles;
+    use AssetTrait;
+    use Enablable;
 
     public $table = 'chief_users';
     protected $guard_name = 'chief';
@@ -26,7 +31,8 @@ class User extends Authenticatable implements HasAsset
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     public static function findByEmail(string $email)
@@ -56,7 +62,7 @@ class User extends Authenticatable implements HasAsset
 
     public function getFullnameAttribute()
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function isSquantoDeveloper()

@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
@@ -34,6 +35,7 @@ class EditManagerTest extends TestCase
     public function admin_can_view_the_edit_form()
     {
         $this->disableExceptionHandling();
+
         $response = $this->asAdmin()->get($this->manager->route('edit'));
         $response->assertViewIs('chief::back.managers.edit');
         $response->assertStatus(200);
@@ -74,11 +76,13 @@ class EditManagerTest extends TestCase
     /** @test */
     public function it_cant_edit_a_softdeleted_model()
     {
+        $this->disableExceptionHandling();
+        $this->expectException(NonExistingRecord::class);
+
         $this->model->delete();
 
         //use the static url here otherwise the existingmodel function errors before this triggers.
         $response = $this->asAdmin()->get('admin/manage/managed_model_first/1/edit');
-        $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.dashboard'));
+        $response->assertStatus(500);
     }
 }

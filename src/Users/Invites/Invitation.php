@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users\Invites;
 
-use Thinktomorrow\Chief\Common\State\StatefulContract;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\URL;
@@ -51,25 +53,29 @@ class Invitation extends Model implements StatefulContract
     public function acceptUrl()
     {
         return URL::temporarySignedRoute(
-            'invite.accept', $this->expires_at, ['token' => $this->token]
+            'invite.accept',
+            $this->expires_at,
+            ['token' => $this->token]
         );
     }
 
     public function denyUrl()
     {
         return URL::temporarySignedRoute(
-            'invite.deny', $this->expires_at, ['token' => $this->token]
+            'invite.deny',
+            $this->expires_at,
+            ['token' => $this->token]
         );
     }
 
-    public function state(): string
+    public function stateOf($key): string
     {
-        return $this->state;
+        return $this->$key;
     }
 
-    public function changeState($state)
+    public function changeStateOf($key, $state)
     {
-        $this->state = $state;
+        $this->$key = $state;
         $this->save();
     }
 

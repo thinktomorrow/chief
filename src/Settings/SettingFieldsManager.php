@@ -1,18 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\RenderingFields;
-use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Urls\UrlHelper;
 
-class SettingFieldsManager extends Fields implements FieldManager
+class SettingFieldsManager implements FieldManager
 {
     use RenderingFields;
 
@@ -28,7 +30,7 @@ class SettingFieldsManager extends Fields implements FieldManager
     {
         return new Fields([
             SelectField::make('homepage')
-                ->name('homepage[:locale]')
+                ->name('homepage.:locale')
                 ->options(UrlHelper::allOnlineModels())
                 ->translatable(config('translatable.locales'))
                 ->validation('required')
@@ -52,7 +54,7 @@ class SettingFieldsManager extends Fields implements FieldManager
 
     public function fieldValue(Field $field, $locale = null)
     {
-        return $this->settings->get($field->key(), $locale);
+        return $this->settings->get($field->getKey(), $locale);
     }
 
     public function saveFields(Request $request)
@@ -62,7 +64,7 @@ class SettingFieldsManager extends Fields implements FieldManager
         foreach ($this->fields() as $key => $field) {
             if (!$setting = Setting::where('key', $key)->first()) {
                 Setting::create([
-                    'key' => $key,
+                    'key'   => $key,
                     'value' => $request->get($key, ''),
                 ]);
 

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Management;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -11,7 +14,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\RenderingFields;
 use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
+use Thinktomorrow\Chief\Management\Assistants\ManagesAssistants;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
@@ -21,14 +24,14 @@ use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 abstract class AbstractManager
 {
-    use RenderingFields,
-        SavingFields,
-        HasDetails,
-        HasSections,
-        ManagesMedia,
-        ManagesPagebuilder,
-        TranslatableCommand,
-        AssistedManager;
+    use RenderingFields;
+    use SavingFields;
+    use HasDetails;
+    use HasSections;
+    use ManagesMedia;
+    use ManagesPagebuilder;
+    use TranslatableCommand;
+    use ManagesAssistants;
 
     protected $translation_columns = [];
 
@@ -37,11 +40,11 @@ abstract class AbstractManager
     /** @var Register */
     protected $registration;
 
-    protected $pageCount                 = 20;
-    protected $paginated                 = true;
+    protected $pageCount = 20;
+    protected $paginated = true;
     protected static $bootedTraitMethods = [];
 
-    public function __construct(Registration $registration)
+    final public function __construct(Registration $registration)
     {
         $this->registration = $registration;
 
@@ -54,6 +57,11 @@ abstract class AbstractManager
         static::bootTraitMethods();
     }
 
+    public function managerKey(): string
+    {
+        return $this->registration->key();
+    }
+
     public function manage($model): Manager
     {
         $this->model = $model;
@@ -63,18 +71,14 @@ abstract class AbstractManager
 
     public function findManaged($id): Manager
     {
-        $model = $this->registration->model();
-
-        $modelInstance = $model::where('id', $id)->withoutGlobalScopes()->first();
+        $modelInstance = $this->modelInstance()::where('id', $id)->withoutGlobalScopes()->first();
 
         return (new static($this->registration))->manage($modelInstance);
     }
 
     public function indexCollection()
     {
-        $model = $this->registration->model();
-
-        $builder = (new $model)->query();
+        $builder = ($this->modelInstance())->query();
 
         $this->filters()->apply($builder);
 
@@ -98,12 +102,12 @@ abstract class AbstractManager
 
     protected function indexSorting(Builder $builder): Builder
     {
-        if ($this->isAssistedBy('publish')) {
-            $builder->orderBy('published', 'DESC');
+        if ($this->isAssistedBy('publish') && Schema::hasColumn($this->modelInstance()->getTable(), 'published_at')) {
+            $builder->orderBy('published_at', 'DESC');
         }
 
         // if model has no timestamps, updated_at doesn't exist
-        if ($this->model()->timestamps) {
+        if ($this->modelInstance()->timestamps) {
             $builder->orderBy('updated_at', 'DESC');
         }
 
@@ -121,29 +125,25 @@ abstract class AbstractManager
         return $paginator->setCollection($modifiedCollection);
     }
 
-    public function model()
+    public function modelInstance(): ManagedModel
     {
-        return $this->model;
+        $class = $this->registration->model();
+
+        return new $class();
     }
 
-    public function hasExistingModel(): bool
-    {
-        return ($this->model && $this->model->exists);
-    }
-
-    /**
-     * If the model exists return it otherwise
-     * throws a nonExistingRecord exception;
-     *
-     * @throws NonExistingRecord
-     */
-    protected function existingModel()
+    public function existingModel(): ManagedModel
     {
         if (!$this->hasExistingModel()) {
             throw new NonExistingRecord('Model does not exist yet but is expected.');
         }
 
         return $this->model;
+    }
+
+    public function hasExistingModel(): bool
+    {
+        return ($this->model && $this->model->exists);
     }
 
     /**
@@ -157,9 +157,9 @@ abstract class AbstractManager
     public function route($verb): ?string
     {
         $routes = [
-            'index'   => route('chief.back.managers.index', [$this->registration->key()]),
-            'create'  => route('chief.back.managers.create', [$this->registration->key()]),
-            'store'   => route('chief.back.managers.store', [$this->registration->key()]),
+            'index'  => route('chief.back.managers.index', [$this->registration->key()]),
+            'create' => route('chief.back.managers.create', [$this->registration->key()]),
+            'store'  => route('chief.back.managers.store', [$this->registration->key()]),
         ];
 
         if (array_key_exists($verb, $routes)) {
@@ -168,10 +168,13 @@ abstract class AbstractManager
 
         //These routes expect the model to be persisted in the database
         $modelRoutes = [
-            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
-            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
-            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
-            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->existingModel()->id]),
+            'edit'   => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
+            'update' => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
+            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
+            'upload' => route('chief.back.managers.media.upload', [
+                $this->registration->key(),
+                $this->existingModel()->id,
+            ]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -191,7 +194,7 @@ abstract class AbstractManager
 
     public function guard($verb): Manager
     {
-        if (! $this->can($verb)) {
+        if (!$this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this);
         }
 
@@ -213,12 +216,12 @@ abstract class AbstractManager
     {
         $fields = $this->fields();
 
-        foreach ($this->assistants() as $assistant) {
-            if (! method_exists($assistant, 'fields')) {
+        foreach ($this->assistantsAsClassNames() as $assistantClass) {
+            if (!method_exists($assistantClass, 'fields')) {
                 continue;
             }
 
-            $fields = $fields->merge($assistant->fields());
+            $fields = $fields->merge($this->assistant($assistantClass)->fields());
         }
 
         return $fields;
@@ -240,6 +243,8 @@ abstract class AbstractManager
 
     public function delete()
     {
+        $this->guard('delete');
+
         if ($this->model instanceof ActsAsChild) {
             $this->model->detachAllParentRelations();
         }
@@ -297,7 +302,7 @@ abstract class AbstractManager
         $class = static::class;
 
         $methods = [
-            'can'
+            'can',
         ];
 
         foreach ($methods as $baseMethod) {
@@ -306,7 +311,7 @@ abstract class AbstractManager
             foreach (class_uses_recursive($class) as $trait) {
                 $method = class_basename($trait) . ucfirst($baseMethod);
 
-                if (method_exists($class, $method) && ! in_array($method, static::$bootedTraitMethods[$baseMethod])) {
+                if (method_exists($class, $method) && !in_array($method, static::$bootedTraitMethods[$baseMethod])) {
                     static::$bootedTraitMethods[$baseMethod][] = lcfirst($method);
                 }
             }

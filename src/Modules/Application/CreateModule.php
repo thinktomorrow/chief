@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;
@@ -17,7 +19,7 @@ class CreateModule
             DB::beginTransaction();
 
             // Fetch managed model and create it via eloquent.
-            $model = app(Managers::class)->findByKey($registerKey)->model();
+            $model = app(Managers::class)->findByKey($registerKey)->modelInstance();
 
             $module = $model->create(['slug' => $slug, 'page_id' => $page_id]);
 

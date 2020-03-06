@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users\Application;
 
 use Thinktomorrow\Chief\Users\Invites\Events\InviteAccepted;

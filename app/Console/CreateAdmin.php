@@ -20,7 +20,7 @@ class CreateAdmin extends BaseCommand
         while (!$firstname) {
             $firstname = $this->ask('firstname');
         }
-        
+
         while (!$lastname) {
             $lastname = $this->ask('lastname');
         }
@@ -34,10 +34,10 @@ class CreateAdmin extends BaseCommand
         } else {
             $role = 'admin';
         }
-        
+
         $this->createUser($firstname, $lastname, $email, $password, [$role]);
-        
-        $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
+
+        $this->info($firstname . ' ' . $lastname . ' succesfully added as admin user.');
     }
 
     private function settingPermissionsAndRoles()
@@ -49,7 +49,7 @@ class CreateAdmin extends BaseCommand
         AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
             Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
         });
-        
+
         $this->info('Default permissions and roles');
     }
 }

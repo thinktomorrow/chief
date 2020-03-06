@@ -1,31 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Pages;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Fields\Types\ImageField;
+use Thinktomorrow\Chief\States\PageStatePresenter;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
+use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Fields\FieldsTab;
 use Thinktomorrow\Chief\Management\Manager;
-use Thinktomorrow\Chief\Urls\UrlSlugFields;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
-use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Pages\Application\DeletePage;
-use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
-use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
+use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
+use Thinktomorrow\Chief\Management\Details\Details;
+use Thinktomorrow\Chief\Pages\Application\DeletePage;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\Urls\UrlSlugFields;
 
 class PageManager extends AbstractManager implements Manager
 {
@@ -37,11 +39,6 @@ class PageManager extends AbstractManager implements Manager
         'archive' => ArchiveAssistant::class,
         'publish' => PublishAssistant::class,
     ];
-
-    public function __construct(Registration $registration)
-    {
-        parent::__construct($registration);
-    }
 
     public function can($verb): bool
     {
@@ -62,15 +59,15 @@ class PageManager extends AbstractManager implements Manager
     {
         $permission = 'update-page';
 
-        if (in_array($verb, ['index','show'])) {
+        if (in_array($verb, ['index', 'show'])) {
             $permission = 'view-page';
-        } elseif (in_array($verb, ['create','store'])) {
+        } elseif (in_array($verb, ['create', 'store'])) {
             $permission = 'create-page';
         } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }
 
-        if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
+        if (!auth()->guard('chief')->user()->hasPermissionTo($permission)) {
             throw NotAllowedManagerRoute::notAllowedPermission($permission, $this);
         }
     }
@@ -89,11 +86,11 @@ class PageManager extends AbstractManager implements Manager
         return parent::fields()->add(
             $this->pageBuilderField(),
             InputField::make('title')->translatable($this->model->availableLocales())
-                                     ->validation('required-fallback-locale|max:200', [], [
-                                         'trans.'.config('app.fallback_locale', 'nl').'.title' => 'title',
-                                     ])
-                                     ->label('De titel van je '.$this->model->labelSingular ?? 'pagina')
-                                     ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
+                ->validation('required-fallback-locale|max:200', [], [
+                    'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',
+                ])
+                ->label('De titel van je ' . $this->model->labelSingular ?? 'pagina')
+                ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel'),
@@ -106,7 +103,7 @@ class PageManager extends AbstractManager implements Manager
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
                 ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
-            MediaField::make('seo_image')
+            ImageField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
                 ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
@@ -116,7 +113,7 @@ class PageManager extends AbstractManager implements Manager
     public static function filters(): Filters
     {
         return new Filters([
-            PublishedFilter::class
+            PublishedFilter::class,
         ]);
     }
 
@@ -133,7 +130,7 @@ class PageManager extends AbstractManager implements Manager
     {
         if ($key == 'create') {
             return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
-                return in_array($field->key, ['title']);
+                return in_array($field->getKey(), ['title']);
             }));
         }
 
@@ -141,7 +138,7 @@ class PageManager extends AbstractManager implements Manager
             new FieldsTab('pagina', ['sections']),
             new RemainingFieldsTab('algemeen'),
             new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
-                'redirects' =>  UrlSlugFields::redirectsFromModel($this->model),
+                'redirects' => UrlSlugFields::redirectsFromModel($this->model),
             ]),
             new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
         ];
@@ -156,11 +153,11 @@ class PageManager extends AbstractManager implements Manager
     public function details(): Details
     {
         // For existing model
-        if ($this->model->id) {
+        if ($this->hasExistingModel()) {
             return parent::details()
-                ->set('title', ucfirst($this->model->title))
-                ->set('intro', 'Aangepast ' . $this->model->updated_at->format('d/m/Y H:i'))
-                ->set('context', '<span class="inline-xs stack-s">' . $this->assistant('publish')->publicationStatusAsLabel() . '</span>');
+                ->set('title', $this->existingModel()->title ? ucfirst($this->existingModel()->title) : '')
+                ->set('intro', PageStatePresenter::fromModel($this->existingModel())->label())
+                ->set('context', '');
         }
 
         return parent::details();
@@ -169,7 +166,7 @@ class PageManager extends AbstractManager implements Manager
     public function saveFields(Request $request)
     {
         // Store the morph_key upon creation
-        if ($this->model instanceof MorphableContract && ! $this->model->morph_key) {
+        if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
@@ -178,6 +175,8 @@ class PageManager extends AbstractManager implements Manager
 
     public function delete()
     {
+        $this->guard('delete');
+
         if (request()->get('deleteconfirmation') !== 'DELETE') {
             throw new DeleteAborted();
         }

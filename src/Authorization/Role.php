@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Authorization;
 
 use Spatie\Permission\Contracts\Role as RoleContract;
@@ -46,6 +48,7 @@ class Role extends BaseRole implements RoleContract
 
             $this->permission = $temp;
         });
+
         return $this->permission;
     }
 }

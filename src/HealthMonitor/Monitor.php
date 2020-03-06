@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\HealthMonitor;
 
@@ -21,8 +21,8 @@ class Monitor
     {
         foreach ($this->checks as $check) {
             $checkInstance = app($check);
-            
-            if (! $checkInstance instanceof HealthCheck) {
+
+            if (!$checkInstance instanceof HealthCheck) {
                 throw new InvalidClassException('Checks must implement Healthcheck interface.');
             }
 
@@ -32,6 +32,7 @@ class Monitor
                 foreach ($notifiers as $notifier) {
                     app($notifier)->onFailure($checkInstance);
                 }
+
                 return;
             } else {
                 foreach ($notifiers as $notifier) {

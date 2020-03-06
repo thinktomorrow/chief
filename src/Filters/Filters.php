@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Filters;
 
 use ArrayIterator;
-use Closure;
 use Illuminate\Database\Eloquent\Builder;
 
 class Filters implements \ArrayAccess, \IteratorAggregate
@@ -97,7 +98,7 @@ class Filters implements \ArrayAccess, \IteratorAggregate
 
     public function offsetSet($offset, $value)
     {
-        if (! $value instanceof Filter) {
+        if (!$value instanceof Filter) {
             throw new \InvalidArgumentException('Passed value must be of type ' . Filter::class);
         }
 

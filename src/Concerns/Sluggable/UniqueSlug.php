@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\Sluggable;
+
+use Illuminate\Support\Str;
 
 class UniqueSlug
 {
@@ -13,13 +17,13 @@ class UniqueSlug
     /** @var \Closure */
     private $slugResolver;
 
-    public function __construct(SluggableContract $model, array $blacklist = [])
+    final public function __construct(SluggableContract $model, array $blacklist = [])
     {
         $this->model = $model;
         $this->blacklist = $blacklist;
 
         $this->slugResolver = function ($slug) {
-            return Illuminate\Support\Str::slug($slug);
+            return Str::slug($slug);
         };
     }
 
@@ -41,7 +45,7 @@ class UniqueSlug
         $i = 1;
 
         while (!$this->isSlugUnique($slug, $entity)) {
-            $slug = $originalslug.'-'.$i;
+            $slug = $originalslug . '-' . $i;
             $i++;
         }
 

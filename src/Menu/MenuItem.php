@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
@@ -16,15 +17,15 @@ use Vine\Node;
 class MenuItem extends Model implements TranslatableContract, VineSource
 {
     const TYPE_INTERNAL = 'internal';
-    const TYPE_CUSTOM   = 'custom';
-    const TYPE_NOLINK   = 'nolink';
+    const TYPE_CUSTOM = 'custom';
+    const TYPE_NOLINK = 'nolink';
 
-    use Translatable,
-        BaseTranslatable;
+    use Translatable;
+    use BaseTranslatable;
 
-    protected $translationModel      = MenuItemTranslation::class;
+    protected $translationModel = MenuItemTranslation::class;
     protected $translationForeignKey = 'menu_item_id';
-    protected $translatedAttributes  = [
+    protected $translatedAttributes = [
         'label',
         'url',
     ];
@@ -32,7 +33,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
     protected $with = ['page', 'translations'];
 
     public $timestamps = false;
-    public $guarded    = [];
+    public $guarded = [];
 
     public function ofType($type): bool
     {
@@ -92,22 +93,22 @@ class MenuItem extends Model implements TranslatableContract, VineSource
      */
     public function nodeEntries($type = 'main'): array
     {
-        $items           = $this->where('menu_type', $type)->get();
+        $items = $this->where('menu_type', $type)->get();
         $collectionItems = collect([]);
 
         // Expose the collection items and populate them with the collection data
         foreach ($items as $k => $item) {
-           
+
             // Fetch the urls of the internal links
             if ($item->ofType(static::TYPE_INTERNAL) && $page = $item->page) {
                 if ($page->isArchived()) {
                     unset($items[$k]);
                 } else {
-                    $item->url            = self::composePageUrl($item, $page);
-                    $item->page_label     = $page->menuLabel();
+                    $item->url = self::composePageUrl($item, $page);
+                    $item->page_label = $page->menuLabel();
                     $item->hidden_in_menu = $page->hidden_in_menu;
-                    $item->draft          = $page->isDraft();
-                    $items[$k]            = $item;
+                    $item->draft = $page->isDraft();
+                    $items[$k] = $item;
                 }
             }
         }
@@ -147,7 +148,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
      */
     public function entry(Node $node)
     {
-        return (object) [
+        return (object)[
             'id'             => $node->id,
             'type'           => $node->type,
             'label'          => $node->label,
@@ -158,7 +159,7 @@ class MenuItem extends Model implements TranslatableContract, VineSource
             'parent_id'      => $node->parent_id,
             'morph_key'      => $node->morph_key,
             'hidden_in_menu' => $node->hidden_in_menu,
-            'draft'          => $node->draft
+            'draft'          => $node->draft,
         ];
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Settings;
 
-use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
 
@@ -24,6 +25,7 @@ class Homepage
         if ($id = chiefSetting(Setting::HOMEPAGE, $locale)) {
             return FlatReferenceFactory::fromString($id)->instance()->url($locale);
         }
+
         return '';
     }
 }

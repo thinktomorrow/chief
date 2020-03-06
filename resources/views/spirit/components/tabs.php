@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/../_partials/header.php'); ?>
+<?php include(__DIR__ . '/../_partials/header.php'); ?>
 
 <section id="tabs">
     <h2>Tabs</h2>
@@ -185,4 +185,4 @@
 
 </section>
 
-<?php include(__DIR__.'/../_partials/footer.php'); ?>
+<?php include(__DIR__ . '/../_partials/footer.php'); ?>

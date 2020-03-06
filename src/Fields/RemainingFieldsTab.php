@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Fields;
 
 class RemainingFieldsTab extends FieldsTab

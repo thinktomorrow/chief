@@ -13,7 +13,7 @@
         "laravel/framework": "~5.8|~6.0",
         "spatie/laravel-activitylog": "^3.0",
         "spatie/laravel-permission": "^2.0|^3.0",
-        "thinktomorrow/assetlibrary": "0.6.*",
+        "thinktomorrow/assetlibrary": "0.7.*",
         "thinktomorrow/squanto": "~0.7.0",
         "thinktomorrow/trap": "^0.1.2",
         "thinktomorrow/url": "~1.0.0",
@@ -25,6 +25,7 @@
         "mockery/mockery": "^1.1",
         "nunomaduro/collision": "^3.0",
         "orchestra/testbench": "3.8.*|4.*",
+        "phpstan/phpstan": "^0.12.5",
         "phpunit/phpunit": "~7.5|~8.0"
     },
     "autoload": {

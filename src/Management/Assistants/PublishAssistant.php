@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 
 class PublishAssistant implements Assistant
 {
     private $manager;
-
-    private $model;
 
     /** @var Managers */
     private $managers;
@@ -28,7 +28,6 @@ class PublishAssistant implements Assistant
     public function manager(Manager $manager)
     {
         $this->manager = $manager;
-        $this->model = $manager->model();
     }
 
     public static function key(): string
@@ -38,40 +37,50 @@ class PublishAssistant implements Assistant
 
     public function isPublished(): bool
     {
-        return $this->model->isPublished();
+        return $this->manager->existingModel()->isPublished();
     }
 
     public function isDraft(): bool
     {
-        return $this->model->isDraft();
+        return $this->manager->existingModel()->isDraft();
     }
 
     public function publishedAt(): Carbon
     {
-        return $this->model->Published_at;
+        return $this->manager->existingModel()->published_at;
     }
 
     public function publish()
     {
-        $this->model->publish();
+        $this->guard('publish');
+
+        PageState::make($this->manager->existingModel())->apply('publish');
+        $this->manager->existingModel()->save();
 
         Audit::activity()
-            ->performedOn($this->model)
+            ->performedOn($this->manager->existingModel())
             ->log('published');
+
+        return redirect()->back()->with('messages.success', $this->manager->details()->title . ' is online gezet.');
     }
 
-    public function draft()
+    public function unpublish()
     {
-        $this->model->draft();
+        $this->guard('unpublish');
+
+        PageState::make($this->manager->existingModel())->apply('unpublish');
+        $this->manager->existingModel()->save();
 
         Audit::activity()
-            ->performedOn($this->model)
-            ->log('draft');
+            ->performedOn($this->manager->existingModel())
+            ->log('unpublished');
+
+        return redirect()->back()->with('messages.success', $this->manager->details()->title . ' is offline gehaald.');
     }
 
     public function findAll(): Collection
     {
-        return $this->model->published()->get()->map(function ($model) {
+        return $this->manager->existingModel()->published()->get()->map(function ($model) {
             return $this->managers->findByModel($model);
         });
     }
@@ -79,8 +88,18 @@ class PublishAssistant implements Assistant
     public function route($verb): ?string
     {
         $modelRoutes = [
-            'publish'   => route('chief.back.assistants.publish', [$this->manager->details()->key, $this->manager->model()->id]),
-            'draft'     => route('chief.back.assistants.draft', [$this->manager->details()->key, $this->manager->model()->id]),
+            'publish'   => route('chief.back.assistants.update', [
+                $this->key(),
+                'publish',
+                $this->manager->details()->key,
+                $this->manager->existingModel()->id,
+            ]),
+            'unpublish' => route('chief.back.assistants.update', [
+                $this->key(),
+                'unpublish',
+                $this->manager->details()->key,
+                $this->manager->existingModel()->id,
+            ]),
         ];
 
         return $modelRoutes[$verb] ?? null;
@@ -91,9 +110,9 @@ class PublishAssistant implements Assistant
         return !is_null($this->route($verb));
     }
 
-    public function guard($verb): Assistant
+    private function guard($verb): Assistant
     {
-        if (! $this->can($verb)) {
+        if (!$this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
         }
 
@@ -102,12 +121,13 @@ class PublishAssistant implements Assistant
 
     public function hasPreviewUrl(): bool
     {
-        return $this->model instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
+        return $this->manager->existingModel() instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
     }
 
     public function publicationStatusAsLabel($plain = false)
     {
         $label = $this->publicationStatusAsPlainLabel();
+        $class = '';
 
         if ($this->isPublished()) {
             $class = 'text-success';
@@ -117,10 +137,10 @@ class PublishAssistant implements Assistant
             $class = 'text-warning';
         }
 
-        $statusAsLabel = '<span class="font-bold '. $class .'"><em>' . $label . '</em></span>';
+        $statusAsLabel = '<span class="' . $class . '">' . $label . '</span>';
 
         if (!$plain && $this->hasPreviewUrl()) {
-            $statusAsLabel =  '<a href="'.$this->previewUrl().'" target="_blank">'. $statusAsLabel .'</a>';
+            $statusAsLabel = '<a href="' . $this->previewUrl() . '" target="_blank">' . $statusAsLabel . '</a>';
         }
 
         return $statusAsLabel;
@@ -141,6 +161,6 @@ class PublishAssistant implements Assistant
 
     public function previewUrl(): string
     {
-        return $this->model->previewUrl();
+        return $this->manager->existingModel()->previewUrl();
     }
 }

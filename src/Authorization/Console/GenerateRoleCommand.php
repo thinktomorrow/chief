@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Authorization\Console;
 
 use Illuminate\Support\Str;

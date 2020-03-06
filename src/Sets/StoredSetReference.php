@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
@@ -41,7 +42,7 @@ class StoredSetReference extends Model implements ActsAsChild
         });
 
         if (!$reference) {
-            throw new \Exception('No query set found by key ['. $this->key. ']. Make sure that this '.$this->key.' set is added to the chief.sets config array.');
+            throw new \Exception('No query set found by key [' . $this->key . ']. Make sure that this ' . $this->key . ' set is added to the chief.sets config array.');
         }
 
         return $reference;

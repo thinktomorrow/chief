@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 class InvitationMail extends Notification implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $invitation;
 

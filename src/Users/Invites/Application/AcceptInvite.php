@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users\Invites\Application;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Common\State\StateException;
+use Thinktomorrow\Chief\States\State\StateException;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
 use Thinktomorrow\Chief\Users\Invites\Events\InviteAccepted;
 
@@ -15,7 +17,7 @@ class AcceptInvite
         try {
             DB::beginTransaction();
 
-            (new InvitationState($invitation))->apply('accept');
+            InvitationState::make($invitation)->apply('accept');
 
             event(new InviteAccepted($invitation->id));
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls;
 
 use Illuminate\Database\Eloquent\Model;
@@ -36,7 +38,7 @@ class MemoizedUrlRecord extends UrlRecord
             ->first();
 
         if (!$record) {
-            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for locale ['.$locale.'].');
+            throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 
         return $record;

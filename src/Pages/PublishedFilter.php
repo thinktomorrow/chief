@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Pages;
 
 use Closure;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Filters\Types\SelectFilter;
 
 class PublishedFilter extends SelectFilter
@@ -24,9 +26,7 @@ class PublishedFilter extends SelectFilter
                 return $query;
             }
 
-            $value = $value == 'online' ? true : false;
-            
-            return $query->where('published', '=', $value);
+            return $query->where('current_state', ($value == 'online') ? '=' : '<>', PageState::PUBLISHED);
         };
     }
 }

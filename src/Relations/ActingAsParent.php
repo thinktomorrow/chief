@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -14,6 +16,7 @@ trait ActingAsParent
         if ($this->areChildRelationsLoaded()) {
             return $this->loadedChildRelations;
         }
+
         return $this->loadedChildRelations = $this->freshChildren();
     }
 

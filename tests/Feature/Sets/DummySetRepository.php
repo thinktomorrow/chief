@@ -12,6 +12,6 @@ class DummySetRepository
     {
         $pages = Page::limit($limit)->get();
 
-        return new Set($pages, 'all-pages');
+        return new Set($pages->all(), 'all-pages');
     }
 }

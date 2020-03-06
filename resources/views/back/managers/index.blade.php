@@ -48,10 +48,6 @@
 
                         @foreach($managers as $manager)
                             @include('chief::back.managers._partials._rowitem')
-                            @include('chief::back.managers._partials.delete-modal')
-                            @if($manager->isAssistedBy('archive'))
-                                @include('chief::back.managers._partials.archive-modal')
-                            @endif
                         @endforeach
 
                     @endif
@@ -82,7 +78,7 @@
             {!! $modelManager::sections()->sidebar !!}
 
             @if($modelManager->isAssistedBy('archive') && $archiveAssistant = $modelManager->assistant('archive'))
-                @if( ! $archiveAssistant->findAll()->isEmpty())
+                @if( ! $archiveAssistant->findAllArchived()->isEmpty())
                     <div class="stack-s">
                         <a href="{{ $archiveAssistant->route('index') }}">Bekijk de gearchiveerde items</a>
                     </div>

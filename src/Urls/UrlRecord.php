@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls;
 
 use Illuminate\Database\Eloquent\Model;
@@ -27,12 +29,12 @@ class UrlRecord extends Model
         }
 
         $record = static::where('slug', $slug)
-                        ->where('locale', $locale)
-                        ->orderBy('redirect_id', 'ASC')
-                        ->first();
+            ->where('locale', $locale)
+            ->orderBy('redirect_id', 'ASC')
+            ->first();
 
         if (!$record) {
-            throw new UrlRecordNotFound('No url record found by slug ['.$slug.'] for locale ['.$locale.'].');
+            throw new UrlRecordNotFound('No url record found by slug [' . $slug . '] for locale [' . $locale . '].');
         }
 
         return $record;
@@ -56,7 +58,7 @@ class UrlRecord extends Model
             ->first();
 
         if (!$record) {
-            throw new UrlRecordNotFound('No url record found for model ['.$model->getMorphClass().'@'.$model->id.'] for locale ['.$locale.'].');
+            throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 
         return $record;
@@ -65,8 +67,8 @@ class UrlRecord extends Model
     public static function getByModel(Model $model)
     {
         return static::where('model_type', $model->getMorphClass())
-                     ->where('model_id', $model->id)
-                     ->get();
+            ->where('model_id', $model->id)
+            ->get();
     }
 
     public static function findRecentRedirect(Model $model, string $locale): ?self
@@ -82,9 +84,9 @@ class UrlRecord extends Model
     public function replaceAndRedirect(array $values): UrlRecord
     {
         $newRecord = static::firstOrCreate(array_merge([
-            'locale'              => $this->locale,
-            'model_type'          => $this->model_type,
-            'model_id'            => $this->model_id,
+            'locale'     => $this->locale,
+            'model_type' => $this->model_type,
+            'model_id'   => $this->model_id,
         ], $values));
 
         $this->redirectTo($newRecord);
@@ -145,16 +147,16 @@ class UrlRecord extends Model
             $builder->where('locale', $locale);
         }
 
-        if (! $includeRedirects) {
+        if (!$includeRedirects) {
             $builder->whereNull('redirect_id');
         }
 
         if ($ignoredModel) {
             $builder->whereNotIn('id', function ($query) use ($ignoredModel) {
                 $query->select('id')
-                      ->from('chief_urls')
-                      ->where('model_type', '=', $ignoredModel->getMorphClass())
-                      ->where('model_id', '=', $ignoredModel->id);
+                    ->from('chief_urls')
+                    ->where('model_type', '=', $ignoredModel->getMorphClass())
+                    ->where('model_id', '=', $ignoredModel->id);
             });
         }
 

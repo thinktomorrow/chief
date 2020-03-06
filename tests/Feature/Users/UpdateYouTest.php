@@ -27,8 +27,6 @@ class UpdateYouTest extends TestCase
     /** @test */
     public function only_you_can_see_the_edit_view()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()->get(route('chief.back.you.edit'));
 
         $this->assertNotEquals($this->newUser->id, $response->getOriginalContent()->getData()['user']->id);

@@ -2,13 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Audit;
 
+use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Management\Register;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 
@@ -90,30 +92,12 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_logs_archive_events_on_pages()
     {
+        $page = factory(Page::class)->create(['current_state' => PageState::PUBLISHED])->first();
+        $manager = app(Managers::class)->findByKey('singles')->manage($page);
+
         $user = $this->developer();
 
-        $page = factory(Page::class)->create(['published' => true])->first();
-
-        $this->actingAs($user, 'chief')
-             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
-
-        $activity = Audit::getAllActivityFor($page);
-
-        $this->assertCount(1, $activity);
-        $this->assertEquals('archived', $activity->last()->description);
-        $this->assertEquals($user->id, $activity->last()->causer_id);
-        $this->assertEquals('singles', $activity->last()->subject_type);
-    }
-
-    /** @test */
-    public function it_can_get_activity_by_subject()
-    {
-        $user = $this->developer();
-
-        $page = factory(Page::class)->create(['published' => true])->first();
-
-        $this->actingAs($user, 'chief')
-             ->post(route('chief.back.assistants.archive', [Single::managedModelKey(), $page->id]));
+        $this->actingAs($user, 'chief')->post($manager->assistant('archive')->route('archive'));
 
         $activity = Audit::getAllActivityFor($page);
 
@@ -145,7 +129,6 @@ class AuditModelTest extends TestCase
     /** @test */
     public function it_show_events()
     {
-        $this->disableExceptionHandling();
         $user = $this->developer();
 
         $this->actingAs($user, 'chief')

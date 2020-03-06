@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Database\Eloquent\Model;
@@ -33,7 +35,7 @@ class Setting extends Model
                 $field = call_user_func($field);
             }
 
-            if ($field->key != $this->key) {
+            if ($field->getKey() != $this->key) {
                 continue;
             }
 
@@ -55,7 +57,7 @@ class Setting extends Model
     private function defaultField()
     {
         return InputField::make($this->key)
-                    ->label(ucfirst(str_replace(['-','_','.'], ' ', $this->key)));
+            ->label(ucfirst(str_replace(['-', '_', '.'], ' ', $this->key)));
     }
 
     public static function refreshFieldsFromConfig()
