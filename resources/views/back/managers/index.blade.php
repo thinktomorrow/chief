@@ -18,7 +18,7 @@
 @section('content')
 
     <div class="row gutter-l stack">
-        <div class="column-9">
+        <div class="column-8">
             <div class="row gutter-s">
 
                 @if($managers->isEmpty() && !$modelManager->filters()->anyApplied())
@@ -65,7 +65,7 @@
 
         </div>
 
-        <div class="column-3">
+        <div class="column-4">
 
             @if( $modelManager::filters()->any() )
                 <div class="mb-8">
@@ -88,6 +88,8 @@
                     </div>
                 @endif
             @endif
+
+            @include('chief::back._elements.sortable-list')
 
         </div>
     </div>

@@ -29,7 +29,9 @@ Vue.component('delete', require('./components/RemoveButton.vue').default);
 Vue.component('error', require('./components/Error.vue').default);
 Vue.component('page-builder', require('./components/Pagebuilder/Pagebuilder.vue').default);
 Vue.component('mediagallery', require('./components/MediaGallery.vue').default);
-
+Vue.component('sortable-list', require('./components/Sortable/SortableList.vue').default);
+Vue.component('sortable-item', require('./components/Sortable/SortableItem.vue').default);
+Vue.component('sortable-handle', require('./components/Sortable/SortableHandle.vue').default);
 
 // sticky polyfill init
 Stickyfill.add(document.querySelectorAll('.sticky'));
