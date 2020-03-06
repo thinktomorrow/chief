@@ -14,8 +14,6 @@
                     fileInput: null,
                     fileInputName: null,
 
-                    // Sorting
-                    filesOrder: [],
                     reorder: false,
                     sortSource: null,
                 };
@@ -44,6 +42,9 @@
                     });
                     return result.includes(undefined) || result.includes(false);
                 },
+                filesOrderInputValue: function(){
+                    return this.items.map(function(item){ return item.id;}).join(',');
+                },
             },
             mounted: function () {
                 this.updateFilesOrder();
@@ -51,6 +52,7 @@
             methods: {
                 addNewItem: function(id, filename, url, file){
                     this.items.push({
+                        key: 'key_' + this.randomString(10), // Internal key reference to satisfy vue loop key reference
                         id: id,
                         existingId: id,
                         filename: filename,
@@ -104,7 +106,7 @@
                  * Sorting methods
                  */
                 updateFilesOrder: function () {
-
+// return;
                     this.filesOrder = [];
 
                     var draggableItems = document.querySelectorAll('#filegroup-'+ this.group +'-'+ this.locale + ' .draggable-item');
@@ -146,35 +148,30 @@
                     this.sortSource.style.opacity = '1';
 
                     // We need our draggable-item, not the child elements
-                    var target = e.target.classList.contains('draggable-item') ? e.target : this.findAncestor(e.target, '.draggable-item');
+                    var target = e.target.classList.contains('draggable-item') ? e.target : this.findAncestor(e.target, '.draggable-item'),
+                        draggedItemId = this.sortSource.dataset.itemId,
+                        targetItemId = target.dataset.itemId,
+                        oldIndex = this.items.findIndex(function(item){ return item.id == draggedItemId}),
+                        newIndex = this.items.findIndex(function(item){ return item.id == targetItemId});
 
-                    if (target && this.isbefore(this.sortSource, target)) {
-                        target.parentNode.insertBefore(this.sortSource, target);
-                        this.updateFilesOrder();
-                    }
-                    else {
-                        if (!target || this.sortSource == target.nextSibling) {
-                            return;
-                        }
-
-                        target.parentNode.insertBefore(this.sortSource, target.nextSibling);
-                        this.updateFilesOrder();
-                    }
+                    this.handleReorder(oldIndex, newIndex);
                 },
-                isbefore: function (a, b) {
-                    if (a.parentNode == b.parentNode) {
-                        for (var cur = a; cur; cur = cur.previousSibling) {
-                            if (cur === b) {
-                                return true;
-                            }
-                        }
-                    }
-                    return false;
+                handleReorder(oldIndex, newIndex) {
+                    this.items.splice(newIndex, 0, this.items.splice(oldIndex, 1)[0]);
                 },
-
                 findAncestor: function (el, sel) {
                     while ((el = el.parentElement) && !((el.matches || el.matchesSelector).call(el, sel)));
                     return el;
+                },
+                randomString: function(length) {
+                    let result = '', i = 0;
+                    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+                    for (; i < length; i++ ) {
+                        result += characters.charAt(Math.floor(Math.random() * characters.length));
+                    }
+
+                    return result;
                 }
             },
         });

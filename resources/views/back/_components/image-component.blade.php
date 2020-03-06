@@ -13,7 +13,6 @@
                 return {
                     hiddenInputValue: null,
                     instance: null,
-                    // addedFromGallery: false,
                 }
             },
             mounted: function () {
@@ -63,6 +62,11 @@
             },
             methods: {
                 didUpload: function(error, data, response){
+                    if(error){
+                        console.error(error);
+                        return;
+                    }
+
                     this.updateItem({
                         id: response.id,
                         url: response.url,
@@ -79,7 +83,7 @@
                 },
                 didRemove: function (e, target) {
 
-                    this.hiddenInputValue = null; // null indicated this image for deletion on the server side
+                    this.hiddenInputValue = null; // null indicated to the server that this image should be deleted
 
                     this.updateItem({
                         deleted: true,
@@ -89,7 +93,7 @@
 
                     // When swapping an existing image with another by clicking on the slim dropzone to upload a replacement image,
                     // slim first emits a didRemove action. This is followed by the didLoad action so that's why we ensure
-                    // here that any image does not have the deleted flag.
+                    // here that any image that is being loaded does not have the deleted flag.
                     if(this.item.deleted) {
                         this.updateItem({
                             deleted: false,

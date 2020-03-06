@@ -46,7 +46,7 @@
 <imagesupload group="{{ $slug }}" locale="{{ $locale }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}" inline-template>
     <div id="filegroup-{{ $slug }}-{{$locale}}" :class="{'sorting-mode' : reorder}">
         <div class="row gutter-s">
-            <div v-for="(item, index) in items" :key="index" class="column-4 draggable-item" :draggable="reorder" :data-item-id="item.id"
+            <div v-for="(item, index) in items" :key="item.key" class="column-4 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
                  @dragenter.prevent="handleSortingEnter"
             >
@@ -86,7 +86,7 @@
             <a v-if="{{ json_encode($field->allowMultiple()) }} == true  && items.length > 1" @click.prevent="toggleReorder" class="btn btn-primary">
                 @{{ reorder ? '&#10003; Gedaan met herschikken' : ' &#8644; Herschik afbeeldingen' }}
             </a>
-            <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrder">
+            <input type="hidden" name="filesOrder[{{ $locale }}][{{ $slug }}]" :value="filesOrderInputValue">
         </div>
     </div>
 </imagesupload>
