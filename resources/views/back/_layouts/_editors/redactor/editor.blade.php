@@ -16,18 +16,8 @@
             @if( ! \Thinktomorrow\Chief\Snippets\SnippetCollection::appearsEmpty())
                 clips: @json(\Thinktomorrow\Chief\Snippets\SnippetCollection::load()->toClips()),
             @endif
-            callbacks: {
-                upload: {
-                    beforeSend: function(xhr)
-                    {
-                        let token = document.head.querySelector('meta[name="csrf-token"]');
-
-                        xhr.setRequestHeader('X-CSRF-TOKEN', token.content);
-                    }
-                }
-            },
             @if(isset($imageUploadUrl) && (!isset($disableImageUpload) || !$disableImageUpload))
-                imageUpload: '{{ $imageUploadUrl }}',
+                imageUpload: chiefRedactorImageUpload('{{ $imageUploadUrl }}'),
             @endif
             definedlinks: '{{ route('chief.api.internal-links') }}',
             customClasses: [
@@ -54,7 +44,7 @@
             ],
         };
     </script>
-    
+
 @endpush
 
 <script>

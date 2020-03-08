@@ -16,6 +16,7 @@ This release introduces a couple of important changes:
 - Changed: Images in slim component are now being uploaded asynchronous to avoid server errors on request and file size.
 - Changed: the underlying StateMachine now allows to manage multiple states for one model.
 - Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
+- Changed: Redactor uploads are now via base64 data urls. A new js function `chiefRedactorImageUpload` should be used for the redactor imageUpload script.
 - Assistants now need to implement the `Thinktomorrow\Chief\Management\Assistants\Assistant` contract.
 - Removed: csrf token verification
 - Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
@@ -24,6 +25,7 @@ This release introduces a couple of important changes:
 - Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
 - Fixed: chief error now returns expected 500 status instead of 200.
 - Fixed: phpstan released lots of static analysis bugs which have been solved.
+- Fixed: uploads via redactor that are too large now stop the script and notify the user.
 
 ### Field changes
 - Added: introduced a `Field` interface for stricter Field usage throughout the application. 

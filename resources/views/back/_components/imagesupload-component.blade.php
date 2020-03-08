@@ -82,7 +82,6 @@
                     for (var i = 0; i < l; i++) {
                         this._handleItem(items[i]);
                     }
-
                     setTimeout(() => this.updateFilesOrder(), 1500);
                 },
                 _handleItem: function (item) {
