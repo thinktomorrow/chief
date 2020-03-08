@@ -44,14 +44,14 @@ class AsyncUploadRedactorMediaController extends Controller
 
         $responseContent = [];
 
-        foreach($files as $filePayload) {
+        foreach ($files as $filePayload) {
             $base64EncodedFile = $filePayload['data'];
             $filename = $filePayload['filename'];
 
             if (! $asset = AssetUploader::uploadFromBase64($base64EncodedFile, $filename)) {
                 $responseContent['file-' . rand(1-999)] = [
                     'error'    => true,
-                    'messages' => 'Afbeelding ['.$filename.'] kan niet worden opgeladen.',
+                    'messages' => 'Afbeelding [' . $filename . '] kan niet worden opgeladen.',
                 ];
                 continue;
             }
