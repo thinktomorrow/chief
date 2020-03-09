@@ -109,8 +109,11 @@ class AddImageFieldValueTest extends TestCase
     public function it_can_upload_an_image_via_redactor_wysiwyg()
     {
         $response = $this->asAdmin()->post(route('chief.back.managers.media.upload', ['singles', $this->page->id]), [
-            'file'   => [
-                UploadedFile::fake()->image('image.png'),
+            'files'   => [
+                [
+                    'data' => $this->dummyBase64Payload(),
+                    'filename' => 'image.png',
+                ]
             ],
             'locale' => 'nl',
         ]);

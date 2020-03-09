@@ -170,20 +170,20 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         return $labelSingular;
     }
 
-    public function mediaUrls($type = null): Collection
+    public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        $assets = $this->assets($type, app()->getLocale())->map->url();
+        $assets = $this->assets($type, app()->getLocale())->map->url($size);
 
         if ($assets->first() == null) {
-            $assets = $this->assets($type)->map->url();
+            $assets = $this->assets($type)->map->url($size);
         }
 
         return $assets;
     }
 
-    public function mediaUrl($type = null): ?string
+    public function mediaUrl($type = null, $size = 'full'): ?string
     {
-        return $this->mediaUrls($type)->first();
+        return $this->mediaUrls($type, $size)->first();
     }
 
     public static function findPublished($id)
