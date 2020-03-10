@@ -5,6 +5,7 @@
  */
 
 require('./vendors');
+require('./utilities/chiefRedactorImageUpload');
 
 import Errors from './utilities/Errors';
 import Form from './utilities/Form';

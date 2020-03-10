@@ -3,5 +3,4 @@
  * loaded after the Vue instantiation
  */
 
-require('./utilities/chiefRedactorImageUpload');
 require('./utilities/form-submit');
