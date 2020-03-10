@@ -32,6 +32,8 @@ class AsyncUploadRedactorMediaController extends Controller
      */
     public function upload(string $key, $id, Request $request)
     {
+        ini_set('memory_limit', '256M');
+
         $files = $request->input('files', []);
         $model = $this->managers->findByKey($key, $id)->existingModel();
 
