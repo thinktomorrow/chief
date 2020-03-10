@@ -2,6 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
+## 0.4.8 - 2020-03-10
+- fix redactor editor for pagebuilder text fields
+
 ## 0.4.7 - 2020-03-09
 **This release requires a migration to implement the new page state logic.**
 This release introduces a couple of important changes: 
