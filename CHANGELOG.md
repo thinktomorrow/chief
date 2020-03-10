@@ -2,12 +2,15 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
-## unreleased
+## 0.4.7 - 2020-03-09
 **This release requires a migration to implement the new page state logic.**
 This release introduces a couple of important changes: 
 - There is now a new state logic for pages: archived, draft, published, deleted. These states are kept in one database column instead of being scattered around.
 - There is now proper image validation for the image and file fields. 
 - There is now async image upload available on the slim component.
+
+More info on upgrading can be found in the [https://thinktomorrow.github.io/package-docs/src/chief/upgrading.html#upgrading-from-0-4-6-to-0-4-7](chief documentation).
+
 
 - Added: A generic `AssistantController` as a default dispatcher for assistant actions. Default assistants `ArchiveAssistant` and `PublishAssistant` now utilise the default `chief.back.assistants.update` and `chief.back.assistants.view` which points to this controller.
 - Added: config option `admin-filepath` that can be used to add custom chief routes. The routes defined in this file will only be accessible on authenticated sessions.
