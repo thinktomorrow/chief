@@ -2,8 +2,13 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
+## unreleased
+
+## 0.4.9 - 2020-03-11
+- fix: full height bugs safari
+
 ## 0.4.8 - 2020-03-10
-- fix redactor editor for pagebuilder text fields
+- fix: redactor editor for pagebuilder text fields
 
 ## 0.4.7 - 2020-03-09
 **This release requires a migration to implement the new page state logic.**
