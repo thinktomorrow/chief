@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="tabs">
         <slot name="tabnav" :tabs="tabs">
-            <ul v-if="!hideNav" role="tablist" class="flex w-full border-b border-grey-100 mb-6">
+            <ul v-if="!hideNav" role="tablist" class="tabs-nav inline-group-s">
                 <li v-for="tab in tabs" role="presentation">
                     <slot name="tabname" :tab="tab">
                         <a v-html="tab.name"
@@ -10,14 +10,14 @@
                            :aria-controls="tab.hash"
                            :aria-selected="tab.isActive"
                            role="tab"
-                           class="block px-3 pb-3 text-grey-500 --bottomline"
+                           class="block squished-s --bottomline"
                            :class="{'active': tab.isActive }"
                         ></a>
                     </slot>
                 </li>
             </ul>
         </slot>
-        <div>
+        <div class="clearfix">
             <slot></slot>
         </div>
     </div>

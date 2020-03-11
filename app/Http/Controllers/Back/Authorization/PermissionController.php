@@ -54,10 +54,8 @@ class PermissionController extends Controller
             }
         }
         return redirect()->route('chief.back.permissions.index')
-            ->with(
-                'flash_message',
-                'Permission' . $permission->name . ' added!'
-            );
+            ->with('flash_message',
+                'Permission'. $permission->name.' added!');
     }
     /**
      * Display the specified resource.
@@ -98,10 +96,8 @@ class PermissionController extends Controller
         $input = $request->all();
         $permission->fill($input)->save();
         return redirect()->route('chief.back.permissions.index')
-            ->with(
-                'flash_message',
-                'Permission' . $permission->name . ' updated!'
-            );
+            ->with('flash_message',
+                'Permission'. $permission->name.' updated!');
     }
     /**
      * Remove the specified resource from storage.
@@ -115,17 +111,13 @@ class PermissionController extends Controller
 
         if ($permission->name == "Administer roles & permissions") {
             return redirect()->route('chief.back.permissions.index')
-                ->with(
-                    'flash_message',
-                    'Cannot delete this Permission!'
-                );
+                ->with('flash_message',
+                    'Cannot delete this Permission!');
         }
 
         $permission->delete();
         return redirect()->route('chief.back.permissions.index')
-            ->with(
-                'flash_message',
-                'Permission deleted!'
-            );
+            ->with('flash_message',
+                'Permission deleted!');
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Translations;
 
 use Illuminate\Http\Request;
@@ -34,7 +33,7 @@ class LineController extends SquantoLineController
     public function edit($id)
     {
         $this->authorize('update-squanto');
-
+        
         return parent::edit($id);
     }
 

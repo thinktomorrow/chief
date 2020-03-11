@@ -11,8 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 class InvitationMail extends Notification implements ShouldQueue
 {
-    use Queueable;
-    use SerializesModels;
+    use Queueable, SerializesModels;
 
     public $invitation;
 
@@ -36,7 +35,7 @@ class InvitationMail extends Notification implements ShouldQueue
     {
         return (new MailMessage())
             ->subject('Uitnodiging tot Chief')
-            ->from(chiefSetting('contact_email'), chiefSetting('contact_name'))
+            ->from(chiefSetting('contact.email'))
             ->view('chief::back.mails.invitation', [
                 'invitee'    => $this->invitation->invitee,
                 'inviter'    => $this->invitation->inviter,

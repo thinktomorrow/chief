@@ -2,16 +2,15 @@
 
 namespace Thinktomorrow\Chief\App\Http\Requests;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
-use Thinktomorrow\Url\Url;
-use Thinktomorrow\Url\Root;
+use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\Common\Helpers\Root;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class MenuRequest extends FormRequest
 {
     use TranslatableCommand;
-
+    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -22,7 +21,7 @@ class MenuRequest extends FormRequest
         return Auth::guard('chief')->user();
     }
 
-    public function validationData()
+    protected function validationData()
     {
         $data = parent::validationData();
 
@@ -39,9 +38,10 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         $translations = $this->request->get('trans', []);
-
-        $rules['type']            = 'required|in:custom,internal,nolink';
+        
+        $rules['type']            = 'required|in:custom,internal,collection,nolink';
         $rules['page_id']         = 'required_if:type,internal';
+        $rules['collection_type'] = 'required_if:type,collection';
 
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {
@@ -76,7 +76,6 @@ class MenuRequest extends FormRequest
     {
         return [
             'required_if' => 'Gelieve nog een :attribute te kiezen, aub.',
-            'required'    => 'Gelieve een :attribute in te geven, aub.',
             'url'         => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
         ];
     }
@@ -94,9 +93,9 @@ class MenuRequest extends FormRequest
 
             // Check if it is a relative
             if ($this->isRelativeUrl($trans['url'])) {
-                $data['trans'][$locale]['url'] = '/' . trim($trans['url'], '/');
+                $data['trans'][$locale]['url'] = '/'. trim($trans['url'], '/');
             } else {
-                $data['trans'][$locale]['url'] = Url::fromString($trans['url'])->secure()->get();
+                $data['trans'][$locale]['url'] = Root::fromString($trans['url'])->get();
             }
 
             $this->request->set('trans', $data['trans']);
@@ -112,6 +111,6 @@ class MenuRequest extends FormRequest
         // Check if passed url is not intended as a host instead of a relative path
         $notIntentedAsRoot = (null == Root::fromString($url)->scheme() && false === strpos($url, '.'));
 
-        return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/' . $nakedUrl]));
+        return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/'.$nakedUrl]));
     }
 }

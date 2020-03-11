@@ -1,73 +1,40 @@
 <template>
-    <div class="absolute flex justify-center items-center w-full h-8 how-on-hover center-y" style="z-index:1;bottom:-24px;left:-14px">
-        <span v-show="!active" @click="active = true" class="block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600">
-            <svg width="24" height="24" class="fill-current"><use xlink:href="#plus"/></svg>
-        </span>
+    <div class="pagebuilder-menu show-on-hover center-y">
+        <span v-show="!active" @click="active = true" class="block icon icon-plus-circle menu-trigger"></span>
 
-        <span v-show="active" @click="active = false" class="block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600">
-            <svg width="24" height="24" class="fill-current"><use xlink:href="#min"/></svg>
-        </span>
-
-        <div v-show="active" class="ml-6 pagebuilder-menu-items float-right absolute bg-white inset --raised rounded flex inline-group-l" style="transform: translateX(50%);">
-            
-            <div class="flex flex-col">
-
-                <p class="stack-xs">Creëer een ...</p>
-
-                <div class="inline-group-s">
-                    <div class="float-left cursor-pointer">
-                        <span title="pagina titel toevoegen" @click="addingNewPagetitleSectionAfter(section.sort)" class="btn btn-o-secondary squished-xs center-y">
-                            <svg width="18" height="18" class="mr-2"><use xlink:href="#align-left"/></svg>
-                            Titel
-                        </span>
-                    </div>
-
-                    <div class="float-left cursor-pointer" @click="addingNewTextSectionAfter(section.sort)">
-                        <span title="tekst / afbeelding toevoegen" class="btn btn-o-secondary squished-xs center-y">
-                            <svg width="18" height="18" class="mr-2"><use xlink:href="#align-left"/></svg>
-                            Tekstblok
-                        </span>
-                    </div>
-                </div>
-
+        <span v-show="active" @click="active = false" class="block icon icon-minus-circle"></span>
+        <div v-show="active" class="pagebuilder-menu-items bg-white squished --raised rounded inline-group-s">
+            <div class="left pointer" @click="addingNewTextSectionAfter(section.sort)">
+                <span title="tekst / afbeelding toevoegen" class="label label-o--secondary center-y"><i class="icon icon-align-left"></i>Text</span>
             </div>
-
-            <div class="flex flex-col" v-if="modulescount+pagescount+setscount > 0">
-
-                <p class="stack-xs">Koppel een ...</p>
-
-                <div class="inline-group-s">
-                    <div class="float-left cursor-pointer" v-if="modulescount > 0" @click="addingModuleSectionAfter(section.sort)">
-                        <span title="vast blok selecteren" class="btn btn-o-secondary squished-xs center-y">
-                            <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
-                            Module
-                        </span>
-                    </div>
-
-                    <div class="float-left cursor-pointer" v-if="pagescount > 0" @click="addingPageSectionAfter(section.sort)">
-                        <span title="pagina selecteren" class="btn btn-o-secondary squished-xs center-y">
-                            <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
-                            Pagina
-                        </span>
-                    </div>
-
-                    <div class="float-left cursor-pointer" v-if="setscount > 0" @click="addingPageSetSectionAfter(section.sort)">
-                        <span title="pagina groep selecteren" class="btn btn-o-secondary squished-xs center-y">
-                            <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
-                            Paginagroep
-                        </span>
-                    </div>
-                </div>
-
+            <div class="left pointer" @click="addingModuleSectionAfter(section.sort)">
+                <span title="vast blok selecteren" class="label label-o--secondary center-y">
+                    <i class="icon icon-layout"></i>
+                    Module
+                </span>
             </div>
-            
+            <div class="left pointer" @click="addingPageSetSectionAfter(section.sort)">
+                <span title="pagina groep selecteren" class="label label-o--secondary center-y">
+                    <i class="icon icon-layout"></i>
+                    Paginagroep
+                </span>
+            </div>
+            <div class="left pointer" @click="addingPageSectionAfter(section.sort)">
+                <span title="pagina selecteren" class="label label-o--secondary center-y">
+                    <i class="icon icon-layout"></i>
+                    Pagina
+                </span>
+            </div>
+            <div class="left pointer">
+                <span title="pagina titel toevoegen" @click="addingNewPagetitleSectionAfter(section.sort)" class="label label-o--secondary center-y">H1</span>
+            </div>
         </div>
     </div>
 </template>
 <script>
 
     export default{
-        props:['section', 'modulescount', 'setscount', 'pagescount'],
+        props:['section'],
         data(){
             return {
                 active: false,

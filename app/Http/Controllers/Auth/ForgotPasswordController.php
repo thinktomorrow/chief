@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Thinktomorrow\Chief\Authorization\ChiefPasswordBrokerResolver;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -38,6 +38,6 @@ class ForgotPasswordController extends Controller
 
     protected function broker()
     {
-        return (new ChiefPasswordBrokerResolver(app()))->resolve();
+        return Password::broker('chief');
     }
 }

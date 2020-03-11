@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
             SendInvite::class
         ],
         InviteAccepted::class => [
-            EnableUser::class . '@onAcceptingInvite',
+            EnableUser::class.'@onAcceptingInvite',
         ],
     ];
 

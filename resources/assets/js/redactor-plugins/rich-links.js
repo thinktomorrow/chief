@@ -33,12 +33,8 @@
             }
             else
             {
-                var $url = this.opts.definedlinks;
-                if(this.opts.locale) {
-                    $url += '?locale=' + this.opts.locale;
-                }
                 $R.ajax.get({
-                    url: $url,
+                    url: this.opts.definedlinks,
                     success: this._build.bind(this)
                 });
             }
@@ -93,7 +89,7 @@
 
             if (formData.text !== '')
             {
-                data = { url: data.url, text: data.text };
+                data = { url: data.url };
             }
 
             this.$form.setData(data);

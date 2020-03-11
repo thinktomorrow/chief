@@ -42,7 +42,7 @@ class RoleController extends Controller
         $role->givePermissionTo($request->permission_names);
 
         return redirect()->route('chief.back.roles.index')
-                         ->with('messages.success', 'Rol ' . $role->name . ' is toegevoegd.');
+                         ->with('messages.success', 'Rol '. $role->name.' is toegevoegd.');
     }
 
     public function edit($id)
@@ -60,7 +60,7 @@ class RoleController extends Controller
         $this->authorize('update-role');
 
         $this->validate($request, [
-            'name' => 'required|alpha_dash|unique:roles,name,' . $id,
+            'name' => 'required|alpha_dash|unique:roles,name,'.$id,
             'permission_names' =>'required|array',
             'permission_names.*'   => 'required', // Avoid null array entry
         ]);
@@ -71,7 +71,7 @@ class RoleController extends Controller
         $role->syncPermissions($request->permission_names);
 
         return redirect()->route('chief.back.roles.index')
-            ->with('messages.success', 'Rol ' . $role->name . ' is aangepast.');
+            ->with('messages.success', 'Rol '. $role->name.' is aangepast.');
     }
 
     public function destroy($id)
@@ -82,6 +82,6 @@ class RoleController extends Controller
         $role->delete();
 
         return redirect()->route('chief.back.roles.index')
-            ->with('messages.success', 'Rol ' . $role->name . ' is verwijderd.');
+            ->with('messages.success', 'Rol '. $role->name.' is verwijderd.');
     }
 }

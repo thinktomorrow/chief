@@ -3,26 +3,27 @@
         <div v-show="isVisible" class="modal" :class="typedclass">
             <div class="modal-backdrop" @click="close"></div>
             <div class="modal-content">
-                <div class="panel border border-grey-100 rounded">
+                <div class="panel panel-default">
                     <div class="inset">
                         <div class="modal-header">
-                            <h3 class="uppercase">{{ title }}</h3>
+                            <h3>{{ title }}</h3>
                         </div>
+
                         <div class="modal-body">
                             <slot></slot>
                         </div>
                     </div>
-                    <div v-if="showFooter" class="modal-footer inset center-y inline-group bg-grey-100">
+
+                    <div v-if="showFooter" class="modal-footer inset center-y inline-group bg-grey-lightest">
                         <slot name="footer">
+                            <a @click="close" class="btn btn-o-primary"><slot name='modal-close-btn'>Annuleer</slot></a>
                             <slot name='modal-action-buttons'></slot>
-                            <a @click="close" class="btn btn-link text-grey-500"><slot name='modal-close-btn'>Annuleer</slot></a>
                         </slot>
                     </div>
+
                 </div>
             </div>
-            <button type="button" @click="close" class="modal-close">
-                <svg width="18" height="18"><use xlink:href="#x"/></svg>
-            </button>
+            <button @click="close" class="modal-close"><i class="icon icon-x"></i></button>
         </div>
     </transition>
 </template>

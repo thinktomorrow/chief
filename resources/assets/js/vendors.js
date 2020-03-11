@@ -27,11 +27,11 @@ if (token) {
 // Stickyfill
 window.Stickyfill = require('stickyfilljs');
 
-// /**
-//  * Tippy tooltip library
-//  * @url https://atomiks.github.io/tippyjs/
-//  */
-// window.tippy = require('tippy.js');
+/**
+ * Tippy tooltip library
+ * @url https://atomiks.github.io/tippyjs/
+ */
+window.tippy = require('tippy.js');
 
 // Vue
 window.Vue = require('vue');

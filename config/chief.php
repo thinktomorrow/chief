@@ -1,13 +1,8 @@
 <?php
 
-return [
+use Thinktomorrow\Chief\Media\MediaType;
 
-    /**
-     * When chief is in strict mode, it exposes potential errors and warnings in your application.
-     * Non-critical errors like non found urls or views. When such an error occurs in strict mode,
-     * your app will throw an exception. Strict mode is by default only enabled in development.
-     */
-    'strict' => env('APP_DEBUG', false),
+return [
 
     /**
      * Domain settings.
@@ -21,58 +16,22 @@ return [
         'path'      => 'src/',
     ],
 
-    'route' => [
-        /**
-         * By default Chief will add the pages.show routing to your app. Since this is a catch-all route, it will be loaded last.
-         * If this conflicts with your project, set the autoload value to false. In this case you are responsible for handling the routing.
-         * Use the following route snippet as a starting point:
-         *
-         *      Route::get('{slug?}', function($slug = '/'){
-         *          return \Thinktomorrow\Chief\Urls\ChiefResponse::fromSlug($slug);
-         *      })->name('pages.show')->where('slug', '(.*)?');
-         *
-         */
-        'autoload' => true,
-
-        /**
-         * Route name for the route that chief uses to listen and interact with
-         * a page request. It is set to `pages.show` but if this conflicts
-         * with your project naming conventions, you can change it here.
-         */
-        'name' => 'pages.show',
-
-        /**
-         * Here you can set the general prefix for all the chief admin routes.
-         * This is set to a sensible default '/admin'.
-         */
-        'prefix' => 'admin',
-
-        /**
-         * The filepath where you can define your projects' chief admin routes. The chief
-         * admin prefix and middleware will automatically be applied to these routes
-         */
-        'admin-filepath' => null,
-    ],
-
     /**
-     * The Viewable::viewPath() method gives the view path for that specific model.
-     * By default, we provide some sensible defaults for pages, modules and sets.
-     * Here you define the relative base view path for these resp. models.
+     * Definitions of the few route names that the chief backend uses to interact with the frontend.
+     * This is for instance used to preview an url of a page.
      */
-    'base-view-paths' => [
-        'pages'   => 'pages',
-        'modules' => 'modules',
-        'sets'    => 'sets',
+    'routes' => [
+        'pages-show' => 'pages.show',
     ],
 
     /**
-     * Here we define which models are available as children.
+     * By default all models are available as children. Here we define which models are explicitly disallowed.
      *
      * This reflects itself in the select options of the page builder. Make note that this has no effect on already
      * created relations, only new ones. After changing this value, make sure you flush the cached relations.
      */
     'relations'   => [
-        'children' => [
+        'blacklist' => [
             // \Thinktomorrow\Chief\Pages\Page::class,
         ],
     ],
@@ -100,6 +59,24 @@ return [
     ],
 
     /**
+     * Set of mediatypes used for each collection.
+     * Default set of mediatypes that is available for every collection
+     */
+    'mediatypes' => [
+
+        'default' => [
+            (object) [
+                'type' => MediaType::HERO,
+                'limit' => 1,
+            ],
+            (object) [
+                'type' => MediaType::THUMB,
+                'limit' => 1,
+            ]
+        ],
+    ],
+
+    /**
      * Define the directory where your html snippets reside. This can be a blade file or regular html.
      * The identifier of each snippet is taken from the filename so make sure to properly name
      * your files. We will load up all the snippets as available clips in e.g. the editor.
@@ -119,18 +96,25 @@ return [
     'withSnippets' => true,
 
     /**
-     * Select the editor for the html fields. This is used for the html fields
-     * in the forms as well as in the pagebuilder. Available options are:
-     * 'quill' and 'redactor'. By default the free quill editor is set.
+     * Define specific setting fields.
+     * By default a standard input field is used.
      */
-    'editor' => 'quill',
-
-    /**
-     * Here you can define the stack of checks used by the healthmonitor.
-     *
-     */
-    'healthMonitor' => [
-        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageSetCheck::class,
-        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageAccessibleCheck::class,
+    'settingFields' => [
+        // TODO: callable can be removed when we set everything up in a service provider
+        'homepage' => function () {
+            return \Thinktomorrow\Chief\Settings\HomepageFieldGenerator::generate();
+        },
+        'contact.email' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.email')
+                        ->label('Webmaster email')
+                        ->description('Het emailadres van de webmaster. Hierop ontvang je standaard alle contactnames.'),
+        'contact.name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('contact.name')
+                        ->label('Webmaster naam')
+                        ->description('Voor en achternaam van de webmaster.'),
+        'client.app_name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('client.app_name')
+                        ->label('Site naam')
+                        ->description('Naam van de applicatie. Dit wordt getoond in o.a. de mail communicatie.'),
+        'client.name' => \Thinktomorrow\Chief\Fields\Types\InputField::make('client.name')
+                        ->label('Organisatie')
+                        ->description('Naam van uw bedrijf. Dit wordt getoond in o.a. de mail communicatie.'),
     ],
 ];

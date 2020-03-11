@@ -14,18 +14,20 @@ class CreateAdmin extends BaseCommand
     {
         $this->settingPermissionsAndRoles();
 
+        $anticipations       = $this->getAnticipations();
+        $anticipatedLastname = null;
         $firstname           = null;
         $lastname            = null;
 
         while (!$firstname) {
-            $firstname = $this->ask('firstname');
+            $firstname = $this->anticipate('firstname', array_pluck($anticipations, 'firstname'));
         }
-
+        
         while (!$lastname) {
-            $lastname = $this->ask('lastname');
+            $lastname = $this->anticipate('lastname', array_pluck($anticipations, 'lastname'), $anticipatedLastname);
         }
 
-        $email = $this->ask('email');
+        $email = $this->ask('email', str_slug($firstname).'@thinktomorrow.be');
 
         $password = $this->askPassword();
 
@@ -34,10 +36,10 @@ class CreateAdmin extends BaseCommand
         } else {
             $role = 'admin';
         }
-
+        
         $this->createUser($firstname, $lastname, $email, $password, [$role]);
-
-        $this->info($firstname . ' ' . $lastname . ' succesfully added as admin user.');
+        
+        $this->info($firstname.' '.$lastname. ' succesfully added as admin user.');
     }
 
     private function settingPermissionsAndRoles()
@@ -49,7 +51,34 @@ class CreateAdmin extends BaseCommand
         AuthorizationDefaults::roles()->each(function ($defaultPermissions, $roleName) {
             Artisan::call('chief:role', ['name' => $roleName, '--permissions' => implode(',', $defaultPermissions)]);
         });
-
+        
         $this->info('Default permissions and roles');
+    }
+
+    /**
+     * We assume we are creating users for ourselves so we make this a bit easier to do
+     * @return array
+     */
+    private function getAnticipations()
+    {
+        $anticipations = [
+            [
+                'firstname' => 'Ben',
+                'lastname'  => 'Cavens',
+                'email'     => 'ben@thinktomorrow.be',
+            ],
+            [
+                'firstname' => 'Philippe',
+                'lastname'  => 'Damen',
+                'email'     => 'philippe@thinktomorrow.be',
+            ],
+            [
+                'firstname' => 'Johnny',
+                'lastname'  => 'Berkmans',
+                'email'     => 'johnny@thinktomorrow.be',
+            ],
+        ];
+
+        return $anticipations;
     }
 }

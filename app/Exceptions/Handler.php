@@ -3,12 +3,10 @@
 namespace Thinktomorrow\Chief\App\Exceptions;
 
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,17 +55,6 @@ class Handler extends ExceptionHandler
             return $this->unauthorized($request, $exception);
         }
 
-        if ($request->getMethod() == 'POST' && $exception instanceof PostTooLargeException) {
-            if ($request->expectsJson()) {
-                return response()->json([
-                    'error' => true, // required by redactor
-                    'message' => $exception->getMessage(),
-                ], 200);
-            }
-
-//            return redirect()->back()->withInput()->withErrors($exception->getMessage());
-        }
-
         //could use some code cleanup
         if ((strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin')) && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException) {
             return $this->renderChiefException($request, $exception);
@@ -83,9 +70,9 @@ class Handler extends ExceptionHandler
                 return response()->json(['error' => 'Something went wrong.'], 404);
             }
 
-            return response()->view('chief::back.errors.custom', [], 500);
+            return response()->view('chief::back.errors.custom');
         }
-
+        
         return parent::render($request, $exception);
     }
 
@@ -109,12 +96,12 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        if (!empty($exception->guards()) && Arr::first($exception->guards()) == 'chief') {
+        if (!empty($exception->guards()) && array_first($exception->guards()) == 'chief') {
             return redirect()->guest(route('chief.back.login'));
         }
 
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)
-            : redirect()->guest(method_exists($exception, 'redirectTo') ? $exception->redirectTo() : '/');
+            : redirect()->guest($exception->redirectTo() ?? '/');
     }
 }

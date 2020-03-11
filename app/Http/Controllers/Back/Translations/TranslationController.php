@@ -1,5 +1,4 @@
 <?php
-
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Translations;
 
 use Illuminate\Http\Request;
@@ -12,7 +11,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class TranslationController extends SquantoController
 {
     use AuthorizesRequests;
-
+    
     public function index()
     {
         $this->authorize('view-squanto');
@@ -27,14 +26,14 @@ class TranslationController extends SquantoController
     public function update(Request $request, $page_id)
     {
         $this->authorize('update-squanto');
-
+        
         return parent::update($request, $page_id);
     }
 
     public function edit($id)
     {
         $this->authorize('update-squanto');
-
+        
         return parent::edit($id);
     }
 }

@@ -17,6 +17,6 @@ class ResendInviteController extends Controller
         app(InviteUser::class)->handle($user, auth()->guard('chief')->user());
 
         return redirect()->route('chief.back.users.index')
-            ->with('messages.success', $user->fullname . ' is opnieuw een uitnodiging verstuurd.');
+            ->with('messages.success', $user->fullname. ' is opnieuw een uitnodiging verstuurd.');
     }
 }

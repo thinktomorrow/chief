@@ -13,11 +13,6 @@ class DisableUserController extends Controller
     {
         $this->authorize('disable-user');
 
-        if (chiefAdmin()->id == $id) {
-            return redirect()->back()
-                ->with('messages.error', 'U kan uzelf niet blokkeren.');
-        }
-
         $user = User::findOrFail($id);
 
         app(DisableUser::class)->handle($user);

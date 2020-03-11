@@ -4,31 +4,22 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Urls\UrlHelper;
 
 class InternalLinksController extends Controller
 {
     public function index(Request $request)
     {
-        $locale = app()->getLocale();
-
         // Fetch the links for specific locale
         if ($request->has('locale')) {
-            $locale = $request->input('locale');
-            app()->setLocale($locale);
+            app()->setLocale($request->get('locale'));
         }
 
-        $onlineModels = UrlHelper::onlineModels();
-
-        $links = $onlineModels->reject(function (ProvidesUrl $model) {
-            return !$model->url();
-        })->map(function ($model) {
-            $name = (method_exists($model, 'menuLabel') && $model->menuLabel()) ? $model->menuLabel() : (isset($model->title) ? $model->title : $model->url());
+        $links = Page::all()->map(function ($page) {
             return [
-                'name' => $name ??  $model->url(),
-                'url' => $model->url(),
+                'name' => $page->menuLabel(),
+                'url' => $page->menuUrl(),
             ];
         });
 

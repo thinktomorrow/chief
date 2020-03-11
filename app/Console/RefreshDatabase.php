@@ -19,7 +19,7 @@ class RefreshDatabase extends BaseCommand
         }
 
         if (app()->environment() != 'local' && $this->option('force')) {
-            if (!$this->confirm('You are about to force refresh the database in the ' . app()->environment() . ' environment! ARE YOU SURE?')) {
+            if (!$this->confirm('You are about to force refresh the database in the '.app()->environment().' environment! ARE YOU SURE?')) {
                 $this->info('aborting.');
                 return;
             }
@@ -37,7 +37,7 @@ class RefreshDatabase extends BaseCommand
         }
 
         // Include Our Chief factories for this command
-        app(ModelFactory::class)->load(realpath(dirname(__DIR__) . '/../database/factories'));
+        app(ModelFactory::class)->load(realpath(dirname(__DIR__).'/../database/factories'));
 
         $this->settingPermissionsAndRoles();
         $this->settingUsers();
@@ -80,7 +80,7 @@ class RefreshDatabase extends BaseCommand
 
         $admins->each(function ($admin) {
             $this->createUser($admin[0], $admin[1], $admin[2], $admin[3], 'developer');
-            $this->info('Added ' . $admin[0] . ' as developer role with your provided password.');
+            $this->info('Added '.$admin[0].' as developer role with your provided password.');
         });
     }
 }

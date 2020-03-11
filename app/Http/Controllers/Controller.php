@@ -12,9 +12,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests;
-    use DispatchesJobs;
-    use ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     protected function lengthAwarePaginator(Collection $collection, $itemsPerPage, $pageName)
     {
@@ -26,8 +24,7 @@ class Controller extends BaseController
             [
                 'path'     => Paginator::resolveCurrentPath($pageName),
                 'pageName' => $pageName
-            ]
-        );
+            ]);
 
         return $paginator;
     }

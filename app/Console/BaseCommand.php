@@ -10,7 +10,7 @@ abstract class BaseCommand extends Command
 {
     protected function createUser(string $firstname, string $lastname, string $email, string $password, $roles = [])
     {
-        $user = new User();
+        $user = new User;
         $user->firstname = $firstname;
         $user->lastname = $lastname;
         $user->email = $email;

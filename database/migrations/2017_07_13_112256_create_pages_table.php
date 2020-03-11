@@ -12,9 +12,12 @@ class CreatepagesTable extends Migration
             $table->increments('id');
             $table->string('collection', 32)->index()->default('singles');
             $table->boolean('published')->default(false);
+            $table->boolean('featured')->default(false);
             $table->timestamp('archived_at')->default(null)->nullable();
             $table->boolean('hidden_in_menu')->default(false);
             $table->timestamp('publication')->nullable();
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
