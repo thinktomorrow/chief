@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\Translatable;
 
 use InvalidArgumentException;
 
 /**
  * Trait Translatable
+ *
  * @author Ben Cavens
  *
  * Allows the entity to contain multiple translations
@@ -101,12 +104,12 @@ trait Translatable
     public static function availableLocales()
     {
         // This is a method expected from the dimsav package
-        return (new static())->getLocalesHelper()->all();
+        return (new self())->getLocalesHelper()->all();
     }
 
     /**
-     * @deprecated use availableLocales instead
      * @return \Illuminate\Config\Repository|mixed
+     * @deprecated use availableLocales instead
      */
     public static function getAvailableLocales()
     {
@@ -237,6 +240,7 @@ trait Translatable
             $this->persistTranslation($entity, $keys, $translation, $available_locale);
         }
     }
+
     /**
      * Check if certain locale input submission is left empty
      *
@@ -255,8 +259,10 @@ trait Translatable
                 $is_completely_empty = false;
             }
         }
+
         return $is_completely_empty;
     }
+
     /**
      * @param TranslatableContract $entity
      * @param array $keys

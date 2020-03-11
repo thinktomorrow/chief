@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls\Application;
 
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
@@ -78,6 +80,7 @@ class SaveUrlSlugs
         // If slug entry is left empty, all existing records will be deleted
         if ($nonRedirectsWithSameLocale->isEmpty()) {
             $this->createRecord($locale, $slug);
+
             return;
         }
 
@@ -92,10 +95,10 @@ class SaveUrlSlugs
     private function createRecord($locale, $slug)
     {
         UrlRecord::create([
-            'locale'              => $locale,
-            'slug'                => $slug,
-            'model_type'          => $this->model->getMorphClass(),
-            'model_id'            => $this->model->id,
+            'locale'     => $locale,
+            'slug'       => $slug,
+            'model_type' => $this->model->getMorphClass(),
+            'model_id'   => $this->model->id,
         ]);
     }
 

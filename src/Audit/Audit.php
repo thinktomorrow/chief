@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Audit;
 
 use Spatie\Activitylog\Models\Activity;

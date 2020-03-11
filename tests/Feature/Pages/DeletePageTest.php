@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\PageManager;
@@ -19,7 +20,7 @@ class DeletePageTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        $this->page = factory(Page::class)->create(['published' => false]);
+        $this->page = factory(Page::class)->create(['current_state' => PageState::DRAFT]);
         app(Register::class)->register(PageManager::class, Single::class);
     }
 
@@ -88,7 +89,8 @@ class DeletePageTest extends TestCase
     /** @test */
     public function a_published_page_cannot_be_deleted()
     {
-        $this->page->publish();
+        $this->page->changeStateOf(PageState::KEY, PageState::PUBLISHED);
+        $this->page->save();
 
         $this->asAdmin()
             ->delete(route('chief.back.managers.delete', ['singles', $this->page->id]), [

@@ -46,6 +46,12 @@ return [
          * This is set to a sensible default '/admin'.
          */
         'prefix' => 'admin',
+
+        /**
+         * The filepath where you can define your projects' chief admin routes. The chief
+         * admin prefix and middleware will automatically be applied to these routes
+         */
+        'admin-filepath' => null,
     ],
 
     /**

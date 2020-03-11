@@ -23,7 +23,7 @@ class DenyInviteTest extends TestCase
         $this->inviter = $this->developer();
 
         $this->invitation = Invitation::make($this->invitee->id, $this->inviter->id);
-        $this->invitation->changeState('pending');
+        $this->invitation->changeStateOf(InvitationState::KEY, 'pending');
 
         // Fake password so we can login with a known value
         $this->invitee->password = Hash::make('password');
@@ -69,7 +69,7 @@ class DenyInviteTest extends TestCase
     public function deny_url_should_not_be_processed_when_invitation_is_revoked()
     {
         // Force invitation state on revoked
-        $this->invitation->changeState('revoked');
+        $this->invitation->changeStateOf(InvitationState::KEY, 'revoked');
 
         $response = $this->get($this->invitation->denyUrl());
         $response->assertRedirect(route('invite.expired'));
@@ -80,12 +80,11 @@ class DenyInviteTest extends TestCase
     /** @test */
     public function deny_url_sets_invitation_to_denied()
     {
-        $this->disableExceptionHandling();
         $response = $this->get($this->invitation->denyUrl());
 
         $response->assertViewIs('chief::back.users.invite-denied');
 
-        $this->assertEquals(InvitationState::DENIED, $this->invitation->fresh()->state());
+        $this->assertEquals(InvitationState::DENIED, $this->invitation->fresh()->stateOf(InvitationState::KEY));
         $this->assertFalse($this->invitee->fresh()->isEnabled());
     }
 }

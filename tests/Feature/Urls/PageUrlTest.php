@@ -45,7 +45,7 @@ class PageUrlTest extends TestCase
     }
 
     /** @test */
-    function url_is_by_default_based_on_current_locale()
+    public function url_is_by_default_based_on_current_locale()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
             'url-slugs' => [
@@ -64,7 +64,7 @@ class PageUrlTest extends TestCase
     }
 
     /** @test */
-    function the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
+    public function the_fallback_locale_for_the_base_url_segment_is_used_when_current_locale_not_found()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams([
             'url-slugs' => [
@@ -75,7 +75,11 @@ class PageUrlTest extends TestCase
 
         $model = ProductWithBaseSegments::first();
 
+        config()->set('app.fallback_locale', 'en');
         $this->assertEquals('products', $model->baseUrlSegment('fr') );
+
+        config()->set('app.fallback_locale', 'nl');
+        $this->assertEquals('producten', $model->baseUrlSegment('fr') );
     }
 
 }

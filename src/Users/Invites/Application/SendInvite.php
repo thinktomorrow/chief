@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users\Invites\Application;
 
 use Thinktomorrow\Chief\App\Notifications\InvitationMail;

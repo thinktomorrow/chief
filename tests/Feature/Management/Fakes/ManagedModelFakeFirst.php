@@ -5,20 +5,24 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\State\StatefulContract;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
-use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 
-class ManagedModelFakeFirst extends Model implements  ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild
+class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, StatefulContract
 {
+    private $current_state = 'draft';
+
     use Translatable,
         \Astrotomic\Translatable\Translatable,
         AssetTrait,
@@ -50,7 +54,7 @@ class ManagedModelFakeFirst extends Model implements  ManagedModel, Translatable
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('custom_column')->nullable();
-            $table->boolean('published')->default(0);
+            $table->string('current_state')->default(PageState::DRAFT);
             $table->dateTime('archived_at')->nullable();
             $table->timestamps();
         });
@@ -87,5 +91,15 @@ class ManagedModelFakeFirst extends Model implements  ManagedModel, Translatable
     public function flatReferenceGroup(): string
     {
         return 'group';
+    }
+
+    public function stateOf($key): string
+    {
+        return $this->current_state;
+    }
+
+    public function changeStateOf($key, $state)
+    {
+        $this->current_state = $state;
     }
 }

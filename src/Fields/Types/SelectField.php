@@ -1,45 +1,30 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-class SelectField extends Field
+class SelectField extends AbstractField implements Field
 {
-    public static function make(string $key)
+    use AllowsMultiple;
+    use AllowsOptions;
+
+    protected $grouped = false;
+
+    public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::SELECT), $key);
     }
 
-    public function options(array $values)
-    {
-        $this->values['options'] = $values;
-
-        return $this;
-    }
-
     public function grouped(bool $grouped = true)
     {
-        $this->values['grouped'] = $grouped;
+        $this->grouped = $grouped;
 
         return $this;
     }
 
-    public function isGrouped()
+    public function isGrouped(): bool
     {
-        return isset($this->values['grouped']);
-    }
-
-    public function selected($values)
-    {
-        $this->values['selected'] = $values;
-
-        return $this;
-    }
-
-    public function multiple($value = true)
-    {
-        $this->values['multiple'] = $value;
-
-        return $this;
+        return $this->grouped;
     }
 }

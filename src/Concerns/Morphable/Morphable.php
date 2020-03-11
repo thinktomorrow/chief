@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 trait Morphable
 {
-    use EloquentMorphableInstantiation,
-        EloquentMorphableCreation;
+    use EloquentMorphableInstantiation;
+    use EloquentMorphableCreation;
 
     public function morphKey(): ?string
     {
@@ -32,7 +34,7 @@ trait Morphable
     public function scopeMorphable($query, string $morphkey = null)
     {
         return $query->withoutGlobalScope(static::globalMorphableScope())
-                     ->where('morph_key', '=', $morphkey);
+            ->where('morph_key', '=', $morphkey);
     }
 
     /**

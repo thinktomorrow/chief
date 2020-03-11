@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Filters;
 
@@ -14,7 +14,7 @@ abstract class Filter
 
     protected $values = [];
 
-    public function __construct(FilterType $filterType, string $key)
+    final public function __construct(FilterType $filterType, string $key)
     {
         $this->filterType = $filterType;
 
@@ -64,7 +64,7 @@ abstract class Filter
         }
 
         if (!in_array($name, ['name', 'label', 'description', 'query', 'viewpath', 'default'])) {
-            throw new \InvalidArgumentException('Cannot set value by ['. $name .'].');
+            throw new \InvalidArgumentException('Cannot set value by [' . $name . '].');
         }
 
         $this->values[$name] = $arguments[0];

@@ -1,20 +1,20 @@
-@if(count($field->locales) > 1)
+@if(count($field->getLocales()) > 1)
     <tabs>
-        @foreach($field->locales as $locale)
+        @foreach($field->getLocales() as $locale)
             <tab v-cloak id="{{ $locale }}-translatable-fields" name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
-                @include($formElementView, [
-                    'key'   => 'trans.'.$locale.'.'.$field->key,
-                    'name' => $field->translateName($locale),
+                @include('chief::back._fields.'.$field->getType()->get(), [
+                    'key'   => 'trans.'.$locale.'.'.$field->getKey(),
+                    'name' => $field->getName($locale),
                     'field' => $field
                 ])
             </tab>
         @endforeach
     </tabs>
 @else
-    @foreach($field->locales as $locale)
-        @include($formElementView, [
-            'key'   => 'trans.'.$locale.'.'.$field->key,
-            'name'  => $field->translateName($locale),
+    @foreach($field->getLocales() as $locale)
+        @include('chief::back._fields.'.$field->getType()->get(), [
+            'key'   => 'trans.'.$locale.'.'.$field->getKey(),
+            'name'  => $field->getName($locale),
             'field' => $field
         ])
     @endforeach

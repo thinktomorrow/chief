@@ -20,8 +20,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
 $factory->define(Page::class, function (Faker\Generator $faker) {
     return [
         'morph_key' => 'singles',
-        'published'   => 1,
-        'publication' => null,
+        'current_state'   => \Thinktomorrow\Chief\States\PageState::DRAFT,
         'title:nl'    => $faker->words(rand(2, 4), true),
     ];
 });

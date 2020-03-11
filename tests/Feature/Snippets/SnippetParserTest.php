@@ -83,7 +83,6 @@ class SnippetParserTest extends TestCase
     /** @test */
     public function it_can_render_a_snippet_when_found_in_pagebuilder_section()
     {
-        $this->disableExceptionHandling();
         $page = $this->addSnippetToPageSection();
 
         $this->assertEquals('foo <p>This is a snippet</p> bar', $page->fresh()->withSnippets()->renderChildren());
@@ -93,7 +92,6 @@ class SnippetParserTest extends TestCase
     /** @test */
     public function it_can_render_a_snippet_when_found_in_module_content()
     {
-        $this->disableExceptionHandling();
         $page = ArticlePageFake::create();
         $module = $this->addSnippetToModule();
 

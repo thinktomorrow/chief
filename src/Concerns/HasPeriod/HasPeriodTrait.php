@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\HasPeriod;
 
 use Illuminate\Support\Carbon;
@@ -8,7 +10,7 @@ trait HasPeriodTrait
 {
     protected static function bootHasPeriodTrait()
     {
-        static::addGlobalScope(new SortPeriodDateScope);
+        static::addGlobalScope(new SortPeriodDateScope());
     }
 
     public function initializeHasPeriodTrait()
@@ -34,7 +36,7 @@ trait HasPeriodTrait
     public function saveStartAtField($start_at)
     {
         $this->start_at = Carbon::parse($start_at)->startOfDay();
-        $this->end_at   = $this->start_at->endOfDay();
+        $this->end_at = $this->start_at->endOfDay();
 
         $this->save();
     }

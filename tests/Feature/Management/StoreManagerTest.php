@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
@@ -75,15 +76,14 @@ class StoreManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_media_field()
+    public function it_can_upload_a_file_field()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()
             ->post($this->fake->route('store'), [
                 'files' => [
                     'hero' => [
-                        'new' => [
-                            $this->dummySlimImagePayload('tt-favicon.png'),
+                        'nl' => [
+                            UploadedFile::fake()->image('tt-favicon.png'),
                         ]
                     ]
                 ],

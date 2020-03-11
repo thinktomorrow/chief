@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
 
@@ -10,7 +11,7 @@ class ChiefMenu
     private $collection;
     private $includeHidden = false;
 
-    public function __construct(NodeCollection $collection)
+    final public function __construct(NodeCollection $collection)
     {
         $this->collection = $collection;
     }
@@ -66,14 +67,15 @@ class ChiefMenu
             $label = $entry->label;
             $entry->label = $node->depth() != 0 ? (str_repeat('-', $node->depth())) . '>' : '';
             $entry->label .= $label;
+
             return $node->replaceEntry($entry);
         });
 
         $menuitems = collect();
         $menu->flatten()->each(function ($node) use ($menuitems) {
-            $menuitems[]  = [
+            $menuitems[] = [
                 'label' => $node->label,
-                'id'    => $node->id
+                'id'    => $node->id,
             ];
         });
 

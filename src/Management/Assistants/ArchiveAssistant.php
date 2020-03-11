@@ -1,20 +1,25 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\States\State\StatefulContract;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Management\Managers;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class ArchiveAssistant implements Assistant
 {
+    /** @var Manager */
     private $manager;
-
-    private $model;
 
     /** @var Managers */
     private $managers;
@@ -24,52 +29,29 @@ class ArchiveAssistant implements Assistant
         $this->managers = $managers;
     }
 
-    public function manager(Manager $manager)
-    {
-        $this->manager  = $manager;
-        $this->model    = $manager->model();
-    }
-
     public static function key(): string
     {
         return 'archive';
     }
 
+    public function manager(Manager $manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function isArchived(): bool
     {
-        return $this->model->isArchived();
+        return $this->manager->existingModel()->isArchived();
     }
 
     public function archivedAt(): Carbon
     {
-        return new Carbon($this->model->archived_at);
+        return new Carbon($this->manager->existingModel()->archived_at);
     }
 
-    public function archive()
+    public function findAllArchived(): Collection
     {
-        $this->model->archive();
-
-        Audit::activity()
-            ->performedOn($this->model)
-            ->log('archived');
-    }
-
-    public function unarchive()
-    {
-        $this->model->unarchive();
-
-        if ($this->manager->isAssistedBy('publish')) {
-            $this->model->draft();
-        }
-
-        Audit::activity()
-            ->performedOn($this->model)
-            ->log('unarchived');
-    }
-
-    public function findAll(): Collection
-    {
-        return $this->model->archived()->get()->map(function ($model) {
+        return $this->manager->modelInstance()::archived()->get()->map(function ($model) {
             return $this->managers->findByModel($model);
         });
     }
@@ -77,7 +59,7 @@ class ArchiveAssistant implements Assistant
     public function route($verb): ?string
     {
         $routes = [
-            'index' => route('chief.back.assistants.archive-index', [$this->manager->details()->key]),
+            'index' => route('chief.back.assistants.view', [$this->key(), 'index', $this->manager->managerKey()]),
         ];
 
         if (array_key_exists($verb, $routes)) {
@@ -85,8 +67,18 @@ class ArchiveAssistant implements Assistant
         }
 
         $modelRoutes = [
-            'archive'   => route('chief.back.assistants.archive', [$this->manager->details()->key, $this->manager->model()->id]),
-            'unarchive' => route('chief.back.assistants.unarchive', [$this->manager->details()->key, $this->manager->model()->id]),
+            'archive' => route('chief.back.assistants.update', [
+                $this->key(),
+                'archive',
+                $this->manager->managerKey(),
+                $this->manager->existingModel()->id,
+            ]),
+            'unarchive' => route('chief.back.assistants.update', [
+                $this->key(),
+                'unarchive',
+                $this->manager->managerKey(),
+                $this->manager->existingModel()->id,
+            ]),
         ];
 
         return isset($modelRoutes[$verb]) ? $modelRoutes[$verb] : null;
@@ -97,12 +89,72 @@ class ArchiveAssistant implements Assistant
         return !is_null($this->route($verb));
     }
 
-    public function guard($verb): Assistant
+    private function guard($verb): Assistant
     {
-        if (! $this->can($verb)) {
+        if (!$this->manager->existingModel() instanceof StatefulContract) {
+            throw new \InvalidArgumentException('ArchiveAssistant requires the model to implement the StatefulContract. [' . get_class($this->manager->existingModel()) . '] given instead.');
+        }
+
+        if (!$this->can($verb)) {
             NotAllowedManagerRoute::notAllowedVerb($verb, $this->manager);
         }
 
         return $this;
+    }
+
+    public function index(Request $request)
+    {
+        return view('chief::back.managers.archive.index', [
+            'modelManager' => $this->manager,
+            'managers'     => $this->findAllArchived(),
+        ]);
+    }
+
+    public function archive(Request $request)
+    {
+        $this->guard('archive');
+
+        // If a redirect_id is passed along the request, it indicates the admin wants this page to be redirected to another one.
+        if ($redirectReference = $request->get('redirect_id')) {
+            $model = FlatReferenceFactory::fromString($redirectReference)->instance();
+
+            $targetRecords = UrlRecord::getByModel($model);
+
+            // Ok now get all urls from this model and point them to the new records
+            foreach (UrlRecord::getByModel($this->manager->existingModel()) as $urlRecord) {
+                if ($targetRecord = $targetRecords->first(function ($record) use ($urlRecord) {
+                    return ($record->locale == $urlRecord->locale && !$record->isRedirect());
+                })) {
+                    $urlRecord->redirectTo($targetRecord);
+                }
+            }
+        }
+
+        // Set state to archived
+        PageState::make($this->manager->existingModel())->apply('archive');
+        $this->manager->existingModel()->save();
+
+        // Log archive activity
+        Audit::activity()
+            ->performedOn($this->manager->existingModel())
+            ->log('archived');
+
+        return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title . ' is gearchiveerd.');
+    }
+
+    public function unarchive()
+    {
+        $this->guard('unarchive');
+
+        // Set state to archived
+        PageState::make($this->manager->existingModel())->apply('unarchive');
+        $this->manager->existingModel()->save();
+
+        // Log archive activity
+        Audit::activity()
+            ->performedOn($this->manager->existingModel())
+            ->log('unarchived');
+
+        return redirect()->to($this->manager->route('index'))->with('messages.success', $this->manager->details()->title . ' is hersteld.');
     }
 }

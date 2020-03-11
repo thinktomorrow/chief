@@ -14,7 +14,9 @@ class FieldType
     const PHONENUMBER = 'phonenumber';    // Timestamp input
     const HTML = 'html';    // Html text (wysiwyg)
     const SELECT = 'select';  // Select options
-    const MEDIA = 'media';  // media file (slim uploader)
+    //const MEDIA = 'media';  // media file
+    const FILE = 'file';  // regular file
+    const IMAGE = 'image';  // image (slim uploader)
     const DOCUMENT = 'document';  // documents
     const RADIO = 'radio';  // radio select
     const CHECKBOX = 'checkbox';  // checkbox select
@@ -30,21 +32,35 @@ class FieldType
      *
      * @param string $type
      */
-    public function __construct(string $type)
+    final public function __construct(string $type)
     {
         $this->type = $type;
     }
 
     public static function fromString(string $type): self
     {
-        $class = 'Thinktomorrow\Chief\Fields\Types\\' . ucfirst($type . 'Field');
-
-        return new $class(new static($type));
+        return new static($type);
     }
 
     public function get(): string
     {
         return $this->type;
+    }
+
+    public function equalsAny(array $types): bool
+    {
+        foreach ($types as $type) {
+            if ($this->equals(FieldType::fromString($type))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function equals($type): bool
+    {
+        return ((string)$type === (string)$this->type && static::class === get_class($type));
     }
 
     public function __toString()

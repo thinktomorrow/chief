@@ -67,6 +67,9 @@ abstract class TestCase extends OrchestraTestCase
         Memoize::clear();
         MemoizedUrlRecord::clearCachedRecords();
         Page::clearCachedUrls();
+
+        // Set nl as default locale for testing env
+        config()->set('app.fallback_locale', 'nl');
     }
 
     protected function resolveApplicationHttpKernel($app)
@@ -82,7 +85,7 @@ abstract class TestCase extends OrchestraTestCase
         $app->bind('path.public', function () {
             return $this->getTempDirectory();
         });
-        
+
         $app['config']->set('permission.table_names', [
             'roles'                 => 'roles',
             'permissions'           => 'permissions',
@@ -113,6 +116,8 @@ abstract class TestCase extends OrchestraTestCase
         $app['config']->set('activitylog.default_log_name', 'default');
         $app['config']->set('activitylog.default_auth_driver', 'chief');
         $app['config']->set('activitylog.activity_model', \Thinktomorrow\Chief\Audit\Audit::class);
+
+        $app['config']->set('thinktomorrow.chief.route.admin-filepath', __DIR__.'/stubs/config/admin-filepaths.php');
 
         $app['config']->set('filesystems.disks.public', [
             'driver' => 'local',

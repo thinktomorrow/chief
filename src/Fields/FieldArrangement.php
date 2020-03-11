@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Fields;
 
 class FieldArrangement
@@ -10,7 +12,7 @@ class FieldArrangement
     /** @var array */
     private $tabs;
 
-    public function __construct(Fields $fields, array $tabs = [])
+    final public function __construct(Fields $fields, array $tabs = [])
     {
         $this->fields = $fields;
 
@@ -63,7 +65,7 @@ class FieldArrangement
             if ($tab instanceof RemainingFieldsTab) {
                 $remainingFieldsTabIndex = $index;
                 continue;
-            };
+            }
 
             // Slim down the remaining fields array so in the end we know which fields are actually missing/
             foreach ($remainingFields as $k => $remainingField) {

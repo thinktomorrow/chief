@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Fields;
 
 use Thinktomorrow\Chief\Fields\Types\Field;
@@ -17,6 +19,7 @@ class FieldsTab
 
     /**
      * array of fieldKeys of the fields which are accepted in this tab
+     *
      * @var array
      */
     private $fieldKeys;
@@ -56,7 +59,7 @@ class FieldsTab
 
     public function contains(Field $field): bool
     {
-        return in_array($field->key, $this->fieldKeys);
+        return in_array($field->getKey(), $this->fieldKeys);
     }
 
     public function fields(): Fields
@@ -66,6 +69,7 @@ class FieldsTab
 
     /**
      * Optional custom view to display this tab and its fields
+     *
      * @return string
      */
     public function view(): ?string

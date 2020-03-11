@@ -14,9 +14,9 @@ use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 class Set extends Collection implements ViewableContract
 {
     use WithSnippets,
-        Viewable{
-            renderView as baseRenderView;
-        }
+        Viewable {
+        renderView as baseRenderView;
+    }
 
     protected $baseViewPath;
     protected $viewKey;
@@ -24,7 +24,7 @@ class Set extends Collection implements ViewableContract
     /** @var array */
     private $settings;
 
-    public function __construct($items = [], string $viewKey, array $settings = [])
+    final public function __construct(array $items, string $viewKey, array $settings = [])
     {
         $this->viewKey = $viewKey;
 
@@ -61,7 +61,7 @@ class Set extends Collection implements ViewableContract
     /**
      * Override the collection map function to include the key
      *
-     * @param  callable  $callback
+     * @param callable $callback
      * @return static
      */
     public function map(callable $callback)
@@ -100,7 +100,7 @@ class Set extends Collection implements ViewableContract
     public function paginate($perPage = null, $currentPage = null): Paginator
     {
         $currentPage = $currentPage ?? request()->get('page', 1);
-        $path = '/'.request()->path();
+        $path = '/' . request()->path();
         $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
 
         return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->paginateSetting('total', $this->count()), $perPage ?? $this->paginateSetting('perPage', '12'), $currentPage))->setPath($path);

@@ -6,20 +6,60 @@ principles.
 
 - Added: generate sitemap command and schedule
 
-## 0.4.6 - 2020-02-20
+## 0.4.8 - 2020-03-10
+- fix redactor editor for pagebuilder text fields
 
+## 0.4.7 - 2020-03-09
+**This release requires a migration to implement the new page state logic.**
+This release introduces a couple of important changes: 
+- There is now a new state logic for pages: archived, draft, published, deleted. These states are kept in one database column instead of being scattered around.
+- There is now proper image validation for the image and file fields. 
+- There is now async image upload available on the slim component.
+
+More info on upgrading can be found in the [https://thinktomorrow.github.io/package-docs/src/chief/upgrading.html#upgrading-from-0-4-6-to-0-4-7](chief documentation).
+
+
+- Added: A generic `AssistantController` as a default dispatcher for assistant actions. Default assistants `ArchiveAssistant` and `PublishAssistant` now utilise the default `chief.back.assistants.update` and `chief.back.assistants.view` which points to this controller.
+- Added: config option `admin-filepath` that can be used to add custom chief routes. The routes defined in this file will only be accessible on authenticated sessions.
+- Added: `PageState` object which represents the page state: draft, published, archived or deleted. This is visible in the database as a current_state column.
+- Added: image validation rules: `required`, `dimensions`, `min`, `max`, `mimetypes`. Visit the [https://laravel.com/docs/6.x/validation#available-validation-rules](laravel documentation) on how to work with these.
+- Changed: Images in slim component are now being uploaded asynchronous to avoid server errors on request and file size.
+- Changed: the underlying StateMachine now allows to manage multiple states for one model.
+- Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
+- Changed: Redactor uploads are now via base64 data urls. A new js function `chiefRedactorImageUpload` should be used for the redactor imageUpload script.
+- Assistants now need to implement the `Thinktomorrow\Chief\Management\Assistants\Assistant` contract.
+- Removed: csrf token verification
+- Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
+- Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
+- Removed: tinker package.
+- Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
+- Fixed: chief error now returns expected 500 status instead of 200.
+- Fixed: phpstan released lots of static analysis bugs which have been solved.
+- Fixed: uploads via redactor that are too large now stop the script and notify the user.
+
+### Field changes
+- Added: introduced a `Field` interface for stricter Field usage throughout the application. 
+- Added: `Field::getPlaceholder()` is added to retrieve a placeholder value.
+- Removed: `Field::getFieldValue()` is removed. Use the new `Field::getValue(Model $model = null, ?string $locale = null)` method instead.
+- Removed: `Field::key()` is now only used to set a custom key.  To retrieve the key use the `Field::getKey()` method.
+- Removed: `Field::name()` is now only used to set a custom name.  To retrieve the name use the `Field::getName()` method.
+- Removed: `Field::column()` is now only used to set a custom column.  To retrieve the column use the `Field::getColumn()` method.
+- Removed: `Field::default()` method is removed. From now on, use `Field::value(string $value)` to set the default value.
+- Removed: `DocumentField` is removed. Replace its usage with `FileField` instead, which has the same behavior. It better reflects its nature because also images are allowed here.
+- Changed: `MediaField` is now an abstract class. Replace its usage with `ImageField` instead. This naming better reflects the image only aspect of this formfield.
+- Changed: `Field::multiple()` is only used to set the multiple state. To retrieve this value, it is replaced by `Field::allowMultiple()`.
+
+## 0.4.6 - 2020-02-20
 - Fixed: show context menu on edit page if even without update permission
 - Fixed: disabled vue from compiling mustache brackets in textareas
 - Added: added audit logs for menu items
 - Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
 
 ## 0.4.5 - 2020-01-14
-
 - Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
 - Fixed: image filter for mediagallery api call now correctly offsets without counting non-images.
 
 ## 0.4.4 - 2020-01-13
-
 - Fixed: modal.vue close button doesnt submit forms anymore
 
 ## 0.4.3 - 2020-01-10

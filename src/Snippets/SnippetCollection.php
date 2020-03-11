@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Snippets;
@@ -25,7 +26,7 @@ class SnippetCollection extends Collection
         $files = collect();
 
         foreach ($paths as $path) {
-            if (! $fullpath = self::constructFullPath($path)) {
+            if (!$fullpath = self::constructFullPath($path)) {
                 continue;
             }
 
@@ -37,7 +38,7 @@ class SnippetCollection extends Collection
             }
         }
 
-        return static::$loadedSnippets = new static($files->map(function (SplFileInfo $file) {
+        return static::$loadedSnippets = new self($files->map(function (SplFileInfo $file) {
             $path = $file->getRealPath();
 
             if (0 === strpos($path, resource_path('views')) && false !== strpos($file->getBasename(), '.blade.php')) {
@@ -45,7 +46,7 @@ class SnippetCollection extends Collection
             }
 
             $key = substr($file->getBasename(), 0, strpos($file->getBasename(), '.'));
-            $label = ucfirst(str_replace(['-','_'], ' ', $key));
+            $label = ucfirst(str_replace(['-', '_'], ' ', $key));
 
             return new Snippet($key, $label, $path);
         })->all());

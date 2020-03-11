@@ -10,7 +10,7 @@ class ManagerFakeWithValidation extends ManagerFake
     public function fields(): Fields
     {
         return new Fields([
-            InputField::make('title')->validation(['required']),
+            InputField::make('title')->validation(['required', 'min:4']),
             InputField::make('custom')->validation('required', ['custom.required' => 'custom error for :attribute'], ['custom' => 'custom attribute']),
             InputField::make('title_trans')->validation('required')->translatable(['nl', 'en']),
             InputField::make('content_trans')->translatable(['nl', 'en']),

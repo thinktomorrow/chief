@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
 use Thinktomorrow\Chief\Tests\Fakes\NomadicPageManager;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\NomadicModuleManager;
@@ -33,7 +33,7 @@ class NomadicModuleTest extends TestCase
     public function developer_can_create_nomadic_module()
     {
         $response = $this->asDeveloper()->post(route('chief.back.managers.store', 'mediamodule'), $this->validModuleParams());
-        
+
         $this->assertCount(1, Module::all());
 
         $manager = app(Managers::class)->findByModel(Module::first());
@@ -106,7 +106,7 @@ class NomadicModuleTest extends TestCase
         $response->assertRedirect(route('chief.back.dashboard'));
         $this->assertCount(0, Page::all());
     }
- 
+
     /** @test */
     public function cant_create_more_than_one_nomadic_page()
     {

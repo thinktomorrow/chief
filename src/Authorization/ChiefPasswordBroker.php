@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Authorization;
 
 use Illuminate\Auth\Passwords\PasswordBroker;

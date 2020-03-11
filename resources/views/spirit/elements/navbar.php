@@ -1,4 +1,4 @@
-<?php include(__DIR__.'/../_partials/header.php'); ?>
+<?php include(__DIR__ . '/../_partials/header.php'); ?>
 
 <section class="stack-l navbar" id="navbar">
   <h1>Navigation</h1>
@@ -131,4 +131,4 @@
 
   <pre class="row code-box" id="code-0"></pre>
 
-  <?php include(__DIR__.'/../_partials/footer.php'); ?>
+  <?php include(__DIR__ . '/../_partials/footer.php'); ?>

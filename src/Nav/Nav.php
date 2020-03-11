@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Nav;
 
 use Illuminate\Support\Collection;
@@ -12,14 +14,14 @@ class Nav
     /** @var array */
     private $items;
 
-    private function __construct(NavItem ...$items)
+    final private function __construct(NavItem ...$items)
     {
         $this->items = $items;
     }
 
     public static function fromKeys($keys)
     {
-        $keys = (array) $keys;
+        $keys = (array)$keys;
         $collection = collect();
 
         /** @var Managers */
@@ -33,7 +35,7 @@ class Nav
 
     public static function fromTags($tags)
     {
-        $tags = (array) $tags;
+        $tags = (array)$tags;
         $collection = collect();
 
         /** @var Managers */
@@ -56,15 +58,15 @@ class Nav
             return !$manager->can('index');
         })->map(function ($manager) {
             return new NavItem($manager->details()->plural, $manager->route('index'), [
-                'key' => $manager->details()->key,
-                'tags' => app(Register::class)->filterByKey($manager->details()->key)->first()->tags()
+                'key'  => $manager->details()->key,
+                'tags' => app(Register::class)->filterByKey($manager->details()->key)->first()->tags(),
             ]);
         })->values()->toArray());
     }
 
     public function rejectKeys($keys)
     {
-        $keys = (array) $keys;
+        $keys = (array)$keys;
 
         foreach ($this->items as $k => $item) {
             if (in_array($item->details('key', ''), $keys)) {
@@ -77,7 +79,7 @@ class Nav
 
     public function rejectTags($tags)
     {
-        $tags = (array) $tags;
+        $tags = (array)$tags;
 
         foreach ($this->items as $k => $item) {
             if (count(array_intersect($item->details('tags', []), $tags)) > 0) {
@@ -119,12 +121,12 @@ class Nav
         $output = '';
 
         foreach ($this->items as $item) {
-            $output .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
+            $output .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="' . $item->url() . '">';
             $output .= $title ?? ucfirst($item->title());
             $output .= '</a>';
         }
 
-        return '<li>'.$output.'</li>';
+        return '<li>' . $output . '</li>';
     }
 
     /**
@@ -146,19 +148,19 @@ class Nav
 
         $items = '';
         foreach ($this->items as $item) {
-            $items .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="'.$item->url().'">';
+            $items .= '<a class="' . (isActiveUrl($item->url()) ? 'active' : '') . '" href="' . $item->url() . '">';
             $items .= ucfirst($item->title());
             $items .= '</a>';
         }
 
         // Surround within vue dropdown
         $output = '<dropdown>';
-        $output .= '<span class="center-y nav-item" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">'. ($title ?? 'Collecties') .'</span>';
+        $output .= '<span class="center-y nav-item" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">' . ($title ?? 'Collecties') . '</span>';
         $output .= '<div v-cloak class="dropdown-box inset-s">';
         $output .= $items;
         $output .= '</div>';
         $output .= '</dropdown>';
 
-        return '<li>'.$output.'</li>';
+        return '<li>' . $output . '</li>';
     }
 }

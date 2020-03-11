@@ -125,8 +125,6 @@ class AdminLoginTest extends TestCase
     /** @test */
     public function it_can_log_you_out()
     {
-        $this->disableExceptionHandling();
-
         $admin = factory(User::class)->make();
 
         Auth::guard('chief')->login($admin);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
@@ -10,11 +12,18 @@ use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\Sections;
-use Thinktomorrow\Chief\Management\Assistants\Assistant;
+use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
-interface Manager extends FieldManager
+interface Manager extends FieldManager, AssistedManager
 {
+    /**
+     * Identifies this type of manager. This is the key that is set upon registration of the manager.
+     *
+     * @return string
+     */
+    public function managerKey(): string;
+
     /**
      * Set the specific model to be managed.
      *
@@ -25,12 +34,6 @@ interface Manager extends FieldManager
      * @return Manager
      */
     public function manage($model): Manager;
-
-    public function isAssistedBy(string $assistant): bool;
-
-    public function assistant(string $assistant): Assistant;
-
-    public function assistants(): array;
 
     /**
      * Find an instance by id wrapped in a Manager
@@ -49,13 +52,23 @@ interface Manager extends FieldManager
     public function indexCollection();
 
     /**
-     * Retrieve the managed model instance
-     * @return mixed
+     * An empty, default instance of the managed model.
+     * This is an instance that is newed up without being persisted.
+     *
+     * @return ManagedModel
      */
-    public function model();
+    public function modelInstance(): ManagedModel;
+
+    /**
+     * Retrieve the managed model instance
+     *
+     * @return ManagedModel
+     */
+    public function existingModel(): ManagedModel;
 
     /**
      * Assert that the model already exists (in database)
+     *
      * @return bool
      */
     public function hasExistingModel(): bool;
@@ -97,6 +110,7 @@ interface Manager extends FieldManager
 
     /**
      * Action to execute deletion of the model.
+     *
      * @return mixed
      */
     public function delete();

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Modules;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Pages\Page;
@@ -27,20 +30,21 @@ use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 
 class Module extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsChild, MorphableContract, ViewableContract
 {
-    use Morphable,
-        AssetTrait,
-        Translatable,
-        BaseTranslatable,
-        SoftDeletes,
-        ActingAsChild,
-        WithSnippets,
-        Viewable;
+    use Morphable;
+    use AssetTrait;
+    use Translatable;
+    use BaseTranslatable;
+    use SoftDeletes;
+    use ActingAsChild;
+    use WithSnippets;
+    use Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;
     protected $translationForeignKey = 'module_id';
     protected $translatedAttributes = [
-        'title', 'content'
+        'title',
+        'content',
     ];
 
     public $useTranslationFallback = true;
@@ -50,7 +54,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 
     protected $baseViewPath;
 
-    public function __construct(array $attributes = [])
+    final public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
 
@@ -67,11 +71,12 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
             return static::$managedModelKey;
         }
 
-        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class . '.');
     }
 
     /**
      * Enlist all available managed modules for creation.
+     *
      * @return Collection of ManagedModelDetails
      */
     public static function availableForCreation(): Collection
@@ -142,7 +147,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
     {
         $translatableFields = array_merge(static::defaultTranslatableFields(), static::customTranslatableFields());
 
-        return $key ? array_pluck($translatableFields, $key) : $translatableFields;
+        return $key ? Arr::pluck($translatableFields, $key) : $translatableFields;
     }
 
     /**
@@ -196,7 +201,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 //            ]
         ];
 
-        return $key ? array_pluck($types, $key) : $types;
+        return $key ? Arr::pluck($types, $key) : $types;
     }
 
     public static function findBySlug($slug)

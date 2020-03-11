@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users\Invites;
 
-use Thinktomorrow\Chief\Common\State\StateMachine;
+use Thinktomorrow\Chief\States\State\StatefulContract;
+use Thinktomorrow\Chief\States\State\StateMachine;
 
 class InvitationState extends StateMachine
 {
+    const KEY = 'state';
+
     /**
      * Possible states of the invitation process:
      *
@@ -43,20 +48,20 @@ class InvitationState extends StateMachine
         ],
         'revoke' => [
             'from' => [self::PENDING, self::EXPIRED],
-            'to' => self::REVOKED,
+            'to'   => self::REVOKED,
         ],
         'accept' => [
             'from' => [self::PENDING],
-            'to' => self::ACCEPTED,
+            'to'   => self::ACCEPTED,
         ],
-        'deny' => [
+        'deny'   => [
             'from' => [self::PENDING],
-            'to' => self::DENIED,
+            'to'   => self::DENIED,
         ],
     ];
 
-    public function __construct(Invitation $invitation)
+    public static function make(StatefulContract $model)
     {
-        parent::__construct($invitation);
+        return new static($model, static::KEY);
     }
 }

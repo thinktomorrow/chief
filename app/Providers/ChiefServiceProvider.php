@@ -2,15 +2,12 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Routing\Router;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
 use Illuminate\Console\Scheduling\Schedule;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
@@ -21,12 +18,8 @@ use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
-use Thinktomorrow\Chief\HealthMonitor\Middleware\MonitorMiddleware;
-use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -41,6 +34,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
         (new ViewServiceProvider($this->app))->boot();
+        (new ValidationServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
@@ -48,9 +42,9 @@ class ChiefServiceProvider extends ServiceProvider
         (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
+        (new ChiefRoutesServiceProvider($this->app))->boot();
         (new ChiefProjectServiceProvider($this->app))->boot();
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes.php');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
@@ -120,9 +114,6 @@ class ChiefServiceProvider extends ServiceProvider
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
 
-        $this->autoloadMiddleware();
-        $this->autoloadRoute();
-
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
             $schedule->command('chief:sitemap')->dailyAt('03:00');
@@ -145,6 +136,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
         (new ViewServiceProvider($this->app))->register();
+        (new ValidationServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();
@@ -152,6 +144,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AssetLibraryServiceProvider($this->app))->register();
 
         // Project defaults
+        (new ChiefRoutesServiceProvider($this->app))->register();
         (new ChiefProjectServiceProvider($this->app))->register();
     }
 
@@ -193,33 +186,5 @@ class ChiefServiceProvider extends ServiceProvider
             'permission' => \Thinktomorrow\Chief\Authorization\Permission::class,
             'role'       => \Thinktomorrow\Chief\Authorization\Role::class,
         ];
-    }
-
-    private function autoloadRoute()
-    {
-        if (true !== config('thinktomorrow.chief.route.autoload')) {
-            return;
-        }
-
-        app()->booted(function () {
-            $routeName = config('thinktomorrow.chief.route.name');
-
-            Route::get('{slug?}', function ($slug = '/') use ($routeName) {
-                return ChiefResponse::fromSlug($slug);
-            })->name($routeName)
-              ->where('slug', '(.*)?')
-              ->middleware('web');
-        });
-    }
-
-    private function autoloadMiddleware()
-    {
-        app(Router::class)->middlewareGroup('web-chief', [
-            AuthenticateChiefSession::class,
-            MonitorMiddleware::class,
-        ]);
-
-        app(Router::class)->aliasMiddleware('chief-guest', ChiefRedirectIfAuthenticated::class);
-        app(Router::class)->aliasMiddleware('chief-validate-invite', ChiefValidateInvite::class);
     }
 }

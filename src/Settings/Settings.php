@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Settings;
 
 use Illuminate\Support\Collection;
@@ -48,7 +50,7 @@ class Settings extends Collection
 
         $config_values = static::configValues();
 
-        $database_values = Schema::hasTable((new Setting)->getTable())
+        $database_values = Schema::hasTable((new Setting())->getTable())
             ? Setting::all()->pluck('value', 'key')->toArray()
             : [];
 

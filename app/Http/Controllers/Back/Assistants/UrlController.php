@@ -27,7 +27,7 @@ class UrlController extends Controller
                 ? trim($request->slug, '/')
                 : $request->slug;
 
-        $exists = UrlRecord::exists($slug, null, $manager->model());
+        $exists = UrlRecord::exists($slug, null, $manager->existingModel());
 
         return response()->json([
             'exists' => $exists,
@@ -44,7 +44,7 @@ class UrlController extends Controller
         }
 
         if (! $urlRecord->isRedirect()) {
-            return response()->json(['Url with id '.$id.' is not a redirect'], 500);
+            return response()->json(['Url with id ' . $id . ' is not a redirect'], 500);
         }
 
         $urlRecord->delete();

@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls\Application;
 
 use Thinktomorrow\Chief\Urls\UrlRecord;
-use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 
 /**

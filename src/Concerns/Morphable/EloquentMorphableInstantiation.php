@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Concerns\Morphable;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Pages\PageTranslation;
 
 /**
  * Overrides the eloquent model instantiation to account for proper morphable object creation.
@@ -87,8 +89,8 @@ trait EloquentMorphableInstantiation
     /**
      * Create a new instance of the given model.
      *
-     * @param  array $attributes
-     * @param  bool $exists
+     * @param array $attributes
+     * @param bool $exists
      * @return static
      */
     public function newInstance($attributes = [], $exists = false)

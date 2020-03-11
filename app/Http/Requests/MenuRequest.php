@@ -94,7 +94,7 @@ class MenuRequest extends FormRequest
 
             // Check if it is a relative
             if ($this->isRelativeUrl($trans['url'])) {
-                $data['trans'][$locale]['url'] = '/'. trim($trans['url'], '/');
+                $data['trans'][$locale]['url'] = '/' . trim($trans['url'], '/');
             } else {
                 $data['trans'][$locale]['url'] = Url::fromString($trans['url'])->secure()->get();
             }
@@ -112,6 +112,6 @@ class MenuRequest extends FormRequest
         // Check if passed url is not intended as a host instead of a relative path
         $notIntentedAsRoot = (null == Root::fromString($url)->scheme() && false === strpos($url, '.'));
 
-        return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/'.$nakedUrl]));
+        return ($notIntentedAsRoot && in_array($url, [$nakedUrl, '/' . $nakedUrl]));
     }
 }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Pages\Application;
 
 use Illuminate\Support\Facades\DB;
@@ -6,6 +9,7 @@ use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\States\PageState;
 
 class DeletePage
 {
@@ -17,7 +21,7 @@ class DeletePage
             $page = Page::withArchived()->findOrFail($id);
 
             // Can only delete a draft or archived page
-            if (!$page->isDraft() && !$page->isArchived()) {
+            if ($page->isPublished()) {
                 return;
             }
 
@@ -26,6 +30,9 @@ class DeletePage
 
             // Remove Page specific urls
             UrlRecord::getByModel($page)->each->delete();
+
+            PageState::make($page)->apply('delete');
+            $page->save();
 
             $page->delete();
 

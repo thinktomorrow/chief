@@ -60,7 +60,6 @@ class ManagersTest extends TestCase
     /** @test */
     public function it_throws_error_if_model_not_persisted_and_we_expect_it_to_be()
     {
-        $this->disableExceptionHandling();
         $this->expectException(NonExistingRecord::class);
 
         app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
@@ -76,7 +75,7 @@ class ManagersTest extends TestCase
         Route::get('pages/{slug}', function () {
         })->name('pages.show');
 
-        $page = factory(Page::class)->create(['published' => false]);
+        $page = factory(Page::class)->create();
 
         $response = $this->asAdmin()
             ->get(route('chief.back.managers.index', ['singles', $page->id]));
@@ -87,7 +86,6 @@ class ManagersTest extends TestCase
     /** @test */
     public function managers_index_is_paginated()
     {
-        $this->disableExceptionHandling();
         $this->setUpDefaultAuthorization();
 
         app(Register::class)->register(ManagerWithPaginationFake::class, ManagedModelFakeFirst::class);

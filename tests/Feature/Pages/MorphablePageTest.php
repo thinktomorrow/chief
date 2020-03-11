@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\States\PageState;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
@@ -32,7 +33,6 @@ class MorphablePageTest extends TestCase
     /** @test */
     public function a_page_can_be_divided_by_morphKey()
     {
-        $this->disableExceptionHandling();
         factory(Page::class)->create(['morph_key' => 'articles']);
 
         $this->assertCount(1, ArticlePageFake::all());
@@ -98,7 +98,7 @@ class MorphablePageTest extends TestCase
         $article = ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',
-            'published' => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, Page::find($article->id));
@@ -108,12 +108,10 @@ class MorphablePageTest extends TestCase
     /** @test */
     public function it_returns_the_right_morphKey_model()
     {
-        $this->disableExceptionHandling();
-
         ArticlePageFake::create([
             'morph_key' => 'articles',
             'title:nl' => 'title',
-            'published' => 1
+            'current_state' => PageState::PUBLISHED,
         ]);
 
         $this->assertInstanceOf(ArticlePageFake::class, Page::first());

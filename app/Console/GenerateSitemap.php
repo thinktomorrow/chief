@@ -17,7 +17,7 @@ class GenerateSitemap extends BaseCommand
 
         $locales = config('translatable.locales');
 
-        foreach(config('translatable.locales') as $key => $locale)
+        foreach($locales as $key => $locale)
         {
             $this->info('Generating for locale: '.$locale);
 

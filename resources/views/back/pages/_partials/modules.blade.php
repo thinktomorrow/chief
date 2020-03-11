@@ -1,5 +1,5 @@
 <?php
-    $page = $manager->model();
+    $page = $manager->existingModel();
 ?>
 
 <div class="stack-l formgroup">
@@ -16,18 +16,18 @@
             </div>
         </div>
     @endif
-        
+
     @if(!$page->modules->isEmpty())
-    
+
         <div class="row gutter-s stack">
             @foreach($page->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
                 @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
                 @push('portals')
-                    @include('chief::back.managers._partials.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                    @include('chief::back.managers._modals.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
                 @endpush
             @endforeach
         </div>
-    
+
         <div class="stack">
             <a @click="showModal('create-module')" class="btn btn-secondary inline-flex items-center">
                 <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
@@ -35,7 +35,7 @@
             </a>
         </div>
     @endif
-    
+
     @push('portals')
         @include('chief::back.modules._partials.create-modal', ['page_id' => $page->id])
     @endpush

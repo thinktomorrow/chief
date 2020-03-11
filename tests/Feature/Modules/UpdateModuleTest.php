@@ -48,7 +48,6 @@ class UpdateModuleTest extends TestCase
     /** @test */
     public function it_can_edit_a_module()
     {
-        $this->disableExceptionHandling();
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['newsletters_fake', $this->module->id]), $this->validUpdateModuleParams());
 
