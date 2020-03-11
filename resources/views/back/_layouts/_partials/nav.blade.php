@@ -34,7 +34,7 @@
                 @endif
             </ul>
 
-            <ul class="navigation-list flex float-right items-center h-full">
+            <ul class="navigation-list flex float-right items-center">
                 {{-- @role('developer')
                     <li class="no-hover px-6"><a class="label label-primary" target="_blank" href="/spirit">Spirit</a></li>
                 @endrole --}}
