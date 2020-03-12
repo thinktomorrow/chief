@@ -60,10 +60,4 @@ class PageFieldTest extends TestCase
 
         $this->assertEquals('http://localhost/foo/bar', $single->buttonlink);
     }
-
-    /** @test */
-    public function pagefield_can_have_multiple()
-    {
-
-    }
 }

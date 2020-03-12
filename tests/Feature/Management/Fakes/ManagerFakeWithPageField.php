@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 
-use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\PageField;
@@ -18,10 +16,5 @@ class ManagerFakeWithPageField extends AbstractManager implements Manager
                 ->exclude($this->modelInstance())
                 ->options()
         );
-    }
-
-    public function setButtonlinkField(Field $field, Request $request)
-    {
-
     }
 }
