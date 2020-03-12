@@ -63,35 +63,14 @@ class UrlHelper
 
     public static function models(bool $onlySingles = false, Model $ignoredModel = null, $online = true)
     {
-        $models = chiefMemoize('all-online-models', function () use ($onlySingles, $online) {
-            $builder = UrlRecord::whereNull('redirect_id')
-                ->select('model_type', 'model_id')
-                ->groupBy('model_type', 'model_id');
+        $types = [];
 
-            if ($onlySingles) {
-                $builder->where('model_type', 'singles');
-            }
-
-            return $builder->get()->mapToGroups(function ($record) {
-                return [$record->model_type => $record->model_id];
-            })->map(function ($record, $key) {
-                return Morphables::instance($key)->find($record->toArray());
-            })->map->reject(function ($model) use ($online) {
-                if ($online) {
-                    return is_null($model) || !$model->isPublished();
-                } // Invalid references to archived or removed models where url record still exists.
-
-                return is_null($model);
-            })->flatten();
-        }, [$onlySingles]);
-
-        if ($ignoredModel) {
-            $models = $models->reject(function ($model) use ($ignoredModel) {
-                return (get_class($model) === get_class($ignoredModel) && $model->id === $ignoredModel->id);
-            });
+        if($onlySingles)
+        {
+            $types = ['singles'];
         }
 
-        return $models;
+        return self::modelsByType($types, $ignoredModel, $online);
     }
 
 
