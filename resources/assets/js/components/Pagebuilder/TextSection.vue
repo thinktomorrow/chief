@@ -1,5 +1,5 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 stack block inset relative rounded">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 block inset relative rounded">
         
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
@@ -17,6 +17,7 @@
                         :name="locale"
                         v-cloak>
                         <textarea
+                            :data-locale="locale"
                             :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
                             :id="'editor-'+locale+'-'+_uid"
                             class="inset-s" cols="30" :rows="single ? 1 : 10"
@@ -48,10 +49,11 @@
             <!-- show single locale not in tabbed format -->
             <template v-if="locales.length == 1">
                 <textarea v-if="textEditor == 'redactor' || editor == false"
-                        :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
-                        :id="'editor-'+locales[0]+'-'+_uid"
-                        class="inset-s" cols="30" :rows="single ? 1 : 10"
-                        v-html="renderInitialContent(locales[0])">
+                    :data-locale="locales[0]"
+                    :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locales[0]+'][content]'"
+                    :id="'editor-'+locales[0]+'-'+_uid"
+                    class="inset-s" cols="30" :rows="single ? 1 : 10"
+                    v-html="renderInitialContent(locales[0])">
                 </textarea>
                 <div v-else-if="textEditor == 'quill'" class="w-full">
                     <div 
@@ -68,8 +70,6 @@
             </template>
 
         </div>
-
-        <pagebuilder-menu :section="section"></pagebuilder-menu>
 
         <div class="module-icons-left">
             <span class="grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move">

@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\PageBuilder;
 
-use HTMLPurifier;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
@@ -11,6 +12,7 @@ use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Application\UpdateModule;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
 
 class UpdateSections
 {
@@ -29,7 +31,7 @@ class UpdateSections
     /** @var array */
     private $sorting;
 
-    private function __construct(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
+    final private function __construct(ActsAsParent $model, array $relation_references, array $text_modules, array $set_refs, array $sorting)
     {
         $this->model = $model;
         $this->relation_references = $relation_references;
@@ -91,7 +93,7 @@ class UpdateSections
     private function removeExistingSets()
     {
         foreach ($this->model->children() as $instance) {
-            if (! $instance instanceof StoredSetReference) {
+            if (!$instance instanceof StoredSetReference) {
                 continue;
             }
             $this->model->rejectChild($instance);
@@ -109,16 +111,14 @@ class UpdateSections
             // Create pagetitle text module
             if (isset($text_module['type']) && $text_module['type'] == 'pagetitle') {
                 $module = app(CreateModule::class)->handle(
-                    (new PagetitleModule)->morphKey(),
+                    (new PagetitleModule())->morphKey(),
                     $text_module['slug'],
                     $this->model->id
                 );
-            }
-
-            // Create page specific text module
+            } // Create page specific text module
             else {
                 $module = app(CreateModule::class)->handle(
-                    (new TextModule)->morphKey(),
+                    (new TextModule())->morphKey(),
                     $text_module['slug'],
                     $this->model->id
                 );
@@ -145,7 +145,7 @@ class UpdateSections
         }
 
         foreach ($this->text_modules['replace'] as $text_module) {
-            if (! $module = FlatReferenceFactory::fromString($text_module['id'])->instance()) {
+            if (!$module = FlatReferenceFactory::fromString($text_module['id'])->instance()) {
                 continue;
             }
 
@@ -154,14 +154,11 @@ class UpdateSections
                 $this->removeTextualModule($module);
                 continue;
             }
-           
-            foreach ($text_module['trans'] as $locale => $content) {
-                $purifier = new HTMLPurifier();
-                $sanitized_text = $purifier->purify($content['content']);
 
-                $text_module['trans'][$locale]['content'] = $sanitized_text;
+            foreach ($text_module['trans'] as $locale => $content) {
+                $text_module['trans'][$locale]['content'] = $content['content'];
             }
-            
+
             // Replace content
             app(UpdateModule::class)->handle($module->id, $module->slug, $text_module['trans'], [], []);
         }
@@ -171,7 +168,7 @@ class UpdateSections
 
     private function removeTextualModule($module)
     {
-        if (! $module instanceof TextModule && ! $module instanceof PagetitleModule) {
+        if (!$module instanceof TextModule && !$module instanceof PagetitleModule) {
             throw new \Exception('Invalid request to remove non textual module');
         }
 
@@ -217,12 +214,12 @@ class UpdateSections
     private function isTextCompletelyEmpty($trans): bool
     {
         $is_completely_empty = true;
-        
+
         foreach ($trans as $locale => $lines) {
             foreach ($lines as $key => $line) {
                 $stripped_line = $this->stripTagsBlacklist($line, ['p', 'br']);
                 $stripped_line = trim($stripped_line);
-    
+
                 if ($stripped_line) {
                     $is_completely_empty = false;
                     break;

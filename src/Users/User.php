@@ -1,19 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Users;
 
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Concerns\Enablable;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasAsset
 {
-    use Notifiable, HasRoles, HasMediaTrait, Enablable;
+    use Notifiable;
+    use HasRoles;
+    use AssetTrait;
+    use Enablable;
 
     public $table = 'chief_users';
     protected $guard_name = 'chief';
@@ -26,7 +31,8 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     public static function findByEmail(string $email)
@@ -56,7 +62,7 @@ class User extends Authenticatable implements HasMedia
 
     public function getFullnameAttribute()
     {
-        return $this->firstname.' '.$this->lastname;
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     public function isSquantoDeveloper()

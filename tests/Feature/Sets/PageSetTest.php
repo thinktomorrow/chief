@@ -2,7 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Sets;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Sets\Set;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
 use Thinktomorrow\Chief\Sets\SetReference;
@@ -11,6 +14,8 @@ use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageSetTest extends TestCase
 {
+    private $parent;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,6 +26,8 @@ class PageSetTest extends TestCase
                 'parameters' => [2],
             ],
         ]);
+
+        $this->parent = Single::create();
     }
 
     /** @test */
@@ -39,7 +46,7 @@ class PageSetTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $set_ref = (new SetReference('key', 'foobar@all', [5]));
-        $set_ref->toSet();
+        $set_ref->toSet($this->parent);
     }
 
     /** @test */
@@ -48,7 +55,7 @@ class PageSetTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $set_ref = (new SetReference('key', DummySetRepository::class.'@unknown', [5]));
-        $set_ref->toSet();
+        $set_ref->toSet($this->parent);
     }
 
     /** @test */
@@ -57,7 +64,7 @@ class PageSetTest extends TestCase
         $this->expectException(\Exception::class);
 
         $stored_set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5]))->store();
-        $stored_set_ref->toSet();
+        $stored_set_ref->toSet($this->parent);
     }
 
     /** @test */
@@ -66,11 +73,11 @@ class PageSetTest extends TestCase
         AgendaPageFake::create();
 
         $stored_set_ref = (new SetReference('foobar', DummySetRepository::class.'@all', [5]))->store();
-        $set = $stored_set_ref->toSet();
+        $set = $stored_set_ref->toSet($this->parent);
 
         $this->assertInstanceOf(Set::class, $set);
         $this->assertInstanceOf(Collection::class, $set);
-        $this->assertCount(1, $set);
+        $this->assertCount(2, $set); // agendapagefake + parent single
     }
 
     /** @test */
@@ -79,11 +86,11 @@ class PageSetTest extends TestCase
         AgendaPageFake::create();
 
         $set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5]));
-        $set = $set_ref->toSet();
+        $set = $set_ref->toSet($this->parent);
 
         $this->assertInstanceOf(Set::class, $set);
         $this->assertInstanceOf(Collection::class, $set);
-        $this->assertCount(1, $set);
+        $this->assertCount(2, $set); // agendapagefake + parent single
     }
 
     /** @test */
@@ -114,6 +121,34 @@ class PageSetTest extends TestCase
         $set_ref = SetReference::find('foobar');
 
         // Parameter of 2 for query limit is passed.
-        $this->assertCount(2, $set_ref->toSet());
+        $this->assertCount(2, $set_ref->toSet($this->parent));
+    }
+
+    /** @test */
+    public function it_can_be_paginated()
+    {
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+
+        $set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5], 'foobar'));
+        $paginatedSet = $set_ref->toSet($this->parent)->paginate(1);
+
+        $this->assertInstanceOf(LengthAwarePaginator::class, $paginatedSet);
+        $this->assertCount(1, $paginatedSet);
+    }
+
+    /** @test */
+    public function it_can_be_simple_paginated()
+    {
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+        AgendaPageFake::create();
+
+        $set_ref = (new SetReference('key', DummySetRepository::class.'@all', [5], 'foobar'));
+        $paginatedSet = $set_ref->toSet($this->parent)->simplePaginate(1);
+
+        $this->assertInstanceOf(Paginator::class, $paginatedSet);
+        $this->assertCount(1, $paginatedSet);
     }
 }

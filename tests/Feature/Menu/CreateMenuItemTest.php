@@ -2,9 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
 
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Menu\MenuItem;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreateMenuItemTest extends TestCase
 {
@@ -200,7 +201,7 @@ class CreateMenuItemTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

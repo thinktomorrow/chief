@@ -1,14 +1,31 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-class PagebuilderField extends Field
+class PagebuilderField extends AbstractField implements Field
 {
-    public static function make(string $key)
+    /** @var array */
+    private $sections;
+
+    /** @var array */
+    private $availablePages;
+
+    /** @var array */
+    private $availableModules;
+
+    /** @var array */
+    private $availableSets;
+
+    public static function make(string $key): Field
     {
-        return (new static(new FieldType(FieldType::PAGEBUILDER), $key))->view('chief::back._fields.pagebuilder');
+        return (new static(new FieldType(FieldType::PAGEBUILDER), $key))
+            ->view('chief::back._fields.pagebuilder')
+            ->sections([])
+            ->availableModules([])
+            ->availablePages([])
+            ->availableSets([]);
     }
 
     /**
@@ -19,41 +36,49 @@ class PagebuilderField extends Field
      */
     public function sections(array $sections)
     {
-        $this->values['sections'] = $sections;
+        $this->sections = $sections;
 
         return $this;
     }
 
     public function availablePages(array $availablePages)
     {
-        $this->values['availablePages'] = $availablePages;
+        $this->availablePages = $availablePages;
 
         return $this;
     }
 
     public function availableModules(array $availableModules)
     {
-        $this->values['availableModules'] = $availableModules;
+        $this->availableModules = $availableModules;
 
         return $this;
     }
 
     public function availableSets(array $availableSets)
     {
-        $this->values['availableSets'] = $availableSets;
+        $this->availableSets = $availableSets;
 
         return $this;
     }
 
-    public function __get($key)
+    public function getSections(): array
     {
-        $value = parent::__get($key);
+        return $this->sections;
+    }
 
-        // Default empty array for these following values
-        if (!$value && in_array($key, ['sections','availableModules','availablePages', 'availableSets'])) {
-            return [];
-        }
+    public function getAvailableModules(): array
+    {
+        return $this->availableModules;
+    }
 
-        return $value;
+    public function getAvailablePages(): array
+    {
+        return $this->availablePages;
+    }
+
+    public function getAvailableSets(): array
+    {
+        return $this->availableSets;
     }
 }

@@ -9,6 +9,10 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
+        <testsuite name="All tests">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
+
         <testsuite name="Feature Tests">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
@@ -22,7 +26,7 @@
             <directory suffix=".php">./app</directory>
             <directory suffix=".php">./src</directory>
             <exclude>
-                <file>./app/routes.php</file>
+                <file>./routes.php</file>
             </exclude>
         </whitelist>
     </filter>

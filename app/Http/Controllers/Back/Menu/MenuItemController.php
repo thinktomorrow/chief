@@ -3,15 +3,16 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Audit\Audit;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Management\Managers;
 
 class MenuItemController extends Controller
 {
@@ -19,17 +20,15 @@ class MenuItemController extends Controller
     {
         $this->authorize('create-page');
 
-        $menuitem            = new MenuItem;
+        $menuitem            = new MenuItem();
         $menuitem->type      = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
 
         $menuitems = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect();
-        $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
 
         return view('chief::back.menu.create', [
             'pages'            => FlatReferencePresenter::toGroupedSelectValues(Page::all())->toArray(),
             'menuitem'         => $menuitem,
-            'collections'      => $collections,
             'internal_page_id' => null,
             'parents'          => $menuitems,
         ]);
@@ -40,6 +39,10 @@ class MenuItemController extends Controller
         $this->authorize('create-page');
 
         $menu = app(CreateMenu::class)->handle($request);
+
+        Audit::activity()
+            ->performedOn($menu)
+            ->log('created');
 
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
@@ -52,7 +55,7 @@ class MenuItemController extends Controller
         $menuitem->injectTranslationForForm();
 
         // Transpose selected page_id to the format <class>@<id>
-        // as expected by t9he select field.
+        // as expected by the select field.
         $internal_page_id = null;
         if ($menuitem->type == MenuItem::TYPE_INTERNAL && $menuitem->page_id) {
             //Archived and deleted pages can no longer be referenced in a menu item
@@ -63,17 +66,14 @@ class MenuItemController extends Controller
 
         $menuitems   = ChiefMenu::fromMenuItems($menuitem->menuType())->getForSelect($id);
 
-        // TODO: replace CollectionKeys logic with Page specific one. e.g. Pages::getCollectionsForSelect()
-        $collections = app(Managers::class)->findByTagForSelect('page')->toArray();
-
         $pages = FlatReferencePresenter::toGroupedSelectValues(Page::all()->reject(function ($page) {
             return $page->hidden_in_menu == true;
         }))->toArray();
 
+
         return view('chief::back.menu.edit', [
             'menuitem'         => $menuitem,
             'pages'            => $pages,
-            'collections'      => $collections,
             'internal_page_id' => $internal_page_id,
             'parents'          => $menuitems,
         ]);
@@ -84,6 +84,10 @@ class MenuItemController extends Controller
         $this->authorize('update-page');
 
         $menu = app(UpdateMenu::class)->handle($id, $request);
+
+        Audit::activity()
+            ->performedOn($menu)
+            ->log('updated');
 
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangepast');
     }
@@ -96,6 +100,10 @@ class MenuItemController extends Controller
 
         if ($menuItem) {
             $message = 'Het item werd verwijderd.';
+
+            Audit::activity()
+                ->performedOn($menuItem)
+                ->log('deleted');
 
             return redirect()->route('chief.back.menus.show', $menuItem->menuType())->with('messages.warning', $message);
         } else {

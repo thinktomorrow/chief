@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Urls\Fakes;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
+use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Thinktomorrow\Chief\FlatReferences\ProvidesFlatReference;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
@@ -31,9 +31,31 @@ class ProductFake extends ManagedModelFakeFirst implements ProvidesUrl, Provides
         return $this->url($locale);
     }
 
+    /** @inheritdoc */
     public static function baseUrlSegment(string $locale = null): string
     {
-        return '/';
+        if (!isset(static::$baseUrlSegment)) {
+            return '/';
+        }
+
+        if (!is_array(static::$baseUrlSegment)) {
+            return static::$baseUrlSegment;
+        }
+
+        // When an array, we try to locate the expected segment by locale
+        $key = $locale ?? app()->getlocale();
+
+        if (isset(static::$baseUrlSegment[$key])) {
+            return static::$baseUrlSegment[$key];
+        }
+
+        $fallback_locale = config('app.fallback_locale');
+        if (isset(static::$baseUrlSegment[$fallback_locale])) {
+            return static::$baseUrlSegment[$fallback_locale];
+        }
+
+        // Fall back to first entry in case no match is found
+        return reset(static::$baseUrlSegment);
     }
 
     /**

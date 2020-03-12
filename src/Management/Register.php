@@ -11,7 +11,7 @@ class Register
     /** @var array */
     private $registrations = [];
 
-    public function __construct(array $registrations = [])
+    final public function __construct(array $registrations = [])
     {
         foreach ($registrations as $registration) {
             $this->push($registration);
@@ -48,14 +48,14 @@ class Register
      */
     public function filter(callable $callback): self
     {
-        if (! is_callable($callback)) {
+        if (!is_callable($callback)) {
             return new static($this->registrations);
         }
 
         $registrations = $this->registrations;
 
         foreach ($registrations as $k => $registration) {
-            if (!! call_user_func($callback, $registration)) {
+            if (!!call_user_func($callback, $registration)) {
                 unset($registrations[$k]);
             }
         }
@@ -81,7 +81,7 @@ class Register
     public function filterByTag($tag): self
     {
         try {
-            return $this->filterBy('tags', (array) $tag);
+            return $this->filterBy('tags', (array)$tag);
         } catch (NonRegisteredManager $e) {
             return new static();
         }
@@ -109,7 +109,7 @@ class Register
         foreach ($registrations as $k => $registration) {
             $containsValue = $registration->has($key, $value);
 
-            if ($type == 'filter' && ! $containsValue) {
+            if ($type == 'filter' && !$containsValue) {
                 unset($registrations[$k]);
             }
 

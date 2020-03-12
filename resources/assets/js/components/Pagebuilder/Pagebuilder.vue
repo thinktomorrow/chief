@@ -14,24 +14,24 @@
                     <span>een tekstblok</span>
                 </a>
             </div>
-            <div class="w-auto">
+            <div class="w-auto" v-if='modules.length > 0'>
                 <p class="stack-xs">Of koppel een ...</p>
                 <a class="btn btn-primary inline-flex items-center" @click="addModuleSectionAfter(-1)">
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
                     <span>eerste module</span>
                 </a>
 
-            </div>  
-            </div>  
+            </div>
+            </div>
 
         </div>
 
         <!-- top menu -->
         <div class="pagebuilder-menu-wrapper relative stack border-l-3 border-transparent inset-s">
-            <pagebuilder-menu :section="{ sort: -1 }"></pagebuilder-menu>
+            <pagebuilder-menu :section="{ sort: -1 }" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
         </div>
 
-        <draggable :value="sortedSections" 
+        <draggable :value="sortedSections"
         v-on:start="minimizeSections"
         v-on:end="changeSectionLocation"
         :options="{
@@ -43,14 +43,14 @@
         }">
 
             <div v-for="section in sortedSections" v-bind:key="section.key">
-
                 <module-section v-if="section.type === 'module'"
                     sectionKey="modules"
                     v-bind:section="section"
                     v-bind:options="modules"
                     placeholder="Selecteer een module"
                     title="Module"
-                    class="stack" :class="section.type"></module-section>
+                    :editUrl="section.editUrl"
+                    class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'page'"
                     sectionKey="modules"
@@ -58,7 +58,8 @@
                     v-bind:options="pages"
                     placeholder="Selecteer een pagina"
                     title="Pagina"
-                    class="stack" :class="section.type"></module-section>
+                    :editUrl="section.editUrl"
+                    class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'pageset'"
                     sectionKey="pagesets"
@@ -66,7 +67,7 @@
                     v-bind:options="pagesets"
                     placeholder="Selecteer een pagina groep"
                     title="Pagina groep"
-                    class="stack" :class="section.type"></module-section>
+                    class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <text-section v-if="section.type === 'text'"
                     v-bind:section="section"
@@ -75,7 +76,7 @@
                     :editor="true"
                     :text-editor="textEditor"
                     title="Pagina text"
-                    class="stack" :class="section.type"></text-section>
+                    class="mt-8 mb-2" :class="section.type"></text-section>
 
                 <text-section v-if="section.type === 'pagetitle'"
                     v-bind:section="section"
@@ -84,12 +85,15 @@
                     :editor="false"
                     :text-editor="textEditor"
                     title="Pagina titel"
-                    class="stack" :class="section.type"></text-section>
-
+                    class="mt-8 mb-2" :class="section.type"></text-section>
+                    
+                <div class="pagebuilder-menu-wrapper relative border-l-3 border-transparent pb-1">
+                    <pagebuilder-menu :section="section" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
+                </div>            
             </div>
 
         </draggable>
-        
+
         <select name="sections[order][]" multiple style="display:none;">
             <template v-for="section in sortedSections">
                 <option v-bind:key="section.key" selected v-if="section.type == 'pagetitle' && !section.id" :value="section.slug"></option>
@@ -183,13 +187,13 @@
                 for(var i = 0; i < this.sections.length; i++) {
                     if(i > oldIndex) this.sections[i].sort--;
                     else if(i === oldIndex && !isHigherIndex) this.sections[i].sort--;
-                }      
+                }
 
                 // Calculate indices of elements after newindex
                 for(var i = 0; i < this.sections.length; i++) {
                     if(i > newIndex) this.sections[i].sort++;
                     else if(i === newIndex && !isHigherIndex) this.sections[i].sort++;
-                }        
+                }
 
                 this.maximizeSections();
 
@@ -205,7 +209,7 @@
                         var selectedText = allSections[i].getElementsByClassName('multiselect__single')[0].innerHTML;
                         allSections[i].getElementsByTagName('h3')[0].innerHTML += " - " + selectedText;
                     }
-                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";   
+                    allSections[i].getElementsByClassName('to-minimize')[0].style.display = "none";
                 }
 
                 pagebuilder.classList.add('pagebuilder-dragging');
@@ -222,8 +226,8 @@
                     if(allSections[i].getElementsByClassName('multiselect__single')[0]) {
                         var titleText = allSections[i].getElementsByTagName('h3')[0];
                         titleText.innerHTML = titleText.innerHTML.substring(0, titleText.innerHTML.indexOf(' - '));
-                    } 
-                } 
+                    }
+                }
 
                 pagebuilder.classList.remove('pagebuilder-dragging');
                 document.querySelector('body').classList.remove('drag-cursor');

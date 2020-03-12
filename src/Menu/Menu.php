@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Menu;
@@ -16,7 +17,7 @@ class Menu
     /** @var string */
     private $view_path;
 
-    public function __construct(string $key, string $label, string $view_path)
+    final public function __construct(string $key, string $label, string $view_path)
     {
         $this->label = $label;
         $this->view_path = $view_path;
@@ -87,6 +88,6 @@ class Menu
             $menu[] = sprintf('<li><a href="%s">%s</a></li>', $item->url, $item->label);
         });
 
-        return '<ul>'.implode('', $menu).'</ul>';
+        return '<ul>' . implode('', $menu) . '</ul>';
     }
 }

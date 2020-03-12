@@ -1,4 +1,4 @@
-<div data-editor class="inset-s bg-white" id="{{ $name ?? $key }}">
+<div data-editor data-locale="{{ $locale ?? app()->getLocale() }}" class="inset-s bg-white" id="{{ $name ?? $key }}">
     {!! old($key, $manager->fieldValue($field, $locale ?? null)) !!}
 </div>
 

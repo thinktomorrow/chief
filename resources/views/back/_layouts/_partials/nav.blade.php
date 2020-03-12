@@ -21,7 +21,9 @@
                                     <a class="{{ isActiveUrl('admin/menus*') ? 'active' : '' }}" href="{{ route('chief.back.menus.index') }}">Menu</a>
                                 @endcan
                                 @can('view-page')
-                                    <a class="{{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Vaste modules</a>
+                                    @if(\Thinktomorrow\Chief\Modules\Module::atLeastOneRegistered())
+                                        <a class="{{ isActiveUrl('admin/modules*') ? 'active' : '' }}" href="{{ route('chief.back.modules.index') }}">Vaste modules</a>
+                                    @endif
                                 @endcan
                                 @can('view-squanto')
                                     <a class="{{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>
@@ -32,7 +34,7 @@
                 @endif
             </ul>
 
-            <ul class="navigation-list flex float-right items-center h-full">
+            <ul class="navigation-list flex float-right items-center">
                 {{-- @role('developer')
                     <li class="no-hover px-6"><a class="label label-primary" target="_blank" href="/spirit">Spirit</a></li>
                 @endrole --}}

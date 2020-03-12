@@ -20,8 +20,8 @@
                     </div>
                 </div>
             </div>
-            <button @click="close" class="modal-close">
-                <svg width="18" height="18"><use xlink:href="#x"/></svg> 
+            <button type="button" @click="close" class="modal-close">
+                <svg width="18" height="18"><use xlink:href="#x"/></svg>
             </button>
         </div>
     </transition>

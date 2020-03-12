@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
@@ -12,6 +14,7 @@ trait ManagesMedia
     {
         $files = array_merge_recursive($request->get('files', []), $request->file('files', []));
         $filesOrder = $request->get('filesOrder', []);
+
 
         /** @var UploadMedia */
         app(UploadMedia::class)->fromUploadComponent($this->model, $files, $filesOrder);

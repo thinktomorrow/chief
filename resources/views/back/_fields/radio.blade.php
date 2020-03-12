@@ -1,13 +1,13 @@
-<radio-options inline-template :errors="errors" default-type="{{ old($key, $field->selected) }}">
+<radio-options inline-template :errors="errors" default-type="{{ old($key, $field->getSelected()) }}">
     <div>
-        @foreach($field->options as $value => $label)
+        @foreach($field->getOptions() as $value => $label)
             <label class="block stack-xs custom-indicators" for="{{ $key.'-'.$value }}">
-                <input v-on:click="changeType({{ $value }})" {{ old($key, $field->selected) == $value ? 'checked="checked"':'' }}
+                <input v-on:click="changeType({{ $value }})" {{ old($key, $field->getSelected()) == $value ? 'checked="checked"':'' }}
                 name="{{ $key }}"
                        value="{{ $value }}"
                        id="{{ $key.'-'.$value }}"
                        type="radio">
-                <span class="custom-radiobutton --primary"></span>
+                <span class="custom-radiobutton"></span>
                 <strong>{{ $label }}</strong>
             </label>
         @endforeach

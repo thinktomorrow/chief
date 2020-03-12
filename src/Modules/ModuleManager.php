@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Http\Request;
@@ -27,23 +29,34 @@ class ModuleManager extends AbstractManager implements Manager
 
     public function route($verb): ?string
     {
+
         /**
          * Page specific modules are expected to be found and managed in the context of a certain page.
          * Therefore the index of these modules is at the modules tab of this page model.
          */
         if ($verb == 'index' && $this->model->isPageSpecific()) {
-            return app(Managers::class)->findByModel($this->model->page)->route('edit').'#eigen-modules';
+            return app(Managers::class)->findByModel($this->model->page)->route('edit') . '#eigen-modules';
         }
 
         $routes = [
-            'index'   => route('chief.back.modules.index'),
-            'create'  => route('chief.back.managers.create', [$this->registration->key()]),
-            'store'   => route('chief.back.managers.store', [$this->registration->key(), $this->model->id]),
-            'edit'    => route('chief.back.managers.edit', [$this->registration->key(), $this->model->id]),
-            'update'  => route('chief.back.managers.update', [$this->registration->key(), $this->model->id]),
-            'delete'  => route('chief.back.managers.delete', [$this->registration->key(), $this->model->id]),
-            'upload'  => route('chief.back.managers.media.upload', [$this->registration->key(), $this->model->id])
+            'index'  => route('chief.back.modules.index', [$this->registration->key()]),
+            'create' => route('chief.back.managers.create', [$this->registration->key()]),
+            'store'  => route('chief.back.managers.store', [$this->registration->key()]),
         ];
+
+        if (array_key_exists($verb, $routes)) {
+            return $routes[$verb] ?? null;
+        }
+
+        $routes = array_merge($routes, [
+            'edit'   => route('chief.back.managers.edit', [$this->registration->key(), $this->existingModel()->id]),
+            'update' => route('chief.back.managers.update', [$this->registration->key(), $this->existingModel()->id]),
+            'delete' => route('chief.back.managers.delete', [$this->registration->key(), $this->existingModel()->id]),
+            'upload' => route('chief.back.managers.media.upload', [
+                $this->registration->key(),
+                $this->existingModel()->id,
+            ]),
+        ]);
 
         return $routes[$verb] ?? null;
     }
@@ -52,26 +65,26 @@ class ModuleManager extends AbstractManager implements Manager
     {
         try {
             $this->authorize($verb);
+
+            return parent::can($verb);
         } catch (NotAllowedManagerRoute $e) {
             return false;
         }
-
-        return parent::can($verb);
     }
 
     private function authorize($verb)
     {
         $permission = 'update-page';
 
-        if (in_array($verb, ['index','show'])) {
+        if (in_array($verb, ['index', 'show'])) {
             $permission = 'view-page';
-        } elseif (in_array($verb, ['create','store'])) {
+        } elseif (in_array($verb, ['create', 'store'])) {
             $permission = 'create-page';
         } elseif (in_array($verb, ['delete'])) {
             $permission = 'delete-page';
         }
 
-        if (! auth()->guard('chief')->user()->hasPermissionTo($permission)) {
+        if (!auth()->guard('chief')->user()->hasPermissionTo($permission)) {
             throw NotAllowedManagerRoute::notAllowedPermission($permission, $this);
         }
     }
@@ -103,7 +116,7 @@ class ModuleManager extends AbstractManager implements Manager
     public function saveFields(Request $request)
     {
         // Store the morph_key upon creation
-        if (! $this->model->morph_key) {
+        if (!$this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 

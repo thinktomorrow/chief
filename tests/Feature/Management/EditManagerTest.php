@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\AssetLibrary\Models\AssetUploader;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
@@ -34,6 +34,8 @@ class EditManagerTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
+        $this->disableExceptionHandling();
+
         $response = $this->asAdmin()->get($this->manager->route('edit'));
         $response->assertViewIs('chief::back.managers.edit');
         $response->assertStatus(200);
@@ -52,12 +54,12 @@ class EditManagerTest extends TestCase
     {
         // Add image to model
         $source = UploadedFile::fake()->image('tt-favicon.png');
-        $asset = AssetUploader::upload($source);
-        $asset->attachToModel($this->model, 'avatar');
+
+        $asset = app(AddAsset::class)->add($this->model, $source, 'avatar', 'nl');
 
         config()->set(['app.fallback_locale' => 'nl']);
 
-        $this->assertEquals('tt-favicon.png', $this->model->getFilename('avatar'));
+        $this->assertEquals('tt-favicon.png', $this->model->asset('avatar')->filename());
 
         $fieldValue = $this->manager->fieldValue($this->manager->fields()['avatar']);
 
@@ -65,8 +67,8 @@ class EditManagerTest extends TestCase
         $this->assertEquals([
             (object)[
                 'id'        => $asset->id,
-                'filename'  => $asset->getFilename(),
-                'url'       => $asset->getFileUrl(),
+                'filename'  => $asset->filename(),
+                'url'       => $asset->url(),
             ]
         ], $fieldValue);
     }
@@ -74,11 +76,13 @@ class EditManagerTest extends TestCase
     /** @test */
     public function it_cant_edit_a_softdeleted_model()
     {
+        $this->disableExceptionHandling();
+        $this->expectException(NonExistingRecord::class);
+
         $this->model->delete();
 
         //use the static url here otherwise the existingmodel function errors before this triggers.
         $response = $this->asAdmin()->get('admin/manage/managed_model_first/1/edit');
-        $response->assertStatus(302);
-        $response->assertRedirect(route('chief.back.dashboard'));
+        $response->assertStatus(500);
     }
 }

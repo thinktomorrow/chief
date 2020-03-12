@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Pages;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ResolvingRoute;
 use Thinktomorrow\Chief\Concerns\Viewable\Viewable;
 use Thinktomorrow\Chief\Concerns\Viewable\ViewableContract;
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Audit\AuditTrait;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Thinktomorrow\Chief\Concerns\Featurable;
 use Thinktomorrow\Chief\Menu\ActsAsMenuItem;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,53 +23,77 @@ use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\Snippets\WithSnippets;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
-use Thinktomorrow\AssetLibrary\Traits\AssetTrait;
+use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphable;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
-use Thinktomorrow\Chief\Concerns\Archivable\Archivable;
+use Thinktomorrow\Chief\States\Archivable\Archivable;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Urls\UrlRecordNotFound;
 
-class Page extends Model implements ManagedModel, TranslatableContract, HasMedia, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl
+class Page extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, ActsAsMenuItem, MorphableContract, ViewableContract, ProvidesUrl, StatefulContract
 {
     use BaseTranslatable {
         getAttribute as getTranslatableAttribute;
     }
 
-    use Morphable,
-        AssetTrait,
-        Translatable,
-        SoftDeletes,
-        Publishable,
-        Featurable,
-        Archivable,
-        AuditTrait,
-        ActingAsParent,
-        ActingAsChild,
-        WithSnippets,
-        ResolvingRoute,
-        Viewable;
+    use Morphable;
+
+    use AssetTrait;
+
+    use Translatable;
+
+    use SoftDeletes;
+
+    use Publishable;
+
+    use Featurable;
+
+    use Archivable;
+
+    use ActingAsParent;
+
+    use ActingAsChild;
+
+    use WithSnippets;
+
+    use ResolvingRoute;
+
+    use Viewable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
-    protected $translationModel      = PageTranslation::class;
+    protected $translationModel = PageTranslation::class;
     protected $translationForeignKey = 'page_id';
-    protected $translatedAttributes  = [
-        'title', 'content', 'short', 'seo_title', 'seo_description', 'seo_keywords', 'seo_image'
+    protected $translatedAttributes = [
+        'title',
+        'content',
+        'short',
+        'seo_title',
+        'seo_description',
+        'seo_keywords',
+        'seo_image',
     ];
 
-    public $table          = "pages";
-    protected $guarded     = [];
-    protected $with        = ['translations'];
+    public $table = "pages";
+    protected $guarded = [];
+    protected $with = ['translations'];
 
     protected $baseViewPath;
     protected static $baseUrlSegment = '/';
 
-    public function __construct(array $attributes = [])
+    protected static $cachedUrls = [];
+
+    public static function clearCachedUrls()
+    {
+        static::$cachedUrls = null;
+    }
+
+    final public function __construct(array $attributes = [])
     {
         $this->constructWithSnippets();
 
@@ -83,7 +110,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
             return static::$managedModelKey;
         }
 
-        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class . '.');
     }
 
     /**
@@ -123,7 +150,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
     public function flatReferenceLabel(): string
     {
         if ($this->exists) {
-            $status = ! $this->isPublished() ? ' [' . $this->statusAsPlainLabel().']' : null;
+            $status = !$this->isPublished() ? ' [' . $this->statusAsPlainLabel() . ']' : null;
 
             return $this->title ? $this->title . $status : '';
         }
@@ -134,27 +161,29 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
     public function flatReferenceGroup(): string
     {
         $classKey = get_class($this);
-        $labelSingular = property_exists($this, 'labelSingular') ? $this->labelSingular : str_singular($classKey);
+        if (property_exists($this, 'labelSingular')) {
+            $labelSingular = $this->labelSingular;
+        } else {
+            $labelSingular = Str::singular($classKey);
+        }
 
         return $labelSingular;
     }
 
-    public function mediaUrls($type = null): Collection
+    public function mediaUrls($type = null, $size = 'full'): Collection
     {
-        // TODO getallfiles should actually get all files...
-        // What was the creator of the assetlibrary package thinking. It sure wasn't me... I promise...
-        $assets = $this->getAllFiles($type, app()->getLocale())->map->getFileUrl();
+        $assets = $this->assets($type, app()->getLocale())->map->url($size);
 
         if ($assets->first() == null) {
-            $assets = $this->getAllFiles($type)->map->getFileUrl();
+            $assets = $this->assets($type)->map->url($size);
         }
 
         return $assets;
     }
 
-    public function mediaUrl($type = null): ?string
+    public function mediaUrl($type = null, $size = 'full'): ?string
     {
-        return $this->mediaUrls($type)->first();
+        return $this->mediaUrls($type, $size)->first();
     }
 
     public static function findPublished($id)
@@ -173,11 +202,16 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         if (!$locale) {
             $locale = app()->getLocale();
         }
-
         try {
+            $memoizedKey = $this->getMorphClass() . '-' . $this->id . '-' . $locale;
+
+            if (isset(static::$cachedUrls[$memoizedKey])) {
+                return static::$cachedUrls[$memoizedKey];
+            }
+
             $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 
-            return $this->resolveUrl($locale, [$slug]);
+            return static::$cachedUrls[$memoizedKey] = $this->resolveUrl($locale, [$slug]);
         } catch (UrlRecordNotFound $e) {
             return '';
         }
@@ -193,7 +227,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
     /** @inheritdoc */
     public function previewUrl(string $locale = null): string
     {
-        return $this->url($locale).'?preview-mode';
+        return $this->url($locale) . '?preview-mode';
     }
 
 
@@ -229,46 +263,14 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         return $this->title ?? '';
     }
 
-    /**
-     * We override the publishable trait defaults because Page needs
-     * to be concerned with the archived state as well.
-     *
-     * TODO: IMPROVEMENT SHOULD BE TO MANAGE THE PAGE STATES IN ONE LOCATION. eg state machine
-     */
-    public function isPublished()
-    {
-        return (!!$this->published && is_null($this->archived_at));
-    }
-
-    public function isDraft()
-    {
-        return (!$this->published && is_null($this->archived_at));
-    }
-
-    public function publish()
-    {
-        $this->published = 1;
-        $this->archived_at = null;
-
-        $this->save();
-    }
-
-    public function draft()
-    {
-        $this->published = 0;
-        $this->archived_at = null;
-
-        $this->save();
-    }
-
     public function statusAsLabel()
     {
         if ($this->isPublished()) {
-            return '<a href="'.$this->url().'" target="_blank"><em>online</em></a>';
+            return '<a href="' . $this->url() . '" target="_blank"><em>online</em></a>';
         }
 
         if ($this->isDraft()) {
-            return '<a href="'.$this->previewUrl().'" target="_blank" class="text-error"><em>offline</em></a>';
+            return '<a href="' . $this->previewUrl() . '" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
         if ($this->isArchived()) {
@@ -293,5 +295,22 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasMedia
         }
 
         return '-';
+    }
+
+    public function stateOf($key): string
+    {
+        return $this->$key ?? PageState::DRAFT;
+    }
+
+    public function changeStateOf($key, $state)
+    {
+        // Ignore change to current state - it should not trigger events either
+        if ($state === $this->stateOf($key)) {
+            return;
+        }
+
+        PageState::assertNewState($this, $key, $state);
+
+        $this->$key = $state;
     }
 }

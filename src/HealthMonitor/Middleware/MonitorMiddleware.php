@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\HealthMonitor\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\HealthMonitor\Monitor;
 
 class MonitorMiddleware
@@ -11,14 +12,14 @@ class MonitorMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         if ($request->isMethod('get')) {
-            Monitor::check();
+            app(Monitor::class)->check();
         }
 
         return $next($request);

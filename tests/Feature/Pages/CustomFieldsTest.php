@@ -34,7 +34,6 @@ class CustomFieldsTest extends TestCase
     /** @test */
     public function it_can_edit_a_page_with_a_custom_field()
     {
-        $this->disableExceptionHandling();
         $response = $this->asAdmin()
             ->put(route('chief.back.managers.update', ['articles_with_category_fake', $this->page->id]), $this->validUpdatePageParams([
                 'custom' => 'foobar'

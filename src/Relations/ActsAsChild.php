@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -14,4 +16,6 @@ interface ActsAsChild extends ProvidesFlatReference
     public function rejectParent(ActsAsParent $parent);
 
     public function relationWithParent(ActsAsParent $parent): Relation;
+
+    public function detachAllParentRelations();
 }

@@ -3,31 +3,40 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Common;
 
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Concerns\Publishable\Publishable;
+use Thinktomorrow\Chief\States\Publishable\Publishable;
 
 /**
  * Class ValidationTraitDummyClass
  * @package Thinktomorrow\Chief\Models
  */
-class PublishableTraitDummyClass extends Model
+class PublishableTraitDummyClass extends Model implements StatefulContract
 {
     use Publishable;
 
-    public $published = false;
+    public $current_state = PageState::DRAFT;
 
     public function save(array $options = [])
     {
         //
     }
+
+    public function stateOf($key): string
+    {
+        return $this->current_state;
+    }
+
+    public function changeStateOf($key, $state)
+    {
+        $this->current_state = $state;
+    }
 }
 
-class PublishableTest extends TestCase
+class PublishableTraitTest extends TestCase
 {
-    use ChiefDatabaseTransactions;
-
     /**
      * @var PublishableTraitDummyClass
      */
@@ -37,61 +46,45 @@ class PublishableTest extends TestCase
     {
         parent::setUp();
 
-        $this->setUpDatabase();
-
         $this->dummy = new PublishableTraitDummyClass();
     }
 
     /** @test */
     public function it_can_check_if_the_model_is_published()
     {
-        $result = $this->dummy->isPublished();
-
-        $this->assertFalse($result);
+        $this->assertFalse($this->dummy->isPublished());
     }
 
     /** @test */
     public function it_can_check_if_the_model_is_draft()
     {
-        $result = $this->dummy->isDraft();
-
-        $this->assertTrue($result);
+        $this->assertTrue($this->dummy->isDraft());
     }
 
     /** @test */
     public function it_can_publish_the_model()
     {
-        $this->dummy->publish();
+        $this->dummy->changeStateOf(PageState::KEY, PageState::PUBLISHED);
 
-        $this->assertEquals(1, $this->dummy->isPublished());
+        $this->assertTrue($this->dummy->isPublished());
     }
 
     /** @test */
     public function it_can_draft_the_model()
     {
-        $this->dummy->draft();
+        $this->dummy->changeStateOf(PageState::KEY, PageState::PUBLISHED);
+        $this->dummy->changeStateOf(PageState::KEY, PageState::DRAFT);
 
-        $this->assertEquals(1, $this->dummy->isDraft());
+        $this->assertTrue($this->dummy->isDraft());
     }
 
     /** @test */
     public function it_can_get_all_the_published_models()
     {
-        factory(Page::class)->create(['published' => 1]);
-        factory(Page::class)->create(['published' => 0]);
-        factory(Page::class)->create(['published' => 1]);
+        factory(Page::class)->create(['current_state' => PageState::PUBLISHED]);
+        factory(Page::class)->create(['current_state' => PageState::PUBLISHED]);
+        factory(Page::class)->create(['current_state' => PageState::DRAFT]);
 
         $this->assertCount(2, Page::getAllPublished());
-    }
-
-    /** @test */
-    public function it_can_get_pages_sorted_by_published()
-    {
-        factory(Page::class)->create(['published' => 1]);
-        factory(Page::class)->create(['published' => 0]);
-        factory(Page::class)->create(['published' => 1]);
-
-        $this->assertTrue(Page::sortedByPublished()->first()->isPublished());
-        $this->assertFalse(Page::sortedByPublished()->get()->last()->isPublished());
     }
 }

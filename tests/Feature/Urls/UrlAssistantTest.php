@@ -2,10 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFake;
+use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductFakeWithBaseSegments;
 use Thinktomorrow\Chief\Tests\Feature\Urls\Fakes\ProductManagerWithUrlAssistant;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
@@ -309,7 +311,7 @@ class UrlAssistantTest extends TestCase
         $product2 = ProductFake::orderBy('id','DESC')->first();
 
         $response = $this->asAdmin()
-            ->post(route('chief.back.assistants.archive', ['products', $product->id]), [
+            ->post($this->manager->manage($product)->assistant('archive')->route('archive'), [
                 'redirect_id' => $product2->flatReference()->get(),
             ]);
 
@@ -322,32 +324,58 @@ class UrlAssistantTest extends TestCase
     {
 
     }
-    
+
     /** @test */
     function it_cannot_publish_without_url()
     {
-        
+
     }
 
     /** @test */
     function a_non_unique_url_is_halted()
     {
-        // evt. instant feedback?
+        $this->createAndChangeUrlSlug('foobar','foobar-updated');
+        $product = ProductFake::orderBy('id','DESC')->first();
+
+        $response = $this->createAndChangeUrlSlug('foobar-2','foobar-updated');
+        $product2 = ProductFake::orderBy('id','DESC')->first();
+
+        $response->assertSessionHasErrors('url-slugs');
+
+        $this->assertEquals('foobar-2', $product2->url());
+    }
+
+    /** @test */
+    function baseurlsegment_is_taken_into_account_for_uniqueness_check()
+    {
+        $this->createAndChangeUrlSlug('foobar','foobar-updated');
+
+        // Use managed model with base url segment
+        app(Register::class)->register(ProductManagerWithUrlAssistant::class, ProductFakeWithBaseSegments::class);
+        $this->manager = app(Managers::class)->findByKey('products_with_base');
+
+
+        $response = $this->createAndChangeUrlSlug('foobar-2','foobar-updated', ProductFakeWithBaseSegments::class);
+        $product2 = ProductFakeWithBaseSegments::orderBy('id','DESC')->first();
+
+        $response->assertSessionHasNoErrors('url-slugs');
+        $this->assertEquals('producten/foobar-updated', $product2->url());
     }
 
     /**
      * @param string $from
      * @param string $to
+     * @param string|null $modelClass
      * @return TestResponse
      */
-    private function createAndChangeUrlSlug($from = 'foobar', $to = 'foobar-updated'): TestResponse
+    private function createAndChangeUrlSlug($from = 'foobar', $to = 'foobar-updated', string $modelClass = null): TestResponse
     {
         $this->asAdmin()->post($this->manager->route('store'), [
             'url-slugs' => ['nl' => $from],
         ]);
 
         // Get the last inserted model
-        $product = ProductFake::orderBy('id','DESC')->first();
+        $product = $modelClass ? $modelClass::orderBy('id','DESC')->first() : ProductFake::orderBy('id','DESC')->first();
 
         // We change it to another value
         $response = $this->asAdmin()->put($this->manager->manage($product)->route('update'), [

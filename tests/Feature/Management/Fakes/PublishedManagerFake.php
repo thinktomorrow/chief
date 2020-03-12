@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Management\Manager;
+use Thinktomorrow\Chief\Fields\Types\FileField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
-use Thinktomorrow\Chief\Fields\Types\DocumentField;
+use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
 
@@ -26,8 +26,8 @@ class PublishedManagerFake extends AbstractManager implements Manager
             InputField::make('custom'),
             InputField::make('title_trans')->translatable(['nl', 'fr']),
             InputField::make('content_trans')->translatable(['nl', 'fr']),
-            MediaField::make('avatar'),
-            DocumentField::make('doc'),
+            ImageField::make('avatar'),
+            FileField::make('doc'),
         ]);
     }
 

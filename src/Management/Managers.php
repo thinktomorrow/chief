@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Support\Collection;
@@ -82,6 +84,7 @@ class Managers
                 'group' => $item->details()->plural,
             ];
         })->toArray();
+
         // We remove the group key as we need to have non-assoc array for the multiselect options.
         return collect(array_values($managers));
     }
@@ -93,6 +96,22 @@ class Managers
         return $registrations->map(function ($registration) {
             return $this->instance($registration);
         });
+    }
+
+    public function allAssistantClassNames(): Collection
+    {
+        $assistants = collect();
+
+        foreach ($this->all() as $manager) {
+            $assistants = $assistants->merge($manager->assistants(false));
+        }
+
+        return $assistants->unique();
+    }
+
+    public function anyRegisteredByTag($tag)
+    {
+        return !empty($this->register->filterByTag($tag)->all());
     }
 
     /**

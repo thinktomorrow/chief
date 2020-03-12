@@ -5,12 +5,33 @@
             <a class="block p-3 --link-with-bg" href="{!! $manager->assistant('publish')->previewUrl() !!}" target="_blank">Bekijk preview</a>
         @endif
 
-        @if($manager->can('edit') && \Illuminate\Support\Facades\Route::currentRouteName() !== 'chief.back.managers.edit')
+        @if($manager->can('edit') && request()->fullUrl() !== $manager->route('edit'))
             <a href="{{ $manager->route('edit') }}" class="block p-3 --link-with-bg">Aanpassen</a>
         @endif
 
-        @include('chief::back.managers._partials.publish-option')
-        @include('chief::back.managers._partials.archive-delete-option')
+        @if($manager->can('update'))
+            @if($manager->existingModel() instanceof \Thinktomorrow\Chief\States\State\StatefulContract)
+                @foreach(\Thinktomorrow\Chief\States\PageStatePresenter::fromModel($manager->existingModel())->transitions() as $transition)
+                    @include('chief::back.managers._transitions.'.$transition)
+                @endforeach
+            @else
+                @if($manager->isAssistedBy('archive'))
+                    @if($manager->assistant('archive')->isArchived())
+                        @include('chief::back.managers._transitions.unarchive')
+                    @else
+                        @include('chief::back.managers._transitions.archive')
+                    @endif
+                @endif
+
+                @if($manager->isAssistedBy('publish'))
+                    @if($manager->assistant('publish')->isPublished())
+                        @include('chief::back.managers._transitions.unpublish')
+                    @else
+                        @include('chief::back.managers._transitions.publish')
+                    @endif
+                @endif
+            @endif
+        @endif
 
     </div>
 </options-dropdown>

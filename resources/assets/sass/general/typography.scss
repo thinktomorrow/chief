@@ -51,3 +51,7 @@ pre {
 code {
     @apply inline-block text-grey-300 p-1;
 }
+
+:focus{
+    outline: none;
+}

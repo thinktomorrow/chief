@@ -3,6 +3,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 
 trait ModuleFormParams
@@ -15,7 +16,7 @@ trait ModuleFormParams
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;
@@ -37,7 +38,7 @@ trait ModuleFormParams
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

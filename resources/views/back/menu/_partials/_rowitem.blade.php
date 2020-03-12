@@ -14,9 +14,6 @@
             @elseif($item->draft)
                 &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
             @endif
-            @if($item->collection_type)
-                &nbsp;<em class="text-subtle">pagina groep</em>
-            @endif
         @endif
     </div>
 
@@ -31,8 +28,6 @@
     </div>
 
     <div class="column-2 text-right py-2">
-        @if(!$item->auto_generated)
-            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="">Aanpassen</a>
-        @endif
+        <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="">Aanpassen</a>
     </div>
 </div>

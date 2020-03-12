@@ -21,11 +21,12 @@ class FlatReference
 
     /**
      * Recreate the model instance that is referred to by this collection id
+     *
      * @return Model
      */
     public function instance(): Model
     {
-        return (new $this->className)->withoutGlobalScopes()->findOrFail($this->id);
+        return (new $this->className())->withoutGlobalScopes()->findOrFail($this->id);
     }
 
     public function id()
@@ -40,7 +41,7 @@ class FlatReference
 
     public function get(): string
     {
-        return $this->className.'@'.$this->id;
+        return $this->className . '@' . $this->id;
     }
 
     public function equals($other): bool

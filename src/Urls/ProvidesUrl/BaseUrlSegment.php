@@ -1,11 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Urls\ProvidesUrl;
 
 use Thinktomorrow\Chief\Management\Managers;
 
 class BaseUrlSegment
 {
+    /**
+     * @param ProvidesUrl $model
+     * @param string $slug
+     * @param $locale
+     * @return string
+     */
+    public static function prepend(ProvidesUrl $model, string $slug, $locale): string
+    {
+        $slugWithBaseSegment = $model->baseUrlSegment($locale) . '/' . $slug;
+        $slugWithBaseSegment = trim($slugWithBaseSegment, '/');
+
+        // If slug with base segment is empty string, it means that the passed slug was probably a "/" character.
+        // so we'll want to return it in case the base segment is not added.
+        return $slugWithBaseSegment ?: '/';
+    }
+
     public static function strip($value)
     {
         $originalValue = $value = trim($value, '/');
@@ -28,8 +46,8 @@ class BaseUrlSegment
         $managers = app(Managers::class)->all();
 
         foreach ($managers as $manager) {
-            if (contract($manager->model(), ProvidesUrl::class)) {
-                $segments[] = $manager->model()->baseUrlSegment();
+            if (contract($manager->existingModel(), ProvidesUrl::class)) {
+                $segments[] = $manager->existingModel()->baseUrlSegment();
             }
         }
 

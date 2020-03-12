@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Management\Assistants;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
-use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Urls\UrlSlugFields;
 use Thinktomorrow\Chief\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Management\Manager;
 
@@ -21,19 +22,9 @@ class UrlAssistant implements Assistant
 
     private $model;
 
-    private $urlRecords;
-
     public function manager(Manager $manager)
     {
-        $this->manager  = $manager;
-
-        if (! $manager->model() instanceof ProvidesUrl) {
-            throw new \Exception('UrlAssistant requires the model interfaced by ' . ProvidesUrl::class . '.');
-        }
-
-        $this->model = $manager->model();
-
-        $this->urlRecords = MemoizedUrlRecord::getByModel($this->model);
+        $this->manager = $manager;
     }
 
     public static function key(): string
@@ -44,7 +35,10 @@ class UrlAssistant implements Assistant
     public function route($verb): ?string
     {
         $routes = [
-            'check' => route('chief.back.assistants.url.check', [$this->manager->details()->key, $this->manager->model()->id]),
+            'check' => route('chief.back.assistants.url.check', [
+                $this->manager->details()->key,
+                $this->manager->existingModel()->id,
+            ]),
         ];
 
         return $routes[$verb] ?? null;
@@ -56,24 +50,29 @@ class UrlAssistant implements Assistant
             InputField::make('url-slugs')
                 ->validation(
                     [
-                        'url-slugs' => ['array', 'min:1', new UniqueUrlSlugRule(($this->model && $this->model->exists) ? $this->model : null),],
+                        'url-slugs' => [
+                            'array',
+                            'min:1',
+                            new UniqueUrlSlugRule($this->manager->modelInstance(), $this->manager->hasExistingModel() ? $this->manager->existingModel() : null),
+                        ],
                     ],
                     [],
                     [
                         'url-slugs.*' => 'taalspecifieke link',
-                    ])
+                    ]
+                )
                 ->view('chief::back._fields.url-slugs')
-                ->viewData(['fields' => UrlSlugFields::fromModel($this->model) ]),
+                ->viewData(['fields' => UrlSlugFields::fromModel($this->manager->hasExistingModel() ? $this->manager->existingModel() : $this->manager->modelInstance())]),
         ]);
     }
 
     public function saveUrlSlugsField(Field $field, Request $request)
     {
-        (new SaveUrlSlugs($this->model))->handle($request->get('url-slugs', []));
+        (new SaveUrlSlugs($this->manager->existingModel()))->handle($request->get('url-slugs', []));
 
         // Push update to homepage setting value
         // TODO: we should just fetch the homepages and push that instead...
-        UrlRecord::getByModel($this->model)->reject(function ($record) {
+        UrlRecord::getByModel($this->manager->existingModel())->reject(function ($record) {
             return ($record->isRedirect() || !$record->isHomepage());
         })->each(function ($record) {
             app(ChangeHomepage::class)->onUrlChanged($record);
@@ -85,8 +84,10 @@ class UrlAssistant implements Assistant
         return true;
     }
 
-    public function guard($verb): Assistant
+    private function validateModel()
     {
-        return $this;
+        if (!$this->manager->existingModel() instanceof ProvidesUrl) {
+            throw new \Exception('UrlAssistant requires the model interfaced by ' . ProvidesUrl::class . '.');
+        }
     }
 }

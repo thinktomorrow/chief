@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -43,13 +45,18 @@ trait ActingAsChild
             ->first();
     }
 
+    public function detachAllParentRelations()
+    {
+        Relation::deleteAllParentRelationsOf($this->getMorphClass(), $this->getKey());
+    }
+
     private function attachParent($parent_type, $parent_id, array $attributes = [])
     {
         Relation::firstOrCreate([
-            'parent_type'  => $parent_type,
-            'parent_id'    => $parent_id,
-            'child_type' => $this->getMorphClass(),
-            'child_id'   => $this->getKey(),
+            'parent_type' => $parent_type,
+            'parent_id'   => $parent_id,
+            'child_type'  => $this->getMorphClass(),
+            'child_id'    => $this->getKey(),
         ], $attributes);
     }
 

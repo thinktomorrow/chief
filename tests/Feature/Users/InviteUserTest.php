@@ -2,13 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Thinktomorrow\Chief\App\Notifications\InvitationMail;
+use Illuminate\Support\Arr;
+use Thinktomorrow\Chief\Users\User;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Thinktomorrow\Chief\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Users\Invites\InvitationState;
-use Thinktomorrow\Chief\Users\User;
-use Illuminate\Notifications\AnonymousNotifiable;
-use Illuminate\Support\Facades\Notification;
+use Thinktomorrow\Chief\App\Notifications\InvitationMail;
 
 class InviteUserTest extends TestCase
 {
@@ -42,8 +43,6 @@ class InviteUserTest extends TestCase
     {
         Notification::fake();
 
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()
                          ->post(route('chief.back.users.store'), $this->validParams());
 
@@ -54,7 +53,7 @@ class InviteUserTest extends TestCase
         $newUser = User::findByEmail('new@example.com');
 
         $this->assertNewValues($newUser);
-        $this->assertEquals(InvitationState::PENDING, $newUser->invitation->last()->state());
+        $this->assertEquals(InvitationState::PENDING, $newUser->invitation->last()->stateOf(InvitationState::KEY));
 
         Notification::assertSentTo(new AnonymousNotifiable(), InvitationMail::class);
     }
@@ -128,7 +127,7 @@ class InviteUserTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

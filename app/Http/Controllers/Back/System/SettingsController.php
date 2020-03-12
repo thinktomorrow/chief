@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Settings\Application\UpdateSetting;
 use Thinktomorrow\Chief\Settings\SettingFieldsManager;
 
@@ -12,9 +13,13 @@ class SettingsController extends Controller
     /** @var SettingFieldsManager */
     private $settingFieldsManager;
 
-    public function __construct(SettingFieldsManager $settingFieldsManager)
+    /** @var FieldValidator */
+    private $fieldValidator;
+
+    public function __construct(SettingFieldsManager $settingFieldsManager, FieldValidator $fieldValidator)
     {
         $this->settingFieldsManager = $settingFieldsManager;
+        $this->fieldValidator = $fieldValidator;
     }
 
     public function edit()
@@ -30,7 +35,7 @@ class SettingsController extends Controller
     {
         $this->authorize('update-setting');
 
-        $this->settingFieldsManager->fields()->validate($request->all());
+        $this->fieldValidator->handle($this->settingFieldsManager->fields(), $request->all());
 
         $this->settingFieldsManager->saveFields($request);
 

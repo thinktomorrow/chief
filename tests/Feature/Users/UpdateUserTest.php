@@ -2,8 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Users;
 
-use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdateUserTest extends TestCase
 {
@@ -26,8 +27,6 @@ class UpdateUserTest extends TestCase
     /** @test */
     public function full_admin_can_see_the_edit_view()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()->get(route('chief.back.users.edit', $this->newUser->id));
         $response->assertViewIs('chief::back.users.edit')
                  ->assertStatus(200);
@@ -163,7 +162,7 @@ class UpdateUserTest extends TestCase
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

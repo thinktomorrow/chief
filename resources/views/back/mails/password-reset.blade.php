@@ -5,7 +5,7 @@
 @endsection
 
 @section('title')
-    Maak een nieuw Chief wachtwoord aan voor {{ chiefSetting('client_app_name') }}.
+    Maak een nieuw Chief wachtwoord aan voor {{ chiefSetting('app_name') }}.
 @endsection
 
 @section('content')

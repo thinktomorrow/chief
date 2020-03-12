@@ -3,6 +3,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Illuminate\Support\Arr;
+
 trait PageFormParams
 {
     protected function validPageParams($overrides = [])
@@ -23,7 +25,7 @@ trait PageFormParams
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;
@@ -54,7 +56,7 @@ trait PageFormParams
         ];
 
         foreach ($overrides as $key => $value) {
-            array_set($params, $key, $value);
+            Arr::set($params, $key, $value);
         }
 
         return $params;

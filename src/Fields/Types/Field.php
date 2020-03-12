@@ -1,205 +1,52 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Fields\Validators\FieldValidatorFactory;
+use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 
-class Field
+interface Field
 {
-    /** @var FieldType */
-    private $fieldType;
+    public function getType(): FieldType;
 
-    protected $values = [];
+    public function ofType(...$type): bool;
 
-    public function __construct(FieldType $fieldType, string $key)
-    {
-        $this->fieldType = $fieldType;
+    public function getKey(): string;
 
-        $this->values['key'] = $this->values['column'] = $this->values['name'] = $this->values['label'] = $key;
-        $this->values['locales'] = [];
-        $this->values['viewData'] = [];
-        $this->values['type'] = $fieldType->get();
-    }
+    public function getColumn(): string;
 
-    public function validation(...$arguments)
-    {
-        // If a Closure or Validator is passed, we do not want to pass it as an array.
-        if (count($arguments) == 1 && !is_array($arguments)) {
-            $this->values['validation'] = reset($arguments);
+    public function getName(string $locale = null): string;
 
-            return $this;
-        }
+    public function getValue($model = null, string $locale = null);
 
-        $this->values['validation'] = $arguments;
+    public function getLocales(): array;
 
-        return $this;
-    }
+    public function isLocalized(): bool;
 
-    public function hasValidation(): bool
-    {
-        return (isset($this->values['validation']) && !empty($this->values['validation']));
-    }
+    public function getView(): string;
 
-    public function validator(array $data): Validator
-    {
-        return app(FieldValidatorFactory::class)->create($this, $data);
-    }
+    public function getElementView(): string;
 
-    public function required(): bool
-    {
-        if (!$this->hasValidation()) {
-            return false;
-        }
+    public function getViewData(): array;
 
-        foreach ($this->values['validation'] as $rule) {
-            if (false !== strpos($rule, 'required')) {
-                return true;
-            }
-        };
+    public function getLabel(): ?string;
 
-        return false;
-    }
+    public function getDescription(): ?string;
 
-    public function optional(): bool
-    {
-        return ! $this->required();
-    }
+    public function getPrepend(?string $locale = null): ?string;
 
-    public function name(string $name = null)
-    {
-        if (!is_null($name)) {
-            $this->values['name'] = $name;
+    public function getAppend(?string $locale = null): ?string;
 
-            return $this;
-        }
+    public function getPlaceholder(?string $locale = null): ?string;
 
-        return $this->values['name'] ?? $this->key();
-    }
+    public function getValidationNames(): array;
 
-    public function translatable(array $locales = [])
-    {
-        $this->values['locales'] = $locales;
-        return $this;
-    }
+    public function getValidationParameters(): ValidationParameters;
 
-    public function isTranslatable(): bool
-    {
-        return count($this->values['locales']) > 0;
-    }
+    public function hasValidation(): bool;
 
-    public function ofType(...$type): bool
-    {
-        foreach ($type as $_type) {
-            if ($this->fieldType->get() == $_type) {
-                return true;
-            }
-        }
+    public function required(): bool;
 
-        return false;
-    }
-
-    public function translateName($locale)
-    {
-        $name = $this->name();
-
-        if (strpos($name, ':locale')) {
-            return preg_replace('#(:locale)#', $locale, $name);
-        }
-
-        return 'trans['.$locale.']['.$name.']';
-    }
-
-    public static function translateValue($value, $locale = null)
-    {
-        if (!$locale || !is_array($value)) {
-            return $value;
-        }
-
-        if ($locale && isset($value[$locale])) {
-            return $value[$locale];
-        }
-
-        return $value;
-    }
-
-    public function getFieldValue(Model $model, $locale = null)
-    {
-        // If string is passed, we use this to find the proper field
-        if ($this->isTranslatable() && $locale) {
-            return $model->getTranslationFor($this->column(), $locale);
-        }
-
-        return $model->{$this->column()};
-    }
-
-    /**
-     * The view path to the full formgroup for this field.
-     *
-     * @param string|null $view
-     * @param array $viewData
-     * @return $this|mixed|null|string
-     */
-    public function view(string $view = null)
-    {
-        if ($view) {
-            $this->values['view'] = $view;
-            return $this;
-        }
-
-        return $this->__get('view') ?? 'chief::back._fields.formgroup';
-    }
-
-    public function viewData(array $viewData = [])
-    {
-        if ($viewData) {
-            $this->values['viewData'] = $viewData;
-            return $this;
-        }
-
-        return $this->__get('viewData');
-    }
-
-    /**
-     * In case of the default formgroup rendering, there is also made use of
-     * the form input element, which is targeted as a specific view as well
-     *
-     * @return string
-     */
-    public function formElementView(): string
-    {
-        return 'chief::back._fields.'.$this->fieldType->get();
-    }
-
-    public function __get($key)
-    {
-        if (isset($this->$key)) {
-            return $this->$key;
-        }
-
-        if (!isset($this->values[$key])) {
-            return null;
-        }
-
-        return $this->values[$key];
-    }
-
-    public function __call($name, $arguments)
-    {
-        // Without arguments we assume you want to retrieve a value property
-        if (empty($arguments)) {
-            return $this->__get($name);
-        }
-
-        if (!in_array($name, ['label', 'key', 'description', 'column', 'name', 'prepend', 'append'])) {
-            throw new \InvalidArgumentException('Cannot set value by ['. $name .'].');
-        }
-
-        $this->values[$name] = $arguments[0];
-
-        return $this;
-    }
+    public function optional(): bool;
 }

@@ -40,6 +40,18 @@ return [
          * with your project naming conventions, you can change it here.
          */
         'name' => 'pages.show',
+
+        /**
+         * Here you can set the general prefix for all the chief admin routes.
+         * This is set to a sensible default '/admin'.
+         */
+        'prefix' => 'admin',
+
+        /**
+         * The filepath where you can define your projects' chief admin routes. The chief
+         * admin prefix and middleware will automatically be applied to these routes
+         */
+        'admin-filepath' => null,
     ],
 
     /**
@@ -112,4 +124,13 @@ return [
      * 'quill' and 'redactor'. By default the free quill editor is set.
      */
     'editor' => 'quill',
+
+    /**
+     * Here you can define the stack of checks used by the healthmonitor.
+     *
+     */
+    'healthMonitor' => [
+        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageSetCheck::class,
+        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageAccessibleCheck::class,
+    ],
 ];

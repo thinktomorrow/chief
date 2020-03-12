@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\Viewable;
 
-use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
@@ -37,7 +38,7 @@ trait Viewable
 
         // If no view has been created for this model, we try once again to fetch the content value if any. This will silently fail
         // if no content value is present. We consider the 'content' attribute to be a default for our copy.
-        return isset($this->content) ? (string) $this->content : '';
+        return isset($this->content) ? (string)$this->content : '';
     }
 
     public function setViewParent(ActsAsParent $parent): ViewableContract
@@ -66,7 +67,7 @@ trait Viewable
 
         if (config('thinktomorrow.chief.strict')) {
             throw new NotFoundViewKey('Missing view key. Please add a [viewKey] property to ' . get_class($this));
-        };
+        }
 
         return '';
     }

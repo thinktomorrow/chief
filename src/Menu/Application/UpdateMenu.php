@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Menu\Application;
 
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 
 class UpdateMenu
@@ -23,8 +26,7 @@ class UpdateMenu
             $menu->type = $request->get('type', null);
             $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
             $menu->page_id = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
-            $menu->collection_type = $request->get('collection_type', null);
-            $menu->order        = $request->get('order', 0);
+            $menu->order = $request->get('order', 0);
 
             $this->reorderAgainstSiblings($menu);
             $menu->save();

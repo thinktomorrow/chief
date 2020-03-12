@@ -6,58 +6,62 @@ namespace Thinktomorrow\Chief\Fields\Types;
 
 class FieldType
 {
-    const INPUT = 'input';   // oneliner text (input)
-    const TEXT = 'text';    // Plain text (textarea)
-    const NUMBER = 'number'; // number
-    const RANGE = 'range'; // range slider
-    const DATE = 'date';    // Timestamp input
-    const PHONENUMBER = 'phonenumber';    // Timestamp input
-    const HTML = 'html';    // Html text (wysiwyg)
-    const SELECT = 'select';  // Select options
-    const MEDIA = 'media';  // media file (slim uploader)
-    const DOCUMENT = 'document';  // documents
-    const RADIO = 'radio';  // media file (slim uploader)
+    const INPUT       = 'input';        // oneliner text (input)
+    const TEXT        = 'text';         // Plain text (textarea)
+    const NUMBER      = 'number';       // number
+    const RANGE       = 'range';        // range slider
+    const DATE        = 'date';         // Timestamp input
+    const PHONENUMBER = 'phonenumber';  // Timestamp input
+    const HTML        = 'html';         // Html text (wysiwyg)
+    const SELECT      = 'select';       // Select options
+    //const MEDIA = 'media';  // media file
+    const FILE        = 'file';         // regular file
+    const IMAGE       = 'image';        // image (slim uploader)
+    const DOCUMENT    = 'document';     // documents
+    const RADIO       = 'radio';        // radio select
+    const CHECKBOX    = 'checkbox';     // checkbox select
     const PAGEBUILDER = 'pagebuilder';  // the most special field there is...
-    const PAGE = 'select'; // select a page (also a special field)
+    const PAGE        = 'page';         // select a page (also a special field)
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $type;
 
-    public function __construct(string $type)
+    /**
+     * FieldType constructor.
+     * Type is not validated against the default available set.
+     * A developer can choose to set any string as a fieldType.
+     *
+     * @param string $type
+     */
+    final public function __construct(string $type)
     {
-        if (!in_array($type, [
-            static::INPUT,
-            static::TEXT,
-            static::NUMBER,
-            static::PHONENUMBER,
-            static::RANGE,
-            static::HTML,
-            static::SELECT,
-            static::DATE,
-            static::MEDIA,
-            static::DOCUMENT,
-            static::RADIO,
-            static::PAGEBUILDER,
-            static::PAGE
-        ])) {
-            throw new \Exception('Invalid type identifier given [' . $type . '].');
-        }
-
         $this->type = $type;
     }
 
-    public static function fromString(string $type)
+    public static function fromString(string $type): self
     {
-        $class = 'Thinktomorrow\Chief\Fields\Types\\' . ucfirst($type . 'Field');
-
-        return new $class(new static($type));
+        return new static($type);
     }
 
-    public function get()
+    public function get(): string
     {
         return $this->type;
+    }
+
+    public function equalsAny(array $types): bool
+    {
+        foreach ($types as $type) {
+            if ($this->equals(FieldType::fromString($type))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function equals($type): bool
+    {
+        return ((string)$type === (string)$this->type && static::class === get_class($type));
     }
 
     public function __toString()

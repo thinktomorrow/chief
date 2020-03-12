@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Concerns\Viewable;
 
 use Thinktomorrow\Chief\Relations\ActsAsParent;

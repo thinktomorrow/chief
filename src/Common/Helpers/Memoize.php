@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Common\Helpers;
 
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +21,7 @@ class Memoize
     {
         $cachableParameters = $this->convertToCachableParameters($parameters);
 
-        $cachekey = $this->baseKey.':'.md5(implode('', $cachableParameters));
+        $cachekey = $this->baseKey . ':' . md5(implode('', $cachableParameters));
 
         if (isset(static::$cache[$cachekey])) {
             return static::$cache[$cachekey];

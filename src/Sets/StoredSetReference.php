@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Sets;
@@ -7,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
+use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 /**
  * @property $id
@@ -28,9 +30,9 @@ class StoredSetReference extends Model implements ActsAsChild
     /**
      * Run the query and collect the resulting pages into a Set object.
      */
-    public function toSet()
+    public function toSet(ActsAsParent $parent)
     {
-        return Set::fromReference($this->toReference());
+        return Set::fromReference($this->toReference(), $parent);
     }
 
     public function toReference(): SetReference
@@ -40,7 +42,7 @@ class StoredSetReference extends Model implements ActsAsChild
         });
 
         if (!$reference) {
-            throw new \Exception('No query set found by key ['. $this->key. ']. Make sure that this '.$this->key.' set is added to the chief.sets config array.');
+            throw new \Exception('No query set found by key [' . $this->key . ']. Make sure that this ' . $this->key . ' set is added to the chief.sets config array.');
         }
 
         return $reference;

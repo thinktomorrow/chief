@@ -8,14 +8,12 @@
         <div class="inline-block">
             <a class="center-y" href="{{ $manager->route('index') }}">
                 <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-                {{-- Terug naar alle {{ $manager->details()->plural }} --}}
             </a>
         </div>
     @endslot
 
     <div class="inline-group-s">
         <button data-submit-form="createForm" type="button" class="btn btn-primary">Aanmaken</button>
-        {{--@include('chief::back.managers._partials.context-menu')--}}
     </div>
 
 @endcomponent
@@ -23,10 +21,6 @@
 @section('content')
 
     <div>
-
-        <!-- needs to be before form to be detected by context-menu. Don't know why :s -->
-        {{--@include('chief::back.managers._partials.delete-modal')--}}
-
         <form id="createForm" method="POST" action="{{ $manager->route('store') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
@@ -43,7 +37,26 @@
 
 @stop
 
-@include('chief::back._elements.file-component')
-@include('chief::back._elements.slimcropper-component')
-@include('chief::back._elements.fileupload-component')
 
+
+@push('custom-scripts-after-vue')
+
+    <script>
+        // Display a warning message to tell the user that adding images to redactor is only possible after page creation.
+        var editors = document.querySelectorAll('[data-editor]');
+        for(var i = 0; i < editors.length; i++) {
+            var message = document.createElement('p');
+            message.style = "font-style: italic; opacity: 0.3; margin-top: 1rem;";
+            message.innerHTML = "Het toevoegen van afbeeldingen aan de wysiwyg is pas mogelijk na het aanmaken van dit item.";
+            editors[i].parentElement.appendChild(message);
+        }
+    </script>
+
+    @include('chief::back._layouts._partials.editor-script', ['disableImageUpload' => true])
+
+@endpush
+
+@include('chief::back._components.file-component')
+@include('chief::back._components.image-component')
+@include('chief::back._components.filesupload-component')
+@include('chief::back._components.imagesupload-component')

@@ -21,6 +21,9 @@
         @apply bg-white;
     }
 }
+.large-modal .modal-content{
+    max-width: 68%;
+}
 
 .modal-close {
     right: 20px;

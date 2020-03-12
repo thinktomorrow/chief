@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\HealthMonitor\Notifiers;
 
@@ -10,11 +10,10 @@ class AlertBarNotifier implements Notifier
 {
     public function onFailure(HealthCheck $healthCheck)
     {
-        session()->put('alertbarmessage', $healthCheck->message());
+        session()->flash('alertbarmessage', $healthCheck->message());
     }
 
     public function onSuccess(HealthCheck $healthCheck)
     {
-        session()->forget('alertbarmessage');
     }
 }

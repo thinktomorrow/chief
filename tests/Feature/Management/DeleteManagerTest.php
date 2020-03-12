@@ -2,8 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
+use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
@@ -33,8 +38,6 @@ class DeleteManagerTest extends TestCase
     /** @test */
     public function it_can_delete_a_model()
     {
-        $this->disableExceptionHandling();
-
         $this->asAdmin()
             ->delete($this->fake->route('delete'));
 
@@ -54,5 +57,32 @@ class DeleteManagerTest extends TestCase
             ->delete('/admin/manage/managed_model_first/1'); // We force the url since it is not provided by the manager
 
         $this->assertNotNull($this->model->fresh());
+    }
+
+    /** @test */
+    public function it_deletes_any_relation_entries_as_well()
+    {
+        $childModel = ManagedModelFakeFirst::create(['title' => 'Child model']);
+        $this->model->adoptChild($childModel);
+
+        $this->assertEquals(1, Relation::count());
+
+        $this->asAdmin()
+            ->delete($this->fake->route('delete'));
+
+        $this->assertNull($this->model->fresh());
+        $this->assertEquals(0, Relation::count());
+
+    }
+
+    /** @test */
+    public function removing_a_model_with_asset_unlinks_the_asset()
+    {
+        app(AddAsset::class)->add($this->model, UploadedFile::fake()->image('image.png'), MediaType::HERO, 'nl');
+
+        $this->asAdmin()
+            ->delete($this->fake->route('delete'));
+
+        $this->assertCount(1, Asset::all());
     }
 }

@@ -1,5 +1,111 @@
 # Changelog
-All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
+All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
+principles.
+
+## unreleased
+
+## 0.4.9 - 2020-03-11
+- fix: full height bugs safari
+
+## 0.4.8 - 2020-03-10
+- fix: redactor editor for pagebuilder text fields
+
+## 0.4.7 - 2020-03-09
+**This release requires a migration to implement the new page state logic.**
+This release introduces a couple of important changes: 
+- There is now a new state logic for pages: archived, draft, published, deleted. These states are kept in one database column instead of being scattered around.
+- There is now proper image validation for the image and file fields. 
+- There is now async image upload available on the slim component.
+
+More info on upgrading can be found in the [https://thinktomorrow.github.io/package-docs/src/chief/upgrading.html#upgrading-from-0-4-6-to-0-4-7](chief documentation).
+
+
+- Added: A generic `AssistantController` as a default dispatcher for assistant actions. Default assistants `ArchiveAssistant` and `PublishAssistant` now utilise the default `chief.back.assistants.update` and `chief.back.assistants.view` which points to this controller.
+- Added: config option `admin-filepath` that can be used to add custom chief routes. The routes defined in this file will only be accessible on authenticated sessions.
+- Added: `PageState` object which represents the page state: draft, published, archived or deleted. This is visible in the database as a current_state column.
+- Added: image validation rules: `required`, `dimensions`, `min`, `max`, `mimetypes`. Visit the [https://laravel.com/docs/6.x/validation#available-validation-rules](laravel documentation) on how to work with these.
+- Changed: Images in slim component are now being uploaded asynchronous to avoid server errors on request and file size.
+- Changed: the underlying StateMachine now allows to manage multiple states for one model.
+- Changed: Routes are now loaded by a separate `ChiefRoutesServiceProvider` which refers to two route files: `chief-open-routes` for non authenticated endpoints and `chief-admin-routes` for authenicated endpoints.
+- Changed: Redactor uploads are now via base64 data urls. A new js function `chiefRedactorImageUpload` should be used for the redactor imageUpload script.
+- Assistants now need to implement the `Thinktomorrow\Chief\Management\Assistants\Assistant` contract.
+- Removed: csrf token verification
+- Removed: `Manager::model()` has been removed. You should either use `Manager::modelInstance()` for an empty generic model instance or `Manager::existingModel()` to retrieve the model record
+- Removed: `Publishable::sortedByPublished` method since it has no effect in sorting by published date.
+- Removed: tinker package.
+- Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
+- Fixed: chief error now returns expected 500 status instead of 200.
+- Fixed: phpstan released lots of static analysis bugs which have been solved.
+- Fixed: uploads via redactor that are too large now stop the script and notify the user.
+
+### Field changes
+- Added: introduced a `Field` interface for stricter Field usage throughout the application. 
+- Added: `Field::getPlaceholder()` is added to retrieve a placeholder value.
+- Removed: `Field::getFieldValue()` is removed. Use the new `Field::getValue(Model $model = null, ?string $locale = null)` method instead.
+- Removed: `Field::key()` is now only used to set a custom key.  To retrieve the key use the `Field::getKey()` method.
+- Removed: `Field::name()` is now only used to set a custom name.  To retrieve the name use the `Field::getName()` method.
+- Removed: `Field::column()` is now only used to set a custom column.  To retrieve the column use the `Field::getColumn()` method.
+- Removed: `Field::default()` method is removed. From now on, use `Field::value(string $value)` to set the default value.
+- Removed: `DocumentField` is removed. Replace its usage with `FileField` instead, which has the same behavior. It better reflects its nature because also images are allowed here.
+- Changed: `MediaField` is now an abstract class. Replace its usage with `ImageField` instead. This naming better reflects the image only aspect of this formfield.
+- Changed: `Field::multiple()` is only used to set the multiple state. To retrieve this value, it is replaced by `Field::allowMultiple()`.
+
+## 0.4.6 - 2020-02-20
+- Fixed: show context menu on edit page if even without update permission
+- Fixed: disabled vue from compiling mustache brackets in textareas
+- Added: added audit logs for menu items
+- Removed: adding collections to a menu item is no longer supported. Instead add each page one by one.
+
+## 0.4.5 - 2020-01-14
+- Fixed: z-index on redactor toolbar lowered so it doesnt overlap modals/dropdowns
+- Fixed: image filter for mediagallery api call now correctly offsets without counting non-images.
+
+## 0.4.4 - 2020-01-13
+- Fixed: modal.vue close button doesnt submit forms anymore
+
+## 0.4.3 - 2020-01-10
+- Added: Functionality to upload existing assets.
+- Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback 
+- Fixed: issue where module add button didn't show for developer account
+- Fixed: slow loading of admin index pages due to overuse of `Page::url()` method
+- Fixed: document upload for multiple locales
+
+## 0.4.2 - 2019-11-27
+- Fixed: modulemanager route function to work with laravel 6.6 
+- Fixed: issue where updating url could result in a duplicate db entry
+- Fixed: Redactor rich links suggestions now show urls for the current selected locale
+- Removed: htmlpurifier which caused inconsistent saving of text module
+- Removed: dropped support for laravel 5.7
+
+## 0.4.1 - 2019-11-26
+- Added: extra parent and request parameters for query set methods.
+- Fixed: preserve old input after failed validation for input field
+- Fixed: dont show modules tab on page edit page when there aren't any modules that can be created 
+- Fixed: issue where `Set::paginate()` would perform a second db query to fetch all results, even when total count was already known.
+
+## 0.4.0 - 2019-11-19
+- Added: function valueResolver on field to customize how a value is retrieved from the database
+- Added: `Field::default()` method to set default field value.
+- Added: nomadic trait. A nomadic page or module can only be edited by admin and only one can exists.
+- Fixed: issue where app name would not show up in chief emails. replaced `client_app_name` by `app_name`.
+- Fixed: Multiselect placeholders were looking buggy. Now they don't.
+- Fixed: issue where deleting a model would not delete any existing relations.
+- Changed: updated Assetlibrary to 0.6
+
+## 0.3.4 - 2019-10-18
+- Added: config option `thinktomorrow.chief.route.prefix` to change default `/admin` url prefix if needed.
+- Added: selected module in pagebuilder now displays an edit link
+- Added: Checkbox field
+- Added: Laravel 6 support
+- Changed: Healthmonitor checks are now defined in the chief.php config file.
+- Changed: FieldType now accepts custom types. It no longer requires a type to be one of the provided defaults.
+- Fixed: wysiwyg editor was missing on the create page. Added extra flag to disable image upload.
+- Fixed: Slug of deleted module is now allowed to be reused. This used to give an unique validation constraint.
+- Fixed: isActiveUrl helper method can now check for full url
+- Fixed: show edit link in context menu in modules tab on page editpage
+- Fixed: deleting a page now also deletes related url records.
+- Fixed: issue where unique url validation didn't take the base url segment into account.
+- Fixed: issue where long pagetitle would overflow the admin header
 
 ## 0.3.3 - 2019-09-30
 - Fixed: fixed bug with set viewkey

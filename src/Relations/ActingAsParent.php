@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Thinktomorrow\Chief\Relations;
 
 use Illuminate\Database\Eloquent\Collection;
@@ -14,6 +16,7 @@ trait ActingAsParent
         if ($this->areChildRelationsLoaded()) {
             return $this->loadedChildRelations;
         }
+
         return $this->loadedChildRelations = $this->freshChildren();
     }
 
@@ -70,6 +73,11 @@ trait ActingAsParent
             ->where('child_type', $child->getMorphClass())
             ->where('child_id', $child->getKey())
             ->update(['sort' => $sort]);
+    }
+
+    public function detachAllChildRelations()
+    {
+        Relation::deleteAllChildRelationsOf($this->getMorphClass(), $this->getKey());
     }
 
     private function attachChild($child_type, $child_id, array $attributes = [])

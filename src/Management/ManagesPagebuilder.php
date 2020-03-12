@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
@@ -30,9 +31,9 @@ trait ManagesPagebuilder
         $sections = $request->get('sections', []);
 
         $modules = $sections['modules'] ?? [];
-        $text    = $sections['text'] ?? [];
-        $sets    = $sections['pagesets'] ?? [];
-        $order   = $sections['order'] ?? [];
+        $text = $sections['text'] ?? [];
+        $sets = $sections['pagesets'] ?? [];
+        $order = $sections['order'] ?? [];
 
         UpdateSections::forModel($this->model, $modules, $text, $sets, $order)
             ->updateModules()
@@ -64,24 +65,42 @@ trait ManagesPagebuilder
 
             return [
                 // Module reference is by id.
-                'id'         => $section->flatReference()->get(),
+                'id'      => $section->flatReference()->get(),
 
                 // Key is a separate value to assign each individual module.
                 // This is separate from id to avoid vue key binding conflicts.
-                'key'        => $section->flatReference()->get(),
-                'type'       => $this->guessPagebuilderSectionType($section),
-                'slug'       => $section->slug,
-                'sort'       => $index,
-                'trans'      => $section->trans ?? [],
+                'key'     => $section->flatReference()->get(),
+                'type'    => $this->guessPagebuilderSectionType($section),
+                'slug'    => $section->slug,
+                'editUrl' => $this->findEditUrl($section),
+                'sort'    => $index,
+                'trans'   => $section->trans ?? [],
             ];
         })->toArray();
 
         return PagebuilderField::make('sections')
-                                ->translatable($this->model->availableLocales())
-                                ->sections($sections)
-                                ->availablePages($available_pages)
-                                ->availableModules($available_modules)
-                                ->availableSets($available_sets);
+            ->translatable($this->model->availableLocales())
+            ->sections($sections)
+            ->availablePages($available_pages)
+            ->availableModules($available_modules)
+            ->availableSets($available_sets);
+    }
+
+    /**
+     * @param $model
+     * @return string|null
+     */
+    private function findEditUrl($model): ?string
+    {
+        if (!$model instanceof ManagedModel) {
+            return null;
+        }
+
+        try {
+            return app(Managers::class)->findByModel($model)->route('edit');
+        } catch (NonRegisteredManager $e) {
+            return null;
+        }
     }
 
     /**
