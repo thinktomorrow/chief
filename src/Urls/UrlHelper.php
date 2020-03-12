@@ -65,8 +65,7 @@ class UrlHelper
     {
         $types = [];
 
-        if($onlySingles)
-        {
+        if ($onlySingles) {
             $types = ['singles'];
         }
 
