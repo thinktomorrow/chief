@@ -3,31 +3,42 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Urls\UrlHelper;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 
 class PageField extends SelectField
 {
-    public static function make(string $key)
+    private $model;
+
+    public static function make(string $key): Field
     {
         return new static(new FieldType(FieldType::PAGE), $key);
     }
 
     public function options(array $morphKeys = [])
     {
-        $morphKeys = collect($morphKeys)->map(function($key){
-            return (new $key)->getMorphClass();
-        });
-        
-        if( ! $morphKeys->isEmpty()) {
-            $pages = Page::whereIn('morph_key', $morphKeys)->get();
+        if( ! empty($morphKeys)) {
+            $morphKeys = collect($morphKeys)->map(function($key){
+                return (new $key)->getMorphClass();
+            });
+
+            $pages = UrlHelper::modelsByType($morphKeys->toArray())->get();
+            $pages = FlatReferencePresenter::toGroupedSelectValues($pages)->toArray();
         } else {
-            $pages = Page::all();
+            $pages = UrlHelper::allModelsWithoutSelf($this->model);
         }
 
-        $this->values['options'] = FlatReferencePresenter::toGroupedSelectValues($pages)->toArray();
+        $this->options = $pages;
 
         return $this->grouped();
+    }
+
+    public function exclude(Model $model)
+    {
+        $this->model = $model;
+
+        return $this;
     }
 }

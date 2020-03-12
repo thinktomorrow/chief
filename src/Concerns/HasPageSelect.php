@@ -6,7 +6,8 @@ use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 
 trait HasPageSelect
 {
-    public function pageLink($column, $locale = null){
-        return FlatReferenceFactory::fromString($this->$column)->instance()->url($locale ?? app()->getLocale());
+    public function convertPagefieldvaluesToLinks($value, $locale = null){
+
+        return FlatReferenceFactory::fromString($value)->instance()->url($locale ?? app()->getLocale());
     }
 }
