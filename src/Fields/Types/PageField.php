@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
@@ -19,9 +20,9 @@ class PageField extends SelectField
 
     public function options(array $morphKeys = [])
     {
-        if( ! empty($morphKeys)) {
-            $morphKeys = collect($morphKeys)->map(function($key){
-                return (new $key)->getMorphClass();
+        if (! empty($morphKeys)) {
+            $morphKeys = collect($morphKeys)->map(function ($key) {
+                return (new $key())->getMorphClass();
             });
 
             $pages = UrlHelper::modelsByType($morphKeys->toArray())->get();
