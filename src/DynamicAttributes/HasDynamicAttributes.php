@@ -5,58 +5,68 @@ namespace Thinktomorrow\Chief\DynamicAttributes;
 
 trait HasDynamicAttributes
 {
+    public function dynamic(string $key, string $index = null)
+    {
+        return $this->dynamicAttributesInstance()->get($index ? "$index.$key" : $key);
+    }
+
+    public function setDynamic(string $key, $value, string $index = null)
+    {
+        return $this->dynamicAttributesInstance()->set($index ? "$index.$key" : $key, $value);
+    }
+
+    protected function shouldBeSetAsDynamicAttribute($key): bool
+    {
+        if(array_key_exists($key, $this->attributes) || !array_key_exists($this->getDynamicAttributesKey(), $this->attributes)) {
+            return false;
+        }
+
+        return in_array($key, $this->dynamicAttributeKeys());
+    }
+
+    protected function dynamicAttributesInstance(): DynamicAttributes
+    {
+        if(!($raw = $this->attributes[$this->getDynamicAttributesKey()]) instanceof DynamicAttributes) {
+            $this->attributes[$this->getDynamicAttributesKey()] = DynamicAttributes::fromRawValue($raw);
+        }
+
+        return $this->attributes[$this->getDynamicAttributesKey()];
+    }
+
+    public function isDynamicAttributeKey($key): bool
+    {
+        return (in_array($key, $this->dynamicAttributeKeys()));
+    }
+
+    protected function getDynamicAttributesKey()
+    {
+        return defined('static::DYNAMIC_ATTRIBUTES_KEY') ? static::DYNAMIC_ATTRIBUTES_KEY : 'values';
+    }
+
+    protected function dynamicAttributeKeys(): array
+    {
+        return property_exists($this, 'dynamicAttributes') ? $this->dynamicAttributes : [];
+    }
+
     /**
-     * Method used by the save logic on eloquent. This way we can inject an json version of the
-     *dynamic attributes for saving into the database.
+     * Method used by the save logic on eloquent. This way we can inject an
+     * json version of the dynamic attributes for saving into the database.
+     *
      * @return mixed
      */
     public function getAttributes()
     {
-        $attributes = $this->attributes;
-
-        $attributes[$this->getDynamicAttributesKey()] = json_encode($attributes[$this->getDynamicAttributesKey()]->all());
-
-        return $attributes;
+        return $this->injectDynamicAttributes($this->attributes, false);
     }
 
     public function setRawAttributes(array $attributes, $sync = false)
     {
-        if (isset($attributes[$this->getDynamicAttributesKey()])) {
-            /*
-             * fill the dynamic attributes in a custom key, so this will not conflict with the original values.
-             * A custom key other than the column key is required because the trait is initialized before
-             * the original attributes of the model are filled in.
-            */
-            $attributes[$this->getDynamicAttributesKey()] = $this->convertToDynamicAttributes($attributes[$this->getDynamicAttributesKey()]);
-        }
-
-        return parent::setRawAttributes($attributes, $sync);
+        return parent::setRawAttributes($this->injectDynamicAttributes($attributes), $sync);
     }
 
     public function fill(array $attributes)
     {
-        if (isset($attributes[$this->getDynamicAttributesKey()])) {
-            /*
-             * fill the dynamic attributes in a custom key, so this will not conflict with the original values.
-             * A custom key other than the column key is required because the trait is initialized before
-             * the original attributes of the model are filled in.
-            */
-            $attributes[$this->getDynamicAttributesKey()] = $this->convertToDynamicAttributes($attributes[$this->getDynamicAttributesKey()]);
-        }
-
-        return parent::fill($attributes);
-    }
-
-    private function convertToDynamicAttributes($value): DynamicAttributes
-    {
-        $value = is_array($value) ? $value : json_decode($value, true);
-
-        /*
-         * fill the dynamic attributes in a custom key, so this will not conflict with the original values.
-         * A custom key other than the column key is required because the trait is initialized before
-         * the original attributes of the model are filled in.
-        */
-        return new DynamicAttributes((array) $value);
+        return parent::fill($this->injectDynamicAttributes($attributes));
     }
 
     public function getAttribute($key)
@@ -81,38 +91,20 @@ trait HasDynamicAttributes
     public function setAttribute($key, $value)
     {
         if ($this->shouldBeSetAsDynamicAttribute($key)){
-            return $this->dynamicAttributesInstance()->set($key, $value);
+            return $this->setDynamic($key, $value);
         }
 
         return parent::setAttribute($key, $value);
     }
 
-    protected function shouldBeSetAsDynamicAttribute($key): bool
+    private function injectDynamicAttributes(array $attributes, bool $castToObject = true): array
     {
-        if(array_key_exists($key, $this->attributes) || !array_key_exists($this->getDynamicAttributesKey(), $this->attributes)) {
-            return false;
+        if(isset($attributes[$this->getDynamicAttributesKey()])) {
+            $attributes[$this->getDynamicAttributesKey()] = $castToObject
+                ? DynamicAttributes::fromRawValue($attributes[$this->getDynamicAttributesKey()])
+                : $attributes[$this->getDynamicAttributesKey()]->toJson();
         }
 
-        return in_array($key, $this->getDynamicAttributes());
-    }
-
-    public function dynamic(string $key, string $index = null)
-    {
-        return $this->dynamicAttributesInstance()->get($index ? "$index.$key" : $key);
-    }
-
-    protected function dynamicAttributesInstance(): DynamicAttributes
-    {
-        return $this->attributes[$this->getDynamicAttributesKey()];
-    }
-
-    protected function getDynamicAttributesKey()
-    {
-        return defined('static::DYNAMIC_ATTRIBUTES_KEY') ? static::DYNAMIC_ATTRIBUTES_KEY : 'values';
-    }
-
-    protected function getDynamicAttributes(): array
-    {
-        return property_exists($this, 'dynamicAttributes') ? $this->dynamicAttributes : [];
+        return $attributes;
     }
 }
