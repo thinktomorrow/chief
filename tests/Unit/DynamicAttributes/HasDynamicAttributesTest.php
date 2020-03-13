@@ -23,7 +23,7 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
-    function it_can_get_the_dynamic_attributes_as_value()
+    public function it_can_get_the_dynamic_attributes_as_value()
     {
         $model = new ModelStub(['values' => ['title' => 'title value']]);
 
@@ -32,7 +32,7 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
-    function a_model_attribute_has_precedence_over_a_dynamic_attribute()
+    public function a_model_attribute_has_precedence_over_a_dynamic_attribute()
     {
         $model = new ModelStub(['title' => 'model title', 'values' => ['title' => 'title value']]);
 
@@ -40,7 +40,7 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
-    function it_can_set_a_dynamic_attribute()
+    public function it_can_set_a_dynamic_attribute()
     {
         $model = new ModelStub(['values' => ['title' => 'title value']]);
         $model->title = 'new title value';
@@ -50,7 +50,7 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
-    function it_can_set_a_new_dynamic_attribute()
+    public function it_can_set_a_new_dynamic_attribute()
     {
         $model = new ModelStub(['values' => []]);
         $model->title = 'title value';
@@ -60,20 +60,7 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
-    function it_can_save_a_dynamic_attribute()
-    {
-        $model = new ModelStub(['values' => []]);
-        $model->title = 'title value';
-        $model->save();
-
-        $model = ModelStub::first();
-
-        $this->assertEquals('title value', $model->dynamic('title'));
-        $this->assertEquals('title value', $model->title);
-    }
-
-    /** @test */
-    function it_can_save_a_localized_dynamic_attribute()
+    public function it_can_save_a_dynamic_attribute()
     {
         $model = new ModelStub(['values' => []]);
         $model->title = 'title value';
