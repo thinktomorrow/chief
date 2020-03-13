@@ -3,7 +3,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 require('./vendors');
+require('./utilities/chiefRedactorImageUpload');
 
 import Errors from './utilities/Errors';
 import Form from './utilities/Form';
@@ -27,9 +29,15 @@ Vue.component('alert', require('./components/Alert.vue').default);
 Vue.component('delete', require('./components/RemoveButton.vue').default);
 Vue.component('error', require('./components/Error.vue').default);
 Vue.component('page-builder', require('./components/Pagebuilder/Pagebuilder.vue').default);
+Vue.component('mediagallery', require('./components/MediaGallery.vue').default);
+
 
 // sticky polyfill init
 Stickyfill.add(document.querySelectorAll('.sticky'));
 
 // Promise polyfill for support of IE9 and below
-require('es6-promise').polyfill();
+import Es6Promise from 'es6-promise';
+
+Es6Promise.polyfill();
+
+import 'equalizeheight';

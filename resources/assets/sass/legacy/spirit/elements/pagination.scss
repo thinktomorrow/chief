@@ -1,0 +1,40 @@
+.pagination{
+    li{
+        list-style: none outside none;
+        display: inline-block;
+        text-align: center;
+        height: 2rem;
+        width: 2rem;
+        border-radius: $pagination-border-radius;
+        line-height: 2rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: $transition;
+        a{
+            text-decoration: none;
+        }
+    }
+}
+
+$block-name: default primary secondary;
+$colors: $color-font $color-primary $color-secondary;
+
+@each $block in $block-name{
+    $i: index($block-name, $block);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .pagination-#{$block}{
+        li{
+            a{
+                color: $color;
+            }
+            &:hover,
+            &.active{
+                background: $color;
+                span, a{
+                    color: $color-white;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+// COLOR SCHEME
+.color-scheme{
+  .color-block{
+    color: $color-emphasis;
+    span{
+      display: block;
+    }
+  }
+}
+
+$textColors: (
+    primary: ($color-primary, $color-primary),
+    secondary: ($color-secondary, $color-secondary),
+    tertiary: ($color-tertiary, $color-tertiary),
+
+    dark: ($color-emphasis, $color-emphasis),
+    white: ($color-white, $color-white),
+    black: ($color-black, $color-black),
+    border: ($color-border, $color-border),
+    heading: ($color-heading, $color-heading),
+    font: ($color-font, $color-font),
+    subtle: ($color-subtle, $color-subtle),
+    grey-lightest: ($color-grey-lightest, $color-grey-lightest),
+
+    success: ($color-success, $color-success),
+    error: ($color-error, $color-error),
+    warning: ($color-warning, $color-warning),
+    information: ($color-information, $color-information),
+);
+
+@each $name, $colors in $textColors {
+
+  $bgcolor: nth($colors, 1);
+  $fontcolor: nth($colors, 2);
+
+  .bg-#{$name}{
+    background-color: $bgcolor;
+  }
+
+  .text-#{$name}{
+    color: $fontcolor;
+
+    &.--link-with-bg:hover {
+        color: darken($fontcolor, 8%);
+        background-color: lighten($fontcolor, 35%)
+    }
+
+  }
+
+  a.text-#{$name}:hover{
+    color: darken($fontcolor, 8%);
+  }
+}

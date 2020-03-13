@@ -1,0 +1,37 @@
+// PANELS
+.panel{
+    border: 1px solid transparent;
+    border-radius: $panel-border-radius;
+    .card-image{
+        height: 250px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    &.panel-card{
+        max-width: 500px;
+    }
+}
+
+$panel-name: default primary secondary success warning error information;
+$colors: $color-border $color-primary $color-secondary $color-success $color-warning $color-error $color-information;
+
+@each $panel in $panel-name{
+    $i: index($panel-name, $panel);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .panel-#{$panel}{
+        border-color: rgba($color, 0.75);
+        .panel-footer,
+        .panel-header{
+            background-color: rgba($color, 0.75);
+            color: $color-white;
+        }
+        &.panel--raised{
+            box-shadow: 0 16px 26px -10px rgba($color, 0.56),
+            0 4px 25px 0px rgba($color-black, 0.12),
+            0 8px 10px -5px rgba($color, 0.2)
+        }
+    }
+}

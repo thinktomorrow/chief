@@ -1,6 +1,8 @@
 ##########################################
 # CODING
 ##########################################
+/database/testing.sqlite
+/database/testing.sqlite-journal
 _migration/uploads
 /storage/debugbar
 /storage
@@ -9,6 +11,7 @@ _migration/uploads
 .env
 /report
 /docs/_site
+.phpunit.result.cache
 
 ##########################################
 # BUILDING

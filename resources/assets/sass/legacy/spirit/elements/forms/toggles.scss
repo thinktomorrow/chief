@@ -1,0 +1,151 @@
+$toggle-size: 1.5rem;
+
+.custom-indicators{
+    line-height: $toggle-size;
+    .label-content{
+        margin-left: $space-l;
+    }
+
+    input[type=radio],
+    input[type=checkbox]{
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+    }
+}
+.custom-checkbox{
+    border-radius: $default-border-radius;
+    &::before{
+        content: "";
+        color: $color-white;
+        font-family: 'spirit';
+        line-height: 1;
+    }
+}
+.custom-checkbox,
+.custom-radiobutton{
+    display: block;
+    float: left;
+    width: $toggle-size;
+    height: $toggle-size;
+    margin-right: $spacy / 2;
+    pointer-events: none;
+    user-select: none;
+    border: 3px solid $color-border;
+    transition: $transition;
+    &::after{
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: $color-white;
+        font-size: 0rem;
+        text-align: center;
+        line-height: $toggle-size;
+        transition: all 0.3s ease-in-out;
+    }
+}
+.custom-radiobutton{
+    border-radius: 50%;
+    &::after{
+        border-radius: 50%;
+    }
+}
+
+// RADIOS AND CHECKBOXES
+
+.custom-indicators.disabled{
+    cursor: not-allowed;
+    opacity: 0.6;
+    .custom-radiobutton, .custom-checkbox{
+        background-color: $color-subtle;
+    }
+}
+
+input[type=radio]:checked ~ .custom-radiobutton{
+    border-color: $color-primary;
+    border-width: 5px;
+}
+
+input[type=checkbox]:checked ~ .custom-checkbox{
+    background-color: $color-primary;
+    border-color: $color-primary;
+    &::before{
+        content: "\E91F";
+        font-family: 'spirit';
+    }
+}
+// SWITCHES
+
+.switch {
+    display: none;
+    // add default box-sizing for this scope
+    &:after,
+    &:before,
+    & + .switch-btn {
+        box-sizing: border-box;
+        &::selection {
+            background: none;
+        }
+    }
+    + .switch-btn {
+        outline: 0;
+        display: block;
+        width: $toggle-size * 2;
+        height: $toggle-size;
+        position: relative;
+        cursor: pointer;
+        user-select: none;
+        &:after,
+        &:before {
+            position: relative;
+            display: block;
+            content: "";
+            width: 50%;
+            height: 100%;
+        }
+
+        &:after {
+            left: 0;
+        }
+
+        &:before {
+            display: none;
+        }
+    }
+
+    &:checked + .switch-btn:after {
+        left: 50%;
+    }
+}
+
+
+
+.switch-primary,
+.switch-secondary,
+.switch-tertiary {
+    + .switch-btn {
+        background: $color-body;
+        border-radius: $toggle-size;
+        padding: 2px;
+        transition: all .4s ease;
+        &:after {
+            border-radius: 50%;
+            background: $color-white;
+            transition: all .2s ease;
+        }
+    }
+}
+
+
+$color-name: primary secondary tertiary;
+$colors: $color-primary $color-secondary $color-tertiary;
+
+@each $block in $color-name{
+    $i: index($color-name, $block);
+    // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
+    $color: nth($colors, $i);
+    .switch-#{$block}:checked + .switch-btn {
+        background: $color;
+    }
+}

@@ -1,0 +1,33 @@
+.translation-tabs-nav {
+    a {
+        @apply cursor-pointer -mb-px inline-block rounded-none border border-grey-200 no-underline;
+
+        .flag {
+            @apply opacity-25;
+        }
+        &:hover {
+            background: config('theme.colors.grey.50');
+            .flag{
+                @apply opacity-100;
+            }
+        }
+        .tabs-name{
+            @apply text-grey-300;
+        }
+        &.tab-error{
+            @apply border border-error text-error;
+        }
+    }
+
+    a.active, a.active:hover {
+        background: config('theme.colors.grey.50');
+        @apply text-grey-500 border border-grey-200;
+        .flag{
+            @apply opacity-100;
+            @extend .inline-s;
+        }
+        .tabs-name{
+            color: inherit;
+        }
+    }
+}

@@ -1,0 +1,55 @@
+.translation-sidemenu{
+    width: 20%; // Allow fixed nav to take up the required space
+    ul{
+        list-style: none;
+        top: 50px;
+        text-align: left;
+    }
+
+    .anchor-item{
+        display: block;
+        text-decoration: none;
+        color: $color-font;
+
+        &:hover{
+            background-color: $color-border;
+            a{
+                color: $color-font;
+            }
+        }
+        &.active{
+            position: relative;
+            background-color: $color-border;
+            a{
+                color: $color-font;
+            }
+        }
+    }
+}
+
+.tab-block{
+    .tab-content{
+        width: 100%;
+        .section-divider{
+            position: relative;
+            padding: 0.7rem 1rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-bottom: 1px solid $color-border;
+            background-color: $color-border;
+            .divider-locale{
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            &:not(:first-child){
+                margin-top: 2rem;
+            }
+        }
+        .form-group{
+            background-color: $color-white;
+            padding: 0.7rem 1rem;
+        }
+    }
+}

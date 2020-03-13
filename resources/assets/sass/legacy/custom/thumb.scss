@@ -1,0 +1,104 @@
+/* product thumbs and image uploads */
+.thumb{
+  @extend .center-center;
+  height:100%;
+  width: 100%;
+  min-height:80px;
+  min-width: 80px;
+  border-radius: .75rem;
+  box-shadow: 1px 5px 28px -10px $color-subtle;
+
+  /* SLIM CROPPER OVERRIDES */
+  .slim{
+    border-radius: .75rem;
+    height:100%;
+    width: 100%;
+  }
+
+  .slim .slim-btn-group{
+    padding:0.5em 0;
+    transition: all .2s ease-out;
+    transform:translateY(6px);
+    opacity:0;
+    //z-index:3; /* avoid hover conflict with other components such as MultiSelect */
+  }
+
+  .slim:hover .slim-btn-group{
+    transform:translateY(0);
+    opacity:1;
+  }
+
+  .slim-btn{
+    width: 25px;
+    height: 25px;
+  }
+
+  .slim .slim-area .slim-status{
+    padding:0;
+  }
+
+  .slim-label {
+    font-size: .8em;
+  }
+
+  .slim .slim-area .slim-loader{
+    right: 50%;
+    top: 50%;
+    margin-right:-12.5px; // width and height of loader is 23px
+    margin-top:-12.5px;
+  }
+}
+
+.thumb-new{
+  border: 2px dashed $color-font;
+  border-radius: .75rem;
+  display:block;
+  position: relative;
+
+  &.is-dragging-over{
+    border-color: $color-primary;
+  }
+
+  &:hover{
+    background-color: $color-white;
+    cursor: pointer;
+  }
+
+  &.is-dropped{
+    border-style: solid;
+  }
+
+  .icon{
+    font-size:24px;
+  }
+
+  input[type="file"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding:0;
+    cursor: pointer;
+  }
+}
+
+.thumb [data-state="empty"]{
+  border: 2px dashed $color-font;
+  border-radius: .75rem;
+  transition: background-color .3s ease-in;
+
+  &:hover{
+    cursor:pointer;
+    background-color: transparentize($color-font,.9);
+  }
+}
+
+/* Indicate thumb as default image */
+.thumb-default{
+  border: 2px solid $color-font;
+}
+
+.slim-result .out{
+  opacity: 0.2 !important;
+}

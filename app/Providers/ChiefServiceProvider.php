@@ -2,23 +2,24 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Support\Facades\Validator;
-use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
-use Thinktomorrow\Chief\App\Console\CreateAdmin;
-use Thinktomorrow\Chief\App\Console\Seed;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\Console\GeneratePage;
-use Thinktomorrow\Chief\App\Console\RefreshDatabase;
-use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
-use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
+use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
-use Thinktomorrow\Chief\Users\User;
+use Illuminate\Support\Facades\Validator;
+use Thinktomorrow\Chief\App\Console\Seed;
+use Illuminate\Console\Scheduling\Schedule;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
-use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
-use Thinktomorrow\Chief\Settings\Console\SeedSettings;
+use Thinktomorrow\Chief\App\Console\GenerateSitemap;
+use Thinktomorrow\Chief\App\Console\RefreshDatabase;
+use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
+use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
+use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\Authorization\Console\GenerateRoleCommand;
+use Thinktomorrow\Chief\Authorization\Console\GeneratePermissionCommand;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -32,6 +33,8 @@ class ChiefServiceProvider extends ServiceProvider
         (new MacrosServiceProvider($this->app))->boot();
         (new AuthServiceProvider($this->app))->boot();
         (new EventServiceProvider($this->app))->boot();
+        (new ViewServiceProvider($this->app))->boot();
+        (new ValidationServiceProvider($this->app))->boot();
         (new SquantoServiceProvider($this->app))->boot();
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
@@ -39,19 +42,20 @@ class ChiefServiceProvider extends ServiceProvider
         (new AssetLibraryServiceProvider($this->app))->boot();
 
         // Project defaults
+        (new ChiefRoutesServiceProvider($this->app))->boot();
         (new ChiefProjectServiceProvider($this->app))->boot();
 
-        $this->loadRoutesFrom(__DIR__.'/../routes.php');
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'chief');
-        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'chief');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
 
         $this->publishes([
-            __DIR__.'/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
-            __DIR__.'/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            __DIR__ . '/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
+            __DIR__ . '/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
         ], 'chief-config');
 
         $this->publishes([
-            __DIR__.'/../../public/chief-assets' => public_path('/chief-assets'),
+            __DIR__ . '/../../public/chief-assets' => public_path('/chief-assets'),
         ], 'chief-assets');
 
         // Register commands
@@ -67,7 +71,9 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
-                'command.chief:settings',
+
+                // Sitemap generation
+                'command.chief:sitemap',
             ]);
 
             // Bind our commands to the container
@@ -77,34 +83,47 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
-            $this->app->bind('command.chief:settings', SeedSettings::class);
             $this->app->bind('command.chief:page', function ($app) {
                 return new GeneratePage($app['files'], [
                     'base_path' => base_path()
                 ]);
             });
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
+        }else{
+            $this->commands([
+                // Sitemap generation
+                'command.chief:sitemap',
+            ]);
+
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
         }
+
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
 
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
-        Validator::extend('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
+        Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {
             $fallbackLocale = config('app.fallback_locale');
 
-            if (false !== strpos($attribute, 'trans.'.$fallbackLocale.'.')) {
-                return !! trim($value);
+            if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
+                return !!trim($value);
             }
 
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('chief:sitemap')->dailyAt('03:00');
+        });
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../../config/chief.php', 'thinktomorrow.chief');
-        $this->mergeConfigFrom(__DIR__.'/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/chief.php', 'thinktomorrow.chief');
+        $this->mergeConfigFrom(__DIR__ . '/../../config/chief-settings.php', 'thinktomorrow.chief-settings');
 
         $this->setupEnvironmentProviders();
 
@@ -116,6 +135,8 @@ class ChiefServiceProvider extends ServiceProvider
         (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();
+        (new ViewServiceProvider($this->app))->register();
+        (new ValidationServiceProvider($this->app))->register();
         (new SquantoServiceProvider($this->app))->register();
         (new SquantoManagerServiceProvider($this->app))->register();
         (new SettingsServiceProvider($this->app))->register();
@@ -123,6 +144,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new AssetLibraryServiceProvider($this->app))->register();
 
         // Project defaults
+        (new ChiefRoutesServiceProvider($this->app))->register();
         (new ChiefProjectServiceProvider($this->app))->register();
     }
 
@@ -134,7 +156,7 @@ class ChiefServiceProvider extends ServiceProvider
      */
     private function setupEnvironmentProviders()
     {
-        if (!$this->app->environment('production') && $services = config('app.providers-'.app()->environment(), false)) {
+        if (!$this->app->environment('production') && $services = config('app.providers-' . app()->environment(), false)) {
             foreach ($services as $service) {
                 $this->app->register($service);
             }

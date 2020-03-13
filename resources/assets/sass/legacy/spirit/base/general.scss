@@ -1,0 +1,80 @@
+// FOR THE STYLEGUIDE
+span.serif:after{
+    font-weight: bold;
+    font-family: $font-family-secondary;
+    content:$font-family-secondary;
+}
+span.sans-serif:after{
+    font-weight: bold;
+    font-family: $font-family-primary;
+    content:$font-family-primary;
+}
+.hexCode:after{
+    content: #{$color-primary};
+}
+
+hr{
+    border-top: 0;
+    border-bottom: 1px dotted $color-border;
+}
+.relative{
+    position: relative;
+}
+
+a, .icon, button{
+    cursor: pointer;
+}
+
+// LINK COLORS
+a{
+    color: $color-link;
+    text-decoration: none;
+
+    &:hover{
+        color: darken($color-link, 8%);
+    }
+}
+
+.--link-with-bg {
+    white-space: nowrap;
+    border-radius: $default-border-radius;
+    &:hover{
+        color: darken($color-link, 8%);
+        background-color: lighten($color-link, 50%)
+    }
+}
+
+.clear-margin{
+    margin: 0 !important;
+}
+
+.divider{
+    margin: 0;
+    border-top: 1px dotted $color-border;
+    width: 100%;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+// Remove outline for mouse users but keep visible for screen readers
+:focus:not(:focus-visible) { outline: none }
+
+// SELECTION COLORS
+::selection{
+    background-color: $color-secondary;
+    color: $color-white;
+}
+
+.disabled{
+    cursor: not-allowed!important;
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.selected{
+    border: 1px solid $color-primary;
+}
+
+

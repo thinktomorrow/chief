@@ -3,23 +3,15 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Illuminate\Http\Response;
-use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\Concerns\Morphable\CollectionDetails;
-use Thinktomorrow\Chief\Concerns\Morphable\CollectionKeys;
-use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
-use Thinktomorrow\Chief\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Menu\Menu;
-use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Menu\Application\UpdateMenu;
-use Thinktomorrow\Chief\Menu\Application\DeleteMenu;
 
 class MenuController extends Controller
 {
     public function index()
     {
+        $this->authorize('view-page');
+
         $menus = Menu::all();
 
         // If there is only one menu, we will show the menu immediately.
@@ -34,6 +26,8 @@ class MenuController extends Controller
 
     public function show($type)
     {
+        $this->authorize('view-page');
+
         $menu = Menu::find($type);
 
         return view('chief::back.menu.show', [
