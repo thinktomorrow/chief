@@ -71,4 +71,17 @@ class HasDynamicAttributesTest extends TestCase
         $this->assertEquals('title value', $model->dynamic('title'));
         $this->assertEquals('title value', $model->title);
     }
+
+    /** @test */
+    function it_can_save_a_localized_dynamic_attribute()
+    {
+        $model = new ModelStub(['values' => []]);
+        $model->title = 'title value';
+        $model->save();
+
+        $model = ModelStub::first();
+
+        $this->assertEquals('title value', $model->dynamic('title'));
+        $this->assertEquals('title value', $model->title);
+    }
 }
