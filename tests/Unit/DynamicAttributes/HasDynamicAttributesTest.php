@@ -32,11 +32,14 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
-    public function a_model_attribute_has_precedence_over_a_dynamic_attribute()
+    public function a_model_attribute_is_forced_as_dynamic_when_its_set_as_dynamic_attribute()
     {
-        $model = new ModelStub(['title' => 'model title', 'values' => ['title' => 'title value']]);
+        $model = new ModelStub(['title' => 'model title']);
 
         $this->assertEquals('model title', $model->title);
+        $this->assertEquals('model title', $model->dynamic('title'));
+
+        $this->assertEquals(new DynamicAttributes(['title' => 'model title']), $model->values);
     }
 
     /** @test */

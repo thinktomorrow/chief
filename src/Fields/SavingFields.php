@@ -102,23 +102,41 @@ trait SavingFields
             // Okay so this is a bit odd but since all translations are expected to be inside the trans
             // array, we can add all these translations at once. Just make sure to keep track of the
             // keys since this is what our translation engine requires as well for proper update.
-            $this->queued_translations = $request->get('trans');
+            $this->queued_translations = $request->input('trans');
             $this->translation_columns[] = $field->getColumn();
 
             return;
         }
 
         // By default we assume the key matches the attribute / column naming
-        $this->model->{$field->getColumn()} = $request->get($field->getKey());
+        $this->model->{$field->getColumn()} = $request->input($field->getKey());
     }
 
     private function saveQueuedFields()
     {
+        $queued_translations = $this->queued_translations;
+
+        foreach($queued_translations as $locale => $translations){
+            foreach($translations as $key => $value) {
+                if(method_exists($this->model, 'isDynamicAttributeKey') && $this->model->isDynamicAttributeKey($key)) {
+                    $this->model->setDynamic($key, $value, $locale);
+
+                    // Remove from queued translations
+                    unset($queued_translations[$locale][$key]);
+                }
+
+                // remove any empty locale entries
+                if(empty($queued_translations[$locale])) {
+                    unset($queued_translations[$locale]);
+                }
+            }
+        }
+
         $this->model->save();
 
         // Translations
-        if (!empty($this->queued_translations)) {
-            $this->saveTranslations($this->queued_translations, $this->model, $this->translation_columns);
+        if (!empty($queued_translations)) {
+            $this->saveTranslations($queued_translations, $this->model, $this->translation_columns);
         }
 
         return (new static($this->registration))->manage($this->model);
