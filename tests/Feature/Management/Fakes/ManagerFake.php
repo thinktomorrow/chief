@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\FileField;
+use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\Management\AbstractManager;
@@ -20,6 +21,7 @@ class ManagerFake extends AbstractManager implements Manager
             InputField::make('custom'),
             InputField::make('title_trans')->translatable(['nl', 'fr']),
             InputField::make('content_trans')->translatable(['nl', 'fr']),
+            TextField::make('dynamic_column'),
             ImageField::make('avatar'),
             FileField::make('hero')
         );

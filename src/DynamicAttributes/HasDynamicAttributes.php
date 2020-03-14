@@ -15,42 +15,39 @@ trait HasDynamicAttributes
         return $this->dynamicAttributesInstance()->set($index ? "$index.$key" : $key, $value);
     }
 
-    protected function shouldBeSetAsDynamicAttribute($key): bool
+    public function isDynamicAttributeKey($key): bool
     {
-        if(array_key_exists($key, $this->attributes) || !array_key_exists($this->getDynamicAttributesKey(), $this->attributes)) {
+        if(array_key_exists($key, $this->attributes)) {
             return false;
         }
 
         return in_array($key, $this->dynamicAttributeKeys());
     }
 
-    protected function dynamicAttributesInstance(): DynamicAttributes
+    /**
+     * The attribute key which the dynamic attributes is
+     * referenced by as well as the database column name.
+     *
+     * @return string
+     */
+    protected function getDynamicAttributesKey(): string
     {
-        if(!($raw = $this->attributes[$this->getDynamicAttributesKey()]) instanceof DynamicAttributes) {
-            $this->attributes[$this->getDynamicAttributesKey()] = DynamicAttributes::fromRawValue($raw);
-        }
-
-        return $this->attributes[$this->getDynamicAttributesKey()];
+        return 'values';
     }
 
-    public function isDynamicAttributeKey($key): bool
-    {
-        return (in_array($key, $this->dynamicAttributeKeys()));
-    }
-
-    protected function getDynamicAttributesKey()
-    {
-        return defined('static::DYNAMIC_ATTRIBUTES_KEY') ? static::DYNAMIC_ATTRIBUTES_KEY : 'values';
-    }
-
+    /**
+     * The attributes that should be treated as dynamic ones. This
+     * is a list of keys matching the database column names.
+     * @return array
+     */
     protected function dynamicAttributeKeys(): array
     {
         return property_exists($this, 'dynamicAttributes') ? $this->dynamicAttributes : [];
     }
 
     /**
-     * Method used by the save logic on eloquent. This way we can inject an
-     * json version of the dynamic attributes for saving into the database.
+     * Part of the custom cast. Method used by the save logic on eloquent. We override this so we can
+     * inject an json version of the dynamic attributes for saving into the database.
      *
      * @return mixed
      */
@@ -59,20 +56,22 @@ trait HasDynamicAttributes
         return $this->injectDynamicAttributes($this->attributes, false);
     }
 
+    /* Part of the custom cast */
     public function setRawAttributes(array $attributes, $sync = false)
     {
         return parent::setRawAttributes($this->injectDynamicAttributes($attributes), $sync);
     }
 
+    /* Part of the custom cast */
     public function fill(array $attributes)
     {
         return parent::fill($this->injectDynamicAttributes($attributes));
     }
 
+    /* Part of the custom cast */
     public function getAttribute($key)
     {
-        // Fetching a native models' attribute has precedence over a dynamic attribute.
-        if (array_key_exists($key, $this->attributes)){
+        if (!$this->isDynamicAttributeKey($key)){
             return parent::getAttribute($key);
         }
 
@@ -88,15 +87,36 @@ trait HasDynamicAttributes
         return parent::getAttribute($key);
     }
 
+    /* Part of the custom cast */
     public function setAttribute($key, $value)
     {
-        if ($this->shouldBeSetAsDynamicAttribute($key)){
+        if ($this->isDynamicAttributeKey($key)){
             return $this->setDynamic($key, $value);
         }
 
         return parent::setAttribute($key, $value);
     }
 
+    /* Part of the custom cast */
+    protected function dynamicAttributesInstance(): DynamicAttributes
+    {
+        if(!isset($this->attributes[$this->getDynamicAttributesKey()])) {
+            $this->attributes[$this->getDynamicAttributesKey()] = DynamicAttributes::fromRawValue([]);
+        } elseif(!($raw = $this->attributes[$this->getDynamicAttributesKey()]) instanceof DynamicAttributes) {
+            $this->attributes[$this->getDynamicAttributesKey()] = DynamicAttributes::fromRawValue($raw);
+        }
+
+        return $this->attributes[$this->getDynamicAttributesKey()];
+    }
+
+    /**
+     * Inject the dynamic attributes into the attributes array.
+     * Either as a DynamicAttributes instance or back to a json format.
+     *
+     * @param array $attributes
+     * @param bool $castToObject
+     * @return array
+     */
     private function injectDynamicAttributes(array $attributes, bool $castToObject = true): array
     {
         if(isset($attributes[$this->getDynamicAttributesKey()])) {

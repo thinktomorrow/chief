@@ -82,10 +82,10 @@ class ArrangingFieldsTest extends TestCase
         $arrangement = $this->manager->fieldArrangement();
 
         $this->assertFalse($arrangement->hasTabs());
-        $this->assertCount(6, $arrangement->fields());
+        $this->assertCount(7, $arrangement->fields());
         $this->assertEquals('title', $arrangement->fields()->keys()[0]);
-        $this->assertEquals('avatar', $arrangement->fields()->keys()[4]);
-        $this->assertEquals('hero', $arrangement->fields()->keys()[5]);
+        $this->assertEquals('avatar', $arrangement->fields()->keys()[5]);
+        $this->assertEquals('hero', $arrangement->fields()->keys()[6]);
     }
 
     /** @test */
