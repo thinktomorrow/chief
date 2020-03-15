@@ -109,7 +109,10 @@ trait SavingFields
         }
 
         // By default we assume the key matches the attribute / column naming
-        $this->model->{$field->getColumn()} = $request->input($field->getKey());
+        // If value is not present in the request input, we'll ignore it.
+        if($request->has($field->getKey())) {
+            $this->model->{$field->getColumn()} = $request->input($field->getKey());
+        }
     }
 
     private function saveQueuedFields()
@@ -118,7 +121,7 @@ trait SavingFields
 
         foreach($queued_translations as $locale => $translations){
             foreach($translations as $key => $value) {
-                if(method_exists($this->model, 'isDynamicAttributeKey') && $this->model->isDynamicAttributeKey($key)) {
+                if(method_exists($this->model, 'isDynamicKey') && $this->model->isDynamicKey($key)) {
                     $this->model->setDynamic($key, $value, $locale);
 
                     // Remove from queued translations

@@ -15,13 +15,13 @@ trait HasDynamicAttributes
         return $this->dynamicAttributesInstance()->set($index ? "$index.$key" : $key, $value);
     }
 
-    public function isDynamicAttributeKey($key): bool
+    public function isDynamicKey($key): bool
     {
         if(array_key_exists($key, $this->attributes)) {
             return false;
         }
 
-        return in_array($key, $this->dynamicAttributeKeys());
+        return in_array($key, $this->dynamicKeys());
     }
 
     /**
@@ -30,7 +30,7 @@ trait HasDynamicAttributes
      *
      * @return string
      */
-    protected function getDynamicAttributesKey(): string
+    protected function getDynamicKey(): string
     {
         return 'values';
     }
@@ -40,9 +40,9 @@ trait HasDynamicAttributes
      * is a list of keys matching the database column names.
      * @return array
      */
-    protected function dynamicAttributeKeys(): array
+    protected function dynamicKeys(): array
     {
-        return property_exists($this, 'dynamicAttributes') ? $this->dynamicAttributes : [];
+        return property_exists($this, 'dynamicKeys') ? $this->dynamicKeys : [];
     }
 
     /**
@@ -68,16 +68,17 @@ trait HasDynamicAttributes
         return parent::fill($this->injectDynamicAttributes($attributes));
     }
 
-    /* Part of the custom cast */
+    /*
+     * If the dynamic attributes contain a localized value, this has preference over any non-localized
+     */
     public function getAttribute($key)
     {
-        if (!$this->isDynamicAttributeKey($key)){
+        if (!$this->isDynamicKey($key)){
             return parent::getAttribute($key);
         }
 
         $locale = app()->getLocale();
 
-        // If the dynamic attributes contain a localized value, this has preference over any non-localized.
         foreach(["{$locale}.$key", $key] as $k){
             if($this->dynamicAttributesInstance()->has($k)){
                 return $this->dynamic($k);
@@ -90,7 +91,7 @@ trait HasDynamicAttributes
     /* Part of the custom cast */
     public function setAttribute($key, $value)
     {
-        if ($this->isDynamicAttributeKey($key)){
+        if ($this->isDynamicKey($key)){
             return $this->setDynamic($key, $value);
         }
 
@@ -100,13 +101,13 @@ trait HasDynamicAttributes
     /* Part of the custom cast */
     protected function dynamicAttributesInstance(): DynamicAttributes
     {
-        if(!isset($this->attributes[$this->getDynamicAttributesKey()])) {
-            $this->attributes[$this->getDynamicAttributesKey()] = DynamicAttributes::fromRawValue([]);
-        } elseif(!($raw = $this->attributes[$this->getDynamicAttributesKey()]) instanceof DynamicAttributes) {
-            $this->attributes[$this->getDynamicAttributesKey()] = DynamicAttributes::fromRawValue($raw);
+        if(!isset($this->attributes[$this->getDynamicKey()])) {
+            $this->attributes[$this->getDynamicKey()] = DynamicAttributes::fromRawValue([]);
+        } elseif(!($raw = $this->attributes[$this->getDynamicKey()]) instanceof DynamicAttributes) {
+            $this->attributes[$this->getDynamicKey()] = DynamicAttributes::fromRawValue($raw);
         }
 
-        return $this->attributes[$this->getDynamicAttributesKey()];
+        return $this->attributes[$this->getDynamicKey()];
     }
 
     /**
@@ -119,10 +120,10 @@ trait HasDynamicAttributes
      */
     private function injectDynamicAttributes(array $attributes, bool $castToObject = true): array
     {
-        if(isset($attributes[$this->getDynamicAttributesKey()])) {
-            $attributes[$this->getDynamicAttributesKey()] = $castToObject
-                ? DynamicAttributes::fromRawValue($attributes[$this->getDynamicAttributesKey()])
-                : $attributes[$this->getDynamicAttributesKey()]->toJson();
+        if(isset($attributes[$this->getDynamicKey()])) {
+            $attributes[$this->getDynamicKey()] = $castToObject
+                ? DynamicAttributes::fromRawValue($attributes[$this->getDynamicKey()])
+                : $attributes[$this->getDynamicKey()]->toJson();
         }
 
         return $attributes;

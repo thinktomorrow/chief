@@ -44,7 +44,7 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
         ActingAsChild;
 
     public $table = 'fake_managed_models';
-    public $dynamicAttributes = ['dynamic_column'];
+    public $dynamicKeys = ['dynamic_column'];
     public $translatedAttributes = ['title_trans', 'content_trans', 'slug'];
     public $guarded = [];
 
@@ -136,7 +136,7 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
 
     public function setAttribute($key, $value)
     {
-        if ($this->isDynamicAttributeKey($key)) {
+        if ($this->isDynamicKey($key)) {
             return $this->hasDynamicAttributesSetAttribute($key, $value);
         }
 
