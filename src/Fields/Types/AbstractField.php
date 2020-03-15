@@ -245,7 +245,7 @@ abstract class AbstractField
             }
 
             if ($locale && $this->isLocalized()) {
-                if(method_exists($model, 'isDynamicAttributeKey') && $model->isDynamicAttributeKey($this->getColumn())){
+                if(method_exists($model, 'isDynamicKey') && $model->isDynamicKey($this->getColumn())){
                     return $model->dynamic($this->getColumn(), $locale);
                 }
 

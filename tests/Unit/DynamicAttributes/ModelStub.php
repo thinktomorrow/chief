@@ -12,7 +12,7 @@ class ModelStub extends Model
 {
     use HasDynamicAttributes;
 
-    protected $dynamicAttributes = [
+    protected $dynamicKeys = [
         'title',
     ];
 
