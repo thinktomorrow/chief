@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Spatie\Sitemap\SitemapServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
@@ -39,7 +40,9 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
 
+        // Packages
         (new AssetLibraryServiceProvider($this->app))->boot();
+        (new SitemapServiceProvider($this->app))->boot();
 
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->boot();
@@ -142,6 +145,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new SettingsServiceProvider($this->app))->register();
 
         (new AssetLibraryServiceProvider($this->app))->register();
+        (new SitemapServiceProvider($this->app))->register();
 
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->register();

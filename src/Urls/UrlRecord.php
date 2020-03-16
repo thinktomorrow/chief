@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Urls;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
 
 class UrlRecord extends Model
 {
@@ -161,5 +164,20 @@ class UrlRecord extends Model
         }
 
         return ($builder->count() > 0);
+    }
+
+    public static function allOnlineModels(string $locale): Collection
+    {
+        $records = static::where('locale', $locale)
+            ->where('redirect_id', '=', null)
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+
+        // Filter out offline urls... TODO: this should be a state that is owned by the url and not the model.
+        return $records->map(function(UrlRecord $urlRecord){
+            return Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
+        })->reject(function(ProvidesUrl $model){
+            return (method_exists($model, 'isPublished') && !$model->isPublished());
+        });
     }
 }
