@@ -7,6 +7,7 @@ use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
 use Spatie\Sitemap\Sitemap;
 use GuzzleHttp\Psr7\Request;
+use Spatie\Sitemap\Tags\Url;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Urls\UrlRecord;
@@ -24,17 +25,28 @@ class SitemapXml
     /** @var Collection */
     private $urls;
 
-    public function __construct(Sitemap $sitemap, Client $httpClient)
+    /** @var array */
+    private $alternateUrls;
+
+    public function __construct(Client $httpClient)
     {
-        $this->sitemap = $sitemap;
         $this->httpClient = $httpClient;
 
-        $this->urls = collect();
+        $this->reset();
     }
 
-    public function generate(string $locale): string
+    private function reset(): void
     {
-        $this->prepareOnlineUrls($locale);
+        $this->sitemap = new Sitemap();
+        $this->urls = collect();
+        $this->alternateUrls = [];
+    }
+
+    public function generate(string $locale, array $alternateLocales = []): string
+    {
+        $this->reset();
+
+        $this->prepareOnlineUrls($locale, $alternateLocales);
 
         $this->rejectNonVisitableUrls($locale);
 
@@ -44,18 +56,35 @@ class SitemapXml
     private function generateXml(): string
     {
         foreach($this->urls as $url) {
-            $this->sitemap->add($url);
+            $urlTag = Url::create($url);
+
+            if(isset($this->alternateUrls[$url])) {
+                foreach($this->alternateUrls[$url] as $locale => $alternateUrl) {
+                    $urlTag->addAlternate($alternateUrl, $locale);
+                }
+            }
+
+            $this->sitemap->add($urlTag);
         }
 
         return $this->sitemap->render();
     }
 
-    private function prepareOnlineUrls(string $locale): void
+    private function prepareOnlineUrls(string $locale, array $alternateLocales = []): void
     {
         $models = UrlRecord::allOnlineModels($locale);
 
-        $this->urls = $models->map(function(ProvidesUrl $model) use($locale){
-            return $model->url($locale);
+        $this->urls = $models->map(function(ProvidesUrl $model) use($locale, $alternateLocales){
+            $url = $model->url($locale);
+            $alternateUrls = [];
+
+            foreach($alternateLocales as $alternateLocale) {
+                $alternateUrls[$alternateLocale] = $model->url($alternateLocale);
+            }
+
+            $this->alternateUrls[$url] = $alternateUrls;
+
+            return $url;
         });
     }
 
@@ -69,7 +98,6 @@ class SitemapXml
                 }
             },
             'rejected' => function (RequestException $reason, $index) {
-            trap($reason);
                 unset($this->urls[$index]);
             },
         ]);

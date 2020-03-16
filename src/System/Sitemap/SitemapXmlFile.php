@@ -13,10 +13,10 @@ class SitemapXmlFile
         $this->sitemapXml = $sitemapXml;
     }
 
-    public function create(string $locale, string $filepath): void
+    public function create(string $locale, string $filepath, array $alternateLocales = []): void
     {
-        $xmlString = $this->sitemapXml->generate($locale);
-trap($xmlString);
+        $xmlString = $this->sitemapXml->generate($locale, $alternateLocales);
+
         file_put_contents($filepath, $xmlString);
     }
 }
