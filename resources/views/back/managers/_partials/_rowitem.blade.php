@@ -1,5 +1,5 @@
 <div class="s-column-6 m-column-6 inset-xs">
-    <div class="row bg-white border border-grey-100 rounded inset-s relative" style="height: 100%">
+    <div class="row bg-white border border-grey-100 rounded inset-s relative">
         <div class="column flex flex-col justify-between">
             @if($manager->can('edit'))
                 <a href="{{ $manager->route('edit') }}" class="flex items-center">
