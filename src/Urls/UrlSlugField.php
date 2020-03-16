@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Urls;
 
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 
@@ -88,6 +87,7 @@ class UrlSlugField extends InputField implements Field
     {
         return [
             'key'            => $this->key,
+            'name'           => $this->getName(),
             'prepend'        => $this->prepend,
             'label'          => $this->label,
             'placeholder'    => $this->placeholder,
