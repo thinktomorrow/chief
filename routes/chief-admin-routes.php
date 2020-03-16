@@ -26,8 +26,8 @@ Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesCont
 Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
 
 // Sitemap
-Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SitemapController@index')->name('chief.back.sitemap.index');
-Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\SitemapController@generate')->name('chief.back.sitemap.generate');
+Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@index')->name('chief.back.sitemap.show');
+Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@generate')->name('chief.back.sitemap.generate');
 
 /**
 * -----------------------------------------------------------------

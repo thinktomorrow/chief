@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
+namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Support\Facades\Artisan;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -15,7 +15,7 @@ class SitemapController extends Controller
             return url('/').'/sitemap-'.$locale.'.xml';
         });
 
-        return view('chief::back.sitemap.index', [
+        return view('chief::back.system.sitemap.show', [
             'sitemaps' => $sitemaps
         ]);
     }

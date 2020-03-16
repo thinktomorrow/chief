@@ -6,13 +6,17 @@
 
 @section('content')
 
-    <div class="container min-h-screen flex items-center">
-        <div class="row w-full justify-center my-32">
-            <div class="xs-column-12 s-column-10 m-column-6 l-column-4 relative z-20">
-                {{-- //TODO: enhance with custom error mssg from laravel --}}
-                <h1 class="mb-8">Er ging iets fout. Het development team is op de hoogte gesteld en werkt hier zo snel mogelijk aan.</h2>
+    <div class="container min-h-screen flex items-center justify-center">
+        <div class="row w-full justify-center">
+            <div class="xs-column-12 s-column-10 m-column-6 l-column-4 z-20">
 
-                <a class="btn btn-primary" href="{{ url('/admin') }}">Ga terug</a>
+                @include('chief::back._layouts._partials.logo')
+
+                <h1 class="mb-8">Er ging iets fout.</h1>
+                <p class="mb-8">Het development team is op de hoogte gesteld en werkt hier zo snel mogelijk aan.</p>
+
+                <a class="btn btn-primary mr-4" href="{{ url('/admin') }}">Naar het dashboard</a>
+                <a href="mailto:chief@thinktomorrow.be">Contacteer ons</a>
 
             </div>
         </div>
