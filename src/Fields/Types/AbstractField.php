@@ -60,12 +60,15 @@ abstract class AbstractField
     /** @var null|Validator|array|\Closure */
     protected $validation;
 
+    /** @var string */
+    protected static $defaultView = 'chief::back._fields.formgroup';
+
     final public function __construct(FieldType $type, string $key)
     {
         $this->type = $type;
         $this->key = $this->column = $this->name = $this->label = $key;
 
-        $this->view('chief::back._fields.formgroup');
+        $this->view(static::$defaultView);
         $this->viewData([]);
         $this->locales([]);
 
@@ -368,6 +371,11 @@ abstract class AbstractField
     public function getView(): string
     {
         return $this->view;
+    }
+
+    public function hasCustomView(): bool
+    {
+        return $this->view !== static::$defaultView;
     }
 
     public function viewData(array $viewData = []): Field

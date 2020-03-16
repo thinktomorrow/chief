@@ -103,7 +103,7 @@ class ChiefServiceProvider extends ServiceProvider
 
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
-        Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
+        Blade::component('chief::back._components.formgroup', 'chiefformgroup');
 
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale

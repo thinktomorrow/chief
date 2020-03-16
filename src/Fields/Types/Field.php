@@ -24,6 +24,8 @@ interface Field
 
     public function isLocalized(): bool;
 
+    public function hasCustomView(): bool;
+
     public function getView(): string;
 
     public function getElementView(): string;

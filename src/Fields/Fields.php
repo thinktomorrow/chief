@@ -19,6 +19,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->fields = $this->convertToKeyedArray($fields);
     }
 
+    public static function make(array $fields = [])
+    {
+        return new static($fields);
+    }
+
     public function all(): array
     {
         return $this->fields;
@@ -46,6 +51,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     public function keys(): array
     {
         return array_keys($this->fields);
+    }
+
+    public function map(callable $callback): Fields
+    {
+        $keys = array_keys($this->fields);
+
+        $items = array_map($callback, $this->fields, $keys);
+
+        return new static(array_combine($keys, $items));
     }
 
     public function filterBy($key, $value = null)

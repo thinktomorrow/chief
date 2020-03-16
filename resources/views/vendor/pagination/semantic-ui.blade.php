@@ -7,7 +7,7 @@
             <a class="icon item" href="{{ $paginator->previousPageUrl() }}" rel="prev"> <i class="left chevron icon"></i> </a>
         @endif
 
-        {{-- Pagination Elements --}}
+        {{-- Pagination FormGroup --}}
         @foreach ($elements as $element)
             {{-- "Three Dots" Separator --}}
             @if (is_string($element))
