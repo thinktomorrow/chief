@@ -174,8 +174,11 @@ class UrlRecord extends Model
             ->get();
 
         // Filter out offline urls... TODO: this should be a state that is owned by the url and not the model.
+        // Because of archived pages the mapping can be null so we reject them before we check for online
         return $records->map(function(UrlRecord $urlRecord){
             return Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
+        })->reject(function($model){
+            return $model == null;
         })->reject(function(ProvidesUrl $model){
             return (method_exists($model, 'isPublished') && !$model->isPublished());
         });
