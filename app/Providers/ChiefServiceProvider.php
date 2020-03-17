@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Thinktomorrow\Chief\App\Console\Seed;
+use Spatie\Sitemap\SitemapServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\Pages\Console\GeneratePage;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
+use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
 use Thinktomorrow\Chief\Settings\SettingsServiceProvider;
@@ -37,7 +40,9 @@ class ChiefServiceProvider extends ServiceProvider
         (new SquantoManagerServiceProvider($this->app))->boot();
         (new SettingsServiceProvider($this->app))->boot();
 
+        // Packages
         (new AssetLibraryServiceProvider($this->app))->boot();
+        (new SitemapServiceProvider($this->app))->boot();
 
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->boot();
@@ -69,6 +74,9 @@ class ChiefServiceProvider extends ServiceProvider
                 'command.chief:admin',
                 'command.chief:developer',
                 'command.chief:page',
+
+                // Sitemap generation
+                'command.chief:sitemap',
             ]);
 
             // Bind our commands to the container
@@ -83,7 +91,16 @@ class ChiefServiceProvider extends ServiceProvider
                     'base_path' => base_path()
                 ]);
             });
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
+        } else {
+            $this->commands([
+                // Sitemap generation
+                'command.chief:sitemap',
+            ]);
+
+            $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
         }
+
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._elements.formgroup', 'chiefformgroup');
@@ -99,6 +116,11 @@ class ChiefServiceProvider extends ServiceProvider
 
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
+
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('chief:sitemap')->dailyAt('03:00');
+        });
     }
 
     public function register()
@@ -123,6 +145,7 @@ class ChiefServiceProvider extends ServiceProvider
         (new SettingsServiceProvider($this->app))->register();
 
         (new AssetLibraryServiceProvider($this->app))->register();
+        (new SitemapServiceProvider($this->app))->register();
 
         // Project defaults
         (new ChiefRoutesServiceProvider($this->app))->register();

@@ -4,6 +4,8 @@ principles.
 
 ## unreleased
 
+- Added: generate sitemap command and schedule
+
 ## 0.4.10 - 2020-03-16
 
 - fix: changing urls can now be saved again.
@@ -12,7 +14,7 @@ principles.
 - fix: full height bugs safari
 
 ## 0.4.8 - 2020-03-10
-- fix: redactor editor for pagebuilder text fields
+- fix redactor editor for pagebuilder text fields
 
 ## 0.4.7 - 2020-03-09
 **This release requires a migration to implement the new page state logic.**

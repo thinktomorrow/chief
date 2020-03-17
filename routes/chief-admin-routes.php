@@ -25,6 +25,10 @@ Route::delete('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Bac
 Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
 Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
 
+// Sitemap
+Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@index')->name('chief.back.sitemap.show');
+Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@generate')->name('chief.back.sitemap.generate');
+
 /**
 * -----------------------------------------------------------------
 * MANAGER ASSISTANT ROUTES

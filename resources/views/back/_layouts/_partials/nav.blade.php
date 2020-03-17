@@ -28,13 +28,15 @@
                                 @can('view-squanto')
                                     <a class="{{ isActiveUrl('admin/translations*') ? 'active' : '' }}" href="{{ route('squanto.index') }}">Teksten</a>
                                 @endcan
+
+                                <a class="{{ isActiveUrl('admin/sitemap*') ? 'active' : '' }}" href="{{ route('chief.back.sitemap.show') }}">Sitemap</a>
                             </div>
                         </dropdown>
                     </li>
                 @endif
             </ul>
 
-            <ul class="navigation-list flex float-right items-center">
+            <ul class="navigation-list flex float-right items-center h-full">
                 {{-- @role('developer')
                     <li class="no-hover px-6"><a class="label label-primary" target="_blank" href="/spirit">Spirit</a></li>
                 @endrole --}}

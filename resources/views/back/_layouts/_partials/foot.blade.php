@@ -65,6 +65,16 @@
             },
             clear: function(field){
                 Eventbus.$emit('clearErrors', field)
+            },
+            generateSitemap: function(id, options){
+                Eventbus.$emit('open-modal', id, options);
+                axios.post('{{route('chief.back.sitemap.generate')}}', {
+                    _method: 'POST'
+                }).then((response) => {
+                    Eventbus.$emit('close-modal',id);
+                }).catch((errors) => {
+                    alert('error');
+                })
             }
         },
     });
