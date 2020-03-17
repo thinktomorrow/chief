@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Urls\UrlHelper;
-use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 
 class PageField extends SelectField
@@ -18,27 +17,19 @@ class PageField extends SelectField
         return new static(new FieldType(FieldType::PAGE), $key);
     }
 
-    public function options(array $morphKeys = [])
+    public function onlinePagesAsOptions(Model $excludedPage = null, array $whitelistedKeys = []): self
     {
-        if (! empty($morphKeys)) {
-            $morphKeys = collect($morphKeys)->map(function ($key) {
-                return (new $key())->getMorphClass();
-            });
+        // options are always grouped
+        $this->grouped();
 
-            $pages = UrlHelper::modelsByType($morphKeys->toArray())->get();
-            $pages = FlatReferencePresenter::toGroupedSelectValues($pages)->toArray();
-        } else {
-            $pages = UrlHelper::allModelsWithoutSelf($this->model);
+        if(empty($whitelistedKeys)) {
+            $this->options = UrlHelper::allModelsExcept($excludedPage);
+            return $this;
         }
 
-        $this->options = $pages;
-
-        return $this->grouped();
-    }
-
-    public function exclude(Model $model)
-    {
-        $this->model = $model;
+        $this->options = FlatReferencePresenter::toGroupedSelectValues(
+            UrlHelper::modelsByKeys($whitelistedKeys)
+        )->toArray();
 
         return $this;
     }

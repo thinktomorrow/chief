@@ -5,7 +5,6 @@ principles.
 ## unreleased
 
 ## 0.4.10 - 2020-03-16
-
 - fix: changing urls can now be saved again.
 
 ## 0.4.9 - 2020-03-11

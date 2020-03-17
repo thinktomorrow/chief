@@ -16,12 +16,12 @@ class SingleFakeWithPageField extends Page
     public static function migrateUp()
     {
         Schema::table('pages', function (Blueprint $table) {
-            $table->text('buttonlink')->nullable()->default(NULL);
+            $table->text('page')->nullable()->default(NULL);
         });
     }
 
-    public function getButtonlinkAttribute($value)
+    public function getPageAttribute($value)
     {
-        return $this->flatReferenceToModel($value)->url(app()->getLocale());
+        return $this->flatReferenceToModel($value);
     }
 }
