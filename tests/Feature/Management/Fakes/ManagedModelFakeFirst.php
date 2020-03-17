@@ -113,12 +113,12 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
 
     public function stateOf($key): string
     {
-        return $this->current_state;
+        return $this->$key;
     }
 
     public function changeStateOf($key, $state)
     {
-        $this->current_state = $state;
+        $this->$key = $state;
     }
 
     public function fill(array $attributes)

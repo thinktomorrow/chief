@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Urls;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Common\Helpers\Memoize;
 use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
@@ -31,11 +32,10 @@ class UrlHelper
      * Internal api for fetching all models.
      * This will return a grouped values array ready for select fields
      *
-     * @param bool $onlySingles
      * @param Model|null $ignoredModel
      * @return array
      */
-    public static function allModelsWithoutSelf(Model $ignoredModel = null): array
+    public static function allModelsExcept(Model $ignoredModel = null): array
     {
         $models = static::models(false, $ignoredModel, false);
 
@@ -70,6 +70,20 @@ class UrlHelper
         }
 
         return self::modelsByType($types, $ignoredModel, $online);
+    }
+
+    public static function modelsByKeys(array $keys, Model $ignoredModel = null, $online = true)
+    {
+        $managers = app(Managers::class);
+
+        $whitelistedDatabaseTypes = [];
+
+        foreach($keys as $key) {
+            $manager = $managers->findByKey($key);
+            $whitelistedDatabaseTypes[] = $manager->modelInstance()->getMorphClass();
+        }
+
+        return static::modelsByType($whitelistedDatabaseTypes, $ignoredModel, $online);
     }
 
 
