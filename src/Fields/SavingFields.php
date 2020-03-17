@@ -109,10 +109,7 @@ trait SavingFields
         }
 
         // By default we assume the key matches the attribute / column naming
-        // If value is not present in the request input, we'll ignore it.
-        if($request->has($field->getKey())) {
-            $this->model->{$field->getColumn()} = $request->input($field->getKey());
-        }
+        $this->model->{$field->getColumn()} = $request->input($field->getKey());
     }
 
     private function saveQueuedFields()
