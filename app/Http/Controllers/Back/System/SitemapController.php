@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Support\Facades\Artisan;
+use Thinktomorrow\Chief\System\Sitemap\SitemapFiles;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class SitemapController extends Controller
@@ -11,12 +12,10 @@ class SitemapController extends Controller
     {
         $this->authorize('view-page');
 
-        $sitemaps = collect(config('translatable.locales'))->map(function($locale){
-            return url('/').'/sitemap-'.$locale.'.xml';
-        });
+        $sitemapFiles = app(SitemapFiles::class)->allWithin(public_path());
 
         return view('chief::back.system.sitemap.show', [
-            'sitemaps' => $sitemaps
+            'sitemapFiles' => $sitemapFiles
         ]);
     }
 

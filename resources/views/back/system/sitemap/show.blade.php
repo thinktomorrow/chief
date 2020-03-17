@@ -6,18 +6,28 @@
     @slot('title', 'Sitemap')
     @slot('extra', 'De sitemaps worden elke nacht automatisch opgemaakt. Dit gebeurt per taal.')
     <div class="inline-group-s">
-        <a @click="generateSitemap('generate-sitemap')" class="">Genereer opnieuw</a>
+        <a class="cursor-pointer" @click="generateSitemap('generate-sitemap')" class="">Vernieuw nu</a>
     </div>
 @endcomponent
 
 @section('content')
     <div class="mt-8">
 
-        Na het genereren zal de sitemap op volgende link te vinden zijn:
-        @foreach($sitemaps as $sitemap)
-            <b>{{$sitemap}}</b>
-        @endforeach
+        <div>
+            @foreach($sitemapFiles as $sitemapFile)
+                <div class="bg-white panel inset-s stack-s flex items-center">
+                    <div>
+                        <span class="font-bold">{{ $sitemapFile->getFileName() }}</span>
+                        <a href="{{ url($sitemapFile->getFileName()) }}" download class="block">{{ url($sitemapFile->getFileName()) }}</a>
+                    </div>
+                    <span class="text-success cursor-pointer" style="margin-left: auto; float:right; padding:2px 5px;">
+                        {{ \Carbon\Carbon::createFromTimestamp($sitemapFile->getMTime())->diffForHumans() }} vernieuwd
+                    </span>
+                </div>
+            @endforeach
+        </div>
 
+        <p class="mt-8">De sitemaps worden automatisch gebruikt door de zoekpagina's zoals Google en Bing. U kan ook de links toevoegen aan uw <a target="_blank" rel="noopener" href="https://search.google.com/search-console">search console</a>.</p>
 
         <p class="mt-8 w-2/3">
             <span class="font-bold">Waarom is een sitemap van belang?</span><br>
