@@ -81,7 +81,7 @@ class SitemapXml
             })
             ->map(function(ProvidesUrl $model) use($locale, $alternateLocales){
                 $url = $model->url($locale);
-    
+
                 $alternateUrls = [];
 
                 foreach($alternateLocales as $alternateLocale) {
