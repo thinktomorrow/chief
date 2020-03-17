@@ -87,6 +87,7 @@ class UrlSlugField extends InputField implements Field
     {
         return [
             'key'            => $this->key,
+            'name'           => $this->getName(),
             'prepend'        => $this->prepend,
             'label'          => $this->label,
             'placeholder'    => $this->placeholder,
