@@ -7,11 +7,11 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\Concerns\HasPageSelect;
+use Thinktomorrow\Chief\FlatReferences\HasFlatReferences;
 
 class SingleFakeWithPageField extends Page
 {
-    use HasPageSelect;
+    use HasFlatReferences;
 
     public static function migrateUp()
     {
@@ -22,6 +22,6 @@ class SingleFakeWithPageField extends Page
 
     public function getButtonlinkAttribute($value)
     {
-        return $this->convertPagefieldvaluesToLinks($value);
+        return $this->flatReferenceToModel($value)->url(app()->getLocale());
     }
 }
