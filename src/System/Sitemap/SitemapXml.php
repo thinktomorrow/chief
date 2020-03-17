@@ -74,18 +74,26 @@ class SitemapXml
     {
         $models = UrlRecord::allOnlineModels($locale);
 
-        $this->urls = $models->map(function(ProvidesUrl $model) use($locale, $alternateLocales){
-            $url = $model->url($locale);
-            $alternateUrls = [];
+        $this->urls = $models
+            ->reject(function(ProvidesUrl $model) use($locale){
+                // In case the url is not found or present for given locale.
+                return !$model->url($locale);
+            })
+            ->map(function(ProvidesUrl $model) use($locale, $alternateLocales){
+                $url = $model->url($locale);
+    
+                $alternateUrls = [];
 
-            foreach($alternateLocales as $alternateLocale) {
-                $alternateUrls[$alternateLocale] = $model->url($alternateLocale);
-            }
+                foreach($alternateLocales as $alternateLocale) {
+                    if($alternateUrl = $model->url($alternateLocale)){
+                        $alternateUrls[$alternateLocale] = $alternateUrl;
+                    }
+                }
 
-            $this->alternateUrls[$url] = $alternateUrls;
+                $this->alternateUrls[$url] = $alternateUrls;
 
-            return $url;
-        });
+                return $url;
+            });
     }
 
     private function rejectNonVisitableUrls()
