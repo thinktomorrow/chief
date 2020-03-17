@@ -44,7 +44,7 @@ class AsyncUploadFileMediaController extends Controller
                 $managerKey,
                 $fieldKey,
                 $locale,
-                $uploadedFile,
+                $uploadedFile
             );
 
             $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName());
