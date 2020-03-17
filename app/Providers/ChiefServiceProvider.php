@@ -92,7 +92,7 @@ class ChiefServiceProvider extends ServiceProvider
                 ]);
             });
             $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
-        }else{
+        } else {
             $this->commands([
                 // Sitemap generation
                 'command.chief:sitemap',

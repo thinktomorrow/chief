@@ -24,10 +24,10 @@ class GenerateSitemap extends BaseCommand
     {
         $locales = config('translatable.locales');
 
-        foreach($locales as $key => $locale) {
-            $filepath = public_path('sitemap-'.$locale.'.xml');
+        foreach ($locales as $key => $locale) {
+            $filepath = public_path('sitemap-' . $locale . '.xml');
 
-            $this->info('Generating a sitemap for locale: '. $locale . ' at: ' .  $filepath);
+            $this->info('Generating a sitemap for locale: ' . $locale . ' at: ' . $filepath);
 
             $this->sitemapXmlFile->create($locale, $filepath, $this->createAlternateLocales($locales, $locale));
         }
