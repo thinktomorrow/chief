@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\System\Sitemap;
 
@@ -27,7 +28,7 @@ class SitemapFiles
     {
         $files = $this->filesystem->files($directory);
 
-        return collect($files)->filter(function($file){
+        return collect($files)->filter(function ($file) {
             return (Str::startsWith($file->getFileName(), 'sitemap-') && Str::endsWith($file->getFileName(), '.xml'));
         });
     }
