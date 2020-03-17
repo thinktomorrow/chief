@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\DynamicAttributes;
@@ -17,7 +18,7 @@ trait HasDynamicAttributes
 
     public function isDynamicKey($key): bool
     {
-        if(array_key_exists($key, $this->attributes)) {
+        if (array_key_exists($key, $this->attributes)) {
             return false;
         }
 
@@ -73,14 +74,14 @@ trait HasDynamicAttributes
      */
     public function getAttribute($key)
     {
-        if (!$this->isDynamicKey($key)){
+        if (!$this->isDynamicKey($key)) {
             return parent::getAttribute($key);
         }
 
         $locale = app()->getLocale();
 
-        foreach(["{$locale}.$key", $key] as $k){
-            if($this->dynamicAttributesInstance()->has($k)){
+        foreach (["{$locale}.$key", $key] as $k) {
+            if ($this->dynamicAttributesInstance()->has($k)) {
                 return $this->dynamic($k);
             }
         }
@@ -91,7 +92,7 @@ trait HasDynamicAttributes
     /* Part of the custom cast */
     public function setAttribute($key, $value)
     {
-        if ($this->isDynamicKey($key)){
+        if ($this->isDynamicKey($key)) {
             return $this->setDynamic($key, $value);
         }
 
@@ -101,9 +102,9 @@ trait HasDynamicAttributes
     /* Part of the custom cast */
     protected function dynamicAttributesInstance(): DynamicAttributes
     {
-        if(!isset($this->attributes[$this->getDynamicKey()])) {
+        if (!isset($this->attributes[$this->getDynamicKey()])) {
             $this->attributes[$this->getDynamicKey()] = DynamicAttributes::fromRawValue([]);
-        } elseif(!($raw = $this->attributes[$this->getDynamicKey()]) instanceof DynamicAttributes) {
+        } elseif (!($raw = $this->attributes[$this->getDynamicKey()]) instanceof DynamicAttributes) {
             $this->attributes[$this->getDynamicKey()] = DynamicAttributes::fromRawValue($raw);
         }
 
@@ -120,7 +121,7 @@ trait HasDynamicAttributes
      */
     private function injectDynamicAttributes(array $attributes, bool $castToObject = true): array
     {
-        if(isset($attributes[$this->getDynamicKey()])) {
+        if (isset($attributes[$this->getDynamicKey()])) {
             $attributes[$this->getDynamicKey()] = $castToObject
                 ? DynamicAttributes::fromRawValue($attributes[$this->getDynamicKey()])
                 : $attributes[$this->getDynamicKey()]->toJson();

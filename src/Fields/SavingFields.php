@@ -116,9 +116,9 @@ trait SavingFields
     {
         $queued_translations = $this->queued_translations;
 
-        foreach($queued_translations as $locale => $translations){
-            foreach($translations as $key => $value) {
-                if(method_exists($this->model, 'isDynamicKey') && $this->model->isDynamicKey($key)) {
+        foreach ($queued_translations as $locale => $translations) {
+            foreach ($translations as $key => $value) {
+                if (method_exists($this->model, 'isDynamicKey') && $this->model->isDynamicKey($key)) {
                     $this->model->setDynamic($key, $value, $locale);
 
                     // Remove from queued translations
@@ -126,7 +126,7 @@ trait SavingFields
                 }
 
                 // remove any empty locale entries
-                if(empty($queued_translations[$locale])) {
+                if (empty($queued_translations[$locale])) {
                     unset($queued_translations[$locale]);
                 }
             }
