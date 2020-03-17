@@ -78,7 +78,7 @@ class UrlHelper
 
         $whitelistedDatabaseTypes = [];
 
-        foreach($keys as $key) {
+        foreach ($keys as $key) {
             $manager = $managers->findByKey($key);
             $whitelistedDatabaseTypes[] = $manager->modelInstance()->getMorphClass();
         }

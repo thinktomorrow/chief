@@ -22,7 +22,7 @@ class PageField extends SelectField
         // options are always grouped
         $this->grouped();
 
-        if(empty($whitelistedKeys)) {
+        if (empty($whitelistedKeys)) {
             $this->options = UrlHelper::allModelsExcept($excludedPage);
             return $this;
         }
