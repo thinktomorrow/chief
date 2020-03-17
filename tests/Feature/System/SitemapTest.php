@@ -9,7 +9,6 @@ use Spatie\Sitemap\Sitemap;
 use GuzzleHttp\Psr7\Response;
 use Thinktomorrow\Chief\Pages\Page;
 use GuzzleHttp\Handler\MockHandler;
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\States\PageState;
@@ -31,7 +30,6 @@ class SitemapTest extends TestCase
 
         $this->mockHandler = new MockHandler();
         $this->sitemapXml = new SitemapXml(
-            app(Sitemap::class),
             new Client(['handler' => $this->mockHandler])
         );
 
