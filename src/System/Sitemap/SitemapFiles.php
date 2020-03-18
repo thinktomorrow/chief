@@ -16,7 +16,6 @@ class SitemapFiles
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        trap($filesystem);
     }
 
     /**
