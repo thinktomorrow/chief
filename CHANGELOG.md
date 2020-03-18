@@ -4,6 +4,7 @@ principles.
 
 ## unreleased
 
+## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
 - Fixed: removing a quill editor text field in pagebuilder is now possible
 
