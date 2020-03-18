@@ -166,11 +166,24 @@
                 this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');
             },
             removeInput(){
-                let textAreas = this.$el.getElementsByTagName('textarea');
-                for(var i = 0; i < textAreas.length; i++) {
-                    textAreas[i].innerHTML = "";
-                    if(this.section.type === "text") {
-                        this.$el.getElementsByClassName('redactor-styles')[i].innerHTML = "";
+                if(this.textEditor == 'redactor')
+                {
+                    let textAreas = this.$el.getElementsByTagName('textarea');
+
+                    for(var i = 0; i < textAreas.length; i++) {
+                        textAreas[i].innerHTML = "";
+                        if(this.section.type === "text") {
+                            this.$el.getElementsByClassName('redactor-styles')[i].innerHTML = "";
+                        }
+                    }
+                }else if(this.textEditor == 'quill')
+                {
+                    let quilleditors = this.$el.getElementsByClassName('ql-editor');
+                    for(var i = 0; i < quilleditors.length; i++) {
+                        quilleditors[i].innerHTML = "";
+                        if(this.section.type === "text") {
+                            quilleditors.innerHTML = "";
+                        }
                     }
                 }
                 this.$el.style.display = "none";
