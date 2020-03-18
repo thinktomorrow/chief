@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\System\Sitemap;
 
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Finder\SplFileInfo;
 
 class SitemapFiles
 {
@@ -18,6 +16,7 @@ class SitemapFiles
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
+        trap($filesystem);
     }
 
     /**

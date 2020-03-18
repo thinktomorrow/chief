@@ -20,6 +20,8 @@
             image: {
                 open: function($modal, $form)
                 {
+                    if (!this.opts.mediagalleryApi) return;
+
                     this._load($modal)
                 }
             }
@@ -34,14 +36,14 @@
 			$tab.attr('data-title', this.lang.get('choose'));
 			$tab.addClass('redactor-modal-tab');
 			$tab.hide();
-            
+
             $wrapper = $R.dom('<div>');
             $wrapper.css({
     			'overflow-y': 'scroll',
     			height: '340px',
     			'line-height': 1
 			});
-            
+
             $tab.append($wrapper);
             $body.append($tab);
 
@@ -52,7 +54,7 @@
             $tab.append($R.dom('<div>').addClass("btn btn-primary mt-3").append('Laad meer afbeeldingen').on('click', this.loadMore.bind(this)))
 
 			$R.ajax.get({
-        		url: '/admin/api/media',
+        		url: this.opts.mediagalleryApi,
         		success: this._parse.bind(this)
             });
 		},
@@ -62,7 +64,7 @@
             {
                 var obj = data[key];
                 if (typeof obj !== 'object') continue;
-            
+
                 var $div = $R.dom('<div>')
                 $div.addClass("column-3 border rounded border-transparent hover:border-grey-100 hover:bg-grey-50 p-2");
 
@@ -89,8 +91,8 @@
                 $div.append($imgContainer)
                 $imgContainer.append($img);
                 $div.append($R.dom('<p>')
-                .css({ 
-                    margin: '0 0 6px 0', 
+                .css({
+                    margin: '0 0 6px 0',
                     wordBreak: 'break-word'
                 })
                 .append(obj.filename));
@@ -111,7 +113,7 @@
         loadMore: function()
         {
             $R.ajax.get({
-        		url: '/admin/api/media?offset='+ this.$box.children().length,
+        		url: this.opts.mediagalleryApi + '?offset='+ this.$box.children().length,
         		success: this._parse.bind(this)
     		});
         }

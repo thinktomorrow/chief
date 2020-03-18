@@ -2,6 +2,10 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
+## unreleased
+
+- Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
+
 ## 0.4.11 - 2020-03-18
 - Added: generate sitemap command and schedule
 - Fixed: quill editor did not save the content in the pagebuilder text module.

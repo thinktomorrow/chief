@@ -80,7 +80,7 @@
                 <div class="btn btn-primary mr-4" onClick="window.showModal('mediagallery-{{ $slug }}-{{$locale}}')">
                     <span>Voeg bestaande toe uit je galerij</span>
                 </div>
-                <mediagallery group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
+                <mediagallery url="{{ route('chief.api.media') }}" group="{{ $slug }}" locale="{{$locale}}" :uploaded="items.map(o=>o.id)"></mediagallery>
             </div>
 
             <a v-if="{{ json_encode($field->allowMultiple()) }} == true  && items.length > 1" @click.prevent="toggleReorder" class="btn btn-primary">

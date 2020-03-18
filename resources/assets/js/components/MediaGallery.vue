@@ -43,7 +43,8 @@
 			locale: {required: true, default: ''},
 			limit: {required: false, default: 12},
             replace: {required: false, default: ''},
-            uploaded: {required: true, default: []}
+            uploaded: {required: true, default: []},
+            url: {required: true, default: '/admin/api/media'}
 		},
 		data(){
             return {
@@ -60,7 +61,7 @@
 		created() {
 			Eventbus.$on('open-modal',(id) => {
 				if(this.id == id && !this.assets.length){
-					axios.get(`/admin/api/media?limit=${this.limit}&excluded=${this.uploaded}`).then((response) => {
+					axios.get(`${this.url}?limit=${this.limit}&excluded=${this.uploaded}`).then((response) => {
                         this.assets = response.data;
 						this.isLoading = false;
 					}).catch((errors) => {
@@ -72,7 +73,7 @@
 		methods: {
 			loadMore: function() {
 				this.isLoading = true;
-				axios.get(`/admin/api/media?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}`).then((response) => {
+				axios.get(`${this.url}?offset=${this.assets.length}&limit=${this.limit}&excluded=${this.uploaded}`).then((response) => {
                     this.assets = [...this.assets, ...response.data];
 					this.isLoading = false;
 					let image = document.getElementById(`media-gallery-image-${this.assets.length-this.limit-1}`);

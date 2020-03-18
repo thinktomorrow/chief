@@ -20,6 +20,7 @@
                 imageUpload: chiefRedactorImageUpload('{{ $imageUploadUrl }}'),
             @endif
             definedlinks: '{{ route('chief.api.internal-links') }}',
+            mediagalleryApi: '{{ route('chief.api.media')}}',
             customClasses: [
                 {
                     title: '<span><svg width="18" height="18"><use xlink:href="#droplet"/></svg></span> link als knop',
