@@ -4,6 +4,8 @@ principles.
 
 ## unreleased
 - Add: dynamic attributes. [https://thinktomorrow.github.io/package-docs/src/chief/managers.html#dynamic-attributes](view docs)
+- Changed: renamed `Thinktomorrow\Chief\Management\Details\Sections` to `Thinktomorrow\Chief\Management\Details\DetailSections`.
+- Changed: renamed `Thinktomorrow\Chief\Management\Details\HasSections` to `Thinktomorrow\Chief\Management\Details\HasDetailSections`.
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin

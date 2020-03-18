@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
-use Thinktomorrow\Chief\Management\Details\Sections;
+use Thinktomorrow\Chief\Management\Details\DetailSections;
 use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
@@ -144,7 +144,7 @@ interface Manager extends FieldManager, AssistedManager
      * Information and custom display on the index listing such as
      * sidebar info, filters, search, title and so on.
      *
-     * @return Sections
+     * @return DetailSections
      */
-    public static function sections(): Sections;
+    public static function sections(): DetailSections;
 }

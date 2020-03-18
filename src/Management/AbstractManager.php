@@ -16,7 +16,7 @@ use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Assistants\ManagesAssistants;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
-use Thinktomorrow\Chief\Management\Details\HasSections;
+use Thinktomorrow\Chief\Management\Details\HasDetailSections;
 use Thinktomorrow\Chief\Management\Exceptions\NonExistingRecord;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
@@ -27,7 +27,7 @@ abstract class AbstractManager
     use RenderingFields;
     use SavingFields;
     use HasDetails;
-    use HasSections;
+    use HasDetailSections;
     use ManagesMedia;
     use ManagesPagebuilder;
     use TranslatableCommand;
