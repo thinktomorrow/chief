@@ -1,6 +1,6 @@
 <template>
     <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 block inset relative rounded">
-        
+
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
         <div class="to-minimize mt-2">
@@ -31,13 +31,13 @@
                         :id="locale+'-text'"
                         :name="locale"
                         v-cloak>
-                        <div 
-                            class="inset-s bg-white" 
+                        <div
+                            class="inset-s bg-white"
                             :id="'editor-'+locale+'-'+_uid"
-                            :lang="locales[key]"
+                            :data-lang="locale"
                             v-html="renderInitialContent(locale)">
                         </div>
-                        <input 
+                        <input
                             :name="'sections[text]['+new_or_replace_key+']['+_uid+'][trans]['+locale+'][content]'"
                             :type="'hidden'"
                             :value="text_content[key].value"
@@ -56,8 +56,9 @@
                     v-html="renderInitialContent(locales[0])">
                 </textarea>
                 <div v-else-if="textEditor == 'quill'" class="w-full">
-                    <div 
-                        class="inset-s bg-white" 
+                    <div
+                        class="inset-s bg-white"
+                        :data-lang="locales[0]"
                         :id="'editor-'+locales[0]+'-'+_uid"
                         v-html="renderInitialContent(locales[0])">
                     </div>
@@ -107,7 +108,7 @@
             return {
                 new_or_replace_key: this.section.id ? 'replace' : 'new',
                 show_menu: false,
-                text_content: this.locales.map(locale => { 
+                text_content: this.locales.map(locale => {
                     return {
                         locale,
                         value: this.section['trans'][locale] ? this.section['trans'][locale].content : '',
@@ -122,7 +123,7 @@
                     if(this.textEditor == 'redactor') {
                         window.$R('#editor-' + this.locales[key] + '-' + this._uid, {
                             // options
-                        }); 
+                        });
                     } else if (this.textEditor == 'quill') {
                         this.text_content[key].value = this.renderInitialContent(this.locales[key]);
                         const quill = new Quill('#editor-' + this.locales[key] + '-' + this._uid, {
@@ -130,7 +131,7 @@
                         });
                         quill.on('text-change', () => {
                             for(let i = 0; i < this.text_content.length; i++) {
-                                if(this.text_content[i].locale == quill.container.lang) {
+                                if(this.text_content[i].locale == quill.container.dataset.lang) {
                                     this.text_content[i].value = quill.root.innerHTML;
                                 }
                             }
@@ -148,21 +149,21 @@
 
                 let content = this.section['trans'][locale].content;
                 if(!content) return '';
-    
+
                 return content;
             },
             removeThisSection(position){
-                // text sections worden alleen verwijderd wanneer ze leeg zijn 
+                // text sections worden alleen verwijderd wanneer ze leeg zijn
                 this.removeInput();
                 this.active = false;
             },
             mouseEnter(){
                 this.$el.getElementsByClassName('module-icons-left')[0].classList.add('reveal-left');
-                this.$el.getElementsByClassName('module-icons-right')[0].classList.add('reveal-right');   
+                this.$el.getElementsByClassName('module-icons-right')[0].classList.add('reveal-right');
             },
             mouseLeave(){
                 this.$el.getElementsByClassName('module-icons-left')[0].classList.remove('reveal-left');
-                this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');    
+                this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');
             },
             removeInput(){
                 let textAreas = this.$el.getElementsByTagName('textarea');
@@ -205,7 +206,7 @@
     opacity: 0;
     width: 40px;
     transition: 0.15s all ease-in;
-}   
+}
 .module-icons-right {
     position: absolute;
     top: 0;
@@ -217,7 +218,7 @@
     opacity: 0;
     width: 40px;
     transition: 0.15s all ease-in;
-}   
+}
 section {
     position: relative;
 }
