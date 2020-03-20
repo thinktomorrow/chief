@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Urls\UrlHelper;
@@ -23,6 +24,9 @@ class ViewServiceProvider extends ServiceProvider
 
             $view->with('targetModels', $onlineModels);
         });
+
+        Blade::component('chief::back._layouts._partials.header', 'chiefheader');
+        Blade::component('chief::back._components.formgroup', 'formgroup');
     }
 
     public function register()

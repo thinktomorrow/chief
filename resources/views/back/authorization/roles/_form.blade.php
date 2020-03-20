@@ -1,10 +1,10 @@
-@chiefformgroup(['field' => 'name'])
+@formgroup(['field' => 'name'])
     @slot('label', 'Naam')
     @slot('description', 'Unieke benaming van de rol')
     <input class="input inset-s" type="text" name="name" value="{{ old('name',$role->name) }}">
-@endchiefformgroup
+@endformgroup
 
-@chiefformgroup(['field' => 'permission_names'])
+@formgroup(['field' => 'permission_names'])
     @slot('label', 'Rechten')
     @slot('description', 'Met welke rechten heeft deze rol toegang tot de admin')
     <chief-multiselect
@@ -17,4 +17,4 @@
     @if($errors->has('permission_names.0'))
         <span class="caption">{{ $errors->first('permission_names.0') }}</span>
     @endif
-@endchiefformgroup
+@endformgroup

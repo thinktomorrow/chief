@@ -37,7 +37,7 @@ class SettingsController extends Controller
 
         $this->fieldValidator->handle($this->settingFieldsManager->fields(), $request->all());
 
-        $this->settingFieldsManager->saveFields($request);
+        $this->settingFieldsManager->saveEditFields($request);
 
         return redirect()->route('chief.back.settings.edit')->with('messages.success', 'De settings zijn aangepast!');
     }

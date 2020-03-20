@@ -13,12 +13,9 @@ use Thinktomorrow\Chief\States\PageStatePresenter;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Filters\Filters;
-use Thinktomorrow\Chief\Fields\FieldsTab;
 use Thinktomorrow\Chief\Management\Manager;
 use Thinktomorrow\Chief\Fields\Types\TextField;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Fields\RemainingFieldsTab;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Management\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Management\Assistants\PublishAssistant;
@@ -90,23 +87,28 @@ class PageManager extends AbstractManager implements Manager
                     'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',
                 ])
                 ->label('De titel van je ' . $this->model->labelSingular ?? 'pagina')
-                ->description('Dit is de titel die zal worden getoond in de overzichten en modules.'),
+                ->description('Dit is de titel die zal worden getoond in de overzichten en modules.')
+                ->tag('general'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
-                ->label('Zoekmachine titel'),
+                ->label('Zoekmachine titel')
+                ->tag('seo'),
             TextField::make('seo_description')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine omschrijving')
-                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.'),
+                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.')
+                ->tag('seo'),
             InputField::make('seo_keywords')
                 ->validation('max:250')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
-                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.'),
+                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.')
+                ->tag('seo'),
             ImageField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
                 ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
+                ->tag('seo')
         );
     }
 
@@ -126,28 +128,29 @@ class PageManager extends AbstractManager implements Manager
         return $this->pageBuilderField = $this->createPagebuilderField();
     }
 
-    public function fieldArrangement($key = null): FieldArrangement
+    public function createView(): string
     {
-        if ($key == 'create') {
-            return new FieldArrangement($this->fieldsWithAssistantFields()->filterBy(function ($field) {
-                return in_array($field->getKey(), ['title']);
-            }));
+        return 'chief::back.pages._partials._createform';
+    }
+
+    public function editView(): string
+    {
+        return 'chief::back.pages._partials._editform';
+    }
+
+    public function createFields(): Fields
+    {
+        return $this->fields()->keyed('title');
+    }
+
+    public function saveCreateFields(Request $request): void
+    {
+        // Store the morph_key upon creation
+        if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
+            $this->model->morph_key = $this->model->morphKey();
         }
 
-        $tabs = [
-            new FieldsTab('pagina', ['sections']),
-            new RemainingFieldsTab('algemeen'),
-            new FieldsTab('url', ['url-slugs'], 'chief::back.pages._partials.url', [
-                'redirects' => UrlSlugFields::redirectsFromModel($this->model),
-            ]),
-            new FieldsTab('seo', ['seo_title', 'seo_description', 'seo_keywords', 'seo_image']),
-        ];
-
-        if (Module::anyAvailableForCreation()) {
-            array_splice($tabs, 1, 0, [new FieldsTab('modules', [], 'chief::back.pages._partials.modules')]);
-        }
-
-        return new FieldArrangement($this->fieldsWithAssistantFields(), $tabs);
+        parent::saveFields($request, $this->createFields()->merge($this->fieldsWithAssistantFields()->keyed('url-slugs')));
     }
 
     public function details(): Details
@@ -161,16 +164,6 @@ class PageManager extends AbstractManager implements Manager
         }
 
         return parent::details();
-    }
-
-    public function saveFields(Request $request)
-    {
-        // Store the morph_key upon creation
-        if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
-            $this->model->morph_key = $this->model->morphKey();
-        }
-
-        parent::saveFields($request);
     }
 
     public function delete()

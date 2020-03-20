@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
@@ -113,14 +114,14 @@ class ModuleManager extends AbstractManager implements Manager
         ]);
     }
 
-    public function saveFields(Request $request)
+    public function saveCreateFields(Request $request): void
     {
         // Store the morph_key upon creation
-        if (!$this->model->morph_key) {
+        if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
-        parent::saveFields($request);
+        parent::saveCreateFields($request);
     }
 
     public function delete()

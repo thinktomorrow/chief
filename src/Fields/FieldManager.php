@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fields;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fields\Types\Field;
 
 interface FieldManager
 {
@@ -20,28 +19,21 @@ interface FieldManager
      */
     public function fields(): Fields;
 
+    public function editFields(): Fields;
+
+    public function createFields(): Fields;
+
     /**
-     * Triggers the save action for all prepared field values.
+     * Triggers the create save action for all prepared field values.
      *
      * @param Request $request
-     * @return FieldManager
      */
-    public function saveFields(Request $request);
+    public function saveCreateFields(Request $request): void;
 
     /**
-     * Render the field view
+     * Triggers the edit save action for all prepared field values.
      *
-     * @param Field $field
-     * @return mixed
+     * @param Request $request
      */
-    public function renderField(Field $field);
-
-    /**
-     * The current value that this field holds. This is used to
-     * populate the form fields with their default value.
-     *
-     * @param Field $field
-     * @return mixed
-     */
-    public function fieldValue(Field $field);
+    public function saveEditFields(Request $request): void;
 }

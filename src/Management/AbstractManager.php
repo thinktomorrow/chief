@@ -9,10 +9,9 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Fields\Fields;
-use Thinktomorrow\Chief\Fields\RenderingFields;
 use Thinktomorrow\Chief\Fields\SavingFields;
+use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Management\Assistants\ManagesAssistants;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
@@ -24,7 +23,6 @@ use Thinktomorrow\Chief\Relations\ActsAsParent;
 
 abstract class AbstractManager
 {
-    use RenderingFields;
     use SavingFields;
     use HasDetails;
     use HasDetailSections;
@@ -227,18 +225,36 @@ abstract class AbstractManager
         return $fields;
     }
 
-    /**
-     * This determines the arrangement of the manageable fields
-     * on the create and edit forms. By default, all fields
-     * are presented in their order of appearance
-     *
-     * @param null $key pinpoint to a specific field arrangement e.g. for create page.
-     * @return FieldArrangement
-     * @throws \Exception
-     */
-    public function fieldArrangement($key = null): FieldArrangement
+    public function createFields(): Fields
     {
-        return new FieldArrangement($this->fieldsWithAssistantFields());
+        return $this->fieldsWithAssistantFields();
+    }
+
+    public function editFields(): Fields
+    {
+        return $this->fieldsWithAssistantFields()->map(function(Field $field){
+            return $field->model($this->model);
+        });
+    }
+
+    public function createView(): string
+    {
+        return 'chief::back.managers._partials._form';
+    }
+
+    public function createViewData(): array
+    {
+        return [];
+    }
+
+    public function editView(): string
+    {
+        return 'chief::back.managers._partials._form';
+    }
+
+    public function editViewData(): array
+    {
+        return [];
     }
 
     public function delete()

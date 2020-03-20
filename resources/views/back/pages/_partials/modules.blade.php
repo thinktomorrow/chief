@@ -1,12 +1,8 @@
-<?php
-    $page = $manager->existingModel();
-?>
-
 <div class="stack-l formgroup">
     <h2>Pagina modules</h2>
     <p>Hier vind je alle modules (blokken) die specifiek zijn voor deze pagina. Je kan deze op de pagina plaatsen door
         ze te selecteren in de <a href="#pagina">pagina tab</a></p>
-    @if($page->modules->isEmpty())
+    @if($model->modules->isEmpty())
         <div class="stack-l">
             <div>
                 <a @click="showModal('create-module')" class="btn btn-primary inline-flex items-center">
@@ -17,10 +13,10 @@
         </div>
     @endif
 
-    @if(!$page->modules->isEmpty())
+    @if(!$model->modules->isEmpty())
 
         <div class="row gutter-s stack">
-            @foreach($page->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
+            @foreach($model->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
                 @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
                 @push('portals')
                     @include('chief::back.managers._modals.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
@@ -37,6 +33,6 @@
     @endif
 
     @push('portals')
-        @include('chief::back.modules._partials.create-modal', ['page_id' => $page->id])
+        @include('chief::back.modules._partials.create-modal', ['page_id' => $model->id])
     @endpush
 </div>

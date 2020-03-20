@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields\Types;
 
-use Thinktomorrow\Chief\Fields\FieldName;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fields\FieldName;
 use Thinktomorrow\Chief\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 
 abstract class AbstractField
 {
+    use AllowsTags;
+
     /** @var FieldType */
     private $type;
 
@@ -45,32 +47,25 @@ abstract class AbstractField
     /** @var callable */
     protected $valueResolver;
 
+    /** @var null|mixed */
+    protected $model = null;
+
     /** @var string */
     protected $view;
 
-    /** @var string|null */
-    protected $elementView;
+    /** @var array */
+    protected $viewData = [];
 
     /** @var array */
-    protected $viewData;
-
-    /** @var array */
-    protected $locales;
+    protected $locales = [];
 
     /** @var null|Validator|array|\Closure */
     protected $validation;
-
-    /** @var string */
-    protected static $defaultView = 'chief::back._fields.formgroup';
 
     final public function __construct(FieldType $type, string $key)
     {
         $this->type = $type;
         $this->key = $this->column = $this->name = $this->label = $key;
-
-        $this->view(static::$defaultView);
-        $this->viewData([]);
-        $this->locales([]);
 
         $this->valueResolver($this->defaultEloquentValueResolver());
     }
@@ -222,9 +217,9 @@ abstract class AbstractField
         return $this;
     }
 
-    public function getValue($model = null, ?string $locale = null)
+    public function getValue(?string $locale = null)
     {
-        return call_user_func_array($this->valueResolver, [$model, $locale]);
+        return call_user_func_array($this->valueResolver, [$this->getModel(), $locale, $this]);
     }
 
     public function valueResolver(\Closure $fn): Field
@@ -355,6 +350,25 @@ abstract class AbstractField
         return reset($items);
     }
 
+    public function render(string $locale = null): string
+    {
+        return view($this->getView(), array_merge([
+            'locale' => $locale,
+        ], $this->getViewData()))->render();
+    }
+
+    public function model($model): Field
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    protected function getModel()
+    {
+        return $this->model;
+    }
+
     /**
      * The view path to the full formgroup for this field.
      *
@@ -368,50 +382,30 @@ abstract class AbstractField
         return $this;
     }
 
-    public function getView(): string
+    protected function getView(): string
     {
-        return $this->view;
-    }
+        if ($this->view) {
+            return $this->view;
+        }
 
-    public function hasCustomView(): bool
-    {
-        return $this->view !== static::$defaultView;
+        return $this->isLocalized()
+            ? 'chief::back._formgroups.fieldgroup_translatable'
+            : 'chief::back._fields.' . $this->type->get();
     }
 
     public function viewData(array $viewData = []): Field
     {
-        $this->viewData = $viewData;
+        $this->viewData = array_merge($this->viewData, $viewData);
 
         return $this;
     }
 
-    public function getViewData(): array
+    protected function getViewData(): array
     {
-        return $this->viewData;
-    }
-
-    /**
-     * In case of the default formgroup rendering, there is also made use of
-     * the form input element, which is targeted as a specific view as well
-     *
-     * @param string $view
-     * @return Field
-     */
-    public function elementView(string $view): Field
-    {
-        $this->elementView = $view;
-
-        return $this;
-    }
-
-    public function getElementView(): string
-    {
-        if ($this->elementView) {
-            return $this->elementView;
-        }
-
-        return $this->isLocalized()
-            ? 'chief::back._fields.translatable'
-            : 'chief::back._fields.' . $this->type->get();
+        return array_merge([
+            'model' => $this->getModel(),
+            'field' => $this,
+            'key'   => $this->getKey(),
+        ],$this->viewData);
     }
 }

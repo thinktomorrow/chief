@@ -18,9 +18,7 @@ class FieldViewTest extends TestCase
         app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
         $manager = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()));
 
-        $render = $manager->renderField(
-            InputField::make('input-one')->view('test-views::custom-field')
-        );
+        $render = InputField::make('input-one')->view('test-views::custom-field')->render();
 
         $this->assertEquals('this is a custom field view',$render);
     }
@@ -33,9 +31,7 @@ class FieldViewTest extends TestCase
         app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
         $manager = (new ManagerFake(app(Register::class)->filterByKey('managed_model_first')->first()));
 
-        $render = $manager->renderField(
-            InputField::make('input-one')->elementView('test-views::custom-element')
-        );
+        $render = InputField::make('input-one')->view('test-views::custom-element')->render();
 
         $this->assertStringContainsString('this is a custom element view',$render);
     }

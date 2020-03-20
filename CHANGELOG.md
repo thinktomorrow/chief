@@ -3,9 +3,20 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
-- Add: dynamic attributes. [https://thinktomorrow.github.io/package-docs/src/chief/managers.html#dynamic-attributes](view docs)
+- Added: dynamic attributes. [https://thinktomorrow.github.io/package-docs/src/chief/managers.html#dynamic-attributes](view docs)
+- Added: `Manager::editView()` and `Manager::createView` provide the option to customise the view filepath for the create and edit admin views.
+- Added: `Manager::editFields()` and `Manager::createFields` provide the fields for respectively the create and edit form views.
+- Added: A `Field` now has the ability to be tagged. This allows to easily group fields on the admin create or edit views. One or more tags can be added with the `Field::tag()` method.
+- Added: `Field::render(string $locale = null)` to render a field onto the page. A field is now responsible to render its own content.
+- Added: `Field::model($model)` to set the data source for this field. By default an Eloquent model is expected. The model is added automatically to each field behind the scenes.
+- Changed: `Field::getValue(string $locale = null)` no longer requires to be passed the model. It now only accepts one optional locale argument.
 - Changed: renamed `Thinktomorrow\Chief\Management\Details\Sections` to `Thinktomorrow\Chief\Management\Details\DetailSections`.
 - Changed: renamed `Thinktomorrow\Chief\Management\Details\HasSections` to `Thinktomorrow\Chief\Management\Details\HasDetailSections`.
+- Changed: Blade component alias `chiefformgroup` renamed to `formgroup`
+- Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
+- Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
+- Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.
+- Removed: `Thinktomorrow\Chief\Fields\FieldArrangement`, `Thinktomorrow\Chief\Fields\FieldTabs` and `Thinktomorrow\Chief\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin

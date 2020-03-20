@@ -1,32 +1,22 @@
-<?php
-
-    // Normally field is a single string value representing the name of the input.
-    // For multiple fields in the same formgroup we allow to add an array of fields as well.
-    $fields = (array) $field;
-
-    $hasErrors = false;
-    foreach($fields as $field){
-        if($errors->has($field)) $hasErrors = true;
-    }
-
-?>
-
 <section class="row formgroup stack gutter-l">
     <div class="column-4">
         @if(isset($label))
-            <h2>{{ $label }}</h2>
+            <h2>
+                {{ $label }}
+                @if(!isset($isRequired) || !$isRequired)
+                    <span class="font-xs text-grey-300">(Optioneel)</span>
+                @else
+                    <span class="font-xs text-warning">(Verplicht)</span>
+                @endif
+            </h2>
         @endif
+
         @if(isset($description))
             <p class="caption">{!! $description !!}</p>
         @endif
     </div>
 
-    <div class="input-group column-8 {{ $hasErrors ? 'error' : '' }}">
+    <div class="input-group column-8">
         {{ $slot }}
-        @foreach($fields as $field)
-            @if($errors->has($field))
-                <span class="caption">{{ $errors->first($field) }}</span>
-            @endif
-        @endforeach
     </div>
 </section>

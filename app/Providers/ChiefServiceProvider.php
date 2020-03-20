@@ -101,10 +101,6 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
         }
 
-
-        Blade::component('chief::back._layouts._partials.header', 'chiefheader');
-        Blade::component('chief::back._components.formgroup', 'chiefformgroup');
-
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
         Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {

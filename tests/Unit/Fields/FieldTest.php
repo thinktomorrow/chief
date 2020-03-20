@@ -113,7 +113,7 @@ class FieldTest extends TestCase
         $field = InputField::make('updated_at');
 
         $this->assertNull($field->getValue()); // without model
-        $this->assertEquals(Carbon::yesterday(), $field->getValue($model)); // with model
+        $this->assertEquals(Carbon::yesterday(), $field->model($model)->getValue()); // with model
     }
 
     /** @test */
@@ -153,7 +153,7 @@ class FieldTest extends TestCase
         $model = ArticleFake::create(['title:en' => 'existing title']);
         $field = InputField::make('title')->translatable(['nl','en']);
 
-        $this->assertEquals('existing title', $field->getValue($model, 'en'));
+        $this->assertEquals('existing title', $field->model($model)->getValue('en'));
         $this->assertNull($field->getValue($model, 'nl'));
     }
 
@@ -164,21 +164,13 @@ class FieldTest extends TestCase
         $model = ArticleFake::create(['title:nl' => 'existing title']);
         $field = InputField::make('title')->translatable(['nl','en']);
 
-        $this->assertNull($field->getValue($model, 'en'));
+        $this->assertNull($field->model($model)->getValue('en'));
     }
 
     /** @test */
     function it_has_a_default_view()
     {
-        $this->assertEquals('chief::back._fields.formgroup', InputField::make('test')->getView());
-    }
-
-    /** @test */
-    function it_can_set_a_view()
-    {
-        $field = InputField::make('test')->view('dummy.view');
-
-        $this->assertEquals('dummy.view', $field->getView());
+        $this->assertStringContainsString('<input type="text" name="test" id="test" class="input inset-s" placeholder="" value="">', InputField::make('test')->render());
     }
 
     /** @test */

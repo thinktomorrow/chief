@@ -2,7 +2,7 @@
     <chief-multiselect
             name="{{ isset($locale) ? $field->getName($locale) : $field->getName() }}"
             :options='@json($field->getOptions())'
-            selected='@json(old($key, $field->getSelected() ?? $manager->fieldValue($field, $locale ?? null)))'
+            selected='@json(old($key, $field->getSelected() ?? $field->getValue($locale ?? null)))'
             :multiple='@json(!!$field->allowMultiple())'
             grouplabel="group"
             groupvalues="values"
@@ -14,7 +14,7 @@
     <chief-multiselect
             name="{{ isset($locale) ? $field->getName($locale) : $field->getName() }}"
             :options='@json($field->getOptions())'
-            selected='@json(old($key, $field->getSelected() ?? $manager->fieldValue($field, $locale ?? null)))'
+            selected='@json(old($key, $field->getSelected() ?? $field->getValue($locale ?? null)))'
             :multiple='@json(!!$field->allowMultiple())'
     >
     </chief-multiselect>

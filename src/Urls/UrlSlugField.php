@@ -34,7 +34,7 @@ class UrlSlugField extends InputField implements Field
         return $this;
     }
 
-    public function getValue($model = null, ?string $locale = null)
+    public function getValue(?string $locale = null)
     {
         return old($this->key, $this->rawSlugValue());
     }

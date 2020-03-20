@@ -36,9 +36,10 @@
 
             <input type="hidden" name="_method" value="PUT">
 
-                @include('chief::back.managers._partials._form', [
-                    'fieldArrangement' => $manager->fieldArrangement('edit')
-                ])
+            @include($manager->editView(), array_merge([
+                'model' => $manager->existingModel(),
+                'fields' => $manager->editFields(),
+            ], $manager->editViewData()))
 
         </form>
     </div>

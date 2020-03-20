@@ -18,19 +18,13 @@ interface Field
 
     public function getName(string $locale = null): string;
 
-    public function getValue($model = null, string $locale = null);
+    public function getValue(string $locale = null);
 
     public function getLocales(): array;
 
     public function isLocalized(): bool;
 
-    public function hasCustomView(): bool;
-
-    public function getView(): string;
-
-    public function getElementView(): string;
-
-    public function getViewData(): array;
+    public function render(?string $locale = null): string;
 
     public function getLabel(): ?string;
 

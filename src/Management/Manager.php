@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Filters\Filters;
 use Thinktomorrow\Chief\Fields\FieldManager;
-use Thinktomorrow\Chief\Fields\FieldArrangement;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Management\Details\DetailSections;
 use Thinktomorrow\Chief\Management\Assistants\AssistedManager;
@@ -90,16 +89,6 @@ interface Manager extends FieldManager, AssistedManager
      * @return Fields
      */
     public function fieldsWithAssistantFields(): Fields;
-
-    /**
-     * This determines the arrangement of the manageable fields
-     * on the create and edit forms. By default, all fields
-     * are presented in their order of appearance
-     *
-     * @param null $key pinpoint to a specific field arrangement e.g. for create page.
-     * @return FieldArrangement
-     */
-    public function fieldArrangement($key = null): FieldArrangement;
 
     /**
      * Collection of filters to be used on the admin index pages.

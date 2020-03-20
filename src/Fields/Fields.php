@@ -89,6 +89,36 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($fields);
     }
 
+    public function render(): string
+    {
+        return array_reduce($this->fields, function(string $carry, Field $field){
+            return $carry . $field->render();
+        }, '');
+    }
+
+    public function keyed($key): Fields
+    {
+        $keys = (array) $key;
+
+        return new static(array_filter($this->fields, function(Field $field) use($keys){
+            return in_array($field->getKey(), $keys);
+        }));
+    }
+
+    public function tagged($tag): Fields
+    {
+        return new static(array_filter($this->fields, function(Field $field) use($tag){
+            return $field->tagged($tag);
+        }));
+    }
+
+    public function untagged(): Fields
+    {
+        return new static(array_filter($this->fields, function(Field $field){
+            return $field->untagged();
+        }));
+    }
+
     public function add(Field ...$fields): Fields
     {
         return new Fields(array_merge($this->fields, $fields));
