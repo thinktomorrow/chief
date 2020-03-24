@@ -41,6 +41,7 @@
 
 ?>
 
+<alert type="error">OPGELET! INSTABIELE COMPONENT 😱 <br><br>Niet bewaarde wijzigingen gaan verloren wanneer u een nieuw blokje toevoegd. <br>Voeg eerst alle blokjes toe en vul dan pas de velden in. <br><br>Met dank, <br>Het development team.</alert>
 <div id="{{ $fragmentField->getKey() }}">
     <fragments :existing-fragments="{{ $existingFragments }}" :empty-fragment="{{ json_encode($emptyFragment) }}" :errors="errors">
         <div slot-scope="{fragments, actions, errors}">

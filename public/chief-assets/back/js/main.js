@@ -27245,15 +27245,16 @@ var render = function() {
               expression: "isVisible"
             }
           ],
+          staticClass: "relative",
           class: _vm.typeclass
         },
         [
-          _c("div", { staticClass: "inline" }, [_vm._t("default")], 2),
+          _c("div", { staticClass: "p-2" }, [_vm._t("default")], 2),
           _vm._v(" "),
           _c(
             "span",
             {
-              staticClass: "alert__btn",
+              staticClass: "alert__btn absolute top-0 right-0 m-2",
               on: {
                 click: function($event) {
                   _vm.isVisible = false
