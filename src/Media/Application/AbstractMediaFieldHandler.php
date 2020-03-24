@@ -55,8 +55,8 @@ abstract class AbstractMediaFieldHandler
 
             /*
              * when value is null, it means that the asset is queued for detachment
-             * is key isn't an attached asset reference, we ignore it because this
-             * means that a newly uploaded asses is deleted in the same request
+             * if key isn't an attached asset reference, we ignore it because this
+             * means that a newly uploaded asset was deleted in the same request
              */
             if (is_null($value)) {
                 if ($keyIsAttachedAssetId) {

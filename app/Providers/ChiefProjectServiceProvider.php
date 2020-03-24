@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Thinktomorrow\Chief\Fragments\FragmentModel;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Menu\MenuItem;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +23,7 @@ class ChiefProjectServiceProvider extends ServiceProvider
             'singles'   => Single::class,
             'text'      => TextModule::class,
             'pagetitle' => PagetitleModule::class,
+            'fragment'  => FragmentModel::class,
         ]);
 
         // singles - text - pagetitle

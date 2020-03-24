@@ -50,6 +50,4 @@
 @endpush
 
 @include('chief::back._components.file-component')
-@include('chief::back._components.image-component')
 @include('chief::back._components.filesupload-component')
-@include('chief::back._components.imagesupload-component')

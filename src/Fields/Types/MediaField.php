@@ -12,10 +12,7 @@ abstract class MediaField extends AbstractField implements Field
 
     protected $customValidationRules = [];
 
-    protected function getLocalizedNameFormat(): string
-    {
-        return 'files.:name.:locale';
-    }
+    protected $localizedFormat = 'files.:name.:locale';
 
     public function validation($rules, array $messages = [], array $attributes = []): Field
     {
@@ -26,10 +23,5 @@ abstract class MediaField extends AbstractField implements Field
         return $this;
     }
 
-    public function getValue(string $locale = null)
-    {
-        return $this->getMedia($this->getModel(), $locale);
-    }
-
-    abstract protected function getMedia(HasAsset $model, ?string $locale = null);
+    abstract public function getMedia(HasAsset $model, ?string $locale = null);
 }

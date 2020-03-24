@@ -6,6 +6,7 @@
     "type": "chief-cms",
     "require": {
         "php": "^7.2.0",
+        "ext-json": "*",
         "astrotomic/laravel-translatable": "^11.3",
         "barryvdh/laravel-debugbar": "^3.2",
         "doctrine/dbal": "^2.5",
@@ -19,7 +20,7 @@
         "thinktomorrow/squanto": "~0.7.0",
         "thinktomorrow/trap": "^0.1.2",
         "thinktomorrow/url": "~1.0.0",
-        "thinktomorrow/vine": "~0.2.1"
+        "thinktomorrow/vine": "~0.2.1",
     },
     "require-dev": {
         "filp/whoops": "^2.1",

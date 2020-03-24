@@ -13,6 +13,7 @@ principles.
 - Changed: renamed `Thinktomorrow\Chief\Management\Details\Sections` to `Thinktomorrow\Chief\Management\Details\DetailSections`.
 - Changed: renamed `Thinktomorrow\Chief\Management\Details\HasSections` to `Thinktomorrow\Chief\Management\Details\HasDetailSections`.
 - Changed: Blade component alias `chiefformgroup` renamed to `formgroup`
+- Changed: `Field::default()` sets the default value in case the model does not provide one. `Field::value()` forces the value.
 - Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.

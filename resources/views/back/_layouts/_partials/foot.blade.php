@@ -26,6 +26,7 @@
 
 @stack('custom-scripts')
 
+<script src="{{ asset('/assets/back/js/vendor/slim.min.js') }}"></script>
 <script>
 
     /**
@@ -75,6 +76,9 @@
                 }).catch((errors) => {
                     alert('error');
                 })
+            },
+            duplicateImageComponent: function(options){
+                Eventbus.$emit('duplicate-image-component', options);
             }
         },
     });

@@ -27,6 +27,7 @@ class ViewServiceProvider extends ServiceProvider
 
         Blade::component('chief::back._layouts._partials.header', 'chiefheader');
         Blade::component('chief::back._components.formgroup', 'formgroup');
+        Blade::component('chief::back._components.expand', 'expand');
     }
 
     public function register()

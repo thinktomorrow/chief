@@ -20,10 +20,13 @@ class FileField extends MediaField implements Field
     public static function make(string $key): Field
     {
         return (new static(new FieldType(FieldType::FILE), $key))
-            ->locales([config('app.fallback_locale', 'nl')]);
+            ->locales([config('app.fallback_locale', 'nl')])
+            ->valueResolver(function($model = null, $locale = null, FileField $field){
+                return $field->getMedia($model, $locale);
+            });
     }
 
-    protected function getMedia(HasAsset $model, ?string $locale = null)
+    public function getMedia(HasAsset $model, ?string $locale = null)
     {
         $files = [];
         $locale = $locale ?? app()->getLocale();

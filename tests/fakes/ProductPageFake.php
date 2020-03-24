@@ -14,4 +14,9 @@ class ProductPageFake extends Page
     {
         return 'product-page-fake-content';
     }
+
+    public static function managedModelKey(): string
+    {
+        return 'products';
+    }
 }

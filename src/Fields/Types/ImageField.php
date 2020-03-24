@@ -19,7 +19,10 @@ class ImageField extends MediaField implements Field
     public static function make(string $key): Field
     {
         return (new static(new FieldType(FieldType::IMAGE), $key))
-            ->locales([config('app.fallback_locale', 'nl')]);
+            ->locales([config('app.fallback_locale', 'nl')])
+            ->valueResolver(function($model = null, $locale = null, ImageField $field){
+                return $field->getMedia($model, $locale);
+            });
     }
 
     protected function getLocalizedNameFormat(): string
@@ -27,7 +30,7 @@ class ImageField extends MediaField implements Field
         return 'images.:name.:locale';
     }
 
-    protected function getMedia(HasAsset $model, ?string $locale = null)
+    public function getMedia(HasAsset $model, ?string $locale = null)
     {
         $images = [];
         $locale = $locale ?? app()->getLocale();

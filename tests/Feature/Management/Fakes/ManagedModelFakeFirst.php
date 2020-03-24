@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
@@ -42,6 +43,8 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
         Publishable,
         ActingAsParent,
         ActingAsChild;
+
+    use HasFragments;
 
     public $table = 'fake_managed_models';
     public $dynamicKeys = ['dynamic_column'];

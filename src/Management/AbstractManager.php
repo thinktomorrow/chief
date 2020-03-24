@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Fragments\ManagesFragments;
 use Thinktomorrow\Chief\Management\Assistants\ManagesAssistants;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasDetailSections;
@@ -30,6 +31,7 @@ abstract class AbstractManager
     use ManagesPagebuilder;
     use TranslatableCommand;
     use ManagesAssistants;
+    use ManagesFragments;
 
     protected $translation_columns = [];
 

@@ -18,6 +18,8 @@ interface Field
 
     public function getName(string $locale = null): string;
 
+    public function getDottedName(string $locale = null): string;
+
     public function getValue(string $locale = null);
 
     public function getLocales(): array;

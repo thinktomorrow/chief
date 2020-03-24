@@ -43,6 +43,21 @@ class HasDynamicAttributesTest extends TestCase
     }
 
     /** @test */
+    public function a_model_can_set_option_to_allow_all_properties_to_be_dynamic()
+    {
+        $model = new FullDynamicModelStub(['content' => 'model content', 'title' => 'model title']);
+
+        $this->assertEquals('model content', $model->content);
+        $this->assertEquals('model content', $model->dynamic('content'));
+
+        // own attribute remains untouched
+        $this->assertEquals('model title', $model->title);
+        $this->assertNull($model->dynamic('title'));
+
+        $this->assertEquals(new DynamicAttributes(['content' => 'model content']), $model->values);
+    }
+
+    /** @test */
     public function it_can_set_a_dynamic_attribute()
     {
         $model = new ModelStub(['values' => ['title' => 'title value']]);

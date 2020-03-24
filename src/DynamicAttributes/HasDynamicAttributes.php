@@ -22,7 +22,15 @@ trait HasDynamicAttributes
             return false;
         }
 
-        return in_array($key, $this->dynamicKeys());
+        if(in_array($key, $this->dynamicKeys())) {
+            return true;
+        }
+
+        if(in_array('*', $this->dynamicKeys())){
+            return !in_array($key, $this->dynamicKeysBlacklist());
+        }
+
+        return false;
     }
 
     /**
@@ -44,6 +52,17 @@ trait HasDynamicAttributes
     protected function dynamicKeys(): array
     {
         return property_exists($this, 'dynamicKeys') ? $this->dynamicKeys : [];
+    }
+
+    /**
+     * When allowing by default for all attributes to be dynamic, you can use
+     * the blacklist to mark certain attributes as non dynamic.
+     *
+     * @return array
+     */
+    protected function dynamicKeysBlacklist(): array
+    {
+        return property_exists($this, 'dynamicKeysBlacklist') ? $this->dynamicKeysBlacklist : [];
     }
 
     /**

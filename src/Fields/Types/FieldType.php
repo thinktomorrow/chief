@@ -14,13 +14,12 @@ class FieldType
     const PHONENUMBER = 'phonenumber';    // Timestamp input
     const HTML = 'html';    // Html text (wysiwyg)
     const SELECT = 'select';  // Select options
-    //const MEDIA = 'media';  // media file
     const FILE = 'file';  // regular file
     const IMAGE = 'image';  // image (slim uploader)
-    const DOCUMENT = 'document';  // documents
     const RADIO = 'radio';  // radio select
     const CHECKBOX = 'checkbox';  // checkbox select
     const PAGEBUILDER = 'pagebuilder';  // the most special field there is...
+    const FRAGMENT = 'fragment';
 
     /** @var string */
     private $type;

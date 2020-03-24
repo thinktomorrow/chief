@@ -24,6 +24,39 @@
 
     <link rel="stylesheet" type="text/css" href="{{ chief_cached_asset('/chief-assets/back/css/main.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('/assets/back/css/vendor/slim.min.css') }}">
+    <style type="text/css">
+
+        .slim{
+            max-height: 250px;
+        }
+
+        .slim-error{
+            min-height:60px;
+        }
+
+        .slim-upload-status{
+            padding: .3em;
+        }
+
+        .slim .slim-area .slim-upload-status[data-state=error] {
+            right: .5em;
+            left: .5em;
+            line-height: 1.1;
+            padding: .3em;
+            white-space: normal;
+        }
+
+        .slim .slim-area .slim-result img{
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb [data-state=empty] {
+            height: 80px;
+        }
+    </style>
+
     @stack('custom-styles')
     @include('chief::back._layouts._partials.project-head')
 </head>

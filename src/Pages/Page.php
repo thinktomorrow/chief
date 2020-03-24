@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
@@ -43,28 +44,18 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     }
 
     use Morphable;
-
     use AssetTrait;
-
     use Translatable;
-
     use SoftDeletes;
-
     use Publishable;
-
     use Featurable;
-
     use Archivable;
-
     use ActingAsParent;
-
     use ActingAsChild;
-
     use WithSnippets;
-
     use ResolvingRoute;
-
     use Viewable;
+    use HasFragments;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = PageTranslation::class;

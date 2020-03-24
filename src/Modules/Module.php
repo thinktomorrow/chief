@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Modules;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Management\Managers;
@@ -38,6 +39,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
     use ActingAsChild;
     use WithSnippets;
     use Viewable;
+    use HasFragments;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = ModuleTranslation::class;

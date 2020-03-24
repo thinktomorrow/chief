@@ -7,6 +7,10 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Fields\Types\SelectField;
+use Thinktomorrow\Chief\Fragments\FragmentField;
+use Thinktomorrow\Chief\Fragments\Fragments;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\States\PageStatePresenter;
@@ -82,6 +86,20 @@ class PageManager extends AbstractManager implements Manager
     {
         return parent::fields()->add(
             $this->pageBuilderField(),
+//            ImageField::make('avatar')->multiple()->validation('max:20'),
+            FragmentField::make('fragment-1', new Fields([
+                InputField::make('title')->label('Testje titel')->translatable(['nl','en']),
+                InputField::make('content')->label('Testje content'),
+SelectField::make('useful')->options(['one' => 'one', 'two' => 'two'])->multiple(),
+//                HtmlField::make('awesome')->label('dududue'),
+                ImageField::make('avatar')->multiple(),
+            ])),
+//            FragmentField::make('fragment-2', new Fields([
+//                InputField::make('title')->label('Testje titel 2'),
+//                InputField::make('content')->label('Testje content 2'),
+//                InputField::make('button_link')->label('Knop link tekstje')->prepend('http'),
+//                ImageField::make('avatar'),
+//            ])),
             InputField::make('title')->translatable($this->model->availableLocales())
                 ->validation('required-fallback-locale|max:200', [], [
                     'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',
