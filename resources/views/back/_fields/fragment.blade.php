@@ -2,128 +2,117 @@
     // Avoid confusion in foreach loop below.
     $fragmentField = $field;
 
-    $emptyFragment = null;
-    $existingFragments = [];
+    // The list of duplicatable fields in the order of appearance.
+    // This reference will also work as an DOM identifier for each field
+    $duplicatableFields = [];
 
-    foreach($fragmentField->getFragments() as $i => $fragment) {
-        $existingFragments[] = [
-            'key' => $fragment->hasModelId() ? $fragment->getModelId() . '_'.mt_rand(1,9999) : 'key_' . mt_rand(1,9999), // unique key for vue for loops
-            'modelId' => $fragment->hasModelId() ? $fragment->getModelId() : null,
-            'modelIdInputName' => $fragment->getModelIdInputName(),
-            'fields' => array_map(function(\Thinktomorrow\Chief\Fields\Types\Field $field){
-                return [
-                    'id' => $field->getDottedName(),
-                    'label' => $field->getLabel(),
-                    'content' => $field->render(),
-                ];
-            }, $fragment->getFields()->all()),
-        ];
-
-        if($i == 0) {
-            $emptyFragment = [
-                'modelId' => null,
-                'modelIdInputName' => null,
-                'fields' => array_map(function(\Thinktomorrow\Chief\Fields\Types\Field $field){
-                    return [
-                        'id' => $field->getDottedName(),
-                        'label' => $field->getLabel(),
-                        'content' => $field instanceof \Thinktomorrow\Chief\Fields\Types\MediaField
-                            ? $field->value([])->render()
-                            : $field->value('')->render(),
-                    ];
-                }, $fragment->getFields()->all()),
-            ];
-        }
-
+    foreach($fragmentField->getFragments() as $i => $fragment){
+        $duplicatableFields[$fragment->getKey()] = array_map(function(\Thinktomorrow\Chief\Fields\Types\Field $field) use($model, $fragment){
+            return (new \Thinktomorrow\Chief\Fields\FieldReference($model->managedModelKey(), $field->getKey(), $fragment->getKey()))->toArray();
+        }, $fragment->getFields()->all());
     }
-
-    $existingFragments = json_encode($existingFragments);
-
 ?>
 
-<alert type="error">OPGELET! INSTABIELE COMPONENT 😱 <br><br>Niet bewaarde wijzigingen gaan verloren wanneer u een nieuw blokje toevoegd. <br>Voeg eerst alle blokjes toe en vul dan pas de velden in. <br><br>Met dank, <br>Het development team.</alert>
+<alert type="error" class="p-4">😱 EXPERIMENTELE COMPONENT <br><br>Onderstaande blokken bevatten nieuwe functionaliteit in chief. Het gaat om het dynamisch toevoegen van veldjes. Een bug ontdekt? Team dev wants to know! <br><br> Met dank, <br>Het tt development team.</alert>
 <div id="{{ $fragmentField->getKey() }}">
-    <fragments :existing-fragments="{{ $existingFragments }}" :empty-fragment="{{ json_encode($emptyFragment) }}" :errors="errors">
-        <div slot-scope="{fragments, actions, errors}">
-            <fragment v-for="(fragment,key) in fragments" :key="fragment.key" :item="fragment" :errors="errors">
-                <div v-if="!deleted" slot-scope="{fragment, errors, deleteFragment, deleted}" class="mb-4 p-4 border">
-                    <input type="hidden" :name="fragment.modelIdInputName" :value="fragment.modelId">
-                    <fieldset v-for="(field,index) in fragment.fields" :key="fragment.key + '_fieldset_' + index">
-                        <label for="field.id" v-text="field.label"></label>
-                        <component :is="{template:field.content}" />
-                    </fieldset>
-                    <span @click="deleteFragment" class="cursor-pointer">DELETE</span>
-                </div>
-            </fragment>
+    <div data-fragments>
+        @foreach($fragmentField->getFragments() as $i => $fragment)
+            <fieldset id="{{ $fragment->getKey().'-'.$i }}" data-fragment="{{ $fragment->getKey() }}" class="mb-4 p-4 border">
+                @if($fragment->hasModelId())
+                    <input type="hidden" name="{{ $fragment->getModelIdInputName() }}" value="{{ $fragment->getModelId() }}">
+                @endif
+                @foreach($fragment->getFields() as $field)
+                    <label for="{{ $field->getDottedName() }}">{{ $field->getLabel() }}</label>
+                    <div data-fragment-field="{{ $field->getKey() }}">
+                        {!! $field->render() !!}
+                    </div>
+                @endforeach
+                @if($i > 0)
+                    <span data-fragment-delete class="cursor-pointer">DELETE</span>
+                @endif
+            </fieldset>
+        @endforeach
+    </div>
 
-            <span @click="actions.duplicateFragment" class="cursor-pointer">ADD</span>
-        </div>
-    </fragments>
-
+    <span data-fragment-add class="cursor-pointer">ADD</span>
 </div>
 
-{{--@push('custom-scripts-after-vue')--}}
-{{--    <script>--}}
+@push('custom-scripts-after-vue')
+    <script>
 
-{{--        function triggerStuff(){--}}
-{{--            window.App.doStuff();--}}
-{{--        }--}}
+        // TODO: place the generic logic in a js file
+        ;(function(){
+            function initFragment(key, duplicatableFields){
+                var fragmentsContainer = document.getElementById(key),
+                    fragmentsInnerContainer = fragmentsContainer.querySelector('[data-fragments]'),
+                    addTrigger = fragmentsContainer.querySelector('[data-fragment-add]');
 
-{{--        ;(function(){--}}
-{{--            function initFragment(key){--}}
-{{--                var fragmentsContainer = document.getElementById(key),--}}
-{{--                    fragmentsInnerContainer = fragmentsContainer.querySelector('[data-fragments]'),--}}
-{{--                    addTrigger = fragmentsContainer.querySelector('[data-fragment-add]');--}}
+                function addFragment(){
+                    var firstFragment = fragmentsContainer.querySelector('[data-fragment]'),
+                        fragmentKey = firstFragment.dataset.fragment,
+                        copiedFragment = firstFragment.cloneNode(true),
+                        nextId = fragmentsInnerContainer.childElementCount,
+                        fragmentId = copiedFragment.id + nextId;
 
-{{--                function addFragment(){--}}
-{{--                    var firstFragment = fragmentsContainer.querySelector('[data-fragment]'),--}}
-{{--                        copiedFragment = firstFragment.cloneNode(true),--}}
-{{--                        nextId = fragmentsInnerContainer.childElementCount;--}}
+                    copiedFragment.id = copiedFragment.id + nextId;
+                    copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';
 
-{{--                    copiedFragment.innerHTML = copiedFragment.innerHTML.replace(/\[0\]/g, '['+nextId+']'); // name attribute--}}
-{{--                    copiedFragment.innerHTML = copiedFragment.innerHTML.replace(/\.0\./g, '.'+nextId+'.'); // id attribute--}}
-{{--                    copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';--}}
+                    Array.from(copiedFragment.elements).forEach(function(el){
+                        el.value = null;
+                    });
 
-{{--                    // How to reinit slim....--}}
-{{--                    triggerStuff();--}}
+                    fragmentsInnerContainer.appendChild(copiedFragment);
+                    registerListeners();
 
-{{--                    // Since copiedFragment is a fieldset, we can loop over all the underlying fields and empty them--}}
+                    let newFragment = fragmentsInnerContainer.querySelector('#' + fragmentId);
 
-{{--                    fragmentsInnerContainer.appendChild(copiedFragment);--}}
+                    for(key in duplicatableFields[fragmentKey]) {
+                        const references = duplicatableFields[fragmentKey][key];
 
-{{--                    Array.from(copiedFragment.elements).forEach(function(el){--}}
-{{--                        el.value = null;--}}
-{{--                    });--}}
-{{--                    // console.log(copiedFragment.elements.reset());--}}
+                        axios.get('/admin/api/field', {
+                            params: references,
+                            responseType: 'json',
+                        }).then(function(response){
 
-{{--                    registerListeners();--}}
-{{--                }--}}
+                            let fieldContainer = newFragment.querySelector('[data-fragment-field="' + references.fieldKey + '"]');
 
-{{--                function removeFragment(event){--}}
-{{--                    var fragment = event.target.closest('[data-fragment]');--}}
+                            fieldContainer.innerHTML = response.data.data;
+                            fieldContainer.innerHTML = fieldContainer.innerHTML.replace(/\[0\]/g, '['+nextId+']'); // name attribute
+                            fieldContainer.innerHTML = fieldContainer.innerHTML.replace(/\.0\./g, '.'+nextId+'.'); // id attribute
 
-{{--                    // Do not remove last fragment--}}
-{{--                    if(fragmentsContainer.querySelectorAll('[data-fragment]').length < 2){--}}
-{{--                        return;--}}
-{{--                    }--}}
+                            new Vue({el: fieldContainer});
 
-{{--                    fragmentsInnerContainer.removeChild(fragment);--}}
-{{--                }--}}
+                            // Reinit wysiwyg fields
+                            $R('[data-editor]');
+                        });
+                    }
+                }
 
-{{--                function registerListeners(){--}}
-{{--                    addTrigger.addEventListener('click', addFragment);--}}
+                function removeFragment(event){
+                    var fragment = event.target.closest('[data-fragment]');
 
-{{--                    var deleteTriggers = fragmentsInnerContainer.querySelectorAll('[data-fragment-delete]');--}}
-{{--                    for(var i =0; i < deleteTriggers.length; i++) {--}}
-{{--                        deleteTriggers[i].addEventListener('click', removeFragment);--}}
-{{--                    }--}}
-{{--                }--}}
+                    // Do not remove last fragment
+                    if(fragmentsContainer.querySelectorAll('[data-fragment]').length < 2){
+                        return;
+                    }
 
-{{--                registerListeners();--}}
-{{--            }--}}
+                    fragmentsInnerContainer.removeChild(fragment);
+                }
 
-{{--            initFragment('{{$fragmentField->getKey()}}');--}}
-{{--        })();--}}
+                function registerListeners(){
+                    addTrigger.addEventListener('click', addFragment);
 
-{{--    </script>--}}
-{{--@endpush--}}
+                    var deleteTriggers = fragmentsInnerContainer.querySelectorAll('[data-fragment-delete]');
+                    for(var i =0; i < deleteTriggers.length; i++) {
+                        deleteTriggers[i].addEventListener('click', removeFragment);
+                    }
+                }
+
+                registerListeners();
+            }
+
+            initFragment('{{$fragmentField->getKey()}}', JSON.parse('@json($duplicatableFields)'));
+        })();
+
+    </script>
+@endpush

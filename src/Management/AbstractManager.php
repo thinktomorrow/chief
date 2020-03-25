@@ -9,6 +9,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Fields\FieldReference;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Fields\Types\Field;

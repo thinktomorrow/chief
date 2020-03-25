@@ -15,19 +15,7 @@ trait ManagesFragments
         $payload = $request->input($fragmentField->getDottedName(), []);
         $imagePayload = $request->input('images.'.$fragmentField->getDottedName(), []);
 
-        // Merge with any asset input
-//        foreach($imagePayload as $k => $imagePayloadEntry) {
-//            if(isset($payload[$k])) {
-//                $payload[$k] = array_merge($payload[$k], $imagePayloadEntry);
-//            } else {
-//                $payload[$k] = $imagePayloadEntry;
-//            }
-//        }
-
-//        trap($payload);
-
-        // TEST
-
+        // Compose Fragment instances for each payload entry
         $fragments = array_map(function($fragmentPayload) use($fragmentField){
             return Fragment::fromRequestPayload($fragmentField->getKey(), $fragmentPayload); // (new Fragment($field->getKey(), $fragmentPayload));
         }, $payload);
@@ -46,19 +34,14 @@ trait ManagesFragments
                 $fieldKey = key($imagePayload[$i]);
                 $imageField = $this->fields()->keyed($fragmentField->getKey())->first()->getFields()->keyed($fieldKey)->first();
 
-                app(ImageFieldHandler::class)->handle(FragmentModel::find($modelId), $imageField, $imagePayload[$i][$fieldKey] , $request);
+                $this->saveFragmentImageFields($imageField, $imagePayload[$i][$fieldKey], FragmentModel::find($modelId), $request);
             }
         }
 
     }
 
-    private function saveFragmentFileFields(FileField $field, Request $request)
+    private function saveFragmentImageFields(ImageField $field, array $values, FragmentModel $model, Request $request)
     {
-        app(FileFieldHandler::class)->handle($this->model, $field, $request);
-    }
-
-    private function saveFragmentImageFields(ImageField $field, Request $request)
-    {
-        app(ImageFieldHandler::class)->handle($this->model, $field, $request);
+        app(ImageFieldHandler::class)->handle($model, $field, $values, $request);
     }
 }

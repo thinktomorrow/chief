@@ -26,8 +26,10 @@ class FileField extends MediaField implements Field
             });
     }
 
-    public function getMedia(HasAsset $model, ?string $locale = null)
+    public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
+        if(!$model) return [];
+
         $files = [];
         $locale = $locale ?? app()->getLocale();
 

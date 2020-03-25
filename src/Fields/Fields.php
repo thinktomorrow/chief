@@ -172,9 +172,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        return (isset($this->fields[$offset]))
-            ? $this->fields[$offset]
-            : null;
+        if(!isset($this->fields[$offset])){
+            throw new \RuntimeException('No field found by key [' . $offset . ']');
+        }
+
+        return $this->fields[$offset];
     }
 
     public function offsetSet($offset, $value)

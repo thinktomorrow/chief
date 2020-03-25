@@ -86,20 +86,6 @@ class PageManager extends AbstractManager implements Manager
     {
         return parent::fields()->add(
             $this->pageBuilderField(),
-//            ImageField::make('avatar')->multiple()->validation('max:20'),
-            FragmentField::make('fragment-1', new Fields([
-                InputField::make('title')->label('Testje titel')->translatable(['nl','en']),
-                InputField::make('content')->label('Testje content'),
-SelectField::make('useful')->options(['one' => 'one', 'two' => 'two'])->multiple(),
-//                HtmlField::make('awesome')->label('dududue'),
-                ImageField::make('avatar')->multiple(),
-            ])),
-//            FragmentField::make('fragment-2', new Fields([
-//                InputField::make('title')->label('Testje titel 2'),
-//                InputField::make('content')->label('Testje content 2'),
-//                InputField::make('button_link')->label('Knop link tekstje')->prepend('http'),
-//                ImageField::make('avatar'),
-//            ])),
             InputField::make('title')->translatable($this->model->availableLocales())
                 ->validation('required-fallback-locale|max:200', [], [
                     'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',

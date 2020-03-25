@@ -30,8 +30,10 @@ class ImageField extends MediaField implements Field
         return 'images.:name.:locale';
     }
 
-    public function getMedia(HasAsset $model, ?string $locale = null)
+    public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
+        if(!$model) return [];
+
         $images = [];
         $locale = $locale ?? app()->getLocale();
 

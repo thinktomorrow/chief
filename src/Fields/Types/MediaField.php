@@ -23,5 +23,5 @@ abstract class MediaField extends AbstractField implements Field
         return $this;
     }
 
-    abstract public function getMedia(HasAsset $model, ?string $locale = null);
+    abstract public function getMedia(HasAsset $model = null, ?string $locale = null);
 }

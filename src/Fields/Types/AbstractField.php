@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Fields\Types;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fields\FieldName;
+use Thinktomorrow\Chief\Fields\FieldReference;
 use Thinktomorrow\Chief\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 
