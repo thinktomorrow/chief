@@ -47,9 +47,6 @@ class UpdateFragmentsTest extends TestCase
         // There are two fragment records created
         $fragmentModels = FragmentModel::all();
 
-        $this->assertEquals([
-            Fragment::fromModel($fragmentModels[0]),
-            Fragment::fromModel($fragmentModels[1]),
-        ], $first->getFragments('fragment-field'));
+        $this->assertEquals($fragmentModels, $first->getFragments('fragment-field'));
     }
 }

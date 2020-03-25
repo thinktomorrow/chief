@@ -49,7 +49,9 @@ class FragmentField extends AbstractField implements Field
             }
 
             if(count($modelFragments = $this->model->getFragments($this->getKey())) > 0) {
-                $fragments = $modelFragments;
+                $fragments = $modelFragments->map(function (FragmentModel $fragmentModel) {
+                    return Fragment::fromModel($fragmentModel);
+                })->all();
             }
         }
 

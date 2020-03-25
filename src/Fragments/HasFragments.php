@@ -2,15 +2,13 @@
 
 namespace Thinktomorrow\Chief\Fragments;
 
+use Illuminate\Support\Collection;
+
 trait HasFragments
 {
-    public function getFragments(string $key): array
+    public function getFragments(string $key): Collection
     {
-        $fragmentModels = $this->fragments()->where('key', $key)->orderBy('order', 'ASC')->get();
-
-        return $fragmentModels->map(function (FragmentModel $fragmentModel) {
-            return Fragment::fromModel($fragmentModel);
-        })->all();
+        return $this->fragments()->where('key', $key)->orderBy('order', 'ASC')->get();
     }
 
     /**

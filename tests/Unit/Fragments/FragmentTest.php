@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fragments  ;
 
 use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\FragmentModel;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class FragmentTest extends TestCase
@@ -28,9 +29,9 @@ class FragmentTest extends TestCase
 
         $this->assertCount(2, $this->model->getFragments('fragment-key'));
 
-        $fragment = $this->model->getFragments('fragment-key')[0];
-        $this->assertInstanceOf(Fragment::class, $fragment);
-        $this->assertEquals('title-one', $fragment->getValue('title'));
+        $fragment = $this->model->getFragments('fragment-key')->first();
+        $this->assertInstanceOf(FragmentModel::class, $fragment);
+        $this->assertEquals('title-one', $fragment->title);
     }
 
     /** @test */
@@ -41,10 +42,10 @@ class FragmentTest extends TestCase
         $this->model->saveFragment(Fragment::fromNew('fragment-other-key', ['title' => 'title-three']), 3);
 
         $this->assertCount(2, $this->model->getFragments('fragment-key'));
-        $this->assertEquals('title-one', $this->model->getFragments('fragment-key')[0]->getValue('title'));
+        $this->assertEquals('title-one', $this->model->getFragments('fragment-key')->first()->title);
 
         $this->assertCount(1, $this->model->getFragments('fragment-other-key'));
-        $this->assertEquals('title-three', $this->model->getFragments('fragment-other-key')[0]->getValue('title'));
+        $this->assertEquals('title-three', $this->model->getFragments('fragment-other-key')->first()->title);
     }
 
     /** @test */
@@ -53,6 +54,6 @@ class FragmentTest extends TestCase
         $this->model->saveFragment(Fragment::fromNew('fragment-key', ['title' => 'title-one']), 2);
         $this->model->saveFragment(Fragment::fromNew('fragment-key', ['title' => 'title-two']), 1);
 
-        $this->assertEquals('title-two', $this->model->getFragments('fragment-key')[0]->getValue('title'));
+        $this->assertEquals('title-two', $this->model->getFragments('fragment-key')->first()->title);
     }
 }
