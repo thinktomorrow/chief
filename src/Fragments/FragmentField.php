@@ -80,4 +80,17 @@ class FragmentField extends AbstractField implements Field
 
         return $fragments;
     }
+
+    public function getDuplicatableFields(): array
+    {
+        if(count($this->getFragments()) < 1) return [];
+
+        // Take the fields from the first fragment as a starting point for duplication
+        return array_map(function(\Thinktomorrow\Chief\Fields\Types\Field $field){
+            return $field->valueResolver(function($model = null, $locale = null, $field){
+                if($field instanceof \Thinktomorrow\Chief\Fields\Types\MediaField) { return []; }
+                return null;
+            })->render();
+        }, $this->getFragments()[0]->getFields()->clone()->all());
+    }
 }
