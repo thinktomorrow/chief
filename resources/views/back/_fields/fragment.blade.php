@@ -58,8 +58,8 @@
                         nextId = fragmentsInnerContainer.childElementCount,
                         fragmentId = copiedFragment.id + nextId;
 
-                    // copiedFragment.id = copiedFragment.id + nextId;
-                    // copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';
+                    copiedFragment.id = copiedFragment.id + nextId;
+                    copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';
 
                     Array.from(copiedFragment.querySelectorAll('[data-fragment-no-duplicate]')).forEach(function(el){ el.remove()});
 
