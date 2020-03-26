@@ -5,15 +5,11 @@
             <span class="icon icon-arrow-right text-border inline-s tree-parent"></span>
         @endif
 
-        @if($item->auto_generated)
-            {{ $item->label }}
-        @else
-            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="color-inherit">{{ $item->label }}</a>
-            @if($item->hidden_in_menu)
-                &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
-            @elseif($item->draft)
-                &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
-            @endif
+        <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="color-inherit">{{ $item->label }}</a>
+        @if($item->hidden_in_menu)
+            &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
+        @elseif($item->draft)
+            &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
         @endif
     </div>
 
