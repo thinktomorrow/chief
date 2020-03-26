@@ -3,6 +3,7 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
 use Thinktomorrow\Chief\Modules\Module;
@@ -14,6 +15,11 @@ class ModulesController extends Controller
     {
         $this->authorize('view-page');
         $modules = Module::withoutPageSpecific()->orderBy('morph_key')->get()->groupBy('morph_key');
+
+        // Remove unmanaged modules
+        $modules = $modules->reject(function($modules){
+            return (!$modules->first() || !contract($modules->first(), ManagedModel::class));
+        });
 
         return view('chief::back.modules.index', [
             'modules' => $modules,
