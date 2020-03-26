@@ -3,28 +3,42 @@
     $fragmentField = $field;
 ?>
 
-<alert type="error" class="p-4">😱 EXPERIMENTELE COMPONENT <br><br>Onderstaande blokken bevatten nieuwe functionaliteit in chief. Het gaat om het dynamisch toevoegen van veldjes. Een bug ontdekt? Team dev wants to know! <br><br> Met dank, <br>Het tt development team.</alert>
+{{-- <alert type="error" class="p-4">😱 EXPERIMENTELE COMPONENT <br><br>Onderstaande blokken bevatten nieuwe functionaliteit in chief. Het gaat om het dynamisch toevoegen van veldjes. Een bug ontdekt? Team dev wants to know! <br><br> Met dank, <br>Het tt development team.</alert> --}}
 <div id="{{ $fragmentField->getKey() }}">
     <div data-fragments>
         @foreach($fragmentField->getFragments() as $i => $fragment)
-            <fieldset id="{{ $fragment->getKey().'-'.$i }}" data-fragment="{{ $fragment->getKey() }}" class="mb-4 p-4 border">
-                @if($fragment->hasModelId())
-                    <input data-fragment-no-duplicate type="hidden" name="{{ $fragment->getModelIdInputName() }}" value="{{ $fragment->getModelId() }}">
-                @endif
-                @foreach($fragment->getFields() as $field)
-                    <label for="{{ $field->getDottedName() }}">{{ $field->getLabel() }}</label>
-                    <div data-fragment-field="{{ $field->getKey() }}">
-                        {!! $field->render() !!}
-                    </div>
-                @endforeach
-                @if($i > 0)
-                    <span data-fragment-delete class="cursor-pointer">DELETE</span>
-                @endif
+            <fieldset id="{{ $fragment->getKey().'-'.$i }}" data-fragment="{{ $fragment->getKey() }}" class="border bg-white border-grey-100 rounded mb-4">
+                <div class="squished bg-grey-100" style="margin-bottom:-3px;">
+                    Kolom {{ $i+=1 }}
+                </div>
+                <div class="inset">
+                    @if($fragment->hasModelId())
+                        <input data-fragment-no-duplicate type="hidden" name="{{ $fragment->getModelIdInputName() }}" value="{{ $fragment->getModelId() }}">
+                    @endif
+                    @foreach($fragment->getFields() as $field)
+                    <div class="mb-4">
+                        <label for="{{ $field->getDottedName() }}">{{ $field->getLabel() }}</label>
+                        <div data-fragment-field="{{ $field->getKey() }}">
+                            {!! $field->render() !!}
+                        </div>
+                        </div>
+                    @endforeach
+                    @if($i > 0)
+                    <div class="flex justify-end items-center my-2 cursor-pointer ">
+                        <div data-fragment-delete class="squished-s text-error hover:bg-grey-50 center-y">
+                        <svg width="18" height="18"><use data-v-3997f6a0="" xlink:href="#trash"></use></svg>
+                        <span>Verwijder deze blok</span></div>
+                    </span>
+                    @endif
+                </div>
             </fieldset>
         @endforeach
     </div>
-
-    <span data-fragment-add class="cursor-pointer">ADD</span>
+    <div class="flex justify-center items-center w-full h-8 center-y relative z-10">
+        <span data-fragment-add class="block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600">
+            <svg width="24" height="24" class="fill-current"><use xlink:href="#plus"/></svg>
+        </span>
+    </div>
 </div>
 
 @push('custom-scripts-after-vue')
@@ -44,8 +58,8 @@
                         nextId = fragmentsInnerContainer.childElementCount,
                         fragmentId = copiedFragment.id + nextId;
 
-                    copiedFragment.id = copiedFragment.id + nextId;
-                    copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';
+                    // copiedFragment.id = copiedFragment.id + nextId;
+                    // copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';
 
                     Array.from(copiedFragment.querySelectorAll('[data-fragment-no-duplicate]')).forEach(function(el){ el.remove()});
 
