@@ -7,7 +7,7 @@
         > a:not(.label) {
             @apply text-grey-600;
         }
-        
+
         &:hover, &:hover > a:not(.label) {
             @apply text-primary-600;
         }
@@ -18,7 +18,7 @@
 .--bottomline {
     transition: 0.3s all ease;
     @apply no-underline relative;
-  
+
     &:after{
       content:"";
       bottom: -1px;
@@ -27,7 +27,7 @@
 
       @apply block absolute h-0 left-0 w-0 bg-primary-500;
     }
-  
+
     &:hover, &.active{
         @apply text-primary-500 no-underline;
 

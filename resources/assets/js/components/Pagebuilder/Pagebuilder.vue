@@ -13,6 +13,10 @@
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
                     <span>een tekstblok</span>
                 </a>
+                <a class="btn btn-primary inline-flex items-center" @click="showModal('create-module')">
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                    <span>een module</span>
+                </a>
             </div>
             <div class="w-auto" v-if='modules.length > 0'>
                 <p class="stack-xs">Of koppel een ...</p>
@@ -20,7 +24,6 @@
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
                     <span>eerste module</span>
                 </a>
-
             </div>
             </div>
 
@@ -86,10 +89,10 @@
                     :text-editor="textEditor"
                     title="Pagina titel"
                     class="mt-8 mb-2" :class="section.type"></text-section>
-                    
+
                 <div class="pagebuilder-menu-wrapper relative border-l-3 border-transparent pb-1">
                     <pagebuilder-menu :section="section" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
-                </div>            
+                </div>
             </div>
 
         </draggable>

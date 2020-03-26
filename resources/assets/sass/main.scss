@@ -6,6 +6,7 @@
 @import './general/colors.scss';
 @import './general/typography.scss';
 @import './general/animations.scss';
+@import './general/utilities.scss';
 
 @import './components/label.scss';
 @import './components/button.scss';
@@ -28,4 +29,3 @@
 @import '../../../node_modules/warpaint/src/sass/_space/responsive';
 @import '../../../node_modules/warpaint/src/sass/_base/states';
 
-@import './general/utilities.scss';
