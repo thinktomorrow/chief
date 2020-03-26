@@ -2,8 +2,8 @@
     <div id="pagebuilder">
 
         <div v-if="sections.length < 1" class="relative stack border-l-3 border-transparent">
-            <div class="inset flex inline-group-l">
-            <div class="w-1/3">
+            <div class="inset flex">
+            <div class="w-1/2">
                 <p class="stack-xs">Start met ...</p>
                 <a class="btn btn-primary inline-flex items-center" @click="addNewPagetitleSectionAfter(-1)">
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
@@ -13,16 +13,18 @@
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
                     <span>een tekstblok</span>
                 </a>
-                <a class="btn btn-primary inline-flex items-center" @click="showModal('create-module')">
-                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
-                    <span>een module</span>
-                </a>
-            </div>
-            <div class="w-auto" v-if='modules.length > 0'>
-                <p class="stack-xs">Of koppel een ...</p>
+                <span v-if='modules.length > 0'>
                 <a class="btn btn-primary inline-flex items-center" @click="addModuleSectionAfter(-1)">
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
-                    <span>eerste module</span>
+                    <span>bestaande module</span>
+                </a>
+                </span>
+            </div>
+            <div class="w-auto">
+                <p class="stack-xs">Of creëer een nieuwe</p>
+                <a class="btn btn-primary inline-flex items-center" @click="showModal('create-module')">
+                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#layout"/></svg></span>
+                    <span>module</span>
                 </a>
             </div>
             </div>

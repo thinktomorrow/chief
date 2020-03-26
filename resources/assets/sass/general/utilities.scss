@@ -1,8 +1,8 @@
 .navigation-list {
     @apply m-0;
     li:not(.no-hover) {
-        @apply text-grey-600;
-        @extend .squished;
+        @apply text-grey-600 px-6 py-5;
+        @extend .--bottomline;
 
         > a:not(.label) {
             @apply text-grey-600;
@@ -61,13 +61,29 @@
         display: table;
     }
 }
-
+.indent-2::before{
+    content: "⠛";
+    display: block;
+    position: absolute;
+    left: -12px;
+    top: 9px;
+}
 .indent-1{
-    @apply ml-1 border-l border-primary-800 text-primary-800;
+    @apply pl-2 ml-6 border border-grey-100 text-grey-600;
 }
 .indent-2{
-    @apply ml-4 border-l border-primary-600 text-primary-600;
+    @apply pl-2 ml-10 border border-grey-100 text-grey-500 relative;
 }
 .indent-3{
-    @apply ml-8 border-l border-primary-400 text-primary-400;
+    @apply pl-2 ml-12 border border-grey-100 text-grey-400;
 }
+.indent-2:not(:first-child){ border-top: 0px;}
+.indent-2:not(:last-child){ border-bottom: 0px;}
+.indent-3:not(:first-child){ border-top: 0px;}
+.indent-3:not(:last-child){ border-bottom: 0px; }
+
+.indent-1 + .indent-1:not(:first-child){ border-bottom: 0px;}
+
+.indent-1 + .indent-1:not(:last-child){ border-bottom: 0px;}
+// .indent-1 + .indent-1{ border-top: 0px;}
+

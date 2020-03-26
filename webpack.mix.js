@@ -26,7 +26,7 @@ mix.webpackConfig({
 
         // Webpack setting to ignore sass loader to follow url() paths
 		processCssUrls: false,
-	
+
 	})
 
     .purgeCss({
@@ -36,10 +36,11 @@ mix.webpackConfig({
             'app',
             'src'
 		],
-		whitelistPatterns: [/slim-/]
+        whitelistPatterns: [/slim-/],
+        whitelist: ['indent-1', 'indent-2', 'indent-3']
     })
 
-	
+
 	/**
 	 * Copy fonts
 	 */

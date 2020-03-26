@@ -31,7 +31,7 @@
                     <div class="float-left cursor-pointer" @click="showModal('create-module')">
                         <span title="tekst / afbeelding toevoegen" class="btn btn-o-secondary squished-xs center-y">
                             <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
-                            Module
+                            Nieuwe module
                         </span>
                     </div>
                 </div>

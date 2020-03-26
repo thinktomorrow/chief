@@ -58,5 +58,14 @@
         "optimize-autoloader": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "@ft/fragments": {
+            "type": "path",
+            "url": "/Users/johnnyberkmans/Documents/Github/chief",
+            "options": {
+                "symlink": true
+            }
+        }
+    }
 }
