@@ -74,7 +74,7 @@ class UrlAssistant implements Assistant
 
     public function saveUrlSlugsField(Field $field, Request $request)
     {
-        (new SaveUrlSlugs($this->manager->existingModel()))->handle($request->get('url-slugs', []));
+        (new SaveUrlSlugs($this->manager->existingModel()))->handle($request->input('url-slugs', []));
 
         // Push update to homepage setting value
         // TODO: we should just fetch the homepages and push that instead...

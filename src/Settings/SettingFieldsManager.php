@@ -91,7 +91,7 @@ class SettingFieldsManager implements FieldManager
             if (!$setting = Setting::where('key', $key)->first()) {
                 Setting::create([
                     'key'   => $key,
-                    'value' => $request->get($key, ''),
+                    'value' => $request->input($key, ''),
                 ]);
 
                 continue;
@@ -101,7 +101,7 @@ class SettingFieldsManager implements FieldManager
                 $existingHomepageValue = $setting->value;
             }
 
-            $setting->update(['value' => $request->get($key, '')]);
+            $setting->update(['value' => $request->input($key, '')]);
         }
 
         // A changed homepage needs to be reflected in the urls as well in order to respond to incoming requests.

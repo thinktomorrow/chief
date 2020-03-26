@@ -28,7 +28,7 @@ trait ManagesPagebuilder
      */
     public function saveSectionsField(PagebuilderField $field, Request $request)
     {
-        $sections = $request->get('sections', []);
+        $sections = $request->input('sections', []);
 
         $modules = $sections['modules'] ?? [];
         $text = $sections['text'] ?? [];

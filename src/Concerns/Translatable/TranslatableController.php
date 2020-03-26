@@ -19,7 +19,7 @@ trait TranslatableController
         $translationattributes = [];
         $translationmessages = [];
 
-        foreach ($request->get('trans') as $locale => $trans) {
+        foreach ($request->input('trans') as $locale => $trans) {
             if ($this->isCompletelyEmpty($rules, $trans)) {
                 continue;
             }

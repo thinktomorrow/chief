@@ -115,7 +115,7 @@ class ArchiveAssistant implements Assistant
         $this->guard('archive');
 
         // If a redirect_id is passed along the request, it indicates the admin wants this page to be redirected to another one.
-        if ($redirectReference = $request->get('redirect_id')) {
+        if ($redirectReference = $request->input('redirect_id')) {
             $model = FlatReferenceFactory::fromString($redirectReference)->instance();
 
             $targetRecords = UrlRecord::getByModel($model);

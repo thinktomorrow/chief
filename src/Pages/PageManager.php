@@ -184,9 +184,9 @@ class PageManager extends AbstractManager implements Manager
     public function storeRequest(Request $request): Request
     {
         $trans = [];
-        $urls = $request->get('url-slugs', []);
+        $urls = $request->input('url-slugs', []);
 
-        foreach ($request->get('trans', []) as $locale => $translation) {
+        foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
             }
@@ -206,7 +206,7 @@ class PageManager extends AbstractManager implements Manager
     public function updateRequest(Request $request): Request
     {
         $trans = [];
-        foreach ($request->get('trans', []) as $locale => $translation) {
+        foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
 
                 // Nullify all values

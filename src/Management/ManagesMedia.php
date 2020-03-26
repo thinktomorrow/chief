@@ -12,8 +12,8 @@ trait ManagesMedia
 {
     public function uploadMedia(Fields $fields, Request $request)
     {
-        $files = array_merge_recursive($request->get('files', []), $request->file('files', []));
-        $filesOrder = $request->get('filesOrder', []);
+        $files = array_merge_recursive($request->input('files', []), $request->file('files', []));
+        $filesOrder = $request->input('filesOrder', []);
 
 
         /** @var UploadMedia */
