@@ -9,7 +9,7 @@
             <fieldset id="{{ $fragment->getKey().'-'.$i }}" data-fragment="{{ $fragment->getKey() }}" class="border bg-white border-grey-100 rounded mb-4">
                 <div class="flex squished items-center bg-grey-100" style="margin-bottom:-3px;">
                     <span data-fragment-label>{{ $fragmentField->getFragmentLabel() }} {{ $i+1 }}</span>
-                    <div data-fragment-delete class="squished-s text-error hover:bg-grey-50 rounded center-y cursor-pointer {{ ($i == 0) ? 'hidden' : '' }}" style="margin-left:auto;">
+                    <div data-fragment-delete class="squished-s text-error hover:bg-grey-50 rounded center-y cursor-pointer {{ (count($fragmentField->getFragments()) == 1) ? 'hidden' : '' }}" style="margin-left:auto;">
                         <svg class="mr-2" width="18" height="18"><use data-v-3997f6a0="" xlink:href="#trash"></use></svg>
                         <span>Verwijder {{ $fragmentField->getFragmentLabel() }}</span>
                     </div>
@@ -95,6 +95,10 @@
                     }
 
                     fragmentsInnerContainer.removeChild(fragment);
+
+                    if(fragmentsContainer.querySelectorAll('[data-fragment]').length == 1){
+                        fragmentsInnerContainer.querySelector('[data-fragment-delete]').classList.add('hidden')
+                    }
                 }
 
                 function registerListeners(){
