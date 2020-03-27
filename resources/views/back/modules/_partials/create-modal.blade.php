@@ -31,6 +31,10 @@
 
         <error class="caption text-warning" field="slug" :errors="errors.all()"></error>
 
+        <div class="stack-s">
+            <p class="text-warning">Opgelet. <br>Bewaar eerst deze pagina indien je niet bewaarde aanpassingen hebt.<br>Anders zullen deze verloren gaan.</p>
+        </div>
+
     </form>
 
     <div slot="modal-action-buttons" v-cloak>
