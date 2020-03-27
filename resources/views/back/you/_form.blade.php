@@ -1,6 +1,6 @@
 @formgroup(['field' => 'firstname'])
     @slot('label', 'Voornaam')
-    @slot('isRequired', $field->required())
+    @slot('isRequired', true)
     <div class="row gutter">
         <div class="column-12">
             <label for="firstName">Voornaam</label>
@@ -11,7 +11,7 @@
 
 @formgroup(['field' => 'lastname'])
     @slot('label', 'Achternaam')
-    @slot('isRequired', $field->required())
+    @slot('isRequired', true)
     <div class="row gutter">
         <div class="column-12">
             <label for="lastName">Achternaam</label>
@@ -23,7 +23,7 @@
 @formgroup(['field' => 'email'])
     @slot('label', 'E-mail')
     @slot('description', 'Dit e-mail adres geldt tevens als jouw login.')
-    @slot('isRequired', $field->required())
+    @slot('isRequired', true)
     <label for="email">E-mail</label>
     <input id="email" class="input inset-s" type="email" name="email" value="{{ old('email',$user->email) }}">
 @endformgroup
