@@ -21,11 +21,10 @@
 @import './components/toggles.scss';
 @import './components/redactor.scss';
 
-@tailwind utilities;
-
-
 // STATES & HELPER CLASSES (WARPAINT)
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';
 @import '../../../node_modules/warpaint/src/sass/_space/responsive';
 @import '../../../node_modules/warpaint/src/sass/_base/states';
+
+@tailwind utilities;
 

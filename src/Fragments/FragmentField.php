@@ -14,6 +14,9 @@ class FragmentField extends AbstractField implements Field
     /** @var Fields */
     private $fields;
 
+    /** @var null|string */
+    private $fragmentLabel;
+
     public static function make(string $key, Fields $fields): Field
     {
         return (new static(new FieldType(FieldType::FRAGMENT), $key))
@@ -79,6 +82,24 @@ class FragmentField extends AbstractField implements Field
         }
 
         return $fragments;
+    }
+
+    /**
+     * A fragmentlabel is shown in admin as the label above each fragment.
+     *
+     * @param string $fragmentLabel
+     * @return $this
+     */
+    public function fragmentLabel(string $fragmentLabel): self
+    {
+        $this->fragmentLabel = $fragmentLabel;
+
+        return $this;
+    }
+
+    public function getFragmentLabel(): string
+    {
+        return $this->fragmentLabel ?? 'fragment';
     }
 
     public function getDuplicatableFields(): array

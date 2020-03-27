@@ -3,13 +3,16 @@
     $fragmentField = $field;
 ?>
 
-{{-- <alert type="error" class="p-4">😱 EXPERIMENTELE COMPONENT <br><br>Onderstaande blokken bevatten nieuwe functionaliteit in chief. Het gaat om het dynamisch toevoegen van veldjes. Een bug ontdekt? Team dev wants to know! <br><br> Met dank, <br>Het tt development team.</alert> --}}
 <div id="{{ $fragmentField->getKey() }}">
     <div data-fragments>
         @foreach($fragmentField->getFragments() as $i => $fragment)
             <fieldset id="{{ $fragment->getKey().'-'.$i }}" data-fragment="{{ $fragment->getKey() }}" class="border bg-white border-grey-100 rounded mb-4">
-                <div class="squished bg-grey-100" style="margin-bottom:-3px;">
-                    Kolom {{ $i+=1 }}
+                <div class="flex squished items-center bg-grey-100" style="margin-bottom:-3px;">
+                    <span data-fragment-label>{{ $fragmentField->getFragmentLabel() }} {{ $i+1 }}</span>
+                    <div data-fragment-delete class="squished-s text-error hover:bg-grey-50 rounded center-y cursor-pointer {{ ($i == 0) ? 'hidden' : '' }}" style="margin-left:auto;">
+                        <svg class="mr-2" width="18" height="18"><use data-v-3997f6a0="" xlink:href="#trash"></use></svg>
+                        <span>Verwijder {{ $fragmentField->getFragmentLabel() }}</span>
+                    </div>
                 </div>
                 <div class="inset">
                     @if($fragment->hasModelId())
@@ -21,15 +24,8 @@
                         <div data-fragment-field="{{ $field->getKey() }}">
                             {!! $field->render() !!}
                         </div>
-                        </div>
+                    </div>
                     @endforeach
-                    @if($i > 0)
-                    <div class="flex justify-end items-center my-2 cursor-pointer ">
-                        <div data-fragment-delete class="squished-s text-error hover:bg-grey-50 center-y">
-                        <svg width="18" height="18"><use data-v-3997f6a0="" xlink:href="#trash"></use></svg>
-                        <span>Verwijder deze blok</span></div>
-                    </span>
-                    @endif
                 </div>
             </fieldset>
         @endforeach
@@ -59,7 +55,13 @@
                         fragmentId = copiedFragment.id + nextId;
 
                     copiedFragment.id = copiedFragment.id + nextId;
-                    copiedFragment.innerHTML += '<span data-fragment-delete class="cursor-pointer">DELETE</span>';
+
+                    // Display the delete button
+                    copiedFragment.querySelector('[data-fragment-delete]').classList.remove('hidden');
+
+                    // Labeling of fragment block
+                    var fragmentLabel = copiedFragment.querySelector('[data-fragment-label]');
+                    fragmentLabel.innerHTML = fragmentLabel.innerHTML.replace(/1/, nextId+1);
 
                     Array.from(copiedFragment.querySelectorAll('[data-fragment-no-duplicate]')).forEach(function(el){ el.remove()});
 
