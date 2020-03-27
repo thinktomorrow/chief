@@ -20,7 +20,7 @@ class ImageField extends MediaField implements Field
     {
         return (new static(new FieldType(FieldType::IMAGE), $key))
             ->locales([config('app.fallback_locale', 'nl')])
-            ->valueResolver(function($model = null, $locale = null, ImageField $field){
+            ->valueResolver(function ($model = null, $locale = null, ImageField $field) {
                 return $field->getMedia($model, $locale);
             });
     }
@@ -32,7 +32,9 @@ class ImageField extends MediaField implements Field
 
     public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
-        if(!$model) return [];
+        if (!$model) {
+            return [];
+        }
 
         $images = [];
         $locale = $locale ?? app()->getLocale();

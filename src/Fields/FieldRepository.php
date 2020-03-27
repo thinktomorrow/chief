@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fields;
@@ -23,8 +24,8 @@ class FieldRepository
 
         $field = $manager->fields()[($reference->hasFragmentKey() ? $reference->getFragmentKey() : $reference->getFieldKey())];
 
-        if($reference->hasFragmentKey()) {
-            if(!$field instanceof FragmentField) {
+        if ($reference->hasFragmentKey()) {
+            if (!$field instanceof FragmentField) {
                 throw new \RuntimeException('Field ' . $field->getKey() . ' was expected to be a fragmentfield but its not.');
             }
 

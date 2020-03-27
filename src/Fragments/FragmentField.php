@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
@@ -45,31 +46,31 @@ class FragmentField extends AbstractField implements Field
         $fragments = [Fragment::empty($this->getKey())];
 
         // Model is auto-injected by Manager::editFields() method.
-        if(($this->model)) {
-
-            if(!method_exists($this->model, 'getFragments')) {
+        if (($this->model)) {
+            if (!method_exists($this->model, 'getFragments')) {
                 throw new \RuntimeException(get_class($this->model) . ' is missing the ' . HasFragments::class . ' trait.');
             }
 
-            if(count($modelFragments = $this->model->getFragments($this->getKey())) > 0) {
+            if (count($modelFragments = $this->model->getFragments($this->getKey())) > 0) {
                 $fragments = $modelFragments->map(function (FragmentModel $fragmentModel) {
                     return Fragment::fromModel($fragmentModel);
                 })->all();
             }
         }
 
-        foreach($fragments as $k => $fragment) {
+        foreach ($fragments as $k => $fragment) {
             $fragments[$k] = $fragments[$k]
-                ->setModelIdInputName($this->name.'[' . $k . '][modelId]')
-                ->setFields($this->fields->clone()->map(function(Field $field) use($k, $fragment){
-                    return $field->name($this->name.'.' . $k . '.' . $field->getName())
+                ->setModelIdInputName($this->name . '[' . $k . '][modelId]')
+                ->setFields($this->fields->clone()->map(function (Field $field) use ($k, $fragment) {
+                    return $field->name($this->name . '.' . $k . '.' . $field->getName())
                                  ->localizedFormat(':name.:locale')
-                                 ->valueResolver(function($model = null, $locale = null, $field) use($fragment){
+                                 ->valueResolver(function ($model = null, $locale = null, $field) use ($fragment) {
+                                     if (isset($field->value)) {
+                                         return $field->value;
+                                     }
 
-                                     if(isset($field->value)) return $field->value;
-
-                                     if($field instanceof MediaField){
-                                         if(!$fragment->hasModelId()){
+                                     if ($field instanceof MediaField) {
+                                         if (!$fragment->hasModelId()) {
                                              return [];
                                          }
 
@@ -104,12 +105,16 @@ class FragmentField extends AbstractField implements Field
 
     public function getDuplicatableFields(): array
     {
-        if(count($this->getFragments()) < 1) return [];
+        if (count($this->getFragments()) < 1) {
+            return [];
+        }
 
         // Take the fields from the first fragment as a starting point for duplication
-        return array_map(function(\Thinktomorrow\Chief\Fields\Types\Field $field){
-            return $field->valueResolver(function($model = null, $locale = null, $field){
-                if($field instanceof \Thinktomorrow\Chief\Fields\Types\MediaField) { return []; }
+        return array_map(function (\Thinktomorrow\Chief\Fields\Types\Field $field) {
+            return $field->valueResolver(function ($model = null, $locale = null, $field) {
+                if ($field instanceof \Thinktomorrow\Chief\Fields\Types\MediaField) {
+                    return [];
+                }
                 return null;
             })->render();
         }, $this->getFragments()[0]->getFields()->clone()->all());

@@ -63,7 +63,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $clonedFields = [];
 
-        foreach($this->fields as $field){
+        foreach ($this->fields as $field) {
             $clonedFields[] = clone $field;
         }
 
@@ -108,7 +108,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function render(): string
     {
-        return array_reduce($this->fields, function(string $carry, Field $field){
+        return array_reduce($this->fields, function (string $carry, Field $field) {
             return $carry . $field->render();
         }, '');
     }
@@ -117,21 +117,21 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $keys = (array) $key;
 
-        return new static(array_filter($this->fields, function(Field $field) use($keys){
+        return new static(array_filter($this->fields, function (Field $field) use ($keys) {
             return in_array($field->getKey(), $keys);
         }));
     }
 
     public function tagged($tag): Fields
     {
-        return new static(array_filter($this->fields, function(Field $field) use($tag){
+        return new static(array_filter($this->fields, function (Field $field) use ($tag) {
             return $field->tagged($tag);
         }));
     }
 
     public function untagged(): Fields
     {
-        return new static(array_filter($this->fields, function(Field $field){
+        return new static(array_filter($this->fields, function (Field $field) {
             return $field->untagged();
         }));
     }
@@ -172,7 +172,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if(!isset($this->fields[$offset])){
+        if (!isset($this->fields[$offset])) {
             throw new \RuntimeException('No field found by key [' . $offset . ']');
         }
 

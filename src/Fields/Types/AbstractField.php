@@ -264,8 +264,9 @@ abstract class AbstractField
     private function defaultEloquentValueResolver(): \Closure
     {
         return function (Model $model = null, $locale = null) {
-
-            if($this->value) return $this->value;
+            if ($this->value) {
+                return $this->value;
+            }
 
             if (!$model) {
                 return $this->default;
@@ -435,6 +436,6 @@ abstract class AbstractField
             'model' => $this->getModel(),
             'field' => $this,
             'key'   => $this->getKey(),
-        ],$this->viewData);
+        ], $this->viewData);
     }
 }

@@ -22,11 +22,11 @@ trait HasDynamicAttributes
             return false;
         }
 
-        if(in_array($key, $this->dynamicKeys())) {
+        if (in_array($key, $this->dynamicKeys())) {
             return true;
         }
 
-        if(in_array('*', $this->dynamicKeys())){
+        if (in_array('*', $this->dynamicKeys())) {
             return !in_array($key, $this->dynamicKeysBlacklist());
         }
 
@@ -109,11 +109,12 @@ trait HasDynamicAttributes
         }
 
         if ($this->dynamicAttributesInstance()->has($key)) {
-
             $value = $this->dynamic($key);
 
             // If value is localized, we wont return the entire value, but instead return null since no fallback will be provided.
-            if(is_array($value) && in_array($locale, $this->dynamicLocales())) return null;
+            if (is_array($value) && in_array($locale, $this->dynamicLocales())) {
+                return null;
+            }
 
             return $value;
         }

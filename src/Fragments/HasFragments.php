@@ -23,7 +23,7 @@ trait HasFragments
             'key' => $fragment->getKey(), 'order' => $order,
         ], $fragment->getValues());
 
-        if($fragment->hasModelId()){
+        if ($fragment->hasModelId()) {
             $model =FragmentModel::find($fragment->getModelId());
             $model->update($values);
 
