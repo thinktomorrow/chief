@@ -17,7 +17,7 @@ class ModulesController extends Controller
         $modules = Module::withoutPageSpecific()->orderBy('morph_key')->get()->groupBy('morph_key');
 
         // Remove unmanaged modules
-        $modules = $modules->reject(function($modules){
+        $modules = $modules->reject(function ($modules) {
             return (!$modules->first() || !contract($modules->first(), ManagedModel::class));
         });
 

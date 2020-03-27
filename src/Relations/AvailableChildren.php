@@ -92,7 +92,7 @@ class AvailableChildren
         }
 
         // Remove duplicate models
-        $collection = $collection->unique(function($model){
+        $collection = $collection->unique(function ($model) {
             return (new FlatReference(get_class($model), $model->id))->get();
         });
 

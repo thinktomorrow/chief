@@ -43,7 +43,7 @@ class AsyncUploadSlimMediaController extends Controller
          * Default payload is set as: images[images-hero][nl][new_67lpsJ] where Fragment fields have
          * a different setup: e.g. images[fragment][0][avatar][nl][new_f0O9Am]
          */
-        if(!is_string($locale)) {
+        if (!is_string($locale)) {
             $rawImagePayload = reset($rawImagePayload);
             $rawImagePayload = reset($rawImagePayload);
             $locale = key($rawImagePayload);
@@ -90,13 +90,17 @@ class AsyncUploadSlimMediaController extends Controller
     protected function validateUpload(string $managerKey, string $fieldKey, string $locale, $imagePayload)
     {
         // TODO: There is currently no support for Fragment Field validation. This is the reason why a managerKey is an empty string and cannot be retrieved. There is no manager for fragment
-        if(!$managerKey) return;
+        if (!$managerKey) {
+            return;
+        }
 
         $manager = $this->managers->findByKey($managerKey);
         $field = $manager->fields()[$fieldKey];
 
         // TODO: There is currently no support for Fragment Field validation. This is the reason why a field cannot be retrieved.
-        if(!$field) return;
+        if (!$field) {
+            return;
+        }
 
         // Convert this Slim request to an expected format for our validation rules.
         // validation rules expects something as [images.avatar.nl => [payload]]

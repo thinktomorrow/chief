@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
@@ -48,7 +49,7 @@ class Fragment
 
     public static function fromRequestPayload(string $key, array $payload): self
     {
-        if(!isset($payload['modelId'])) {
+        if (!isset($payload['modelId'])) {
             return static::fromNew($key, $payload);
         }
 
@@ -72,13 +73,13 @@ class Fragment
 
     public function getValue(string $key, ?string $locale = null)
     {
-        if(!isset($this->values[$key])) {
+        if (!isset($this->values[$key])) {
             return null;
         }
 
         // When the value is an array, it is assumed that this is an array of locales, each representing the value for that locale
-        if(is_array($this->values[$key])) {
-            if($locale && array_key_exists($locale, $this->values[$key])) {
+        if (is_array($this->values[$key])) {
+            if ($locale && array_key_exists($locale, $this->values[$key])) {
                 return $this->values[$key][$locale];
             }
         }

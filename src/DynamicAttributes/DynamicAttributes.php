@@ -16,7 +16,9 @@ class DynamicAttributes
 
     public static function fromRawValue($value): self
     {
-        if($value instanceof self) return $value;
+        if ($value instanceof self) {
+            return $value;
+        }
 
         $value = is_null($value) ? [] : (is_array($value) ? $value : json_decode($value, true));
 
