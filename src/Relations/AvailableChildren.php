@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Relations;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Sets\SetReference;
@@ -89,6 +90,11 @@ class AvailableChildren
             // thus overwrites 'duplicates'. This isn't expected behaviour since we have different types.
             $collection = collect(array_merge($collection->all(), (new $type())->all()->all()));
         }
+
+        // Remove duplicate models
+        $collection = $collection->unique(function($model){
+            return (new FlatReference(get_class($model), $model->id))->get();
+        });
 
         // Filter out our parent
         return $this->collection = $collection->reject(function ($item) {
