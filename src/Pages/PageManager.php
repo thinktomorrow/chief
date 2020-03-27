@@ -90,8 +90,8 @@ class PageManager extends AbstractManager implements Manager
                 ->validation('required-fallback-locale|max:200', [], [
                     'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',
                 ])
-                ->label('De titel van je ' . $this->model->labelSingular ?? 'pagina')
-                ->description('Dit is de titel die zal worden getoond in de overzichten en modules.')
+                ->label('Intern label')
+                ->description('Dit is de benaming die zal worden getoond in de admin selectie velden.')
                 ->tag('general'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
