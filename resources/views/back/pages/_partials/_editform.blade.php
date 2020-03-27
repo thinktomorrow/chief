@@ -12,9 +12,10 @@
     <tab name="Algemeen">
         @foreach($fields->tagged('general')->merge($fields->untagged()) as $field)
             @formgroup
-            @slot('label',$field->getLabel())
-            @slot('description',$field->getDescription())
-            {!! $field->render() !!}
+                @slot('label',$field->getLabel())
+                @slot('description',$field->getDescription())
+                @slot('isRequired', $field->required())
+                {!! $field->render() !!}
             @endformgroup
         @endforeach
     </tab>
@@ -29,11 +30,11 @@
     <tab name="Seo">
         @foreach($fields->tagged('seo') as $field)
             @formgroup
-            @slot('label',$field->getLabel())
-            @slot('description',$field->getDescription())
-            {!! $field->render() !!}
+                @slot('label',$field->getLabel())
+                @slot('description',$field->getDescription())
+                @slot('isRequired', $field->required())
+                {!! $field->render() !!}
             @endformgroup
         @endforeach
     </tab>
 </tabs>
-

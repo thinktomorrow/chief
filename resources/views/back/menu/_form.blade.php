@@ -1,6 +1,7 @@
 @formgroup(['field' => 'label'])
     @slot('label', 'Label')
     @slot('description', 'Dit is de tekst die wordt getoond in het menu. Verkies een korte, duidelijke term.')
+    @slot('isRequired', $field->required())
     @if(count($menuitem->availableLocales()) > 1)
         <tabs v-cloak>
             @foreach($menuitem->availableLocales() as $locale)
@@ -116,6 +117,7 @@
     @formgroup(['field' => 'parent_id'])
         @slot('label', 'Niveau')
         @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
+        @slot('isRequired', $field->required())
         <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
             <div>
                 <label class="block stack-xs custom-indicators" for="withoutParentId">
@@ -157,6 +159,7 @@
     @formgroup(['field' => 'order'])
         @slot('label', 'Sortering')
         @slot('description', 'Sortering van dit menu item op het huidige niveau')
+        @slot('isRequired', $field->required())
         <div class="row">
             <div class="column-1">
                 <input type="number" name="order" id="order" placeholder="Menu order" value="{{ old('order', $menuitem->order) }}" class="input inset-s text-center">
