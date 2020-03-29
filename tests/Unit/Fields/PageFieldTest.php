@@ -34,10 +34,18 @@ class PageFieldTest extends TestCase
     }
 
     /** @test */
-    public function pagefield_can_automatically_set_all_online_pages_as_options()
+    public function pagefield_can_set_all_visitable_pages_as_options()
     {
-        // Offline page is not added
-        Single::create();
+        $pagefield = PageField::make('foobar')->pagesAsOptions();
+
+        $this->assertCount(1, $pagefield->getOptions()[0]['values']);
+    }
+
+    /** @test */
+    public function options_can_be_online_pages_only()
+    {
+        $this->page->changeStateOf(PageState::KEY, PageState::PUBLISHED);
+        $this->page->save();
 
         $pagefield = PageField::make('foobar')->onlinePagesAsOptions();
 
@@ -50,7 +58,7 @@ class PageFieldTest extends TestCase
         $page = Single::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo', 'model_type' => $page->morphKey(), 'model_id' => $page->id]);
 
-        $pagefield = PageField::make('foobar')->onlinePagesAsOptions($this->page);
+        $pagefield = PageField::make('foobar')->pagesAsOptions($this->page);
 
         $this->assertCount(1, $pagefield->getOptions()[0]['values']);
     }

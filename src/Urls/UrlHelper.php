@@ -35,9 +35,9 @@ class UrlHelper
      * @param Model|null $ignoredModel
      * @return array
      */
-    public static function allModelsExcept(Model $ignoredModel = null): array
+    public static function allModelsExcept(Model $ignoredModel = null, bool $online = false): array
     {
-        $models = static::models(false, $ignoredModel, false);
+        $models = static::models(false, $ignoredModel, $online);
 
         return FlatReferencePresenter::toGroupedSelectValues($models)->toArray();
     }
@@ -61,7 +61,7 @@ class UrlHelper
     }
 
 
-    public static function models(bool $onlySingles = false, Model $ignoredModel = null, $online = true)
+    public static function models(bool $onlySingles = false, Model $ignoredModel = null, bool $online = true)
     {
         $types = [];
 
@@ -72,7 +72,7 @@ class UrlHelper
         return self::modelsByType($types, $ignoredModel, $online);
     }
 
-    public static function modelsByKeys(array $keys, Model $ignoredModel = null, $online = true)
+    public static function modelsByKeys(array $keys, Model $ignoredModel = null, bool $online = true)
     {
         $managers = app(Managers::class);
 
@@ -87,7 +87,7 @@ class UrlHelper
     }
 
 
-    public static function modelsByType(array $types, Model $ignoredModel = null, $online = true)
+    public static function modelsByType(array $types, Model $ignoredModel = null, bool $online = true)
     {
         $models = chiefMemoize('all-online-models', function () use ($types, $online) {
             $builder = UrlRecord::whereNull('redirect_id')
