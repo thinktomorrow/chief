@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Add: dynamic attributes. [https://thinktomorrow.github.io/package-docs/src/chief/managers.html#dynamic-attributes](view docs)
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
@@ -13,7 +14,6 @@ principles.
 - Fixed: quill editor did not save the content in the pagebuilder text module.
 
 ## 0.4.10 - 2020-03-16
-
 - Fixed: changing urls can now be saved again.
 
 ## 0.4.9 - 2020-03-11

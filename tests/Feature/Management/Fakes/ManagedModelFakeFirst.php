@@ -14,23 +14,37 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\States\State\StatefulContract;
 use Thinktomorrow\Chief\States\Publishable\Publishable;
 use Thinktomorrow\Chief\Concerns\Translatable\Translatable;
+use Thinktomorrow\Chief\DynamicAttributes\HasDynamicAttributes;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableContract;
 use Thinktomorrow\Chief\Relations\ActingAsChild;
 use Thinktomorrow\Chief\Relations\ActingAsParent;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
+use \Astrotomic\Translatable\Translatable as BaseTranslatable;
 
 class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, StatefulContract
 {
     private $current_state = 'draft';
 
-    use Translatable,
-        \Astrotomic\Translatable\Translatable,
-        AssetTrait,
+    use HasDynamicAttributes {
+        HasDynamicAttributes::fill as hasDynamicAttributesFill;
+        HasDynamicAttributes::getAttribute as private hasDynamicAttributesGetAttribute;
+        HasDynamicAttributes::setAttribute as hasDynamicAttributesSetAttribute;
+    }
+
+    use Translatable;
+    use BaseTranslatable {
+        BaseTranslatable::getAttribute as private baseTranslatableGetAttribute;
+        BaseTranslatable::fill as baseTranslatableFill;
+        BaseTranslatable::setAttribute as baseTranslatableSetAttribute;
+    }
+
+    use AssetTrait,
         Publishable,
         ActingAsParent,
         ActingAsChild;
 
     public $table = 'fake_managed_models';
+    public $dynamicKeys = ['dynamic_column'];
     public $translatedAttributes = ['title_trans', 'content_trans', 'slug'];
     public $guarded = [];
 
@@ -41,11 +55,11 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
 
     public static function managedModelKey(): string
     {
-        if(isset(static::$managedModelKey)){
+        if (isset(static::$managedModelKey)) {
             return static::$managedModelKey;
         }
 
-        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class. '.');
+        throw new \Exception('Missing required static property \'managedModelKey\' on ' . static::class . '.');
     }
 
     public static function migrateUp()
@@ -55,6 +69,7 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
             $table->string('title')->nullable();
             $table->string('custom_column')->nullable();
             $table->string('current_state')->default(PageState::DRAFT);
+            $table->json('values')->nullable(); // dynamic attributes
             $table->dateTime('archived_at')->nullable();
             $table->timestamps();
         });
@@ -101,5 +116,30 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
     public function changeStateOf($key, $state)
     {
         $this->current_state = $state;
+    }
+
+    public function fill(array $attributes)
+    {
+        $this->hasDynamicAttributesFill($attributes);
+
+        return $this->baseTranslatableFill($attributes);
+    }
+
+    public function getAttribute($key)
+    {
+        if($value = $this->hasDynamicAttributesGetAttribute($key)) {
+            return $value;
+        }
+
+        return $this->baseTranslatableGetAttribute($key);
+    }
+
+    public function setAttribute($key, $value)
+    {
+        if ($this->isDynamicKey($key)) {
+            return $this->hasDynamicAttributesSetAttribute($key, $value);
+        }
+
+        return $this->baseTranslatableSetAttribute($key, $value);
     }
 }

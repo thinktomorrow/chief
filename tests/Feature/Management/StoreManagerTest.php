@@ -76,6 +76,67 @@ class StoreManagerTest extends TestCase
     }
 
     /** @test */
+    public function it_can_create_a_dynamic_field()
+    {
+        $this->asAdmin()
+            ->post($this->fake->route('store'), [
+                'dynamic_column' => 'dynamic value',
+            ]);
+
+        $first = ManagedModelFakeFirst::first();
+
+        $this->assertEquals('dynamic value', $first->dynamic('dynamic_column'));
+        $this->assertEquals('dynamic value', $first->dynamic_column);
+    }
+
+    /** @test */
+    public function it_can_create_a_dynamic_localized_field()
+    {
+        $this->asAdmin()
+            ->post($this->fake->route('store'), [
+                'trans' => [
+                    'nl' => [
+                        'dynamic_column' => 'dynamic value nl',
+                    ],
+                    'en' => [
+                        'dynamic_column' => 'dynamic value en',
+                    ]
+                ],
+            ]);
+
+        $first = ManagedModelFakeFirst::first();
+
+        $this->assertEquals('dynamic value nl', $first->dynamic_column);
+        $this->assertEquals('dynamic value en', $first->dynamic('dynamic_column','en'));
+    }
+
+    /** @test */
+    public function it_can_create_a_dynamic_localized_field_alongside_a_translatable_one()
+    {
+        $this->asAdmin()
+            ->post($this->fake->route('store'), [
+                'trans' => [
+                    'nl' => [
+                        'dynamic_column' => 'dynamic value nl',
+                        'title_trans' => 'title-nl-created',
+                    ],
+                    'en' => [
+                        'dynamic_column' => 'dynamic value en',
+                        'title_trans' => 'title-en-created',
+                    ]
+                ],
+            ]);
+
+        $first = ManagedModelFakeFirst::first();
+
+        $this->assertEquals('title-nl-created', $first->title_trans);
+        $this->assertEquals('title-en-created', $first->getTranslationFor('title_trans', 'en'));
+
+        $this->assertEquals('dynamic value nl', $first->dynamic_column);
+        $this->assertEquals('dynamic value en', $first->dynamic('dynamic_column','en'));
+    }
+
+    /** @test */
     public function it_can_upload_a_file_field()
     {
         $this->asAdmin()
