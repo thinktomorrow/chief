@@ -19,6 +19,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->fields = $this->convertToKeyedArray($fields);
     }
 
+    public static function make(array $fields = [])
+    {
+        return new static($fields);
+    }
+
     public function all(): array
     {
         return $this->fields;
@@ -48,6 +53,15 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return array_keys($this->fields);
     }
 
+    public function map(callable $callback): Fields
+    {
+        $keys = array_keys($this->fields);
+
+        $items = array_map($callback, $this->fields, $keys);
+
+        return new static(array_combine($keys, $items));
+    }
+
     public function filterBy($key, $value = null)
     {
         $fields = [];
@@ -73,6 +87,36 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         }
 
         return new static($fields);
+    }
+
+    public function render(): string
+    {
+        return array_reduce($this->fields, function(string $carry, Field $field){
+            return $carry . $field->render();
+        }, '');
+    }
+
+    public function keyed($key): Fields
+    {
+        $keys = (array) $key;
+
+        return new static(array_filter($this->fields, function(Field $field) use($keys){
+            return in_array($field->getKey(), $keys);
+        }));
+    }
+
+    public function tagged($tag): Fields
+    {
+        return new static(array_filter($this->fields, function(Field $field) use($tag){
+            return $field->tagged($tag);
+        }));
+    }
+
+    public function untagged(): Fields
+    {
+        return new static(array_filter($this->fields, function(Field $field){
+            return $field->untagged();
+        }));
     }
 
     public function add(Field ...$fields): Fields

@@ -21,9 +21,19 @@ trait SavingFields
 
     protected $queued_translations = [];
 
-    public function saveFields(Request $request)
+    public function saveCreateFields(Request $request): void
     {
-        foreach ($this->fieldsWithAssistantFields() as $field) {
+        $this->saveFields($request, $this->createFields());
+    }
+
+    public function saveEditFields(Request $request): void
+    {
+        $this->saveFields($request, $this->editFields());
+    }
+
+    protected function saveFields(Request $request, Fields $fields)
+    {
+        foreach ($fields as $field) {
 
             // Custom save methods
             if ($this->detectCustomSaveMethods($field)) {
@@ -54,9 +64,10 @@ trait SavingFields
         foreach ([$saveMethodByKey, $saveMethodByType] as $saveMethod) {
             foreach ($this->assistants() as $assistant) {
                 if (method_exists($assistant, $saveMethod)) {
-                    $this->saveAssistantMethods[$field->getKey()] = ['field'     => $field,
-                                                                     'method'    => $saveMethod,
-                                                                     'assistant' => $assistant,
+                    $this->saveAssistantMethods[$field->getKey()] = [
+                        'field'     => $field,
+                        'method'    => $saveMethod,
+                        'assistant' => $assistant,
                     ];
 
                     return true;

@@ -1,4 +1,4 @@
-@chiefformgroup(['field' => 'label'])
+@formgroup(['field' => 'label'])
     @slot('label', 'Label')
     @slot('description', 'Dit is de tekst die wordt getoond in het menu. Verkies een korte, duidelijke term.')
     @if(count($menuitem->availableLocales()) > 1)
@@ -26,7 +26,7 @@
         @endforeach
     @endif
     <input type="hidden" name="menu_type" value="{{$menuitem->menu_type}}">
-@endchiefformgroup
+@endformgroup
 
 <section class="formgroup">
     <div class="row gutter-l">
@@ -113,7 +113,7 @@
 </section>
 
 @if(count($parents) > 0)
-    @chiefformgroup(['field' => 'parent_id'])
+    @formgroup(['field' => 'parent_id'])
         @slot('label', 'Niveau')
         @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
         <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
@@ -150,11 +150,11 @@
                 </label>
             </div>
         </radio-options>
-    @endchiefformgroup
+    @endformgroup
 @endif
 
 @if($menuitem->id && ! $menuitem->siblings()->isEmpty())
-    @chiefformgroup(['field' => 'order'])
+    @formgroup(['field' => 'order'])
         @slot('label', 'Sortering')
         @slot('description', 'Sortering van dit menu item op het huidige niveau')
         <div class="row">
@@ -176,5 +176,5 @@
                 @endforeach
             </div>
         </div>
-    @endchiefformgroup
+    @endformgroup
 @endif

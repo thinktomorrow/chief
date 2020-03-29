@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Management\Details;
 
 use Illuminate\Contracts\Support\Arrayable;
 
-class Sections implements Arrayable
+class DetailSections implements Arrayable
 {
     /** @var array */
     protected $values = [];

@@ -1,5 +1,5 @@
 
-@chiefformgroup(['field' => ['firstname', 'lastname']])
+@formgroup(['field' => ['firstname', 'lastname']])
     @slot('label', 'Naam')
     <div class="row gutter">
         <div class="column-5">
@@ -11,16 +11,16 @@
             <input id="lastName" class="input inset-s" type="text" name="lastname" value="{{ old('lastname',$user->lastname) }}">
         </div>
     </div>
-@endchiefformgroup
+@endformgroup
 
-@chiefformgroup(['field' => 'email'])
+@formgroup(['field' => 'email'])
     @slot('label', 'E-mail')
     @slot('description', 'Dit e-mail adres geldt tevens als login.')
     <label for="email">E-mail</label>
     <input id="email" class="input inset-s" type="email" name="email" value="{{ old('email',$user->email) }}">
-@endchiefformgroup
+@endformgroup
 
-@chiefformgroup(['field' => 'roles'])
+@formgroup(['field' => 'roles'])
     @slot('label', 'Rechten')
     @slot('description', 'Geef aan met een of meerdere rollen welke rechten deze gebruiker ter beschikking heeft.')
         <label for="roles">Rechten</label>
@@ -34,4 +34,4 @@
     @if($errors->has('roles.0'))
         <span class="caption">{{ $errors->first('roles.0') }}</span>
     @endif
-@endchiefformgroup
+@endformgroup

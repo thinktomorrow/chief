@@ -1,4 +1,4 @@
-<url-slugs inline-template :initialfields='@json($fields->toArray())' checkurl="{{ $manager->assistant('url')->route('check') }}">
+<url-slugs inline-template :initialfields='@json($fields->toArray())' checkurl="{{ $checkUrl }}">
     <section class="row formgroup stack gutter-l">
         <div class="column-4">
             <h2 class="formgroup-label">Pagina link</h2>

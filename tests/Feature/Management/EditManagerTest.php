@@ -34,8 +34,6 @@ class EditManagerTest extends TestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
-        $this->disableExceptionHandling();
-
         $response = $this->asAdmin()->get($this->manager->route('edit'));
         $response->assertViewIs('chief::back.managers.edit');
         $response->assertStatus(200);
@@ -61,7 +59,7 @@ class EditManagerTest extends TestCase
 
         $this->assertEquals('tt-favicon.png', $this->model->asset('avatar')->filename());
 
-        $fieldValue = $this->manager->fieldValue($this->manager->fields()['avatar']);
+        $fieldValue = $this->manager->fields()['avatar']->model($this->model)->getValue();
 
         $this->assertCount(1, $fieldValue);
         $this->assertEquals([

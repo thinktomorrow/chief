@@ -1,5 +1,5 @@
 <?php
-    $files = $manager->fieldValue($field, $locale ?? null);
+    $files = $field->getValue($locale ?? null);
     $locale = $locale ?? app()->getLocale();
     $name = $name ?? $field->getName($locale);
     $slug = $field->getKey();

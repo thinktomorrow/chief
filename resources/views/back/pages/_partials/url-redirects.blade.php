@@ -1,7 +1,3 @@
-@foreach($tab->fields() as $field)
-    {!! $manager->renderField($field) !!}
-@endforeach
-
 @if(count($redirects) > 0)
     <h3>Redirects</h3>
     <p>Dit zijn alle oude links die worden doorgelinkt naar deze pagina. </p>

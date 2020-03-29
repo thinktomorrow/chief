@@ -24,13 +24,13 @@ class StoreManager
 
         $request = $manager->storeRequest($request);
 
-        $this->fieldValidator->handle($manager->fieldsWithAssistantFields(), $request->all());
+        $this->fieldValidator->handle($manager->createFields(), $request->all());
 
         if (method_exists($manager, 'beforeStore')) {
             $manager->beforeStore($request);
         }
 
-        $manager->saveFields($request);
+        $manager->saveCreateFields($request);
 
         if (method_exists($manager, 'afterStore')) {
             $manager->afterStore($request);

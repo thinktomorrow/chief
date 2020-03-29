@@ -24,13 +24,13 @@ class UpdateManager
 
         $request = $manager->updateRequest($request);
 
-        $this->fieldValidator->handle($manager->fieldsWithAssistantFields(), $request->all());
+        $this->fieldValidator->handle($manager->editFields(), $request->all());
 
         if (method_exists($manager, 'beforeUpdate')) {
             $manager->beforeUpdate($request);
         }
 
-        $manager->saveFields($request);
+        $manager->saveEditFields($request);
 
         if (method_exists($manager, 'afterUpdate')) {
             $manager->afterUpdate($request);

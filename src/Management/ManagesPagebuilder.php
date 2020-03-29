@@ -83,7 +83,8 @@ trait ManagesPagebuilder
             ->sections($sections)
             ->availablePages($available_pages)
             ->availableModules($available_modules)
-            ->availableSets($available_sets);
+            ->availableSets($available_sets)
+            ->tag('pagebuilder');
     }
 
     /**

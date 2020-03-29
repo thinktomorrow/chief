@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldManager;
-use Thinktomorrow\Chief\Fields\RenderingFields;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
@@ -16,8 +15,6 @@ use Thinktomorrow\Chief\Urls\UrlHelper;
 
 class SettingFieldsManager implements FieldManager
 {
-    use RenderingFields;
-
     /** @var Settings */
     private $settings;
 
@@ -52,12 +49,41 @@ class SettingFieldsManager implements FieldManager
         ]);
     }
 
-    public function fieldValue(Field $field, $locale = null)
+    public function editFields(): Fields
     {
-        return $this->settings->get($field->getKey(), $locale);
+        return $this->fields()->map(function(Field $field){
+            return $field->valueResolver(function($model = null, $locale = null, $field){
+                return $this->settings->get($field->getKey(), $locale);
+            });
+        });
     }
 
-    public function saveFields(Request $request)
+    public function createFields(): Fields
+    {
+        return new Fields();
+    }
+
+    /**
+     * Triggers the create save action for all prepared field values.
+     *
+     * @param Request $request
+     */
+    public function saveCreateFields(Request $request): void
+    {
+        // Not used for settings manager but required by interface
+    }
+
+    /**
+     * Triggers the edit save action for all prepared field values.
+     *
+     * @param Request $request
+     */
+    public function saveEditFields(Request $request): void
+    {
+        $this->saveFields($request);
+    }
+
+    private function saveFields(Request $request)
     {
         $existingHomepageValue = [];
 

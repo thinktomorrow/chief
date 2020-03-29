@@ -21,5 +21,5 @@
         quill.on('text-change', function() {
             editorInput.value = quill.root.innerHTML;
         });
-    }   
+    }
 </script>

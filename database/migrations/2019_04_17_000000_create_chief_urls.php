@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\States\Archivable\ArchiveScope;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class CreateChiefUrls extends Migration
@@ -38,7 +39,7 @@ class CreateChiefUrls extends Migration
 
     private function migrateSlugs()
     {
-        foreach (Page::all() as $page) {
+        foreach (Page::withoutGlobalScope(ArchiveScope::class)->get() as $page) {
             foreach ($page->translations as $translation) {
                 UrlRecord::create([
                     'locale'              => $translation->locale,

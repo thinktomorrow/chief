@@ -24,9 +24,9 @@
         <form id="createForm" method="POST" action="{{ $manager->route('store') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
-             @include('chief::back.managers._partials._form', [
-                'fieldArrangement' => $manager->fieldArrangement('create')
-             ])
+            @include($manager->createView(), array_merge([
+                'fields' => $manager->createFields(),
+            ], $manager->createViewData()))
 
             <div class="stack text-right">
                 <button type="submit" class="btn btn-primary">Aanmaken</button>

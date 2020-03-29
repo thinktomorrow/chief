@@ -34,12 +34,14 @@ class UrlAssistant implements Assistant
 
     public function route($verb): ?string
     {
-        $routes = [
-            'check' => route('chief.back.assistants.url.check', [
-                $this->manager->details()->key,
-                $this->manager->existingModel()->id,
-            ]),
-        ];
+        if($this->manager->hasExistingModel()) {
+            $routes = [
+                'check' => route('chief.back.assistants.url.check', [
+                    $this->manager->details()->key,
+                    $this->manager->existingModel()->id,
+                ]),
+            ];
+        }
 
         return $routes[$verb] ?? null;
     }
@@ -62,7 +64,11 @@ class UrlAssistant implements Assistant
                     ]
                 )
                 ->view('chief::back._fields.url-slugs')
-                ->viewData(['fields' => UrlSlugFields::fromModel($this->manager->hasExistingModel() ? $this->manager->existingModel() : $this->manager->modelInstance())]),
+                ->viewData([
+                    'fields' => UrlSlugFields::fromModel($this->manager->hasExistingModel() ? $this->manager->existingModel() : $this->manager->modelInstance()),
+                    'checkUrl' => $this->route('check'),
+                ])
+                ->tag('url'),
         ]);
     }
 
