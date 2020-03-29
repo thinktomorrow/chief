@@ -24,8 +24,6 @@ use \Astrotomic\Translatable\Translatable as BaseTranslatable;
 
 class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, StatefulContract
 {
-    private $current_state = 'draft';
-
     use HasDynamicAttributes {
         HasDynamicAttributes::fill as hasDynamicAttributesFill;
         HasDynamicAttributes::getAttribute as private hasDynamicAttributesGetAttribute;
