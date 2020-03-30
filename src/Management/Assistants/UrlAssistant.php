@@ -34,7 +34,7 @@ class UrlAssistant implements Assistant
 
     public function route($verb): ?string
     {
-        if($this->manager->hasExistingModel()) {
+        if ($this->manager->hasExistingModel()) {
             $routes = [
                 'check' => route('chief.back.assistants.url.check', [
                     $this->manager->details()->key,
