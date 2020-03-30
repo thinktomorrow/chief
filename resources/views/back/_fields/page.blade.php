@@ -1,8 +1,8 @@
 @if($field->isGrouped())
     <chief-multiselect
-            name="{{ isset($locale) ? $field->getName($locale) : $field->getName() }}"
+            name="{{ $field->getName($locale ?? null) }}"
             :options='@json($field->getOptions())'
-            selected='@json(old($key, $field->getSelected() ?? $manager->fieldValue($field, $locale ?? null)))'
+            selected='@json(old($key, $field->getSelected() ?? $field->getValue($locale ?? null)))'
             :multiple='@json(!!$field->allowMultiple())'
             grouplabel="group"
             groupvalues="values"
@@ -12,9 +12,9 @@
     </chief-multiselect>
 @else
     <chief-multiselect
-            name="{{ isset($locale) ? $field->getName($locale) : $field->getName() }}"
+            name="{{ $field->getName($locale ?? null) }}"
             :options='@json($field->getOptions())'
-            selected='@json(old($key, $field->getSelected() ?? $manager->fieldValue($field, $locale ?? null)))'
+            selected='@json(old($key, $field->getSelected() ?? $field->getValue($locale ?? null)))'
             :multiple='@json(!!$field->allowMultiple())'
     >
     </chief-multiselect>
