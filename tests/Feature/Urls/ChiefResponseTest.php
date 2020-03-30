@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;

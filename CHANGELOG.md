@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: Pagefield used to select an internal page
 - Added: dynamic attributes. [https://thinktomorrow.github.io/package-docs/src/chief/managers.html#dynamic-attributes](view docs)
 - Added: `Manager::editView()` and `Manager::createView` provide the option to customise the view filepath for the create and edit admin views.
 - Added: `Manager::editFields()` and `Manager::createFields` provide the fields for respectively the create and edit form views.

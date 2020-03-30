@@ -20,6 +20,7 @@ class FieldType
     const CHECKBOX = 'checkbox';  // checkbox select
     const PAGEBUILDER = 'pagebuilder';  // the most special field there is...
     const FRAGMENT = 'fragment';
+    const PAGE = 'page'; // select a page (also a special field)
 
     /** @var string */
     private $type;
