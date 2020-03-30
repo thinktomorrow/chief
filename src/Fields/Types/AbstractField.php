@@ -406,6 +406,6 @@ abstract class AbstractField
             'model' => $this->getModel(),
             'field' => $this,
             'key'   => $this->getKey(),
-        ],$this->viewData);
+        ], $this->viewData);
     }
 }

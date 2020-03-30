@@ -232,7 +232,7 @@ abstract class AbstractManager
 
     public function editFields(): Fields
     {
-        return $this->fieldsWithAssistantFields()->map(function(Field $field){
+        return $this->fieldsWithAssistantFields()->map(function (Field $field) {
             return $field->model($this->model);
         });
     }

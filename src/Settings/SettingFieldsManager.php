@@ -51,8 +51,8 @@ class SettingFieldsManager implements FieldManager
 
     public function editFields(): Fields
     {
-        return $this->fields()->map(function(Field $field){
-            return $field->valueResolver(function($model = null, $locale = null, $field){
+        return $this->fields()->map(function (Field $field) {
+            return $field->valueResolver(function ($model = null, $locale = null, $field) {
                 return $this->settings->get($field->getKey(), $locale);
             });
         });
