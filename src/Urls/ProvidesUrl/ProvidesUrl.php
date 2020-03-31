@@ -29,7 +29,7 @@ interface ProvidesUrl
      * @param null|string $locale
      * @return string
      */
-    public static function baseUrlSegment(string $locale = null): string;
+    public function baseUrlSegment(string $locale = null): string;
 
     /**
      * Create the full url for this given resource

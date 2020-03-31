@@ -16,6 +16,7 @@ principles.
 - Changed: Blade component alias `chiefformgroup` renamed to `formgroup`
 - Changed: Trying to retrieve a Fields offset e.g. `$fields['title']`), which doesn't exist, now results in an exception being thrown.
 - Changed: `Field::default()` sets the default value in case the model does not provide one. `Field::value()` forces the value.
+- Changed: baseUrlSegment method is no longer a static method and requires to be an instance method.
 - Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.

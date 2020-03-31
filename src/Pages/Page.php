@@ -223,7 +223,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
 
 
     /** @inheritdoc */
-    public static function baseUrlSegment(string $locale = null): string
+    public function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
             return '/';

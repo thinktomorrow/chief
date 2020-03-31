@@ -32,7 +32,7 @@ class ProductFake extends ManagedModelFakeFirst implements ProvidesUrl, Provides
     }
 
     /** @inheritdoc */
-    public static function baseUrlSegment(string $locale = null): string
+    public function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
             return '/';
