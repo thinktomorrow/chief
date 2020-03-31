@@ -30,8 +30,11 @@
                         @include('chief::back.managers._transitions.publish')
                     @endif
                 @endif
+
+                @include('chief::back.managers._transitions.delete')
             @endif
         @endif
+
 
     </div>
 </options-dropdown>

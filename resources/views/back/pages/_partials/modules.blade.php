@@ -18,9 +18,6 @@
         <div class="row gutter-s stack">
             @foreach($model->modules->reject(function($module){ return $module->morph_key == 'pagetitle'; }) as $module)
                 @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                @push('portals')
-                    @include('chief::back.managers._modals.delete-modal', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
-                @endpush
             @endforeach
         </div>
 

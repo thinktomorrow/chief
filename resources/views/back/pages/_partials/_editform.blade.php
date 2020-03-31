@@ -4,7 +4,7 @@
     </tab>
 
     @if(\Thinktomorrow\Chief\Modules\Module::anyAvailableForCreation())
-        <tab name="modules">
+        <tab name="Modules">
             @include('chief::back.pages._partials.modules')
         </tab>
     @endif
