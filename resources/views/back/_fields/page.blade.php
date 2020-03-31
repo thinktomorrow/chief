@@ -20,4 +20,4 @@
     </chief-multiselect>
 @endif
 
-<error class="caption text-warning" field="{{ $key }}" :errors="errors.all()"></error>
+{{-- <error class="caption text-warning" field="{{ $key }}" :errors="errors.all()"></error> --}}
