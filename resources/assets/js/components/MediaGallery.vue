@@ -39,7 +39,7 @@
 <script>
 	export default {
 		props: {
-			group: {required: true, default: ''},
+			reference: {required: true },
 			locale: {required: true, default: ''},
 			limit: {required: false, default: 12},
             replace: {required: false, default: ''},
@@ -55,7 +55,7 @@
         },
 	    computed: {
 		    id: function() {
-			    return 'mediagallery-' + this.group + '-' + this.locale;
+			    return 'mediagallery-' + this.reference + '-' + this.locale;
 			}
 		},
 		created() {
@@ -89,7 +89,7 @@
                 this.selected = asset.id;
                 this.assets.splice(item => item.id == this.selected);
 				Eventbus.$emit('close-modal', this.id);
-				Eventbus.$emit('mediagallery-loaded-'+ this.group, asset);
+				Eventbus.$emit('mediagallery-loaded-'+ this.reference, asset);
 			}
 		}
 	}

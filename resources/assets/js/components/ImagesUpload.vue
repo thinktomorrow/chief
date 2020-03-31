@@ -1,8 +1,9 @@
 <script>
     export default {
-        props: ['preselected', 'settings'],
+        props: ['reference', 'preselected', 'settings'],
         render(){
             return this.$scopedSlots.default({
+                reference: this.reference,
                 settings: this.settings,
                 items: this.items,
                 drag: {
@@ -54,7 +55,7 @@
 
             setTimeout(this.updateFilesOrder, 100);
 
-            Eventbus.$on('mediagallery-loaded-' + this.settings.group, function (asset){
+            Eventbus.$on('mediagallery-loaded-' + this.reference, function (asset){
                 self.addNewItem(asset.id, asset.filename, asset.url);
                 setTimeout(this.updateFilesOrder, 100);
             })
@@ -76,7 +77,7 @@
         },
         methods: {
             openGalleryModal: function() {
-                Eventbus.$emit('open-modal', 'mediagallery-' + this.settings.group + '-' + this.settings.locale);
+                Eventbus.$emit('open-modal', 'mediagallery-' + this.reference + '-' + this.settings.locale);
             },
             addNewItem: function(id, filename, url, file){
                 this.items.push({

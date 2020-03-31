@@ -12,8 +12,8 @@
     ]);
 ?>
 
-<imagesupload :settings="{{ $imagesUploadSettings }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}">
-    <div slot-scope="{items, sort, drag, settings, gallery}"  :id="'filegroup-' + settings.group + '-' + settings.locale" :class="{'sorting-mode' : sort.isReordering}">
+<imagesupload reference="{{ \Illuminate\Support\Str::random(10) }}" :settings="{{ $imagesUploadSettings }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}">
+    <div slot-scope="{items, sort, drag, settings, gallery, reference}"  :id="'filegroup-' + reference + '-' + settings.locale" :class="{'sorting-mode' : sort.isReordering}">
         <div class="row gutter-s">
             <div v-for="(item, index) in items" :key="item.key" class="column-4 draggable-item" :draggable="sort.isReordering" :data-item-id="item.id"
                  @dragstart="sort.handleSortingStart"
@@ -48,7 +48,7 @@
                 <div class="btn btn-primary mr-4" @click="gallery.open">
                     <span>Voeg bestaande toe uit je galerij</span>
                 </div>
-                <mediagallery url="{{ route('chief.api.media') }}" :group="settings.group" :locale="settings.locale" :uploaded="items.map(o=>o.id)"></mediagallery>
+                <mediagallery url="{{ route('chief.api.media') }}" :reference="reference" :locale="settings.locale" :uploaded="items.map(o=>o.id)"></mediagallery>
             </div>
 
             <a v-if="settings.multiple == true  && items.length > 1" @click.prevent="sort.toggleReorder" class="btn btn-primary">
