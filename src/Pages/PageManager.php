@@ -96,11 +96,12 @@ class PageManager extends AbstractManager implements Manager
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel')
+                ->description('Maximum 66 tekens')
                 ->tag('seo'),
             TextField::make('seo_description')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine omschrijving')
-                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.')
+                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven. Maximum 160 tekens')
                 ->tag('seo'),
             InputField::make('seo_keywords')
                 ->validation('max:250')
