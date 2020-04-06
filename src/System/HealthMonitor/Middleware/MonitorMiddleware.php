@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\HealthMonitor\Middleware;
+namespace Thinktomorrow\Chief\System\HealthMonitor\Middleware;
 
 use Closure;
-use Thinktomorrow\Chief\HealthMonitor\Monitor;
+use Thinktomorrow\Chief\System\HealthMonitor\Monitor;
 
 class MonitorMiddleware
 {

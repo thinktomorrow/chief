@@ -129,7 +129,7 @@ return [
      * Here you can define the stack of checks used by the healthmonitor.
      */
     'healthMonitor' => [
-        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageSetCheck::class,
-        Thinktomorrow\Chief\HealthMonitor\Checks\HomepageAccessibleCheck::class,
+        Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageSetCheck::class,
+        Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageAccessibleCheck::class,
     ],
 ];

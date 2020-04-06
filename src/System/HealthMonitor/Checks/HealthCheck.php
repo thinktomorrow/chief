@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\HealthMonitor\Checks;
+namespace Thinktomorrow\Chief\System\HealthMonitor\Checks;
 
 interface HealthCheck
 {

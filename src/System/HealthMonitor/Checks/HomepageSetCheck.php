@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\HealthMonitor\Checks;
+namespace Thinktomorrow\Chief\System\HealthMonitor\Checks;
 
 use Thinktomorrow\Chief\Settings\Setting;
-use Thinktomorrow\Chief\HealthMonitor\Notifiers\AlertBarNotifier;
+use Thinktomorrow\Chief\System\HealthMonitor\Notifiers\AlertBarNotifier;
 
 class HomepageSetCheck implements HealthCheck
 {

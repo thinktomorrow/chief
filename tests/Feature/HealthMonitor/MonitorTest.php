@@ -3,13 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\HealthMonitor;
 
 use Thinktomorrow\Chief\Pages\Page;
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\Settings\Setting;
 use Thinktomorrow\Chief\Settings\Settings;
-use Thinktomorrow\Chief\HealthMonitor\Monitor;
-use Thinktomorrow\Chief\HealthMonitor\Exceptions\InvalidClassException;
+use Thinktomorrow\Chief\System\HealthMonitor\Exceptions\InvalidClassException;
+use Thinktomorrow\Chief\System\HealthMonitor\Monitor;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class MonitorTest extends TestCase
 {
@@ -42,7 +40,7 @@ class MonitorTest extends TestCase
         $this->expectException(InvalidClassException::class);
 
         config()->set('thinktomorrow.chief.healthMonitor', [
-            Page::class 
+            Page::class
         ]);
 
         app(Monitor::class)->check();

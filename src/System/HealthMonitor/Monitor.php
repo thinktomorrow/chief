@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\HealthMonitor;
+namespace Thinktomorrow\Chief\System\HealthMonitor;
 
-use Thinktomorrow\Chief\HealthMonitor\Checks\HealthCheck;
-use Thinktomorrow\Chief\HealthMonitor\Exceptions\InvalidClassException;
+use Thinktomorrow\Chief\System\HealthMonitor\Checks\HealthCheck;
+use Thinktomorrow\Chief\System\HealthMonitor\Exceptions\InvalidClassException;
 
 class Monitor
 {

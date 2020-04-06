@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\HealthMonitor\Notifiers;
+namespace Thinktomorrow\Chief\System\HealthMonitor\Notifiers;
 
-use Thinktomorrow\Chief\HealthMonitor\Checks\HealthCheck;
+use Thinktomorrow\Chief\System\HealthMonitor\Checks\HealthCheck;
 
 class AlertBarNotifier implements Notifier
 {

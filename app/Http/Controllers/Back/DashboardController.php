@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use Thinktomorrow\Chief\HealthMonitor\Monitor;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\System\HealthMonitor\Monitor;
 
 class DashboardController extends Controller
 {
