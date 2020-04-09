@@ -18,6 +18,7 @@ principles.
 - Changed: `Field::default()` sets the default value in case the model does not provide one. `Field::value()` forces the value.
 - Changed: baseUrlSegment method is no longer a static method and requires to be an instance method.
 - Changed: Moved the Healthmonitor classes to the `src/System` directory. You'll need to update your chief.php monitor entries.
+- Fixed: Creating own modules for pages with custom tables now works as expected.
 - Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.
