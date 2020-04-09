@@ -139,7 +139,7 @@
                 options = this.isJson(options) ? JSON.parse(options) : options;
 
                 // We need an array so if options is given as key:value pairs, we convert them here.
-                if(this.isKeyValuePair(options)) {
+                if(this.isKeyValuePair(options) && options.length > 0) {
 
                     let convertedOptions = [];
 
@@ -231,7 +231,7 @@
                 }
 
                 if(!value) value = key;
-                
+
                 if(Array.isArray(values))
                 {
                     let result = {};
@@ -346,7 +346,7 @@
 
     .multiselect__placeholder {
         color: #BEB4BB;
-        margin: 0; padding: 0;  
+        margin: 0; padding: 0;
         line-height: 20px;
     }
 

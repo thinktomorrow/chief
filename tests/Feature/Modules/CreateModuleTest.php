@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class CreateModuleTest extends TestCase
 {
@@ -73,4 +73,5 @@ class CreateModuleTest extends TestCase
         $modules = Module::all();
         $this->assertCount(2, $modules);
     }
+
 }

@@ -107,7 +107,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 
     public function page()
     {
-        return $this->belongsTo(Page::class, 'page_id');
+        return $this->morphTo('page', 'page_morph_key', 'page_id');
     }
 
     /**
