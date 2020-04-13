@@ -137,7 +137,6 @@
         methods: {
             parseOptions(options){
                 options = this.isJson(options) ? JSON.parse(options) : options;
-
                 // We need an array so if options is given as key:value pairs, we convert them here.
                 if(this.isKeyValuePair(options) && (options.length > 0 || Object.keys(options).length > 0)) {
                     let convertedOptions = [];

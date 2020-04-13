@@ -23,6 +23,7 @@ principles.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.
 - Removed: `Thinktomorrow\Chief\Fields\FieldArrangement`, `Thinktomorrow\Chief\Fields\FieldTabs` and `Thinktomorrow\Chief\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
+- Fixed: small bug in multiselect that would set the value as 'length' if the options array was empty.
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
