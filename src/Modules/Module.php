@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\HasFragments;
-use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Management\Managers;
 use Illuminate\Database\Eloquent\SoftDeletes;
