@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Urls\UrlHelper;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
 
@@ -36,18 +37,39 @@ class PageField extends SelectField
      */
     public function pagesAsOptions(Model $excludedPage = null, array $whitelistedKeys = [], $online = false): self
     {
-        // options are always grouped
-        $this->grouped();
-
         if (empty($whitelistedKeys)) {
+            $this->grouped();
             $this->options = UrlHelper::allModelsExcept($excludedPage, $online);
             return $this;
         }
 
-        $this->options = FlatReferencePresenter::toGroupedSelectValues(
-            UrlHelper::modelsByKeys($whitelistedKeys, $excludedPage, $online)
-        )->toArray();
+        $this->setModelsAsOptions(UrlHelper::modelsByKeys($whitelistedKeys, $excludedPage, $online));
 
         return $this;
+    }
+
+    public function flatReferencesAsOptions(array $flatReferences): self
+    {
+        $instances = [];
+
+        foreach($flatReferences as $k => $flatReference) {
+            if(is_string($flatReference)) {
+                $flatReference = FlatReferenceFactory::fromString($flatReference);
+            }
+
+            $instances[] = $flatReference->instance();
+        }
+
+        $this->setModelsAsOptions($instances);
+
+        return $this;
+    }
+
+    private function setModelsAsOptions(array $models): void
+    {
+        // options are always grouped
+        $this->grouped();
+
+        $this->options = FlatReferencePresenter::toGroupedSelectValues(collect($models))->toArray();
     }
 }
