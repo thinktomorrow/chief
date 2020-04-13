@@ -26,11 +26,6 @@ class ProductFake extends ManagedModelFakeFirst implements ProvidesUrl, Provides
         return UrlRecord::findByModel($this, $locale)->slug;
     }
 
-    public function previewUrl(string $locale = null): string
-    {
-        return $this->url($locale);
-    }
-
     /** @inheritdoc */
     public function baseUrlSegment(string $locale = null): string
     {

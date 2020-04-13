@@ -15,7 +15,7 @@ class PreviewMode
 
     public static function fromRequest()
     {
-        $active = (request()->has('preview-mode') && auth()->guard('chief')->check());
+        $active = (session()->get('preview-mode') === true && auth()->guard('chief')->check());
 
         return new static($active);
     }

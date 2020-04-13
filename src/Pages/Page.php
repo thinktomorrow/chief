@@ -216,17 +216,6 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     }
 
     /** @inheritdoc */
-    public function previewUrl(string $locale = null): string
-    {
-        if($this->isPublished()) {
-            return $this->url($locale);
-        }
-
-        return $this->url($locale) . '?preview-mode';
-    }
-
-
-    /** @inheritdoc */
     public function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
@@ -265,7 +254,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         }
 
         if ($this->isDraft()) {
-            return '<a href="' . $this->previewUrl() . '" target="_blank" class="text-error"><em>offline</em></a>';
+            return '<a href="' . $this->url() . '" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
         if ($this->isArchived()) {

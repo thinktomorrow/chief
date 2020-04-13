@@ -80,7 +80,8 @@ class ChiefResponseTest extends TestCase
 
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
-        $response = $this->asAdmin()->get('foo/bar?preview-mode');
+        session()->flash('preview-mode', true);
+        $response = $this->asAdmin()->get('foo/bar');
 
         $response->assertSuccessful();
     }
