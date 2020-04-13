@@ -2,6 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Thinktomorrow\Chief\Templates\ApplyTemplate;
+use Thinktomorrow\Chief\Templates\ModuleTemplateApplicator;
+use Thinktomorrow\Chief\Templates\PageTemplateApplicator;
 use Thinktomorrow\Chief\Users\User;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -129,6 +132,15 @@ class ChiefServiceProvider extends ServiceProvider
         // Manager register is globally available
         $this->app->singleton(Register::class, function () {
             return new Register();
+        });
+
+        // Load up the available template applicators. If your projects requires a custom template source,
+        // you can bind your own ApplyTemplate version with a custom set of applicators.
+        $this->app->bind(ApplyTemplate::class, function($app){
+            return new ApplyTemplate([
+                $app->make(ModuleTemplateApplicator::class),
+                $app->make(PageTemplateApplicator::class),
+            ]);
         });
 
         (new MacrosServiceProvider($this->app))->register();

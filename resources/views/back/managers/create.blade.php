@@ -28,6 +28,8 @@
                 'fields' => $manager->createFields(),
             ], $manager->createViewData()))
 
+            @include('chief::back.managers._partials._templatefield')
+
             <div class="stack text-right">
                 <button type="submit" class="btn btn-primary">Aanmaken</button>
             </div>

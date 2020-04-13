@@ -22,6 +22,12 @@ class Settings extends Collection
             return $default;
         }
 
+        // non-assoc array of items
+        if(is_array($this->items[$key]) && key($this->items[$key]) === 0) {
+            return $this->items[$key];
+        }
+
+        // Array of localized items
         if (is_array($this->items[$key])) {
             if (!$locale) {
                 $locale = app()->getLocale();
