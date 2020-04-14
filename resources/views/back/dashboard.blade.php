@@ -26,7 +26,7 @@
                         <div class="rounded bg-white shadow">
                             <div class="inset">
                                 <div class="flex items-center mb-4">
-                                    <span class="text-4xl font-bold inline-block mr-4" style="leading-none">{{ $total }}</span>
+                                    <span class="text-4xl font-bold inline-block mr-4">{{ $total }}</span>
                                     <p class="mt-2 text-lg">{{ $total == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
                                 </div>
                                 <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
