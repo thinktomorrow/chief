@@ -13,7 +13,7 @@ class CreateModule
 {
     use TranslatableCommand;
 
-    public function handle(string $registerKey, string $slug, $page_morphkey = null, $page_id = null): Module
+    public function handle(string $registerKey, string $slug, $owner_type = null, $owner_id = null): Module
     {
         try {
             DB::beginTransaction();
@@ -21,7 +21,7 @@ class CreateModule
             // Fetch managed model and create it via eloquent.
             $model = app(Managers::class)->findByKey($registerKey)->modelInstance();
 
-            $module = $model->create(['slug' => $slug, 'page_morph_key' => $page_morphkey, 'page_id' => $page_id]);
+            $module = $model->create(['slug' => $slug, 'owner_type' => $owner_type, 'owner_id' => $owner_id]);
 
             DB::commit();
 
