@@ -35,7 +35,8 @@ class ModulesController extends Controller
         $module = app(CreateModule::class)->handle(
             $request->get('module_key'),
             $request->get('slug'),
-            $request->get('page_id')
+            $request->get('owner_type'),
+            $request->get('owner_id')
         );
 
         // Populate the manager with the model so we can direct the admin to the correct page.
