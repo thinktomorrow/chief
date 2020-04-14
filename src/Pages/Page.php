@@ -130,7 +130,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
      */
     public function modules()
     {
-        return $this->hasMany(Module::class, 'page_id')->where('morph_key', '<>', 'text');
+        return $this->morphMany(Module::class, 'owner')->where('morph_key', '<>', 'text');
     }
 
     public function flatReference(): FlatReference
