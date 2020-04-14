@@ -126,6 +126,16 @@ abstract class AbstractManager
         return $paginator->setCollection($modifiedCollection);
     }
 
+    public function indexView(): string
+    {
+        return 'chief::back.managers._partials._rowitems';
+    }
+
+    public function indexViewData(): array
+    {
+        return [];
+    }
+
     public function modelInstance(): ManagedModel
     {
         $class = $this->registration->model();
