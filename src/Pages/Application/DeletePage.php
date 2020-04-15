@@ -14,7 +14,6 @@ class DeletePage
 {
     public function handle($flatreference)
     {
-
         try {
             DB::beginTransaction();
 

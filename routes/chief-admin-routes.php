@@ -10,11 +10,11 @@
 Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
 
 // Toggle preview mode on frontend chief admin toast
-Route::get('toggle-preview', function(){
-    session()->put('preview-mode', !session()->get('preview-mode',false));
+Route::get('toggle-preview', function () {
+    session()->put('preview-mode', !session()->get('preview-mode', false));
 
     return redirect()->back();
-} )->name('chief.front.preview');
+})->name('chief.front.preview');
 
 /**
 * -----------------------------------------------------------------
