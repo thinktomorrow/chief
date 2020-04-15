@@ -22,7 +22,7 @@ class PublishController extends Controller
 
         $manager->assistant('publish')->publish();
 
-        return redirect()->back()->with('messages.success', $manager->details()->title . ' is gepubliceerd. <a href="' . $manager->assistant('publish')->previewUrl() . '" target="_blank">Bekijk de pagina online</a>.');
+        return redirect()->back()->with('messages.success', $manager->details()->title . ' is gepubliceerd. <a href="' . $manager->assistant('publish')->url() . '" target="_blank">Bekijk de pagina online</a>.');
     }
 
     public function unpublish(Request $request, $key, $id)

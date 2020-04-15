@@ -119,9 +119,9 @@ class PublishAssistant implements Assistant
         return $this;
     }
 
-    public function hasPreviewUrl(): bool
+    public function hasUrl(): bool
     {
-        return $this->manager->existingModel() instanceof ProvidesUrl && $this->previewUrl() != '?preview-mode';
+        return $this->manager->existingModel() instanceof ProvidesUrl;
     }
 
     public function publicationStatusAsLabel($plain = false)
@@ -139,8 +139,8 @@ class PublishAssistant implements Assistant
 
         $statusAsLabel = '<span class="' . $class . '">' . $label . '</span>';
 
-        if (!$plain && $this->hasPreviewUrl()) {
-            $statusAsLabel = '<a href="' . $this->previewUrl() . '" target="_blank">' . $statusAsLabel . '</a>';
+        if (!$plain && $this->hasUrl()) {
+            $statusAsLabel = '<a href="' . $this->url() . '" target="_blank">' . $statusAsLabel . '</a>';
         }
 
         return $statusAsLabel;
@@ -159,8 +159,8 @@ class PublishAssistant implements Assistant
         return '-';
     }
 
-    public function previewUrl(): string
+    public function url(): string
     {
-        return $this->manager->existingModel()->previewUrl();
+        return $this->manager->existingModel()->url();
     }
 }

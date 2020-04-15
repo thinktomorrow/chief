@@ -111,13 +111,6 @@ class CustomTableArticleFake extends Model implements ManagedModel, HasAsset, Ac
     }
 
     /** @inheritdoc */
-    public function previewUrl(string $locale = null): string
-    {
-        return $this->url($locale) . '?preview-mode';
-    }
-
-
-    /** @inheritdoc */
     public function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
