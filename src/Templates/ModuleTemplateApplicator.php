@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Templates;
@@ -11,7 +12,6 @@ class ModuleTemplateApplicator implements TemplateApplicator
 {
     public function __construct()
     {
-
     }
 
     public function handle($sourceModel, $targetModel): void
@@ -20,20 +20,18 @@ class ModuleTemplateApplicator implements TemplateApplicator
         Assert::isInstanceOf($targetModel, Module::class);
 
         // Dynamic attributes
-        if($sourceModel->values && $sourceModel->values instanceof DynamicAttributes) {
+        if ($sourceModel->values && $sourceModel->values instanceof DynamicAttributes) {
             $targetModel->values = $sourceModel->values;
         }
 
         // Translations
-        foreach($sourceModel->getTranslationsArray() as $locale => $values) {
+        foreach ($sourceModel->getTranslationsArray() as $locale => $values) {
             $targetModel->translations()->create(array_merge(['locale' => $locale], $values));
         }
 
         // Fragments
-        if (method_exists($sourceModel, 'fragments') && method_exists($targetModel, 'fragments'))
-        {
-            foreach ($sourceModel->fragments()->get() as $fragmentModel)
-            {
+        if (method_exists($sourceModel, 'fragments') && method_exists($targetModel, 'fragments')) {
+            foreach ($sourceModel->fragments()->get() as $fragmentModel) {
                 $targetModel->fragments()->create([
                     'key'    => $fragmentModel->key,
                     'values' => $fragmentModel->values,
@@ -44,7 +42,7 @@ class ModuleTemplateApplicator implements TemplateApplicator
         $targetModel->save();
 
         // Assets
-        foreach($sourceModel->assets() as $asset) {
+        foreach ($sourceModel->assets() as $asset) {
             $targetModel->assetRelation()->attach($asset, ['type' => $asset->pivot->type, 'locale' => $asset->pivot->locale, 'order' => $asset->pivot->order]);
         }
     }

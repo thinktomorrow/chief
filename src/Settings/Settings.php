@@ -23,7 +23,7 @@ class Settings extends Collection
         }
 
         // non-assoc array of items
-        if(is_array($this->items[$key]) && key($this->items[$key]) === 0) {
+        if (is_array($this->items[$key]) && key($this->items[$key]) === 0) {
             return $this->items[$key];
         }
 

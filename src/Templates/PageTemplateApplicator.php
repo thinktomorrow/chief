@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Templates;
@@ -23,8 +24,7 @@ class PageTemplateApplicator implements TemplateApplicator
         /** @var Page $sourceModel */
         Assert::isInstanceOf($sourceModel, Page::class);
 
-        if ($this->shouldApplyRelations($sourceModel, $targetModel))
-        {
+        if ($this->shouldApplyRelations($sourceModel, $targetModel)) {
             $this->applyRelations($sourceModel, $targetModel);
         }
 
@@ -48,12 +48,10 @@ class PageTemplateApplicator implements TemplateApplicator
 
     private function applyRelations(ActsAsParent $sourceModel, ActsAsParent $targetModel): void
     {
-        foreach ($sourceModel->children() as $child)
-        {
+        foreach ($sourceModel->children() as $child) {
             $duplicatedChild = null;
 
-            if ($child instanceof Module && $child->isPageSpecific())
-            {
+            if ($child instanceof Module && $child->isPageSpecific()) {
                 $duplicatedChild = $child::create([
                     'slug'           => $targetModel->title ? $targetModel->title . '-' . $child->slug : $child->slug . '-copy',
                     'owner_id'        => $targetModel->id,
@@ -61,8 +59,7 @@ class PageTemplateApplicator implements TemplateApplicator
                 ]);
 
                 $this->moduleTemplateApplicator->handle($child, $duplicatedChild);
-            } else
-            {
+            } else {
                 $duplicatedChild = $child;
             }
 

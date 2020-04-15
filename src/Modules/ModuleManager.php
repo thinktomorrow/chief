@@ -36,9 +36,8 @@ class ModuleManager extends AbstractManager implements Manager
          * Therefore the index of these modules is at the modules tab of this page model.
          */
         if ($verb == 'index' && $this->model->isPageSpecific()) {
-
-            if(!$this->model->page) {
-                throw new \RuntimeException('Cannot retrieve parent for page specific module [type: '.$this->registration->key() .', id: '. $this->existingModel()->id.']');
+            if (!$this->model->page) {
+                throw new \RuntimeException('Cannot retrieve parent for page specific module [type: ' . $this->registration->key() . ', id: ' . $this->existingModel()->id . ']');
             }
 
             return app(Managers::class)->findByModel($this->model->page)->route('edit') . '#eigen-modules';

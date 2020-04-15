@@ -218,7 +218,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     /** @inheritdoc */
     public function previewUrl(string $locale = null): string
     {
-        if($this->isPublished()) {
+        if ($this->isPublished()) {
             return $this->url($locale);
         }
 
