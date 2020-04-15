@@ -56,8 +56,8 @@ class PageTemplateApplicator implements TemplateApplicator
             {
                 $duplicatedChild = $child::create([
                     'slug'           => $targetModel->title ? $targetModel->title . '-' . $child->slug : $child->slug . '-copy',
-                    'page_id'        => $targetModel->id,
-                    'page_morph_key' => $targetModel->getMorphClass()
+                    'owner_id'        => $targetModel->id,
+                    'owner_type' => $targetModel->getMorphClass()
                 ]);
 
                 $this->moduleTemplateApplicator->handle($child, $duplicatedChild);

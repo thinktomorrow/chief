@@ -20,7 +20,7 @@ class PageTemplateTest extends TestCase
 
         $this->source = Single::create();
         $this->source->adoptChild(NewsletterModuleFake::create(['slug' => 'newsletter-one']));
-        $this->source->adoptChild(NewsletterModuleFake::create(['slug' => 'newsletter-one', 'page_id' => $this->source->id, 'dynamic_title' => 'dynamic title']));
+        $this->source->adoptChild(NewsletterModuleFake::create(['slug' => 'newsletter-one', 'owner_id' => $this->source->id, 'owner_type' => $this->source->getMorphClass(), 'dynamic_title' => 'dynamic title']));
         $this->source->adoptChild(ArticlePageFake::create());
 
         $this->target = Single::create();

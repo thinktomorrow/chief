@@ -46,9 +46,9 @@
 
                     @else
 
-                        @foreach($managers as $manager)
-                            @include('chief::back.managers._partials._rowitem')
-                        @endforeach
+                        @include($modelManager->indexView(), array_merge([
+                            'managers' => $managers,
+                        ], $modelManager->indexViewData()))
 
                     @endif
 

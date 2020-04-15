@@ -30,6 +30,6 @@
     @endif
 
     @push('portals')
-        @include('chief::back.modules._partials.create-modal', ['page_id' => $model->id])
+        @include('chief::back.modules._partials.create-modal', ['owner_id' => $model->id, 'owner_type' => $model->getMorphClass()])
     @endpush
 </div>

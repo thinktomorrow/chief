@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeFirst;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\SingleFakeWithPageField;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFakeWithPageField;
+use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeTranslation;
 
 class PageFieldTest extends TestCase
 {
@@ -67,6 +68,7 @@ class PageFieldTest extends TestCase
     public function pagefield_can_whitelist_certain_page_types()
     {
         ManagedModelFakeFirst::migrateUp();
+        ManagedModelFakeTranslation::migrateUp();
         app(Register::class)->register(ManagerFake::class, ManagedModelFakeFirst::class);
         $otherPage = ManagedModelFakeFirst::create(['current_state' => PageState::PUBLISHED]);
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foobaz', 'model_type' => get_class($otherPage), 'model_id' => $otherPage->id]);

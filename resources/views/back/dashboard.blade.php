@@ -19,18 +19,15 @@
 
                 @if(!$manager->can('index')) @continue @endif
 
-                @php
-                    $collection = $manager->indexCollection();
-                    $collectionCount = $manager->indexCollection() instanceof LengthAwarePaginator ? $manager->indexCollection()->total() : $collection->count();
-                @endphp
+                <?php $total = method_exists($manager->indexCollection(), 'total') ? $manager->indexCollection()->total() : $manager->indexCollection()->count(); ?>
 
-                @if($collectionCount > 0)
+                @if($total > 0)
                     <div class="column-6">
                         <div class="rounded bg-white shadow">
                             <div class="inset">
                                 <div class="flex items-center mb-4">
-                                    <span class="text-4xl font-bold inline-block mr-4" style="leading-none">{{ $collectionCount }}</span>
-                                    <p class="mt-2 text-lg">{{ $collectionCount == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
+                                    <span class="text-4xl font-bold inline-block mr-4">{{ $total }}</span>
+                                    <p class="mt-2 text-lg">{{ $total == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
                                 </div>
                                 <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
                             </div>

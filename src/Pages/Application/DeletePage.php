@@ -26,7 +26,7 @@ class DeletePage
             }
 
             // Remove Page specific modules
-            Module::where('page_id', $page->id)->delete();
+            Module::where('owner_id', $page->id)->where('owner_type', $page->getMorphClass())->delete();
 
             // Remove Page specific urls
             UrlRecord::getByModel($page)->each->delete();

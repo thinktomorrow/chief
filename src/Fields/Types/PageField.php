@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fields\Types;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Urls\UrlHelper;
 use Thinktomorrow\Chief\FlatReferences\FlatReferencePresenter;
@@ -60,12 +61,12 @@ class PageField extends SelectField
             $instances[] = $flatReference->instance();
         }
 
-        $this->setModelsAsOptions($instances);
+        $this->setModelsAsOptions(collect($instances));
 
         return $this;
     }
 
-    private function setModelsAsOptions(array $models): void
+    private function setModelsAsOptions(Collection $models): void
     {
         // options are always grouped
         $this->grouped();

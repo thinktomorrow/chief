@@ -385,11 +385,13 @@ class PageBuildTest extends TestCase
     public function it_only_has_general_or_own_modules()
     {
         $module = Module::create(['slug' => 'foobar']);
-        $module->page_id = $this->page->id++;
+        $module->owner_id = $this->page->id++;
+        $module->owner_type = $this->page->getMorphClass();
         $module->save();
 
         $module = Module::create(['slug' => 'foobar 2']);
-        $module->page_id = $this->page->id;
+        $module->owner_id = $this->page->id;
+        $module->owner_type = $this->page->getMorphClass();
         $module->save();
         $managers = app(Managers::class);
         $pagebuilderField = $managers->findByKey('articles_fake')->manage($this->page)->fields()->first();
