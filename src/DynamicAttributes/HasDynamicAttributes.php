@@ -18,7 +18,7 @@ trait HasDynamicAttributes
 
     public function isDynamicKey($key): bool
     {
-        if (array_key_exists($key, $this->attributes)) {
+        if (array_key_exists($key, $this->attributes) || $key === $this->getDynamicKey()) {
             return false;
         }
 
