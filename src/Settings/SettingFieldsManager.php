@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Fields\FieldManager;
 use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\Fields\Types\PageField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
 use Thinktomorrow\Chief\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Urls\UrlHelper;
@@ -46,6 +47,11 @@ class SettingFieldsManager implements FieldManager
                 ->validation('required')
                 ->label('Webmaster naam')
                 ->description('Voor en achternaam van de webmaster.'),
+            PageField::make('templates')
+                ->label('Pagina templates')
+                ->pagesAsOptions()
+                ->description('Selecteer één of meerdere pagina\'s om te gebruiken als template. Een nieuwe pagina vanuit een template aanmaken start met eenzelfde paginaopbouw.')
+                ->multiple()
         ]);
     }
 

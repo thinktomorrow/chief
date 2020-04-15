@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: A new page can be created based on an existing template. This will duplicate the pagebuilder content and structure.
 - Added: Pagefield used to select an internal page
 - Added: chief admin toast - a widget element on frontend for quick page edit and preview mode toggle
 - Added: dynamic attributes. [https://thinktomorrow.github.io/package-docs/src/chief/managers.html#dynamic-attributes](view docs)

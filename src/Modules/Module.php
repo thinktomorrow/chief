@@ -8,7 +8,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\HasFragments;
-use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Management\Managers;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -107,7 +106,7 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
 
     public function page()
     {
-        return $this->morphTo('page', 'page_morph_key', 'page_id');
+        return $this->morphTo('page', 'owner_type', 'owner_id');
     }
 
     /**
@@ -118,12 +117,12 @@ class Module extends Model implements ManagedModel, TranslatableContract, HasAss
      */
     public function scopeWithoutPageSpecific($query)
     {
-        $query->whereNull('page_id');
+        $query->whereNull('owner_id');
     }
 
     public function isPageSpecific(): bool
     {
-        return !is_null($this->page_id);
+        return !is_null($this->owner_id);
     }
 
     /**

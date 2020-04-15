@@ -42,7 +42,7 @@ class DeleteManagedModel
             }
 
             if ($model instanceof Page) {
-                Module::where('page_id', $model->id)->delete();
+                Module::where('owner_id', $model->id)->where('owner_type', $model->getMorphClass())->delete();
             }
 
             Audit::activity()

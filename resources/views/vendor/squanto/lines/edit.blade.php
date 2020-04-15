@@ -1,11 +1,11 @@
 @extends('chief::back._layouts.master')
 
 @section('custom-styles')
-    <link rel="stylesheet" href="{{ asset('chief-assets/back/vendor/redactor/redactor.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/back/css/vendor/redactor.css') }}">
 @stop
 
 @push('custom-scripts')
-<script src="{{ asset('chief-assets/back/vendor/redactor/redactor.js') }}"></script>
+<script src="{{ asset('assets/back/js/vendor/redactor.js') }}"></script>
 <script>
     ;(function ($) {
 

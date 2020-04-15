@@ -51,6 +51,18 @@ interface Manager extends FieldManager, AssistedManager
     public function indexCollection();
 
     /**
+     * Viewfile for the admin index listing of results
+     * @return string
+     */
+    public function indexView(): string;
+
+    /**
+     * Any additional viewData to be passed on to the index view partial
+     * @return array
+     */
+    public function indexViewData(): array;
+
+    /**
      * An empty, default instance of the managed model.
      * This is an instance that is newed up without being persisted.
      *

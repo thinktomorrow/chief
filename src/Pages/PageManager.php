@@ -179,7 +179,7 @@ class PageManager extends AbstractManager implements Manager
             throw new DeleteAborted();
         }
 
-        app(DeletePage::class)->handle($this->model->id);
+        app(DeletePage::class)->handle($this->model->flatreference());
     }
 
     public function storeRequest(Request $request): Request
