@@ -8,17 +8,19 @@ use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Urls\UrlRecord;
 use Thinktomorrow\Chief\States\PageState;
 
 class DeletePage
 {
-    public function handle($id)
+    public function handle($flatreference)
     {
+
         try {
             DB::beginTransaction();
 
-            $page = Page::withArchived()->findOrFail($id);
+            $page = $flatreference->instance();
 
             // Can only delete a draft or archived page
             if ($page->isPublished()) {
