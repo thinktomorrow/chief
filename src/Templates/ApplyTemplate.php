@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Templates;
@@ -25,8 +26,8 @@ class ApplyTemplate
         $targetModel = $this->findModel($targetClassName, $targetId);
 
         /** @var TemplateApplicator $applicator */
-        foreach($this->applicators as $applicator) {
-            if(!$applicator->shouldApply($sourceModel, $targetModel)) {
+        foreach ($this->applicators as $applicator) {
+            if (!$applicator->shouldApply($sourceModel, $targetModel)) {
                 continue;
             }
 
@@ -35,7 +36,7 @@ class ApplyTemplate
             return;
         }
 
-        $availableApplicatorsString = implode(array_map(function($applicator){ return get_class($applicator);}, $this->applicators), ',');
+        $availableApplicatorsString = implode(array_map(function ($applicator) { return get_class($applicator);}, $this->applicators), ',');
 
         throw new \RuntimeException("No proper template applicator found. $sourceClassName [$sourceId] cannot be applied as template. Available applicators: [$availableApplicatorsString]");
     }
@@ -48,10 +49,10 @@ class ApplyTemplate
      */
     private function findModel(string $className, string $sourceId): Model
     {
-        if($morphedClassName = Relation::getMorphedModel($className)) {
+        if ($morphedClassName = Relation::getMorphedModel($className)) {
             $className = $morphedClassName;
         }
 
-        return (new $className)->findOrFail($sourceId);
+        return (new $className())->findOrFail($sourceId);
     }
 }

@@ -136,7 +136,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Load up the available template applicators. If your projects requires a custom template source,
         // you can bind your own ApplyTemplate version with a custom set of applicators.
-        $this->app->bind(ApplyTemplate::class, function($app){
+        $this->app->bind(ApplyTemplate::class, function ($app) {
             return new ApplyTemplate([
                 $app->make(ModuleTemplateApplicator::class),
                 $app->make(PageTemplateApplicator::class),

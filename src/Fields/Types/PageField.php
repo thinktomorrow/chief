@@ -53,8 +53,8 @@ class PageField extends SelectField
     {
         $instances = [];
 
-        foreach($flatReferences as $k => $flatReference) {
-            if(is_string($flatReference)) {
+        foreach ($flatReferences as $k => $flatReference) {
+            if (is_string($flatReference)) {
                 $flatReference = FlatReferenceFactory::fromString($flatReference);
             }
 

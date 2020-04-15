@@ -25,7 +25,7 @@ class AddPageMorphkeyToModulesTable extends Migration
 
         $this->migrateOwnerMorphKey();
 
-        Schema::table('modules', function (Blueprint $table){
+        Schema::table('modules', function (Blueprint $table) {
             $table->string('owner_type')->change();
         });
     }
@@ -39,9 +39,9 @@ class AddPageMorphkeyToModulesTable extends Migration
     {
         $modules = Module::all();
 
-        $modules->reject(function($module){
+        $modules->reject(function ($module) {
             return $module->owner_id == null;
-        })->each(function($module){
+        })->each(function ($module) {
             $module->owner_type = 'singles';
             $module->save();
         });
