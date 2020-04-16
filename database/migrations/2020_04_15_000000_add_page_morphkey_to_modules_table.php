@@ -42,8 +42,17 @@ class AddPageMorphkeyToModulesTable extends Migration
         $modules->reject(function ($module) {
             return $module->owner_id == null;
         })->each(function ($module) {
-            $module->owner_type = 'singles';
-            $module->save();
+
+            try{
+                $page = \Thinktomorrow\Chief\Pages\Page::find($module->owner_id);
+                $module->owner_type = $page->getMorphClass();
+                $module->save();
+            } catch(Exception $e)
+            {
+                echo "Could not determine page owner_type for page id [$module->owner_id], error: ".$e->getMessage()." \n";
+            }
+
+
         });
     }
 }
