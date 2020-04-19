@@ -27,13 +27,6 @@ class PageTemplateApplicator implements TemplateApplicator
         if ($this->shouldApplyRelations($sourceModel, $targetModel)) {
             $this->applyRelations($sourceModel, $targetModel);
         }
-
-
-        // which parts to provide?
-        //    public function children(): Collection;
-        //    public function values(): array;
-        //    public function translations(): array;
-        //    public function fragments(): array;
     }
 
     public function shouldApply($sourceModel, $targetModel): bool
