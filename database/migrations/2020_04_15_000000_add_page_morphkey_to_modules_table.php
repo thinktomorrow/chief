@@ -37,22 +37,28 @@ class AddPageMorphkeyToModulesTable extends Migration
 
     private function migrateOwnerMorphKey()
     {
-        $modules = Module::all();
+        $moduleRecords = \Illuminate\Support\Facades\DB::table('modules')->get();
 
-        $modules->reject(function ($module) {
-            return $module->owner_id == null;
-        })->each(function ($module) {
+        foreach($moduleRecords as $moduleRecord) {
+
+            if(!$moduleRecord->owner_id) continue;
 
             try{
-                $page = \Thinktomorrow\Chief\Pages\Page::find($module->owner_id);
-                $module->owner_type = $page->getMorphClass();
-                $module->save();
+                $page = \Thinktomorrow\Chief\Pages\Page::find($moduleRecord->owner_id);
+
+                if(!$page) {
+                    throw new Exception('No page found by id ' . $moduleRecord->owner_id);
+                }
+
+                \Illuminate\Support\Facades\DB::table('modules')->where('id', $moduleRecord->id)->update([
+                    'owner_type' => $page->getMorphClass(),
+                ]);
             } catch(Exception $e)
             {
-                echo "Could not determine page owner_type for page id [$module->owner_id], error: ".$e->getMessage()." \n";
+                echo "Could not determine page owner_type for page id [$moduleRecord->owner_id], module morph_key: $moduleRecord->morph_key, error: ".$e->getMessage()." \n";
             }
+        }
 
 
-        });
     }
 }
