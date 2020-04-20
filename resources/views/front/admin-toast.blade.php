@@ -14,7 +14,7 @@
         //
     }
 
-    $inPreviewMode = session()->get('preview-mode', false);
+    $inPreviewMode = session()->get('preview-mode', true);
     $previewModeToggleUrl = route('chief.front.preview');
 
 ?>
