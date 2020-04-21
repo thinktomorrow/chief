@@ -15,7 +15,7 @@
                     </div>
                     <div class="text-subtle font-s">
                         <span class="inline-block label label--primary" v-if="field.is_homepage">homepage</span>
-                        <a class="inline-block" v-if="field.value" target="_blank" :href="field.prepend + field.value + '?preview-mode'">Bekijk op site</a>
+                        <a class="inline-block" v-if="field.value" target="_blank" :href="field.prepend + field.value">Bekijk op site</a>
                         <p class="inline-block right text-error" v-if="field.hint" v-html="field.hint"></p>
                     </div>
                 </div>

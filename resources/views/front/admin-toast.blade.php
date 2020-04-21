@@ -14,7 +14,7 @@
             //
         }
 
-        $inPreviewMode = session()->get('preview-mode', true);
+        $inPreviewMode = \Thinktomorrow\Chief\States\Publishable\PreviewMode::fromRequest()->check();
         $previewModeToggleUrl = route('chief.front.preview');
 
     ?>
