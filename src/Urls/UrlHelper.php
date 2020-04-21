@@ -89,7 +89,7 @@ class UrlHelper
 
     public static function modelsByType(array $types, Model $ignoredModel = null, bool $online = true)
     {
-        $models = chiefMemoize('all-online-models', function () use ($types, $online) {
+        $models = chiefMemoize('all-online-models-' . implode('_', $types), function () use ($types, $online) {
             $builder = UrlRecord::whereNull('redirect_id')
                 ->select('model_type', 'model_id')
                 ->groupBy('model_type', 'model_id');
