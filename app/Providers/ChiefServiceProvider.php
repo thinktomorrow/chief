@@ -2,6 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
+use Thinktomorrow\Chief\Fields\FieldManager;
+use Thinktomorrow\Chief\Settings\SettingFieldsManager;
+use Thinktomorrow\Chief\Settings\Settings;
 use Thinktomorrow\Chief\Templates\ApplyTemplate;
 use Thinktomorrow\Chief\Templates\ModuleTemplateApplicator;
 use Thinktomorrow\Chief\Templates\PageTemplateApplicator;
@@ -133,6 +137,12 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->singleton(Register::class, function () {
             return new Register();
         });
+
+        $this->app->when(SettingsController::class)
+            ->needs(FieldManager::class)
+            ->give(function () {
+                return new SettingFieldsManager(new Settings());
+            });
 
         // Load up the available template applicators. If your projects requires a custom template source,
         // you can bind your own ApplyTemplate version with a custom set of applicators.
