@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
             }
         }
 
-        if($this->shouldRenderChiefException($exception)) {
+        if ($this->shouldRenderChiefException($exception)) {
             return $this->renderChiefException($request, $exception);
         }
 
