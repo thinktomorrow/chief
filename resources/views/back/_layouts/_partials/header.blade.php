@@ -1,5 +1,5 @@
 @section('header')
-    <header class="bg-white border-b border-secondary-200 sticky top-0 z-2">
+    <header class="bg-white border-b border-secondary-200 sticky top-0 z-20">
         <div class="container">
             <div class="row stack flex justify-between">
                 <div class="column-9">
