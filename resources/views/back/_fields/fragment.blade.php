@@ -30,7 +30,7 @@
             </fieldset>
         @endforeach
     </div>
-    <div class="flex justify-center items-center w-full h-8 center-y relative z-10">
+    <div class="flex justify-center items-center w-full h-8 center-y relative z-1">
         <span data-fragment-add class="block menu-trigger bg-secondary-50 rounded-full cursor-pointer mx-auto hover:text-secondary-600">
             <svg width="24" height="24" class="fill-current"><use xlink:href="#plus"/></svg>
         </span>

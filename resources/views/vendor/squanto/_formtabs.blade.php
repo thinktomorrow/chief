@@ -59,7 +59,7 @@
                                     <span class="divider-locale font-s">{{ $tab->locale }}</span>
                                 </div>
                             @endif
-                            <div class="bg-white border border-grey-100 rounded inset-s z-10 relative">
+                            <div class="bg-white border border-grey-100 rounded inset-s relative z-1">
                             @foreach($lines as $line)
                                 @include('squanto::_form',['locale' => $tab->locale])
                             @endforeach
