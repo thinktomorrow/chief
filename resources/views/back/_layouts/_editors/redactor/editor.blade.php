@@ -43,6 +43,7 @@
                     tags: ['a'],
                 },
             ],
+            toolbarFixedTopOffset: 80, // Fixed chief header compensation
         };
     </script>
 
