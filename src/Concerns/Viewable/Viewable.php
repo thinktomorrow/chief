@@ -73,6 +73,17 @@ trait Viewable
     }
 
     /**
+     * Group identifier for a page set.
+     *
+     * @return string
+     * @throws NotFoundViewKey
+     */
+    public function setKey(): string
+    {
+        return $this->viewKey();
+    }
+
+    /**
      * This is the full path reference for this model's view file. This is relative to your main view folder
      * e.g. key 'articles.show'. A sensible default is set and determined based on the viewKey value.
      * But you are free to override this and change it to another value to fit your own logic.

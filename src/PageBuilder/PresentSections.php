@@ -112,7 +112,7 @@ class PresentSections
             return;
         }
 
-        $key = $model->viewKey();
+        $key = $model->setKey();
 
         // Set the current collection to the model key identifier: for pages this is the collection key, for
         // other managed models this is the registered key.
