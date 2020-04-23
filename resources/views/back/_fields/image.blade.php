@@ -11,7 +11,6 @@
         'managerKey' => method_exists($model, 'managedModelKey') ? $model->managedModelKey() : '',
     ]);
 ?>
-
 <imagesupload reference="{{ \Illuminate\Support\Str::random(10) }}" :settings="{{ $imagesUploadSettings }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}">
     <div slot-scope="{items, sort, drag, settings, gallery, reference}"  :id="'filegroup-' + reference + '-' + settings.locale" :class="{'sorting-mode' : sort.isReordering}">
         <div class="row gutter-s">

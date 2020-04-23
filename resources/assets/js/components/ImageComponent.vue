@@ -17,8 +17,8 @@
         mounted: function () {
             this.instance = new Slim(this.$el.childNodes[0], {
 
-                label: 'geen afbeelding',
-                labelLoading: '',
+                label: 'Klik om een afbeelding te selecteren',
+                // labelLoading: 'De afbeelding is aan het laden ...', // werkt niet
 
                 // Async upload settings
                 service: '/admin/api/assets/images/upload',
@@ -27,7 +27,7 @@
                 didLoad: this.didLoad,
                 didRemove: this.didRemove,
                 push: true,
-                statusUploadSuccess: '<span class="slim-upload-status-icon"></span>',
+                statusUploadSuccess: '<span class="slim-upload-status-icon"></span> Afbeelding geüpload',
                 didReceiveServerError: this.failed,
                 meta: {
                     "managerKey" : this.managerKey,
@@ -61,6 +61,8 @@
         },
         methods: {
             didUpload: function(error, data, response){
+                this.enableUpdateForm();
+
                 if(error){
                     console.error(error);
                     return;
@@ -78,10 +80,9 @@
                 if(error == 'fail') {
                     error = 'Fout bij verwerking. Mogelijk is de afbeelding te groot.';
                 }
-                return "<span class='slim-upload-status-icon'></span>" + error;
+                return `<span class="slim-upload-status-icon"></span> ${error}`;
             },
             didRemove: function (e, target) {
-
                 this.hiddenInputValue = null; // null indicated to the server that this image should be deleted
 
                 this.updateItem({
@@ -89,7 +90,6 @@
                 });
             },
             didLoad: function () {
-
                 // When swapping an existing image with another by clicking on the slim dropzone to upload a replacement image,
                 // slim first emits a didRemove action. This is followed by the didLoad action so that's why we ensure
                 // here that any image that is being loaded does not have the deleted flag.
@@ -99,11 +99,12 @@
                     });
                 }
 
+                this.disableUpdateForm();
+
                 // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                 return true;
             },
             updateItem(item){
-
                 // Unknown bug: when updating the entire item as a whole to the parent component, the item object itself is not
                 // being updated in this component. Looks like because we are doing a full swap (items[index] = newItem)
                 // because updating a single property (items[index].filename = newItem.filename) seems to propagate like expected.
@@ -121,6 +122,20 @@
                 }
 
                 return result;
+            },
+            enableUpdateForm: () => {
+                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
+                saveButtons.forEach((button) => {
+                    button.disabled = false;
+                    button.style.filter = 'none';
+                })
+            },
+            disableUpdateForm: () => {
+                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
+                saveButtons.forEach((button) => {
+                    button.disabled = true;
+                    button.style.filter = 'grayscale(100)';
+                });
             }
         }
     }

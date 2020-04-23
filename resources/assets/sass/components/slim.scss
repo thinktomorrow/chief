@@ -1,0 +1,45 @@
+/*
+    Slim CSS loader animation overrides
+*/
+@keyframes Flashing {
+    0% { opacity: 1; }
+    50% { opacity: .65; }
+    100% { opacity: 1; }
+}
+.slim .slim-area .slim-loader {
+    animation-name: Flashing;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+.slim .slim-area .slim-loader .slim-loader-background {
+    stroke: lightgrey !important;
+    stroke-width: 4 !important;
+}
+.slim .slim-area .slim-loader .slim-loader-foreground {
+    stroke: $color-information !important;
+    stroke-width: 4 !important;
+}
+
+/*
+    Slim CSS upload status messages overrides:
+    - Error (top middle)
+    - Success (top right)
+*/
+.slim .slim-area .slim-upload-status {
+    top: .5rem !important;
+    padding: .5rem !important;
+    line-height: 1.4 !important;
+    font-size: 12px !important;
+}
+.slim .slim-area .slim-upload-status[data-state=error] {
+    left: .5rem !important;
+    right: .5rem !important;
+    background: $color-warning !important;
+    color: white !important;
+}
+.slim .slim-area .slim-upload-status[data-state=success] {
+    right: .5rem !important;
+    background: $color-success !important;
+    color: white !important;
+}
