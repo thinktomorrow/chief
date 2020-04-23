@@ -10,6 +10,7 @@
             @endif
             formatting: ['p', 'h2', 'h3'],
             definedlinks: '{{ route('chief.api.internal-links') }}',
+            toolbarFixedTopOffset: 80, // Fixed chief header compensation
         };
     </script>
 @endpush
