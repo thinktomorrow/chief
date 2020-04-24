@@ -64,6 +64,11 @@ class ManagedModelFakeActingAsChild extends Model implements ActsAsChild, Viewab
         return 'managed-model-fakes';
     }
 
+    public function setKey(): string
+    {
+        return $this->viewKey();
+    }
+
     /**
      * This is the full path reference for this model's view file. This is the relative to your view folder
      * e.g. key 'articles.show'. A sensible default is set and determined based on the viewKey value.

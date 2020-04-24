@@ -17,6 +17,14 @@ interface ViewableContract
     public function viewKey(): string;
 
     /**
+     * This is the model's identifier for set grouping. This is only applicable to pages.
+     * Modules will always be rendered on their own
+     *
+     * @return string
+     */
+    public function setKey(): string;
+
+    /**
      * Renders the view for this model. It makes use of the viewPath to get the proper
      * view and is responsible for passed the expected view data parameters.
      *
