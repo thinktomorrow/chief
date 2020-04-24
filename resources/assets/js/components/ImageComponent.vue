@@ -18,7 +18,7 @@
             this.instance = new Slim(this.$el.childNodes[0], {
 
                 label: 'Klik om een afbeelding te selecteren',
-                // labelLoading: 'De afbeelding is aan het laden ...', // werkt niet
+                labelLoading: 'De afbeelding is aan het laden ...',
 
                 // Async upload settings
                 service: '/admin/api/assets/images/upload',
@@ -44,6 +44,9 @@
             if(this.item.existingId) {
                 this.hiddenInputValue = this.item.existingId;
             }
+
+            // disable the update form on slim init, because this is when the first image is added
+            this.disableUpdateForm();
         },
         computed: {
             hiddenInputName: function(){
@@ -61,8 +64,6 @@
         },
         methods: {
             didUpload: function(error, data, response){
-                this.enableUpdateForm();
-
                 if(error){
                     console.error(error);
                     return;
@@ -97,9 +98,11 @@
                     this.updateItem({
                         deleted: false,
                     });
+                } else {
+                    if(this.item.id) {
+                        this.enableUpdateForm();
+                    }
                 }
-
-                this.disableUpdateForm();
 
                 // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
                 return true;
@@ -111,6 +114,12 @@
                 for(const prop in item) {
                     const value = item[prop];
                     this.$emit('input', prop, value);
+                }
+                // not part of the official slim API, but this property holds state info about the async upload
+                if(this.instance._state.includes('busy') && !this.instance._state.includes('upload')) {
+                    this.disableUpdateForm();
+                } else {
+                    this.enableUpdateForm();
                 }
             },
             randomString: function(length) {

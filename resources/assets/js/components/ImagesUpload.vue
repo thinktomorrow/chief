@@ -134,7 +134,7 @@
              * Sorting methods
              */
             updateFilesOrder: function () {
-// return;
+                // return;
                 this.filesOrder = [];
 
                 var draggableItems = document.querySelectorAll('#filegroup-'+ this.settings.group +'-'+ this.settings.locale + ' .draggable-item');
@@ -142,12 +142,12 @@
                 for (var i = 0; i < draggableItems.length; i++) {
                     var itemId = draggableItems[i].getAttribute('data-item-id');
 
-// Newly added items do not have an id yet, so the filename is passed
-// to we are still able to identify their order upon saving.
+                    // Newly added items do not have an id yet, so the filename is passed
+                    // to we are still able to identify their order upon saving.
                     if (!itemId) {
                         var input = draggableItems[i].querySelector('input[name="files[' + this.settings.group.replace('files-', '') + '][' + this.settings.locale + '][new][]"]');
-// Possible reason is that loading of new file takes too long and we tried
-// to sort the files before it finished loading
+                        // Possible reason is that loading of new file takes too long and we tried
+                        // to sort the files before it finished loading
                         if (!input || !input.value) return;
 
                         var slimValues = JSON.parse(input.value);
@@ -175,7 +175,7 @@
                 if(!this.sortSource) return;
                 this.sortSource.style.opacity = '1';
 
-// We need our draggable-item, not the child elements
+                // We need our draggable-item, not the child elements
                 var target = e.target.classList.contains('draggable-item') ? e.target : this.findAncestor(e.target, '.draggable-item'),
                     draggedItemId = this.sortSource.dataset.itemId,
                     targetItemId = target.dataset.itemId,
