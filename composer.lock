@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
-            "version": "v11.8.0",
+            "version": "v11.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Astrotomic/laravel-translatable.git",
-                "reference": "8bd84a30381dfd9e2e1f24252b54279899959a7b"
+                "reference": "2b7cfd6c48c5340b2d06d8edc8b6995580e64f65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/8bd84a30381dfd9e2e1f24252b54279899959a7b",
-                "reference": "8bd84a30381dfd9e2e1f24252b54279899959a7b",
+                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/2b7cfd6c48c5340b2d06d8edc8b6995580e64f65",
+                "reference": "2b7cfd6c48c5340b2d06d8edc8b6995580e64f65",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,7 @@
                 "laravel",
                 "translation"
             ],
-            "time": "2020-03-03T10:43:26+00:00"
+            "time": "2020-04-23T08:57:35+00:00"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -5022,6 +5022,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -5068,6 +5069,7 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
