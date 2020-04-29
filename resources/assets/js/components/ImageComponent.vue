@@ -78,6 +78,7 @@
                 this.hiddenInputValue = response.id;
             },
             failed: function(error, defaultError) {
+                this.enableUpdateForm();
                 if(error == 'fail') {
                     error = 'Fout bij verwerking. Mogelijk is de afbeelding te groot.';
                 }
