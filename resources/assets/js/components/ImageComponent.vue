@@ -61,7 +61,7 @@
         },
         methods: {
             didUpload: function(error, data, response) {
-                Eventbus.$emit('image-uploaded' + this.reference, this.instance);
+                Eventbus.$emit('image-upload-response' + this.reference, this.instance);
 
                 if(error){
                     console.error(error);
@@ -77,7 +77,7 @@
                 this.hiddenInputValue = response.id;
             },
             failed: function(error, defaultError) {
-                Eventbus.$emit('enable-update-form');
+                Eventbus.$emit('image-upload-response' + this.reference, this.instance);
 
                 if(error == 'fail') {
                     error = 'Fout bij verwerking. Mogelijk is de afbeelding te groot.';
@@ -94,7 +94,7 @@
             },
             didLoad: function () {
                 if(!this.item.id || this.item.deleted) {
-                    Eventbus.$emit('image-uploading' + this.reference, this.instance);
+                    Eventbus.$emit('image-upload-request' + this.reference, this.instance);
                 }
 
                 // When swapping an existing image with another by clicking on the slim dropzone to upload a replacement image,

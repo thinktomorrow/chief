@@ -61,14 +61,14 @@
                 setTimeout(this.updateFilesOrder, 100);
             });
 
-            Eventbus.$on('image-uploading' + this.reference, (item) => {
+            Eventbus.$on('image-upload-request' + this.reference, (item) => {
                 this.itemsUploading.push(item);
                 if(this.itemsUploading.length == 1) {
                     Eventbus.$emit('disable-update-form');
                 }
             });
 
-            Eventbus.$on('image-uploaded' + this.reference, (item) => {
+            Eventbus.$on('image-upload-response' + this.reference, (item) => {
                 this.itemsUploading.splice(this.itemsUploading.indexOf(item), 1);
                 if(this.itemsUploading.length == 0) {
                     Eventbus.$emit('enable-update-form');
