@@ -17,7 +17,7 @@
             <div v-for="(item, index) in items" :key="item.key" class="column-4 draggable-item" :draggable="sort.isReordering" :data-item-id="item.id"
                  @dragstart="sort.handleSortingStart"
                  @dragenter.prevent="sort.handleSortingEnter">
-                    <image-component :item="item" @input="(prop, value) => { items[index][prop] = value; }" :name="settings.name" :group="settings.group" :manager-key="settings.managerKey">
+                    <image-component :reference="reference" :item="item" @input="(prop, value) => { items[index][prop] = value; }" :name="settings.name" :group="settings.group" :manager-key="settings.managerKey">
                         <div class="thumb" slot-scope="{hiddenInputName, hiddenInputValue, name}">
                             <div>
                                 <img v-show="item.url" :src="item.url" :alt="item.filename">

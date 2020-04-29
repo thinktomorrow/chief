@@ -1,6 +1,6 @@
 <script>
     export default{
-        props: ['item', 'name', 'group', 'managerKey'],
+        props: ['reference', 'item', 'name', 'group', 'managerKey'],
         render(){
             return this.$scopedSlots.default({
                 hiddenInputName: this.hiddenInputName,
@@ -44,9 +44,6 @@
             if(this.item.existingId) {
                 this.hiddenInputValue = this.item.existingId;
             }
-
-            // disable the update form on slim init, because this is when the first image is added
-            this.disableUpdateForm();
         },
         computed: {
             hiddenInputName: function(){
@@ -63,7 +60,9 @@
             }
         },
         methods: {
-            didUpload: function(error, data, response){
+            didUpload: function(error, data, response) {
+                Eventbus.$emit('image-uploaded' + this.reference, this.instance);
+
                 if(error){
                     console.error(error);
                     return;
@@ -78,10 +77,12 @@
                 this.hiddenInputValue = response.id;
             },
             failed: function(error, defaultError) {
-                this.enableUpdateForm();
+                Eventbus.$emit('enable-update-form');
+
                 if(error == 'fail') {
                     error = 'Fout bij verwerking. Mogelijk is de afbeelding te groot.';
                 }
+
                 return `<span class="slim-upload-status-icon"></span> ${error}`;
             },
             didRemove: function (e, target) {
@@ -92,6 +93,10 @@
                 });
             },
             didLoad: function () {
+                if(!this.item.id || this.item.deleted) {
+                    Eventbus.$emit('image-uploading' + this.reference, this.instance);
+                }
+
                 // When swapping an existing image with another by clicking on the slim dropzone to upload a replacement image,
                 // slim first emits a didRemove action. This is followed by the didLoad action so that's why we ensure
                 // here that any image that is being loaded does not have the deleted flag.
@@ -99,10 +104,6 @@
                     this.updateItem({
                         deleted: false,
                     });
-                } else {
-                    if(this.item.id) {
-                        this.enableUpdateForm();
-                    }
                 }
 
                 // Let Slim know it's good to go on - didLoad callback allows for input check prior to Slim.
@@ -116,12 +117,6 @@
                     const value = item[prop];
                     this.$emit('input', prop, value);
                 }
-                // not part of the official slim API, but this property holds state info about the async upload
-                if(this.instance._state.includes('busy') && !this.instance._state.includes('upload')) {
-                    this.disableUpdateForm();
-                } else {
-                    this.enableUpdateForm();
-                }
             },
             randomString: function(length) {
                 let result = '', i = 0;
@@ -132,20 +127,6 @@
                 }
 
                 return result;
-            },
-            enableUpdateForm: () => {
-                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
-                saveButtons.forEach((button) => {
-                    button.disabled = false;
-                    button.style.filter = 'none';
-                })
-            },
-            disableUpdateForm: () => {
-                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
-                saveButtons.forEach((button) => {
-                    button.disabled = true;
-                    button.style.filter = 'grayscale(100)';
-                });
             }
         }
     }
