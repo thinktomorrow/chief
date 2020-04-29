@@ -64,19 +64,16 @@
             Eventbus.$on('image-uploading' + this.reference, (item) => {
                 this.itemsUploading.push(item);
                 if(this.itemsUploading.length == 1) {
-                    this.disableUpdateForm();
+                    Eventbus.$emit('disable-update-form');
                 }
             });
 
             Eventbus.$on('image-uploaded' + this.reference, (item) => {
                 this.itemsUploading.splice(this.itemsUploading.indexOf(item), 1);
                 if(this.itemsUploading.length == 0) {
-                    this.enableUpdateForm();
+                    Eventbus.$emit('enable-update-form');
                 }
             });
-
-            Eventbus.$on('enable-update-form', this.enableUpdateForm);
-            Eventbus.$on('disable-update-form', this.disableUpdateForm);
         },
         computed: {
             hasValidUpload: function(){
@@ -217,20 +214,6 @@
                 }
 
                 return result;
-            },
-            enableUpdateForm: () => {
-                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
-                saveButtons.forEach((button) => {
-                    button.disabled = false;
-                    button.style.filter = 'none';
-                })
-            },
-            disableUpdateForm: () => {
-                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
-                saveButtons.forEach((button) => {
-                    button.disabled = true;
-                    button.style.filter = 'grayscale(100)';
-                });
             }
         }
     }

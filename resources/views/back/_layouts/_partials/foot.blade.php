@@ -47,9 +47,9 @@
         created: function(){
             this.errors.record({!! isset($errors) ? json_encode($errors->getMessages()) : json_encode([]) !!});
 
-            Eventbus.$on('clearErrors', (field) => {
-                this.errors.clear(field);
-            });
+            Eventbus.$on('clearErrors', (field) => { this.errors.clear(field); });
+            Eventbus.$on('enable-update-form', this.enableUpdateForm);
+            Eventbus.$on('disable-update-form', this.disableUpdateForm);
         },
         methods:{
             showModal: function(id, options){
@@ -79,6 +79,20 @@
             },
             duplicateImageComponent: function(options){
                 Eventbus.$emit('duplicate-image-component', options);
+            },
+            enableUpdateForm: () => {
+                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
+                saveButtons.forEach((button) => {
+                    button.disabled = false;
+                    button.style.filter = 'none';
+                })
+            },
+            disableUpdateForm: () => {
+                let saveButtons = document.querySelectorAll('[data-submit-form="updateForm"]');
+                saveButtons.forEach((button) => {
+                    button.disabled = true;
+                    button.style.filter = 'grayscale(100)';
+                });
             }
         },
     });
