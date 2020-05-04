@@ -3,6 +3,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.5.0 - 2020-05-04
 - Added: A new page can be created based on an existing template. This will duplicate the pagebuilder content and structure.
 - Added: Pagefield used to select an internal page
 - Added: chief admin toast - a widget element on frontend for quick page edit and preview mode toggle
@@ -21,12 +23,12 @@ principles.
 - Changed: baseUrlSegment method is no longer a static method and requires to be an instance method.
 - Changed: Moved the Healthmonitor classes to the `src/System` directory. You'll need to update your chief.php monitor entries.
 - Fixed: Creating own modules for pages with custom tables now works as expected.
+- Fixed: small bug in multiselect that would set the value as 'length' if the options array was empty.
 - Removed: `ManagedModel::previewUrl()`. Use the `ManagedModel::url()` instead.
 - Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.
 - Removed: `Thinktomorrow\Chief\Fields\FieldArrangement`, `Thinktomorrow\Chief\Fields\FieldTabs` and `Thinktomorrow\Chief\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
-- Fixed: small bug in multiselect that would set the value as 'length' if the options array was empty.
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
