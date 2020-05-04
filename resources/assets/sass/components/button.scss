@@ -51,14 +51,14 @@ $buttonColors: (
         color: $fontcolor;
         box-shadow: 0px 2px 0px 0px darken($bgcolor, 10%);
 
-        &:hover, &:focus, &:active, &.active{
+        &:hover:not([disabled]), &:focus, &:active, &.active {
             color: $fontcolor;
             background-color: lighten($bgcolor, 3%);
             transform: translateY(2px);
             box-shadow: 0px 2px 0px 0px transparent;
         }
 	}
-	
+
     .btn-o-#{$name}{
 		@apply bg-transparent;
         color: $bgcolor;
@@ -66,7 +66,7 @@ $buttonColors: (
         &:hover, &:focus, &:active, &.active{
             background-color: $bgcolor;
             color: $fontcolor;
-            @apply shadow-lg;            
+            @apply shadow-lg;
         }
     }
 
@@ -96,5 +96,3 @@ $buttonColors: (
         border-bottom-right-radius: 5px;
     }
 }
-
-

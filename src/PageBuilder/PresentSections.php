@@ -80,6 +80,14 @@ class PresentSections
                 continue;
             }
 
+            // A model that is not a module will be rendered as a set by default. You can set a 'dontRenderAsSet' property to avoid this behavior
+            // and allow for the model to be rendered as a single element.
+            if (property_exists($child, 'dontRenderAsSet') && $child->dontRenderAsSet) {
+                $this->sets[$i] = $child;
+                $this->current_type = null;
+                continue;
+            }
+
             $this->addModelToCollection($i, $child);
         }
 
@@ -104,7 +112,7 @@ class PresentSections
             return;
         }
 
-        $key = $model->viewKey();
+        $key = $model->setKey();
 
         // Set the current collection to the model key identifier: for pages this is the collection key, for
         // other managed models this is the registered key.

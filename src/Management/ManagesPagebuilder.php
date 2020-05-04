@@ -28,7 +28,7 @@ trait ManagesPagebuilder
      */
     public function saveSectionsField(PagebuilderField $field, Request $request)
     {
-        $sections = $request->get('sections', []);
+        $sections = $request->input('sections', []);
 
         $modules = $sections['modules'] ?? [];
         $text = $sections['text'] ?? [];
@@ -50,7 +50,7 @@ trait ManagesPagebuilder
         $availableChildren = AvailableChildren::forParent($model);
 
         $modules = $availableChildren->onlyModules()->reject(function ($module) use ($model) {
-            return $module->page_id != null && $module->page_id != $model->id;
+            return $module->owner_id != null && $module->owner_id != $model->id;
         });
 
         $available_modules = FlatReferencePresenter::toGroupedSelectValues($modules)->toArray();

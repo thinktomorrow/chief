@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Fields\Types;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fields\FieldName;
+use Thinktomorrow\Chief\Fields\FieldReference;
 use Thinktomorrow\Chief\Fields\Validation\ValidationNames;
 use Thinktomorrow\Chief\Fields\Validation\ValidationParameters;
 
@@ -44,6 +45,9 @@ abstract class AbstractField
     /** @var null|mixed */
     protected $value;
 
+    /** @var null|mixed */
+    protected $default = null;
+
     /** @var callable */
     protected $valueResolver;
 
@@ -61,6 +65,8 @@ abstract class AbstractField
 
     /** @var null|Validator|array|\Closure */
     protected $validation;
+
+    protected $localizedFormat = 'trans.:locale.:name';
 
     final public function __construct(FieldType $type, string $key)
     {
@@ -102,6 +108,11 @@ abstract class AbstractField
             ->get($locale);
     }
 
+    public function getDottedName(string $locale = null): string
+    {
+        return $this->fieldName()->get($locale);
+    }
+
     protected function getValidationNameFormat(): string
     {
         if ($this->isLocalized()) {
@@ -117,7 +128,14 @@ abstract class AbstractField
             return $this->name;
         }
 
-        return 'trans.:locale.:name';
+        return $this->localizedFormat;
+    }
+
+    public function localizedFormat(string $format)
+    {
+        $this->localizedFormat = $format;
+
+        return $this;
     }
 
     protected function fieldName(): FieldName
@@ -198,6 +216,13 @@ abstract class AbstractField
         return $this->extractLocalizedItem($this->placeholder, $locale);
     }
 
+    /**
+     * This value will always be returned as value. If you want to provide a default value in case
+     * the model record does not have a value provided, use the default() method instead.
+     *
+     * @param $value
+     * @return Field
+     */
     public function value($value): Field
     {
         $this->value = $value;
@@ -206,11 +231,12 @@ abstract class AbstractField
     }
 
     /**
+     * A default value in case the model does not provide the value itself.
+     *
      * @param $default
-     * @return $this
-     * @deprecated use value() instead
+     * @return Field
      */
-    public function default($default)
+    public function default($default): Field
     {
         $this->default = $default;
 
@@ -238,8 +264,12 @@ abstract class AbstractField
     private function defaultEloquentValueResolver(): \Closure
     {
         return function (Model $model = null, $locale = null) {
-            if (!$model) {
+            if ($this->value) {
                 return $this->value;
+            }
+
+            if (!$model) {
+                return $this->default;
             }
 
             if ($locale && $this->isLocalized()) {
@@ -250,7 +280,7 @@ abstract class AbstractField
                 return $model->getTranslationFor($this->getColumn(), $locale);
             }
 
-            return $model->{$this->getColumn()} ?: $this->value;
+            return $model->{$this->getColumn()} ?: $this->default;
         };
     }
 

@@ -9,10 +9,12 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Fields\FieldReference;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\SavingFields;
 use Thinktomorrow\Chief\Fields\Types\Field;
 use Thinktomorrow\Chief\Filters\Filters;
+use Thinktomorrow\Chief\Fragments\ManagesFragments;
 use Thinktomorrow\Chief\Management\Assistants\ManagesAssistants;
 use Thinktomorrow\Chief\Management\Details\HasDetails;
 use Thinktomorrow\Chief\Management\Details\HasDetailSections;
@@ -30,6 +32,7 @@ abstract class AbstractManager
     use ManagesPagebuilder;
     use TranslatableCommand;
     use ManagesAssistants;
+    use ManagesFragments;
 
     protected $translation_columns = [];
 
@@ -121,6 +124,16 @@ abstract class AbstractManager
         });
 
         return $paginator->setCollection($modifiedCollection);
+    }
+
+    public function indexView(): string
+    {
+        return 'chief::back.managers._partials._rowitems';
+    }
+
+    public function indexViewData(): array
+    {
+        return [];
     }
 
     public function modelInstance(): ManagedModel

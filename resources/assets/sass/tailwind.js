@@ -14,10 +14,10 @@ module.exports = {
       black: '#000',
       white: '#fff',
 
-      success: '#17B890',
-      warning: '#F29177',
-      error: '#915748',
-      information: '#00A5CF',
+      success: '#7dc68c',
+      warning: '#ffb355',
+      error: '#df5959',
+      information: '#4fa6db',
 
       primary: {
         100: '#E8F8F4',
@@ -68,7 +68,7 @@ module.exports = {
         800: '#291F27',
         900: '#1C141A',
       },
-      
+
     },
     spacing: {
       px: '1px',
@@ -344,6 +344,8 @@ module.exports = {
     zIndex: {
       auto: 'auto',
       '0': '0',
+      '1': '1',
+      '2': '2',
       '10': '10',
       '20': '20',
       '30': '30',

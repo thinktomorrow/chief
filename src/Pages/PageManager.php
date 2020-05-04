@@ -7,6 +7,10 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
+use Thinktomorrow\Chief\Fields\Types\HtmlField;
+use Thinktomorrow\Chief\Fields\Types\SelectField;
+use Thinktomorrow\Chief\Fragments\FragmentField;
+use Thinktomorrow\Chief\Fragments\Fragments;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\States\PageStatePresenter;
@@ -86,17 +90,18 @@ class PageManager extends AbstractManager implements Manager
                 ->validation('required-fallback-locale|max:200', [], [
                     'trans.' . config('app.fallback_locale', 'nl') . '.title' => 'title',
                 ])
-                ->label('De titel van je ' . $this->model->labelSingular ?? 'pagina')
-                ->description('Dit is de titel die zal worden getoond in de overzichten en modules.')
+                ->label('Intern label')
+                ->description('Dit is de benaming die zal worden getoond in de admin selectie velden.')
                 ->tag('general'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine titel')
+                ->description('Maximum 66 tekens')
                 ->tag('seo'),
             TextField::make('seo_description')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine omschrijving')
-                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven.')
+                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven. Maximum 160 tekens')
                 ->tag('seo'),
             InputField::make('seo_keywords')
                 ->validation('max:250')
@@ -174,15 +179,15 @@ class PageManager extends AbstractManager implements Manager
             throw new DeleteAborted();
         }
 
-        app(DeletePage::class)->handle($this->model->id);
+        app(DeletePage::class)->handle($this->model->flatreference());
     }
 
     public function storeRequest(Request $request): Request
     {
         $trans = [];
-        $urls = $request->get('url-slugs', []);
+        $urls = $request->input('url-slugs', []);
 
-        foreach ($request->get('trans', []) as $locale => $translation) {
+        foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
             }
@@ -202,7 +207,7 @@ class PageManager extends AbstractManager implements Manager
     public function updateRequest(Request $request): Request
     {
         $trans = [];
-        foreach ($request->get('trans', []) as $locale => $translation) {
+        foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
 
                 // Nullify all values

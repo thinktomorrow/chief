@@ -36,6 +36,10 @@ class ModuleManager extends AbstractManager implements Manager
          * Therefore the index of these modules is at the modules tab of this page model.
          */
         if ($verb == 'index' && $this->model->isPageSpecific()) {
+            if (!$this->model->page) {
+                throw new \RuntimeException('Cannot retrieve parent for page specific module [type: ' . $this->registration->key() . ', id: ' . $this->existingModel()->id . ']');
+            }
+
             return app(Managers::class)->findByModel($this->model->page)->route('edit') . '#eigen-modules';
         }
 
@@ -138,7 +142,7 @@ class ModuleManager extends AbstractManager implements Manager
     public function storeRequest(Request $request): Request
     {
         $trans = [];
-        foreach ($request->get('trans', []) as $locale => $translation) {
+        foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
             }
@@ -152,7 +156,7 @@ class ModuleManager extends AbstractManager implements Manager
     public function updateRequest(Request $request): Request
     {
         $trans = [];
-        foreach ($request->get('trans', []) as $locale => $translation) {
+        foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
 
                 // Nullify all values

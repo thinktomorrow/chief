@@ -23,15 +23,15 @@ class UpdateMenu
             $request = $this->forceRemoveUrlWhenNoLinkIsRequested($request);
 
             $menu = MenuItem::find($id);
-            $menu->type = $request->get('type', null);
-            $menu->parent_id = ($request->get('allow_parent') && $request->get('parent_id')) ? $request->get('parent_id') : null;
-            $menu->page_id = ($page_id = $request->get('page_id')) ? $this->getPage($request->get('page_id'))->id : null;
-            $menu->order = $request->get('order', 0);
+            $menu->type = $request->input('type', null);
+            $menu->parent_id = ($request->input('allow_parent') && $request->input('parent_id')) ? $request->input('parent_id') : null;
+            $menu->page_id = ($page_id = $request->input('page_id')) ? $this->getPage($request->input('page_id'))->id : null;
+            $menu->order = $request->input('order', 0);
 
             $this->reorderAgainstSiblings($menu);
             $menu->save();
 
-            $this->saveTranslations($request->get('trans'), $menu, [
+            $this->saveTranslations($request->input('trans'), $menu, [
                 'label', 'url'
             ]);
 
@@ -90,8 +90,8 @@ class UpdateMenu
      */
     private function forceRemoveUrlWhenNoLinkIsRequested(MenuRequest $request)
     {
-        if (MenuItem::TYPE_NOLINK == $request->get('type')) {
-            $trans = $request->get('trans', []);
+        if (MenuItem::TYPE_NOLINK == $request->input('type')) {
+            $trans = $request->input('trans', []);
 
             foreach ($trans as $locale => $translations) {
                 $trans[$locale]['url'] = null;

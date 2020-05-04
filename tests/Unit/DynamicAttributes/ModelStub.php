@@ -16,6 +16,8 @@ class ModelStub extends Model
         'title',
     ];
 
+    protected $dynamicLocales = ['nl','en'];
+
     protected $guarded = [];
 
     public static function migrateUp()

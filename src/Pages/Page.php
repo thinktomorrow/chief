@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\ManagedModel;
 use Thinktomorrow\Chief\Urls\MemoizedUrlRecord;
@@ -43,28 +44,18 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     }
 
     use Morphable;
-
     use AssetTrait;
-
     use Translatable;
-
     use SoftDeletes;
-
     use Publishable;
-
     use Featurable;
-
     use Archivable;
-
     use ActingAsParent;
-
     use ActingAsChild;
-
     use WithSnippets;
-
     use ResolvingRoute;
-
     use Viewable;
+    use HasFragments;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = PageTranslation::class;
@@ -139,7 +130,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
      */
     public function modules()
     {
-        return $this->hasMany(Module::class, 'page_id')->where('morph_key', '<>', 'text');
+        return $this->morphMany(Module::class, 'owner')->where('morph_key', '<>', 'text');
     }
 
     public function flatReference(): FlatReference
@@ -225,14 +216,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     }
 
     /** @inheritdoc */
-    public function previewUrl(string $locale = null): string
-    {
-        return $this->url($locale) . '?preview-mode';
-    }
-
-
-    /** @inheritdoc */
-    public static function baseUrlSegment(string $locale = null): string
+    public function baseUrlSegment(string $locale = null): string
     {
         if (!isset(static::$baseUrlSegment)) {
             return '/';
@@ -270,7 +254,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
         }
 
         if ($this->isDraft()) {
-            return '<a href="' . $this->previewUrl() . '" target="_blank" class="text-error"><em>offline</em></a>';
+            return '<a href="' . $this->url() . '" target="_blank" class="text-error"><em>offline</em></a>';
         }
 
         if ($this->isArchived()) {

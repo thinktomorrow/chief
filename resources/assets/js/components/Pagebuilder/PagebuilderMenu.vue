@@ -9,7 +9,7 @@
         </span>
 
         <div v-show="active" class="ml-6 pagebuilder-menu-items float-right absolute bg-white inset --raised rounded flex inline-group-l" style="transform: translateX(50%);">
-            
+
             <div class="flex flex-col">
 
                 <p class="stack-xs">Creëer een ...</p>
@@ -26,6 +26,12 @@
                         <span title="tekst / afbeelding toevoegen" class="btn btn-o-secondary squished-xs center-y">
                             <svg width="18" height="18" class="mr-2"><use xlink:href="#align-left"/></svg>
                             Tekstblok
+                        </span>
+                    </div>
+                    <div class="float-left cursor-pointer" @click="showModal('create-module')">
+                        <span title="tekst / afbeelding toevoegen" class="btn btn-o-secondary squished-xs center-y">
+                            <svg width="18" height="18" class="mr-2"><use xlink:href="#layout"/></svg>
+                            Nieuwe module
                         </span>
                     </div>
                 </div>
@@ -60,7 +66,7 @@
                 </div>
 
             </div>
-            
+
         </div>
     </div>
 </template>

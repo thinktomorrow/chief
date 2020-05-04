@@ -8,7 +8,8 @@
                        id="{{ $key.'-'.$value }}"
                        type="radio">
                 <span class="custom-radiobutton"></span>
-                <strong>{{ $label }}</strong>
+                <span><strong>{!! $label !!}</strong></span>
+
             </label>
         @endforeach
     </div>

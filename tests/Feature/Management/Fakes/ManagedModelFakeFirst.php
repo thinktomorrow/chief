@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
 use Thinktomorrow\Chief\FlatReferences\FlatReference;
@@ -23,8 +24,6 @@ use \Astrotomic\Translatable\Translatable as BaseTranslatable;
 
 class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableContract, HasAsset, ActsAsParent, ActsAsChild, StatefulContract
 {
-    private $current_state = 'draft';
-
     use HasDynamicAttributes {
         HasDynamicAttributes::fill as hasDynamicAttributesFill;
         HasDynamicAttributes::getAttribute as private hasDynamicAttributesGetAttribute;
@@ -42,6 +41,8 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
         Publishable,
         ActingAsParent,
         ActingAsChild;
+
+    use HasFragments;
 
     public $table = 'fake_managed_models';
     public $dynamicKeys = ['dynamic_column'];
@@ -110,12 +111,12 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
 
     public function stateOf($key): string
     {
-        return $this->current_state;
+        return $this->$key;
     }
 
     public function changeStateOf($key, $state)
     {
-        $this->current_state = $state;
+        $this->$key = $state;
     }
 
     public function fill(array $attributes)

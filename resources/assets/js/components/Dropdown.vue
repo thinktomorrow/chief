@@ -2,7 +2,7 @@
     <div ref="parent" class="cursor-pointer">
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
         <transition name="fade">
-            <div v-show="isActive" class="absolute" style="z-index: 2;">
+            <div v-show="isActive" class="absolute" style="z-index: 21; /* above sticky header */">
                 <slot :toggle="toggle"></slot>
             </div>
         </transition>

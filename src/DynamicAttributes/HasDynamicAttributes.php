@@ -8,21 +8,29 @@ trait HasDynamicAttributes
 {
     public function dynamic(string $key, string $index = null)
     {
-        return $this->dynamicAttributesInstance()->get($index ? "$index.$key" : $key);
+        return $this->dynamicAttributesInstance()->get($index ? "$key.$index" : $key);
     }
 
     public function setDynamic(string $key, $value, string $index = null)
     {
-        return $this->dynamicAttributesInstance()->set($index ? "$index.$key" : $key, $value);
+        return $this->dynamicAttributesInstance()->set($index ? "$key.$index" : $key, $value);
     }
 
     public function isDynamicKey($key): bool
     {
-        if (array_key_exists($key, $this->attributes)) {
+        if (array_key_exists($key, $this->attributes) || $key === $this->getDynamicKey()) {
             return false;
         }
 
-        return in_array($key, $this->dynamicKeys());
+        if (in_array($key, $this->dynamicKeys())) {
+            return true;
+        }
+
+        if (in_array('*', $this->dynamicKeys())) {
+            return !in_array($key, $this->dynamicKeysBlacklist());
+        }
+
+        return false;
     }
 
     /**
@@ -44,6 +52,22 @@ trait HasDynamicAttributes
     protected function dynamicKeys(): array
     {
         return property_exists($this, 'dynamicKeys') ? $this->dynamicKeys : [];
+    }
+
+    protected function dynamicLocales(): array
+    {
+        return property_exists($this, 'dynamicLocales') ? $this->dynamicLocales : [];
+    }
+
+    /**
+     * When allowing by default for all attributes to be dynamic, you can use
+     * the blacklist to mark certain attributes as non dynamic.
+     *
+     * @return array
+     */
+    protected function dynamicKeysBlacklist(): array
+    {
+        return property_exists($this, 'dynamicKeysBlacklist') ? $this->dynamicKeysBlacklist : [];
     }
 
     /**
@@ -80,10 +104,19 @@ trait HasDynamicAttributes
 
         $locale = app()->getLocale();
 
-        foreach (["{$locale}.$key", $key] as $k) {
-            if ($this->dynamicAttributesInstance()->has($k)) {
-                return $this->dynamic($k);
+        if ($this->dynamicAttributesInstance()->has("$key.{$locale}")) {
+            return $this->dynamic("$key.{$locale}");
+        }
+
+        if ($this->dynamicAttributesInstance()->has($key)) {
+            $value = $this->dynamic($key);
+
+            // If value is localized, we wont return the entire value, but instead return null since no fallback will be provided.
+            if (is_array($value) && in_array($locale, $this->dynamicLocales())) {
+                return null;
             }
+
+            return $value;
         }
 
         return parent::getAttribute($key);

@@ -1,6 +1,6 @@
 <nav class="bg-white border-b border-secondary-200">
     <div class="container">
-        <div class="stack-xs row justify-between">
+        <div class="row justify-between">
 
             <ul class="navigation-list flex items-center">
 

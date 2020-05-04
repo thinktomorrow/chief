@@ -1,6 +1,7 @@
 @formgroup(['field' => 'label'])
     @slot('label', 'Label')
     @slot('description', 'Dit is de tekst die wordt getoond in het menu. Verkies een korte, duidelijke term.')
+    @slot('isRequired', true)
     @if(count($menuitem->availableLocales()) > 1)
         <tabs v-cloak>
             @foreach($menuitem->availableLocales() as $locale)

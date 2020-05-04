@@ -1,19 +1,11 @@
-<div class="row hover:bg-grey-50 px-2">
-    <div class="column center-y py-2 {{ isset($level) ? 'indent-'.$level : '' }} ">
-        {{--<i class="icon icon-menu inline text-border tree-parent"></i>--}}
-        @if(isset($level) && $level > 0)
-            <span class="icon icon-arrow-right text-border inline-s tree-parent"></span>
-        @endif
+<div class="row hover:bg-grey-50 px-2 {{ isset($level) ? 'indent-'.$level : 'font-bold' }} ">
+    <div class="column center-y py-2">
 
-        @if($item->auto_generated)
-            {{ $item->label }}
-        @else
-            <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="color-inherit">{{ $item->label }}</a>
-            @if($item->hidden_in_menu)
-                &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
-            @elseif($item->draft)
-                &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
-            @endif
+        <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="color-inherit">{{ $item->label }}</a>
+        @if($item->hidden_in_menu)
+            &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
+        @elseif($item->draft)
+            &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
         @endif
     </div>
 

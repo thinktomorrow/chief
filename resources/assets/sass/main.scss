@@ -6,6 +6,7 @@
 @import './general/colors.scss';
 @import './general/typography.scss';
 @import './general/animations.scss';
+@import './general/utilities.scss';
 
 @import './components/label.scss';
 @import './components/button.scss';
@@ -19,13 +20,12 @@
 @import './components/thumb.scss';
 @import './components/toggles.scss';
 @import './components/redactor.scss';
-
-@tailwind utilities;
-
+@import './components/slim.scss';
 
 // STATES & HELPER CLASSES (WARPAINT)
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';
 @import '../../../node_modules/warpaint/src/sass/_space/responsive';
 @import '../../../node_modules/warpaint/src/sass/_base/states';
 
-@import './general/utilities.scss';
+@tailwind utilities;
+

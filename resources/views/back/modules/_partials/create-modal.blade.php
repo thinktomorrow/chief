@@ -1,12 +1,14 @@
 <?php
     $defaultLocale = config('app.fallback_locale');
-    $page_id = isset($page_id) ? $page_id : null;
+    $owner_type = isset($owner_type) ? $owner_type : null;
+    $owner_id = isset($owner_id) ? $owner_id : null;
 ?>
 <modal id="create-module" class="large-modal" title='' :active="{{ ($errors->has('morph_key') || $errors->has('slug')) ? 'true' : 'false' }}">
     <form v-cloak id="createModuleForm" method="POST" action="{{ route('chief.back.modules.store') }}" role="form">
         {{ csrf_field() }}
 
-        <input type="hidden" name="page_id" value="{{ $page_id }}">
+        <input type="hidden" name="owner_type" value="{{ $owner_type }}">
+        <input type="hidden" name="owner_id" value="{{ $owner_id }}">
         <div class="stack-s">
             <label for="morphKeyField">Type</label>
             <chief-multiselect
@@ -30,6 +32,10 @@
         </div>
 
         <error class="caption text-warning" field="slug" :errors="errors.all()"></error>
+
+        <div class="stack-s">
+            <p class="text-warning">Opgelet. <br>Bewaar eerst deze pagina indien je niet bewaarde aanpassingen hebt.<br>Anders zullen deze verloren gaan.</p>
+        </div>
 
     </form>
 

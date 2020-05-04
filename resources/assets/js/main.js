@@ -30,6 +30,10 @@ Vue.component('delete', require('./components/RemoveButton.vue').default);
 Vue.component('error', require('./components/Error.vue').default);
 Vue.component('page-builder', require('./components/Pagebuilder/Pagebuilder.vue').default);
 Vue.component('mediagallery', require('./components/MediaGallery.vue').default);
+Vue.component('image-component', require('./components/ImageComponent').default);
+Vue.component('imagesupload', require('./components/ImagesUpload').default);
+Vue.component('fragment', require('./components/Fragment').default);
+Vue.component('fragments', require('./components/Fragments').default);
 
 
 // sticky polyfill init

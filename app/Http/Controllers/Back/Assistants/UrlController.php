@@ -75,7 +75,7 @@ class UrlController extends Controller
 
     private function editUrlOfExistingModel(UrlRecord $urlRecord): string
     {
-        $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
+        $model = Morphables::instance($urlRecord->model_type)->withArchived()->find($urlRecord->model_id);
 
         return app(Managers::class)->findByModel($model)->route('edit') . '#inhoud';
     }

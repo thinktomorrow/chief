@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
-use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
-use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
-use Thinktomorrow\Chief\HealthMonitor\Middleware\MonitorMiddleware;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
+use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
+use Thinktomorrow\Chief\System\HealthMonitor\Middleware\MonitorMiddleware;
+use Thinktomorrow\Chief\Urls\ChiefResponse;
 
 class ChiefRoutesServiceProvider extends ServiceProvider
 {

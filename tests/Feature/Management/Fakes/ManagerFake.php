@@ -8,6 +8,7 @@ use Thinktomorrow\Chief\Fields\Types\FileField;
 use Thinktomorrow\Chief\Fields\Types\TextField;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
+use Thinktomorrow\Chief\Fragments\FragmentField;
 use Thinktomorrow\Chief\Management\AbstractManager;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Management\Manager;
@@ -22,6 +23,10 @@ class ManagerFake extends AbstractManager implements Manager
             InputField::make('title_trans')->translatable(['nl', 'fr']),
             InputField::make('content_trans')->translatable(['nl', 'fr']),
             TextField::make('dynamic_column'),
+            FragmentField::make('fragment-field', new Fields([
+                InputField::make('title'),
+                TextField::make('content')
+            ])),
             ImageField::make('avatar'),
             FileField::make('hero')
         );

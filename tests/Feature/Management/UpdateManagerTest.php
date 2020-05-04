@@ -3,6 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Management;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\Chief\Fragments\Fragment;
+use Thinktomorrow\Chief\Fragments\FragmentModel;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagerFake;
@@ -75,7 +77,7 @@ class UpdateManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_dynamic_field()
+    public function it_can_update_a_dynamic_field()
     {
         $this->asAdmin()
             ->put($this->fake->route('update'), [
@@ -89,7 +91,7 @@ class UpdateManagerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_a_dynamic_localized_field()
+    public function it_can_update_a_dynamic_localized_field()
     {
         $this->asAdmin()
             ->put($this->fake->route('update'), [

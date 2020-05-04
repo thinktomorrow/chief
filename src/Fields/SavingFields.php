@@ -160,6 +160,6 @@ trait SavingFields
 
     public function saveImageFields(ImageField $field, Request $request)
     {
-        app(ImageFieldHandler::class)->handle($this->model, $field, $request);
+        app(ImageFieldHandler::class)->handle($this->model, $field, $request->input('images.' . $field->getName(), []), $request);
     }
 }

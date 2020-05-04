@@ -53,6 +53,23 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return array_keys($this->fields);
     }
 
+    /**
+     * Clone method is needed because Field as an object has mutable state. This is something that we
+     * should try to avoid and fix the field object to an object of immutable state instead.
+     *
+     * @return Fields
+     */
+    public function clone(): Fields
+    {
+        $clonedFields = [];
+
+        foreach ($this->fields as $field) {
+            $clonedFields[] = clone $field;
+        }
+
+        return new static($clonedFields);
+    }
+
     public function map(callable $callback): Fields
     {
         $keys = array_keys($this->fields);
@@ -155,9 +172,11 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        return (isset($this->fields[$offset]))
-            ? $this->fields[$offset]
-            : null;
+        if (!isset($this->fields[$offset])) {
+            throw new \RuntimeException('No field found by key [' . $offset . ']');
+        }
+
+        return $this->fields[$offset];
     }
 
     public function offsetSet($offset, $value)

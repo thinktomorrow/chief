@@ -17,8 +17,10 @@ class LocalizedDynamicAttributesTest extends TestCase
     public function it_can_get_a_localized_dynamic_attribute()
     {
         $model = new ModelStub(['values' => [
-            'nl' => ['title' => 'localized title nl'],
-            'en' => ['title' => 'localized title en'],
+            'title' => [
+                'nl' => 'localized title nl',
+                'en' => 'localized title en'
+            ],
         ]]);
 
         app()->setLocale('nl');
@@ -35,11 +37,22 @@ class LocalizedDynamicAttributesTest extends TestCase
     public function it_does_not_provide_a_fallback_localized_value()
     {
         $model = new ModelStub(['values' => [
-            'nl' => ['title' => 'localized title nl'],
+            'title' => ['nl' => 'localized title nl'],
         ]]);
 
         app()->setLocale('en');
         $this->assertNull($model->title);
+    }
+
+    /** @test */
+    public function when_locale_is_not_provided_as_dynamic_locale_it_will_return_raw_result()
+    {
+        $model = new ModelStub(['values' => [
+            'title' => ['nl' => 'localized title nl'],
+        ]]);
+
+        app()->setLocale('dk');
+        $this->assertEquals(['nl' => 'localized title nl'], $model->title);
     }
 
     /** @test */

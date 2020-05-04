@@ -113,6 +113,7 @@ class UpdateSections
                 $module = app(CreateModule::class)->handle(
                     (new PagetitleModule())->morphKey(),
                     $text_module['slug'],
+                    $this->model->getMorphClass(),
                     $this->model->id
                 );
             } // Create page specific text module
@@ -120,6 +121,7 @@ class UpdateSections
                 $module = app(CreateModule::class)->handle(
                     (new TextModule())->morphKey(),
                     $text_module['slug'],
+                    $this->model->getMorphClass(),
                     $this->model->id
                 );
             }

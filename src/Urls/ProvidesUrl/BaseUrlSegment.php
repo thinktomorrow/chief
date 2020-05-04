@@ -46,8 +46,8 @@ class BaseUrlSegment
         $managers = app(Managers::class)->all();
 
         foreach ($managers as $manager) {
-            if (contract($manager->existingModel(), ProvidesUrl::class)) {
-                $segments[] = $manager->existingModel()->baseUrlSegment();
+            if (contract($manager->modelInstance(), ProvidesUrl::class)) {
+                $segments[] = $manager->modelInstance()->baseUrlSegment();
             }
         }
 

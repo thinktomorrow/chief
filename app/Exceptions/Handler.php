@@ -64,16 +64,18 @@ class Handler extends ExceptionHandler
                     'message' => $exception->getMessage(),
                 ], 200);
             }
-
-//            return redirect()->back()->withInput()->withErrors($exception->getMessage());
         }
 
-        //could use some code cleanup
-        if ((strpos(url()->previous(), 'admin') || strpos(url()->current(), 'admin')) && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException) {
+        if ($this->shouldRenderChiefException($exception)) {
             return $this->renderChiefException($request, $exception);
         }
 
         return parent::render($request, $exception);
+    }
+
+    private function shouldRenderChiefException(Exception $exception): bool
+    {
+        return (strpos(url()->current(), 'admin') && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException);
     }
 
     protected function renderChiefException($request, Exception $exception)

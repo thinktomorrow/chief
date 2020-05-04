@@ -44,27 +44,19 @@
             </div>
             @foreach($menuItems as $menuItem)
                 <section class="relative bg-white border border-grey-100 rounded inset-s bg-white stack-s">
-
-                @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
+                    @include('chief::back.menu._partials._rowitem', ['item' => $menuItem])
 
                     @foreach($menuItem->children as $child)
                         @include('chief::back.menu._partials._rowitem', ['level' => 1, 'item' => $child])
 
+                        @foreach($child->children as $subchild)
+                            @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
 
-                            @foreach($child->children as $subchild)
-    
-                                @include('chief::back.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
-
-                                @foreach($child->children as $subchild)
-        
-                                    @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subchild])
-                                
-                                @endforeach
-
+                            @foreach($subchild->children as $subsubchild)
+                                @include('chief::back.menu._partials._rowitem', ['level' => 3, 'item' => $subsubchild])
                             @endforeach
-
+                        @endforeach
                     @endforeach
-
                 </section>
             @endforeach
         </div>

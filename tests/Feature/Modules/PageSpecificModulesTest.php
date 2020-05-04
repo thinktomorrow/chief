@@ -2,21 +2,34 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Fakes\CustomTableArticleFake;
 
 class PageSpecificModulesTest extends TestCase
 {
     use ChiefDatabaseTransactions;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        CustomTableArticleFake::migrateUp();
+
+        Relation::morphMap([
+            'customArticles' => CustomTableArticleFake::class,
+        ]);
+    }
+
     /** @test */
     public function it_can_assign_a_module_to_a_page()
     {
         $page = Page::create(['morph_key' => 'singles', 'title:nl' => 'foobar']);
-        $module = Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar', 'page_id' => $page->id]);
+        $module = Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar', 'owner_id' => $page->id, 'owner_type' => $page->getMorphClass()]);
 
         $this->assertEquals($page->id, $module->page->id);
         $this->assertTrue($module->isPageSpecific());
@@ -30,4 +43,13 @@ class PageSpecificModulesTest extends TestCase
         $this->assertInstanceOf(NewsletterModuleFake::class, $page->modules->first());
     }
 
+    /** @test */
+    public function module_can_be_linked_to_a_detached_page()
+    {
+        $created = new CustomTableArticleFake();
+        $created->save();
+        $module = Module::create(['morph_key' => NewsletterModuleFake::class, 'slug' => 'foobar', 'owner_id' => $created->id, 'owner_type' => $created->getMorphClass()]);
+
+        $this->assertEquals($created->id, $module->page->id);
+    }
 }

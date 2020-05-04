@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Feature\Urls;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Urls\UrlRecord;
@@ -81,7 +80,8 @@ class ChiefResponseTest extends TestCase
 
         UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->morphKey(), 'model_id' => $model->id]);
 
-        $response = $this->asAdmin()->get('foo/bar?preview-mode');
+        session()->flash('preview-mode', true);
+        $response = $this->asAdmin()->get('foo/bar');
 
         $response->assertSuccessful();
     }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Management;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Concerns\Morphable\Morphables;
+use Thinktomorrow\Chief\Urls\UrlRecord;
 
 class Managers
 {
@@ -40,6 +42,15 @@ class Managers
         $registration = $this->register->filterByModel($model)->first();
 
         return $this->instance($registration, $id);
+    }
+
+    public function findByUrl(string $slug, string $locale): Manager
+    {
+        $urlRecord = UrlRecord::findBySlug($slug, $locale);
+
+        $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
+
+        return $this->findByModel($model);
     }
 
     /**

@@ -11,9 +11,9 @@ use Thinktomorrow\Chief\Fields\Types\MediaField;
 
 class ImageFieldHandler extends AbstractMediaFieldHandler
 {
-    public function handle(HasAsset $model, MediaField $field, Request $request): void
+    public function handle(HasAsset $model, MediaField $field, array $requestValues, Request $request): void
     {
-        foreach ($request->input('images.' . $field->getName(), []) as $locale => $values) {
+        foreach ($requestValues as $locale => $values) {
             $this->handlePayload($model, $field, $locale, $values);
         }
 
