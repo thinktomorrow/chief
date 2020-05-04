@@ -2489,6 +2489,12 @@
                 "spatie",
                 "user"
             ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-03-23T17:09:07+00:00"
         },
         {
@@ -5733,16 +5739,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.20",
+            "version": "0.12.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "3d79c7109223aeb2d1157870c5d8875545403917"
+                "reference": "59090e1b84efca9310e58586aeb787521aa00b10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3d79c7109223aeb2d1157870c5d8875545403917",
-                "reference": "3d79c7109223aeb2d1157870c5d8875545403917",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/59090e1b84efca9310e58586aeb787521aa00b10",
+                "reference": "59090e1b84efca9310e58586aeb787521aa00b10",
                 "shasum": ""
             },
             "require": {
@@ -5771,7 +5777,21 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-05-03T17:12:46+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-05-04T09:21:25+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6773,5 +6793,6 @@
         "php": "^7.2.0",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
