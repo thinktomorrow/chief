@@ -4,6 +4,9 @@ principles.
 
 ## unreleased
 
+## 0.5.1 - 2020-11-05
+- Fixed: teaser helper function changed to work with multibyte character strings
+
 ## 0.5.0 - 2020-05-04
 - Added: A new page can be created based on an existing template. This will duplicate the pagebuilder content and structure.
 - Added: Pagefield used to select an internal page

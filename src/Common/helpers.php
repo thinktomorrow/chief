@@ -109,10 +109,12 @@ if (!function_exists('teaser')) {
         if (is_null($max) or is_string($max)) {
             return $text;
         }
+
         if (!is_null($clean)) {
             $text = cleanupHTML($text, $clean);
         }
-        $teaser = substr($text, 0, $max);
+
+        $teaser = mb_substr($text, 0, $max, 'utf-8');
 
         return strlen($text) <= $max ? $teaser : $teaser . $ending;
     }
