@@ -4,6 +4,9 @@ principles.
 
 ## unreleased
 
+- Added: search in mediagallery popup
+- Added: if a mediafield allows multiple images, the mediagallery popup now allows multiple selection
+
 ## 0.5.0 - 2020-05-04
 - Added: A new page can be created based on an existing template. This will duplicate the pagebuilder content and structure.
 - Added: Pagefield used to select an internal page

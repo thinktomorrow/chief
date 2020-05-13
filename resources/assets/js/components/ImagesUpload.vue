@@ -56,8 +56,10 @@
 
             setTimeout(this.updateFilesOrder, 100);
 
-            Eventbus.$on('mediagallery-loaded-' + this.reference, function (asset){
-                self.addNewItem(asset.id, asset.filename, asset.url);
+            Eventbus.$on('mediagallery-loaded-' + this.reference, function (assets){
+                assets.forEach(function(asset){
+                    self.addNewItem(asset.id, asset.filename, asset.url);
+                }, self)
                 setTimeout(this.updateFilesOrder, 100);
             });
 

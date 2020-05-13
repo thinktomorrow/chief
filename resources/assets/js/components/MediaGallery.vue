@@ -11,7 +11,7 @@
                     <svg width="32px" height="32px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
                 </div>
 
-                <div v-for="(asset, i) in assets" v-bind:key="asset.id" @click="select(asset)" class="column-3 border rounded border-transparent hover:bg-grey-50 p-2 cursor-pointer">
+                <div v-for="(asset, i) in assets" v-bind:key="asset.id" @click="select(asset)" :class="{'border-primary-500 border-4': isSelectedAsset(asset)}" class="column-3 border rounded border-transparent hover:bg-grey-50 p-2 cursor-pointer">
                     <div class="bg-grey-100 flex items-center justify-center h-32 mb-2 rounded">
                         <img :id="'media-gallery-image-'+i" :src="asset.url" :alt="asset.filename" class="max-h-full">
                     </div>
@@ -33,14 +33,22 @@
 		</div>
 
 
-		<div @click="loadMore()" class="flex justify-center w-full" v-if="assets.length > 0" slot="footer">
-			<div class="btn btn-primary inline-flex">
-				<span>Toon meer afbeeldingen</span>
-				<span v-if="isLoading" class="ml-2">
-					<svg width="20px"  height="20px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
-				</span>
-			</div>
-		</div>
+        <div slot="footer">
+            <div @click="loadMore()" class="flex justify-center w-full" v-if="assets.length > 0">
+                <div class="btn btn-primary inline-flex">
+                    <span>Toon meer afbeeldingen</span>
+                    <span v-if="isLoading" class="ml-2">
+                        <svg width="20px"  height="20px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+                    </span>
+                </div>
+            </div>
+
+            <div @click="chooseAssets()" class="flex justify-center w-full">
+                <div class="btn btn-primary inline-flex">
+                    <span>Kies geselecteerde assets</span>
+                </div>
+            </div>
+        </div>
 
 	</modal>
 </template>
@@ -52,14 +60,15 @@
 			limit: {required: false, default: 12},
             replace: {required: false, default: ''},
             uploaded: {required: true, default: []},
-            url: {required: true, default: '/admin/api/media'}
+            url: {required: true, default: '/admin/api/media'},
+            multiple: {required: false, default: false}
 		},
 		data(){
             return {
                 searchQuery: '',
                 isLoading: true,
 				assets: [],
-				selected: null
+                selected: []
             }
         },
 	    computed: {
@@ -95,10 +104,29 @@
 				})
 			},
 			select: function(asset) {
-                this.selected = asset.id;
-                this.assets.splice(item => item.id == this.selected);
+                if(this.multiple){
+                    if(this.isSelectedAsset(asset)){
+                        this.selected = this.selected.filter(item => item.id != asset.id);
+                    }else{
+                        this.selected.push(asset);
+                    }
+                }else{
+                    this.selected.push(asset);
+                    this.chooseAssets();
+                }
+            },
+            chooseAssets: function() {
+                let localAssets = this.assets;
+                this.selected.forEach(function(asset){
+                    localAssets.splice(item => item.id == asset.id);
+                });
+                this.assets = localAssets;
+
 				Eventbus.$emit('close-modal', this.id);
-				Eventbus.$emit('mediagallery-loaded-'+ this.reference, asset);
+				Eventbus.$emit('mediagallery-loaded-'+ this.reference, this.selected);
+            },
+            isSelectedAsset: function(asset) {
+                return this.selected.find(item => item.id == asset.id);
             },
             search: function() {
 				this.isLoading = true;
