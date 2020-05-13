@@ -17,5 +17,7 @@
 @else
     <input type="text" name="{{ $field->getName($locale ?? null) }}" id="{{ $field->getDottedName($locale ?? null) }}" class="input inset-s" placeholder="{{ $field->getPlaceholder($locale ?? null) }}" value="{{ old($field->getDottedName($locale ?? null),$field->getValue($locale ?? null)) }}">
 @endif
-
+@if($field->hasCharacterCount())
+    @include('chief::back._fields.charactercount')
+@endif
 {{--<error class="caption text-warning" field="{{ $field->getDottedName($locale ?? null) }}" :errors="errors.all()"></error>--}}

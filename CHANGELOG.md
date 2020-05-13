@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Added: option to add charactercount to textfield and inputfield. Added this to default seo description and seo title fields.
 
 ## 0.5.1 - 2020-11-05
 - Fixed: teaser helper function changed to work with multibyte character strings
