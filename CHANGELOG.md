@@ -3,13 +3,14 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.5.2 - 2020-18-05
 - Added: option to add charactercount to textfield and inputfield. Added this to default seo description and seo title fields.
+- Added: search in mediagallery popup
+- Added: if a mediafield allows multiple images, the mediagallery popup now allows multiple selection
 
 ## 0.5.1 - 2020-11-05
 - Fixed: teaser helper function changed to work with multibyte character strings
-
-- Added: search in mediagallery popup
-- Added: if a mediafield allows multiple images, the mediagallery popup now allows multiple selection
 
 ## 0.5.0 - 2020-05-04
 - Added: A new page can be created based on an existing template. This will duplicate the pagebuilder content and structure.
