@@ -51,7 +51,7 @@
             'options' : { default: function(){ return [] }, type: Array },
             'placeholder': { default: 'Selecteer een module'},
             'title': {},
-            'editUrl': { required: true, type: String }
+            'editUrl': { required: false, type: String }
         },
         data(){
             return {

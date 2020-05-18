@@ -1,17 +1,28 @@
 <template>
 	<modal :id="id" class="large-modal" type="modal">
 
-		<div v-if="!isLoading || assets.length > 1" class="row mb-4">
-			<h2>Kies een bestaande afbeelding</h2>
+		<div v-if="!isLoading || assets.length > 1" class="row items-center mb-4">
+			<div class="column-6">
+                <h2 class="text-2xl">Kies een bestaande afbeelding</h2>
+            </div>
+
+            <div class="column-6">
+                <div class="formgroup">
+                    <div class="input-group flex justify-end items-center">
+                        <input placeholder="Zoek op bestandsnaam ..." class="input inset-s" type="text" v-model="searchQuery">
+                        <button class="btn btn-secondary ml-4" @click.prevent="search()">Filter</button>
+                    </div>
+                </div>
+            </div>
 		</div>
 
-		<div data-overflow-scroll class="row overflow-scroll justify-center max-h-3/4">
-            <div class="column-10">
-                <div v-if="isLoading && assets.length < 1">
-                    <svg width="32px" height="32px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
-                </div>
+		<div data-overflow-scroll class="row overflow-scroll max-h-3/4 -mx-3">
+            <div class="flex justify-center w-full" v-if="isLoading && assets.length < 1">
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+            </div>
 
-                <div v-for="(asset, i) in assets" v-bind:key="asset.id" @click="select(asset)" :class="{'border-primary-500 border-4': isSelectedAsset(asset)}" class="column-3 border rounded border-transparent hover:bg-grey-50 p-2 cursor-pointer">
+            <div v-for="(asset, i) in assets" v-bind:key="asset.id" @click="select(asset)" class="xs-column-12 s-column-6 m-column-4 l-column-3 xl-column-2 p-1 cursor-pointer">
+                <div :class="{'bg-grey-50 border-secondary-500': isSelectedAsset(asset)}" class="p-2 border-2 rounded border-transparent hover:bg-grey-50">
                     <div class="bg-grey-100 flex items-center justify-center h-32 mb-2 rounded">
                         <img :id="'media-gallery-image-'+i" :src="asset.url" :alt="asset.filename" class="max-h-full">
                     </div>
@@ -24,34 +35,23 @@
                     </div>
                 </div>
             </div>
-            <div class="column-2 bg-grey-100">
-                <label for="search">Filters</label>
-                <input type="text" v-model="searchQuery">
-
-                <button @click.prevent="search()">Filter</button>
-            </div>
 		</div>
 
 
-        <div slot="footer">
-            <div @click="loadMore()" class="flex justify-center w-full" v-if="assets.length > 0">
-                <div class="btn btn-primary inline-flex">
-                    <span>Toon meer afbeeldingen</span>
-                    <span v-if="isLoading" class="ml-2">
-                        <svg width="20px"  height="20px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
-                    </span>
-                </div>
+        <div slot="footer" class="flex justify-between w-full" v-if="assets.length > 0">
+            <div @click="loadMore()" class="btn btn-secondary inline-flex">
+                <span>Toon meer afbeeldingen</span>
+                <span v-if="isLoading" class="ml-2">
+                    <svg width="20px"  height="20px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" fill="none" stroke-linecap="round" r="40" stroke-width="10" stroke="#5C4456" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(233.955 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+                </span>
             </div>
-
-            <div @click="chooseAssets()" class="flex justify-center w-full">
-                <div class="btn btn-primary inline-flex">
-                    <span>Kies geselecteerde assets</span>
-                </div>
+            <div v-if="multiple" @click="chooseAssets()" class="btn btn-primary inline-flex">
+                <span>Kies geselecteerde assets</span>
             </div>
         </div>
-
 	</modal>
 </template>
+
 <script>
 	export default {
 		props: {
