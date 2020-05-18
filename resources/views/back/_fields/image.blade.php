@@ -47,7 +47,7 @@
                 <div class="btn btn-primary mr-4" @click="gallery.open">
                     <span>Voeg bestaande toe uit je galerij</span>
                 </div>
-                <mediagallery url="{{ route('chief.api.media') }}" :reference="reference" :locale="settings.locale" :uploaded="items.map(o=>o.id)"></mediagallery>
+                <mediagallery url="{{ route('chief.api.media') }}" :reference="reference" :locale="settings.locale" :uploaded="items.map(o=>o.id)" :multiple="{{ $field->allowMultiple() ? 'true' : 'false' }}"></mediagallery>
             </div>
 
             <a v-if="settings.multiple == true  && items.length > 1" @click.prevent="sort.toggleReorder" class="btn btn-primary">
