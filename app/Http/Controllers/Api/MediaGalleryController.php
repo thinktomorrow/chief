@@ -21,9 +21,9 @@ class MediaGalleryController extends Controller
 
         $excluded = isset($request->query()['excluded']) ? explode(",", $request->query()['excluded']) : $excluded;
 
-        $links = Asset::with('media')->orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->whereHas('media', function (Builder $query) use($search) {
+        $links = Asset::with('media')->orderBy('created_at', 'DESC')->whereNotIn('id', $excluded)->whereHas('media', function (Builder $query) use ($search) {
             $query->where('mime_type', 'LIKE', '%image%');
-            $query->where('name', 'LIKE', '%'.$search.'%');
+            $query->where('name', 'LIKE', '%' . $search . '%');
         })->offset($offset)->limit($limit)->get()->map(function ($asset) {
             return [
                 "id"         => $asset->id,
