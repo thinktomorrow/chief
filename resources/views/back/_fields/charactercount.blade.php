@@ -2,6 +2,10 @@
 
 @push('custom-scripts-after-vue')
     <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            document.getElementById("{{$key}}-wordcount").innerHTML = document.getElementById('{{ $key }}').value.length;
+        });
+
         document.getElementById('{{ $key }}').addEventListener("input", function(){
             var currentLength = this.value.length;
 
