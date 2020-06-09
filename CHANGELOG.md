@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: issue where chief error page is shown when path contains the 'admin' string.
 
 ## 0.5.2 - 2020-18-05
 - Added: option to add charactercount to textfield and inputfield. Added this to default seo description and seo title fields.

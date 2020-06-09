@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
 
     private function shouldRenderChiefException(Exception $exception): bool
     {
-        return (strpos(url()->current(), 'admin') && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException);
+        return (Str::startsWith(request()->path(), 'admin/') && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException);
     }
 
     protected function renderChiefException($request, Exception $exception)
