@@ -17,23 +17,23 @@ class AuthenticateChiefSession
 
     public function handle($request, Closure $next)
     {
-        if (! $request->user() || ! $request->session()) {
+        if (! $request->user('chief') || ! $request->session()) {
             return $next($request);
         }
 
         if ($this->auth->viaRemember()) {
             $passwordHash = explode('|', $request->cookies->get($this->auth->getRecallerName()))[2];
 
-            if ($passwordHash != $request->user()->getAuthPassword()) {
+            if ($passwordHash != $request->user('chief')->getAuthPassword()) {
                 $this->logout($request);
             }
         }
 
-        if (! $request->session()->has('password_hash')) {
+        if (! $request->session()->has('chief_password_hash')) {
             $this->storePasswordHashInSession($request);
         }
 
-        if ($request->session()->get('password_hash') !== $request->user()->getAuthPassword()) {
+        if ($request->session()->get('chief_password_hash') !== $request->user('chief')->getAuthPassword()) {
             $this->logout($request);
         }
 
@@ -50,12 +50,12 @@ class AuthenticateChiefSession
      */
     protected function storePasswordHashInSession($request)
     {
-        if (! $request->user()) {
+        if (! $request->user('chief')) {
             return;
         }
 
         $request->session()->put([
-            'password_hash' => $request->user()->getAuthPassword(),
+            'chief_password_hash' => $request->user('chief')->getAuthPassword(),
             ]);
     }
 
@@ -71,7 +71,7 @@ class AuthenticateChiefSession
     {
         $this->auth->logout();
 
-        $request->session()->flush();
+        $request->session()->remove('chief_password_hash');
 
         throw new AuthenticationException();
     }

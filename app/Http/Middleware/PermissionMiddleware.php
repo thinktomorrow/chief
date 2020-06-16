@@ -20,7 +20,7 @@ class PermissionMiddleware
             return redirect('/');
         }
 
-        if (! $request->user()->can($permission)) {
+        if (! $request->user('chief')->can($permission)) {
             abort(403);
         }
 
