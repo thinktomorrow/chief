@@ -30,7 +30,7 @@
         "nunomaduro/collision": "^3.0",
         "orchestra/testbench": "3.8.*|4.*",
         "phpstan/phpstan": "^0.12.5",
-        "phpunit/phpunit": "~7.5|~8.0"
+        "phpunit/phpunit": "^9.2.5"
     },
     "autoload": {
         "psr-4": {
