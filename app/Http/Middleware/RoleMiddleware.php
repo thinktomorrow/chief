@@ -20,11 +20,11 @@ class RoleMiddleware
             return redirect('/');
         }
 
-        if (! $request->user()->hasRole($role)) {
+        if (! $request->user('chief')->hasRole($role)) {
             abort(403);
         }
 
-        if (! $request->user()->can($permission)) {
+        if (! $request->user('chief')->can($permission)) {
             abort(403);
         }
 

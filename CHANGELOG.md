@@ -4,6 +4,7 @@ principles.
 
 ## unreleased
 - Fixed: issue where chief error page is shown when path contains the 'admin' string.
+- Fixed: added chief guard when fetching user out of request to prevent conflict with front end logins.
 
 ## 0.5.2 - 2020-18-05
 - Added: option to add charactercount to textfield and inputfield. Added this to default seo description and seo title fields.
