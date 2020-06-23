@@ -24,7 +24,7 @@
             </p>
 
             <p style="margin: 0; font-family: Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 100; line-height: 12px;">
-                Indien je vind dat dit een vergissing is of geen toegang wenst, kan je deze mail negeren. Eventueel kan je de <a href="{{ $deny_url }}">uitnodiging expliciet weigeren</a>.
+                Indien je vindt dat dit een vergissing is of geen toegang wenst, kan je deze mail negeren. Eventueel kan je de <a href="{{ $deny_url }}">uitnodiging expliciet weigeren</a>.
             </p>
 
         </td>

@@ -1,10 +1,10 @@
 @extends('chief::back._layouts.master')
 
-@section('page-title', 'Gebruikers')
+@section('page-title', 'Admins')
 
 @chiefheader
-    @slot('title', 'Gebruikers')
-    <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe gebruiker uit.</a>
+    @slot('title', 'Admins')
+    <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe admin uit.</a>
 @endchiefheader
 
 @section('content')
@@ -46,6 +46,6 @@
         @endforeach
     </div>
     <div class="stack inset-xs text-center">
-        <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe gebruiker uit.</a>
+        <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe admin uit.</a>
     </div>
 @endsection

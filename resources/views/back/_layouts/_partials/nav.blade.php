@@ -48,7 +48,7 @@
                             </span>
                             <div v-cloak class="dropdown-box inset-s">
                                 @can('view-user')
-                                    <a class="{{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Users</a>
+                                    <a class="{{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Admins</a>
                                 @endcan
                                 @can('view-role')
                                     <a class="{{ isActiveUrl('admin/roles*') ? 'active' : '' }}" href="{{ route('chief.back.roles.index') }}">Rechten</a>
