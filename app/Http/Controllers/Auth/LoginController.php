@@ -44,7 +44,7 @@ class LoginController extends Controller
     {
         Auth::guard('chief')->logout();
 
-        $request->session()->invalidate();
+        $request->session()->forget('chief_password_hash');
 
         return redirect('/');
     }
