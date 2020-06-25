@@ -63,7 +63,7 @@
             <label for="file">Upload</label>
             <label class="custom-file">
                 <input type="file" id="file">
-                <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
+                <span class="custom-file-input" data-title="Kies jouw bestand" data-button="Browse"></span>
             </label>
         </div>
     </div>

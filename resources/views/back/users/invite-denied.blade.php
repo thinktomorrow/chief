@@ -9,7 +9,7 @@
 
                 <h1 class="mb-8">Jouw uitnodiging is afgewezen.</h1>
 
-                <p>Ok. Je hebt jouw uitnodiging tot {{ chiefSetting('app_name') }} afgewezen.</p>
+                <p>Ok. Je hebt je uitnodiging tot {{ chiefSetting('app_name') }} afgewezen.</p>
                 <p>Mocht je toch opnieuw toegang wensen, kan je je wenden tot de beheerder.</p>
 
                 <div class="stack">

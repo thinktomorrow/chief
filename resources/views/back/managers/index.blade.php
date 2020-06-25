@@ -39,7 +39,7 @@
                     @if($managers->isEmpty())
 
                         <div class="stack">
-                            <p>Geen resultaten gevonden voor uw huidige filtering.
+                            <p>Geen resultaten gevonden voor de huidige filtering.
                             <br><a href="{{ $modelManager->route('index') }}">Bekijk alle resultaten</a>
                             </p>
                         </div>

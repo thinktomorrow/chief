@@ -27,7 +27,7 @@
             @endforeach
         </div>
 
-        <p class="mt-8">De sitemaps worden automatisch gebruikt door de zoekpagina's zoals Google en Bing. U kan ook de links toevoegen aan uw <a target="_blank" rel="noopener" href="https://search.google.com/search-console">search console</a>.</p>
+        <p class="mt-8">De sitemaps worden automatisch gebruikt door de zoekpagina's zoals Google en Bing. U kan ook de links toevoegen aan jouw<a target="_blank" rel="noopener" href="https://search.google.com/search-console">search console</a>.</p>
 
         <p class="mt-8 w-2/3">
             <span class="font-bold">Waarom is een sitemap van belang?</span><br>
