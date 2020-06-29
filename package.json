@@ -19,7 +19,7 @@
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
     "module": "^1.2.5",
-    "sass": "^1.26.2",
+    "sass": "^1.26.9",
     "sass-loader": "^8.0.2",
     "tailwindcss": "^1.2.0",
     "vue-server-renderer": "^2.6.11",
