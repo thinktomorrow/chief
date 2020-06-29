@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
-            "version": "v11.8.1",
+            "version": "v11.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Astrotomic/laravel-translatable.git",
-                "reference": "2b7cfd6c48c5340b2d06d8edc8b6995580e64f65"
+                "reference": "29d409f5fca2209252c9b6dc135b0994b2cadca0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/2b7cfd6c48c5340b2d06d8edc8b6995580e64f65",
-                "reference": "2b7cfd6c48c5340b2d06d8edc8b6995580e64f65",
+                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/29d409f5fca2209252c9b6dc135b0994b2cadca0",
+                "reference": "29d409f5fca2209252c9b6dc135b0994b2cadca0",
                 "shasum": ""
             },
             "require": {
@@ -69,7 +69,21 @@
                 "laravel",
                 "translation"
             ],
-            "time": "2020-04-23T08:57:35+00:00"
+            "funding": [
+                {
+                    "url": "https://offset.earth/treeware",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/Gummibeer",
+                    "type": "github"
+                },
+                {
+                    "url": "https://issuehunt.io/r/astrotomic",
+                    "type": "issuehunt"
+                }
+            ],
+            "time": "2020-06-23T15:40:25+00:00"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -332,6 +346,20 @@
                 "sqlite",
                 "sqlserver",
                 "sqlsrv"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fdbal",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-04-20T17:19:26+00:00"
         },
@@ -2715,6 +2743,12 @@
                 "media",
                 "spatie"
             ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-03-09T16:43:55+00:00"
         },
         {
@@ -2848,6 +2882,12 @@
             "keywords": [
                 "laravel-sitemap",
                 "spatie"
+            ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
             ],
             "time": "2020-03-03T07:05:15+00:00"
         },
@@ -6008,6 +6048,16 @@
                 "orchestra-platform",
                 "orchestral",
                 "testing"
+            ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/crynobone",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-04-11T10:37:21+00:00"
         },
