@@ -22,7 +22,7 @@
             <label>Afbeelding</label>
             <label class="custom-file">
                 <input type="file" id="facebook-image">
-                <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
+                <span class="custom-file-input" data-title="Kies jouw bestand" data-button="Browse"></span>
             </label>
         </div>
         <div class="panel panel-card --border stack-xl inset">
@@ -76,7 +76,7 @@
             <label>Afbeelding</label>
             <label class="custom-file">
                 <input type="file" id="twitter-image">
-                <span class="custom-file-input" data-title="Kies uw bestand" data-button="Browse"></span>
+                <span class="custom-file-input" data-title="Kies jouw bestand" data-button="Browse"></span>
             </label>
         </div>
         <div class="panel panel-card --border stack-xl inset">
