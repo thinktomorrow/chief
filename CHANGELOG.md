@@ -3,6 +3,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+
+## 0.5.4 - 2020-07-02
 - Fixed: small bug with duplicates when selecting existing assets from mediagallery
 
 ## 0.5.3 - 2020-06-23
