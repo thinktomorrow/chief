@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: small bug with duplicates when selecting existing assets from mediagallery
 
 ## 0.5.3 - 2020-06-23
 - Fixed: issue where chief error page is shown when path contains the 'admin' string.

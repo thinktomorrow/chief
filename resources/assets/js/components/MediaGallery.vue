@@ -124,6 +124,7 @@
 
 				Eventbus.$emit('close-modal', this.id);
 				Eventbus.$emit('mediagallery-loaded-'+ this.reference, this.selected);
+                this.selected = [];
             },
             isSelectedAsset: function(asset) {
                 return this.selected.find(item => item.id == asset.id);
