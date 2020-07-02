@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3c9673c4e9d4e44269600fcd4420e7c",
+    "content-hash": "b5fc4bee4cbabbe51a05b6b3c35234ba",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -5021,31 +5021,31 @@
         },
         {
             "name": "thinktomorrow/squanto",
-            "version": "0.7.1",
+            "version": "0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thinktomorrow/squanto.git",
-                "reference": "c87765e6a175713d2621bc025e9316b9f60b3588"
+                "reference": "6cef1f9de6079c3aae23c033b43028a47a6dbc18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/c87765e6a175713d2621bc025e9316b9f60b3588",
-                "reference": "c87765e6a175713d2621bc025e9316b9f60b3588",
+                "url": "https://api.github.com/repos/thinktomorrow/squanto/zipball/6cef1f9de6079c3aae23c033b43028a47a6dbc18",
+                "reference": "6cef1f9de6079c3aae23c033b43028a47a6dbc18",
                 "shasum": ""
             },
             "require": {
-                "astrotomic/laravel-translatable": "^11.6",
-                "ezyang/htmlpurifier": "^4.12",
-                "illuminate/contracts": "~6.0|~7.0",
-                "illuminate/database": "~6.0|~7.0",
-                "illuminate/support": "~6.0|~7.0",
+                "astrotomic/laravel-translatable": "^11.3",
+                "ezyang/htmlpurifier": "^4.11",
+                "illuminate/contracts": "~5.7|~5.8|~6.0",
+                "illuminate/database": "~5.7|~5.8|~6.0",
+                "illuminate/support": "~5.7|~5.8|~6.0",
                 "league/flysystem": "^1.0",
-                "php": ">=7.3"
+                "php": ">=7.2"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9.7|^1.1",
-                "orchestra/testbench": "~4.0.0|~5.0.0",
-                "phpunit/phpunit": "~8.0",
+                "orchestra/testbench": "~3.6.0|~3.7.0|~4.0.0",
+                "phpunit/phpunit": "7.0|~8.0",
                 "squizlabs/php_codesniffer": "~2.3"
             },
             "type": "library",
@@ -5079,7 +5079,7 @@
                 "squanto",
                 "thinktomorrow"
             ],
-            "time": "2020-06-23T13:33:25+00:00"
+            "time": "2019-10-08T12:17:11+00:00"
         },
         {
             "name": "thinktomorrow/trap",
