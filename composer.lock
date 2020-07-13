@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
-            "version": "v11.8.2",
+            "version": "v11.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Astrotomic/laravel-translatable.git",
-                "reference": "29d409f5fca2209252c9b6dc135b0994b2cadca0"
+                "reference": "104f9501bf94738b6d82984685010e3d8040e891"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/29d409f5fca2209252c9b6dc135b0994b2cadca0",
-                "reference": "29d409f5fca2209252c9b6dc135b0994b2cadca0",
+                "url": "https://api.github.com/repos/Astrotomic/laravel-translatable/zipball/104f9501bf94738b6d82984685010e3d8040e891",
+                "reference": "104f9501bf94738b6d82984685010e3d8040e891",
                 "shasum": ""
             },
             "require": {
@@ -83,7 +83,7 @@
                     "type": "issuehunt"
                 }
             ],
-            "time": "2020-06-23T15:40:25+00:00"
+            "time": "2020-07-08T17:21:18+00:00"
         },
         {
             "name": "barryvdh/laravel-debugbar",
@@ -6063,6 +6063,16 @@
                 "orchestra-platform",
                 "orchestral",
                 "testing"
+            ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/crynobone",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-04-11T10:37:21+00:00"
         },
