@@ -131,5 +131,6 @@ return [
     'healthMonitor' => [
         Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageSetCheck::class,
         Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageAccessibleCheck::class,
+        Thinktomorrow\Chief\System\HealthMonitor\Checks\ChiefVersionCheck::class,
     ],
 ];
