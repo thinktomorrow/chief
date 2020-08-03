@@ -1,6 +1,6 @@
 @if ($paginator->lastPage() > 1)
     <div class="pt-10 w-full">
-        <ul class="flex justify-center items-center ">
+        <ul class="flex flex-wrap justify-center items-center ">
             @if($paginator->currentPage() == 1)
                 <li class="cursor-not-allowed opacity-50">
                     <span>Vorige</span>
@@ -10,7 +10,7 @@
                     <a href="{{ $paginator->url(1) }}" class="">Vorige</a>
                 </li>
             @endif
-            
+
             @for ($i = 1; $i <= $paginator->lastPage(); $i++)
                 @if($paginator->currentPage() == $i)
                     <li class="ml-10 text-l font-bold">
@@ -22,8 +22,8 @@
                     </li>
                 @endif
             @endfor
-    
-    
+
+
             @if($paginator->currentPage() == $paginator->lastPage())
                 <li class="ml-10 cursor-not-allowed opacity-50">
                     <span>Volgende</span>

@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## unreleased
+- Fixed: pagination overflow
 
 ## 0.5.4 - 2020-07-02
 - Fixed: small bug with duplicates when selecting existing assets from mediagallery
