@@ -15,7 +15,7 @@
     "@vue/test-utils": "^1.0.3",
     "browser-sync": "^2.26.12",
     "browser-sync-webpack-plugin": "^2.2.2",
-    "expect": "^25.5.0",
+    "expect": "^26.2.0",
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
     "module": "^1.2.5",
