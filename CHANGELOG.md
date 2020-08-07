@@ -2,8 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
-## unreleased
+## 0.5.5 - 2020-08-07
 - Fixed: pagination overflow
+- Fixed: issue where edit option on admin toast for localized page wasn't visible
 
 ## 0.5.4 - 2020-07-02
 - Fixed: small bug with duplicates when selecting existing assets from mediagallery

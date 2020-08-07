@@ -5,7 +5,15 @@
         $editUrl = null;
 
         try{
-            $manager = app(\Thinktomorrow\Chief\Management\Managers::class)->findByUrl(request()->path(), app()->getLocale());
+
+            $path = request()->path();
+
+            // Remove the locale if any
+            if(0 === strpos($path, app()->getLocale() . '/') || $path === app()->getLocale()) {
+                $path = substr($path, strlen(app()->getLocale() . '/'));
+            }
+
+            $manager = app(\Thinktomorrow\Chief\Management\Managers::class)->findByUrl($path, app()->getLocale());
 
             $editUrl = $manager->can('edit') ? $manager->route('edit') : null;
 
