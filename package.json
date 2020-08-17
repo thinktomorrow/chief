@@ -32,7 +32,7 @@
     "es6-promise": "^4.2.8",
     "laravel-mix": "^5.0.4",
     "laravel-mix-purgecss": "^4.2.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "npmlog": "^4.1.2",
     "popper.js": "^1.16.1",
     "sortablejs": "^1.10.2",
