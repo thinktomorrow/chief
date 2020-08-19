@@ -10,11 +10,17 @@ class AddPageMorphkeyToModulesTable extends Migration
 {
     public function up()
     {
-        Schema::table('modules', function (Blueprint $table) {
-            if (App::environment() != 'testing') {
-                $table->dropForeign('modules_page_id_foreign');
-            }
+        try {
+            Schema::table('modules', function (Blueprint $table) {
+                if (App::environment() != 'testing') {
+                    $table->dropForeign('modules_page_id_foreign');
+                }
+            });
+        } catch(\Illuminate\Database\QueryException $e){
+            // Early versions of chief don't have this foreign key
+        }
 
+        Schema::table('modules', function (Blueprint $table) {
             $table->renameColumn('page_id', 'owner_id');
         });
 
