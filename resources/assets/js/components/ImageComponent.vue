@@ -1,6 +1,6 @@
 <script>
     export default{
-        props: ['reference', 'item', 'name', 'group', 'managerKey'],
+        props: ['reference', 'item', 'name', 'group', 'managerKey', 'apiService'],
         render(){
             return this.$scopedSlots.default({
                 hiddenInputName: this.hiddenInputName,
@@ -21,7 +21,7 @@
                 labelLoading: 'De afbeelding is aan het laden ...',
 
                 // Async upload settings
-                service: '/admin/api/assets/images/upload',
+                service: this.apiService,
                 uploadBase64: true,
                 didUpload: this.didUpload,
                 didLoad: this.didLoad,

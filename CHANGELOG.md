@@ -2,6 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
+## 0.5.6 - 2020-08-19
+- Fixed: issue where a custom admin prefix did not get honoured by the api image upload url
+
 ## 0.5.5 - 2020-08-07
 - Fixed: pagination overflow
 - Fixed: issue where edit option on admin toast for localized page wasn't visible
