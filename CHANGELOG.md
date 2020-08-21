@@ -4,6 +4,7 @@ principles.
 
 ## 0.5.8 - 2020-08-21
 - Added: mediagallery to manage assets stored on disk.
+- Added: updated npm packaged to latest version (tailwind 1.7.3)
 
 ## 0.5.7 - 2020-08-19
 - Fixed: issue where removing a foreign key constraint would fail when the key isn't present.
