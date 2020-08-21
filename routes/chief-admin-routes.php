@@ -74,6 +74,10 @@ Route::post('api/assets/files/upload', 'Thinktomorrow\Chief\App\Http\Controllers
 Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
 Route::get('api/media', 'Thinktomorrow\Chief\App\Http\Controllers\Api\MediaGalleryController@index')->name('chief.api.media');
 
+Route::post('mediagallery/bulk', [Thinktomorrow\Chief\Mediagallery\Http\BulkActionsController::class, 'bulk'])->name('chief.mediagallery.bulk');
+Route::get('mediagallery', [Thinktomorrow\Chief\Mediagallery\Http\MediagalleryController::class, 'index'])->name('chief.mediagallery.index');
+
+
 /**
 * -----------------------------------------------------------------
 * USERS & AUTHORIZATION MANAGEMENT
