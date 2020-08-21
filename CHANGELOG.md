@@ -2,8 +2,8 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
-## Unreleased
-- Added: media gallery to manage assets stored on disk.
+## 0.5.8 - 2020-08-21
+- Added: mediagallery to manage assets stored on disk.
 
 ## 0.5.7 - 2020-08-19
 - Fixed: issue where removing a foreign key constraint would fail when the key isn't present.
