@@ -1,12 +1,14 @@
 <template>
-    <div v-show="isVisible" class="pl-8 pr-16 py-4 bg-white rounded-r-lg shadow-lg relative border-l-2" :class="border">
-        <div class="mb-1">
-            <h4 v-if="this.title">{{ this.title }}</h4>
+    <div :ref="'notification-' + this._uid" v-show="isVisible" class="flex items-center bg-white border border-grey-100 rounded-lg shadow-lg px-6 py-4 space-x-8 pop">
+        <div class="rounded-full" :class="color">
+            <svg width="24" height="24"><use :xlink:href="'#' + this.type"></use></svg>
         </div>
 
-        <p v-if="this.description" class="text-grey-500">{{ this.description }}</p>
+        <div class="flex-grow">
+            <p v-if="this.description" class="text-grey-500">{{ this.description }}</p>
+        </div>
 
-        <div @click="hideNotification" class="absolute top-0 right-0 m-2 p-1 text-grey-500 rounded-full cursor-pointer bg-grey-100 hover:bg-grey-50 transition duration-150 ease-in-out">
+        <div @click="hideNotification" class="cursor-pointer rounded-full p-1 text-grey-500 bg-grey-50 hover:bg-grey-100 transition duration-150 ease-in-out">
             <svg width="16" height="16"><use xlink:href="#x"></use></svg>
         </div>
     </div>
@@ -15,28 +17,40 @@
 <script>
     export default {
         props: {
-            title: String,
             description: String,
             type: String,
         },
         data() {
             return {
                 isVisible: true,
-                border: this.setBorderByType()
+                color: this.setColorByType()
             }
         },
         methods: {
+            showNotification: function() {
+                this.isVisible = true;
+            },
             hideNotification: function() {
                 this.isVisible = false;
+
+                Eventbus.$emit('minimize-notification', this)
             },
-            setBorderByType: function() {
+            setColorByType: function() {
                 switch(this.type) {
                     case 'success':
-                        return 'border-success';
+                        return 'bg-success bg-opacity-25 text-success';
                         break;
-
+                    case 'error':
+                        return 'bg-error bg-opacity-25 text-error';
+                        break;
+                    case 'warning':
+                        return 'bg-warning bg-opacity-25 text-warning';
+                        break;
+                    case 'information':
+                        return 'bg-information bg-opacity-25 text-information';
+                        break;
                     default:
-                        return 'border-information';
+                        return 'bg-information bg-opacity-25 text-information';
                         break;
                 }
             }

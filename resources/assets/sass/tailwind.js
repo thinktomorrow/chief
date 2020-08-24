@@ -91,6 +91,10 @@ module.exports = {
             '48': '12rem',
             '56': '14rem',
             '64': '16rem',
+            '80': '20rem',
+            '88': '22rem',
+            '96': '24rem',
+            'peak': 'calc(100% - 4rem - 24px)',
         },
         backgroundColor: theme => theme('colors'),
         backgroundPosition: {
@@ -421,9 +425,10 @@ module.exports = {
         verticalAlign: ['responsive'],
         visibility: ['responsive'],
         whitespace: ['responsive'],
-        width: ['responsive'],
+        width: ['responsive', 'group-hover'],
         wordBreak: ['responsive'],
         zIndex: ['responsive'],
+        scale: ['responsive', 'group-hover'],
     },
     corePlugins: {
         container: false,

@@ -1,44 +1,60 @@
 // Vue transition fade effect
 .fade-enter-active, .fade-leave-active {
     transition: opacity .3s;
-  }
-  .fade-enter, .fade-leave-to {
+}
+.fade-enter, .fade-leave-to {
     opacity: 0;
-  }
-  
-  
-  /**
-   * Animations taken from animate.css
-   * @ref: https://daneden.github.io/animate.css/
-   */
-  .animated {
+}
+
+
+/**
+* Animations taken from animate.css
+* @ref: https://daneden.github.io/animate.css/
+*/
+.animated {
     animation-duration: 1s;
     animation-fill-mode: both;
-  }
-  
-  .animation-delayed, .animation-delayed-2 {
+}
+
+.animation-delayed, .animation-delayed-2 {
     animation-delay: 2s
-  }
-  
-  .animation-delayed-3 {
+}
+
+.animation-delayed-3 {
     animation-delay: 3s
-  }
-  
-  .animation-delayed-4 {
+}
+
+.animation-delayed-4 {
     animation-delay: 4s
-  }
-  
-  @keyframes fadeOutDown {
+}
+
+@keyframes fadeOutDown {
     from {
-      opacity: 1;
+        opacity: 1;
     }
-  
+
     to {
-      opacity: 0;
-      transform: translate3d(0, 100%, 0);
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
     }
-  }
-  
-  .fadeOutDown {
+}
+
+.fadeOutDown {
     animation-name: fadeOutDown;
-  }
+}
+
+.pop {
+    animation: Pop;
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+    transform-origin: right;
+}
+
+@keyframes Pop {
+    0% {
+        transform: scale(0) translateZ(0);
+    }
+    100% {
+        transform: scale(1) translateZ(0);
+    }
+}
