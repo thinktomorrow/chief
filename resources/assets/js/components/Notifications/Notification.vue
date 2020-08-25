@@ -1,5 +1,5 @@
 <template>
-    <div :ref="'notification-' + this._uid" v-show="isVisible" class="flex items-center bg-white border border-grey-100 rounded-lg shadow-lg px-6 py-4 space-x-8 pop">
+    <div :ref="'notification-' + this._uid" v-show="isVisible" class="flex items-center bg-white border border-grey-100 rounded-lg shadow-lg px-6 py-4 space-x-8 pop origin-right">
         <div class="rounded-full" :class="color">
             <svg width="24" height="24"><use :xlink:href="'#' + this.type"></use></svg>
         </div>
@@ -22,18 +22,21 @@
         },
         data() {
             return {
-                isVisible: true,
+                isVisible: false,
                 color: this.setColorByType()
             }
+        },
+        mounted() {
+            this.showNotification();
         },
         methods: {
             showNotification: function() {
                 this.isVisible = true;
+                Eventbus.$emit('open-notification', this);
             },
             hideNotification: function() {
                 this.isVisible = false;
-
-                Eventbus.$emit('minimize-notification', this)
+                Eventbus.$emit('hide-notification', this._uid);
             },
             setColorByType: function() {
                 switch(this.type) {
