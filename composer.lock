@@ -348,6 +348,20 @@
                 "sqlserver",
                 "sqlsrv"
             ],
+            "funding": [
+                {
+                    "url": "https://www.doctrine-project.org/sponsorship.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/phpdoctrine",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fdbal",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-04-20T17:19:26+00:00"
         },
         {
@@ -2803,6 +2817,12 @@
                 "media",
                 "spatie"
             ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-03-09T16:43:55+00:00"
         },
         {
@@ -2937,6 +2957,12 @@
                 "laravel-sitemap",
                 "spatie"
             ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-03-03T07:05:15+00:00"
         },
         {
@@ -2986,6 +3012,12 @@
                 "pdf",
                 "pdf-to-image",
                 "spatie"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/spatie",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-04-29T08:21:17+00:00"
         },
@@ -6298,6 +6330,16 @@
                 "orchestral",
                 "testing"
             ],
+            "funding": [
+                {
+                    "url": "https://paypal.me/crynobone",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/crynobone",
+                    "type": "patreon"
+                }
+            ],
             "time": "2020-04-11T10:37:21+00:00"
         },
         {
@@ -6613,16 +6655,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.38",
+            "version": "0.12.40",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "ad606c5f1c641b465b739e79a3a0f1a5a57cf1b4"
+                "reference": "dce7293ad7b59fc09a9ab9b0b5b44902c092ca17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ad606c5f1c641b465b739e79a3a0f1a5a57cf1b4",
-                "reference": "ad606c5f1c641b465b739e79a3a0f1a5a57cf1b4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dce7293ad7b59fc09a9ab9b0b5b44902c092ca17",
+                "reference": "dce7293ad7b59fc09a9ab9b0b5b44902c092ca17",
                 "shasum": ""
             },
             "require": {
@@ -6665,7 +6707,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-19T08:13:30+00:00"
+            "time": "2020-08-26T19:06:20+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
