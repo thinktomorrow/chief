@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Sets;
 
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class RelatingPageSetToPageTest extends TestCase
 {

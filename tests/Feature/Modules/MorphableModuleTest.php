@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Tests\Fakes\OtherModuleFake;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 

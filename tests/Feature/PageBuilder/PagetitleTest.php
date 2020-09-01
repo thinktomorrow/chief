@@ -3,13 +3,13 @@
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Modules\PagetitleModule;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Modules\TextModule;
+use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Modules\PagetitleModule;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 
 class PagetitleTest extends TestCase
 {

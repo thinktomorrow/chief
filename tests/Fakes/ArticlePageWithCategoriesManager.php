@@ -5,9 +5,9 @@ declare(strict_types = 1);
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
 use Thinktomorrow\Chief\Fields\Fields;
+use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fields\Types\SelectField;
-use Thinktomorrow\Chief\Pages\PageManager;
 
 class ArticlePageWithCategoriesManager extends PageManager
 {

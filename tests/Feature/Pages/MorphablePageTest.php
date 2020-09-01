@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Thinktomorrow\Chief\States\PageState;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\States\PageState;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 
 class MorphablePageTest extends TestCase
 {

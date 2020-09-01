@@ -2,15 +2,15 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Sets;
 
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Sets\Set;
-use Thinktomorrow\Chief\Sets\StoredSetReference;
-use Thinktomorrow\Chief\Sets\SetReference;
-use Thinktomorrow\Chief\Tests\Fakes\AgendaPageFake;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Sets\SetReference;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Thinktomorrow\Chief\Sets\StoredSetReference;
+use Thinktomorrow\Chief\Tests\Fakes\AgendaPageFake;
 
 class PageSetTest extends TestCase
 {

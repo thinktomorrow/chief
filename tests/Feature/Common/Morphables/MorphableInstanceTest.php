@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Pages\PageTranslation;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Pages\PageTranslation;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 
 class MorphableInstanceTest extends TestCase
 {

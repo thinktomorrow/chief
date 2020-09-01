@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
-use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class UpdateModuleTest extends TestCase
 {

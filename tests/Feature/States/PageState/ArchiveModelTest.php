@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\States\PageState;
 
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\Managers;

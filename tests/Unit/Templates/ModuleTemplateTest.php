@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Templates;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Fragments\Fragment;
 use Thinktomorrow\Chief\Templates\ApplyTemplate;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 
 class ModuleTemplateTest extends TestCase

@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFakeActingAsChild;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class PresentRelationsTest extends TestCase
 {

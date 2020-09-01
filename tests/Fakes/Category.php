@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class Category extends Model
 {

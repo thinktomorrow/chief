@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Relations;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Relations\AvailableChildren;
-use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Relations\Relation;
+use Thinktomorrow\Chief\Relations\AvailableChildren;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 
 class RelationsTest extends TestCase
 {

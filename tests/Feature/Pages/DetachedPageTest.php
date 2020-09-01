@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Pages\PageTranslation;
 use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFake;
 use Thinktomorrow\Chief\Tests\Fakes\DetachedPageFakeTranslation;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class DetachedPageTest extends TestCase
 {
