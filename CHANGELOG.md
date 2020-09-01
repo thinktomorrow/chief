@@ -2,6 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
+## unreleased
+- Fixed: issue where visiting archived url would throw a 500 server error instead of 404.
+
 ## 0.5.8 - 2020-08-21
 - Added: mediagallery to manage assets stored on disk.
 - Added: updated npm packaged to latest version (tailwind 1.7.3)

@@ -39,7 +39,7 @@ class ChiefResponse extends Response
                     $targetModel = Morphables::instance($targetUrlRecord->model_type)->find($targetUrlRecord->model_id);
 
                     if (!$targetModel) {
-                        throw new \DomainException('Corrupt target model for this url request. Model by reference [' . $targetUrlRecord->model_type . '@' . $targetUrlRecord->model_id . '] has probably been archived or deleted.');
+                        throw new ArchivedUrlException('Corrupt target model for this url request. Model by reference [' . $targetUrlRecord->model_type . '@' . $targetUrlRecord->model_id . '] has probably been archived or deleted.');
                     }
 
                     return static::createRedirect($targetModel->url($locale));
@@ -49,7 +49,7 @@ class ChiefResponse extends Response
             }
 
             if (!$model) {
-                throw new \DomainException('Corrupt target model for this url request. Model by reference [' . $urlRecord->model_type . '@' . $urlRecord->model_id . '] has probably been archived or deleted.');
+                throw new ArchivedUrlException('Corrupt target model for this url request. Model by reference [' . $urlRecord->model_type . '@' . $urlRecord->model_id . '] has probably been archived or deleted.');
             }
 
             if (method_exists($model, 'isPublished') && !$model->isPublished()) {
@@ -61,7 +61,7 @@ class ChiefResponse extends Response
             }
 
             return new static($model->renderView(), 200);
-        } catch (UrlRecordNotFound | NotFoundMorphKey $e) {
+        } catch (UrlRecordNotFound | NotFoundMorphKey | ArchivedUrlException $e) {
             if (config('thinktomorrow.chief.strict')) {
                 throw $e;
             }
