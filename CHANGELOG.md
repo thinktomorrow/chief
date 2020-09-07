@@ -5,6 +5,8 @@ principles.
 ## unreleased
 - Fixed: issue where visiting archived url would throw a 500 server error instead of 404.
 - Fixed: issue where not remaining but actual characters for seo title and description are shown
+- Fixed: no longer seo max. character length restricted by validation.
+- Fixed: show correct maximum character count for an input or textarea field. Pass a max. via `$field->characterCount(66)`.
 
 ## 0.5.8 - 2020-08-21
 - Added: mediagallery to manage assets stored on disk.
