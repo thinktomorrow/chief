@@ -7,6 +7,8 @@ principles.
 - Fixed: issue where not remaining but actual characters for seo title and description are shown
 - Fixed: no longer seo max. character length restricted by validation.
 - Fixed: show correct maximum character count for an input or textarea field. Pass a max. via `$field->characterCount(66)`.
+- Fixed: issue where range field had wrong name attribute 
+- Added: Field::untag() method to remove an existing tag from the field
 
 ## 0.5.8 - 2020-08-21
 - Added: mediagallery to manage assets stored on disk.
