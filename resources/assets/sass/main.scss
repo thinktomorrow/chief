@@ -3,9 +3,10 @@
 @tailwind base;
 @tailwind components;
 
-@import './general/colors.scss';
-@import './general/typography.scss';
 @import './general/animations.scss';
+@import './general/colors.scss';
+@import './general/overrides.scss';
+@import './general/typography.scss';
 @import './general/utilities.scss';
 
 @import './components/label.scss';
@@ -28,4 +29,3 @@
 @import '../../../node_modules/warpaint/src/sass/_base/states';
 
 @tailwind utilities;
-
