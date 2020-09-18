@@ -12,16 +12,16 @@
     "watch-test": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require=tests/Vue/setup.js tests/Vue/**/*.spec.js"
   },
   "devDependencies": {
-    "@vue/test-utils": "^1.0.4",
+    "@vue/test-utils": "^1.1.0",
     "browser-sync": "^2.26.12",
     "browser-sync-webpack-plugin": "^2.2.2",
     "expect": "^25.5.0",
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
     "module": "^1.2.5",
-    "sass": "^1.26.10",
+    "sass": "^1.26.11",
     "sass-loader": "^8.0.2",
-    "tailwindcss": "^1.7.3",
+    "tailwindcss": "^1.8.10",
     "vue-server-renderer": "^2.6.12",
     "vue-template-compiler": "^2.6.12"
   },
