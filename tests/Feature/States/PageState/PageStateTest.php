@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Feature\States\PageState;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\States\PageState;
-use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 use Thinktomorrow\Chief\States\State\StateException;
+use Thinktomorrow\Chief\Tests\Fakes\ProductPageFake;
 
 class PageStateTest extends TestCase
 {

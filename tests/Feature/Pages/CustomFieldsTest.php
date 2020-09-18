@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Fakes\Category;
 use Thinktomorrow\Chief\Pages\Application\CreatePage;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategories;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageWithCategoriesManager;
-use Thinktomorrow\Chief\Tests\Fakes\Category;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class CustomFieldsTest extends TestCase
 {

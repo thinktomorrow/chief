@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
-use Thinktomorrow\Chief\Tests\Fakes\AgendaPageFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 use Illuminate\Support\Carbon;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Fakes\AgendaPageFake;
 
 class PeriodPageTest extends TestCase
 {

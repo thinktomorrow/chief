@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\MediaGallery\Application;
+namespace Thinktomorrow\Chief\Mediagallery\Application;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

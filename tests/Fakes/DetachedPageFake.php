@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
-use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Facades\Schema;
-use \Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Database\Schema\Blueprint;
 
 class DetachedPageFake extends Page
 {

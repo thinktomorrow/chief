@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Database\Eloquent\Model;
 
 class DetachedPageFakeTranslation extends Model
 {

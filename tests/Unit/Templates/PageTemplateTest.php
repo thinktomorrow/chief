@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Templates;
 
 use Thinktomorrow\Chief\Pages\Single;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Templates\ApplyTemplate;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageTemplateTest extends TestCase
 {

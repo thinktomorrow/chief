@@ -7,12 +7,12 @@ use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Fakes\NomadicPage;
 use Thinktomorrow\Chief\Tests\Fakes\NomadicPageManager;
 use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 use Thinktomorrow\Chief\Tests\Fakes\NomadicModuleManager;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
-use Thinktomorrow\Chief\Tests\Fakes\NomadicPage;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
 
 class NomadicModuleTest extends TestCase
 {

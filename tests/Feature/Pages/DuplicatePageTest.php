@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Feature\Pages;
 
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Management\Register;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
+use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
 
 class DuplicatePageTest extends TestCase
 {

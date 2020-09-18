@@ -3,13 +3,13 @@
 namespace Thinktomorrow\Chief\Tests\Feature\PageBuilder;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Sets\SetReference;
+use Thinktomorrow\Chief\Pages\PageManager;
+use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Sets\StoredSetReference;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Feature\Sets\DummySetRepository;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class PageSetTest extends TestCase
 {

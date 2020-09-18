@@ -309,7 +309,7 @@ abstract class AbstractField
 
         if ($this->getValidationParameters() instanceof ValidationParameters) {
             foreach ($this->getValidationParameters()->getRules() as $rule) {
-                if (false !== strpos($rule, 'required')) {
+                if (is_string($rule) && false !== strpos($rule, 'required')) {
                     return true;
                 }
             }

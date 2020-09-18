@@ -2,17 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Menu\ChiefMenu;
-use Thinktomorrow\Chief\Menu\Menu;
-use Thinktomorrow\Chief\Menu\MenuItem;
-use Thinktomorrow\Chief\States\PageState;
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 use Vine\NodeCollection;
-use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Carbon;
+use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\Route;
+use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
+use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
 
 class MenuTest extends TestCase
 {

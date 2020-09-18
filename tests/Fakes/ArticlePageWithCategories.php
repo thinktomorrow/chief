@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace Thinktomorrow\Chief\Tests\Fakes;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Pages\Page;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class ArticlePageWithCategories extends Page
 {

@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Assistants;
 
-use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Routing\Route;
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Management\Register;
+use Illuminate\Foundation\Testing\TestResponse;
 use Thinktomorrow\Chief\Management\Registration;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageFake;
 use Thinktomorrow\Chief\Tests\Fakes\ArticlePageManager;

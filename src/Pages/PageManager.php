@@ -95,28 +95,26 @@ class PageManager extends AbstractManager implements Manager
                 ->tag('general'),
             InputField::make('seo_title')
                 ->translatable($this->model->availableLocales())
-                ->validation('max:66')
                 ->label('Zoekmachine titel')
-                ->description('Maximum 66 tekens')
-                ->withCharacterCount()
+                ->description('Maximum 66 tekens voor een optimale weergave in Google.')
+                ->characterCount(66)
                 ->tag('seo'),
             TextField::make('seo_description')
                 ->translatable($this->model->availableLocales())
-                ->validation('max:160')
                 ->label('Zoekmachine omschrijving')
-                ->description('omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven. Maximum 160 tekens')
-                ->withCharacterCount()
+                ->description('Omschrijving van de pagina zoals in search engines (o.a. google) wordt weergegeven. Maximum 160 tekens voor een optimale weergave in Google.')
+                ->characterCount(160)
                 ->tag('seo'),
             InputField::make('seo_keywords')
                 ->validation('max:250')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine sleutelwoorden')
-                ->description('sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.')
+                ->description('Sleutelwoorden van de pagina waarop in search engines (o.a google) gezocht kan worden.')
                 ->tag('seo'),
             ImageField::make('seo_image')
                 ->translatable($this->model->availableLocales())
                 ->label('Zoekmachine foto')
-                ->description('foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
+                ->description('Foto die bij het delen van deze pagina getoond wordt. De ideale afmetingen zijn 1200px breed op 627px hoog.')
                 ->tag('seo')
         );
     }

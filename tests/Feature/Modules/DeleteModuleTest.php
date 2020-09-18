@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Feature\Modules;
 
+use Thinktomorrow\Chief\Pages\Page;
+use Thinktomorrow\Chief\Modules\Module;
+use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\Chief\Modules\ModuleManager;
-use Thinktomorrow\Chief\Relations\Relation;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Tests\Fakes\NewsletterModuleFake;
-use Thinktomorrow\Chief\Tests\TestCase;
 
 class DeleteModuleTest extends TestCase
 {
