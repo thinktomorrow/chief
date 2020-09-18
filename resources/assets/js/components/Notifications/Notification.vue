@@ -5,7 +5,9 @@
         </div>
 
         <div class="flex-grow">
-            <p v-if="this.description" class="text-grey-500">{{ this.description }}</p>
+            <p class="text-grey-500">
+                <slot></slot>
+            </p>
         </div>
 
         <div @click="hideNotification" class="cursor-pointer rounded-full p-1 text-grey-500 bg-grey-50 hover:bg-grey-100 transition duration-150 ease-in-out">

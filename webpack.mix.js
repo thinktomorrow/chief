@@ -76,5 +76,7 @@ mix.webpackConfig({
     // Change directory back to current directory.
     shell.cd(currentDir);
 
+    shell.echo(`Published chief assets in project ${process.env.SYMLINKED_PROJECT_PATH}.\n`);
+
     return 0;
 });
