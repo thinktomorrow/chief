@@ -7,7 +7,8 @@ principles.
 - Fixed: issue where not remaining but actual characters for seo title and description are shown
 - Fixed: no longer seo max. character length restricted by validation.
 - Fixed: show correct maximum character count for an input or textarea field. Pass a max. via `$field->characterCount(66)`.
-- Fixed: issue where range field had wrong name attribute 
+- Fixed: issue where range field had wrong name attribute
+- Fixed: issue where passing a paginated collection to set would conflict with set::paginate(). 
 - Added: new notifications UI
 - Added: file watcher for chief asset build. A `npm run watch` can now trigger the vendor publish on the application that uses the chief package. Great for local development. Add a 
 - Added: Field::untag() method to remove an existing tag from the field

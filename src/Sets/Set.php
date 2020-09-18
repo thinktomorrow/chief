@@ -84,7 +84,9 @@ class Set extends Collection implements ViewableContract
     {
         $currentPage = $currentPage ?? request()->get('page', 1);
         $path = request()->path();
-        $items = array_slice($this->all(), ($currentPage - 1) * $perPage);
+
+        // When we have an entire collection as result we will cut down the items here, else if already paginated, we'll keep it as is.
+        $items = $this->comingFromPaginatedCollection() ? $this->all() :array_slice($this->all(), ($currentPage - 1) * $perPage);
 
         return (new \Illuminate\Pagination\Paginator($items, $perPage ?? $this->paginateSetting('perPage', '12'), $currentPage))->setPath($path);
     }
@@ -101,9 +103,16 @@ class Set extends Collection implements ViewableContract
     {
         $currentPage = $currentPage ?? request()->get('page', 1);
         $path = '/' . request()->path();
-        $items = array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
+
+        // When we have an entire collection as result we will cut down the items here, else if already paginated, we'll keep it as is.
+        $items = $this->comingFromPaginatedCollection() ? $this->all() : array_slice($this->all(), ($currentPage - 1) * $perPage, $perPage);
 
         return (new \Illuminate\Pagination\LengthAwarePaginator($items, $this->paginateSetting('total', $this->count()), $perPage ?? $this->paginateSetting('perPage', '12'), $currentPage))->setPath($path);
+    }
+
+    private function comingFromPaginatedCollection(): bool
+    {
+        return isset($this->settings['paginate']);
     }
 
     private function paginateSetting($key, $default = null)
