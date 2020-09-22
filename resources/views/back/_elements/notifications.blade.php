@@ -14,4 +14,12 @@
             </notification>
         @endforeach
     @endif
+
+    @if(count( $toastMessages = Session::get('toast_messages', [])) > 0)
+        @foreach($toastMessages as $toastMessage)
+            <notification type="{{ $toastMessage['type'] }}">
+                {!! $toastMessage['message'] !!}
+            </notification>
+        @endforeach
+    @endif
 </notifications>

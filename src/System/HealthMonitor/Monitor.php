@@ -9,8 +9,8 @@ use Thinktomorrow\Chief\System\HealthMonitor\Exceptions\InvalidClassException;
 
 class Monitor
 {
-    private $checks = [
-    ];
+    /** @var array */
+    private $checks;
 
     public function __construct()
     {
@@ -32,8 +32,6 @@ class Monitor
                 foreach ($notifiers as $notifier) {
                     app($notifier)->onFailure($checkInstance);
                 }
-
-                return;
             } else {
                 foreach ($notifiers as $notifier) {
                     app($notifier)->onSuccess($checkInstance);
