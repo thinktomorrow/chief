@@ -6,7 +6,10 @@
 
         <div class="flex-grow">
             <p class="text-grey-500">
-                <slot></slot>
+                <slot>
+                    <!-- Notifications that were created asynchronously, have their content stored in description variable -->
+                    {{ this.description }}
+                </slot>
             </p>
         </div>
 
