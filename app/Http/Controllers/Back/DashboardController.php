@@ -9,8 +9,6 @@ class DashboardController extends Controller
 {
     public function show()
     {
-        app(Monitor::class)->check();
-
         return view('chief::back.dashboard');
     }
 
