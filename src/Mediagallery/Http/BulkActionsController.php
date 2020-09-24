@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Mediagallery\Http;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\MediaGallery\Application\ZipAction;
-use Thinktomorrow\Chief\MediaGallery\Application\RemovalAction;
+use Thinktomorrow\Chief\Mediagallery\Application\ZipAction;
+use Thinktomorrow\Chief\Mediagallery\Application\RemovalAction;
     use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class BulkActionsController extends Controller
