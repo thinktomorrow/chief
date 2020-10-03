@@ -63,11 +63,12 @@
             didUpload: function(error, data, response) {
                 Eventbus.$emit('image-upload-response' + this.reference, this.instance);
 
-                Eventbus.$emit('create-notification', 'success', 'De afbeelding is correct geüpload en klaar om te gebruiken!');
-
                 if(error){
+                    Eventbus.$emit('create-notification', 'error', error);
                     console.error(error);
                     return;
+                } else {
+                    Eventbus.$emit('create-notification', 'success', 'De afbeelding is correct geüpload en klaar om te gebruiken!');
                 }
 
                 this.updateItem({
