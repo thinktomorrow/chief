@@ -57,3 +57,14 @@
         transform: scale(1) translateZ(0);
     }
 }
+
+// Documentation: https://vuejs.org/v2/guide/transitions.html
+.pop-enter-active {
+    transition: all 300ms cubic-bezier(0.85, 0, 0.15, 1);
+}
+.pop-leave-active {
+    transition: all 300ms cubic-bezier(0.85, 0, 0.15, 1);
+}
+.pop-enter, .pop-leave-to {
+    transform: scale(0) translateZ(0);
+}

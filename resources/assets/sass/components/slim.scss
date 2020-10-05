@@ -35,11 +35,10 @@
 .slim .slim-area .slim-upload-status[data-state=error] {
     left: .5rem !important;
     right: .5rem !important;
-    background: $color-warning !important;
-    color: white !important;
+    @apply text-white bg-error #{!important};
 }
 .slim .slim-area .slim-upload-status[data-state=success] {
+    left: .5rem !important;
     right: .5rem !important;
-    background: $color-success !important;
-    color: white !important;
+    @apply text-white bg-success #{!important};
 }
