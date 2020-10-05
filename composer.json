@@ -11,7 +11,7 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "doctrine/dbal": "^2.5",
         "fideloper/proxy": "^4.0",
-        "guzzlehttp/guzzle": "^6.5",
+        "guzzlehttp/guzzle": "^7.1",
         "laravel/framework": "~5.8|~6.0",
         "maennchen/zipstream-php": "^1.2",
         "spatie/laravel-activitylog": "^3.0",
