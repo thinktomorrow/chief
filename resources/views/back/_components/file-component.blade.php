@@ -8,7 +8,7 @@
             template: `
                     <div class="border border-grey-100 rounded inset-s center-y bg-white">
                         <input ref="hiddenInput" type="hidden" :name="hiddenInputKey" :value="hiddenInputValue"/>
-                        <div v-if="deletion" class="w-full text-error">Bestand wordt verwijderd.</div>
+                        <div v-if="deletion" class="w-full text-error">Bestand wordt verwijderd zodra je de aanpassingen bewaart.</div>
                         <div v-else class="w-full">
                             <div><strong>@{{ filename }}</strong></div>
                             <span class="text-grey-300">
@@ -17,6 +17,9 @@
 
                             <div v-if="url" class="pr-2 ml-auto">
                                 <a :href="url" target="_blank">Bekijk document</a>
+                            </div>
+                            <div v-if="showLoader" class="pr-2 ml-auto">
+                                Bezig met opladen...
                             </div>
 
                             <div class="text-error" v-if="error" v-html="error"></div>
@@ -42,6 +45,7 @@
                     deletion: false,
                     addedFromGallery: false,
                     error: null,
+                    showLoader: false
                 }
             },
             mounted: function () {
@@ -87,6 +91,9 @@
             methods: {
                 upload: function(){
 
+                    this.showLoader = true;
+                    Eventbus.$emit('disable-update-form');
+
                     // Put file in FormData in order to get transferred to the server
                     let formData = new FormData();
                     formData.append('file', this.file);
@@ -118,6 +125,10 @@
 
                         // Possible server errors with uploads are also a: 413 Request Entity Too Large
                         this.showError(error.response.data.message || 'Ongeldig bestand. Mogelijk is dit te groot.');
+                    }).then(() => {
+                        // The second 'then' is always executed
+                        this.showLoader = false;
+                        Eventbus.$emit('enable-update-form');
                     });
                 },
                 showError: function(error){
