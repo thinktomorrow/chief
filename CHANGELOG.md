@@ -12,7 +12,8 @@ principles.
 - Changed: The modules tab is hidden and only present when there is at least one module created.
 - Added: new notifications UI
 - Added: file watcher for chief asset build. A `npm run watch` can now trigger the vendor publish on the application that uses the chief package. Great for local development. Add a 
-- Added: Field::untag() method to remove an existing tag from the field
+- Added: Field::untag() method to remove an existing tag from the field.
+- Added: maximum fragments for a fragmentfield. Set by `FragmentField::max()`.
 
 ## 0.5.8 - 2020-08-21
 - Added: mediagallery to manage assets stored on disk.
