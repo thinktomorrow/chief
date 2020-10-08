@@ -18,6 +18,9 @@ class FragmentField extends AbstractField implements Field
     /** @var null|string */
     private $fragmentLabel;
 
+    /** @var int */
+    private $max;
+
     public static function make(string $key, Fields $fields): Field
     {
         return (new static(new FieldType(FieldType::FRAGMENT), $key))
@@ -118,5 +121,17 @@ class FragmentField extends AbstractField implements Field
                 return null;
             })->render();
         }, $this->getFragments()[0]->getFields()->clone()->all());
+    }
+
+    public function max(int $max)
+    {
+        $this->max = $max;
+
+        return $this;
+    }
+
+    public function getMax(): int
+    {
+        return $this->max;
     }
 }

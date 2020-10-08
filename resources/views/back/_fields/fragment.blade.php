@@ -45,9 +45,16 @@
             function initFragment(key, duplicatableFields){
                 var fragmentsContainer = document.getElementById(key),
                     fragmentsInnerContainer = fragmentsContainer.querySelector('[data-fragments]'),
-                    addTrigger = fragmentsContainer.querySelector('[data-fragment-add]');
+                    addTrigger = fragmentsContainer.querySelector('[data-fragment-add]'),
+                    maxFragments = {{ method_exists($fragmentField, 'getMax') ? $fragmentField->getMax() : 50 }};
+
+                if(fragmentsContainer.querySelectorAll('[data-fragment]').length >= maxFragments) {
+                    addTrigger.remove();
+                }
 
                 function addFragment(){
+
+                    if(fragmentsContainer.querySelectorAll('[data-fragment]').length >= maxFragments) return;
 
                     var firstFragment = fragmentsContainer.querySelector('[data-fragment]'),
                         copiedFragment = firstFragment.cloneNode(true),
@@ -83,6 +90,10 @@
 
                         // Reinit wysiwyg fields
                         $R('[data-editor]');
+                    }
+
+                    if(fragmentsContainer.querySelectorAll('[data-fragment]').length >= maxFragments) {
+                        addTrigger.remove();
                     }
                 }
 
