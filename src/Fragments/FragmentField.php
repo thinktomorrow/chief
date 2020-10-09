@@ -132,6 +132,6 @@ class FragmentField extends AbstractField implements Field
 
     public function getMax(): int
     {
-        return $this->max;
+        return $this->max ?: 50;
     }
 }
