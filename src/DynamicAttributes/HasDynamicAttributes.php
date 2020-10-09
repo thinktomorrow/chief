@@ -112,7 +112,7 @@ trait HasDynamicAttributes
             $value = $this->dynamic($key);
 
             // If value is localized, we wont return the entire value, but instead return null since no fallback will be provided.
-            if (is_array($value) && in_array($locale, $this->dynamicLocales())) {
+            if (is_array($value) && count(array_intersect($this->dynamicLocales(), array_keys($value))) > 0 && in_array($locale, $this->dynamicLocales())) {
                 return null;
             }
 
