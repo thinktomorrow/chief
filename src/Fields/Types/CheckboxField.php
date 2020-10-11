@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Fields\Types;
 class CheckboxField extends AbstractField implements Field
 {
     use AllowsOptions;
+    use AllowsMultiple;
 
     public static function make(string $key): Field
     {
