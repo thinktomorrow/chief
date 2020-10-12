@@ -48,9 +48,7 @@ class Managers
     {
         $urlRecord = UrlRecord::findBySlug($slug, $locale);
 
-        $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
-
-        return $this->findByModel($model);
+        return $this->findByModel(get_class(Morphables::instance($urlRecord->model_type)), $urlRecord->model_id);
     }
 
     /**
