@@ -7,6 +7,7 @@
         <div class="column-12">
             <h1>Media galerij</h1>
         </div>
+
         <div class="column-9">
             <div class="column-12">
                 <form method="POST" action="{{ route('chief.mediagallery.bulk') }}" id="selecting" class="gutter">
@@ -42,13 +43,15 @@
                     </div>
                 </form>
             </div>
+
             <div class="column-12">
-                {{$assets->links()}}
+                {{ $assets->links('chief::back.managers.pagination') }}
             </div>
         </div>
 
         <div class="column-3">
             <h2 class="mb-0">Filteren</h2>
+
             <span class="text-grey-400">{{ $assets->total() }} resultaten</span>
 
             <form method="GET" id="filtering" class="mb-8 mt-4">
