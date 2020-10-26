@@ -10,6 +10,7 @@ principles.
 - Fixed: issue where range field had wrong name attribute
 - Fixed: issue where passing a paginated collection to set would conflict with set::paginate(). 
 - Fixed: Checkboxfield stores value as primitive, not as array. Extra option to set 'multiple' on checkboxField to store multiple values as array.
+- Fixed: Previewmode was also active on admin routes. This is now disabled.
 - Changed: The modules tab is hidden and only present when there is at least one module created.
 - Added: new notifications UI
 - Added: file watcher for chief asset build. A `npm run watch` can now trigger the vendor publish on the application that uses the chief package. Great for local development. Add a 
