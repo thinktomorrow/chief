@@ -2,7 +2,10 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
-## unreleased
+## Unreleased
+Don't leave me hanging here...
+
+## 0.5.9 - 2020-10-26
 - Fixed: issue where visiting archived url would throw a 500 server error instead of 404.
 - Fixed: issue where not remaining but actual characters for seo title and description are shown
 - Fixed: no longer seo max. character length restricted by validation.
