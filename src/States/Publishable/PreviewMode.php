@@ -10,9 +10,6 @@ class PreviewMode
 {
     private $active;
 
-    // Default state for preview mode
-    const DEFAULT = true;
-
     final public function __construct(bool $active)
     {
         $this->active = $active;
@@ -20,20 +17,31 @@ class PreviewMode
 
     public static function fromRequest()
     {
-        if(Str::startsWith(request()->path(), 'admin/')) return new static(false);
+        if(!config('chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
+            return new static(false);
+        }
 
-        $active = (session()->get('preview-mode', static::DEFAULT) === true && auth()->guard('chief')->check());
+        $active = (session()->get('preview-mode', static::default()) === true && auth()->guard('chief')->check());
 
         return new static($active);
     }
 
     public static function toggle()
     {
-        session()->put('preview-mode', !session()->get('preview-mode', static::DEFAULT));
+        session()->put('preview-mode', !session()->get('preview-mode', static::default()));
     }
 
     public function check(): bool
     {
         return $this->active;
+    }
+
+    private static function default(): bool
+    {
+        $mode = config('chief.preview-mode');
+
+        if(!$mode || $mode == 'live') return false;
+
+        return ($mode == 'preview');
     }
 }

@@ -3,7 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
-Don't leave me hanging here...
+- Added: config option `chief.preview-mode` to set the default admin preview behavior. 
 
 ## 0.5.9 - 2020-10-26
 - Fixed: issue where visiting archived url would throw a 500 server error instead of 404.

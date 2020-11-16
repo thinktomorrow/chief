@@ -132,4 +132,15 @@ return [
         Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageSetCheck::class,
         Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageAccessibleCheck::class,
     ],
+
+    /**
+     * Preview mode
+     *
+     * With preview mode enabled, the admin can preview draft pages and modules on the live site.
+     * Here you can tweak the default behavior:
+     * -  null to disable preview mode altogether
+     * - 'live' to use the live view as a default so the admin sees the site as any other visitor
+     * - 'preview' to use the preview view as a default so the admin can see drafted elements as well.
+     */
+    'preview-mode' => 'live',
 ];
