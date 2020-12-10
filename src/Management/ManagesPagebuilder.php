@@ -58,7 +58,7 @@ trait ManagesPagebuilder
         $available_sets = FlatReferencePresenter::toGroupedSelectValues($availableChildren->onlySets())->toArray();
 
         // Current sections
-        $sections = $model->children()->map(function ($section, $index) {
+        $sections = $model->children()->map(function ($section, $index) use($model) {
             if ($section instanceof TranslatableContract) {
                 $section->injectTranslationForForm();
             }
@@ -73,6 +73,17 @@ trait ManagesPagebuilder
                 'type'    => $this->guessPagebuilderSectionType($section),
                 'slug'    => $section->slug,
                 'editUrl' => $this->findEditUrl($section),
+
+                // Online-offline toggle for module
+                'showOnlineToggle' => true, // TODO: from config chief
+                'onlineStatus' => $section->relation->isOnline(),
+                'toggleOnlineUrl' => route('chief.api.relation.status'),
+                'toggleOnlineUrlBody' => [
+                    'parent_type' => $model->getMorphClass(),
+                    'parent_id' => $model->id,
+                    'child_type' => $section->getMorphClass(),
+                    'child_id' => $section->id,
+                ],
                 'sort'    => $index,
                 'trans'   => $section->trans ?? [],
             ];

@@ -55,6 +55,10 @@
                     placeholder="Selecteer een module"
                     title="Module"
                     :editUrl="section.editUrl"
+                    :initial-show-online-toggle="section.showOnlineToggle"
+                    :initial-online-status="section.onlineStatus"
+                    :toggle-online-url="section.toggleOnlineUrl"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
                     class="mt-8 mb-2" :class="section.type"></module-section>
 
                 <module-section v-if="section.type === 'page'"
@@ -81,6 +85,10 @@
                     :editor="true"
                     :text-editor="textEditor"
                     title="Pagina text"
+                    :initial-show-online-toggle="section.showOnlineToggle"
+                    :initial-online-status="section.onlineStatus"
+                    :toggle-online-url="section.toggleOnlineUrl"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
                     class="mt-8 mb-2" :class="section.type"></text-section>
 
                 <text-section v-if="section.type === 'pagetitle'"
@@ -166,6 +174,11 @@
 
             Eventbus.$on('removeThisSection',(position, component) => {
                 this.removeSection(position);
+            });
+
+            Eventbus.$on('toggleOnlineStatus', (newOnlineStatus, component) => {
+               console.log(newOnlineStatus, component);
+                // this.toggleOnlineStatus(newOnlineStatus)
             });
         },
 

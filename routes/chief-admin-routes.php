@@ -77,6 +77,7 @@ Route::get('api/media', 'Thinktomorrow\Chief\App\Http\Controllers\Api\MediaGalle
 Route::post('mediagallery/bulk', [Thinktomorrow\Chief\Mediagallery\Http\BulkActionsController::class, 'bulk'])->name('chief.mediagallery.bulk');
 Route::get('mediagallery', [Thinktomorrow\Chief\Mediagallery\Http\MediagalleryController::class, 'index'])->name('chief.mediagallery.index');
 
+Route::put('api/relations/status', [\Thinktomorrow\Chief\App\Http\Controllers\Api\RelationStatusController::class, 'update'] )->name('chief.api.relation.status');
 
 /**
 * -----------------------------------------------------------------

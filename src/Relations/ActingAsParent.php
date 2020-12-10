@@ -104,4 +104,9 @@ trait ActingAsParent
     {
         return !is_null($this->loadedChildRelations);
     }
+
+    public function breakChildRelationCache()
+    {
+        $this->loadedChildRelations = null;
+    }
 }

@@ -18,6 +18,17 @@ class Relation extends Model
     public $timestamps = false;
     public $guarded = [];
 
+    public function isOnline(): bool
+    {
+        // Default is online, except explicitly set offline
+        return ($this->online_status != 0);
+    }
+
+    public function isOffline(): bool
+    {
+        return !$this->isOnline();
+    }
+
     /**
      * Set the keys for a save update query.
      * We override the default save setup since we do not have a primary key in relation table.
@@ -29,8 +40,8 @@ class Relation extends Model
      */
     protected function setKeysForSaveQuery(Builder $query)
     {
-        $query->where('parent_type', $this->getMorphClass())
-            ->where('parent_id', $this->getKey())
+        $query->where('parent_type', $this->parent_type)
+            ->where('parent_id', $this->parent_id)
             ->where('child_type', $this->child_type)
             ->where('child_id', $this->child_id);
 

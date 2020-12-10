@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Pages\Page;
 use Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Urls\UrlHelper;
 

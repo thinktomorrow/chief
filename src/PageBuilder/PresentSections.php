@@ -68,6 +68,10 @@ class PresentSections
     public function toCollection(): Collection
     {
         foreach ($this->children as $i => $child) {
+
+            // Do not render offline relations
+            if($child->relation->isOffline()) continue;
+
             if ($child instanceof StoredSetReference) {
                 $this->addSetToCollection($i, $child->toSet($this->parent));
                 continue;

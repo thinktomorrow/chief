@@ -18,7 +18,13 @@
                 >
                 </chief-multiselect>
             </div>
-            <a :href="editUrl" target="_blank" class="ml-2 right">bewerk</a>
+            <a v-if="editModuleUrl" :href="editModuleUrl" target="_blank" class="ml-2 right">bewerk</a>
+
+            <template v-if="showOnlineToggle">
+                <span v-if="!isOnline" @click="toggleOnlineStatus" class="btn">Offline. Zet online</span>
+                <a v-if="isOnline" @click="toggleOnlineStatus" class="btn">Online. Zet offline</a>
+            </template>
+
         </div>
 
         <div class="module-icons-left">
@@ -37,10 +43,12 @@
 </template>
 <script>
 
+    import toggleOnlineStatusMixin from "./toggleOnlineStatusMixin";
     import MultiSelect from './../MultiSelect.vue';
     import PagebuilderMenu from './PagebuilderMenu.vue';
 
     export default{
+        mixins: [toggleOnlineStatusMixin],
         components: {
             'chief-multiselect': MultiSelect,
             'pagebuilder-menu': PagebuilderMenu
@@ -51,12 +59,14 @@
             'options' : { default: function(){ return [] }, type: Array },
             'placeholder': { default: 'Selecteer een module'},
             'title': {},
-            'editUrl': { required: false, type: String }
+            'editUrl': { required: false, type: String },
         },
         data(){
             return {
                 show_menu: false,
-                selected: this.section.id
+                selected: this.section.id,
+                initialSelection: this.section.id, // used to know when to show the editUrl - which is only valid for the original selection - sorry no autoupdates yet :(
+                editModuleUrl: this.editUrl
             }
         },
         created(){
@@ -65,6 +75,19 @@
 
                 // Only trigger event coming from own child component
                 if(component.$parent._uid != this._uid) return true;
+
+                // Another module, so don't point to the former edit.
+                if(this.section.id !== valuesForSelect[0]) {
+                    this.editModuleUrl = null;
+                    this.showOnlineToggle = false;
+                }
+
+                // Selection is back to the original module so we can show the initial options
+                if(this.initialSelection === valuesForSelect[0]) {
+                    this.editModuleUrl = this.editUrl;
+                    this.showOnlineToggle = this.initialShowOnlineToggle;
+                }
+
 
                 // Single module allows for one selection
                 if(valuesForSelect[0]) {
@@ -93,7 +116,7 @@
             mouseLeave(){
                 this.$el.getElementsByClassName('module-icons-left')[0].classList.remove('reveal-left');
                 this.$el.getElementsByClassName('module-icons-right')[0].classList.remove('reveal-right');
-            }
+            },
         }
     }
 </script>

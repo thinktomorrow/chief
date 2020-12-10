@@ -70,6 +70,11 @@
                 </div>
             </template>
 
+            <template v-if="showOnlineToggle">
+                <span v-if="!isOnline" @click="toggleOnlineStatus" class="btn">Offline. Zet online</span>
+                <a v-if="isOnline" @click="toggleOnlineStatus" class="btn">Online. Zet offline</a>
+            </template>
+
         </div>
 
         <div class="module-icons-left">
@@ -88,9 +93,11 @@
 </template>
 <script>
 
+    import toggleOnlineStatusMixin from "./toggleOnlineStatusMixin";
     import PagebuilderMenu from './PagebuilderMenu.vue';
 
     export default{
+        mixins: [toggleOnlineStatusMixin],
         components: {
             'pagebuilder-menu': PagebuilderMenu
         },
