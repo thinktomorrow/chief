@@ -1,5 +1,7 @@
 <template>
-    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave" class="shadow border bg-white border-grey-100 block inset relative rounded">
+    <section @mouseenter="mouseEnter" @mouseleave="mouseLeave"
+             class="shadow border border-grey-100 block inset relative rounded"
+             :class="!isOnline ? 'bg-grey-100' : 'bg-white'">
 
         <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
 
@@ -71,8 +73,8 @@
             </template>
 
             <template v-if="showOnlineToggle">
-                <span v-if="!isOnline" @click="toggleOnlineStatus" class="btn">Offline. Zet online</span>
-                <a v-if="isOnline" @click="toggleOnlineStatus" class="btn">Online. Zet offline</a>
+                <span v-if="!isOnline" @click="toggleOnlineStatus" class="btn absolute btn mt-1 right-0 top-0">Offline <span class="underline">Zet online</span></span>
+                <a v-if="isOnline" @click="toggleOnlineStatus" class="btn absolute btn mt-1 right-0 top-0">Online <span class="underline">Zet offline</span></a>
             </template>
 
         </div>
