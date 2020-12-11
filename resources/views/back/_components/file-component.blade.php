@@ -8,6 +8,9 @@
             template: `
                     <div class="border border-grey-100 rounded inset-s center-y bg-white">
                         <input ref="hiddenInput" type="hidden" :name="hiddenInputKey" :value="hiddenInputValue"/>
+                        <div v-if="isImage" class="column-2 bg-grey-50 mr-4">
+                             <img loading="lazy" :src="thumbUrl" :alt="filename" />
+                        </div>
                         <div v-if="deletion" class="w-full text-error">Bestand wordt verwijderd zodra je de aanpassingen bewaart.</div>
                         <div v-else class="w-full">
                             <div><strong>@{{ filename }}</strong></div>
@@ -37,7 +40,9 @@
                     id: this.options.id || null, // This is the id of the newest linked asset.
 
                     url: this.options.url || null, // Already existing link
+                    thumbUrl: this.options.thumbUrl || this.options.url || null,
                     filename: this.options.filename || null,
+                    isImage: this.options.isImage || false,
                     mimetype: this.options.mimetype || null,
                     size: this.options.size || null,
 
@@ -86,6 +91,12 @@
                     }
 
                     return this.id;
+                },
+                isImage: function(){
+                    return ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(this.mimetype);
+                },
+                thumbUrl: function(){
+                    return this.thumbUrl;
                 }
             },
             methods: {

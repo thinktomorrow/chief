@@ -45,7 +45,9 @@ class FileField extends MediaField implements Field
                 'id'       => $asset->id,
                 'filename' => $asset->filename(),
                 'url'      => $asset->url(),
+                'thumbUrl' => $asset->url('thumb'),
                 'mimetype' => $asset->getMimeType(),
+                'isImage'  => ($asset->getExtensionType() == 'image'),
                 'size'     => $asset->getSize(),
             ];
         }

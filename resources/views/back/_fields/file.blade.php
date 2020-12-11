@@ -16,6 +16,8 @@
                         id: item.id,
                         filename: item.filename,
                         url: item.url,
+                        isImage: item.isImage,
+                        thumbUrl: item.thumbUrl,
                         mimetype: item.mimetype || null,
                         size: item.size || null,
                         file: item.file,
@@ -41,38 +43,3 @@
         </div>
     </div>
 </filesupload>
-
-
-
-{{--<div data-document-upload data-locale="{{ $locale }}" class="{{ !empty($files) && !$field->allowMultiple() ? 'hidden' : ''}}">--}}
-{{--    <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">--}}
-{{--        Document uploaden--}}
-{{--    </label>--}}
-{{--    <span class="text-secondary-500"></span>--}}
-{{--</div>--}}
-{{--<input id="document-upload-{{$locale}}" onchange="inputValueToLabel(event, '{{$locale}}')" type="file" name="{{ $name }}[]" {{ $field->allowMultiple() ? 'multiple' : '' }} class="hidden">--}}
-
-{{--@push('custom-scripts')--}}
-{{--    <script>--}}
-{{--        function removeFile(id, locale) {--}}
-{{--            document.getElementById('removeFile-'+id).value = id;--}}
-{{--            document.getElementById('asset-'+id).remove();--}}
-{{--            document.querySelector("[data-document-upload][data-locale='" + locale + "']").classList.remove('hidden');--}}
-
-{{--            // Remove entry in replace array as well.--}}
-{{--            document.getElementById("existingFile-"+id+"-"+locale).remove();--}}
-{{--        }--}}
-
-{{--        function inputValueToLabel(event, locale) {--}}
-{{--            var selector = document.querySelector("[data-document-upload][data-locale='" + locale + "']");--}}
-
-{{--            var fileName = selector.getElementsByTagName('span')[0],--}}
-{{--                label = selector.getElementsByTagName('label')[0],--}}
-{{--                valuePathArray = event.target.value.split('\\'),--}}
-{{--                value = valuePathArray[valuePathArray.length - 1];--}}
-
-{{--            fileName.innerHTML = value;--}}
-{{--            label.innerHTML = event.target.value === '' ? label.innerHTML : 'Een ander document uploaden';--}}
-{{--        }--}}
-{{--    </script>--}}
-{{--@endpush--}}
