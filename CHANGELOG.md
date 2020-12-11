@@ -4,6 +4,9 @@ principles.
 
 ## Unreleased
 - Added: config option `chief.preview-mode` to set the default admin preview behavior. 
+- Added: filefield now shows thumbnail of image if an image was uploaded.
+- Added: Pagebuilder module and text sections now have a online/offline toggle. This allows for the admin to toggle the frontend visibility of certain sections.
+This requires a migration to be run.
 
 ## 0.5.9 - 2020-10-26
 - Fixed: issue where visiting archived url would throw a 500 server error instead of 404.
