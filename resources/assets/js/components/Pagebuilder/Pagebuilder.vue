@@ -1,38 +1,36 @@
 <template>
     <div id="pagebuilder">
-
-        <div v-if="sections.length < 1" class="relative stack border-l-3 border-transparent">
-            <div class="inset flex">
-            <div class="w-1/2">
-                <p class="stack-xs">Start met ...</p>
-                <a class="btn btn-primary inline-flex items-center" @click="addNewPagetitleSectionAfter(-1)">
-                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
-                    <span>een paginatitel</span>
-                </a>
-                <a class="btn btn-primary inline-flex items-center" @click="addNewTextSectionAfter(-1)">
-                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
-                    <span>een tekstblok</span>
-                </a>
-                <span v-if='modules.length > 0'>
-                <a class="btn btn-primary inline-flex items-center" @click="addModuleSectionAfter(-1)">
-                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
-                    <span>bestaande module</span>
-                </a>
-                </span>
+        <div v-if="sections.length < 1" class="relative border-transparent stack border-l-3">
+            <div class="flex inset">
+                <div class="w-1/2">
+                    <p class="stack-xs">Start met ...</p>
+                    <a class="inline-flex items-center btn btn-primary" @click="addNewPagetitleSectionAfter(-1)">
+                        <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                        <span>een paginatitel</span>
+                    </a>
+                    <a class="inline-flex items-center btn btn-primary" @click="addNewTextSectionAfter(-1)">
+                        <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
+                        <span>een tekstblok</span>
+                    </a>
+                    <span v-if='modules.length > 0'>
+                    <a class="inline-flex items-center btn btn-primary" @click="addModuleSectionAfter(-1)">
+                        <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
+                        <span>bestaande module</span>
+                    </a>
+                    </span>
+                </div>
+                <div class="w-auto">
+                    <p class="stack-xs">Of creëer een nieuwe</p>
+                    <a class="inline-flex items-center btn btn-primary" @click="showModal('create-module')">
+                        <span class="mr-2"><svg width="18" height="18"><use xlink:href="#layout"/></svg></span>
+                        <span>module</span>
+                    </a>
+                </div>
             </div>
-            <div class="w-auto">
-                <p class="stack-xs">Of creëer een nieuwe</p>
-                <a class="btn btn-primary inline-flex items-center" @click="showModal('create-module')">
-                    <span class="mr-2"><svg width="18" height="18"><use xlink:href="#layout"/></svg></span>
-                    <span>module</span>
-                </a>
-            </div>
-            </div>
-
         </div>
 
         <!-- top menu -->
-        <div class="pagebuilder-menu-wrapper relative stack border-l-3 border-transparent inset-s">
+        <div class="relative border-transparent pagebuilder-menu-wrapper stack border-l-3 inset-s">
             <pagebuilder-menu :section="{ sort: -1 }" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
         </div>
 
@@ -46,61 +44,82 @@
             dragClass: 'sortable-drag',
             animation: 150
         }">
-
             <div v-for="section in sortedSections" v-bind:key="section.key">
                 <module-section v-if="section.type === 'module'"
+                    title="Module"
+                    placeholder="Selecteer een module"
                     sectionKey="modules"
                     v-bind:section="section"
                     v-bind:options="modules"
-                    placeholder="Selecteer een module"
-                    title="Module"
-                    :editUrl="section.editUrl"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
                     :initial-show-online-toggle="section.showOnlineToggle"
                     :initial-online-status="section.onlineStatus"
                     :toggle-online-url="section.toggleOnlineUrl"
-                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
-                    class="mt-8 mb-2" :class="section.type"></module-section>
+                    :editUrl="section.editUrl"
+                    :class="section.type"
+                    class="mt-8 mb-2" 
+                ></module-section>
 
                 <module-section v-if="section.type === 'page'"
+                    title="Pagina"
+                    placeholder="Selecteer een pagina"
                     sectionKey="modules"
                     v-bind:section="section"
                     v-bind:options="pages"
-                    placeholder="Selecteer een pagina"
-                    title="Pagina"
-                    :editUrl="section.editUrl"
-                    class="mt-8 mb-2" :class="section.type"></module-section>
-
-                <module-section v-if="section.type === 'pageset'"
-                    sectionKey="pagesets"
-                    v-bind:section="section"
-                    v-bind:options="pagesets"
-                    placeholder="Selecteer een pagina groep"
-                    title="Pagina groep"
-                    class="mt-8 mb-2" :class="section.type"></module-section>
-
-                <text-section v-if="section.type === 'text'"
-                    v-bind:section="section"
-                    v-bind:locales="locales"
-                    :single="true"
-                    :editor="true"
-                    :text-editor="textEditor"
-                    title="Pagina text"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
                     :initial-show-online-toggle="section.showOnlineToggle"
                     :initial-online-status="section.onlineStatus"
                     :toggle-online-url="section.toggleOnlineUrl"
-                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
-                    class="mt-8 mb-2" :class="section.type"></text-section>
+                    :editUrl="section.editUrl"
+                    :class="section.type"
+                    class="mt-8 mb-2" 
+                ></module-section>
 
-                <text-section v-if="section.type === 'pagetitle'"
+                <module-section v-if="section.type === 'pageset'"
+                    title="Pagina groep"
+                    placeholder="Selecteer een pagina groep"
+                    sectionKey="pagesets"
+                    v-bind:section="section"
+                    v-bind:options="pagesets"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
+                    :initial-show-online-toggle="section.showOnlineToggle"
+                    :initial-online-status="section.onlineStatus"
+                    :toggle-online-url="section.toggleOnlineUrl"
+                    :class="section.type"
+                    class="mt-8 mb-2"
+                ></module-section>
+
+                <text-section v-if="section.type === 'text'"
+                    title="Pagina tekst"
                     v-bind:section="section"
                     v-bind:locales="locales"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
+                    :initial-show-online-toggle="section.showOnlineToggle"
+                    :initial-online-status="section.onlineStatus"
+                    :toggle-online-url="section.toggleOnlineUrl"
+                    :single="true"
+                    :editor="true"
+                    :text-editor="textEditor"
+                    :class="section.type"
+                    class="mt-8 mb-2" 
+                ></text-section>
+
+                <text-section v-if="section.type === 'pagetitle'"
+                    title="Pagina titel"
+                    v-bind:section="section"
+                    v-bind:locales="locales"
+                    v-bind:toggle-online-url-body="section.toggleOnlineUrlBody"
+                    :initial-show-online-toggle="section.showOnlineToggle"
+                    :initial-online-status="section.onlineStatus"
+                    :toggle-online-url="section.toggleOnlineUrl"
                     :single="true"
                     :editor="false"
                     :text-editor="textEditor"
-                    title="Pagina titel"
-                    class="mt-8 mb-2" :class="section.type"></text-section>
+                    :class="section.type"
+                    class="mt-8 mb-2"
+                ></text-section>
 
-                <div class="pagebuilder-menu-wrapper relative border-l-3 border-transparent pb-1">
+                <div class="relative pb-1 border-transparent pagebuilder-menu-wrapper border-l-3">
                     <pagebuilder-menu :section="section" :modulescount="modules.length" :setscount="pagesets.length" :pagescount="pages.length"></pagebuilder-menu>
                 </div>
             </div>
@@ -114,7 +133,6 @@
                 <option v-bind:key="section.key" selected v-else :value="section.id"></option>
             </template>
         </select>
-
     </div>
 </template>
 

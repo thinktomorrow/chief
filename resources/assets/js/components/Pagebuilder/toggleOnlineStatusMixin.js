@@ -25,7 +25,7 @@ export default {
             }).then(response => response.json())
                 .then(data => {
                     this.isOnline = newOnlineStatus;
-                    Eventbus.$emit('create-notification', 'success', (newOnlineStatus ? 'Module is online gezet' : 'Module is offline gezet'))
+                    Eventbus.$emit('create-notification', 'success', (newOnlineStatus ? `${this.title ?? 'Module'} is online gezet` : `${this.title ?? 'Module'} is offline gezet`))
                 })
                 .catch(err => console.error(err))
         },
