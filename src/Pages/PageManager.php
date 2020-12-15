@@ -7,11 +7,7 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Fields\Types\HtmlField;
-use Thinktomorrow\Chief\Fields\Types\SelectField;
-use Thinktomorrow\Chief\Fragments\FragmentField;
 use Thinktomorrow\Chief\Fragments\Fragments;
-use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\States\PageStatePresenter;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
@@ -28,7 +24,6 @@ use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
-use Thinktomorrow\Chief\Urls\UrlSlugFields;
 
 class PageManager extends AbstractManager implements Manager
 {
@@ -155,6 +150,10 @@ class PageManager extends AbstractManager implements Manager
         // Store the morph_key upon creation
         if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
+        }
+
+        if($this->isManualSortable() && !$request->has('order')) {
+            $this->model->order = $this->modelInstance()::orderBy('order', 'desc')->first()->order + 1;
         }
 
         parent::saveFields($request, $this->createFields()->merge($this->fieldsWithAssistantFields()->keyed('url-slugs')));

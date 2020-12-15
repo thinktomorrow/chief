@@ -7,6 +7,7 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Concerns\Sortable;
 use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Management\ManagedModel;
@@ -56,6 +57,7 @@ class Page extends Model implements ManagedModel, TranslatableContract, HasAsset
     use ResolvingRoute;
     use Viewable;
     use HasFragments;
+    use Sortable;
 
     // Explicitly mention the translation model so on inheritance the child class uses the proper default translation model
     protected $translationModel = PageTranslation::class;

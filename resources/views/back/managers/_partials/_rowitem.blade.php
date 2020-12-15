@@ -1,4 +1,4 @@
-<div class="s-column-6 m-column-6 inset-xs flex">
+<div class="s-column-6 m-column-6 inset-xs flex" data-sortable-id="{{ $manager->existingModel()->id }}">
     <div class="row bg-white border border-grey-100 rounded inset-s relative" style="flex:1 1 0%;">
         <div class="column flex flex-col justify-between">
             @if($manager->can('edit'))
@@ -28,7 +28,7 @@
                 <div class="stack-s">{{$manager->details()->singular}}</div>
             @endif
         </div>
-        <div class="column-1 text-right flex flex-col justify-between items-end">
+        <div class="column-1 text-right flex flex-col justify-between items-end" data-sortable-hide-when-sorting>
             @if($manager->can('update'))
                 @include('chief::back.managers._partials.context-menu')
             @endif

@@ -4,3 +4,11 @@
  */
 
 require('./utilities/form-submit');
+
+/** Sortable */
+import {IndexSorting} from "./utilities/sortable";
+if(document.getElementById('js-sortable')) {
+    new IndexSorting({
+        // any options go here
+    });
+}

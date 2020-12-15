@@ -62,6 +62,8 @@ interface Manager extends FieldManager, AssistedManager
      */
     public function indexViewData(): array;
 
+    public function isManualSortable(): bool;
+
     /**
      * An empty, default instance of the managed model.
      * This is an instance that is newed up without being persisted.
