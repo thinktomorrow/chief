@@ -1,11 +1,25 @@
 <template>
     <section @mouseenter="mouseEnter" @mouseleave="mouseLeave"
-             class="shadow border border-grey-100 block inset relative rounded"
+             class="relative block border rounded shadow border-grey-100 inset"
              :class="!isOnline ? 'bg-grey-100' : 'bg-white'">
 
-        <h3 class="text-grey-500 mb-0 font-bold" v-if="title" v-text="title"></h3>
+        <div class="justify-between row center-y">
+            <h3 class="mb-0 font-bold text-grey-500" v-if="title" v-text="title"></h3>
 
-        <div class="to-minimize mt-2">
+            <template v-if="showOnlineToggle">
+                <div class="flex items-center text-sm leading-none">
+                    <span class="mr-1" :class="isOnline ? 'text-grey-300' : 'text-grey-600'">Offline</span>
+                    <span class="mr-1 text-grey-300">|</span>
+                    <span class="mr-2" :class="isOnline ? 'text-grey-600' : 'text-grey-300'">Online</span>
+
+                    <div @click="toggleOnlineStatus" class="flex items-center w-10 h-5 rounded-full cursor-pointer border-grey-100" :class="isOnline ? 'bg-primary-500' : 'bg-grey-200'">
+                        <div class="w-3 h-3 m-1 bg-white rounded-full transform transition duration-300 ease-in-out" :class="isOnline ? 'translate-x-5' : ''"></div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="mt-2 to-minimize">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][id]'" :value="section.id">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][slug]'" :value="section.slug">
             <input type="hidden" :name="'sections[text]['+new_or_replace_key+']['+_uid+'][type]'" :value="section.type">
@@ -34,7 +48,7 @@
                         :name="locale"
                         v-cloak>
                         <div
-                            class="inset-s bg-white"
+                            class="bg-white inset-s"
                             :id="'editor-'+locale+'-'+_uid"
                             :data-lang="locale"
                             v-html="renderInitialContent(locale)">
@@ -59,7 +73,7 @@
                 </textarea>
                 <div v-else-if="textEditor == 'quill'" class="w-full">
                     <div
-                        class="inset-s bg-white"
+                        class="bg-white inset-s"
                         :data-lang="locales[0]"
                         :id="'editor-'+locales[0]+'-'+_uid"
                         v-html="renderInitialContent(locales[0])">
@@ -71,30 +85,24 @@
                     >
                 </div>
             </template>
-
-            <template v-if="showOnlineToggle">
-                <span v-if="!isOnline" @click="toggleOnlineStatus" class="btn absolute btn mt-1 right-0 top-0">Offline <span class="underline">Zet online</span></span>
-                <a v-if="isOnline" @click="toggleOnlineStatus" class="btn absolute btn mt-1 right-0 top-0">Online <span class="underline">Zet offline</span></a>
-            </template>
-
         </div>
 
         <div class="module-icons-left">
-            <span class="grip-button inset-xs flex justify-center text-grey-500 text-center my-2 cursor-move">
+            <span class="flex justify-center my-2 text-center cursor-move grip-button inset-xs text-grey-500">
                 <svg width="18" height="18"><use xlink:href="#menu"/></svg>
             </span>
         </div>
 
         <div class="module-icons-right">
-            <span class="delete-button inset-xs flex justify-center text-error text-center my-2 cursor-pointer" @click="removeThisSection(section.sort)">
+            <span class="flex justify-center my-2 text-center cursor-pointer delete-button inset-xs text-error" @click="removeThisSection(section.sort)">
                 <svg width="18" height="18"><use xlink:href="#trash"/></svg>
             </span>
         </div>
 
     </section>
 </template>
-<script>
 
+<script>
     import toggleOnlineStatusMixin from "./toggleOnlineStatusMixin";
     import PagebuilderMenu from './PagebuilderMenu.vue';
 
