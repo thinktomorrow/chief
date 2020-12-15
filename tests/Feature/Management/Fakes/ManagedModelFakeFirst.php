@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Tests\Feature\Management\Fakes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\Concerns\Sortable;
 use Thinktomorrow\Chief\Fragments\HasFragments;
 use Thinktomorrow\Chief\States\PageState;
 use Thinktomorrow\Chief\Relations\ActsAsChild;
@@ -39,6 +40,7 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
 
     use AssetTrait,
         Publishable,
+        Sortable,
         ActingAsParent,
         ActingAsChild;
 
@@ -70,6 +72,7 @@ class ManagedModelFakeFirst extends Model implements ManagedModel, TranslatableC
             $table->string('title')->nullable();
             $table->string('custom_column')->nullable();
             $table->string('current_state')->default(PageState::DRAFT);
+            $table->tinyInteger('order')->default(0);
             $table->json('values')->nullable(); // dynamic attributes
             $table->dateTime('archived_at')->nullable();
             $table->timestamps();

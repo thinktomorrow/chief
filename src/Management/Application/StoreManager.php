@@ -37,6 +37,7 @@ class StoreManager
         }
 
         $manager->saveCreateFields($request);
+
         if ($request->filled('template')) {
             $this->applyTemplate->handle(
                 FlatReferenceFactory::fromString($request->input('template'))->className(),

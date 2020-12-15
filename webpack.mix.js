@@ -39,10 +39,7 @@ mix.webpackConfig({
     whitelist: ['indent-1', 'indent-2', 'indent-3']
 })
 
-
-/**
- * Copy fonts
- */
+/** Copy fonts */
 .copy('resources/assets/fonts', 'public/chief-assets/back/fonts')
 
 // Imagine not having to publish chief assets manually every time webpack recompiles them. Sounds like a dream right? Not anymore.

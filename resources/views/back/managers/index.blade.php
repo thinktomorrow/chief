@@ -46,9 +46,13 @@
 
                     @else
 
+                    <div
+                        data-sortable-type="{{ get_class($modelManager->modelInstance()) }}"
+                        id="{{ $modelManager->isManualSortable() ? 'js-sortable' : '' }}">
                         @include($modelManager->indexView(), array_merge([
                             'managers' => $managers,
                         ], $modelManager->indexViewData()))
+                    </div>
 
                     @endif
 
@@ -62,6 +66,15 @@
         </div>
 
         <div class="column-3">
+
+            @if($modelManager->isManualSortable())
+                <div class="mb-8">
+                    <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
+                    <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
+                    <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
+
+                </div>
+            @endif
 
             @if( $modelManager::filters()->any() )
                 <div class="mb-8">

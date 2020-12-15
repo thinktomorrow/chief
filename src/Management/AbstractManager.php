@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Fields\Types\NumberField;
 use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
 use Thinktomorrow\Chief\Fields\FieldReference;
 use Thinktomorrow\Chief\Fields\Fields;
@@ -70,6 +71,20 @@ abstract class AbstractManager
         return $this;
     }
 
+    public function isManualSortable(): bool
+    {
+        return (isset($this->useManualSorting) && $this->useManualSorting && method_exists($this->modelInstance(), 'scopeSortedManually'));
+    }
+
+    public function saveCreateFields(Request $request): void
+    {
+        if($this->isManualSortable() && !$request->has('order')) {
+            $this->model->order = $this->modelInstance()::orderBy('order', 'desc')->first()->order + 1;
+        }
+
+        $this->saveFields($request, $this->createFields());
+    }
+
     public function findManaged($id): Manager
     {
         $modelInstance = $this->modelInstance()::where('id', $id)->withoutGlobalScopes()->first();
@@ -103,6 +118,10 @@ abstract class AbstractManager
 
     protected function indexSorting(Builder $builder): Builder
     {
+        if($this->isManualSortable()) {
+            $builder->sortedManually();
+        }
+
         if ($this->isAssistedBy('publish') && Schema::hasColumn($this->modelInstance()->getTable(), 'published_at')) {
             $builder->orderBy('published_at', 'DESC');
         }
@@ -240,7 +259,13 @@ abstract class AbstractManager
 
     public function createFields(): Fields
     {
-        return $this->fieldsWithAssistantFields();
+        $fields = $this->fieldsWithAssistantFields();
+
+        if($this->isManualSortable() && !$fields->offsetExists('order')) {
+            $fields = $fields->add(NumberField::make('order'));
+        }
+trap($fields);
+        return $fields;
     }
 
     public function editFields(): Fields
