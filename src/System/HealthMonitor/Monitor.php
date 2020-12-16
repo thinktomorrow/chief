@@ -32,6 +32,7 @@ class Monitor
                 foreach ($notifiers as $notifier) {
                     app($notifier)->onFailure($checkInstance);
                 }
+                break;
             } else {
                 foreach ($notifiers as $notifier) {
                     app($notifier)->onSuccess($checkInstance);

@@ -7,6 +7,7 @@ principles.
 - Added: filefield now shows thumbnail of image if an image was uploaded.
 - Added: Pagebuilder module and text sections now have a online/offline toggle. This allows for the admin to toggle the frontend visibility of certain sections.
 - Added: sortable option for models. Add a $useManualSorting on a PageManager to allow the admin to sort their models. Note: for the time being it only works for non-paginated index views.
+- Fixed: stop pending monitor checks after first occurring failure.
 
 This release requires migrations to be run. 
 

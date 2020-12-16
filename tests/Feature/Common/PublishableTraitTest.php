@@ -92,7 +92,7 @@ class PublishableTraitTest extends TestCase
     public function it_can_fetch_all_drafts_when_previewMode_is_active()
     {
         $this->asAdmin();
-        config()->set('chief.preview-mode', 'preview');
+        config()->set('thinktomorrow.chief.preview-mode', 'preview');
 
         factory(Page::class)->create(['current_state' => PageState::DRAFT]);
 
@@ -102,7 +102,7 @@ class PublishableTraitTest extends TestCase
     /** @test */
     public function it_will_not_fetch_all_drafts_when_previewMode_is_active_but_no_admin_is_logged()
     {
-        config()->set('chief.preview-mode', 'preview');
+        config()->set('thinktomorrow.chief.preview-mode', 'preview');
 
         factory(Page::class)->create(['current_state' => PageState::DRAFT]);
 
@@ -113,7 +113,7 @@ class PublishableTraitTest extends TestCase
     public function preview_mode_can_be_disabled()
     {
         $this->asAdmin();
-        config()->set('chief.preview-mode', null);
+        config()->set('thinktomorrow.chief.preview-mode', null);
 
         factory(Page::class)->create(['current_state' => PageState::DRAFT]);
 

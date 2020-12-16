@@ -264,7 +264,7 @@ abstract class AbstractManager
         if($this->isManualSortable() && !$fields->offsetExists('order')) {
             $fields = $fields->add(NumberField::make('order'));
         }
-trap($fields);
+
         return $fields;
     }
 
