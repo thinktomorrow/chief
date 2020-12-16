@@ -16,7 +16,7 @@ use Thinktomorrow\Squanto\Domain\PageKey;
 class ArchiveTraitTest extends TestCase
 {
     /**
-     * @var FeaturableTraitDummyClass
+     * @var FeaturableDummy
      */
     private $dummy;
 

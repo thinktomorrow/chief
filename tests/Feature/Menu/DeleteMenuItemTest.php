@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
+namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
 use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Menu\MenuItem;

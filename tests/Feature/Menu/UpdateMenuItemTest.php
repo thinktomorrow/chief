@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\MenuItems;
+namespace Thinktomorrow\Chief\Tests\Feature\Menu;
 
 use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Pages\Page;
