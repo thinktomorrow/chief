@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
-use Thinktomorrow\Chief\Tests\Media\fakes\OptionalFileFieldManager;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\OptionalFileFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\FileFieldModuleManager;
 
 class SortFileFieldValueTest extends TestCase

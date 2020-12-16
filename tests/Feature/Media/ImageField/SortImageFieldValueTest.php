@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Management\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
-use Thinktomorrow\Chief\Tests\Feature\Media\fakes\OptionalImageFieldManager;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\OptionalImageFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldModuleManager;
 
 class SortImageFieldValueTest extends TestCase

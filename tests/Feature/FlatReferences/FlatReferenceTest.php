@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Feature\Common\Morphables;
+namespace Thinktomorrow\Chief\Tests\Feature\FlatReferences;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -8,6 +8,8 @@ use Thinktomorrow\Chief\FlatReferences\FlatReference;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceCollection;
 use Thinktomorrow\Chief\FlatReferences\FlatReferenceFactory;
 use Thinktomorrow\Chief\Tests\TestCase;
+use Thinktomorrow\Chief\Tests\Feature\Common\Morphables\MorphableContractFake;
+use Thinktomorrow\Chief\Tests\Feature\Common\Morphables\MorphableContractFakeModel;
 
 class FlatReferenceTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Thinktomorrow\Chief\Tests\Feature\Media\fakes;
+namespace Thinktomorrow\Chief\Tests\Feature\Media\Fakes;
 
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Media\MediaType;
