@@ -14,7 +14,7 @@
   "devDependencies": {
     "@vue/test-utils": "^1.1.2",
     "browser-sync": "^2.26.13",
-    "browser-sync-webpack-plugin": "^2.2.2",
+    "browser-sync-webpack-plugin": "^2.3.0",
     "expect": "^25.5.0",
     "mocha": "^5.0.4",
     "mocha-webpack": "^1.0.1",
