@@ -83,13 +83,8 @@ class Relation extends Model
 
         return $relations->map(function (Relation $relation) use ($parent_type, $parent_id) {
 
-            // It could be that the child itself is soft-deleted, if this is the case, we will ignore it and move on.
+            // It could be that the child itself is archived, soft-deleted or removed. If this is the case, we will ignore it and move on.
             if (!$child = $relation->child) {
-                if (!$relation->child()->withTrashed()->first()) {
-                    // If we cannot retrieve it then the relation type is possibly wrong, this is a database inconsistency and should be addressed
-                    throw new \DomainException('Corrupt relation reference. Related child [' . $relation->child_type . '@' . $relation->child_id . '] could not be retrieved for parent [' . $parent_type . '@' . $parent_id . ']. Make sure the morph key can resolve to a valid class.');
-                }
-
                 return null;
             }
 

@@ -3,6 +3,9 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
+- Fixed: ignore broken pagebuilder relations on page render
+
+## 0.5.12 - 2020-12-18
 - Added: config option `chief.preview-mode` to set the default admin preview behavior. 
 - Added: filefield now shows thumbnail of image if an image was uploaded.
 - Added: Pagebuilder module and text sections now have a online/offline toggle. This allows for the admin to toggle the frontend visibility of certain sections.
