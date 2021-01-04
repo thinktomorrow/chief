@@ -313,6 +313,8 @@ class PageBuildTest extends TestCase
         $module = NewsletterModuleFake::create(['slug' => 'nieuwsbrief', 'content:nl' => 'newsletter content']);
         $this->page->adoptChild($module, ['sort' => 0]);
 
+        $this->assertCount(1, $this->page->freshChildren());
+
         // Replace text module content
         $this->asAdmin()
             ->put(route('chief.back.managers.update', ['articles_fake', $this->page->id]), $this->validPageParams([
@@ -324,7 +326,7 @@ class PageBuildTest extends TestCase
                 ],
             ]));
 
-        $this->assertCount(0, $this->page->children());
+        $this->assertCount(0, $this->page->freshChildren());
     }
 
     /** @test */

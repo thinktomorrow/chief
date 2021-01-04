@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
+- Fixed: Issue where online status was removed on pagebuilder save. Now we keep existing modules and sets on pagebuilder save
 - Fixed: ignore broken pagebuilder relations on page render
 
 ## 0.5.12 - 2020-12-18

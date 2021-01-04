@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\PageBuilder;
 
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Sets\SetReference;
 use Thinktomorrow\Chief\Modules\TextModule;
+use Thinktomorrow\Chief\Relations\Relation;
 use Thinktomorrow\Chief\Relations\ActsAsParent;
 use Thinktomorrow\Chief\Modules\PagetitleModule;
 use Thinktomorrow\Chief\Modules\Application\CreateModule;
@@ -47,17 +49,14 @@ class UpdateSections
 
     public function updateModules()
     {
-        // Remove existing relations expect the text ones
-        $this->removeExistingModules();
-
-        if (empty($this->relation_references)) {
-            return $this;
-        }
-
         $referred_instances = FlatReferenceCollection::fromFlatReferences($this->relation_references);
 
-        foreach ($referred_instances as $instance) {
-            $this->model->adoptChild($instance, ['sort' => 0]);
+        $this->removeModules($referred_instances);
+
+        foreach ($referred_instances as $i => $instance) {
+            if(!$relation = Relation::find($this->model->getMorphClass(), $this->model->id, $instance->getMorphClass(), $instance->id)) {
+                $this->model->adoptChild($instance, ['sort' => $i]);
+            }
         }
 
         return $this;
@@ -65,40 +64,78 @@ class UpdateSections
 
     public function updateSets()
     {
-        $this->removeExistingSets();
+        $stored_set_refs = collect($this->set_refs)->reject(function($ref){
+            return !$ref;
+        })->map(function($flat_set_ref){
+            return $this->findOrCreateStoredSetReference($flat_set_ref);
+        });
 
-        foreach ($this->set_refs as $flat_set_ref) {
-            if (!$flat_set_ref) {
-                continue;
+        $this->removeSets($stored_set_refs);
+
+        foreach ($stored_set_refs as $i => $stored_set_ref) {
+            if(!$relation = Relation::find($this->model->getMorphClass(), $this->model->id, $stored_set_ref->getMorphClass(), $stored_set_ref->id)) {
+                $this->model->adoptChild($stored_set_ref, ['sort' => $i]);
             }
-
-            $stored_set_ref = $this->findOrCreateStoredSetReference($flat_set_ref);
-
-            $this->model->adoptChild($stored_set_ref, ['sort' => 0]);
         }
 
         return $this;
     }
 
-    private function removeExistingModules()
+    /**
+     * Get all module children and only those not passed so we know to delete these ones
+     * @param Collection $referred_instances
+     */
+    private function removeModules(Collection $referred_instances): void
     {
-        foreach ($this->model->children() as $instance) {
-            if ($instance instanceof StoredSetReference || $instance instanceof TextModule || $instance instanceof PagetitleModule) {
-                continue;
-            }
+        $this->model->children()->filter(function ($instance) {
+            return (!$instance instanceof StoredSetReference && !$instance instanceof TextModule && !$instance instanceof PagetitleModule);
+        })->reject(function ($instance) use ($referred_instances) {
+            // If this model still exists in the update request, we'll reject it from the removed list.
+            return $referred_instances->filter(function ($referred_instance) use ($instance) {
+                return (get_class($referred_instance) == get_class($instance) && $referred_instance->id == $instance->id);
+            })->isNotEmpty();
+        })->each(function ($instance) {
             $this->model->rejectChild($instance);
-        }
+        });
     }
 
-    private function removeExistingSets()
+    /**
+     * Get all module children and only those not passed so we know to delete these ones
+     * @param Collection $referred_instances
+     */
+    private function removeSets(Collection $referred_instances): void
     {
-        foreach ($this->model->children() as $instance) {
-            if (!$instance instanceof StoredSetReference) {
-                continue;
-            }
+        $this->model->children()->filter(function ($instance) {
+            return ($instance instanceof StoredSetReference);
+        })->reject(function ($instance) use ($referred_instances) {
+            // If this model still exists in the update request, we'll reject it from the removed list.
+            return $referred_instances->filter(function ($referred_instance) use ($instance) {
+                return (get_class($referred_instance) == get_class($instance) && $referred_instance->id == $instance->id);
+            })->isNotEmpty();
+        })->each(function ($instance) {
             $this->model->rejectChild($instance);
-        }
+        });
     }
+
+//    private function removeExistingModules()
+//    {
+//        foreach ($this->model->children() as $instance) {
+//            if ($instance instanceof StoredSetReference || $instance instanceof TextModule || $instance instanceof PagetitleModule) {
+//                continue;
+//            }
+//            $this->model->rejectChild($instance);
+//        }
+//    }
+//
+//    private function removeExistingSets()
+//    {
+//        foreach ($this->model->children() as $instance) {
+//            if (!$instance instanceof StoredSetReference) {
+//                continue;
+//            }
+//            $this->model->rejectChild($instance);
+//        }
+//    }
 
     public function addTextModules()
     {

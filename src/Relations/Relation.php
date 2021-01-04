@@ -18,6 +18,16 @@ class Relation extends Model
     public $timestamps = false;
     public $guarded = [];
 
+    public static function find(string $parent_type, $parent_id, string $child_type, $child_id): ?Relation
+    {
+        return static::query()
+            ->where('parent_type', $parent_type )
+            ->where('parent_id', $parent_id )
+            ->where('child_type', $child_type )
+            ->where('child_id', $child_id )
+            ->first();
+    }
+
     public function isOnline(): bool
     {
         // Default is online, except explicitly set offline
