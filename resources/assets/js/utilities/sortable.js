@@ -86,9 +86,9 @@ IndexSorting.prototype._init = function() {
                 }).then(function(response) {
                     return response.json();
                 }).then(() => {
-                    Eventbus.$emit('create-notification', 'success', 'nieuwe sortering is bewaard.️')
-                }).catch(function(error){
-                    Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️')
+                    Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
+                }).catch(function(error) {
+                    Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️');
                     console.error(error);
                 });
             },

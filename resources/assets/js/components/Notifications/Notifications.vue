@@ -9,6 +9,7 @@
                 v-bind:key="notification._uid"
                 v-bind:type="notification.type"
                 v-bind:description="notification.description"
+                v-bind:duration="notification.duration"
             ></notification>
         </div>
 
@@ -29,8 +30,8 @@
             }
         },
         created() {
-            Eventbus.$on('create-notification', (type, description) => {
-                this.createNotification(type, description);
+            Eventbus.$on('create-notification', (type, description, duration = 5000) => {
+                this.createNotification(type, description, duration);
             });
             Eventbus.$on('open-notification', (element) => {
                 if(this.createdNotifications.find(notification => notification.element._uid === element._uid)) return;
@@ -49,10 +50,11 @@
             })
         },
         methods: {
-            createNotification: function(type, description) {
+            createNotification: function(type, description, duration) {
                 this.notifications.push({
                     type,
-                    description
+                    description,
+                    duration
                 });
             },
             showNotifications: function() {

@@ -1,19 +1,22 @@
 # Changelog
-All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
+All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
+
+## Unreleased
+- Added: option to pass a custom duration for each asynchronous notification
 
 ## 0.5.13 - 2021-01-04
 - Fixed: Issue where online status was removed on pagebuilder save. Now we keep existing modules and sets on pagebuilder save
 - Fixed: ignore broken pagebuilder relations on page render
 
 ## 0.5.12 - 2020-12-18
-- Added: config option `chief.preview-mode` to set the default admin preview behavior. 
+- Added: config option `chief.preview-mode` to set the default admin preview behavior.
 - Added: filefield now shows thumbnail of image if an image was uploaded.
 - Added: Pagebuilder module and text sections now have a online/offline toggle. This allows for the admin to toggle the frontend visibility of certain sections.
 - Added: sortable option for models. Add a $useManualSorting on a PageManager to allow the admin to sort their models. Note: for the time being it only works for non-paginated index views.
 - Fixed: stop pending monitor checks after first occurring failure.
 
-This release requires migrations to be run. 
+This release requires migrations to be run.
 
 ## 0.5.9 - 2020-10-26
 - Fixed: issue where visiting archived url would throw a 500 server error instead of 404.
@@ -21,12 +24,12 @@ This release requires migrations to be run.
 - Fixed: no longer seo max. character length restricted by validation.
 - Fixed: show correct maximum character count for an input or textarea field. Pass a max. via `$field->characterCount(66)`.
 - Fixed: issue where range field had wrong name attribute
-- Fixed: issue where passing a paginated collection to set would conflict with set::paginate(). 
+- Fixed: issue where passing a paginated collection to set would conflict with set::paginate().
 - Fixed: Checkboxfield stores value as primitive, not as array. Extra option to set 'multiple' on checkboxField to store multiple values as array.
 - Fixed: Previewmode was also active on admin routes. This is now disabled.
 - Changed: The modules tab is hidden and only present when there is at least one module created.
 - Added: new notifications UI
-- Added: file watcher for chief asset build. A `npm run watch` can now trigger the vendor publish on the application that uses the chief package. Great for local development. Add a 
+- Added: file watcher for chief asset build. A `npm run watch` can now trigger the vendor publish on the application that uses the chief package. Great for local development. Add a
 - Added: Field::untag() method to remove an existing tag from the field.
 - Added: maximum fragments for a fragmentfield. Set by `FragmentField::max()`.
 
@@ -105,9 +108,9 @@ This release requires migrations to be run.
 
 ## 0.4.7 - 2020-03-09
 **This release requires a migration to implement the new page state logic.**
-This release introduces a couple of important changes: 
+This release introduces a couple of important changes:
 - There is now a new state logic for pages: archived, draft, published, deleted. These states are kept in one database column instead of being scattered around.
-- There is now proper image validation for the image and file fields. 
+- There is now proper image validation for the image and file fields.
 - There is now async image upload available on the slim component.
 
 More info on upgrading can be found in the [https://thinktomorrow.github.io/package-docs/src/chief/upgrading.html#upgrading-from-0-4-6-to-0-4-7](chief documentation).
@@ -132,7 +135,7 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 - Fixed: uploads via redactor that are too large now stop the script and notify the user.
 
 ### Field changes
-- Added: introduced a `Field` interface for stricter Field usage throughout the application. 
+- Added: introduced a `Field` interface for stricter Field usage throughout the application.
 - Added: `Field::getPlaceholder()` is added to retrieve a placeholder value.
 - Removed: `Field::getFieldValue()` is removed. Use the new `Field::getValue(Model $model = null, ?string $locale = null)` method instead.
 - Removed: `Field::key()` is now only used to set a custom key.  To retrieve the key use the `Field::getKey()` method.
@@ -158,13 +161,13 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 
 ## 0.4.3 - 2020-01-10
 - Added: Functionality to upload existing assets.
-- Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback 
+- Changed: changed getmedia assets fetch to use direct asset relation so it doesnt use fallback
 - Fixed: issue where module add button didn't show for developer account
 - Fixed: slow loading of admin index pages due to overuse of `Page::url()` method
 - Fixed: document upload for multiple locales
 
 ## 0.4.2 - 2019-11-27
-- Fixed: modulemanager route function to work with laravel 6.6 
+- Fixed: modulemanager route function to work with laravel 6.6
 - Fixed: issue where updating url could result in a duplicate db entry
 - Fixed: Redactor rich links suggestions now show urls for the current selected locale
 - Removed: htmlpurifier which caused inconsistent saving of text module
@@ -173,7 +176,7 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 ## 0.4.1 - 2019-11-26
 - Added: extra parent and request parameters for query set methods.
 - Fixed: preserve old input after failed validation for input field
-- Fixed: dont show modules tab on page edit page when there aren't any modules that can be created 
+- Fixed: dont show modules tab on page edit page when there aren't any modules that can be created
 - Fixed: issue where `Set::paginate()` would perform a second db query to fetch all results, even when total count was already known.
 
 ## 0.4.0 - 2019-11-19
@@ -263,7 +266,7 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 - Fixed: CRUD for menu's now enforce the page permissions
 
 ## 0.2.13 - 2019-05-23
-- Fixed: Find published page where the slug matches one of the application base url segments. 
+- Fixed: Find published page where the slug matches one of the application base url segments.
 
 ## 0.2.12 - 2019-05-22
 - Added: Pagebuilder action labels to better describe their intent
@@ -309,14 +312,14 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 ## 0.2.7 - 2019-03-21
 - Added: Publish filter added to pagemanager.
 - Changed: own settings page now requires the user to have the `update-you` permission. In existing projects you can add this permission by running: `php artisan chief:permission update-you`. Next you'll need to add this permission to all the roles in your system. This is done via the UI.
-- Removed: We removed the unused `view-setting` permission for the default roles setup. 
+- Removed: We removed the unused `view-setting` permission for the default roles setup.
 - Removed: manager::archive() method in favor of ArchiveAssistant flow.
 - Removed: pagemanager::archive() method in favor of ArchiveAssistant flow.
 - Removed: unused views: authorization.permissions.*, _elements.mediagroup-*, authorization.roles._deletemodal
-- Removed: unused crudcommands: archive,create,update page commands 
+- Removed: unused crudcommands: archive,create,update page commands
 - Fixed: only a developer can edit/update an user with role developer.
 - Fixed: only a developer can assign an user with the developer role.
-- Fixed: improved user management UI 
+- Fixed: improved user management UI
 - Fixed: header margin bug by updating warpaint 0.0.10
 - Fixed: fallback set to default page view
 - Fixed: pagebuilder module section now save in right order
@@ -355,7 +358,7 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 
 ## 0.2.1 - 2019-02-14
 - Added: option to choose which managers to display on dashboard by registering them with a 'dashboard' tag.
-- Changed: updated vine package to latest version 0.2.4.   
+- Changed: updated vine package to latest version 0.2.4.
 - Fixed: pagebuilder removal bug where removing a multilingual text section would only remove the current visible translation.
 - Fixed: pagebuilder sorting bug that occurred in a specific case where text placed on top could not be dragged.
 - Fixed: menu where now a custom url can be set as a relative path, e.g. /contact.

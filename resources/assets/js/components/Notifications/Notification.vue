@@ -31,8 +31,9 @@
 <script>
     export default {
         props: {
-            description: String,
             type: String,
+            description: String,
+            duration: Number
         },
         data() {
             return {
@@ -51,7 +52,7 @@
                 if(isClosingAutomatically && this.type !== 'error') {
                     setTimeout(() => {
                         this.hideNotification();
-                    }, 5000);
+                    }, this.duration);
                 }
             },
             hideNotification: function() {
