@@ -3,6 +3,8 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
+- Added: Filefield:uploadButtonLabel() to set a custom label for the upload button
+- Added: Sorting for paged items is done on a dedicated page
 - Added: option to pass a custom duration for each asynchronous notification
 
 ## 0.5.13 - 2021-01-04
