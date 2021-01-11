@@ -9,6 +9,8 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 
 class FileField extends MediaField implements Field
 {
+    private $uploadButtonLabel = 'Document opladen';
+
     protected $customValidationRules = [
         'required'   => 'filefield_required',
         'mimetypes'  => 'filefield_mimetypes',
@@ -53,5 +55,17 @@ class FileField extends MediaField implements Field
         }
 
         return $files;
+    }
+
+    public function uploadButtonLabel(string $uploadButtonLabel)
+    {
+        $this->uploadButtonLabel = $uploadButtonLabel;
+
+        return $this;
+    }
+
+    public function getUploadButtonLabel(): string
+    {
+        return $this->uploadButtonLabel;
     }
 }

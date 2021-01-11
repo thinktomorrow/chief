@@ -85,32 +85,14 @@ IndexSorting.prototype._init = function() {
                     },
                 }).then(function(response) {
                     return response.json();
+                }).then(() => {
+                    Eventbus.$emit('create-notification', 'success', 'nieuwe sortering is bewaard.️')
                 }).catch(function(error){
+                    Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️')
                     console.error(error);
                 });
             },
-        },
-        // Called by any change to the list (add / update / remove)
-        // onEnd: function (evt) {
-        //     let itemEl = evt.item;  // dragged HTMLElement
-        //
-        //     fetch(self.endpoint, {
-        //         method: 'post',
-        //         body: JSON.stringify({
-        //             "modelType": itemEl.getAttribute(self.sortableTypeAttribute),
-        //             "modelId": itemEl.getAttribute(self.sortableIdAttribute),
-        //             "index": evt.newIndex, // evt.to, evt.from, evt.oldIndex, evt.newIndex
-        //             "all_indices": '',
-        //         }),
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //     }).then(function(response) {
-        //         return response.json();
-        //     }).catch(function(error){
-        //         console.error(error);
-        //     });
-        // }
+        }
     }));
 
     this.sortToggles.forEach((toggle) => {

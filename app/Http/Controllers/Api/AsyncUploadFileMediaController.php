@@ -54,7 +54,8 @@ class AsyncUploadFileMediaController extends Controller
                 'filename' => $asset->filename(),
                 'id'       => $asset->id,
                 'mimetype' => $asset->getMimeType(),
-                'size' => $asset->getSize(),
+                'size'     => $asset->getSize(),
+                'isImage'  => ($asset->getExtensionType() == 'image'),
             ], 201);
         } catch (ValidationException $e) {
 

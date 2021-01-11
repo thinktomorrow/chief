@@ -19,7 +19,8 @@
                             </span>
 
                             <div v-if="url" class="pr-2 ml-auto">
-                                <a :href="url" target="_blank">Bekijk document</a>
+                                <a v-if="isImage" :href="url" target="_blank">Bekijk afbeelding</a>
+                                <a v-else :href="url" target="_blank">Bekijk document</a>
                             </div>
                             <div v-if="showLoader" class="pr-2 ml-auto">
                                 Bezig met opladen...
@@ -91,12 +92,6 @@
                     }
 
                     return this.id;
-                },
-                isImage: function(){
-                    return ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'].includes(this.mimetype);
-                },
-                thumbUrl: function(){
-                    return this.thumbUrl;
                 }
             },
             methods: {
@@ -126,16 +121,18 @@
 
                         this.id = responseData.id;
                         this.url = responseData.url;
+                        this.thumbUrl = responseData.url;
                         this.filename = responseData.filename;
                         this.mimetype = responseData.mimetype;
                         this.size = responseData.size;
+                        this.isImage = responseData.isImage || this.isImage;
 
                     }).catch((error) => {
                         this.id = null;
                         console.error(error);
 
                         // Possible server errors with uploads are also a: 413 Request Entity Too Large
-                        this.showError(error.response.data.message || 'Ongeldig bestand. Mogelijk is dit te groot.');
+                        this.showError((error.response ? error.response.data.message : false) || 'Ongeldig bestand. Mogelijk is dit te groot.');
                     }).then(() => {
                         // The second 'then' is always executed
                         this.showLoader = false;

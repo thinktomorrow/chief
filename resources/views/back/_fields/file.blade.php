@@ -30,7 +30,7 @@
 
                 <div data-document-upload data-locale="{{ $locale }}">
                     <label for="document-upload-{{$locale}}" class="btn btn-secondary mr-4">
-                        Document uploaden
+                        {!! $field->getUploadButtonLabel() !!}
                     </label>
                     <span class="text-secondary-500"></span>
                 </div>
