@@ -2,6 +2,10 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) 
 principles.
 
+## Unreleased
+- Added: Filefield:uploadButtonLabel() to set a custom label for the upload button
+- Added: Sorting for paged items is done on a dedicated page.
+
 ## 0.5.13 - 2021-01-04
 - Fixed: Issue where online status was removed on pagebuilder save. Now we keep existing modules and sets on pagebuilder save
 - Fixed: ignore broken pagebuilder relations on page render
