@@ -111,6 +111,13 @@ abstract class AbstractManager
         });
     }
 
+    public function withoutPagination(): Manager
+    {
+        $this->paginated = false;
+
+        return $this;
+    }
+
     protected function indexBuilder(Builder $builder): Builder
     {
         return $builder;
@@ -187,9 +194,10 @@ abstract class AbstractManager
     public function route($verb): ?string
     {
         $routes = [
-            'index'  => route('chief.back.managers.index', [$this->registration->key()]),
-            'create' => route('chief.back.managers.create', [$this->registration->key()]),
-            'store'  => route('chief.back.managers.store', [$this->registration->key()]),
+            'index'      => route('chief.back.managers.index', [$this->registration->key()]),
+            'create'     => route('chief.back.managers.create', [$this->registration->key()]),
+            'store'      => route('chief.back.managers.store', [$this->registration->key()]),
+            'sort-index' => route('chief.back.managers.sort-index', [$this->registration->key()]),
         ];
 
         if (array_key_exists($verb, $routes)) {

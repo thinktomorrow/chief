@@ -50,6 +50,8 @@ interface Manager extends FieldManager, AssistedManager
      */
     public function indexCollection();
 
+    public function withoutPagination(): Manager;
+
     /**
      * Viewfile for the admin index listing of results
      * @return string

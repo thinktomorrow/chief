@@ -8,7 +8,7 @@ const IndexSorting = function(options){
     this.endpoint = options.endpoint || '/admin/api/sort';
 
     // Toggle
-    this.isSorting = false;
+    this.isSorting = options.isSorting || false;
     this.sortToggles = Array.from(document.querySelectorAll('[data-sortable-toggle]'));
     this.hiddenWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-hide-when-sorting]'));
     this.showWhenSortingEls = Array.from(document.querySelectorAll('[data-sortable-show-when-sorting]'));

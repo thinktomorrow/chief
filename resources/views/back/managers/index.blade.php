@@ -68,12 +68,18 @@
         <div class="column-3">
 
             @if($modelManager->isManualSortable())
-                <div class="mb-8">
-                    <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
-                    <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
-                    <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
-
-                </div>
+                @if(!$managers instanceof Illuminate\Contracts\Pagination\Paginator)
+                    <div class="mb-8">
+                        <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
+                        <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
+                        <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
+                    </div>
+                @else
+                    <div class="mb-8">
+                        <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
+                        <a class="btn btn-primary" href="{{ $modelManager->route('sort-index') }}">Sorteer handmatig</a>
+                    </div>
+                @endif
             @endif
 
             @if( $modelManager::filters()->any() )

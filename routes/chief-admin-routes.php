@@ -21,6 +21,7 @@ Route::get('toggle-preview', function () {
 * MANAGER ROUTES
 * -----------------------------------------------------------------
 */
+Route::get('manage/{key}/sort', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@sortIndex')->name('chief.back.managers.sort-index');
 Route::get('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@index')->name('chief.back.managers.index');
 Route::get('manage/{key}/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@create')->name('chief.back.managers.create');
 Route::post('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@store')->name('chief.back.managers.store');

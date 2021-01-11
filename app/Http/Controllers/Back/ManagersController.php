@@ -34,6 +34,20 @@ class ManagersController extends Controller
         ]);
     }
 
+    public function sortIndex(string $key)
+    {
+        $manager = $this->managers->findByKey($key);
+
+        $manager->guard('index');
+
+        $managers = $manager->withoutPagination()->indexCollection();
+
+        return view('chief::back.managers.sorting.index', [
+            'modelManager' => $manager,
+            'managers' => $managers,
+        ]);
+    }
+
     public function create(string $key)
     {
         $manager = $this->managers->findByKey($key);
