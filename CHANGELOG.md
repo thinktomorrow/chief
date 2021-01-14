@@ -2,7 +2,7 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-## Unreleased
+## 0.5.14 - 2021-01-14
 - Fixed: pagination in admin when using filtering.
 - Added: Filefield:uploadButtonLabel() to set a custom label for the upload button
 - Added: Sorting for paged items is done on a dedicated page
