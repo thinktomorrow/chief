@@ -149,6 +149,11 @@ abstract class AbstractManager
             return (new static($this->registration))->manage($model);
         });
 
+        foreach(request()->query() as $key => $value) {
+            if($key == 'page') continue;
+            $paginator->appends($key, $value);
+        }
+
         return $paginator->setCollection($modifiedCollection);
     }
 

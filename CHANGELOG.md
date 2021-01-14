@@ -3,6 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 ## Unreleased
+- Fixed: pagination in admin when using filtering.
 - Added: Filefield:uploadButtonLabel() to set a custom label for the upload button
 - Added: Sorting for paged items is done on a dedicated page
 - Added: option to pass a custom duration for each asynchronous notification
