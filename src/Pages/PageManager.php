@@ -7,9 +7,9 @@ namespace Thinktomorrow\Chief\Pages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Fragments\Fragments;
 use Thinktomorrow\Chief\Fields\Types\ImageField;
 use Thinktomorrow\Chief\States\PageStatePresenter;
+use Thinktomorrow\Chief\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\Concerns\Morphable\MorphableContract;
 use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Filters\Filters;
@@ -23,6 +23,7 @@ use Thinktomorrow\Chief\Management\Assistants\UrlAssistant;
 use Thinktomorrow\Chief\Management\Details\Details;
 use Thinktomorrow\Chief\Pages\Application\DeletePage;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Urls\ValidationRules\UniqueUrlSlugRule;
 use Thinktomorrow\Chief\Management\Exceptions\NotAllowedManagerRoute;
 
 class PageManager extends AbstractManager implements Manager
@@ -188,6 +189,8 @@ class PageManager extends AbstractManager implements Manager
         $trans = [];
         $urls = $request->input('url-slugs', []);
 
+        $urlValidator = (new UniqueUrlSlugRule($this->model));
+
         foreach ($request->input('trans', []) as $locale => $translation) {
             if (is_array_empty($translation)) {
                 continue;
@@ -196,8 +199,16 @@ class PageManager extends AbstractManager implements Manager
             $trans[$locale] = $this->addDefaultShortDescription($translation);
 
             // Automatically add an url for this locale based on the given title
+            // Also make sure to inject an unique url
             if (!isset($urls[$locale]) && isset($translation['title'])) {
-                $urls[$locale] = Str::slug($translation['title']);
+                $append = ''; $i = 1;
+
+                do{
+                    $urls[$locale] = Str::slug($translation['title']) . $append;
+                    $append = "$i";
+                    $i++;
+                }
+                while(!$urlValidator->passes(null, [$locale => $urls[$locale]]));
             }
         }
 

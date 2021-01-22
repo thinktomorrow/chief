@@ -4,6 +4,7 @@ principles.
 
 # Unreleased
 - Fixed: use original asset for filefield thumb when thumb conversion is not available.
+- Fixed: issue where sometimes creating new page gave error on non unique url
 
 ## 0.5.14 - 2021-01-14
 - Fixed: pagination in admin when using filtering.

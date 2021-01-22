@@ -30,7 +30,7 @@ class UniqueUrlSlugRule implements Rule
      * Determine if the validation rule passes.
      *
      * @param string $attribute
-     * @param bool $slugs
+     * @param array $slugs
      * @return bool
      */
     public function passes($attribute, $slugs)
