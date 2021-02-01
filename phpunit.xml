@@ -15,11 +15,8 @@
     </report>
   </coverage>
   <testsuites>
-    <testsuite name="All tests">
-      <directory suffix="Test.php">./tests/</directory>
-    </testsuite>
-    <testsuite name="Feature Tests">
-      <directory suffix="Test.php">./tests/Feature</directory>
+    <testsuite name="Application tests">
+      <directory suffix="Test.php">./tests/Application</directory>
     </testsuite>
     <testsuite name="Unit Tests">
       <directory suffix="Test.php">./tests/Unit</directory>
@@ -31,7 +28,6 @@
   <php>
     <env name="APP_KEY" value="base64:qS0gL9WK3DppyaiXy79dURhU+ecb6k9aryqyOmpHjF8="/>
     <env name="APP_ENV" value="testing"/>
-    <env name="BCRYPT_ROUNDS" value="4"/>
     <env name="CACHE_DRIVER" value="array"/>
     <env name="SESSION_DRIVER" value="array"/>
     <env name="QUEUE_DRIVER" value="sync"/>
