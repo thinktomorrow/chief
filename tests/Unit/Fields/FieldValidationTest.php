@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\Fields\Types\InputField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 
 class FieldValidationTest extends TestCase
 {

@@ -5,12 +5,13 @@ namespace Thinktomorrow\Chief\App\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Thinktomorrow\Chief\App\Http\Middleware\ChiefNavigation;
 use Thinktomorrow\Chief\App\Http\Middleware\AuthenticateChiefSession;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefValidateInvite;
 use Thinktomorrow\Chief\App\Http\Middleware\EncryptCookies;
-use Thinktomorrow\Chief\System\HealthMonitor\Middleware\MonitorMiddleware;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Admin\HealthMonitor\Middleware\MonitorMiddleware;
+use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
 
 class ChiefRoutesServiceProvider extends ServiceProvider
 {
@@ -24,18 +25,18 @@ class ChiefRoutesServiceProvider extends ServiceProvider
 
     private function loadOpenAdminRoutes()
     {
-        Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
+        Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
             $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-open-routes.php');
         });
     }
 
     private function loadAdminRoutes()
     {
-        Route::group(['prefix' => config('thinktomorrow.chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () {
+        Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () {
             $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-admin-routes.php');
 
             // Add project specific chief routing...
-            $projectChiefRoutePath = config('thinktomorrow.chief.route.admin-filepath', null);
+            $projectChiefRoutePath = config('chief.route.admin-filepath', null);
 
             if ($projectChiefRoutePath && file_exists($projectChiefRoutePath)) {
                 $this->loadRoutesFrom($projectChiefRoutePath);
@@ -45,12 +46,12 @@ class ChiefRoutesServiceProvider extends ServiceProvider
 
     private function autoloadFrontendRoute()
     {
-        if (true !== config('thinktomorrow.chief.route.autoload')) {
+        if (true !== config('chief.route.autoload')) {
             return;
         }
 
         app()->booted(function () {
-            $routeName = config('thinktomorrow.chief.route.name');
+            $routeName = config('chief.route.name');
 
             Route::get('{slug?}', function ($slug = '/') use ($routeName) {
                 return ChiefResponse::fromSlug($slug);
@@ -70,9 +71,10 @@ class ChiefRoutesServiceProvider extends ServiceProvider
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
 
-            // Chief specific middleware
+            // Chief admin specific middleware
             AuthenticateChiefSession::class,
             MonitorMiddleware::class,
+            ChiefNavigation::class,
         ]);
 
         app(Router::class)->aliasMiddleware('chief-guest', ChiefRedirectIfAuthenticated::class);

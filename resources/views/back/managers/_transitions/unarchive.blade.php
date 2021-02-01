@@ -1,8 +1,6 @@
-@if($manager->isAssistedBy('archive'))
-    <a data-submit-form="unarchiveForm-{{ $manager->details()->id }}" class="block p-3 text-warning --link-with-bg">Herstel</a>
+<a data-submit-form="unarchiveForm-{{ $model->id }}" class="block p-3 text-warning --link-with-bg">Herstel</a>
 
-    <form class="hidden" id="unarchiveForm-{{ $manager->details()->id }}" action="{{ $manager->assistant('archive')->route('unarchive') }}" method="POST">
-        {{ csrf_field() }}
-        <button type="submit">Herstel</button>
-    </form>
-@endif
+<form class="hidden" id="unarchiveForm-{{ $model->id }}" action="@adminRoute('unarchive', $model)" method="POST">
+    {{ csrf_field() }}
+    <button type="submit">Herstel</button>
+</form>

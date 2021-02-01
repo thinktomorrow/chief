@@ -2,11 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
+use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Audit\Audit;
-use Thinktomorrow\Chief\Users\User;
 
 class AuditController extends Controller
 {

@@ -5,6 +5,6 @@
             :modules='@json($field->getAvailableModules())'
             :pages='@json($field->getAvailablePages())'
             :pagesets='@json($field->getAvailableSets())'
-            :text-editor='@json(config('thinktomorrow.chief.editor'))'>
+            :text-editor='@json(config('chief.editor'))'>
     </page-builder>
 </section>

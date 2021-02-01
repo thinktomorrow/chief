@@ -4,34 +4,35 @@
 namespace Thinktomorrow\Chief\Tests;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Testing\TestResponse;
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
-use Thinktomorrow\Chief\Authorization\Permission;
-use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Urls\ChiefResponse;
-use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
+use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
+use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Artisan;
 use PHPUnit\Framework\Assert;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
 
 trait TestHelpers
 {
     public function registerResponseMacros()
     {
-        TestResponse::macro('assertViewIsPassed', function ($value) {
-            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
-        });
-
-        TestResponse::macro('assertViewVariableInstanceOf', function ($value, $instance) {
-            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
-            Assert::assertInstanceOf($instance, $this->getOriginalContent()->getData()[$value]);
-        });
-
-        TestResponse::macro('assertViewVariableCountIs', function ($count, $value) {
-            Assert::assertArrayHasKey($value, $this->getOriginalContent()->getData());
-            Assert::assertCount($count, $this->getOriginalContent()->getData()[$value]);
+        TestResponse::macro('assertViewCount', function ($key, $count) {
+            Assert::assertArrayHasKey($key, $this->getOriginalContent()->getData());
+            Assert::assertCount($count, $this->getOriginalContent()->getData()[$key]);
         });
 
         TestResponse::macro('assertContains', function ($value) {
@@ -58,7 +59,7 @@ trait TestHelpers
 
     protected function asAdminWithoutRole()
     {
-        return $this->actingAs(factory(User::class)->make(), 'chief');
+        return $this->actingAs(User::factory()->create(), 'chief');
     }
 
     protected function asDeveloper()
@@ -73,7 +74,7 @@ trait TestHelpers
             return $this->actingAs($admin, 'chief');
         }
 
-        $admin = factory(User::class)->create();
+        $admin = User::factory()->create();
         $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 
         return $this->actingAs($admin, 'chief');
@@ -81,7 +82,7 @@ trait TestHelpers
 
     protected function asAuthor()
     {
-        $author = factory(User::class)->create();
+        $author = User::factory()->create();
         $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $this->actingAs($author, 'chief');
@@ -89,7 +90,7 @@ trait TestHelpers
 
     protected function developer()
     {
-        $developer = factory(User::class)->create();
+        $developer = User::factory()->create();
         $developer->assignRole(Role::firstOrCreate(['name' => 'developer']));
 
         return $developer;
@@ -97,7 +98,7 @@ trait TestHelpers
 
     protected function admin()
     {
-        $admin = factory(User::class)->create();
+        $admin = User::factory()->create();
         $admin->assignRole(Role::firstOrCreate(['name' => 'admin']));
 
         return $admin;
@@ -105,18 +106,83 @@ trait TestHelpers
 
     protected function author()
     {
-        $author = factory(User::class)->create();
+        $author = User::factory()->create();
         $author->assignRole(Role::firstOrCreate(['name' => 'author']));
 
         return $author;
+    }
+
+    protected function
+    setupAndCreateArticle(array $values = []): ArticlePage
+    {
+        ArticlePage::migrateUp();
+
+        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        return ArticlePage::create($values);
+    }
+
+    protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
+    {
+        ArticlePageWithFileValidation::migrateUp();
+
+        chiefRegister()->model(ArticlePageWithFileValidation::class, PageManager::class);
+        return ArticlePageWithFileValidation::create($values);
+    }
+
+    protected function setupAndCreateArticleWithRequiredImage(array $values = []): ArticlePage
+    {
+        ArticlePageWithImageValidation::migrateUp();
+
+        chiefRegister()->model(ArticlePageWithImageValidation::class, PageManager::class);
+        return ArticlePageWithImageValidation::create($values);
+    }
+
+    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = []): Quote
+    {
+        Quote::migrateUp();
+
+        chiefRegister()->model(Quote::class, FragmentManager::class);
+        $quote = Quote::create($values);
+
+        return $quote->setFragmentModel(
+            app(CreateFragmentModel::class)->create($owner, $quote, 1)
+        );
+    }
+
+    protected function manager($managedModel): Manager
+    {
+        if(is_object($managedModel)) {
+            $managedModel = $managedModel::managedModelKey();
+        }
+
+        return app(Registry::class)->manager($managedModel);
     }
 
     protected function setUpChiefEnvironment()
     {
         $this->setUpDefaultAuthorization();
 
-        // Setup expected page routes
+        $this->disableSiteRouteCatchAll();
+    }
+
+    /**
+     * Because our site route catch all is registered on boot, and our tests usually contain registrations of routes after the application boot,
+     * we'll need to make sure the catch all is not in effect so that our testroute endpoints will be hit.
+     */
+    protected function disableSiteRouteCatchAll()
+    {
+        if(isset($this->keepOriginalSiteRoute) && $this->keepOriginalSiteRoute) return;
+
         Route::get('{slug?}', function ($slug = '/') { return ChiefResponse::fromSlug($slug); })->name('pages.show');
+    }
+
+    protected function updateLinks(Model $model, array $links): TestResponse
+    {
+        return $this->asAdmin()->put(route('chief.back.links.update'), [
+            'modelClass' => get_class($model),
+            'modelId' => $model->id,
+            'links' => $links,
+        ]);
     }
 
     protected function setUpDefaultAuthorization()

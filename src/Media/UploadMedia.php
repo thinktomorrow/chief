@@ -192,7 +192,7 @@ class UploadMedia
 
         foreach ($files_by_type as $type => $files) {
             foreach ($files as $locale => $_files) {
-                if (!in_array($locale, config('translatable.locales'))) {
+                if (!in_array($locale, config('chief.locales'))) {
                     unset($files_by_type[$type][$locale]);
 
                     if (!isset($files_by_type[$type][$defaultLocale])) {

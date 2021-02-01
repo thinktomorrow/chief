@@ -15,27 +15,7 @@
             <p>Don't try to follow trends. Create them.</p>
         </div>
         <div class="gutter column-8 right">
-            @foreach(app(\Thinktomorrow\Chief\Management\Managers::class)->findByTag(['page', 'dashboard']) as $manager)
-
-                @if(!$manager->can('index')) @continue @endif
-
-                <?php $total = method_exists($manager->indexCollection(), 'total') ? $manager->indexCollection()->total() : $manager->indexCollection()->count(); ?>
-
-                @if($total > 0)
-                    <div class="column-6">
-                        <div class="rounded bg-white shadow">
-                            <div class="inset">
-                                <div class="flex items-center mb-4">
-                                    <span class="text-4xl font-bold inline-block mr-4">{{ $total }}</span>
-                                    <p class="mt-2 text-lg">{{ $total == 1 ? $manager->details()->singular : $manager->details()->plural }}</p>
-                                </div>
-                                <a class="btn btn-primary" href="{{ $manager->route('index') }}">Ga naar {{ $manager->details()->plural }}</a>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-            @endforeach
+            <?= app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))->get()); ?>
         </div>
     </div>
 @stop

@@ -1,6 +1,6 @@
 <script>
     export default{
-        props: ['reference', 'item', 'name', 'group', 'managerKey', 'apiService'],
+        props: ['reference', 'item', 'name', 'group', 'uploadUrl'],
         render(){
             return this.$scopedSlots.default({
                 hiddenInputName: this.hiddenInputName,
@@ -21,7 +21,7 @@
                 labelLoading: 'De afbeelding is aan het laden ...',
 
                 // Async upload settings
-                service: this.apiService,
+                service: this.uploadUrl,//'/admin/api/assets/images/upload',
                 uploadBase64: true,
                 didUpload: this.didUpload,
                 didLoad: this.didLoad,
@@ -30,7 +30,6 @@
                 statusUploadSuccess: '<span class="slim-upload-status-icon"></span> Afbeelding geüpload',
                 didReceiveServerError: this.failed,
                 meta: {
-                    "managerKey" : this.managerKey,
                     "fieldKey" : this.group,
                 }
             });

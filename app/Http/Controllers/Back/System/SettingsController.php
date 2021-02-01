@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Admin\Settings\SettingFieldsManager;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Fields\FieldManager;
-use Thinktomorrow\Chief\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 
 class SettingsController extends Controller
 {
@@ -15,7 +15,7 @@ class SettingsController extends Controller
     /** @var FieldValidator */
     private $fieldValidator;
 
-    public function __construct(FieldManager $settingFieldsManager, FieldValidator $fieldValidator)
+    public function __construct(SettingFieldsManager $settingFieldsManager, FieldValidator $fieldValidator)
     {
         $this->settingFieldsManager = $settingFieldsManager;
         $this->fieldValidator = $fieldValidator;

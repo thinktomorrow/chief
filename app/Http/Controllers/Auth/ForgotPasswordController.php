@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-use Thinktomorrow\Chief\Authorization\ChiefPasswordBrokerResolver;
+use Thinktomorrow\Chief\Admin\Authorization\ChiefPasswordBrokerResolver;
 
 class ForgotPasswordController extends Controller
 {

@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Menu\ChiefMenu;
-use Thinktomorrow\Chief\Menu\Menu;
+use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Site\Menu\Menu;
 
 class MenuController extends Controller
 {

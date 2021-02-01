@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Thinktomorrow\Chief\Modules\Module;
 
 class AddPageMorphkeyToModulesTable extends Migration
 {
@@ -51,7 +50,7 @@ class AddPageMorphkeyToModulesTable extends Migration
             }
 
             try {
-                $page = \Thinktomorrow\Chief\Pages\Page::find($moduleRecord->owner_id);
+                $page = \Thinktomorrow\Chief\Legacy\Pages\Page::find($moduleRecord->owner_id);
 
                 if (!$page) {
                     throw new Exception('No page found by id ' . $moduleRecord->owner_id);

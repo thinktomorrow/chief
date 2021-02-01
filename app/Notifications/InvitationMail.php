@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Notifications;
 
-use Thinktomorrow\Chief\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;

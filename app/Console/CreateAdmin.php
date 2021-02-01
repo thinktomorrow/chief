@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\App\Console;
 
 use Illuminate\Support\Facades\Artisan;
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 
 class CreateAdmin extends BaseCommand
 {

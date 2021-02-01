@@ -5,7 +5,7 @@
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu ' . $menu->label())
 
-    @if(Thinktomorrow\Chief\Menu\Menu::all()->count() > 1)
+    @if(Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1)
         @slot('subtitle')
             <a class="center-y" href="{{ route('chief.back.menus.index') }}">
                 <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>

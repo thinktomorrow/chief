@@ -1,17 +1,17 @@
 <div class="stack-s">
-    @if($filter->label)
-        <label for="{{ $filter->key }}">{{ $filter->label }}</label>
+    @if($label)
+        <label for="{{ $id }}">{{ $label }}</label>
     @endif
 
-    <chief-multiselect
-        name="{{ $filter->name }}"
-        :options='@json($filter->options)'
-        selected='@json(old($filter->name, $filter->selected ?? $filter->default))'
-        :multiple='@json(!!$filter->allowMultiple())'
+    <chief-multiselect id="{{ $id }}"
+        name="{{ $name }}"
+        :options='@json($options)'
+        selected='@json($value)'
+        :multiple='@json($multiple)'
     >
     </chief-multiselect>
 
-    @if($filter->description)
-        <p class="stack-xs squished-xs font-s">{{ $filter->description }}</p>
+    @if($description)
+        <p class="stack-xs squished-xs font-s">{{ $description }}</p>
     @endif
 </div>

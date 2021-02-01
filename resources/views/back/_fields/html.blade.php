@@ -1,1 +1,1 @@
-@include('chief::back._layouts._editors.' . config('thinktomorrow.chief.editor', 'quill') . '.html')
+@include('chief::back._layouts._editors.' . config('chief.editor', 'quill') . '.html')

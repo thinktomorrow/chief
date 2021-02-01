@@ -34,6 +34,10 @@
     </section>
 </url-slugs>
 
+@include('chief::back.pages._partials.url-redirects', [
+    'redirects' => \Thinktomorrow\Chief\Site\Urls\Field\UrlSlugFields::redirectsFromModel($model)
+])
+
 @push('custom-components')
     <script>
         Vue.component('url-slugs',{

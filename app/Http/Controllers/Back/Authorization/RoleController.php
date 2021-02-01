@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Authorization\Permission;
-use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller

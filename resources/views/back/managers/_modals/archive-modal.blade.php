@@ -1,12 +1,12 @@
 @push('portals')
-    <?php $managedModelId = \Illuminate\Support\Str::slug( $manager->assistant('archive')->route('archive')); ?>
+    <?php $managedModelId = $model->id; ?>
 
     <modal id="archive-manager-{{ $managedModelId }}" class="large-modal" title=''>
-        <form action="{{ $manager->assistant('archive')->route('archive') }}" method="POST" id="archive-manager-form-{{ $managedModelId }}">
+        <form action="@adminRoute('archive', $model)" method="POST" id="archive-manager-form-{{ $managedModelId }}">
             @csrf
             <div v-cloak>
-                <h2 class="formgroup-label">Archiveer: {{ $manager->details()->title }}</h2>
-                @if(contract($manager->existingModel(), \Thinktomorrow\Chief\Urls\ProvidesUrl\ProvidesUrl::class))
+                <h2 class="formgroup-label">Archiveer: {{ $model->adminlabel('title') }}</h2>
+                @if(contract($model, \Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl::class))
                     <p>
                         Opgelet, dit haalt deze pagina van de site en bezoekers krijgen een 404-pagina te zien.<br>
                         Je kan ook kiezen om door te linken naar een andere pagina. Stel die pagina hieronder in.
@@ -24,7 +24,7 @@
                         </chief-multiselect>
                     @else
                         <p>
-                            Archiveren haalt de {{ $manager->existingModel()->labelSingular }} onmiddellijk van de site.<br>
+                            Archiveren haalt de {{ $model->adminLabel('title') }} onmiddellijk van de site.<br>
                         </p>
                     @endif
                 </div>

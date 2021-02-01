@@ -7,46 +7,21 @@
  */
 
 // Dashboard
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', 'Thinktomorrow\Chief\App\Http\Controllers\Back\DashboardController@show')->name('chief.back.dashboard');
 
 // Toggle preview mode on frontend chief admin toast
-Route::get('toggle-preview', function () {
-    \Thinktomorrow\Chief\States\Publishable\PreviewMode::toggle();
-
-    return redirect()->back();
-})->name('chief.front.preview');
-
-/**
-* -----------------------------------------------------------------
-* MANAGER ROUTES
-* -----------------------------------------------------------------
-*/
-Route::get('manage/{key}/sort', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@sortIndex')->name('chief.back.managers.sort-index');
-Route::get('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@index')->name('chief.back.managers.index');
-Route::get('manage/{key}/create', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@create')->name('chief.back.managers.create');
-Route::post('manage/{key}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@store')->name('chief.back.managers.store');
-Route::put('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@update')->name('chief.back.managers.update')->where('id', '[0-9]+');
-Route::get('manage/{key}/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@edit')->name('chief.back.managers.edit')->where('id', '[0-9]+');
-Route::delete('manage/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ManagersController@delete')->name('chief.back.managers.delete')->where('id', '[0-9]+');
-
-// Modules
-Route::get('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@index')->name('chief.back.modules.index');
-Route::post('modules', 'Thinktomorrow\Chief\App\Http\Controllers\Back\ModulesController@store')->name('chief.back.modules.store');
+Route::get('toggle-preview', [\Thinktomorrow\Chief\App\Http\Controllers\TogglePreviewController::class, 'toggle'])->name('chief.front.preview');
 
 // Sitemap
 Route::get('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@index')->name('chief.back.sitemap.show');
 Route::post('sitemap', 'Thinktomorrow\Chief\App\Http\Controllers\Back\System\SitemapController@generate')->name('chief.back.sitemap.generate');
 
-/**
-* -----------------------------------------------------------------
-* MANAGER ASSISTANT ROUTES
-* -----------------------------------------------------------------
-*/
-Route::get('assist-view/{assistant}/{method}/{manager}/{model?}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@view')->name('chief.back.assistants.view')->where('model', '[0-9]+');
-Route::post('assist-update/{assistant}/{method}/{manager}/{model}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\AssistantController@update')->name('chief.back.assistants.update')->where('model', '[0-9]+');
-
-Route::post('check-url/{key}/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@checkSlugExists')->name('chief.back.assistants.url.check')->where('id', '[0-9]+');
-Route::delete('remove-redirect/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\Assistants\UrlController@removeRedirect')->name('chief.back.assistants.url.remove-redirect')->where('id', '[0-9]+');
+// Urls
+Route::post('links/check', [\Thinktomorrow\Chief\Site\Urls\Controllers\CheckLinkController::class, 'check'])->name('chief.back.links.check');
+Route::put('links', [\Thinktomorrow\Chief\Site\Urls\Controllers\LinksController::class, 'update'])->name('chief.back.links.update');
+Route::delete('remove-redirect/{id}', [\Thinktomorrow\Chief\Site\Urls\Controllers\RemoveRedirectController::class, 'delete'])->name('chief.back.assistants.url.remove-redirect')->where('id', '[0-9]+');
 
 /**
 * -----------------------------------------------------------------
@@ -69,14 +44,11 @@ Route::get('menuitem/{id}/edit', 'Thinktomorrow\Chief\App\Http\Controllers\Back\
 * EDITOR API & MEDIA MANAGEMENT (used by editor)
 * -----------------------------------------------------------------
 */
-Route::post('managers/{key}/{id}/media', 'Thinktomorrow\Chief\App\Http\Controllers\Api\AsyncUploadRedactorMediaController@upload')->name('chief.back.managers.media.upload');
-Route::post('api/assets/images/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Api\AsyncUploadSlimMediaController@upload')->name('chief.api.images.upload');
-Route::post('api/assets/files/upload', 'Thinktomorrow\Chief\App\Http\Controllers\Api\AsyncUploadFileMediaController@upload')->name('chief.api.files.upload');
 Route::get('api/internal-links', 'Thinktomorrow\Chief\App\Http\Controllers\Api\InternalLinksController@index')->name('chief.api.internal-links');
 Route::get('api/media', 'Thinktomorrow\Chief\App\Http\Controllers\Api\MediaGalleryController@index')->name('chief.api.media');
 
-Route::post('mediagallery/bulk', [Thinktomorrow\Chief\Mediagallery\Http\BulkActionsController::class, 'bulk'])->name('chief.mediagallery.bulk');
-Route::get('mediagallery', [Thinktomorrow\Chief\Mediagallery\Http\MediagalleryController::class, 'index'])->name('chief.mediagallery.index');
+Route::post('mediagallery/bulk', [Thinktomorrow\Chief\Admin\Mediagallery\Http\BulkActionsController::class, 'bulk'])->name('chief.mediagallery.bulk');
+Route::get('mediagallery', [Thinktomorrow\Chief\Admin\Mediagallery\Http\MediagalleryController::class, 'index'])->name('chief.mediagallery.index');
 
 Route::put('api/relations/status', [\Thinktomorrow\Chief\App\Http\Controllers\Api\RelationStatusController::class, 'update'] )->name('chief.api.relation.status');
 Route::post('api/sort', [\Thinktomorrow\Chief\App\Http\Controllers\Api\SortController::class, 'sort'] )->name('chief.api.sort');
@@ -149,14 +121,6 @@ Route::get('audit/{id}', 'Thinktomorrow\Chief\App\Http\Controllers\Back\AuditCon
 * SQUANTO TRANSLATION ROUTES
 * -----------------------------------------------------------------
 */
-// Developer access
-Route::get('translations/lines/create', ['as' => 'squanto.lines.create', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@create']);
-Route::delete('translations/lines/{id}', ['as' => 'squanto.lines.destroy', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@destroy']);
-Route::get('translations/lines/{id}/edit', ['as' => 'squanto.lines.edit', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@edit']);
-Route::put('translations/lines/{id}', ['as' => 'squanto.lines.update', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@update']);
-Route::post('translations/lines', ['as' => 'squanto.lines.store', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\LineController@store']);
-
-// Client access
-Route::get('translations/{id}/edit', ['as' => 'squanto.edit', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\TranslationController@edit']);
-Route::put('translations/{id}', ['as' => 'squanto.update', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\TranslationController@update']);
-Route::get('translations', ['as' => 'squanto.index', 'uses' => 'Thinktomorrow\Chief\App\Http\Controllers\Back\Translations\TranslationController@index']);
+Route::get('translations/{id}/edit', [\Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController::class, 'edit'])->name('squanto.edit');
+Route::put('translations/{id}', [\Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController::class, 'update'])->name('squanto.update');
+Route::get('translations', [\Thinktomorrow\Chief\App\Http\Controllers\Back\TranslationController::class, 'index'])->name('squanto.index');

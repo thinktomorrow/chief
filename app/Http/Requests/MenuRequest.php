@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Thinktomorrow\Url\Url;
 use Thinktomorrow\Url\Root;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 
 class MenuRequest extends FormRequest
 {
@@ -41,7 +41,7 @@ class MenuRequest extends FormRequest
         $translations = $this->request->get('trans', []);
 
         $rules['type']            = 'required|in:custom,internal,nolink';
-        $rules['page_id']         = 'required_if:type,internal';
+        $rules['owner_reference']         = 'required_if:type,internal';
 
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {
@@ -66,7 +66,7 @@ class MenuRequest extends FormRequest
             $attributes['trans.' . $locale . '.url']     = $locale . ' link';
         }
 
-        $attributes['page_id'] = 'Interne pagina';
+        $attributes['owner_reference'] = 'Interne pagina';
 
 
         return $attributes;

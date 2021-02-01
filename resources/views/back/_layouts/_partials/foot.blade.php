@@ -1,6 +1,3 @@
-<!-- project specific includes -->
-@include('chief::back._layouts._partials.project-footer')
-
 <script src="{{ chief_cached_asset('/chief-assets/back/js/main.js') }}"></script>
 
 <!-- place to add custom vue components, right before the global Vue instance is created -->

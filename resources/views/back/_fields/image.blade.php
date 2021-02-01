@@ -8,7 +8,6 @@
         'locale'     => $locale,
         'name'       => $name,
         'multiple'   => $field->allowMultiple(),
-        'managerKey' => method_exists($model, 'managedModelKey') ? $model->managedModelKey() : '',
     ]);
 ?>
 <imagesupload reference="{{ \Illuminate\Support\Str::random(10) }}" :settings="{{ $imagesUploadSettings }}" v-cloak preselected="{{ count($files) ? json_encode($files) : '[]'  }}">
@@ -17,7 +16,7 @@
             <div v-for="(item, index) in items" :key="item.key" class="column-4 draggable-item" :draggable="sort.isReordering" :data-item-id="item.id"
                  @dragstart="sort.handleSortingStart"
                  @dragenter.prevent="sort.handleSortingEnter">
-                    <image-component :reference="reference" :item="item" @input="(prop, value) => { items[index][prop] = value; }" :name="settings.name" :group="settings.group" :manager-key="settings.managerKey" api-service="{{ route('chief.api.images.upload') }}">
+                    <image-component :item="item" @input="(prop, value) => { items[index][prop] = value; }" :name="settings.name" :group="settings.group" upload-url="@adminRoute('asyncUploadSlimImage',$model,$field->getKey())">
                         <div class="thumb" slot-scope="{hiddenInputName, hiddenInputValue, name}">
                             <div>
                                 <img v-show="item.url" :src="item.url" :alt="item.filename">

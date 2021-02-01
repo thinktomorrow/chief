@@ -2,15 +2,18 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Thinktomorrow\Chief\Fragments\FragmentModel;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Fragments\StaticFragmentManager;
+use Thinktomorrow\Chief\Modules\Presets\TextModuleManager;
+use Thinktomorrow\Chief\Managers\Register\RegisterManager;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Modules\Presets\PagetitleModuleManager;
+use Thinktomorrow\Chief\Legacy\Fragments\FragmentModel;
 use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Menu\MenuItem;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Modules\TextModule;
-use Thinktomorrow\Chief\Management\Register;
-use Thinktomorrow\Chief\Modules\ModuleManager;
-use Thinktomorrow\Chief\Modules\PagetitleModule;
+use Thinktomorrow\Chief\Modules\Presets\TextModule;
+use Thinktomorrow\Chief\Modules\Presets\PagetitleModule;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ChiefProjectServiceProvider extends ServiceProvider
@@ -26,26 +29,24 @@ class ChiefProjectServiceProvider extends ServiceProvider
             'fragment'  => FragmentModel::class,
         ]);
 
-        // singles - text - pagetitle
-        $this->registerPage(PageManager::class, Single::class);
+        // singles
+//        $this->registerPage(PageManager::class, Single::class);
 
-        $this->registerManager(ModuleManager::class, TextModule::class, ['pagesection']);
-        $this->registerManager(ModuleManager::class, PagetitleModule::class, ['pagesection']);
+//        $this->registerManager(StaticFragmentManager::class);
+//        $this->registerModel(TextModule::class, TextModuleManager::class,'module');
+//        $this->registerManager(PagetitleModuleManager::class, ['module']);
     }
 
-    public function registerModule($class, $model, array $tags = [])
+    protected function registerModel(string $modelClass, string $managerClass, $tags = []): void
     {
-        return $this->registerManager($class, $model, array_merge(['module'], $tags));
+        $this->app->make(Register::class)->model($modelClass, $managerClass, $tags);
     }
 
-    public function registerPage($class, $model, array $tags = [])
+    protected function registerFragments(array $fragmentClasses): void
     {
-        return $this->registerManager($class, $model, array_merge(['page'], $tags));
-    }
-
-    public function registerManager($class, $model, array $tags = [])
-    {
-        return app(Register::class)->register($class, $model, $tags);
+        foreach($fragmentClasses as $fragmentClass) {
+            $this->app->make(Register::class)->staticFragment($fragmentClass);
+        }
     }
 
     public function register()

@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
 
 class ResendInviteController extends Controller
 {

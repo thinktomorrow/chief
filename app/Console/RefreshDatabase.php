@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
-use Illuminate\Database\Eloquent\Factory as ModelFactory;
 use Illuminate\Support\Facades\Artisan;
+use Thinktomorrow\Chief\Legacy\Pages\Page;
+use Illuminate\Database\Eloquent\Factory as ModelFactory;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 
 class RefreshDatabase extends BaseCommand
 {

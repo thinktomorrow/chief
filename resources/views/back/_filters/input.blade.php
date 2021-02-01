@@ -1,10 +1,10 @@
 <div class="stack-s">
-    @if($filter->label)
-        <label for="{{ $filter->key }}">{{ $filter->label }}</label>
+    @if($label)
+        <label for="{{ $id }}">{{ $label }}</label>
     @endif
-    <input type="text" name="{{ $filter->name }}" id="{{ $filter->key }}" class="input inset-s" placeholder="{{ $filter->placeholder ?? '' }}" value="{{ old($filter->name, $filter->default) }}">
+    <input type="text" name="{{ $name }}" id="{{ $id }}" class="input inset-s" placeholder="{{ $placeholder }}" value="{{ $value }}">
 
-    @if($filter->description)
-        <p class="stack-xs squished-xs font-s">{{ $filter->description }}</p>
+    @if($description)
+        <p class="stack-xs squished-xs font-s">{{ $description }}</p>
     @endif
 </div>

@@ -12,6 +12,7 @@ _migration/uploads
 /report
 /docs/_site
 .phpunit.result.cache
+build/
 
 ##########################################
 # BUILDING
@@ -27,3 +28,4 @@ _migration/uploads
 /public/uploads
 /storage/medialibrary
 /storage/*.key
+/tests/Shared/tmp

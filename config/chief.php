@@ -10,6 +10,19 @@ return [
     'strict' => env('APP_DEBUG', false),
 
     /**
+     * Application locales
+     *
+     * The available application locales in which model values can be localized in.
+     * The translatable fields will be editable for each locale accordingly. Note
+     * that you can still override this for each model or individual field.
+     *
+     * The first locale in this list is considered the default required locale.
+     */
+    'locales' => [
+        'nl',
+    ],
+
+    /**
      * Domain settings.
      *
      * Here you should set your primary location for your models
@@ -28,7 +41,7 @@ return [
          * Use the following route snippet as a starting point:
          *
          *      Route::get('{slug?}', function($slug = '/'){
-         *          return \Thinktomorrow\Chief\Urls\ChiefResponse::fromSlug($slug);
+         *          return \Thinktomorrow\Chief\Site\Urls\ChiefResponse::fromSlug($slug);
          *      })->name('pages.show')->where('slug', '(.*)?');
          *
          */
@@ -78,6 +91,13 @@ return [
     ],
 
     /**
+     * Widgets that will be shown on the dashboard
+     */
+    'widgets' => [
+
+    ],
+
+    /**
      * Custom query sets.
      */
     'sets' => [
@@ -100,6 +120,10 @@ return [
     ],
 
     /**
+     * Snippet parsing is no longer out of the box available. If you want this for your project,
+     * you can overwrite the renderView or renderFragment methods and parse the content via the SnippetParser.
+     * This way you'll get to parse the entire rendered html prior to returning it to the user.
+     *
      * Define the directory where your html snippets reside. This can be a blade file or regular html.
      * The identifier of each snippet is taken from the filename so make sure to properly name
      * your files. We will load up all the snippets as available clips in e.g. the editor.
@@ -110,27 +134,18 @@ return [
     ],
 
     /**
-     * Enable snippet rendering by default.
-     *
-     * Pages and modules will parse any valid snippet placeholders found in a text or content
-     * block and render it to the expected html. If set to false, you can always manually
-     * manage this by calling the 'withSnippets()' method on a Page or Module object.
-     */
-    'withSnippets' => true,
-
-    /**
      * Select the editor for the html fields. This is used for the html fields
      * in the forms as well as in the pagebuilder. Available options are:
      * 'quill' and 'redactor'. By default the free quill editor is set.
      */
-    'editor' => 'quill',
+    'editor' => 'redactor',
 
     /**
      * Here you can define the stack of checks used by the healthmonitor.
      */
     'healthMonitor' => [
-        Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageSetCheck::class,
-        Thinktomorrow\Chief\System\HealthMonitor\Checks\HomepageAccessibleCheck::class,
+        Thinktomorrow\Chief\Admin\HealthMonitor\Checks\HomepageSetCheck::class,
+        Thinktomorrow\Chief\Admin\HealthMonitor\Checks\HomepageAccessibleCheck::class,
     ],
 
     /**

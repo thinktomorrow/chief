@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Auth\AuthenticationException;
@@ -33,53 +33,39 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Exception  $exception
-     * @return void
-     */
-    public function report(Exception $exception)
-    {
-        parent::report($exception);
-    }
-
-    /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param Throwable $e
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $e)
     {
-        if ($exception instanceof AuthorizationException) {
-            return $this->unauthorized($request, $exception);
+        if ($e instanceof AuthorizationException) {
+            return $this->unauthorized($request, $e);
         }
 
-        if ($request->getMethod() == 'POST' && $exception instanceof PostTooLargeException) {
+        if ($request->getMethod() == 'POST' && $e instanceof PostTooLargeException) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'error' => true, // required by redactor
-                    'message' => $exception->getMessage(),
+                    'message' => $e->getMessage(),
                 ], 200);
             }
         }
-
-        if ($this->shouldRenderChiefException($exception)) {
-            return $this->renderChiefException($request, $exception);
+        if ($this->shouldRenderChiefException($e)) {
+            return $this->renderChiefException($request, $e);
         }
 
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 
-    private function shouldRenderChiefException(Exception $exception): bool
+    private function shouldRenderChiefException(Throwable $exception): bool
     {
         return (Str::startsWith(request()->path(), 'admin/') && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException);
     }
 
-    protected function renderChiefException($request, Exception $exception)
+    protected function renderChiefException($request, Throwable $exception)
     {
         if (!config('app.debug')) {
             if ($request->expectsJson()) {

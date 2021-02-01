@@ -1,0 +1,95 @@
+<?php
+declare(strict_types=1);
+
+namespace Thinktomorrow\Chief\Managers\Assistants;
+
+use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+
+trait ManagerDefaults
+{
+    private string $managedModelClass;
+    private FragmentRepository $fragmentRepository;
+    private FieldValidator $fieldValidator;
+
+    public function __construct(string $managedModelClass, FragmentRepository $fragmentRepository, FieldValidator $fieldValidator)
+    {
+        $this->managedModelClass = $managedModelClass;
+        $this->fragmentRepository = $fragmentRepository;
+        $this->fieldValidator = $fieldValidator;
+    }
+
+    public function managedModelClass(): string
+    {
+        return $this->managedModelClass;
+    }
+
+    public function route(string $action, $model = null, ...$parameters): string
+    {
+        foreach(DiscoverTraitMethods::belongingTo(static::class, 'route') as $method) {
+            if(null !== ($route = $this->$method($action, $model, ...$parameters))){
+                return $route;
+            }
+        }
+
+        return $this->generateRoute($action, $model, ...$parameters);
+    }
+
+    public function can(string $action, $model = null): bool
+    {
+        foreach(DiscoverTraitMethods::belongingTo(static::class, 'can') as $method) {
+            if(true === $this->$method($action, $model)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function generateRoute(string $action, $model = null, ...$parameters): string
+    {
+        if ($model) {
+            $modelId = is_object($model) ? $model->id : $model;
+
+            $parameters = array_merge((array)$modelId, $parameters);
+        }
+
+        return route('chief.' . $this->managedModelClass()::managedModelKey() . '.' . $action, $parameters);
+    }
+
+    private function guard(string $action, $model = null)
+    {
+        if (!$this->can($action, $model)) {
+            throw NotAllowedManagerAction::notAllowedAction($action, $this->managedModelClass()::managedModelKey());
+        }
+    }
+
+    /**
+     * The authorize method provides a check against the current admin permissions.
+     *
+     * @param string $action
+     * @throws NotAllowedManagerAction
+     */
+    private function authorize(string $permission): void
+    {
+        if (!chiefAdmin() || !chiefAdmin()->hasPermissionTo($permission)) {
+            throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
+        }
+    }
+
+    /**
+     * Which model contains the fields.
+     * This is set as a method so the static fragment can also benefit from our assistants.
+     */
+    private function fieldsModel($id)
+    {
+        return $this->managedModelClass()::findOrFail($id);
+    }
+
+    private function fieldValidator(): FieldValidator
+    {
+        return $this->fieldValidator;
+    }
+}

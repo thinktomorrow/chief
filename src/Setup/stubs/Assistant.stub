@@ -1,0 +1,46 @@
+<?php
+declare(strict_types=1);
+
+namespace __STUB_NAMESPACE__;
+
+use Illuminate\Http\Request;
+
+trait __STUB_CLASSNAME__
+{
+    abstract protected function generateRoute(string $action, $model = null, ...$parameters);
+
+    public static function routes__STUB_CLASSNAME__(): array
+    {
+        return [
+             ManagedRoute::get('__STUB_ACTION__'),
+        ];
+    }
+
+    /**
+     * Builds and returns the fully qualified route for a given action.
+     *
+     * When dealing with a dynamic route constructed from a specific model,
+     * a model instance should be passed as second argument.
+     *
+     * @param string $action
+     * @param null $model
+     * @param array $parameters
+     * @return string
+     */
+    public function route__STUB_CLASSNAME__(string $action, $model = null, ...$parameters): ?string
+    {
+        if(!$this->can__STUB_CLASSNAME__($action, $model)) return null;
+
+        return $this->generateRoute($action, $model, ...$parameters);
+    }
+
+    public function can__STUB_CLASSNAME__(string $action, $model = null): bool
+    {
+        return in_array($action, [__STUB_ACTION__]);
+    }
+
+    public function __STUB_ACTION__(Request $request)
+    {
+        // work your magic
+    }
+}

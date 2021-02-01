@@ -1,12 +1,12 @@
 @push('portals')
-    <?php $managedModelId = Illuminate\Support\Str::slug($manager->route('delete')); ?>
+    <?php $managedModelId = $model->id; ?>
 
     <modal id="delete-manager-{{ $managedModelId }}" class="large-modal" title=''>
-        <form action="{{ $manager->route('delete') }}" method="POST" id="delete-manager-form-{{ $managedModelId }}" slot>
+        <form action="@adminRoute('delete', $model)" method="POST" id="delete-manager-form-{{ $managedModelId }}" slot>
             @method('DELETE')
             @csrf
             <div v-cloak>
-                <h2>Verwijder {{ $manager->details()->title }}</h2>
+                <h2>Verwijder {{ $model->adminLabel('title') }}</h2>
                 <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
                 <div class="input-group stack column-6">
                     <input data-delete-confirmation name="deleteconfirmation" placeholder="DELETE" type="text" class="input inset-s" autocomplete="off">

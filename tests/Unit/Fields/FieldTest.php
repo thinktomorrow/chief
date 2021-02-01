@@ -4,13 +4,19 @@ namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Carbon\Carbon;
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Fields\Types\FieldType;
-use Thinktomorrow\Chief\Fields\Types\InputField;
-use Thinktomorrow\Chief\Tests\Feature\Audit\ArticleFake;
-use Thinktomorrow\Chief\Tests\Feature\Management\Fakes\ManagedModelFake;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 
 class FieldTest extends TestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        ArticlePage::migrateUp();
+    }
+
     /** @test */
     function it_has_a_type()
     {
@@ -109,7 +115,7 @@ class FieldTest extends TestCase
     /** @test */
     function it_can_get_the_existing_model_value()
     {
-        $model = ArticleFake::create(['updated_at' => Carbon::yesterday()]);
+        $model = ArticlePage::make(['updated_at' => Carbon::yesterday()]);
         $field = InputField::make('updated_at');
 
         $this->assertNull($field->getValue()); // without model
@@ -117,7 +123,35 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_allows_for_a_custom_resolved_value()
+    function if_model_has_not_got_the_value_than_the_default_is_used()
+    {
+        $model = ArticlePage::make(['updated_at' => null]);
+        $field = InputField::make('updated_at')->value('default-value');
+
+        $this->assertEquals('default-value', $field->getValue());
+        $this->assertEquals('default-value', $field->getValue($model));
+    }
+
+    /** @test */
+    function it_can_get_the_existing_translated_model_value()
+    {
+        config()->set('chief.locales', ['nl','en','fr']);
+
+        $model = ArticlePage::make(['content_trans' => [
+            'nl' => 'existing content nl',
+            'en' => 'existing content en',
+        ]]);
+        $field = InputField::make('content_trans')->translatable(['nl', 'en', 'fr']);
+
+        $this->assertEquals('existing content nl', $field->model($model)->getValue('nl'));
+        $this->assertEquals('existing content en', $field->model($model)->getValue('en'));
+
+        // It does not use a fallback for translated values
+        $this->assertNull($field->getValue($model, 'fr'));
+    }
+
+    /** @test */
+    function it_allows_for_a_custom_value_resolver()
     {
         $field = InputField::make('title')->valueResolver(function(){
             return 'custom value';
@@ -138,39 +172,19 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function if_model_has_not_got_the_value_than_the_default_is_used()
-    {
-        $model = ArticleFake::create(['updated_at' => null]);
-        $field = InputField::make('updated_at')->value('default-value');
-
-        $this->assertEquals('default-value', $field->getValue());
-        $this->assertEquals('default-value', $field->getValue($model));
-    }
-
-    /** @test */
-    function it_can_get_the_existing_translated_model_value()
-    {
-        $model = ArticleFake::create(['title:en' => 'existing title']);
-        $field = InputField::make('title')->translatable(['nl','en']);
-
-        $this->assertEquals('existing title', $field->model($model)->getValue('en'));
-        $this->assertNull($field->getValue($model, 'nl'));
-    }
-
-    /** @test */
-    function it_does_not_use_a_fallback_for__translated_values()
-    {
-        // Nl is default so make sure 'en' does not fallback to nl
-        $model = ArticleFake::create(['title:nl' => 'existing title']);
-        $field = InputField::make('title')->translatable(['nl','en']);
-
-        $this->assertNull($field->model($model)->getValue('en'));
-    }
-
-    /** @test */
     function it_has_a_default_view()
     {
         $this->assertStringContainsString('<input type="text" name="test" id="test" class="input inset-s" placeholder="" value="">', InputField::make('test')->render());
+    }
+
+    /** @test */
+    public function it_can_have_a_custom_view()
+    {
+        $this->app['view']->addNamespace('test-views', __DIR__ . '/stubs/views');
+
+        $render = InputField::make('input-one')->view('test-views::custom-field')->render();
+
+        $this->assertEquals('this is a custom field view',$render);
     }
 
     /** @test */

@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Relations\Relation;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\PageBuilder\Relations\Relation;
+use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 
 class DeleteModule
 {

@@ -12,7 +12,7 @@
         @if($asset->getExtensionType() == "image")
             <img class="relative" src="{{ $asset->url() }}" style="max-width:100%; max-height:100%;">
         @else
-            {!! \Thinktomorrow\Chief\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
+            {!! \Thinktomorrow\Chief\Admin\Mediagallery\MimetypeIcon::fromString($asset->getMimetype())->icon() !!}
         @endif
     </div>
 

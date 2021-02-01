@@ -17,7 +17,7 @@ class VerifyCsrfToken extends BaseVerifier
 
     public function handle($request, \Closure $next)
     {
-        $adminRoute = config('thinktomorrow.chief.route.prefix', '/admin');
+        $adminRoute = config('chief.route.prefix', '/admin');
 
         // Add exception routes for all chief admin endpoints.
         $this->except[] = rtrim($adminRoute, '/') . '/*';

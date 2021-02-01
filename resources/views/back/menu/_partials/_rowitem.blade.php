@@ -10,9 +10,9 @@
     </div>
 
     <div class="column-4 center-y">
-        @if($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_INTERNAL)
+        @if($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_INTERNAL)
             <a class="label label-primary" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
-        @elseif($item->type == \Thinktomorrow\Chief\Menu\MenuItem::TYPE_NOLINK)
+        @elseif($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
             -
         @else
             <a class="text-subtle" href="{{ $item->url }}" target="_blank">{{ $item->url }}</a>

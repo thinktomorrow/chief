@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
-use Thinktomorrow\Chief\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
 
 class ChiefValidateInvite
 {

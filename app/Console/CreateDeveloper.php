@@ -2,9 +2,6 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Illuminate\Support\Facades\Artisan;
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
-
 class CreateDeveloper extends BaseCommand
 {
     protected $signature = 'chief:developer';

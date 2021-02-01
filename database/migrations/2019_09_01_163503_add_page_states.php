@@ -1,9 +1,9 @@
 <?php
 
-use Thinktomorrow\Chief\Pages\Page;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
-use Thinktomorrow\Chief\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\Legacy\Pages\Page;
 use Illuminate\Database\Migrations\Migration;
 
 class AddPageStates extends Migration
@@ -14,7 +14,7 @@ class AddPageStates extends Migration
             $table->string('current_state')->after('morph_key')->default(PageState::DRAFT);
         });
 
-        $this->convertOldStates();
+        // $this->convertOldStates();
 
         Schema::table('pages', function (Blueprint $table) {
             $table->dropColumn('archived_at');

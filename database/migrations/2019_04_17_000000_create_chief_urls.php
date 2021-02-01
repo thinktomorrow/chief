@@ -1,11 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\Legacy\Pages\Page;
 use Illuminate\Database\Migrations\Migration;
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\States\Archivable\ArchiveScope;
-use Thinktomorrow\Chief\Urls\UrlRecord;
+use Thinktomorrow\Chief\ManagedModels\States\Archivable\ArchiveScope;
 
 class CreateChiefUrls extends Migration
 {
@@ -25,7 +25,7 @@ class CreateChiefUrls extends Migration
         });
 
         // Migrate the slugs
-        $this->migrateSlugs();
+//        $this->migrateSlugs();
 
         Schema::table('page_translations', function (Blueprint $table) {
             $table->dropColumn('slug');
@@ -37,17 +37,17 @@ class CreateChiefUrls extends Migration
         Schema::dropIfExists('chief_urls');
     }
 
-    private function migrateSlugs()
-    {
-        foreach (Page::withoutGlobalScope(ArchiveScope::class)->get() as $page) {
-            foreach ($page->translations as $translation) {
-                UrlRecord::create([
-                    'locale'              => $translation->locale,
-                    'slug'                => $translation->slug,
-                    'model_type'          => $page->getMorphClass(),
-                    'model_id'            => $page->id,
-                ]);
-            }
-        }
-    }
+//    private function migrateSlugs()
+//    {
+//        foreach (Page::withoutGlobalScope(ArchiveScope::class)->get() as $page) {
+//            foreach ($page->translations as $translation) {
+//                UrlRecord::create([
+//                    'locale'              => $translation->locale,
+//                    'slug'                => $translation->slug,
+//                    'model_type'          => $page->getMorphClass(),
+//                    'model_id'            => $page->id,
+//                ]);
+//            }
+//        }
+//    }
 }

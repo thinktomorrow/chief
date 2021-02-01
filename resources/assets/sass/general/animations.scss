@@ -32,7 +32,6 @@
     from {
         opacity: 1;
     }
-
     to {
         opacity: 0;
         transform: translate3d(0, 100%, 0);
@@ -67,4 +66,32 @@
 }
 .pop-enter, .pop-leave-to {
     transform: scale(0) translateZ(0);
+}
+
+}
+
+
+/**
+ * Sidebar animations
+ */
+.slide-from-right {
+    animation: slideFromRight;
+    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+    animation-duration: .6s;
+}
+
+@keyframes slideFromRight {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(0); }
+}
+
+.fade-in {
+    animation: fadeIn;
+    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+    animation-duration: .6s;
+}
+
+@keyframes fadeIn {
+    0% { @apply opacity-0; }
+    100% { @apply opacity-25; }
 }

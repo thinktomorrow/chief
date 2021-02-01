@@ -1,14 +1,16 @@
+<input type="hidden" name="menu_type" value="{{$menuitem->menu_type}}">
+
 @formgroup(['field' => 'label'])
     @slot('label', 'Label')
     @slot('description', 'Dit is de tekst die wordt getoond in het menu. Verkies een korte, duidelijke term.')
     @slot('isRequired', true)
-    @if(count($menuitem->availableLocales()) > 1)
+    @if(count(config('chief.locales')) > 1)
         <tabs v-cloak>
-            @foreach($menuitem->availableLocales() as $locale)
+            @foreach(config('chief.locales') as $locale)
                 <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
                     <div class="row">
                         <div class="column-4">
-                            <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+                            <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}" class="input inset-s">
                         </div>
                     </div>
 
@@ -17,16 +19,15 @@
             @endforeach
         </tabs>
     @else
-        @foreach($menuitem->availableLocales() as $locale)
+        @foreach(config('chief.locales') as $locale)
             <div class="row">
                 <div class="column-4">
-                    <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->getTranslationFor('label', $locale)) }}" class="input inset-s">
+                    <input type="text" name="trans[{{ $locale }}][label]" id="trans-{{ $locale }}-label" placeholder="Menu label" value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}" class="input inset-s">
                 </div>
             </div>
             <error class="caption text-warning" field="trans.{{ $locale }}.label" :errors="errors.get('trans.{{ $locale }}')"></error>
         @endforeach
     @endif
-    <input type="hidden" name="menu_type" value="{{$menuitem->menu_type}}">
 @endformgroup
 
 <section class="formgroup">
@@ -51,9 +52,9 @@
 
                         <div v-if="type == 'internal'" class="stack-xs input-group-prefix relative">
                             <chief-multiselect
-                                    name="page_id"
+                                    name="owner_reference"
                                     :options='@json($pages)'
-                                    selected='@json(old('page_id', $internal_page_id))'
+                                    selected='@json(old('owner_reference', $ownerReference))'
                                     grouplabel="group"
                                     groupvalues="values"
                                     labelkey="label"
@@ -61,7 +62,7 @@
                             >
                             </chief-multiselect>
 
-                            <error class="caption text-warning" field="page_id" :errors="errors.all()"></error>
+                            <error class="caption text-warning" field="owner_reference" :errors="errors.all()"></error>
 
                         </div>
                     </label>
@@ -77,19 +78,19 @@
                         <strong>Of kies een eigen link.</strong>
 
                         <div v-if="type == 'custom'" class="stack-xs input-group-prefix relative">
-                            @if(count($menuitem->availableLocales()) > 1)
+                            @if(count(config('chief.locales')) > 1)
                             <tabs v-cloak>
-                                @foreach($menuitem->availableLocales() as $locale)
+                                @foreach(config('chief.locales') as $locale)
                                     <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.label')}">
-                                        <input type="text" name="trans[{{ $locale }}][url]" id="trans-{{ $locale }}-url" placeholder="e.g. https://google.com" value="{{ old('trans.'.$locale.'.url', $menuitem->getTranslationfor('url', $locale)) }}"
+                                        <input type="text" name="trans[{{ $locale }}][url]" id="trans-{{ $locale }}-url" placeholder="e.g. https://google.com" value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                                class="input inset-s">
                                         <error class="caption text-warning" field="trans.{{ $locale }}.url" :errors="errors.get('trans.{{ $locale }}')"></error>
                                     </tab>
                                 @endforeach
                             </tabs>
                             @else
-                                @foreach($menuitem->availableLocales() as $locale)
-                                        <input type="text" name="trans[{{ $locale }}][url]" id="trans-{{ $locale }}-url" placeholder="e.g. https://google.com" value="{{ old('trans.'.$locale.'.url', $menuitem->getTranslationfor('url', $locale)) }}"
+                                @foreach(config('chief.locales') as $locale)
+                                        <input type="text" name="trans[{{ $locale }}][url]" id="trans-{{ $locale }}-url" placeholder="e.g. https://google.com" value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                             class="input inset-s">
                                         <error class="caption text-warning" field="trans.{{ $locale }}.url" :errors="errors.get('trans.{{ $locale }}')"></error>
                                 @endforeach

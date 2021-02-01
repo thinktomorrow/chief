@@ -2,7 +2,132 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-# Unreleased
+// TODO:
+- routes() method not static -> so staticFragmentManager can be set for each static model.
+  -> one global Register to points to all registered models and managers.
+- perf: not loading the managers on frontend?
+- wat met spirit in chief?
+- duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
+- allow files/images on create (needs existing model owner for async uploads). Refactor asyncUploadFile(Request $request, $id, $fieldKey) to pass the class of the owner model instead of id (we dont need the id on create, only on edit)
+- replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
+- remove menu translations table (=> try to remove astrotomic altogether)
+- menu only connects with 'Pages', need to add model_type as well to allow other models
+- add: menu migration for translations to dynamic values (script instead of standard migration) + and remove translations table
+- menu requires menuLabel for an owner... (internal url) try to remove this and set a title on the menu item itself
+- validation op settings page toont: 'validation.required'.
+- squanto page layouts are messed up.
+- squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
+- allow to revoke invitation.
+- proper duplicate context feature (with buttons and all)
+
+## UPCOMING 0.6 (REFACTOR RELEASE)
+high impact on manager setup and admin page customisation.
+A manager takes care of the routing and responses. It basically acts as a controller. The model itself is responsible for the field definitions and saving of those fields.
+- fields are now defined on the managed model, instead of the manager.
+- saving of the field values is now the model's responsibility, no longer the manager.
+
+### Manager and model related
+- Removed: following methods from a Manager: findManaged,
+- Filters have gotten a complete overhaul. Each filter should now implement a `Filter` interface. Some preset filters are available out of the box.
+- `UrlField` has been removed. Page urls are no longer maintained as a field. Field behavior for the url management was always a bit too forced. Instead all pages will automatically contain the url management in the sidebar of their admin page.
+  The links mgmt segment is auto-injected when that page model implements the `ProvidesUrl` interface.
+
+### View related
+- Removed: custom `project-head` and `project-footer` blade files. These served as a placeholder to add custom code to your projects' admin pages. It is however rarely used and now obsolete due to the new way how admin pages are constructed.
+- Removed: unused `ActsAsMenuItem` interface.
+
+### TODO:
+
+#### ABSTRACTMANAGER
+- ✓ findManaged needed?
+- ✓ indexCollection and indexBuilder filters() from CrudAssistant
+- ✓ indexSorting and indexPagination methods should no longer be necessary -> filters() and indexModels() from CrudAssistant
+- ✓ indexView and indexViewData should no longer be necessary -> index method from CrudAssistant
+- ✓ existingModel() or modelInstance() and hasExistingModel() no longer necessary?
+- ✓ route() method has new signature: route(string $action, $model = null, ...$parameters)
+- ✓ does guard() need to be public? => no is now no longer public
+- ✓ fieldsWithAssistantFields() -> no. was primarily for url field but urlfield is now added as other fields.
+- ✓ createFields / editFields => use field tags 'create'
+- ✓ createView / createViewData => now an create method from CrudAssistant
+- ✓ editView / editViewData => now an create method from CrudAssistant
+
+#### PAGEMANAGER:
+- pagebuilder
+- ✓ pagemanager::authorize() -> check if behavior is there
+- ✓ delete a page (+ confirmation)
+- ✓ try to remove : createFields / saveCreateFields - editFields / saveEditFields
+- transport storeRequest and updateRequest: default urls, default short description, default title for page, ...
+- audit records after creation and update
+- try to remove: Page application classes: storeManager, updateManager and DeleteManager
+- Fix: issue where url is not prefilled in on creation based on title
+
+#### PAGE:
+- ✓ try to remove findPublished() on page
+- ✓ mediaUrls() / mediaUrl() used?
+- snippets: try to remove from Page altogether (now in getAttribute): should be in viewCompiler stuff no?
+- fragments
+- base url segment
+- url -> move logic to class
+- viewpaths for frontend
+- flatReference stuff on Page
+- statusAsLabel() and statusAsPlainLabel()
+- try to remove sortedByCreated() scope on page
+
+#### MODULE and MODULE MANAGER
+- delete a module. There is now a DeleteModule action class.
+- WithSnippets behavior
+- all the same stuff as for page
+
+#### GENERAL
+- ✓ refactor save methods to use array input instead of request object.
+- ✓ Then we can refactor updateModule stuff... -> convert to the TextModule::saveFields()
+
+- refactor MenuItem so it accepts interface 'MenuItemable' or so
+- refactor url stuff (esp. UrlHelper) so it always only uses a 'ProvidesUrl' and add to this interface a 'visitableUrl($locale)' or something to indicate this url is visitable on the site or not.
+- memory usage for memoizedUrlRecords is high (lots of model instances)
+- ✓ rename FlatReference to 'ModelReference';
+- ✓ HOW to remove managerViewModel data element to be passed to views?
+- refactor view components so adminLabel is not needed as much (or as little as possible)
+- BUG: no redactor in pagebuilder
+- CHECK: is module slug needed? Try without. probably used for sorting new text modules in pagebuilder but for something else as well?
+
+#### Improvements
+- remove: translatable logic + migrations + TranslatableCommand in concerns.
+- TODO: Removed: Translatable logic based on the `astrotomic/laravel-translatable` package, which required a separate translation table.
+  This will no longer be required in a blank Chief project. For translatable content, the default models now rely on the `Thinktomorrow/DynamicAttribures` package instead.
+
+- add: thinktomorrow.chief.locales to replace dependency on translatable.locales -> also than we can autofill for 'locales' method on a field
+- filter views on index: possibly as components? <x-filters>
+
+### types of fragments
+// Possible fragmentables are:
+// module: fixed promobar
+// module: cta block
+// couple of pages
+// card modules
+// automatic collection set (with params like amount, max, sorting, ...)
+// snippet (replaces snippet stuff)
+// fixed fragment: hero or footer
+// ineditable block: promobar
+
+## 0.6.0
+
+### Major impact
+- Fields are no longer defined on a manager, but instead are set on the managed model. The model is responsible for saving the fields as well. For this reason, there is a convenience trait `ManagedModels\SavingFields` available. This trait
+  takes care of most of the usecases for saving fields.
+- FlatReference and all associated classes are renamed to ModelReference. All custom implementations of `ActsAsChild` or the former `ProvidesFlatReference`, which is now `ProvidesModelReference` should be updated accordingly.
+
+### Worth your attention but likely a minor impact
+- Changed: Module presets Pagetitle and text have moved to the Modules\Presets`  namespace. The two modules are shipped with Chief and are used in the pagebuilder.
+- Removed: StoreManager, UpdateManager, `Manager\SavingFields`, `FieldManager` interface and the following manager methods: createFields, saveCreateFields, editFields and saveEditFields.
+- Removed: Page methods: `findPublished`, `mediaUrls`, `mediaUrl`
+- Removed: Module methods: `mediaFields`
+
+### Minor impact
+- Removed: ArrayIterable interface on Filters. Filters class no longer functions as an array like object. This functionality is never used in the chief internals.
+- Removed: Custom DynamicAttributes code. We now make use of the `Thinktomorrow\DynamicAttributes` package.
+
+## unreleased
 - Fixed: use original asset for filefield thumb when thumb conversion is not available.
 - Fixed: issue where sometimes creating new page gave error on non unique url
 
@@ -94,7 +219,7 @@ This release requires migrations to be run.
 - Removed: the `$manager` instance is no longer available inside a field view. You can always pass this to the view via the `Field::viewData()` method.
 - Removed: `Manager::fieldValue()` and `Manager::renderField()` methods. A field is now responsible for rendering its content, not the manager.
 - Removed: `RenderingFields` trait as the methods `Manager::fieldValue()` and `Manager::renderField()` are no longer being used.
-- Removed: `Thinktomorrow\Chief\Fields\FieldArrangement`, `Thinktomorrow\Chief\Fields\FieldTabs` and `Thinktomorrow\Chief\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
+- Removed: `Thinktomorrow\Chief\ManagedModels\Fields\FieldArrangement`, `Thinktomorrow\Chief\ManagedModels\Fields\FieldTabs` and `Thinktomorrow\Chief\ManagedModels\Fields\RemainingFieldsTab` classes. Admin views can now be edited as blade files.
 
 ## 0.4.12 - 2020-03-18
 - Changed: passed the media api url from outside the js and vue scripts so the urls are in line with the rest of the admin
@@ -346,7 +471,7 @@ More info on upgrading can be found in the [https://thinktomorrow.github.io/pack
 - Fixed: role name cant contain spaces.
 
 ## 0.2.5 - 2019-03-05
-- Added: add `addTab()` method to `Thinktomorrow\Chief\Fields\FieldArrangement` class.
+- Added: add `addTab()` method to `Thinktomorrow\Chief\ManagedModels\Fields\FieldArrangement` class.
 - Added: possibility to display sidebar data on manager index page via a `sections()` method on the manager.
 
 ## 0.2.4 - 2019-03-01

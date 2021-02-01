@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Console\Command;
 
 abstract class BaseCommand extends Command

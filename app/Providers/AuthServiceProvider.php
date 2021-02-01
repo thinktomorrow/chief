@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Thinktomorrow\Chief\Authorization\ChiefUserProvider;
+use Thinktomorrow\Chief\Admin\Authorization\ChiefUserProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

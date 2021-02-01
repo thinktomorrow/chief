@@ -2,14 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Pages\Page;
-use Thinktomorrow\Chief\Authorization\AuthorizationDefaults;
-use Illuminate\Database\Eloquent\Factory as ModelFactory;
-use Illuminate\Support\Facades\Artisan;
-
 class Seed extends BaseCommand
 {
-    protected $signature = 'chief:seed 
+    protected $signature = 'chief:seed
                             {seeder=DatabaseSeeder : the classname of the seeder. }
                             {--force}';
     protected $description = 'This will run the seeders to inject new data into your project database.';

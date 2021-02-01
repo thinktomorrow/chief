@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 

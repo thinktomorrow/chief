@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Media\Application;
 
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
@@ -44,9 +43,10 @@ abstract class AbstractMediaFieldHandler
         $this->assetUploader = $assetUploader;
     }
 
-    protected function handlePayload(HasAsset $model, MediaField $field, string $locale, $values)
+    protected function handlePayload(HasAsset $model, MediaField $field, string $locale, array $values)
     {
         foreach ($values as $key => $value) {
+
             $keyIsAttachedAssetId = $this->isKeyAnAttachedAssetId($model->assetRelation, $locale, $field->getKey(), $key);
 
             if ($this->shouldNotBeProcessed($value, $key, $keyIsAttachedAssetId)) {
@@ -147,15 +147,15 @@ abstract class AbstractMediaFieldHandler
         return Str::slug($filename) . '.' . $extension;
     }
 
-    protected function sort(HasAsset $model, MediaField $field, Request $request)
+    protected function sort(HasAsset $model, MediaField $field, array $input)
     {
-        if ($request->has('filesOrder')) {
-            foreach ($request->input('filesOrder') as $locale => $fileIdInput) {
-                $fileIds = $this->getFileIdsFromInput($field->getKey(), $fileIdInput);
+        $filesOrder = data_get($input, 'filesOrder', []);
 
-                if (!empty($fileIds)) {
-                    $this->sortAssets->handle($model, $fileIds, $field->getKey(), $locale);
-                }
+        foreach ($filesOrder as $locale => $fileIdInput) {
+            $fileIds = $this->getFileIdsFromInput($field->getKey(), $fileIdInput);
+
+            if (!empty($fileIds)) {
+                $this->sortAssets->handle($model, $fileIds, $field->getKey(), $locale);
             }
         }
     }

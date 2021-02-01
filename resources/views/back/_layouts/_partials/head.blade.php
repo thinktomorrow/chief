@@ -58,5 +58,4 @@
     </style>
 
     @stack('custom-styles')
-    @include('chief::back._layouts._partials.project-head')
 </head>

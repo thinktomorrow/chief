@@ -3,15 +3,13 @@
 @section('page-title', "Modules")
 
 @component('chief::back._layouts._partials.header')
-    @slot('title', 'Vaste modules')
-        @if(\Thinktomorrow\Chief\Modules\Module::anyAvailableForCreation())
+    @slot('title', 'Gedeelde modules')
             <div class="inline-group-s">
                 <a @click="showModal('create-module')" class="btn btn-secondary inline-flex items-center">
                     <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
                     <span>Voeg een module toe</span>
                 </a>
             </div>
-        @endif
     @endcomponent
 
     @section('content')
@@ -36,10 +34,12 @@
             @foreach($modules as $groupLabel => $module_group)
 
                 <div class="stack">
-                    <h2>{{ ucfirst($groupLabel) }}</h2>
+                    <h2>{{ $module_group['manager']->adminLabel('label') }}</h2>
                     <div class="row gutter-s">
-                        @foreach($module_group as $module)
-                            @include('chief::back.managers._partials._rowitem', ['manager' => app(\Thinktomorrow\Chief\Management\Managers::class)->findByModel($module)])
+                        @foreach($module_group['modules'] as $model)
+                            @include('chief::back.managers._index._card', [
+                                'manager' => $module_group['manager'],
+                            ])
                         @endforeach
                     </div>
                 </div>
@@ -47,5 +47,5 @@
             @endforeach
         @endif
 
-    @include('chief::back.modules._partials.create-modal')
+    @include('chief::back.modules._partials.create-shared-modal')
 @stop

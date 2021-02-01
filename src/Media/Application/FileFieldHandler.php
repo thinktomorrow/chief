@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Media\Application;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\Chief\Fields\Types\MediaField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;
 
 class FileFieldHandler extends AbstractMediaFieldHandler
 {
-    public function handle(HasAsset $model, MediaField $field, Request $request): void
+    public function handle(HasAsset $model, MediaField $field, array $input, array $files): void
     {
-        foreach ([$request->file('files.' . $field->getName(), []), $request->input('files.' . $field->getName(), [])] as $requestPayload) {
+        foreach ([data_get($files, 'files.' . $field->getName(), []), data_get($input, 'files.' . $field->getName(), [])] as $requestPayload) {
             foreach ($requestPayload as $locale => $values) {
                 $this->handlePayload($model, $field, $locale, $values);
             }
         }
 
-        $this->sort($model, $field, $request);
+        $this->sort($model, $field, $input);
     }
 
     protected function new(HasAsset $model, string $locale, string $type, $value): Asset

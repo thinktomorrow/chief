@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\System\Sitemap\SitemapXmlFile;
+use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
 
 class GenerateSitemap extends BaseCommand
 {
@@ -22,7 +22,7 @@ class GenerateSitemap extends BaseCommand
 
     public function handle()
     {
-        $locales = config('translatable.locales');
+        $locales = config('chief.locales');
 
         foreach ($locales as $key => $locale) {
             $filepath = public_path('sitemap-' . $locale . '.xml');

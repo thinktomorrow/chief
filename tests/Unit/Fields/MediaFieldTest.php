@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Fields\Types\FileField;
-use Thinktomorrow\Chief\Fields\Types\ImageField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
 
 class MediaFieldTest extends TestCase
 {

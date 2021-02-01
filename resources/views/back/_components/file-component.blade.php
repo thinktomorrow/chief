@@ -4,7 +4,7 @@
 @push('custom-scripts')
     <script>
         Vue.component('file', {
-            props: ['options', 'name', 'group', 'locale'],
+            props: ['options', 'name', 'group', 'locale', 'uploadUrl'],
             template: `
                     <div class="border border-grey-100 rounded inset-s center-y bg-white">
                         <input ref="hiddenInput" type="hidden" :name="hiddenInputKey" :value="hiddenInputValue"/>
@@ -35,8 +35,6 @@
                 `,
             data: function () {
                 return {
-                    service: '{{ route('chief.api.files.upload') }}',
-
                     existingId: this.options.id || null, // This is the existing asset id if any
                     id: this.options.id || null, // This is the id of the newest linked asset.
 
@@ -104,10 +102,8 @@
                     let formData = new FormData();
                     formData.append('file', this.file);
                     formData.append('locale', this.locale);
-                    formData.append('managerKey', "{{ $manager->managerKey() }}");
-                    formData.append('fieldKey', this.group);
 
-                    window.axios.post(this.service, formData, {headers: {
+                    window.axios.post(this.uploadUrl, formData, {headers: {
                         'Content-Type': 'multipart/form-data'
                     }}).then((response) => {
 

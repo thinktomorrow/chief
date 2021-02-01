@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Modules\Application;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Modules\Module;
-use Thinktomorrow\Chief\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 
 class CreateModule
 {
     use TranslatableCommand;
 
-    public function handle(string $registerKey, string $slug, $owner_type = null, $owner_id = null): Module
+    public function handle(string $registerKey, string $slug, $owner_type = null, $owner_id = null): Fragment
     {
         try {
             DB::beginTransaction();
 
             // Fetch managed model and create it via eloquent.
-            $model = app(Managers::class)->findByKey($registerKey)->modelInstance();
-
-            $module = $model->create(['slug' => $slug, 'owner_type' => $owner_type, 'owner_id' => $owner_id]);
+            $class = Relation::getMorphedModel($registerKey);
+            $module = $class::create(['slug' => $slug, 'owner_type' => $owner_type, 'owner_id' => $owner_id]);
 
             DB::commit();
 

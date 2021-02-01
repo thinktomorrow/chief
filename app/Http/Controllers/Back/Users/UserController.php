@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Illuminate\Auth\Access\AuthorizationException;
-use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Authorization\Role;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
 
 class UserController extends Controller
 {

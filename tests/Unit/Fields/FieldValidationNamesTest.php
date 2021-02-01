@@ -3,7 +3,7 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Fields\Validation\ValidationNames;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationNames;
 
 class FieldValidationNamesTest extends TestCase
 {

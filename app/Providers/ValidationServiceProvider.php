@@ -4,16 +4,16 @@ namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldMinRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldMaxRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldMaxRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldMinRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldRequiredRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldMimetypesRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldRequiredRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\FileFieldDimensionsRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldMimetypesRule;
-use Thinktomorrow\Chief\Fields\ValidationRules\ImageFieldDimensionsRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMinRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMaxRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMaxRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMinRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldRequiredRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMimetypesRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldRequiredRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldDimensionsRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMimetypesRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldDimensionsRule;
 
 class ValidationServiceProvider extends ServiceProvider
 {

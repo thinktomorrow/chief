@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Authorization\Role;
-use Thinktomorrow\Chief\Users\Invites\Application\AcceptInvite;
-use Thinktomorrow\Chief\Users\Invites\Application\DenyInvite;
-use Thinktomorrow\Chief\Users\Invites\Application\InviteUser;
-use Thinktomorrow\Chief\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Users\User;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
+use Thinktomorrow\Chief\Admin\Users\Invites\Application\AcceptInvite;
+use Thinktomorrow\Chief\Admin\Users\Invites\Application\DenyInvite;
+use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Http\Request;
 
 class InviteController extends Controller

@@ -7,8 +7,8 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Auth;
-use Thinktomorrow\Chief\Authorization\ChiefPasswordBroker;
-use Thinktomorrow\Chief\Authorization\ChiefPasswordBrokerResolver;
+use Thinktomorrow\Chief\Admin\Authorization\ChiefPasswordBroker;
+use Thinktomorrow\Chief\Admin\Authorization\ChiefPasswordBrokerResolver;
 
 class ResetPasswordController extends Controller
 {

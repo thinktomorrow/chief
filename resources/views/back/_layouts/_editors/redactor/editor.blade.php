@@ -13,9 +13,9 @@
             lang: 'nl',
             imagePosition: true,
             imageFigure: false,
-            @if( ! \Thinktomorrow\Chief\Snippets\SnippetCollection::appearsEmpty())
-                clips: @json(\Thinktomorrow\Chief\Snippets\SnippetCollection::load()->toClips()),
-            @endif
+{{--            @if( ! \Thinktomorrow\Chief\Snippets\SnippetCollection::appearsEmpty())--}}
+{{--                clips: @json(\Thinktomorrow\Chief\Snippets\SnippetCollection::load()->toClips()),--}}
+{{--            @endif--}}
             @if(isset($imageUploadUrl) && (!isset($disableImageUpload) || !$disableImageUpload))
                 imageUpload: chiefRedactorImageUpload('{{ $imageUploadUrl }}'),
             @endif
