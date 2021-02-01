@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Management\Application;
+namespace Thinktomorrow\Chief\ManagedModels\Application;
 
 use Illuminate\Support\Facades\DB;
 
 class SortModels
 {
-    public function handle(string $modelClass, array $indices): void
+    public function handle(string $modelClass, array $indices, string $column = 'order'): void
     {
         $table = (new $modelClass())->getTable();
 
-        static::batchUpdateColumn($table, 'order', $indices);
+        static::batchUpdateColumn($table, $column, $indices);
     }
 
     /** Taken from: https://github.com/laravel/ideas/issues/575 */

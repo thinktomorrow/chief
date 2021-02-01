@@ -15,7 +15,7 @@ class Filters
     {
         $this->validateFilters($filters);
 
-        $this->filters = $filters;
+        $this->filters = $this->sanitizeFilters($filters);
     }
 
     public function all(): array
@@ -75,11 +75,31 @@ class Filters
         array_map(function (Filter $filter) {}, $filters);
     }
 
-    public function add(Filter ...$filter)
+    private function sanitizeFilters(array $filters): array
     {
-        $this->filters = array_merge($this->filters, $filter);
+        $existingQueryKeys = [];
 
-        return $this;
+        foreach(array_reverse($filters, true) as $index => $filter) {
+
+            if(in_array($filter->queryKey(), $existingQueryKeys)) {
+                unset($filters[$index]);
+                continue;
+            }
+
+            $existingQueryKeys[] = $filter->queryKey();
+        }
+
+        return $filters;
+    }
+
+    public function add(Filter ...$filter): Filters
+    {
+        return $this->merge(new Filters($filter));
+    }
+
+    public function merge(Filters $other): Filters
+    {
+        return new static(array_merge($this->filters, $other->all()));
     }
 
 }

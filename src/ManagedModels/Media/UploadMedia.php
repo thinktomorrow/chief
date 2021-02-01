@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Media;
+namespace Thinktomorrow\Chief\ManagedModels\Media;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\UploadedFile;

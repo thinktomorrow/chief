@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\FileField;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;

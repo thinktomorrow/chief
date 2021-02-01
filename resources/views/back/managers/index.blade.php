@@ -12,7 +12,14 @@
 
     <div class="row gutter-l stack">
         <div class="column">
-            <div class="row gutter-s">
+
+            @adminCan('sort-index')
+                <div class="row gutter-s"
+                     data-sort-route="{{ $manager->route('sort-index') }}"
+                     id="js-sortable">
+            @elseAdminCan
+                <div class="row gutter-s">
+            @endAdminCan
                 @forelse($models as $model)
                     @include('chief::back.managers._index._card')
                 @empty
@@ -21,7 +28,7 @@
             </div>
 
             @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                {!! $models->links('chief::back.managers.pagination') !!}
+                {!! $models->links() !!}
             @endif
 
         </div>
@@ -37,22 +44,20 @@
                 </form>
             @endif
 
-            @if($modelManager->isManualSortable())
-                @if(!$managers instanceof Illuminate\Contracts\Pagination\Paginator)
+            @adminCan('sort-index')
+                @if(!$models instanceof Illuminate\Contracts\Pagination\Paginator || !$models->hasPages())
                     <div class="mb-8">
-                        <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
+                        <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
                         <button class="btn btn-primary " data-sortable-toggle>Sorteer handmatig</button>
                         <p class="font-xs mt-2" data-sortable-show-when-sorting>Sleep de blokken in de gewenste volgorde. De volgorde wordt automatisch bewaard.</p>
                     </div>
                 @else
                     <div class="mb-8">
-                        <p class="mb-4">Deze {{ strtolower($modelManager->details()->plural) }} worden op de site weergegeven volgens een handmatige sortering.</p>
-                        <a class="btn btn-primary" href="{{ $modelManager->route('sort-index') }}">Sorteer handmatig</a>
+                        <p class="mb-4">Deze pagina's worden op de site weergegeven volgens een handmatige sortering.</p>
+                        <a class="btn btn-primary" href="{{ $manager->route('index-for-sorting') }}">Sorteer handmatig</a>
                     </div>
                 @endif
-            @endif
-
-            // SIDEBAR WEG WEG ZEG IK!
+            @endAdminCan
 
             @adminCan('archive_index')
             <div class="stack-s">

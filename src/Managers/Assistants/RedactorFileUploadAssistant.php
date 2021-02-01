@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;

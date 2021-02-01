@@ -5,10 +5,12 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\ManagedModels\Filters\Filter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Illuminate\Contracts\Pagination\Paginator;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
@@ -84,7 +86,7 @@ trait CrudAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        return $builder->paginate(12);
+        return $builder->paginate(2);
     }
 
     public function filters(): Filters
@@ -96,17 +98,22 @@ trait CrudAssistant
     {
         $filters = new Filters();
 
-        // Default sorted by publish date
-        $modelClass = $this->managedModelClass();
-        if (Schema::hasColumn((new $modelClass)->getTable(), 'published_at')) {
-            $filters = $filters->add(HiddenFilter::make('publish', function ($query) {
-                return $query->orderBy('published_at', 'DESC');
-            }));
+        foreach(DiscoverTraitMethods::belongingTo(static::class, 'filters') as $method) {
+            $filters = $filters->merge($this->$method());
         }
+
+        $filters = $this->addUpdatedFilter($filters);
+
+        return $filters;
+    }
+
+    private function addUpdatedFilter(Filters $filters): Filters
+    {
+        $modelClass = $this->managedModelClass();
 
         // if model has no timestamps, updated_at doesn't exist
         if ((new $modelClass)->timestamps) {
-            $filters = $filters->add(HiddenFilter::make('updated', function ($query) {
+            return $filters->add(HiddenFilter::make('updated', function ($query) {
                 return $query->orderBy('updated_at', 'DESC');
             }));
         }

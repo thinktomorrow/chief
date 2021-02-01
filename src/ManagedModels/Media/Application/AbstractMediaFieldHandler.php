@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Media\Application;
+namespace Thinktomorrow\Chief\ManagedModels\Media\Application;
 
 use Illuminate\Support\Str;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\Chief\Media\DuplicateAssetException;
+use Thinktomorrow\Chief\ManagedModels\Media\DuplicateAssetException;
 use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;

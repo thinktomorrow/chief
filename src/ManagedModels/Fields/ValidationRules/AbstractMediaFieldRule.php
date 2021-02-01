@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Validation\Concerns\ValidatesAttributes;
-use Thinktomorrow\Chief\Media\Application\ChecksExistingAssets;
+use Thinktomorrow\Chief\ManagedModels\Media\Application\ChecksExistingAssets;
 
 abstract class AbstractMediaFieldRule
 {

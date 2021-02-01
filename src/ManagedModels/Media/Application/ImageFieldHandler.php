@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Media\Application;
+namespace Thinktomorrow\Chief\ManagedModels\Media\Application;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Asset;

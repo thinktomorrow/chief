@@ -18,7 +18,6 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 trait FileUploadAssistant
 {
     abstract protected function fieldsModel($id);
-
     abstract protected function fieldValidator(): FieldValidator;
 
     public function routesFileUploadAssistant(): array

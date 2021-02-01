@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Old\Management;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\Media\UploadMedia;
+use Thinktomorrow\Chief\ManagedModels\Media\UploadMedia;
 
 trait ManagesMedia
 {

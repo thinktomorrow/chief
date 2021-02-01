@@ -10,6 +10,7 @@ import {IndexSorting} from "./utilities/sortable";
 if(document.getElementById('js-sortable')) {
     new IndexSorting({
         // any options go here
-        isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load')
+        isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
+        endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route')
     });
 }

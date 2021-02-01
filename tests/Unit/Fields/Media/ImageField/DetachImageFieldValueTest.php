@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Media\MediaType;
+use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
 use Thinktomorrow\Chief\Pages\PageManager;
 use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 use Thinktomorrow\Chief\Managers\Register\Register;

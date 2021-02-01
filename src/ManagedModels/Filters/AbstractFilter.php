@@ -38,6 +38,11 @@ abstract class AbstractFilter
         return ($request->filled($this->queryKey) || $this->value);
     }
 
+    public function queryKey(): string
+    {
+        return $this->queryKey;
+    }
+
     public function query(): Closure
     {
         return $this->query;

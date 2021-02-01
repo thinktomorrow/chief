@@ -10,6 +10,8 @@ interface Filter
 {
     public function applicable(Request $request): bool;
 
+    public function queryKey(): string;
+
     public function query(): Closure;
 
     public function render(): string;

@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,7 @@ class ArticlePage extends Model implements Page, HasAsset
     use SoftDeletes;
     use AssetTrait;
     use HasPeriodTrait;
+    use Sortable;
 
     public $table = 'article_pages';
     public $guarded = [];
@@ -55,6 +57,7 @@ class ArticlePage extends Model implements Page, HasAsset
             $table->string('title')->nullable();
             $table->string('current_state')->default(PageState::DRAFT);
             $table->json('values')->nullable(); // dynamic attributes
+            $table->unsignedInteger('order')->default(0);
             $table->dateTime('start_at')->nullable();
             $table->dateTime('end_at')->nullable();
             $table->timestamps();

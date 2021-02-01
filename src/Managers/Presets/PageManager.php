@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Presets;
 
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\SortAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\PublishAssistant;
@@ -23,6 +24,7 @@ final class PageManager implements Manager
 
     use ArchiveAssistant;
     use PublishAssistant;
+    use SortAssistant;
 
     use SlimImageUploadAssistant;
     use FileUploadAssistant;

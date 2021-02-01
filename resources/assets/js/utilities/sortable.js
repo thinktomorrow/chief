@@ -3,9 +3,12 @@ import Sortable from 'sortablejs';
 const IndexSorting = function(options){
     this.Sortables = [];
     this.sortableGroupEl = options.sortableGroupEl || document.getElementById('js-sortable');
-    this.sortableTypeAttribute = options.sortableType || 'data-sortable-type';
     this.sortableIdAttribute = options.sortableId || 'data-sortable-id';
-    this.endpoint = options.endpoint || '/admin/api/sort';
+    this.endpoint = options.endpoint;
+
+    if(!this.endpoint) {
+        throw new Error('Missing endpoint for sortable js. Please set the options.endpoint value');
+    }
 
     // Toggle
     this.isSorting = options.isSorting || false;
@@ -77,7 +80,6 @@ IndexSorting.prototype._init = function() {
                 fetch(self.endpoint, {
                     method: 'post',
                     body: JSON.stringify({
-                        "modelType": self.sortableGroupEl.getAttribute(self.sortableTypeAttribute),
                         "indices": sortable.toArray(),
                     }),
                     headers: {

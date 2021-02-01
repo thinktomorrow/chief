@@ -14,8 +14,8 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\PagebuilderField;
-use Thinktomorrow\Chief\Media\Application\FileFieldHandler;
-use Thinktomorrow\Chief\Media\Application\ImageFieldHandler;
+use Thinktomorrow\Chief\ManagedModels\Media\Application\FileFieldHandler;
+use Thinktomorrow\Chief\ManagedModels\Media\Application\ImageFieldHandler;
 
 trait SavingFields
 {

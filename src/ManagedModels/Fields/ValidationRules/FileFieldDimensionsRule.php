@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules;
 
-use Thinktomorrow\Chief\Media\Application\MediaRequest;
+use Thinktomorrow\Chief\ManagedModels\Media\Application\MediaRequest;
 
 class FileFieldDimensionsRule extends AbstractMediaFieldRule
 {

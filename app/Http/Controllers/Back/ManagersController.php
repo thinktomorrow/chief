@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\Media\DuplicateAssetException;
+use Thinktomorrow\Chief\ManagedModels\Media\DuplicateAssetException;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
 use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;

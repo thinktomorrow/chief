@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Legacy\Fragments;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
-use Thinktomorrow\Chief\Media\Application\FileFieldHandler;
-use Thinktomorrow\Chief\Media\Application\ImageFieldHandler;
+use Thinktomorrow\Chief\ManagedModels\Media\Application\FileFieldHandler;
+use Thinktomorrow\Chief\ManagedModels\Media\Application\ImageFieldHandler;
 
 trait ManagesFragments
 {
