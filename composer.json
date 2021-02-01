@@ -48,6 +48,7 @@
     "autoload-dev": {
         "psr-4": {
             "Thinktomorrow\\Chief\\Database\\Factories\\" : "database/factories/",
+            "Thinktomorrow\\Chief\\Tests\\Shared\\Tmp\\": "tests/Shared/tmp",
             "Thinktomorrow\\Chief\\Tests\\": "tests/"
         }
     },
