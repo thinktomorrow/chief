@@ -17,7 +17,7 @@ class PreviewMode
 
     public static function fromRequest()
     {
-        if(!config('thinktomorrow.chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
+        if(!config('chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
             return new static(false);
         }
 
@@ -38,7 +38,7 @@ class PreviewMode
 
     private static function default(): bool
     {
-        $mode = config('thinktomorrow.chief.preview-mode');
+        $mode = config('chief.preview-mode');
 
         if(!$mode || $mode == 'live') return false;
 

@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Route;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -87,6 +86,7 @@ class ChiefResponseTest extends ChiefTestCase
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
+        session()->flash('preview-mode', true);
         $response = $this->asAdmin()->get('foo/bar');
         $response->assertSuccessful();
 
@@ -100,7 +100,6 @@ class ChiefResponseTest extends ChiefTestCase
         $model = ArticlePage::create(['title' => 'Foobar', 'current_state' => PageState::DRAFT]);
         $record = UrlRecord::create(['locale' => 'nl', 'slug' => 'foo/bar', 'model_type' => $model->getMorphClass(), 'model_id' => $model->id]);
 
-        PreviewMode::toggle();
         $response = $this->asAdmin()->get('foo/bar');
         $response->assertStatus(404);
 
