@@ -48,9 +48,15 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     {
         return config('chief.locales', []);
     }
-//
-//    public function isStaticFragment(): bool
-//    {
-//        return Str::endsWith($this->model_reference, '@0');
-//    }
+
+    public function isOnline(): bool
+    {
+        // Default is online, except explicitly set offline
+        return (null === $this->online_status || $this->online_status != 0);
+    }
+
+    public function isOffline(): bool
+    {
+        return !$this->isOnline();
+    }
 }

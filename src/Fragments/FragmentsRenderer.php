@@ -19,7 +19,9 @@ final class FragmentsRenderer
 
     public function render(FragmentsOwner $owner, array $viewData): string
     {
-        $fragmentables = $this->fragmentRepository->getByOwner($owner);
+        $fragmentables = $this->fragmentRepository->getByOwner($owner)->reject(function(Fragmentable $fragmentable) {
+            return $fragmentable->fragmentModel()->isOffline();
+        });
 
         return $this->renderFragments->render($fragmentables, $owner, $viewData);
     }

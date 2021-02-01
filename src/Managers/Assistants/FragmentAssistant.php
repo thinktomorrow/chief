@@ -23,6 +23,7 @@ trait FragmentAssistant
         return [
             ManagedRoute::get('fragment-edit', 'fragment/{fragment_id}/edit'),
             ManagedRoute::put('fragment-update', 'fragment/{fragment_id}/update'),
+            ManagedRoute::post('fragment-status', 'fragment/{fragment_id}/status'),
             ManagedRoute::delete('fragment-delete', 'fragment/{fragment_id}'),
             ManagedRoute::get('fragment-create', 'fragment/{fragmentowner_type}/{fragmentowner_id}/create'),
             ManagedRoute::post('fragment-store', 'fragment/{fragmentowner_type}/{fragmentowner_id}'),
@@ -31,7 +32,7 @@ trait FragmentAssistant
 
     public function routeFragmentAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if(!in_array($action, ['fragment-edit','fragment-update','fragment-delete','fragment-create','fragment-store'])) {
+        if(!in_array($action, ['fragment-edit','fragment-update','fragment-delete','fragment-create','fragment-store', 'fragment-status'])) {
             return null;
         }
 
@@ -57,7 +58,7 @@ trait FragmentAssistant
 
     public function canFragmentAssistant(string $action, $model = null): bool
     {
-        return in_array($action, ['fragment-edit','fragment-update','fragment-delete','fragment-create','fragment-store']);
+        return in_array($action, ['fragment-edit','fragment-update','fragment-delete','fragment-create','fragment-store', 'fragment-status']);
     }
 
     public function fragmentCreate(Request $request, string $ownerKey, $ownerId)
@@ -135,6 +136,20 @@ trait FragmentAssistant
             'message' => 'fragment updated',
             'data' => [],
         ], 200);
+    }
+
+    public function fragmentStatus(Request $request, string $fragmentId)
+    {
+        $this->guard('fragment-update');
+
+        $fragmentable = $this->fragmentRepository->findFragment($fragmentId);
+
+        $fragmentable->fragmentModel()->update(['online_status' => !!$request->input('online_status')]);
+
+        return response()->json([
+            'message' => 'fragment online status updated',
+            'data' => [],
+        ]);
     }
 
     public function fragmentDelete($id, Request $request)
