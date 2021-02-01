@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="4"
+    errorLevel="8"
     findUnusedVariablesAndParams="true"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -8,8 +8,7 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <directory name="src"/>
-        <directory name="app"/>
+        <directory name="src/Admin"/>
         <ignoreFiles>
             <directory name="vendor"/>
         </ignoreFiles>

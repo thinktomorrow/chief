@@ -53,7 +53,7 @@ class PageField extends SelectField
     {
         $instances = [];
 
-        foreach ($modelReferences as $k => $modelReference) {
+        foreach ($modelReferences as $modelReference) {
             if (is_string($modelReference)) {
                 $modelReference = ModelReference::fromString($modelReference);
             }

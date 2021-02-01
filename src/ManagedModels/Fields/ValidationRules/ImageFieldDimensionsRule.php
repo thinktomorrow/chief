@@ -8,7 +8,7 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
 {
     public function validate($attribute, array $values, $params, $validator): bool
     {
-        foreach ($values as $key => $value) {
+        foreach ($values as $value) {
             if ($value && false === $this->validateDimensions($attribute, $value, $params)) {
                 $this->addCustomValidationMessage($attribute, $params, $validator);
 
@@ -25,13 +25,13 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
             return $this->validateAssetDimensions($this->existingAsset($value), $parameters);
         }
 
-        return $this->validateSlimOutputDimensions($attribute, $value, $parameters);
+        return $this->validateSlimOutputDimensions($value, $parameters);
     }
 
     /**
      * Override Laravel validateDimensions to focus on the ImageField specifics
      */
-    private function validateSlimOutputDimensions($attribute, $value, $parameters)
+    private function validateSlimOutputDimensions($value, $parameters)
     {
         $file = json_decode($value)->output;
 

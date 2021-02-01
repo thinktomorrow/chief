@@ -88,7 +88,7 @@ class ValidationNames
     {
         foreach ($this->placeholders as $placeholder => $replacements) {
             $newKeySet = [];
-            foreach ($keys as $i => $key) {
+            foreach ($keys as $key) {
                 if (count($replacements) < 1) {
                     $newKeySet[] = $key;
                     continue;

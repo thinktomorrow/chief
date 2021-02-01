@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\HealthMonitor\Checks;
 
+use Thinktomorrow\Chief\Admin\HealthMonitor\Notifiers\Notifier;
+
 interface HealthCheck
 {
     public function check(): bool;
@@ -11,7 +13,7 @@ interface HealthCheck
     public function message(): string;
 
     /**
-     * @return Thinktomorrow\Chief\HealthMonitor\Notifiers\Notifier[]
+     * @return Notifier[]
      */
     public function notifiers(): array;
 }

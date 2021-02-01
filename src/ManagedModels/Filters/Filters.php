@@ -72,7 +72,7 @@ class Filters
 
     private function validateFilters(array $filters)
     {
-        array_map(function (Filter $filter) {}, $filters);
+        array_map(function (Filter $filter) { return $filter; }, $filters);
     }
 
     private function sanitizeFilters(array $filters): array

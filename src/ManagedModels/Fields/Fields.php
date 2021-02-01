@@ -99,7 +99,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $fields = [];
 
-        foreach ($this->fields as $i => $field) {
+        foreach ($this->fields as $field) {
             if ($key instanceof \Closure) {
                 if (true == $key($field)) {
                     $fields[] = $field;
@@ -236,8 +236,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     private function validateFields(array $fields)
     {
-        array_map(function (Field $field) {
-        }, $fields);
+        array_map(function (Field $field) { return $field; }, $fields);
     }
 
     public function count()

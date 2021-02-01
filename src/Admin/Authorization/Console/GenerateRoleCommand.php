@@ -40,7 +40,7 @@ class GenerateRoleCommand extends Command
         $permissionNames = explode(',', $this->option('permissions'));
 
         $cleanPermissionNames = [];
-        foreach ($permissionNames as $k => $permissionName) {
+        foreach ($permissionNames as $permissionName) {
             $permissionName = trim($permissionName);
             // Generate all permissions if only scope is passed
             if (false === strpos($permissionName, '-')) {
