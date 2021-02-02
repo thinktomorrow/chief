@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Actions;
 
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -22,12 +23,12 @@ final class CreateFragmentModel
     /**
      * Store a non-static fragmentable.
      *
-     * @param FragmentsOwner $owner
+     * @param Model $owner
      * @param Fragmentable $fragmentable
      * @param int $order
      * @param array $data
      */
-    public function create(FragmentsOwner $owner, Fragmentable $fragmentable, int $order, array $data = []): FragmentModel
+    public function create(Model $owner, Fragmentable $fragmentable, int $order, array $data = []): FragmentModel
     {
         if(!$context = ContextModel::ownedBy($owner)) {
             $context = ContextModel::createForOwner($owner);

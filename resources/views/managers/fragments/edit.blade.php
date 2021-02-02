@@ -13,11 +13,11 @@
         @endforeach
     </div>
 
-    <div>
-        @adminCan('fragments-index', $model)
-            <livewire:fragments :owner="$model" />
-        @endAdminCan
-    </div>
+    @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner)
+        <div>
+            <x-chief::fragments :owner="$model"/>
+        </div>
+    @endif
 
     <div class="stack text-right">
         <button

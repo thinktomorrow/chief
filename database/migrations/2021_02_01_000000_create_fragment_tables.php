@@ -11,7 +11,7 @@ class CreateFragmentTables extends Migration
         Schema::create('context', function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('owner_type');
-            $table->unsignedBigInteger('owner_id');
+            $table->char('owner_id', 36); // account for integer ids as well as uuids
             $table->timestamps();
         });
 

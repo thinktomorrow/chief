@@ -12,15 +12,17 @@
         @endforeach
     </div>
 
+
+
     <div class="mt-8">
         @forelse($allowedFragments as $allowedFragment)
-            <a
-                data-edit-modal
-                class="btn btn-primary"
-                href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
-            >
+
+            <a data-edit-modal
+               class="btn btn-primary"
+               href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}">
                 Voeg een {{ $allowedFragment['model']->adminLabel('label') }} toe
             </a>
+
         @empty
             No available fragments.
         @endforelse

@@ -34,6 +34,6 @@ final class StaticFragmentManager implements Manager
 
     private function fieldsModel($id)
     {
-        return $this->fragmentRepository->findFragment($id);
+        return $this->fragmentRepository->find($id);
     }
 }
