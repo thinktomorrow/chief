@@ -32,6 +32,11 @@ trait FragmentableDefaults
         return '';
     }
 
+    public function isFragment(): bool
+    {
+        return isset($this->fragmentModel);
+    }
+
     public function setFragmentModel(FragmentModel $fragmentModel): Fragmentable
     {
         $this->fragmentModel = $fragmentModel;

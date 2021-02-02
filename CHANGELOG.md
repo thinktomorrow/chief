@@ -8,7 +8,7 @@ principles.
 - perf: not loading the managers on frontend?
 - wat met spirit in chief?
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
-- allow files/images on create (needs existing model owner for async uploads). Refactor asyncUploadFile(Request $request, $id, $fieldKey) to pass the class of the owner model instead of id (we dont need the id on create, only on edit)
+- BUG: allow files/images on create (needs existing model owner for async uploads). Refactor asyncUploadFile(Request $request, $id, $fieldKey) to pass the class of the owner model instead of id (we dont need the id on create, only on edit)
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
 - remove menu translations table (=> try to remove astrotomic altogether)
 - menu only connects with 'Pages', need to add model_type as well to allow other models
@@ -19,6 +19,7 @@ principles.
 - squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
 - allow to revoke invitation.
 - proper duplicate context feature (with buttons and all)
+- list of reserved model keys such as 'fragments' (used for fragmentModel)
 
 ## UPCOMING 0.6 (REFACTOR RELEASE)
 high impact on manager setup and admin page customisation.

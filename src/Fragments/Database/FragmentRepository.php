@@ -24,7 +24,7 @@ final class FragmentRepository
      * @param FragmentsOwner $owner
      * @return Collection Fragmentable[]
      */
-    public function getByOwner(FragmentsOwner $owner): Collection
+    public function getByOwner(Model $owner): Collection
     {
         if(!$context = ContextModel::ownedBy($owner)) return collect();
 
@@ -37,7 +37,7 @@ final class FragmentRepository
         );
     }
 
-    public function findFragment(string $id): Fragmentable
+    public function find(string $id): Fragmentable
     {
         return $this->fragmentFactory(FragmentModel::findOrFail($id));
     }

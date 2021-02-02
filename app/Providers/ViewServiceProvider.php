@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
-use Thinktomorrow\Chief\App\View\Components\Fragments;
+use Thinktomorrow\Chief\App\View\Livewire\Fragments;
 
 class ViewServiceProvider extends ServiceProvider
 {

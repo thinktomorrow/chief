@@ -1,8 +1,8 @@
 <?php
 
-namespace Thinktomorrow\Chief\App\View\Components;
+namespace Thinktomorrow\Chief\App\View\Livewire;
 
-use Illuminate\View\Component;
+use Livewire\Component;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -17,11 +17,11 @@ class Fragments extends Component
     private Collection $fragments;
     private array $allowedFragments;
 
-    public function __construct(FragmentsOwner $owner)
+    public function mount(FragmentsOwner $owner)
     {
         $this->fragmentRepository = app(FragmentRepository::class);
         $this->owner = $owner;
-        $this->load();
+        $this->reload();
     }
 
     public function render()
@@ -32,19 +32,10 @@ class Fragments extends Component
         ]);
     }
 
-    public function load()
+    public function reload()
     {
         // Current fragments
-
-        // For a fragment as owner, we look at the uuid of the fragmentmodel
-//        if($this->owner->isFragment()) {
-//
-//        }
-        $owner = ($this->owner instanceof Fragmentable && $this->owner->isFragment())
-            ? $this->owner->fragmentModel()
-            : $this->owner;
-
-        $this->fragments = app(FragmentRepository::class)->getByOwner($owner)->map(function(Fragmentable $model){
+        $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner)->map(function(Fragmentable $model){
             return [
                 'model'    => $model,
                 'manager'  => app(Registry::class)->manager($model::managedModelKey()),
@@ -59,5 +50,7 @@ class Fragments extends Component
                 'model' => new $modelClass(),
             ];
         }, $this->owner->allowedFragments());
+
+        $this->emit('fragmentsReloaded');
     }
 }

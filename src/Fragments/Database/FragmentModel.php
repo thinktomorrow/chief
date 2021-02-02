@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Database;
 
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\AssetTrait;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 

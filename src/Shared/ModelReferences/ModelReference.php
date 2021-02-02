@@ -7,10 +7,9 @@ namespace Thinktomorrow\Chief\Shared\ModelReferences;
 final class ModelReference
 {
     private string $className;
+    protected string $id;
 
-    protected int $id;
-
-    public function __construct(string $className, int $id)
+    public function __construct(string $className, string $id)
     {
         $this->className = $className;
         $this->id = $id;
@@ -18,7 +17,7 @@ final class ModelReference
 
     public static function fromStatic(string $className): self
     {
-        return new static($className, 0);
+        return new static($className, "0");
     }
 
     public static function fromString(string $reference): self
@@ -33,7 +32,7 @@ final class ModelReference
             throw new \InvalidArgumentException('Missing id on model reference. [' . $reference . '] was passed.');
         }
 
-        return new static($className, (int) $id);
+        return new static($className, (string) $id);
     }
 
     /**
@@ -45,7 +44,7 @@ final class ModelReference
     {
         $className = $this->className();
 
-        if($this->id == 0) {
+        if($this->id === "0") {
             return new $className($attributes);
         }
 
@@ -55,7 +54,7 @@ final class ModelReference
         return $model;
     }
 
-    public function id(): int
+    public function id(): string
     {
         return $this->id;
     }
@@ -67,7 +66,7 @@ final class ModelReference
 
     public function get(): string
     {
-        return $this->className . '@' . $this->id;
+        return "$this->className@$this->id";
     }
 
     public function equals($other): bool
