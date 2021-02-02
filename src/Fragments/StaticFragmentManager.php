@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;
@@ -18,7 +19,7 @@ final class StaticFragmentManager implements Manager
     use FileUploadAssistant;
     use SlimImageUploadAssistant;
 
-    private function storeFragmentable(FragmentsOwner $owner, Fragmentable $fragmentable, Request $request): void
+    private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): void
     {
         $fragmentable->setFragmentModel(
             app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order)

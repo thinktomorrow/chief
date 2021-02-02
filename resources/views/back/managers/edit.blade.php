@@ -103,72 +103,28 @@
                   sidebar = new Sidebar('[data-sidebar]'),
                   livewireComponent = Livewire.find(document.getElementById('js-fragments-component').getAttribute('wire:id'));
 
-            const editRequestHandler = function(event) {
-                event.preventDefault();
-                loadUrlContent(this.getAttribute('href'), modalContainer);
-            }
-
-            function listenForEditRequests() {
-                const els = document.querySelectorAll('[data-edit-modal]');
-
-                Array.from(els).forEach(function(el) {
-                    el.removeEventListener('click', editRequestHandler)
-                    el.addEventListener('click', editRequestHandler);
-                });
-            }
-
-            function listenForFormSubmits() {
-                const form = modalContainer.querySelector('form');
-
-                form.addEventListener('submit', function(event) {
+            window.SidebarMain = {
+                editRequestHandler: function (event) {
                     event.preventDefault();
+                    sidebarPanels.show(this.getAttribute('href'));
+                }
+            };
 
-                    fetch(this.action, {
-                        method: this.method,
-                        body: new FormData(this),
-                    })
-                    .then(response => { return response.json() })
-                    .then(data => {
-                        // trigger immediate reload of fragments component
-                        livewireComponent.reload();
+            const sidebarPanels = new SidebarPanels(sidebar, SidebarEvents, function(){
+                //
+            }, function(){
+                // trigger immediate reload of fragments component
+                livewireComponent.reload();
+            });
 
-                        sidebar.close();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                });
-            }
-
-            function loadUrlContent(url, container)
-            {
-                fetch(url)
-                .then(response => { return response.text() })
-                .then(data => {
-                    container.innerHTML = data;
-
-                    // only mount Vue on our vue specific fields and not on the form element itself
-                    // so that the submit event still works. I know this is kinda hacky.
-                    new Vue({ el: container.querySelector('[data-vue-fields]')});
-
-                    listenForEditRequests();
-
-                    console.log('reload content');
-
-                    listenForFormSubmits();
-
-                    sidebar.open();
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-            }
+            // Test ref
+            window.sidebarPanels = sidebarPanels;
 
             Livewire.on('fragmentsReloaded', () => {
-                listenForEditRequests();
+                SidebarEvents.listenForEditRequests();
             })
 
-            listenForEditRequests();
+            SidebarEvents.listenForEditRequests();
         });
     </script>
 @endpush

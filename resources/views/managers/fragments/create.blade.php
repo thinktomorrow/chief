@@ -2,14 +2,16 @@
     <form id="createForm" method="POST" action="@adminRoute('fragment-store', $owner)" enctype="multipart/form-data" role="form">
         {{ csrf_field() }}
 
-        @foreach($fields as $field)
-            @formgroup
-            @slot('label',$field->getLabel())
-            @slot('description',$field->getDescription())
-            @slot('isRequired', $field->required())
-            {!! $field->render(get_defined_vars()) !!}
-            @endformgroup
-        @endforeach
+        <div data-vue-fields>
+            @foreach($fields as $field)
+                @formgroup
+                @slot('label',$field->getLabel())
+                @slot('description',$field->getDescription())
+                @slot('isRequired', $field->required())
+                {!! $field->render(get_defined_vars()) !!}
+                @endformgroup
+            @endforeach
+        </div>
 
         <div class="stack text-right">
             <button type="submit" class="btn btn-primary">Aanmaken</button>

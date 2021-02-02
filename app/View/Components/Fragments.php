@@ -34,12 +34,6 @@ class Fragments extends Component
 
     public function load()
     {
-        // Current fragments
-
-        // For a fragment as owner, we look at the uuid of the fragmentmodel
-//        if($this->owner->isFragment()) {
-//
-//        }
         $owner = ($this->owner instanceof Fragmentable && $this->owner->isFragment())
             ? $this->owner->fragmentModel()
             : $this->owner;

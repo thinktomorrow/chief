@@ -27,6 +27,10 @@
                 });
             }
 
+            dom() {
+                return this.sidebarContent;
+            }
+
             open() {
                 this.sidebar.style.display = "block";
             }
@@ -61,6 +65,162 @@
                     } catch(error) {
                         reject(error);
                     }
+                });
+            }
+        }
+
+        class SidebarPanels {
+            constructor(sidebar, events, loadContentCallback, submitCallback) {
+                this.sidebar = sidebar;
+                this.events = events;
+                this.loadContentCallback = loadContentCallback;
+                this.submitCallback = submitCallback;
+
+                this.panels = [];
+                this.activePanel = null;
+            }
+
+            show(url) {
+                const id = encodeURIComponent(url);
+
+                // else load content.
+                if(this._find(id)) {
+                    // if present in panels, than show this panel.
+                    console.log('existing id ' + id);
+                    this._activate(id);
+                    return 'existing';
+                }
+
+                this._addNewPanel(id, url);
+            }
+
+            _find(id) {
+                return this.panels.find((panel) => panel.id === id );
+            }
+
+            _addNewPanel(id, url) {
+                // Create DOM slot with url reference (or hash???)....
+                const newPanelContainer = document.createElement('div');
+                newPanelContainer.setAttribute('data-panel-id', id);
+                this.sidebar.dom().appendChild(newPanelContainer);
+
+                this.events.loadUrlContent(url, newPanelContainer, () => {
+
+                    console.log('loading content for ' + url);
+
+                    if(!this.activePanel) {
+                        this.sidebar.open();
+                    }
+
+                    this.panels.push({
+                        id: id,
+                        url: url,
+                        parent: this.activePanel ? this.activePanel : null,
+                    });
+
+                    this._activate(id);
+
+                }, () => {
+                    this.backOrClose();
+
+                    if(this.submitCallback) {
+                        this.submitCallback();
+                    }
+                })
+            }
+
+            _activate(id) {
+                this.activePanel = this._find(id);
+
+                Array.from(this.sidebar.dom().querySelectorAll('[data-panel-id]')).forEach(el => el.style.display = 'none');
+                this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).style.display = "block";
+
+                if(this.loadContentCallback) {
+                    this.loadContentCallback();
+                }
+            }
+
+            backOrClose() {
+
+                console.log('closing...');
+                console.log(this.activePanel.parent);
+                if(this.activePanel.parent) {
+                    this.show(this.activePanel.parent.url);
+                    return;
+                }
+
+                // Only on the top level we close the sidebar
+                // Check for unsaved content before clicking submit...
+                this.sidebar.close();
+
+                this._reset();
+            }
+
+            _reset() {
+                this.panels = [];
+                this.activePanel = null;
+
+                // Remove all from dom
+                this.sidebar.dom().innerHTML = '';
+            }
+
+
+        }
+
+
+        const SidebarEvents = {
+
+            listenForEditRequests: function() {
+                const els = document.querySelectorAll('[data-edit-modal]');
+
+                Array.from(els).forEach(function(el) {
+                    el.removeEventListener('click', SidebarMain.editRequestHandler)
+                    el.addEventListener('click', SidebarMain.editRequestHandler);
+                });
+            },
+
+            loadUrlContent: function(url, container, callback, submitCallback)
+            {
+                fetch(url)
+                    .then(response => { return response.text() })
+                    .then(data => {
+                        container.innerHTML = data;
+
+                        // only mount Vue on our vue specific fields and not on the form element itself
+                        // so that the submit event still works. I know this is kinda hacky.
+                        new Vue({ el: container.querySelector('[data-vue-fields]')});
+
+                        console.log('reloaded content');
+
+                        this.listenForEditRequests();
+                        this.listenForFormSubmits(container, submitCallback);
+
+                        if(callback) callback();
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+
+            listenForFormSubmits: function(container, callback) {
+                const form = container.querySelector('form');
+
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    fetch(this.action, {
+                        method: this.method,
+                        body: new FormData(this),
+                    })
+                        .then(response => { return response.json() })
+                        .then(data => {
+
+                            if(callback) callback();
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 });
             }
         }

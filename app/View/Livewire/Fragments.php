@@ -34,8 +34,12 @@ class Fragments extends Component
 
     public function reload()
     {
+        $owner = ($this->owner instanceof Fragmentable && $this->owner->isFragment())
+            ? $this->owner->fragmentModel()
+            : $this->owner;
+
         // Current fragments
-        $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner)->map(function(Fragmentable $model){
+        $this->fragments = app(FragmentRepository::class)->getByOwner($owner)->map(function(Fragmentable $model){
             return [
                 'model'    => $model,
                 'manager'  => app(Registry::class)->manager($model::managedModelKey()),
