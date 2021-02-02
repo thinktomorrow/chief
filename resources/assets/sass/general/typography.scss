@@ -1,34 +1,46 @@
-html, body {
-    font-family: 'Magra', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+.font-body, .font-heading {
+    font-family: 'Inter', sans-serif;
+    @apply antialiased;
+}
+
+html, body, p, li, ol, input, textarea {
     font-size: 14px;
-    @apply tracking-wide font-normal;
+    @apply text-grey-700 font-normal;
+    @extend .font-body;
 }
 
-h1, h1:not(:last-child) {
-    @apply text-3xl;
+h1, h2, h3, h4, h5, h6 {
+    @apply font-bold leading-tight text-grey-900;
+    @extend .font-heading;
 }
 
-h1.mb-0, h2.mb-0, h3.mb-0 {
-    @apply mb-0;
-}
-
-h1, h2, h3, h4, h5 {
-    @apply font-bold text-grey-600 tracking-normal;
+h1 {
+    @apply text-5xl font-black;
 }
 
 h2 {
-    @apply text-xl;
+    @apply text-3xl;
 }
 
 h3 {
+    @apply text-2xl;
+}
+
+h4 {
+    @apply text-xl;
+}
+
+h5 {
     @apply text-lg;
 }
 
-p, body {
-    @apply font-normal text-grey-500;
+p {
+    @apply leading-relaxed;
 }
 
-a {
+a:not(.btn) {
     @apply text-primary-500;
 }
 
@@ -38,20 +50,4 @@ ul, ol {
 
 ol li {
     list-style: inherit;
-}
-
-blockquote {
-    @apply p-4 text-grey-300 border-l-2 border-secondary-300;
-}
-
-pre {
-    @apply m-0;
-}
-
-code {
-    @apply inline-block text-grey-300 p-1;
-}
-
-:focus{
-    outline: none;
 }

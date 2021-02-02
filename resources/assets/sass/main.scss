@@ -3,29 +3,30 @@
 @tailwind base;
 @tailwind components;
 
-@import './general/animations.scss';
-@import './general/colors.scss';
-@import './general/overrides.scss';
-@import './general/typography.scss';
-@import './general/utilities.scss';
+@import './general/base';
+@import './general/animations';
+@import './general/colors';
+@import './general/typography';
 
-@import './components/label.scss';
-@import './components/button.scss';
-@import './components/dropdown.scss';
-@import './components/tabs.scss';
-@import './components/pagebuilder.scss';
-@import './components/modal.scss';
-@import './components/alert.scss';
-@import './components/form.scss';
-@import './components/translation.scss';
-@import './components/thumb.scss';
-@import './components/toggles.scss';
-@import './components/redactor.scss';
-@import './components/slim.scss';
+@import './components/label';
+@import './components/button';
+@import './components/dropdown';
+@import './components/tabs';
+@import './components/pagebuilder';
+@import './components/modal';
+@import './components/alert';
+@import './components/form';
+@import './components/translation';
+@import './components/thumb';
+@import './components/toggles';
+@import './components/redactor';
+@import './components/slim';
 
-// STATES & HELPER CLASSES (WARPAINT)
 @import '../../../node_modules/warpaint/src/sass/_space/spaces';
 @import '../../../node_modules/warpaint/src/sass/_space/responsive';
 @import '../../../node_modules/warpaint/src/sass/_base/states';
 
 @tailwind utilities;
+
+@import './general/utilities';
+@import './general/overrides';

@@ -1,11 +1,12 @@
 .navigation-list {
     @apply m-0;
+
     li:not(.no-hover) {
-        @apply text-grey-600 px-6 py-5;
+        @apply p-6 font-medium;
         @extend .--bottomline;
 
         > a:not(.label) {
-            @apply text-grey-600;
+            @apply text-grey-700;
         }
 
         &:hover, &:hover > a:not(.label) {
