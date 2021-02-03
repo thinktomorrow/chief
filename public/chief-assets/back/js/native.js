@@ -4070,6 +4070,7 @@ var Panels = /*#__PURE__*/function () {
   }, {
     key: "_find",
     value: function _find(id) {
+      console.dir(this.panels);
       return this.panels.find(function (panel) {
         return panel.id === id;
       });
@@ -4091,7 +4092,12 @@ var Panels = /*#__PURE__*/function () {
           el: newPanelContainer.querySelector('[data-vue-fields]')
         });
         _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function () {
-          _this4.backOrClose();
+          var previousId = _this4.activePanel.id;
+
+          _this4.backOrClose(); // On form submit we can safely remove current panel
+
+
+          _this4._remove(previousId);
 
           if (_this4.submitCallback) {
             _this4.submitCallback();
@@ -4117,13 +4123,12 @@ var Panels = /*#__PURE__*/function () {
     value: function _activate(id) {
       // Hide current active panel
       if (this.activePanel) {
-        this.activePanel.dom.style.display = "none"; // this.sidebar.dom().querySelector(`[data-panel-id="${this.activePanel.id}"]`)
+        this.activePanel.dom.style.display = "none";
       } // Make our new panel the active one
 
 
       this.activePanel = this._find(id);
-      this.activePanel.dom.style.display = "block"; // this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).style.display = "block";
-      // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
+      this.activePanel.dom.style.display = "block"; // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
 
       this.sidebar.setBackButtonDisplay();
       this.listenForPanelTriggers();
@@ -4131,6 +4136,17 @@ var Panels = /*#__PURE__*/function () {
       if (this.newPanelCallback) {
         this.newPanelCallback();
       }
+    }
+  }, {
+    key: "_remove",
+    value: function _remove(id) {
+      var index = this.panels.findIndex(function (panel) {
+        return panel.id === id;
+      });
+      delete this.panels[index];
+      this.panels.splice(index, 1);
+      console.log(this.panels);
+      this.sidebar.dom().querySelector("[data-panel-id=\"".concat(id, "\"]")).remove();
     }
   }, {
     key: "backOrClose",
@@ -4153,7 +4169,7 @@ var Panels = /*#__PURE__*/function () {
     key: "_reset",
     value: function _reset() {
       this.panels = [];
-      this.activePanel = null; // Remove all from dom
+      this.activePanel = null; // Remove all panels from dom
 
       this.sidebar.dom().innerHTML = '';
     }

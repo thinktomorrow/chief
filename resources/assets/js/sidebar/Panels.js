@@ -54,6 +54,7 @@ export default class Panels {
     }
 
     _find(id) {
+        console.dir(this.panels);
         return this.panels.find((panel) => panel.id === id );
     }
 
@@ -73,7 +74,13 @@ export default class Panels {
             new Vue({el: newPanelContainer.querySelector('[data-vue-fields]')});
 
             Api.listenForFormSubmits(newPanelContainer, () => {
+                const previousId = this.activePanel.id;
+
                 this.backOrClose();
+
+                // On form submit we can safely remove current panel
+                this._remove(previousId);
+
                 if(this.submitCallback) {
                     this.submitCallback();
                 }
@@ -99,13 +106,11 @@ export default class Panels {
         // Hide current active panel
         if(this.activePanel) {
             this.activePanel.dom.style.display = "none";
-            // this.sidebar.dom().querySelector(`[data-panel-id="${this.activePanel.id}"]`)
         }
 
         // Make our new panel the active one
         this.activePanel = this._find(id);
         this.activePanel.dom.style.display = "block";
-        // this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).style.display = "block";
 
         // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
         this.sidebar.setBackButtonDisplay();
@@ -117,11 +122,18 @@ export default class Panels {
         }
     }
 
+    _remove(id){
+        const index = this.panels.findIndex((panel) => panel.id === id );
+        delete this.panels[index];
+        this.panels.splice(index,1);
+console.log(this.panels);
+        this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).remove();
+    }
+
     backOrClose() {
 
         if(this.activePanel.parent) {
             this.show(this.activePanel.parent.url);
-
             this._reloadActivePanelSections();
             return;
         }
@@ -136,7 +148,7 @@ export default class Panels {
         this.panels = [];
         this.activePanel = null;
 
-        // Remove all from dom
+        // Remove all panels from dom
         this.sidebar.dom().innerHTML = '';
     }
 

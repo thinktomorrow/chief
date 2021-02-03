@@ -1,6 +1,10 @@
 <div data-fragments-component>
     <h2>Fragments</h2>
 
+    <div data-sidebar-component="fragmentcount">
+        AANTAL: {{ count($fragments) }}
+    </div>
+
     <div data-sidebar-component="fragments" class="row gutter-s">
         @foreach($fragments as $fragment)
             @include('chief::managers.fragments._card', [
