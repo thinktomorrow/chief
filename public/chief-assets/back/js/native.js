@@ -4145,7 +4145,6 @@ var Panels = /*#__PURE__*/function () {
       });
       delete this.panels[index];
       this.panels.splice(index, 1);
-      console.log(this.panels);
       this.sidebar.dom().querySelector("[data-panel-id=\"".concat(id, "\"]")).remove();
     }
   }, {

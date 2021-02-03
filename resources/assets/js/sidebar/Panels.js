@@ -126,7 +126,7 @@ export default class Panels {
         const index = this.panels.findIndex((panel) => panel.id === id );
         delete this.panels[index];
         this.panels.splice(index,1);
-console.log(this.panels);
+
         this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).remove();
     }
 
