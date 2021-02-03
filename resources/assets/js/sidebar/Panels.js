@@ -22,10 +22,14 @@ export default class Panels {
 
     remove(id) {
         const index = this.collection.findIndex((panel) => panel.id === id );
+
+        this.collection[index].remove();
         this.collection.splice(index,1);
     }
 
     clear() {
+        this.collection.forEach(panel => panel.remove() );
+
         this.collection = [];
         this.activePanel = null;
     }

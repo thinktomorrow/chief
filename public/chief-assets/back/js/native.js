@@ -3920,8 +3920,8 @@ var Sidebar = /*#__PURE__*/function () {
     this.el = el;
     this.sidebarBackdrop = this.el.querySelector('[data-sidebar-backdrop]');
     this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
-    this.sidebarBackButton = this.el.querySelector('[data-sidebar-back-button]');
-    this.backTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-back]'));
+    this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
+    this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
   }
 
   _createClass(Sidebar, [{
@@ -3951,12 +3951,12 @@ var Sidebar = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "setBackButtonDisplay",
-    value: function setBackButtonDisplay() {
+    key: "renderCloseButton",
+    value: function renderCloseButton() {
       var template = document.querySelector('#js-sidebar-close-button');
       var node = document.importNode(template.content, true);
-      this.sidebarBackButton.innerHTML = '';
-      this.sidebarBackButton.appendChild(node);
+      this.closeButton.innerHTML = '';
+      this.closeButton.appendChild(node);
     }
   }, {
     key: "_closeElement",
@@ -4030,6 +4030,11 @@ var Panel = /*#__PURE__*/function () {
     value: function replaceComponent(selector, content) {
       this.el.querySelector(selector).innerHTML = content;
     }
+  }, {
+    key: "remove",
+    value: function remove() {
+      this.el.remove();
+    }
   }]);
 
   return Panel;
@@ -4091,11 +4096,15 @@ var Panels = /*#__PURE__*/function () {
       var index = this.collection.findIndex(function (panel) {
         return panel.id === id;
       });
+      this.collection[index].remove();
       this.collection.splice(index, 1);
     }
   }, {
     key: "clear",
     value: function clear() {
+      this.collection.forEach(function (panel) {
+        return panel.remove();
+      });
       this.collection = [];
       this.activePanel = null;
     }
@@ -4132,15 +4141,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var PanelsManager = /*#__PURE__*/function () {
-  function PanelsManager(sidebar, newPanelCallback, submitCallback) {
+  function PanelsManager(container, newPanelCallback, submitCallback) {
     var _this = this;
 
     _classCallCheck(this, PanelsManager);
 
-    this.sidebar = sidebar;
+    this.container = container;
+    this.panels = new _Panels__WEBPACK_IMPORTED_MODULE_2__["default"]();
     this.newPanelCallback = newPanelCallback;
-    this.submitCallback = submitCallback;
-    this.panels = new _Panels__WEBPACK_IMPORTED_MODULE_2__["default"](); // Register unique trigger handler
+    this.submitCallback = submitCallback; // Register unique trigger handler
 
     this.handle = function (event) {
       return _this._handlePanelTrigger(event);
@@ -4152,15 +4161,15 @@ var PanelsManager = /*#__PURE__*/function () {
     value: function init() {
       var _this2 = this;
 
-      this.listenForPanelTriggers(); // Listen for close triggers on the sidebar container
+      this.scanForPanelTriggers(); // Listen for close triggers on the sidebar container
 
-      this.sidebar.backTriggers.forEach(function (trigger) {
+      this.container.closeTriggers.forEach(function (trigger) {
         trigger.addEventListener('click', _this2.backOrClose.bind(_this2));
       });
     }
   }, {
-    key: "listenForPanelTriggers",
-    value: function listenForPanelTriggers() {
+    key: "scanForPanelTriggers",
+    value: function scanForPanelTriggers() {
       var _this3 = this;
 
       Array.from(document.querySelectorAll('[data-sidebar-show]')).forEach(function (el) {
@@ -4197,7 +4206,7 @@ var PanelsManager = /*#__PURE__*/function () {
       // Add new panel container to dom
       var newPanelContainer = document.createElement('div');
       newPanelContainer.setAttribute('data-panel-id', id);
-      this.sidebar.dom().appendChild(newPanelContainer);
+      this.container.dom().appendChild(newPanelContainer);
       _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(url, newPanelContainer, function (data) {
         newPanelContainer.innerHTML = data; // only mount Vue on our vue specific fields and not on the form element itself
         // so that the submit event still works. I know this is kinda hacky.
@@ -4206,15 +4215,15 @@ var PanelsManager = /*#__PURE__*/function () {
           el: newPanelContainer.querySelector('[data-vue-fields]')
         });
         _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function () {
-          _this4.backOrClose();
+          _this4.backOrClose(false);
 
           if (_this4.submitCallback) {
             _this4.submitCallback();
           }
         });
 
-        if (!_this4.sidebar.isOpen()) {
-          _this4.sidebar.open();
+        if (!_this4.container.isOpen()) {
+          _this4.container.open();
         }
 
         _this4.panels.add(new _Panel__WEBPACK_IMPORTED_MODULE_1__["default"](id, url, _this4.panels.findActive() ? _this4.panels.findActive() : null, newPanelContainer));
@@ -4228,45 +4237,47 @@ var PanelsManager = /*#__PURE__*/function () {
       // Hide current active panel
       if (this.panels.findActive()) {
         this.panels.findActive().hide();
-      }
+      } // Set new panel as active and show it
+
 
       this.panels.markAsActive(id);
-      this.panels.findActive().show(); // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
+      this.panels.findActive().show(); // TODO: pass here type to switch templates x/terug/...
 
-      this.sidebar.setBackButtonDisplay();
-      this.listenForPanelTriggers();
+      this.container.renderCloseButton();
+      this.scanForPanelTriggers();
 
       if (this.newPanelCallback) {
         this.newPanelCallback();
       }
     }
+    /**
+     * Handle the closing of the current panel and determine the next one.
+     * Either the user clicks the close button or has saved the panel form.
+     */
+
   }, {
     key: "backOrClose",
     value: function backOrClose() {
-      var previousId = this.panels.findActive().id;
+      var keepPreviousPanel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
+      // Back to parent
       if (this.panels.findActive().parent) {
+        var previousId = this.panels.findActive().id;
         this.show(this.panels.findActive().parent.url);
 
         this._reloadActivePanelSections();
 
+        if (!keepPreviousPanel) {
+          this.panels.remove(previousId);
+        }
+
         return;
-      }
+      } // At top level so close entire sidebar which also clears out the panels
+      // TODO: Check for unsaved content before clicking submit...
 
-      this.panels.remove(previousId);
-      this.sidebar.dom().querySelector("[data-panel-id=\"".concat(previousId, "\"]")).remove(); // Only on the top level we close the sidebar
-      // Check for unsaved content before clicking submit...
 
-      this.sidebar.close();
-
-      this._reset();
-    }
-  }, {
-    key: "_reset",
-    value: function _reset() {
-      this.panels.clear(); // Remove all panels from dom
-
-      this.sidebar.dom().innerHTML = '';
+      this.panels.clear();
+      this.container.close();
     }
   }, {
     key: "_reloadActivePanelSections",
@@ -4281,7 +4292,7 @@ var PanelsManager = /*#__PURE__*/function () {
 
           _this5.panels.activePanel.replaceComponent('[data-sidebar-component="' + componentKey + '"]', DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML);
 
-          _this5.listenForPanelTriggers();
+          _this5.scanForPanelTriggers();
         });
       });
     }
@@ -4323,7 +4334,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   sidebarPanels.init();
   Livewire.on('fragmentsReloaded', function () {
-    sidebarPanels.listenForPanelTriggers();
+    sidebarPanels.scanForPanelTriggers();
   });
 });
 

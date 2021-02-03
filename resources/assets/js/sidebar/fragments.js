@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     sidebarPanels.init();
 
     Livewire.on('fragmentsReloaded', () => {
-        sidebarPanels.listenForPanelTriggers();
+        sidebarPanels.scanForPanelTriggers();
     })
 
 

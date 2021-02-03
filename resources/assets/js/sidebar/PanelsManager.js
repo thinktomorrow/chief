@@ -3,27 +3,26 @@ import Panel from "./Panel"
 import Panels from "./Panels"
 
 export default class PanelsManager {
-    constructor(sidebar, newPanelCallback, submitCallback) {
-        this.sidebar = sidebar;
+    constructor(container, newPanelCallback, submitCallback) {
+        this.container = container;
+        this.panels = new Panels();
         this.newPanelCallback = newPanelCallback;
         this.submitCallback = submitCallback;
-
-        this.panels = new Panels();
 
         // Register unique trigger handler
         this.handle = (event) => this._handlePanelTrigger(event);
     }
 
     init() {
-        this.listenForPanelTriggers();
+        this.scanForPanelTriggers();
 
         // Listen for close triggers on the sidebar container
-        this.sidebar.backTriggers.forEach(trigger => {
+        this.container.closeTriggers.forEach(trigger => {
             trigger.addEventListener('click', this.backOrClose.bind(this));
         });
     }
 
-    listenForPanelTriggers() {
+    scanForPanelTriggers() {
         Array.from(document.querySelectorAll('[data-sidebar-show]')).forEach((el) => {
             el.removeEventListener('click', this.handle)
             el.addEventListener('click', this.handle);
@@ -59,7 +58,7 @@ export default class PanelsManager {
         // Add new panel container to dom
         const newPanelContainer = document.createElement('div');
         newPanelContainer.setAttribute('data-panel-id', id);
-        this.sidebar.dom().appendChild(newPanelContainer);
+        this.container.dom().appendChild(newPanelContainer);
 
         Api.get(url, newPanelContainer, (data) => {
 
@@ -71,15 +70,15 @@ export default class PanelsManager {
 
             Api.listenForFormSubmits(newPanelContainer, () => {
 
-                this.backOrClose();
+                this.backOrClose(false);
 
                 if(this.submitCallback) {
                     this.submitCallback();
                 }
             });
 
-            if(!this.sidebar.isOpen()) {
-                this.sidebar.open();
+            if(!this.container.isOpen()) {
+                this.container.open();
             }
 
             this.panels.add(new Panel(id, url, this.panels.findActive() ? this.panels.findActive() : null, newPanelContainer));
@@ -94,42 +93,45 @@ export default class PanelsManager {
             this.panels.findActive().hide();
         }
 
+        // Set new panel as active and show it
         this.panels.markAsActive(id);
         this.panels.findActive().show();
 
-        // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
-        this.sidebar.setBackButtonDisplay();
-        this.listenForPanelTriggers();
+        // TODO: pass here type to switch templates x/terug/...
+        this.container.renderCloseButton();
+        this.scanForPanelTriggers();
 
         if(this.newPanelCallback) {
             this.newPanelCallback();
         }
     }
 
-    backOrClose() {
+    /**
+     * Handle the closing of the current panel and determine the next one.
+     * Either the user clicks the close button or has saved the panel form.
+     */
+    backOrClose(keepPreviousPanel = true) {
 
-        const previousId = this.panels.findActive().id;
 
+        // Back to parent
         if(this.panels.findActive().parent) {
+
+            const previousId = this.panels.findActive().id;
+
             this.show(this.panels.findActive().parent.url);
             this._reloadActivePanelSections();
+
+            if(!keepPreviousPanel) {
+                this.panels.remove(previousId);
+            }
+
             return;
         }
 
-        this.panels.remove(previousId);
-        this.sidebar.dom().querySelector(`[data-panel-id="${previousId}"]`).remove();
-
-        // Only on the top level we close the sidebar
-        // Check for unsaved content before clicking submit...
-        this.sidebar.close();
-        this._reset();
-    }
-
-    _reset() {
+        // At top level so close entire sidebar which also clears out the panels
+        // TODO: Check for unsaved content before clicking submit...
         this.panels.clear();
-
-        // Remove all panels from dom
-        this.sidebar.dom().innerHTML = '';
+        this.container.close();
     }
 
     _reloadActivePanelSections() {
@@ -140,7 +142,7 @@ export default class PanelsManager {
                 DOM.innerHTML = data;
 
                 this.panels.activePanel.replaceComponent('[data-sidebar-component="' + componentKey + '"]' , DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML);
-                this.listenForPanelTriggers();
+                this.scanForPanelTriggers();
             })
         });
     }

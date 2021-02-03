@@ -8,9 +8,9 @@ export default class Sidebar {
         this.el = el;
         this.sidebarBackdrop = this.el.querySelector('[data-sidebar-backdrop]');
         this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
-        this.sidebarBackButton = this.el.querySelector('[data-sidebar-back-button]');
+        this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
 
-        this.backTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-back]'));
+        this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
     }
 
     dom() {
@@ -36,12 +36,12 @@ export default class Sidebar {
         });
     }
 
-    setBackButtonDisplay() {
+    renderCloseButton() {
         const template = document.querySelector('#js-sidebar-close-button');
 
         const node = document.importNode(template.content, true);
-        this.sidebarBackButton.innerHTML = '';
-        this.sidebarBackButton.appendChild(node);
+        this.closeButton.innerHTML = '';
+        this.closeButton.appendChild(node);
     }
 
     _closeElement(element, animationName) {

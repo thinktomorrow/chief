@@ -17,4 +17,8 @@ export default class Panel {
     replaceComponent(selector, content) {
         this.el.querySelector(selector).innerHTML = content;
     }
+
+    remove() {
+        this.el.remove();
+    }
 }
