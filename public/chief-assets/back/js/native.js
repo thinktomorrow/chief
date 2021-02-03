@@ -3989,6 +3989,56 @@ var Sidebar = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js/sidebar/Panel.js":
+/*!**********************************************!*\
+  !*** ./resources/assets/js/sidebar/Panel.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Panel; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Panel = /*#__PURE__*/function () {
+  function Panel(id, url, parent, el) {
+    _classCallCheck(this, Panel);
+
+    this.id = id;
+    this.url = url;
+    this.parent = parent;
+    this.el = el;
+  }
+
+  _createClass(Panel, [{
+    key: "show",
+    value: function show() {
+      this.el.style.display = "block";
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.el.style.display = "none";
+    }
+  }, {
+    key: "replaceComponent",
+    value: function replaceComponent(selector, content) {
+      this.el.querySelector(selector).innerHTML = content;
+    }
+  }]);
+
+  return Panel;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/sidebar/Panels.js":
 /*!***********************************************!*\
   !*** ./resources/assets/js/sidebar/Panels.js ***!
@@ -3999,7 +4049,78 @@ var Sidebar = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Panels; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Panels = /*#__PURE__*/function () {
+  function Panels() {
+    _classCallCheck(this, Panels);
+
+    this.collection = [];
+    this.activePanel = null;
+  }
+
+  _createClass(Panels, [{
+    key: "find",
+    value: function find(id) {
+      return this.collection.find(function (panel) {
+        return panel.id === id;
+      });
+    }
+  }, {
+    key: "findActive",
+    value: function findActive() {
+      return this.activePanel;
+    }
+  }, {
+    key: "markAsActive",
+    value: function markAsActive(id) {
+      this.activePanel = this.find(id);
+    }
+  }, {
+    key: "add",
+    value: function add(panel) {
+      this.collection.push(panel);
+    }
+  }, {
+    key: "remove",
+    value: function remove(id) {
+      var index = this.collection.findIndex(function (panel) {
+        return panel.id === id;
+      });
+      this.collection.splice(index, 1);
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.collection = [];
+      this.activePanel = null;
+    }
+  }]);
+
+  return Panels;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/sidebar/PanelsManager.js":
+/*!******************************************************!*\
+  !*** ./resources/assets/js/sidebar/PanelsManager.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PanelsManager; });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/sidebar/Api.js");
+/* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Panel */ "./resources/assets/js/sidebar/Panel.js");
+/* harmony import */ var _Panels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panels */ "./resources/assets/js/sidebar/Panels.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4008,24 +4129,25 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-var Panels = /*#__PURE__*/function () {
-  function Panels(sidebar, newPanelCallback, submitCallback) {
+
+
+var PanelsManager = /*#__PURE__*/function () {
+  function PanelsManager(sidebar, newPanelCallback, submitCallback) {
     var _this = this;
 
-    _classCallCheck(this, Panels);
+    _classCallCheck(this, PanelsManager);
 
     this.sidebar = sidebar;
     this.newPanelCallback = newPanelCallback;
     this.submitCallback = submitCallback;
-    this.panels = [];
-    this.activePanel = null; // Register unique trigger handler
+    this.panels = new _Panels__WEBPACK_IMPORTED_MODULE_2__["default"](); // Register unique trigger handler
 
     this.handle = function (event) {
       return _this._handlePanelTrigger(event);
     };
   }
 
-  _createClass(Panels, [{
+  _createClass(PanelsManager, [{
     key: "init",
     value: function init() {
       var _this2 = this;
@@ -4059,21 +4181,13 @@ var Panels = /*#__PURE__*/function () {
     value: function show(url) {
       var id = encodeURIComponent(url); // if present in panels, than show the existing panel.
 
-      if (this._find(id)) {
+      if (this.panels.find(id)) {
         this._activate(id);
 
         return;
       }
 
       this._addAndShowNewPanel(id, url);
-    }
-  }, {
-    key: "_find",
-    value: function _find(id) {
-      console.dir(this.panels);
-      return this.panels.find(function (panel) {
-        return panel.id === id;
-      });
     }
   }, {
     key: "_addAndShowNewPanel",
@@ -4092,12 +4206,7 @@ var Panels = /*#__PURE__*/function () {
           el: newPanelContainer.querySelector('[data-vue-fields]')
         });
         _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function () {
-          var previousId = _this4.activePanel.id;
-
-          _this4.backOrClose(); // On form submit we can safely remove current panel
-
-
-          _this4._remove(previousId);
+          _this4.backOrClose();
 
           if (_this4.submitCallback) {
             _this4.submitCallback();
@@ -4108,12 +4217,7 @@ var Panels = /*#__PURE__*/function () {
           _this4.sidebar.open();
         }
 
-        _this4.panels.push({
-          id: id,
-          url: url,
-          parent: _this4.activePanel ? _this4.activePanel : null,
-          dom: newPanelContainer
-        });
+        _this4.panels.add(new _Panel__WEBPACK_IMPORTED_MODULE_1__["default"](id, url, _this4.panels.findActive() ? _this4.panels.findActive() : null, newPanelContainer));
 
         _this4._activate(id);
       });
@@ -4122,13 +4226,12 @@ var Panels = /*#__PURE__*/function () {
     key: "_activate",
     value: function _activate(id) {
       // Hide current active panel
-      if (this.activePanel) {
-        this.activePanel.dom.style.display = "none";
-      } // Make our new panel the active one
+      if (this.panels.findActive()) {
+        this.panels.findActive().hide();
+      }
 
-
-      this.activePanel = this._find(id);
-      this.activePanel.dom.style.display = "block"; // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
+      this.panels.markAsActive(id);
+      this.panels.findActive().show(); // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
 
       this.sidebar.setBackButtonDisplay();
       this.listenForPanelTriggers();
@@ -4138,27 +4241,21 @@ var Panels = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "_remove",
-    value: function _remove(id) {
-      var index = this.panels.findIndex(function (panel) {
-        return panel.id === id;
-      });
-      delete this.panels[index];
-      this.panels.splice(index, 1);
-      this.sidebar.dom().querySelector("[data-panel-id=\"".concat(id, "\"]")).remove();
-    }
-  }, {
     key: "backOrClose",
     value: function backOrClose() {
-      if (this.activePanel.parent) {
-        this.show(this.activePanel.parent.url);
+      var previousId = this.panels.findActive().id;
+
+      if (this.panels.findActive().parent) {
+        this.show(this.panels.findActive().parent.url);
 
         this._reloadActivePanelSections();
 
         return;
-      } // Only on the top level we close the sidebar
-      // Check for unsaved content before clicking submit...
+      }
 
+      this.panels.remove(previousId);
+      this.sidebar.dom().querySelector("[data-panel-id=\"".concat(previousId, "\"]")).remove(); // Only on the top level we close the sidebar
+      // Check for unsaved content before clicking submit...
 
       this.sidebar.close();
 
@@ -4167,8 +4264,7 @@ var Panels = /*#__PURE__*/function () {
   }, {
     key: "_reset",
     value: function _reset() {
-      this.panels = [];
-      this.activePanel = null; // Remove all panels from dom
+      this.panels.clear(); // Remove all panels from dom
 
       this.sidebar.dom().innerHTML = '';
     }
@@ -4177,12 +4273,13 @@ var Panels = /*#__PURE__*/function () {
     value: function _reloadActivePanelSections() {
       var _this5 = this;
 
-      Array.from(this.activePanel.dom.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
+      Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
         var componentKey = el.getAttribute('data-sidebar-component');
-        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(_this5.activePanel.url, el, function (data) {
+        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(_this5.panels.findActive().url, el, function (data) {
           var DOM = document.createElement('div');
           DOM.innerHTML = data;
-          _this5.activePanel.dom.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML = DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML;
+
+          _this5.panels.activePanel.replaceComponent('[data-sidebar-component="' + componentKey + '"]', DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML);
 
           _this5.listenForPanelTriggers();
         });
@@ -4190,7 +4287,7 @@ var Panels = /*#__PURE__*/function () {
     }
   }]);
 
-  return Panels;
+  return PanelsManager;
 }();
 
 
@@ -4207,9 +4304,7 @@ var Panels = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/sidebar/Container.js");
-/* harmony import */ var _Panels__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Panels */ "./resources/assets/js/sidebar/Panels.js");
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/sidebar/Api.js");
-
+/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
 
  // --------------------------------------------------------------------------------
 // FRAGMENT JS --------------------------------------------------------------------
@@ -4220,7 +4315,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!sidebarEl) return;
   var livewireComponent = Livewire.find(document.querySelector('[data-fragments-component]').getAttribute('wire:id'));
-  var sidebarPanels = new _Panels__WEBPACK_IMPORTED_MODULE_1__["default"](new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarEl), function () {
+  var sidebarPanels = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"](new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarEl), function () {
     console.log('new panel');
   }, function () {
     // trigger immediate reload of fragments component

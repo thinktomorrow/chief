@@ -1,6 +1,5 @@
 import Container from "./Container"
-import Panels from "./Panels"
-import {Api} from "./Api"
+import PanelsManager from "./PanelsManager"
 
 // --------------------------------------------------------------------------------
 // FRAGMENT JS --------------------------------------------------------------------
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const livewireComponent = Livewire.find(document.querySelector('[data-fragments-component]').getAttribute('wire:id'));
 
-    const sidebarPanels = (new Panels(new Container(sidebarEl), function(){
+    const sidebarPanels = (new PanelsManager(new Container(sidebarEl), function(){
         console.log('new panel');
     }, function(){
         // trigger immediate reload of fragments component
