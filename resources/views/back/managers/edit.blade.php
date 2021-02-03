@@ -40,9 +40,7 @@
 @endcomponent
 
 @section('content')
-    <x-chief-sidebar>
-        <div id="fragmentModal"></div>
-    </x-chief-sidebar>
+    <x-chief-sidebar></x-chief-sidebar>
 
     <div class="row gutter-l stack">
         <div class="column-8">
@@ -95,37 +93,37 @@
     @endAdminCan
 
     <script>
-        // --------------------------------------------------------------------------------
-        // FRAGMENT JS --------------------------------------------------------------------
-        // --------------------------------------------------------------------------------
-        document.addEventListener('DOMContentLoaded', function() {
-            const modalContainer = document.getElementById('fragmentModal'),
-                  sidebar = new Sidebar('[data-sidebar]'),
-                  livewireComponent = Livewire.find(document.getElementById('js-fragments-component').getAttribute('wire:id'));
-
-            window.SidebarMain = {
-                editRequestHandler: function (event) {
-                    event.preventDefault();
-                    sidebarPanels.show(this.getAttribute('href'));
-                }
-            };
-
-            const sidebarPanels = new SidebarPanels(sidebar, SidebarEvents, function(){
-                //
-            }, function(){
-                // trigger immediate reload of fragments component
-                livewireComponent.reload();
-            });
-
-            // Test ref
-            window.sidebarPanels = sidebarPanels;
-
-            Livewire.on('fragmentsReloaded', () => {
-                SidebarEvents.listenForEditRequests();
-            })
-
-            SidebarEvents.listenForEditRequests();
-        });
+        // // --------------------------------------------------------------------------------
+        // // FRAGMENT JS --------------------------------------------------------------------
+        // // --------------------------------------------------------------------------------
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     const modalContainer = document.getElementById('fragmentModal'),
+        //           sidebar = new Sidebar('[data-sidebar]'),
+        //           livewireComponent = Livewire.find(document.getElementById('js-fragments-component').getAttribute('wire:id'));
+        //
+        //     window.SidebarMain = {
+        //         editRequestHandler: function (event) {
+        //             event.preventDefault();
+        //             sidebarPanels.show(this.getAttribute('href'));
+        //         }
+        //     };
+        //
+        //     const sidebarPanels = new SidebarPanels(sidebar, SidebarEvents, function(){
+        //         //
+        //     }, function(){
+        //         // trigger immediate reload of fragments component
+        //         livewireComponent.reload();
+        //     });
+        //
+        //     // Test ref
+        //     window.sidebarPanels = sidebarPanels;
+        //
+        //     Livewire.on('fragmentsReloaded', () => {
+        //         SidebarEvents.listenForEditRequests();
+        //     })
+        //
+        //     SidebarEvents.listenForEditRequests();
+        // });
     </script>
 @endpush
 

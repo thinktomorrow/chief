@@ -7,7 +7,7 @@
         @adminCan('fragment-edit')
             <div class="flex-shrink-0 flex items-center">
                 <a
-                    data-edit-modal
+                    data-sidebar-show
                     href="@adminRoute('fragment-edit', $model)"
                     class="flex items-center mr-2"
                 >
@@ -26,7 +26,7 @@
                     Atm it also opens the edit sidebar.
                 --}}
                 <a
-                    data-edit-modal
+                    data-sidebar-show
                     href="@adminRoute('fragment-edit', $model)"
                     class="flex items-center"
                 >

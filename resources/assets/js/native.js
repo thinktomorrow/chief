@@ -14,3 +14,6 @@ if(document.getElementById('js-sortable')) {
         endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route')
     });
 }
+
+/** Sidebar */
+require('./sidebar/fragments')
