@@ -42,7 +42,7 @@ export default class PanelsManager {
     }
 
     show(url) {
-        const id = encodeURIComponent(url);
+        const id = this.panels.createId(url);
 
         // if present in panels, than show the existing panel.
         if(this.panels.find(id)) {
@@ -50,10 +50,10 @@ export default class PanelsManager {
             return;
         }
 
-        this._addAndShowNewPanel(id, url);
+        this._activateNewPanel(id, url);
     }
 
-    _addAndShowNewPanel(id, url) {
+    _activateNewPanel(id, url) {
 
         // Add new panel container to dom
         const newPanelContainer = document.createElement('div');
@@ -112,14 +112,13 @@ export default class PanelsManager {
      */
     backOrClose(keepPreviousPanel = true) {
 
-
         // Back to parent
         if(this.panels.findActive().parent) {
 
             const previousId = this.panels.findActive().id;
 
             this.show(this.panels.findActive().parent.url);
-            this._reloadActivePanelSections();
+            this._replacePanelComponents();
 
             if(!keepPreviousPanel) {
                 this.panels.remove(previousId);
@@ -134,7 +133,14 @@ export default class PanelsManager {
         this.container.close();
     }
 
-    _reloadActivePanelSections() {
+    /**
+     * Replace components found within the active panel with their updated server html.
+     * A component is marked by the [data-sidebar-component] attribute. A unique
+     * value is required so that the different components can be distinguished.
+     *
+     * @private
+     */
+    _replacePanelComponents() {
         Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach((el) => {
             const componentKey = el.getAttribute('data-sidebar-component');
             Api.get(this.panels.findActive().url, el, (data) => {

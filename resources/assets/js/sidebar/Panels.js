@@ -33,4 +33,8 @@ export default class Panels {
         this.collection = [];
         this.activePanel = null;
     }
+
+    createId(url) {
+        return encodeURIComponent(url);
+    }
 }

@@ -4108,6 +4108,11 @@ var Panels = /*#__PURE__*/function () {
       this.collection = [];
       this.activePanel = null;
     }
+  }, {
+    key: "createId",
+    value: function createId(url) {
+      return encodeURIComponent(url);
+    }
   }]);
 
   return Panels;
@@ -4188,7 +4193,7 @@ var PanelsManager = /*#__PURE__*/function () {
   }, {
     key: "show",
     value: function show(url) {
-      var id = encodeURIComponent(url); // if present in panels, than show the existing panel.
+      var id = this.panels.createId(url); // if present in panels, than show the existing panel.
 
       if (this.panels.find(id)) {
         this._activate(id);
@@ -4196,11 +4201,11 @@ var PanelsManager = /*#__PURE__*/function () {
         return;
       }
 
-      this._addAndShowNewPanel(id, url);
+      this._activateNewPanel(id, url);
     }
   }, {
-    key: "_addAndShowNewPanel",
-    value: function _addAndShowNewPanel(id, url) {
+    key: "_activateNewPanel",
+    value: function _activateNewPanel(id, url) {
       var _this4 = this;
 
       // Add new panel container to dom
@@ -4265,7 +4270,7 @@ var PanelsManager = /*#__PURE__*/function () {
         var previousId = this.panels.findActive().id;
         this.show(this.panels.findActive().parent.url);
 
-        this._reloadActivePanelSections();
+        this._replacePanelComponents();
 
         if (!keepPreviousPanel) {
           this.panels.remove(previousId);
@@ -4279,9 +4284,17 @@ var PanelsManager = /*#__PURE__*/function () {
       this.panels.clear();
       this.container.close();
     }
+    /**
+     * Replace components found within the active panel with their updated server html.
+     * A component is marked by the [data-sidebar-component] attribute. A unique
+     * value is required so that the different components can be distinguished.
+     *
+     * @private
+     */
+
   }, {
-    key: "_reloadActivePanelSections",
-    value: function _reloadActivePanelSections() {
+    key: "_replacePanelComponents",
+    value: function _replacePanelComponents() {
       var _this5 = this;
 
       Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
