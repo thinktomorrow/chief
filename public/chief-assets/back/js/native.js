@@ -3858,25 +3858,14 @@ __webpack_require__(/*! ./sidebar/fragments */ "./resources/assets/js/sidebar/fr
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Api", function() { return Api; });
 var Api = {
-  get: function get(url, container, callback, submitCallback) {
-    var _this = this;
-
+  get: function get(url, container, successCallback, errorCallback) {
     fetch(url).then(function (response) {
       return response.text();
     }).then(function (data) {
-      container.innerHTML = data; // only mount Vue on our vue specific fields and not on the form element itself
-      // so that the submit event still works. I know this is kinda hacky.
-
-      new Vue({
-        el: container.querySelector('[data-vue-fields]')
-      });
-      console.log('reloaded content');
-
-      _this.listenForFormSubmits(container, submitCallback);
-
-      if (callback) callback();
+      if (successCallback) successCallback(data);
     })["catch"](function (error) {
-      console.log(error);
+      if (errorCallback) errorCallback(error);
+      console.error(error);
     });
   },
   submit: function submit(method, url, body, successCallback, errorCallback) {
@@ -3888,7 +3877,7 @@ var Api = {
     }).then(function (data) {
       if (successCallback) successCallback(data);
     })["catch"](function (error) {
-      if (errorCallback) errorCallback();
+      if (errorCallback) errorCallback(error);
       console.error(error);
     });
   },
@@ -4094,8 +4083,21 @@ var Panels = /*#__PURE__*/function () {
       var newPanelContainer = document.createElement('div');
       newPanelContainer.setAttribute('data-panel-id', id);
       this.sidebar.dom().appendChild(newPanelContainer);
-      _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(url, newPanelContainer, function () {
+      _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(url, newPanelContainer, function (data) {
         console.log('loading content for ' + url);
+        newPanelContainer.innerHTML = data; // only mount Vue on our vue specific fields and not on the form element itself
+        // so that the submit event still works. I know this is kinda hacky.
+
+        new Vue({
+          el: newPanelContainer.querySelector('[data-vue-fields]')
+        });
+        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function () {
+          _this4.backOrClose();
+
+          if (_this4.submitCallback) {
+            _this4.submitCallback();
+          }
+        });
 
         if (!_this4.sidebar.isOpen()) {
           _this4.sidebar.open();
@@ -4110,12 +4112,6 @@ var Panels = /*#__PURE__*/function () {
         _this4._activate(id);
 
         _this4.listenForPanelTriggers();
-      }, function () {
-        _this4.backOrClose();
-
-        if (_this4.submitCallback) {
-          _this4.submitCallback();
-        }
       });
     }
   }, {

@@ -64,9 +64,22 @@ export default class Panels {
         newPanelContainer.setAttribute('data-panel-id', id);
         this.sidebar.dom().appendChild(newPanelContainer);
 
-        Api.get(url, newPanelContainer, () => {
+        Api.get(url, newPanelContainer, (data) => {
 
             console.log('loading content for ' + url);
+
+            newPanelContainer.innerHTML = data;
+
+            // only mount Vue on our vue specific fields and not on the form element itself
+            // so that the submit event still works. I know this is kinda hacky.
+            new Vue({el: newPanelContainer.querySelector('[data-vue-fields]')});
+
+            Api.listenForFormSubmits(newPanelContainer, () => {
+                this.backOrClose();
+                if(this.submitCallback) {
+                    this.submitCallback();
+                }
+            });
 
             if(!this.sidebar.isOpen()) {
                 this.sidebar.open();
@@ -81,12 +94,6 @@ export default class Panels {
             this._activate(id);
             this.listenForPanelTriggers();
 
-        }, () => {
-            this.backOrClose();
-
-            if(this.submitCallback) {
-                this.submitCallback();
-            }
         })
     }
 

@@ -1,25 +1,16 @@
 export const Api = {
 
-    get: function (url, container, callback, submitCallback) {
+    get: function (url, container, successCallback, errorCallback) {
         fetch(url)
             .then(response => {
                 return response.text()
             })
             .then(data => {
-                container.innerHTML = data;
-
-                // only mount Vue on our vue specific fields and not on the form element itself
-                // so that the submit event still works. I know this is kinda hacky.
-                new Vue({el: container.querySelector('[data-vue-fields]')});
-
-                console.log('reloaded content');
-
-                this.listenForFormSubmits(container, submitCallback);
-
-                if (callback) callback();
+                if (successCallback) successCallback(data);
             })
             .catch(error => {
-                console.log(error);
+                if (errorCallback) errorCallback(error);
+                console.error(error);
             });
     },
 
@@ -32,7 +23,7 @@ export const Api = {
             if (successCallback) successCallback(data);
         })
         .catch(error => {
-            if (errorCallback) errorCallback();
+            if (errorCallback) errorCallback(error);
             console.error(error);
         });
     },
