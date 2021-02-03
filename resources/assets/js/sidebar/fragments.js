@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Do not trigger the sidebar script is DOM element isn't present
     if(!sidebarEl) return;
 
-    const livewireComponent = Livewire.find(document.getElementById('js-fragments-component').getAttribute('wire:id'));
+    const livewireComponent = Livewire.find(document.querySelector('[data-fragments-component]').getAttribute('wire:id'));
 
     const sidebarPanels = (new Panels(new Container(sidebarEl), function(){
         console.log('new panel');

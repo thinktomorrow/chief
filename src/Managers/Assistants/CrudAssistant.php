@@ -86,7 +86,7 @@ trait CrudAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        return $builder->paginate(2);
+        return $builder->paginate(12);
     }
 
     public function filters(): Filters

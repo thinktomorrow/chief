@@ -1,4 +1,4 @@
-<div id="js-fragments-component">
+<div data-fragments-component>
     <h2>Fragments</h2>
 
     <div class="row gutter-s">

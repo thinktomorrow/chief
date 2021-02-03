@@ -4187,7 +4187,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var sidebarEl = document.querySelector('[data-sidebar]'); // Do not trigger the sidebar script is DOM element isn't present
 
   if (!sidebarEl) return;
-  var livewireComponent = Livewire.find(document.getElementById('js-fragments-component').getAttribute('wire:id'));
+  var livewireComponent = Livewire.find(document.querySelector('[data-fragments-component]').getAttribute('wire:id'));
   var sidebarPanels = new _Panels__WEBPACK_IMPORTED_MODULE_1__["default"](new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarEl), function () {
     console.log('new panel');
   }, function () {

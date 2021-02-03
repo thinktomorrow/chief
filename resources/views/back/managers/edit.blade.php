@@ -91,40 +91,6 @@
     @adminCan('asyncRedactorFileUpload', $model)
         @include('chief::back._layouts._partials.editor-script', ['imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)])
     @endAdminCan
-
-    <script>
-        // // --------------------------------------------------------------------------------
-        // // FRAGMENT JS --------------------------------------------------------------------
-        // // --------------------------------------------------------------------------------
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const modalContainer = document.getElementById('fragmentModal'),
-        //           sidebar = new Sidebar('[data-sidebar]'),
-        //           livewireComponent = Livewire.find(document.getElementById('js-fragments-component').getAttribute('wire:id'));
-        //
-        //     window.SidebarMain = {
-        //         editRequestHandler: function (event) {
-        //             event.preventDefault();
-        //             sidebarPanels.show(this.getAttribute('href'));
-        //         }
-        //     };
-        //
-        //     const sidebarPanels = new SidebarPanels(sidebar, SidebarEvents, function(){
-        //         //
-        //     }, function(){
-        //         // trigger immediate reload of fragments component
-        //         livewireComponent.reload();
-        //     });
-        //
-        //     // Test ref
-        //     window.sidebarPanels = sidebarPanels;
-        //
-        //     Livewire.on('fragmentsReloaded', () => {
-        //         SidebarEvents.listenForEditRequests();
-        //     })
-        //
-        //     SidebarEvents.listenForEditRequests();
-        // });
-    </script>
 @endpush
 
 @include('chief::back._components.file-component')
