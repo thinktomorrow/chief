@@ -4084,7 +4084,6 @@ var Panels = /*#__PURE__*/function () {
       newPanelContainer.setAttribute('data-panel-id', id);
       this.sidebar.dom().appendChild(newPanelContainer);
       _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(url, newPanelContainer, function (data) {
-        console.log('loading content for ' + url);
         newPanelContainer.innerHTML = data; // only mount Vue on our vue specific fields and not on the form element itself
         // so that the submit event still works. I know this is kinda hacky.
 
@@ -4106,12 +4105,11 @@ var Panels = /*#__PURE__*/function () {
         _this4.panels.push({
           id: id,
           url: url,
-          parent: _this4.activePanel ? _this4.activePanel : null
+          parent: _this4.activePanel ? _this4.activePanel : null,
+          dom: newPanelContainer
         });
 
         _this4._activate(id);
-
-        _this4.listenForPanelTriggers();
       });
     }
   }, {
@@ -4119,14 +4117,16 @@ var Panels = /*#__PURE__*/function () {
     value: function _activate(id) {
       // Hide current active panel
       if (this.activePanel) {
-        this.sidebar.dom().querySelector("[data-panel-id=\"".concat(this.activePanel.id, "\"]")).style.display = "none";
+        this.activePanel.dom.style.display = "none"; // this.sidebar.dom().querySelector(`[data-panel-id="${this.activePanel.id}"]`)
       } // Make our new panel the active one
 
 
       this.activePanel = this._find(id);
-      this.sidebar.dom().querySelector("[data-panel-id=\"".concat(id, "\"]")).style.display = "block"; // set close triggers on sidebar
+      this.activePanel.dom.style.display = "block"; // this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).style.display = "block";
+      // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
 
       this.sidebar.setBackButtonDisplay();
+      this.listenForPanelTriggers();
 
       if (this.newPanelCallback) {
         this.newPanelCallback();
@@ -4136,13 +4136,14 @@ var Panels = /*#__PURE__*/function () {
     key: "backOrClose",
     value: function backOrClose() {
       if (this.activePanel.parent) {
-        console.log('going to previous');
         this.show(this.activePanel.parent.url);
-        return;
-      }
 
-      console.log('closing...'); // Only on the top level we close the sidebar
+        this._reloadActivePanelSections();
+
+        return;
+      } // Only on the top level we close the sidebar
       // Check for unsaved content before clicking submit...
+
 
       this.sidebar.close();
 
@@ -4155,6 +4156,22 @@ var Panels = /*#__PURE__*/function () {
       this.activePanel = null; // Remove all from dom
 
       this.sidebar.dom().innerHTML = '';
+    }
+  }, {
+    key: "_reloadActivePanelSections",
+    value: function _reloadActivePanelSections() {
+      var _this5 = this;
+
+      Array.from(this.activePanel.dom.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
+        var componentKey = el.getAttribute('data-sidebar-component');
+        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(_this5.activePanel.url, el, function (data) {
+          var DOM = document.createElement('div');
+          DOM.innerHTML = data;
+          _this5.activePanel.dom.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML = DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML;
+
+          _this5.listenForPanelTriggers();
+        });
+      });
     }
   }]);
 

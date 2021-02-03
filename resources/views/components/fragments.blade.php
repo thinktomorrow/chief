@@ -1,7 +1,7 @@
 <div data-fragments-component>
     <h2>Fragments</h2>
 
-    <div class="row gutter-s">
+    <div data-sidebar-component="fragments" class="row gutter-s">
         @foreach($fragments as $fragment)
             @include('chief::managers.fragments._card', [
                 'model' => $fragment['model'],
@@ -11,8 +11,6 @@
             ])
         @endforeach
     </div>
-
-
 
     <div class="mt-8">
         @forelse($allowedFragments as $allowedFragment)

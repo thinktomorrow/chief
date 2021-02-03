@@ -1,6 +1,6 @@
 <div data-sidebar class="fixed inset-0" style="z-index: 50; display: none;">
     <div data-sidebar-backdrop data-sidebar-back class="absolute inset-0 bg-black opacity-25 fade-in"></div>
-    <aside class="absolute top-0 right-0 bottom-0 bg-white shadow-lg p-16 slide-from-right overflow-auto">
+    <aside class="absolute top-0 right-0 bottom-0 bg-white shadow-lg p-16 slide-from-right overflow-auto w-1/2">
         <div data-sidebar-back data-sidebar-back-button class="absolute top-0 left-0 m-4 cursor-pointer"></div>
         <div data-sidebar-content>
             {{ $slot }}

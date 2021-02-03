@@ -66,8 +66,6 @@ export default class Panels {
 
         Api.get(url, newPanelContainer, (data) => {
 
-            console.log('loading content for ' + url);
-
             newPanelContainer.innerHTML = data;
 
             // only mount Vue on our vue specific fields and not on the form element itself
@@ -89,11 +87,10 @@ export default class Panels {
                 id: id,
                 url: url,
                 parent: this.activePanel ? this.activePanel : null,
+                dom: newPanelContainer
             });
 
             this._activate(id);
-            this.listenForPanelTriggers();
-
         })
     }
 
@@ -101,15 +98,19 @@ export default class Panels {
 
         // Hide current active panel
         if(this.activePanel) {
-            this.sidebar.dom().querySelector(`[data-panel-id="${this.activePanel.id}"]`).style.display = "none";
+            this.activePanel.dom.style.display = "none";
+            // this.sidebar.dom().querySelector(`[data-panel-id="${this.activePanel.id}"]`)
         }
 
         // Make our new panel the active one
         this.activePanel = this._find(id);
-        this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).style.display = "block";
+        this.activePanel.dom.style.display = "block";
+        // this.sidebar.dom().querySelector(`[data-panel-id="${id}"]`).style.display = "block";
 
-        // set close triggers on sidebar
+        // set close triggers on sidebar. TODO: pass here type to switch templates x/terug/...
         this.sidebar.setBackButtonDisplay();
+
+        this.listenForPanelTriggers();
 
         if(this.newPanelCallback) {
             this.newPanelCallback();
@@ -119,12 +120,11 @@ export default class Panels {
     backOrClose() {
 
         if(this.activePanel.parent) {
-            console.log('going to previous');
             this.show(this.activePanel.parent.url);
+
+            this._reloadActivePanelSections();
             return;
         }
-
-        console.log('closing...');
 
         // Only on the top level we close the sidebar
         // Check for unsaved content before clicking submit...
@@ -140,5 +140,17 @@ export default class Panels {
         this.sidebar.dom().innerHTML = '';
     }
 
+    _reloadActivePanelSections() {
+        Array.from(this.activePanel.dom.querySelectorAll('[data-sidebar-component]')).forEach((el) => {
+            const componentKey = el.getAttribute('data-sidebar-component');
+            Api.get(this.activePanel.url, el, (data) => {
+                let DOM = document.createElement('div');
+                DOM.innerHTML = data;
+
+                this.activePanel.dom.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML = DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML;
+                this.listenForPanelTriggers();
+            })
+        });
+    }
 
 }
