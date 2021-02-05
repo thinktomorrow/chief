@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -19,6 +20,7 @@ class FragmentableStub extends Model implements Fragmentable, FragmentsOwner
     use ManagedModelDefaults;
     use ReferableModelDefault;
     use FragmentableDefaults;
+    use OwningFragments;
 
     protected $guarded = [];
 

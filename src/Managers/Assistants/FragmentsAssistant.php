@@ -9,6 +9,8 @@ use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 trait FragmentsAssistant
@@ -19,7 +21,7 @@ trait FragmentsAssistant
     {
         return [
             ManagedRoute::get('fragments-index', '{id}/fragments'),
-            ManagedRoute::put('fragments-reorder', '{id}/fragments/reorder'),
+            ManagedRoute::post('fragments-reorder', '{id}/fragments/reorder'),
         ];
     }
 
@@ -37,10 +39,8 @@ trait FragmentsAssistant
 
     public function fragmentsIndex(Request $request, $id)
     {
-        $modelClass = $this->managedModelClass();
-
         /** @var FragmentsOwner $model */
-        $model = $modelClass::findOrFail($id);
+        $model = $this->managedModelClass()::findOrFail($id);
 
         // Current fragments
         $fragments = app(FragmentRepository::class)->getByOwner($model)->map(function(Fragmentable $model){
@@ -64,6 +64,22 @@ trait FragmentsAssistant
             'manager'   => $this,
             'fragments' => $fragments,
             'allowedFragments' => $allowedFragments,
+        ]);
+    }
+
+    public function fragmentsReorder(Request $request, $id)
+    {
+        /** @var FragmentsOwner $model */
+        $model = $this->managedModelClass()::findOrFail($id);
+
+        if(!$request->indices) {
+            throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
+        }
+
+        app(SortModels::class)->handle(FragmentModel::class, $request->indices, 'order', false);
+
+        return response()->json([
+            'message' => 'models sorted.'
         ]);
     }
 }

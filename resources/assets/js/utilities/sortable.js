@@ -10,6 +10,9 @@ const IndexSorting = function(options){
         throw new Error('Missing endpoint for sortable js. Please set the options.endpoint value');
     }
 
+    // Optional draggable handle instead of entire element
+    this.handle = options.handle || null;
+
     // Toggle
     this.isSorting = options.isSorting || false;
     this.sortToggles = Array.from(document.querySelectorAll('[data-sortable-toggle]'));
@@ -73,6 +76,7 @@ IndexSorting.prototype._init = function() {
         fallbackOnBody: true,
         swapThreshold: 0.65,
         dataIdAttr: this.sortableIdAttribute,
+        handle: this.handle,
 
         store: {
             set: function(sortable){

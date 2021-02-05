@@ -4329,6 +4329,8 @@ var PanelsManager = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/sidebar/Container.js");
 /* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
+/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
+
 
  // --------------------------------------------------------------------------------
 // FRAGMENT JS --------------------------------------------------------------------
@@ -4348,6 +4350,14 @@ document.addEventListener('DOMContentLoaded', function () {
   sidebarPanels.init();
   Livewire.on('fragmentsReloaded', function () {
     sidebarPanels.scanForPanelTriggers();
+  });
+  Array.from(document.querySelectorAll('[data-sortable-fragments]')).forEach(function (el) {
+    new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"]({
+      sortableGroupEl: el,
+      endpoint: el.getAttribute('data-sortable-endpoint'),
+      handle: '[data-sortable-handle]',
+      isSorting: true
+    });
   });
 });
 
@@ -4396,8 +4406,10 @@ var IndexSorting = function IndexSorting(options) {
 
   if (!this.endpoint) {
     throw new Error('Missing endpoint for sortable js. Please set the options.endpoint value');
-  } // Toggle
+  } // Optional draggable handle instead of entire element
 
+
+  this.handle = options.handle || null; // Toggle
 
   this.isSorting = options.isSorting || false;
   this.sortToggles = Array.from(document.querySelectorAll('[data-sortable-toggle]'));
@@ -4453,6 +4465,7 @@ IndexSorting.prototype._init = function () {
     fallbackOnBody: true,
     swapThreshold: 0.65,
     dataIdAttr: this.sortableIdAttribute,
+    handle: this.handle,
     store: {
       set: function set(sortable) {
         fetch(self.endpoint, {

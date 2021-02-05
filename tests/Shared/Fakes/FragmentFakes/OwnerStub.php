@@ -8,12 +8,14 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
 
 class OwnerStub extends Model implements FragmentsOwner
 {
     use ManagedModelDefaults;
+    use OwningFragments;
     use ReferableModelDefault;
 
     protected $guarded = [];

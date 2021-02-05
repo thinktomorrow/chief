@@ -1,5 +1,6 @@
-<div class="xs-column-12 s-column-12 m-column-12">
+<div class="xs-column-12 s-column-12 m-column-12" data-sortable-id="{{ $model->fragmentModel()->id }}">
     <div class="flex items-center justify-between bg-white border border-grey-100 rounded-lg px-6 py-4">
+        <span class="mr-4 cursor-pointer" data-sortable-handle>🍔</span>
         <div class="flex-grow">
             {!! $model->renderAdminFragment($owner, $loop, $fragments) !!}
         </div>

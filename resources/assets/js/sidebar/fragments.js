@@ -1,5 +1,6 @@
 import Container from "./Container"
 import PanelsManager from "./PanelsManager"
+import {IndexSorting} from "../utilities/sortable";
 
 // --------------------------------------------------------------------------------
 // FRAGMENT JS --------------------------------------------------------------------
@@ -25,6 +26,15 @@ document.addEventListener('DOMContentLoaded', function() {
     Livewire.on('fragmentsReloaded', () => {
         sidebarPanels.scanForPanelTriggers();
     })
+
+    Array.from(document.querySelectorAll('[data-sortable-fragments]')).forEach((el) => {
+        new IndexSorting({
+            sortableGroupEl: el,
+            endpoint: el.getAttribute('data-sortable-endpoint'),
+            handle: '[data-sortable-handle]',
+            isSorting: true,
+        })
+    });
 
 
 });

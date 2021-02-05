@@ -27,27 +27,29 @@ class Fragments extends Component
     public function render()
     {
         return view('chief::components.fragments', [
-            'fragments' => $this->fragments,
+            'fragments'        => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
+            'manager'          => app(Registry::class)->manager($this->owner::managedModelKey()),
         ]);
     }
 
     public function reload()
     {
         // Current fragments
-        $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function(Fragmentable $model){
+        $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function (Fragmentable $model) {
             return [
-                'model'    => $model,
-                'manager'  => app(Registry::class)->manager($model::managedModelKey()),
+                'model'   => $model,
+                'manager' => app(Registry::class)->manager($model::managedModelKey()),
             ];
         });
 
         // Available fragments
-        $this->allowedFragments = array_map(function($fragmentableClass){
+        $this->allowedFragments = array_map(function ($fragmentableClass) {
             $modelClass = app(Registry::class)->modelClass($fragmentableClass::managedModelKey());
+
             return [
                 'manager' => app(Registry::class)->manager($fragmentableClass::managedModelKey()),
-                'model' => new $modelClass(),
+                'model'   => new $modelClass(),
             ];
         }, $this->owner->allowedFragments());
 

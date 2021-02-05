@@ -5,7 +5,10 @@
         AANTAL: {{ count($fragments) }}
     </div>
 
-    <div data-sidebar-component="fragments" class="row gutter-s">
+    <div data-sidebar-component="fragments"
+         data-sortable-fragments
+         data-sortable-endpoint="@adminRoute('fragments-reorder', $owner)"
+         class="row gutter-s">
         @foreach($fragments as $fragment)
             @include('chief::managers.fragments._card', [
                 'model' => $fragment['model'],
