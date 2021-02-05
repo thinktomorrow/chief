@@ -22,7 +22,7 @@ trait SlimImageUploadAssistant
     public function routesSlimImageUploadAssistant(): array
     {
         return [
-            ManagedRoute::post('asyncUploadSlimImage', '{id}/asyncUploadSlimImage/{fieldkey}'),
+            ManagedRoute::post('asyncUploadSlimImage', '{fieldkey}/asyncUploadSlimImage/{id?}'),
         ];
     }
 
@@ -30,7 +30,7 @@ trait SlimImageUploadAssistant
      * Upload a file via the image field. Keep in mind
      * that here one image at a time is uploaded asynchronously
      */
-    public function asyncUploadSlimImage(Request $request, $id, $fieldKey)
+    public function asyncUploadSlimImage(Request $request, $fieldKey, $id = null)
     {
         $payload = $request->input('images', []);
         $rawImagePayload = reset($payload);
@@ -53,7 +53,7 @@ trait SlimImageUploadAssistant
 
         try {
 
-            $model = $this->fieldsModel($id);
+            $model = $id ? $this->fieldsModel($id) : new $this->managedModelClass();
             $field = $model->fields()->find($fieldKey);
 
             $this->validateAsyncSlimUpload($field, $locale, $imagePayload);

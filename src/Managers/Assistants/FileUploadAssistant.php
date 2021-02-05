@@ -23,7 +23,7 @@ trait FileUploadAssistant
     public function routesFileUploadAssistant(): array
     {
         return [
-            ManagedRoute::post('asyncUploadFile', '{id}/asyncUploadFile/{fieldkey}'),
+            ManagedRoute::post('asyncUploadFile', '{fieldkey}/asyncUploadFile/{id?}'),
         ];
     }
 
@@ -31,12 +31,13 @@ trait FileUploadAssistant
      * Upload a file via the file field. Keep in mind
      * that here one file at a time is upload asynchronously
      */
-    public function asyncUploadFile(Request $request, $id, $fieldKey)
+    public function asyncUploadFile(Request $request, $fieldKey, $id = null)
     {
         $uploadedFile = $request->file('file');
         $locale = $request->input('locale');
         try {
-            $model = $this->fieldsModel($id);
+
+            $model = $id ? $this->fieldsModel($id) : new $this->managedModelClass();
             $field = $model->fields()->find($fieldKey);
 
             $this->validateAsyncFileUpload(

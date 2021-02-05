@@ -12,7 +12,7 @@
             <div v-for="(item, index) in items" class="column-12 draggable-item" :draggable="reorder" :data-item-id="item.id"
                  @dragstart="handleSortingStart"
                  @dragenter.prevent="handleSortingEnter" v-show="!item.deleted || ({{ json_encode($field->allowMultiple()) }} != true && !hasValidUpload && index == 0)">
-                <file name="{{ $name }}" group="{{ $slug }}" locale="{{$locale}}" upload-url="@adminRoute('asyncUploadFile',$model,$field->getKey())" :options="{
+                <file name="{{ $name }}" group="{{ $slug }}" locale="{{$locale}}" upload-url="@adminRoute('asyncUploadFile',$field->getKey(),$model ? $model->id : null)" :options="{
                         id: item.id,
                         filename: item.filename,
                         url: item.url,
