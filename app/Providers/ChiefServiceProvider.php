@@ -59,8 +59,8 @@ class ChiefServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'chief');
 
         $this->publishes([
-            __DIR__ . '/../../config/chief.php' => config_path('thinktomorrow/chief.php'),
-            __DIR__ . '/../../config/chief-settings.php' => config_path('thinktomorrow/chief-settings.php'),
+            __DIR__ . '/../../config/chief.php' => config_path('chief.php'),
+            __DIR__ . '/../../config/chief-settings.php' => config_path('chief-settings.php'),
         ], 'chief-config');
 
         $this->publishes([

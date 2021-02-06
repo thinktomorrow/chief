@@ -4234,6 +4234,10 @@ var PanelsManager = /*#__PURE__*/function () {
         _this4.panels.add(new _Panel__WEBPACK_IMPORTED_MODULE_1__["default"](id, url, _this4.panels.findActive() ? _this4.panels.findActive() : null, newPanelContainer));
 
         _this4._activate(id);
+
+        if (_this4.newPanelCallback) {
+          _this4.newPanelCallback(_this4.panels.find(id));
+        }
       });
     }
   }, {
@@ -4250,10 +4254,6 @@ var PanelsManager = /*#__PURE__*/function () {
 
       this.container.renderCloseButton();
       this.scanForPanelTriggers();
-
-      if (this.newPanelCallback) {
-        this.newPanelCallback();
-      }
     }
     /**
      * Handle the closing of the current panel and determine the next one.
@@ -4330,6 +4330,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/sidebar/Container.js");
 /* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
 /* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
  // --------------------------------------------------------------------------------
@@ -4341,24 +4347,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!sidebarEl) return;
   var livewireComponent = Livewire.find(document.querySelector('[data-fragments-component]').getAttribute('wire:id'));
-  var sidebarPanels = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"](new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarEl), function () {
-    console.log('new panel');
+  var sidebarPanels = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"](new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarEl), function (panel) {
+    console.log('new panel ' + panel.id);
+    initSortable('[data-sortable-fragments]', panel.el, {});
   }, function () {
     // trigger immediate reload of fragments component
-    livewireComponent.reload();
+    livewireComponent.reload(); // TODO: set this in callback for when entire sidebar is closed.
+
+    initSortable();
   });
   sidebarPanels.init();
   Livewire.on('fragmentsReloaded', function () {
     sidebarPanels.scanForPanelTriggers();
   });
-  Array.from(document.querySelectorAll('[data-sortable-fragments]')).forEach(function (el) {
-    new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"]({
-      sortableGroupEl: el,
-      endpoint: el.getAttribute('data-sortable-endpoint'),
-      handle: '[data-sortable-handle]',
-      isSorting: true
+
+  function initSortable() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-sortable-fragments]';
+    var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    // TODO: first remove existing sortable instances on these same selector els...
+    Array.from(container.querySelectorAll(selector)).forEach(function (el) {
+      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"](_objectSpread(_objectSpread({}, {
+        sortableGroupEl: el,
+        endpoint: el.getAttribute('data-sortable-endpoint'),
+        handle: '[data-sortable-handle]',
+        isSorting: true
+      }), options));
     });
-  });
+  }
+
+  initSortable();
 });
 
 /***/ }),

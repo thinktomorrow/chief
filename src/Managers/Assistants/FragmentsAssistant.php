@@ -40,7 +40,7 @@ trait FragmentsAssistant
     public function fragmentsIndex(Request $request, $id)
     {
         /** @var FragmentsOwner $model */
-        $model = $this->managedModelClass()::findOrFail($id);
+        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
 
         // Current fragments
         $fragments = app(FragmentRepository::class)->getByOwner($model)->map(function(Fragmentable $model){
@@ -70,7 +70,7 @@ trait FragmentsAssistant
     public function fragmentsReorder(Request $request, $id)
     {
         /** @var FragmentsOwner $model */
-        $model = $this->managedModelClass()::findOrFail($id);
+        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
 
         if(!$request->indices) {
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');

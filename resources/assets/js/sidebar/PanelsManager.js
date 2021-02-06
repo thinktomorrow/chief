@@ -83,6 +83,10 @@ export default class PanelsManager {
 
             this.panels.add(new Panel(id, url, this.panels.findActive() ? this.panels.findActive() : null, newPanelContainer));
             this._activate(id);
+
+            if(this.newPanelCallback) {
+                this.newPanelCallback(this.panels.find(id));
+            }
         })
     }
 
@@ -100,10 +104,6 @@ export default class PanelsManager {
         // TODO: pass here type to switch templates x/terug/...
         this.container.renderCloseButton();
         this.scanForPanelTriggers();
-
-        if(this.newPanelCallback) {
-            this.newPanelCallback();
-        }
     }
 
     /**

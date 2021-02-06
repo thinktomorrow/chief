@@ -85,7 +85,7 @@ trait ManagerDefaults
      */
     private function fieldsModel($id)
     {
-        return $this->managedModelClass()::findOrFail($id);
+        return $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
     }
 
     private function fieldValidator(): FieldValidator

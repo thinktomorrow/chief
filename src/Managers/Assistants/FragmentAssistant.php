@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -208,7 +209,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-delete');
 
-        $model = $this->managedModelClass()::findOrFail($id);
+        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
 
         if ($request->get('deleteconfirmation') !== 'DELETE') {
             return redirect()->back()->with('messages.warning', $model->adminLabel('title') . ' is niet verwijderd.');
@@ -224,7 +225,7 @@ trait FragmentAssistant
     {
         $ownerClass = app(Registry::class)->modelClass($ownerKey);
 
-        return $ownerClass::find($ownerId);
+        return $ownerClass::withoutGlobalScopes()->find($ownerId);
     }
 
     /**

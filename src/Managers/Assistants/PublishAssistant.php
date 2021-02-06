@@ -64,7 +64,7 @@ trait PublishAssistant
 
     public function publish(Request $request, $id)
     {
-        $model = $this->managedModelClass()::findOrFail($id);
+        $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
 
         $this->guard('publish', $model);
 

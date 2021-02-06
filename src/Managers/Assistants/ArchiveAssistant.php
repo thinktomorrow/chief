@@ -51,7 +51,7 @@ trait ArchiveAssistant
 
     public function archive(Request $request, $id)
     {
-        $model = $this->managedModelClass()::findOrFail($id);
+        $model = $this->managedModelClass()::unarchived()->findOrFail($id);
 
         $this->guard('archive', $model);
 
