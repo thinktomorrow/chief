@@ -22,15 +22,20 @@ trait SortAssistant
 
     public function canSortAssistant(string $action, $model = null): bool
     {
-        // TODO: check if model has sortable trait...
-        return in_array($action, ['sort-index', 'index-for-sorting']);
+        return (in_array($action, ['sort-index', 'index-for-sorting'])
+            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable())  );
     }
 
     public function filtersSortAssistant(): Filters
     {
+        $model = new $this->managedModelClass();
+        if(!$this->can('sort-index', $model)) {
+            return new Filters();
+        }
+
         return new Filters([
-            HiddenFilter::make('sortIndex', function ($query) {
-                return $query->orderBy('order', 'ASC');
+            HiddenFilter::make('sortIndex', function ($query) use($model) {
+                return $query->orderBy($model->sortableAttribute(), 'ASC');
             }),
         ]);
     }
@@ -41,7 +46,7 @@ trait SortAssistant
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle($this->managedModelClass(), $request->indices);
+        app(SortModels::class)->handle($this->managedModelClass(), $request->indices, (new $this->managedModelClass())->sortableAttribute());
 
         return response()->json([
             'message' => 'models sorted.'
