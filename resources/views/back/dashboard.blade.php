@@ -7,7 +7,7 @@
 @section('content')
     <div class="row gutter-l stack-xl">
         <div class="column-6">
-            <h1>Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}</h1>
+            <h1 class="text-5xl">Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}</h1>
             <p class="text-lg font-medium text-grey-500">Don't try to follow trends. Create them.</p>
         </div>
 

@@ -1,23 +1,23 @@
 .btn {
-	line-height: inherit;
-	text-overflow: ellipsis;
-	-webkit-appearance: none;
-	transition: 0.2s all ease;
-	@apply whitespace-no-wrap align-middle outline-none px-4 py-2 inline-block no-underline cursor-pointer rounded;
+    line-height: inherit;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    transition: 0.2s all ease;
+    @apply whitespace-no-wrap align-middle outline-none px-4 py-3 inline-block no-underline cursor-pointer rounded font-semibold leading-tight;
 }
 
 .btn-link {
-	&:after{
-		content:'';
-		background-color: currentColor;
-		transition: 0.3s all ease;
-		@apply block h-px w-0;
-	}
-	&:hover{
-		&:after{
-			@apply w-full;
-		}
-	}
+    &:after{
+        content:'';
+        background-color: currentColor;
+        transition: 0.3s all ease;
+        @apply block h-px w-0;
+    }
+    &:hover{
+        &:after{
+            @apply w-full;
+        }
+    }
 }
 
 .btn-round {
@@ -25,7 +25,7 @@
 }
 
 .btn-icon {
-	@apply inline-flex justify-center items-center;
+    @apply inline-flex justify-center items-center;
     & > *:first-child{
         @apply mr-4;
     }
@@ -57,10 +57,10 @@ $buttonColors: (
             transform: translateY(2px);
             box-shadow: 0px 2px 0px 0px transparent;
         }
-	}
+    }
 
     .btn-o-#{$name}{
-		@apply bg-transparent;
+        @apply bg-transparent;
         color: $bgcolor;
         border: 1px solid $bgcolor;
         &:hover, &:focus, &:active, &.active{
@@ -81,7 +81,7 @@ $buttonColors: (
 // Buttons are not floated to allow for flex behaviour but this means that there should be no
 // space between the button elements to avoid an empty space in between.
 .btn-group {
-	@apply inline-block;
+    @apply inline-block;
 
     .btn{
         line-height: 1.5;

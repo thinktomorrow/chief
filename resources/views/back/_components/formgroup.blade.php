@@ -1,14 +1,16 @@
-<section class="row formgroup stack gutter-l">
-    <div class="column-4">
+<section class="space-y-2">
+    <div>
         @if(isset($label))
-            <h2>
-                {{ $label }}
-                @if(!isset($isRequired) || !$isRequired)
-                    <span class="font-xs text-grey-300">(Optioneel)</span>
-                @else
-                    <span class="font-xs text-warning">(Verplicht)</span>
+            <label class="font-medium">
+                {{ ucfirst($label) }}
+
+                @if(isset($isRequired) && $isRequired)
+                    <span class="group text-warning text-base">
+                        <span class="inline group-hover:hidden">*</span>
+                        <span class="hidden group-hover:inline font-semibold">Verplicht veld</span>
+                    </span>
                 @endif
-            </h2>
+            </label>
         @endif
 
         @if(isset($description))
@@ -16,7 +18,7 @@
         @endif
     </div>
 
-    <div class="input-group column-8">
+    <div class="input-group">
         {{ $slot }}
     </div>
 </section>

@@ -1,5 +1,4 @@
 .formgroup {
-
     /* override the default gutter margin-bottom */
     .formgroup-info, .formgroup-input{
         @apply mb-0;
@@ -8,7 +7,6 @@
 
 // Field addons (prepend or appending fixed content in input field)
 .input-addon {
-
     @apply flex;
 
     .input {
@@ -37,7 +35,7 @@
 }
 
 // Reset input submit
-input[type="submit"]{
+input[type="submit"] {
     @apply cursor-pointer border-none outline-none p-0;
 }
 
@@ -53,14 +51,14 @@ input[type='phone'],
 input[type='password'],
 input[type='file'],
 .custom-file-input {
-    @apply rounded border border-grey-200;
+    @apply bg-grey-100 border-2 border-grey-100 rounded-lg px-4 py-3;
 
-    &:focus{
-        box-shadow: 0 1px 5px -1px config('theme.colors.grey.200');
-        @apply outline-none border border-grey-200;
+    &:focus {
+        @apply outline-none border-grey-200;
     }
-    &::placeholder{
-        @apply text-grey-300 opacity-100;
+
+    &::placeholder {
+        @apply text-grey-300;
     }
 }
 
@@ -73,7 +71,7 @@ textarea,
 input[type='text'],
 input[type='range'],
 input[type='email'],
-input[type='url'], 
+input[type='url'],
 input[type='search'],
 input[type='phone'],
 input[type='password'],

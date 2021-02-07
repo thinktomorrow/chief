@@ -1,8 +1,15 @@
 <div>
-    <form id="createForm" method="POST" action="@adminRoute('fragment-store', $owner)" enctype="multipart/form-data" role="form">
+    <form
+        id="createForm"
+        method="POST"
+        action="@adminRoute('fragment-store', $owner)"
+        enctype="multipart/form-data"
+        role="form"
+        class="space-y-8"
+    >
         {{ csrf_field() }}
 
-        <div data-vue-fields>
+        <div data-vue-fields class="space-y-8">
             @foreach($fields as $field)
                 @formgroup
                 @slot('label',$field->getLabel())
@@ -13,9 +20,7 @@
             @endforeach
         </div>
 
-        <div class="stack text-right">
-            <button type="submit" class="btn btn-primary">Aanmaken</button>
-        </div>
+        <button type="submit" class="btn btn-primary">Aanmaken</button>
     </form>
 </div>
 

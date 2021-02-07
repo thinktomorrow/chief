@@ -9,14 +9,14 @@
 @stop
 
 @section('content')
-
     <div class="row gutter-l stack">
         <div class="column">
-
             @adminCan('sort-index')
-                <div class="row gutter-s"
-                     data-sort-route="{{ $manager->route('sort-index') }}"
-                     id="js-sortable">
+                <div
+                    class="row gutter-s"
+                    data-sort-route="{{ $manager->route('sort-index') }}"
+                    id="js-sortable"
+                >
             @elseAdminCan
                 <div class="row gutter-s">
             @endAdminCan
@@ -30,7 +30,6 @@
             @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
                 {!! $models->links() !!}
             @endif
-
         </div>
 
         <div class="column-3">
@@ -66,5 +65,4 @@
             @endAdminCan
         </div>
     </div>
-
 @stop

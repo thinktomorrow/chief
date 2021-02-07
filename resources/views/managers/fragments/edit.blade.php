@@ -2,7 +2,7 @@
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
-    <div data-vue-fields>
+    <div data-vue-fields class="space-y-8">
         @foreach($fields as $field)
             @formgroup
                 @slot('label',$field->getLabel())
