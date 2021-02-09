@@ -2,18 +2,21 @@ import {Api} from "./Api"
 import Panel from "./Panel"
 import Panels from "./Panels"
 
-export default class PanelsManager {
-    constructor(container, newPanelCallback, submitCallback) {
+export default class {
+    constructor(triggerSelector, container, onNewPanel, onSubmitPanel) {
+        this.triggerSelector = triggerSelector;
         this.container = container;
-        this.panels = new Panels();
-        this.newPanelCallback = newPanelCallback;
-        this.submitCallback = submitCallback;
-
-        // Register unique trigger handler
-        this.handle = (event) => this._handlePanelTrigger(event);
+        this.panels
+            = new Panels();
+        this.onNewPanel = onNewPanel;
+        this.onSubmitPanel = onSubmitPanel;
     }
 
     init() {
+
+        // Register unique trigger handler
+        this.handle = (event) => this._handlePanelTrigger(event);
+
         this.scanForPanelTriggers();
 
         // Listen for close triggers on the sidebar container
@@ -23,7 +26,7 @@ export default class PanelsManager {
     }
 
     scanForPanelTriggers() {
-        Array.from(document.querySelectorAll('[data-sidebar-show]')).forEach((el) => {
+        Array.from(document.querySelectorAll(this.triggerSelector)).forEach((el) => {
             el.removeEventListener('click', this.handle)
             el.addEventListener('click', this.handle);
         });
@@ -72,8 +75,8 @@ export default class PanelsManager {
 
                 this.backOrClose(false);
 
-                if(this.submitCallback) {
-                    this.submitCallback();
+                if(this.onSubmitPanel) {
+                    this.onSubmitPanel();
                 }
             });
 
@@ -84,8 +87,8 @@ export default class PanelsManager {
             this.panels.add(new Panel(id, url, this.panels.findActive() ? this.panels.findActive() : null, newPanelContainer));
             this._activate(id);
 
-            if(this.newPanelCallback) {
-                this.newPanelCallback(this.panels.find(id));
+            if(this.onNewPanel) {
+                this.onNewPanel(this.panels.find(id));
             }
         })
     }

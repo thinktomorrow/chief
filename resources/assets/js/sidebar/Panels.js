@@ -1,4 +1,4 @@
-export default class Panels {
+export default class {
     constructor() {
         this.collection = [];
         this.activePanel = null;

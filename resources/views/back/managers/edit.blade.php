@@ -40,8 +40,6 @@
 @endcomponent
 
 @section('content')
-    <x-chief-sidebar></x-chief-sidebar>
-
     <div class="row gutter-l stack">
         <div class="column-8">
             @adminCan('fragments-index', $model)
@@ -82,7 +80,7 @@
         </div>
 
         <div class="column">
-            @include('chief::managers.partials.links')
+            <livewire:links :model="$model" />
         </div>
     </div>
 @stop

@@ -51,7 +51,7 @@ trait ManagerDefaults
     private function generateRoute(string $action, $model = null, ...$parameters): string
     {
         if ($model) {
-            $modelId = is_object($model) ? $model->id : $model;
+            $modelId = (is_object($model) && isset($model->id)) ? $model->id : $model;
 
             $parameters = array_merge((array)$modelId, $parameters);
         }

@@ -1,16 +1,29 @@
-export default class Sidebar {
-    constructor(el) {
+export default class {
+    constructor(containerEl) {
 
-        if (!el) {
-            throw new Error('Sidebar element does not exist in DOM.');
+        if (!containerEl) {
+            throw new Error('Sidebar container element does not exist in DOM.');
         }
 
-        this.el = el;
+        this.containerEl = containerEl;
+        this.el = this._createDomElement();
+
         this.sidebarBackdrop = this.el.querySelector('[data-sidebar-backdrop]');
         this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
         this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
 
         this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
+    }
+
+    _createDomElement() {
+
+        const template = document.querySelector('#js-sidebar-template');
+        const docFragment = document.importNode(template.content, true);
+        const el = docFragment.firstElementChild;
+
+        this.containerEl.appendChild(docFragment);
+
+        return el;
     }
 
     dom() {
