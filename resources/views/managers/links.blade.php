@@ -1,37 +1,24 @@
-<?php if(!$model || !$model instanceof \Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl){ return; } ?>
+@foreach($linkForm->links() as $locale => $links)
+    <h3>{{ $locale }}</h3>
+    <div>CURRENT: {{ optional($links->current)->slug }}</div>
+    <div>
+        @foreach($links->redirects as $urlRecord)
+            <url-redirect inline-template removeurl="{{ route('chief.back.assistants.url.remove-redirect',$urlRecord->id) }}">
+                <div v-show="!this.removed" class="bg-white panel inset-s stack-s">
+                    <span class="text-error cursor-pointer" style="float:right; padding:2px 5px;" @click="remove">
+                        <svg class="fill-current" width="18" height="18"><use xlink:href="#trash"/></svg>
+                    </span>
+                    <div>{{ $urlRecord->slug }}</div>
+                </div>
+            </url-redirect>
+        @endforeach
+    </div>
+@endforeach
 
-<?php $linkForm = \Thinktomorrow\Chief\Site\Urls\Form\LinkForm::fromModel($model); ?>
 
-@unless($linkForm->exist())
-    Geen huidige links
-@else
-    @foreach($linkForm->links() as $locale => $links)
-        <h3>{{ $locale }}</h3>
-        <div>CURRENT: {{ optional($links->current)->slug }}</div>
-        <div>
-            @foreach($links->redirects as $urlRecord)
-                <url-redirect inline-template removeurl="{{ route('chief.back.assistants.url.remove-redirect',$urlRecord->id) }}">
-                    <div v-show="!this.removed" class="bg-white panel inset-s stack-s">
-                        <span class="text-error cursor-pointer" style="float:right; padding:2px 5px;" @click="remove">
-                            <svg class="fill-current" width="18" height="18"><use xlink:href="#trash"/></svg>
-                        </span>
-                        <div>{{ $urlRecord->slug }}</div>
-                    </div>
-                </url-redirect>
-            @endforeach
-        </div>
-    @endforeach
-@endunless
-
-<div>
-
-</div>
-
-<form action="{{ route('chief.back.links.update') }}" method="POST">
+<form action="@adminRoute('links-update', $model)" method="POST">
     @csrf
     @method('PUT')
-    <input type="hidden" name="modelClass" value="{{ get_class($model) }}">
-    <input type="hidden" name="modelId" value="{{ $model->id }}">
 
     @foreach($linkForm->formValues() as $locale => $formValues)
 
@@ -115,4 +102,3 @@
         });
     </script>
 @endpush
-

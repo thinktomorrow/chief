@@ -32,6 +32,8 @@ export const Api = {
         const form = container.querySelector('form');
         let self = this;
 
+        if(!form) return;
+
         form.addEventListener('submit',  function(event) {
             event.preventDefault();
 

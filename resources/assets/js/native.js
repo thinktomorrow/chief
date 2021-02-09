@@ -17,3 +17,4 @@ if(document.getElementById('js-sortable')) {
 
 /** Sidebar */
 require('./sidebar/fragments')
+require('./sidebar/links')

@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Illuminate\Contracts\Pagination\Paginator;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;

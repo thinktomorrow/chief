@@ -23,7 +23,7 @@
 
     <div class="mt-8">
         @forelse($allowedFragments as $allowedFragment)
-            <a data-sidebar-show
+            <a data-sidebar-fragment-edit
                class="btn btn-primary"
                href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}">
                 Voeg een {{ $allowedFragment['model']->adminLabel('label') }} toe

@@ -7,28 +7,28 @@ import {IndexSorting} from "../utilities/sortable";
 // --------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function() {
 
-    const sidebarEl = document.querySelector('[data-sidebar]');
+    const sidebarContainerEl = document.querySelector( '#js-sidebar-container');
+    const componentEl = document.querySelector('[data-fragments-component]');
 
     // Do not trigger the sidebar script is DOM element isn't present
-    if(!sidebarEl) return;
+    if(!sidebarContainerEl || !componentEl) return;
 
-    const livewireComponent = Livewire.find(document.querySelector('[data-fragments-component]').getAttribute('wire:id'));
+    const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    const sidebarPanels = (new PanelsManager(new Container(sidebarEl), function(panel){
-        console.log('new panel ' + panel.id)
+    const fragmentPanelsManager = new PanelsManager('[data-sidebar-fragment-edit]', new Container(sidebarContainerEl), function(panel){
+        console.log('new fragments panel ' + panel.id)
         initSortable('[data-sortable-fragments]', panel.el, {});
     }, function(){
-        // trigger immediate reload of fragments component
         livewireComponent.reload();
 
         // TODO: set this in callback for when entire sidebar is closed.
         initSortable();
-    }));
+    });
 
-    sidebarPanels.init();
+    fragmentPanelsManager.init();
 
     Livewire.on('fragmentsReloaded', () => {
-        sidebarPanels.scanForPanelTriggers();
+        fragmentPanelsManager.scanForPanelTriggers();
     })
 
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
@@ -37,11 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         Array.from(container.querySelectorAll(selector)).forEach((el) => {
             new IndexSorting({...{
-                sortableGroupEl: el,
-                endpoint: el.getAttribute('data-sortable-endpoint'),
-                handle: '[data-sortable-handle]',
-                isSorting: true,
-            }, ...options})
+                    sortableGroupEl: el,
+                    endpoint: el.getAttribute('data-sortable-endpoint'),
+                    handle: '[data-sortable-handle]',
+                    isSorting: true,
+                }, ...options})
         });
     }
 

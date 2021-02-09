@@ -18,7 +18,7 @@
         @adminCan('fragment-edit')
             <div class="flex-shrink-0">
                 <a
-                    data-sidebar-show
+                    data-sidebar-fragment-edit
                     href="@adminRoute('fragment-edit', $model)"
                     class="flex items-center -mx-2"
                 >

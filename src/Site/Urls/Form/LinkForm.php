@@ -38,6 +38,7 @@ final class LinkForm
 
             $links[$locale] = (object)[
                 'current'   => $currentRecord,
+                'url'       => $this->model->url($locale),
                 'redirects' => $records->filter->isRedirect(),
             ];
         }

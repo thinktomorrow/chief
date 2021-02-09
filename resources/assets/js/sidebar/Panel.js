@@ -1,4 +1,4 @@
-export default class Panel {
+export default class {
     constructor(id, url, parent, el) {
         this.id = id;
         this.url = url;
