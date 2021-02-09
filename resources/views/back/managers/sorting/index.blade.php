@@ -18,23 +18,20 @@
 
     <div class="row gutter-l stack">
         <div class="column-12">
-            <div class="row gutter-s">
-
-                <div
-                    data-sortable-type="{{ get_class($modelManager->modelInstance()) }}"
-                    id="js-sortable" data-sort-on-load>
-                    @foreach($managers as $manager)
-                        <div class="s-column-3 inset-xs flex" data-sortable-id="{{ $manager->existingModel()->id }}" style="cursor:grab;">
-                            <div class="bg-white border border-grey-100 rounded inset-s" style="flex:1 1 0%;">
-                                <span class="text-black font-bold">{!! $manager->details()->title !!}</span>
-                            </div>
+            <div
+                data-sortable-type="{{ get_class($modelManager->modelInstance()) }}"
+                id="js-sortable"
+                data-sort-on-load
+                class="row gutter-s"
+            >
+                @foreach($managers as $manager)
+                    <div class="s-column-3 inset-xs flex" data-sortable-id="{{ $manager->existingModel()->id }}" style="cursor:grab;">
+                        <div class="bg-white border border-grey-100 rounded inset-s" style="flex:1 1 0%;">
+                            <span class="text-black font-bold">{!! $manager->details()->title !!}</span>
                         </div>
-                    @endforeach
-                </div>
-
+                    </div>
+                @endforeach
             </div>
-
         </div>
     </div>
-
 @stop
