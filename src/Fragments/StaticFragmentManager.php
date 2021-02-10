@@ -17,6 +17,7 @@ final class StaticFragmentManager implements Manager
 {
     use ManagerDefaults;
     use FragmentAssistant;
+    use FragmentsAssistant;
     use FileUploadAssistant;
     use SlimImageUploadAssistant;
 

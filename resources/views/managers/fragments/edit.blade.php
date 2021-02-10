@@ -13,10 +13,8 @@
         @endforeach
     </div>
 
-    @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner)
-        <div>
-            <x-chief::fragments :owner="$model"/>
-        </div>
+    @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
+        <x-chief::fragments :owner="$model"/>
     @endif
 
     <div class="stack text-right">
