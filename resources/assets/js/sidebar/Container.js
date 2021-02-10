@@ -1,6 +1,5 @@
 export default class {
     constructor(containerEl) {
-
         if (!containerEl) {
             throw new Error('Sidebar container element does not exist in DOM.');
         }
@@ -9,6 +8,7 @@ export default class {
         this.el = this._createDomElement();
 
         this.sidebarBackdrop = this.el.querySelector('[data-sidebar-backdrop]');
+        this.sidebarAside = this.el.querySelector('[data-sidebar-aside]');
         this.sidebarContent = this.el.querySelector('[data-sidebar-content]');
         this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
 
@@ -16,7 +16,6 @@ export default class {
     }
 
     _createDomElement() {
-
         const template = document.querySelector('#js-sidebar-template');
         const docFragment = document.importNode(template.content, true);
         const el = docFragment.firstElementChild;
@@ -41,7 +40,7 @@ export default class {
     close() {
         Promise.all([
             this._closeElement(this.sidebarBackdrop, 'fade-in'),
-            this._closeElement(this.sidebarContent, 'slide-from-right')
+            this._closeElement(this.sidebarAside, 'slide-from-right')
         ]).then(() => {
             this.el.style.display = "none";
         }).catch((error) => {
@@ -51,8 +50,8 @@ export default class {
 
     renderCloseButton() {
         const template = document.querySelector('#js-sidebar-close-button');
-
         const node = document.importNode(template.content, true);
+
         this.closeButton.innerHTML = '';
         this.closeButton.appendChild(node);
     }

@@ -36,7 +36,6 @@
 
         @include('chief::back.managers._index._options')
     </div>
-
 @endcomponent
 
 @section('content')

@@ -72,18 +72,18 @@
  */
 .slide-from-right {
     animation: slideFromRight;
-    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+    animation-timing-function: ease-in-out;
     animation-duration: .6s;
 }
 
 @keyframes slideFromRight {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(0); }
+    0% { transform: translateX(100%) translateZ(0); }
+    100% { transform: translateX(0) translateZ(0); }
 }
 
 .fade-in {
     animation: fadeIn;
-    animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1);
+    animation-timing-function: ease-in-out;
     animation-duration: .6s;
 }
 
