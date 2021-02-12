@@ -6,8 +6,7 @@ export default class {
     constructor(triggerSelector, container, onNewPanel, onSubmitPanel) {
         this.triggerSelector = triggerSelector;
         this.container = container;
-        this.panels
-            = new Panels();
+        this.panels = new Panels();
         this.onNewPanel = onNewPanel;
         this.onSubmitPanel = onSubmitPanel;
     }

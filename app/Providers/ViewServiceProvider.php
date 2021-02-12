@@ -9,6 +9,7 @@ use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 use Thinktomorrow\Chief\App\View\Livewire\Links;
 use Thinktomorrow\Chief\App\View\Livewire\Fragments;
+use Thinktomorrow\Chief\App\View\Livewire\FieldsComponent;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,7 @@ class ViewServiceProvider extends ServiceProvider
 
         Livewire::component('fragments', Fragments::class);
         Livewire::component('links', Links::class);
+        Livewire::component('fields_component', FieldsComponent::class);
 
         Blade::componentNamespace('Thinktomorrow\\Chief\\App\\View\\Components', 'chief');
 

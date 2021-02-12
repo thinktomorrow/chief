@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    const fragmentPanelsManager = new PanelsManager('[data-sidebar-fragment-edit]', new Container(sidebarContainerEl), function(panel){
+    const fragmentPanelsManager = new PanelsManager('[data-sidebar-fragments-edit]', new Container(sidebarContainerEl), function(panel){
         console.log('new fragments panel ' + panel.id)
         initSortable('[data-sortable-fragments]', panel.el, {});
     }, function(){

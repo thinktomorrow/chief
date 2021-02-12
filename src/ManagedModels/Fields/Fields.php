@@ -95,6 +95,28 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         });
     }
 
+    public function component($componentKey): Fields
+    {
+        return $this->filterBy(function($field) use($componentKey){
+            return $field->componentKey() === $componentKey;
+        });
+    }
+
+    public function groupByComponent(): array
+    {
+        $fields = [];
+
+        foreach($this->fields as $field) {
+            if(!isset($fields[$field->componentKey()])) {
+                $fields[$field->componentKey()] = new static();
+            }
+
+            $fields[$field->componentKey()] = $fields[$field->componentKey()]->add($field);
+        }
+
+        return $fields;
+    }
+
     public function filterBy($key, $value = null)
     {
         $fields = [];

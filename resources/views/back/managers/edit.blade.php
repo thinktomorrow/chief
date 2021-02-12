@@ -55,7 +55,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" name="_method" value="PUT">
 
-                @foreach($fields as $field)
+                @foreach($fields->notTagged('component') as $field)
                     @formgroup
                         @slot('label',$field->getLabel())
                         @slot('description',$field->getDescription())
@@ -80,6 +80,11 @@
 
         <div class="column">
             <livewire:links :model="$model" />
+
+            @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
+                <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+            @endforeach
+
         </div>
     </div>
 @stop

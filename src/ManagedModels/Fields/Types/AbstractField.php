@@ -13,6 +13,7 @@ use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationParameters;
 abstract class AbstractField
 {
     use AllowsTags;
+    use AllowsComponentTags;
 
     /** @var FieldType */
     private $type;

@@ -14,6 +14,7 @@ use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FragmentsAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\RedactorFileUploadAssistant;
 
 final class PageManager implements Manager
@@ -23,6 +24,7 @@ final class PageManager implements Manager
     use LinkAssistant;
     use FragmentsAssistant;
     use FragmentAssistant;
+    use FieldsComponentAssistant;
 
     use ArchiveAssistant;
     use PublishAssistant;
