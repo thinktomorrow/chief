@@ -43,9 +43,10 @@
 
         <div class="flex mt-4">
             <div v-if="(settings.multiple == true || items.length < 1 || !drag.hasValidUpload) && !sort.isReordering">
-                <div class="btn btn-primary mr-4" @click="gallery.open">
-                    <span>Voeg bestaande toe uit je galerij</span>
+                <div class="btn btn-secondary mr-4" @click="gallery.open">
+                    Voeg bestaande toe uit je galerij
                 </div>
+
                 <mediagallery url="{{ route('chief.api.media') }}" :reference="reference" :locale="settings.locale" :uploaded="items.map(o=>o.id)" :multiple="{{ $field->allowMultiple() ? 'true' : 'false' }}"></mediagallery>
             </div>
 

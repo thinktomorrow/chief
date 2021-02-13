@@ -98,28 +98,34 @@
 // }
 
 .btn {
-    @apply inline-block px-5 py-3 rounded-lg font-semibold leading-normal outline-none cursor-pointer;
+    @apply inline-block font-bold leading-tight outline-none px-4 py-3 rounded-lg cursor-pointer border-2 shadow-soft;
 }
 
 .btn-primary {
-    background-color: #a2e3d3;
-    border-color: darken(#a2e3d3, 2%);
-    @apply text-primary-900 border;
+    @apply bg-primary-500 border-primary-500 text-white;
 }
 
 .btn-primary:hover {
-    background-color: lighten(#a2e3d3, 5%);
+    @apply bg-primary-600 border-primary-600;
 }
 
 .btn-secondary {
-    background-color: #F29177;
-    border-color: darken(#F29177, 2%);
-    @apply text-white font-bold border;
+    @apply text-primary-500 border-primary-500 bg-transparent;
 }
 
 .btn-secondary:hover {
-    background-color: lighten(#F29177, 5%);
+    @apply bg-primary-500 border-primary-500 text-white;
 }
+
+// .btn-secondary {
+//     background-color: #F29177;
+//     border-color: darken(#F29177, 2%);
+//     @apply text-white font-bold border;
+// }
+
+// .btn-secondary:hover {
+//     background-color: lighten(#F29177, 5%);
+// }
 
 .btn-tertiary {
     background-color: #FFFDD0;

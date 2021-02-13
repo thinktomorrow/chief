@@ -51,7 +51,7 @@ input[type='phone'],
 input[type='password'],
 input[type='file'],
 .custom-file-input {
-    @apply bg-grey-100 border border-grey-100 rounded-lg px-4 py-3;
+    @apply bg-grey-100 border border-grey-150 rounded-lg px-4 py-3;
 
     &:focus {
         @apply outline-none border-grey-200;

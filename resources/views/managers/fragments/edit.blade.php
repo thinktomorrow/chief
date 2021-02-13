@@ -8,8 +8,14 @@
     {{ csrf_field() }}
     <input type="hidden" name="_method" value="PUT">
 
-    <div class="space-y-16">
-        <div data-vue-fields class="space-y-8">
+    <div class="space-y-10">
+        <div data-vue-fields class="space-y-10">
+            <h3>
+                {{-- <span class="bg-primary-50 font-semibold text-primary-900 py-2 px-4 rounded-lg text-lg"> --}}
+                    {{ ucfirst($model->managedModelKey()) }}
+                {{-- </span> --}}
+            </h3>
+
             @foreach($fields as $field)
                 @formgroup
                     @slot('label',$field->getLabel())
@@ -29,7 +35,7 @@
                 data-submit-form="updateForm{{ $model->modelReference()->get() }}"
                 type="submit"
                 form="updateForm{{ $model->modelReference()->get() }}"
-                class="new-btn new-btn-primary"
+                class="btn btn-primary"
             >
                 Wijzigingen opslaan
             </button>

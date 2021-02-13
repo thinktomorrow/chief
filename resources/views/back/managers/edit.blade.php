@@ -17,7 +17,17 @@
         {{ $model->adminLabel('title') }}
     @endslot
 
-    @slot('subtitle')
+    @slot('breadcrumbs')
+        @adminCan('index')
+            <div>
+                <a href="@adminRoute('index')" class="link link-primary">
+                    <x-link-label type="back">Ga terug</x-link-label>
+                </a>
+            </div>
+        @endAdminCan
+    @endslot
+
+    {{-- @slot('subtitle')
         @adminCan('index')
             <div class="inline-block">
                 <a class="center-y" href="@adminRoute('index')">
@@ -25,7 +35,7 @@
                 </a>
             </div>
         @endAdminCan
-    @endslot
+    @endslot --}}
 
     <div class="inline-group-s flex items-center">
         {!! $model->adminLabel('online_status') !!}
@@ -39,52 +49,57 @@
 @endcomponent
 
 @section('content')
-    <div class="row gutter-l stack">
+    <div class="row">
         <div class="column-8">
-            @adminCan('fragments-index', $model)
-                <livewire:fragments :owner="$model" />
-            @endAdminCan
+            <div class="bg-white p-12 rounded-2xl space-y-16">
+                @adminCan('fragments-index', $model)
+                    <livewire:fragments :owner="$model" />
+                @endAdminCan
 
-            <form
-                method="POST"
-                action="@adminRoute('update', $model)"
-                id="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-                enctype="multipart/form-data"
-                role="form"
-            >
-                {{ csrf_field() }}
-                <input type="hidden" name="_method" value="PUT">
+                {{-- Todo: do we still need this? --}}
+                {{-- <form
+                    method="POST"
+                    action="@adminRoute('update', $model)"
+                    id="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
+                    enctype="multipart/form-data"
+                    role="form"
+                    class="mb-0"
+                >
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="PUT">
 
-                @foreach($fields->notTagged('component') as $field)
-                    @formgroup
-                        @slot('label',$field->getLabel())
-                        @slot('description',$field->getDescription())
-                        @slot('isRequired', $field->required())
+                    @foreach($fields->notTagged('component') as $field)
+                        @formgroup
+                            @slot('label',$field->getLabel())
+                            @slot('description',$field->getDescription())
+                            @slot('isRequired', $field->required())
 
-                        {!! $field->render(get_defined_vars()) !!}
-                    @endformgroup
-                @endforeach
+                            {!! $field->render(get_defined_vars()) !!}
+                        @endformgroup
+                    @endforeach
 
-                <div class="stack text-right">
-                    <button
-                        data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-                        type="submit"
-                        form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-                        class="btn btn-primary"
-                    >
-                        Wijzigingen opslaan
-                    </button>
-                </div>
-            </form>
+                    <div>
+                        <button
+                            data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
+                            type="submit"
+                            form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
+                            class="btn btn-primary"
+                        >
+                            Wijzigingen opslaan
+                        </button>
+                    </div>
+                </form> --}}
+            </div>
         </div>
 
         <div class="column">
-            <livewire:links :model="$model" />
+            <div class="p-12">
+                <livewire:links :model="$model" />
 
-            @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
-                <livewire:fields_component :model="$model" :componentKey="$componentKey" />
-            @endforeach
-
+                @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
+                    <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+                @endforeach
+            </div>
         </div>
     </div>
 @stop

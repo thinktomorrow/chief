@@ -32,19 +32,19 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
-
         // TODO: first remove existing sortable instances on these same selector els...
-
         Array.from(container.querySelectorAll(selector)).forEach((el) => {
-            new IndexSorting({...{
+            new IndexSorting({
+                ...{
                     sortableGroupEl: el,
                     endpoint: el.getAttribute('data-sortable-endpoint'),
                     handle: '[data-sortable-handle]',
                     isSorting: true,
-                }, ...options})
+                },
+                ...options
+            });
         });
     }
 
     initSortable();
-
 });

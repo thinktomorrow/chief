@@ -5,7 +5,7 @@
         @include('chief::layout.partials.healthbar')
         @include('chief::layout.partials.svg-symbols')
 
-        <main id="main" class="bg-grey-50 min-h-screen relative">
+        <main id="main" class="bg-grey-100 min-h-screen relative">
             @include('chief::layout.nav.nav')
             @yield('header')
 

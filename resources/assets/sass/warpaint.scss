@@ -103,7 +103,7 @@ $sizes: (xs : $space-xs, s : $space-s, m : $space-m, l : $space-l, xl : $space-x
  | Here we fetch all the warpaint files directly from node_modules
  | This allows for a custom build.
  */
- 
+
 @import '../../../node_modules/warpaint/src/sass/_base/normalize';
 @import '../../../node_modules/warpaint/src/sass/_base/breakpoints';
 @import '../../../node_modules/warpaint/src/sass/_base/base';

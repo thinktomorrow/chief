@@ -12,7 +12,7 @@ html, body, p, li, ol, input, textarea {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    @apply font-bold leading-tight text-grey-900;
+    @apply leading-tight text-grey-900;
     @extend .font-heading;
 }
 
@@ -21,19 +21,23 @@ h1 {
 }
 
 h2 {
-    @apply text-3xl;
+    @apply text-3xl font-bold;
 }
 
 h3 {
-    @apply text-2xl;
+    @apply text-2xl font-bold;
 }
 
 h4 {
-    @apply text-xl;
+    @apply text-xl font-semibold;
 }
 
 h5 {
-    @apply text-lg;
+    @apply text-lg font-semibold;
+}
+
+h6 {
+    @apply text-base font-medium;
 }
 
 p {

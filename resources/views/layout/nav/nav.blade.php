@@ -1,4 +1,4 @@
-<nav class="bg-white border-b border-grey-100">
+<nav class="bg-grey-50">
     <div class="container">
         <div class="row justify-between">
             <ul class="navigation-list flex items-center">

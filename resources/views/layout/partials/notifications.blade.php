@@ -1,19 +1,25 @@
-@if($errors and count($errors) > 0)
-    <alert class="alert --raised fixed right-0 bottom-0 m-2 inset-s animated animation-delayed-4 fadeOutDown" type="error">
-        <div v-cloak>
-            @foreach($errors->all() as $error)
-                {{ $error }}<br>
-            @endforeach
-        </div>
-    </alert>
-@endif
+<notifications>
+    @if($errors and count($errors) > 0)
+        @foreach($errors->all() as $error)
+            <notification type="error" duration="5000">
+                {!! $error !!}
+            </notification>
+        @endforeach
+    @endif
 
-@if(count( $_messages = Session::get('messages', [])) > 0)
-    @foreach($_messages as $type => $_message)
-        <alert class="alert --raised inset-s fixed right-0 bottom-0 m-2 animated animation-delayed-4 fadeOutDown" type="{{$type}}">
-            <div v-cloak>
+    @if(count($_messages = Session::get('messages', [])) > 0)
+        @foreach($_messages as $type => $_message)
+            <notification type="{{ $type }}" duration="5000">
                 {!! $_message !!}
-            </div>
-        </alert>
-    @endforeach
-@endif
+            </notification>
+        @endforeach
+    @endif
+
+    @if(count($toastMessages = Session::get('toast_messages', [])) > 0)
+        @foreach($toastMessages as $toastMessage)
+            <notification type="{{ $toastMessage['type'] }}" duration="5000">
+                {!! $toastMessage['message'] !!}
+            </notification>
+        @endforeach
+    @endif
+</notifications>

@@ -12,7 +12,6 @@ export default class {
     }
 
     init() {
-
         // Register unique trigger handler
         this.handle = (event) => this._handlePanelTrigger(event);
 

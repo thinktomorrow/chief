@@ -23,7 +23,6 @@ const IndexSorting = function(options){
 };
 
 IndexSorting.prototype.toggle = function(e){
-
     this.isSorting = !this.isSorting;
 
     if(this.isSorting) {
@@ -36,7 +35,6 @@ IndexSorting.prototype.toggle = function(e){
 }
 
 IndexSorting.prototype.showSorting = function(){
-
     this.hiddenWhenSortingEls.forEach((el) => {
         el.classList.add('hidden');
     });
@@ -51,7 +49,6 @@ IndexSorting.prototype.showSorting = function(){
 }
 
 IndexSorting.prototype.hideSorting = function(){
-
     this.hiddenWhenSortingEls.forEach((el) => {
         el.classList.remove('hidden');
     });
@@ -67,20 +64,20 @@ IndexSorting.prototype.hideSorting = function(){
 
 
 IndexSorting.prototype._init = function() {
-
     let self = this;
 
     this.Sortables.push(Sortable.create(this.sortableGroupEl, {
         group: 'models',
-        animation: 150,
         fallbackOnBody: true,
         swapThreshold: 0.65,
         dataIdAttr: this.sortableIdAttribute,
         handle: this.handle,
+        animation: 200,
+        easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
+        filter: '[data-sortable-ignore]',
 
         store: {
             set: function(sortable){
-
                 fetch(self.endpoint, {
                     method: 'post',
                     body: JSON.stringify({
@@ -109,4 +106,4 @@ IndexSorting.prototype._init = function() {
     (this.isSorting) ? this.showSorting() : this.hideSorting();
 }
 
-export {IndexSorting};
+export { IndexSorting };

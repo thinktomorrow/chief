@@ -34,8 +34,6 @@ final class Register
 
     public function model(string $modelClass, string $managerClass = PageManager::class, $tags = ['nav']): void
     {
-
-
         $this->register(
             $modelClass,
             $this->container->makeWith($managerClass, ['managedModelClass' => $modelClass]),
