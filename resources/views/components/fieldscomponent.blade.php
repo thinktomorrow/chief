@@ -1,5 +1,5 @@
 <div data-fields-component="data-sidebar-fields-{{$componentKey}}-edit">
-    @if(!public_method_exists($model, 'render'.ucfirst($componentKey).'Component'))
+    @if(public_method_exists($model, 'render'.ucfirst($componentKey).'Component'))
         {!! $model->{'render'.ucfirst($componentKey).'Component'}() !!}
     @else
         @foreach($fields->component($componentKey) as $field)
