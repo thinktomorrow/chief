@@ -34,7 +34,9 @@ trait FieldsComponentAssistant
         return view('chief::managers.fields.edit', [
             'manager'      => $this,
             'model'        => $model,
-            'fields'       => $model->fields()->model($model)->component($componentKey),
+            'fields'       => $componentKey !== "default"
+                ? $model->fields()->model($model)->component($componentKey)
+                : $model->fields()->model($model)->notTagged('component'),
             'componentKey' => $componentKey,
         ]);
     }
@@ -45,7 +47,9 @@ trait FieldsComponentAssistant
 
         $this->guard('fields-update', $model);
 
-        $fields = $model->fields()->model($model)->component($componentKey);
+        $fields = $componentKey !== "default"
+            ? $model->fields()->model($model)->component($componentKey)
+            : $model->fields()->model($model)->notTagged('component');
 
         $this->fieldValidator()->handle($fields, $request->all());
 

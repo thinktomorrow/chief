@@ -37,20 +37,20 @@
         @endAdminCan
     @endslot --}}
 
-    <div class="inline-group-s flex items-center">
-        {!! $model->adminLabel('online_status') !!}
+{{--    <div class="inline-group-s flex items-center">--}}
+{{--        {!! $model->adminLabel('online_status') !!}--}}
 
-        @adminCan('update')
-            <button data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-        @endAdminCan
+{{--        @adminCan('update')--}}
+{{--            <button data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}" type="button" class="btn btn-primary">Wijzigingen opslaan</button>--}}
+{{--        @endAdminCan--}}
 
-        @include('chief::back.managers._index._options')
-    </div>
+{{--        @include('chief::back.managers._index._options')--}}
+{{--    </div>--}}
 @endcomponent
 
 @section('content')
     <div class="row">
-        <div class="column-8">
+        <div class="column-9">
             <div class="bg-white p-12 rounded-2xl space-y-16">
                 @adminCan('fragments-index', $model)
                     <livewire:fragments :owner="$model" />
@@ -94,11 +94,27 @@
 
         <div class="column">
             <div class="p-12">
+                {!! $model->adminLabel('online_status') !!}
                 <livewire:links :model="$model" />
 
                 @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
                     <livewire:fields_component :model="$model" :componentKey="$componentKey" />
                 @endforeach
+
+                <livewire:fields_component :model="$model" default-component />
+
+                <div class="mt-8">
+                    @adminCan('preview', $model)
+                    <a class="block" href="@adminRoute('preview', $model)" target="_blank">Bekijk op site</a>
+                    @endAdminCan
+
+                    @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive', 'delete'] as $action)
+                        @adminCan($action, $model)
+                            @include('chief::back.managers._transitions.'.$action)
+                        @endAdminCan
+                    @endforeach
+                </div>
+
             </div>
         </div>
     </div>
