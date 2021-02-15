@@ -158,7 +158,7 @@ trait CrudAssistant
         return view('chief::back.managers.edit', [
             'manager' => $this,
             'model'   => $model,
-            'fields'  => $model->fields()->notTagged('create')->model($model),
+            'fields'  => $model->fields()->model($model),
         ]);
     }
 
@@ -168,9 +168,9 @@ trait CrudAssistant
 
         $this->guard('update', $model);
 
-        $this->fieldValidator()->handle($model->fields()->notTagged('create'), $request->all());
+        $this->fieldValidator()->handle($model->fields(), $request->all());
 
-        $model->saveFields($model->fields()->notTagged('create'), $request->all(), $request->allFiles());
+        $model->saveFields($model->fields(), $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminLabel('title') . '</a> is aangepast');
