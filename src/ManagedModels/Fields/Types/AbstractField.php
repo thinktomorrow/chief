@@ -71,7 +71,8 @@ abstract class AbstractField
     final public function __construct(FieldType $type, string $key)
     {
         $this->type = $type;
-        $this->key = $this->column = $this->name = $this->label = $key;
+        $this->key = $this->column = $this->name = $key;
+        $this->label = str_replace('_', ' ', $key);
 
         $this->valueResolver($this->defaultEloquentValueResolver());
     }

@@ -3,12 +3,9 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 // TODO:
-- routes() method not static -> so staticFragmentManager can be set for each static model.
-  -> one global Register to points to all registered models and managers.
 - perf: not loading the managers on frontend?
 - wat met spirit in chief?
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
-- BUG: allow files/images on create (needs existing model owner for async uploads). Refactor asyncUploadFile(Request $request, $id, $fieldKey) to pass the class of the owner model instead of id (we dont need the id on create, only on edit)
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
 - remove menu translations table (=> try to remove astrotomic altogether)
 - menu only connects with 'Pages', need to add model_type as well to allow other models

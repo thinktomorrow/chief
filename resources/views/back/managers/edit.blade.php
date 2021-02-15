@@ -61,24 +61,27 @@
         <div class="column">
             <div class="p-12">
                 {!! $model->adminLabel('online_status') !!}
+                @adminCan('preview', $model)
+                    <a class="block" href="@adminRoute('preview', $model)" target="_blank">Bekijk op site</a>
+                @endAdminCan
+
+                @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive'] as $action)
+                    @adminCan($action, $model)
+                        @include('chief::back.managers._transitions.'.$action)
+                    @endAdminCan
+                @endforeach
                 <livewire:links :model="$model" />
 
                 @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
                     <livewire:fields_component :model="$model" :componentKey="$componentKey" />
                 @endforeach
 
-                <livewire:fields_component :model="$model" inline-edit />
+                <livewire:fields_component :model="$model"/>
 
                 <div class="mt-8">
-                    @adminCan('preview', $model)
-                    <a class="block" href="@adminRoute('preview', $model)" target="_blank">Bekijk op site</a>
+                    @adminCan('delete', $model)
+                        @include('chief::back.managers._transitions.delete')
                     @endAdminCan
-
-                    @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive', 'delete'] as $action)
-                        @adminCan($action, $model)
-                            @include('chief::back.managers._transitions.'.$action)
-                        @endAdminCan
-                    @endforeach
                 </div>
 
             </div>
