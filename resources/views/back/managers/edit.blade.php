@@ -101,7 +101,7 @@
                     <livewire:fields_component :model="$model" :componentKey="$componentKey" />
                 @endforeach
 
-                <livewire:fields_component :model="$model" default-component />
+                <livewire:fields_component :model="$model" inline-edit />
 
                 <div class="mt-8">
                     @adminCan('preview', $model)
