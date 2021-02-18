@@ -108,6 +108,11 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:sitemap', GenerateSitemap::class);
         }
 
+        // Register sitemap command
+        $this->callAfterResolving(Schedule::class, function (Schedule $schedule) {
+            $schedule->command('chief:sitemap')->daily();
+        });
+
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
         Validator::extendImplicit('requiredFallbackLocale', function ($attribute, $value, $parameters, $validator) {

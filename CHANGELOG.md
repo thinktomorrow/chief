@@ -2,7 +2,12 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-# Unreleased
+## Unreleased
+- Fixed: index view in admin was squashed due to missing container div
+- Added: default sitemap.xml for the default application locale (based on the app.fallback_locale value)
+- Added: sitemap command is now added automatically. It is no longer necessary to set this in your project kernel.
+
+# 0.5.15 - 2021-01-22
 - Fixed: use original asset for filefield thumb when thumb conversion is not available.
 - Fixed: issue where sometimes creating new page gave error on non unique url
 
