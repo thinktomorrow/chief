@@ -3,9 +3,7 @@ All Notable changes to the `chief` application template will be documented in th
 principles.
 
 // TODO:
-- routes() method not static -> so staticFragmentManager can be set for each static model.
-  -> one global Register to points to all registered models and managers.
-- perf: not loading the managers on frontend?
+- perf: not loading the managers + these routes on frontend? / when not logged in as admin?
 - wat met spirit in chief?
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
 - BUG: allow files/images on create (needs existing model owner for async uploads). Refactor asyncUploadFile(Request $request, $id, $fieldKey) to pass the class of the owner model instead of id (we dont need the id on create, only on edit)
@@ -20,6 +18,11 @@ principles.
 - allow to revoke invitation.
 - proper duplicate context feature (with buttons and all)
 - list of reserved model keys such as 'fragments' (used for fragmentModel)
+- locales voor pagina (view: nl - fr ... version of the page in chief)
+
+- global search: 
+    - ik had ergens een usp banner toegevoegd en zou die graag op een andere pagina ook willen toevoegen
+    - komt er op de site ergens het woord 'kakkerlak' voor?
 
 ## UPCOMING 0.6 (REFACTOR RELEASE)
 high impact on manager setup and admin page customisation.
