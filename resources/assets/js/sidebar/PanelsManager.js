@@ -70,7 +70,7 @@ export default class {
             // creating a custom event so redactor js can be initiated async
             // needs to dispatch after vue instances get created otherwise they overrides
             // all redactor event listeners like toolbar clicks ...
-            const newPanelEvent = new Event('panelcreate');
+            const newPanelEvent = new Event('chief::newpanel');
             window.dispatchEvent(newPanelEvent);
 
             Api.listenForFormSubmits(newPanelContainer, () => {
