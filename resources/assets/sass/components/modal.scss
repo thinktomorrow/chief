@@ -1,10 +1,10 @@
 .modal {
-    transition: opacity .4s ease;
+    transition: opacity 0.4s ease;
     @apply fixed bottom-0 left-0 right-0 top-0 flex justify-center items-center overflow-hidden z-20;
 }
 
 .modal-backdrop {
-    background-color: rgba(0,0,0,.3);
+    background-color: rgba(0, 0, 0, 0.3);
     @apply absolute bottom-0 left-0 right-0 top-0;
 }
 
@@ -15,13 +15,13 @@
     text-align: left;
     @apply mx-auto my-0;
 
-    .panel{
-        transition: all .3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    .panel {
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
         @apply bg-white;
     }
 }
-.large-modal .modal-content{
+.large-modal .modal-content {
     max-width: 68%;
 }
 
@@ -30,7 +30,7 @@
     top: 20px;
     width: 40px;
     height: 40px;
-    transition: transform 200ms cubic-bezier(.694, .0482, .335, 1);
+    transition: transform 200ms cubic-bezier(0.694, 0.0482, 0.335, 1);
     @apply bg-transparent select-none border-none rounded-full cursor-pointer inline-block outline-none fixed text-white;
 
     &:hover {
@@ -39,10 +39,9 @@
 }
 
 .sidebar {
-
     .modal-content {
         max-height: none;
-        @apply my-0 ml-auto -mr-px h-full 
+        @apply my-0 ml-auto -mr-px h-full;
     }
 
     .panel {
@@ -58,12 +57,13 @@
 /**
 * Automatically applied by vue by the <transition="modal"> wrapper
 */
-.modal-enter, .modal-leave-active{
+.modal-enter,
+.modal-leave-active {
     @apply opacity-0;
 }
 
 .modal-enter .panel,
-.modal-leave-active .panel{
+.modal-leave-active .panel {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
@@ -71,35 +71,35 @@
 /**
 * Automatically applied by vue by the <transition="modal"> wrapper
 */
-.sidebar-enter, .sidebar-leave-active{
+.sidebar-enter,
+.sidebar-leave-active {
     @apply opacity-0;
 }
 
 .sidebar-enter .panel,
-.sidebar-leave .panel{
+.sidebar-leave .panel {
     transform: translate3d(100%, 0, 0);
 }
 
 .sidebar-enter-active .panel,
-.sidebar-leave-active .panel{
+.sidebar-leave-active .panel {
     transform: translate3d(100%, 0, 0);
 }
 
-.sidebar-large{
-
-    .modal-content{
+.sidebar-large {
+    .modal-content {
         width: 50%;
         min-width: 350px;
     }
 
-    .panel{
+    .panel {
         @apply w-full;
     }
 }
 
-.sidebar-topbar{
+.sidebar-topbar {
     width: 51%;
     margin-left: -11px;
     z-index: 1;
-    @apply fixed top-0 p-3 border border-grey-100 bg-white
+    @apply fixed top-0 p-3 border border-grey-100 bg-white;
 }

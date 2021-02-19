@@ -1,35 +1,40 @@
-import Container from "./Container"
-import PanelsManager from "./PanelsManager"
-import { IndexSorting } from "../utilities/sortable";
+import Container from './Container';
+import PanelsManager from './PanelsManager';
+import { IndexSorting } from '../utilities/sortable';
 
 /**
  * Fragments JS
  */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const sidebarContainerEl = document.querySelector('#js-sidebar-container');
     const componentEl = document.querySelector('[data-fragments-component]');
 
     // Do not trigger the sidebar script is DOM element isn't present
-    if(!sidebarContainerEl || !componentEl) return;
+    if (!sidebarContainerEl || !componentEl) return;
 
     const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    const fragmentPanelsManager = new PanelsManager('[data-sidebar-fragments-edit]', new Container(sidebarContainerEl), function(panel) {
-        console.log('New fragments panel ' + panel.id);
+    const fragmentPanelsManager = new PanelsManager(
+        '[data-sidebar-fragments-edit]',
+        new Container(sidebarContainerEl),
+        function (panel) {
+            console.log('New fragments panel ' + panel.id);
 
-        let fragmentSelectionElement = document.querySelector('[data-fragment-selection]');
-        if(fragmentSelectionElement) {
-            let order = getChildIndex(fragmentSelectionElement);
-            panel.el.querySelector('input[name="order"]').value = order;
+            let fragmentSelectionElement = document.querySelector('[data-fragment-selection]');
+            if (fragmentSelectionElement) {
+                let order = getChildIndex(fragmentSelectionElement);
+                panel.el.querySelector('input[name="order"]').value = order;
+            }
+
+            initSortable('[data-sortable-fragments]', panel.el);
+        },
+        function () {
+            livewireComponent.reload();
+
+            // TODO: set this in callback for when entire sidebar is closed.
+            initSortable();
         }
-
-        initSortable('[data-sortable-fragments]', panel.el);
-    }, function() {
-        livewireComponent.reload();
-
-        // TODO: set this in callback for when entire sidebar is closed.
-        initSortable();
-    });
+    );
 
     fragmentPanelsManager.init();
 
@@ -37,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fragmentPanelsManager.scanForPanelTriggers();
 
         scanForFragmentSelectionTriggers();
-    })
+    });
 
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
         // TODO: first remove existing sortable instances on these same selector els...
@@ -49,13 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     handle: '[data-sortable-handle]',
                     isSorting: true,
                 },
-                ...options
+                ...options,
             });
         });
     }
 
     initSortable();
-
 
     /**
      * Fragment selection
@@ -65,11 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function scanForFragmentSelectionTriggers() {
         let fragmentSelectionTriggers = Array.from(document.querySelectorAll('[data-sortable-insert]'));
 
-        fragmentSelectionTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function() {
+        fragmentSelectionTriggers.forEach((trigger) => {
+            trigger.addEventListener('click', function () {
                 let fragmentSelectionElement = document.querySelector('[data-fragment-selection]');
 
-                if(fragmentSelectionElement) {
+                if (fragmentSelectionElement) {
                     fragmentSelectionElement.parentElement.removeChild(fragmentSelectionElement);
                 }
 
@@ -91,10 +95,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function insertFragmentSelectionElement(element, trigger) {
-        let insertBeforeTarget = (trigger.getAttribute('data-sortable-insert-position') === 'before');
-        let targetElement = document.querySelector(`[data-sortable-id="${trigger.getAttribute('data-sortable-insert')}"]`);
+        let insertBeforeTarget = trigger.getAttribute('data-sortable-insert-position') === 'before';
+        let targetElement = document.querySelector(
+            `[data-sortable-id="${trigger.getAttribute('data-sortable-insert')}"]`
+        );
 
-        if(insertBeforeTarget) {
+        if (insertBeforeTarget) {
             targetElement.parentNode.insertBefore(element, targetElement);
         } else {
             targetElement.parentNode.insertBefore(element, targetElement.nextSibling);

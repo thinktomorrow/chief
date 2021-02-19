@@ -16,24 +16,24 @@ $color-tertiary-sat: 78;
 $color-tertiary-light: 48;
 $color-tertiary: hsl($color-tertiary-hue, $color-tertiary-sat, $color-tertiary-light); // #d81b60;
 
-$color-heading:       #212631; // Used for titles
-$color-font:          #4f5164; // Used for paragraph text
-$color-body:          #f4f6f9; // Used for body
-$color-border:        #dadada; // Used for subtle borders
+$color-heading: #212631; // Used for titles
+$color-font: #4f5164; // Used for paragraph text
+$color-body: #f4f6f9; // Used for body
+$color-border: #dadada; // Used for subtle borders
 
 //$color-subtle:        #e1e2e8;
-$color-subtle:        #6d7775;
-$color-emphasis:      #4f5164;
-$color-white:         #ffffff;
-$color-black:         #000000;
+$color-subtle: #6d7775;
+$color-emphasis: #4f5164;
+$color-white: #ffffff;
+$color-black: #000000;
 
 $color-grey-lightest: #f4f6f5;
 
-$color-success:       #2fca74;
-$color-warning:       #f5b848;
-$color-error:         #ed4d4d;
-$color-information:   #2083fe;
+$color-success: #2fca74;
+$color-warning: #f5b848;
+$color-error: #ed4d4d;
+$color-information: #2083fe;
 
 // components
-$color-table:         #f7f8f9 !default;
-$color-link:          $color-primary !default;
+$color-table: #f7f8f9 !default;
+$color-link: $color-primary !default;

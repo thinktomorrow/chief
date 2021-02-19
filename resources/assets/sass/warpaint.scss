@@ -30,7 +30,7 @@ $grid-columns: 12 !default;
  | and sizings are measured upon. By default this is set to 0.875em. Depending on
  | your font family of choice this should be changed to a proper default.
  */
-$base-font-size:  0.875em;
+$base-font-size: 0.875em;
 
 /*
  | ----------------------------------------------------------------
@@ -44,7 +44,7 @@ $base-font-size:  0.875em;
  */
 $ratio-xs: 0.8;
 $ratio-s: 0.9;
-$ratio-m: 1.0;
+$ratio-m: 1;
 $ratio-l: 1.1;
 $ratio-xl: 1.2;
 $ratio-xxl: 1.4;
@@ -93,7 +93,13 @@ $bp-xxlarge: 120em; // 1920px
  | You should not edit this list unless you plan on expanding the
  | spacing sizes.
  */
-$sizes: (xs : $space-xs, s : $space-s, m : $space-m, l : $space-l, xl : $space-xl);
+$sizes: (
+    xs: $space-xs,
+    s: $space-s,
+    m: $space-m,
+    l: $space-l,
+    xl: $space-xl,
+);
 
 /*
  | ----------------------------------------------------------------

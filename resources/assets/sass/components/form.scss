@@ -1,6 +1,7 @@
 .formgroup {
     /* override the default gutter margin-bottom */
-    .formgroup-info, .formgroup-input{
+    .formgroup-info,
+    .formgroup-input {
         @apply mb-0;
     }
 }
@@ -25,17 +26,19 @@
         @apply bg-white border border-grey-100 text-grey-400 font-normal;
     }
 
-    .input:first-child, .addon:first-child {
+    .input:first-child,
+    .addon:first-child {
         border-radius: 5px 0 0 5px;
     }
 
-    .input:last-child, .addon:last-child{
+    .input:last-child,
+    .addon:last-child {
         border-radius: 0 5px 5px 0;
     }
 }
 
 // Reset input submit
-input[type="submit"] {
+input[type='submit'] {
     @apply cursor-pointer border-none outline-none p-0;
 }
 
@@ -81,9 +84,9 @@ input[type='file'],
 }
 
 // SEARCH
-.search-wrapper{
+.search-wrapper {
     @apply relative;
-    &:after{
+    &:after {
         font-family: 'linearicons';
         content: '\e86f';
         top: 50%;
@@ -92,7 +95,6 @@ input[type='file'],
     }
 }
 
-
 // ERRORS AND VALIDS
 .valid {
     @apply text-success;
@@ -100,7 +102,7 @@ input[type='file'],
     input[type='text'],
     input[type='email'],
     input[type='url'],
-    input[type='password']{
+    input[type='password'] {
         @apply text-success border border-success;
     }
 }
@@ -110,10 +112,10 @@ input[type='file'],
     input[type='text'],
     input[type='email'],
     input[type='url'],
-    input[type='password']{
+    input[type='password'] {
         @apply text-error border border-error;
     }
-    .input-prefix{
+    .input-prefix {
         @apply text-error;
     }
 }

@@ -1,8 +1,6 @@
-(function($R)
-{
+(function ($R) {
     $R.add('plugin', 'rich-links', {
-        init: function(app)
-        {
+        init: function (app) {
             this.app = app;
             this.opts = app.opts;
             this.component = app.component;
@@ -12,42 +10,35 @@
         // messages
         onmodal: {
             link: {
-                open: function($modal, $form)
-                {
+                open: function ($modal, $form) {
                     if (!this.opts.definedlinks) return;
 
                     this.$modal = $modal;
                     this.$form = $form;
 
                     this._load();
-                }
-            }
+                },
+            },
         },
 
         // private
-        _load: function()
-        {
-            if (typeof this.opts.definedlinks === 'object')
-            {
+        _load: function () {
+            if (typeof this.opts.definedlinks === 'object') {
                 this._build(this.opts.definedlinks);
-            }
-            else
-            {
+            } else {
                 var $url = this.opts.definedlinks;
-                if(this.opts.locale) {
+                if (this.opts.locale) {
                     $url += '?locale=' + this.opts.locale;
                 }
                 $R.ajax.get({
                     url: $url,
-                    success: this._build.bind(this)
+                    success: this._build.bind(this),
                 });
             }
         },
-        _build: function(data)
-        {
+        _build: function (data) {
             var $selector = this.$modal.find('#redactor-defined-links');
-            if ($selector.length === 0)
-            {
+            if ($selector.length === 0) {
                 var $body = this.$modal.getBody();
                 var $item = $R.dom('<div class="form-item" />');
                 var $selector = $R.dom('<select id="redactor-defined-links" />');
@@ -61,10 +52,8 @@
             $selector.html('');
             $selector.off('change');
 
-            for (var key in data)
-            {
-                if (!data.hasOwnProperty(key) || typeof data[key] !== 'object')
-                {
+            for (var key in data) {
+                if (!data.hasOwnProperty(key) || typeof data[key] !== 'object') {
                     continue;
                 }
 
@@ -79,24 +68,21 @@
 
             $selector.on('change', this._select.bind(this));
         },
-        _select: function(e)
-        {
+        _select: function (e) {
             var formData = this.$form.getData();
             var key = $R.dom(e.target).val();
             var data = { text: '', url: '' };
 
-            if (key !== '0')
-            {
+            if (key !== '0') {
                 data.text = this.links[key].name;
                 data.url = this.links[key].url;
             }
 
-            if (formData.text !== '')
-            {
+            if (formData.text !== '') {
                 data = { url: data.url, text: data.text };
             }
 
             this.$form.setData(data);
-        }
+        },
     });
 })(Redactor);

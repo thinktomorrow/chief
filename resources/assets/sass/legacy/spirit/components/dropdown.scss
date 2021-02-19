@@ -1,24 +1,23 @@
 // Convenience class for a default dropdown content box
-.dropdown-box{
-  background-color: $color-white;
-  margin-top: $space-xs;
+.dropdown-box {
+    background-color: $color-white;
+    margin-top: $space-xs;
 
-  // Taken from panel
-  border: 1px solid transparent;
-  border-radius: $panel-border-radius;
-  overflow: hidden;
-  text-align: left;
+    // Taken from panel
+    border: 1px solid transparent;
+    border-radius: $panel-border-radius;
+    overflow: hidden;
+    text-align: left;
 
-  box-shadow: 0 16px 26px -10px rgba($color-black, 0.56),
-  0 4px 25px 0px rgba($color-black, 0.12),
-  0 8px 10px -5px rgba($color-black, 0.2)
+    box-shadow: 0 16px 26px -10px rgba($color-black, 0.56), 0 4px 25px 0px rgba($color-black, 0.12),
+        0 8px 10px -5px rgba($color-black, 0.2);
 }
 
 .dropdown-backdrop {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  background-color: transparent;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background-color: transparent;
 }

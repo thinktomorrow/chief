@@ -1,25 +1,21 @@
-(function($R)
-{
+(function ($R) {
     $R.add('plugin', 'custom-classes', {
-        init: function(app)
-        {
+        init: function (app) {
             this.app = app;
             this.toolbar = app.toolbar;
             this.opts = app.opts;
             this.selection = app.selection;
         },
         /** Called when redactor instance is enabled */
-        start: function(){
-
+        start: function () {
             var dropdown = {};
-            for (var key in this.opts.customClasses)
-            {
+            for (var key in this.opts.customClasses) {
                 var custom_tag = this.opts.customClasses[key];
 
                 dropdown[key] = {
                     title: custom_tag.title,
                     api: 'plugin.custom-classes.toggle',
-                    args: custom_tag
+                    args: custom_tag,
                 };
             }
 
@@ -28,30 +24,28 @@
             $button.setIcon('<span><svg width="18" height="18"><use xlink:href="#button"/></svg></span>');
             $button.setDropdown(dropdown);
         },
-        toggle: function(custom_tag) {
-
+        toggle: function (custom_tag) {
             var currentEl = this.selection.getParent();
 
             // If nothing is selected or the current element does not match our tag whitelist, we abort
-            if(!currentEl || custom_tag.tags.indexOf(currentEl.tagName.toLowerCase()) == -1){
+            if (!currentEl || custom_tag.tags.indexOf(currentEl.tagName.toLowerCase()) == -1) {
                 return;
             }
 
             // Remove existing classes first
             var current_classes = currentEl.classList;
-            while(current_classes.length > 0) {
+            while (current_classes.length > 0) {
                 current_classes.remove(current_classes.item(0));
             }
 
             // Add our requested classes
             var classes = custom_tag.class.split(' ');
-            for(var i in classes) {
-
+            for (var i in classes) {
                 // Avoid empty execution
-                if( ! classes[i]) continue;
+                if (!classes[i]) continue;
 
                 currentEl.classList.add(classes[i]);
             }
-        }
+        },
     });
 })(Redactor);

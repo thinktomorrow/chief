@@ -1,13 +1,13 @@
-.thumb{
+.thumb {
     max-height: 150px;
 }
 
-.slim{
+.slim {
     background-color: $color-white !important;
     border: 1px solid $color-border;
-    .slim-area{
-        .slim-result{
-            img{
+    .slim-area {
+        .slim-result {
+            img {
                 max-height: 150px;
                 width: auto !important;
                 margin-left: auto;
@@ -20,26 +20,30 @@
     }
 }
 
-.sorting-mode{
-    .thumb-new{
-        display:none;
+.sorting-mode {
+    .thumb-new {
+        display: none;
     }
 }
 
-[draggable="true"]{
+[draggable='true'] {
     position: relative;
 
-    &:after{
-        content:"";
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background-color:rgba(255,255,255,.4);
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.4);
     }
 
-    .slim-btn-group, .slim-file-hopper, .slim-status, .slim-upload-status, .slim-drip{
+    .slim-btn-group,
+    .slim-file-hopper,
+    .slim-status,
+    .slim-upload-status,
+    .slim-drip {
         visibility: hidden;
     }
 }

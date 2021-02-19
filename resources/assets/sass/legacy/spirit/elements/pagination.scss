@@ -1,5 +1,5 @@
-.pagination{
-    li{
+.pagination {
+    li {
         list-style: none outside none;
         display: inline-block;
         text-align: center;
@@ -10,7 +10,7 @@
         font-size: 1rem;
         cursor: pointer;
         transition: $transition;
-        a{
+        a {
             text-decoration: none;
         }
     }
@@ -19,19 +19,20 @@
 $block-name: default primary secondary;
 $colors: $color-font $color-primary $color-secondary;
 
-@each $block in $block-name{
+@each $block in $block-name {
     $i: index($block-name, $block);
     // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
     $color: nth($colors, $i);
-    .pagination-#{$block}{
-        li{
-            a{
+    .pagination-#{$block} {
+        li {
+            a {
                 color: $color;
             }
             &:hover,
-            &.active{
+            &.active {
                 background: $color;
-                span, a{
+                span,
+                a {
                     color: $color-white;
                 }
             }

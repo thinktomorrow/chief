@@ -6,10 +6,10 @@
     top: 0;
     align-items: center;
     justify-content: center;
-    display:flex;
+    display: flex;
     overflow: hidden;
     z-index: 20;
-    transition: opacity .4s ease;
+    transition: opacity 0.4s ease;
 }
 
 .modal-backdrop {
@@ -18,16 +18,16 @@
     left: 0;
     right: 0;
     top: 0;
-    background-color: transparentize(darken($color-body,50%),.3);
+    background-color: transparentize(darken($color-body, 50%), 0.3);
 }
 
-.modal-header{
-    h3{
+.modal-header {
+    h3 {
         text-transform: uppercase;
     }
 }
 
-.--with-fixed-topbar{
+.--with-fixed-topbar {
     padding-top: 2rem;
 }
 
@@ -37,15 +37,15 @@
     max-width: 640px;
     text-align: left;
     z-index: 1;
-    .panel{
-        background-color:$color-white;
-        transition: all .3s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    .panel {
+        background-color: $color-white;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     }
 }
 
 .modal-close {
-    background-color:transparent;
+    background-color: transparent;
     user-select: none;
     border: none;
     border-radius: 50px;
@@ -58,36 +58,35 @@
     top: 20px;
     width: 40px;
     height: 40px;
-    color:$color-white;
+    color: $color-white;
     //transition: transform .3s cubic-bezier(0.175, 0.885, 0.52, 1.775);
-    transition: transform 200ms cubic-bezier(.694, .0482, .335, 1);
+    transition: transform 200ms cubic-bezier(0.694, 0.0482, 0.335, 1);
 
-    &:hover{
+    &:hover {
         transform: scale(1.1);
     }
 
     .icon {
-        font-size:2em;
+        font-size: 2em;
     }
 }
 
-.sidebar{
-
-    .modal-content{
+.sidebar {
+    .modal-content {
         margin: 0 auto;
         margin-right: -1px;
         max-height: none;
         height: 100%;
     }
 
-    .panel{
+    .panel {
         float: right;
-        min-height:100%;
+        min-height: 100%;
         border-radius: 0;
     }
 
-    .modal-close{
-        left:20px;
+    .modal-close {
+        left: 20px;
         right: auto;
     }
 }
@@ -95,12 +94,13 @@
 /**
 * Automatically applied by vue by the <transition="modal"> wrapper
 */
-.modal-enter, .modal-leave-active{
+.modal-enter,
+.modal-leave-active {
     opacity: 0;
 }
 
 .modal-enter .panel,
-.modal-leave-active .panel{
+.modal-leave-active .panel {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
@@ -108,37 +108,37 @@
 /**
 * Automatically applied by vue by the <transition="modal"> wrapper
 */
-.sidebar-enter, .sidebar-leave-active{
-    opacity:0;
+.sidebar-enter,
+.sidebar-leave-active {
+    opacity: 0;
 }
 
 .sidebar-enter .panel,
-.sidebar-leave .panel{
+.sidebar-leave .panel {
     transform: translate3d(100%, 0, 0);
 }
 
 .sidebar-enter-active .panel,
-.sidebar-leave-active .panel{
+.sidebar-leave-active .panel {
     transform: translate3d(100%, 0, 0);
 }
 
-.sidebar-large{
-
-    .modal-content{
+.sidebar-large {
+    .modal-content {
         width: 50%;
         min-width: 350px;
     }
 
-    .panel{
-        width:100%;
+    .panel {
+        width: 100%;
     }
 }
 
-.sidebar-topbar{
+.sidebar-topbar {
     position: fixed;
     top: 0;
-    padding: .75rem;
-    border-bottom: 1px solid #D9D9D9;
+    padding: 0.75rem;
+    border-bottom: 1px solid #d9d9d9;
     width: 51%;
     margin-left: -11px;
     background-color: rgba(253, 253, 253, 1);

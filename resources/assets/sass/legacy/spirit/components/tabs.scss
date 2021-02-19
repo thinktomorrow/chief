@@ -1,59 +1,60 @@
-.tabs-nav{
-    border-bottom:1px solid $color-border;
+.tabs-nav {
+    border-bottom: 1px solid $color-border;
 
-    li{
-        display:inline-block;
+    li {
+        display: inline-block;
     }
 }
 
 .tabs {
-    width:100%;
-    display:inline-block;
+    width: 100%;
+    display: inline-block;
 }
-.clearfix{
+.clearfix {
     &:before,
-    &:after{
-        content: " ";
+    &:after {
+        content: ' ';
         display: table;
     }
 }
 
 // THIS IS VERY SPECIFIC FOR TRANSLATION TAB NAVIGATION
 .translation-tabs-nav {
-    a{
+    a {
         cursor: pointer;
         margin-bottom: -1px;
-        display:inline-block;
-        border-radius:none;
+        display: inline-block;
+        border-radius: none;
         border: 1px solid $color-border;
-        text-decoration:none;
-        .flag{
+        text-decoration: none;
+        .flag {
             opacity: 0.3;
         }
         &:hover {
             background: $color-body;
-            .flag{
+            .flag {
                 opacity: 1;
             }
         }
-        .tabs-name{
+        .tabs-name {
             color: $color-subtle;
         }
-        &.tab-error{
+        &.tab-error {
             border: 1px solid $color-error;
             color: $color-error;
         }
     }
 
-    a.active, a.active:hover {
-        background:$color-body;
-        color:$color-emphasis;
+    a.active,
+    a.active:hover {
+        background: $color-body;
+        color: $color-emphasis;
         border: 1px solid $color-border;
-        .flag{
+        .flag {
             @extend .inline-s;
             opacity: 1;
         }
-        .tabs-name{
+        .tabs-name {
             color: inherit;
         }
     }

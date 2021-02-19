@@ -1,33 +1,32 @@
-@import "spirit/settings";
+@import 'spirit/settings';
 
-@import "spirit/base/color";
-@import "spirit/base/typography";
-@import "spirit/base/general";
-@import "spirit/base/color-scheme";
-@import "spirit/base/icons";
+@import 'spirit/base/color';
+@import 'spirit/base/typography';
+@import 'spirit/base/general';
+@import 'spirit/base/color-scheme';
+@import 'spirit/base/icons';
 
-@import "spirit/elements/buttons";
-@import "spirit/elements/labels";
-@import "spirit/elements/badges";
-@import "spirit/elements/panels";
-@import "spirit/elements/listgroups";
-@import "spirit/elements/thumbnails";
-@import "spirit/elements/tables";
-@import "spirit/elements/pagination";
-@import "spirit/elements/treeview";
+@import 'spirit/elements/buttons';
+@import 'spirit/elements/labels';
+@import 'spirit/elements/badges';
+@import 'spirit/elements/panels';
+@import 'spirit/elements/listgroups';
+@import 'spirit/elements/thumbnails';
+@import 'spirit/elements/tables';
+@import 'spirit/elements/pagination';
+@import 'spirit/elements/treeview';
 
-@import "spirit/components/notifications";
-@import "spirit/components/navbar";
-@import "spirit/components/tabs";
-@import "spirit/components/modal";
-@import "spirit/components/dropdown";
+@import 'spirit/components/notifications';
+@import 'spirit/components/navbar';
+@import 'spirit/components/tabs';
+@import 'spirit/components/modal';
+@import 'spirit/components/dropdown';
 
-@import "spirit/elements/forms/input-fields";
-@import "spirit/elements/forms/custom-file";
-@import "spirit/elements/forms/toggles";
-@import "spirit/elements/forms/select";
+@import 'spirit/elements/forms/input-fields';
+@import 'spirit/elements/forms/custom-file';
+@import 'spirit/elements/forms/toggles';
+@import 'spirit/elements/forms/select';
 
-
-@import "spirit/mixins/mediaqueries";
-@import "spirit/mixins/utilities";
-@import "spirit/mixins/animations";
+@import 'spirit/mixins/mediaqueries';
+@import 'spirit/mixins/utilities';
+@import 'spirit/mixins/animations';

@@ -7,9 +7,10 @@
  | Zo ben je zeker van een deftige font-rendering.
  |
  */
-    html,body{
-      font-size: 14px;
-    }
+html,
+body {
+    font-size: 14px;
+}
 /*
  | ----------------------------------------------------------------
  | Typography
@@ -19,10 +20,10 @@
  | Best is dat je een serif en sans-serif font kiest.
  |
  */
-    //@import "https://fonts.googleapis.com/css?family=Merriweather|Montserrat:300";
+//@import "https://fonts.googleapis.com/css?family=Merriweather|Montserrat:300";
 
-    $font-family-secondary: "Quicksand"; // meestal voor lettertypes
-    $font-family-primary:   "Quicksand"; // het lettertype dat het meeste gebruikt wordt.
+$font-family-secondary: 'Quicksand'; // meestal voor lettertypes
+$font-family-primary: 'Quicksand'; // het lettertype dat het meeste gebruikt wordt.
 /*
  | ----------------------------------------------------------------
  | Border Radius
@@ -31,17 +32,17 @@
  | een border radius van minder dan 15px zal op ieder element mooi gerenderd worden.
  |
  */
-    $default-border-radius: 5px;
-    $panel-border-radius: $default-border-radius;
-    $label-border-radius: $default-border-radius;
-    $badge-border-radius: $default-border-radius;
-    $navpills-border-radius: $default-border-radius;
-    $dropdown-border-radius: $default-border-radius;
+$default-border-radius: 5px;
+$panel-border-radius: $default-border-radius;
+$label-border-radius: $default-border-radius;
+$badge-border-radius: $default-border-radius;
+$navpills-border-radius: $default-border-radius;
+$dropdown-border-radius: $default-border-radius;
 
-    $table-border-radius: $default-border-radius;
-    $tab-border-radius: $default-border-radius;
-    $thumbnail-border-radius: $default-border-radius;
-    $pagination-border-radius: $default-border-radius;
+$table-border-radius: $default-border-radius;
+$tab-border-radius: $default-border-radius;
+$thumbnail-border-radius: $default-border-radius;
+$pagination-border-radius: $default-border-radius;
 
 /*
  | ----------------------------------------------------------------
@@ -51,7 +52,7 @@
  | Icon setup.
  |
  */
-    $spacy: 0.75rem;
+$spacy: 0.75rem;
 
 /*
  | ----------------------------------------------------------------
@@ -61,8 +62,7 @@
  | Icon setup.
  |
  */
-    $base-icon-size: 16px;
-
+$base-icon-size: 16px;
 
 /*
  | ----------------------------------------------------------------
@@ -72,7 +72,7 @@
  | Meestal gebruikt voor hover states e.d.
  |
  */
-  $transition: 0.3s ease-in-out all;
+$transition: 0.3s ease-in-out all;
 
 /*
  * ----------------------------------------------------------------

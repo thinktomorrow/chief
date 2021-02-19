@@ -5,14 +5,14 @@ export default class {
     }
 
     find(id) {
-        return this.collection.find((panel) => panel.id === id );
+        return this.collection.find((panel) => panel.id === id);
     }
 
     findActive() {
         return this.activePanel;
     }
 
-    markAsActive(id){
+    markAsActive(id) {
         this.activePanel = this.find(id);
     }
 
@@ -21,14 +21,14 @@ export default class {
     }
 
     remove(id) {
-        const index = this.collection.findIndex((panel) => panel.id === id );
+        const index = this.collection.findIndex((panel) => panel.id === id);
 
         this.collection[index].remove();
-        this.collection.splice(index,1);
+        this.collection.splice(index, 1);
     }
 
     clear() {
-        this.collection.forEach(panel => panel.remove() );
+        this.collection.forEach((panel) => panel.remove());
 
         this.collection = [];
         this.activePanel = null;

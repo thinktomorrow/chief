@@ -2,9 +2,15 @@
     Slim CSS loader animation overrides
 */
 @keyframes Flashing {
-    0% { opacity: 1; }
-    50% { opacity: .65; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.65;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 .slim .slim-area .slim-loader {
     animation-name: Flashing;
@@ -27,18 +33,18 @@
     - Success (top right)
 */
 .slim .slim-area .slim-upload-status {
-    top: .5rem !important;
-    padding: .5rem !important;
+    top: 0.5rem !important;
+    padding: 0.5rem !important;
     line-height: 1.4 !important;
     font-size: 12px !important;
 }
-.slim .slim-area .slim-upload-status[data-state=error] {
-    left: .5rem !important;
-    right: .5rem !important;
+.slim .slim-area .slim-upload-status[data-state='error'] {
+    left: 0.5rem !important;
+    right: 0.5rem !important;
     @apply text-white bg-error #{!important};
 }
-.slim .slim-area .slim-upload-status[data-state=success] {
-    left: .5rem !important;
-    right: .5rem !important;
+.slim .slim-area .slim-upload-status[data-state='success'] {
+    left: 0.5rem !important;
+    right: 0.5rem !important;
     @apply text-white bg-success #{!important};
 }

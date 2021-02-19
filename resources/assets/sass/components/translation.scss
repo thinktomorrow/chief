@@ -1,4 +1,4 @@
-.translation-sidemenu{
+.translation-sidemenu {
     @apply w-1/5;
 
     ul {
@@ -7,7 +7,7 @@
         text-align: left;
     }
 
-    .anchor-item{
+    .anchor-item {
         @apply block no-underline text-grey-500;
 
         &:hover {
@@ -25,8 +25,8 @@
     }
 }
 
-.tab-block{
-    .tab-content{
+.tab-block {
+    .tab-content {
         scroll-behavior: smooth;
         @apply w-full;
         .section-divider {
@@ -35,9 +35,9 @@
                 right: 1rem;
                 top: 50%;
                 transform: translateY(-50%);
-                @apply absolute;  
+                @apply absolute;
             }
-            &:not(:first-child){
+            &:not(:first-child) {
                 @apply mt-8;
             }
         }
