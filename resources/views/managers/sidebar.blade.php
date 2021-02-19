@@ -30,9 +30,6 @@
 
     <template id="js-sidebar-close-button">
         <div class="link link-primary">
-            {{-- <svg width="18" height="18"><use xlink:href="#x"></use></svg> --}}
-            {{-- <svg width="24" height="24" class="fill-current"><use xlink:href="#arrow-left"/></svg> --}}
-
             <x-link-label type="back">Ga terug</x-link-label>
         </div>
     </template>

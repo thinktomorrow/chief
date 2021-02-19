@@ -99,7 +99,7 @@ trait FragmentAssistant
             'manager'    => $this,
             'owner'      => $owner,
             'model'      => $fragmentable,
-            'fields'     => $fragmentable->fields()->notTagged('edit'),
+            'fields'     => $fragmentable->fields()->notTagged('edit')
         ]);
     }
 
@@ -136,7 +136,8 @@ trait FragmentAssistant
         $this->fieldValidator()->handle($fragmentable->fields()->notTagged('edit'), $request->all());
 
         // TODO: pass order with request
-        $request->merge(['order' => 1]);
+        // TODO: this is hacky, right Ben?
+        $request->merge(['order' => intval($request->input('order'))]);
 
         $this->storeFragmentable($owner, $fragmentable, $request);
 

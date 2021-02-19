@@ -44,9 +44,9 @@ p {
     @apply leading-relaxed;
 }
 
-a:not(.btn) {
-    @apply text-primary-500;
-}
+// a:not(.btn) {
+//     @apply text-primary-500;
+// }
 
 ul, ol {
     @apply break-words pl-0;

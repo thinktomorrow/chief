@@ -1,4 +1,4 @@
-import {Api} from "./Api"
+import { Api } from "./Api"
 import Panel from "./Panel"
 import Panels from "./Panels"
 
@@ -153,5 +153,4 @@ export default class {
             })
         });
     }
-
 }

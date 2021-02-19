@@ -13,6 +13,8 @@ export default class {
         this.closeButton = this.el.querySelector('[data-sidebar-close-button]');
 
         this.closeTriggers = Array.from(this.el.querySelectorAll('[data-sidebar-close]'));
+
+        this._closeWithEscape();
     }
 
     _createDomElement() {
@@ -54,6 +56,14 @@ export default class {
 
         this.closeButton.innerHTML = '';
         this.closeButton.appendChild(node);
+    }
+
+    _closeWithEscape() {
+        window.addEventListener('keydown', (e) => {
+            if(this.isOpen() && e.key === 'Escape') {
+                this.close();
+            }
+        });
     }
 
     _closeElement(element, animationName) {

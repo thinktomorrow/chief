@@ -1,12 +1,20 @@
 .link {
     @apply font-semibold no-underline;
+    @extend .transition-150;
 }
 
 .link-primary {
     @apply text-primary-500;
-    @extend .transition-base;
 }
 
 .link-primary:hover {
     @apply text-primary-600;
+}
+
+.link-black {
+    @apply text-grey-700;
+}
+
+.link-black:hover {
+    @apply text-grey-900;
 }

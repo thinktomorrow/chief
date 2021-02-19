@@ -9,13 +9,9 @@
     <input type="hidden" name="_method" value="PUT">
 
     <div class="space-y-10">
-        <div data-vue-fields class="space-y-10">
-            <h3>
-                {{-- <span class="bg-primary-50 font-semibold text-primary-900 py-2 px-4 rounded-lg text-lg"> --}}
-                    {{ ucfirst($model->managedModelKey()) }}
-                {{-- </span> --}}
-            </h3>
+        <h3>{{ ucfirst($model->managedModelKey()) }}</h3>
 
+        <div data-vue-fields class="space-y-10">
             @foreach($fields as $field)
                 @formgroup
                     @slot('label',$field->getLabel())
