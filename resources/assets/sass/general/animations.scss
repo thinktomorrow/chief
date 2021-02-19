@@ -9,34 +9,26 @@
 /**
  * Sidebar animations
  */
-.slide-from-right {
-    animation: slideFromRight;
+.sidebar-slide-from-right {
+    animation: SidebarSlideFromRight;
     animation-timing-function: cubic-bezier(0.87, 0, 0.13, 1);
     animation-duration: 600ms;
 }
 
-@keyframes slideFromRight {
-    0% {
-        transform: translateX(100%) translateZ(0);
-    }
-    100% {
-        transform: translateX(0) translateZ(0);
-    }
+@keyframes SidebarSlideFromRight {
+    0% { transform: translateX(100%) translateZ(0); }
+    100% { transform: translateX(0) translateZ(0); }
 }
 
-.fade-in {
-    animation: fadeIn;
+.sidebar-bg-fade-in {
+    animation: SidebarBackgroundFadeIn;
     animation-timing-function: cubic-bezier(0.87, 0, 0.13, 1);
     animation-duration: 600ms;
 }
 
-@keyframes fadeIn {
-    0% {
-        @apply opacity-0;
-    }
-    100% {
-        @apply opacity-25;
-    }
+@keyframes SidebarBackgroundFadeIn {
+    0% { @apply opacity-0; }
+    100% { @apply opacity-25; }
 }
 
 /**

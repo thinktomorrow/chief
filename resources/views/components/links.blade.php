@@ -1,5 +1,4 @@
 <div data-links-component class="flex flex-col space-y-6">
-
     <div>
         <h3>Links</h3>
         @unless($linkForm->exist())
