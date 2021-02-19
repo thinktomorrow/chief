@@ -35,6 +35,9 @@ Vue.component('imagesupload', require('./components/ImagesUpload').default);
 Vue.component('fragment', require('./components/Fragment').default);
 Vue.component('fragments', require('./components/Fragments').default);
 
+Vue.component('url-redirect', require('./components/UrlRedirect').default);
+Vue.component('link-input', require('./components/LinkInput').default);
+
 Vue.component('notifications', require('./components/Notifications/Notifications.vue').default);
 Vue.component('notification', require('./components/Notifications/Notification.vue').default);
 

@@ -168,7 +168,7 @@ trait FragmentAssistant
         return view('chief::managers.fragments.edit', [
             'manager'    => $this,
             'model'      => $fragmentable,
-            'fields'     => $fragmentable->fields()->notTagged('create')->model($this->fragmentModel($fragmentable)),
+            'fields'     => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),
         ]);
     }
 
@@ -178,12 +178,12 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        $this->fieldValidator()->handle($fragmentable->fields()->notTagged('create'), $request->all());
+        $this->fieldValidator()->handle($fragmentable->fields(), $request->all());
 
         // TODO: pass order with request
 //        $request->merge(['order' => 1]);
 
-        $this->fragmentModel($fragmentable)->saveFields($fragmentable->fields()->notTagged('create'), $request->all(), $request->allFiles());
+        $this->fragmentModel($fragmentable)->saveFields($fragmentable->fields(), $request->all(), $request->allFiles());
 
         return response()->json([
             'message' => 'fragment updated',

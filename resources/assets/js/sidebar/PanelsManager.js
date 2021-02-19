@@ -67,7 +67,9 @@ export default class {
 
             // only mount Vue on our vue specific fields and not on the form element itself
             // so that the submit event still works. I know this is kinda hacky.
-            new Vue({el: newPanelContainer.querySelector('[data-vue-fields]')});
+            Array.from(newPanelContainer.querySelectorAll('[data-vue-fields]')).forEach(el => {
+                new Vue({el: el});
+            });
 
             Api.listenForFormSubmits(newPanelContainer, () => {
 

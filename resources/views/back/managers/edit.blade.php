@@ -37,68 +37,53 @@
         @endAdminCan
     @endslot --}}
 
-    <div class="inline-group-s flex items-center">
-        {!! $model->adminLabel('online_status') !!}
+{{--    <div class="inline-group-s flex items-center">--}}
+{{--        {!! $model->adminLabel('online_status') !!}--}}
 
-        @adminCan('update')
-            <button data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}" type="button" class="btn btn-primary">Wijzigingen opslaan</button>
-        @endAdminCan
+{{--        @adminCan('update')--}}
+{{--            <button data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}" type="button" class="btn btn-primary">Wijzigingen opslaan</button>--}}
+{{--        @endAdminCan--}}
 
-        @include('chief::back.managers._index._options')
-    </div>
+{{--        @include('chief::back.managers._index._options')--}}
+{{--    </div>--}}
 @endcomponent
 
 @section('content')
     <div class="row">
-        <div class="column-8">
+        <div class="column-9">
             <div class="bg-white p-12 rounded-2xl space-y-16">
                 @adminCan('fragments-index', $model)
                     <livewire:fragments :owner="$model" />
                 @endAdminCan
-
-                {{-- Todo: do we still need this? --}}
-                {{-- <form
-                    method="POST"
-                    action="@adminRoute('update', $model)"
-                    id="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-                    enctype="multipart/form-data"
-                    role="form"
-                    class="mb-0"
-                >
-                    {{ csrf_field() }}
-                    <input type="hidden" name="_method" value="PUT">
-
-                    @foreach($fields->notTagged('component') as $field)
-                        @formgroup
-                            @slot('label',$field->getLabel())
-                            @slot('description',$field->getDescription())
-                            @slot('isRequired', $field->required())
-
-                            {!! $field->render(get_defined_vars()) !!}
-                        @endformgroup
-                    @endforeach
-
-                    <div>
-                        <button
-                            data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-                            type="submit"
-                            form="updateForm{{ $model->getMorphClass().'_'.$model->id }}"
-                            class="btn btn-primary"
-                        >
-                            Wijzigingen opslaan
-                        </button>
-                    </div>
-                </form> --}}
             </div>
         </div>
 
         <div class="column">
             <div class="p-12">
+                {!! $model->adminLabel('online_status') !!}
+                @adminCan('preview', $model)
+                    <a class="block" href="@adminRoute('preview', $model)" target="_blank">Bekijk op site</a>
+                @endAdminCan
+
+                @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive'] as $action)
+                    @adminCan($action, $model)
+                        @include('chief::back.managers._transitions.'.$action)
+                    @endAdminCan
+                @endforeach
                 <livewire:links :model="$model" />
 
                 @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
                     <livewire:fields_component :model="$model" :componentKey="$componentKey" />
                 @endforeach
+
+                <livewire:fields_component :model="$model"/>
+
+                <div class="mt-8">
+                    @adminCan('delete', $model)
+                        @include('chief::back.managers._transitions.delete')
+                    @endAdminCan
+                </div>
+
             </div>
         </div>
     </div>
