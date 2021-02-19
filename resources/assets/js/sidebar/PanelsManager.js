@@ -55,14 +55,12 @@ export default class {
     }
 
     _activateNewPanel(id, url) {
-
         // Add new panel container to dom
         const newPanelContainer = document.createElement('div');
         newPanelContainer.setAttribute('data-panel-id', id);
         this.container.dom().appendChild(newPanelContainer);
 
         Api.get(url, newPanelContainer, (data) => {
-
             newPanelContainer.innerHTML = data;
 
             // only mount Vue on our vue specific fields and not on the form element itself
@@ -71,8 +69,13 @@ export default class {
                 new Vue({el: el});
             });
 
-            Api.listenForFormSubmits(newPanelContainer, () => {
+            // creating a custom event so redactor js can be initiated async
+            // needs to dispatch after vue instances get created otherwise they overrides
+            // all redactor event listeners like toolbar clicks ...
+            const newPanelEvent = new Event('panelcreate');
+            window.dispatchEvent(newPanelEvent);
 
+            Api.listenForFormSubmits(newPanelContainer, () => {
                 this.backOrClose(false);
 
                 if(this.onSubmitPanel) {

@@ -41,8 +41,8 @@ export default class {
 
     close() {
         Promise.all([
-            this._closeElement(this.sidebarBackdrop, 'fade-in'),
-            this._closeElement(this.sidebarAside, 'slide-from-right')
+            this._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'),
+            this._closeElement(this.sidebarAside, 'sidebar-slide-from-right')
         ]).then(() => {
             this.el.style.display = "none";
         }).catch((error) => {
