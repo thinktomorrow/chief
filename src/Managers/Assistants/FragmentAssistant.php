@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
-use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
-use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
 
 trait FragmentAssistant
 {
@@ -36,20 +36,20 @@ trait FragmentAssistant
 
     public function routeFragmentAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if(!in_array($action, ['fragment-edit','fragment-update','fragment-delete','fragment-create','fragment-store', 'fragment-status'])) {
+        if (! in_array($action, ['fragment-edit','fragment-update','fragment-delete','fragment-create','fragment-store', 'fragment-status'])) {
             return null;
         }
 
         $modelKey = $this->managedModelClass()::managedModelKey();
 
         // model is owner for create endpoints
-        if(in_array($action, ['fragment-create', 'fragment-store'])) {
-            if (!$model || !$model instanceof FragmentsOwner) {
+        if (in_array($action, ['fragment-create', 'fragment-store'])) {
+            if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for '.$action.' requires the owning Model as second argument.');
             }
 
             // Nested fragments
-            if($model instanceof Fragmentable && $model->isFragment()) {
+            if ($model instanceof Fragmentable && $model->isFragment()) {
                 return route('chief.' . $modelKey . '.nested-' . $action, array_merge([
                     $model->fragmentModel()->id,
                 ], $parameters));
@@ -62,7 +62,7 @@ trait FragmentAssistant
         }
 
         // Here model refers to the editable fragmentable
-        if (!$model || !$model instanceof Fragmentable) {
+        if (! $model || ! $model instanceof Fragmentable) {
             throw new \Exception('Fragment route definition for '.$action.' requires the fragment model as second argument.');
         }
 
@@ -83,10 +83,10 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentable();
 
         return view('chief::managers.fragments.create', [
-            'manager'    => $this,
-            'owner'      => $owner,
-            'model'      => $fragmentable,
-            'fields'     => $fragmentable->fields()->notTagged('edit'),
+            'manager' => $this,
+            'owner' => $owner,
+            'model' => $fragmentable,
+            'fields' => $fragmentable->fields()->notTagged('edit'),
         ]);
     }
 
@@ -96,10 +96,10 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentable();
 
         return view('chief::managers.fragments.create', [
-            'manager'    => $this,
-            'owner'      => $owner,
-            'model'      => $fragmentable,
-            'fields'     => $fragmentable->fields()->notTagged('edit')
+            'manager' => $this,
+            'owner' => $owner,
+            'model' => $fragmentable,
+            'fields' => $fragmentable->fields()->notTagged('edit'),
         ]);
     }
 
@@ -166,9 +166,9 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
         return view('chief::managers.fragments.edit', [
-            'manager'    => $this,
-            'model'      => $fragmentable,
-            'fields'     => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),
+            'manager' => $this,
+            'model' => $fragmentable,
+            'fields' => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),
         ]);
     }
 
@@ -197,7 +197,7 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        $fragmentable->fragmentModel()->update(['online_status' => !!$request->input('online_status')]);
+        $fragmentable->fragmentModel()->update(['online_status' => ! ! $request->input('online_status')]);
 
         return response()->json([
             'message' => 'fragment online status updated',

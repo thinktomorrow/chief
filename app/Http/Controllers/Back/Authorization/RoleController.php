@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization;
 
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Illuminate\Http\Request;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
@@ -24,7 +24,7 @@ class RoleController extends Controller
 
         return view('chief::back.authorization.roles.create', [
             'role' => new Role(),
-            'permission_names' => Permission::all()->pluck('name')->toArray()
+            'permission_names' => Permission::all()->pluck('name')->toArray(),
         ]);
     }
 
@@ -33,9 +33,9 @@ class RoleController extends Controller
         $this->authorize('create-role');
 
         $this->validate($request, [
-            'name'               => 'required|unique:roles',
-            'permission_names'   => 'required|array',
-            'permission_names.*'   => 'required', // Avoid null array entry
+            'name' => 'required|unique:roles',
+            'permission_names' => 'required|array',
+            'permission_names.*' => 'required', // Avoid null array entry
         ]);
 
         $role = Role::create($request->only('name'));
@@ -61,8 +61,8 @@ class RoleController extends Controller
 
         $this->validate($request, [
             'name' => 'required|alpha_dash|unique:roles,name,' . $id,
-            'permission_names' =>'required|array',
-            'permission_names.*'   => 'required', // Avoid null array entry
+            'permission_names' => 'required|array',
+            'permission_names.*' => 'required', // Avoid null array entry
         ]);
 
         $role = Role::findOrFail($id);

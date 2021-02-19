@@ -28,23 +28,23 @@ class ModuleCreateRequest extends FormRequest
     {
         return [
             'module_key' => 'required',
-            'slug'       => 'required|unique:modules,slug',
+            'slug' => 'required|unique:modules,slug',
         ];
     }
 
     public function attributes()
     {
         return [
-            'module_key'    => 'type',
-            'slug'          => 'interne titel',
+            'module_key' => 'type',
+            'slug' => 'interne titel',
         ];
     }
 
     public function messages()
     {
         return [
-            'required'    => 'Gelieve een :attribute in te geven, aub.',
-            'unique'      => 'De naam van een module moet uniek zijn.'
+            'required' => 'Gelieve een :attribute in te geven, aub.',
+            'unique' => 'De naam van een module moet uniek zijn.',
         ];
     }
 }

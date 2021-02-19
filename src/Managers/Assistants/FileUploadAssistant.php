@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Illuminate\Support\Arr;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\FieldName;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
-use Illuminate\Http\Exceptions\PostTooLargeException;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\Chief\ManagedModels\Fields\FieldName;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FileUploadAssistant
 {
@@ -35,8 +35,8 @@ trait FileUploadAssistant
     {
         $uploadedFile = $request->file('file');
         $locale = $request->input('locale');
-        try {
 
+        try {
             $model = $id ? $this->fieldsModel($id) : new $this->managedModelClass();
             $field = $model->fields()->find($fieldKey);
 
@@ -49,12 +49,12 @@ trait FileUploadAssistant
             $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName());
 
             return response()->json([
-                'url'      => $asset->url(),
+                'url' => $asset->url(),
                 'filename' => $asset->filename(),
-                'id'       => $asset->id,
+                'id' => $asset->id,
                 'mimetype' => $asset->getMimeType(),
-                'size'     => $asset->getSize(),
-                'isImage'  => ($asset->getExtensionType() == 'image'),
+                'size' => $asset->getSize(),
+                'isImage' => ($asset->getExtensionType() == 'image'),
             ], 201);
         } catch (ValidationException $e) {
 
@@ -64,12 +64,12 @@ trait FileUploadAssistant
             $firstError = reset($errors);
 
             return response()->json([
-                'status'  => 'failure',
+                'status' => 'failure',
                 'message' => $firstError,
             ], 422);
         } catch (PostTooLargeException $e) {
             return response()->json([
-                'error'   => true, // required by redactor
+                'error' => true, // required by redactor
                 'message' => 'Te groot bestand...',
             ], 500);
         }

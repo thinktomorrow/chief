@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
 use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
-use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 abstract class TestCase extends OrchestraTestCase
 {

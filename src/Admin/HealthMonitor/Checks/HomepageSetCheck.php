@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\HealthMonitor\Checks;
 
-use Thinktomorrow\Chief\Admin\Settings\Setting;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Notifiers\AlertBarNotifier;
+use Thinktomorrow\Chief\Admin\Settings\Setting;
 
 class HomepageSetCheck implements HealthCheck
 {
@@ -13,7 +13,7 @@ class HomepageSetCheck implements HealthCheck
     {
         $homepageValue = chiefSetting(Setting::HOMEPAGE);
 
-        return !!$homepageValue;
+        return ! ! $homepageValue;
     }
 
     public function message(): string

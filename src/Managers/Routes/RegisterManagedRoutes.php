@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Routes;
 
-use Illuminate\Support\Str;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Managers\Manager;
 
 final class RegisterManagedRoutes
@@ -29,8 +28,8 @@ final class RegisterManagedRoutes
     {
         $managedRoutes = $this->expandWithAssistantRoutes($manager, $managedRoutes);
 
-        $this->router->group(['prefix' => $this->routePrefix, 'middleware' => $this->routeMiddleware], function () use($managedRoutes, $controllerClass) {
-            foreach($managedRoutes as $route) {
+        $this->router->group(['prefix' => $this->routePrefix, 'middleware' => $this->routeMiddleware], function () use ($managedRoutes, $controllerClass) {
+            foreach ($managedRoutes as $route) {
                 $this->router->addRoute(
                     $route->method,
                     $managedRoutes->getPrefix() .'/'. $route->uri,
@@ -49,7 +48,7 @@ final class RegisterManagedRoutes
             }
         }
 
-        if(public_method_exists($manager, 'routes')) {
+        if (public_method_exists($manager, 'routes')) {
             $managedRoutes = $managedRoutes->push($manager->routes());
         }
 

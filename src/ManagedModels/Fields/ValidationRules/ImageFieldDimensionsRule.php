@@ -48,11 +48,11 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
     private function humanReadableParams($params): array
     {
         $paramReplacements = [
-            'min_width'  => 'minimum breedte: %spx',
-            'max_width'  => 'maximum breedte: %spx',
+            'min_width' => 'minimum breedte: %spx',
+            'max_width' => 'maximum breedte: %spx',
             'min_height' => 'minimum hoogte: %spx',
             'max_height' => 'maximum hoogte: %spx',
-            'ratio'      => 'verwachtte verhouding: %s',
+            'ratio' => 'verwachtte verhouding: %s',
         ];
 
         $humanReadableParams = [];
@@ -79,7 +79,7 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
             'imagefield_dimensions' => ':attribute heeft niet de juiste afmetingen: ' . implode(', ', $this->humanReadableParams($params)),
         ]);
 
-        if (!isset($validator->customAttributes[$attribute])) {
+        if (! isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

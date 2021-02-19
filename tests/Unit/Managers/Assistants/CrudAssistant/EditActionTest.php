@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
+use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 class EditActionTest extends ChiefTestCase
 {

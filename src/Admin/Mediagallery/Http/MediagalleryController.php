@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Admin\Mediagallery\Http;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
-use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class MediagalleryController extends Controller
 {
@@ -35,12 +35,12 @@ class MediagalleryController extends Controller
             });
         }
 
-        if($owner){
+        if ($owner) {
             $owner = ModelReference::fromString($owner)->instance();
             $modelAssets = collect();
             $modelAssets = $modelAssets->merge($owner->assets());
 
-            $owner->children()->each(function($module) use($modelAssets){
+            $owner->children()->each(function ($module) use ($modelAssets) {
                 $modelAssets = $modelAssets->merge($module->assets());
             });
 

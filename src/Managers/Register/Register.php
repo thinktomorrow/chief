@@ -3,15 +3,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
 
-use Thinktomorrow\Chief\Managers\Manager;
 use Illuminate\Contracts\Container\Container;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
 use Thinktomorrow\Chief\Fragments\StaticFragmentManager;
-use Thinktomorrow\Chief\Managers\Routes\RegisterManagedRoutes;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Request\ManagerRequestDispatcher;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoutes;
+use Thinktomorrow\Chief\Managers\Routes\RegisterManagedRoutes;
 
 final class Register
 {
@@ -45,7 +45,7 @@ final class Register
     {
         // Check if model class points to ManagedModel interface
         $ref = new \ReflectionClass($modelClass);
-        if(!$ref->implementsInterface(ManagedModel::class)) {
+        if (! $ref->implementsInterface(ManagedModel::class)) {
             throw new \DomainException('Class ' . $modelClass . ' should implement contract ' . ManagedModel::class);
         }
 
@@ -66,7 +66,7 @@ final class Register
 
         // Add to eloquent db morph map
         Relation::morphMap([
-            $managedModelKey  => $modelClass,
+            $managedModelKey => $modelClass,
         ]);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu;
 
-use Vine\NodeCollection;
 use Thinktomorrow\Chief\Site\Menu\Tree\BuildMenuItemsTree;
+use Vine\NodeCollection;
 
 class ChiefMenu
 {
@@ -49,9 +49,9 @@ class ChiefMenu
 
     public function sanitize(NodeCollection $collection): NodeCollection
     {
-        if (!$this->includeHidden) {
+        if (! $this->includeHidden) {
             $collection = $collection->shake(function ($node) {
-                return !$node->hidden_in_menu && !$node->draft;
+                return ! $node->hidden_in_menu && ! $node->draft;
             });
         }
 

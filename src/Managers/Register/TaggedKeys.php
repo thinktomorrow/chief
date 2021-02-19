@@ -23,7 +23,7 @@ final class TaggedKeys
     {
         $tags = (array) $tags;
 
-        return $this->filter(function($value, $key) use($tags){
+        return $this->filter(function ($value, $key) use ($tags) {
             return count(array_intersect($value, $tags)) > 0;
         });
     }
@@ -32,14 +32,14 @@ final class TaggedKeys
     {
         $tags = (array) $tags;
 
-        return $this->filter(function($value, $key) use($tags){
+        return $this->filter(function ($value, $key) use ($tags) {
             return count(array_intersect($value, $tags)) === 0;
         });
     }
 
     public function untagged(): self
     {
-        return $this->filter(function($value){
+        return $this->filter(function ($value) {
             return empty($value);
         });
     }
@@ -50,7 +50,6 @@ final class TaggedKeys
     }
 
     public function get(): array
-
     {
         return $this->map;
     }

@@ -2,11 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Users\Application\EnableUser;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Http\Request;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Admin\Users\Application\DisableUser;
 
 class EnableUserController extends Controller
 {

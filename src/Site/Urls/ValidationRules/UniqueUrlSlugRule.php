@@ -6,9 +6,9 @@ namespace Thinktomorrow\Chief\Site\Urls\ValidationRules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\BaseUrlSegment;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class UniqueUrlSlugRule implements Rule
 {
@@ -40,8 +40,8 @@ class UniqueUrlSlugRule implements Rule
 
             if (UrlRecord::existsIgnoringRedirects($slug, $locale, $this->ignoredModel)) {
                 session()->flash('unique_url_slug_validation', [
-                    'locale'       => $locale,
-                    'slug'         => $slug,
+                    'locale' => $locale,
+                    'slug' => $slug,
                     'ignoredModel' => $this->ignoredModel,
                 ]);
 

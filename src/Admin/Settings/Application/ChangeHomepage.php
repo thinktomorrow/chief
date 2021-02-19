@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Settings\Application;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Admin\Settings\Setting;
-use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
-use Thinktomorrow\Chief\Site\Urls\Application\RevertUrlSlug;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\Application\RevertUrlSlug;
+use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class ChangeHomepage
 {
@@ -42,7 +42,7 @@ class ChangeHomepage
     {
         $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
 
-        if (!$homepage = Setting::findByKey(Setting::HOMEPAGE)) {
+        if (! $homepage = Setting::findByKey(Setting::HOMEPAGE)) {
             $homepage = Setting::create(['key' => Setting::HOMEPAGE, 'value' => []]);
         }
 
@@ -53,7 +53,7 @@ class ChangeHomepage
     private function assertNoEmptyValues(array $modelReferences)
     {
         foreach ($modelReferences as $locale => $modelReferenceString) {
-            if (!$modelReferenceString) {
+            if (! $modelReferenceString) {
                 throw new \InvalidArgumentException('Homepage setting value cannot be empty. Value for locale ' . $locale . ' is missing.');
             }
         }

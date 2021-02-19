@@ -1,0 +1,17 @@
+name: codestyle
+on:
+  push:
+    paths:
+      - '**.php'
+      - '.php_cs'
+      - '.github/workflows/codestyle.yml'
+jobs:
+  codestyle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+      - name: Fix style
+        uses: docker://oskarstark/php-cs-fixer-ga
+        with:
+          args: --config=.php_cs --allow-risky=yes

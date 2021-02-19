@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Filters\Presets;
 
+use Thinktomorrow\Chief\ManagedModels\Filters\AbstractFilter;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filter;
 use Thinktomorrow\Chief\ManagedModels\Filters\FilterType;
-use Thinktomorrow\Chief\ManagedModels\Filters\AbstractFilter;
 
 class RadioFilter extends AbstractFilter implements Filter
 {
@@ -28,7 +28,7 @@ class RadioFilter extends AbstractFilter implements Filter
 
     protected function viewData(): array
     {
-        return array_merge( parent::viewData(),[
+        return array_merge(parent::viewData(), [
             'options' => $this->options,
         ]);
     }

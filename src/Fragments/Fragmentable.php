@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments;
 
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModel;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 
 interface Fragmentable extends ReferableModel, ManagedModel
 {

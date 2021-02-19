@@ -33,6 +33,5 @@ class SortModels
         $cases = implode(' ', $cases);
 
         DB::update("UPDATE `{$table}` SET `{$column}` = CASE `id` {$cases} END WHERE `id` in ({$ids})", $params);
-
     }
 }

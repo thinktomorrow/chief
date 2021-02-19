@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared;
 
+use Astrotomic\Translatable\Translatable;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Astrotomic\Translatable\Translatable;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 final class ManagedModelFactory
 {
@@ -46,24 +46,25 @@ final class ManagedModelFactory
     public static function make(string $modelClass = null): self
     {
         // We need a different classname each time because otherwise composer still refers to the first found class
-        return new static($modelClass ?? 'FoobarModel' . mt_rand(1,9999));
+        return new static($modelClass ?? 'FoobarModel' . mt_rand(1, 9999));
     }
 
     public static function clearTemporaryFiles()
     {
-        if(!is_dir(static::$directory)) return;
+        if (! is_dir(static::$directory)) {
+            return;
+        }
 
         $filesystem = app(Filesystem::class);
 
-        collect($filesystem->files(static::$directory, true))->each(function($file) use($filesystem){
+        collect($filesystem->files(static::$directory, true))->each(function ($file) use ($filesystem) {
             $filesystem->delete($file);
         });
-
     }
 
     public function withTraits(...$traits): self
     {
-        if(count($traits) == 1 && is_array(reset($traits))) {
+        if (count($traits) == 1 && is_array(reset($traits))) {
             $traits = reset($traits);
         }
 
@@ -102,7 +103,7 @@ final class ManagedModelFactory
 
     public function create($attributes = []): ManagedModel
     {
-        if(!is_dir(static::$directory)) {
+        if (! is_dir(static::$directory)) {
             mkdir(static::$directory);
         }
 
@@ -114,17 +115,17 @@ final class ManagedModelFactory
         $modelClass::$fields = $this->fields;
 
         // Create translation model
-        if(count($this->translatedAttributes) > 0) {
+        if (count($this->translatedAttributes) > 0) {
             $translationFactory = ManagedTranslationModelFactory::make(class_basename($modelClass));
 
-            if($this->withoutDatabaseInsert) {
+            if ($this->withoutDatabaseInsert) {
                 $translationFactory->withoutDatabaseInsert();
             }
 
             $translationFactory->create();
         }
 
-        $model = !$this->withoutDatabaseInsert
+        $model = ! $this->withoutDatabaseInsert
             ? $modelClass::create($attributes)
             : new $modelClass($attributes);
 
@@ -144,15 +145,15 @@ final class ManagedModelFactory
     private function content(): string
     {
         $traitStrings = '';
-        foreach($this->traits as $trait){
+        foreach ($this->traits as $trait) {
             $traitStrings .= 'use \\' . $trait .';';
         }
 
-        if(count($this->dynamicKeys) > 0) {
+        if (count($this->dynamicKeys) > 0) {
             $traitStrings .= 'use \\' . HasDynamicAttributes::class . ';';
         }
 
-        if(count($this->translatedAttributes) > 0) {
+        if (count($this->translatedAttributes) > 0) {
             $traitStrings .= 'use \\' . Translatable::class . ';';
         }
 
@@ -226,6 +227,5 @@ class $this->modelClass extends Model implements ManagedModel, HasAsset, Statefu
     }
 }
 HEREDOC;
-
     }
 }

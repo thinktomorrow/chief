@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Controllers;
 
-use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 
 class LinksController
@@ -23,7 +23,7 @@ class LinksController
         $model = (new ModelReference($request->modelClass, (string) $request->modelId))->instance();
 
         $this->validate($request, ['links' => [
-            'array', 'min:1', new UniqueUrlSlugRule($model, $model),], [], ['links.*' => 'taalspecifieke link']
+            'array', 'min:1', new UniqueUrlSlugRule($model, $model),], [], ['links.*' => 'taalspecifieke link'],
         ]);
 
         (new SaveUrlSlugs())->handle($model, $request->input('links', []));
@@ -31,7 +31,7 @@ class LinksController
         // Push update to homepage setting value
         // TODO: we should just fetch the homepages and push that instead...
         UrlRecord::getByModel($model)->reject(function ($record) {
-            return ($record->isRedirect() || !$record->isHomepage());
+            return ($record->isRedirect() || ! $record->isHomepage());
         })->each(function ($record) {
             app(ChangeHomepage::class)->onUrlChanged($record);
         });

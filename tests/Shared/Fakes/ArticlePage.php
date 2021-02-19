@@ -3,22 +3,22 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes;
 
-use Thinktomorrow\AssetLibrary\HasAsset;
-use Thinktomorrow\AssetLibrary\AssetTrait;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Thinktomorrow\Chief\Shared\Concerns\Sortable;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Schema\Blueprint;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\Presets\Page;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
+use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\ManagedModels\Presets\Page;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Shared\Concerns\HasPeriod\HasPeriodTrait;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable;
+use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 class ArticlePage extends Model implements Page, HasAsset
 {

@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ProvidesUrlTest extends ChiefTestCase
 {
@@ -16,11 +16,12 @@ class ProvidesUrlTest extends ChiefTestCase
 
         ArticlePage::migrateUp();
 
-        Route::get('{slug}', function () { })->name('pages.show');
+        Route::get('{slug}', function () {
+        })->name('pages.show');
     }
 
     /** @test */
-    function a_page_can_provide_an_url()
+    public function a_page_can_provide_an_url()
     {
         $page = ArticlePage::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
@@ -30,7 +31,7 @@ class ProvidesUrlTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_url_is_not_found_for_locale_empty_string_is_returned()
+    public function when_url_is_not_found_for_locale_empty_string_is_returned()
     {
         $page = ArticlePage::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
@@ -39,7 +40,7 @@ class ProvidesUrlTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_no_locale_is_passed_current_locale_is_used()
+    public function when_no_locale_is_passed_current_locale_is_used()
     {
         $page = ArticlePage::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
@@ -52,7 +53,7 @@ class ProvidesUrlTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_url_does_not_exist_an_empty_string_is_returned()
+    public function when_url_does_not_exist_an_empty_string_is_returned()
     {
         config()->set('app.fallback_locale', 'nl');
 
@@ -68,7 +69,7 @@ class ProvidesUrlTest extends ChiefTestCase
     }
 
     /** @test */
-    function a_page_can_provide_an_url_with_a_segmented_slug()
+    public function a_page_can_provide_an_url_with_a_segmented_slug()
     {
         $page = ArticlePage::create();
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar/foo', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);
@@ -77,7 +78,7 @@ class ProvidesUrlTest extends ChiefTestCase
     }
 
     /** @test */
-    function a_page_without_url_record_entry_has_no_url_and_gives_empty_string()
+    public function a_page_without_url_record_entry_has_no_url_and_gives_empty_string()
     {
         $page = ArticlePage::create([]);
 
@@ -85,7 +86,7 @@ class ProvidesUrlTest extends ChiefTestCase
     }
 
     /** @test */
-    function the_base_url_segment_only_affects_newly_edited_urls()
+    public function the_base_url_segment_only_affects_newly_edited_urls()
     {
         $this->markTestIncomplete();
     }

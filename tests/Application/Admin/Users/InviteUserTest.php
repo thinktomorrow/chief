@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Users;
 
-use Illuminate\Support\Arr;
-use Thinktomorrow\Chief\Admin\Users\User;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Notifications\AnonymousNotifiable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Notifications\InvitationMail;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class InviteUserTest extends ChiefTestCase
 {
@@ -83,7 +83,10 @@ class InviteUserTest extends ChiefTestCase
     /** @test */
     public function when_creating_user_firstname_is_required()
     {
-        $this->assertValidation(new User(), 'firstname', $this->validParams(['firstname' => '']),
+        $this->assertValidation(
+            new User(),
+            'firstname',
+            $this->validParams(['firstname' => '']),
             route('chief.back.users.index'),
             route('chief.back.users.store'),
             1 // creating account (developer) already exists
@@ -93,7 +96,10 @@ class InviteUserTest extends ChiefTestCase
     /** @test */
     public function when_creating_user_lastname_is_required()
     {
-        $this->assertValidation(new User(), 'lastname', $this->validParams(['lastname' => '']),
+        $this->assertValidation(
+            new User(),
+            'lastname',
+            $this->validParams(['lastname' => '']),
             route('chief.back.users.index'),
             route('chief.back.users.store'),
             1 // creating account (developer) already exists
@@ -103,7 +109,10 @@ class InviteUserTest extends ChiefTestCase
     /** @test */
     public function when_creating_user_role_is_required()
     {
-        $this->assertValidation(new User(), 'roles', $this->validParams(['roles' => []]),
+        $this->assertValidation(
+            new User(),
+            'roles',
+            $this->validParams(['roles' => []]),
             route('chief.back.users.index'),
             route('chief.back.users.store'),
             1 // creating account (developer) already exists

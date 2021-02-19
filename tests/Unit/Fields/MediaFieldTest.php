@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class MediaFieldTest extends TestCase
 {
@@ -23,5 +23,4 @@ class MediaFieldTest extends TestCase
         $this->assertTrue($imageField->isLocalized());
         $this->assertCount(1, $imageField->getLocales());
     }
-
 }

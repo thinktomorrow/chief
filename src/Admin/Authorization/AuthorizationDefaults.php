@@ -32,7 +32,7 @@ class AuthorizationDefaults
             ],
 
             // Manages everything, including users
-            'admin'     => [
+            'admin' => [
                 'user',
                 'page',
                 'disable-user',
@@ -44,7 +44,7 @@ class AuthorizationDefaults
             ],
 
             // Writes and edits content
-            'author'    => ['page', 'update-you', 'view-squanto', 'update-squanto'],
+            'author' => ['page', 'update-you', 'view-squanto', 'update-squanto'],
         ]);
     }
 

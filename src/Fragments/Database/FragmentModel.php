@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Database;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\AssetLibrary\AssetTrait;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
 final class FragmentModel extends Model implements ManagedModel, HasAsset
 {
@@ -57,6 +57,6 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
 
     public function isOffline(): bool
     {
-        return !$this->isOnline();
+        return ! $this->isOnline();
     }
 }

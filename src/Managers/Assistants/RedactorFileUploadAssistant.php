@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait RedactorFileUploadAssistant
 {
@@ -30,9 +30,9 @@ trait RedactorFileUploadAssistant
         $files = $request->input('files', []);
         $model = $this->fieldsModel($id);
 
-        if (!is_array($files) || empty($files)) {
+        if (! is_array($files) || empty($files)) {
             return response()->json([
-                'error'    => true,
+                'error' => true,
                 'messages' => 'Geen afbeelding opgeladen.',
             ], 200);
         }
@@ -43,11 +43,12 @@ trait RedactorFileUploadAssistant
             $base64EncodedFile = $filePayload['data'];
             $filename = $filePayload['filename'];
 
-            if (!$asset = AssetUploader::uploadFromBase64($base64EncodedFile, $filename)) {
+            if (! $asset = AssetUploader::uploadFromBase64($base64EncodedFile, $filename)) {
                 $responseContent['file-' . rand(1 - 999)] = [
-                    'error'    => true,
+                    'error' => true,
                     'messages' => 'Afbeelding [' . $filename . '] kan niet worden opgeladen.',
                 ];
+
                 continue;
             }
 
@@ -55,7 +56,7 @@ trait RedactorFileUploadAssistant
 
             $responseContent['file-' . $asset->id] = [
                 'url' => $asset->url(),
-                'id'  => $asset->id,
+                'id' => $asset->id,
             ];
         }
 

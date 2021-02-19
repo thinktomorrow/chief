@@ -3,13 +3,13 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Auth\Events\Login;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 use Thinktomorrow\Chief\Admin\Users\Application\EnableUser;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\SendInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteAccepted;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Thinktomorrow\Chief\App\Listeners\LogSuccessfulLogin;
 
 class EventServiceProvider extends ServiceProvider
 {

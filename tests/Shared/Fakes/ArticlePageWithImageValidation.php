@@ -17,7 +17,7 @@ class ArticlePageWithImageValidation extends ArticlePage
                 'dimensions:min_width=100,min_height=100',
                 'max:2',
                 'min:1',
-            ])
+            ]),
         ]);
     }
 }

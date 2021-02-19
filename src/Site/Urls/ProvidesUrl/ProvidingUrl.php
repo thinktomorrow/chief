@@ -12,9 +12,10 @@ trait ProvidingUrl
     /** @inheritdoc */
     public function url(string $locale = null): string
     {
-        if (!$locale) {
+        if (! $locale) {
             $locale = app()->getLocale();
         }
+
         try {
             $slug = MemoizedUrlRecord::findByModel($this, $locale)->slug;
 

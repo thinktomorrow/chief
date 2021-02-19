@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Pages\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
-use Thinktomorrow\Chief\Shared\Concerns\Sortable;
-use Thinktomorrow\Chief\Legacy\Pages\Page;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\App\Console\BaseCommand;
+use Thinktomorrow\Chief\Legacy\Pages\Page;
 use Thinktomorrow\Chief\ManagedModels\States\Publishable\Publishable;
+use Thinktomorrow\Chief\Shared\Concerns\Sortable;
 
 class GeneratePage extends BaseCommand
 {
@@ -90,14 +90,14 @@ class GeneratePage extends BaseCommand
     {
         $choice = null;
 
-        while (!in_array($choice, ['q'])) {
+        while (! in_array($choice, ['q'])) {
             $choice = $this->choice(
                 "Which model options would you like to set up?",
                 $choices = $this->modelTraits(),
                 'q' // Default is to just continue without traits
             );
 
-            if (!in_array($choice, ['q'])) {
+            if (! in_array($choice, ['q'])) {
                 $this->chooseTrait($choices[$choice]);
             }
         }
@@ -130,8 +130,8 @@ class GeneratePage extends BaseCommand
      */
     protected function publishFile($from, $to, $type)
     {
-        if ($this->filesystem->exists($to) && !$this->option('force')) {
-            if (!$this->confirm('File [' . $to . '] already exists? Overwrite this file?')) {
+        if ($this->filesystem->exists($to) && ! $this->option('force')) {
+            if (! $this->confirm('File [' . $to . '] already exists? Overwrite this file?')) {
                 return;
             }
         }
@@ -151,7 +151,7 @@ class GeneratePage extends BaseCommand
      */
     protected function createParentDirectory($directory)
     {
-        if (!$this->filesystem->isDirectory($directory)) {
+        if (! $this->filesystem->isDirectory($directory)) {
             $this->filesystem->makeDirectory($directory, 0755, true);
         }
     }
@@ -179,8 +179,8 @@ class GeneratePage extends BaseCommand
             '##NAMESPACE##' => $this->guessNamespace(),
             '##CLASSNAME##' => ucfirst($this->singular),
             '##TABLENAME##' => strtolower($this->plural),
-            '##IMPORTS##'   => $this->generateImportStatements(),
-            '##TRAITS##'    => $this->generateTraitStatements(),
+            '##IMPORTS##' => $this->generateImportStatements(),
+            '##TRAITS##' => $this->generateTraitStatements(),
         ];
 
         return str_replace(array_keys($replacements), array_values($replacements), $content);

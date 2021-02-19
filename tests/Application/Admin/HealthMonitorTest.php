@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Admin\Settings\Setting;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Admin\HealthMonitor\Monitor;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Exceptions\InvalidClassException;
+use Thinktomorrow\Chief\Admin\HealthMonitor\Monitor;
+use Thinktomorrow\Chief\Admin\Settings\Setting;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class HealthMonitorTest extends ChiefTestCase
 {

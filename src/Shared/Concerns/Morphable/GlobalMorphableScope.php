@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Morphable;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
-use Thinktomorrow\Chief\Modules\Module;
-use Illuminate\Database\Eloquent\Builder;
 use Thinktomorrow\Chief\Legacy\Pages\Page;
+use Thinktomorrow\Chief\Modules\Module;
 
 class GlobalMorphableScope implements Scope
 {

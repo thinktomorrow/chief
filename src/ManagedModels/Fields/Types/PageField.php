@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class PageField extends SelectField
 {
@@ -41,6 +41,7 @@ class PageField extends SelectField
         if (empty($whitelistedKeys)) {
             $this->grouped();
             $this->options = UrlHelper::allModelsExcept($excludedPage, $online);
+
             return $this;
         }
 

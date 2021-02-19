@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Media\Application;
 
-use Illuminate\Http\Request;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;

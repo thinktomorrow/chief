@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class FragmentOnlineStatusTest extends ChiefTestCase
 {
@@ -76,5 +76,4 @@ class FragmentOnlineStatusTest extends ChiefTestCase
 
         $this->assertEquals('quote-contentquote-content', app(FragmentsRenderer::class)->render($this->owner, []));
     }
-
 }

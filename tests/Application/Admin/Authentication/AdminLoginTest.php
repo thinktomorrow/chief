@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Authentication;
 
-use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AdminLoginTest extends ChiefTestCase
 {
@@ -29,8 +29,8 @@ class AdminLoginTest extends ChiefTestCase
         ]);
 
         $response = $this->post(route('chief.back.login.store'), [
-            'email'     => 'foo@example.com',
-            'password'  => 'foobar',
+            'email' => 'foo@example.com',
+            'password' => 'foobar',
         ]);
 
         $this->assertFalse(Auth::guard('chief')->check());
@@ -47,8 +47,8 @@ class AdminLoginTest extends ChiefTestCase
         ]);
 
         $response = $this->post(route('chief.back.login.store'), [
-            'email'     => 'foo@example.com',
-            'password'  => 'foobar',
+            'email' => 'foo@example.com',
+            'password' => 'foobar',
         ]);
 
         $this->assertTrue(Auth::guard('chief')->check());
@@ -61,7 +61,7 @@ class AdminLoginTest extends ChiefTestCase
     public function entering_invalid_login_credentials_keeps_you_out()
     {
         User::factory()->make([
-            'email' => 'foo@example.com'
+            'email' => 'foo@example.com',
         ]);
 
         // Enter invalid credentials
@@ -134,13 +134,13 @@ class AdminLoginTest extends ChiefTestCase
         Notification::fake();
 
         $admin = User::factory()->create([
-            'email'     => 'foo@example.com',
-            'password'  => 'IForgotThisPassword',
-            'enabled'   => true,
+            'email' => 'foo@example.com',
+            'password' => 'IForgotThisPassword',
+            'enabled' => true,
         ]);
 
         $response = $this->post(route('chief.back.password.email'), [
-            'email' => 'foo@example.com'
+            'email' => 'foo@example.com',
         ]);
 
         Notification::assertSentTo(
@@ -153,17 +153,17 @@ class AdminLoginTest extends ChiefTestCase
     public function it_can_reset_your_password()
     {
         $admin = User::factory()->create([
-            'email'     => 'foo@example.com',
-            'password'  => 'IForgotThisPassword',
-            'enabled'   => true,
+            'email' => 'foo@example.com',
+            'password' => 'IForgotThisPassword',
+            'enabled' => true,
         ]);
 
         DB::insert('INSERT INTO chief_password_resets (email, token, created_at) VALUES(?, ?, ?)', ["foo@example.com", bcrypt("71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c"), Carbon::now()]);
 
         $response = $this->post(route('chief.back.password.request'), [
-            'token'                 => "71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c",
-            'email'                 => "foo@example.com",
-            'password'              => "password",
+            'token' => "71594f253f7543eca5d884b37c637b0611b6a40809250c2e5ba2fbc9db74916c",
+            'email' => "foo@example.com",
+            'password' => "password",
             'password_confirmation' => "password",
         ]);
 
@@ -172,8 +172,8 @@ class AdminLoginTest extends ChiefTestCase
         Auth::guard('chief')->logout();
 
         $response = $this->post(route('chief.back.login.store'), [
-            'email'     => 'foo@example.com',
-            'password'  => 'password',
+            'email' => 'foo@example.com',
+            'password' => 'password',
         ]);
 
         $this->assertFalse(session()->has('errors'));
@@ -184,7 +184,7 @@ class AdminLoginTest extends ChiefTestCase
     public function it_will_redirect_if_logged_in_when_trying_to_log_in()
     {
         $admin = User::factory()->make([
-            'email' => 'foo@example.com'
+            'email' => 'foo@example.com',
         ]);
 
         Auth::guard('chief')->login($admin);
@@ -203,7 +203,7 @@ class AdminLoginTest extends ChiefTestCase
     public function it_returns_a_json_error_if_unauthenticated_request_expects_json_response()
     {
         $response = $this->get('/admin', [
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
         ]);
 
         $response->assertStatus(401);
@@ -213,7 +213,7 @@ class AdminLoginTest extends ChiefTestCase
     public function it_can_access_admin_via_helper()
     {
         $admin = User::factory()->make([
-            'email'     => 'foo@example.com'
+            'email' => 'foo@example.com',
         ]);
 
         $this->assertNull(chiefAdmin());

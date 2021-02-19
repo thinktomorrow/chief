@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 final class PublishAssistantTest extends ChiefTestCase
 {

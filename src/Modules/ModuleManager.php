@@ -6,11 +6,11 @@ namespace Thinktomorrow\Chief\Modules;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
+use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Modules\Application\DeleteModule;
-use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
-use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\MorphableContract;
 
 abstract class ModuleManager implements Manager
@@ -120,7 +120,7 @@ abstract class ModuleManager implements Manager
     public function saveCreateFields(Request $request): void
     {
         // Store the morph_key upon creation
-        if ($this->model instanceof MorphableContract && !$this->model->morph_key) {
+        if ($this->model instanceof MorphableContract && ! $this->model->morph_key) {
             $this->model->morph_key = $this->model->morphKey();
         }
 
@@ -162,6 +162,7 @@ abstract class ModuleManager implements Manager
                 $trans[$locale] = array_map(function ($value) {
                     return null;
                 }, $translation);
+
                 continue;
             }
 

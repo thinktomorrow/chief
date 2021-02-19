@@ -40,23 +40,23 @@ class InvitationState extends StateMachine
     protected $transitions = [
         'invite' => [
             'from' => [self::NONE, self::EXPIRED, self::REVOKED],
-            'to'   => self::PENDING,
+            'to' => self::PENDING,
         ],
         'expire' => [
             'from' => [self::PENDING],
-            'to'   => self::EXPIRED,
+            'to' => self::EXPIRED,
         ],
         'revoke' => [
             'from' => [self::PENDING, self::EXPIRED],
-            'to'   => self::REVOKED,
+            'to' => self::REVOKED,
         ],
         'accept' => [
             'from' => [self::PENDING],
-            'to'   => self::ACCEPTED,
+            'to' => self::ACCEPTED,
         ],
-        'deny'   => [
+        'deny' => [
             'from' => [self::PENDING],
-            'to'   => self::DENIED,
+            'to' => self::DENIED,
         ],
     ];
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Filesystem\Filesystem;
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 final class ManagerFactory
 {
@@ -41,24 +41,25 @@ final class ManagerFactory
     public static function make(string $managerClass = null): self
     {
         // We need a different classname each time because otherwise composer still refers to the first found class
-        return new static($managerClass ?? 'FoobarManager' . mt_rand(1,9999));
+        return new static($managerClass ?? 'FoobarManager' . mt_rand(1, 9999));
     }
 
     public static function clearTemporaryFiles()
     {
-        if(!is_dir(static::$directory)) return;
+        if (! is_dir(static::$directory)) {
+            return;
+        }
 
         $filesystem = app(Filesystem::class);
 
-        collect($filesystem->files(static::$directory, true))->each(function($file) use($filesystem){
+        collect($filesystem->files(static::$directory, true))->each(function ($file) use ($filesystem) {
             $filesystem->delete($file);
         });
-
     }
 
     public function withAssistants(...$assistants): self
     {
-        if(count($assistants) == 1 && is_array(reset($assistants))) {
+        if (count($assistants) == 1 && is_array(reset($assistants))) {
             $assistants = reset($assistants);
         }
 
@@ -69,11 +70,11 @@ final class ManagerFactory
 
     public function create(): Manager
     {
-        if(!is_dir(static::$directory)) {
+        if (! is_dir(static::$directory)) {
             mkdir(static::$directory);
         }
 
-        if(!$this->managedModelClass) {
+        if (! $this->managedModelClass) {
             $model = ManagedModelFactory::make()->create();
             $this->managedModelClass = get_class($model);
         }
@@ -95,7 +96,7 @@ final class ManagerFactory
     private function managerContent(): string
     {
         $assistantStrings = '';
-        foreach($this->assistants as $assistant){
+        foreach ($this->assistants as $assistant) {
             $assistantStrings .= 'use \\' . $assistant .';';
         }
 
@@ -128,6 +129,5 @@ class $this->managerClass implements Manager
     }
 }
 HEREDOC;
-
     }
 }

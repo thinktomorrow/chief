@@ -45,8 +45,8 @@ class FieldReference
     public function toArray(): array
     {
         return [
-            'managerKey'  => $this->managerKey,
-            'fieldKey'    => $this->fieldKey,
+            'managerKey' => $this->managerKey,
+            'fieldKey' => $this->fieldKey,
             'fragmentKey' => $this->fragmentKey,
         ];
     }

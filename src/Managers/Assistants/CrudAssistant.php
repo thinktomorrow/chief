@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Illuminate\Contracts\Pagination\Paginator;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
-use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
+use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait CrudAssistant
 {
@@ -37,10 +37,11 @@ trait CrudAssistant
 
     public function canCrudAssistant(string $action, $model = null): bool
     {
-        if(!in_array($action, ['index', 'create', 'store', 'edit', 'update', 'delete'])) return false;
+        if (! in_array($action, ['index', 'create', 'store', 'edit', 'update', 'delete'])) {
+            return false;
+        }
 
         try {
-
             $permission = 'update-page';
 
             if (in_array($action, ['index', 'show'])) {
@@ -56,13 +57,17 @@ trait CrudAssistant
             return false;
         }
 
-        if(in_array($action, ['index', 'create', 'store'])) return true;
+        if (in_array($action, ['index', 'create', 'store'])) {
+            return true;
+        }
 
-        if(!$model || !$model instanceof StatefulContract) return true;
+        if (! $model || ! $model instanceof StatefulContract) {
+            return true;
+        }
 
         // Model cannot be in deleted state for editing purposes.
-        if(in_array($action, ['edit', 'update'])) {
-            return !($model->stateOf(PageState::KEY) == PageState::DELETED);
+        if (in_array($action, ['edit', 'update'])) {
+            return ! ($model->stateOf(PageState::KEY) == PageState::DELETED);
         }
 
         return PageState::make($model)->can($action);
@@ -75,8 +80,8 @@ trait CrudAssistant
 
         return view('chief::back.managers.index', [
             'manager' => $this,
-            'model'   => $model,
-            'models'  => $this->indexModels(),
+            'model' => $model,
+            'models' => $this->indexModels(),
         ]);
     }
 
@@ -96,7 +101,7 @@ trait CrudAssistant
     {
         $filters = new Filters();
 
-        foreach(DiscoverTraitMethods::belongingTo(static::class, 'filters') as $method) {
+        foreach (DiscoverTraitMethods::belongingTo(static::class, 'filters') as $method) {
             $filters = $filters->merge($this->$method());
         }
 
@@ -126,8 +131,8 @@ trait CrudAssistant
 
         return view('chief::back.managers.create', [
             'manager' => $this,
-            'model'   => $model,
-            'fields'  => $model->fields()->notTagged('edit'),
+            'model' => $model,
+            'fields' => $model->fields()->notTagged('edit'),
         ]);
     }
 
@@ -157,8 +162,8 @@ trait CrudAssistant
 
         return view('chief::back.managers.edit', [
             'manager' => $this,
-            'model'   => $model,
-            'fields'  => $model->fields()->model($model),
+            'model' => $model,
+            'fields' => $model->fields()->model($model),
         ]);
     }
 

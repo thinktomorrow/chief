@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\Tests\Application\Admin\Mediagallery;
 
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MediaApiTest extends ChiefTestCase
 {
@@ -14,7 +14,6 @@ class MediaApiTest extends ChiefTestCase
         parent::setUp();
 
         $this->setUpDefaultAuthorization();
-
     }
 
     /** @test */
@@ -26,12 +25,12 @@ class MediaApiTest extends ChiefTestCase
         $response->assertStatus(200)
                  ->assertJson([
                         [
-                            "id"         => $asset->id,
-                            "url"        => $asset->url(),
-                            "filename"   => $asset->filename(),
+                            "id" => $asset->id,
+                            "url" => $asset->url(),
+                            "filename" => $asset->filename(),
                             "dimensions" => $asset->getDimensions(),
-                            "size"       => $asset->getSize()
-                        ]
+                            "size" => $asset->getSize(),
+                        ],
                  ]);
     }
 
@@ -65,22 +64,22 @@ class MediaApiTest extends ChiefTestCase
 
         $response->assertStatus(200)
                  ->assertJson([[
-                    "id"         => $asset->id,
-                    "url"        => $asset->url(),
-                    "filename"   => $asset->filename(),
+                    "id" => $asset->id,
+                    "url" => $asset->url(),
+                    "filename" => $asset->filename(),
                     "dimensions" => $asset->getDimensions(),
-                    "size"       => $asset->getSize()
+                    "size" => $asset->getSize(),
                 ]]);
 
         $response = $this->asAdmin()->get(route('chief.api.media'). "?limit=1&offset=1");
 
         $response->assertStatus(200)
                  ->assertJson([[
-                    "id"         => $asset2->id,
-                    "url"        => $asset2->url(),
-                    "filename"   => $asset2->filename(),
+                    "id" => $asset2->id,
+                    "url" => $asset2->url(),
+                    "filename" => $asset2->filename(),
                     "dimensions" => $asset2->getDimensions(),
-                    "size"       => $asset2->getSize()
+                    "size" => $asset2->getSize(),
                 ]]);
     }
 
@@ -97,11 +96,11 @@ class MediaApiTest extends ChiefTestCase
 
         $response->assertStatus(200)
                  ->assertJson([[
-                    "id"         => $asset2->id,
-                    "url"        => $asset2->url(),
-                    "filename"   => $asset2->filename(),
+                    "id" => $asset2->id,
+                    "url" => $asset2->url(),
+                    "filename" => $asset2->filename(),
                     "dimensions" => $asset2->getDimensions(),
-                    "size"       => $asset2->getSize()
+                    "size" => $asset2->getSize(),
                  ]]);
     }
 }

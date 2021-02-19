@@ -27,14 +27,17 @@ class InvitationPresenter
         switch ($this->invitation->stateOf(InvitationState::KEY)) {
             case InvitationState::REVOKED:
                 $flair = 'label-error';
+
                 break;
             case InvitationState::DENIED:
             case InvitationState::EXPIRED:
                 $flair = 'label-warning';
+
                 break;
             case InvitationState::PENDING:
             case InvitationState::NONE:
                 $flair = 'label-primary';
+
                 break;
         }
 

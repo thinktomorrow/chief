@@ -9,7 +9,7 @@ class ImageFieldRequiredRule extends AbstractMediaFieldRule
     public function validate($attribute, array $values, $params, $validator): bool
     {
         foreach ($values as $value) {
-            if (!is_null($value)) {
+            if (! is_null($value)) {
                 return true;
             }
         }
@@ -18,7 +18,7 @@ class ImageFieldRequiredRule extends AbstractMediaFieldRule
             'imagefield_required' => ':attribute is verplicht.',
         ]);
 
-        if (!isset($validator->customAttributes[$attribute])) {
+        if (! isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

@@ -41,7 +41,7 @@ abstract class StateMachine
 
     public function apply($transition)
     {
-        if (!$this->can($transition)) {
+        if (! $this->can($transition)) {
             throw StateException::invalidTransition($transition, $this->statefulContract->stateOf($this->stateKey), $this);
         }
 
@@ -63,7 +63,7 @@ abstract class StateMachine
     {
         $machine = new static($statefulContract, $stateKey);
 
-        if (!$machine->canTransitionTo($state)) {
+        if (! $machine->canTransitionTo($state)) {
             throw StateException::invalidState($state, $statefulContract->stateOf($stateKey), $machine);
         }
     }
@@ -77,12 +77,12 @@ abstract class StateMachine
      */
     public function canTransitionTo($state)
     {
-        if (!in_array($state, $this->states)) {
+        if (! in_array($state, $this->states)) {
             return false;
         }
 
         foreach ($this->transitions as $transition) {
-            if (!in_array($this->statefulContract->stateOf($this->stateKey), $transition['from'])) {
+            if (! in_array($this->statefulContract->stateOf($this->stateKey), $transition['from'])) {
                 continue;
             }
 
@@ -110,17 +110,17 @@ abstract class StateMachine
     private function validateTransitions()
     {
         foreach ($this->transitions as $transitionKey => $transition) {
-            if (!array_key_exists('from', $transition) || !array_key_exists('to', $transition) || !is_array($transition['from'])) {
+            if (! array_key_exists('from', $transition) || ! array_key_exists('to', $transition) || ! is_array($transition['from'])) {
                 throw StateException::malformedTransition($transitionKey, $this);
             }
 
             foreach ($transition['from'] as $fromState) {
-                if (!in_array($fromState, $this->states)) {
+                if (! in_array($fromState, $this->states)) {
                     throw StateException::invalidTransitionState($transitionKey, $fromState, $this);
                 }
             }
 
-            if (!in_array($transition['to'], $this->states)) {
+            if (! in_array($transition['to'], $this->states)) {
                 throw StateException::invalidTransitionState($transitionKey, $transition['to'], $this);
             }
         }

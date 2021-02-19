@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls\Field;
 
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class UrlSlugFields extends Fields
 {
@@ -23,7 +23,7 @@ class UrlSlugFields extends Fields
     public static function redirectsFromModel(ProvidesUrl $model)
     {
         $records = MemoizedUrlRecord::getByModel($model)->reject(function ($record) {
-            return !$record->isRedirect();
+            return ! $record->isRedirect();
         })->sortByDesc('created_at');
 
         $fields = new static([]);
@@ -85,7 +85,7 @@ class UrlSlugFields extends Fields
         })->sortBy('locale');
 
         foreach ($records as $record) {
-            if (!isset($fields['url-slugs.' . $record->locale])) {
+            if (! isset($fields['url-slugs.' . $record->locale])) {
                 continue;
             }
 

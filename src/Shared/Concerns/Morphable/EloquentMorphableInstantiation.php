@@ -66,7 +66,7 @@ trait EloquentMorphableInstantiation
     private function loadCustomTranslations($instance)
     {
         if ($this->requiresCustomTranslation($instance)) {
-            if (!is_array($instance->with) || !in_array('translations', $instance->with)) {
+            if (! is_array($instance->with) || ! in_array('translations', $instance->with)) {
                 $instance->unsetRelation('translations');
             } else {
                 // TODO: this is a heavy queryload since it loads new translations for each model...
@@ -95,7 +95,7 @@ trait EloquentMorphableInstantiation
      */
     public function newInstance($attributes = [], $exists = false)
     {
-        if (!isset($attributes['morph_key'])) {
+        if (! isset($attributes['morph_key'])) {
             return parent::newInstance($attributes, $exists);
         }
 

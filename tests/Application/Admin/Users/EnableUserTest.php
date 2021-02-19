@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Users;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Illuminate\Support\Facades\Hash;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class EnableUserTest extends ChiefTestCase
 {

@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\FileField;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class DetachFileFieldValueTest extends ChiefTestCase
 {
@@ -89,7 +89,7 @@ class DetachFileFieldValueTest extends ChiefTestCase
             ],
             'en' => [
                 $existing_asset_en->id => null, // detach
-            ]
+            ],
         ]);
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->refresh()->asset('thumb_trans', 'nl')->filename());

@@ -9,7 +9,9 @@ trait PreviewAssistant
 {
     public function canPreviewAssistant(string $action, $model = null): bool
     {
-        if($action !== 'preview' || !$model) return false;
+        if ($action !== 'preview' || ! $model) {
+            return false;
+        }
 
         return $model instanceof ProvidesUrl;
     }
@@ -27,7 +29,9 @@ trait PreviewAssistant
      */
     public function routePreviewAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if(!$this->canPreviewAssistant($action, $model)) return null;
+        if (! $this->canPreviewAssistant($action, $model)) {
+            return null;
+        }
 
         return $model->url();
     }

@@ -44,7 +44,7 @@ class UniqueSlug
         $slug = $originalslug = $this->sluggify($title);
         $i = 1;
 
-        while (!$this->isSlugUnique($slug, $entity)) {
+        while (! $this->isSlugUnique($slug, $entity)) {
             $slug = $originalslug . '-' . $i;
             $i++;
         }
@@ -70,7 +70,7 @@ class UniqueSlug
     {
         $model = $this->model->findBySlug($slug);
 
-        if (!in_array($slug, $this->blacklist) && (!$model || ($entity && $entity->id && $model->id == $entity->id))) {
+        if (! in_array($slug, $this->blacklist) && (! $model || ($entity && $entity->id && $model->id == $entity->id))) {
             return true;
         }
 

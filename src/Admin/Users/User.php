@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users;
 
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Thinktomorrow\Chief\Shared\Concerns\Enablable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\App\Notifications\ResetAdminPassword;
+use Thinktomorrow\Chief\Shared\Concerns\Enablable;
 
 class User extends Authenticatable implements HasAsset
 {

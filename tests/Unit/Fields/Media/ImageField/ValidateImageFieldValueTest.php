@@ -3,15 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Illuminate\Foundation\Testing\TestResponse;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\ImageFieldManagerWithValidation;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class ValidateImageFieldValueTest extends ChiefTestCase
 {
@@ -74,7 +69,7 @@ class ValidateImageFieldValueTest extends ChiefTestCase
 
         $response = $this->uploadImage('thumb_image_trans', [
             'nl' => [
-                $existing_asset_nl->id => $this->dummySlimImagePayload('replacing-image.png', 'image/png', 50, 50)
+                $existing_asset_nl->id => $this->dummySlimImagePayload('replacing-image.png', 'image/png', 50, 50),
             ],
             'en' => [],
         ]);
@@ -90,7 +85,7 @@ class ValidateImageFieldValueTest extends ChiefTestCase
     {
         $response = $this->uploadImage('thumb_image_trans', [
             'nl' => [
-                $this->dummyLargeSlimImagePayload('image.png', 'image/png', 1000, 800)
+                $this->dummyLargeSlimImagePayload('image.png', 'image/png', 1000, 800),
             ],
             'en' => [],
         ]);
@@ -106,7 +101,7 @@ class ValidateImageFieldValueTest extends ChiefTestCase
     {
         $response = $this->uploadImage('thumb_image_trans', [
             'nl' => [
-                $this->dummySmallSlimImagePayload('image.png', 'image/png', 100, 100, 900)
+                $this->dummySmallSlimImagePayload('image.png', 'image/png', 100, 100, 900),
             ],
             'en' => [],
         ]);
@@ -122,7 +117,7 @@ class ValidateImageFieldValueTest extends ChiefTestCase
     {
         $response = $this->uploadImage('thumb_image_trans', [
             'nl' => [
-                $this->dummySlimImagePayload('image.jpg', 'image/jpg', 150, 150)
+                $this->dummySlimImagePayload('image.jpg', 'image/jpg', 150, 150),
             ],
             'en' => [],
         ]);

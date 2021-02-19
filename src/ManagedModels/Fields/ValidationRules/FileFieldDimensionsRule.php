@@ -39,7 +39,7 @@ class FileFieldDimensionsRule extends AbstractMediaFieldRule
             'filefield_dimensions' => ':attribute heeft niet de juiste afmetingen: ' . implode(', ', $params),
         ]);
 
-        if (!isset($validator->customAttributes[$attribute])) {
+        if (! isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Validation;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
 
 class FieldValidator
 {

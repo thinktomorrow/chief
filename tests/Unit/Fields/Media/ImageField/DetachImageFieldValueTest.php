@@ -3,16 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
-use Thinktomorrow\Chief\Pages\PageManager;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\ImageFieldManager;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class DetachImageFieldValueTest extends ChiefTestCase
 {
@@ -73,7 +68,7 @@ class DetachImageFieldValueTest extends ChiefTestCase
         $this->uploadImage('thumb_image_trans', [
             'nl' => [
                 $this->page->assets('thumb_image_trans')->first()->id => null,
-                $this->dummySlimImagePayload('image.jpg','image/jpeg'),
+                $this->dummySlimImagePayload('image.jpg', 'image/jpeg'),
             ],
         ]);
 
@@ -94,7 +89,7 @@ class DetachImageFieldValueTest extends ChiefTestCase
             ],
             'en' => [
                 $existing_asset_en->id => null, // detach
-            ]
+            ],
         ]);
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->refresh()->asset('thumb_image_trans', 'nl')->filename());

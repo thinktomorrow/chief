@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldsTest extends TestCase
 {
@@ -16,7 +16,7 @@ class FieldsTest extends TestCase
             InputField::make('input-two'),
         ]);
 
-        $this->assertEquals(['input-one','input-two'],$fields->keys());
+        $this->assertEquals(['input-one','input-two'], $fields->keys());
     }
 
     /** @test */
@@ -36,7 +36,7 @@ class FieldsTest extends TestCase
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
         $this->assertCount(4, $mergedFields->all());
-        $this->assertEquals(['input-one','input-two','input-three','input-four'],$mergedFields->keys());
+        $this->assertEquals(['input-one','input-two','input-three','input-four'], $mergedFields->keys());
     }
 
     /** @test */
@@ -55,6 +55,6 @@ class FieldsTest extends TestCase
 
         // Explicitly check for 'key' because this is also a reserved callable in php: key();
         $this->assertCount(2, $mergedFields->all());
-        $this->assertEquals(['input-one','input-two'],$mergedFields->keys());
+        $this->assertEquals(['input-one','input-two'], $mergedFields->keys());
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\FragmentAssistant;
 
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 class EditFragmentActionTest extends ChiefTestCase
 {

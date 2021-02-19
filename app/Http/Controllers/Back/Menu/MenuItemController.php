@@ -3,18 +3,15 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Menu;
 
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
-use Thinktomorrow\Chief\Legacy\Pages\Page;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
-use Thinktomorrow\Chief\Site\Menu\Tree\BuildMenuItemsTree;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
 use Thinktomorrow\Chief\Site\Menu\Application\CreateMenu;
 use Thinktomorrow\Chief\Site\Menu\Application\DeleteMenu;
 use Thinktomorrow\Chief\Site\Menu\Application\UpdateMenu;
-use Thinktomorrow\Chief\App\Http\Requests\MenuRequest;
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\Site\Menu\Tree\PrepareMenuItemsForAdminSelect;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class MenuItemController extends Controller
 {
@@ -39,10 +36,10 @@ class MenuItemController extends Controller
         );
 
         return view('chief::back.menu.create', [
-            'pages'          => UrlHelper::allOnlineModels(),
-            'menuitem'       => $menuitem,
+            'pages' => UrlHelper::allOnlineModels(),
+            'menuitem' => $menuitem,
             'ownerReference' => null,
-            'parents'        => $menuitems,
+            'parents' => $menuitems,
         ]);
     }
 
@@ -71,10 +68,10 @@ class MenuItemController extends Controller
         );
 
         return view('chief::back.menu.edit', [
-            'menuitem'       => $menuitem,
-            'pages'          => UrlHelper::allOnlineModels(),
+            'menuitem' => $menuitem,
+            'pages' => UrlHelper::allOnlineModels(),
             'ownerReference' => $menuitem->owner ? $menuitem->owner->modelReference()->get() : null,
-            'parents'        => $menuitems,
+            'parents' => $menuitems,
         ]);
     }
 

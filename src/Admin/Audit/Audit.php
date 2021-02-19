@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Audit;
 
-use Spatie\Activitylog\Models\Activity;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\ActivityLogger;
+use Spatie\Activitylog\Models\Activity;
 use Thinktomorrow\Chief\Admin\Users\User;
 
 class Audit extends Activity

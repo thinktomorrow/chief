@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 final class ManagedTranslationModelFactory
 {
@@ -39,7 +39,7 @@ final class ManagedTranslationModelFactory
 
     public function create($attributes = [])
     {
-        if(!is_dir(static::$directory)) {
+        if (! is_dir(static::$directory)) {
             mkdir(static::$directory);
         }
 
@@ -49,7 +49,7 @@ final class ManagedTranslationModelFactory
 
         $modelClass = $this->namespace . "\\" . $this->modelClass;
 
-        $model = !$this->withoutDatabaseInsert
+        $model = ! $this->withoutDatabaseInsert
             ? $modelClass::create($attributes)
             : new $modelClass($attributes);
 
@@ -85,6 +85,5 @@ class $this->modelClass extends Model
     public \$guarded = [];
 }
 HEREDOC;
-
     }
 }

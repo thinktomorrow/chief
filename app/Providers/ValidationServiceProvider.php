@@ -2,18 +2,18 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMinRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMaxRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMaxRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMinRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldRequiredRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMimetypesRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldRequiredRule;
+use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldDimensionsRule;
-use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMimetypesRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMaxRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMimetypesRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldMinRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\FileFieldRequiredRule;
 use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldDimensionsRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMaxRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMimetypesRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldMinRule;
+use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldRequiredRule;
 
 class ValidationServiceProvider extends ServiceProvider
 {
@@ -25,7 +25,7 @@ class ValidationServiceProvider extends ServiceProvider
             $fallbackLocale = config('app.fallback_locale');
 
             if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
-                return !!trim($value);
+                return ! ! trim($value);
             }
 
             return true;

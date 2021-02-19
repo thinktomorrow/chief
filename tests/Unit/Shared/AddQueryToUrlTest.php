@@ -19,7 +19,7 @@ class AddQueryToUrlTest extends TestCase
     {
         return [
             ['http://example.com',['foo' => 'bar'],'http://example.com?foo=bar'],
-            ['http://example.com',['foo' => 'bar','bal'=>'boy'],'http://example.com?foo=bar&bal=boy'],
+            ['http://example.com',['foo' => 'bar','bal' => 'boy'],'http://example.com?foo=bar&bal=boy'],
             ['example.com',['foo' => 'bar'],'example.com?foo=bar'],
             ['http://example.com?baz=foz',['foo' => 'bar'],'http://example.com?baz=foz&foo=bar'],
             ['http://example.com?foo=bazz',['foo' => 'bar'],'http://example.com?foo=bar'],

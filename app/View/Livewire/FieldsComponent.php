@@ -21,7 +21,7 @@ class FieldsComponent extends Component
     public function render()
     {
         return view('chief::components.fieldscomponent', [
-            'fields'  => $this->componentKey !== "default"
+            'fields' => $this->componentKey !== "default"
                 ? $this->model->fields()->model($this->model)->component($this->componentKey)
                 : $this->model->fields()->model($this->model)->notTagged('component'),
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),

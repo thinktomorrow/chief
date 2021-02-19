@@ -5,10 +5,10 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
+use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait SortAssistant
 {
@@ -23,18 +23,18 @@ trait SortAssistant
     public function canSortAssistant(string $action, $model = null): bool
     {
         return (in_array($action, ['sort-index', 'index-for-sorting'])
-            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable())  );
+            && ($model && public_method_exists($model, 'isSortable') && $model->isSortable()));
     }
 
     public function filtersSortAssistant(): Filters
     {
         $model = new $this->managedModelClass();
-        if(!$this->can('sort-index', $model)) {
+        if (! $this->can('sort-index', $model)) {
             return new Filters();
         }
 
         return new Filters([
-            HiddenFilter::make('sortIndex', function ($query) use($model) {
+            HiddenFilter::make('sortIndex', function ($query) use ($model) {
                 return $query->orderBy($model->sortableAttribute(), 'ASC');
             }),
         ]);
@@ -42,14 +42,14 @@ trait SortAssistant
 
     public function sortIndex(Request $request)
     {
-        if(!$request->indices) {
+        if (! $request->indices) {
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
         app(SortModels::class)->handle($this->managedModelClass(), $request->indices, (new $this->managedModelClass())->sortableAttribute());
 
         return response()->json([
-            'message' => 'models sorted.'
+            'message' => 'models sorted.',
         ]);
     }
 
@@ -60,8 +60,8 @@ trait SortAssistant
 
         return view('chief::back.managers.index-for-sorting', [
             'manager' => $this,
-            'model'   => $model,
-            'models'  => $this->indexModelsForSorting(),
+            'model' => $model,
+            'models' => $this->indexModelsForSorting(),
         ]);
     }
 

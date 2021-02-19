@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\HealthMonitor\Checks;
 
-use Thinktomorrow\Chief\Admin\Settings\Homepage;
 use Thinktomorrow\Chief\Admin\HealthMonitor\Notifiers\AlertBarNotifier;
+use Thinktomorrow\Chief\Admin\Settings\Homepage;
 
 class HomepageAccessibleCheck implements HealthCheck
 {
@@ -23,7 +23,7 @@ class HomepageAccessibleCheck implements HealthCheck
         // Avoid ssl errors: SSL operation failed with code 1
         stream_context_set_default([
             'ssl' => [
-                'verify_peer'      => false,
+                'verify_peer' => false,
                 'verify_peer_name' => false,
             ],
         ]);

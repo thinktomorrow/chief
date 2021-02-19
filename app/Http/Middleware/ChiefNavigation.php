@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Container\Container;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Nav\NavItem;
-use Illuminate\Contracts\Container\Container;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 final class ChiefNavigation
@@ -25,10 +25,8 @@ final class ChiefNavigation
 
     public function handle($request, Closure $next)
     {
-        foreach($this->registry->managersWithTags() as $managerWithTags){
-
-            if($managerWithTags->manager->can('index')) {
-
+        foreach ($this->registry->managersWithTags() as $managerWithTags) {
+            if ($managerWithTags->manager->can('index')) {
                 $modelClass = $managerWithTags->manager->managedModelClass();
                 $navLabel = (new $modelClass)->adminLabel('nav_label');
 
@@ -38,7 +36,6 @@ final class ChiefNavigation
                     $managerWithTags->tags
                 ));
             }
-
         }
 
         return $next($request);

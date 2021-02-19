@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Media\Application;
 
 use Illuminate\Support\Str;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\AssetLibrary\Application\DetachAsset;
+use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
+use Thinktomorrow\AssetLibrary\Application\SortAssets;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\Chief\ManagedModels\Media\DuplicateAssetException;
-use Thinktomorrow\AssetLibrary\Application\DetachAsset;
-use Thinktomorrow\AssetLibrary\Application\ReplaceAsset;
-use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\AssetLibrary\Application\SortAssets;
 
 abstract class AbstractMediaFieldHandler
 {
@@ -46,7 +46,6 @@ abstract class AbstractMediaFieldHandler
     protected function handlePayload(HasAsset $model, MediaField $field, string $locale, array $values)
     {
         foreach ($values as $key => $value) {
-
             $keyIsAttachedAssetId = $this->isKeyAnAttachedAssetId($model->assetRelation, $locale, $field->getKey(), $key);
 
             if ($this->shouldNotBeProcessed($value, $key, $keyIsAttachedAssetId)) {
@@ -69,6 +68,7 @@ abstract class AbstractMediaFieldHandler
             // If key refers to an already existing asset, it is queued for replacement by a new one
             if ($keyIsAttachedAssetId) {
                 $this->replace($model, $locale, $field->getKey(), $key, $value);
+
                 continue;
             }
 
@@ -154,7 +154,7 @@ abstract class AbstractMediaFieldHandler
         foreach ($filesOrder as $locale => $fileIdInput) {
             $fileIds = $this->getFileIdsFromInput($field->getKey(), $fileIdInput);
 
-            if (!empty($fileIds)) {
+            if (! empty($fileIds)) {
                 $this->sortAssets->handle($model, $fileIds, $field->getKey(), $locale);
             }
         }
@@ -175,7 +175,7 @@ abstract class AbstractMediaFieldHandler
                 : ''
             );
 
-        if (!$values) {
+        if (! $values) {
             return [];
         }
 

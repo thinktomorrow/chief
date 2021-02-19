@@ -6,8 +6,8 @@ use Thinktomorrow\Chief\Site\Sitemap\SitemapXmlFile;
 
 class GenerateSitemap extends BaseCommand
 {
-    protected $signature    = 'chief:sitemap';
-    protected $description  = 'Generate a sitemap for all locales. Only online and visitable urls are included.';
+    protected $signature = 'chief:sitemap';
+    protected $description = 'Generate a sitemap for all locales. Only online and visitable urls are included.';
     /**
      * @var SitemapXmlFile
      */

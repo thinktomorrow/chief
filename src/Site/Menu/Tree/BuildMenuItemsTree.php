@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
-use Vine\NodeCollection;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Site\Menu\MenuItem;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Vine\NodeCollection;
 
 class BuildMenuItemsTree
 {
@@ -23,7 +23,6 @@ class BuildMenuItemsTree
 
         // Expose the collection items and populate them with the collection data
         foreach ($items as $k => $item) {
-
             if ($item->ofType(MenuItem::TYPE_INTERNAL) && $owner = $item->owner) {
                 if (public_method_exists($owner, 'isArchived') && $owner->isArchived()) {
                     unset($items[$k]);

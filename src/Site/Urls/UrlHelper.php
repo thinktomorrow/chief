@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Management\Managers;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\Morphables;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
@@ -93,7 +93,7 @@ class UrlHelper
                 ->select('model_type', 'model_id')
                 ->groupBy('model_type', 'model_id');
 
-            if (!empty($types)) {
+            if (! empty($types)) {
                 $builder->whereIn('model_type', $types);
             }
 
@@ -103,7 +103,7 @@ class UrlHelper
                 return Morphables::instance($key)->find($record->toArray());
             })->map->reject(function ($model) use ($online) {
                 if ($online) {
-                    return is_null($model) || (public_method_exists($model, 'isPublished') && !$model->isPublished());
+                    return is_null($model) || (public_method_exists($model, 'isPublished') && ! $model->isPublished());
                 } // Invalid references to archived or removed models where url record still exists.
 
                 return is_null($model);

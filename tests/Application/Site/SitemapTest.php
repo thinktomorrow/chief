@@ -2,16 +2,16 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site;
 
-use DateTime;
 use Carbon\Carbon;
+use DateTime;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Handler\MockHandler;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use GuzzleHttp\Psr7\Response;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Site\Sitemap\SitemapXml;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class SitemapTest extends ChiefTestCase
 {

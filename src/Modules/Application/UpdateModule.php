@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Modules\Application;
 
-
 class UpdateModule
 {
     public function handle($id, string $slug, array $translations, array $files, array $files_order): Module
@@ -12,7 +11,7 @@ class UpdateModule
         $module = Module::findOrFail($id);
         $module->slug = $slug;
         $module->save();
-dump($module->id, $module->slug, $module);
+        dump($module->id, $module->slug, $module);
         $module->saveFields($module->fields(), array_merge($translations, ['filesOrder' => $files_order]), $files);
 //
 //

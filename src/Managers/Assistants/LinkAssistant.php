@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Site\Urls\Controllers\LinksController;
+use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 
 trait LinkAssistant
 {
@@ -34,8 +34,8 @@ trait LinkAssistant
 
         return view('chief::managers.links', [
             'linkForm' => LinkForm::fromModel($model),
-            'manager'  => app(Registry::class)->manager($model->managedModelKey()),
-            'model'    => $model,
+            'manager' => app(Registry::class)->manager($model->managedModelKey()),
+            'model' => $model,
         ]);
     }
 
@@ -43,7 +43,7 @@ trait LinkAssistant
     {
         return app(LinksController::class)->update($request->merge([
             'modelClass' => $this->managedModelClass(),
-            'modelId'    => $id,
+            'modelId' => $id,
         ]));
     }
 }

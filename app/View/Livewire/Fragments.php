@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\App\View\Livewire;
 
-use Livewire\Component;
 use Illuminate\Support\Collection;
+use Livewire\Component;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 class Fragments extends Component
 {
@@ -27,9 +27,9 @@ class Fragments extends Component
     public function render()
     {
         return view('chief::components.fragments', [
-            'fragments'        => $this->fragments,
+            'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
-            'manager'          => app(Registry::class)->manager($this->owner::managedModelKey()),
+            'manager' => app(Registry::class)->manager($this->owner::managedModelKey()),
         ]);
     }
 
@@ -38,7 +38,7 @@ class Fragments extends Component
         // Current fragments
         $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function (Fragmentable $model) {
             return [
-                'model'   => $model,
+                'model' => $model,
                 'manager' => app(Registry::class)->manager($model::managedModelKey()),
             ];
         });
@@ -49,7 +49,7 @@ class Fragments extends Component
 
             return [
                 'manager' => app(Registry::class)->manager($fragmentableClass::managedModelKey()),
-                'model'   => new $modelClass(),
+                'model' => new $modelClass(),
             ];
         }, $this->owner->allowedFragments());
 

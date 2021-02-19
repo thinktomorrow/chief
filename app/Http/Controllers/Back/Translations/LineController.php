@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Translations;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Thinktomorrow\Squanto\Manager\Http\Controllers\LineController as SquantoLineController;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LineController extends SquantoLineController
 {

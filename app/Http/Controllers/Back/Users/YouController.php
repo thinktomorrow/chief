@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class YouController extends Controller
@@ -22,7 +22,7 @@ class YouController extends Controller
         $this->validate($request, [
             'firstname' => 'required|max:50',
             'lastname' => 'required|max:50',
-            'email' =>  'required|email|unique:' . (new User())->getTable() . ',email,' . $user->id,
+            'email' => 'required|email|unique:' . (new User())->getTable() . ',email,' . $user->id,
         ]);
 
         $user->update($request->only(['firstname', 'lastname', 'email']));

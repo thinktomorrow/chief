@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Authorization\Console;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Thinktomorrow\Chief\Admin\Authorization\Role;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 
 class GenerateRoleCommand extends Command
 {
@@ -33,7 +33,7 @@ class GenerateRoleCommand extends Command
 
     private function assignPermissionsToRole(Role $role)
     {
-        if (!$this->option('permissions')) {
+        if (! $this->option('permissions')) {
             return;
         }
 

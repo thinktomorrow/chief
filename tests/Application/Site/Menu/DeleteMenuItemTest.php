@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class DeleteMenuItemTest extends ChiefTestCase
 {

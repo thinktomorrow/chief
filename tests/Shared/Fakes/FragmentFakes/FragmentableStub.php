@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes;
 
-use Illuminate\Support\Facades\Schema;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\ManagedModels\Assistants\ManagedModelDefaults;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Shared\ModelReferences\ReferableModelDefault;
 
 class FragmentableStub extends Model implements Fragmentable, FragmentsOwner
 {

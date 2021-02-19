@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Admin\Settings;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\PageField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\SelectField;
-use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class SettingFieldsManager
@@ -50,7 +50,7 @@ class SettingFieldsManager
                 ->label('Pagina templates')
                 ->pagesAsOptions()
                 ->description('Selecteer één of meerdere pagina\'s om te gebruiken als template. Een nieuwe pagina vanuit een template aanmaken start met eenzelfde paginaopbouw.')
-                ->multiple()
+                ->multiple(),
         ]);
     }
 
@@ -93,9 +93,9 @@ class SettingFieldsManager
         $existingHomepageValue = [];
 
         foreach ($this->fields() as $key => $field) {
-            if (!$setting = Setting::where('key', $key)->first()) {
+            if (! $setting = Setting::where('key', $key)->first()) {
                 Setting::create([
-                    'key'   => $key,
+                    'key' => $key,
                     'value' => $request->input($key, ''),
                 ]);
 

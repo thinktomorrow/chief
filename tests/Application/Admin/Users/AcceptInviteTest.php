@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Users;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Notification;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class AcceptInviteTest extends ChiefTestCase
 {
@@ -76,7 +76,7 @@ class AcceptInviteTest extends ChiefTestCase
         $this->assertTrue($this->invitee->fresh()->isEnabled());
 
         $response = $this->post(route('chief.back.login.store'), [
-            'email'    => $this->invitee->email,
+            'email' => $this->invitee->email,
             'password' => 'password',
         ]);
         $response->assertRedirect(route('chief.back.dashboard'));
@@ -86,7 +86,7 @@ class AcceptInviteTest extends ChiefTestCase
     public function non_enabled_invitee_cannot_log_in()
     {
         $response = $this->post(route('chief.back.login.store'), [
-            'email'    => $this->invitee->email,
+            'email' => $this->invitee->email,
             'password' => 'password',
         ]);
 
@@ -124,10 +124,10 @@ class AcceptInviteTest extends ChiefTestCase
     {
         Notification::fake();
 
-        $invitee            = new User();
-        $invitee->email     = 'email';
+        $invitee = new User();
+        $invitee->email = 'email';
         $invitee->firstname = 'firstname';
-        $invitee->lastname  = 'lastname';
+        $invitee->lastname = 'lastname';
         $invitee->save();
 
         app(InviteUser::class)->handle($invitee, $this->inviter);

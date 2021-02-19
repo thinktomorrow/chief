@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Application;
 
-use Webmozart\Assert\Assert;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 
 class DuplicateContext
 {
@@ -22,12 +21,14 @@ class DuplicateContext
 
     public function handle($sourceModel, $targetModel): void
     {
-        if(!$sourceModel instanceof FragmentsOwner || !$context = ContextModel::ownedBy($sourceModel)) return;
+        if (! $sourceModel instanceof FragmentsOwner || ! $context = ContextModel::ownedBy($sourceModel)) {
+            return;
+        }
 
         $copiedContext = ContextModel::createForOwner($targetModel);
 
         /** @var FragmentModel $fragment */
-        foreach($context->fragments as $fragment) {
+        foreach ($context->fragments as $fragment) {
             $copiedFragment = $fragment->replicate(['context_id']);
             $copiedFragment->id = $this->fragmentRepository->nextId();
             $copiedFragment->context_id = $copiedContext->id;

@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Support\Arr;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 final class UpdatePageValidationTest extends ChiefTestCase
 {
@@ -32,20 +32,28 @@ final class UpdatePageValidationTest extends ChiefTestCase
     /** @test */
     public function a_required_field_can_be_validated()
     {
-        $this->assertValidation(new ArticlePage(), 'title', $this->payload(['title' => '']),
-            $this->manager->route('edit',$this->model),
-            $this->manager->route('update',$this->model),
-            1, 'put'
+        $this->assertValidation(
+            new ArticlePage(),
+            'title',
+            $this->payload(['title' => '']),
+            $this->manager->route('edit', $this->model),
+            $this->manager->route('update', $this->model),
+            1,
+            'put'
         );
     }
 
     /** @test */
     public function a_required_translatable_field_can_be_validated()
     {
-        $this->assertValidation(new ArticlePage(), 'trans.nl.content_trans', $this->payload(['trans.nl.content_trans' => '']),
+        $this->assertValidation(
+            new ArticlePage(),
+            'trans.nl.content_trans',
+            $this->payload(['trans.nl.content_trans' => '']),
             $this->manager->route('edit', $this->model),
             $this->manager->route('update', $this->model),
-            1, 'put'
+            1,
+            'put'
         );
     }
 
@@ -53,7 +61,7 @@ final class UpdatePageValidationTest extends ChiefTestCase
     public function a_non_default_translatable_field_is_not_validated_if_entire_translation_is_empty()
     {
         $response = $this->actingAs($this->developer(), 'chief')
-            ->put($this->manager->route('update',$this->model), $this->payload(['trans.en.content_trans' => '']));
+            ->put($this->manager->route('update', $this->model), $this->payload(['trans.en.content_trans' => '']));
 
         $this->assertNull(session('errors'));
     }

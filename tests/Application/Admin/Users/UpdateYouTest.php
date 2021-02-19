@@ -56,7 +56,10 @@ class UpdateYouTest extends ChiefTestCase
     /** @test */
     public function when_updating_user_firstname_is_required()
     {
-        $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']),
+        $this->assertValidation(
+            new User(),
+            'firstname',
+            $this->validUpdateParams(['firstname' => '']),
             route('chief.back.dashboard'),
             route('chief.back.you.update'),
             2, // Admin self and existing one
@@ -67,7 +70,10 @@ class UpdateYouTest extends ChiefTestCase
     /** @test */
     public function when_updating_user_lastname_is_required()
     {
-        $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']),
+        $this->assertValidation(
+            new User(),
+            'lastname',
+            $this->validUpdateParams(['lastname' => '']),
             route('chief.back.dashboard'),
             route('chief.back.you.update'),
             2, // Admin self and existing one

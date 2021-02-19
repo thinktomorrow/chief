@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
 use Illuminate\Auth\Access\AuthorizationException;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
+use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -16,6 +16,7 @@ class UserController extends Controller
         $this->authorize('view-user');
 
         $users = User::all();
+
         return view('chief::back.users.index')->with('users', $users);
     }
 
@@ -29,7 +30,7 @@ class UserController extends Controller
         $this->authorize('create-user');
 
         return view('chief::back.users.create', [
-            'user'      => new User(),
+            'user' => new User(),
             'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer')),
         ]);
     }
@@ -47,7 +48,7 @@ class UserController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' =>  'required|email|unique:' . (new User())->getTable(),
+            'email' => 'required|email|unique:' . (new User())->getTable(),
             'roles' => 'required|array',
         ]);
 
@@ -68,8 +69,8 @@ class UserController extends Controller
         $this->authorize('update-user');
 
         return view('chief::back.users.edit', [
-            'user'      => User::findOrFail($id),
-            'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer'))
+            'user' => User::findOrFail($id),
+            'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer')),
         ]);
     }
 
@@ -86,14 +87,14 @@ class UserController extends Controller
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' =>  'required|email|unique:' . (new User())->getTable() . ',email,' . $id,
+            'email' => 'required|email|unique:' . (new User())->getTable() . ',email,' . $id,
             'roles' => 'required|array',
         ]);
 
         $user = User::findOrFail($id);
 
         // Only another developer can change another developer.
-        if (!chiefAdmin()->hasRole('developer') && ($user->hasRole('developer') || in_array('developer', $request->get('roles', [])))) {
+        if (! chiefAdmin()->hasRole('developer') && ($user->hasRole('developer') || in_array('developer', $request->get('roles', [])))) {
             throw new AuthorizationException('Constraint: Only an user with role developer can update an user with developer role.');
         }
 

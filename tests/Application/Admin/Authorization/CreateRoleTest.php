@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Authorization;
 
 use Illuminate\Support\Arr;
+use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Admin\Users\User;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 
 class CreateRoleTest extends ChiefTestCase
 {
@@ -56,7 +56,10 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function when_creating_role_name_is_required()
     {
-        $this->assertValidation(new Role(), 'name', $this->validParams(['name' => '']),
+        $this->assertValidation(
+            new Role(),
+            'name',
+            $this->validParams(['name' => '']),
             route('chief.back.roles.index'),
             route('chief.back.roles.store'),
             AuthorizationDefaults::roles()->count() // default roles were already present
@@ -66,7 +69,10 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function when_creating_role_name_must_be_unique()
     {
-        $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']),
+        $this->assertValidation(
+            new Role(),
+            'name',
+            $this->validParams(['name' => 'developer']),
             route('chief.back.roles.index'),
             route('chief.back.roles.store'),
             AuthorizationDefaults::roles()->count() // default roles were already present
@@ -76,7 +82,10 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function when_creating_role_permissions_are_required()
     {
-        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']),
+        $this->assertValidation(
+            new Role(),
+            'permission_names',
+            $this->validParams(['permission_names' => '']),
             route('chief.back.roles.index'),
             route('chief.back.roles.store'),
             AuthorizationDefaults::roles()->count() // default roles were already present
@@ -86,7 +95,10 @@ class CreateRoleTest extends ChiefTestCase
     /** @test */
     public function when_creating_role_permissions_must_be_passed_as_array()
     {
-        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']),
+        $this->assertValidation(
+            new Role(),
+            'permission_names',
+            $this->validParams(['permission_names' => 'view-role']),
             route('chief.back.roles.index'),
             route('chief.back.roles.store'),
             AuthorizationDefaults::roles()->count() // default roles were already present

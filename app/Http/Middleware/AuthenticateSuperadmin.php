@@ -38,7 +38,7 @@ class AuthenticateSuperadmin
     {
         // Low level way to only allow TT users
         // this is not a safe way to handle security and is only used for convenience, not to secure page restriction!!
-        if (!$this->auth->user() || !$this->authorize('update-squanto')) {
+        if (! $this->auth->user() || ! $this->authorize('update-squanto')) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {

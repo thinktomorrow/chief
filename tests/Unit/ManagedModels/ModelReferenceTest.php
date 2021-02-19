@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class ModelReferenceTest extends TestCase
 {

@@ -95,11 +95,11 @@ class DummyStateMachine extends StateMachine
     protected $transitions = [
         'create' => [
             'from' => ['new'],
-            'to'   => 'pending',
+            'to' => 'pending',
         ],
         'complete' => [
             'from' => ['pending'],
-            'to'   => 'completed',
+            'to' => 'completed',
         ],
     ];
 }
@@ -122,7 +122,7 @@ class MissingStateMachine extends StateMachine
     protected $transitions = [
         'create' => [
             'from' => ['new'],
-            'to'   => 'pending',
+            'to' => 'pending',
         ],
     ];
 }

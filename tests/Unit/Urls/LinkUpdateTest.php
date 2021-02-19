@@ -3,14 +3,14 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
+use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 
 class LinkUpdateTest extends ChiefTestCase
 {
@@ -31,7 +31,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function it_automatically_adds_an_url_on_creation()
+    public function it_automatically_adds_an_url_on_creation()
     {
         $model = ArticlePage::create();
 
@@ -48,7 +48,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function it_adds_a_slug_for_each_locale()
+    public function it_adds_a_slug_for_each_locale()
     {
         $model = ArticlePage::create();
 
@@ -62,7 +62,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function it_cannot_add_same_url_for_specific_locale_twice()
+    public function it_cannot_add_same_url_for_specific_locale_twice()
     {
         $model = ArticlePage::create();
 
@@ -79,7 +79,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function it_can_use_same_url_for_same_model()
+    public function it_can_use_same_url_for_same_model()
     {
         $model = ArticlePage::create();
 
@@ -96,7 +96,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_updating_an_url_it_keeps_the_old_url_as_redirect()
+    public function when_updating_an_url_it_keeps_the_old_url_as_redirect()
     {
         $model = ArticlePage::create();
 
@@ -109,11 +109,11 @@ class LinkUpdateTest extends ChiefTestCase
 
         // Assert old one is now set as redirect
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
-        $this->get(route('pages.show','foobar'))->assertRedirect('foobar-updated');
+        $this->get(route('pages.show', 'foobar'))->assertRedirect('foobar-updated');
     }
 
     /** @test */
-    function updating_to_same_url_as_a_redirect_one_of_same_model_will_remove_redirect()
+    public function updating_to_same_url_as_a_redirect_one_of_same_model_will_remove_redirect()
     {
         $model = ArticlePage::create();
 
@@ -129,13 +129,13 @@ class LinkUpdateTest extends ChiefTestCase
         $response->assertStatus(200);
         $response->assertSessionHasNoErrors();
 
-        $this->assertCount(2,UrlRecord::all());
+        $this->assertCount(2, UrlRecord::all());
         $this->assertFalse(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar-updated', 'nl')->isRedirect());
     }
 
     /** @test */
-    function updating_to_an_already_existing_url_will_fail()
+    public function updating_to_an_already_existing_url_will_fail()
     {
         $model = ArticlePage::create();
         $this->updateLinks($model, ['nl' => 'foobar']);
@@ -150,7 +150,7 @@ class LinkUpdateTest extends ChiefTestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors('links');
 
-        $this->assertCount(2,UrlRecord::all());
+        $this->assertCount(2, UrlRecord::all());
 
         // verify url points to model
         $this->assertEquals($model->id, UrlRecord::findBySlug('foobar', 'nl')->model_id);
@@ -158,7 +158,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function updating_to_same_url_as_a_redirect_of_different_model_will_remove_redirect()
+    public function updating_to_same_url_as_a_redirect_of_different_model_will_remove_redirect()
     {
         $model = ArticlePage::create();
         $this->updateLinks($model, ['nl' => 'foobar']);
@@ -173,7 +173,7 @@ class LinkUpdateTest extends ChiefTestCase
         $response->assertStatus(200);
         $response->assertSessionHasNoErrors();
 
-        $this->assertCount(2,UrlRecord::all());
+        $this->assertCount(2, UrlRecord::all());
 
         // verify url points to new model
         $this->assertFalse(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
@@ -181,17 +181,17 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function updating_to_empty_url_will_remove_record_and_all_redirects()
+    public function updating_to_empty_url_will_remove_record_and_all_redirects()
     {
         $model = ArticlePage::create();
         $this->updateLinks($model, ['nl' => 'foobar']);
         $this->updateLinks($model, ['nl' => '']);
 
-        $this->assertCount(0,UrlRecord::all());
+        $this->assertCount(0, UrlRecord::all());
     }
 
     /** @test */
-    function updating_to_same_url_will_keep_records_as_they_were()
+    public function updating_to_same_url_will_keep_records_as_they_were()
     {
         $model = ArticlePage::create();
         $this->updateLinks($model, ['nl' => 'foobar']);
@@ -201,25 +201,25 @@ class LinkUpdateTest extends ChiefTestCase
 
         $this->updateLinks($model, ['nl' => 'foobar-updated']);
 
-        $this->assertCount(2,UrlRecord::all());
+        $this->assertCount(2, UrlRecord::all());
 
         // assert the record in db is still the same row
         $this->assertEquals($record->id, UrlRecord::findBySlug('foobar-updated', 'nl')->id);
     }
 
     /** @test */
-    function it_can_update_to_root_slug()
+    public function it_can_update_to_root_slug()
     {
         $model = ArticlePage::create();
         $this->updateLinks($model, ['nl' => 'foobar']);
         $this->updateLinks($model, ['nl' => '/']);
 
-        $this->assertCount(2,UrlRecord::all());
+        $this->assertCount(2, UrlRecord::all());
         $this->assertNotNull(UrlRecord::findBySlug('/', 'nl'));
     }
 
     /** @test */
-    function it_can_store_the_archived_url_as_redirect()
+    public function it_can_store_the_archived_url_as_redirect()
     {
         $model = ArticlePage::create();
         $this->updateLinks($model, ['nl' => 'foobar']);
@@ -239,7 +239,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function the_updated_slug_is_prepended_with_the_basesegment()
+    public function the_updated_slug_is_prepended_with_the_basesegment()
     {
         app(Register::class)->model(ArticlePageWithBaseSegments::class, PageManager::class);
         $model = ArticlePageWithBaseSegments::create();
@@ -250,7 +250,7 @@ class LinkUpdateTest extends ChiefTestCase
     }
 
     /** @test */
-    function baseurlsegment_is_taken_into_account_for_uniqueness_check()
+    public function baseurlsegment_is_taken_into_account_for_uniqueness_check()
     {
         // Todo: if we register after the first updateLink requests, these routes do not seem to be found... something cached??
         app(Register::class)->model(ArticlePageWithBaseSegments::class, PageManager::class);
@@ -267,5 +267,4 @@ class LinkUpdateTest extends ChiefTestCase
         $response->assertSessionHasNoErrors('links');
         $this->assertStringEndsWith('/artikels/foobar-updated', $model2->url());
     }
-
 }

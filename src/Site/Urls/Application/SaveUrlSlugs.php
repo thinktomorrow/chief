@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Site\Urls\Application;
 
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\BaseUrlSegment;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 final class SaveUrlSlugs
 {
@@ -26,8 +26,9 @@ final class SaveUrlSlugs
         $existingRecords = UrlRecord::getByModel($model);
 
         foreach ($slugs as $locale => $slug) {
-            if (!$slug) {
+            if (! $slug) {
                 $this->deleteEmptyRecord($model, $locale, $existingRecords);
+
                 continue;
             }
 
@@ -46,12 +47,12 @@ final class SaveUrlSlugs
         $nonRedirectsWithSameLocale = $existingRecords->filter(function ($record) use ($locale) {
             return (
                 $record->locale == $locale &&
-                !$record->isRedirect()
+                ! $record->isRedirect()
             );
         });
 
         // If slug entry is left empty, all existing records will be deleted
-        if (!$slug) {
+        if (! $slug) {
             $nonRedirectsWithSameLocale->each(function ($existingRecord) {
                 $existingRecord->delete();
             });
@@ -79,10 +80,10 @@ final class SaveUrlSlugs
     private function createRecord(ProvidesUrl $model, $locale, $slug)
     {
         UrlRecord::create([
-            'locale'     => $locale,
-            'slug'       => $slug,
+            'locale' => $locale,
+            'slug' => $slug,
             'model_type' => $model->getMorphClass(),
-            'model_id'   => $model->id,
+            'model_id' => $model->id,
         ]);
     }
 
@@ -98,7 +99,7 @@ final class SaveUrlSlugs
         $this->deleteIdenticalRedirects($sameExistingRecords, $locale, $slug);
 
         // Also delete any urls that match this locale and slug but are related to another model
-        if(!$this->strict) {
+        if (! $this->strict) {
             $this->deleteIdenticalRecords($model, $sameExistingRecords);
         }
     }
@@ -128,7 +129,7 @@ final class SaveUrlSlugs
     {
         // The old homepage url should be removed since this is no longer in effect.
         // In case of any redirect to this old homepage, the last used redirect is now back in effect.
-        $existingRecords->reject(function ($existingRecord) use($model) {
+        $existingRecords->reject(function ($existingRecord) use ($model) {
             return (
                 $existingRecord->model_type == $model->getMorphClass() &&
                 $existingRecord->model_id == $model->id);

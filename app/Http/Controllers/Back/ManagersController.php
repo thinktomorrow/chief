@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Management\Managers;
-use Thinktomorrow\Chief\ManagedModels\Media\DuplicateAssetException;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\ManagedModels\Media\DuplicateAssetException;
 use Thinktomorrow\Chief\Management\Application\StoreManager;
-use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
 use Thinktomorrow\Chief\Management\Application\UpdateManager;
+use Thinktomorrow\Chief\Management\Exceptions\DeleteAborted;
+use Thinktomorrow\Chief\Management\Managers;
 
 class ManagersController extends Controller
 {
@@ -82,7 +82,7 @@ class ManagersController extends Controller
          * to retrieve a (soft) deleted model. In that case we kindly redirect
          * the admin to the managers index with a brief explanation.
          */
-        if (!$manager->existingModel()) {
+        if (! $manager->existingModel()) {
             return redirect()->route('chief.back.dashboard')->with('messages.error', 'Oeps, de pagina die je probeerde te bewerken, is verwijderd of bestaat niet meer.');
         }
 

@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferenceCollection;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class ModelReferenceTest extends ChiefTestCase
 {
@@ -60,7 +60,7 @@ class ModelReferenceTest extends ChiefTestCase
 
         $instances = ModelReferenceCollection::fromModelReferences(collect([
             $first->modelReference()->get(),
-            $second->modelReference()->get()
+            $second->modelReference()->get(),
         ]));
 
         $this->assertCount(2, $instances);

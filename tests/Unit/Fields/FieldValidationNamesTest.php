@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationNames;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldValidationNamesTest extends TestCase
 {
@@ -66,7 +66,7 @@ class FieldValidationNamesTest extends TestCase
                     'nl' => ['foo' => '', 'bar' => null],
                     'fr' => ['foo' => 'value', 'bar' => null],
                     'en' => ['foo' => 'value', 'bar' => 'value'],
-                ]
+                ],
             ])
             ->requiredLocale('en');
 

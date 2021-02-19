@@ -2,13 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
-use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Site\Urls\Form\LinkForm;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Site\Urls\Field\UrlSlugFields;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithBaseSegments;
 
 class LinkFormTest extends ChiefTestCase
@@ -19,7 +16,7 @@ class LinkFormTest extends ChiefTestCase
     }
 
     /** @test */
-    function the_fixed_base_segment_is_prepended_to_the_slug()
+    public function the_fixed_base_segment_is_prepended_to_the_slug()
     {
         ArticlePageWithBaseSegments::migrateUp();
         app(Register::class)->model(ArticlePageWithBaseSegments::class, PageManager::class);

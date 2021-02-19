@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back;
 
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Thinktomorrow\Squanto\Manager\Http\ManagerController;
 
 class TranslationController extends ManagerController

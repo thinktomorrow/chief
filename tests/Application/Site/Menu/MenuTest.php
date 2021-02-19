@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Site\Menu;
 
-use Vine\NodeCollection;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Site\Menu\Menu;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Thinktomorrow\Chief\Site\Menu\ChiefMenu;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Vine\NodeCollection;
 
 class MenuTest extends ChiefTestCase
 {
@@ -40,10 +40,10 @@ class MenuTest extends ChiefTestCase
 
         $item = MenuItem::create([
             'menu_type' => 'main',
-            'label'      => ['nl' => 'second item'],
-            'type'       => 'internal',
+            'label' => ['nl' => 'second item'],
+            'type' => 'internal',
             'owner_type' => $page->getMorphClass(),
-            'owner_id'   => $page->id,
+            'owner_id' => $page->id,
         ]);
 
         $collection = ChiefMenu::fromMenuItems()->items();
@@ -55,8 +55,8 @@ class MenuTest extends ChiefTestCase
     {
         $item = MenuItem::create([
             'label' => ['nl' => 'second item'],
-            'type'     => 'custom',
-            'url'      => ['nl' => 'https://google.com'],
+            'type' => 'custom',
+            'url' => ['nl' => 'https://google.com'],
         ]);
 
         $tree = ChiefMenu::fromMenuItems()->items();
@@ -73,10 +73,10 @@ class MenuTest extends ChiefTestCase
 
         $this->updateLinks($page, ['nl' => 'pagelink-nl']);
 
-        MenuItem::create(['type'       => 'internal',
-                          'label'      => 'first item',
+        MenuItem::create(['type' => 'internal',
+                          'label' => 'first item',
                           'owner_type' => $page->getMorphClass(),
-                          'owner_id'   => $page->id,
+                          'owner_id' => $page->id,
         ]);
         MenuItem::create(['type' => 'custom', 'label' => ['nl' => 'second item'], 'url' => ['nl' => 'https://google.com']]);
 
@@ -128,12 +128,12 @@ class MenuTest extends ChiefTestCase
         $parent = MenuItem::create(['label' => ['nl' => 'first item']]);
         $second = MenuItem::create(['label' => ['nl' => 'second item'], 'parent_id' => $parent->id, 'order' => 2]);
         $third = MenuItem::create([
-            'label'  => 'last item',
-            'type'      => 'internal',
-            'owner_type'  => $page->getMorphClass(),
-            'owner_id'  => $page->id,
+            'label' => 'last item',
+            'type' => 'internal',
+            'owner_type' => $page->getMorphClass(),
+            'owner_id' => $page->id,
             'parent_id' => $parent->id,
-            'order'     => 1,
+            'order' => 1,
         ]);
 
         $collection = ChiefMenu::fromMenuItems()->items();

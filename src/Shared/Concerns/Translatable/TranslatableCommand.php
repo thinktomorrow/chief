@@ -18,8 +18,9 @@ trait TranslatableCommand
         foreach ($entity->getAvailableLocales() as $available_locale) {
             // Remove the product translation if any already exists
             // Translation is also removed if all fields of a translation are left empty
-            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation)) {
+            if (! isset($translations[$available_locale]) or ! ($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation)) {
                 $entity->removeTranslation($available_locale);
+
                 continue;
             }
 
@@ -58,7 +59,7 @@ trait TranslatableCommand
         $is_completely_empty = true;
 
         foreach ($keys as $key) {
-            if (!array_key_exists($key, $translation)) {
+            if (! array_key_exists($key, $translation)) {
                 continue;
             }
 

@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\App\Exceptions;
 
-use Throwable;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Exceptions\PostTooLargeException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -62,12 +62,12 @@ class Handler extends ExceptionHandler
 
     private function shouldRenderChiefException(Throwable $exception): bool
     {
-        return (Str::startsWith(request()->path(), 'admin/') && !$exception instanceof AuthenticationException && !$exception instanceof ValidationException);
+        return (Str::startsWith(request()->path(), 'admin/') && ! $exception instanceof AuthenticationException && ! $exception instanceof ValidationException);
     }
 
     protected function renderChiefException($request, Throwable $exception)
     {
-        if (!config('app.debug')) {
+        if (! config('app.debug')) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Something went wrong.'], 404);
             }
@@ -98,7 +98,7 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        if (!empty($exception->guards()) && Arr::first($exception->guards()) == 'chief') {
+        if (! empty($exception->guards()) && Arr::first($exception->guards()) == 'chief') {
             return redirect()->guest(route('chief.back.login'));
         }
 

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Routes;
 
-
 use ArrayIterator;
 use Webmozart\Assert\Assert;
 

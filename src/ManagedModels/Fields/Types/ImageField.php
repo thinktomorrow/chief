@@ -9,11 +9,11 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 class ImageField extends MediaField implements Field
 {
     protected $customValidationRules = [
-        'required'   => 'imagefield_required',
-        'mimetypes'  => 'imagefield_mimetypes',
+        'required' => 'imagefield_required',
+        'mimetypes' => 'imagefield_mimetypes',
         'dimensions' => 'imagefield_dimensions',
-        'min'        => 'imagefield_min',
-        'max'        => 'imagefield_max',
+        'min' => 'imagefield_min',
+        'max' => 'imagefield_max',
     ];
 
     public static function make(string $key): Field
@@ -32,7 +32,7 @@ class ImageField extends MediaField implements Field
 
     public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
-        if (!$model) {
+        if (! $model) {
             return [];
         }
 
@@ -45,9 +45,9 @@ class ImageField extends MediaField implements Field
 
         foreach ($assets as $asset) {
             $images[] = (object)[
-                'id'       => $asset->id,
+                'id' => $asset->id,
                 'filename' => $asset->filename(),
-                'url'      => $asset->url(),
+                'url' => $asset->url(),
             ];
         }
 

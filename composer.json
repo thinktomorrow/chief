@@ -34,6 +34,7 @@
     },
     "require-dev": {
         "filp/whoops": "^2.9",
+        "friendsofphp/php-cs-fixer": "^2.18",
         "fzaninotto/faker": "~1.9",
         "mockery/mockery": "^1.4",
         "orchestra/testbench": "^6.9",

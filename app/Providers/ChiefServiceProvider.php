@@ -2,33 +2,33 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Livewire\LivewireServiceProvider;
-use Thinktomorrow\Chief\Admin\Nav\Nav;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Thinktomorrow\Chief\Managers\Register\TaggedKeys;
-use Thinktomorrow\Chief\App\Console\ChiefPublishCommand;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\ServiceProvider;
+use Livewire\LivewireServiceProvider;
+use Spatie\Sitemap\SitemapServiceProvider;
+use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
+use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
+use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
+use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFieldsManager;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
-use Thinktomorrow\Chief\ManagedModels\Application\DuplicateContext;
+use Thinktomorrow\Chief\Admin\Settings\SettingsServiceProvider;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Validator;
-use Thinktomorrow\Chief\App\Console\Seed;
-use Spatie\Sitemap\SitemapServiceProvider;
+use Thinktomorrow\Chief\App\Console\ChiefPublishCommand;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
-use Thinktomorrow\Squanto\SquantoServiceProvider;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
 use Thinktomorrow\Chief\App\Console\RefreshDatabase;
+use Thinktomorrow\Chief\App\Console\Seed;
+use Thinktomorrow\Chief\App\Http\Controllers\Back\System\SettingsController;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\ManagedModels\Application\DuplicateContext;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Managers\Register\TaggedKeys;
 use Thinktomorrow\Squanto\SquantoManagerServiceProvider;
-use Thinktomorrow\Chief\Admin\Settings\SettingsServiceProvider;
-use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
-use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
-use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
+use Thinktomorrow\Squanto\SquantoServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
@@ -107,7 +107,7 @@ class ChiefServiceProvider extends ServiceProvider
             $fallbackLocale = config('app.fallback_locale');
 
             if (false !== strpos($attribute, 'trans.' . $fallbackLocale . '.')) {
-                return !!trim($value);
+                return ! ! trim($value);
             }
 
             return true;
@@ -121,7 +121,6 @@ class ChiefServiceProvider extends ServiceProvider
         Relation::morphMap([
             'fragmentmodel' => FragmentModel::class,
         ]);
-
     }
 
     public function register()
@@ -142,7 +141,7 @@ class ChiefServiceProvider extends ServiceProvider
         });
 
         // Global chief nav singleton
-        $this->app->singleton(Nav::class, function($app){
+        $this->app->singleton(Nav::class, function ($app) {
             return new Nav();
         });
 
@@ -177,7 +176,7 @@ class ChiefServiceProvider extends ServiceProvider
      */
     private function setupEnvironmentProviders()
     {
-        if (!$this->app->environment('production') && $services = config('app.providers-' . app()->environment(), false)) {
+        if (! $this->app->environment('production') && $services = config('app.providers-' . app()->environment(), false)) {
             foreach ($services as $service) {
                 $this->app->register($service);
             }
@@ -187,25 +186,25 @@ class ChiefServiceProvider extends ServiceProvider
     private function registerChiefGuard()
     {
         $this->app['config']["auth.guards.chief"] = [
-            'driver'   => 'session',
+            'driver' => 'session',
             'provider' => 'chief',
         ];
 
         $this->app['config']["auth.providers.chief"] = [
             'driver' => 'chief-eloquent',
-            'model'  => User::class,
+            'model' => User::class,
         ];
 
         $this->app['config']["auth.passwords.chief"] = [
             'provider' => 'chief',
-            'table'    => 'chief_password_resets',
-            'expire'   => 60,
+            'table' => 'chief_password_resets',
+            'expire' => 60,
         ];
 
         // Custom models for permission
         $this->app['config']['permission.models'] = [
             'permission' => \Thinktomorrow\Chief\Admin\Authorization\Permission::class,
-            'role'       => \Thinktomorrow\Chief\Admin\Authorization\Role::class,
+            'role' => \Thinktomorrow\Chief\Admin\Authorization\Role::class,
         ];
     }
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules;
 
-use Symfony\Component\HttpFoundation\File\File;
 use Illuminate\Validation\Concerns\ValidatesAttributes;
+use Symfony\Component\HttpFoundation\File\File;
 use Thinktomorrow\Chief\ManagedModels\Media\Application\ChecksExistingAssets;
 
 abstract class AbstractMediaFieldRule

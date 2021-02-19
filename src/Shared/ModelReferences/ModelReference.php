@@ -28,7 +28,7 @@ final class ModelReference
 
         list($className, $id) = explode('@', $reference);
 
-        if("" === $id) {
+        if ("" === $id) {
             throw new \InvalidArgumentException('Missing id on model reference. [' . $reference . '] was passed.');
         }
 
@@ -44,7 +44,7 @@ final class ModelReference
     {
         $className = $this->className();
 
-        if($this->id === "0") {
+        if ($this->id === "0") {
             return new $className($attributes);
         }
 

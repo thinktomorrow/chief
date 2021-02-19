@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\App\Http\Requests;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
-use Thinktomorrow\Url\Url;
-use Thinktomorrow\Url\Root;
+use Illuminate\Support\Facades\Auth;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
+use Thinktomorrow\Url\Root;
+use Thinktomorrow\Url\Url;
 
 class MenuRequest extends FormRequest
 {
@@ -40,17 +40,17 @@ class MenuRequest extends FormRequest
     {
         $translations = $this->request->get('trans', []);
 
-        $rules['type']            = 'required|in:custom,internal,nolink';
-        $rules['owner_reference']         = 'required_if:type,internal';
+        $rules['type'] = 'required|in:custom,internal,nolink';
+        $rules['owner_reference'] = 'required_if:type,internal';
 
         foreach ($translations as $locale => $trans) {
             if ($this->isCompletelyEmpty(['label'], $trans) && $locale !== config('app.locale')) {
                 continue;
             }
 
-            $rules['trans.' . $locale . '.label']   = 'required';
+            $rules['trans.' . $locale . '.label'] = 'required';
             if ($this->request->get('trans.' . $locale . '.url') != null) {
-                $rules['trans.' . $locale . '.url']     = 'url';
+                $rules['trans.' . $locale . '.url'] = 'url';
             }
         }
 
@@ -62,8 +62,8 @@ class MenuRequest extends FormRequest
         $attributes = [];
 
         foreach ($this->request->get('trans', []) as $locale => $trans) {
-            $attributes['trans.' . $locale . '.label']   = $locale . ' label';
-            $attributes['trans.' . $locale . '.url']     = $locale . ' link';
+            $attributes['trans.' . $locale . '.label'] = $locale . ' label';
+            $attributes['trans.' . $locale . '.url'] = $locale . ' link';
         }
 
         $attributes['owner_reference'] = 'Interne pagina';
@@ -76,8 +76,8 @@ class MenuRequest extends FormRequest
     {
         return [
             'required_if' => 'Gelieve nog een :attribute te kiezen, aub.',
-            'required'    => 'Gelieve een :attribute in te geven, aub.',
-            'url'         => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
+            'required' => 'Gelieve een :attribute in te geven, aub.',
+            'url' => 'Dit is geen geldige url. Kan je dit even nakijken, aub?',
         ];
     }
 

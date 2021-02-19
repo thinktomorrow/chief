@@ -21,7 +21,7 @@ final class Nav
 
     public function tagged($tags): self
     {
-        $filteredItems = array_filter($this->items, function(NavItem $navItem) use($tags){
+        $filteredItems = array_filter($this->items, function (NavItem $navItem) use ($tags) {
             return $navItem->isTagged($tags);
         });
 
@@ -30,7 +30,7 @@ final class Nav
 
     public function untagged(): self
     {
-        $filteredItems = array_filter($this->items, function(NavItem $navItem){
+        $filteredItems = array_filter($this->items, function (NavItem $navItem) {
             return $navItem->isUntagged();
         });
 
@@ -41,7 +41,7 @@ final class Nav
     {
         $instance = new static();
 
-        foreach($navItems as $item) {
+        foreach ($navItems as $item) {
             $instance->add($item);
         }
 

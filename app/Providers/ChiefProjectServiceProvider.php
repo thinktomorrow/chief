@@ -2,19 +2,18 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
-use Thinktomorrow\Chief\Managers\Register\Registry;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\ServiceProvider;
 use Thinktomorrow\Chief\Fragments\StaticFragmentManager;
-use Thinktomorrow\Chief\Modules\Presets\TextModuleManager;
-use Thinktomorrow\Chief\Managers\Register\RegisterManager;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Modules\Presets\PagetitleModuleManager;
 use Thinktomorrow\Chief\Legacy\Fragments\FragmentModel;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Managers\Register\RegisterManager;
+use Thinktomorrow\Chief\Modules\Presets\PagetitleModule;
+use Thinktomorrow\Chief\Modules\Presets\PagetitleModuleManager;
+use Thinktomorrow\Chief\Modules\Presets\TextModule;
+use Thinktomorrow\Chief\Modules\Presets\TextModuleManager;
 use Thinktomorrow\Chief\Pages\Single;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
-use Illuminate\Support\ServiceProvider;
-use Thinktomorrow\Chief\Modules\Presets\TextModule;
-use Thinktomorrow\Chief\Modules\Presets\PagetitleModule;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ChiefProjectServiceProvider extends ServiceProvider
 {
@@ -22,11 +21,11 @@ class ChiefProjectServiceProvider extends ServiceProvider
     {
         // Out of the box morphables - the key 'singles' is the page's default morphKey.
         Relation::morphMap([
-            'menuitem'  => MenuItem::class,
-            'singles'   => Single::class,
-            'text'      => TextModule::class,
+            'menuitem' => MenuItem::class,
+            'singles' => Single::class,
+            'text' => TextModule::class,
             'pagetitle' => PagetitleModule::class,
-            'fragment'  => FragmentModel::class,
+            'fragment' => FragmentModel::class,
         ]);
 
         // singles
@@ -44,7 +43,7 @@ class ChiefProjectServiceProvider extends ServiceProvider
 
     protected function registerFragments(array $fragmentClasses): void
     {
-        foreach($fragmentClasses as $fragmentClass) {
+        foreach ($fragmentClasses as $fragmentClass) {
             $this->app->make(Register::class)->staticFragment($fragmentClass);
         }
     }

@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Http;
 
-use Thinktomorrow\Chief\App\Http\Middleware\OptimizeImages;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Thinktomorrow\Chief\App\Http\Middleware\OptimizeImages;
 
 class Kernel extends HttpKernel
 {
@@ -51,11 +51,11 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'              => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic'        => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings'          => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can'               => \Illuminate\Auth\Middleware\Authorize::class,
-        'throttle'          => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'optimizeImages'    => OptimizeImages::class,
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'optimizeImages' => OptimizeImages::class,
     ];
 }

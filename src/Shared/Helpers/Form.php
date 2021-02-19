@@ -13,8 +13,8 @@ class Form
      */
     public static function foreachTrans(array $translations, \Closure $callback)
     {
-        foreach($translations as $locale => $trans){
-            foreach($trans as $key => $value){
+        foreach ($translations as $locale => $trans) {
+            foreach ($trans as $key => $value) {
                 call_user_func($callback, $locale, $key, $value);
             }
         }

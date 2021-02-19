@@ -12,11 +12,11 @@ class FileField extends MediaField implements Field
     private $uploadButtonLabel = 'Document opladen';
 
     protected $customValidationRules = [
-        'required'   => 'filefield_required',
-        'mimetypes'  => 'filefield_mimetypes',
+        'required' => 'filefield_required',
+        'mimetypes' => 'filefield_mimetypes',
         'dimensions' => 'filefield_dimensions',
-        'min'        => 'filefield_min',
-        'max'        => 'filefield_max',
+        'min' => 'filefield_min',
+        'max' => 'filefield_max',
     ];
 
     public static function make(string $key): Field
@@ -30,7 +30,7 @@ class FileField extends MediaField implements Field
 
     public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
-        if (!$model) {
+        if (! $model) {
             return [];
         }
 
@@ -43,22 +43,21 @@ class FileField extends MediaField implements Field
 
         /** @var Asset $asset */
         foreach ($assets as $asset) {
-
             $thumbUrl = $asset->url('thumb');
 
             // If the conversions haven't run yet, we'll use the original image until they are uploaded
-            if(!file_exists(public_path($thumbUrl))) {
+            if (! file_exists(public_path($thumbUrl))) {
                 $thumbUrl = $asset->url();
             }
 
             $files[] = (object)[
-                'id'       => $asset->id,
+                'id' => $asset->id,
                 'filename' => $asset->filename(),
-                'url'      => $asset->url(),
+                'url' => $asset->url(),
                 'thumbUrl' => $thumbUrl,
                 'mimetype' => $asset->getMimeType(),
-                'isImage'  => ($asset->getExtensionType() == 'image'),
-                'size'     => $asset->getSize(),
+                'isImage' => ($asset->getExtensionType() == 'image'),
+                'size' => $asset->getSize(),
             ];
         }
 

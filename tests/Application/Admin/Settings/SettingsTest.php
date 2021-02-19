@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Settings;
 
+use Thinktomorrow\Chief\Admin\Settings\Setting;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\HtmlField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
-use Thinktomorrow\Chief\Admin\Settings\Setting;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class SettingsTest extends ChiefTestCase
@@ -83,7 +83,7 @@ class SettingsTest extends ChiefTestCase
     public function it_has_a_default_input_field_for_admin()
     {
         $setting = Setting::create([
-            'key'   => 'foo',
+            'key' => 'foo',
             'value' => 'bar',
         ]);
 
@@ -101,7 +101,7 @@ class SettingsTest extends ChiefTestCase
         ]);
 
         $setting = Setting::create([
-            'key'   => 'foo',
+            'key' => 'foo',
             'value' => 'bar',
         ]);
 

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu\Tree;
 
-use Vine\NodeCollection;
 use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Menu\MenuItem;
+use Vine\NodeCollection;
 
 class PrepareMenuItemsForAdminSelect
 {
@@ -15,7 +15,7 @@ class PrepareMenuItemsForAdminSelect
 
         if ($model) {
             $this->collection = $this->collection->prune(function ($node) use ($model) {
-                return !in_array($model->id, $node->pluckAncestors('id'));
+                return ! in_array($model->id, $node->pluckAncestors('id'));
             });
         }
 
@@ -32,7 +32,7 @@ class PrepareMenuItemsForAdminSelect
         $menu->flatten()->each(function ($node) use ($menuitems) {
             $menuitems[] = [
                 'label' => $node->label,
-                'id'    => $node->id,
+                'id' => $node->id,
             ];
         });
 

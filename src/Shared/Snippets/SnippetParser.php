@@ -10,7 +10,7 @@ class SnippetParser
 
     public static function parse($value)
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return $value;
         }
 
@@ -26,7 +26,7 @@ class SnippetParser
 
     private static function replaceWithSnippet($placeholder, $snippetKey)
     {
-        if (!$snippet = SnippetCollection::find($snippetKey)) {
+        if (! $snippet = SnippetCollection::find($snippetKey)) {
             return $placeholder;
         }
 

@@ -19,7 +19,7 @@ trait Translatable
 {
     public function getDefaultTranslation($attribute)
     {
-        if (!($translation = $this->getTranslation(config('app.fallback_locale')))) {
+        if (! ($translation = $this->getTranslation(config('app.fallback_locale')))) {
             return null;
         }
 
@@ -66,11 +66,11 @@ trait Translatable
     public function getTranslationFor($attribute, $locale = null, $strict = true)
     {
         // No locale given means we take the current defaulted locale (handled automagically)
-        if (!$locale) {
+        if (! $locale) {
             return $this->getAttribute($attribute);
         }
 
-        if (!$this->hasTranslation($locale) && $strict) {
+        if (! $this->hasTranslation($locale) && $strict) {
             return null;
         }
 
@@ -94,7 +94,7 @@ trait Translatable
 
     public function removeTranslation($locale)
     {
-        if (!$this->hasTranslation($locale)) {
+        if (! $this->hasTranslation($locale)) {
             return;
         }
 
@@ -150,7 +150,7 @@ trait Translatable
         $current_locales = $this->translations->pluck('locale')->toArray();
 
         return array_filter($available_locales, function ($v) use ($current_locales, $available) {
-            return $available ? in_array($v, $current_locales) : !in_array($v, $current_locales);
+            return $available ? in_array($v, $current_locales) : ! in_array($v, $current_locales);
         }, ARRAY_FILTER_USE_BOTH);
     }
 
@@ -161,7 +161,7 @@ trait Translatable
      */
     private function validateLocale($locale)
     {
-        if (!in_array($locale, static::availableLocales())) {
+        if (! in_array($locale, static::availableLocales())) {
             throw new InvalidArgumentException('Locale [' . $locale . '] is not available');
         }
     }
@@ -214,7 +214,7 @@ trait Translatable
      */
     public function translateForForm($locale, $key)
     {
-        if (!isset($this->trans) || !isset($this->trans[$locale])) {
+        if (! isset($this->trans) || ! isset($this->trans[$locale])) {
             return null;
         }
 
@@ -233,8 +233,9 @@ trait Translatable
         foreach ($entity->getAvailableLocales() as $available_locale) {
             // Remove the product translation if any already exists
             // Translation is also removed if all fields of a translation are left empty
-            if (!isset($translations[$available_locale]) or !($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation)) {
+            if (! isset($translations[$available_locale]) or ! ($translation = $translations[$available_locale]) or $this->isCompletelyEmpty($keys, $translation)) {
                 $entity->removeTranslation($available_locale);
+
                 continue;
             }
             $this->persistTranslation($entity, $keys, $translation, $available_locale);
@@ -252,7 +253,7 @@ trait Translatable
     {
         $is_completely_empty = true;
         foreach ($keys as $key) {
-            if (!isset($translation[$key])) {
+            if (! isset($translation[$key])) {
                 continue;
             }
             if (trim($translation[$key])) {

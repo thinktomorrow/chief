@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Application;
 
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\AssetLibrary\Application\DetachAsset;
 use Thinktomorrow\AssetLibrary\HasAsset;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\AssetLibrary\Application\DetachAsset;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class DeleteModel
 {
@@ -38,8 +38,8 @@ class DeleteModel
             // TODO: schedule for deletion instead of instantly deleting all relations and stuff...
             // so the user has a small window of recovery
 
-            if($model instanceof HasAsset) {
-                 $this->detachAsset->detachAll($model);
+            if ($model instanceof HasAsset) {
+                $this->detachAsset->detachAll($model);
             }
             // TODO: soft-delete the context of this model... (=fragments)
 //            Relation::deleteRelationsOf($model->getMorphClass(), $model->id);
@@ -59,6 +59,7 @@ class DeleteModel
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
     }

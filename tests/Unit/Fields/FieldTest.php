@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
 use Carbon\Carbon;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class FieldTest extends TestCase
 {
@@ -18,7 +18,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_has_a_type()
+    public function it_has_a_type()
     {
         $field = InputField::make('title');
 
@@ -31,7 +31,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_uses_the_key_as_default_for_other_values()
+    public function it_uses_the_key_as_default_for_other_values()
     {
         $field = InputField::make('title');
 
@@ -42,7 +42,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function these_other_values_can_be_set_individually()
+    public function these_other_values_can_be_set_individually()
     {
         $field = InputField::make('title')
                     ->column('title-column')
@@ -56,7 +56,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_has_formfield_related_info()
+    public function it_has_formfield_related_info()
     {
         $field = InputField::make('title');
 
@@ -77,7 +77,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function the_formfield_info_can_be_localized()
+    public function the_formfield_info_can_be_localized()
     {
         $field = InputField::make('title')
             ->prepend(['nl' => 'prepend-nl', 'en' => 'prepend-en'])
@@ -99,7 +99,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_can_set_and_get_the_value()
+    public function it_can_set_and_get_the_value()
     {
         $field = InputField::make('title');
 
@@ -113,7 +113,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_can_get_the_existing_model_value()
+    public function it_can_get_the_existing_model_value()
     {
         $model = ArticlePage::make(['updated_at' => Carbon::yesterday()]);
         $field = InputField::make('updated_at');
@@ -123,7 +123,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function if_model_has_not_got_the_value_than_the_default_is_used()
+    public function if_model_has_not_got_the_value_than_the_default_is_used()
     {
         $model = ArticlePage::make(['updated_at' => null]);
         $field = InputField::make('updated_at')->value('default-value');
@@ -133,7 +133,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_can_get_the_existing_translated_model_value()
+    public function it_can_get_the_existing_translated_model_value()
     {
         config()->set('chief.locales', ['nl','en','fr']);
 
@@ -151,9 +151,9 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_allows_for_a_custom_value_resolver()
+    public function it_allows_for_a_custom_value_resolver()
     {
-        $field = InputField::make('title')->valueResolver(function(){
+        $field = InputField::make('title')->valueResolver(function () {
             return 'custom value';
         });
 
@@ -161,10 +161,10 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function a_custom_resolved_value_always_trumps_the_default_value()
+    public function a_custom_resolved_value_always_trumps_the_default_value()
     {
         // Anything passed by value resolver trumps the default value
-        $field = InputField::make('title')->value('default-value')->valueResolver(function(){
+        $field = InputField::make('title')->value('default-value')->valueResolver(function () {
             return 'custom value';
         });
 
@@ -172,7 +172,7 @@ class FieldTest extends TestCase
     }
 
     /** @test */
-    function it_has_a_default_view()
+    public function it_has_a_default_view()
     {
         $this->assertStringContainsString('<input type="text" name="test" id="test" class="input inset-s" placeholder="" value="">', InputField::make('test')->render());
     }
@@ -184,11 +184,11 @@ class FieldTest extends TestCase
 
         $render = InputField::make('input-one')->view('test-views::custom-field')->render();
 
-        $this->assertEquals('this is a custom field view',$render);
+        $this->assertEquals('this is a custom field view', $render);
     }
 
     /** @test */
-    function it_can_set_locales()
+    public function it_can_set_locales()
     {
         $field = InputField::make('test');
 

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels;
 
-use Thinktomorrow\Chief\Tests\TestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class AdminLabelTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\ManagedModels\Traits;
 
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
 
 class ArchiveTraitTest extends ChiefTestCase
 {

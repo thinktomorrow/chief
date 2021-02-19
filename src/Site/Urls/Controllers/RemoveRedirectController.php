@@ -5,11 +5,6 @@ namespace Thinktomorrow\Chief\Site\Urls\Controllers;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
-use Thinktomorrow\Chief\Site\Urls\Application\SaveUrlSlugs;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
-use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 
 class RemoveRedirectController
 {
@@ -17,7 +12,7 @@ class RemoveRedirectController
     {
         $urlRecord = UrlRecord::find($id);
 
-        if (!$urlRecord) {
+        if (! $urlRecord) {
             return response()->json(['No url record found by id ' . $id], 500);
         }
 
@@ -42,7 +37,7 @@ class RemoveRedirectController
      */
     public function pointChildRedirectsToParent(UrlRecord $urlRecord, $parentId): void
     {
-        if (!$urlRecord->isRedirect()) {
+        if (! $urlRecord->isRedirect()) {
             return;
         }
 

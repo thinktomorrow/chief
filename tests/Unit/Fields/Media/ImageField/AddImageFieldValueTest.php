@@ -3,18 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Illuminate\Foundation\Testing\TestResponse;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\MediaModule;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\ImageFieldModuleManager;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\ImageFieldManagerWithValidation;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class AddImageFieldValueTest extends ChiefTestCase
 {
@@ -44,7 +37,7 @@ class AddImageFieldValueTest extends ChiefTestCase
     public function it_can_add_a_new_image()
     {
         $response = $this->uploadImage('thumb_image', [
-            'nl' => [$this->dummySlimImagePayload('image.png', 'image/png', 150, 150)]
+            'nl' => [$this->dummySlimImagePayload('image.png', 'image/png', 150, 150)],
         ]);
 
         $response->assertSessionHasNoErrors();
@@ -56,7 +49,7 @@ class AddImageFieldValueTest extends ChiefTestCase
     public function it_can_add_a_new_image_with_a_random_key()
     {
         $response = $this->uploadImage('thumb_image', [
-            'nl' => [99 => $this->dummySlimImagePayload('image.png', 'image/png', 150, 150)]
+            'nl' => [99 => $this->dummySlimImagePayload('image.png', 'image/png', 150, 150)],
         ]);
 
         $response->assertSessionHasNoErrors();
@@ -70,7 +63,7 @@ class AddImageFieldValueTest extends ChiefTestCase
         $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
 
         $response = $this->uploadImage('thumb_image', [
-            'nl' => [$existing_asset->id]
+            'nl' => [$existing_asset->id],
         ]);
 
         $response->assertSessionHasNoErrors();
@@ -86,7 +79,7 @@ class AddImageFieldValueTest extends ChiefTestCase
         $existing_asset = AssetUploader::upload(UploadedFile::fake()->image('image.png', 810, 810));
 
         $this->uploadImage('thumb_image', [
-            'nl' => [$existing_asset->id, $existing_asset->id]
+            'nl' => [$existing_asset->id, $existing_asset->id],
         ]);
 
         $this->assertCount(1, $this->page->fresh()->assets('thumb_image'));
@@ -103,7 +96,7 @@ class AddImageFieldValueTest extends ChiefTestCase
             ],
             'en' => [
                 $this->dummySlimImagePayload('tt-favicon-en.png', 'image/png', 800, 800),
-            ]
+            ],
         ]);
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->asset('thumb_image', 'nl')->filename());

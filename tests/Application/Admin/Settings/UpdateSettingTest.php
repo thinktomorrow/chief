@@ -2,11 +2,11 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Settings;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Admin\Settings\Setting;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
-use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
 
 class UpdateSettingTest extends ChiefTestCase
 {
@@ -25,8 +25,8 @@ class UpdateSettingTest extends ChiefTestCase
     public function update_a_setting()
     {
         Setting::create([
-            'key'   => 'app_name',
-            'value' => 'old app_name'
+            'key' => 'app_name',
+            'value' => 'old app_name',
         ]);
 
         $response = $this->asAdmin()->put(route('chief.back.settings.update'), $this->validSettingParams());

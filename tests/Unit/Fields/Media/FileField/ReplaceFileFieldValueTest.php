@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\FileField;
 
 use Illuminate\Http\UploadedFile;
+use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class ReplaceFileFieldValueTest extends ChiefTestCase
 {
@@ -38,7 +38,7 @@ class ReplaceFileFieldValueTest extends ChiefTestCase
             ],
             'en' => [
                 UploadedFile::fake()->image('tt-favicon-en.png'), // New
-            ]
+            ],
         ]);
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->fresh()->asset('thumb_trans', 'nl')->filename());
@@ -72,7 +72,7 @@ class ReplaceFileFieldValueTest extends ChiefTestCase
         $this->uploadFile('thumb_trans', [
             'nl' => [
                 $existing_asset->id => UploadedFile::fake()->image('tt-favicon.png'),
-                null => null
+                null => null,
             ],
         ]);
 
@@ -82,5 +82,4 @@ class ReplaceFileFieldValueTest extends ChiefTestCase
 
         $this->assertStringContainsString('tt-favicon.png', $this->page->fresh()->asset('thumb_trans', 'nl')->filename());
     }
-
 }

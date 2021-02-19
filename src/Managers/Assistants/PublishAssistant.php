@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait PublishAssistant
 {
@@ -21,21 +21,25 @@ trait PublishAssistant
     public function routesPublishAssistant(): array
     {
         return [
-            ManagedRoute::post('publish','publish/{id}'),
-            ManagedRoute::post('unpublish','unpublish/{id}'),
+            ManagedRoute::post('publish', 'publish/{id}'),
+            ManagedRoute::post('unpublish', 'unpublish/{id}'),
         ];
     }
 
     public function routePublishAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if(!$this->canPublishAssistant($action, $model)) return null;
+        if (! $this->canPublishAssistant($action, $model)) {
+            return null;
+        }
 
         return $this->generateRoute($action, $model, ...$parameters);
     }
 
     public function canPublishAssistant(string $action, $model = null): bool
     {
-        if(!in_array($action, ['publish', 'unpublish'])) return false;
+        if (! in_array($action, ['publish', 'unpublish'])) {
+            return false;
+        }
 
         try {
             $this->authorize('update-page');
@@ -43,7 +47,9 @@ trait PublishAssistant
             return false;
         }
 
-        if(!$model || !$model instanceof StatefulContract) return false;
+        if (! $model || ! $model instanceof StatefulContract) {
+            return false;
+        }
 
         return PageState::make($model)->can($action);
     }

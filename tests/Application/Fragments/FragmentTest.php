@@ -2,12 +2,12 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\OwnerStub;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\FragmentableStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\OwnerStub;
+use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 class FragmentTest extends ChiefTestCase
 {
@@ -42,7 +42,8 @@ class FragmentTest extends ChiefTestCase
         $this->assertCount(0, $this->fragmentRepo->getByOwner($owner));
 
         $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, $fragmentable), [
+            $manager->route('fragment-store', $owner, $fragmentable),
+            [
                 'order' => 1,
             ]
         );
@@ -66,7 +67,8 @@ class FragmentTest extends ChiefTestCase
             ->create();
 
         $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, $fragmentable), [
+            $manager->route('fragment-store', $owner, $fragmentable),
+            [
                 'order' => 1,
                 'title' => 'foobar',
             ]
@@ -75,5 +77,3 @@ class FragmentTest extends ChiefTestCase
         $this->assertEquals('foobar', $this->fragmentRepo->getByOwner($owner)->first()->title);
     }
 }
-
-

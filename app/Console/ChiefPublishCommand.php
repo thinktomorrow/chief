@@ -9,7 +9,7 @@ class ChiefPublishCommand extends BaseCommand
 
     public function handle()
     {
-        if(!$this->hasArgument('part')) {
+        if (! $this->hasArgument('part')) {
             $part = $this->ask('which part');
         } else {
             $part = $this->argument('part');

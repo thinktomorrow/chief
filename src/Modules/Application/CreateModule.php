@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Modules\Application;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Shared\Concerns\Translatable\TranslatableCommand;
 
 class CreateModule
@@ -27,6 +27,7 @@ class CreateModule
             return $module->fresh();
         } catch (\Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
     }

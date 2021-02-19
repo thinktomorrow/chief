@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Validation;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class ValidationNames
 {
@@ -91,6 +91,7 @@ class ValidationNames
             foreach ($keys as $key) {
                 if (count($replacements) < 1) {
                     $newKeySet[] = $key;
+
                     continue;
                 }
 
@@ -129,7 +130,7 @@ class ValidationNames
 
     private function removeEmptyTranslations(array $keys): array
     {
-        if (!isset($this->payload['trans'])) {
+        if (! isset($this->payload['trans'])) {
             return $keys;
         }
 
@@ -137,7 +138,7 @@ class ValidationNames
 
         // Remove locales that are considered empty in the request payload
         foreach ($this->payload['trans'] as $locale => $values) {
-            if ($locale == $this->requiredLocale || !is_array_empty($values)) {
+            if ($locale == $this->requiredLocale || ! is_array_empty($values)) {
                 continue;
             }
 
@@ -157,14 +158,14 @@ class ValidationNames
         $filteredKeys = $keys;
 
         foreach ($filteredKeys as $i => $key) {
-            if (!Str::startsWith($key, ['images.', 'files.'])) {
+            if (! Str::startsWith($key, ['images.', 'files.'])) {
                 continue;
             }
 
             $payload = Arr::get($this->payload, $key, '_notfound_');
 
             // If the payload is empty and this is not the entry for the required locale
-            if ($payload !== '_notfound_' && !$payload && !Str::endsWith($key, '.' . $this->requiredLocale)) {
+            if ($payload !== '_notfound_' && ! $payload && ! Str::endsWith($key, '.' . $this->requiredLocale)) {
                 unset($filteredKeys[$i]);
             }
         }

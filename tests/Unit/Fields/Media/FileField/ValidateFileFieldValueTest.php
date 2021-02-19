@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\FileField;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class ValidateFileFieldValueTest extends ChiefTestCase
 {
@@ -52,7 +52,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
     public function it_can_validate_the_dimensions()
     {
         $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.png','50','50')],
+            'nl' => [UploadedFile::fake()->image('image.png', '50', '50')],
             'en' => [],
         ]);
 
@@ -70,7 +70,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
 
         $response = $this->uploadFile('thumb_trans', [
             'nl' => [
-                $existing_asset_nl->id => UploadedFile::fake()->image('replacing-image.png','50','50')
+                $existing_asset_nl->id => UploadedFile::fake()->image('replacing-image.png', '50', '50'),
             ],
             'en' => [],
         ]);
@@ -85,7 +85,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
     public function it_can_validate_a_max_filesize()
     {
         $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.png','1000','800')],
+            'nl' => [UploadedFile::fake()->image('image.png', '1000', '800')],
             'en' => [],
         ]);
 
@@ -99,7 +99,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
     public function it_can_validate_a_min_filesize()
     {
         $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.png','101','101')],
+            'nl' => [UploadedFile::fake()->image('image.png', '101', '101')],
             'en' => [],
         ]);
 
@@ -113,7 +113,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
     public function it_can_validate_a_mimetype()
     {
         $response = $this->uploadFile('thumb_trans', [
-            'nl' => [UploadedFile::fake()->image('image.jpg','200','200')],
+            'nl' => [UploadedFile::fake()->image('image.jpg', '200', '200')],
             'en' => [],
         ]);
 

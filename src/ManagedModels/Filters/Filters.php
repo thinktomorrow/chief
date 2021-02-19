@@ -46,11 +46,13 @@ class Filters
 
     public function anyRenderable(): bool
     {
-        if($this->isEmpty()) return false;
+        if ($this->isEmpty()) {
+            return false;
+        }
 
         // If at least one of the filters has content to be rendered.
-        foreach($this->filters as $filter) {
-            if($filter->render()) {
+        foreach ($this->filters as $filter) {
+            if ($filter->render()) {
                 return true;
             }
         }
@@ -60,7 +62,7 @@ class Filters
 
     public function isEmpty(): bool
     {
-        return !$this->any();
+        return ! $this->any();
     }
 
     public function keys(): array
@@ -72,17 +74,19 @@ class Filters
 
     private function validateFilters(array $filters)
     {
-        array_map(function (Filter $filter) { return $filter; }, $filters);
+        array_map(function (Filter $filter) {
+            return $filter;
+        }, $filters);
     }
 
     private function sanitizeFilters(array $filters): array
     {
         $existingQueryKeys = [];
 
-        foreach(array_reverse($filters, true) as $index => $filter) {
-
-            if(in_array($filter->queryKey(), $existingQueryKeys)) {
+        foreach (array_reverse($filters, true) as $index => $filter) {
+            if (in_array($filter->queryKey(), $existingQueryKeys)) {
                 unset($filters[$index]);
+
                 continue;
             }
 
@@ -101,5 +105,4 @@ class Filters
     {
         return new static(array_merge($this->filters, $other->all()));
     }
-
 }

@@ -26,7 +26,7 @@ class SnippetCollection extends Collection
         $files = collect();
 
         foreach ($paths as $path) {
-            if (!$fullpath = self::constructFullPath($path)) {
+            if (! $fullpath = self::constructFullPath($path)) {
                 continue;
             }
 
@@ -71,14 +71,14 @@ class SnippetCollection extends Collection
      */
     private static function constructFullPath($path)
     {
-        if (!$path) {
+        if (! $path) {
             return false;
         }
 
         $fullpath = base_path($path);
 
         // We will create a fullpath reference if the file does not exist as an extra safety measure.
-        if (!is_dir($fullpath) && !file_exists($fullpath)) {
+        if (! is_dir($fullpath) && ! file_exists($fullpath)) {
             $fullpath = realpath($path);
         }
 

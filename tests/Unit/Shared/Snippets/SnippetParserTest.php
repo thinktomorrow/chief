@@ -2,11 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Snippets;
 
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Tests\TestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Shared\Snippets\SnippetParser;
 use Thinktomorrow\Chief\Shared\Snippets\SnippetCollection;
+use Thinktomorrow\Chief\Shared\Snippets\SnippetParser;
+use Thinktomorrow\Chief\Tests\TestCase;
 
 class SnippetParserTest extends TestCase
 {

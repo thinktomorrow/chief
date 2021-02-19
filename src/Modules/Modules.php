@@ -29,17 +29,19 @@ final class Modules
         // Get the modules that can be set for the pagebuilder
         // TODO: how to assign for pagebuilder?? with tag, via the chief relations config or is this default
         $moduleManagerClasses = $this->registry->tagged('module')->get();
-trap('working on it');
-        $managers = collect(array_map(function($moduleManagerClass){
+        trap('working on it');
+        $managers = collect(array_map(function ($moduleManagerClass) {
             return app($moduleManagerClass);
         }, $moduleManagerClasses));
 
         return $managers
-            ->reject(function($manager){ return !$manager->can('create'); })
-            ->map(function($manager) {
+            ->reject(function ($manager) {
+                return ! $manager->can('create');
+            })
+            ->map(function ($manager) {
                 return [
                     'label' => $manager->adminLabel('page_title'),
-                    'value' => $manager->route('create')
+                    'value' => $manager->route('create'),
                 ];
             })
             ->toArray();
@@ -50,16 +52,18 @@ trap('working on it');
         // Get the modules that are set to be shareable.
         $moduleManagerClasses = $this->shareableModules();
 
-        $managers = collect(array_map(function($moduleManagerClass){
+        $managers = collect(array_map(function ($moduleManagerClass) {
             return app($moduleManagerClass);
         }, $moduleManagerClasses));
 
         return $managers
-            ->reject(function($manager){ return !$manager->can('create-shared'); })
-            ->map(function($manager){
+            ->reject(function ($manager) {
+                return ! $manager->can('create-shared');
+            })
+            ->map(function ($manager) {
                 return [
                     'label' => $manager->adminLabel('page_title'),
-                    'value' => $manager->route('create-shared')
+                    'value' => $manager->route('create-shared'),
                 ];
             })
             ->toArray();

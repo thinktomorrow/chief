@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Users;
 
-use Thinktomorrow\Chief\Tests\ChiefDatabaseTransactions;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Support\Facades\Hash;
+use Thinktomorrow\Chief\Admin\Users\User;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class ChangePasswordTest extends ChiefTestCase
 {

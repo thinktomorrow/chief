@@ -14,9 +14,9 @@ trait SettingFormParams
 
         $params = [
             'homepage' => ['nl' => $model->modelReference()->get(), 'en' => $model->modelReference()->get()],
-            'app_name' =>  'updated app_name',
+            'app_name' => 'updated app_name',
             'contact_email' => 'valid@mail.com',
-            'contact_name' => 'foobar'
+            'contact_name' => 'foobar',
         ];
 
         foreach ($overrides as $key => $value) {

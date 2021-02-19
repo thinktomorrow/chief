@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\App\View\Components;
 
-use Illuminate\View\Component;
 use Illuminate\Support\Collection;
+use Illuminate\View\Component;
 use Thinktomorrow\Chief\Admin\Nav\Nav as NavItems;
 
 final class Nav extends Component
@@ -28,11 +28,11 @@ final class Nav extends Component
     public function items(): Collection
     {
         // Attribute bag is filled at moment of method call (inside the component view)
-        if($this->attributes->has('untagged')){
+        if ($this->attributes->has('untagged')) {
             return collect($this->nav->untagged()->all());
         }
 
-        if($this->attributes->has('tagged')) {
+        if ($this->attributes->has('tagged')) {
             return collect($this->nav->tagged(explode(',', $this->attributes->get('tagged')))->all());
         }
 

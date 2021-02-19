@@ -3,12 +3,12 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\FileField;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
+use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class AddFileFieldValueTest extends ChiefTestCase
 {
@@ -38,7 +38,7 @@ class AddFileFieldValueTest extends ChiefTestCase
     public function it_can_add_a_new_file()
     {
         $response = $this->uploadFile('thumb', [
-            'nl' => [$this->dummyUploadedFile('tt-document.txt')]
+            'nl' => [$this->dummyUploadedFile('tt-document.txt')],
         ]);
 
         $response->assertSessionHasNoErrors();
@@ -68,11 +68,11 @@ class AddFileFieldValueTest extends ChiefTestCase
     public function it_can_upload_a_file_via_redactor_wysiwyg()
     {
         $response = $this->asAdmin()->post($this->manager->route('asyncRedactorFileUpload', $this->page), [
-            'files'   => [
+            'files' => [
                 [
                     'data' => $this->dummyBase64Payload(),
                     'filename' => 'image.png',
-                ]
+                ],
             ],
             'locale' => 'nl',
         ]);
@@ -84,7 +84,7 @@ class AddFileFieldValueTest extends ChiefTestCase
             ->assertJson([
                 "file-" . $assets->first()->id => [
                     "url" => $this->page->asset(MediaType::CONTENT)->url(),
-                    "id"  => $assets->first()->id,
+                    "id" => $assets->first()->id,
                 ],
             ]);
     }
@@ -115,7 +115,7 @@ class AddFileFieldValueTest extends ChiefTestCase
             ],
             'en' => [
                 UploadedFile::fake()->image('tt-favicon-en.png'),
-            ]
+            ],
         ]);
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->asset('thumb_trans', 'nl')->filename());

@@ -28,7 +28,7 @@ class CreateMenuItemTest extends ChiefTestCase
     /** @test */
     public function only_authenticated_admin_can_create_a_menuItem()
     {
-        $response = $this->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url'   => 'https://thinktomorrow.be']));
+        $response = $this->post(route('chief.back.menuitem.store'), $this->validParams(['trans.nl.url' => 'https://thinktomorrow.be']));
 
         $response->assertRedirect(route('chief.back.login'));
         $this->assertCount(0, MenuItem::all());
@@ -39,9 +39,9 @@ class CreateMenuItemTest extends ChiefTestCase
     {
         $response = $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
-                'trans.nl.url'   => 'https://thinktomorrow.be',
+                'trans.nl.url' => 'https://thinktomorrow.be',
                 'trans.nl.label' => 'label one',
-                'trans.en.url'   => 'https://thinktomorrow.co.uk',
+                'trans.en.url' => 'https://thinktomorrow.co.uk',
                 'trans.en.label' => 'label two',
             ]));
 
@@ -70,7 +70,7 @@ class CreateMenuItemTest extends ChiefTestCase
         $response = $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
                 'allow_parent' => true,
-                'parent_id' => $parent->id
+                'parent_id' => $parent->id,
             ]));
 
         $response->assertStatus(302);
@@ -98,8 +98,8 @@ class CreateMenuItemTest extends ChiefTestCase
     {
         $this->asAdmin()
             ->post(route('chief.back.menuitem.store'), $this->validParams([
-                'type'              => 'custom',
-                'trans.nl.url'      => 'thinktomorrow.be',
+                'type' => 'custom',
+                'trans.nl.url' => 'thinktomorrow.be',
             ]));
 
         $this->assertEquals('https://thinktomorrow.be', MenuItem::first()->url);
@@ -108,7 +108,10 @@ class CreateMenuItemTest extends ChiefTestCase
     /** @test */
     public function label_is_required()
     {
-        $this->assertValidation(new MenuItem(), 'trans.nl.label', $this->validParams(['trans.nl.label' => '']),
+        $this->assertValidation(
+            new MenuItem(),
+            'trans.nl.label',
+            $this->validParams(['trans.nl.label' => '']),
             route('chief.back.menus.show', 'main'),
             route('chief.back.menuitem.store')
         );
@@ -117,7 +120,10 @@ class CreateMenuItemTest extends ChiefTestCase
     /** @test */
     public function type_internal_makes_owner_required()
     {
-        $this->assertValidation(new MenuItem(), 'owner_reference', $this->validParams(['type' => 'internal', 'owner_reference' => '']),
+        $this->assertValidation(
+            new MenuItem(),
+            'owner_reference',
+            $this->validParams(['type' => 'internal', 'owner_reference' => '']),
             route('chief.back.menus.show', 'main'),
             route('chief.back.menuitem.store')
         );
@@ -126,14 +132,14 @@ class CreateMenuItemTest extends ChiefTestCase
     private function validParams($overrides = [])
     {
         $params = [
-            'type'  => 'custom',
+            'type' => 'custom',
             'allow_parent' => false, // flag to allow nesting or not
             'parent_id' => null,
             'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',
                     'url' => 'http://google.com',
-                ]
+                ],
             ],
         ];
 
@@ -143,5 +149,4 @@ class CreateMenuItemTest extends ChiefTestCase
 
         return $params;
     }
-
 }

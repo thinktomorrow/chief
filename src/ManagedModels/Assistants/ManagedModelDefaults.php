@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
 use Illuminate\Support\Str;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 
 trait ManagedModelDefaults
 {
@@ -21,11 +21,11 @@ trait ManagedModelDefaults
 
     public function adminLabel(string $key, $default = null, array $replace = [])
     {
-        if (! ($value = data_get($this->adminLabels(), $key)) ) {
+        if (! ($value = data_get($this->adminLabels(), $key))) {
             return $default;
         }
 
-        return (is_string($value) && !empty($replace)) ? sprintf($value, $replace) : $value;
+        return (is_string($value) && ! empty($replace)) ? sprintf($value, $replace) : $value;
     }
 
     /**
@@ -36,7 +36,7 @@ trait ManagedModelDefaults
      */
     private function adminLabels(): array
     {
-        $singular = Str::of(static::managedModelKey())->singular()->replace('_',' ')->__toString();
+        $singular = Str::of(static::managedModelKey())->singular()->replace('_', ' ')->__toString();
 
         return [
             /**
@@ -46,7 +46,7 @@ trait ManagedModelDefaults
              */
             'label' => $singular, // Label used to refer to the generic model
             'nav_label' => $singular, // label used in the chief navigation
-            'page_title' => Str::of(static::managedModelKey())->plural()->replace('_',' ')->__toString(), // Generic collection title, for example used on index
+            'page_title' => Str::of(static::managedModelKey())->plural()->replace('_', ' ')->__toString(), // Generic collection title, for example used on index
 
             /**
              * Instance labels
@@ -63,7 +63,9 @@ trait ManagedModelDefaults
 
     private function onlineStatusAsLabel(): string
     {
-        if(!$this instanceof StatefulContract) return '';
+        if (! $this instanceof StatefulContract) {
+            return '';
+        }
 
         if ($this->stateOf(PageState::KEY) === PageState::PUBLISHED) {
             return $this instanceof ProvidesUrl

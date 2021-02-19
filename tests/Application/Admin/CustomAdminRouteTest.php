@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin;
 
-use Illuminate\Support\Arr;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Arr;
 use Thinktomorrow\Chief\Tests\TestCase;
 
 class CustomAdminRouteTest extends TestCase
@@ -14,7 +14,7 @@ class CustomAdminRouteTest extends TestCase
     }
 
     /** @test */
-    function a_custom_admin_filepath_can_add_chief_admin_routes()
+    public function a_custom_admin_filepath_can_add_chief_admin_routes()
     {
         // There is a dummy.route route defined in the config test stub
         $this->assertStringEndsWith('/admin/dummy-route', route('dummy.route'));

@@ -39,7 +39,7 @@ class FileFieldMimetypesRule extends AbstractMediaFieldRule
             'filefield_mimetypes' => ':attribute is niet het juiste bestandstype. Volgende types zijn geldig: ' . implode(', ', $params),
         ]);
 
-        if (!isset($validator->customAttributes[$attribute])) {
+        if (! isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

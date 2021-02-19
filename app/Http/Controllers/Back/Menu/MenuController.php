@@ -20,7 +20,7 @@ class MenuController extends Controller
         }
 
         return view('chief::back.menu.index', [
-            'menus' => $menus
+            'menus' => $menus,
         ]);
     }
 

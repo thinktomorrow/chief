@@ -13,7 +13,7 @@ class Homepage
     {
         $homepageValue = chiefSetting(Setting::HOMEPAGE, $locale);
 
-        if (!$homepageValue || !is_object($model) || !$model instanceof ReferableModel) {
+        if (! $homepageValue || ! is_object($model) || ! $model instanceof ReferableModel) {
             return false;
         }
 

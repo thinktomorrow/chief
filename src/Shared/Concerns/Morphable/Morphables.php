@@ -17,7 +17,7 @@ class Morphables
             $class = $morphedModel;
         }
 
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             throw new NotFoundMorphKey('No class found by morphkey [' . $class . ']. Make sure that the morphkey is a valid class reference.');
         }
 

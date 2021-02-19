@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Audit\Audit;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;
-use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
+use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 trait ArchiveAssistant
 {
@@ -20,15 +20,17 @@ trait ArchiveAssistant
     public function routesArchiveAssistant(): array
     {
         return [
-            ManagedRoute::post('archive','archive/{id}'),
-            ManagedRoute::post('unarchive','unarchive/{id}'),
+            ManagedRoute::post('archive', 'archive/{id}'),
+            ManagedRoute::post('unarchive', 'unarchive/{id}'),
             ManagedRoute::get('archive_index'),
         ];
     }
 
     public function canArchiveAssistant(string $action, $model = null): bool
     {
-        if(!in_array($action, ['archive', 'unarchive', 'archive_index'])) return false;
+        if (! in_array($action, ['archive', 'unarchive', 'archive_index'])) {
+            return false;
+        }
 
         try {
             $this->authorize('update-page');
@@ -36,15 +38,18 @@ trait ArchiveAssistant
             return false;
         }
 
-        if($action === 'archive_index') {
+        if ($action === 'archive_index') {
             // Archive index is only visitable when there is at least one model archived.
-            if(public_method_exists($this->managedModelClass(), 'scopeArchived')) {
+            if (public_method_exists($this->managedModelClass(), 'scopeArchived')) {
                 return $this->managedModelClass()::archived()->count() > 0;
             }
+
             return false;
         }
 
-        if(!$model || !$model instanceof StatefulContract) return false;
+        if (! $model || ! $model instanceof StatefulContract) {
+            return false;
+        }
 
         return PageState::make($model)->can($action);
     }
@@ -65,19 +70,17 @@ trait ArchiveAssistant
             // Ok now get all urls from this model and point them to the new records
             foreach ($archivedUrlRecords as $urlRecord) {
                 if ($targetRecord = $targetRecords->first(function ($record) use ($urlRecord) {
-                    return ($record->locale == $urlRecord->locale && !$record->isRedirect());
+                    return ($record->locale == $urlRecord->locale && ! $record->isRedirect());
                 })) {
                     $urlRecord->redirectTo($targetRecord);
                 }
             }
 
             // Cast all existing records to the new owning model
-            $archivedUrlRecords->each(function(UrlRecord $urlRecord) use($redirectModel){
+            $archivedUrlRecords->each(function (UrlRecord $urlRecord) use ($redirectModel) {
                 $urlRecord->changeOwningModel($redirectModel);
                 $urlRecord->save();
             });
-
-
         }
 
         $model->archive();
@@ -107,8 +110,8 @@ trait ArchiveAssistant
 
         return view('chief::back.managers.index', [
             'manager' => $this,
-            'model'   => $model,
-            'models'  => $this->managedModelClass()::archived()->paginate(20),
+            'model' => $model,
+            'models' => $this->managedModelClass()::archived()->paginate(20),
         ]);
     }
 }

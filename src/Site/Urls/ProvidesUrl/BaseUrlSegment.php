@@ -8,14 +8,22 @@ class BaseUrlSegment
 {
     public static function find(array $segments, string $locale = null)
     {
-        if(count($segments) < 1) return '/';
-        if(count($segments) == 1) return reset($segments);
+        if (count($segments) < 1) {
+            return '/';
+        }
+        if (count($segments) == 1) {
+            return reset($segments);
+        }
 
         // Localized value
-        if (($key = $locale ?? app()->getlocale()) && isset($segments[$key])) return $segments[$key];
+        if (($key = $locale ?? app()->getlocale()) && isset($segments[$key])) {
+            return $segments[$key];
+        }
 
         // Fallback localized value
-        if (($fallback_locale = config('app.fallback_locale')) && isset($segments[$fallback_locale])) return $segments[$fallback_locale];
+        if (($fallback_locale = config('app.fallback_locale')) && isset($segments[$fallback_locale])) {
+            return $segments[$fallback_locale];
+        }
 
         // Fallback to first entry
         return reset($segments);

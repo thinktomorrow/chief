@@ -29,12 +29,12 @@ class MimetypeIcon
 
     public function icon(): string
     {
-        if(isset($this->mapping[$this->mimetype])) {
+        if (isset($this->mapping[$this->mimetype])) {
             return $this->mapping[$this->mimetype];
         }
 
-        foreach($this->mapping as $mimetype => $icon) {
-            if(Str::contains($this->mimetype, $mimetype)) {
+        foreach ($this->mapping as $mimetype => $icon) {
+            if (Str::contains($this->mimetype, $mimetype)) {
                 return $icon;
             }
         }

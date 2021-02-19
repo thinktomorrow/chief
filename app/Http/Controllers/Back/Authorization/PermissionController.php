@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Authorization;
 
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Illuminate\Http\Request;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
 {
@@ -17,6 +17,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
+
         return view('chief::back.permissions.index')->with('permissions', $permissions);
     }
     /**
@@ -27,6 +28,7 @@ class PermissionController extends Controller
     public function create()
     {
         $roles = Role::get();
+
         return view('chief::back.permissions.create')->with('roles', $roles);
     }
     /**
@@ -38,7 +40,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name' => 'required|max:40',
         ]);
         $name = $request['name'];
         $permission = new Permission();
@@ -46,13 +48,14 @@ class PermissionController extends Controller
         $roles = $request['roles'];
 
         $permission->save();
-        if (!empty($request['roles'])) {
+        if (! empty($request['roles'])) {
             foreach ($roles as $role) {
                 $r = Role::where('id', '=', $role)->firstOrFail(); //Match input role to db record
                 $permission = Permission::where('name', '=', $name)->first();
                 $r->givePermissionTo($permission);
             }
         }
+
         return redirect()->route('chief.back.permissions.index')
             ->with(
                 'flash_message',
@@ -92,11 +95,12 @@ class PermissionController extends Controller
     {
         $permission = Permission::findOrFail($id);
         $this->validate($request, [
-            'name'=>'required|max:40',
+            'name' => 'required|max:40',
         ]);
 
         $input = $request->all();
         $permission->fill($input)->save();
+
         return redirect()->route('chief.back.permissions.index')
             ->with(
                 'flash_message',
@@ -122,6 +126,7 @@ class PermissionController extends Controller
         }
 
         $permission->delete();
+
         return redirect()->route('chief.back.permissions.index')
             ->with(
                 'flash_message',

@@ -5,5 +5,4 @@ namespace Thinktomorrow\Chief\Managers\Exceptions;
 
 final class MissingManagerRegistration extends \Exception
 {
-
 }

@@ -3,16 +3,15 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Mediagallery\Application;
 
-use ZipStream\ZipStream;
 use Illuminate\Http\Request;
-use ZipStream\Option\Archive;
 use Thinktomorrow\AssetLibrary\Asset;
+use ZipStream\Option\Archive;
+use ZipStream\ZipStream;
 
 final class ZipAction
 {
     public function __construct()
     {
-
     }
 
     public function handle(string $filename, Request $request)
@@ -25,8 +24,8 @@ final class ZipAction
 
         $zip = new ZipStream($filename, $options);
 
-        $assets->each(function(Asset $asset) use($zip){
-            if(file_exists($asset->getFirstMediaPath())) {
+        $assets->each(function (Asset $asset) use ($zip) {
+            if (file_exists($asset->getFirstMediaPath())) {
                 $zip->addFileFromPath($asset->filename(), $asset->getFirstMediaPath());
             }
         });

@@ -31,6 +31,7 @@ class DeleteModule
             DB::commit();
         } catch (\Throwable $e) {
             DB::rollBack();
+
             throw $e;
         }
     }

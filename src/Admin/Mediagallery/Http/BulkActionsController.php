@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Admin\Mediagallery\Http;
 
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Admin\Mediagallery\Application\ZipAction;
+use Illuminate\Support\Str;
 use Thinktomorrow\Chief\Admin\Mediagallery\Application\RemovalAction;
+use Thinktomorrow\Chief\Admin\Mediagallery\Application\ZipAction;
     use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class BulkActionsController extends Controller
@@ -24,11 +24,11 @@ class BulkActionsController extends Controller
 
     public function bulk(Request $request)
     {
-        if($request->input('type') == 'download') {
+        if ($request->input('type') == 'download') {
             return $this->download($request);
         }
 
-        if($request->input('type') == 'remove') {
+        if ($request->input('type') == 'remove') {
             return $this->remove($request);
         }
     }
@@ -45,7 +45,7 @@ class BulkActionsController extends Controller
     {
         $result = $this->removalAction->handle($request);
 
-        if($result) {
+        if ($result) {
             return redirect()->back()->with('messages.success', 'De mediabestanden zijn verwijderd');
         }
 

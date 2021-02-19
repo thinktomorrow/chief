@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
-use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\Managers\DiscoverTraitMethods;
 use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
 
 trait ManagerDefaults
@@ -28,8 +28,8 @@ trait ManagerDefaults
 
     public function route(string $action, $model = null, ...$parameters): string
     {
-        foreach(DiscoverTraitMethods::belongingTo(static::class, 'route') as $method) {
-            if(null !== ($route = $this->$method($action, $model, ...$parameters))){
+        foreach (DiscoverTraitMethods::belongingTo(static::class, 'route') as $method) {
+            if (null !== ($route = $this->$method($action, $model, ...$parameters))) {
                 return $route;
             }
         }
@@ -39,8 +39,8 @@ trait ManagerDefaults
 
     public function can(string $action, $model = null): bool
     {
-        foreach(DiscoverTraitMethods::belongingTo(static::class, 'can') as $method) {
-            if(true === $this->$method($action, $model)){
+        foreach (DiscoverTraitMethods::belongingTo(static::class, 'can') as $method) {
+            if (true === $this->$method($action, $model)) {
                 return true;
             }
         }
@@ -61,7 +61,7 @@ trait ManagerDefaults
 
     private function guard(string $action, $model = null)
     {
-        if (!$this->can($action, $model)) {
+        if (! $this->can($action, $model)) {
             throw NotAllowedManagerAction::notAllowedAction($action, $this->managedModelClass()::managedModelKey());
         }
     }
@@ -74,7 +74,7 @@ trait ManagerDefaults
      */
     private function authorize(string $permission): void
     {
-        if (!chiefAdmin() || !chiefAdmin()->hasPermissionTo($permission)) {
+        if (! chiefAdmin() || ! chiefAdmin()->hasPermissionTo($permission)) {
             throw NotAllowedManagerAction::notAllowedPermission($permission, get_class($this));
         }
     }

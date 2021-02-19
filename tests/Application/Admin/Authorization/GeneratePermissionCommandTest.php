@@ -29,8 +29,8 @@ class GeneratePermissionCommandTest extends ChiefTestCase
         Role::create(['name' => 'new admin']);
 
         $this->artisan('chief:permission', [
-            'name'   => 'view-ability',
-            '--role' => 'new admin'
+            'name' => 'view-ability',
+            '--role' => 'new admin',
         ]);
 
         $role = Role::findByName('new admin');
@@ -43,7 +43,7 @@ class GeneratePermissionCommandTest extends ChiefTestCase
     public function permissions_can_be_generated()
     {
         $this->artisan('chief:permission', [
-            'name' => 'ability'
+            'name' => 'ability',
         ]);
 
         $this->assertCount(4, Permission::all());
@@ -65,7 +65,7 @@ class GeneratePermissionCommandTest extends ChiefTestCase
 
         $this->artisan('chief:permission', [
             'name' => 'view-role',
-            '--role' => 'admin'
+            '--role' => 'admin',
         ]);
 
         $role = Role::findByName('admin');
@@ -84,7 +84,7 @@ class GeneratePermissionCommandTest extends ChiefTestCase
 
         $this->artisan('chief:permission', [
             'name' => 'permission',
-            '--role' => 'admin, author'
+            '--role' => 'admin, author',
         ]);
 
         $this->assertCount(4, Role::findByName('admin')->permissions);

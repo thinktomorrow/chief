@@ -11,13 +11,14 @@ final class Widgets
 
     private function __construct(array $widgets)
     {
-        array_map(function(Widget $widget){}, $widgets);
+        array_map(function (Widget $widget) {
+        }, $widgets);
         $this->widgets = $widgets;
     }
 
     public static function fromArray(array $widgetClasses): self
     {
-        return new static(array_map(function(string $widgetClass){
+        return new static(array_map(function (string $widgetClass) {
             return app($widgetClass);
         }, $widgetClasses));
     }

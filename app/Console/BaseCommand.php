@@ -2,9 +2,8 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Thinktomorrow\Chief\Admin\Users\User;
 use Illuminate\Console\Command;
+use Thinktomorrow\Chief\Admin\Users\User;
 
 abstract class BaseCommand extends Command
 {
@@ -30,7 +29,7 @@ abstract class BaseCommand extends Command
         $password = $passwordConfirm = null;
         $tries = 0;
 
-        while (!$password || strlen($password) < 4 || $password != $passwordConfirm) {
+        while (! $password || strlen($password) < 4 || $password != $passwordConfirm) {
             if ($tries > 2) {
                 throw new \Exception('Aborting. Too many failed attempts to set password');
             }

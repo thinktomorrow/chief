@@ -40,7 +40,9 @@ class FieldsFilterTest extends TestCase
             InputField::make('input-two'),
         ]);
 
-        $filtered = $fields->filterBy(function($field){ return $field->getName() == 'input-one';  });
+        $filtered = $fields->filterBy(function ($field) {
+            return $field->getName() == 'input-one';
+        });
 
         $this->assertCount(1, $filtered);
         $this->assertEquals('input-one', $filtered->first()->getKey());

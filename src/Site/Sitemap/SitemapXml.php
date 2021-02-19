@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Sitemap;
 
-use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
-use Spatie\Sitemap\Sitemap;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Pool;
 use GuzzleHttp\Psr7\Request;
-use Spatie\Sitemap\Tags\Url;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Collection;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use GuzzleHttp\Exception\RequestException;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class SitemapXml
 {
@@ -78,7 +78,7 @@ class SitemapXml
         $this->urls = $models
             ->reject(function (ProvidesUrl $model) use ($locale) {
                 // In case the url is not found or present for given locale.
-                return !$model->url($locale);
+                return ! $model->url($locale);
             })
             ->map(function (ProvidesUrl $model) use ($locale, $alternateLocales) {
                 $url = $model->url($locale);

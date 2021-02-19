@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\Http\Middleware;
 
 use Closure;
 use Spatie\ImageOptimizer\OptimizerChain;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class OptimizeImages
 {

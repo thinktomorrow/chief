@@ -3,17 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\MediaModule;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\fakes\OptionalImageFieldManager;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\ImageFieldModuleManager;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class SortImageFieldValueTest extends ChiefTestCase
 {
@@ -41,8 +34,8 @@ class SortImageFieldValueTest extends ChiefTestCase
 
         $this->uploadFileOrder('thumb_image_trans', [
             'nl' => [
-                'thumb_image_trans' => $images->last()->id . ',' . $images->first()->id
-            ]
+                'thumb_image_trans' => $images->last()->id . ',' . $images->first()->id,
+            ],
         ]);
 
         $assetIds = $this->page->fresh()->assets('thumb_image_trans')->pluck('id')->toArray();
@@ -66,8 +59,8 @@ class SortImageFieldValueTest extends ChiefTestCase
                 'files-' . 'thumb_image_trans' => $nl_images[1]->id . ',' . $nl_images[0]->id,
             ],
             'en' => [
-                'files-' . 'thumb_image_trans' => $en_images[3]->id . ',' . $en_images[2]->id
-            ]
+                'files-' . 'thumb_image_trans' => $en_images[3]->id . ',' . $en_images[2]->id,
+            ],
         ]);
 
         $nl_newImagesSorted = $this->page->refresh()->assets('thumb_image_trans', 'nl')->pluck('id')->toArray();

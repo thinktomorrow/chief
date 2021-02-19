@@ -26,7 +26,7 @@ class MemoizedUrlRecord extends UrlRecord
      */
     public static function findByModel(Model $model, string $locale = null): UrlRecord
     {
-        if (!static::$cachedRecords) {
+        if (! static::$cachedRecords) {
             static::$cachedRecords = parent::all();
         }
 
@@ -37,7 +37,7 @@ class MemoizedUrlRecord extends UrlRecord
             ->sortBy('redirect_id')
             ->first();
 
-        if (!$record) {
+        if (! $record) {
             throw new UrlRecordNotFound('No url record found for model [' . $model->getMorphClass() . '@' . $model->id . '] for locale [' . $locale . '].');
         }
 

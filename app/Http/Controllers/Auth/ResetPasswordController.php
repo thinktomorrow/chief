@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
-use Illuminate\Support\Facades\Password;
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefPasswordBroker;
 use Thinktomorrow\Chief\Admin\Authorization\ChiefPasswordBrokerResolver;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class ResetPasswordController extends Controller
 {

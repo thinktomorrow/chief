@@ -27,8 +27,8 @@ trait AllowsTags
 
     public function untag($tag)
     {
-        foreach((array) $tag as $_tag) {
-            if(false !== ($k = array_search($_tag, $this->tags))) {
+        foreach ((array) $tag as $_tag) {
+            if (false !== ($k = array_search($_tag, $this->tags))) {
                 unset($this->tags[$k]);
             }
         }

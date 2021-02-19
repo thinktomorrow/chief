@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\System;
 
 use Illuminate\Support\Facades\Artisan;
-use Thinktomorrow\Chief\Site\Sitemap\SitemapFiles;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Site\Sitemap\SitemapFiles;
 
 class SitemapController extends Controller
 {
@@ -15,7 +15,7 @@ class SitemapController extends Controller
         $sitemapFiles = app(SitemapFiles::class)->allWithin(public_path());
 
         return view('chief::back.system.sitemap.show', [
-            'sitemapFiles' => $sitemapFiles
+            'sitemapFiles' => $sitemapFiles,
         ]);
     }
 
@@ -24,7 +24,7 @@ class SitemapController extends Controller
         Artisan::call('chief:sitemap');
 
         return response()->json([
-            'status' => 200
+            'status' => 200,
         ]);
     }
 }

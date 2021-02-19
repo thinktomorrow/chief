@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Field;
 
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class UrlSlugField extends InputField implements Field
 {
@@ -56,7 +56,7 @@ class UrlSlugField extends InputField implements Field
 
     private function rawSlugValue(): string
     {
-        if (!$this->urlRecord) {
+        if (! $this->urlRecord) {
             return '';
         }
 
@@ -87,17 +87,17 @@ class UrlSlugField extends InputField implements Field
     public function toArray(): array
     {
         return [
-            'key'            => $this->key,
-            'name'           => $this->getName(),
-            'prepend'        => $this->prepend,
-            'label'          => $this->label,
-            'placeholder'    => $this->placeholder,
-            'description'    => $this->description,
-            'value'          => $this->getValue(),
+            'key' => $this->key,
+            'name' => $this->getName(),
+            'prepend' => $this->prepend,
+            'label' => $this->label,
+            'placeholder' => $this->placeholder,
+            'description' => $this->description,
+            'value' => $this->getValue(),
             'baseUrlSegment' => $this->baseUrlSegment,
-            'hint'           => null, // Hint placeholder to show url hint when it already exists
-            'is_homepage'    => ($this->getValue() === '/'),
-            'show'           => !!$this->getValue(),// show input field or not
+            'hint' => null, // Hint placeholder to show url hint when it already exists
+            'is_homepage' => ($this->getValue() === '/'),
+            'show' => ! ! $this->getValue(),// show input field or not
         ];
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu;
 
-use Vine\Node;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Vine\Node;
 
 class MenuItem extends Model
 {
@@ -70,7 +70,9 @@ class MenuItem extends Model
 
     public function url($locale = null)
     {
-        if(!$locale) $locale = app()->getLocale();
+        if (! $locale) {
+            $locale = app()->getLocale();
+        }
 
         if ($this->ofType(static::TYPE_INTERNAL) && $owner = $this->owner) {
             return $owner->url($locale);
@@ -87,18 +89,18 @@ class MenuItem extends Model
     public function entry(Node $node)
     {
         return (object)[
-            'id'             => $node->id,
-            'type'           => $node->type,
-            'label'          => $node->label,
-            'page_label'     => $node->page_label,                       // Extra info when dealing with internal links
-            'url'            => $node->url(),
-            'order'          => $node->order,
-            'owner_type'     => $node->owner_type,
-            'owner_id'       => $node->owner_id,
-            'parent_id'      => $node->parent_id,
-            'morph_key'      => $node->morph_key,
+            'id' => $node->id,
+            'type' => $node->type,
+            'label' => $node->label,
+            'page_label' => $node->page_label,                       // Extra info when dealing with internal links
+            'url' => $node->url(),
+            'order' => $node->order,
+            'owner_type' => $node->owner_type,
+            'owner_id' => $node->owner_id,
+            'parent_id' => $node->parent_id,
+            'morph_key' => $node->morph_key,
             'hidden_in_menu' => $node->hidden_in_menu,
-            'draft'          => $node->draft,
+            'draft' => $node->draft,
         ];
     }
 }

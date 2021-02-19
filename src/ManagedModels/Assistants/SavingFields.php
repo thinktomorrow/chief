@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Assistants;
 
-use SplFileInfo;
-use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
-use Thinktomorrow\Chief\Shared\Helpers\Form;
+use Illuminate\Support\Str;
+use SplFileInfo;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\Site\Urls\Field\Url;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\PagebuilderField;
 use Thinktomorrow\Chief\ManagedModels\Media\Application\FileFieldHandler;
 use Thinktomorrow\Chief\ManagedModels\Media\Application\ImageFieldHandler;
+use Thinktomorrow\Chief\Shared\Helpers\Form;
+use Thinktomorrow\Chief\Site\Urls\Field\Url;
 
 trait SavingFields
 {
@@ -31,13 +31,12 @@ trait SavingFields
     {
         [$input, $files] = $this->removeDuplicateFilePayload($input, $files);
 
-        foreach($fields as $field){
-            if($this->detectCustomSaveMethod($field)) {
+        foreach ($fields as $field) {
+            if ($this->detectCustomSaveMethod($field)) {
                 continue;
             }
 
-            if(!$field->isLocalized())
-            {
+            if (! $field->isLocalized()) {
                 // Set standard non-localized attribute on the model
                 ($customSetMethod = $this->detectCustomSetMethod($field))
                     ? $this->$customSetMethod($field, $input)
@@ -48,10 +47,12 @@ trait SavingFields
 
             // Dynamic localized values or standard translated
             // For standard translations we set value with the colon notation, e.g. title:en
-            Form::foreachTrans(data_get($input, 'trans', []), function($locale, $key, $value) use($field){
-                if($key !== $field->getColumn()) return;
+            Form::foreachTrans(data_get($input, 'trans', []), function ($locale, $key, $value) use ($field) {
+                if ($key !== $field->getColumn()) {
+                    return;
+                }
 
-                if($this->isFieldForDynamicValue($field)) {
+                if ($this->isFieldForDynamicValue($field)) {
                     $this->setDynamic($key, $value, $locale);
                 } else {
                     $this->{$field->getColumn().':'.$locale} = $value;
@@ -62,8 +63,8 @@ trait SavingFields
         $this->save();
 
         // Custom save methods
-        foreach($fields as $field){
-            if($customSaveMethod = $this->detectCustomSaveMethod($field)) {
+        foreach ($fields as $field) {
+            if ($customSaveMethod = $this->detectCustomSaveMethod($field)) {
                 $this->$customSaveMethod($field, $input, $files);
             }
         }
@@ -121,8 +122,8 @@ trait SavingFields
         $flatInput = Arr::dot($input);
         $flatFiles = Arr::dot($files);
 
-        foreach($flatInput as $key => $entry) {
-            if($this->isValidFile($entry) && array_key_exists($key, $flatFiles)) {
+        foreach ($flatInput as $key => $entry) {
+            if ($this->isValidFile($entry) && array_key_exists($key, $flatFiles)) {
                 Arr::forget($input, $key);
             }
         }

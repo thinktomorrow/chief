@@ -3,17 +3,16 @@
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\AssetLibrary\Tests\stubs\Article;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\AssetLibrary\Application\AssetUploader;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 use Thinktomorrow\Chief\ManagedModels\Application\DuplicateContext;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
 
 class DuplicateContextTest extends ChiefTestCase
 {
@@ -104,7 +103,7 @@ class DuplicateContextTest extends ChiefTestCase
         $this->markTestIncomplete();
 
         $this->asAdmin()->post(route('chief.back.managers.store', 'singles'), array_merge([
-            'template' => get_class($this->page).'@'.$this->page->id
+            'template' => get_class($this->page).'@'.$this->page->id,
         ], $this->validPageParams()));
 
         $page = Single::find(3);

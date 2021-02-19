@@ -2,14 +2,14 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Urls;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Admin\Settings\Homepage;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
 use Thinktomorrow\Chief\Tests\Shared\SettingFormParams;
 
@@ -32,7 +32,7 @@ class HomepageTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_setting_homepage_url_is_set_as_well()
+    public function when_setting_homepage_url_is_set_as_well()
     {
         $model = ArticlePage::create([]);
 
@@ -40,7 +40,7 @@ class HomepageTest extends ChiefTestCase
             'homepage' => [
                 'nl' => $model->modelReference()->get(),
                 'en' => $model->modelReference()->get(),
-            ]
+            ],
         ]));
 
         $this->assertEquals($model->modelReference()->get(), chiefSetting('homepage'));
@@ -49,7 +49,7 @@ class HomepageTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_setting_single_homepage_all_urls_are_changed()
+    public function when_setting_single_homepage_all_urls_are_changed()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -92,7 +92,7 @@ class HomepageTest extends ChiefTestCase
     }
 
     /** @test */
-    function when_setting_homepage_per_locale_only_those_localized_urls_of_the_model_are_changed()
+    public function when_setting_homepage_per_locale_only_those_localized_urls_of_the_model_are_changed()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -111,7 +111,7 @@ class HomepageTest extends ChiefTestCase
             'homepage' => [
                 'nl' => $model->modelReference()->get(),
                 'en' => $other->modelReference()->get(),
-            ]
+            ],
         ]));
 
         $this->assertEquals($model->modelReference()->get(), chiefSetting('homepage'));
@@ -125,7 +125,7 @@ class HomepageTest extends ChiefTestCase
         $this->assertTrue($redirectUrlRecord->isRedirect());
         $this->assertEquals($homepageUrlRecord->id, $redirectUrlRecord->redirect_id);
 
-        $this->assertEquals($other->modelReference()->get() , chiefSetting('homepage', 'en'));
+        $this->assertEquals($other->modelReference()->get(), chiefSetting('homepage', 'en'));
 
         // Assert existing url record is kept the same
         $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
@@ -133,20 +133,20 @@ class HomepageTest extends ChiefTestCase
     }
 
     /** @test */
-    function passing_homepage_setting_to_null_is_not_allowed()
+    public function passing_homepage_setting_to_null_is_not_allowed()
     {
         $response = $this->asAdmin()->put(route('chief.back.settings.update'), [
             'homepage' => [
                 'nl' => 'flatreference@1',
                 'en' => null,
-            ]
+            ],
         ]);
 
         $response->assertSessionHasErrors('homepage.en');
     }
 
     /** @test */
-    function when_setting_homepage_to_another_url_the_previous_one_is_reset_to_its_recent_redirect()
+    public function when_setting_homepage_to_another_url_the_previous_one_is_reset_to_its_recent_redirect()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -169,8 +169,8 @@ class HomepageTest extends ChiefTestCase
         ]));
 
         $this->assertEquals(4, UrlRecord::count());
-        $this->assertEquals('/', UrlRecord::findByModel($model,'nl')->slug);
-        $this->assertEquals('/', UrlRecord::findByModel($model,'en')->slug);
+        $this->assertEquals('/', UrlRecord::findByModel($model, 'nl')->slug);
+        $this->assertEquals('/', UrlRecord::findByModel($model, 'en')->slug);
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'nl')->isRedirect());
         $this->assertTrue(UrlRecord::findBySlug('foobar', 'en')->isRedirect());
 
@@ -178,18 +178,18 @@ class HomepageTest extends ChiefTestCase
             'homepage' => [
                 'nl' => $other->modelReference()->get(),
                 'en' => $other->modelReference()->get(),
-            ]
+            ],
         ]));
 
         $this->assertEquals(4, UrlRecord::count());
-        $this->assertEquals('/', UrlRecord::findByModel($other,'nl')->slug);
-        $this->assertEquals('/', UrlRecord::findByModel($other,'en')->slug);
-        $this->assertEquals('foobar', UrlRecord::findByModel($model,'nl')->slug);
-        $this->assertEquals('foobar', UrlRecord::findByModel($model,'en')->slug);
+        $this->assertEquals('/', UrlRecord::findByModel($other, 'nl')->slug);
+        $this->assertEquals('/', UrlRecord::findByModel($other, 'en')->slug);
+        $this->assertEquals('foobar', UrlRecord::findByModel($model, 'nl')->slug);
+        $this->assertEquals('foobar', UrlRecord::findByModel($model, 'en')->slug);
     }
 
     /** @test */
-    function when_setting_a_homepage_url_the_homepage_setting_is_set_as_well()
+    public function when_setting_a_homepage_url_the_homepage_setting_is_set_as_well()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -208,7 +208,7 @@ class HomepageTest extends ChiefTestCase
     }
 
     /** @test */
-    function helper_can_check_if_page_is_homepage()
+    public function helper_can_check_if_page_is_homepage()
     {
         $this->asAdmin()->post($this->manager->route('store'), $this->validPageParams());
         $model = ArticlePage::first();
@@ -228,5 +228,4 @@ class HomepageTest extends ChiefTestCase
 
         $this->assertFalse(Homepage::is($other));
     }
-
 }

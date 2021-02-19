@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Controllers;
 
-use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Managers\Register\Registry;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class CheckLinkController
 {
@@ -31,7 +31,7 @@ class CheckLinkController
 
     private function hint(string $slug, bool $exists): string
     {
-        if (!$exists) {
+        if (! $exists) {
             return '';
         }
 
@@ -40,6 +40,7 @@ class CheckLinkController
         if ($urlRecord->isRedirect()) {
             return 'Deze link bestaat reeds als redirect. Deze redirect zal bijgevolg worden verwijderd.';
         }
+
         return 'Deze link bestaat reeds. Kies een andere of <a target="_blank" href="' . $this->editRouteOfOtherModel($urlRecord) . '">pas de andere pagina aan</a>.';
     }
 

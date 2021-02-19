@@ -5,5 +5,4 @@ namespace Thinktomorrow\Chief\ManagedModels\Exceptions;
 
 class ManagerRouteNotFound extends \Exception
 {
-
 }

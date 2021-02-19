@@ -32,9 +32,9 @@ trait FieldsComponentAssistant
         $this->guard('fields-edit', $model);
 
         return view('chief::managers.fields.edit', [
-            'manager'      => $this,
-            'model'        => $model,
-            'fields'       => $componentKey !== "default"
+            'manager' => $this,
+            'model' => $model,
+            'fields' => $componentKey !== "default"
                 ? $model->fields()->model($model)->component($componentKey)
                 : $model->fields()->model($model)->notTagged('component'),
             'componentKey' => $componentKey,
@@ -57,7 +57,7 @@ trait FieldsComponentAssistant
 
         return response()->json([
             'message' => 'fields updated',
-            'data'    => [],
+            'data' => [],
         ], 200);
     }
 }

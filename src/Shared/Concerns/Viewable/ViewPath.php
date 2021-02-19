@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 
-use Thinktomorrow\Chief\Sets\Set;
 use Thinktomorrow\Chief\PageBuilder\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Sets\Set;
 
 class ViewPath
 {
@@ -55,14 +55,14 @@ class ViewPath
         }
 
         foreach ($viewPaths as $viewPath) {
-            if (!view()->exists($viewPath)) {
+            if (! view()->exists($viewPath)) {
                 continue;
             }
 
             return $viewPath;
         }
 
-        if (!view()->exists($basePath . 'show')) {
+        if (! view()->exists($basePath . 'show')) {
             throw new NotFoundView('Viewfile not found for [' . get_class($this->viewable) . ']. Make sure the view [' . $basePath . $guessedViewName . '] or the default view [' . $basePath . 'show] exists.');
         }
     }

@@ -10,7 +10,7 @@ trait ChecksExistingAssets
 {
     protected function looksLikeAnAssetId($value): bool
     {
-        if (!is_string($value) && !is_int($value)) {
+        if (! is_string($value) && ! is_int($value)) {
             return false;
         }
 

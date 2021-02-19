@@ -13,12 +13,14 @@ final class RenderWidgets
     public function render(Collection $widgets): string
     {
         // Validate each entry as a valid widget object.
-        $widgets->each(function(Widget $widget){});
+        $widgets->each(function (Widget $widget) {
+        });
 
         // Init new loop object
-        $this->loopsStack = []; $this->addLoop($widgets);
+        $this->loopsStack = [];
+        $this->addLoop($widgets);
 
-        return $widgets->reduce(function($carry, Widget $widget) use($widgets){
+        return $widgets->reduce(function ($carry, Widget $widget) use ($widgets) {
             $this->incrementLoopIndices();
             $loop = $this->getLastLoop();
 

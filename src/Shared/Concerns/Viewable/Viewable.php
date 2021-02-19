@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Shared\Concerns\Viewable;
 
-use Thinktomorrow\Chief\Sets\Set;
-use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\Legacy\Pages\Page;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Modules\Module;
 use Thinktomorrow\Chief\PageBuilder\Relations\ActsAsParent;
+use Thinktomorrow\Chief\Sets\Set;
 
 trait Viewable
 {
@@ -90,7 +90,7 @@ trait Viewable
     private function viewData(): array
     {
         $viewData = [
-            'model'  => $this,
+            'model' => $this,
             'parent' => $this->viewParent,
         ];
 

@@ -10,16 +10,16 @@ trait ValidatesExistingAssetAttributes
 {
     protected function refersToExistingAsset($value): bool
     {
-        if (!is_string($value) && !is_int($value)) {
+        if (! is_string($value) && ! is_int($value)) {
             return false;
         }
 
         // Check if id is passed first
-        if (!preg_match('/^[1-9][0-9]*$/', (string)$value)) {
+        if (! preg_match('/^[1-9][0-9]*$/', (string)$value)) {
             return false;
         }
 
-        return !is_null($this->existingAsset($value));
+        return ! is_null($this->existingAsset($value));
     }
 
     protected function existingAsset($value): ?Asset
@@ -31,7 +31,7 @@ trait ValidatesExistingAssetAttributes
     {
         $filepath = $asset->media->first()->getPath();
 
-        if (!$sizeDetails = @getimagesize($filepath)) {
+        if (! $sizeDetails = @getimagesize($filepath)) {
             return false;
         }
 

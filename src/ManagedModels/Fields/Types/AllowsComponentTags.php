@@ -18,7 +18,9 @@ trait AllowsComponentTags
 
     public function componentKey(): ?string
     {
-        if(!isset($this->componentKey)) return null;
+        if (! isset($this->componentKey)) {
+            return null;
+        }
 
         return $this->componentKey;
     }

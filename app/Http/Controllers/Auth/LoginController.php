@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {

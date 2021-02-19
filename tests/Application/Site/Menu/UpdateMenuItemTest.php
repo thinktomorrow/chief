@@ -45,7 +45,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $response = $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'trans.nl.label' => 'foobar',
-                'trans.nl.url'   => 'https://thinktomorrow.be',
+                'trans.nl.url' => 'https://thinktomorrow.be',
             ]));
 
         $response->assertStatus(302);
@@ -77,7 +77,7 @@ class UpdateMenuItemTest extends ChiefTestCase
 
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
-                'type'            => 'internal',
+                'type' => 'internal',
                 'owner_reference' => $page->modelReference()->get(),
             ]))->assertStatus(302);
 
@@ -91,7 +91,7 @@ class UpdateMenuItemTest extends ChiefTestCase
 
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
-                'type'         => 'custom',
+                'type' => 'custom',
                 'trans.nl.url' => 'contact',
             ]));
 
@@ -107,7 +107,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $child->id), $this->validParams([
                 'allow_parent' => true,
-                'parent_id'    => $parent->id,
+                'parent_id' => $parent->id,
             ]))->assertStatus(302);
 
         $this->assertCount(1, $parent->fresh()->children);
@@ -150,7 +150,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $this->asAdmin()
             ->put(route('chief.back.menuitem.update', $menuitem->id), $this->validParams([
                 'trans.nl.label' => 'new label',
-                'trans.nl.url'   => 'thinktomorrow.be',
+                'trans.nl.url' => 'thinktomorrow.be',
             ]));
 
         $this->assertEquals('https://thinktomorrow.be', $menuitem->fresh()->url);
@@ -159,13 +159,13 @@ class UpdateMenuItemTest extends ChiefTestCase
     private function validParams($overrides = [])
     {
         $params = [
-            'type'         => 'custom',
+            'type' => 'custom',
             'allow_parent' => false,      // flag to allow nesting or not
-            'parent_id'    => null,
-            'trans'        => [
+            'parent_id' => null,
+            'trans' => [
                 'nl' => [
                     'label' => 'nieuw label',
-                    'url'   => 'http://google.com',
+                    'url' => 'http://google.com',
                 ],
             ],
         ];

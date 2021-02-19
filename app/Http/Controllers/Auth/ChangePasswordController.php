@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Auth;
 
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class ChangePasswordController extends Controller
 {
@@ -13,13 +13,13 @@ class ChangePasswordController extends Controller
     {
         $user = auth()->guard('chief')->user();
 
-        return view('chief::auth.passwords.edit', ['new_password' => !$user->password]);
+        return view('chief::auth.passwords.edit', ['new_password' => ! $user->password]);
     }
 
     public function update(Request $request)
     {
         $this->validate($request, [
-            'password' => 'required|confirmed|min:6'
+            'password' => 'required|confirmed|min:6',
         ]);
 
         $user = auth()->guard('chief')->user();

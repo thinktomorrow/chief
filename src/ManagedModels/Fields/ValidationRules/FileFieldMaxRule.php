@@ -39,7 +39,7 @@ class FileFieldMaxRule extends AbstractMediaFieldRule
      */
     protected function getSize($attribute, $value)
     {
-        if (!$value instanceof File) {
+        if (! $value instanceof File) {
             throw new \InvalidArgumentException('Value is expected to be of type ' . File::class);
         }
 
@@ -57,7 +57,7 @@ class FileFieldMaxRule extends AbstractMediaFieldRule
             'filefield_max' => ':attribute is te groot en dient kleiner te zijn dan ' . implode(',', $params) . 'Kb.',
         ]);
 
-        if (!isset($validator->customAttributes[$attribute])) {
+        if (! isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

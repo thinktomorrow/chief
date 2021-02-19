@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Chief\App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Site\Urls\UrlHelper;
-use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class InternalLinksController extends Controller
 {
@@ -22,11 +22,12 @@ class InternalLinksController extends Controller
         $onlineModels = UrlHelper::onlineModels();
 
         $links = $onlineModels->reject(function (ProvidesUrl $model) {
-            return !$model->url();
+            return ! $model->url();
         })->map(function ($model) {
             $name = (method_exists($model, 'menuLabel') && $model->menuLabel()) ? $model->menuLabel() : (isset($model->title) ? $model->title : $model->url());
+
             return [
-                'name' => $name ??  $model->url(),
+                'name' => $name ?? $model->url(),
                 'url' => $model->url(),
             ];
         });

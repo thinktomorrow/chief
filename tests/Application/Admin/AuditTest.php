@@ -47,8 +47,8 @@ class AuditTest extends ChiefTestCase
 
         $response = $this->asAdmin()->get(route('chief.back.audit.show', $user->id));
 
-        $activity   = $this->getResponseData($response, 'activity');
-        $causer     = $this->getResponseData($response, 'causer');
+        $activity = $this->getResponseData($response, 'activity');
+        $causer = $this->getResponseData($response, 'causer');
 
         $response->assertViewHas('activity');
         $this->assertEquals($user->name, $causer->name);

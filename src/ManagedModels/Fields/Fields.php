@@ -31,7 +31,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function first(): ?Field
     {
-        if (!$this->any()) {
+        if (! $this->any()) {
             return null;
         }
 
@@ -40,7 +40,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function find(string $key): Field
     {
-        if(!isset($this->fields[$key])) {
+        if (! isset($this->fields[$key])) {
             throw new \InvalidArgumentException('No field found by key ' . $key);
         }
 
@@ -54,7 +54,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function isEmpty(): bool
     {
-        return !$this->any();
+        return ! $this->any();
     }
 
     public function keys(): array
@@ -90,14 +90,14 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function model($model)
     {
-        return $this->map(function($field) use ($model) {
+        return $this->map(function ($field) use ($model) {
             return $field->model($model);
         });
     }
 
     public function component($componentKey): Fields
     {
-        return $this->filterBy(function($field) use($componentKey){
+        return $this->filterBy(function ($field) use ($componentKey) {
             return $field->componentKey() === $componentKey;
         });
     }
@@ -106,8 +106,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $fields = [];
 
-        foreach($this->fields as $field) {
-            if(!isset($fields[$field->componentKey()])) {
+        foreach ($this->fields as $field) {
+            if (! isset($fields[$field->componentKey()])) {
                 $fields[$field->componentKey()] = new static();
             }
 
@@ -136,7 +136,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
             if ($value && $value == $field->$method()) {
                 $fields[] = $field;
             } // Reject from list if key returns null (key not present on field)
-            elseif (!$value && !is_null($field->$method())) {
+            elseif (! $value && ! is_null($field->$method())) {
                 $fields[] = $field;
             }
         }
@@ -171,7 +171,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         // TODO: to test this...
         return new static(array_filter($this->fields, function (Field $field) use ($tag) {
-            return !$field->tagged($tag);
+            return ! $field->tagged($tag);
         }));
     }
 
@@ -194,7 +194,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function remove($keys = null)
     {
-        if (!$keys) {
+        if (! $keys) {
             return $this;
         }
 
@@ -218,7 +218,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetGet($offset)
     {
-        if (!isset($this->fields[$offset])) {
+        if (! isset($this->fields[$offset])) {
             throw new \RuntimeException('No field found by key [' . $offset . ']');
         }
 
@@ -227,7 +227,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     public function offsetSet($offset, $value)
     {
-        if (!$value instanceof Field) {
+        if (! $value instanceof Field) {
             throw new \InvalidArgumentException('Passed value must be of type ' . Field::class);
         }
 
@@ -258,7 +258,9 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 
     private function validateFields(array $fields)
     {
-        array_map(function (Field $field) { return $field; }, $fields);
+        array_map(function (Field $field) {
+            return $field;
+        }, $fields);
     }
 
     public function count()

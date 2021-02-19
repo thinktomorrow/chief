@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Authorization;
 
+use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Spatie\Permission\Exceptions\PermissionDoesNotExist;
 
 class GenerateRoleCommandTest extends ChiefTestCase
 {
@@ -28,7 +28,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
     public function a_role_can_be_generated()
     {
         $this->artisan('chief:role', [
-            'name' => 'new role'
+            'name' => 'new role',
         ]);
 
         $this->assertCount(1, Role::all());
@@ -44,7 +44,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
 
         $this->artisan('chief:role', [
             'name' => 'new role',
-            '--permissions' => 'view-user'
+            '--permissions' => 'view-user',
         ]);
 
         $role = Role::findByName('new role');
@@ -61,7 +61,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
 
         $this->artisan('chief:role', [
             'name' => 'new role',
-            '--permissions' => 'user'
+            '--permissions' => 'user',
         ]);
 
         $role = Role::findByName('new role');
@@ -77,7 +77,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
 
         $this->artisan('chief:role', [
             'name' => 'new role',
-            '--permissions' => 'user'
+            '--permissions' => 'user',
         ]);
     }
 
@@ -91,7 +91,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
 
         $this->artisan('chief:role', [
             'name' => 'new role',
-            '--permissions' => 'view-user, create-user'
+            '--permissions' => 'view-user, create-user',
         ]);
 
         $role = Role::findByName('new role');
@@ -114,7 +114,7 @@ class GenerateRoleCommandTest extends ChiefTestCase
 
         $this->artisan('chief:role', [
             'name' => 'new role',
-            '--permissions' => 'user, page'
+            '--permissions' => 'user, page',
         ]);
 
         $role = Role::findByName('new role');

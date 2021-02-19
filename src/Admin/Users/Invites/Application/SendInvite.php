@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users\Invites\Application;
 
-use Thinktomorrow\Chief\App\Notifications\InvitationMail;
+use Illuminate\Support\Facades\Notification;
 use Thinktomorrow\Chief\Admin\Users\Invites\Events\UserInvited;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
-use Illuminate\Support\Facades\Notification;
+use Thinktomorrow\Chief\App\Notifications\InvitationMail;
 
 class SendInvite
 {

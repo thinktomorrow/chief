@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Modules\Assistants;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
-use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
-use Thinktomorrow\Chief\ManagedModels\ManagedModel;
-use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
-use Thinktomorrow\Chief\Managers\Exceptions\NotAllowedManagerAction;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
+use Thinktomorrow\Chief\ManagedModels\ManagedModel;
+use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 // TODO: these routes are just as transition from the old management way. At the end this assistant should become obsolete since there are no substantial differences between management of 'pages' and 'modules'
 trait ModuleCrudAssistant
@@ -30,9 +29,11 @@ trait ModuleCrudAssistant
 
     public function routeModuleCrudAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if(!in_array($action, ['create','store'])) return null;
+        if (! in_array($action, ['create','store'])) {
+            return null;
+        }
 
-        return $this->generateRoute($action, $model, ... $parameters);
+        return $this->generateRoute($action, $model, ...$parameters);
     }
 
     public function create()
@@ -41,7 +42,7 @@ trait ModuleCrudAssistant
 
         return view('chief::back.managers.create', [
             'manager' => $this,
-            'fields'  => (new $modelClass())->fields()->tagged('create'),
+            'fields' => (new $modelClass())->fields()->tagged('create'),
         ]);
     }
 
@@ -72,9 +73,9 @@ trait ModuleCrudAssistant
         $model = $modelClass::findOrFail($id);
 
         return view('chief::back.managers.edit', [
-            'manager'    => $this,
-            'model'      => $model,
-            'fields'     => $model->fields()->map(function (Field $field) use ($model) {
+            'manager' => $this,
+            'model' => $model,
+            'fields' => $model->fields()->map(function (Field $field) use ($model) {
                 // TODO refactor so render method of field takes model and managerViewModel as arguments.
                 return $field->model($model);
             }),

@@ -17,7 +17,7 @@ class PreviewMode
 
     public static function fromRequest()
     {
-        if(!config('chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
+        if (! config('chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
             return new static(false);
         }
 
@@ -28,7 +28,7 @@ class PreviewMode
 
     public static function toggle()
     {
-        session()->put('preview-mode', !session()->get('preview-mode', static::default()));
+        session()->put('preview-mode', ! session()->get('preview-mode', static::default()));
     }
 
     public function check(): bool
@@ -40,7 +40,9 @@ class PreviewMode
     {
         $mode = config('chief.preview-mode');
 
-        if(!$mode || $mode == 'live') return false;
+        if (! $mode || $mode == 'live') {
+            return false;
+        }
 
         return ($mode == 'preview');
     }

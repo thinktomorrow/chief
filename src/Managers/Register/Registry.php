@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Register;
 
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Managers\Exceptions\MissingModelRegistration;
 use Thinktomorrow\Chief\Managers\Exceptions\MissingManagerRegistration;
+use Thinktomorrow\Chief\Managers\Exceptions\MissingModelRegistration;
+use Thinktomorrow\Chief\Managers\Manager;
 
 final class Registry
 {
@@ -22,7 +22,7 @@ final class Registry
 
     public function modelClass(string $key): string
     {
-        if(!isset($this->models[$key])) {
+        if (! isset($this->models[$key])) {
             throw new MissingModelRegistration('No model class registered for key ['.$key.']');
         }
 
@@ -31,7 +31,7 @@ final class Registry
 
     public function manager(string $key): Manager
     {
-        if(!isset($this->managers[$key])) {
+        if (! isset($this->managers[$key])) {
             throw new MissingManagerRegistration('No manager registered for key ['.$key.']');
         }
 
@@ -50,9 +50,9 @@ final class Registry
 
     public function managersWithTags(): array
     {
-        return collect($this->tags->get())->reject(function($tags, $key){
-            return !isset($this->managers[$key]);
-        })->map(function($tags, $key){
+        return collect($this->tags->get())->reject(function ($tags, $key) {
+            return ! isset($this->managers[$key]);
+        })->map(function ($tags, $key) {
             return (object)[
                 'manager' => $this->manager($key),
                 'tags' => $tags,
@@ -65,11 +65,11 @@ final class Registry
         $tags = $this->tags->tagged($tag);
         $taggedKeys = $tags->getKeys();
 
-        $filteredModels = array_filter($this->models, function($key) use($taggedKeys){
+        $filteredModels = array_filter($this->models, function ($key) use ($taggedKeys) {
             return in_array($key, $taggedKeys);
         }, ARRAY_FILTER_USE_KEY);
 
-        $filteredManagers = array_filter($this->managers, function($key) use($taggedKeys){
+        $filteredManagers = array_filter($this->managers, function ($key) use ($taggedKeys) {
             return in_array($key, $taggedKeys);
         }, ARRAY_FILTER_USE_KEY);
 

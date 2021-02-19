@@ -58,7 +58,7 @@ trait Morphable
 
     protected function initializeMorphable()
     {
-        if(!isset($this->morph_key)) {
+        if (! isset($this->morph_key)) {
             $this->morph_key = $this->morphKey();
         }
     }

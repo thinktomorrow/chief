@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\FragmentAssistant;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class UpdateFragmentTest extends ChiefTestCase
 {

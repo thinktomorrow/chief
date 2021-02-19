@@ -3,28 +3,28 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Testing\TestResponse;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
-use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
+use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Assert;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
 use Thinktomorrow\Chief\Admin\Authorization\Permission;
 use Thinktomorrow\Chief\Admin\Authorization\Role;
-use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Support\Facades\Artisan;
-use PHPUnit\Framework\Assert;
+use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 trait TestHelpers
 {
@@ -112,12 +112,12 @@ trait TestHelpers
         return $author;
     }
 
-    protected function
-    setupAndCreateArticle(array $values = []): ArticlePage
+    protected function setupAndCreateArticle(array $values = []): ArticlePage
     {
         ArticlePage::migrateUp();
 
         chiefRegister()->model(ArticlePage::class, PageManager::class);
+
         return ArticlePage::create($values);
     }
 
@@ -126,6 +126,7 @@ trait TestHelpers
         ArticlePageWithFileValidation::migrateUp();
 
         chiefRegister()->model(ArticlePageWithFileValidation::class, PageManager::class);
+
         return ArticlePageWithFileValidation::create($values);
     }
 
@@ -134,6 +135,7 @@ trait TestHelpers
         ArticlePageWithImageValidation::migrateUp();
 
         chiefRegister()->model(ArticlePageWithImageValidation::class, PageManager::class);
+
         return ArticlePageWithImageValidation::create($values);
     }
 
@@ -151,7 +153,7 @@ trait TestHelpers
 
     protected function manager($managedModel): Manager
     {
-        if(is_object($managedModel)) {
+        if (is_object($managedModel)) {
             $managedModel = $managedModel::managedModelKey();
         }
 
@@ -171,9 +173,13 @@ trait TestHelpers
      */
     protected function disableSiteRouteCatchAll()
     {
-        if(isset($this->keepOriginalSiteRoute) && $this->keepOriginalSiteRoute) return;
+        if (isset($this->keepOriginalSiteRoute) && $this->keepOriginalSiteRoute) {
+            return;
+        }
 
-        Route::get('{slug?}', function ($slug = '/') { return ChiefResponse::fromSlug($slug); })->name('pages.show');
+        Route::get('{slug?}', function ($slug = '/') {
+            return ChiefResponse::fromSlug($slug);
+        })->name('pages.show');
     }
 
     protected function updateLinks(Model $model, array $links): TestResponse
@@ -218,10 +224,11 @@ trait TestHelpers
         $reflection = new \ReflectionClass(get_class($object));
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
+
         return $method->invokeArgs($object, $parameters);
     }
 
-    protected function dummySmallSlimImagePayload($name = "tt-favicon.png", $mimetype = 'image/png', $width = 32, $height = 32, $size=5000)
+    protected function dummySmallSlimImagePayload($name = "tt-favicon.png", $mimetype = 'image/png', $width = 32, $height = 32, $size = 5000)
     {
         return '{"server":null,"meta":{},"input":{"name":"'.$name.'","type":"'.$mimetype.'","size":'.$size.',"width":'.$width.',"height":'.$height.',"field":null},"output":{"name":"'.$name.'","type":"'.$mimetype.'","width":'.$width.',"height":'.$height.',"image":"data:'.$mimetype.';base64,iVBORw0KGgoAAAANSUhEUgAAA/gAAAE4AQMAAADVYspJAAAAA1BMVEUEAgSVKDOdAAAAPUlEQVR42u3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BicAAABWZX81AAAAABJRU5ErkJggg=="},"actions":{"rotation":null,"crop":{"x":0,"y":0,"height":'.$height.',"width":'.$width.',"type":"auto"},"size":null,"filters":{"sharpen":0},"minSize":{"width":0,"height":0}}}';
     }
@@ -246,16 +253,16 @@ trait TestHelpers
         return UploadedFile::fake()->create($name, $sizeInKilobytes);
     }
 
-    private function recurse_copy($src, $dst) {
+    private function recurse_copy($src, $dst)
+    {
         $dir = opendir($src);
         @mkdir($dst);
-        while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' )) {
-                if ( is_dir($src . '/' . $file) ) {
-                    $this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
-                }
-                else {
-                    copy($src . '/' . $file,$dst . '/' . $file);
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($src . '/' . $file)) {
+                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                } else {
+                    copy($src . '/' . $file, $dst . '/' . $file);
                 }
             }
         }

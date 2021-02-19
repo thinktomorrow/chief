@@ -18,7 +18,7 @@ class Settings extends Collection
     {
         $this->fetch();
 
-        if (!isset($this->items[$key])) {
+        if (! isset($this->items[$key])) {
             return $default;
         }
 
@@ -29,11 +29,11 @@ class Settings extends Collection
 
         // Array of localized items
         if (is_array($this->items[$key])) {
-            if (!$locale) {
+            if (! $locale) {
                 $locale = app()->getLocale();
             }
 
-            if ($this->items[$key] == null || !isset($this->items[$key][$locale])) {
+            if ($this->items[$key] == null || ! isset($this->items[$key][$locale])) {
                 return $default;
             }
 

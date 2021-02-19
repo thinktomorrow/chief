@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Form;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
 
 final class LinkForm
@@ -32,13 +32,12 @@ final class LinkForm
         $links = [];
 
         foreach (config('chief.locales') as $locale) {
-
             $records = $this->urlRecords->get($locale, collect());
             $currentRecord = $records->reject->isRedirect()->first();
 
             $links[$locale] = (object)[
-                'current'   => $currentRecord,
-                'url'       => $this->model->url($locale),
+                'current' => $currentRecord,
+                'url' => $this->model->url($locale),
                 'redirects' => $records->filter->isRedirect(),
             ];
         }
@@ -51,13 +50,12 @@ final class LinkForm
         $values = [];
 
         foreach (config('chief.locales') as $locale) {
-
             $currentRecord = $this->urlRecords->get($locale, collect())->reject->isRedirect()->first();
 
             $values[$locale] = (object)[
-                'host'         => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
+                'host' => $this->model->resolveUrl($locale, $this->model->baseUrlSegment($locale)) . '/',
                 'fixedSegment' => $this->model->baseUrlSegment($locale),
-                'value'        => $currentRecord
+                'value' => $currentRecord
                     ? $this->rawSlugValue($currentRecord->slug, $this->model->baseUrlSegment($locale))
                     : null,
             ];

@@ -2,10 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Users;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Illuminate\Support\Facades\Hash;
-use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
-use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class DisableUserTest extends ChiefTestCase
 {
@@ -66,7 +64,7 @@ class DisableUserTest extends ChiefTestCase
         $this->user->disable();
 
         $response = $this->post(route('chief.back.login.store'), [
-            'email'    => $this->user->email,
+            'email' => $this->user->email,
             'password' => 'password',
         ]);
 

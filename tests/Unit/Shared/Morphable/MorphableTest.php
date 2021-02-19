@@ -2,10 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Shared\Morphable;
 
-use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Thinktomorrow\Chief\Shared\Concerns\Morphable\NotFoundMorphKey;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 
 class MorphableTest extends ChiefTestCase
 {

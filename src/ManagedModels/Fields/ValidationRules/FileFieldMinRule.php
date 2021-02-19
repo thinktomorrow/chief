@@ -39,7 +39,7 @@ class FileFieldMinRule extends AbstractMediaFieldRule
             'filefield_min' => ':attribute is te klein en dient groter te zijn dan ' . implode(',', $params) . 'Kb.',
         ]);
 
-        if (!isset($validator->customAttributes[$attribute])) {
+        if (! isset($validator->customAttributes[$attribute])) {
             $validator->addCustomAttributes([
                 $attribute => 'afbeelding',
             ]);

@@ -3,15 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fields\Media\ImageField;
 
 use Illuminate\Http\UploadedFile;
-use Thinktomorrow\AssetLibrary\Asset;
-use Thinktomorrow\Chief\Pages\Single;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\ManagedModels\Media\MediaType;
-use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
-use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
+use Thinktomorrow\AssetLibrary\Asset;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\PageFormParams;
-use Thinktomorrow\Chief\Tests\Unit\Fields\Media\Fakes\ImageFieldManager;
+use Thinktomorrow\Chief\Tests\Shared\UploadsFile;
 
 class ReplaceImageFieldValueTest extends ChiefTestCase
 {
@@ -42,7 +38,7 @@ class ReplaceImageFieldValueTest extends ChiefTestCase
             ],
             'en' => [
                 $this->dummySlimImagePayload('tt-favicon-en.png'), // new
-            ]
+            ],
         ]);
 
         $this->assertEquals('tt-favicon-nl.png', $this->page->fresh()->asset('thumb_image_trans', 'nl')->filename());
@@ -76,7 +72,7 @@ class ReplaceImageFieldValueTest extends ChiefTestCase
         $this->uploadImage('thumb_image_trans', [
             'nl' => [
                 $existing_asset->id => $this->dummySlimImagePayload(),
-                null => null
+                null => null,
             ],
         ]);
 
@@ -94,11 +90,10 @@ class ReplaceImageFieldValueTest extends ChiefTestCase
 
         $this->uploadImage('thumb_image_trans', [
             'nl' => [
-                $existing_asset->id => $existing_asset->id
+                $existing_asset->id => $existing_asset->id,
             ],
         ]);
 
         $this->assertCount(1, $this->page->fresh()->assets('thumb_image_trans'));
     }
-
 }

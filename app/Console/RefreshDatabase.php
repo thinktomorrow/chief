@@ -2,10 +2,10 @@
 
 namespace Thinktomorrow\Chief\App\Console;
 
-use Illuminate\Support\Facades\Artisan;
-use Thinktomorrow\Chief\Legacy\Pages\Page;
 use Illuminate\Database\Eloquent\Factory as ModelFactory;
+use Illuminate\Support\Facades\Artisan;
 use Thinktomorrow\Chief\Admin\Authorization\AuthorizationDefaults;
+use Thinktomorrow\Chief\Legacy\Pages\Page;
 
 class RefreshDatabase extends BaseCommand
 {
@@ -14,18 +14,20 @@ class RefreshDatabase extends BaseCommand
 
     public function handle()
     {
-        if (app()->environment() != 'local' && !$this->option('force')) {
+        if (app()->environment() != 'local' && ! $this->option('force')) {
             throw new \Exception('Aborting. This command is dangerous and only meant for your local environment.');
         }
 
         if (app()->environment() != 'local' && $this->option('force')) {
-            if (!$this->confirm('You are about to force refresh the database in the ' . app()->environment() . ' environment! ARE YOU SURE?')) {
+            if (! $this->confirm('You are about to force refresh the database in the ' . app()->environment() . ' environment! ARE YOU SURE?')) {
                 $this->info('aborting.');
+
                 return;
             }
 
-            if (!$this->confirm('ARE YOU REALLY SURE? THIS DELETES EVERYTHING!!!!!')) {
+            if (! $this->confirm('ARE YOU REALLY SURE? THIS DELETES EVERYTHING!!!!!')) {
                 $this->info('pfew.');
+
                 return;
             }
         }

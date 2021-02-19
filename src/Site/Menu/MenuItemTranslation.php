@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Menu;
 
-use Thinktomorrow\Chief\Shared\Concerns\Sluggable\SluggableContract;
 use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Shared\Concerns\Sluggable\SluggableContract;
 
 class MenuItemTranslation extends Model implements SluggableContract
 {

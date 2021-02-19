@@ -12,7 +12,7 @@ class MenuPagesTest extends ChiefTestCase
     {
         config()->set('chief.menus.footer', [
             'label' => 'Hoofdnavigatie',
-            'view'  => 'front.menus.main'
+            'view' => 'front.menus.main',
             ]);
 
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));

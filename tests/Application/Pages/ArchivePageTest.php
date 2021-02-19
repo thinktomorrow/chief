@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Tests\Application\Pages;
 
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Site\Urls\UrlRecord;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
 use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\ManagedModels\States\PageState;
+use Thinktomorrow\Chief\Site\Urls\UrlRecord;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 final class ArchivePageTest extends ChiefTestCase
 {
@@ -124,7 +124,7 @@ final class ArchivePageTest extends ChiefTestCase
         $this->assertCount(0, UrlRecord::getByModel($model));
         $this->assertCount(4, UrlRecord::getByModel($redirectModel));
 
-        $this->assertEquals('first-nl',UrlRecord::findRecentRedirect($redirectModel, 'nl')->slug);
-        $this->assertEquals('first-en',UrlRecord::findRecentRedirect($redirectModel, 'en')->slug);
+        $this->assertEquals('first-nl', UrlRecord::findRecentRedirect($redirectModel, 'nl')->slug);
+        $this->assertEquals('first-en', UrlRecord::findRecentRedirect($redirectModel, 'en')->slug);
     }
 }

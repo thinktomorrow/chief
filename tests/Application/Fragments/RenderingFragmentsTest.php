@@ -2,17 +2,17 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\App\Providers\ChiefProjectServiceProvider;
 use Thinktomorrow\Chief\Fragments\Actions\RenderFragments;
-use Thinktomorrow\Chief\Managers\Register\Register;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\OwnerStub;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
-use Thinktomorrow\Chief\App\Providers\ChiefProjectServiceProvider;
+use Thinktomorrow\Chief\Managers\Register\Register;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\FragmentableStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\OwnerStub;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\SnippetStub;
+use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 class RenderingFragmentsTest extends ChiefTestCase
 {
@@ -46,13 +46,15 @@ class RenderingFragmentsTest extends ChiefTestCase
             ->create();
 
         $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
+            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()),
+            [
                 'order' => 1,
             ]
         );
 
         $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
+            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()),
+            [
                 'order' => 2,
             ]
         );
@@ -78,7 +80,8 @@ class RenderingFragmentsTest extends ChiefTestCase
         $manager = app(Registry::class)->manager(SnippetStub::managedModelKey());
 
         $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, SnippetStub::managedModelKey()), [
+            $manager->route('fragment-store', $owner, SnippetStub::managedModelKey()),
+            [
                 'order' => 1,
             ]
         );

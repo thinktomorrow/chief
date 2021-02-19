@@ -14,14 +14,14 @@ class CreateAdmin extends BaseCommand
     {
         $this->settingPermissionsAndRoles();
 
-        $firstname           = null;
-        $lastname            = null;
+        $firstname = null;
+        $lastname = null;
 
-        while (!$firstname) {
+        while (! $firstname) {
             $firstname = $this->ask('firstname');
         }
 
-        while (!$lastname) {
+        while (! $lastname) {
             $lastname = $this->ask('lastname');
         }
 

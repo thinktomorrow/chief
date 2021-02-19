@@ -2,27 +2,27 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
-use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\App\Http\Kernel;
-use Thinktomorrow\Chief\App\Exceptions\Handler;
-use Thinktomorrow\Chief\Shared\Helpers\Memoize;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
+use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Spatie\Permission\PermissionServiceProvider;
-use Spatie\Activitylog\ActivitylogServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
-use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
-use Astrotomic\Translatable\TranslatableServiceProvider;
+use Spatie\Activitylog\ActivitylogServiceProvider;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Image;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
-use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
-use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
+use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
+use Spatie\Permission\PermissionServiceProvider;
+use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
+use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
+use Thinktomorrow\Chief\Shared\Helpers\Memoize;
+use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
+use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
+use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
 abstract class ChiefTestCase extends OrchestraTestCase
 {
@@ -91,24 +91,24 @@ abstract class ChiefTestCase extends OrchestraTestCase
         });
 
         $app['config']->set('permission.table_names', [
-            'roles'                 => 'roles',
-            'permissions'           => 'permissions',
+            'roles' => 'roles',
+            'permissions' => 'permissions',
             'model_has_permissions' => 'model_has_permissions',
-            'model_has_roles'       => 'model_has_roles',
-            'role_has_permissions'  => 'role_has_permissions',
+            'model_has_roles' => 'model_has_roles',
+            'role_has_permissions' => 'role_has_permissions',
         ]);
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('auth.defaults', [
-            'guard'     => 'xxx',
+            'guard' => 'xxx',
             'passwords' => 'chief',
         ]);
 
         // Connection is defined in the phpunit config xml
         $app['config']->set('database.connections.testing', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => env('DB_DATABASE', __DIR__.'/../database/testing.sqlite'),
-            'prefix'   => '',
+            'prefix' => '',
         ]);
 
         // For our tests is it required to have 2 languages: nl and en.
@@ -158,12 +158,14 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function disableCookiesEncryption(array $cookies)
     {
-        $this->app->resolving(EncryptCookies::class,
+        $this->app->resolving(
+            EncryptCookies::class,
             function ($object) use ($cookies) {
                 foreach ($cookies as $cookie) {
                     $object->disableFor($cookie);
                 }
-            });
+            }
+        );
 
         return $this;
     }

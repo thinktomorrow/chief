@@ -3,7 +3,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Shared;
 
-
 use Illuminate\Testing\TestResponse;
 
 trait UploadsFile

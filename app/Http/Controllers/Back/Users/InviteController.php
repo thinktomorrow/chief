@@ -2,14 +2,12 @@
 
 namespace Thinktomorrow\Chief\App\Http\Controllers\Back\Users;
 
-use Thinktomorrow\Chief\App\Http\Controllers\Controller;
-use Thinktomorrow\Chief\Admin\Authorization\Role;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\AcceptInvite;
 use Thinktomorrow\Chief\Admin\Users\Invites\Application\DenyInvite;
-use Thinktomorrow\Chief\Admin\Users\Invites\Application\InviteUser;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Http\Request;
+use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class InviteController extends Controller
 {

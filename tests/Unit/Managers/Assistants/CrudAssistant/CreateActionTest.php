@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\CrudAssistant;
 
+use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
-use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 
 class CreateActionTest extends ChiefTestCase
 {

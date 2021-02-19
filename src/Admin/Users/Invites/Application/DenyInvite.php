@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Users\Invites\Application;
 
-use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteDenied;
 use Illuminate\Support\Facades\DB;
+use Thinktomorrow\Chief\Admin\Users\Invites\Events\InviteDenied;
 use Thinktomorrow\Chief\Admin\Users\Invites\Invitation;
-use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 use Thinktomorrow\Chief\Admin\Users\Invites\InvitationState;
+use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 
 class DenyInvite
 {
@@ -28,6 +28,7 @@ class DenyInvite
             // exception is thrown if state transfer is already done
         } catch (\Exception $e) {
             DB::rollback();
+
             throw $e;
         }
     }
