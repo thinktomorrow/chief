@@ -1,4 +1,4 @@
-select{
+select {
     padding: $spacy;
     background: transparent;
     border: 1px solid $color-border;
@@ -7,9 +7,9 @@ select{
     -webkit-appearance: none;
     appearance: none;
 }
-.select-wrapper{
+.select-wrapper {
     position: relative;
-    &:after{
+    &:after {
         display: block;
         // Icon
         font-family: 'linearicons';

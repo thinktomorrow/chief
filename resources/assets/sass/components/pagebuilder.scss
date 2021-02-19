@@ -1,12 +1,12 @@
 .show-on-hover {
-    .menu-trigger{
+    .menu-trigger {
         @apply invisible;
     }
-    &:hover .menu-trigger { 
+    &:hover .menu-trigger {
         @apply visible;
     }
 }
-  
+
 .menu-trigger:after {
     content: '';
     width: calc(100% - 2rem);
@@ -15,14 +15,14 @@
     @apply block h-px bg-transparent absolute right-0 border-t border-dashed border-grey-200;
 }
 
-  
-.pagebuilder-menu-items:before{
+.pagebuilder-menu-items:before {
     content: '';
     border: 0 solid #0000;
     border-top-width: 10px;
     border-bottom-width: 10px;
-    border-right: 10px solid #FFF;
-    left: -10px; top: 50%;
+    border-right: 10px solid #fff;
+    left: -10px;
+    top: 50%;
     transform: translateY(-50%);
     @apply block absolute w-0 h-0;
 }

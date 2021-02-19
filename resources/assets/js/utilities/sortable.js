@@ -1,12 +1,12 @@
 import Sortable from 'sortablejs';
 
-const IndexSorting = function(options){
+const IndexSorting = function (options) {
     this.Sortables = [];
     this.sortableGroupEl = options.sortableGroupEl || document.getElementById('js-sortable');
     this.sortableIdAttribute = options.sortableId || 'data-sortable-id';
     this.endpoint = options.endpoint;
 
-    if(!this.endpoint) {
+    if (!this.endpoint) {
         throw new Error('Missing endpoint for sortable js. Please set the options.endpoint value');
     }
 
@@ -22,19 +22,19 @@ const IndexSorting = function(options){
     this._init();
 };
 
-IndexSorting.prototype.toggle = function(e){
+IndexSorting.prototype.toggle = function (e) {
     this.isSorting = !this.isSorting;
 
-    if(this.isSorting) {
+    if (this.isSorting) {
         e.target.innerText = 'Stop met sorteren';
         this.showSorting();
     } else {
         e.target.innerText = 'Sorteer handmatig';
         this.hideSorting();
     }
-}
+};
 
-IndexSorting.prototype.showSorting = function(){
+IndexSorting.prototype.showSorting = function () {
     this.hiddenWhenSortingEls.forEach((el) => {
         el.classList.add('hidden');
     });
@@ -44,11 +44,11 @@ IndexSorting.prototype.showSorting = function(){
     });
 
     this.Sortables.forEach((sortableInstance) => {
-        sortableInstance.option("disabled", false)
-    })
-}
+        sortableInstance.option('disabled', false);
+    });
+};
 
-IndexSorting.prototype.hideSorting = function(){
+IndexSorting.prototype.hideSorting = function () {
     this.hiddenWhenSortingEls.forEach((el) => {
         el.classList.remove('hidden');
     });
@@ -58,52 +58,60 @@ IndexSorting.prototype.hideSorting = function(){
     });
 
     this.Sortables.forEach((sortableInstance) => {
-        sortableInstance.option("disabled", true)
-    })
-}
+        sortableInstance.option('disabled', true);
+    });
+};
 
-
-IndexSorting.prototype._init = function() {
+IndexSorting.prototype._init = function () {
     let self = this;
 
-    this.Sortables.push(Sortable.create(this.sortableGroupEl, {
-        group: 'models',
-        fallbackOnBody: true,
-        swapThreshold: 0.65,
-        dataIdAttr: this.sortableIdAttribute,
-        handle: this.handle,
-        animation: 200,
-        easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
-        filter: '[data-sortable-ignore]',
+    this.Sortables.push(
+        Sortable.create(this.sortableGroupEl, {
+            group: 'models',
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
+            dataIdAttr: this.sortableIdAttribute,
+            handle: this.handle,
+            animation: 200,
+            easing: 'cubic-bezier(0.87, 0, 0.13, 1)',
+            filter: '[data-sortable-ignore]',
 
-        store: {
-            set: function(sortable){
-                fetch(self.endpoint, {
-                    method: 'post',
-                    body: JSON.stringify({
-                        "indices": sortable.toArray(),
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                }).then(function(response) {
-                    return response.json();
-                }).then(() => {
-                    Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
-                }).catch(function(error) {
-                    Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️');
-                    console.error(error);
-                });
+            store: {
+                set: function (sortable) {
+                    fetch(self.endpoint, {
+                        method: 'post',
+                        body: JSON.stringify({
+                            indices: sortable.toArray(),
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(() => {
+                            Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
+                        })
+                        .catch(function (error) {
+                            Eventbus.$emit(
+                                'create-notification',
+                                'error',
+                                'Sortering kan niet worden bewaard. Er is iets misgelopen.️'
+                            );
+                            console.error(error);
+                        });
+                },
             },
-        }
-    }));
+        })
+    );
 
     this.sortToggles.forEach((toggle) => {
-        toggle.addEventListener('click', this.toggle.bind(this))
+        toggle.addEventListener('click', this.toggle.bind(this));
     });
 
     // Default view
-    (this.isSorting) ? this.showSorting() : this.hideSorting();
-}
+    this.isSorting ? this.showSorting() : this.hideSorting();
+};
 
 export { IndexSorting };

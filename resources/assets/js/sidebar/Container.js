@@ -32,11 +32,11 @@ export default class {
     }
 
     open() {
-        this.el.style.display = "block";
+        this.el.style.display = 'block';
     }
 
     isOpen() {
-        return (this.el.style.display === "block");
+        return this.el.style.display === 'block';
     }
 
     close() {
@@ -60,7 +60,7 @@ export default class {
 
     _closeWithEscape() {
         window.addEventListener('keydown', (e) => {
-            if(this.isOpen() && e.key === 'Escape') {
+            if (this.isOpen() && e.key === 'Escape') {
                 this.close();
             }
         });
@@ -79,7 +79,7 @@ export default class {
                     element.removeEventListener('animationend', onAnimationEnd);
 
                     resolve();
-                }
+                };
 
                 element.addEventListener('animationend', onAnimationEnd);
             } catch (error) {

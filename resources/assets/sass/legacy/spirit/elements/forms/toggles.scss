@@ -1,29 +1,29 @@
 $toggle-size: 1.5rem;
 
-.custom-indicators{
+.custom-indicators {
     line-height: $toggle-size;
-    .label-content{
+    .label-content {
         margin-left: $space-l;
     }
 
-    input[type=radio],
-    input[type=checkbox]{
+    input[type='radio'],
+    input[type='checkbox'] {
         position: absolute;
         z-index: -1;
         opacity: 0;
     }
 }
-.custom-checkbox{
+.custom-checkbox {
     border-radius: $default-border-radius;
-    &::before{
-        content: "";
+    &::before {
+        content: '';
         color: $color-white;
         font-family: 'spirit';
         line-height: 1;
     }
 }
 .custom-checkbox,
-.custom-radiobutton{
+.custom-radiobutton {
     display: block;
     float: left;
     width: $toggle-size;
@@ -33,7 +33,7 @@ $toggle-size: 1.5rem;
     user-select: none;
     border: 3px solid $color-border;
     transition: $transition;
-    &::after{
+    &::after {
         content: '';
         display: block;
         width: 100%;
@@ -45,33 +45,34 @@ $toggle-size: 1.5rem;
         transition: all 0.3s ease-in-out;
     }
 }
-.custom-radiobutton{
+.custom-radiobutton {
     border-radius: 50%;
-    &::after{
+    &::after {
         border-radius: 50%;
     }
 }
 
 // RADIOS AND CHECKBOXES
 
-.custom-indicators.disabled{
+.custom-indicators.disabled {
     cursor: not-allowed;
     opacity: 0.6;
-    .custom-radiobutton, .custom-checkbox{
+    .custom-radiobutton,
+    .custom-checkbox {
         background-color: $color-subtle;
     }
 }
 
-input[type=radio]:checked ~ .custom-radiobutton{
+input[type='radio']:checked ~ .custom-radiobutton {
     border-color: $color-primary;
     border-width: 5px;
 }
 
-input[type=checkbox]:checked ~ .custom-checkbox{
+input[type='checkbox']:checked ~ .custom-checkbox {
     background-color: $color-primary;
     border-color: $color-primary;
-    &::before{
-        content: "\E91F";
+    &::before {
+        content: '\E91F';
         font-family: 'spirit';
     }
 }
@@ -100,7 +101,7 @@ input[type=checkbox]:checked ~ .custom-checkbox{
         &:before {
             position: relative;
             display: block;
-            content: "";
+            content: '';
             width: 50%;
             height: 100%;
         }
@@ -119,8 +120,6 @@ input[type=checkbox]:checked ~ .custom-checkbox{
     }
 }
 
-
-
 .switch-primary,
 .switch-secondary,
 .switch-tertiary {
@@ -128,20 +127,19 @@ input[type=checkbox]:checked ~ .custom-checkbox{
         background: $color-body;
         border-radius: $toggle-size;
         padding: 2px;
-        transition: all .4s ease;
+        transition: all 0.4s ease;
         &:after {
             border-radius: 50%;
             background: $color-white;
-            transition: all .2s ease;
+            transition: all 0.2s ease;
         }
     }
 }
 
-
 $color-name: primary secondary tertiary;
 $colors: $color-primary $color-secondary $color-tertiary;
 
-@each $block in $color-name{
+@each $block in $color-name {
     $i: index($color-name, $block);
     // GET YOUR COLOR FROM THE nth-PLACE ON THE LIST
     $color: nth($colors, $i);

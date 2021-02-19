@@ -1,26 +1,27 @@
-.formgroup{
-
+.formgroup {
     /* override the default gutter margin-bottom */
-    .formgroup-info, .formgroup-input{
-        margin-bottom:0;
+    .formgroup-info,
+    .formgroup-input {
+        margin-bottom: 0;
     }
 
-    h2{
-        font-size:1em;
+    h2 {
+        font-size: 1em;
         text-transform: uppercase;
     }
 }
 
 /* redactor wysiwyg */
-.redactor-toolbar{
-    z-index:10; // override default 100 z-index
+.redactor-toolbar {
+    z-index: 10; // override default 100 z-index
 }
 
-.redactor-air li a, .redactor-toolbar li a{
-    height:auto;
+.redactor-air li a,
+.redactor-toolbar li a {
+    height: auto;
 }
 
-.redactor-toolbar a{
+.redactor-toolbar a {
     margin-right: 0;
 }
 
@@ -29,11 +30,12 @@
     font-size: 12px;
 }
 
-.redactor-in .row , .redactor-in [class*="column-"]{
-  border:1px dashed lightgrey;
+.redactor-in .row,
+.redactor-in [class*='column-'] {
+    border: 1px dashed lightgrey;
 }
 
-.redactor-dropdown-format{
+.redactor-dropdown-format {
     .redactor-dropdown-item-p,
     .redactor-dropdown-item-h2,
     .redactor-dropdown-item-h3 {
@@ -55,7 +57,7 @@
 }
 .redactor-clips-list span {
     white-space: nowrap;
-    background: rgba(0,125,255, .75);
+    background: rgba(0, 125, 255, 0.75);
     color: #fff;
     display: inline-block;
     padding: 3px 6px;
@@ -66,10 +68,9 @@
 
 // Field addons (prepend or appending fixed content in input field)
 .input-addon {
-
     display: flex;
 
-    .input{
+    .input {
         flex: 1;
 
         &:not(:first-child) {
@@ -80,7 +81,7 @@
         }
     }
 
-    .addon{
+    .addon {
         background-color: #f4f6f5;
         border: 1px solid #dadada;
         color: #666666;
@@ -88,11 +89,13 @@
         font-weight: normal;
     }
 
-    .input:first-child, .addon:first-child{
+    .input:first-child,
+    .addon:first-child {
         border-radius: 5px 0 0 5px;
     }
 
-    .input:last-child, .addon:last-child{
+    .input:last-child,
+    .addon:last-child {
         border-radius: 0 5px 5px 0;
     }
 }

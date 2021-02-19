@@ -7,11 +7,11 @@ export default class {
     }
 
     show() {
-        this.el.style.display = "block";
+        this.el.style.display = 'block';
     }
 
     hide() {
-        this.el.style.display = "none";
+        this.el.style.display = 'none';
     }
 
     replaceComponent(selector, content) {

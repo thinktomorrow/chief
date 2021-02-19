@@ -128,11 +128,11 @@
 // }
 
 .btn-tertiary {
-    background-color: #FFFDD0;
-    border-color: darken(#FFFDD0, 2%);
+    background-color: #fffdd0;
+    border-color: darken(#fffdd0, 2%);
     @apply text-grey-900 border;
 }
 
 .btn-tertiary:hover {
-    background-color: lighten(#FFFDD0, 5%);
+    background-color: lighten(#fffdd0, 5%);
 }

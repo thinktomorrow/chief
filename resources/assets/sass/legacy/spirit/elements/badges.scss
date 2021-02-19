@@ -1,5 +1,5 @@
 // BADGES
-.badge{
+.badge {
     display: inline-block;
     min-width: 10px;
     padding: 3px 7px;
@@ -12,10 +12,10 @@
     vertical-align: middle;
     background-color: rgba($color-emphasis, 0.3);
     border-radius: $badge-border-radius;
-    &.badge-left{
+    &.badge-left {
         margin-right: 0.5rem;
     }
-    &.badge-right{
+    &.badge-right {
         margin-left: 0.5rem;
     }
 }

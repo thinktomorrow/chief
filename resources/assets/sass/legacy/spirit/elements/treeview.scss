@@ -1,11 +1,11 @@
 .treeview {
-    .indent-1{
+    .indent-1 {
         padding-left: 3rem;
     }
-    .indent-2{
+    .indent-2 {
         padding-left: 5.5rem;
     }
-    .tree-parent{
+    .tree-parent {
         position: relative;
         //&:after{
         //    font-family: "spirit";
@@ -17,6 +17,6 @@
     }
 }
 
-.separator{
+.separator {
     border-bottom: 1px dotted $color-border;
 }

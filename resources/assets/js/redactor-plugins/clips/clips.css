@@ -10,7 +10,7 @@
 }
 .redactor-clips-list span {
     white-space: nowrap;
-    background: rgba(0,125,255, .75);
+    background: rgba(0, 125, 255, 0.75);
     color: #fff;
     display: inline-block;
     padding: 3px 6px;

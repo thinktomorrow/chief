@@ -5,8 +5,12 @@
  */
 const triggers = document.querySelectorAll('[data-submit-form]');
 
-for(let i = 0;i<triggers.length;i++) {
-    triggers[i].addEventListener('click',function(){
-        document.getElementById(this.getAttribute('data-submit-form')).submit();
-    }, false);
+for (let i = 0; i < triggers.length; i++) {
+    triggers[i].addEventListener(
+        'click',
+        function () {
+            document.getElementById(this.getAttribute('data-submit-form')).submit();
+        },
+        false
+    );
 }

@@ -3,74 +3,74 @@
 }
 
 .label-primary {
-  @apply bg-primary-500 border border-primary-500 text-white;
-  &::before{
-    border-color: transparent config('theme.colors.primary.500') transparent transparent;
-  }
+    @apply bg-primary-500 border border-primary-500 text-white;
+    &::before {
+        border-color: transparent config('theme.colors.primary.500') transparent transparent;
+    }
 }
 
 .label-o--primary {
-  @apply text-primary-500 border border-primary-500 bg-transparent;
+    @apply text-primary-500 border border-primary-500 bg-transparent;
 }
 
 .label-secondary {
-  @apply bg-secondary-500 border border-secondary-500 text-white;
-  &::before{
-    border-color: transparent config('theme.colors.secondary.500') transparent transparent;
-  }
+    @apply bg-secondary-500 border border-secondary-500 text-white;
+    &::before {
+        border-color: transparent config('theme.colors.secondary.500') transparent transparent;
+    }
 }
 
 .label-o--secondary {
-  @apply text-secondary-500 border border-secondary-500 bg-transparent;
+    @apply text-secondary-500 border border-secondary-500 bg-transparent;
 }
 
 .label-tertiary {
-  @apply bg-tertiary-500 border border-tertiary-500 text-grey-600;
-  &::before{
-    border-color: transparent config('theme.colors.tertiary.500') transparent transparent;
-  }
+    @apply bg-tertiary-500 border border-tertiary-500 text-grey-600;
+    &::before {
+        border-color: transparent config('theme.colors.tertiary.500') transparent transparent;
+    }
 }
 
 .label-success {
-  @apply bg-success border border-success text-white;
-  &::before{
-    border-color: transparent config('theme.colors.success') transparent transparent;
-  }
+    @apply bg-success border border-success text-white;
+    &::before {
+        border-color: transparent config('theme.colors.success') transparent transparent;
+    }
 }
 
 .label-o--success {
-  @apply text-success border border-success bg-transparent;
+    @apply text-success border border-success bg-transparent;
 }
 
 .label-warning {
-  @apply bg-warning border border-warning text-white;
-  &::before{
-    border-color: transparent config('theme.colors.warning') transparent transparent;
-  }
+    @apply bg-warning border border-warning text-white;
+    &::before {
+        border-color: transparent config('theme.colors.warning') transparent transparent;
+    }
 }
 
 .label-o--warning {
-  @apply text-warning border border-warning bg-transparent;
+    @apply text-warning border border-warning bg-transparent;
 }
 
 .label-error {
-  @apply bg-error border border-error text-white;
-  &::before{
-    border-color: transparent config('theme.colors.error') transparent transparent;
-  }
+    @apply bg-error border border-error text-white;
+    &::before {
+        border-color: transparent config('theme.colors.error') transparent transparent;
+    }
 }
 
 .label-o--error {
-  @apply text-error border border-error bg-transparent;
+    @apply text-error border border-error bg-transparent;
 }
 
 .label-information {
-  @apply bg-information border border-information text-white;
-  &::before{
-    border-color: transparent config('theme.colors.information') transparent transparent;
-  }
+    @apply bg-information border border-information text-white;
+    &::before {
+        border-color: transparent config('theme.colors.information') transparent transparent;
+    }
 }
 
 .label-o--information {
-  @apply text-information border border-information bg-transparent;
+    @apply text-information border border-information bg-transparent;
 }

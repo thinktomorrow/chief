@@ -9,7 +9,8 @@
             @apply text-grey-700;
         }
 
-        &:hover, &:hover > a:not(.label) {
+        &:hover,
+        &:hover > a:not(.label) {
             @apply text-primary-600;
         }
     }
@@ -20,19 +21,20 @@
     transition: 0.3s all ease;
     @apply no-underline relative;
 
-    &:after{
-      content:"";
-      bottom: -1px;
-      transform: translateX(-50%);
-      transition: .26s cubic-bezier(0.69, 0.14, 0.05, 1.31);
+    &:after {
+        content: '';
+        bottom: -1px;
+        transform: translateX(-50%);
+        transition: 0.26s cubic-bezier(0.69, 0.14, 0.05, 1.31);
 
-      @apply block absolute h-0 left-0 w-0 bg-primary-500;
+        @apply block absolute h-0 left-0 w-0 bg-primary-500;
     }
 
-    &:hover, &.active{
+    &:hover,
+    &.active {
         @apply text-primary-500 no-underline;
 
-        &:after{
+        &:after {
             left: 50%;
             width: 30%;
             height: 1px;
@@ -41,7 +43,8 @@
 }
 
 .--raised {
-    box-shadow: 0 16px 38px -12px rgba(0,0,0,0.05), 0 4px 25px 0px rgba(0,0,0,0.06), 0 8px 10px -5px rgba(0,0,0,0.06);
+    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.05), 0 4px 25px 0px rgba(0, 0, 0, 0.06),
+        0 8px 10px -5px rgba(0, 0, 0, 0.06);
 }
 
 .--link-with-bg {
@@ -51,39 +54,51 @@
     }
 }
 
-.color-inherit{
+.color-inherit {
     color: inherit;
 }
 
 .clearfix {
     &:before,
-    &:after{
-        content: " ";
+    &:after {
+        content: ' ';
         display: table;
     }
 }
-.indent-2::before{
-    content: "⠛";
+.indent-2::before {
+    content: '⠛';
     display: block;
     position: absolute;
     left: -12px;
     top: 9px;
 }
-.indent-1{
+.indent-1 {
     @apply pl-2 ml-6 border border-grey-100 text-grey-600;
 }
-.indent-2{
+.indent-2 {
     @apply pl-2 ml-10 border border-grey-100 text-grey-500 relative;
 }
-.indent-3{
+.indent-3 {
     @apply pl-2 ml-12 border border-grey-100 text-grey-400;
 }
-.indent-2:not(:first-child){ border-top: 0px;}
-.indent-2:not(:last-child){ border-bottom: 0px;}
-.indent-3:not(:first-child){ border-top: 0px;}
-.indent-3:not(:last-child){ border-bottom: 0px; }
+.indent-2:not(:first-child) {
+    border-top: 0px;
+}
+.indent-2:not(:last-child) {
+    border-bottom: 0px;
+}
+.indent-3:not(:first-child) {
+    border-top: 0px;
+}
+.indent-3:not(:last-child) {
+    border-bottom: 0px;
+}
 
-.indent-1 + .indent-1:not(:first-child){ border-bottom: 0px;}
+.indent-1 + .indent-1:not(:first-child) {
+    border-bottom: 0px;
+}
 
-.indent-1 + .indent-1:not(:last-child){ border-bottom: 0px;}
+.indent-1 + .indent-1:not(:last-child) {
+    border-bottom: 0px;
+}
 // .indent-1 + .indent-1{ border-top: 0px;}

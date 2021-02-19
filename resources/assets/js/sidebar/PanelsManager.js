@@ -1,6 +1,6 @@
-import { Api } from "./Api"
-import Panel from "./Panel"
-import Panels from "./Panels"
+import { Api } from './Api';
+import Panel from './Panel';
+import Panels from './Panels';
 
 export default class {
     constructor(triggerSelector, container, onNewPanel, onSubmitPanel) {
@@ -18,14 +18,14 @@ export default class {
         this.scanForPanelTriggers();
 
         // Listen for close triggers on the sidebar container
-        this.container.closeTriggers.forEach(trigger => {
+        this.container.closeTriggers.forEach((trigger) => {
             trigger.addEventListener('click', this.backOrClose.bind(this));
         });
     }
 
     scanForPanelTriggers() {
         Array.from(document.querySelectorAll(this.triggerSelector)).forEach((el) => {
-            el.removeEventListener('click', this.handle)
+            el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);
         });
     }
@@ -33,9 +33,7 @@ export default class {
     _handlePanelTrigger(event) {
         event.preventDefault();
 
-        const link = (event.target.hasAttribute('href'))
-            ? event.target
-            : event.target.closest('[href]')
+        const link = event.target.hasAttribute('href') ? event.target : event.target.closest('[href]');
 
         if (!link) return;
 
@@ -46,7 +44,7 @@ export default class {
         const id = this.panels.createId(url);
 
         // if present in panels, than show the existing panel.
-        if(this.panels.find(id)) {
+        if (this.panels.find(id)) {
             this._activate(id);
             return;
         }
@@ -65,8 +63,8 @@ export default class {
 
             // only mount Vue on our vue specific fields and not on the form element itself
             // so that the submit event still works. I know this is kinda hacky.
-            Array.from(newPanelContainer.querySelectorAll('[data-vue-fields]')).forEach(el => {
-                new Vue({el: el});
+            Array.from(newPanelContainer.querySelectorAll('[data-vue-fields]')).forEach((el) => {
+                new Vue({ el: el });
             });
 
             // creating a custom event so redactor js can be initiated async
@@ -78,28 +76,29 @@ export default class {
             Api.listenForFormSubmits(newPanelContainer, () => {
                 this.backOrClose(false);
 
-                if(this.onSubmitPanel) {
+                if (this.onSubmitPanel) {
                     this.onSubmitPanel();
                 }
             });
 
-            if(!this.container.isOpen()) {
+            if (!this.container.isOpen()) {
                 this.container.open();
             }
 
-            this.panels.add(new Panel(id, url, this.panels.findActive() ? this.panels.findActive() : null, newPanelContainer));
+            this.panels.add(
+                new Panel(id, url, this.panels.findActive() ? this.panels.findActive() : null, newPanelContainer)
+            );
             this._activate(id);
 
-            if(this.onNewPanel) {
+            if (this.onNewPanel) {
                 this.onNewPanel(this.panels.find(id));
             }
-        })
+        });
     }
 
     _activate(id) {
-
         // Hide current active panel
-        if(this.panels.findActive()) {
+        if (this.panels.findActive()) {
             this.panels.findActive().hide();
         }
 
@@ -117,16 +116,14 @@ export default class {
      * Either the user clicks the close button or has saved the panel form.
      */
     backOrClose(keepPreviousPanel = true) {
-
         // Back to parent
-        if(this.panels.findActive().parent) {
-
+        if (this.panels.findActive().parent) {
             const previousId = this.panels.findActive().id;
 
             this.show(this.panels.findActive().parent.url);
             this._replacePanelComponents();
 
-            if(!keepPreviousPanel) {
+            if (!keepPreviousPanel) {
                 this.panels.remove(previousId);
             }
 
@@ -153,9 +150,12 @@ export default class {
                 let DOM = document.createElement('div');
                 DOM.innerHTML = data;
 
-                this.panels.activePanel.replaceComponent('[data-sidebar-component="' + componentKey + '"]' , DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML);
+                this.panels.activePanel.replaceComponent(
+                    '[data-sidebar-component="' + componentKey + '"]',
+                    DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML
+                );
                 this.scanForPanelTriggers();
-            })
+            });
         });
     }
 }

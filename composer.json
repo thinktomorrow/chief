@@ -1,7 +1,11 @@
 {
     "name": "thinktomorrow/chief",
     "description": "Chief site management application",
-    "keywords": ["site management", "laravel", "think tomorrow"],
+    "keywords": [
+        "site management",
+        "laravel",
+        "think tomorrow"
+    ],
     "license": "none",
     "type": "chief-cms",
     "require": {
@@ -39,16 +43,16 @@
     },
     "autoload": {
         "psr-4": {
-            "Thinktomorrow\\Chief\\App\\" : "app/",
-            "Thinktomorrow\\Chief\\" : "src/"
+            "Thinktomorrow\\Chief\\App\\": "app/",
+            "Thinktomorrow\\Chief\\": "src/"
         },
         "files": [
-          "src/Shared/helpers.php"
+            "src/Shared/helpers.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Thinktomorrow\\Chief\\Database\\Factories\\" : "database/factories/",
+            "Thinktomorrow\\Chief\\Database\\Factories\\": "database/factories/",
             "Thinktomorrow\\Chief\\Tests\\Shared\\Tmp\\": "tests/Shared/tmp",
             "Thinktomorrow\\Chief\\Tests\\": "tests/",
             "Thinktomorrow\\Chief\\Migrate\\": "migrate/"

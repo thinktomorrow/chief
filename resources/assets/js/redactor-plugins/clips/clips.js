@@ -1,17 +1,15 @@
-(function($R)
-{
+(function ($R) {
     $R.add('plugin', 'clips', {
         translations: {
-    		en: {
-    			"clips": "Clips",
-    			"clips-select": "Please, select a clip"
-            }
+            en: {
+                clips: 'Clips',
+                'clips-select': 'Please, select a clip',
+            },
         },
         modals: {
-            'clips': ''
+            clips: '',
         },
-        init: function(app)
-        {
+        init: function (app) {
             this.app = app;
             this.opts = app.opts;
             this.lang = app.lang;
@@ -21,41 +19,37 @@
         // messages
         onmodal: {
             clips: {
-                open: function($modal)
-                {
+                open: function ($modal) {
                     this._build($modal);
-                }
-            }
+                },
+            },
         },
 
         // public
-        start: function()
-        {
+        start: function () {
             if (!this.opts.clips) return;
 
             var data = {
                 title: this.lang.get('clips'),
-                api: 'plugin.clips.open'
+                api: 'plugin.clips.open',
             };
 
             var $button = this.toolbar.addButton('clips', data);
             $button.setIcon('<i class="re-icon-clips"></i>');
         },
-        open: function(type)
-        {
+        open: function (type) {
             var options = {
                 title: this.lang.get('clips'),
                 width: '600px',
-                name: 'clips'
+                name: 'clips',
             };
 
             this.app.api('module.modal.build', options);
-		},
+        },
 
-		// private
-		_build: function($modal)
-		{
-    		var $body = $modal.getBody();
+        // private
+        _build: function ($modal) {
+            var $body = $modal.getBody();
             var $label = this._buildLabel();
             var $list = this._buildList();
 
@@ -64,27 +58,22 @@
             $body.html('');
             $body.append($label);
             $body.append($list);
-
-		},
-		_buildLabel: function()
-		{
+        },
+        _buildLabel: function () {
             var $label = $R.dom('<label>');
             $label.html(this.lang.parse('## clips-select ##:'));
 
-    		return $label;
-		},
-		_buildList: function()
-		{
-    		var $list = $R.dom('<ul>');
+            return $label;
+        },
+        _buildList: function () {
+            var $list = $R.dom('<ul>');
             $list.addClass('redactor-clips-list');
 
             return $list;
-		},
-		_buildItems: function($list)
-		{
-    		var items = this.opts.clips;
-    		for (var i = 0; i < items.length; i++)
-            {
+        },
+        _buildItems: function ($list) {
+            var items = this.opts.clips;
+            for (var i = 0; i < items.length; i++) {
                 var $li = $R.dom('<li>');
                 var $item = $R.dom('<span>');
 
@@ -95,15 +84,14 @@
                 $li.append($item);
                 $list.append($li);
             }
-		},
-		_insert: function(e)
-		{
+        },
+        _insert: function (e) {
             var $item = $R.dom(e.target);
             var index = $item.attr('data-index');
             var html = this.opts.clips[index][1];
 
             this.app.api('module.modal.close');
             this.insertion.insertRaw(html);
-		}
+        },
     });
 })(Redactor);
