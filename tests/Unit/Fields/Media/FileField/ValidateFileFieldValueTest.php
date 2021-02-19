@@ -57,7 +57,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb_trans'.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.thumb_trans.nl'));
+        $this->assertStringContainsString('thumb trans'.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.thumb_trans.nl'));
 
         $this->assertCount(0, $this->page->assets('thumb_trans'));
     }
@@ -76,7 +76,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb_trans'.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.thumb_trans.nl'));
+        $this->assertStringContainsString('thumb trans'.' heeft niet de juiste afmetingen', session()->get('errors')->first('files.thumb_trans.nl'));
 
         $this->assertEquals('original-image.png', $this->page->asset('thumb_trans')->filename());
     }
@@ -90,7 +90,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb_trans is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.thumb_trans.nl'));
+        $this->assertStringContainsString('thumb trans is te groot en dient kleiner te zijn dan', session()->get('errors')->first('files.thumb_trans.nl'));
 
         $this->assertCount(0, $this->page->assets('thumb_trans'));
     }
@@ -104,7 +104,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb_trans'.' is te klein en dient groter te zijn dan', session()->get('errors')->first('files.thumb_trans.nl'));
+        $this->assertStringContainsString('thumb trans'.' is te klein en dient groter te zijn dan', session()->get('errors')->first('files.thumb_trans.nl'));
 
         $this->assertCount(0, $this->page->assets('thumb_trans'));
     }
@@ -118,7 +118,7 @@ class ValidateFileFieldValueTest extends ChiefTestCase
         ]);
 
         $response->assertSessionHasErrors('files.thumb_trans.nl');
-        $this->assertStringContainsString('thumb_trans'.' is niet het juiste bestandstype', session()->get('errors')->first('files.thumb_trans.nl'));
+        $this->assertStringContainsString('thumb trans'.' is niet het juiste bestandstype', session()->get('errors')->first('files.thumb_trans.nl'));
 
         $this->assertCount(0, $this->page->assets('thumb_trans'));
     }

@@ -174,7 +174,10 @@ class FieldTest extends TestCase
     /** @test */
     public function it_has_a_default_view()
     {
-        $this->assertStringContainsString('<input type="text" name="test" id="test" class="input inset-s" placeholder="" value="">', InputField::make('test')->render());
+        $render = str_replace(["\r\n", "\n"], "", InputField::make('test')->render());
+        $render = preg_replace('/\s+/', ' ',$render);
+
+        $this->assertStringContainsString('<input type="text" name="test"', $render);
     }
 
     /** @test */
