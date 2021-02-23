@@ -74,13 +74,17 @@
                     @endforeach
                 </div>
 
-                <livewire:links :model="$model" />
+                @adminCan('links-edit', $model)
+                    <livewire:links :model="$model" />
+                @endAdminCan
 
-                @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
-                    <livewire:fields_component :model="$model" :componentKey="$componentKey" />
-                @endforeach
+                @adminCan('fields-edit', $model)
+                    @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
+                        <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+                    @endforeach
 
-                <livewire:fields_component :model="$model"/>
+                    <livewire:fields_component :model="$model"/>
+                @endAdminCan
 
                 <div>
                     @adminCan('delete', $model)
@@ -93,11 +97,11 @@
 @stop
 
 @push('custom-scripts-after-vue')
-    {{-- @adminCan('asyncRedactorFileUpload', $model) --}}
+     @adminCan('asyncRedactorFileUpload', $model)
         @include('chief::back._layouts._partials.editor-script', [
             'imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)
         ])
-    {{-- @endAdminCan --}}
+     @endAdminCan
 @endpush
 
 @include('chief::back._components.file-component')

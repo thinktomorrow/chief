@@ -29,6 +29,7 @@ class Fragments extends Component
         return view('chief::components.fragments', [
             'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
+            'sharedFragments' => [],
             'manager' => app(Registry::class)->manager($this->owner::managedModelKey()),
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -12,7 +13,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
 {
     private ArticlePage $owner;
     private Quote $fragment;
-    private \Thinktomorrow\Chief\Managers\Manager $fragmentManager;
+    private Manager $fragmentManager;
 
     public function setUp(): void
     {

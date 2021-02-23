@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 final class ContextModel extends Model
 {
-    public $table = "context";
+    public $table = "contexts";
     public $guarded = [];
 
     public static function ownedBy(Model $owner): ?ContextModel
@@ -27,6 +27,7 @@ final class ContextModel extends Model
 
     public function fragments()
     {
-        return $this->hasMany(FragmentModel::class, 'context_id')->orderBy('order');
+        return $this->belongsToMany(FragmentModel::class, 'context_fragment_lookup', 'context_id', 'fragment_id')
+                    ->orderBy('context_fragment_lookup.order');
     }
 }

@@ -8,7 +8,7 @@ class CreateFragmentTables extends Migration
 {
     public function up()
     {
-        Schema::create('context', function(Blueprint $table){
+        Schema::create('contexts', function(Blueprint $table){
             $table->bigIncrements('id');
             $table->string('owner_type');
             $table->char('owner_id', 36); // account for integer ids as well as uuids
@@ -17,13 +17,20 @@ class CreateFragmentTables extends Migration
 
         Schema::create('context_fragments', function(Blueprint $table){
             $table->char('id', 36)->primary();
-            $table->unsignedBigInteger('context_id');
-            $table->unsignedSmallInteger('order')->default(0);
             $table->string('model_reference');
             $table->json('data')->nullable();
+            $table->boolean('shared')->default(0);
             $table->timestamps();
+        });
 
-            $table->foreign('context_id')->references('id')->on('context')->onDelete('cascade');
+        Schema::create('context_fragment_lookup', function (Blueprint $table) {
+            $table->unsignedBigInteger('context_id');
+            $table->char('fragment_id', 36);
+            $table->unsignedSmallInteger('order')->default(0);
+            $table->foreign('context_id')->references('id')->on('contexts')->onDelete('cascade');
+            $table->foreign('fragment_id')->references('id')->on('context_fragments')->onDelete('cascade');
+
+            $table->primary(['context_id', 'fragment_id']);
         });
     }
 }

@@ -26,8 +26,13 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
 
     public $dynamicKeys = ['*'];
     public $dynamicKeysBlacklist = [
-        'id', 'context_id', 'model_reference', 'order', 'created_at', 'updated_at',
+        'id', 'model_reference', 'shared', 'created_at', 'updated_at',
     ];
+
+    public function isShared(): bool
+    {
+        return !!$this->shared;
+    }
 
     public static function managedModelKey(): string
     {
