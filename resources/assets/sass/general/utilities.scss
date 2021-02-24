@@ -102,3 +102,16 @@
     border-bottom: 0px;
 }
 // .indent-1 + .indent-1{ border-top: 0px;}
+
+.link-label {
+    .link-label-icon {
+        @apply inline-block transform;
+        @extend .transition-150;
+    }
+
+    &:hover {
+        .link-label-icon {
+            @apply scale-110;
+        }
+    }
+}

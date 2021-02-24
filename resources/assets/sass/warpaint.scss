@@ -119,7 +119,8 @@ $sizes: (
 @import '../../../node_modules/warpaint/src/sass/_grid/row';
 @import '../../../node_modules/warpaint/src/sass/_grid/sizes';
 @import '../../../node_modules/warpaint/src/sass/_grid/responsive';
-@import '../../../node_modules/warpaint/src/sass/_grid/container';
+// @import '../../../node_modules/warpaint/src/sass/_grid/container';
+@import './warpaint/_container';
 
 @import '../../../node_modules/warpaint/src/sass/_elements/text';
 

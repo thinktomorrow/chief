@@ -49,44 +49,57 @@
 @endcomponent
 
 @section('content')
-    <div class="row">
-        <div class="column-8">
-            <div class="bg-white p-12 rounded-2xl space-y-16">
+    <div class="row -m-6">
+        <div class="xs-column-12 s-column-12 m-column-12 l-column-8 p-6">
+            <div class="window window-white space-y-12">
+                <livewire:fields_component :model="$model" />
+
                 @adminCan('fragments-index', $model)
                     <livewire:fragments :owner="$model" />
                 @endAdminCan
             </div>
         </div>
 
-        <div class="column">
-            <div class="p-12 space-y-10">
-                <div>
-                    {!! $model->adminLabel('online_status') !!}
-
-                    @adminCan('preview', $model)
-                        <a class="block" href="@adminRoute('preview', $model)" target="_blank">Bekijk op site</a>
-                    @endAdminCan
-
-                    @foreach(['draft', 'publish', 'unpublish', 'archive', 'unarchive'] as $action)
-                        @adminCan($action, $model)
-                            @include('chief::back.managers._transitions.' . $action)
-                        @endAdminCan
-                    @endforeach
+        <div class="xs-column-12 s-column-12 m-column-12 l-column-4 p-6">
+            <div class="space-y-12">
+                <div class="window window-grey">
+                    <livewire:links :model="$model" />
                 </div>
 
-                <livewire:links :model="$model" />
+                <div class="window window-grey">
+                    @component('chief::components.card', [
+                        'title' => 'SEO',
+                        'edit_request_url' => '#',
+                        'type' => 'seo'
+                    ])
+                        <div class="space-y-4">
+                            <div class="space-y-2">
+                                <h6 class="mb-0">Titel</h6>
+                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <h6 class="mb-0">Description</h6>
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque sequi eveniet, dicta, quibusdam nam quis repellendus fuga mollitia, voluptate aspernatur quia eaque deserunt iure aliquid.</p>
+                            </div>
+
+                            <div class="space-y-2">
+                                <h6 class="mb-0">Afbeelding</h6>
+                                <img
+                                    class="w-24 h-24 object-cover rounded-xl"
+                                    src="https://images.unsplash.com/photo-1489533119213-66a5cd877091?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80"
+                                    alt="SEO image"
+                                >
+                            </div>
+                        </div>
+                    @endcomponent
+                </div>
 
                 @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
-                    <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+                    <div class="window window-grey">
+                        <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+                    </div>
                 @endforeach
-
-                <livewire:fields_component :model="$model"/>
-
-                <div>
-                    @adminCan('delete', $model)
-                        @include('chief::back.managers._transitions.delete')
-                    @endAdminCan
-                </div>
             </div>
         </div>
     </div>

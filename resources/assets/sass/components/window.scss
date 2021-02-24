@@ -1,0 +1,11 @@
+.window {
+    @apply rounded-2xl p-12;
+}
+
+.window-white {
+    @apply bg-white;
+}
+
+.window-grey {
+    @apply bg-grey-100;
+}

@@ -1,6 +1,6 @@
-<section>
+<div>
     @if(isset($label))
-        <h4 class="text-base font-semibold group flex items-center space-x-2 mb-1 cursor-default">
+        <h6 class="group flex items-center space-x-2 mb-0 cursor-default">
             <span>{{ ucfirst($label) }}</span>
 
             @if(isset($isRequired) && $isRequired)
@@ -9,14 +9,14 @@
                     <div class="absolute transform scale-0 group-hover:scale-100 whitespace-no-wrap transition-150 font-medium">Verplicht veld</div>
                 </div>
             @endif
-        </h4>
+        </h6>
     @endif
 
     @if(isset($description))
-        <p class="text-grey-500 mb-4">{!! $description !!}</p>
+        <p class="text-grey-500 mb-4 mt-2">{!! $description !!}</p>
     @endif
 
     <div class="input-group mt-3">
         {{ $slot }}
     </div>
-</section>
+</div>

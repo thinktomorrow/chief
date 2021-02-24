@@ -1,11 +1,11 @@
 <div data-fragments-component class="space-y-10">
-    <div class="flex justify-between items-center">
+    {{-- <div class="flex justify-between items-center">
         <h2 class="mb-0">Fragments</h2>
 
         <div data-sidebar-component="fragmentcount">
             <span class="font-medium text-grey-500">Aantal: {{ count($fragments) }}</span>
         </div>
-    </div>
+    </div> --}}
 
     <div data-sidebar-component="fragments"
          data-sortable-fragments
