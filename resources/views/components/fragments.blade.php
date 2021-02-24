@@ -22,9 +22,6 @@
         @endforeach
     </div>
 
-    {{-- @include('chief::managers.fragments._add', [
-        'allowedFragments' => $allowedFragments
-    ]) --}}
 </div>
 
 @push('custom-scripts-after-vue')
@@ -56,16 +53,17 @@
             </div>
             <div class="flex justify-center items-center space-x-2">
                 @forelse($sharedFragments as $sharedFragment)
-                    <a
-                        data-sidebar-fragments-edit
-                        data-sortable-ignore
-                        class="bg-primary-50 font-medium text-grey-900 py-1 px-2 rounded-lg"
-                        href="{{ $sharedFragment['manager']->route('fragment-create', $owner) }}"
-                    >
-                        {{ ucfirst($allowedFragment['model']->adminLabel('label')) }}
-                    </a>
+                    <form method="POST" action="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) }}">
+                        <button
+                            type="submit"
+                            data-sortable-ignore
+                            class="bg-primary-50 font-medium text-grey-900 py-1 px-2 rounded-lg"
+                        >
+                            {{ ucfirst($sharedFragment['model']->adminLabel('label')) }}
+                        </button>
+                    </form>
                 @empty
-                    No available fragments.
+                    No shared fragments.
                 @endforelse
             </div>
         </div>
