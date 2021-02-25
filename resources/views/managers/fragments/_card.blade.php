@@ -37,7 +37,7 @@
 
     <div data-sortable-ignore class="absolute z-10 inset-0 flex flex-col justify-between items-center pointer-events-none">
         <div
-            data-fragments-new
+            data-fragments-new="{{ $model->fragmentModel()->id }}"
             data-fragments-new-position="before"
             class="flex items-center link link-black h-8 -mt-4 cursor-pointer pointer-events-auto transform scale-0 group-hover:scale-100 transition-300"
          >
@@ -47,7 +47,7 @@
        </div>
 
         <div
-            data-fragments-new
+            data-fragments-new="{{ $model->fragmentModel()->id }}"
             data-fragments-new-position="after"
             class="flex items-center link link-black h-8 -mb-4 cursor-pointer pointer-events-auto transform scale-0 group-hover:scale-100 transition-300"
         >

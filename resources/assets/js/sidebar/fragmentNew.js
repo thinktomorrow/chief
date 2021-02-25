@@ -3,10 +3,10 @@
  * submit fragment post request and grab results
  */
 export default class {
-    constructor(container, fragmentsContainer, onSubmit) {
+    constructor(container, fragmentsContainer, onClick) {
         this.container = container || document;
         this.fragmentsContainer = fragmentsContainer;
-        this.onSubmit = onSubmit;
+        this.onClick = onClick;
         this.triggerAttribute = 'data-fragments-new';
         this.selectElAttribute = 'data-fragments-new-selection';
     }
@@ -50,8 +50,8 @@ export default class {
         });
 
         // Create the new selection el from our template
-        const selectionEl = createSelectionEl();
-        insertSelectionEl(selectionEl, trigger);
+        const selectionEl = this._createSelectionEl();
+        this._insertSelectionEl(selectionEl, el);
 
         if (this.onClick) {
             this.onClick(selectionEl);
@@ -67,6 +67,8 @@ export default class {
 
     _insertSelectionEl(element, trigger) {
         let insertBeforeTarget = trigger.getAttribute('data-fragments-new-position') === 'before';
+
+        // TODO: need to refactor this. We should already know the position yes?
         let targetElement = document.querySelector(
             `[data-sortable-id="${trigger.getAttribute('data-fragments-new')}"]`
         );

@@ -2,6 +2,7 @@ import Container from './Container';
 import PanelsManager from './PanelsManager';
 import { IndexSorting } from '../utilities/sortable';
 import FragmentAdd from './fragmentAdd';
+import FragmentNew from './fragmentNew';
 
 /**
  * Fragments JS
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    const fragmentNew = new FragmentNew(document, function () {
+    const fragmentNew = new FragmentNew(document, componentEl, function () {
         // Rescan for any DOM triggers
         // IDEA: replace callbacks with global event state?
         fragmentPanelsManager.scanForPanelTriggers();
