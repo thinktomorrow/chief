@@ -6,10 +6,11 @@ import EventBus from './EventBus';
  * submit fragment post request and grab results
  */
 export default class {
-    constructor(container, onSubmit) {
+    constructor(container) {
         this.container = container || document;
-        this.onSubmit = onSubmit;
         this.postActionAttribute = 'data-fragments-add';
+
+        this.init();
     }
 
     init() {
@@ -40,10 +41,9 @@ export default class {
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {
-            if (this.onSubmit) {
-                this.onSubmit(data);
-            }
-            console.log(data);
+            this.scanForTriggers();
+
+            EventBus.publish('fragment-add', data);
         });
     }
 }

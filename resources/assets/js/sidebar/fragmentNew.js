@@ -10,11 +10,21 @@ export default class {
         this.fragmentsContainer = fragmentsContainer;
         this.triggerAttribute = 'data-fragments-new';
         this.selectElAttribute = 'data-fragments-new-selection';
+
+        this.init();
     }
 
     init() {
         // Register unique trigger handler
         this.handle = (event) => this._handleTrigger(event);
+
+        EventBus.subscribe('fragments-new-panel', (panel) => {
+            this._onNewPanel(panel);
+        });
+
+        EventBus.subscribe('fragments-reloaded', (panel) => {
+            this.scanForTriggers();
+        });
 
         this.scanForTriggers();
     }
@@ -26,7 +36,7 @@ export default class {
         });
     }
 
-    onNewPanel(panel) {
+    _onNewPanel(panel) {
         const fragmentSelectionElement = document.querySelector(`[${this.selectElAttribute}]`);
         if (fragmentSelectionElement) {
             let order = this._getChildIndex(fragmentSelectionElement);

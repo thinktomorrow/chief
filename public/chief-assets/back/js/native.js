@@ -4235,6 +4235,7 @@ var _default = /*#__PURE__*/function () {
     this.onNewPanel = options.onNewPanel || null;
     this.onSubmitPanel = options.onSubmitPanel || null;
     this.events = options.events || {};
+    this.init();
   }
 
   _createClass(_default, [{
@@ -4449,7 +4450,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // },
       }
     });
-    linkPanelsManager.init();
     Livewire.on('linksReloaded', function () {
       linkPanelsManager.scanForPanelTriggers();
     });
@@ -4485,12 +4485,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
  */
 
 var _default = /*#__PURE__*/function () {
-  function _default(container, onSubmit) {
+  function _default(container) {
     _classCallCheck(this, _default);
 
     this.container = container || document;
-    this.onSubmit = onSubmit;
     this.postActionAttribute = 'data-fragments-add';
+    this.init();
   }
 
   _createClass(_default, [{
@@ -4528,11 +4528,9 @@ var _default = /*#__PURE__*/function () {
           action = el ? el.getAttribute(this.postActionAttribute) : null;
       if (!action) return;
       _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].submit('POST', action, {}, function (data) {
-        if (_this3.onSubmit) {
-          _this3.onSubmit(data);
-        }
+        _this3.scanForTriggers();
 
-        console.log(data);
+        _EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('fragment-add', data);
       });
     }
   }]);
@@ -4576,6 +4574,7 @@ var _default = /*#__PURE__*/function () {
     this.fragmentsContainer = fragmentsContainer;
     this.triggerAttribute = 'data-fragments-new';
     this.selectElAttribute = 'data-fragments-new-selection';
+    this.init();
   }
 
   _createClass(_default, [{
@@ -4588,6 +4587,12 @@ var _default = /*#__PURE__*/function () {
         return _this._handleTrigger(event);
       };
 
+      _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
+        _this._onNewPanel(panel);
+      });
+      _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-reloaded', function (panel) {
+        _this.scanForTriggers();
+      });
       this.scanForTriggers();
     }
   }, {
@@ -4601,8 +4606,8 @@ var _default = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "onNewPanel",
-    value: function onNewPanel(panel) {
+    key: "_onNewPanel",
+    value: function _onNewPanel(panel) {
       var fragmentSelectionElement = document.querySelector("[".concat(this.selectElAttribute, "]"));
 
       if (fragmentSelectionElement) {
@@ -4702,36 +4707,41 @@ document.addEventListener('DOMContentLoaded', function () {
   var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
 
   if (!sidebarContainerEl || !componentEl) return;
-  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  var fragmentNew = new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl);
-  fragmentNew.init();
-  var fragmentAdd = new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document, function (data) {
-    livewireComponent.reload();
-    fragmentAdd.scanForTriggers();
-  });
-  fragmentAdd.init();
+  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl);
+  new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onNewPanel: function onNewPanel(panel) {
-      console.log('New fragments panel ' + panel.id);
-      fragmentNew.onNewPanel(panel);
-      initSortable('[data-sortable-fragments]', panel.el);
+      _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
     },
     onSubmitPanel: function onSubmitPanel() {
-      livewireComponent.reload(); // TODO: set this in callback for when entire sidebar is closed.
-
-      initSortable();
+      _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
     },
     events: {
       'fragment-new': function fragmentNew() {
         fragmentPanelsManager.scanForPanelTriggers();
+      },
+      'fragments-reloaded': function fragmentsReloaded() {
+        fragmentPanelsManager.scanForPanelTriggers();
       }
     }
   });
-  fragmentPanelsManager.init();
-  Livewire.on('fragmentsReloaded', function () {
-    fragmentPanelsManager.scanForPanelTriggers();
-    fragmentNew.scanForTriggers();
+  /**
+   * Fragments livewire components logic. Update the component on important changes
+   */
+
+  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
+    livewireComponent.reload();
   });
+  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+    livewireComponent.reload();
+  });
+  Livewire.on('fragmentsReloaded', function () {
+    _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
+  });
+  /**
+   * Sortable logic for fragment component
+   */
 
   function initSortable() {
     var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-sortable-fragments]';
@@ -4748,8 +4758,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
+    initSortable('[data-sortable-fragments]', panel.el);
+  });
+  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+    initSortable();
+  });
   initSortable();
-  window.PubSub = _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a;
 });
 
 /***/ }),
@@ -4786,7 +4801,6 @@ document.addEventListener('DOMContentLoaded', function () {
       // },
     }
   });
-  linkPanelsManager.init();
   Livewire.on('linksReloaded', function () {
     linkPanelsManager.scanForPanelTriggers();
   });

@@ -15,48 +15,50 @@ document.addEventListener('DOMContentLoaded', function () {
     // Do not trigger the sidebar script is DOM element isn't present
     if (!sidebarContainerEl || !componentEl) return;
 
-    const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-
-    const fragmentNew = new FragmentNew(document, componentEl);
-    fragmentNew.init();
-
-    const fragmentAdd = new FragmentAdd(document, function (data) {
-        livewireComponent.reload();
-        fragmentAdd.scanForTriggers();
-    });
-    fragmentAdd.init();
+    new FragmentNew(document, componentEl);
+    new FragmentAdd(document);
 
     const fragmentPanelsManager = new PanelsManager(
         '[data-sidebar-fragments-edit]',
         new Container(sidebarContainerEl),
         {
             onNewPanel: (panel) => {
-                console.log('New fragments panel ' + panel.id);
-
-                fragmentNew.onNewPanel(panel);
-                initSortable('[data-sortable-fragments]', panel.el);
+                EventBus.publish('fragments-new-panel', panel);
             },
             onSubmitPanel: () => {
-                livewireComponent.reload();
-
-                // TODO: set this in callback for when entire sidebar is closed.
-                initSortable();
+                EventBus.publish('fragments-submit-panel');
             },
             events: {
                 'fragment-new': () => {
+                    fragmentPanelsManager.scanForPanelTriggers();
+                },
+                'fragments-reloaded': () => {
                     fragmentPanelsManager.scanForPanelTriggers();
                 },
             },
         }
     );
 
-    fragmentPanelsManager.init();
+    /**
+     * Fragments livewire components logic. Update the component on important changes
+     */
+    const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    Livewire.on('fragmentsReloaded', () => {
-        fragmentPanelsManager.scanForPanelTriggers();
-        fragmentNew.scanForTriggers();
+    EventBus.subscribe('fragment-add', () => {
+        livewireComponent.reload();
     });
 
+    EventBus.subscribe('fragments-submit-panel', () => {
+        livewireComponent.reload();
+    });
+
+    Livewire.on('fragmentsReloaded', () => {
+        EventBus.publish('fragments-reloaded');
+    });
+
+    /**
+     * Sortable logic for fragment component
+     */
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
         // TODO: first remove existing sortable instances on these same selector els...
         Array.from(container.querySelectorAll(selector)).forEach((el) => {
@@ -72,7 +74,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    initSortable();
+    EventBus.subscribe('fragments-new-panel', (panel) => {
+        initSortable('[data-sortable-fragments]', panel.el);
+    });
 
-    window.PubSub = EventBus;
+    EventBus.subscribe('fragments-submit-panel', () => {
+        initSortable();
+    });
+
+    initSortable();
 });

@@ -11,6 +11,8 @@ export default class {
         this.onNewPanel = options.onNewPanel || null;
         this.onSubmitPanel = options.onSubmitPanel || null;
         this.events = options.events || {};
+
+        this.init();
     }
 
     init() {

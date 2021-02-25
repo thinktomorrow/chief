@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
     });
 
-    linkPanelsManager.init();
-
     Livewire.on('linksReloaded', () => {
         linkPanelsManager.scanForPanelTriggers();
     });
