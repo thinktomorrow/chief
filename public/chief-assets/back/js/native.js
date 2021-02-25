@@ -4450,7 +4450,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // },
       }
     });
-    Livewire.on('linksReloaded', function () {
+    Livewire.on('fieldsComponentReloaded', function () {
       linkPanelsManager.scanForPanelTriggers();
     });
   });

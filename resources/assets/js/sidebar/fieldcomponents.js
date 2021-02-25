@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         );
 
-        Livewire.on('linksReloaded', () => {
+        Livewire.on('fieldsComponentReloaded', () => {
             linkPanelsManager.scanForPanelTriggers();
         });
     });
