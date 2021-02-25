@@ -51,8 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Livewire.on('fragmentsReloaded', () => {
         fragmentPanelsManager.scanForPanelTriggers();
-
-        scanForFragmentSelectionTriggers();
+        fragmentNew.scanForTriggers();
     });
 
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {

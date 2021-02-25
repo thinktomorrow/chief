@@ -4653,7 +4653,7 @@ document.addEventListener('DOMContentLoaded', function () {
   fragmentPanelsManager.init();
   Livewire.on('fragmentsReloaded', function () {
     fragmentPanelsManager.scanForPanelTriggers();
-    scanForFragmentSelectionTriggers();
+    fragmentNew.scanForTriggers();
   });
 
   function initSortable() {
