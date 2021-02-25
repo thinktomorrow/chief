@@ -9,6 +9,8 @@
     <input type="hidden" name="_method" value="PUT">
 
     <div class="space-y-10">
+        <h3>{{ ucfirst($componentKey) }}</h3>
+
         <div data-vue-fields class="space-y-10">
             @foreach($fields as $field)
                 @formgroup

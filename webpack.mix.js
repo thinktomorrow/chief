@@ -1,6 +1,5 @@
 let mix = require('laravel-mix');
 let shell = require('shelljs');
-require('laravel-mix-purgecss');
 
 mix.webpackConfig({
     watchOptions: { ignored: /node_modules/ },
@@ -13,6 +12,8 @@ mix.webpackConfig({
 
     .version()
 
+    .copy('resources/assets/fonts', 'public/chief-assets/back/fonts')
+
     .options({
         postCss: [
             require('tailwindcss')('./resources/assets/sass/tailwind.js'),
@@ -21,22 +22,12 @@ mix.webpackConfig({
             }),
         ],
 
-        // autoprefixer: true,
-
         // Webpack setting to ignore sass loader to follow url() paths
         processCssUrls: false,
     })
 
-    .purgeCss({
-        folders: ['resources/assets/', 'resources/views/', 'app', 'src'],
-        whitelistPatterns: [/slim-/],
-        whitelist: ['indent-1', 'indent-2', 'indent-3'],
-    })
-
-    /** Copy fonts */
-    .copy('resources/assets/fonts', 'public/chief-assets/back/fonts')
-
-    // Imagine not having to publish chief assets manually every time webpack recompiles them. Sounds like a dream right? Not anymore.
+    // Imagine not having to publish chief assets manually every time webpack recompiles them.
+    // Sounds like a dream right? Not anymore.
     .then(() => {
         if (mix.inProduction()) return;
 

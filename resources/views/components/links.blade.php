@@ -17,10 +17,10 @@
                 @foreach($linkForm->links() as $locale => $links)
                     @if($links->current)
                         <div class="flex items-center space-x-3">
-                            <span class="bg-grey-150 font-medium text-grey-900 py-1 px-2 rounded-lg">{{ $locale }}</span>
+                            <span class="bg-grey-150 font-semibold text-grey-700 py-1 px-2 rounded">{{ strtoupper($locale) }}</span>
 
                             <a class="link link-primary" target="_blank" rel="noopener" href="{{ $links->url }}">
-                                <x-link-label type="external-link" position="append">{{ $links->current->slug }}</x-link-label>
+                                <x-link-label type="external-link" position="append">/{{ $links->current->slug }}</x-link-label>
                             </a>
                         </div>
                     @endif

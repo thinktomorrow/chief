@@ -1,5 +1,7 @@
+const PurgeCssConfig = require('./../../../purgecss.config.js');
+
 module.exports = {
-    purge: false,
+    purge: PurgeCssConfig,
     prefix: '',
     important: false,
     separator: ':',

@@ -22,7 +22,7 @@
                     <a
                         data-sidebar-fragments-edit
                         href="@adminRoute('fragment-edit', $model)"
-                        class="link link-primary"
+                        class="link link-black"
                     >
                         <x-link-label type="edit"></x-link-label>
                     </a>
