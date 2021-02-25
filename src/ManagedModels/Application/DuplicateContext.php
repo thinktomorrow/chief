@@ -29,9 +29,8 @@ class DuplicateContext
 
         /** @var FragmentModel $fragment */
         foreach ($context->fragments as $fragment) {
-            $copiedFragment = $fragment->replicate(['context_id']);
+            $copiedFragment = $fragment->replicate();
             $copiedFragment->id = $this->fragmentRepository->nextId();
-            $copiedFragment->context_id = $copiedContext->id;
             $copiedFragment->save();
 
             // Assets

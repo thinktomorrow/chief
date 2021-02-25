@@ -23,10 +23,6 @@
             @endforeach
         </div>
 
-        @if($model instanceof \Thinktomorrow\Chief\Fragments\FragmentsOwner && $manager->can('fragments-index', $model))
-            <x-chief::fragments :owner="$model"/>
-        @endif
-
         <div>
             <button
                 type="submit"

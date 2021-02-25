@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Application\Fragments;
+namespace Thinktomorrow\Chief\Tests\Unit\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;

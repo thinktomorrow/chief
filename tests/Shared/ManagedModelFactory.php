@@ -177,8 +177,10 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StatefulContract;;
 use Illuminate\Database\Eloquent\Model;
 use \Thinktomorrow\AssetLibrary\HasAsset;
 use \Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl;
+use Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidingUrl;
 
-class $this->modelClass extends Model implements ManagedModel, HasAsset, StatefulContract, Fragmentable
+class $this->modelClass extends Model implements ManagedModel, HasAsset, StatefulContract, Fragmentable, ProvidesUrl
 {
     public \$table = 'articles';
     public \$timestamps = false;
@@ -190,6 +192,7 @@ class $this->modelClass extends Model implements ManagedModel, HasAsset, Statefu
 
     use AssetTrait;
     use SavingFields;
+    use ProvidingUrl;
     $traitStrings
 
     public \$dynamicKeys = [$dynamicKeysString];

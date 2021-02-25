@@ -13,6 +13,7 @@ class EditActionTest extends ChiefTestCase
     /** @test */
     public function admin_can_view_the_edit_form()
     {
+        $this->disableExceptionHandling();
         $model = ManagedModelFactory::make()->fields([
             InputField::make('title'),
         ])->create(['title' => 'Original titel']);

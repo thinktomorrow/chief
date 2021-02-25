@@ -14,9 +14,13 @@ final class CreateFragmentModel
     /** @var FragmentRepository */
     private FragmentRepository $fragmentRepository;
 
-    public function __construct(FragmentRepository $fragmentRepository)
+    /** @var AddFragmentModel */
+    private AddFragmentModel $addFragmentToContext;
+
+    public function __construct(FragmentRepository $fragmentRepository, AddFragmentModel $addFragmentToContext)
     {
         $this->fragmentRepository = $fragmentRepository;
+        $this->addFragmentToContext = $addFragmentToContext;
     }
 
     /**
@@ -29,16 +33,14 @@ final class CreateFragmentModel
      */
     public function create(Model $owner, Fragmentable $fragmentable, int $order, array $data = []): FragmentModel
     {
-        if (! $context = ContextModel::ownedBy($owner)) {
-            $context = ContextModel::createForOwner($owner);
-        }
-
-        return FragmentModel::create([
+        $fragmentModel = FragmentModel::create([
             'id' => $this->fragmentRepository->nextId(),
-            'context_id' => $context->id,
             'model_reference' => $fragmentable->modelReference()->get(),
             'data' => $data,
-            'order' => $order,
         ]);
+
+        $this->addFragmentToContext->handle($owner, $fragmentModel, $order);
+
+        return $fragmentModel;
     }
 }

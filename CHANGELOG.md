@@ -93,6 +93,7 @@ A manager takes care of the routing and responses. It basically acts as a contro
 - refactor view components so adminLabel is not needed as much (or as little as possible)
 - BUG: no redactor in pagebuilder
 - CHECK: is module slug needed? Try without. probably used for sorting new text modules in pagebuilder but for something else as well?
+- nested fragment Add
 
 #### Improvements
 - remove: translatable logic + migrations + TranslatableCommand in concerns.

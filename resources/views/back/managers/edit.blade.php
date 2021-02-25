@@ -52,7 +52,9 @@
     <div class="row -m-6">
         <div class="xs-column-12 s-column-12 m-column-12 l-column-8 p-6">
             <div class="window window-white space-y-12">
-                <livewire:fields_component :model="$model" />
+                @adminCan('fields-edit', $model)
+                    <livewire:fields_component :model="$model" />
+                @endAdminCan
 
                 @adminCan('fragments-index', $model)
                     <livewire:fragments :owner="$model" />
@@ -63,7 +65,9 @@
         <div class="xs-column-12 s-column-12 m-column-12 l-column-4 p-6">
             <div class="space-y-12">
                 <div class="window window-grey">
-                    <livewire:links :model="$model" />
+                    @adminCan('links-edit', $model)
+                        <livewire:links :model="$model" />
+                    @endAdminCan
                 </div>
 
                 <div class="window window-grey">
@@ -95,22 +99,28 @@
                     @endcomponent
                 </div>
 
-                @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
-                    <div class="window window-grey">
-                        <livewire:fields_component :model="$model" :componentKey="$componentKey" />
-                    </div>
-                @endforeach
+                @adminCan('fields-edit', $model)
+                    @foreach($fields->tagged('component')->groupByComponent() as $componentKey => $componentFields)
+                        <div class="window window-grey">
+                            <livewire:fields_component :model="$model" :componentKey="$componentKey" />
+                        </div>
+                    @endforeach
+                @endAdminCan
+
+                @adminCan('delete', $model)
+                    @include('chief::back.managers._transitions.delete')
+                @endAdminCan
             </div>
         </div>
     </div>
 @stop
 
 @push('custom-scripts-after-vue')
-    {{-- @adminCan('asyncRedactorFileUpload', $model) --}}
+     @adminCan('asyncRedactorFileUpload', $model)
         @include('chief::back._layouts._partials.editor-script', [
             'imageUploadUrl' => $manager->route('asyncRedactorFileUpload', $model)
         ])
-    {{-- @endAdminCan --}}
+     @endAdminCan
 @endpush
 
 @include('chief::back._components.file-component')
