@@ -1,14 +1,16 @@
 import { Api } from './Api';
 import Panel from './Panel';
 import Panels from './Panels';
+import EventBus from './EventBus';
 
 export default class {
-    constructor(triggerSelector, container, onNewPanel, onSubmitPanel) {
+    constructor(triggerSelector, container, options) {
         this.triggerSelector = triggerSelector;
         this.container = container;
         this.panels = new Panels();
-        this.onNewPanel = onNewPanel;
-        this.onSubmitPanel = onSubmitPanel;
+        this.onNewPanel = options.onNewPanel || null;
+        this.onSubmitPanel = options.onSubmitPanel || null;
+        this.events = options.events || {};
     }
 
     init() {
@@ -21,9 +23,15 @@ export default class {
         this.container.closeTriggers.forEach((trigger) => {
             trigger.addEventListener('click', this.backOrClose.bind(this));
         });
+
+        // Subscribe events via our EventBus
+        Object.keys(this.events).forEach((key) => {
+            EventBus.subscribe(key, this.events[key]);
+        });
     }
 
     scanForPanelTriggers() {
+        console.log('scan...');
         Array.from(document.querySelectorAll(this.triggerSelector)).forEach((el) => {
             el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);

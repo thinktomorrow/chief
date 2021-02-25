@@ -19,11 +19,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const linkPanelsManager = new PanelsManager(
             '[' + el.getAttribute('data-fields-component') + ']',
             new Container(sidebarContainerEl),
-            function (panel) {
-                console.log('new fieldcomponent panel ' + panel.id);
-            },
-            function () {
-                livewireComponent.reload();
+            {
+                onNewPanel: (panel) => {
+                    console.log('New fragments panel ' + panel.id);
+                },
+                onSubmitPanel: () => {
+                    livewireComponent.reload();
+                },
+                events: {
+                    // 'fragment-new': () => {
+                    //
+                    // },
+                },
             }
         );
 

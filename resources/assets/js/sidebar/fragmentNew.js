@@ -1,12 +1,13 @@
+import EventBus from './EventBus';
+
 /**
  * Fragment new
  * submit fragment post request and grab results
  */
 export default class {
-    constructor(container, fragmentsContainer, onClick) {
+    constructor(container, fragmentsContainer) {
         this.container = container || document;
         this.fragmentsContainer = fragmentsContainer;
-        this.onClick = onClick;
         this.triggerAttribute = 'data-fragments-new';
         this.selectElAttribute = 'data-fragments-new-selection';
     }
@@ -28,7 +29,7 @@ export default class {
     onNewPanel(panel) {
         const fragmentSelectionElement = document.querySelector(`[${this.selectElAttribute}]`);
         if (fragmentSelectionElement) {
-            let order = _getChildIndex(fragmentSelectionElement);
+            let order = this._getChildIndex(fragmentSelectionElement);
             if (panel.el.querySelector('input[name="order"]')) {
                 panel.el.querySelector('input[name="order"]').value = order;
             }
@@ -53,9 +54,7 @@ export default class {
         const selectionEl = this._createSelectionEl();
         this._insertSelectionEl(selectionEl, el);
 
-        if (this.onClick) {
-            this.onClick(selectionEl);
-        }
+        EventBus.publish('fragment-new');
     }
 
     _createSelectionEl() {

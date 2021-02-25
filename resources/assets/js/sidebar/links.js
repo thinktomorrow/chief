@@ -9,16 +9,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const componentEl = document.querySelector('[data-links-component]');
     const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    const linkPanelsManager = new PanelsManager(
-        '[data-sidebar-links-edit]',
-        new Container(sidebarContainerEl),
-        function (panel) {
+    const linkPanelsManager = new PanelsManager('[data-sidebar-links-edit]', new Container(sidebarContainerEl), {
+        onNewPanel: (panel) => {
             console.log('new links panel ' + panel.id);
         },
-        function () {
+        onSubmitPanel: () => {
             livewireComponent.reload();
-        }
-    );
+        },
+        events: {
+            // 'fragment-new': () => {
+            //
+            // },
+        },
+    });
 
     linkPanelsManager.init();
 

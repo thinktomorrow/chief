@@ -3,6 +3,7 @@ import PanelsManager from './PanelsManager';
 import { IndexSorting } from '../utilities/sortable';
 import FragmentAdd from './fragmentAdd';
 import FragmentNew from './fragmentNew';
+import EventBus from './EventBus';
 
 /**
  * Fragments JS
@@ -16,12 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
-    const fragmentNew = new FragmentNew(document, componentEl, function () {
-        // Rescan for any DOM triggers
-        // IDEA: replace callbacks with global event state?
-        fragmentPanelsManager.scanForPanelTriggers();
-        fragmentAdd.scanForTriggers();
-    });
+    const fragmentNew = new FragmentNew(document, componentEl);
     fragmentNew.init();
 
     const fragmentAdd = new FragmentAdd(document, function (data) {
@@ -33,17 +29,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const fragmentPanelsManager = new PanelsManager(
         '[data-sidebar-fragments-edit]',
         new Container(sidebarContainerEl),
-        function (panel) {
-            console.log('New fragments panel ' + panel.id);
+        {
+            onNewPanel: (panel) => {
+                console.log('New fragments panel ' + panel.id);
 
-            fragmentNew.onNewPanel(panel);
-            initSortable('[data-sortable-fragments]', panel.el);
-        },
-        function () {
-            livewireComponent.reload();
+                fragmentNew.onNewPanel(panel);
+                initSortable('[data-sortable-fragments]', panel.el);
+            },
+            onSubmitPanel: () => {
+                livewireComponent.reload();
 
-            // TODO: set this in callback for when entire sidebar is closed.
-            initSortable();
+                // TODO: set this in callback for when entire sidebar is closed.
+                initSortable();
+            },
+            events: {
+                'fragment-new': () => {
+                    fragmentPanelsManager.scanForPanelTriggers();
+                },
+            },
         }
     );
 
@@ -70,4 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     initSortable();
+
+    window.PubSub = EventBus;
 });

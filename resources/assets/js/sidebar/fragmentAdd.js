@@ -1,4 +1,5 @@
 import { Api } from './Api';
+import EventBus from './EventBus';
 
 /**
  * Fragment add
@@ -14,6 +15,10 @@ export default class {
     init() {
         // Register unique trigger handler
         this.handle = (event) => this._handleTrigger(event);
+
+        EventBus.subscribe('fragment-new', () => {
+            this.scanForTriggers();
+        });
 
         this.scanForTriggers();
     }

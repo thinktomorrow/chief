@@ -4018,6 +4018,54 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
+/***/ "./resources/assets/js/sidebar/EventBus.js":
+/*!*************************************************!*\
+  !*** ./resources/assets/js/sidebar/EventBus.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Lightweight eventbus implementation
+ * based on the repo: https://github.com/PierfrancescoSoffritti/light-event-bus.js
+ */
+var subscriptions = {};
+var getNextUniqueId = getIdGenerator();
+
+function subscribe(event, callback) {
+  var id = getNextUniqueId();
+  if (!subscriptions[event]) subscriptions[event] = {};
+  subscriptions[event][id] = callback;
+  return {
+    unsubscribe: function unsubscribe() {
+      delete subscriptions[event][id];
+      if (Object.keys(subscriptions[event]).length === 0) delete subscriptions[event];
+    }
+  };
+}
+
+function publish(event, arg) {
+  if (!subscriptions[event]) return;
+  Object.keys(subscriptions[event]).forEach(function (key) {
+    return subscriptions[event][key](arg);
+  });
+}
+
+function getIdGenerator() {
+  var lastId = 0;
+  return function getNextUniqueId() {
+    lastId += 1;
+    return lastId;
+  };
+}
+
+module.exports = {
+  publish: publish,
+  subscribe: subscribe
+};
+
+/***/ }),
+
 /***/ "./resources/assets/js/sidebar/Panel.js":
 /*!**********************************************!*\
   !*** ./resources/assets/js/sidebar/Panel.js ***!
@@ -4164,6 +4212,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/sidebar/Api.js");
 /* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Panel */ "./resources/assets/js/sidebar/Panel.js");
 /* harmony import */ var _Panels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panels */ "./resources/assets/js/sidebar/Panels.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_3__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4174,15 +4224,17 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 var _default = /*#__PURE__*/function () {
-  function _default(triggerSelector, container, onNewPanel, onSubmitPanel) {
+  function _default(triggerSelector, container, options) {
     _classCallCheck(this, _default);
 
     this.triggerSelector = triggerSelector;
     this.container = container;
     this.panels = new _Panels__WEBPACK_IMPORTED_MODULE_2__["default"]();
-    this.onNewPanel = onNewPanel;
-    this.onSubmitPanel = onSubmitPanel;
+    this.onNewPanel = options.onNewPanel || null;
+    this.onSubmitPanel = options.onSubmitPanel || null;
+    this.events = options.events || {};
   }
 
   _createClass(_default, [{
@@ -4199,6 +4251,10 @@ var _default = /*#__PURE__*/function () {
 
       this.container.closeTriggers.forEach(function (trigger) {
         trigger.addEventListener('click', _this.backOrClose.bind(_this));
+      }); // Subscribe events via our EventBus
+
+      Object.keys(this.events).forEach(function (key) {
+        _EventBus__WEBPACK_IMPORTED_MODULE_3___default.a.subscribe(key, _this.events[key]);
       });
     }
   }, {
@@ -4206,6 +4262,7 @@ var _default = /*#__PURE__*/function () {
     value: function scanForPanelTriggers() {
       var _this2 = this;
 
+      console.log('scan...');
       Array.from(document.querySelectorAll(this.triggerSelector)).forEach(function (el) {
         el.removeEventListener('click', _this2.handle);
         el.addEventListener('click', _this2.handle);
@@ -4380,10 +4437,17 @@ document.addEventListener('DOMContentLoaded', function () {
   Array.from(componentEls).forEach(function (el) {
     var livewireComponent = Livewire.find(el.getAttribute('wire:id'));
     console.log(el.getAttribute('data-fields-component'));
-    var linkPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), function (panel) {
-      console.log('new fieldcomponent panel ' + panel.id);
-    }, function () {
-      livewireComponent.reload();
+    var linkPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+      onNewPanel: function onNewPanel(panel) {
+        console.log('New fragments panel ' + panel.id);
+      },
+      onSubmitPanel: function onSubmitPanel() {
+        livewireComponent.reload();
+      },
+      events: {// 'fragment-new': () => {
+        //
+        // },
+      }
     });
     linkPanelsManager.init();
     Livewire.on('linksReloaded', function () {
@@ -4405,11 +4469,14 @@ document.addEventListener('DOMContentLoaded', function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/sidebar/Api.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 /**
@@ -4436,6 +4503,9 @@ var _default = /*#__PURE__*/function () {
         return _this._handleTrigger(event);
       };
 
+      _EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function () {
+        _this.scanForTriggers();
+      });
       this.scanForTriggers();
     }
   }, {
@@ -4484,23 +4554,26 @@ var _default = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_0__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
 /**
  * Fragment new
  * submit fragment post request and grab results
  */
+
 var _default = /*#__PURE__*/function () {
-  function _default(container, fragmentsContainer, onClick) {
+  function _default(container, fragmentsContainer) {
     _classCallCheck(this, _default);
 
     this.container = container || document;
     this.fragmentsContainer = fragmentsContainer;
-    this.onClick = onClick;
     this.triggerAttribute = 'data-fragments-new';
     this.selectElAttribute = 'data-fragments-new-selection';
   }
@@ -4533,7 +4606,7 @@ var _default = /*#__PURE__*/function () {
       var fragmentSelectionElement = document.querySelector("[".concat(this.selectElAttribute, "]"));
 
       if (fragmentSelectionElement) {
-        var order = _getChildIndex(fragmentSelectionElement);
+        var order = this._getChildIndex(fragmentSelectionElement);
 
         if (panel.el.querySelector('input[name="order"]')) {
           panel.el.querySelector('input[name="order"]').value = order;
@@ -4555,9 +4628,7 @@ var _default = /*#__PURE__*/function () {
 
       this._insertSelectionEl(selectionEl, el);
 
-      if (this.onClick) {
-        this.onClick(selectionEl);
-      }
+      _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
     }
   }, {
     key: "_createSelectionEl",
@@ -4608,11 +4679,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
 /* harmony import */ var _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragmentAdd */ "./resources/assets/js/sidebar/fragmentAdd.js");
 /* harmony import */ var _fragmentNew__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragmentNew */ "./resources/assets/js/sidebar/fragmentNew.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_5__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -4629,26 +4703,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (!sidebarContainerEl || !componentEl) return;
   var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  var fragmentNew = new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl, function () {
-    // Rescan for any DOM triggers
-    // IDEA: replace callbacks with global event state?
-    fragmentPanelsManager.scanForPanelTriggers();
-    fragmentAdd.scanForTriggers();
-  });
+  var fragmentNew = new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl);
   fragmentNew.init();
   var fragmentAdd = new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document, function (data) {
     livewireComponent.reload();
     fragmentAdd.scanForTriggers();
   });
   fragmentAdd.init();
-  var fragmentPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), function (panel) {
-    console.log('New fragments panel ' + panel.id);
-    fragmentNew.onNewPanel(panel);
-    initSortable('[data-sortable-fragments]', panel.el);
-  }, function () {
-    livewireComponent.reload(); // TODO: set this in callback for when entire sidebar is closed.
+  var fragmentPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+    onNewPanel: function onNewPanel(panel) {
+      console.log('New fragments panel ' + panel.id);
+      fragmentNew.onNewPanel(panel);
+      initSortable('[data-sortable-fragments]', panel.el);
+    },
+    onSubmitPanel: function onSubmitPanel() {
+      livewireComponent.reload(); // TODO: set this in callback for when entire sidebar is closed.
 
-    initSortable();
+      initSortable();
+    },
+    events: {
+      'fragment-new': function fragmentNew() {
+        fragmentPanelsManager.scanForPanelTriggers();
+      }
+    }
   });
   fragmentPanelsManager.init();
   Livewire.on('fragmentsReloaded', function () {
@@ -4672,6 +4749,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   initSortable();
+  window.PubSub = _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a;
 });
 
 /***/ }),
@@ -4696,10 +4774,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var sidebarContainerEl = document.querySelector('#js-sidebar-container');
   var componentEl = document.querySelector('[data-links-component]');
   var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  var linkPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), function (panel) {
-    console.log('new links panel ' + panel.id);
-  }, function () {
-    livewireComponent.reload();
+  var linkPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+    onNewPanel: function onNewPanel(panel) {
+      console.log('new links panel ' + panel.id);
+    },
+    onSubmitPanel: function onSubmitPanel() {
+      livewireComponent.reload();
+    },
+    events: {// 'fragment-new': () => {
+      //
+      // },
+    }
   });
   linkPanelsManager.init();
   Livewire.on('linksReloaded', function () {
