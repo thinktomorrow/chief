@@ -41,8 +41,8 @@
 
     <div data-sortable-ignore class="absolute z-10 inset-0 flex flex-col justify-between items-center pointer-events-none">
         <div
-            data-sortable-insert="{{ $model->fragmentModel()->id }}"
-            data-sortable-insert-position="before"
+            data-fragments-new
+            data-fragments-new-position="before"
             class="flex items-center link link-black h-8 -mt-4 cursor-pointer pointer-events-auto transform scale-0 group-hover:scale-100 transition-300"
          >
             <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -51,8 +51,8 @@
        </div>
 
         <div
-            data-sortable-insert="{{ $model->fragmentModel()->id }}"
-            data-sortable-insert-position="after"
+            data-fragments-new
+            data-fragments-new-position="after"
             class="flex items-center link link-black h-8 -mb-4 cursor-pointer pointer-events-auto transform scale-0 group-hover:scale-100 transition-300"
         >
             <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

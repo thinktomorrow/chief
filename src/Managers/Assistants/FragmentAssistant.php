@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -68,7 +69,9 @@ trait FragmentAssistant
                     $model->fragmentModel()->id,
                 ], $parameters));
             }
-
+if(!$model->id) {
+    trap($model, $action);
+}
             return route('chief.' . $modelKey . '.' . $action, array_merge([
                 $model::managedModelKey(),
                 $model->modelReference()->id(),
@@ -161,10 +164,14 @@ trait FragmentAssistant
         // 5. delete a shared fragment: deletes for all CONTEXTS
         // 6. extra: list all shared fragments on separate page (is it possible)
 
-        $this->addFragmentable($owner, $fragmentable, $request);
-
-        // TODO: savefields for static fragment
-        // Allow relations, translations, assets, ...
+        try{
+            $this->addFragmentable($owner, $fragmentable, $request);
+        } catch(FragmentAlreadyAdded $e) {
+            return response()->json([
+                'message' => 'fragment not added',
+                'data' => [],
+            ], 400);
+        }
 
         return response()->json([
             'message' => 'fragment added',

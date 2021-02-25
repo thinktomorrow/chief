@@ -61,7 +61,11 @@ class Fragments extends Component
             ];
         }, $this->owner->allowedFragments());
 
-        $this->sharedFragments = app(FragmentRepository::class)->shared()->map(function($fragmentable){
+        $fragmentModelIds = $this->fragments->map(fn($fragment) => $fragment['model']->fragmentModel())->pluck('id')->toArray();
+
+        $this->sharedFragments = app(FragmentRepository::class)->shared()->reject(function($fragmentable) use($fragmentModelIds){
+            return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
+        })->map(function($fragmentable){
             return [
                 'manager' => app(Registry::class)->manager($fragmentable::managedModelKey()),
                 'model'   => $fragmentable,

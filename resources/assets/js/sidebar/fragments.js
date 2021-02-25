@@ -1,6 +1,7 @@
 import Container from './Container';
 import PanelsManager from './PanelsManager';
 import { IndexSorting } from '../utilities/sortable';
+import FragmentAdd from './fragmentAdd';
 
 /**
  * Fragments JS
@@ -14,18 +15,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
 
+    const fragmentNew = new FragmentNew(document, function () {
+        // Rescan for any DOM triggers
+        // IDEA: replace callbacks with global event state?
+        fragmentPanelsManager.scanForPanelTriggers();
+        fragmentAdd.scanForTriggers();
+    });
+    fragmentNew.init();
+
+    const fragmentAdd = new FragmentAdd(document, function (data) {
+        livewireComponent.reload();
+        fragmentAdd.scanForTriggers();
+    });
+    fragmentAdd.init();
+
     const fragmentPanelsManager = new PanelsManager(
         '[data-sidebar-fragments-edit]',
         new Container(sidebarContainerEl),
         function (panel) {
             console.log('New fragments panel ' + panel.id);
 
-            let fragmentSelectionElement = document.querySelector('[data-fragment-selection]');
-            if (fragmentSelectionElement) {
-                let order = getChildIndex(fragmentSelectionElement);
-                panel.el.querySelector('input[name="order"]').value = order;
-            }
-
+            fragmentNew.onNewPanel(panel);
             initSortable('[data-sortable-fragments]', panel.el);
         },
         function () {
@@ -60,54 +70,4 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     initSortable();
-
-    /**
-     * Fragment selection
-     */
-    scanForFragmentSelectionTriggers();
-
-    function scanForFragmentSelectionTriggers() {
-        let fragmentSelectionTriggers = Array.from(document.querySelectorAll('[data-sortable-insert]'));
-
-        fragmentSelectionTriggers.forEach((trigger) => {
-            trigger.addEventListener('click', function () {
-                let fragmentSelectionElement = document.querySelector('[data-fragment-selection]');
-
-                if (fragmentSelectionElement) {
-                    fragmentSelectionElement.parentElement.removeChild(fragmentSelectionElement);
-                }
-
-                fragmentSelectionElement = createFragmentSelection();
-
-                insertFragmentSelectionElement(fragmentSelectionElement, trigger);
-
-                fragmentPanelsManager.scanForPanelTriggers();
-            });
-        });
-    }
-
-    function createFragmentSelection() {
-        const template = document.querySelector('#js-fragment-selection-template');
-        const docFragment = document.importNode(template.content, true);
-        const el = docFragment.firstElementChild;
-
-        return el;
-    }
-
-    function insertFragmentSelectionElement(element, trigger) {
-        let insertBeforeTarget = trigger.getAttribute('data-sortable-insert-position') === 'before';
-        let targetElement = document.querySelector(
-            `[data-sortable-id="${trigger.getAttribute('data-sortable-insert')}"]`
-        );
-
-        if (insertBeforeTarget) {
-            targetElement.parentNode.insertBefore(element, targetElement);
-        } else {
-            targetElement.parentNode.insertBefore(element, targetElement.nextSibling);
-        }
-    }
-
-    function getChildIndex(node) {
-        return Array.prototype.indexOf.call(node.parentElement.children, node);
-    }
 });

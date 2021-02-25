@@ -1,1 +1,234 @@
-::-moz-selection{--bg-opacity:1;background-color:#6366f1;background-color:rgba(99,102,241,var(--bg-opacity));--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}::selection{--bg-opacity:1;background-color:#6366f1;background-color:rgba(99,102,241,var(--bg-opacity));--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}body{font-family:Roboto,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;width:100%;height:100vh;margin:0}a{color:#404040;color:rgba(64,64,64,var(--text-opacity));text-decoration:none}a,a:hover{--text-opacity:1}a:hover{color:#6366f1;color:rgba(99,102,241,var(--text-opacity))}main{width:100%;height:100%}aside,main{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex}aside{background:#13c6a6 url(../img/logo.svg) no-repeat 50%;background-size:100%;width:80%;align-items:flex-end}section{box-shadow:-10px 0 20px 0 rgba(0,0,0,.2);display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;justify-content:flex-start;align-items:center;overflow-y:auto;width:100%;padding:2rem 2rem 2rem 6rem}.input-group-prefix{position:relative;display:inline-block;width:100%}.form label{float:left;padding-top:.5rem;padding-bottom:.5rem}.form input[type=email]:focus,.form input[type=password]:focus,.form input[type=text]:focus{border-bottom-width:1px;--border-opacity:1;border-color:#404040;border-color:rgba(64,64,64,var(--border-opacity))}.form input[type=email],.form input[type=password],.form input[type=text]{font-family:Roboto,sans-serif;box-sizing:border-box;font-size:14px;transition:.3s ease-in-out;outline:2px solid transparent;outline-offset:2px;--bg-opacity:1;background-color:#fff;background-color:rgba(255,255,255,var(--bg-opacity));width:100%;border-width:0 0 1px;--border-opacity:1;border-color:#fafafa;border-color:rgba(250,250,250,var(--border-opacity));margin-bottom:1rem;padding:1rem 2rem}.form input[type=checkbox]{margin-right:1rem}.form button{font-family:Roboto,sans-serif;font-size:14px;outline:2px solid transparent;outline-offset:2px;width:50%;--bg-opacity:1;background-color:#404040;background-color:rgba(64,64,64,var(--bg-opacity));border-style:none;--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity));font-weight:700;cursor:pointer;border-radius:9999px;padding:1rem;margin-top:1rem;margin-bottom:1rem}.form button:hover{box-shadow:0 10px 20px rgba(0,0,0,.1);transition:all .3s ease}.form button:active,.form button:focus,.form button:hover{--bg-opacity:1;background-color:#6366f1;background-color:rgba(99,102,241,var(--bg-opacity))}.form .error{--text-opacity:1;color:#df5959;color:rgba(223,89,89,var(--text-opacity))}.form .succes{--text-opacity:1;color:#7dc68c;color:rgba(125,198,140,var(--text-opacity))}.form .message{display:block;margin-top:1rem;margin-bottom:1rem}.form .message a{--text-opacity:1;color:#6366f1;color:rgba(99,102,241,var(--text-opacity));text-decoration:none}footer{position:absolute;bottom:0;right:0;text-align:center;padding:.5rem 1rem}
+/*
+ |
+ | LOGIN.CSS
+ | ---------
+ | Deze file staat apart omdat het loginscherm los staat van de default layout.
+ | De opmaak toont zich op de pagina thinktomorrow.be/chief en is zichtbaar voor zowel
+ |  adminbeheerders als de gebruikers.
+ |
+*/
+
+::-moz-selection {
+  --bg-opacity: 1;
+  background-color: #6366f1;
+  background-color: rgba(99, 102, 241, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+}
+
+::selection {
+  --bg-opacity: 1;
+  background-color: #6366f1;
+  background-color: rgba(99, 102, 241, var(--bg-opacity));
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+
+a {
+  --text-opacity: 1;
+  color: #404040;
+  color: rgba(64, 64, 64, var(--text-opacity));
+  text-decoration: none;
+}
+
+a:hover {
+  --text-opacity: 1;
+  color: #6366f1;
+  color: rgba(99, 102, 241, var(--text-opacity));
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+aside {
+  background: #13c6a6 url("../img/logo.svg") no-repeat center center;
+  background-size: 100%;
+  width: 80%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: flex-end;
+}
+
+section {
+  box-shadow: -10px 0px 20px 0 rgba(0, 0, 0, 0.2);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
+  width: 100%;
+  padding-left: 6rem;
+  padding-right: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.login-wrapper {
+  max-width: 400px;
+  width: 100%;
+}
+
+.input-group-prefix {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.input-group-prefix span.lnr {
+  bottom: 33px;
+  position: absolute;
+}
+
+.form label {
+  float: left;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.form input[type=text]:focus,
+.form input[type=email]:focus,
+.form input[type=password]:focus {
+  border-bottom-width: 1px;
+  --border-opacity: 1;
+  border-color: #404040;
+  border-color: rgba(64, 64, 64, var(--border-opacity));
+}
+
+.form input[type=text],
+.form input[type=email],
+.form input[type=password] {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+  font-size: 14px;
+  transition: 0.3s ease-in-out;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --bg-opacity: 1;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, var(--bg-opacity));
+  width: 100%;
+  border-top-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+  --border-opacity: 1;
+  border-color: #fafafa;
+  border-color: rgba(250, 250, 250, var(--border-opacity));
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.form input[type=checkbox] {
+  margin-right: 1rem;
+}
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  width: 50%;
+  --bg-opacity: 1;
+  background-color: #404040;
+  background-color: rgba(64, 64, 64, var(--bg-opacity));
+  border-style: none;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 9999px;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form button:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: 0.3s all ease;
+}
+
+.form button:hover,
+.form button:active,
+.form button:focus {
+  --bg-opacity: 1;
+  background-color: #6366f1;
+  background-color: rgba(99, 102, 241, var(--bg-opacity));
+}
+
+.form .error {
+  --text-opacity: 1;
+  color: #df5959;
+  color: rgba(223, 89, 89, var(--text-opacity));
+}
+
+.form .succes {
+  --text-opacity: 1;
+  color: #7dc68c;
+  color: rgba(125, 198, 140, var(--text-opacity));
+}
+
+.form .message {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form .message a {
+  --text-opacity: 1;
+  color: #6366f1;
+  color: rgba(99, 102, 241, var(--text-opacity));
+  text-decoration: none;
+}
+
+.form .register-form {
+  display: none;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/*TOGGLE PWD*/
+
+.showHideInput {
+  display: none;
+}
+
+.showHideLabel {
+  right: 55px;
+  margin-top: -50px;
+  position: absolute;
+}
