@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -15,7 +14,7 @@ trait FragmentsAssistant
     public function routesFragmentsAssistant(): array
     {
         return [
-            ManagedRoute::post('fragments-reorder', 'fragments/reorder'),
+            ManagedRoute::post('fragments-reorder', 'fragments/{fragmentowner_id}/reorder'),
         ];
     }
 
@@ -33,13 +32,15 @@ trait FragmentsAssistant
         return in_array($action, ['fragments-index', 'fragments-reorder']);
     }
 
-    public function fragmentsReorder(Request $request)
+    public function fragmentsReorder(Request $request, $ownerId)
     {
         if (! $request->indices) {
             throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
         }
 
-        app(SortModels::class)->handle(FragmentModel::class, $request->indices, 'order', false);
+        $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
+
+        app(SortModels::class)->handleFragments($owner, $request->indices);
 
         return response()->json([
             'message' => 'models sorted.',
