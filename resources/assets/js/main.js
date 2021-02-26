@@ -24,16 +24,12 @@ Vue.component('translation-tabs', require('./components-vue/TranslationTabs.vue'
 Vue.component('chief-multiselect', require('./components-vue/MultiSelect.vue').default);
 
 Vue.component('modal', require('./components-vue/Modal.vue').default);
-Vue.component('sidebar', require('./components-vue/Sidebar.vue').default);
 Vue.component('alert', require('./components-vue/Alert.vue').default);
 Vue.component('delete', require('./components-vue/RemoveButton.vue').default);
 Vue.component('error', require('./components-vue/Error.vue').default);
-Vue.component('page-builder', require('./components-vue/Pagebuilder/Pagebuilder.vue').default);
 Vue.component('mediagallery', require('./components-vue/MediaGallery.vue').default);
 Vue.component('image-component', require('./components-vue/ImageComponent').default);
 Vue.component('imagesupload', require('./components-vue/ImagesUpload').default);
-Vue.component('fragment', require('./components-vue/Fragment').default);
-Vue.component('fragments', require('./components-vue/Fragments').default);
 
 Vue.component('url-redirect', require('./components-vue/UrlRedirect').default);
 Vue.component('link-input', require('./components-vue/LinkInput').default);
