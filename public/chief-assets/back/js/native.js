@@ -3831,9 +3831,9 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', function () {
   var sidebarContainerEl = document.querySelector('#js-sidebar-container'),
-      componentEls = document.querySelectorAll('[data-fields-component]'),
-      livewireComponent = Livewire.find(el.getAttribute('wire:id'));
+      componentEls = document.querySelectorAll('[data-fields-component]');
   Array.from(componentEls).forEach(function (el) {
+    var livewireComponent = Livewire.find(el.getAttribute('wire:id'));
     var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
       onSubmitPanel: function onSubmitPanel() {
         livewireComponent.reload();

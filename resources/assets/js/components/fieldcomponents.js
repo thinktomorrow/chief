@@ -6,10 +6,10 @@ import PanelsManager from './sidebar/PanelsManager';
 // --------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
     const sidebarContainerEl = document.querySelector('#js-sidebar-container'),
-        componentEls = document.querySelectorAll('[data-fields-component]'),
-        livewireComponent = Livewire.find(el.getAttribute('wire:id'));
+        componentEls = document.querySelectorAll('[data-fields-component]');
 
     Array.from(componentEls).forEach((el) => {
+        const livewireComponent = Livewire.find(el.getAttribute('wire:id'));
         const linkPanelsManager = new PanelsManager(
             '[' + el.getAttribute('data-fields-component') + ']',
             new Container(sidebarContainerEl),
