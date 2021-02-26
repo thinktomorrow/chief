@@ -1,5 +1,5 @@
 import { Api } from '../sidebar/Api';
-import EventBus from '../sidebar/EventBus';
+import EventBus from '../../utilities/EventBus';
 
 /**
  * Fragment add

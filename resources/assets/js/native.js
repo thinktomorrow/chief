@@ -17,5 +17,5 @@ if (document.getElementById('js-sortable')) {
 
 /** Sidebar */
 require('./components/fragment/fragments');
-require('./components/sidebar/links');
-require('./components/sidebar/fieldcomponents');
+require('./components/links');
+require('./components/fieldcomponents');

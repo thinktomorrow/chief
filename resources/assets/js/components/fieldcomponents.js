@@ -1,5 +1,5 @@
-import Container from './Container';
-import PanelsManager from './PanelsManager';
+import Container from './sidebar/Container';
+import PanelsManager from './sidebar/PanelsManager';
 
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------

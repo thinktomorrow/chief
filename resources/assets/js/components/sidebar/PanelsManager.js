@@ -1,7 +1,7 @@
 import { Api } from './Api';
 import Panel from './Panel';
 import Panels from './Panels';
-import EventBus from './EventBus';
+import EventBus from '../../utilities/EventBus';
 
 export default class {
     constructor(triggerSelector, container, options) {

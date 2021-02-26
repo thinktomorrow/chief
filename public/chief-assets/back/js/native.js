@@ -3813,6 +3813,52 @@ Sortable.mount(Remove, Revert);
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/fieldcomponents.js":
+/*!***********************************************************!*\
+  !*** ./resources/assets/js/components/fieldcomponents.js ***!
+  \***********************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
+/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
+
+ // --------------------------------------------------------------------------------
+// LINKS JS --------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
+  var componentEls = document.querySelectorAll('[data-fields-component]'); // Multiple componentEls with each their own sidebar instance ....
+  // require route to edit - update, maybe via assistant FieldsAssistant::edit(model, fieldnames), update(),
+  // Also how to show the content of these fields???? a field method:: renderAdminComponent() ???
+  // <x-fields-component :tagged=seo></x-fields-component>
+
+  Array.from(componentEls).forEach(function (el) {
+    var livewireComponent = Livewire.find(el.getAttribute('wire:id'));
+    console.log(el.getAttribute('data-fields-component'));
+    var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+      onNewPanel: function onNewPanel(panel) {
+        console.log('New fragments panel ' + panel.id);
+      },
+      onSubmitPanel: function onSubmitPanel() {
+        livewireComponent.reload();
+      },
+      events: {// 'fragment-new': () => {
+        //
+        // },
+      }
+    });
+    Livewire.on('fieldsComponentReloaded', function () {
+      linkPanelsManager.scanForPanelTriggers();
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/fragment/fragmentAdd.js":
 /*!****************************************************************!*\
   !*** ./resources/assets/js/components/fragment/fragmentAdd.js ***!
@@ -3824,8 +3870,8 @@ Sortable.mount(Remove, Revert);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
 /* harmony import */ var _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/Api */ "./resources/assets/js/components/sidebar/Api.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidebar/EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utilities_EventBus__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3858,7 +3904,7 @@ var _default = /*#__PURE__*/function () {
         return _this._handleTrigger(event);
       };
 
-      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function () {
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function () {
         _this.scanForTriggers();
       });
       this.scanForTriggers();
@@ -3885,7 +3931,7 @@ var _default = /*#__PURE__*/function () {
       _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__["Api"].submit('POST', action, {}, function (data) {
         _this3.scanForTriggers();
 
-        _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('fragment-add', data);
+        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('fragment-add', data);
       });
     }
   }]);
@@ -3907,8 +3953,8 @@ var _default = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_utilities_EventBus__WEBPACK_IMPORTED_MODULE_0__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3942,10 +3988,10 @@ var _default = /*#__PURE__*/function () {
         return _this._handleTrigger(event);
       };
 
-      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
         _this._onNewPanel(panel);
       });
-      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-reloaded', function (panel) {
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-reloaded', function (panel) {
         _this.scanForTriggers();
       });
       this.scanForTriggers();
@@ -3988,7 +4034,7 @@ var _default = /*#__PURE__*/function () {
 
       this._insertSelectionEl(selectionEl, el);
 
-      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
     }
   }, {
     key: "_createSelectionEl",
@@ -4039,8 +4085,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
 /* harmony import */ var _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragmentAdd */ "./resources/assets/js/components/fragment/fragmentAdd.js");
 /* harmony import */ var _fragmentNew__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragmentNew */ "./resources/assets/js/components/fragment/fragmentNew.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../sidebar/EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4066,10 +4112,10 @@ document.addEventListener('DOMContentLoaded', function () {
   new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onNewPanel: function onNewPanel(panel) {
-      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
     },
     onSubmitPanel: function onSubmitPanel() {
-      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
     },
     events: {
       'fragment-new': function fragmentNew() {
@@ -4085,14 +4131,14 @@ document.addEventListener('DOMContentLoaded', function () {
    */
 
   var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
     livewireComponent.reload();
   });
-  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
     livewireComponent.reload();
   });
   Livewire.on('fragmentsReloaded', function () {
-    _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
+    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
   });
   /**
    * Sortable logic for fragment component
@@ -4113,13 +4159,52 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
     initSortable('[data-sortable-fragments]', panel.el);
   });
-  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
     initSortable();
   });
   initSortable();
+});
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/links.js":
+/*!*************************************************!*\
+  !*** ./resources/assets/js/components/links.js ***!
+  \*************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
+/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
+
+ // --------------------------------------------------------------------------------
+// LINKS JS --------------------------------------------------------------------
+// --------------------------------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
+  var componentEl = document.querySelector('[data-links-component]');
+  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+  var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+    onNewPanel: function onNewPanel(panel) {
+      console.log('new links panel ' + panel.id);
+    },
+    onSubmitPanel: function onSubmitPanel() {
+      livewireComponent.reload();
+    },
+    events: {// 'fragment-new': () => {
+      //
+      // },
+    }
+  });
+  Livewire.on('linksReloaded', function () {
+    linkPanelsManager.scanForPanelTriggers();
+  });
 });
 
 /***/ }),
@@ -4235,7 +4320,7 @@ var _default = /*#__PURE__*/function () {
       var _this = this;
 
       Promise.all([this._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'), this._closeElement(this.sidebarAside, 'sidebar-slide-from-right')]).then(function () {
-        _this.el.style.display = "none";
+        _this.el.style.display = 'none';
       })["catch"](function (error) {
         console.error(error);
       });
@@ -4287,54 +4372,6 @@ var _default = /*#__PURE__*/function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/sidebar/EventBus.js":
-/*!************************************************************!*\
-  !*** ./resources/assets/js/components/sidebar/EventBus.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Lightweight eventbus implementation
- * based on the repo: https://github.com/PierfrancescoSoffritti/light-event-bus.js
- */
-var subscriptions = {};
-var getNextUniqueId = getIdGenerator();
-
-function subscribe(event, callback) {
-  var id = getNextUniqueId();
-  if (!subscriptions[event]) subscriptions[event] = {};
-  subscriptions[event][id] = callback;
-  return {
-    unsubscribe: function unsubscribe() {
-      delete subscriptions[event][id];
-      if (Object.keys(subscriptions[event]).length === 0) delete subscriptions[event];
-    }
-  };
-}
-
-function publish(event, arg) {
-  if (!subscriptions[event]) return;
-  Object.keys(subscriptions[event]).forEach(function (key) {
-    return subscriptions[event][key](arg);
-  });
-}
-
-function getIdGenerator() {
-  var lastId = 0;
-  return function getNextUniqueId() {
-    lastId += 1;
-    return lastId;
-  };
-}
-
-module.exports = {
-  publish: publish,
-  subscribe: subscribe
-};
 
 /***/ }),
 
@@ -4484,8 +4521,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/components/sidebar/Api.js");
 /* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Panel */ "./resources/assets/js/components/sidebar/Panel.js");
 /* harmony import */ var _Panels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panels */ "./resources/assets/js/components/sidebar/Panels.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utilities_EventBus__WEBPACK_IMPORTED_MODULE_3__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -4528,7 +4565,7 @@ var _default = /*#__PURE__*/function () {
       }); // Subscribe events via our EventBus
 
       Object.keys(this.events).forEach(function (key) {
-        _EventBus__WEBPACK_IMPORTED_MODULE_3___default.a.subscribe(key, _this.events[key]);
+        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_3___default.a.subscribe(key, _this.events[key]);
       });
     }
   }, {
@@ -4699,91 +4736,6 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/sidebar/fieldcomponents.js":
-/*!*******************************************************************!*\
-  !*** ./resources/assets/js/components/sidebar/fieldcomponents.js ***!
-  \*******************************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/components/sidebar/Container.js");
-/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
-
- // --------------------------------------------------------------------------------
-// LINKS JS --------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEls = document.querySelectorAll('[data-fields-component]'); // Multiple componentEls with each their own sidebar instance ....
-  // require route to edit - update, maybe via assistant FieldsAssistant::edit(model, fieldnames), update(),
-  // Also how to show the content of these fields???? a field method:: renderAdminComponent() ???
-  // <x-fields-component :tagged=seo></x-fields-component>
-
-  Array.from(componentEls).forEach(function (el) {
-    var livewireComponent = Livewire.find(el.getAttribute('wire:id'));
-    console.log(el.getAttribute('data-fields-component'));
-    var linkPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
-      onNewPanel: function onNewPanel(panel) {
-        console.log('New fragments panel ' + panel.id);
-      },
-      onSubmitPanel: function onSubmitPanel() {
-        livewireComponent.reload();
-      },
-      events: {// 'fragment-new': () => {
-        //
-        // },
-      }
-    });
-    Livewire.on('fieldsComponentReloaded', function () {
-      linkPanelsManager.scanForPanelTriggers();
-    });
-  });
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/sidebar/links.js":
-/*!*********************************************************!*\
-  !*** ./resources/assets/js/components/sidebar/links.js ***!
-  \*********************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/components/sidebar/Container.js");
-/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
-
- // --------------------------------------------------------------------------------
-// LINKS JS --------------------------------------------------------------------
-// --------------------------------------------------------------------------------
-
-document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-links-component]');
-  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  var linkPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
-    onNewPanel: function onNewPanel(panel) {
-      console.log('new links panel ' + panel.id);
-    },
-    onSubmitPanel: function onSubmitPanel() {
-      livewireComponent.reload();
-    },
-    events: {// 'fragment-new': () => {
-      //
-      // },
-    }
-  });
-  Livewire.on('linksReloaded', function () {
-    linkPanelsManager.scanForPanelTriggers();
-  });
-});
-
-/***/ }),
-
 /***/ "./resources/assets/js/native.js":
 /*!***************************************!*\
   !*** ./resources/assets/js/native.js ***!
@@ -4816,9 +4768,57 @@ if (document.getElementById('js-sortable')) {
 
 __webpack_require__(/*! ./components/fragment/fragments */ "./resources/assets/js/components/fragment/fragments.js");
 
-__webpack_require__(/*! ./components/sidebar/links */ "./resources/assets/js/components/sidebar/links.js");
+__webpack_require__(/*! ./components/links */ "./resources/assets/js/components/links.js");
 
-__webpack_require__(/*! ./components/sidebar/fieldcomponents */ "./resources/assets/js/components/sidebar/fieldcomponents.js");
+__webpack_require__(/*! ./components/fieldcomponents */ "./resources/assets/js/components/fieldcomponents.js");
+
+/***/ }),
+
+/***/ "./resources/assets/js/utilities/EventBus.js":
+/*!***************************************************!*\
+  !*** ./resources/assets/js/utilities/EventBus.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Lightweight eventbus implementation
+ * based on the repo: https://github.com/PierfrancescoSoffritti/light-event-bus.js
+ */
+var subscriptions = {};
+var getNextUniqueId = getIdGenerator();
+
+function subscribe(event, callback) {
+  var id = getNextUniqueId();
+  if (!subscriptions[event]) subscriptions[event] = {};
+  subscriptions[event][id] = callback;
+  return {
+    unsubscribe: function unsubscribe() {
+      delete subscriptions[event][id];
+      if (Object.keys(subscriptions[event]).length === 0) delete subscriptions[event];
+    }
+  };
+}
+
+function publish(event, arg) {
+  if (!subscriptions[event]) return;
+  Object.keys(subscriptions[event]).forEach(function (key) {
+    return subscriptions[event][key](arg);
+  });
+}
+
+function getIdGenerator() {
+  var lastId = 0;
+  return function getNextUniqueId() {
+    lastId += 1;
+    return lastId;
+  };
+}
+
+module.exports = {
+  publish: publish,
+  subscribe: subscribe
+};
 
 /***/ }),
 

@@ -1,4 +1,4 @@
-import EventBus from '../sidebar/EventBus';
+import EventBus from '../../utilities/EventBus';
 
 /**
  * Fragment new
