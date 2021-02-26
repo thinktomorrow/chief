@@ -3813,6 +3813,317 @@ Sortable.mount(Remove, Revert);
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/fragment/fragmentAdd.js":
+/*!****************************************************************!*\
+  !*** ./resources/assets/js/components/fragment/fragmentAdd.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
+/* harmony import */ var _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../sidebar/Api */ "./resources/assets/js/sidebar/Api.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sidebar/EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+/**
+ * Fragment add
+ * submit fragment post request and grab results
+ */
+
+var _default = /*#__PURE__*/function () {
+  function _default(container) {
+    _classCallCheck(this, _default);
+
+    this.container = container || document;
+    this.postActionAttribute = 'data-fragments-add';
+    this.init();
+  }
+
+  _createClass(_default, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      // Register unique trigger handler
+      this.handle = function (event) {
+        return _this._handleTrigger(event);
+      };
+
+      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function () {
+        _this.scanForTriggers();
+      });
+      this.scanForTriggers();
+    }
+  }, {
+    key: "scanForTriggers",
+    value: function scanForTriggers() {
+      var _this2 = this;
+
+      Array.from(this.container.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
+        el.removeEventListener('click', _this2.handle);
+        el.addEventListener('click', _this2.handle);
+      });
+    }
+  }, {
+    key: "_handleTrigger",
+    value: function _handleTrigger(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      var el = event.target.hasAttribute(this.postActionAttribute) ? event.target : event.target.closest("[".concat(this.postActionAttribute, "]")),
+          action = el ? el.getAttribute(this.postActionAttribute) : null;
+      if (!action) return;
+      _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__["Api"].submit('POST', action, {}, function (data) {
+        _this3.scanForTriggers();
+
+        _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('fragment-add', data);
+      });
+    }
+  }]);
+
+  return _default;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/fragment/fragmentNew.js":
+/*!****************************************************************!*\
+  !*** ./resources/assets/js/components/fragment/fragmentNew.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../sidebar/EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+/**
+ * Fragment new
+ * submit fragment post request and grab results
+ */
+
+var _default = /*#__PURE__*/function () {
+  function _default(container, fragmentsContainer) {
+    _classCallCheck(this, _default);
+
+    this.container = container || document;
+    this.fragmentsContainer = fragmentsContainer;
+    this.triggerAttribute = 'data-fragments-new';
+    this.selectElAttribute = 'data-fragments-new-selection';
+    this.init();
+  }
+
+  _createClass(_default, [{
+    key: "init",
+    value: function init() {
+      var _this = this;
+
+      // Register unique trigger handler
+      this.handle = function (event) {
+        return _this._handleTrigger(event);
+      };
+
+      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
+        _this._onNewPanel(panel);
+      });
+      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-reloaded', function (panel) {
+        _this.scanForTriggers();
+      });
+      this.scanForTriggers();
+    }
+  }, {
+    key: "scanForTriggers",
+    value: function scanForTriggers() {
+      var _this2 = this;
+
+      Array.from(this.container.querySelectorAll("[".concat(this.triggerAttribute, "]"))).forEach(function (el) {
+        el.removeEventListener('click', _this2.handle);
+        el.addEventListener('click', _this2.handle);
+      });
+    }
+  }, {
+    key: "_onNewPanel",
+    value: function _onNewPanel(panel) {
+      var fragmentSelectionElement = document.querySelector("[".concat(this.selectElAttribute, "]"));
+
+      if (fragmentSelectionElement) {
+        var order = this._getChildIndex(fragmentSelectionElement);
+
+        if (panel.el.querySelector('input[name="order"]')) {
+          panel.el.querySelector('input[name="order"]').value = order;
+        }
+      }
+    }
+  }, {
+    key: "_handleTrigger",
+    value: function _handleTrigger(event) {
+      event.preventDefault();
+      var el = event.target.hasAttribute(this.triggerAttribute) ? event.target : event.target.closest("[".concat(this.triggerAttribute, "]"));
+      if (!el) return; // Remove any existing selection els - only want to display one.
+
+      Array.from(this.fragmentsContainer.querySelectorAll("[".concat(this.selectElAttribute, "]"))).forEach(function (el) {
+        el.remove();
+      }); // Create the new selection el from our template
+
+      var selectionEl = this._createSelectionEl();
+
+      this._insertSelectionEl(selectionEl, el);
+
+      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
+    }
+  }, {
+    key: "_createSelectionEl",
+    value: function _createSelectionEl() {
+      var template = document.querySelector('#js-fragment-selection-template');
+      var el = template.firstElementChild.cloneNode(true);
+      console.log(el);
+      return el;
+    }
+  }, {
+    key: "_insertSelectionEl",
+    value: function _insertSelectionEl(element, trigger) {
+      var insertBeforeTarget = trigger.getAttribute('data-fragments-new-position') === 'before'; // TODO: need to refactor this. We should already know the position yes?
+
+      var targetElement = document.querySelector("[data-sortable-id=\"".concat(trigger.getAttribute('data-fragments-new'), "\"]"));
+
+      if (insertBeforeTarget) {
+        targetElement.parentNode.insertBefore(element, targetElement);
+      } else {
+        targetElement.parentNode.insertBefore(element, targetElement.nextSibling);
+      }
+    }
+  }, {
+    key: "_getChildIndex",
+    value: function _getChildIndex(node) {
+      return Array.prototype.indexOf.call(node.parentElement.children, node);
+    }
+  }]);
+
+  return _default;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/fragment/fragments.js":
+/*!**************************************************************!*\
+  !*** ./resources/assets/js/components/fragment/fragments.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../sidebar/Container */ "./resources/assets/js/sidebar/Container.js");
+/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sidebar/PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
+/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
+/* harmony import */ var _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragmentAdd */ "./resources/assets/js/components/fragment/fragmentAdd.js");
+/* harmony import */ var _fragmentNew__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragmentNew */ "./resources/assets/js/components/fragment/fragmentNew.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../sidebar/EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+/**
+ * Fragments JS
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
+  var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
+
+  if (!sidebarContainerEl || !componentEl) return;
+  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl);
+  new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
+  var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+    onNewPanel: function onNewPanel(panel) {
+      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
+    },
+    onSubmitPanel: function onSubmitPanel() {
+      _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
+    },
+    events: {
+      'fragment-new': function fragmentNew() {
+        fragmentPanelsManager.scanForPanelTriggers();
+      },
+      'fragments-reloaded': function fragmentsReloaded() {
+        fragmentPanelsManager.scanForPanelTriggers();
+      }
+    }
+  });
+  /**
+   * Fragments livewire components logic. Update the component on important changes
+   */
+
+  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
+    livewireComponent.reload();
+  });
+  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+    livewireComponent.reload();
+  });
+  Livewire.on('fragmentsReloaded', function () {
+    _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
+  });
+  /**
+   * Sortable logic for fragment component
+   */
+
+  function initSortable() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-sortable-fragments]';
+    var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    // TODO: first remove existing sortable instances on these same selector els...
+    Array.from(container.querySelectorAll(selector)).forEach(function (el) {
+      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"](_objectSpread(_objectSpread({}, {
+        sortableGroupEl: el,
+        endpoint: el.getAttribute('data-sortable-endpoint'),
+        handle: '[data-sortable-handle]',
+        isSorting: true
+      }), options));
+    });
+  }
+
+  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
+    initSortable('[data-sortable-fragments]', panel.el);
+  });
+  _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+    initSortable();
+  });
+  initSortable();
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js/native.js":
 /*!***************************************!*\
   !*** ./resources/assets/js/native.js ***!
@@ -3843,7 +4154,7 @@ if (document.getElementById('js-sortable')) {
 /** Sidebar */
 
 
-__webpack_require__(/*! ./sidebar/fragments */ "./resources/assets/js/sidebar/fragments.js");
+__webpack_require__(/*! ./components/fragment/fragments */ "./resources/assets/js/components/fragment/fragments.js");
 
 __webpack_require__(/*! ./sidebar/links */ "./resources/assets/js/sidebar/links.js");
 
@@ -4468,317 +4779,6 @@ document.addEventListener('DOMContentLoaded', function () {
       linkPanelsManager.scanForPanelTriggers();
     });
   });
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/sidebar/fragmentAdd.js":
-/*!****************************************************!*\
-  !*** ./resources/assets/js/sidebar/fragmentAdd.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/sidebar/Api.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_1__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-/**
- * Fragment add
- * submit fragment post request and grab results
- */
-
-var _default = /*#__PURE__*/function () {
-  function _default(container) {
-    _classCallCheck(this, _default);
-
-    this.container = container || document;
-    this.postActionAttribute = 'data-fragments-add';
-    this.init();
-  }
-
-  _createClass(_default, [{
-    key: "init",
-    value: function init() {
-      var _this = this;
-
-      // Register unique trigger handler
-      this.handle = function (event) {
-        return _this._handleTrigger(event);
-      };
-
-      _EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function () {
-        _this.scanForTriggers();
-      });
-      this.scanForTriggers();
-    }
-  }, {
-    key: "scanForTriggers",
-    value: function scanForTriggers() {
-      var _this2 = this;
-
-      Array.from(this.container.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
-        el.removeEventListener('click', _this2.handle);
-        el.addEventListener('click', _this2.handle);
-      });
-    }
-  }, {
-    key: "_handleTrigger",
-    value: function _handleTrigger(event) {
-      var _this3 = this;
-
-      event.preventDefault();
-      var el = event.target.hasAttribute(this.postActionAttribute) ? event.target : event.target.closest("[".concat(this.postActionAttribute, "]")),
-          action = el ? el.getAttribute(this.postActionAttribute) : null;
-      if (!action) return;
-      _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].submit('POST', action, {}, function (data) {
-        _this3.scanForTriggers();
-
-        _EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('fragment-add', data);
-      });
-    }
-  }]);
-
-  return _default;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/sidebar/fragmentNew.js":
-/*!****************************************************!*\
-  !*** ./resources/assets/js/sidebar/fragmentNew.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-/**
- * Fragment new
- * submit fragment post request and grab results
- */
-
-var _default = /*#__PURE__*/function () {
-  function _default(container, fragmentsContainer) {
-    _classCallCheck(this, _default);
-
-    this.container = container || document;
-    this.fragmentsContainer = fragmentsContainer;
-    this.triggerAttribute = 'data-fragments-new';
-    this.selectElAttribute = 'data-fragments-new-selection';
-    this.init();
-  }
-
-  _createClass(_default, [{
-    key: "init",
-    value: function init() {
-      var _this = this;
-
-      // Register unique trigger handler
-      this.handle = function (event) {
-        return _this._handleTrigger(event);
-      };
-
-      _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
-        _this._onNewPanel(panel);
-      });
-      _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-reloaded', function (panel) {
-        _this.scanForTriggers();
-      });
-      this.scanForTriggers();
-    }
-  }, {
-    key: "scanForTriggers",
-    value: function scanForTriggers() {
-      var _this2 = this;
-
-      Array.from(this.container.querySelectorAll("[".concat(this.triggerAttribute, "]"))).forEach(function (el) {
-        el.removeEventListener('click', _this2.handle);
-        el.addEventListener('click', _this2.handle);
-      });
-    }
-  }, {
-    key: "_onNewPanel",
-    value: function _onNewPanel(panel) {
-      var fragmentSelectionElement = document.querySelector("[".concat(this.selectElAttribute, "]"));
-
-      if (fragmentSelectionElement) {
-        var order = this._getChildIndex(fragmentSelectionElement);
-
-        if (panel.el.querySelector('input[name="order"]')) {
-          panel.el.querySelector('input[name="order"]').value = order;
-        }
-      }
-    }
-  }, {
-    key: "_handleTrigger",
-    value: function _handleTrigger(event) {
-      event.preventDefault();
-      var el = event.target.hasAttribute(this.triggerAttribute) ? event.target : event.target.closest("[".concat(this.triggerAttribute, "]"));
-      if (!el) return; // Remove any existing selection els - only want to display one.
-
-      Array.from(this.fragmentsContainer.querySelectorAll("[".concat(this.selectElAttribute, "]"))).forEach(function (el) {
-        el.remove();
-      }); // Create the new selection el from our template
-
-      var selectionEl = this._createSelectionEl();
-
-      this._insertSelectionEl(selectionEl, el);
-
-      _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
-    }
-  }, {
-    key: "_createSelectionEl",
-    value: function _createSelectionEl() {
-      var template = document.querySelector('#js-fragment-selection-template');
-      var el = template.firstElementChild.cloneNode(true);
-      console.log(el);
-      return el;
-    }
-  }, {
-    key: "_insertSelectionEl",
-    value: function _insertSelectionEl(element, trigger) {
-      var insertBeforeTarget = trigger.getAttribute('data-fragments-new-position') === 'before'; // TODO: need to refactor this. We should already know the position yes?
-
-      var targetElement = document.querySelector("[data-sortable-id=\"".concat(trigger.getAttribute('data-fragments-new'), "\"]"));
-
-      if (insertBeforeTarget) {
-        targetElement.parentNode.insertBefore(element, targetElement);
-      } else {
-        targetElement.parentNode.insertBefore(element, targetElement.nextSibling);
-      }
-    }
-  }, {
-    key: "_getChildIndex",
-    value: function _getChildIndex(node) {
-      return Array.prototype.indexOf.call(node.parentElement.children, node);
-    }
-  }]);
-
-  return _default;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/sidebar/fragments.js":
-/*!**************************************************!*\
-  !*** ./resources/assets/js/sidebar/fragments.js ***!
-  \**************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/sidebar/Container.js");
-/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
-/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
-/* harmony import */ var _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragmentAdd */ "./resources/assets/js/sidebar/fragmentAdd.js");
-/* harmony import */ var _fragmentNew__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragmentNew */ "./resources/assets/js/sidebar/fragmentNew.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_5__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-
-/**
- * Fragments JS
- */
-
-document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
-
-  if (!sidebarContainerEl || !componentEl) return;
-  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl);
-  new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
-  var fragmentPanelsManager = new _PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
-    onNewPanel: function onNewPanel(panel) {
-      _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
-    },
-    onSubmitPanel: function onSubmitPanel() {
-      _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
-    },
-    events: {
-      'fragment-new': function fragmentNew() {
-        fragmentPanelsManager.scanForPanelTriggers();
-      },
-      'fragments-reloaded': function fragmentsReloaded() {
-        fragmentPanelsManager.scanForPanelTriggers();
-      }
-    }
-  });
-  /**
-   * Fragments livewire components logic. Update the component on important changes
-   */
-
-  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
-    livewireComponent.reload();
-  });
-  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
-    livewireComponent.reload();
-  });
-  Livewire.on('fragmentsReloaded', function () {
-    _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
-  });
-  /**
-   * Sortable logic for fragment component
-   */
-
-  function initSortable() {
-    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-sortable-fragments]';
-    var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    // TODO: first remove existing sortable instances on these same selector els...
-    Array.from(container.querySelectorAll(selector)).forEach(function (el) {
-      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"](_objectSpread(_objectSpread({}, {
-        sortableGroupEl: el,
-        endpoint: el.getAttribute('data-sortable-endpoint'),
-        handle: '[data-sortable-handle]',
-        isSorting: true
-      }), options));
-    });
-  }
-
-  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
-    initSortable('[data-sortable-fragments]', panel.el);
-  });
-  _EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
-    initSortable();
-  });
-  initSortable();
 });
 
 /***/ }),

@@ -16,6 +16,6 @@ if (document.getElementById('js-sortable')) {
 }
 
 /** Sidebar */
-require('./sidebar/fragments');
+require('./components/fragment/fragments');
 require('./sidebar/links');
 require('./sidebar/fieldcomponents');
