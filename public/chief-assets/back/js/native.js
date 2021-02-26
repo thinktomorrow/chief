@@ -3882,16 +3882,15 @@ var Api = {
       if (successCallback) successCallback(data);
     })["catch"](function (error) {
       if (errorCallback) errorCallback(error);
-      console.error(error);
     });
   },
-  listenForFormSubmits: function listenForFormSubmits(container, callback) {
+  listenForFormSubmits: function listenForFormSubmits(container, successCallback, errorCallback) {
     var form = container.querySelector('form');
     var self = this;
     if (!form) return;
     form.addEventListener('submit', function (event) {
       event.preventDefault();
-      self.submit(this.method, this.action, new FormData(this), callback);
+      self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
     });
   }
 };
@@ -4234,6 +4233,7 @@ var _default = /*#__PURE__*/function () {
     this.panels = new _Panels__WEBPACK_IMPORTED_MODULE_2__["default"]();
     this.onNewPanel = options.onNewPanel || null;
     this.onSubmitPanel = options.onSubmitPanel || null;
+    this.onFail = options.onFail || null;
     this.events = options.events || {};
     this.init();
   }
@@ -4313,12 +4313,20 @@ var _default = /*#__PURE__*/function () {
 
         var newPanelEvent = new Event('chief::newpanel');
         window.dispatchEvent(newPanelEvent);
-        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function () {
+        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function (response) {
+          console.log(response);
+          console.log('SUCCESS');
+
           _this3.backOrClose(false);
 
           if (_this3.onSubmitPanel) {
             _this3.onSubmitPanel();
           }
+        }, function (error) {
+          console.log(error);
+          console.log('ERROR');
+
+          _this3.showError(error);
         });
 
         if (!_this3.container.isOpen()) {
@@ -4348,6 +4356,12 @@ var _default = /*#__PURE__*/function () {
 
       this.container.renderCloseButton();
       this.scanForPanelTriggers();
+    }
+  }, {
+    key: "showError",
+    value: function showError(message) {
+      // remove current ...
+      console.log('showing error: ' + message);
     }
     /**
      * Handle the closing of the current panel and determine the next one.

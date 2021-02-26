@@ -26,11 +26,10 @@ export const Api = {
             })
             .catch((error) => {
                 if (errorCallback) errorCallback(error);
-                console.error(error);
             });
     },
 
-    listenForFormSubmits: function (container, callback) {
+    listenForFormSubmits: function (container, successCallback, errorCallback) {
         const form = container.querySelector('form');
         let self = this;
 
@@ -39,7 +38,7 @@ export const Api = {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
-            self.submit(this.method, this.action, new FormData(this), callback);
+            self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
         });
     },
 };

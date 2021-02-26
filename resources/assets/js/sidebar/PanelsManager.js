@@ -10,6 +10,7 @@ export default class {
         this.panels = new Panels();
         this.onNewPanel = options.onNewPanel || null;
         this.onSubmitPanel = options.onSubmitPanel || null;
+        this.onFail = options.onFail || null;
         this.events = options.events || {};
 
         this.init();
@@ -83,12 +84,18 @@ export default class {
             const newPanelEvent = new Event('chief::newpanel');
             window.dispatchEvent(newPanelEvent);
 
-            Api.listenForFormSubmits(newPanelContainer, () => {
+            Api.listenForFormSubmits(newPanelContainer, (response) => {
+                console.log(response);
+                console.log('SUCCESS');
                 this.backOrClose(false);
 
                 if (this.onSubmitPanel) {
                     this.onSubmitPanel();
                 }
+            }, (error) => {
+                console.log(error);
+                console.log('ERROR');
+                this.showError(error);
             });
 
             if (!this.container.isOpen()) {
@@ -119,6 +126,11 @@ export default class {
         // TODO: pass here type to switch templates x/terug/...
         this.container.renderCloseButton();
         this.scanForPanelTriggers();
+    }
+
+    showError(message){
+        // remove current ...
+        console.log('showing error: ' + message);
     }
 
     /**
