@@ -3830,19 +3830,11 @@ __webpack_require__.r(__webpack_exports__);
 // --------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEls = document.querySelectorAll('[data-fields-component]'); // Multiple componentEls with each their own sidebar instance ....
-  // require route to edit - update, maybe via assistant FieldsAssistant::edit(model, fieldnames), update(),
-  // Also how to show the content of these fields???? a field method:: renderAdminComponent() ???
-  // <x-fields-component :tagged=seo></x-fields-component>
-
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container'),
+      componentEls = document.querySelectorAll('[data-fields-component]'),
+      livewireComponent = Livewire.find(el.getAttribute('wire:id'));
   Array.from(componentEls).forEach(function (el) {
-    var livewireComponent = Livewire.find(el.getAttribute('wire:id'));
-    console.log(el.getAttribute('data-fields-component'));
     var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
-      onNewPanel: function onNewPanel(panel) {
-        console.log('New fragments panel ' + panel.id);
-      },
       onSubmitPanel: function onSubmitPanel() {
         livewireComponent.reload();
       },
@@ -4187,13 +4179,10 @@ __webpack_require__.r(__webpack_exports__);
 // --------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-links-component]');
-  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container'),
+      componentEl = document.querySelector('[data-links-component]'),
+      livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
   var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
-    onNewPanel: function onNewPanel(panel) {
-      console.log('new links panel ' + panel.id);
-    },
     onSubmitPanel: function onSubmitPanel() {
       livewireComponent.reload();
     },
