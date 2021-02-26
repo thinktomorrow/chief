@@ -1,9 +1,9 @@
-import Container from '../../sidebar/Container';
-import PanelsManager from '../../sidebar/PanelsManager';
+import Container from '../sidebar/Container';
+import PanelsManager from '../sidebar/PanelsManager';
 import { IndexSorting } from '../../utilities/sortable';
 import FragmentAdd from './fragmentAdd';
 import FragmentNew from './fragmentNew';
-import EventBus from '../../sidebar/EventBus';
+import EventBus from '../sidebar/EventBus';
 
 /**
  * Fragments JS

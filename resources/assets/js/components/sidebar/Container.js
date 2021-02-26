@@ -42,12 +42,14 @@ export default class {
     close() {
         Promise.all([
             this._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'),
-            this._closeElement(this.sidebarAside, 'sidebar-slide-from-right')
-        ]).then(() => {
-            this.el.style.display = "none";
-        }).catch((error) => {
-            console.error(error);
-        });
+            this._closeElement(this.sidebarAside, 'sidebar-slide-from-right'),
+        ])
+            .then(() => {
+                this.el.style.display = 'none';
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     renderCloseButton() {

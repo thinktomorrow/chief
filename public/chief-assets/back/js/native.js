@@ -3823,8 +3823,8 @@ Sortable.mount(Remove, Revert);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../sidebar/Api */ "./resources/assets/js/sidebar/Api.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sidebar/EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/Api */ "./resources/assets/js/components/sidebar/Api.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidebar/EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
 /* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3907,7 +3907,7 @@ var _default = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../sidebar/EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
 /* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_0__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4034,12 +4034,12 @@ var _default = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../sidebar/Container */ "./resources/assets/js/sidebar/Container.js");
-/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../sidebar/PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
+/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
+/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
 /* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
 /* harmony import */ var _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragmentAdd */ "./resources/assets/js/components/fragment/fragmentAdd.js");
 /* harmony import */ var _fragmentNew__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragmentNew */ "./resources/assets/js/components/fragment/fragmentNew.js");
-/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../sidebar/EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../sidebar/EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
 /* harmony import */ var _sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_sidebar_EventBus__WEBPACK_IMPORTED_MODULE_5__);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -4124,48 +4124,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/native.js":
-/*!***************************************!*\
-  !*** ./resources/assets/js/native.js ***!
-  \***************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
-/**
- * List here all the js utilities needed to be
- * loaded after the Vue instantiation
- */
-__webpack_require__(/*! ./utilities/form-submit */ "./resources/assets/js/utilities/form-submit.js");
-/** Sortable */
-
-
-
-
-if (document.getElementById('js-sortable')) {
-  new _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__["IndexSorting"]({
-    // any options go here
-    isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
-    endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route')
-  });
-}
-/** Sidebar */
-
-
-__webpack_require__(/*! ./components/fragment/fragments */ "./resources/assets/js/components/fragment/fragments.js");
-
-__webpack_require__(/*! ./sidebar/links */ "./resources/assets/js/sidebar/links.js");
-
-__webpack_require__(/*! ./sidebar/fieldcomponents */ "./resources/assets/js/sidebar/fieldcomponents.js");
-
-/***/ }),
-
-/***/ "./resources/assets/js/sidebar/Api.js":
-/*!********************************************!*\
-  !*** ./resources/assets/js/sidebar/Api.js ***!
-  \********************************************/
+/***/ "./resources/assets/js/components/sidebar/Api.js":
+/*!*******************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/Api.js ***!
+  \*******************************************************/
 /*! exports provided: Api */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4208,10 +4170,10 @@ var Api = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/Container.js":
-/*!**************************************************!*\
-  !*** ./resources/assets/js/sidebar/Container.js ***!
-  \**************************************************/
+/***/ "./resources/assets/js/components/sidebar/Container.js":
+/*!*************************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/Container.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4328,10 +4290,10 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/EventBus.js":
-/*!*************************************************!*\
-  !*** ./resources/assets/js/sidebar/EventBus.js ***!
-  \*************************************************/
+/***/ "./resources/assets/js/components/sidebar/EventBus.js":
+/*!************************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/EventBus.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -4376,10 +4338,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/Panel.js":
-/*!**********************************************!*\
-  !*** ./resources/assets/js/sidebar/Panel.js ***!
-  \**********************************************/
+/***/ "./resources/assets/js/components/sidebar/Panel.js":
+/*!*********************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/Panel.js ***!
+  \*********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4431,10 +4393,10 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/Panels.js":
-/*!***********************************************!*\
-  !*** ./resources/assets/js/sidebar/Panels.js ***!
-  \***********************************************/
+/***/ "./resources/assets/js/components/sidebar/Panels.js":
+/*!**********************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/Panels.js ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4509,20 +4471,20 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/PanelsManager.js":
-/*!******************************************************!*\
-  !*** ./resources/assets/js/sidebar/PanelsManager.js ***!
-  \******************************************************/
+/***/ "./resources/assets/js/components/sidebar/PanelsManager.js":
+/*!*****************************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/PanelsManager.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
-/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/sidebar/Api.js");
-/* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Panel */ "./resources/assets/js/sidebar/Panel.js");
-/* harmony import */ var _Panels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panels */ "./resources/assets/js/sidebar/Panels.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/sidebar/EventBus.js");
+/* harmony import */ var _Api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Api */ "./resources/assets/js/components/sidebar/Api.js");
+/* harmony import */ var _Panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Panel */ "./resources/assets/js/components/sidebar/Panel.js");
+/* harmony import */ var _Panels__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Panels */ "./resources/assets/js/components/sidebar/Panels.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/components/sidebar/EventBus.js");
 /* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_3__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4737,17 +4699,17 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/fieldcomponents.js":
-/*!********************************************************!*\
-  !*** ./resources/assets/js/sidebar/fieldcomponents.js ***!
-  \********************************************************/
+/***/ "./resources/assets/js/components/sidebar/fieldcomponents.js":
+/*!*******************************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/fieldcomponents.js ***!
+  \*******************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/sidebar/Container.js");
-/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
+/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/components/sidebar/Container.js");
+/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
 
  // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -4783,17 +4745,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/sidebar/links.js":
-/*!**********************************************!*\
-  !*** ./resources/assets/js/sidebar/links.js ***!
-  \**********************************************/
+/***/ "./resources/assets/js/components/sidebar/links.js":
+/*!*********************************************************!*\
+  !*** ./resources/assets/js/components/sidebar/links.js ***!
+  \*********************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/sidebar/Container.js");
-/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/sidebar/PanelsManager.js");
+/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Container */ "./resources/assets/js/components/sidebar/Container.js");
+/* harmony import */ var _PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
 
  // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
@@ -4819,6 +4781,44 @@ document.addEventListener('DOMContentLoaded', function () {
     linkPanelsManager.scanForPanelTriggers();
   });
 });
+
+/***/ }),
+
+/***/ "./resources/assets/js/native.js":
+/*!***************************************!*\
+  !*** ./resources/assets/js/native.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
+/**
+ * List here all the js utilities needed to be
+ * loaded after the Vue instantiation
+ */
+__webpack_require__(/*! ./utilities/form-submit */ "./resources/assets/js/utilities/form-submit.js");
+/** Sortable */
+
+
+
+
+if (document.getElementById('js-sortable')) {
+  new _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__["IndexSorting"]({
+    // any options go here
+    isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
+    endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route')
+  });
+}
+/** Sidebar */
+
+
+__webpack_require__(/*! ./components/fragment/fragments */ "./resources/assets/js/components/fragment/fragments.js");
+
+__webpack_require__(/*! ./components/sidebar/links */ "./resources/assets/js/components/sidebar/links.js");
+
+__webpack_require__(/*! ./components/sidebar/fieldcomponents */ "./resources/assets/js/components/sidebar/fieldcomponents.js");
 
 /***/ }),
 

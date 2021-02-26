@@ -84,19 +84,23 @@ export default class {
             const newPanelEvent = new Event('chief::newpanel');
             window.dispatchEvent(newPanelEvent);
 
-            Api.listenForFormSubmits(newPanelContainer, (response) => {
-                console.log(response);
-                console.log('SUCCESS');
-                this.backOrClose(false);
+            Api.listenForFormSubmits(
+                newPanelContainer,
+                (response) => {
+                    console.log(response);
+                    console.log('SUCCESS');
+                    this.backOrClose(false);
 
-                if (this.onSubmitPanel) {
-                    this.onSubmitPanel();
+                    if (this.onSubmitPanel) {
+                        this.onSubmitPanel();
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                    console.log('ERROR');
+                    this.showError(error);
                 }
-            }, (error) => {
-                console.log(error);
-                console.log('ERROR');
-                this.showError(error);
-            });
+            );
 
             if (!this.container.isOpen()) {
                 this.container.open();
@@ -128,7 +132,7 @@ export default class {
         this.scanForPanelTriggers();
     }
 
-    showError(message){
+    showError(message) {
         // remove current ...
         console.log('showing error: ' + message);
     }
