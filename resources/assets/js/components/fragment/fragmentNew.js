@@ -20,14 +20,22 @@ export default class {
         this._addTriggerElements();
         this._activateTriggerElements();
 
-        this._onlyShowClosestTriggerElement();
+        let reloadEvents = ['sortable-stored', 'fragments-reloaded'];
 
-        EventBus.subscribe('sortable-stored', () => {
-            this._removeTriggerElements();
+        reloadEvents.forEach((event) => {
+            EventBus.subscribe(event, () => {
+                this._removeTriggerElements();
 
-            this._addTriggerElements();
-            this._activateTriggerElements();
+                this._addTriggerElements();
+                this._activateTriggerElements();
+            });
         });
+
+        EventBus.subscribe('fragments-new-panel', (panel) => {
+            this._passNewFragmentOrderToPanel(panel);
+        });
+
+        this._onlyShowClosestTriggerElement();
     }
 
     _createTriggerElement() {
@@ -103,13 +111,13 @@ export default class {
 
                 this._hideAllTriggerElements();
                 if (centerY > e.clientY) {
-                    let triggerElement = this._getTopTriggerElement(element);
+                    let triggerElement = this._getPreviousSiblingElement(element, this.triggerSelector);
 
                     if (!triggerElement) return;
 
                     this._showTriggerElement(triggerElement);
                 } else {
-                    let triggerElement = this._getBottomTriggerElement(element);
+                    let triggerElement = this._getNextSiblingElement(element, this.triggerSelector);
 
                     if (!triggerElement) return;
 
@@ -135,122 +143,56 @@ export default class {
         triggerElement.children[0].style.transform = 'scale(1)';
     }
 
-    _getTopTriggerElement(fragmentElement) {
-        // Get the next sibling element
-        var sibling = fragmentElement.previousElementSibling;
+    _getPreviousSiblingElement(element, selector) {
+        let sibling = element.previousElementSibling;
 
-        // If the sibling matches our selector, use it
-        // If not, jump to the next sibling and continue the loop
         while (sibling) {
-            if (sibling.matches(this.triggerSelector)) return sibling;
+            if (sibling.matches(selector)) break;
             sibling = sibling.previousElementSibling;
         }
+
+        return sibling;
     }
 
-    _getBottomTriggerElement(fragmentElement) {
-        // Get the next sibling element
-        var sibling = fragmentElement.nextElementSibling;
+    _getNextSiblingElement(element, selector) {
+        let sibling = element.nextElementSibling;
 
-        // If the sibling matches our selector, use it
-        // If not, jump to the next sibling and continue the loop
         while (sibling) {
-            if (sibling.matches(this.triggerSelector)) return sibling;
+            if (sibling.matches(selector)) break;
             sibling = sibling.nextElementSibling;
+        }
+
+        return sibling;
+    }
+
+    _passNewFragmentOrderToPanel(panel) {
+        const selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
+
+        if (selectionElement) {
+            let order = this._getSelectionElementOrder(selectionElement);
+
+            if (panel.el.querySelector('input[name="order"]')) {
+                panel.el.querySelector('input[name="order"]').value = order;
+            }
         }
     }
 
-    // constructor(container, fragmentsContainer) {
-    //     this.container = container || document;
-    //     this.fragmentsContainer = fragmentsContainer;
-    //     this.triggerAttribute = 'data-fragments-new';
-    //     this.selectElAttribute = 'data-fragments-new-selection';
+    _getSelectionElementOrder(node) {
+        let nextFragmentElement = this._getNextSiblingElement(node, this.fragmentSelector);
 
-    //     this.init();
-    // }
+        let fragmentElements = Array.from(this.fragmentsContainer.children).filter((element) =>
+            element.matches(this.fragmentSelector)
+        );
 
-    // init() {
-    //     // Register unique trigger handler
-    //     this.handle = (event) => this._handleTrigger(event);
+        let order = fragmentElements.length;
 
-    //     EventBus.subscribe('fragments-new-panel', (panel) => {
-    //         this._onNewPanel(panel);
-    //     });
+        fragmentElements.forEach((fragmentElement, index) => {
+            if (fragmentElement === nextFragmentElement) {
+                order = index;
+                return;
+            }
+        });
 
-    //     EventBus.subscribe('fragments-reloaded', (panel) => {
-    //         this.scanForTriggers();
-    //     });
-
-    //     this.scanForTriggers();
-    // }
-
-    // scanForTriggers() {
-    //     Array.from(this.container.querySelectorAll(`[${this.triggerAttribute}]`)).forEach((el) => {
-    //         el.removeEventListener('click', this.handle);
-    //         el.addEventListener('click', this.handle);
-    //     });
-    // }
-
-    // _onNewPanel(panel) {
-    //     const fragmentSelectionElement = document.querySelector(`[${this.selectElAttribute}]`);
-    //     if (fragmentSelectionElement) {
-    //         let order = this._getChildIndex(fragmentSelectionElement);
-    //         if (panel.el.querySelector('input[name="order"]')) {
-    //             panel.el.querySelector('input[name="order"]').value = order;
-    //         }
-    //     }
-    // }
-
-    // _handleTrigger(event) {
-    //     event.preventDefault();
-
-    //     const triggerElement = event.target.hasAttribute(this.triggerAttribute)
-    //         ? event.target
-    //         : event.target.closest(`[${this.triggerAttribute}]`);
-
-    //     if (!triggerElement) return;
-
-    //     // Remove any existing selection els - only want to display one.
-    //     Array.from(this.fragmentsContainer.querySelectorAll(`[${this.selectElAttribute}]`)).forEach((el) => {
-    //         el.remove();
-    //     });
-
-    //     // Create the new selection el from our template
-    //     const selectionEl = this._createSelectionEl();
-
-    //     this._insertSelectionEl(selectionEl, triggerElement);
-
-    //     this._showAllTriggers();
-    //     this._hideCurrentTrigger(triggerElement);
-
-    //     EventBus.publish('fragment-new');
-    // }
-
-    // _createSelectionEl() {
-    //     const template = document.querySelector('#js-fragment-selection-template');
-    //     const selectionElement = template.firstElementChild.cloneNode(true);
-    //     return selectionElement;
-    // }
-
-    // _insertSelectionEl(element, target) {
-    //     let targetElementContainer = target.parentNode.hasAttribute('data-sortable-id')
-    //         ? target.parentNode.parentNode
-    //         : target.parentNode;
-    //     let targetElement = target.parentNode.hasAttribute('data-sortable-id') ? target.parentNode : target;
-
-    //     targetElementContainer.insertBefore(element, targetElement.nextSibling);
-    // }
-
-    // _getChildIndex(node) {
-    //     return Array.prototype.indexOf.call(node.parentElement.children, node);
-    // }
-
-    // _hideCurrentTrigger(element) {
-    //     element.classList.add('hidden');
-    // }
-
-    // _showAllTriggers() {
-    //     Array.from(this.container.querySelectorAll(`[${this.triggerAttribute}]`)).forEach((el) => {
-    //         el.classList.remove('hidden');
-    //     });
-    // }
+        return order;
+    }
 }
