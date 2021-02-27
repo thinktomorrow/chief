@@ -1,4 +1,5 @@
 <div
+    data-fragment
     data-sortable-id="{{ $model->fragmentModel()->id }}"
     data-sortable-handle
     class="group relative w-full px-12 py-6"
@@ -33,27 +34,5 @@
         <div>
             {!! $model->renderAdminFragment($owner, $loop, $fragments) !!}
         </div>
-    </div>
-
-    <div data-sortable-ignore class="absolute z-10 inset-0 flex flex-col justify-between items-center pointer-events-none">
-        <div
-            data-fragments-new="{{ $model->fragmentModel()->id }}"
-            data-fragments-new-position="before"
-            class="flex items-center link link-black h-8 -mt-4 cursor-pointer pointer-events-auto transform scale-0 group-hover:scale-100 transition-300"
-         >
-            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-       </div>
-
-        <div
-            data-fragments-new="{{ $model->fragmentModel()->id }}"
-            data-fragments-new-position="after"
-            class="flex items-center link link-black h-8 -mb-4 cursor-pointer pointer-events-auto transform scale-0 group-hover:scale-100 transition-300"
-        >
-            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-       </div>
     </div>
 </div>
