@@ -96,7 +96,7 @@ export default class {
             element.parentNode.insertBefore(selectionElement, element);
             element.parentNode.removeChild(element);
 
-            EventBus.publish('fragment-new');
+            EventBus.publish('fragment-new', element);
         });
     }
 

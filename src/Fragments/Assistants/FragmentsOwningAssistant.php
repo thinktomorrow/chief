@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
@@ -15,6 +17,7 @@ trait FragmentsOwningAssistant
     {
         return [
             ManagedRoute::post('fragments-reorder', 'fragments/{fragmentowner_id}/reorder'),
+            ManagedRoute::post('nested-fragments-reorder', 'nestedfragments/{fragmentmodelowner_id}/reorder'),
         ];
     }
 
@@ -22,6 +25,12 @@ trait FragmentsOwningAssistant
     {
         if (! in_array($action, ['fragments-reorder'])) {
             return null;
+        }
+
+        if ($model instanceof Fragmentable && $model->isFragment()) {
+            return route('chief.' . $this->managedModelClass()::managedModelKey() . '.nested-' . $action,
+                array_merge([$model->fragmentModel()->id], $parameters)
+            );
         }
 
         return $this->generateRoute($action, $model, ...$parameters);
@@ -34,13 +43,21 @@ trait FragmentsOwningAssistant
 
     public function fragmentsReorder(Request $request, $ownerId)
     {
-        if (! $request->indices) {
-            throw new \InvalidArgumentException('Missing arguments [indices] for sorting request.');
-        }
-
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
 
-        app(SortModels::class)->handleFragments($ownerId, $request->indices);
+        return $this->handleFragmentsReorder($owner, $request->input('indices'));
+    }
+
+    public function nestedFragmentsReorder(Request $request, $fragmentModelId)
+    {
+        $owner = $this->fragmentRepository->find($fragmentModelId);
+
+        return $this->handleFragmentsReorder($owner->fragmentModel(), $request->input('indices'));
+    }
+
+    private function handleFragmentsReorder(Model $ownerModel, array $indices)
+    {
+        app(SortModels::class)->handleFragments($ownerModel, $indices);
 
         return response()->json([
             'message' => 'models sorted.',

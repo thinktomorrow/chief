@@ -7,7 +7,7 @@
     <h3>Fragments</h3>
     <div class="row">
         @foreach($fragments as $fragment)
-            @include('chief::managers.fragments._card', [
+            @include('chief::fragments.component._card', [
                 'model' => $fragment['model'],
                 'owner' => $model,
                 'manager' => $fragment['manager'],

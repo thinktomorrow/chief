@@ -3851,9 +3851,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/fragment/fragmentAdd.js":
+/***/ "./resources/assets/js/components/fragment/addFragment.js":
 /*!****************************************************************!*\
-  !*** ./resources/assets/js/components/fragment/fragmentAdd.js ***!
+  !*** ./resources/assets/js/components/fragment/addFragment.js ***!
   \****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -3900,9 +3900,13 @@ var _default = /*#__PURE__*/function () {
 
 
       _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function (selectionEl) {
+        console.log('selection...');
+
         _this._scanForTriggersIn(selectionEl);
       });
       _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragments-new-panel', function (panel) {
+        console.log('panel...', panel);
+
         _this._scanForTriggersIn(panel.el);
       });
       this.scanForTriggers();
@@ -3949,10 +3953,112 @@ var _default = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/fragment/fragmentNew.js":
-/*!****************************************************************!*\
-  !*** ./resources/assets/js/components/fragment/fragmentNew.js ***!
-  \****************************************************************/
+/***/ "./resources/assets/js/components/fragment/fragments.js":
+/*!**************************************************************!*\
+  !*** ./resources/assets/js/components/fragment/fragments.js ***!
+  \**************************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
+/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
+/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
+/* harmony import */ var _addFragment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./addFragment */ "./resources/assets/js/components/fragment/addFragment.js");
+/* harmony import */ var _selectFragment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./selectFragment */ "./resources/assets/js/components/fragment/selectFragment.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+/**
+ * Fragments JS
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
+  var componentEl = document.querySelector('[data-fragments-component]');
+  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]'); // Do not trigger the sidebar script is DOM element isn't present
+
+  if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
+  new _selectFragment__WEBPACK_IMPORTED_MODULE_4__["default"](document, fragmentsContainerEl);
+  new _addFragment__WEBPACK_IMPORTED_MODULE_3__["default"](document);
+  var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+    onNewPanel: function onNewPanel(panel) {
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
+    },
+    onSubmitPanel: function onSubmitPanel() {
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
+    },
+    events: {
+      'fragment-new': function fragmentNew() {
+        fragmentPanelsManager.scanForPanelTriggers();
+      },
+      'fragment-add': function fragmentAdd() {
+        fragmentPanelsManager.replacePanelComponents();
+      },
+      'fragments-reloaded': function fragmentsReloaded() {
+        fragmentPanelsManager.scanForPanelTriggers();
+      }
+    }
+  });
+  /**
+   * Fragments livewire components logic. Update the component on important changes
+   */
+
+  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
+    livewireComponent.reload();
+  });
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+    livewireComponent.reload();
+  });
+  Livewire.on('fragmentsReloaded', function () {
+    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
+  });
+  /**
+   * Sortable logic for fragment component
+   */
+
+  function initSortable() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-sortable-fragments]';
+    var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    Array.from(container.querySelectorAll(selector)).forEach(function (el) {
+      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"](_objectSpread(_objectSpread({}, {
+        sortableGroupEl: el,
+        endpoint: el.getAttribute('data-sortable-endpoint'),
+        handle: '[data-sortable-handle]',
+        isSorting: true
+      }), options));
+    });
+  }
+
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
+    initSortable('[data-sortable-fragments]', panel.el);
+  });
+  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
+    initSortable();
+  });
+  initSortable();
+});
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/fragment/selectFragment.js":
+/*!*******************************************************************!*\
+  !*** ./resources/assets/js/components/fragment/selectFragment.js ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4080,7 +4186,7 @@ var _default = /*#__PURE__*/function () {
 
         element.parentNode.insertBefore(selectionElement, element);
         element.parentNode.removeChild(element);
-        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
+        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new', element);
       });
     }
   }, {
@@ -4194,106 +4300,6 @@ var _default = /*#__PURE__*/function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/fragment/fragments.js":
-/*!**************************************************************!*\
-  !*** ./resources/assets/js/components/fragment/fragments.js ***!
-  \**************************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../sidebar/Container */ "./resources/assets/js/components/sidebar/Container.js");
-/* harmony import */ var _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../sidebar/PanelsManager */ "./resources/assets/js/components/sidebar/PanelsManager.js");
-/* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
-/* harmony import */ var _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fragmentAdd */ "./resources/assets/js/components/fragment/fragmentAdd.js");
-/* harmony import */ var _fragmentNew__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fragmentNew */ "./resources/assets/js/components/fragment/fragmentNew.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/EventBus */ "./resources/assets/js/utilities/EventBus.js");
-/* harmony import */ var _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_utilities_EventBus__WEBPACK_IMPORTED_MODULE_5__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-
-/**
- * Fragments JS
- */
-
-document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-fragments-component]');
-  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]'); // Do not trigger the sidebar script is DOM element isn't present
-
-  if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
-  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, fragmentsContainerEl);
-  new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
-  var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
-    onNewPanel: function onNewPanel(panel) {
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
-    },
-    onSubmitPanel: function onSubmitPanel() {
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-submit-panel');
-    },
-    events: {
-      'fragment-new': function fragmentNew() {
-        fragmentPanelsManager.scanForPanelTriggers();
-      },
-      'fragments-reloaded': function fragmentsReloaded() {
-        fragmentPanelsManager.scanForPanelTriggers();
-      }
-    }
-  });
-  /**
-   * Fragments livewire components logic. Update the component on important changes
-   */
-
-  var livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragment-add', function () {
-    livewireComponent.reload();
-  });
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
-    livewireComponent.reload();
-  });
-  Livewire.on('fragmentsReloaded', function () {
-    _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-reloaded');
-  });
-  /**
-   * Sortable logic for fragment component
-   */
-
-  function initSortable() {
-    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '[data-sortable-fragments]';
-    var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
-    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-    // TODO: first remove existing sortable instances on these same selector els...
-    Array.from(container.querySelectorAll(selector)).forEach(function (el) {
-      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"](_objectSpread(_objectSpread({}, {
-        sortableGroupEl: el,
-        endpoint: el.getAttribute('data-sortable-endpoint'),
-        handle: '[data-sortable-handle]',
-        isSorting: true
-      }), options));
-    });
-  }
-
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-new-panel', function (panel) {
-    initSortable('[data-sortable-fragments]', panel.el);
-  });
-  _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.subscribe('fragments-submit-panel', function () {
-    initSortable();
-  });
-  initSortable();
-});
 
 /***/ }),
 
@@ -4697,7 +4703,6 @@ var _default = /*#__PURE__*/function () {
     value: function scanForPanelTriggers() {
       var _this2 = this;
 
-      console.log('scan...');
       Array.from(document.querySelectorAll(this.triggerSelector)).forEach(function (el) {
         el.removeEventListener('click', _this2.handle);
         el.addEventListener('click', _this2.handle);
@@ -4811,8 +4816,7 @@ var _default = /*#__PURE__*/function () {
       if (this.panels.findActive().parent) {
         var previousId = this.panels.findActive().id;
         this.show(this.panels.findActive().parent.url);
-
-        this._replacePanelComponents();
+        this.replacePanelComponents();
 
         if (!keepPreviousPanel) {
           this.panels.remove(previousId);
@@ -4830,13 +4834,11 @@ var _default = /*#__PURE__*/function () {
      * Replace components found within the active panel with their updated server html.
      * A component is marked by the [data-sidebar-component] attribute. A unique
      * value is required so that the different components can be distinguished.
-     *
-     * @private
      */
 
   }, {
-    key: "_replacePanelComponents",
-    value: function _replacePanelComponents() {
+    key: "replacePanelComponents",
+    value: function replacePanelComponents() {
       var _this4 = this;
 
       Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
@@ -5005,6 +5007,12 @@ var IndexSorting = function IndexSorting(options) {
   this._init();
 };
 
+IndexSorting.prototype.destroy = function () {
+  this.Sortables.forEach(function (sortable) {
+    return sortable.destroy();
+  });
+};
+
 IndexSorting.prototype.toggle = function (e) {
   this.isSorting = !this.isSorting;
 
@@ -5056,7 +5064,7 @@ IndexSorting.prototype._init = function () {
     filter: '[data-sortable-ignore]',
     store: {
       set: function set(sortable) {
-        var indices = self._filterSortableIndices(sortable.toArray());
+        var indices = sortable.toArray(); // let indices = self._filterSortableIndices(sortable.toArray());
 
         fetch(self.endpoint, {
           method: 'post',
@@ -5084,16 +5092,13 @@ IndexSorting.prototype._init = function () {
   }); // Default view
 
   this.isSorting ? this.showSorting() : this.hideSorting();
-};
+}; // IndexSorting.prototype._filterSortableIndices = function (indices) {
+//     // Sortablejs will generate '4w1' for elements without data id
+//     // This is used for instance on the plus icons in the fragments,
+//     // which are elements which should not impact the order numbers.
+//     return indices.filter((index) => index !== 'remove-before-post');
+// };
 
-IndexSorting.prototype._filterSortableIndices = function (indices) {
-  // Sortablejs will generate '4w1' for elements without data id
-  // This is used for instance on the plus icons in the fragments,
-  // which are elements which should not impact the order numbers.
-  return indices.filter(function (index) {
-    return index != 'remove-before-post';
-  });
-};
 
 
 

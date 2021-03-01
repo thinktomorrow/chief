@@ -22,10 +22,12 @@ export default class {
         // });
 
         EventBus.subscribe('fragment-new', (selectionEl) => {
+            console.log('selection...');
             this._scanForTriggersIn(selectionEl);
         });
 
         EventBus.subscribe('fragments-new-panel', (panel) => {
+            console.log('panel...', panel);
             this._scanForTriggersIn(panel.el);
         });
 

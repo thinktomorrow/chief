@@ -23,6 +23,10 @@ const IndexSorting = function (options) {
     this._init();
 };
 
+IndexSorting.prototype.destroy = function () {
+    this.Sortables.forEach((sortable) => sortable.destroy());
+};
+
 IndexSorting.prototype.toggle = function (e) {
     this.isSorting = !this.isSorting;
 
@@ -79,7 +83,8 @@ IndexSorting.prototype._init = function () {
 
             store: {
                 set: function (sortable) {
-                    let indices = self._filterSortableIndices(sortable.toArray());
+                    let indices = sortable.toArray();
+                    // let indices = self._filterSortableIndices(sortable.toArray());
 
                     fetch(self.endpoint, {
                         method: 'post',
@@ -122,11 +127,11 @@ IndexSorting.prototype._init = function () {
     this.isSorting ? this.showSorting() : this.hideSorting();
 };
 
-IndexSorting.prototype._filterSortableIndices = function (indices) {
-    // Sortablejs will generate '4w1' for elements without data id
-    // This is used for instance on the plus icons in the fragments,
-    // which are elements which should not impact the order numbers.
-    return indices.filter((index) => index != 'remove-before-post');
-};
+// IndexSorting.prototype._filterSortableIndices = function (indices) {
+//     // Sortablejs will generate '4w1' for elements without data id
+//     // This is used for instance on the plus icons in the fragments,
+//     // which are elements which should not impact the order numbers.
+//     return indices.filter((index) => index !== 'remove-before-post');
+// };
 
 export { IndexSorting };

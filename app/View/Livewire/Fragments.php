@@ -14,7 +14,6 @@ class Fragments extends Component
     private FragmentRepository $fragmentRepository;
 
     public FragmentsOwner $owner;
-    public FragmentsOwner $ownerModel;
     private Collection $fragments;
     private array $allowedFragments;
     private array $sharedFragments;
@@ -23,13 +22,12 @@ class Fragments extends Component
     {
         $this->fragmentRepository = app(FragmentRepository::class);
         $this->owner = $owner;
-        $this->ownerModel = $owner; // this model is referred to in the view for route definitions. TODO: clean this up...
         $this->reload();
     }
 
     public function render()
     {
-        return view('chief::components.fragments', [
+        return view('chief::fragments.component.fragments-main', [
             'fragments'        => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
             'sharedFragments'  => $this->sharedFragments,

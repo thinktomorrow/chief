@@ -6,7 +6,6 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
-use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -38,7 +37,7 @@ trait FragmentAssistant
             ManagedRoute::post('fragment-add', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/add'),
             ManagedRoute::get('nested-fragment-create', 'nestedfragment/{fragmentowner_model_id}/create'),
             ManagedRoute::post('nested-fragment-store', 'nestedfragment/{fragmentowner_model_id}'),
-            ManagedRoute::get('nested-fragment-add', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/add'),
+            ManagedRoute::post('nested-fragment-add', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/add'),
         ];
     }
 
@@ -113,7 +112,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        return view('chief::managers.fragments.create', [
+        return view('chief::fragments.create', [
             'manager' => $this,
             'owner' => $owner,
             'model' => $fragmentable,
@@ -224,7 +223,7 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        return view('chief::managers.fragments.edit', [
+        return view('chief::fragments.edit', [
             'manager' => $this,
             'model' => $fragmentable,
             'fields' => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),

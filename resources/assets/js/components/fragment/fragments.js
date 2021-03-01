@@ -1,8 +1,8 @@
 import Container from '../sidebar/Container';
 import PanelsManager from '../sidebar/PanelsManager';
 import { IndexSorting } from '../../utilities/sortable';
-import FragmentAdd from './fragmentAdd';
-import FragmentNew from './fragmentNew';
+import AddFragment from './addFragment';
+import SelectFragment from './selectFragment';
 import EventBus from '../../utilities/EventBus';
 
 /**
@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Do not trigger the sidebar script is DOM element isn't present
     if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
 
-    new FragmentNew(document, fragmentsContainerEl);
-    new FragmentAdd(document);
+    new SelectFragment(document, fragmentsContainerEl);
+    new AddFragment(document);
 
     const fragmentPanelsManager = new PanelsManager(
         '[data-sidebar-fragments-edit]',
@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
             events: {
                 'fragment-new': () => {
                     fragmentPanelsManager.scanForPanelTriggers();
+                },
+                'fragment-add': () => {
+                    fragmentPanelsManager.replacePanelComponents();
                 },
                 'fragments-reloaded': () => {
                     fragmentPanelsManager.scanForPanelTriggers();
@@ -61,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
      * Sortable logic for fragment component
      */
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
-        // TODO: first remove existing sortable instances on these same selector els...
         Array.from(container.querySelectorAll(selector)).forEach((el) => {
             new IndexSorting({
                 ...{

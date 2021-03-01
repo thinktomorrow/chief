@@ -4,7 +4,6 @@ namespace Thinktomorrow\Chief\App\View\Components;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
-use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
@@ -17,7 +16,6 @@ class Fragments extends Component
     private FragmentRepository $fragmentRepository;
 
     public FragmentsOwner $owner;
-    public FragmentModel $ownerModel; // as the 'real' owner of nested fragments
     private Collection $fragments;
     private array $allowedFragments;
     private array $sharedFragments;
@@ -26,13 +24,12 @@ class Fragments extends Component
     {
         $this->fragmentRepository = app(FragmentRepository::class);
         $this->owner = $owner;
-        $this->ownerModel = $owner->fragmentModel();
         $this->load();
     }
 
     public function render()
     {
-        return view('chief::components.fragments', [
+        return view('chief::fragments.component.fragments-nested', [
             'fragments'        => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
             'sharedFragments'  => $this->sharedFragments,

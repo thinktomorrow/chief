@@ -34,7 +34,6 @@ export default class {
     }
 
     scanForPanelTriggers() {
-        console.log('scan...');
         Array.from(document.querySelectorAll(this.triggerSelector)).forEach((el) => {
             el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);
@@ -147,7 +146,7 @@ export default class {
             const previousId = this.panels.findActive().id;
 
             this.show(this.panels.findActive().parent.url);
-            this._replacePanelComponents();
+            this.replacePanelComponents();
 
             if (!keepPreviousPanel) {
                 this.panels.remove(previousId);
@@ -166,10 +165,8 @@ export default class {
      * Replace components found within the active panel with their updated server html.
      * A component is marked by the [data-sidebar-component] attribute. A unique
      * value is required so that the different components can be distinguished.
-     *
-     * @private
      */
-    _replacePanelComponents() {
+    replacePanelComponents() {
         Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach((el) => {
             const componentKey = el.getAttribute('data-sidebar-component');
             Api.get(this.panels.findActive().url, el, (data) => {
