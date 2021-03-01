@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Managers\Assistants;
+namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
@@ -35,8 +36,9 @@ trait FragmentAssistant
             ManagedRoute::get('fragment-create', 'fragment/{fragmentowner_type}/{fragmentowner_id}/create'),
             ManagedRoute::post('fragment-store', 'fragment/{fragmentowner_type}/{fragmentowner_id}'),
             ManagedRoute::post('fragment-add', 'fragment/{fragmentowner_type}/{fragmentowner_id}/{fragmentmodel_id}/add'),
-            ManagedRoute::get('nested-fragment-create', 'nestedfragment/{fragmentmodel_id}/create'),
-            ManagedRoute::post('nested-fragment-store', 'nestedfragment/{fragmentmodel_id}'),
+            ManagedRoute::get('nested-fragment-create', 'nestedfragment/{fragmentowner_model_id}/create'),
+            ManagedRoute::post('nested-fragment-store', 'nestedfragment/{fragmentowner_model_id}'),
+            ManagedRoute::get('nested-fragment-add', 'nestedfragment/{fragmentowner_model_id}/{fragmentmodel_id}/add'),
         ];
     }
 
@@ -59,19 +61,17 @@ trait FragmentAssistant
             }
 
             // fragment-add has second argument as the fragmentable
-            if($action == 'fragment-add' && $parameters[0] instanceof Fragmentable) {
+            if($action === 'fragment-add' && $parameters[0] instanceof Fragmentable) {
                 $parameters[0] = $parameters[0]->fragmentModel()->id;
             }
 
-            // Nested fragments
+            // Nested fragments routes
             if ($model instanceof Fragmentable && $model->isFragment()) {
-                return route('chief.' . $modelKey . '.nested-' . $action, array_merge([
-                    $model->fragmentModel()->id,
-                ], $parameters));
+                return route('chief.' . $modelKey . '.nested-' . $action,
+                    array_merge([$model->fragmentModel()->id], $parameters)
+                );
             }
-if(!$model->id) {
-    trap($model, $action);
-}
+
             return route('chief.' . $modelKey . '.' . $action, array_merge([
                 $model::managedModelKey(),
                 $model->modelReference()->id(),
@@ -95,23 +95,22 @@ if(!$model->id) {
         ]);
     }
 
-    public function nestedFragmentCreate(Request $request, $fragmentModelId)
-    {
-        $owner = $this->fragmentRepository->find($fragmentModelId);
-
-        $fragmentable = $this->fragmentable();
-
-        return view('chief::managers.fragments.create', [
-            'manager' => $this,
-            'owner' => $owner,
-            'model' => $fragmentable,
-            'fields' => $fragmentable->fields()->notTagged('edit'),
-        ]);
-    }
-
     public function fragmentCreate(Request $request, string $ownerKey, $ownerId)
     {
-        $owner = $this->owner($ownerKey, $ownerId);
+        return $this->renderFragmentCreate(
+            $this->ownerModel($ownerKey, $ownerId)
+        );
+    }
+
+    public function nestedFragmentCreate(Request $request, $fragmentModelId)
+    {
+        return $this->renderFragmentCreate(
+            $this->fragmentRepository->find($fragmentModelId)
+        );
+    }
+
+    private function renderFragmentCreate($owner)
+    {
         $fragmentable = $this->fragmentable();
 
         return view('chief::managers.fragments.create', [
@@ -126,78 +125,34 @@ if(!$model->id) {
     {
         $this->guard('fragment-store');
 
-        $owner = $this->owner($ownerKey, $ownerId);
-        $fragmentable = $this->fragmentable();
-
-        $this->fieldValidator()->handle($fragmentable->fields()->notTagged('edit'), $request->all());
-
-        // TODO: pass order with request
-        // TODO: this is hacky, right Ben?
-        $request->merge(['order' => intval($request->input('order'))]);
-
-        $this->storeFragmentable($owner, $fragmentable, $request);
-
-        // TODO: savefields for static fragment
-        // Allow relations, translations, assets, ...
-
-        return response()->json([
-            'message' => 'fragment created',
-            'data' => [],
-        ], 201);
-    }
-
-    public function fragmentAdd(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
-    {
-        $this->guard('fragment-store');
-
-        // TODO: need to account for nested fragment add as well.
-        $owner = $this->owner($ownerKey, $ownerId);
-
-        $fragmentable = $this->fragmentRepository->find($fragmentModelId);
-
-        $request->merge(['order' => intval($request->input('order'))]);
-
-        // 1. show in selectbox
-        // 2. immediately add to fragments
-        // 3. clear note on a shared fragment edit (or even a label)
-        // 4. removeShare(fragmentId): this duplicates the fragment for all OR keep existing but make no longer shareable for other pages
-        // 5. delete a shared fragment: deletes for all CONTEXTS
-        // 6. extra: list all shared fragments on separate page (is it possible)
-
-        try{
-            $this->addFragmentable($owner, $fragmentable, $request);
-        } catch(FragmentAlreadyAdded $e) {
-            return response()->json([
-                'message' => 'fragment not added',
-                'data' => [],
-            ], 400);
-        }
-
-        return response()->json([
-            'message' => 'fragment added',
-            'data' => [],
-        ], 201);
+        return $this->handleFragmentStore(
+            $this->ownerModel($ownerKey, $ownerId),
+            $request
+        );
     }
 
     public function nestedFragmentStore(Request $request, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        $owner = $this->fragmentRepository->find($fragmentModelId);
+        return $this->handleFragmentStore(
+            $this->fragmentRepository->find($fragmentModelId)->fragmentModel(),
+            $request
+        );
+    }
+
+    private function handleFragmentStore($ownerModel, Request $request)
+    {
         $fragmentable = $this->fragmentable();
 
         $this->fieldValidator()->handle($fragmentable->fields()->notTagged('edit'), $request->all());
 
-        // TODO: pass order with request
-        $request->merge(['order' => 1]);
+        $request->merge(['order' => (int) $request->input('order', 0)]);
 
-        $this->storeFragmentable($owner->fragmentModel(), $fragmentable, $request);
-
-        // TODO: savefields for static fragment
-        // Allow relations, translations, assets, ...
+        $this->storeFragmentable($ownerModel, $fragmentable, $request);
 
         return response()->json([
-            'message' => 'nested fragment created',
+            'message' => 'fragment created',
             'data' => [],
         ], 201);
     }
@@ -211,13 +166,56 @@ if(!$model->id) {
         );
     }
 
-    private function addFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): void
+    public function fragmentAdd(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
     {
-        app(AddFragmentModel::class)->handle(
-            $owner,
-            $fragmentable->fragmentModel(),
+        $this->guard('fragment-store');
+
+        // 1. show in selectbox
+        // 2. immediately add to fragments
+        // 3. clear note on a shared fragment edit (or even a label)
+        // 4. removeShare(fragmentId): this duplicates the fragment for all OR keep existing but make no longer shareable for other pages
+        // 5. delete a shared fragment: deletes for all CONTEXTS
+        // 6. extra: list all shared fragments on separate page (is it possible)
+
+        return $this->handleFragmentAdd(
+            $this->ownerModel($ownerKey, $ownerId),
+            $fragmentModelId,
             $request->input('order', 0)
         );
+    }
+
+    public function nestedFragmentAdd(Request $request, $fragmentOwnerModelId,  $fragmentModelId)
+    {
+        $this->guard('fragment-store');
+
+        return $this->handleFragmentAdd(
+            $this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),
+            $fragmentModelId,
+            $request->input('order', 0)
+        );
+    }
+
+    private function handleFragmentAdd(Model $ownerModel, string $fragmentModelId, int $order)
+    {
+        $fragmentable = $this->fragmentRepository->find($fragmentModelId);
+
+        try{
+            app(AddFragmentModel::class)->handle(
+                $ownerModel,
+                $fragmentable->fragmentModel(),
+                $order
+            );
+        } catch(FragmentAlreadyAdded $e) {
+            return response()->json([
+                'message' => 'fragment not added',
+                'data' => [],
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'fragment added',
+            'data' => [],
+        ], 201);
     }
 
     public function fragmentEdit(Request $request, string $fragmentId)
@@ -310,7 +308,7 @@ if(!$model->id) {
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is verwijderd.');
     }
 
-    private function owner(string $ownerKey, $ownerId): FragmentsOwner
+    private function ownerModel(string $ownerKey, $ownerId): Model
     {
         $ownerClass = app(Registry::class)->modelClass($ownerKey);
 

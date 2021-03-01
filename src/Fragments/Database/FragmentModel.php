@@ -17,6 +17,12 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
     use HasDynamicAttributes;
     use AssetTrait;
 
+    /**
+     * Used as reference to the fragmentModel
+     * as predefined owner of nested fragments
+     */
+    const MODELTYPE = 'fragmentmodel';
+
     public $table = 'context_fragments';
     public $guarded = [];
 

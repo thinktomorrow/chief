@@ -4,33 +4,39 @@ namespace Thinktomorrow\Chief\App\View\Components;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
+// Nested fragments component in sidebar (cannot use livewire)
 class Fragments extends Component
 {
     private FragmentRepository $fragmentRepository;
 
     public FragmentsOwner $owner;
+    public FragmentModel $ownerModel; // as the 'real' owner of nested fragments
     private Collection $fragments;
     private array $allowedFragments;
+    private array $sharedFragments;
 
     public function __construct(FragmentsOwner $owner)
     {
         $this->fragmentRepository = app(FragmentRepository::class);
         $this->owner = $owner;
+        $this->ownerModel = $owner->fragmentModel();
         $this->load();
     }
 
     public function render()
     {
         return view('chief::components.fragments', [
-            'fragments' => $this->fragments,
+            'fragments'        => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
-            'sharedFragments' => [],
-            'manager' => app(Registry::class)->manager($this->owner::managedModelKey()),
+            'sharedFragments'  => $this->sharedFragments,
+            'manager'          => app(Registry::class)->manager($this->owner::managedModelKey()),
         ]);
     }
 
@@ -38,19 +44,36 @@ class Fragments extends Component
     {
         $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function (Fragmentable $model) {
             return [
-                'model' => $model,
+                'model'   => $model,
                 'manager' => app(Registry::class)->manager($model::managedModelKey()),
             ];
         });
 
+        $this->reloadFragmentSelection();
+    }
+
+
+    private function reloadFragmentSelection()
+    {
         // Available fragments
         $this->allowedFragments = array_map(function ($fragmentableClass) {
             $modelClass = app(Registry::class)->modelClass($fragmentableClass::managedModelKey());
 
             return [
                 'manager' => app(Registry::class)->manager($fragmentableClass::managedModelKey()),
-                'model' => new $modelClass(),
+                'model'   => new $modelClass(),
             ];
         }, $this->owner->allowedFragments());
+
+        $fragmentModelIds = $this->fragments->map(fn($fragment) => $fragment['model']->fragmentModel())->pluck('id')->toArray();
+
+        $this->sharedFragments = app(FragmentRepository::class)->shared()->reject(function($fragmentable) use($fragmentModelIds){
+            return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
+        })->map(function($fragmentable){
+            return [
+                'manager' => app(Registry::class)->manager($fragmentable::managedModelKey()),
+                'model'   => $fragmentable,
+            ];
+        })->all();
     }
 }

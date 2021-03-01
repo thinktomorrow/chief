@@ -3894,19 +3894,31 @@ var _default = /*#__PURE__*/function () {
       // Register unique trigger handler
       this.handle = function (event) {
         return _this._handleTrigger(event);
-      };
+      }; // EventBus.subscribe('fragment-new', () => {
+      //     this.scanForTriggers();
+      // });
 
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function () {
-        _this.scanForTriggers();
+
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragment-new', function (selectionEl) {
+        _this._scanForTriggersIn(selectionEl);
+      });
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.subscribe('fragments-new-panel', function (panel) {
+        _this._scanForTriggersIn(panel.el);
       });
       this.scanForTriggers();
     }
   }, {
     key: "scanForTriggers",
     value: function scanForTriggers() {
+      this._scanForTriggersIn(this.container);
+    }
+  }, {
+    key: "_scanForTriggersIn",
+    value: function _scanForTriggersIn(el) {
       var _this2 = this;
 
-      Array.from(this.container.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
+      console.log(this.postActionAttribute, el.querySelectorAll("[".concat(this.postActionAttribute, "]")));
+      Array.from(el.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
         el.removeEventListener('click', _this2.handle);
         el.addEventListener('click', _this2.handle);
       });
@@ -3919,6 +3931,7 @@ var _default = /*#__PURE__*/function () {
       event.preventDefault();
       var el = event.target.hasAttribute(this.postActionAttribute) ? event.target : event.target.closest("[".concat(this.postActionAttribute, "]")),
           action = el ? el.getAttribute(this.postActionAttribute) : null;
+      console.log(action);
       if (!action) return;
       _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__["Api"].submit('POST', action, {}, function (data) {
         _this3.scanForTriggers();
@@ -4026,14 +4039,13 @@ var _default = /*#__PURE__*/function () {
 
       this._insertSelectionEl(selectionEl, el);
 
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
+      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new', selectionEl);
     }
   }, {
     key: "_createSelectionEl",
     value: function _createSelectionEl() {
       var template = document.querySelector('#js-fragment-selection-template');
       var el = template.firstElementChild.cloneNode(true);
-      console.log(el);
       return el;
     }
   }, {
@@ -4100,7 +4112,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
 
   if (!sidebarContainerEl || !componentEl) return;
-  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl);
+  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl.querySelector('[data-fragments-component-inner]'));
   new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onNewPanel: function onNewPanel(panel) {

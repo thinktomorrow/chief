@@ -1,24 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\Managers\Assistants;
+namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
-trait FragmentsAssistant
+trait FragmentsOwningAssistant
 {
     abstract protected function generateRoute(string $action, $model = null, ...$parameters): string;
 
-    public function routesFragmentsAssistant(): array
+    public function routesFragmentsOwningAssistant(): array
     {
         return [
             ManagedRoute::post('fragments-reorder', 'fragments/{fragmentowner_id}/reorder'),
         ];
     }
 
-    public function routeFragmentsAssistant(string $action, $model = null, ...$parameters): ?string
+    public function routeFragmentsOwningAssistant(string $action, $model = null, ...$parameters): ?string
     {
         if (! in_array($action, ['fragments-reorder'])) {
             return null;
@@ -27,7 +27,7 @@ trait FragmentsAssistant
         return $this->generateRoute($action, $model, ...$parameters);
     }
 
-    public function canFragmentsAssistant(string $action, $model = null): bool
+    public function canFragmentsOwningAssistant(string $action, $model = null): bool
     {
         return in_array($action, ['fragments-index', 'fragments-reorder']);
     }
@@ -40,7 +40,7 @@ trait FragmentsAssistant
 
         $owner = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($ownerId);
 
-        app(SortModels::class)->handleFragments($owner, $request->indices);
+        app(SortModels::class)->handleFragments($ownerId, $request->indices);
 
         return response()->json([
             'message' => 'models sorted.',

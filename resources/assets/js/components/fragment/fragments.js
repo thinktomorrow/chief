@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Do not trigger the sidebar script is DOM element isn't present
     if (!sidebarContainerEl || !componentEl) return;
 
-    new FragmentNew(document, componentEl);
+    new FragmentNew(document, componentEl.querySelector('[data-fragments-component-inner]'));
     new FragmentAdd(document);
 
     const fragmentPanelsManager = new PanelsManager(

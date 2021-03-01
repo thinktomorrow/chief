@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\FragmentAssistant;
 
-use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;

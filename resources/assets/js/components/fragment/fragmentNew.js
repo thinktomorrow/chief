@@ -64,13 +64,12 @@ export default class {
         const selectionEl = this._createSelectionEl();
         this._insertSelectionEl(selectionEl, el);
 
-        EventBus.publish('fragment-new');
+        EventBus.publish('fragment-new', selectionEl);
     }
 
     _createSelectionEl() {
         const template = document.querySelector('#js-fragment-selection-template');
         const el = template.firstElementChild.cloneNode(true);
-        console.log(el);
         return el;
     }
 

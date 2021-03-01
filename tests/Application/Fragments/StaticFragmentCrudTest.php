@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Fragments\StaticFragmentManager;
-use Thinktomorrow\Chief\Managers\Assistants\FragmentsAssistant;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Register\Register;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
@@ -38,7 +38,7 @@ class StaticFragmentCrudTest extends ChiefTestCase
 
         $this->owner = OwnerStub::create();
         ManagerFactory::make()
-            ->withAssistants([FragmentsAssistant::class])
+            ->withAssistants([FragmentsOwningAssistant::class])
             ->withModel($this->owner)
             ->create();
 

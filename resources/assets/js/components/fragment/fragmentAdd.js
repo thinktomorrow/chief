@@ -17,15 +17,30 @@ export default class {
         // Register unique trigger handler
         this.handle = (event) => this._handleTrigger(event);
 
-        EventBus.subscribe('fragment-new', () => {
-            this.scanForTriggers();
+        // EventBus.subscribe('fragment-new', () => {
+        //     this.scanForTriggers();
+        // });
+
+        EventBus.subscribe('fragment-new', (selectionEl) => {
+            this._scanForTriggersIn(selectionEl);
+        });
+
+        EventBus.subscribe('fragments-new-panel', (panel) => {
+            this._scanForTriggersIn(panel.el);
         });
 
         this.scanForTriggers();
     }
 
     scanForTriggers() {
-        Array.from(this.container.querySelectorAll(`[${this.postActionAttribute}]`)).forEach((el) => {
+        this._scanForTriggersIn(this.container);
+    }
+
+    _scanForTriggersIn(el) {
+
+        console.log(this.postActionAttribute, el.querySelectorAll(`[${this.postActionAttribute}]`));
+
+        Array.from(el.querySelectorAll(`[${this.postActionAttribute}]`)).forEach((el) => {
             el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);
         });
@@ -37,7 +52,7 @@ export default class {
                 ? event.target
                 : event.target.closest(`[${this.postActionAttribute}]`),
             action = el ? el.getAttribute(this.postActionAttribute) : null;
-
+console.log(action);
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {

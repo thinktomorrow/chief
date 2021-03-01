@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
-use Thinktomorrow\Chief\Managers\Assistants\FragmentAssistant;
-use Thinktomorrow\Chief\Managers\Assistants\FragmentsAssistant;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\SlimImageUploadAssistant;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -17,7 +17,7 @@ final class StaticFragmentManager implements Manager
 {
     use ManagerDefaults;
     use FragmentAssistant;
-    use FragmentsAssistant;
+    use FragmentsOwningAssistant;
     use FileUploadAssistant;
     use SlimImageUploadAssistant;
 
