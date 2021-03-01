@@ -3917,6 +3917,7 @@ var _default = /*#__PURE__*/function () {
     value: function _scanForTriggersIn(el) {
       var _this2 = this;
 
+      console.log(el);
       console.log(this.postActionAttribute, el.querySelectorAll("[".concat(this.postActionAttribute, "]")));
       Array.from(el.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
         el.removeEventListener('click', _this2.handle);
@@ -3976,48 +3977,192 @@ var _default = /*#__PURE__*/function () {
   function _default(container, fragmentsContainer) {
     _classCallCheck(this, _default);
 
-    this.container = container || document;
+    this.container = container;
     this.fragmentsContainer = fragmentsContainer;
-    this.triggerAttribute = 'data-fragments-new';
-    this.selectElAttribute = 'data-fragments-new-selection';
-    this.init();
+    this.fragmentSelector = '[data-fragment]';
+    this.triggerSelector = '[data-fragments-new-trigger]';
+    this.selectionSelector = '[data-fragments-new-selection]';
+
+    this._init();
   }
 
   _createClass(_default, [{
-    key: "init",
-    value: function init() {
+    key: "_init",
+    value: function _init() {
       var _this = this;
 
-      // Register unique trigger handler
-      this.handle = function (event) {
-        return _this._handleTrigger(event);
-      };
+      this._addTriggerElements();
 
+      this._activateTriggerElements();
+
+      var reloadEvents = ['sortable-stored', 'fragments-reloaded'];
+      reloadEvents.forEach(function (event) {
+        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe(event, function () {
+          _this._removeTriggerElements();
+
+          _this._addTriggerElements();
+
+          _this._activateTriggerElements();
+        });
+      });
       _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
-        _this._onNewPanel(panel);
+        _this._passNewFragmentOrderToPanel(panel);
       });
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-reloaded', function (panel) {
-        _this.scanForTriggers();
-      });
-      this.scanForTriggers();
+
+      this._onlyShowClosestTriggerElement();
     }
   }, {
-    key: "scanForTriggers",
-    value: function scanForTriggers() {
+    key: "_createTriggerElement",
+    value: function _createTriggerElement() {
+      var template = document.querySelector('#js-fragment-add-template');
+      return template.firstElementChild.cloneNode(true);
+    }
+  }, {
+    key: "_createSelectionElement",
+    value: function _createSelectionElement() {
+      var template = document.querySelector('#js-fragment-selection-template');
+      return template.firstElementChild.cloneNode(true);
+    }
+  }, {
+    key: "_addTriggerElements",
+    value: function _addTriggerElements() {
       var _this2 = this;
 
-      Array.from(this.container.querySelectorAll("[".concat(this.triggerAttribute, "]"))).forEach(function (el) {
-        el.removeEventListener('click', _this2.handle);
-        el.addEventListener('click', _this2.handle);
+      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+      fragmentElements.forEach(function (element, index) {
+        var triggerElement = _this2._createTriggerElement();
+
+        _this2.fragmentsContainer.insertBefore(triggerElement, element);
+
+        if (index === fragmentElements.length - 1) {
+          var _triggerElement = _this2._createTriggerElement();
+
+          _this2.fragmentsContainer.insertBefore(_triggerElement, element.nextSibling);
+        }
       });
     }
   }, {
-    key: "_onNewPanel",
-    value: function _onNewPanel(panel) {
-      var fragmentSelectionElement = document.querySelector("[".concat(this.selectElAttribute, "]"));
+    key: "_removeTriggerElements",
+    value: function _removeTriggerElements() {
+      var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+      triggerElements.forEach(function (element) {
+        element.parentNode.removeChild(element);
+      });
+    }
+  }, {
+    key: "_activateTriggerElements",
+    value: function _activateTriggerElements() {
+      var _this3 = this;
 
-      if (fragmentSelectionElement) {
-        var order = this._getChildIndex(fragmentSelectionElement);
+      var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+      triggerElements.forEach(function (element) {
+        _this3._activateTriggerElement(element);
+      });
+    }
+  }, {
+    key: "_activateTriggerElement",
+    value: function _activateTriggerElement(element) {
+      var _this4 = this;
+
+      element.addEventListener('click', function () {
+        var selectionElement = _this4._createSelectionElement();
+
+        var existingSelectionElement = _this4.fragmentsContainer.querySelector(_this4.selectionSelector);
+
+        if (existingSelectionElement) {
+          var triggerElement = _this4._createTriggerElement();
+
+          _this4._activateTriggerElement(triggerElement);
+
+          existingSelectionElement.parentNode.insertBefore(triggerElement, existingSelectionElement);
+          existingSelectionElement.parentNode.removeChild(existingSelectionElement);
+        }
+
+        element.parentNode.insertBefore(selectionElement, element);
+        element.parentNode.removeChild(element);
+        _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new');
+      });
+    }
+  }, {
+    key: "_onlyShowClosestTriggerElement",
+    value: function _onlyShowClosestTriggerElement() {
+      var _this5 = this;
+
+      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+      fragmentElements.forEach(function (element) {
+        element.addEventListener('mouseover', function (e) {
+          var rect = element.getBoundingClientRect();
+          var centerY = rect.top + (rect.bottom - rect.top) / 2;
+
+          _this5._hideAllTriggerElements();
+
+          if (centerY > e.clientY) {
+            var triggerElement = _this5._getPreviousSiblingElement(element, _this5.triggerSelector);
+
+            if (!triggerElement) return;
+
+            _this5._showTriggerElement(triggerElement);
+          } else {
+            var _triggerElement2 = _this5._getNextSiblingElement(element, _this5.triggerSelector);
+
+            if (!_triggerElement2) return;
+
+            _this5._showTriggerElement(_triggerElement2);
+          }
+        });
+      });
+    }
+  }, {
+    key: "_hideAllTriggerElements",
+    value: function _hideAllTriggerElements() {
+      var _this6 = this;
+
+      var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+      triggerElements.forEach(function (element) {
+        _this6._hideTriggerElement(element);
+      });
+    }
+  }, {
+    key: "_hideTriggerElement",
+    value: function _hideTriggerElement(triggerElement) {
+      triggerElement.children[0].style.transform = 'scale(0)';
+    }
+  }, {
+    key: "_showTriggerElement",
+    value: function _showTriggerElement(triggerElement) {
+      triggerElement.children[0].style.transform = 'scale(1)';
+    }
+  }, {
+    key: "_getPreviousSiblingElement",
+    value: function _getPreviousSiblingElement(element, selector) {
+      var sibling = element.previousElementSibling;
+
+      while (sibling) {
+        if (sibling.matches(selector)) break;
+        sibling = sibling.previousElementSibling;
+      }
+
+      return sibling;
+    }
+  }, {
+    key: "_getNextSiblingElement",
+    value: function _getNextSiblingElement(element, selector) {
+      var sibling = element.nextElementSibling;
+
+      while (sibling) {
+        if (sibling.matches(selector)) break;
+        sibling = sibling.nextElementSibling;
+      }
+
+      return sibling;
+    }
+  }, {
+    key: "_passNewFragmentOrderToPanel",
+    value: function _passNewFragmentOrderToPanel(panel) {
+      var selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
+
+      if (selectionElement) {
+        var order = this._getSelectionElementOrder(selectionElement);
 
         if (panel.el.querySelector('input[name="order"]')) {
           panel.el.querySelector('input[name="order"]').value = order;
@@ -4025,46 +4170,23 @@ var _default = /*#__PURE__*/function () {
       }
     }
   }, {
-    key: "_handleTrigger",
-    value: function _handleTrigger(event) {
-      event.preventDefault();
-      var el = event.target.hasAttribute(this.triggerAttribute) ? event.target : event.target.closest("[".concat(this.triggerAttribute, "]"));
-      if (!el) return; // Remove any existing selection els - only want to display one.
+    key: "_getSelectionElementOrder",
+    value: function _getSelectionElementOrder(node) {
+      var _this7 = this;
 
-      Array.from(this.fragmentsContainer.querySelectorAll("[".concat(this.selectElAttribute, "]"))).forEach(function (el) {
-        el.remove();
-      }); // Create the new selection el from our template
+      var nextFragmentElement = this._getNextSiblingElement(node, this.fragmentSelector);
 
-      var selectionEl = this._createSelectionEl();
-
-      this._insertSelectionEl(selectionEl, el);
-
-      _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('fragment-new', selectionEl);
-    }
-  }, {
-    key: "_createSelectionEl",
-    value: function _createSelectionEl() {
-      var template = document.querySelector('#js-fragment-selection-template');
-      var el = template.firstElementChild.cloneNode(true);
-      return el;
-    }
-  }, {
-    key: "_insertSelectionEl",
-    value: function _insertSelectionEl(element, trigger) {
-      var insertBeforeTarget = trigger.getAttribute('data-fragments-new-position') === 'before'; // TODO: need to refactor this. We should already know the position yes?
-
-      var targetElement = document.querySelector("[data-sortable-id=\"".concat(trigger.getAttribute('data-fragments-new'), "\"]"));
-
-      if (insertBeforeTarget) {
-        targetElement.parentNode.insertBefore(element, targetElement);
-      } else {
-        targetElement.parentNode.insertBefore(element, targetElement.nextSibling);
-      }
-    }
-  }, {
-    key: "_getChildIndex",
-    value: function _getChildIndex(node) {
-      return Array.prototype.indexOf.call(node.parentElement.children, node);
+      var fragmentElements = Array.from(this.fragmentsContainer.children).filter(function (element) {
+        return element.matches(_this7.fragmentSelector);
+      });
+      var order = fragmentElements.length;
+      fragmentElements.forEach(function (fragmentElement, index) {
+        if (fragmentElement === nextFragmentElement) {
+          order = index;
+          return;
+        }
+      });
+      return order;
     }
   }]);
 
@@ -4109,10 +4231,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 document.addEventListener('DOMContentLoaded', function () {
   var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
+  var componentEl = document.querySelector('[data-fragments-component]');
+  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]'); // Do not trigger the sidebar script is DOM element isn't present
 
-  if (!sidebarContainerEl || !componentEl) return;
-  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, componentEl.querySelector('[data-fragments-component-inner]'));
+  if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
+  new _fragmentNew__WEBPACK_IMPORTED_MODULE_4__["default"](document, fragmentsContainerEl);
   new _fragmentAdd__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onNewPanel: function onNewPanel(panel) {
@@ -4855,7 +4978,10 @@ for (var i = 0; i < triggers.length; i++) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IndexSorting", function() { return IndexSorting; });
-/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
+
 
 
 var IndexSorting = function IndexSorting(options) {
@@ -4919,7 +5045,7 @@ IndexSorting.prototype._init = function () {
   var _this = this;
 
   var self = this;
-  this.Sortables.push(sortablejs__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.sortableGroupEl, {
+  this.Sortables.push(sortablejs__WEBPACK_IMPORTED_MODULE_1__["default"].create(this.sortableGroupEl, {
     group: 'models',
     fallbackOnBody: true,
     swapThreshold: 0.65,
@@ -4930,10 +5056,12 @@ IndexSorting.prototype._init = function () {
     filter: '[data-sortable-ignore]',
     store: {
       set: function set(sortable) {
+        var indices = self._filterSortableIndices(sortable.toArray());
+
         fetch(self.endpoint, {
           method: 'post',
           body: JSON.stringify({
-            indices: sortable.toArray()
+            indices: indices
           }),
           headers: {
             'Content-Type': 'application/json'
@@ -4942,8 +5070,10 @@ IndexSorting.prototype._init = function () {
           return response.json();
         }).then(function () {
           Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
+          _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('sortable-stored');
         })["catch"](function (error) {
           Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️');
+          _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('sortable-stored');
           console.error(error);
         });
       }
@@ -4954,6 +5084,15 @@ IndexSorting.prototype._init = function () {
   }); // Default view
 
   this.isSorting ? this.showSorting() : this.hideSorting();
+};
+
+IndexSorting.prototype._filterSortableIndices = function (indices) {
+  // Sortablejs will generate '4w1' for elements without data id
+  // This is used for instance on the plus icons in the fragments,
+  // which are elements which should not impact the order numbers.
+  return indices.filter(function (index) {
+    return index != 'remove-before-post';
+  });
 };
 
 

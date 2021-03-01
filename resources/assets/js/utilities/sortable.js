@@ -1,3 +1,4 @@
+import EventBus from './EventBus';
 import Sortable from 'sortablejs';
 
 const IndexSorting = function (options) {
@@ -78,10 +79,12 @@ IndexSorting.prototype._init = function () {
 
             store: {
                 set: function (sortable) {
+                    let indices = self._filterSortableIndices(sortable.toArray());
+
                     fetch(self.endpoint, {
                         method: 'post',
                         body: JSON.stringify({
-                            indices: sortable.toArray(),
+                            indices: indices,
                         }),
                         headers: {
                             'Content-Type': 'application/json',
@@ -92,6 +95,8 @@ IndexSorting.prototype._init = function () {
                         })
                         .then(() => {
                             Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
+
+                            EventBus.publish('sortable-stored');
                         })
                         .catch(function (error) {
                             Eventbus.$emit(
@@ -99,6 +104,9 @@ IndexSorting.prototype._init = function () {
                                 'error',
                                 'Sortering kan niet worden bewaard. Er is iets misgelopen.️'
                             );
+
+                            EventBus.publish('sortable-stored');
+
                             console.error(error);
                         });
                 },
@@ -112,6 +120,13 @@ IndexSorting.prototype._init = function () {
 
     // Default view
     this.isSorting ? this.showSorting() : this.hideSorting();
+};
+
+IndexSorting.prototype._filterSortableIndices = function (indices) {
+    // Sortablejs will generate '4w1' for elements without data id
+    // This is used for instance on the plus icons in the fragments,
+    // which are elements which should not impact the order numbers.
+    return indices.filter((index) => index != 'remove-before-post');
 };
 
 export { IndexSorting };

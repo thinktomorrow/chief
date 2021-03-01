@@ -37,7 +37,7 @@ export default class {
     }
 
     _scanForTriggersIn(el) {
-
+        console.log(el);
         console.log(this.postActionAttribute, el.querySelectorAll(`[${this.postActionAttribute}]`));
 
         Array.from(el.querySelectorAll(`[${this.postActionAttribute}]`)).forEach((el) => {
@@ -52,7 +52,7 @@ export default class {
                 ? event.target
                 : event.target.closest(`[${this.postActionAttribute}]`),
             action = el ? el.getAttribute(this.postActionAttribute) : null;
-console.log(action);
+        console.log(action);
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {
