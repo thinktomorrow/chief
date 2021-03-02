@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         componentEls = document.querySelectorAll('[data-fields-component]');
 
     Array.from(componentEls).forEach((el) => {
-        const livewireComponent = Livewire.find(el.getAttribute('wire:id'));
+        const livewireComponent = window.Livewire.find(el.getAttribute('wire:id'));
         const linkPanelsManager = new PanelsManager(
             '[' + el.getAttribute('data-fields-component') + ']',
             new Container(sidebarContainerEl),
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         );
 
-        Livewire.on('fieldsComponentReloaded', () => {
+        window.Livewire.on('fieldsComponentReloaded', () => {
             linkPanelsManager.scanForPanelTriggers();
         });
     });

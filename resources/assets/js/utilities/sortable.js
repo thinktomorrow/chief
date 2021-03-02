@@ -99,12 +99,12 @@ IndexSorting.prototype._init = function () {
                             return response.json();
                         })
                         .then(() => {
-                            Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
+                            window.Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
 
                             EventBus.publish('sortable-stored');
                         })
                         .catch(function (error) {
-                            Eventbus.$emit(
+                            window.Eventbus.$emit(
                                 'create-notification',
                                 'error',
                                 'Sortering kan niet worden bewaard. Er is iets misgelopen.️'

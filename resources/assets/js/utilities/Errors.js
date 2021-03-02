@@ -14,7 +14,7 @@ class Errors {
     has(field) {
         var results = {};
         for (var property in this.errors) {
-            if (this.errors.hasOwnProperty(property) && property.toString().startsWith(field)) {
+            if (Object.prototype.hasOwnProperty.call(this.errors, property) && property.toString().startsWith(field)) {
                 results[property] = this.errors[property];
             }
         }
@@ -42,7 +42,7 @@ class Errors {
     get(field) {
         var results = {};
         for (var property in this.errors) {
-            if (this.errors.hasOwnProperty(property) && property.toString().startsWith(field)) {
+            if (Object.prototype.hasOwnProperty.call(this.errors, property) && property.toString().startsWith(field)) {
                 results[property] = this.errors[property];
             }
         }

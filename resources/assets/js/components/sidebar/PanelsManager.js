@@ -74,7 +74,7 @@ export default class {
             // only mount Vue on our vue specific fields and not on the form element itself
             // so that the submit event still works. I know this is kinda hacky.
             Array.from(newPanelContainer.querySelectorAll('[data-vue-fields]')).forEach((el) => {
-                new Vue({ el: el });
+                new window.Vue({ el: el });
             });
 
             // creating a custom event so redactor js can be initiated async

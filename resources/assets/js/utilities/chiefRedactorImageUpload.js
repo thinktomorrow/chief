@@ -15,8 +15,8 @@ window.chiefRedactorImageUpload = function (uploadUrl) {
         return new Promise(function (resolve, reject) {
             function fileToDataURL(file) {
                 const reader = new FileReader();
-                return new Promise(function (resolve, reject) {
-                    reader.onload = function (event) {
+                return new Promise(function (resolve) {
+                    reader.onload = function () {
                         resolve({ data: reader.result, filename: file.name });
                     };
                     reader.readAsDataURL(file);
