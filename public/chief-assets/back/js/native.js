@@ -3991,8 +3991,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]'); // Do not trigger the sidebar script is DOM element isn't present
 
   if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
-  Object(_selectFragment__WEBPACK_IMPORTED_MODULE_4__["default"])(document, fragmentsContainerEl);
-  Object(_addFragment__WEBPACK_IMPORTED_MODULE_3__["default"])(document);
+  new _selectFragment__WEBPACK_IMPORTED_MODULE_4__["default"](document, fragmentsContainerEl);
+  new _addFragment__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onNewPanel: function onNewPanel(panel) {
       _utilities_EventBus__WEBPACK_IMPORTED_MODULE_5___default.a.publish('fragments-new-panel', panel);
@@ -4035,7 +4035,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     Array.from(container.querySelectorAll(selector)).forEach(function (el) {
-      Object(_utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["default"])(_objectSpread(_objectSpread({}, {
+      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["default"](_objectSpread(_objectSpread({}, {
         sortableGroupEl: el,
         endpoint: el.getAttribute('data-sortable-endpoint'),
         handle: '[data-sortable-handle]',
@@ -4877,7 +4877,7 @@ __webpack_require__(/*! ./utilities/form-submit */ "./resources/assets/js/utilit
 
 
 if (document.getElementById('js-sortable')) {
-  Object(_utilities_sortable__WEBPACK_IMPORTED_MODULE_0__["default"])({
+  new _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__["default"]({
     // any options go here
     isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
     endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route')

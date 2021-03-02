@@ -9,7 +9,7 @@ require('./utilities/form-submit');
  * Sortable
  */
 if (document.getElementById('js-sortable')) {
-    IndexSorting({
+    new IndexSorting({
         // any options go here
         isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
         endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route'),

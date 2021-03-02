@@ -41298,7 +41298,9 @@ var Form = /*#__PURE__*/function () {
     this.originalData = data;
 
     for (var field in data) {
-      this[field] = data[field];
+      if (Object.prototype.hasOwnProperty.call(data, field)) {
+        this[field] = data[field];
+      }
     }
 
     this.errors = new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"]();
@@ -41314,7 +41316,9 @@ var Form = /*#__PURE__*/function () {
       var data = {};
 
       for (var property in this.originalData) {
-        data[property] = this[property];
+        if (Object.prototype.hasOwnProperty.call(this.originalData, property)) {
+          data[property] = this[property];
+        }
       }
 
       return data;
@@ -41333,7 +41337,9 @@ var Form = /*#__PURE__*/function () {
     key: "reset",
     value: function reset() {
       for (var field in this.originalData) {
-        this[field] = '';
+        if (Object.prototype.hasOwnProperty.call(this.originalData, field)) {
+          this[field] = '';
+        }
       }
 
       this.errors.clear();

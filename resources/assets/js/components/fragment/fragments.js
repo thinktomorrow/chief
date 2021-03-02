@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Do not trigger the sidebar script is DOM element isn't present
     if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
 
-    SelectFragment(document, fragmentsContainerEl);
-    AddFragment(document);
+    new SelectFragment(document, fragmentsContainerEl);
+    new AddFragment(document);
 
     const fragmentPanelsManager = new PanelsManager(
         '[data-sidebar-fragments-edit]',
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function initSortable(selector = '[data-sortable-fragments]', container = document, options = {}) {
         Array.from(container.querySelectorAll(selector)).forEach((el) => {
-            IndexSorting({
+            new IndexSorting({
                 ...{
                     sortableGroupEl: el,
                     endpoint: el.getAttribute('data-sortable-endpoint'),
