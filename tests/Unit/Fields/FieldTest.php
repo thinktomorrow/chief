@@ -175,7 +175,7 @@ class FieldTest extends TestCase
     public function it_has_a_default_view()
     {
         $render = str_replace(["\r\n", "\n"], "", InputField::make('test')->render());
-        $render = preg_replace('/\s+/', ' ',$render);
+        $render = preg_replace('/\s+/', ' ', $render);
 
         $this->assertStringContainsString('<input type="text" name="test"', $render);
     }

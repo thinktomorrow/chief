@@ -5,5 +5,4 @@ namespace Thinktomorrow\Chief\Fragments;
 
 class FragmentAlreadyAdded extends \Exception
 {
-
 }

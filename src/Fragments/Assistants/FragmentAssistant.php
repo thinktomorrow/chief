@@ -5,12 +5,12 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
-use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -60,13 +60,14 @@ trait FragmentAssistant
             }
 
             // fragment-add has second argument as the fragmentable
-            if($action === 'fragment-add' && $parameters[0] instanceof Fragmentable) {
+            if ($action === 'fragment-add' && $parameters[0] instanceof Fragmentable) {
                 $parameters[0] = $parameters[0]->fragmentModel()->id;
             }
 
             // Nested fragments routes
             if ($model instanceof Fragmentable && $model->isFragment()) {
-                return route('chief.' . $modelKey . '.nested-' . $action,
+                return route(
+                    'chief.' . $modelKey . '.nested-' . $action,
                     array_merge([$model->fragmentModel()->id], $parameters)
                 );
             }
@@ -198,13 +199,13 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
-        try{
+        try {
             app(AddFragmentModel::class)->handle(
                 $ownerModel,
                 $fragmentable->fragmentModel(),
                 $order
             );
-        } catch(FragmentAlreadyAdded $e) {
+        } catch (FragmentAlreadyAdded $e) {
             return response()->json([
                 'message' => 'fragment not added',
                 'data' => [],

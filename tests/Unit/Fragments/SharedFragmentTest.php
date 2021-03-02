@@ -3,11 +3,11 @@
 namespace Thinktomorrow\Chief\Tests\Unit\Fragments;
 
 use Illuminate\Support\Facades\DB;
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class SharedFragmentTest extends ChiefTestCase
 {
@@ -62,5 +62,4 @@ class SharedFragmentTest extends ChiefTestCase
         $owner2Fragment = $this->fragmentRepo->getByOwner($this->owner)->first();
         $this->assertEquals($ownerFragment, $owner2Fragment);
     }
-
 }

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Fragments\Assistants;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\ManagedModels\Application\SortModels;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -28,7 +28,8 @@ trait FragmentsOwningAssistant
         }
 
         if ($model instanceof Fragmentable && $model->isFragment()) {
-            return route('chief.' . $this->managedModelClass()::managedModelKey() . '.nested-' . $action,
+            return route(
+                'chief.' . $this->managedModelClass()::managedModelKey() . '.nested-' . $action,
                 array_merge([$model->fragmentModel()->id], $parameters)
             );
         }

@@ -41,7 +41,7 @@ final class FragmentRepository
 
     public function shared(): Collection
     {
-        return FragmentModel::where('shared',1)->get()->map(
+        return FragmentModel::where('shared', 1)->get()->map(
             fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel)
         );
     }

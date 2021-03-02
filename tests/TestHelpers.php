@@ -141,7 +141,7 @@ trait TestHelpers
 
     protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $withSetup = true): Quote
     {
-        if($withSetup) {
+        if ($withSetup) {
             Quote::migrateUp();
             chiefRegister()->model(Quote::class, FragmentManager::class);
         }

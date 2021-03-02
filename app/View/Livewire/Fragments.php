@@ -28,10 +28,10 @@ class Fragments extends Component
     public function render()
     {
         return view('chief::fragments.component.fragments-main', [
-            'fragments'        => $this->fragments,
+            'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
-            'sharedFragments'  => $this->sharedFragments,
-            'manager'          => app(Registry::class)->manager($this->owner::managedModelKey()),
+            'sharedFragments' => $this->sharedFragments,
+            'manager' => app(Registry::class)->manager($this->owner::managedModelKey()),
         ]);
     }
 
@@ -39,7 +39,7 @@ class Fragments extends Component
     {
         $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function (Fragmentable $model) {
             return [
-                'model'   => $model,
+                'model' => $model,
                 'manager' => app(Registry::class)->manager($model::managedModelKey()),
             ];
         });
@@ -57,18 +57,18 @@ class Fragments extends Component
 
             return [
                 'manager' => app(Registry::class)->manager($fragmentableClass::managedModelKey()),
-                'model'   => new $modelClass(),
+                'model' => new $modelClass(),
             ];
         }, $this->owner->allowedFragments());
 
-        $fragmentModelIds = $this->fragments->map(fn($fragment) => $fragment['model']->fragmentModel())->pluck('id')->toArray();
+        $fragmentModelIds = $this->fragments->map(fn ($fragment) => $fragment['model']->fragmentModel())->pluck('id')->toArray();
 
-        $this->sharedFragments = app(FragmentRepository::class)->shared()->reject(function($fragmentable) use($fragmentModelIds){
+        $this->sharedFragments = app(FragmentRepository::class)->shared()->reject(function ($fragmentable) use ($fragmentModelIds) {
             return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
-        })->map(function($fragmentable){
+        })->map(function ($fragmentable) {
             return [
                 'manager' => app(Registry::class)->manager($fragmentable::managedModelKey()),
-                'model'   => $fragmentable,
+                'model' => $fragmentable,
             ];
         })->all();
     }

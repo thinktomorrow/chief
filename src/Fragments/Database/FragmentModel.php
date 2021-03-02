@@ -37,7 +37,7 @@ final class FragmentModel extends Model implements ManagedModel, HasAsset
 
     public function isShared(): bool
     {
-        return !!$this->shared;
+        return ! ! $this->shared;
     }
 
     public static function managedModelKey(): string

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Application;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 
 class SortModels
@@ -48,7 +48,7 @@ class SortModels
         $ids = implode(',', $ids);
         $cases = implode(' ', $cases);
 
-        if($extraWhere) {
+        if ($extraWhere) {
             $extraWhere = ' AND ' . DB::raw($extraWhere);
         }
 

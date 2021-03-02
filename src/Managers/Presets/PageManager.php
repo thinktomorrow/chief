@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Managers\Presets;
 
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
+use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ArchiveAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\CrudAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FieldsComponentAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\FileUploadAssistant;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
-use Thinktomorrow\Chief\Fragments\Assistants\FragmentsOwningAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\LinkAssistant;
 use Thinktomorrow\Chief\Managers\Assistants\ManagerDefaults;
 use Thinktomorrow\Chief\Managers\Assistants\PublishAssistant;
