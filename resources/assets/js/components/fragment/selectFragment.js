@@ -20,7 +20,7 @@ export default class {
         this._addTriggerElements();
         this._activateTriggerElements();
 
-        let reloadEvents = ['sortable-stored', 'fragments-reloaded'];
+        const reloadEvents = ['sortable-stored', 'fragments-reloaded'];
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
@@ -37,34 +37,34 @@ export default class {
         this._onlyShowClosestTriggerElement();
     }
 
-    _createTriggerElement() {
+    static _createTriggerElement() {
         const template = document.querySelector('#js-fragment-add-template');
         return template.firstElementChild.cloneNode(true);
     }
 
-    _createSelectionElement() {
+    static _createSelectionElement() {
         const template = document.querySelector('#js-fragment-selection-template');
         return template.firstElementChild.cloneNode(true);
     }
 
     _addTriggerElements() {
-        let fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+        const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
 
         fragmentElements.forEach((element, index) => {
-            let triggerElement = this._createTriggerElement();
+            const triggerElement = this.constructor._createTriggerElement();
 
             this.fragmentsContainer.insertBefore(triggerElement, element);
 
             if (index === fragmentElements.length - 1) {
-                let triggerElement = this._createTriggerElement();
+                const lastTriggerElement = this.constructor._createTriggerElement();
 
-                this.fragmentsContainer.insertBefore(triggerElement, element.nextSibling);
+                this.fragmentsContainer.insertBefore(lastTriggerElement, element.nextSibling);
             }
         });
     }
 
     _removeTriggerElements() {
-        let triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+        const triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
 
         triggerElements.forEach((element) => {
             element.parentNode.removeChild(element);
@@ -72,7 +72,7 @@ export default class {
     }
 
     _activateTriggerElements() {
-        let triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+        const triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
 
         triggerElements.forEach((element) => {
             this._activateTriggerElement(element);
@@ -81,11 +81,11 @@ export default class {
 
     _activateTriggerElement(element) {
         element.addEventListener('click', () => {
-            let selectionElement = this._createSelectionElement();
-            let existingSelectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
+            const selectionElement = this.constructor._createSelectionElement();
+            const existingSelectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
 
             if (existingSelectionElement) {
-                let triggerElement = this._createTriggerElement();
+                const triggerElement = this.constructor._createTriggerElement();
 
                 this._activateTriggerElement(triggerElement);
 
@@ -101,48 +101,48 @@ export default class {
     }
 
     _onlyShowClosestTriggerElement() {
-        let fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+        const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
 
         fragmentElements.forEach((element) => {
             element.addEventListener('mouseover', (e) => {
-                let rect = element.getBoundingClientRect();
-                let centerY = rect.top + (rect.bottom - rect.top) / 2;
+                const rect = element.getBoundingClientRect();
+                const centerY = rect.top + (rect.bottom - rect.top) / 2;
 
                 this._hideAllTriggerElements();
                 if (centerY > e.clientY) {
-                    let triggerElement = this._getPreviousSiblingElement(element, this.triggerSelector);
+                    const triggerElement = this.constructor._getPreviousSiblingElement(element, this.triggerSelector);
 
                     if (!triggerElement) return;
 
-                    this._showTriggerElement(triggerElement);
+                    this.constructor._showTriggerElement(triggerElement);
                 } else {
-                    let triggerElement = this._getNextSiblingElement(element, this.triggerSelector);
+                    const triggerElement = this.constructor._getNextSiblingElement(element, this.triggerSelector);
 
                     if (!triggerElement) return;
 
-                    this._showTriggerElement(triggerElement);
+                    this.constructor._showTriggerElement(triggerElement);
                 }
             });
         });
     }
 
     _hideAllTriggerElements() {
-        let triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
+        const triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
 
         triggerElements.forEach((element) => {
-            this._hideTriggerElement(element);
+            this.constructor._hideTriggerElement(element);
         });
     }
 
-    _hideTriggerElement(triggerElement) {
+    static _hideTriggerElement(triggerElement) {
         triggerElement.children[0].style.transform = 'scale(0)';
     }
 
-    _showTriggerElement(triggerElement) {
+    static _showTriggerElement(triggerElement) {
         triggerElement.children[0].style.transform = 'scale(1)';
     }
 
-    _getPreviousSiblingElement(element, selector) {
+    static _getPreviousSiblingElement(element, selector) {
         let sibling = element.previousElementSibling;
 
         while (sibling) {
@@ -153,7 +153,7 @@ export default class {
         return sibling;
     }
 
-    _getNextSiblingElement(element, selector) {
+    static _getNextSiblingElement(element, selector) {
         let sibling = element.nextElementSibling;
 
         while (sibling) {
@@ -168,7 +168,7 @@ export default class {
         const selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
 
         if (selectionElement) {
-            let order = this._getSelectionElementOrder(selectionElement);
+            const order = this._getSelectionElementOrder(selectionElement);
 
             if (panel.el.querySelector('input[name="order"]')) {
                 panel.el.querySelector('input[name="order"]').value = order;
@@ -177,18 +177,16 @@ export default class {
     }
 
     _getSelectionElementOrder(node) {
-        let nextFragmentElement = this._getNextSiblingElement(node, this.fragmentSelector);
+        const nextFragmentElement = this.constructor._getNextSiblingElement(node, this.fragmentSelector);
 
-        let fragmentElements = Array.from(this.fragmentsContainer.children).filter((element) =>
-            element.matches(this.fragmentSelector)
-        );
+        const fragmentsContainerChildren = Array.from(this.fragmentsContainer.children);
+        const fragmentElements = fragmentsContainerChildren.filter((element) => element.matches(this.fragmentSelector));
 
         let order = fragmentElements.length;
 
         fragmentElements.forEach((fragmentElement, index) => {
             if (fragmentElement === nextFragmentElement) {
                 order = index;
-                return;
             }
         });
 

@@ -4,10 +4,10 @@ import PanelsManager from './sidebar/PanelsManager';
 // --------------------------------------------------------------------------------
 // LINKS JS --------------------------------------------------------------------
 // --------------------------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', function () {
-    const sidebarContainerEl = document.querySelector('#js-sidebar-container'),
-        componentEl = document.querySelector('[data-links-component]'),
-        livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebarContainerEl = document.querySelector('#js-sidebar-container');
+    const componentEl = document.querySelector('[data-links-component]');
+    const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
     const linkPanelsManager = new PanelsManager('[data-sidebar-links-edit]', new Container(sidebarContainerEl), {
         onSubmitPanel: () => {

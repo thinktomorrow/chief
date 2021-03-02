@@ -12,8 +12,9 @@ class Errors {
      * @param {string} field
      */
     has(field) {
-        var results = {};
-        for (var property in this.errors) {
+        const results = {};
+
+        for (const property in this.errors) {
             if (Object.prototype.hasOwnProperty.call(this.errors, property) && property.toString().startsWith(field)) {
                 results[property] = this.errors[property];
             }
@@ -40,8 +41,9 @@ class Errors {
      * @param {string} field
      */
     get(field) {
-        var results = {};
-        for (var property in this.errors) {
+        const results = {};
+
+        for (const property in this.errors) {
             if (Object.prototype.hasOwnProperty.call(this.errors, property) && property.toString().startsWith(field)) {
                 results[property] = this.errors[property];
             }
@@ -70,14 +72,13 @@ class Errors {
      * @param {string|null} field
      */
     clear(field) {
-        let errors = this.errors;
+        const { errors } = this;
 
         if (field && field.includes('[')) {
             delete errors[field.replace(/\[/g, '.').replace(/\]/g, '')];
 
             this.errors = {};
             this.errors = errors;
-            return;
         } else if (field) {
             delete errors[field];
 

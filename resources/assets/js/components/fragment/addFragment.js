@@ -1,4 +1,4 @@
-import { Api } from '../sidebar/Api';
+import Api from '../sidebar/Api';
 import EventBus from '../../utilities/EventBus';
 
 /**
@@ -38,11 +38,11 @@ export default class {
         this._scanForTriggersIn(this.container);
     }
 
-    _scanForTriggersIn(el) {
-        console.log(el);
-        console.log(this.postActionAttribute, el.querySelectorAll(`[${this.postActionAttribute}]`));
+    _scanForTriggersIn(element) {
+        console.log(element);
+        console.log(this.postActionAttribute, element.querySelectorAll(`[${this.postActionAttribute}]`));
 
-        Array.from(el.querySelectorAll(`[${this.postActionAttribute}]`)).forEach((el) => {
+        Array.from(element.querySelectorAll(`[${this.postActionAttribute}]`)).forEach((el) => {
             el.removeEventListener('click', this.handle);
             el.addEventListener('click', this.handle);
         });
@@ -50,11 +50,14 @@ export default class {
 
     _handleTrigger(event) {
         event.preventDefault();
+
         const el = event.target.hasAttribute(this.postActionAttribute)
-                ? event.target
-                : event.target.closest(`[${this.postActionAttribute}]`),
-            action = el ? el.getAttribute(this.postActionAttribute) : null;
+            ? event.target
+            : event.target.closest(`[${this.postActionAttribute}]`);
+        const action = el ? el.getAttribute(this.postActionAttribute) : null;
+
         console.log(action);
+
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {

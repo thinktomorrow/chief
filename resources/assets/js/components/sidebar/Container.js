@@ -41,8 +41,8 @@ export default class {
 
     close() {
         Promise.all([
-            this._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'),
-            this._closeElement(this.sidebarAside, 'sidebar-slide-from-right'),
+            this.constructor._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'),
+            this.constructor._closeElement(this.sidebarAside, 'sidebar-slide-from-right'),
         ])
             .then(() => {
                 this.el.style.display = 'none';
@@ -68,13 +68,15 @@ export default class {
         });
     }
 
-    _closeElement(element, animationName) {
+    static _closeElement(element, animationName) {
         return new Promise((resolve, reject) => {
             try {
                 element.style.animationDirection = 'reverse';
                 element.classList.remove(animationName);
-                void element.offsetWidth;
-                element.classList.add(animationName);
+
+                setTimeout(() => {
+                    element.classList.add(animationName);
+                }, 0);
 
                 const onAnimationEnd = () => {
                     element.style.animationDirection = 'normal';

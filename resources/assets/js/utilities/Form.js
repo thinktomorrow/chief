@@ -9,8 +9,10 @@ class Form {
     constructor(data) {
         this.originalData = data;
 
-        for (let field in data) {
-            this[field] = data[field];
+        for (const field in data) {
+            if (Object.prototype.hasOwnProperty.call(data, field)) {
+                this[field] = data[field];
+            }
         }
 
         this.errors = new Errors();
@@ -20,10 +22,12 @@ class Form {
      * Fetch all relevant data for the form.
      */
     data() {
-        let data = {};
+        const data = {};
 
-        for (let property in this.originalData) {
-            data[property] = this[property];
+        for (const property in this.originalData) {
+            if (Object.prototype.hasOwnProperty.call(this.originalData, property)) {
+                data[property] = this[property];
+            }
         }
 
         return data;
@@ -38,8 +42,10 @@ class Form {
      * Reset the form fields.
      */
     reset() {
-        for (let field in this.originalData) {
-            this[field] = '';
+        for (const field in this.originalData) {
+            if (Object.prototype.hasOwnProperty.call(this.originalData, field)) {
+                this[field] = '';
+            }
         }
 
         this.errors.clear();
