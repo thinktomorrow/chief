@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /**
      * Fragments livewire components logic. Update the component on important changes
      */
-    const livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+    const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
     EventBus.subscribe('fragment-add', () => {
         livewireComponent.reload();
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         livewireComponent.reload();
     });
 
-    Livewire.on('fragmentsReloaded', () => {
+    window.Livewire.on('fragmentsReloaded', () => {
         EventBus.publish('fragments-reloaded');
     });
 

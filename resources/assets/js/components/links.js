@@ -7,7 +7,7 @@ import PanelsManager from './sidebar/PanelsManager';
 document.addEventListener('DOMContentLoaded', function () {
     const sidebarContainerEl = document.querySelector('#js-sidebar-container'),
         componentEl = document.querySelector('[data-links-component]'),
-        livewireComponent = Livewire.find(componentEl.getAttribute('wire:id'));
+        livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
     const linkPanelsManager = new PanelsManager('[data-sidebar-links-edit]', new Container(sidebarContainerEl), {
         onSubmitPanel: () => {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
     });
 
-    Livewire.on('linksReloaded', () => {
+    window.Livewire.on('linksReloaded', () => {
         linkPanelsManager.scanForPanelTriggers();
     });
 });

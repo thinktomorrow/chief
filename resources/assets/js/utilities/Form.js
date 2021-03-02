@@ -69,7 +69,7 @@ class Form {
      */
     submit(requestType, url) {
         return new Promise((resolve, reject) => {
-            axios[requestType](url, this.data())
+            window.axios[requestType](url, this.data())
                 .then((response) => {
                     this.onSuccess(response.data);
 
@@ -83,9 +83,9 @@ class Form {
         });
     }
 
-    onSuccess(data) {
-        // Default behaviour after each success update
-    }
+    // onSuccess(data) {
+    //     // Default behaviour after each success update
+    // }
 
     onFail(errors) {
         this.errors.record(errors);
