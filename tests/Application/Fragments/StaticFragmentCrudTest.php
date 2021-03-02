@@ -88,7 +88,6 @@ class StaticFragmentCrudTest extends ChiefTestCase
     /** @test */
     public function static_fragmentable_can_be_edited()
     {
-        $this->disableExceptionHandling();
         // Create fragment
         $this->asAdmin()->post(
             $this->manager->route('fragment-store', $this->owner),
@@ -126,8 +125,6 @@ class StaticFragmentCrudTest extends ChiefTestCase
                 'title' => 'foobar updated',
             ]
         );
-
-        $fragmentable = $this->fragmentRepo->getByOwner($this->owner)->first();
 
         $this->assertEquals('foobar updated', $this->fragmentRepo->getByOwner($this->owner)->first()->getTitle());
     }

@@ -9,9 +9,9 @@ use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 
 class SortModels
 {
-    public function handle(string $modelClass, array $indices, string $column = 'order'): void
+    public function handle(Model $model, array $indices, string $column = 'order'): void
     {
-        $table = (new $modelClass())->getTable();
+        $table = $model->getTable();
 
         static::batchUpdateColumn($table, $column, $indices);
     }

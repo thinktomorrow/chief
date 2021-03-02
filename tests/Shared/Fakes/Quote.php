@@ -9,6 +9,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Thinktomorrow\AssetLibrary\AssetTrait;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\Assistants\OwningFragments;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentableDefaults;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FileField;
@@ -17,9 +19,10 @@ use Thinktomorrow\Chief\ManagedModels\Presets\Fragment;
 use Thinktomorrow\Chief\ManagedModels\States\PageState;
 use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
 
-class Quote extends Model implements Fragment, HasAsset
+class Quote extends Model implements Fragment, HasAsset, FragmentsOwner
 {
     use FragmentableDefaults;
+    use OwningFragments;
     use HasDynamicAttributes;
     use SoftDeletes;
     use AssetTrait;

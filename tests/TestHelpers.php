@@ -139,15 +139,22 @@ trait TestHelpers
         return ArticlePageWithImageValidation::create($values);
     }
 
-    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = []): Quote
+    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $withSetup = true): Quote
     {
-        Quote::migrateUp();
+        if($withSetup) {
+            Quote::migrateUp();
+            chiefRegister()->model(Quote::class, FragmentManager::class);
+        }
 
-        chiefRegister()->model(Quote::class, FragmentManager::class);
         $quote = Quote::create($values);
 
-        return $quote->setFragmentModel(
-            app(CreateFragmentModel::class)->create($owner, $quote, 1)
+        return $this->addAsFragment($quote, $owner);
+    }
+
+    protected function addAsFragment($model, $owner)
+    {
+        return $model->setFragmentModel(
+            app(CreateFragmentModel::class)->create($owner, $model, 1)
         );
     }
 

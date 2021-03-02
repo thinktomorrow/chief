@@ -8,8 +8,6 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\FragmentableStub;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\FragmentFakes\OwnerStub;
 
 class SharedFragmentTest extends ChiefTestCase
 {

@@ -21,21 +21,21 @@ class SortPagesTest extends ChiefTestCase
     /** @test */
     public function it_can_sort_a_model()
     {
-        $model2 = ArticlePage::create(['title' => 'Foobar 2', 'order' => 2]);
-        $model3 = ArticlePage::create(['title' => 'Foobar 3', 'order' => 3]);
+        $model2 = ArticlePage::create(['title' => 'Foobar 2', 'order' => 8]);
+        $model3 = ArticlePage::create(['title' => 'Foobar 3', 'order' => 9]);
 
         $this->asAdmin()
             ->post($this->manager->route('sort-index'), [
                 'indices' => [
-                    1 => $this->page->id,
-                    4 => $model2->id,
-                    3 => $model3->id,
+                    $this->page->id,
+                    $model3->id,
+                    $model2->id,
                 ],
             ]);
 
-        $this->assertEquals(1, $this->page->fresh()->order);
-        $this->assertEquals(4, $model2->fresh()->order);
-        $this->assertEquals(3, $model3->fresh()->order);
+        $this->assertEquals(0, $this->page->fresh()->order);
+        $this->assertEquals(1, $model3->fresh()->order);
+        $this->assertEquals(2, $model2->fresh()->order);
     }
 
     /** @test */
