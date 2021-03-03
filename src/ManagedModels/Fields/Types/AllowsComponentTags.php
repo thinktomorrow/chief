@@ -8,7 +8,10 @@ trait AllowsComponentTags
 
     protected ?string $componentKey;
 
-    public function component($componentKey)
+    /**
+     * @return AbstractField
+     */
+    public function component($componentKey): self
     {
         $this->tag('component');
         $this->componentKey = $componentKey;

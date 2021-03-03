@@ -167,6 +167,7 @@ class AcceptInviteTest extends ChiefTestCase
     /** @test */
     public function after_invite_accepted_invite_can_only_be_reused_by_same_user_if_he_is_logged()
     {
+        $this->disableExceptionHandling();
         Notification::fake();
 
         $invitee = new User();

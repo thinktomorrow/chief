@@ -31,7 +31,7 @@ class ImageFieldMimetypesRule extends AbstractMediaFieldRule
     /**
      * Override Laravel validateDimensions to focus on the ImageField specifics
      */
-    private function validateSlimMimetypes($value, $parameters): bool
+    private function validateSlimMimetypes($value, array $parameters): bool
     {
         $mimetype = json_decode($value)->output->type;
 

@@ -10,7 +10,7 @@ class MemoizedUrlRecord extends UrlRecord
 {
     public static $cachedRecords;
 
-    public static function clearCachedRecords()
+    public static function clearCachedRecords(): void
     {
         static::$cachedRecords = null;
     }

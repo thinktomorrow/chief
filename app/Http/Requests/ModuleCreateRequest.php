@@ -13,9 +13,9 @@ class ModuleCreateRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function authorize()
+    public function authorize(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
         return Auth::guard('chief')->user();
     }

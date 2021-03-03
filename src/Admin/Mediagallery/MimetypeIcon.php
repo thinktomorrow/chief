@@ -22,7 +22,10 @@ class MimetypeIcon
         $this->mimetype = $mimetype;
     }
 
-    public static function fromString(string $mimetype)
+    /**
+     * @return static
+     */
+    public static function fromString(string $mimetype): self
     {
         return new static($mimetype);
     }

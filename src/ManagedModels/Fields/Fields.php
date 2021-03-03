@@ -19,7 +19,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->fields = $this->convertToKeyedArray($fields);
     }
 
-    public static function make(array $fields = [])
+    /**
+     * @return static
+     */
+    public static function make(array $fields = []): self
     {
         return new static($fields);
     }
@@ -88,7 +91,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static(array_combine($keys, $items));
     }
 
-    public function model($model)
+    public function model($model): self
     {
         return $this->map(function ($field) use ($model) {
             return $field->model($model);
@@ -117,7 +120,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return $fields;
     }
 
-    public function filterBy($key, $value = null)
+    /**
+     * @param \Closure|string $key
+     * @param null|mixed $value
+     *
+     * @return static
+     */
+    public function filterBy($key, $value = null): self
     {
         $fields = [];
 
@@ -167,7 +176,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         }));
     }
 
-    public function notTagged($tag): Fields
+    public function notTagged(string $tag): Fields
     {
         // TODO: to test this...
         return new static(array_filter($this->fields, function (Field $field) use ($tag) {
@@ -192,7 +201,10 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new Fields(array_merge($this->fields, $fields->all()));
     }
 
-    public function remove($keys = null)
+    /**
+     * @return static
+     */
+    public function remove($keys = null): self
     {
         if (! $keys) {
             return $this;
@@ -256,7 +268,7 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return $keyedFields;
     }
 
-    private function validateFields(array $fields)
+    private function validateFields(array $fields): void
     {
         array_map(function (Field $field) {
             return $field;

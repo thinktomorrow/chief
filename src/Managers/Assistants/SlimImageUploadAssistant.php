@@ -85,7 +85,7 @@ trait SlimImageUploadAssistant
         }
     }
 
-    private function validateAsyncSlimUpload(ImageField $field, string $locale, $imagePayload)
+    private function validateAsyncSlimUpload(ImageField $field, string $locale, $imagePayload): void
     {
         // Convert this Slim request to an expected format for our validation rules.
         // validation rules expects something as [images.avatar.nl => [payload]]

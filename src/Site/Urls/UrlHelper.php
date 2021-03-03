@@ -41,7 +41,7 @@ class UrlHelper
         return ModelReferencePresenter::toGroupedSelectValues($models)->toArray();
     }
 
-    public static function allOnlineSingles()
+    public static function allOnlineSingles(): array
     {
         return static::allOnlineModels(true);
     }

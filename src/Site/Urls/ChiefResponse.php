@@ -66,7 +66,7 @@ final class ChiefResponse
         throw new NotFoundHttpException('No url or model found for request [' . $slug . '] for locale [' . $locale . '].');
     }
 
-    private static function createRedirect(string $url)
+    private static function createRedirect(string $url): RedirectResponse
     {
         return new RedirectResponse($url, 301, []);
     }

@@ -27,6 +27,7 @@ class AuditTest extends ChiefTestCase
     /** @test */
     public function it_show_events()
     {
+        $this->disableExceptionHandling();
         $article = $this->setupAndCreateArticle();
 
         $this->asAdmin()->post($this->manager($article)->route('archive', $article));

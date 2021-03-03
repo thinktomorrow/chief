@@ -19,7 +19,10 @@ final class Nav
         return $this;
     }
 
-    public function tagged($tags): self
+    /**
+     * @param string[] $tags
+     */
+    public function tagged(array $tags): self
     {
         $filteredItems = array_filter($this->items, function (NavItem $navItem) use ($tags) {
             return $navItem->isTagged($tags);

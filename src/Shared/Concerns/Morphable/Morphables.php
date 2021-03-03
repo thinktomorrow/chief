@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class Morphables
 {
-    public static function instance(string $key, $attributes = [])
+    public static function instance(string $key, $attributes = []): object
     {
         $class = $key;
 

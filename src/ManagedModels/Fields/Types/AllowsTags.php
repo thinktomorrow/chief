@@ -4,7 +4,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsTags
 {
-    protected $tags = [];
+    protected array $tags = [];
 
     public function tagged($tag): bool
     {
@@ -18,6 +18,9 @@ trait AllowsTags
         return count($this->tags) < 1;
     }
 
+    /**
+     * @return AbstractField
+     */
     public function tag($tag)
     {
         $this->tags = array_merge($this->tags, (array)$tag);
@@ -25,7 +28,10 @@ trait AllowsTags
         return $this;
     }
 
-    public function untag($tag)
+    /**
+     * @return AbstractField
+     */
+    public function untag($tag): self
     {
         foreach ((array) $tag as $_tag) {
             if (false !== ($k = array_search($_tag, $this->tags))) {

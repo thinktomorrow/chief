@@ -23,7 +23,7 @@ class Filters
         return $this->filters;
     }
 
-    public function apply(Builder $builder)
+    public function apply(Builder $builder): void
     {
         foreach ($this->all() as $filter) {
             if ($filter->applicable(request())) {
@@ -72,7 +72,7 @@ class Filters
         }, $this->filters);
     }
 
-    private function validateFilters(array $filters)
+    private function validateFilters(array $filters): void
     {
         array_map(function (Filter $filter) {
             return $filter;

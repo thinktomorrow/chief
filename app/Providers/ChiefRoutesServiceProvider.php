@@ -15,7 +15,7 @@ use Thinktomorrow\Chief\Site\Urls\ChiefResponse;
 
 class ChiefRoutesServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->loadOpenAdminRoutes();
         $this->loadAdminRoutes();
@@ -23,14 +23,14 @@ class ChiefRoutesServiceProvider extends ServiceProvider
         $this->autoloadFrontendRoute();
     }
 
-    private function loadOpenAdminRoutes()
+    private function loadOpenAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web']], function () {
             $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-open-routes.php');
         });
     }
 
-    private function loadAdminRoutes()
+    private function loadAdminRoutes(): void
     {
         Route::group(['prefix' => config('chief.route.prefix', 'admin'), 'middleware' => ['web-chief', 'auth:chief']], function () {
             $this->loadRoutesFrom(__DIR__ . '/../../routes/chief-admin-routes.php');
@@ -44,6 +44,9 @@ class ChiefRoutesServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @return void
+     */
     private function autoloadFrontendRoute()
     {
         if (true !== config('chief.route.autoload')) {
@@ -61,7 +64,7 @@ class ChiefRoutesServiceProvider extends ServiceProvider
         });
     }
 
-    private function autoloadAdminMiddleware()
+    private function autoloadAdminMiddleware(): void
     {
         app(Router::class)->middlewareGroup('web-chief', [
             // The default laravel web middleware - except for the csrf token verification.

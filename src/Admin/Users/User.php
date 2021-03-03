@@ -42,7 +42,7 @@ class User extends Authenticatable implements HasAsset
         return self::where('email', $email)->first();
     }
 
-    public function invitation()
+    public function invitation(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Invitation::class, 'invitee_id');
     }
@@ -52,7 +52,7 @@ class User extends Authenticatable implements HasAsset
         return $this->roles->pluck('name')->toArray();
     }
 
-    public function present()
+    public function present(): UserPresenter
     {
         return new UserPresenter($this);
     }
@@ -62,17 +62,17 @@ class User extends Authenticatable implements HasAsset
         $this->notify(new ResetAdminPassword($token));
     }
 
-    public function getFullnameAttribute()
+    public function getFullnameAttribute(): string
     {
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public function isSquantoDeveloper()
+    public function isSquantoDeveloper(): bool
     {
         return $this->hasRole('developer');
     }
 
-    public function getShortNameAttribute()
+    public function getShortNameAttribute(): string
     {
         return $this->firstname . ' ' . substr($this->lastname, 0, 1) . '.';
     }

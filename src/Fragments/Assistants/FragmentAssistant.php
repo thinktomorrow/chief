@@ -109,6 +109,9 @@ trait FragmentAssistant
         );
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     private function renderFragmentCreate($owner)
     {
         $fragmentable = $this->fragmentable();
@@ -218,6 +221,9 @@ trait FragmentAssistant
         ], 201);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function fragmentEdit(Request $request, string $fragmentId)
     {
         $this->guard('fragment-edit');
@@ -318,8 +324,10 @@ trait FragmentAssistant
     /**
      * Which fragment model will the fields be saved to? This can be overwritten so that
      * also static fragments can store their values on the fragmentModel.
+     *
+     * @return \Thinktomorrow\Chief\Fragments\Fragmentable
      */
-    private function fragmentModel(Fragmentable $fragmentable)
+    private function fragmentModel(Fragmentable $fragmentable): \Thinktomorrow\Chief\Fragments\Fragmentable
     {
         return $fragmentable;
     }

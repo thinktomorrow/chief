@@ -43,7 +43,7 @@ abstract class AbstractMediaFieldHandler
         $this->assetUploader = $assetUploader;
     }
 
-    protected function handlePayload(HasAsset $model, MediaField $field, string $locale, array $values)
+    protected function handlePayload(HasAsset $model, MediaField $field, string $locale, array $values): void
     {
         foreach ($values as $key => $value) {
             $keyIsAttachedAssetId = $this->isKeyAnAttachedAssetId($model->assetRelation, $locale, $field->getKey(), $key);
@@ -78,6 +78,9 @@ abstract class AbstractMediaFieldHandler
 
     abstract protected function new(HasAsset $model, string $locale, string $type, $value): Asset;
 
+    /**
+     * @param (int|string) $currentAssetId
+     */
     protected function replace(HasAsset $model, string $locale, string $type, $currentAssetId, $value): Asset
     {
         $asset = $this->looksLikeAnAssetId($value)
@@ -89,13 +92,16 @@ abstract class AbstractMediaFieldHandler
         return $asset;
     }
 
-    protected function detach(HasAsset $model, string $locale, string $type, $assetId)
+    protected function detach(HasAsset $model, string $locale, string $type, $assetId): void
     {
         $this->detachAsset->detach($model, $assetId, $type, $locale);
     }
 
     abstract protected function createNewAsset(HasAsset $model, string $locale, string $type, $value): Asset;
 
+    /**
+     * @param (int|string) $key
+     */
     protected function shouldNotBeProcessed($value, $key, bool $keyIsAttachedAssetId): bool
     {
         // If the async upload is not finished yet and the user already uploads, the slim passes an "undefined" as value.
@@ -147,7 +153,7 @@ abstract class AbstractMediaFieldHandler
         return Str::slug($filename) . '.' . $extension;
     }
 
-    protected function sort(HasAsset $model, MediaField $field, array $input)
+    protected function sort(HasAsset $model, MediaField $field, array $input): void
     {
         $filesOrder = data_get($input, 'filesOrder', []);
 

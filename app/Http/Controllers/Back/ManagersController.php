@@ -20,6 +20,9 @@ class ManagersController extends Controller
         $this->managers = $managers;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(string $key)
     {
         $manager = $this->managers->findByKey($key);
@@ -34,6 +37,9 @@ class ManagersController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function sortIndex(string $key)
     {
         $manager = $this->managers->findByKey($key);
@@ -48,6 +54,9 @@ class ManagersController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create(string $key)
     {
         $manager = $this->managers->findByKey($key);

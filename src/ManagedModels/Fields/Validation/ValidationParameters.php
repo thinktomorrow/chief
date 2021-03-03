@@ -6,20 +6,20 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Validation;
 
 class ValidationParameters
 {
-    /** @var array */
-    private $rules;
-
-    /** @var array */
-    private $customMessages;
-
-    /** @var array */
-    private $customAttributes;
+    private array $rules;
+    private array $customMessages;
+    private array $customAttributes;
 
     public function __construct($rules, array $customMessages, array $customAttributes)
     {
         $this->rules = ValidationParameters::normalizeToArray($rules);
         $this->customMessages = $customMessages;
         $this->customAttributes = $customAttributes;
+    }
+
+    public function isEmpty(): bool
+    {
+        return count($this->rules) < 1;
     }
 
     public function getRules(): array

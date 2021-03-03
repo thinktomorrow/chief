@@ -8,6 +8,9 @@ use Thinktomorrow\Chief\Site\Sitemap\SitemapFiles;
 
 class SitemapController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $this->authorize('view-page');

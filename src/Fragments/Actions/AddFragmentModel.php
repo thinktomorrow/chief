@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
 
 final class AddFragmentModel
 {
-    public function handle(Model $owner, FragmentModel $fragmentModel, int $order)
+    public function handle(Model $owner, FragmentModel $fragmentModel, int $order): void
     {
         if (! $context = ContextModel::ownedBy($owner)) {
             $context = ContextModel::createForOwner($owner);

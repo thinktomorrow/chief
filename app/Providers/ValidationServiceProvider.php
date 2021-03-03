@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\ManagedModels\Fields\ValidationRules\ImageFieldRequiredR
 
 class ValidationServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         // Custom validator for requiring on translations only the fallback locale
         // this is called in the validation as required-fallback-locale
@@ -34,7 +34,7 @@ class ValidationServiceProvider extends ServiceProvider
         $this->bootMediaValidationRules();
     }
 
-    private function bootMediaValidationRules()
+    private function bootMediaValidationRules(): void
     {
         Validator::extendImplicit('filefield_required', FileFieldRequiredRule::class . '@validate');
         Validator::extend('filefield_mimetypes', FileFieldMimetypesRule::class . '@validate');

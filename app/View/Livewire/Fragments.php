@@ -18,13 +18,16 @@ class Fragments extends Component
     private array $allowedFragments;
     private array $sharedFragments;
 
-    public function mount(FragmentsOwner $owner)
+    public function mount(FragmentsOwner $owner): void
     {
         $this->fragmentRepository = app(FragmentRepository::class);
         $this->owner = $owner;
         $this->reload();
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function render()
     {
         return view('chief::fragments.component.fragments-main', [
@@ -35,7 +38,7 @@ class Fragments extends Component
         ]);
     }
 
-    public function reload()
+    public function reload(): void
     {
         $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function (Fragmentable $model) {
             return [
@@ -49,7 +52,7 @@ class Fragments extends Component
         $this->emit('fragmentsReloaded');
     }
 
-    private function reloadFragmentSelection()
+    private function reloadFragmentSelection(): void
     {
         // Available fragments
         $this->allowedFragments = array_map(function ($fragmentableClass) {

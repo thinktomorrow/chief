@@ -18,7 +18,7 @@ class ChiefPasswordBrokerResolver
         $this->app = $app;
     }
 
-    public function resolve()
+    public function resolve(): ChiefPasswordBroker
     {
         $config = $this->getConfig('chief');
 
@@ -32,7 +32,7 @@ class ChiefPasswordBrokerResolver
         );
     }
 
-    protected function createTokenRepository(array $config)
+    protected function createTokenRepository(array $config): DatabaseTokenRepository
     {
         $key = $this->app['config']['app.key'];
 
@@ -51,7 +51,7 @@ class ChiefPasswordBrokerResolver
         );
     }
 
-    private function getConfig($name)
+    private function getConfig(string $name)
     {
         return $this->app['config']["auth.passwords.{$name}"];
     }

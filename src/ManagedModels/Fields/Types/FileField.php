@@ -9,9 +9,9 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 
 class FileField extends MediaField implements Field
 {
-    private $uploadButtonLabel = 'Document opladen';
+    private string $uploadButtonLabel = 'Document opladen';
 
-    protected $customValidationRules = [
+    protected array $customValidationRules = [
         'required' => 'filefield_required',
         'mimetypes' => 'filefield_mimetypes',
         'dimensions' => 'filefield_dimensions',
@@ -28,6 +28,11 @@ class FileField extends MediaField implements Field
             });
     }
 
+    /**
+     * @return \stdClass[]
+     *
+     * @psalm-return list<\stdClass>
+     */
     public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
         if (! $model) {
@@ -64,7 +69,10 @@ class FileField extends MediaField implements Field
         return $files;
     }
 
-    public function uploadButtonLabel(string $uploadButtonLabel)
+    /**
+     * @return static
+     */
+    public function uploadButtonLabel(string $uploadButtonLabel): self
     {
         $this->uploadButtonLabel = $uploadButtonLabel;
 

@@ -8,11 +8,17 @@ use Thinktomorrow\Chief\Admin\HealthMonitor\Checks\HealthCheck;
 
 class AlertBarNotifier implements Notifier
 {
+    /**
+     * @return void
+     */
     public function onFailure(HealthCheck $healthCheck)
     {
         session()->flash('alertbarmessage', $healthCheck->message());
     }
 
+    /**
+     * @return void
+     */
     public function onSuccess(HealthCheck $healthCheck)
     {
     }

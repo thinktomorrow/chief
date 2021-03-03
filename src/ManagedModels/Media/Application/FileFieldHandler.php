@@ -36,6 +36,7 @@ class FileFieldHandler extends AbstractMediaFieldHandler
         return $this->addAsset->add($model, $uploadedFile, $type, $locale, $this->sluggifyFilename($filename));
     }
 
+    /** @return Asset */
     protected function createNewAsset(HasAsset $model, string $locale, string $type, $value): Asset
     {
         /** @var UploadedFile $uploadedFile */

@@ -9,6 +9,9 @@ class Seed extends BaseCommand
                             {--force}';
     protected $description = 'This will run the seeders to inject new data into your project database.';
 
+    /**
+     * @return void
+     */
     public function handle()
     {
         if (app()->environment() != 'local' && ! $this->option('force')) {

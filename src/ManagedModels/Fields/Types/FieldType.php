@@ -58,7 +58,7 @@ class FieldType
         return false;
     }
 
-    public function equals($type): bool
+    public function equals(self $type): bool
     {
         return ((string)$type === (string)$this->type && static::class === get_class($type));
     }

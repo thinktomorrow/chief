@@ -23,6 +23,9 @@ class MenuItemController extends Controller
         $this->prepareMenuItemsForAdminSelect = $prepareMenuItemsForAdminSelect;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create(string $menutype)
     {
         $this->authorize('create-page');
@@ -56,6 +59,9 @@ class MenuItemController extends Controller
         return redirect()->route('chief.back.menus.show', $menu->menu_type)->with('messages.success', $menu->label . ' is aangemaakt');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit($id)
     {
         $this->authorize('update-page');

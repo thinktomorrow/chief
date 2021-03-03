@@ -6,10 +6,12 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsCharacterCount
 {
-    /** @var int */
-    protected $characterCount = 0;
+    protected int $characterCount = 0;
 
-    public function characterCount(int $max)
+    /**
+     * @return TextField
+     */
+    public function characterCount(int $max): self
     {
         $this->characterCount = $max;
 

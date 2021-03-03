@@ -36,11 +36,14 @@ final class SaveUrlSlugs
         }
     }
 
-    private function deleteEmptyRecord(ProvidesUrl $model, string $locale, Collection $existingRecords)
+    private function deleteEmptyRecord(ProvidesUrl $model, string $locale, Collection $existingRecords): void
     {
         $this->saveRecord($model, $locale, null, $existingRecords);
     }
 
+    /**
+     * @return void
+     */
     private function saveRecord(ProvidesUrl $model, string $locale, ?string $slug, Collection $existingRecords, bool $strict = true)
     {
         // Existing ones for this locale?
@@ -77,7 +80,7 @@ final class SaveUrlSlugs
         });
     }
 
-    private function createRecord(ProvidesUrl $model, $locale, $slug)
+    private function createRecord(ProvidesUrl $model, string $locale, string $slug): void
     {
         UrlRecord::create([
             'locale' => $locale,
@@ -111,7 +114,7 @@ final class SaveUrlSlugs
      * @param $locale
      * @param $slug
      */
-    private function deleteIdenticalRedirects($existingRecords, $locale, $slug): void
+    private function deleteIdenticalRedirects(Collection $existingRecords, string $locale, string $slug): void
     {
         $existingRecords->filter(function ($record) use ($locale) {
             return (
@@ -143,6 +146,8 @@ final class SaveUrlSlugs
     /**
      * @param string $slug
      * @param $locale
+     * @param (int|string) $locale
+     *
      * @return string
      */
     private function prependBaseUrlSegment(ProvidesUrl $model, string $slug, $locale): string

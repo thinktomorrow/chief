@@ -14,7 +14,7 @@ final class ZipAction
     {
     }
 
-    public function handle(string $filename, Request $request)
+    public function handle(string $filename, Request $request): void
     {
         $assets = Asset::whereIn('id', (array) $request->input('asset_ids', []))->get();
 

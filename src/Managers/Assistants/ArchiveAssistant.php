@@ -103,6 +103,9 @@ trait ArchiveAssistant
         return redirect()->to($this->route('index'))->with('messages.success', $model->adminLabel('title') . ' is uit het archief gehaald.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function archiveIndex(Request $request)
     {
         $modelClass = $this->managedModelClass();

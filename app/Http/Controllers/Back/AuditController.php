@@ -8,6 +8,9 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class AuditController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $this->authorize('view-audit');
@@ -17,6 +20,9 @@ class AuditController extends Controller
         return view('chief::back.audit.index', compact('activity'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function show($id)
     {
         $this->authorize('view-audit');

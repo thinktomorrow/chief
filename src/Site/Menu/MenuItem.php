@@ -38,12 +38,12 @@ class MenuItem extends Model
         return $this->menu_type;
     }
 
-    public function owner()
+    public function owner(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo('owner', 'owner_type', 'owner_id');
     }
 
-    public function parent()
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(MenuItem::class, 'parent_id');
     }
@@ -85,8 +85,10 @@ class MenuItem extends Model
      * Convert entire models to condensed data arrays
      *
      * @param Node $node
+     *
+     * @return \stdClass
      */
-    public function entry(Node $node)
+    public function entry(Node $node): \stdClass
     {
         return (object)[
             'id' => $node->id,

@@ -22,17 +22,23 @@ class UniqueSlug
         $this->model = $model;
         $this->blacklist = $blacklist;
 
-        $this->slugResolver = function ($slug) {
+        $this->slugResolver = function ($slug): string {
             return Str::slug($slug);
         };
     }
 
-    public static function make($model, array $blacklist = [])
+    /**
+     * @return static
+     */
+    public static function make($model, array $blacklist = []): self
     {
         return new static($model, $blacklist);
     }
 
-    public function slugResolver(\Closure $resolver)
+    /**
+     * @return static
+     */
+    public function slugResolver(\Closure $resolver): self
     {
         $this->slugResolver = $resolver;
 

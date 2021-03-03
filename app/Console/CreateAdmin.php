@@ -10,7 +10,7 @@ class CreateAdmin extends BaseCommand
     protected $signature = 'chief:admin {--dev}';
     protected $description = 'Create a new chief admin user';
 
-    public function handle()
+    public function handle(): void
     {
         $this->settingPermissionsAndRoles();
 
@@ -40,7 +40,7 @@ class CreateAdmin extends BaseCommand
         $this->info($firstname . ' ' . $lastname . ' succesfully added as admin user.');
     }
 
-    private function settingPermissionsAndRoles()
+    private function settingPermissionsAndRoles(): void
     {
         AuthorizationDefaults::permissions()->each(function ($permissionName) {
             Artisan::call('chief:permission', ['name' => $permissionName]);

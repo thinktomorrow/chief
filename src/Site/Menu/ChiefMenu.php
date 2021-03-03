@@ -17,7 +17,10 @@ class ChiefMenu
         $this->collection = $this->sanitize($collection);
     }
 
-    public static function fromMenuItems($type = 'main')
+    /**
+     * @return static
+     */
+    public static function fromMenuItems(string $type = 'main'): self
     {
         return new static(app(BuildMenuItemsTree::class)->build(
             MenuItem::where('menu_type', $type)->get()
@@ -35,7 +38,10 @@ class ChiefMenu
 //        return new static($collection);
 //    }
 
-    public function includeHidden()
+    /**
+     * @return static
+     */
+    public function includeHidden(): self
     {
         $this->includeHidden = true;
 

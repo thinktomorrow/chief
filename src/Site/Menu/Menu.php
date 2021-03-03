@@ -40,17 +40,17 @@ class Menu
         })->first();
     }
 
-    public function key()
+    public function key(): string
     {
         return $this->key;
     }
 
-    public function label()
+    public function label(): string
     {
         return $this->label;
     }
 
-    public function viewPath()
+    public function viewPath(): string
     {
         return $this->view_path;
     }
@@ -60,7 +60,7 @@ class Menu
         return ChiefMenu::fromMenuItems($this->key);
     }
 
-    public function items()
+    public function items(): \Vine\NodeCollection
     {
         return $this->menu()->items();
     }
@@ -80,7 +80,7 @@ class Menu
         return $this->fallbackRender();
     }
 
-    private function fallbackRender()
+    private function fallbackRender(): string
     {
         $menu = [];
 

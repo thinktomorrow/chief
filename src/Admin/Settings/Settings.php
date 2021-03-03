@@ -43,11 +43,14 @@ class Settings extends Collection
         return $this->items[$key];
     }
 
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->items[$key] = $value;
     }
 
+    /**
+     * @return void
+     */
     private function fetch()
     {
         if ($this->items) {
@@ -63,7 +66,10 @@ class Settings extends Collection
         $this->items = array_merge($config_values, $database_values);
     }
 
-    public function fresh()
+    /**
+     * @return static
+     */
+    public function fresh(): self
     {
         $this->items = null;
 

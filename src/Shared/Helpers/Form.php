@@ -10,8 +10,10 @@ class Form
      *
      * @param array $translations
      * @param \Closure $callback
+     *
+     * @return void
      */
-    public static function foreachTrans(array $translations, \Closure $callback)
+    public static function foreachTrans(array $translations, \Closure $callback): void
     {
         foreach ($translations as $locale => $trans) {
             foreach ($trans as $key => $value) {

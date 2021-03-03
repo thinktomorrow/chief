@@ -92,7 +92,7 @@ class SnippetCollection extends Collection
         })->toArray();
     }
 
-    public static function refresh()
+    public static function refresh(): void
     {
         static::$loadedSnippets = null;
     }

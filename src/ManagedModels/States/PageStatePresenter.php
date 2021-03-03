@@ -20,7 +20,10 @@ class PageStatePresenter
         $this->pageState = $pageState;
     }
 
-    public static function fromModel(StatefulContract $model)
+    /**
+     * @return static
+     */
+    public static function fromModel(StatefulContract $model): self
     {
         return new static($model, PageState::make($model));
     }

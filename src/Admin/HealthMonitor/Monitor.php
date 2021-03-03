@@ -17,7 +17,7 @@ class Monitor
         $this->checks = config('chief.healthMonitor', []);
     }
 
-    public function check()
+    public function check(): void
     {
         foreach ($this->checks as $check) {
             $checkInstance = app($check);

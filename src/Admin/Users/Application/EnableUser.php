@@ -10,12 +10,12 @@ use Thinktomorrow\Chief\Admin\Users\User;
 
 class EnableUser
 {
-    public function handle(User $user)
+    public function handle(User $user): void
     {
         $user->enable();
     }
 
-    public function onAcceptingInvite(InviteAccepted $event)
+    public function onAcceptingInvite(InviteAccepted $event): void
     {
         $invitation = Invitation::find($event->invitation_id);
 

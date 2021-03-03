@@ -88,7 +88,7 @@ class SettingFieldsManager
         $this->saveFields($request);
     }
 
-    private function saveFields(Request $request)
+    private function saveFields(Request $request): void
     {
         $existingHomepageValue = [];
 

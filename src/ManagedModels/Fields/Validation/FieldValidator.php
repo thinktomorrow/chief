@@ -19,7 +19,7 @@ class FieldValidator
         $this->validatorFactory = $validatorFactory;
     }
 
-    public function handle(Fields $fields, array $payload)
+    public function handle(Fields $fields, array $payload): void
     {
         foreach ($fields as $field) {
             if ($field->hasValidation()) {

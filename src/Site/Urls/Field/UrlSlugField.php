@@ -16,7 +16,10 @@ class UrlSlugField extends InputField implements Field
 
     private $fullUrl;
 
-    public function setUrlRecord(UrlRecord $urlRecord)
+    /**
+     * @return static
+     */
+    public function setUrlRecord(UrlRecord $urlRecord): self
     {
         $this->urlRecord = $urlRecord;
 
@@ -28,7 +31,10 @@ class UrlSlugField extends InputField implements Field
         return $this->urlRecord->id;
     }
 
-    public function setBaseUrlSegment($baseUrlSegment = null)
+    /**
+     * @return static
+     */
+    public function setBaseUrlSegment($baseUrlSegment = null): self
     {
         $this->baseUrlSegment = $baseUrlSegment;
 
@@ -47,7 +53,10 @@ class UrlSlugField extends InputField implements Field
             : $this->prepend . $this->getValue();
     }
 
-    public function setFullUrl(string $fullUrl)
+    /**
+     * @return static
+     */
+    public function setFullUrl(string $fullUrl): self
     {
         $this->fullUrl = $fullUrl;
 

@@ -43,7 +43,7 @@ class UrlRecord extends Model
         return $record;
     }
 
-    public function model()
+    public function model(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo('model');
 //        return Morphables::instance($this->model_type)->find($this->model_id);
@@ -123,6 +123,9 @@ class UrlRecord extends Model
     }
 
     // Remove all urls that came after this one
+    /**
+     * @return void
+     */
     public function revert()
     {
         if (! $this->isRedirect()) {
@@ -150,12 +153,15 @@ class UrlRecord extends Model
         return $this->slug === '/';
     }
 
-    public static function existsIgnoringRedirects($slug, string $locale = null, Model $ignoredModel = null): bool
+    /**
+     * @param null|string $slug
+     */
+    public static function existsIgnoringRedirects(?string $slug, string $locale = null, Model $ignoredModel = null): bool
     {
         return static::exists($slug, $locale, $ignoredModel, false);
     }
 
-    public static function exists($slug, string $locale = null, Model $ignoredModel = null, bool $includeRedirects = true): bool
+    public static function exists(?string $slug, string $locale = null, Model $ignoredModel = null, bool $includeRedirects = true): bool
     {
         $builder = static::where('slug', $slug);
 
@@ -197,7 +203,7 @@ class UrlRecord extends Model
         });
     }
 
-    public function changeOwningModel(Model $model)
+    public function changeOwningModel(Model $model): void
     {
         $this->model_type = $model->getMorphClass();
         $this->model_id = $model->id;

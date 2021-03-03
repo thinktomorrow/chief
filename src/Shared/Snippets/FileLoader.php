@@ -29,7 +29,7 @@ class FileLoader
         return $this->handle($directory, true);
     }
 
-    public function handle(string $directory, $recursive = false): Collection
+    public function handle(string $directory, bool $recursive = false): Collection
     {
         $files = $recursive ? $this->filesystem->allFiles($directory) : $this->filesystem->files($directory);
 

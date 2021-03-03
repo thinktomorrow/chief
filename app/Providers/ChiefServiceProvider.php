@@ -32,7 +32,7 @@ use Thinktomorrow\Squanto\SquantoServiceProvider;
 
 class ChiefServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->registerChiefGuard();
         $this->registerSquanto();
@@ -173,8 +173,10 @@ class ChiefServiceProvider extends ServiceProvider
      *
      * The app()->register() will both trigger the register and boot
      * methods of the service provider
+     *
+     * @return void
      */
-    private function setupEnvironmentProviders()
+    private function setupEnvironmentProviders(): void
     {
         if (! $this->app->environment('production') && $services = config('app.providers-' . app()->environment(), false)) {
             foreach ($services as $service) {
@@ -183,7 +185,7 @@ class ChiefServiceProvider extends ServiceProvider
         }
     }
 
-    private function registerChiefGuard()
+    private function registerChiefGuard(): void
     {
         $this->app['config']["auth.guards.chief"] = [
             'driver' => 'session',
@@ -208,7 +210,7 @@ class ChiefServiceProvider extends ServiceProvider
         ];
     }
 
-    private function registerSquanto()
+    private function registerSquanto(): void
     {
         // Project specific squanto files
         $this->app['view']->addNamespace('squanto', __DIR__ . '/../../resources/views/vendor/squanto');

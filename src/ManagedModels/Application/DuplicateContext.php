@@ -25,7 +25,7 @@ class DuplicateContext
             return;
         }
 
-        $copiedContext = ContextModel::createForOwner($targetModel);
+        ContextModel::createForOwner($targetModel);
 
         /** @var FragmentModel $fragment */
         foreach ($context->fragments as $fragment) {

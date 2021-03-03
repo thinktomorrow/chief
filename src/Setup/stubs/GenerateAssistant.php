@@ -5,7 +5,7 @@ namespace Thinktomorrow\Chief\Setup\stubs;
 
 final class GenerateAssistant
 {
-    public function handle()
+    public function handle(): void
     {
         // Which namespace?
 

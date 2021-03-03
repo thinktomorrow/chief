@@ -6,9 +6,12 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsMultiple
 {
-    protected $allowMultiple = false;
+    protected bool $allowMultiple = false;
 
-    public function multiple($flag = true)
+    /**
+     * @return SelectField
+     */
+    public function multiple($flag = true): self
     {
         $this->allowMultiple = $flag;
 

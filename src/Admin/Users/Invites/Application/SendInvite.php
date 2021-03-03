@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\App\Notifications\InvitationMail;
 
 class SendInvite
 {
-    public function handle(UserInvited $event)
+    public function handle(UserInvited $event): void
     {
         $invitation = Invitation::findOrFail($event->invitation_id);
 

@@ -22,7 +22,7 @@ final class Modules
      * TODO: this is old behavior and will in time be replaced by the new pagebuilder logic. A 'Module' should not be handled differently
      * than any other resource that is used in the pagebuilder. The difference between used pagebuilder parts (module, shared modules, page, pageset, text, pagetitle) should be flattened.
      *
-     * @return Collection of ManagedModelDetails
+     * @return array of ManagedModelDetails
      */
     public function creatableModulesForSelect(): array
     {

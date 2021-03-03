@@ -10,9 +10,9 @@ abstract class MediaField extends AbstractField implements Field
 {
     use AllowsMultiple;
 
-    protected $customValidationRules = [];
+    protected array $customValidationRules = [];
 
-    protected $localizedFormat = 'files.:name.:locale';
+    protected string $localizedFormat = 'files.:name.:locale';
 
     public function validation($rules, array $messages = [], array $attributes = []): Field
     {

@@ -12,6 +12,9 @@ class RefreshDatabase extends BaseCommand
     protected $signature = 'chief:refresh {--force}';
     protected $description = 'This will clear the entire database and reseed with development defaults';
 
+    /**
+     * @return void
+     */
     public function handle()
     {
         if (app()->environment() != 'local' && ! $this->option('force')) {
@@ -50,7 +53,7 @@ class RefreshDatabase extends BaseCommand
         $this->info('Great. We\'re done here. NOW START HACKING!');
     }
 
-    private function settingPermissionsAndRoles()
+    private function settingPermissionsAndRoles(): void
     {
         AuthorizationDefaults::permissions()->each(function ($permissionName) {
             Artisan::call('chief:permission', ['name' => $permissionName]);
@@ -63,7 +66,7 @@ class RefreshDatabase extends BaseCommand
         $this->info('Default permissions and roles');
     }
 
-    private function settingUsers()
+    private function settingUsers(): void
     {
         /**
          * The developer who is scaffolding this data is in charge of picking the default

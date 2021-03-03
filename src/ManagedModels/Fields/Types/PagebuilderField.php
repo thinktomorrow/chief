@@ -6,17 +6,10 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 class PagebuilderField extends AbstractField implements Field
 {
-    /** @var array */
-    private $sections;
-
-    /** @var array */
-    private $availablePages;
-
-    /** @var array */
-    private $availableModules;
-
-    /** @var array */
-    private $availableSets;
+    private array $sections;
+    private array $availablePages;
+    private array $availableModules;
+    private array $availableSets;
 
     public static function make(string $key): Field
     {
@@ -41,21 +34,30 @@ class PagebuilderField extends AbstractField implements Field
         return $this;
     }
 
-    public function availablePages(array $availablePages)
+    /**
+     * @return static
+     */
+    public function availablePages(array $availablePages): self
     {
         $this->availablePages = $availablePages;
 
         return $this;
     }
 
-    public function availableModules(array $availableModules)
+    /**
+     * @return static
+     */
+    public function availableModules(array $availableModules): self
     {
         $this->availableModules = $availableModules;
 
         return $this;
     }
 
-    public function availableSets(array $availableSets)
+    /**
+     * @return static
+     */
+    public function availableSets(array $availableSets): self
     {
         $this->availableSets = $availableSets;
 

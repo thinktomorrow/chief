@@ -25,6 +25,9 @@ trait FieldsComponentAssistant
         return in_array($action, ['fields-edit', 'fields-update']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function fieldsEdit(Request $request, $id, string $componentKey)
     {
         $model = $this->fieldsModel($id);

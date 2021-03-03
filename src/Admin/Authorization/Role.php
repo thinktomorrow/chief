@@ -18,7 +18,7 @@ class Role extends BaseRole implements RoleContract
         parent::__construct($attributes);
     }
 
-    public static function rolesForSelect($includeDeveloperRole = false)
+    public static function rolesForSelect($includeDeveloperRole = false): array
     {
         $roles = $includeDeveloperRole ? static::all() : static::all()->reject(function ($role) {
             return $role->name == 'developer';

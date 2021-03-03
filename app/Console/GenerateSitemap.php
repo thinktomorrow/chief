@@ -20,7 +20,7 @@ class GenerateSitemap extends BaseCommand
         $this->sitemapXmlFile = $sitemapXmlFile;
     }
 
-    public function handle()
+    public function handle(): void
     {
         $locales = config('chief.locales');
 

@@ -12,8 +12,10 @@ trait TranslatableCommand
      * @param $translations
      * @param TranslatableContract $entity
      * @param array $keys pass the columns that need to be translated. these need to match the passed request keys
+     *
+     * @return void
      */
-    protected function saveTranslations($translations, TranslatableContract $entity, array $keys)
+    protected function saveTranslations($translations, TranslatableContract $entity, array $keys): void
     {
         foreach ($entity->getAvailableLocales() as $available_locale) {
             // Remove the product translation if any already exists
@@ -33,8 +35,10 @@ trait TranslatableCommand
      * @param array $keys
      * @param $translation
      * @param $available_locale
+     *
+     * @return void
      */
-    protected function updateTranslation(TranslatableContract $entity, array $keys, array $translation, $available_locale)
+    protected function updateTranslation(TranslatableContract $entity, array $keys, array $translation, $available_locale): void
     {
         $attributes = [];
 

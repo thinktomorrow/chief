@@ -11,19 +11,19 @@ trait Enablable
         return (int)$this->{$this->getEnabledField()} === $this->getEnabledValue();
     }
 
-    public function disable()
+    public function disable(): void
     {
         $this->{$this->getEnabledField()} = $this->getDisabledValue();
         $this->save();
     }
 
-    public function enable()
+    public function enable(): void
     {
         $this->{$this->getEnabledField()} = $this->getEnabledValue();
         $this->save();
     }
 
-    public function scopeEnabled($query)
+    public function scopeEnabled($query): void
     {
         $query->where($this->enablable_field, $this->getEnabledValue());
     }

@@ -84,7 +84,7 @@ class StateMachineIntegrityTest extends ChiefTestCase
 
 class DummyStateMachine extends StateMachine
 {
-    protected $states = [
+    protected array $states = [
         'new',
         'pending',
         'completed',
@@ -92,7 +92,7 @@ class DummyStateMachine extends StateMachine
         'refunded',
     ];
 
-    protected $transitions = [
+    protected array $transitions = [
         'create' => [
             'from' => ['new'],
             'to' => 'pending',
@@ -106,7 +106,7 @@ class DummyStateMachine extends StateMachine
 
 class MalformedStateMachine extends StateMachine
 {
-    protected $transitions = [
+    protected array $transitions = [
         'complete' => [
             'from' => 'foobar',
         ],
@@ -115,11 +115,11 @@ class MalformedStateMachine extends StateMachine
 
 class MissingStateMachine extends StateMachine
 {
-    protected $states = [
+    protected array $states = [
         'new',
     ];
 
-    protected $transitions = [
+    protected array $transitions = [
         'create' => [
             'from' => ['new'],
             'to' => 'pending',

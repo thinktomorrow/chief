@@ -17,7 +17,7 @@ use Thinktomorrow\Chief\Site\Menu\MenuItem;
 
 class ChiefProjectServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         // Out of the box morphables - the key 'singles' is the page's default morphKey.
         Relation::morphMap([

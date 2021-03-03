@@ -9,7 +9,7 @@ class MacrosServiceProvider extends ServiceProvider
 {
     protected $defer = false;
 
-    public function boot()
+    public function boot(): void
     {
 //        Builder::macro('ignoreCollection', function(){
 //            return $this;

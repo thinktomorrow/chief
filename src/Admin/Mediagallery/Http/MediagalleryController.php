@@ -12,6 +12,9 @@ use Thinktomorrow\Chief\Site\Urls\UrlHelper;
 
 class MediagalleryController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(Request $request)
     {
         $search = $request->input('search', false);
@@ -41,7 +44,7 @@ class MediagalleryController extends Controller
             $modelAssets = $modelAssets->merge($owner->assets());
 
             $owner->children()->each(function ($module) use ($modelAssets) {
-                $modelAssets = $modelAssets->merge($module->assets());
+                $modelAssets->merge($module->assets());
             });
 
             $assets->whereIn('id', $modelAssets->pluck('id'));

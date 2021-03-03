@@ -20,7 +20,7 @@ class PageState extends StateMachine
     // Online states
     const PUBLISHED = 'published';
 
-    protected $states = [
+    protected array $states = [
         self::DRAFT,
         self::ARCHIVED,
         self::DELETED,
@@ -28,7 +28,7 @@ class PageState extends StateMachine
         self::PUBLISHED,
     ];
 
-    protected $transitions = [
+    protected array $transitions = [
         'publish' => [
             'from' => [self::DRAFT],
             'to' => self::PUBLISHED,
@@ -51,7 +51,10 @@ class PageState extends StateMachine
         ],
     ];
 
-    public static function make(StatefulContract $model)
+    /**
+     * @return static
+     */
+    public static function make(StatefulContract $model): self
     {
         return new static($model, static::KEY);
     }

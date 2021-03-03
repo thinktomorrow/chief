@@ -75,7 +75,7 @@ trait FileUploadAssistant
         }
     }
 
-    private function validateAsyncFileUpload(FileField $field, string $locale, UploadedFile $uploadedFile)
+    private function validateAsyncFileUpload(FileField $field, string $locale, UploadedFile $uploadedFile): void
     {
         // Convert this request to an expected format for our validation rules.
         // validation rules expects something as [files.avatar.nl => [payload]]

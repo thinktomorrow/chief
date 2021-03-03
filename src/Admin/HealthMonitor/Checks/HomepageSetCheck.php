@@ -21,6 +21,11 @@ class HomepageSetCheck implements HealthCheck
         return 'Het lijkt erop dat er geen homepagina ingesteld is. Stel er een in hier: <a href="' . route('chief.back.settings.edit') . '" class="text-secondary-800 underline hover:text-white">Settings</a>';
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
     public function notifiers(): array
     {
         return [

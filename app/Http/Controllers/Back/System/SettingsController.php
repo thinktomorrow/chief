@@ -21,6 +21,9 @@ class SettingsController extends Controller
         $this->fieldValidator = $fieldValidator;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit()
     {
         $this->authorize('update-setting');

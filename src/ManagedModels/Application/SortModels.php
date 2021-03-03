@@ -30,8 +30,12 @@ class SortModels
         );
     }
 
-    /** Taken from: https://github.com/laravel/ideas/issues/575 */
-    private static function batchUpdateColumn(string $table, string $column, array $indices, string $indexColumn = 'id', bool $castIdToIntegers = true, string $extraWhere = null)
+    /**
+     * Taken from: https://github.com/laravel/ideas/issues/575
+     *
+     * @return void
+     */
+    private static function batchUpdateColumn(string $table, string $column, array $indices, string $indexColumn = 'id', bool $castIdToIntegers = true, string $extraWhere = null): void
     {
         $cases = [];
         $ids = [];

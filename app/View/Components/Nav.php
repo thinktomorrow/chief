@@ -20,6 +20,9 @@ final class Nav extends Component
         $this->nav = $nav;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function render()
     {
         return view('chief::components.nav');

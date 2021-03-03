@@ -26,6 +26,9 @@ class Fragments extends Component
         $this->load();
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function render()
     {
         return view('chief::fragments.component.fragments-nested', [
@@ -36,7 +39,7 @@ class Fragments extends Component
         ]);
     }
 
-    public function load()
+    public function load(): void
     {
         $this->fragments = app(FragmentRepository::class)->getByOwner($this->owner->ownerModel())->map(function (Fragmentable $model) {
             return [
@@ -49,7 +52,7 @@ class Fragments extends Component
     }
 
 
-    private function reloadFragmentSelection()
+    private function reloadFragmentSelection(): void
     {
         // Available fragments
         $this->allowedFragments = array_map(function ($fragmentableClass) {

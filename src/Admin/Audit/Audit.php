@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\ActivityLogger;
 use Spatie\Activitylog\Models\Activity;
 use Thinktomorrow\Chief\Admin\Users\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class Audit extends Activity
 {
@@ -37,7 +38,10 @@ class Audit extends Activity
         return self::causedBy($causer)->get()->sortByDesc('created_at');
     }
 
-    public static function getActivity()
+    /**
+     * @return Collection
+     */
+    public static function getActivity(): Collection
     {
         return self::all()->sortByDesc('created_at');
     }

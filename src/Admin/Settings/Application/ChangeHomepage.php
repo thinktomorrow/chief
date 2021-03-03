@@ -13,7 +13,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class ChangeHomepage
 {
-    public function onSettingChanged(array $existingValues)
+    public function onSettingChanged(array $existingValues): void
     {
         $setting = Setting::findByKey(Setting::HOMEPAGE);
 
@@ -38,7 +38,7 @@ class ChangeHomepage
         }
     }
 
-    public function onUrlChanged(UrlRecord $urlRecord)
+    public function onUrlChanged(UrlRecord $urlRecord): void
     {
         $model = Morphables::instance($urlRecord->model_type)->find($urlRecord->model_id);
 
@@ -50,7 +50,7 @@ class ChangeHomepage
         $homepage->save();
     }
 
-    private function assertNoEmptyValues(array $modelReferences)
+    private function assertNoEmptyValues(array $modelReferences): void
     {
         foreach ($modelReferences as $locale => $modelReferenceString) {
             if (! $modelReferenceString) {

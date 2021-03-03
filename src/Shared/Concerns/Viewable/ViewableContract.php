@@ -37,7 +37,8 @@ interface ViewableContract
      * the way the view is determined as well as the passed data parameters.
      *
      * @param ActsAsParent $parent
-     * @return mixed
+     *
+     * @return self
      */
-    public function setViewParent(ActsAsParent $parent): ViewableContract;
+    public function setViewParent(ActsAsParent $parent): self;
 }

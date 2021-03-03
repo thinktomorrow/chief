@@ -21,7 +21,12 @@ class InvitationMail extends Notification implements ShouldQueue
         $this->invitation = $invitation;
     }
 
-    public function via($notifiable)
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string}
+     */
+    public function via($notifiable): array
     {
         return ['mail'];
     }

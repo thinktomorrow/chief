@@ -37,7 +37,7 @@ class ImageFieldMinRule extends AbstractMediaFieldRule
      * @param $value
      * @return float|int
      */
-    protected function getSize($attribute, $value)
+    protected function getSize(string $attribute, $value)
     {
         $inputData = json_decode($value)->input;
 

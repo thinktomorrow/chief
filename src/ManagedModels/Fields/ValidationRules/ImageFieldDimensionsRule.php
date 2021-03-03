@@ -30,8 +30,10 @@ class ImageFieldDimensionsRule extends AbstractMediaFieldRule
 
     /**
      * Override Laravel validateDimensions to focus on the ImageField specifics
+     *
+     * @return bool
      */
-    private function validateSlimOutputDimensions($value, $parameters)
+    private function validateSlimOutputDimensions($value, array $parameters): bool
     {
         $file = json_decode($value)->output;
 

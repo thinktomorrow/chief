@@ -6,25 +6,14 @@ namespace Thinktomorrow\Chief\ManagedModels\States\State;
 
 abstract class StateMachine
 {
-    /**
-     * States and transitions should be set on the specific state Machine.
-     *
-     * @var array
-     */
-    protected $states = [];
+    /** States and transitions should be set on the specific state Machine. */
+    protected array $states = [];
 
-    /**
-     * Transitions from one state to other(s)
-     *
-     * @var array
-     */
-    protected $transitions = [];
+    /** Transitions from one state to other(s) */
+    protected array $transitions = [];
 
-    /** @var StatefulContract */
-    protected $statefulContract;
-
-    /** @var string */
-    private $stateKey;
+    protected StatefulContract $statefulContract;
+    private string $stateKey;
 
     final public function __construct(StatefulContract $statefulContract, string $stateKey)
     {
@@ -39,10 +28,10 @@ abstract class StateMachine
         return in_array($transition, $this->allowedTransitions());
     }
 
-    public function apply($transition)
+    public function apply($transition): void
     {
         if (! $this->can($transition)) {
-            throw StateException::invalidTransition($transition, $this->statefulContract->stateOf($this->stateKey), $this);
+            throw StateException::invalidTransition($transition, $this->statefulContract->stateOf($this->stateKey), get_class($this));
         }
 
         $state = $this->transitions[$transition]['to'];
@@ -58,13 +47,15 @@ abstract class StateMachine
      * @param $state
      *
      * @throws StateException
+     *
+     * @return void
      */
-    public static function assertNewState(StatefulContract $statefulContract, string $stateKey, $state)
+    public static function assertNewState(StatefulContract $statefulContract, string $stateKey, $state): void
     {
         $machine = new static($statefulContract, $stateKey);
 
         if (! $machine->canTransitionTo($state)) {
-            throw StateException::invalidState($state, $statefulContract->stateOf($stateKey), $machine);
+            throw StateException::invalidState($state, $statefulContract->stateOf($stateKey), get_class($machine));
         }
     }
 
@@ -107,21 +98,21 @@ abstract class StateMachine
         return $transitions;
     }
 
-    private function validateTransitions()
+    private function validateTransitions(): void
     {
         foreach ($this->transitions as $transitionKey => $transition) {
             if (! array_key_exists('from', $transition) || ! array_key_exists('to', $transition) || ! is_array($transition['from'])) {
-                throw StateException::malformedTransition($transitionKey, $this);
+                throw StateException::malformedTransition($transitionKey, get_class($this));
             }
 
             foreach ($transition['from'] as $fromState) {
                 if (! in_array($fromState, $this->states)) {
-                    throw StateException::invalidTransitionState($transitionKey, $fromState, $this);
+                    throw StateException::invalidTransitionState($transitionKey, $fromState, get_class($this));
                 }
             }
 
             if (! in_array($transition['to'], $this->states)) {
-                throw StateException::invalidTransitionState($transitionKey, $transition['to'], $this);
+                throw StateException::invalidTransitionState($transitionKey, $transition['to'], get_class($this));
             }
         }
     }

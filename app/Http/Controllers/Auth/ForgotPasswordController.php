@@ -31,6 +31,9 @@ class ForgotPasswordController extends Controller
         $this->middleware('chief-guest');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showLinkRequestForm()
     {
         return view('chief::auth.passwords.email');

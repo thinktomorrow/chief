@@ -39,12 +39,12 @@ class NullMenu
         return new ChiefMenu(new NodeCollection());
     }
 
-    public function items()
+    public function items(): NodeCollection
     {
         return $this->menu()->items();
     }
 
-    public function render()
+    public function render(): string
     {
         return '';
     }

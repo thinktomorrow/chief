@@ -54,25 +54,20 @@ abstract class AbstractField
     /** @var null|mixed */
     protected $model = null;
 
-    /** @var string */
-    protected $view;
+    protected string $view;
+    protected array $viewData = [];
+    protected array $locales = [];
+    protected ValidationParameters $validation;
 
-    /** @var array */
-    protected $viewData = [];
-
-    /** @var array */
-    protected $locales = [];
-
-    /** @var null|Validator|array|\Closure */
-    protected $validation;
-
-    protected $localizedFormat = 'trans.:locale.:name';
+    protected string $localizedFormat = 'trans.:locale.:name';
 
     final public function __construct(FieldType $type, string $key)
     {
         $this->type = $type;
         $this->key = $this->column = $this->name = $key;
         $this->label = str_replace('_', ' ', $key);
+
+        $this->validation([]);
 
         $this->valueResolver($this->defaultEloquentValueResolver());
     }
@@ -92,6 +87,9 @@ abstract class AbstractField
         return $this->key;
     }
 
+    /**
+     * @return Field
+     */
     public function name(string $name): Field
     {
         $this->name = $name;
@@ -132,7 +130,10 @@ abstract class AbstractField
         return $this->localizedFormat;
     }
 
-    public function localizedFormat(string $format)
+    /**
+     * @return Field
+     */
+    public function localizedFormat(string $format): Field
     {
         $this->localizedFormat = $format;
 
@@ -145,6 +146,9 @@ abstract class AbstractField
             ->localizedFormat($this->getLocalizedNameFormat());
     }
 
+    /**
+     * @return Field
+     */
     public function column(string $column): Field
     {
         $this->column = $column;
@@ -157,6 +161,9 @@ abstract class AbstractField
         return $this->column;
     }
 
+    /**
+     * @return Field
+     */
     public function label(string $label): Field
     {
         $this->label = $label;
@@ -169,6 +176,9 @@ abstract class AbstractField
         return $this->label;
     }
 
+    /**
+     * @return Field
+     */
     public function description(string $description): Field
     {
         $this->description = $description;
@@ -181,6 +191,9 @@ abstract class AbstractField
         return $this->description;
     }
 
+    /**
+     * @return Field
+     */
     public function prepend($prepend): Field
     {
         $this->prepend = $prepend;
@@ -193,6 +206,9 @@ abstract class AbstractField
         return $this->extractLocalizedItem($this->prepend, $locale);
     }
 
+    /**
+     * @return Field
+     */
     public function append($append): Field
     {
         $this->append = $append;
@@ -205,6 +221,9 @@ abstract class AbstractField
         return $this->extractLocalizedItem($this->append, $locale);
     }
 
+    /**
+     * @return Field
+     */
     public function placeholder($placeholder): Field
     {
         $this->placeholder = $placeholder;
@@ -222,6 +241,7 @@ abstract class AbstractField
      * the model record does not have a value provided, use the default() method instead.
      *
      * @param $value
+     *
      * @return Field
      */
     public function value($value): Field
@@ -235,6 +255,7 @@ abstract class AbstractField
      * A default value in case the model does not provide the value itself.
      *
      * @param $default
+     *
      * @return Field
      */
     public function default($default): Field
@@ -249,6 +270,9 @@ abstract class AbstractField
         return call_user_func_array($this->valueResolver, [$this->getModel(), $locale, $this]);
     }
 
+    /**
+     * @return Field
+     */
     public function valueResolver(\Closure $fn): Field
     {
         $this->valueResolver = $fn;
@@ -286,6 +310,9 @@ abstract class AbstractField
         };
     }
 
+    /**
+     * @return Field
+     */
     public function validation($rules, array $messages = [], array $attributes = []): Field
     {
         $this->validation = new ValidationParameters($rules, $messages, $attributes ?: [$this->getLabel()]);
@@ -293,6 +320,9 @@ abstract class AbstractField
         return $this;
     }
 
+    /**
+     * @return ValidationParameters
+     */
     public function getValidationParameters(): ValidationParameters
     {
         return $this->validation;
@@ -300,7 +330,7 @@ abstract class AbstractField
 
     public function hasValidation(): bool
     {
-        return isset($this->validation);
+        return isset($this->validation) && !$this->validation->isEmpty();
     }
 
     public function required(): bool
@@ -352,6 +382,9 @@ abstract class AbstractField
         return $this->isLocalized();
     }
 
+    /**
+     * @return Field
+     */
     public function locales(array $locales = null): Field
     {
         $this->locales = null === $locales ? config('chief.locales', []) : $locales;
@@ -369,6 +402,9 @@ abstract class AbstractField
         return count($this->locales) > 0;
     }
 
+    /**
+     * @param array|null|string $items
+     */
     protected function extractLocalizedItem($items, ?string $locale = null): ?string
     {
         if (! is_array($items)) {
@@ -387,6 +423,9 @@ abstract class AbstractField
         return view($this->getView(), array_merge($viewData, $this->getViewData()))->render();
     }
 
+    /**
+     * @return Field
+     */
     public function model($model): Field
     {
         $this->model = $model;
@@ -403,7 +442,8 @@ abstract class AbstractField
      * The view path to the full formgroup for this field.
      *
      * @param string $view
-     * @return $this|mixed|null|string
+     *
+     * @return Field
      */
     public function view(string $view): Field
     {
@@ -414,7 +454,7 @@ abstract class AbstractField
 
     protected function getView(): string
     {
-        if ($this->view) {
+        if (isset($this->view)) {
             return $this->view;
         }
 
@@ -423,6 +463,9 @@ abstract class AbstractField
             : 'chief::back._fields.' . $this->type->get();
     }
 
+    /**
+     * @return Field
+     */
     public function viewData(array $viewData = []): Field
     {
         $this->viewData = array_merge($this->viewData, $viewData);

@@ -59,6 +59,9 @@ trait ManagerDefaults
         return route('chief.' . $this->managedModelClass()::managedModelKey() . '.' . $action, $parameters);
     }
 
+    /**
+     * @return void
+     */
     private function guard(string $action, $model = null)
     {
         if (! $this->can($action, $model)) {

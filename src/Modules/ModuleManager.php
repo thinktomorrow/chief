@@ -100,23 +100,8 @@ abstract class ModuleManager implements Manager
      * 1. Make sure to setup the proper migrations and
      * 2. For a translatable field you should add this field to the $translatedAttributes property of the model as well.
      *
-     * @return Fields
+     * @return void
      */
-//    public function fields(): Fields
-//    {
-//        return new Fields([
-//            InputField::make('slug')
-//                ->label('Interne benaming')
-//                ->validation('required', ['slug' => 'Interne titel is verplicht']),
-//            InputField::make('title')
-//                ->translatable($this->model->availableLocales())
-//                ->label('titel'),
-//            HtmlField::make('content')
-//                ->translatable($this->model->availableLocales())
-//                ->label('inhoud'),
-//        ]);
-//    }
-
     public function saveCreateFields(Request $request): void
     {
         // Store the morph_key upon creation
@@ -127,7 +112,7 @@ abstract class ModuleManager implements Manager
         parent::saveCreateFields($request);
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->guard('delete');
 

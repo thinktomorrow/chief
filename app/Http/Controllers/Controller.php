@@ -16,7 +16,7 @@ class Controller extends BaseController
     use DispatchesJobs;
     use ValidatesRequests;
 
-    protected function lengthAwarePaginator(Collection $collection, $itemsPerPage, $pageName)
+    protected function lengthAwarePaginator(Collection $collection, $itemsPerPage, $pageName): LengthAwarePaginator
     {
         $paginator = new LengthAwarePaginator(
             $collection->forPage(Paginator::resolveCurrentPage($pageName), $itemsPerPage),

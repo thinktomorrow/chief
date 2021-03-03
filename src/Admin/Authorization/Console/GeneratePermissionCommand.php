@@ -17,7 +17,7 @@ class GeneratePermissionCommand extends Command
 
     protected $description = 'Generate default permissions';
 
-    public function handle()
+    public function handle(): void
     {
         $scope = $this->getNameArgument();
         $permissions = (false === strpos($scope, '-')) ? Permission::generate($scope) : [$scope];
@@ -26,7 +26,7 @@ class GeneratePermissionCommand extends Command
         $this->assignPermissionsToRoles($permissions);
     }
 
-    private function getNameArgument()
+    private function getNameArgument(): string
     {
         return Str::slug(
             strtolower(Str::singular($this->argument('name')))
@@ -36,8 +36,10 @@ class GeneratePermissionCommand extends Command
 
     /**
      * @param $permissions
+     *
+     * @return void
      */
-    private function createPermissions($permissions)
+    private function createPermissions(array $permissions): void
     {
         foreach ($permissions as $permission) {
             Permission::findOrCreate($permission, 'chief');
@@ -48,8 +50,10 @@ class GeneratePermissionCommand extends Command
 
     /**
      * @param $permissions
+     *
+     * @return void
      */
-    private function assignPermissionsToRoles($permissions)
+    private function assignPermissionsToRoles(array $permissions)
     {
         if (! $this->option('role')) {
             return;

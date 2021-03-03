@@ -6,11 +6,14 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsRange
 {
-    protected $steps = 1;
-    protected $max = 100;
-    protected $min = 0;
+    protected int $steps = 1;
+    protected int $max = 100;
+    protected int $min = 0;
 
-    public function steps(int $steps = 1)
+    /**
+     * @return RangeField
+     */
+    public function steps(int $steps = 1): self
     {
         $this->steps = $steps;
 
@@ -22,7 +25,10 @@ trait AllowsRange
         return $this->steps;
     }
 
-    public function max(int $max)
+    /**
+     * @return RangeField
+     */
+    public function max(int $max): self
     {
         $this->max = $max;
 
@@ -34,7 +40,10 @@ trait AllowsRange
         return $this->max;
     }
 
-    public function min(int $min)
+    /**
+     * @return RangeField
+     */
+    public function min(int $min): self
     {
         $this->min = $min;
 

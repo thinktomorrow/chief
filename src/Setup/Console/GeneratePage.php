@@ -45,7 +45,7 @@ class GeneratePage extends BaseCommand
         $this->files['routes'] = $this->settings['routes_file'] ?? $this->dirs['base'] . '/routes/web.php';
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->singular = $this->argument('name');
         $this->plural = Str::plural($this->singular);
@@ -61,7 +61,7 @@ class GeneratePage extends BaseCommand
         // TODO: add mapping to config: "public static \$collection = '".strtolower($this->plural)."';",
     }
 
-    private function publishModel()
+    private function publishModel(): void
     {
         $this->publishFile(
             __DIR__ . '/stubs/model.php.stub',
@@ -72,7 +72,7 @@ class GeneratePage extends BaseCommand
         $this->addToConfig('collections', [$this->plural => $this->guessNamespace() . '\\' . ucfirst($this->singular)]);
     }
 
-    private function publishController()
+    private function publishController(): void
     {
         $this->publishFile(
             __DIR__ . '/stubs/controller.php.stub',
@@ -103,6 +103,9 @@ class GeneratePage extends BaseCommand
         }
     }
 
+    /**
+     * @return void
+     */
     protected function chooseTrait(string $trait)
     {
         if (in_array($trait, $this->chosenTraits)) {
@@ -112,7 +115,12 @@ class GeneratePage extends BaseCommand
         $this->chosenTraits[] = $trait;
     }
 
-    private function modelTraits()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: string, 1: string, q: string}
+     */
+    private function modelTraits(): array
     {
         return [
             '\\' . Publishable::class,
@@ -128,7 +136,7 @@ class GeneratePage extends BaseCommand
      * @param string $to
      * @return void
      */
-    protected function publishFile($from, $to, $type)
+    protected function publishFile($from, $to, string $type)
     {
         if ($this->filesystem->exists($to) && ! $this->option('force')) {
             if (! $this->confirm('File [' . $to . '] already exists? Overwrite this file?')) {
@@ -173,7 +181,7 @@ class GeneratePage extends BaseCommand
         $this->line('<info>Copied ' . $type . '</info> <comment>[' . $from . ']</comment> <info>To</info> <comment>[' . $to . ']</comment>');
     }
 
-    protected function replacePlaceholders($content)
+    protected function replacePlaceholders($content): string
     {
         $replacements = [
             '##NAMESPACE##' => $this->guessNamespace(),
@@ -220,7 +228,7 @@ class GeneratePage extends BaseCommand
         return str_replace('\\\\', '\\', ucfirst(config('chief.domain.namespace', 'App')) . '\\' . ucfirst($this->plural));
     }
 
-    private function addToConfig($configKey, $value)
+    private function addToConfig(string $configKey, array $value): void
     {
         $current_values = config('chief.' . $configKey);
 
@@ -231,7 +239,7 @@ class GeneratePage extends BaseCommand
         $this->changeValueInArrayFile(config_path('thinktomorrow/chief.php'), $configKey, $value);
     }
 
-    private function changeValueInArrayFile($file, $key, $value)
+    private function changeValueInArrayFile(string $file, $key, $value): void
     {
         $content = file_get_contents($file);
 

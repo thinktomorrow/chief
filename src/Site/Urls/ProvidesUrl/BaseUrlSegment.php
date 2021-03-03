@@ -33,6 +33,8 @@ class BaseUrlSegment
      * @param ProvidesUrl $model
      * @param string $slug
      * @param $locale
+     * @param (int|string) $locale
+     *
      * @return string
      */
     public static function prepend(ProvidesUrl $model, string $slug, $locale): string
@@ -45,7 +47,7 @@ class BaseUrlSegment
         return $slugWithBaseSegment ?: '/';
     }
 
-    public static function strip($value)
+    public static function strip($value): string
     {
         $originalValue = $value = trim($value, '/');
 

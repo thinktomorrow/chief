@@ -9,6 +9,9 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $this->authorize('view-role');
@@ -18,6 +21,9 @@ class RoleController extends Controller
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         $this->authorize('create-role');
@@ -45,6 +51,9 @@ class RoleController extends Controller
                          ->with('messages.success', 'Rol ' . $role->name . ' is toegevoegd.');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit($id)
     {
         $this->authorize('update-role');

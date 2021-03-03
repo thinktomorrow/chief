@@ -7,7 +7,7 @@ use Thinktomorrow\Chief\Admin\Users\User;
 
 abstract class BaseCommand extends Command
 {
-    protected function createUser(string $firstname, string $lastname, string $email, string $password, $roles = [])
+    protected function createUser(string $firstname, string $lastname, string $email, string $password, $roles = []): void
     {
         $user = new User();
         $user->firstname = $firstname;

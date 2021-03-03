@@ -20,7 +20,7 @@ abstract class AbstractMediaFieldRule
         return $this->normalizePayload($value, false);
     }
 
-    protected function normalizePayload(array $values, $excludeExistingMedia = true): array
+    protected function normalizePayload(array $values, bool $excludeExistingMedia = true): array
     {
 //        if($excludeExistingMedia) {
 //            foreach($values as $key => $value) {
@@ -41,9 +41,11 @@ abstract class AbstractMediaFieldRule
      *
      * @param $attribute
      * @param $value
+     * @param numeric $value
+     *
      * @return bool|false|float|int
      */
-    protected function getSize($attribute, $value)
+    protected function getSize(string $attribute, $value)
     {
         if ($value instanceof File) {
             return $value->getSize() / 1024;

@@ -24,7 +24,7 @@ class Permission extends BasePermission
         return parent::create($attributes);
     }
 
-    public static function generate($scope): array
+    public static function generate(string $scope): array
     {
         $abilities = ['view', 'create', 'update', 'delete'];
 

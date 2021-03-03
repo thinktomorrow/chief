@@ -40,17 +40,17 @@ class Invitation extends Model implements StatefulContract
         return self::where('token', $token)->first();
     }
 
-    public function invitee()
+    public function invitee(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'invitee_id');
     }
 
-    public function inviter()
+    public function inviter(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'inviter_id');
     }
 
-    public function acceptUrl()
+    public function acceptUrl(): string
     {
         return URL::temporarySignedRoute(
             'invite.accept',
@@ -59,7 +59,7 @@ class Invitation extends Model implements StatefulContract
         );
     }
 
-    public function denyUrl()
+    public function denyUrl(): string
     {
         return URL::temporarySignedRoute(
             'invite.deny',
@@ -68,18 +68,21 @@ class Invitation extends Model implements StatefulContract
         );
     }
 
-    public function stateOf($key): string
+    public function stateOf(string $key): string
     {
         return $this->$key;
     }
 
+    /**
+     * @return void
+     */
     public function changeStateOf($key, $state)
     {
         $this->$key = $state;
         $this->save();
     }
 
-    public function present()
+    public function present(): InvitationPresenter
     {
         return new InvitationPresenter($this);
     }

@@ -14,7 +14,8 @@ class BuildMenuItemsTree
      * Full array of original data rows
      * These are the rows to be converted to the tree model
      *
-     * @param array $items
+     * @param Collection $items
+     *
      * @return NodeCollection
      */
     public function build(Collection $items): NodeCollection

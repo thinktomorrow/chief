@@ -97,7 +97,7 @@ class SitemapXml
             });
     }
 
-    private function rejectNonVisitableUrls()
+    private function rejectNonVisitableUrls(): void
     {
         $pool = new Pool($this->httpClient, $this->crawlableUrlGenerator(), [
             'concurrency' => 5,

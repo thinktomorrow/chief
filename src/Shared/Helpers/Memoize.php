@@ -30,12 +30,17 @@ class Memoize
         return static::$cache[$cachekey] = call_user_func_array($closure, $parameters);
     }
 
-    public static function clear()
+    public static function clear(): void
     {
         static::$cache = [];
     }
 
-    private function convertToCachableParameters(array $parameters)
+    /**
+     * @return (mixed|string)[]
+     *
+     * @psalm-return array<array-key, mixed|string>
+     */
+    private function convertToCachableParameters(array $parameters): array
     {
         foreach ($parameters as $key => $value) {
             if ($value instanceof Model) {

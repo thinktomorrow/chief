@@ -15,7 +15,10 @@ class PreviewMode
         $this->active = $active;
     }
 
-    public static function fromRequest()
+    /**
+     * @return static
+     */
+    public static function fromRequest(): self
     {
         if (! config('chief.preview-mode') || Str::startsWith(request()->path(), 'admin/')) {
             return new static(false);
@@ -26,7 +29,7 @@ class PreviewMode
         return new static($active);
     }
 
-    public static function toggle()
+    public static function toggle(): void
     {
         session()->put('preview-mode', ! session()->get('preview-mode', static::default()));
     }

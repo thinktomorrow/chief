@@ -6,12 +6,12 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateMachine;
 
 class OnlineStateMachineStub extends StateMachine
 {
-    protected $states = [
+    protected array $states = [
         true, // online
         false, // offline
     ];
 
-    protected $transitions = [
+    protected array $transitions = [
         'publish' => [
             'from' => [false],
             'to' => true,

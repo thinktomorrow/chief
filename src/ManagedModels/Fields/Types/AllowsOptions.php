@@ -6,13 +6,15 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 trait AllowsOptions
 {
-    /** @var array */
-    protected $options = [];
+    protected array $options = [];
 
     /** @var mixed */
     protected $selected;
 
-    public function options(array $options)
+    /**
+     * @return SelectField
+     */
+    public function options(array $options): self
     {
         $this->options = $options;
 
@@ -24,7 +26,10 @@ trait AllowsOptions
         return $this->options;
     }
 
-    public function selected($selected)
+    /**
+     * @return SelectField
+     */
+    public function selected($selected): self
     {
         $this->selected = $selected;
 

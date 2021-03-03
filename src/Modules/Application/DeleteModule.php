@@ -12,7 +12,7 @@ class DeleteModule
 {
     use TranslatableCommand;
 
-    public function handle($id)
+    public function handle($id): void
     {
         try {
             DB::beginTransaction();

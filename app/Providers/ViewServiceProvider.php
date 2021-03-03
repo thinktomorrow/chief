@@ -15,7 +15,7 @@ class ViewServiceProvider extends ServiceProvider
 {
     protected $defer = false;
 
-    public function boot()
+    public function boot(): void
     {
         View::composer([
             'chief::back.managers._modals.archive-modal',

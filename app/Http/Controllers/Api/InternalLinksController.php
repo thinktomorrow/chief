@@ -11,12 +11,9 @@ class InternalLinksController extends Controller
 {
     public function index(Request $request)
     {
-        $locale = app()->getLocale();
-
         // Fetch the links for specific locale
         if ($request->has('locale')) {
-            $locale = $request->input('locale');
-            app()->setLocale($locale);
+            app()->setLocale($request->input('locale'));
         }
 
         $onlineModels = UrlHelper::onlineModels();

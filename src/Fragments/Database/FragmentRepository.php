@@ -21,7 +21,8 @@ final class FragmentRepository
     }
 
     /**
-     * @param FragmentsOwner $owner
+     * @param Model $owner
+     *
      * @return Collection Fragmentable[]
      */
     public function getByOwner(Model $owner): Collection
@@ -51,7 +52,7 @@ final class FragmentRepository
         return $this->fragmentFactory(FragmentModel::findOrFail($id));
     }
 
-    private function prefetchRecords(Collection $fragmentModels)
+    private function prefetchRecords(Collection $fragmentModels): void
     {
         $fragmentModels->mapToGroups(function (FragmentModel $fragmentModel) {
             return [ModelReference::fromString($fragmentModel->model_reference)->className() => ModelReference::fromString($fragmentModel->model_reference)->id()];

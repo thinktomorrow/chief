@@ -8,7 +8,7 @@ use Thinktomorrow\AssetLibrary\HasAsset;
 
 class ImageField extends MediaField implements Field
 {
-    protected $customValidationRules = [
+    protected array $customValidationRules = [
         'required' => 'imagefield_required',
         'mimetypes' => 'imagefield_mimetypes',
         'dimensions' => 'imagefield_dimensions',
@@ -30,6 +30,11 @@ class ImageField extends MediaField implements Field
         return 'images.:name.:locale';
     }
 
+    /**
+     * @return \stdClass[]
+     *
+     * @psalm-return list<\stdClass>
+     */
     public function getMedia(HasAsset $model = null, ?string $locale = null)
     {
         if (! $model) {

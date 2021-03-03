@@ -16,6 +16,9 @@ class InviteController extends Controller
         $this->middleware(['chief-validate-invite'])->except('expired');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function expired()
     {
         return view('chief::back.users.invite-expired');
@@ -37,6 +40,9 @@ class InviteController extends Controller
         return redirect()->route('chief.back.dashboard.getting-started');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function deny(Request $request)
     {
         $invitation = Invitation::findByToken($request->token);

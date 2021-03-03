@@ -37,14 +37,14 @@ class ImageFieldMaxRule extends AbstractMediaFieldRule
      * @param $value
      * @return float|int
      */
-    protected function getSize($attribute, $value)
+    protected function getSize(string $attribute, $value)
     {
         $file = json_decode($value)->output;
 
         return $this->getBase64ImageSize($file->image) / 1024;
     }
 
-    private function getBase64ImageSize($value)
+    private function getBase64ImageSize($value): int
     {
         return strlen(base64_decode($value));
     }

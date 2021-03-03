@@ -28,6 +28,9 @@ trait LinkAssistant
             && ($model && $model instanceof ProvidesUrl));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function linksEdit(Request $request, $id)
     {
         $model = $this->fieldsModel($id);

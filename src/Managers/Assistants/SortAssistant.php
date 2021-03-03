@@ -53,6 +53,9 @@ trait SortAssistant
         ]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function indexForSorting()
     {
         $modelClass = $this->managedModelClass();

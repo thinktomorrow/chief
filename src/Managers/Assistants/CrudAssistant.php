@@ -73,6 +73,9 @@ trait CrudAssistant
         return PageState::make($model)->can($action);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index()
     {
         $modelClass = $this->managedModelClass();
@@ -124,6 +127,9 @@ trait CrudAssistant
         return $filters;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function create()
     {
         $modelClass = $this->managedModelClass();
@@ -154,6 +160,9 @@ trait CrudAssistant
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is toegevoegd');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit(Request $request, $id)
     {
         $model = $this->fieldsModel($id);

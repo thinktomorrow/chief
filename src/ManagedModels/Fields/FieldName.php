@@ -6,21 +6,22 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 class FieldName
 {
-    /** @var string */
-    private $name;
+    private string $name;
 
     /** @var null|string */
     private $localizedFormat;
 
-    /** @var bool */
-    private $withBrackets = false;
+    private bool $withBrackets = false;
 
     final private function __construct(string $name)
     {
         $this->name = $this->replaceBracketsByDots($name);
     }
 
-    public static function fromString(string $name)
+    /**
+     * @return static
+     */
+    public static function fromString(string $name): self
     {
         return new static($name);
     }
@@ -56,7 +57,7 @@ class FieldName
         return $this;
     }
 
-    private function getLocalized(string $name, string $locale)
+    private function getLocalized(string $name, string $locale): string
     {
         if (isset($this->localizedFormat)) {
             $name = str_replace(':name', $name, $this->localizedFormat);

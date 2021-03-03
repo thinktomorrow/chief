@@ -13,6 +13,9 @@ class LoginController extends Controller
         $this->middleware('chief-guest', ['except' => 'logout']);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function showLoginForm()
     {
         return view('chief::auth.login');
@@ -37,8 +40,9 @@ class LoginController extends Controller
     /**
      * Log the admin out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request  $request
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function logout(Request $request)
     {

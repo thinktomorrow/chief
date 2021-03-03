@@ -8,7 +8,7 @@ use Thinktomorrow\Chief\Admin\Users\User;
 
 class DisableUser
 {
-    public function handle(User $user)
+    public function handle(User $user): void
     {
         $user->disable();
     }

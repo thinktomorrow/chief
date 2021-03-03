@@ -28,7 +28,7 @@ class InvitationState extends StateMachine
     const DENIED = 'denied';
     const REVOKED = 'revoked';
 
-    protected $states = [
+    protected array $states = [
         self::NONE,
         self::PENDING,
         self::EXPIRED,
@@ -37,7 +37,7 @@ class InvitationState extends StateMachine
         self::DENIED,
     ];
 
-    protected $transitions = [
+    protected array $transitions = [
         'invite' => [
             'from' => [self::NONE, self::EXPIRED, self::REVOKED],
             'to' => self::PENDING,
@@ -60,7 +60,10 @@ class InvitationState extends StateMachine
         ],
     ];
 
-    public static function make(StatefulContract $model)
+    /**
+     * @return static
+     */
+    public static function make(StatefulContract $model): self
     {
         return new static($model, static::KEY);
     }

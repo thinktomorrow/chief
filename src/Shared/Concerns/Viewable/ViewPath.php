@@ -25,7 +25,10 @@ class ViewPath
         $this->viewBasePath = $viewBasePath;
     }
 
-    public static function make(ViewableContract $viewable, ActsAsParent $parent = null, string $viewBasePath = null)
+    /**
+     * @return static
+     */
+    public static function make(ViewableContract $viewable, ActsAsParent $parent = null, string $viewBasePath = null): self
     {
         return new static($viewable, $parent, $viewBasePath);
     }

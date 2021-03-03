@@ -24,7 +24,7 @@ class DeleteModel
         $this->detachAsset = $detachAsset;
     }
 
-    public function handle(ManagedModel $model)
+    public function handle(ManagedModel $model): void
     {
         try {
             DB::beginTransaction();

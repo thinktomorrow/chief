@@ -9,6 +9,9 @@ use Thinktomorrow\Chief\App\Http\Controllers\Controller;
 
 class ChangePasswordController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function edit()
     {
         $user = auth()->guard('chief')->user();

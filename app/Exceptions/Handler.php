@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
         return (Str::startsWith(request()->path(), 'admin/') && ! $exception instanceof AuthenticationException && ! $exception instanceof ValidationException);
     }
 
-    protected function renderChiefException($request, Throwable $exception)
+    protected function renderChiefException(\Illuminate\Http\Request $request, Throwable $exception)
     {
         if (! config('app.debug')) {
             if ($request->expectsJson()) {
@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
     }
 
 
-    protected function unauthorized($request, AuthorizationException $exception)
+    protected function unauthorized(\Illuminate\Http\Request $request, AuthorizationException $exception)
     {
         return redirect()->route('chief.back.dashboard')
                          ->with('messages.error', 'Oeps. Het lijkt erop dat je geen toegang hebt tot dit deel van chief. Vraag even de beheerder voor meer info.');

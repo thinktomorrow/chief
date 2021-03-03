@@ -12,7 +12,7 @@ final class RenderFragments
 {
     use ManagesLoops;
 
-    public function render(Collection $fragmentables, FragmentsOwner $owner, $viewData = []): string
+    public function render(Collection $fragmentables, FragmentsOwner $owner, array $viewData = []): string
     {
         // Validate each entry as a valid fragment object.
         $fragmentables->each(function (Fragmentable $fragmentable) {

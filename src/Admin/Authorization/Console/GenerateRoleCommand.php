@@ -17,7 +17,7 @@ class GenerateRoleCommand extends Command
 
     protected $description = 'Generate a new role';
 
-    public function handle()
+    public function handle(): void
     {
         $roleName = $this->getNameArgument();
 
@@ -26,11 +26,17 @@ class GenerateRoleCommand extends Command
         $this->assignPermissionsToRole($role);
     }
 
-    private function getNameArgument()
+    /**
+     * @return string
+     */
+    private function getNameArgument(): string
     {
         return strtolower(Str::singular($this->argument('name')));
     }
 
+    /**
+     * @return void
+     */
     private function assignPermissionsToRole(Role $role)
     {
         if (! $this->option('permissions')) {

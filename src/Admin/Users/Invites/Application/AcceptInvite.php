@@ -12,6 +12,9 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 
 class AcceptInvite
 {
+    /**
+     * @return void
+     */
     public function handle(Invitation $invitation)
     {
         try {

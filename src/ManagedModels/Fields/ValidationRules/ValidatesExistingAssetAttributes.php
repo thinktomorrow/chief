@@ -27,7 +27,7 @@ trait ValidatesExistingAssetAttributes
         return Asset::where('id', $value)->first();
     }
 
-    protected function validateAssetDimensions(Asset $asset, $parameters)
+    protected function validateAssetDimensions(Asset $asset, $parameters): bool
     {
         $filepath = $asset->media->first()->getPath();
 
@@ -54,13 +54,13 @@ trait ValidatesExistingAssetAttributes
         return true;
     }
 
-    protected function validateAssetMimetypes(Asset $asset, $parameters)
+    protected function validateAssetMimetypes(Asset $asset, $parameters): bool
     {
         return (in_array($asset->getMimeType(), $parameters) ||
             in_array(explode('/', $asset->getMimeType())[0] . '/*', $parameters));
     }
 
-    protected function validateAssetMax(Asset $asset, $parameters)
+    protected function validateAssetMax(Asset $asset, $parameters): bool
     {
         // Asset size in bytes
         $assetSize = $asset->media->first()->size;
@@ -68,7 +68,7 @@ trait ValidatesExistingAssetAttributes
         return ($assetSize / 1024) <= $parameters[0];
     }
 
-    protected function validateAssetMin(Asset $asset, $parameters)
+    protected function validateAssetMin(Asset $asset, $parameters): bool
     {
         // Asset size in bytes
         $assetSize = $asset->media->first()->size;

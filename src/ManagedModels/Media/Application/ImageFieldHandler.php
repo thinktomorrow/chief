@@ -42,6 +42,9 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
         return $this->addAsset->add($model, $base64FileString, $type, $locale, $this->sluggifyFilename($filename));
     }
 
+    /**
+     * @return Asset
+     */
     protected function createNewAsset(HasAsset $model, string $locale, string $type, $value): Asset
     {
         $value = json_decode($value);

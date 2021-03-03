@@ -60,7 +60,7 @@ class Setting extends Model
             ->label(ucfirst(str_replace(['-', '_', '.'], ' ', $this->key)));
     }
 
-    public static function refreshFieldsFromConfig()
+    public static function refreshFieldsFromConfig(): void
     {
         static::$fieldsFromConfig = null;
     }

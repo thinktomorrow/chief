@@ -19,7 +19,7 @@ final class RemovalAction
         $this->deleteAsset = $deleteAsset;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request): bool
     {
         // Strict protection enabled: we won't remove assets who are still being used...
         $assetIds = collect($request->input('asset_ids', []))->reject(function ($assetId) {

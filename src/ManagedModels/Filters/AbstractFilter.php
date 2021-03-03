@@ -76,7 +76,7 @@ abstract class AbstractFilter
         return $this;
     }
 
-    public function value($value): self
+    public function value(array $value): self
     {
         $this->value = $value;
 

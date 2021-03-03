@@ -8,6 +8,9 @@ use Illuminate\Support\Str;
 
 class InvitationToken
 {
+    /**
+     * @return false|string
+     */
     public static function generate()
     {
         return hash_hmac('sha256', Str::random(20), static::hashKey());

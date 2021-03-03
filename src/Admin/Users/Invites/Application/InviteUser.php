@@ -13,6 +13,9 @@ use Thinktomorrow\Chief\ManagedModels\States\State\StateException;
 
 class InviteUser
 {
+    /**
+     * @return void
+     */
     public function handle(User $invitee, User $inviter)
     {
         try {

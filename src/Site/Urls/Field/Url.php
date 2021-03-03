@@ -12,7 +12,7 @@ use Thinktomorrow\Chief\Site\Urls\ValidationRules\UniqueUrlSlugRule;
 
 final class Url
 {
-    public function save(ProvidesUrl $model, array $input)
+    public function save(ProvidesUrl $model, array $input): void
     {
         (new SaveUrlSlugs())->handle($model, data_get($input, 'url-slugs', []));
 

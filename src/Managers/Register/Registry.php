@@ -60,7 +60,7 @@ final class Registry
         })->toArray();
     }
 
-    public function tagged($tag): self
+    public function tagged(string $tag): self
     {
         $tags = $this->tags->tagged($tag);
         $taggedKeys = $tags->getKeys();
@@ -83,14 +83,14 @@ final class Registry
         return $this;
     }
 
-    public function registerManager(string $key, Manager $manager)
+    public function registerManager(string $key, Manager $manager): self
     {
         $this->managers[$key] = $manager;
 
         return $this;
     }
 
-    public function registerTags(string $key, array $tags)
+    public function registerTags(string $key, array $tags): self
     {
         $this->tags->tag($key, $tags);
 

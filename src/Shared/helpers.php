@@ -4,7 +4,7 @@
  * Retrieve the logged in admin
  */
 if (! function_exists('chiefAdmin')) {
-    function chiefAdmin()
+    function chiefAdmin(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
         return \Illuminate\Support\Facades\Auth::guard('chief')->user();
     }
@@ -15,7 +15,7 @@ if (! function_exists('chiefAdmin')) {
  * This allows for browsercache out of the box
  */
 if (! function_exists('chief_cached_asset')) {
-    function chief_cached_asset($filepath)
+    function chief_cached_asset($filepath): string
     {
         $manifestPath = '/chief-assets/back';
 
@@ -57,6 +57,9 @@ if (! function_exists('chiefRegister')) {
 }
 
 if (! function_exists('chiefmenu')) {
+    /**
+     * @return \Thinktomorrow\Chief\Site\Menu\Menu|\Thinktomorrow\Chief\Site\Menu\NullMenu
+     */
     function chiefmenu($key = 'main')
     {
         $menu = \Thinktomorrow\Chief\Site\Menu\Menu::find($key);
@@ -66,7 +69,7 @@ if (! function_exists('chiefmenu')) {
 }
 
 if (! function_exists('str_slug_slashed')) {
-    function str_slug_slashed($title, $separator = '-', $language = 'en')
+    function str_slug_slashed($title, $separator = '-', $language = 'en'): string
     {
         $parts = explode('/', $title);
 
@@ -79,7 +82,7 @@ if (! function_exists('str_slug_slashed')) {
 }
 
 if (! function_exists('is_array_empty')) {
-    function is_array_empty(array $values)
+    function is_array_empty(array $values): bool
     {
         $empty = true;
 
@@ -95,7 +98,7 @@ if (! function_exists('is_array_empty')) {
 }
 
 if (! function_exists('contract')) {
-    function contract($instance, $contract)
+    function contract($instance, $contract): bool
     {
         return $instance instanceof $contract;
     }
@@ -107,7 +110,7 @@ if (! function_exists('contract')) {
  * need an extra assurance that the method has in fact public accessibility.
  */
 if (! function_exists('public_method_exists')) {
-    function public_method_exists($class, $method)
+    function public_method_exists($class, $method): bool
     {
         return (method_exists($class, $method) && is_callable([$class, $method]));
     }
@@ -156,7 +159,7 @@ if (! function_exists('teaser')) {
  * @return    string
  */
 if (! function_exists('cleanupString')) {
-    function cleanupString($value)
+    function cleanupString($value): string
     {
         $value = strip_tags($value);
 
@@ -176,7 +179,7 @@ if (! function_exists('cleanupString')) {
  * @return    string
  */
 if (! function_exists('cleanupHTML')) {
-    function cleanupHTML($value, $whitelist = null)
+    function cleanupHTML($value, $whitelist = null): string
     {
         if (is_null($whitelist)) {
             $whitelist = '<code><span><div><label><a><br><p><b><i><del><strike><u><img><video><audio><iframe><object><embed><param><blockquote><mark><cite><small><ul><ol><li><hr><dl><dt><dd><sup><sub><big><pre><code><figure><figcaption><strong><em><table><tr><td><th><tbody><thead><tfoot><h1><h2><h3><h4><h5><h6>';
@@ -212,7 +215,7 @@ if (! function_exists('cleanupHTML')) {
  * @return bool
  */
 if (! function_exists('isActiveUrl')) {
-    function isActiveUrl($name, $parameters = [])
+    function isActiveUrl($name, $parameters = []): bool
     {
         if (\Illuminate\Support\Facades\Route::currentRouteNamed($name)) {
             $flag = true;
@@ -258,7 +261,7 @@ if (! function_exists('isActiveUrl')) {
  * @return string
  */
 if (! function_exists('addQueryToUrl')) {
-    function addQueryToUrl($url, array $query_params = [], $overrides = [])
+    function addQueryToUrl($url, array $query_params = [], $overrides = []): string
     {
         $parsed_url = parse_url($url);
 

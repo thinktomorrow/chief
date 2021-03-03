@@ -40,7 +40,10 @@ class ValidationNames
         $this->requiredLocale((string)config('app.fallback_locale', 'nl'));
     }
 
-    public static function fromFormat(string $format)
+    /**
+     * @return static
+     */
+    public static function fromFormat(string $format): self
     {
         return new static($format);
     }

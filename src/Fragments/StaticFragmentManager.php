@@ -30,11 +30,14 @@ final class StaticFragmentManager implements Manager
         $fragmentable->fragmentModel()->saveFields($fragmentable->fields()->notTagged('edit'), $request->all(), $request->allFiles());
     }
 
-    private function fragmentModel(Fragmentable $fragmentable)
+    private function fragmentModel(Fragmentable $fragmentable): Database\FragmentModel
     {
         return $fragmentable->fragmentModel();
     }
 
+    /**
+     * @return Fragmentable
+     */
     private function fieldsModel($id)
     {
         return $this->fragmentRepository->find($id);

@@ -22,22 +22,22 @@ class Snippet
         $this->key = $key;
     }
 
-    public function key()
+    public function key(): string
     {
         return $this->key;
     }
 
-    public function placeholder()
+    public function placeholder(): string
     {
         return "[[$this->key]]";
     }
 
-    public function label()
+    public function label(): string
     {
         return $this->label;
     }
 
-    public function path()
+    public function path(): string
     {
         return $this->path;
     }

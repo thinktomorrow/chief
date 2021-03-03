@@ -11,7 +11,7 @@ use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 
 class UrlSlugFields extends Fields
 {
-    final public static function fromModel(ProvidesUrl $model)
+    final public static function fromModel(ProvidesUrl $model): self
     {
         $fields = self::initEmptyFields(config('chief.locales', []), $model);
 
@@ -20,7 +20,10 @@ class UrlSlugFields extends Fields
         return $fields;
     }
 
-    public static function redirectsFromModel(ProvidesUrl $model)
+    /**
+     * @return static
+     */
+    public static function redirectsFromModel(ProvidesUrl $model): self
     {
         $records = MemoizedUrlRecord::getByModel($model)->reject(function ($record) {
             return ! $record->isRedirect();

@@ -37,6 +37,9 @@ class ResetPasswordController extends Controller
         );
     }
 
+    /**
+     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     */
     protected function guard()
     {
         return Auth::guard('chief');
@@ -47,13 +50,16 @@ class ResetPasswordController extends Controller
         return (new ChiefPasswordBrokerResolver(app()))->resolve();
     }
 
-    public function redirectTo()
+    public function redirectTo(): string
     {
         return route('chief.back.dashboard');
     }
 
     // Override the reset method because chief uses different lang keys and
     // laravel internals expects this to be of a specific value.
+    /**
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function reset(Request $request)
     {
         $request->validate($this->rules(), $this->validationErrorMessages());

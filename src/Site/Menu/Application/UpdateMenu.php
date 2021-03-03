@@ -49,7 +49,7 @@ class UpdateMenu
         }
     }
 
-    private function reorderAgainstSiblings(MenuItem $menu)
+    private function reorderAgainstSiblings(MenuItem $menu): void
     {
         $siblings = MenuItem::where('parent_id', $menu->parent_id)->whereNotIn('id', [$menu->id])->get();
 
@@ -72,7 +72,7 @@ class UpdateMenu
         $this->reorder($sequence);
     }
 
-    private function reorder(array $sequence)
+    private function reorder(array $sequence): void
     {
         array_walk($sequence, function ($order, $id) {
             MenuItem::withoutGlobalScope(SoftDeletingScope::class)
