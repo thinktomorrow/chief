@@ -24,7 +24,7 @@ class UpdateMenuItemTest extends ChiefTestCase
         $menuitem = MenuItem::create();
 
         $response = $this->asAdmin()->get(route('chief.back.menuitem.edit', $menuitem->id));
-        $response->assertViewIs('chief::back.menu.edit')
+        $response->assertViewIs('chief::admin.menu.edit')
             ->assertStatus(200);
     }
 

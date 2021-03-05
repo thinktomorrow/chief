@@ -38,7 +38,7 @@ class MenuItemController extends Controller
             ChiefMenu::fromMenuItems($menuitem->menuType())->items()
         );
 
-        return view('chief::back.menu.create', [
+        return view('chief::admin.menu.create', [
             'pages' => UrlHelper::allOnlineModels(),
             'menuitem' => $menuitem,
             'ownerReference' => null,
@@ -73,7 +73,7 @@ class MenuItemController extends Controller
             $menuitem
         );
 
-        return view('chief::back.menu.edit', [
+        return view('chief::admin.menu.edit', [
             'menuitem' => $menuitem,
             'pages' => UrlHelper::allOnlineModels(),
             'ownerReference' => $menuitem->owner ? $menuitem->owner->modelReference()->get() : null,

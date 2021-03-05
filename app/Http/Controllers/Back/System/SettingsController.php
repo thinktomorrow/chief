@@ -28,7 +28,7 @@ class SettingsController extends Controller
     {
         $this->authorize('update-setting');
 
-        return view('chief::back.system.settings', [
+        return view('chief::admin.settings', [
             'manager' => $this->settingFieldsManager,
         ]);
     }

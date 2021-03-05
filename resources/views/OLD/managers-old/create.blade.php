@@ -1,16 +1,12 @@
 @extends('chief::back._layouts.master')
 
-@section('page-title')
-    @adminLabel('page_title')
-@endsection
+@section('page-title',$manager->details()->title)
 
 @component('chief::back._layouts._partials.header')
-    @slot('title')
-        @adminLabel('page_title')
-    @endslot
+    @slot('title', $manager->details()->title)
     @slot('subtitle')
         <div class="inline-block">
-            <a class="center-y" href="@adminRoute('index')">
+            <a class="center-y" href="{{ $manager->route('index') }}">
                 <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
             </a>
         </div>
@@ -25,19 +21,14 @@
 @section('content')
 
     <div>
-        <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
+        <form id="createForm" method="POST" action="{{ $manager->route('store') }}" enctype="multipart/form-data" role="form">
             {{ csrf_field() }}
 
-            @foreach($fields as $field)
-                @formgroup
-                    @slot('label',$field->getLabel())
-                    @slot('description',$field->getDescription())
-                    @slot('isRequired', $field->required())
-                    {!! $field->render(get_defined_vars()) !!}
-                @endformgroup
-            @endforeach
+            @include($manager->createView(), array_merge([
+                'fields' => $manager->createFields(),
+            ], $manager->createViewData()))
 
-            @include('chief::back.managers._create._templatefield')
+            @include('chief::back.managers._partials._templatefield')
 
             <div class="stack text-right">
                 <button type="submit" class="btn btn-primary">Aanmaken</button>

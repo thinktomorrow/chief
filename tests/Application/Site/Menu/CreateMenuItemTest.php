@@ -13,7 +13,7 @@ class CreateMenuItemTest extends ChiefTestCase
     public function admin_can_view_the_create_form()
     {
         $response = $this->asAdmin()->get(route('chief.back.menuitem.create', 'main'));
-        $response->assertViewIs('chief::back.menu.create')
+        $response->assertViewIs('chief::admin.menu.create')
                  ->assertStatus(200);
     }
 

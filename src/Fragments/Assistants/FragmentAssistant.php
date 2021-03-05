@@ -116,7 +116,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        return view('chief::fragments.create', [
+        return view('chief::managers.fragments.create', [
             'manager' => $this,
             'owner' => $owner,
             'model' => $fragmentable,
@@ -230,7 +230,7 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        return view('chief::fragments.edit', [
+        return view('chief::managers.fragments.edit', [
             'manager' => $this,
             'model' => $fragmentable,
             'fields' => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),

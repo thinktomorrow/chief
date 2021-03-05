@@ -459,8 +459,8 @@ abstract class AbstractField
         }
 
         return $this->isLocalized()
-            ? 'chief::back._formgroups.fieldgroup_translatable'
-            : 'chief::back._fields.' . $this->type->get();
+            ? 'chief::managers.fields.formgroup_translatable'
+            : 'chief::managers.fieldtypes.' . $this->type->get();
     }
 
     /**

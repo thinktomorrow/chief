@@ -31,7 +31,7 @@ class Fragments extends Component
      */
     public function render()
     {
-        return view('chief::fragments.component.fragments-nested', [
+        return view('chief::managers.fragments.component.fragments-nested', [
             'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
             'sharedFragments' => $this->sharedFragments,

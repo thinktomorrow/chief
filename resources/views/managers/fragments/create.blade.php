@@ -1,33 +1,18 @@
-@extends('chief::back._layouts.master')
+<form
+    id="createForm"
+    method="POST"
+    action="@adminRoute('fragment-store', $owner)"
+    enctype="multipart/form-data"
+    role="form"
+>
+    {{ csrf_field() }}
 
-@section('page-title')
-    @adminLabel('page_title')
-@endsection
+    <input type="number" name="order" value="0" hidden>
 
-@component('chief::back._layouts._partials.header')
-    @slot('title')
-        @adminLabel('page_title')
-    @endslot
-    @slot('subtitle')
-        <div class="inline-block">
-            <a class="center-y" href="@adminRoute('index')">
-                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-            </a>
-        </div>
-    @endslot
+    <div class="space-y-10">
+        <h3>{{ ucfirst($model->managedModelKey()) }}</h3>
 
-    <div class="inline-group-s">
-        <button data-submit-form="createForm" type="button" class="btn btn-primary">Aanmaken</button>
-    </div>
-
-@endcomponent
-
-@section('content')
-
-    <div>
-        <form id="createForm" method="POST" action="@adminRoute('store')" enctype="multipart/form-data" role="form">
-            {{ csrf_field() }}
-
+        <div data-vue-fields class="space-y-10">
             @foreach($fields as $field)
                 @formgroup
                     @slot('label',$field->getLabel())
@@ -36,22 +21,21 @@
                     {!! $field->render(get_defined_vars()) !!}
                 @endformgroup
             @endforeach
+        </div>
 
-            @include('chief::back.managers._create._templatefield')
-
-            <div class="stack text-right">
-                <button type="submit" class="btn btn-primary">Aanmaken</button>
-            </div>
-
-        </form>
+        <div>
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                Aanmaken
+            </button>
+        </div>
     </div>
-
-@stop
-
+</form>
 
 
 @push('custom-scripts-after-vue')
-
     <script>
         // Display a warning message to tell the user that adding images to redactor is only possible after page creation.
         var editors = document.querySelectorAll('[data-editor]');
@@ -64,7 +48,6 @@
     </script>
 
     @include('chief::back._layouts._partials.editor-script', ['disableImageUpload' => true])
-
 @endpush
 
 @include('chief::components.file-component')
