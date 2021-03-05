@@ -80,7 +80,7 @@ class DenyInviteTest extends ChiefTestCase
     {
         $response = $this->get($this->invitation->denyUrl());
 
-        $response->assertViewIs('chief::back.users.invite-denied');
+        $response->assertViewIs('chief::admin.users.invite-denied');
 
         $this->assertEquals(InvitationState::DENIED, $this->invitation->fresh()->stateOf(InvitationState::KEY));
         $this->assertFalse($this->invitee->fresh()->isEnabled());

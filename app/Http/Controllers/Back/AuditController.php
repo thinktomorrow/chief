@@ -17,7 +17,7 @@ class AuditController extends Controller
 
         $activity = Audit::getActivity();
 
-        return view('chief::back.audit.index', compact('activity'));
+        return view('chief::admin.audit.index', compact('activity'));
     }
 
     /**
@@ -30,6 +30,6 @@ class AuditController extends Controller
         $causer = User::findOrFail($id);
         $activity = Audit::getActivityBy($causer);
 
-        return view('chief::back.audit.show', compact('activity', 'causer'));
+        return view('chief::admin.audit.show', compact('activity', 'causer'));
     }
 }

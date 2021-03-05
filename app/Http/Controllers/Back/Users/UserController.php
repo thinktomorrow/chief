@@ -17,7 +17,7 @@ class UserController extends Controller
 
         $users = User::all();
 
-        return view('chief::back.users.index')->with('users', $users);
+        return view('chief::admin.users.index')->with('users', $users);
     }
 
     /**
@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $this->authorize('create-user');
 
-        return view('chief::back.users.create', [
+        return view('chief::admin.users.create', [
             'user' => new User(),
             'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer')),
         ]);
@@ -71,7 +71,7 @@ class UserController extends Controller
     {
         $this->authorize('update-user');
 
-        return view('chief::back.users.edit', [
+        return view('chief::admin.users.edit', [
             'user' => User::findOrFail($id),
             'roleNames' => Role::rolesForSelect(chiefAdmin()->hasRole('developer')),
         ]);

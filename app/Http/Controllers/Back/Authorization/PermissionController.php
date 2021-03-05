@@ -18,7 +18,7 @@ class PermissionController extends Controller
     {
         $permissions = Permission::all();
 
-        return view('chief::back.permissions.index')->with('permissions', $permissions);
+        return view('chief::admin.permissions.index')->with('permissions', $permissions);
     }
     /**
      * Show the form for creating a new resource.
@@ -29,7 +29,7 @@ class PermissionController extends Controller
     {
         $roles = Role::get();
 
-        return view('chief::back.permissions.create')->with('roles', $roles);
+        return view('chief::admin.permissions.create')->with('roles', $roles);
     }
     /**
      * Store a newly created resource in storage.
@@ -84,7 +84,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
 
-        return view('chief::back.permissions.edit', compact('permission'));
+        return view('chief::admin.permissions.edit', compact('permission'));
     }
     /**
      * Update the specified resource in storage.

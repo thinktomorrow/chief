@@ -83,7 +83,7 @@ class AdminLoginTest extends ChiefTestCase
         $admin = User::factory()->make();
         $response = $this->actingAs($admin, 'chief')->get('/admin');
 
-        $response->assertViewIs('chief::back.dashboard')
+        $response->assertViewIs('chief::admin.dashboard')
             ->assertStatus(200);
         $this->assertInstanceOf(User::class, Auth::guard('chief')->user());
         $this->assertFalse(session()->has('errors'));

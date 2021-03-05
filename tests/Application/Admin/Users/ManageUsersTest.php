@@ -24,7 +24,7 @@ class ManageUsersTest extends ChiefTestCase
     public function full_admin_can_view_the_users_overview()
     {
         $response = $this->asAdmin()->get(route('chief.back.users.index'));
-        $response->assertViewIs('chief::back.users.index')
+        $response->assertViewIs('chief::admin.users.index')
                  ->assertStatus(200);
     }
 

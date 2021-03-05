@@ -72,7 +72,7 @@ class Handler extends ExceptionHandler
                 return response()->json(['error' => 'Something went wrong.'], 404);
             }
 
-            return response()->view('chief::back.errors.custom', [], 500);
+            return response()->view('chief::errors.custom', [], 500);
         }
 
         return parent::render($request, $exception);

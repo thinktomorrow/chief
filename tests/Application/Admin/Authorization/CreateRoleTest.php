@@ -17,7 +17,7 @@ class CreateRoleTest extends ChiefTestCase
         $developer->assignRole('developer');
 
         $response = $this->actingAs($developer, 'chief')->get(route('chief.back.roles.create'));
-        $response->assertViewIs('chief::back.authorization.roles.create')
+        $response->assertViewIs('chief::admin.authorization.roles.create')
                  ->assertStatus(200);
     }
 

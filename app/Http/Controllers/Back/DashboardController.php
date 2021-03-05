@@ -11,7 +11,7 @@ class DashboardController extends Controller
      */
     public function show()
     {
-        return view('chief::back.dashboard');
+        return view('chief::admin.dashboard');
     }
 
     /**
@@ -19,6 +19,6 @@ class DashboardController extends Controller
      */
     public function gettingStarted()
     {
-        return view('chief::back.dashboard');
+        return view('chief::admin.dashboard');
     }
 }

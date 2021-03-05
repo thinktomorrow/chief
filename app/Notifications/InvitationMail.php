@@ -42,7 +42,7 @@ class InvitationMail extends Notification implements ShouldQueue
         return (new MailMessage())
             ->subject('Uitnodiging tot Chief')
             ->from(chiefSetting('contact_email'), chiefSetting('contact_name'))
-            ->view('chief::back.mails.invitation', [
+            ->view('chief::mails.invitation', [
                 'invitee' => $this->invitation->invitee,
                 'inviter' => $this->invitation->inviter,
                 'accept_url' => $this->invitation->acceptUrl(),
