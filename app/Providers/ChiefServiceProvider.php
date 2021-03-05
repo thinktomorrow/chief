@@ -2,11 +2,15 @@
 
 namespace Thinktomorrow\Chief\App\Providers;
 
+use Illuminate\Console\Scheduling\Schedule;
+use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
+use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
+use Thinktomorrow\Chief\Admin\Setup\CreatePageCommand;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
@@ -85,10 +89,10 @@ class ChiefServiceProvider extends ServiceProvider
                 // Project setup tools
                 'command.chief:permission',
                 'command.chief:role',
+
                 'command.chief:admin',
                 'command.chief:developer',
-
-                'command.chief:part',
+                'command.chief:page',
             ]);
 
             // Bind our commands to the container
@@ -96,9 +100,10 @@ class ChiefServiceProvider extends ServiceProvider
             $this->app->bind('command.chief:seed', Seed::class);
             $this->app->bind('command.chief:permission', GeneratePermissionCommand::class);
             $this->app->bind('command.chief:role', GenerateRoleCommand::class);
+
+            $this->app->bind('command.chief:page', CreatePageCommand::class);
             $this->app->bind('command.chief:admin', CreateAdmin::class);
             $this->app->bind('command.chief:developer', CreateDeveloper::class);
-            $this->app->bind('command.chief:part', ChiefPublishCommand::class);
         }
 
         // Custom validator for requiring on translations only the fallback locale
@@ -113,10 +118,10 @@ class ChiefServiceProvider extends ServiceProvider
             return true;
         }, 'Voor :attribute is minstens de default taal verplicht in te vullen, aub.');
 
-//        $this->app->booted(function () {
-//            $schedule = $this->app->make(Schedule::class);
-//            $schedule->command('chief:sitemap')->dailyAt('03:00');
-//        });
+        $this->app->booted(function () {
+            $schedule = $this->app->make(Schedule::class);
+            $schedule->command('chief:sitemap')->dailyAt('03:00');
+        });
 
         Relation::morphMap([
             'fragmentmodel' => FragmentModel::class,
@@ -150,6 +155,15 @@ class ChiefServiceProvider extends ServiceProvider
         $this->app->bind(DuplicateContext::class, function ($app) {
             return new DuplicateContext($app->make(FragmentRepository::class));
         });
+
+        // Setup commands
+        $this->app->bind(CreatePageCommand::class, function ($app) {
+            return new CreatePageCommand(
+                $app->make(FileManipulation::class),
+                new SetupConfig(config('chief.setup', []))
+            );
+        });
+
         (new MacrosServiceProvider($this->app))->register();
         (new AuthServiceProvider($this->app))->register();
         (new EventServiceProvider($this->app))->register();

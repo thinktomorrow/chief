@@ -1,0 +1,65 @@
+<?php
+declare(strict_types=1);
+
+namespace ##NAMESPACE##;
+
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Illuminate\Database\Eloquent\Model;
+use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\AssetLibrary\AssetTrait;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\TextField;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
+use Thinktomorrow\Chief\ManagedModels\Presets\Page;
+use Thinktomorrow\DynamicAttributes\HasDynamicAttributes;
+use Thinktomorrow\Chief\ManagedModels\Assistants\PageDefaults;
+
+class ##CLASSNAME## extends Model implements Page, HasAsset
+{
+    use PageDefaults{
+        adminLabels as defaultAdminLabels;
+    }
+    use HasDynamicAttributes;
+    use AssetTrait;
+
+    public $dynamicKeys = [
+        'title',
+        'seo_title',
+        'seo_content',
+    ];
+
+    public $guarded = [];
+
+    public function allowedFragments(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    private function adminLabels()
+    {
+        return array_merge($this->defaultAdminLabels(), [
+            //
+        ]);
+    }
+
+    public function fields(): Fields
+    {
+        return new Fields([
+            InputField::make('title')->locales(),
+            InputField::make('seo_title')->component('seo'),
+            TextField::make('seo_content')->component('seo'),
+            ##FIELDS##
+        ]);
+    }
+
+    /**
+     * This is an optional method for the DynamicAttributes behavior and allows for
+     * proper localized values to be returned. Here we provide the default in
+     * advance in case the model decides to make use of DynamicAttributes.
+     */
+    public function dynamicLocales(): array
+    {
+        return config('chief.locales');
+    }
+}
