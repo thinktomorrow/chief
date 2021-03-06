@@ -1,14 +1,16 @@
+// Promise polyfill for support of IE9 and below
+import Es6Promise from 'es6-promise';
+
+import Errors from './utilities/Errors';
+import Form from './utilities/Form';
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 require('./vendors');
 require('./utilities/chiefRedactorImageUpload');
-
-import Errors from './utilities/Errors';
-import Form from './utilities/Form';
 
 window.Errors = Errors;
 window.Form = Form;
@@ -28,11 +30,11 @@ window.Vue.component('alert', require('./components-vue/Alert.vue').default);
 window.Vue.component('delete', require('./components-vue/RemoveButton.vue').default);
 window.Vue.component('error', require('./components-vue/Error.vue').default);
 window.Vue.component('mediagallery', require('./components-vue/MediaGallery.vue').default);
-window.Vue.component('image-component', require('./components-vue/ImageComponent').default);
-window.Vue.component('imagesupload', require('./components-vue/ImagesUpload').default);
+window.Vue.component('image-component', require('./components-vue/ImageComponent.vue').default);
+window.Vue.component('imagesupload', require('./components-vue/ImagesUpload.vue').default);
 
-window.Vue.component('url-redirect', require('./components-vue/UrlRedirect').default);
-window.Vue.component('link-input', require('./components-vue/LinkInput').default);
+window.Vue.component('url-redirect', require('./components-vue/UrlRedirect.vue').default);
+window.Vue.component('link-input', require('./components-vue/LinkInput.vue').default);
 
 window.Vue.component('notifications', require('./components-vue/Notifications/Notifications.vue').default);
 window.Vue.component('notification', require('./components-vue/Notifications/Notification.vue').default);
@@ -40,9 +42,4 @@ window.Vue.component('notification', require('./components-vue/Notifications/Not
 // sticky polyfill init
 window.Stickyfill.add(document.querySelectorAll('.sticky'));
 
-// Promise polyfill for support of IE9 and below
-import Es6Promise from 'es6-promise';
-
 Es6Promise.polyfill();
-
-import 'equalizeheight';

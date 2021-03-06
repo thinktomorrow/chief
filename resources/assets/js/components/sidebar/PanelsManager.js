@@ -1,4 +1,4 @@
-import { Api } from './Api';
+import Api from './Api';
 import Panel from './Panel';
 import Panels from './Panels';
 import EventBus from '../../utilities/EventBus';
@@ -51,7 +51,7 @@ export default class {
     }
 
     show(url) {
-        const id = this.panels.createId(url);
+        const id = Panels.createId(url);
 
         // if present in panels, than show the existing panel.
         if (this.panels.find(id)) {
@@ -74,7 +74,7 @@ export default class {
             // only mount Vue on our vue specific fields and not on the form element itself
             // so that the submit event still works. I know this is kinda hacky.
             Array.from(newPanelContainer.querySelectorAll('[data-vue-fields]')).forEach((el) => {
-                new window.Vue({ el: el });
+                new window.Vue({ el }); // eslint-disable-line
             });
 
             // creating a custom event so redactor js can be initiated async
@@ -95,9 +95,7 @@ export default class {
                     }
                 },
                 (error) => {
-                    console.log(error);
-                    console.log('ERROR');
-                    this.showError(error);
+                    console.error(`showing error: ${error}`);
                 }
             );
 
@@ -129,11 +127,6 @@ export default class {
         // TODO: pass here type to switch templates x/terug/...
         this.container.renderCloseButton();
         this.scanForPanelTriggers();
-    }
-
-    showError(message) {
-        // remove current ...
-        console.log('showing error: ' + message);
     }
 
     /**
@@ -169,14 +162,17 @@ export default class {
     replacePanelComponents() {
         Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach((el) => {
             const componentKey = el.getAttribute('data-sidebar-component');
+
             Api.get(this.panels.findActive().url, el, (data) => {
-                let DOM = document.createElement('div');
+                const DOM = document.createElement('div');
+
                 DOM.innerHTML = data;
 
                 this.panels.activePanel.replaceComponent(
-                    '[data-sidebar-component="' + componentKey + '"]',
-                    DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML
+                    `[data-sidebar-component="${componentKey}"]`,
+                    DOM.querySelector(`[data-sidebar-component="${componentKey}"]`).innerHTML
                 );
+
                 this.scanForPanelTriggers();
             });
         });

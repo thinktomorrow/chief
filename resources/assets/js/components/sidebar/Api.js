@@ -1,9 +1,7 @@
-export const Api = {
-    get: function (url, container, successCallback, errorCallback) {
+const Api = {
+    get(url, container, successCallback, errorCallback) {
         fetch(url)
-            .then((response) => {
-                return response.text();
-            })
+            .then((response) => response.text())
             .then((data) => {
                 if (successCallback) successCallback(data);
             })
@@ -13,14 +11,12 @@ export const Api = {
             });
     },
 
-    submit: function (method, url, body, successCallback, errorCallback) {
+    submit(method, url, body, successCallback, errorCallback) {
         fetch(url, {
-            method: method,
-            body: body,
+            method,
+            body,
         })
-            .then((response) => {
-                return response.json();
-            })
+            .then((response) => response.json())
             .then((data) => {
                 if (successCallback) successCallback(data);
             })
@@ -29,9 +25,9 @@ export const Api = {
             });
     },
 
-    listenForFormSubmits: function (container, successCallback, errorCallback) {
+    listenForFormSubmits(container, successCallback, errorCallback) {
+        const self = this;
         const form = container.querySelector('form');
-        let self = this;
 
         if (!form) return;
 
@@ -42,3 +38,5 @@ export const Api = {
         });
     },
 };
+
+export { Api as default };

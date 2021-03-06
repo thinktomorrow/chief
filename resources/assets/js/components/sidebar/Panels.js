@@ -34,7 +34,7 @@ export default class {
         this.activePanel = null;
     }
 
-    createId(url) {
+    static createId(url) {
         return encodeURIComponent(url);
     }
 }
