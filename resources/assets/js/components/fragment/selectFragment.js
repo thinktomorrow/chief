@@ -19,6 +19,7 @@ export default class {
     _init() {
         this._addTriggerElements();
         this._activateTriggerElements();
+        this._onlyShowClosestTriggerElement();
 
         const reloadEvents = ['sortable-stored', 'fragments-reloaded'];
 
@@ -27,14 +28,13 @@ export default class {
                 this._removeTriggerElements();
                 this._addTriggerElements();
                 this._activateTriggerElements();
+                this._onlyShowClosestTriggerElement();
             });
         });
 
         EventBus.subscribe('fragments-new-panel', (panel) => {
             this._passNewFragmentOrderToPanel(panel);
         });
-
-        this._onlyShowClosestTriggerElement();
     }
 
     static _createTriggerElement() {
@@ -49,6 +49,15 @@ export default class {
 
     _addTriggerElements() {
         const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+
+        // make sure to add a trigger when no fragments exist
+        if (fragmentElements.length === 0) {
+            const triggerElement = this.constructor._createTriggerElement();
+
+            this.fragmentsContainer.appendChild(triggerElement);
+
+            return;
+        }
 
         fragmentElements.forEach((element, index) => {
             const triggerElement = this.constructor._createTriggerElement();
@@ -103,12 +112,22 @@ export default class {
     _onlyShowClosestTriggerElement() {
         const fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
 
+        // Always show the triggerSelector when there are no fragmentElements
+        if (fragmentElements.length === 0) {
+            const triggerElement = this.fragmentsContainer.querySelector(this.triggerSelector);
+
+            this.constructor._showTriggerElement(triggerElement);
+
+            return;
+        }
+
         fragmentElements.forEach((element) => {
             element.addEventListener('mouseover', (e) => {
                 const rect = element.getBoundingClientRect();
                 const centerY = rect.top + (rect.bottom - rect.top) / 2;
 
                 this._hideAllTriggerElements();
+
                 if (centerY > e.clientY) {
                     const triggerElement = this.constructor._getPreviousSiblingElement(element, this.triggerSelector);
 

@@ -22,6 +22,7 @@ module.exports = {
         'no-restricted-syntax': 0,
         'no-underscore-dangle': 0,
 
+        'no-new': process.env.NODE_ENV === 'production' ? 1 : 0,
         'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
         'no-alert': process.env.NODE_ENV === 'production' ? 1 : 0,
     },

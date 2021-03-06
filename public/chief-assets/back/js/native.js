@@ -4101,6 +4101,8 @@ var _default = /*#__PURE__*/function () {
 
       this._activateTriggerElements();
 
+      this._onlyShowClosestTriggerElement();
+
       var reloadEvents = ['sortable-stored', 'fragments-reloaded'];
       reloadEvents.forEach(function (event) {
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe(event, function () {
@@ -4109,20 +4111,28 @@ var _default = /*#__PURE__*/function () {
           _this._addTriggerElements();
 
           _this._activateTriggerElements();
+
+          _this._onlyShowClosestTriggerElement();
         });
       });
       _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
         _this._passNewFragmentOrderToPanel(panel);
       });
-
-      this._onlyShowClosestTriggerElement();
     }
   }, {
     key: "_addTriggerElements",
     value: function _addTriggerElements() {
       var _this2 = this;
 
-      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector)); // make sure to add a trigger when no fragments exist
+
+      if (fragmentElements.length === 0) {
+        var triggerElement = this.constructor._createTriggerElement();
+
+        this.fragmentsContainer.appendChild(triggerElement);
+        return;
+      }
+
       fragmentElements.forEach(function (element, index) {
         var triggerElement = _this2.constructor._createTriggerElement();
 
@@ -4182,7 +4192,16 @@ var _default = /*#__PURE__*/function () {
     value: function _onlyShowClosestTriggerElement() {
       var _this5 = this;
 
-      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector)); // Always show the triggerSelector when there are no fragmentElements
+
+      if (fragmentElements.length === 0) {
+        var triggerElement = this.fragmentsContainer.querySelector(this.triggerSelector);
+
+        this.constructor._showTriggerElement(triggerElement);
+
+        return;
+      }
+
       fragmentElements.forEach(function (element) {
         element.addEventListener('mouseover', function (e) {
           var rect = element.getBoundingClientRect();
@@ -4191,17 +4210,17 @@ var _default = /*#__PURE__*/function () {
           _this5._hideAllTriggerElements();
 
           if (centerY > e.clientY) {
-            var triggerElement = _this5.constructor._getPreviousSiblingElement(element, _this5.triggerSelector);
-
-            if (!triggerElement) return;
-
-            _this5.constructor._showTriggerElement(triggerElement);
-          } else {
-            var _triggerElement = _this5.constructor._getNextSiblingElement(element, _this5.triggerSelector);
+            var _triggerElement = _this5.constructor._getPreviousSiblingElement(element, _this5.triggerSelector);
 
             if (!_triggerElement) return;
 
             _this5.constructor._showTriggerElement(_triggerElement);
+          } else {
+            var _triggerElement2 = _this5.constructor._getNextSiblingElement(element, _this5.triggerSelector);
+
+            if (!_triggerElement2) return;
+
+            _this5.constructor._showTriggerElement(_triggerElement2);
           }
         });
       });
