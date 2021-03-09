@@ -11,10 +11,11 @@ import EventBus from '../../utilities/EventBus';
 document.addEventListener('DOMContentLoaded', () => {
     const sidebarContainerEl = document.querySelector('#js-sidebar-container');
     const componentEl = document.querySelector('[data-fragments-component]');
-    const fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]');
 
     // Do not trigger the sidebar script is DOM element isn't present
-    if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
+    if (!sidebarContainerEl || !componentEl) return;
+
+    const fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]');
 
     new SelectFragment(document, fragmentsContainerEl);
     new AddFragment(document);

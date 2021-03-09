@@ -3987,10 +3987,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 document.addEventListener('DOMContentLoaded', function () {
   var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-fragments-component]');
-  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]'); // Do not trigger the sidebar script is DOM element isn't present
+  var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
 
-  if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
+  if (!sidebarContainerEl || !componentEl) return;
+  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]');
   new _selectFragment__WEBPACK_IMPORTED_MODULE_4__["default"](document, fragmentsContainerEl);
   new _addFragment__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
@@ -4340,7 +4340,9 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', function () {
   var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-links-component]');
+  var componentEl = document.querySelector('[data-links-component]'); // Do not trigger the sidebar script is DOM element isn't present
+
+  if (!sidebarContainerEl || !componentEl) return;
   var livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
   var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onSubmitPanel: function onSubmitPanel() {
