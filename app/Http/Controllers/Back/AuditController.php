@@ -16,7 +16,7 @@ class AuditController extends Controller
         $this->authorize('view-audit');
 
         return view('chief::admin.audit.index', [
-            'audit' => Audit::getPaginatedAudit(5),
+            'audit' => Audit::getPaginatedAudit(),
         ]);
     }
 
@@ -28,8 +28,10 @@ class AuditController extends Controller
         $this->authorize('view-audit');
 
         $causer = User::findOrFail($id);
-        $activity = Audit::getActivityBy($causer);
 
-        return view('chief::admin.audit.show', compact('activity', 'causer'));
+        return view('chief::admin.audit.show', [
+            'audit' => Audit::getPaginatedAuditBy($causer),
+            'causer' => $causer,
+        ]);
     }
 }

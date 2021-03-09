@@ -17,29 +17,6 @@ class Audit extends Activity
 {
     public $with = ['causer'];
 
-    public static function activity(string $logName = null): ActivityLogger
-    {
-        $defaultLogName = config('activitylog.default_log_name');
-
-        return app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
-    }
-
-    public static function getAllActivityFor(Model $subject)
-    {
-        return self::allActivityFor($subject)->get();
-    }
-
-    public static function ScopeAllActivityFor(Builder $query, Model $subject): Builder
-    {
-        return $query
-            ->where('subject_type', $subject->getMorphClass());
-    }
-
-    public static function getActivityBy(User $causer)
-    {
-        return self::causedBy($causer)->get()->sortByDesc('created_at');
-    }
-
     public function getReadableSubject()
     {
         return Str::contains($this->subject_type, '\\')
@@ -55,10 +32,31 @@ class Audit extends Activity
         return $this->created_at->format('d/m/Y H:i');
     }
 
+    public static function activity(string $logName = null): ActivityLogger
+    {
+        $defaultLogName = config('activitylog.default_log_name');
 
+        return app(ActivityLogger::class)->useLog($logName ?? $defaultLogName);
+    }
+
+    public static function getAllActivityFor(Model $subject)
+    {
+        return self::allActivityFor($subject)->get();
+    }
+
+    public static function scopeAllActivityFor(Builder $query, Model $subject): Builder
+    {
+        return $query
+            ->where('subject_type', $subject->getMorphClass());
+    }
 
     public static function getPaginatedAudit(int $perPage = 50): Paginator
     {
         return static::orderBy('created_at', 'DESC')->paginate($perPage);
+    }
+
+    public static function getPaginatedAuditBy(User $causer, int $perPage = 50): Paginator
+    {
+        return static::causedBy($causer)->orderBy('created_at', 'DESC')->paginate($perPage);
     }
 }
