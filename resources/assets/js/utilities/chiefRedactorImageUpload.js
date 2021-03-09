@@ -47,17 +47,14 @@ window.chiefRedactorImageUpload = function (uploadUrl) {
                     .then((response) => {
                         // PostsizeTooLarge is returned as 200 instead of 419 to meet the redactor requirements
                         if (typeof response.data === 'string' && response.data.includes('POST Content-Length')) {
-                            reject({
-                                error: true,
-                                message: 'De afbeelding is te groot en is niet opgeladen.',
-                            });
+                            reject(new Error('De afbeelding is te groot en is niet opgeladen.'));
                         }
 
                         resolve(response.data);
                     })
                     .catch((error) => {
                         console.error(error);
-                        reject(error);
+                        reject(new Error(error));
                     });
             });
         })

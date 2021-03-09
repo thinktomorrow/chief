@@ -41457,16 +41457,13 @@ window.chiefRedactorImageUpload = function (uploadUrl) {
         }).then(function (response) {
           // PostsizeTooLarge is returned as 200 instead of 419 to meet the redactor requirements
           if (typeof response.data === 'string' && response.data.includes('POST Content-Length')) {
-            reject({
-              error: true,
-              message: 'De afbeelding is te groot en is niet opgeladen.'
-            });
+            reject(new Error('De afbeelding is te groot en is niet opgeladen.'));
           }
 
           resolve(response.data);
         })["catch"](function (error) {
           console.error(error);
-          reject(error);
+          reject(new Error(error));
         });
       });
     }).then(function (response) {
@@ -41564,9 +41561,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/tijs/Documents/Github/chief/resources/assets/js/main.js */"./resources/assets/js/main.js");
-__webpack_require__(/*! /Users/tijs/Documents/Github/chief/resources/assets/sass/main.scss */"./resources/assets/sass/main.scss");
-module.exports = __webpack_require__(/*! /Users/tijs/Documents/Github/chief/resources/assets/sass/login.scss */"./resources/assets/sass/login.scss");
+__webpack_require__(/*! /Users/bencavens/Code/packages/chief/resources/assets/js/main.js */"./resources/assets/js/main.js");
+__webpack_require__(/*! /Users/bencavens/Code/packages/chief/resources/assets/sass/main.scss */"./resources/assets/sass/main.scss");
+module.exports = __webpack_require__(/*! /Users/bencavens/Code/packages/chief/resources/assets/sass/login.scss */"./resources/assets/sass/login.scss");
 
 
 /***/ })

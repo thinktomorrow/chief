@@ -5130,7 +5130,7 @@ IndexSorting.prototype._init = function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/tijs/Documents/Github/chief/resources/assets/js/native.js */"./resources/assets/js/native.js");
+module.exports = __webpack_require__(/*! /Users/bencavens/Code/packages/chief/resources/assets/js/native.js */"./resources/assets/js/native.js");
 
 
 /***/ })
