@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 window._ = require('lodash');
 
 /**
@@ -34,7 +36,7 @@ window.Stickyfill = require('stickyfilljs');
 // window.tippy = require('tippy.js');
 
 // Vue
-window.Vue = require('vue');
+window.Vue = Vue;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

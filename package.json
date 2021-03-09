@@ -1,13 +1,8 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "prod": "npm run production",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "mix watch --mix-config=webpack.mix.js",
+        "prod": "mix --production --mix-config=webpack.mix.js",
         "test": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --require=tests/Vue/setup.js tests/Vue/**/*.spec.js",
         "watch-test": "mocha-webpack --webpack-config=node_modules/laravel-mix/setup/webpack.config.js --watch --require=tests/Vue/setup.js tests/Vue/**/*.spec.js",
         "format": "prettier 'resources/assets/**/*.{css,js,json,scss,ts,tsx}' '*.{js,css,scss,json}' --write"
@@ -16,6 +11,7 @@
         "@vue/test-utils": "^1.1.2",
         "browser-sync": "^2.26.14",
         "browser-sync-webpack-plugin": "^2.3.0",
+        "core-js": "^3.9.1",
         "eslint": "^7.21.0",
         "eslint-config-airbnb-base": "^14.2.1",
         "eslint-plugin-import": "^2.22.1",
@@ -23,7 +19,9 @@
         "eslint-webpack-plugin": "^2.5.2",
         "expect": "^25.5.0",
         "husky": "^4.3.8",
+        "laravel-mix": "^6.0.13",
         "laravel-mix-eslint": "^0.2.0",
+        "laravel-mix-polyfill": "^3.0.0",
         "lint-staged": "^10.5.4",
         "mocha": "^5.0.4",
         "mocha-webpack": "^1.0.1",
@@ -31,29 +29,28 @@
         "prettier": "2.2.1",
         "sass": "^1.32.5",
         "sass-loader": "^8.0.2",
-        "tailwindcss": "^1.9.6",
-        "vue-server-renderer": "^2.6.12",
-        "vue-template-compiler": "^2.6.12"
+        "shelljs": "^0.8.4"
     },
     "dependencies": {
+        "autoprefixer": "^10.2.5",
         "axios": "^0.21.1",
         "cross-env": "^7.0.3",
         "es6-promise": "^4.2.8",
-        "laravel-mix": "^5.0.9",
         "lodash": "^4.17.20",
         "npmlog": "^4.1.2",
         "popper.js": "^1.16.1",
-        "shelljs": "^0.8.4",
+        "postcss": "^8.2.7",
         "sortablejs": "^1.13.0",
         "stickyfilljs": "^2.1.0",
+        "tailwindcss": "^2.0.3",
         "vue": "^2.6.12",
         "vue-loader": "^15.9.6",
         "vue-multiselect": "^2.1.6",
-        "vuedraggable": "^2.24.3",
-        "warpaint": "^0.0.10"
+        "vue-server-renderer": "^2.6.12",
+        "vue-template-compiler": "^2.6.12"
     },
     "engine": {
-        "node": ">=8.9"
+        "node": ">=12.13.0"
     },
     "husky": {
         "hooks": {

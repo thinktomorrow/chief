@@ -35,4 +35,4 @@ function publish(event, arg) {
     Object.keys(subscriptions[event]).forEach((key) => subscriptions[event][key](arg));
 }
 
-module.exports = { publish, subscribe };
+export default { publish, subscribe };

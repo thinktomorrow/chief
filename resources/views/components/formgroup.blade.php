@@ -6,7 +6,7 @@
             @if(isset($isRequired) && $isRequired)
                 <div class="relative flex items-center text-warning">
                     <div class="relative transform group-hover:scale-0 transition-150"> * </div>
-                    <div class="absolute transform scale-0 group-hover:scale-100 whitespace-no-wrap transition-150 font-medium">Verplicht veld</div>
+                    <div class="absolute transform scale-0 group-hover:scale-100 whitespace-nowrap transition-150 font-medium">Verplicht veld</div>
                 </div>
             @endif
         </h6>

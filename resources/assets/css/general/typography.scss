@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+.font-body,
+.font-heading {
+    font-family: 'Inter', sans-serif;
+    @apply antialiased;
+}
+
+html,
+body,
+p,
+li,
+ol,
+input,
+textarea {
+    font-size: 14px;
+    @apply text-grey-700 font-normal;
+    @extend .font-body;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply leading-tight text-grey-900;
+    @extend .font-heading;
+}
+
+h1 {
+    @apply text-4xl font-extrabold;
+}
+
+h2 {
+    @apply text-3xl font-bold;
+}
+
+h3 {
+    @apply text-2xl font-bold;
+}
+
+h4 {
+    @apply text-xl font-semibold;
+}
+
+h5 {
+    @apply text-lg font-semibold;
+}
+
+h6 {
+    @apply text-base font-semibold;
+}
+
+p {
+    @apply leading-relaxed;
+}
+
+ul,
+ol {
+    @apply break-words pl-0;
+}
+
+ol li {
+    list-style: inherit;
+}

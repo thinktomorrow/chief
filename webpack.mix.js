@@ -1,33 +1,34 @@
 let mix = require('laravel-mix');
+let path = require('path');
 let shell = require('shelljs');
 
+require('laravel-mix-polyfill');
 require('laravel-mix-eslint');
 
-mix.webpackConfig({
-    watchOptions: { ignored: /node_modules/ },
-})
-    .setPublicPath(path.normalize('public/chief-assets/back'))
+mix.setPublicPath(path.normalize('public/chief-assets/back'))
+
     .js('resources/assets/js/main.js', 'public/chief-assets/back/js')
+    .vue({ version: 2 })
     .js('resources/assets/js/native.js', 'public/chief-assets/back/js')
+
     .eslint({
         extensions: ['js'],
     })
-    .sass('resources/assets/sass/main.scss', 'public/chief-assets/back/css')
-    .sass('resources/assets/sass/login.scss', 'public/chief-assets/back/css')
+
+    .sass('resources/assets/css/main.scss', 'public/chief-assets/back/css')
+    .sass('resources/assets/css/login.scss', 'public/chief-assets/back/css')
+
+    .polyfill({
+        enabled: true,
+        targets: 'firefox 50, IE 11',
+    })
 
     .version()
 
-    .copy('resources/assets/fonts', 'public/chief-assets/back/fonts')
-
     .options({
-        postCss: [
-            require('tailwindcss')('./resources/assets/sass/tailwind.js'),
-            require('autoprefixer')({
-                overrideBrowserslist: ['last 40 versions'],
-            }),
-        ],
+        postCss: [require('tailwindcss')('./resources/assets/css/tailwind.config.js'), require('autoprefixer')],
 
-        // Webpack setting to ignore sass loader to follow url() paths
+        // Ignore Sass loader to follow url() paths
         processCssUrls: false,
     })
 

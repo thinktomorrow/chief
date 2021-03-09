@@ -1,0 +1,28 @@
+@responsive {
+    .row {
+        @apply row-start-start;
+    }
+
+    .gutter {
+        @apply gutter-4;
+        & > * {
+            @apply p-4;
+        }
+        @screen md {
+            @apply gutter-8;
+            & > * {
+                @apply p-8;
+            }
+        }
+    }
+
+    .container {
+        @apply container-5/6;
+        @screen md {
+            @apply container-4/5;
+        }
+        @screen xl {
+            @apply container-3/5;
+        }
+    }
+}
