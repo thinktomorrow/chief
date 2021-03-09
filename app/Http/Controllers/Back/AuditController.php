@@ -15,9 +15,9 @@ class AuditController extends Controller
     {
         $this->authorize('view-audit');
 
-        $activity = Audit::getActivity();
-
-        return view('chief::admin.audit.index', compact('activity'));
+        return view('chief::admin.audit.index', [
+            'audit' => Audit::getPaginatedAudit(5),
+        ]);
     }
 
     /**
