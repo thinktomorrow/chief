@@ -32,6 +32,6 @@
     </div>
 @else
     <div>
-        @include('chief::managers.fields.inline-edit')
+        @include('chief::manager.fields.inline-edit')
     </div>
 @endunless

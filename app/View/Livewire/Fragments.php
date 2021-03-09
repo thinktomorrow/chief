@@ -30,7 +30,7 @@ class Fragments extends Component
      */
     public function render()
     {
-        return view('chief::managers.fragments.component.fragments-main', [
+        return view('chief::manager.fragments.component.fragments-main', [
             'fragments' => $this->fragments,
             'allowedFragments' => $this->allowedFragments,
             'sharedFragments' => $this->sharedFragments,

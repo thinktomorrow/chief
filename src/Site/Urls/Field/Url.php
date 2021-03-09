@@ -41,7 +41,7 @@ final class Url
                         'url-slugs.*' => 'taalspecifieke link',
                     ]
                 )
-                ->view('chief::managers.fieldtypes.url-slugs')
+                ->view('chief::manager.fieldtypes.url-slugs')
                 ->viewData([
                     'fields' => UrlSlugFields::fromModel($model),
                     'checkUrl' => $checkUrl,

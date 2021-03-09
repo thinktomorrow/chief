@@ -23,7 +23,7 @@ class Links extends Component
      */
     public function render()
     {
-        return view('chief::components.links', [
+        return view('chief::manager.links.card', [
             'linkForm' => $this->linkForm,
             'manager' => app(Registry::class)->manager($this->model->managedModelKey()),
         ]);

@@ -45,7 +45,7 @@
             </div>
 
             <div class="column-12">
-                {{ $assets->links('chief::managers.pagination') }}
+                {{ $assets->links('chief::manager.pagination') }}
             </div>
         </div>
 

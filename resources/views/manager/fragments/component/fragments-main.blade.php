@@ -14,7 +14,7 @@
         class="relative divide-y divide-grey-150 border-t border-b border-grey-150 -mx-12"
     >
         @foreach($fragments as $fragment)
-            @include('chief::managers.fragments.component._card', [
+            @include('chief::manager.fragments.component._card', [
                 'model' => $fragment['model'],
                 'owner' => $owner,
                 'manager' => $fragment['manager'],
@@ -23,6 +23,6 @@
         @endforeach
     </div>
 
-    @include('chief::managers.fragments.component.fragment-new')
+    @include('chief::manager.fragments.component.fragment-new')
 
 </div>

@@ -29,7 +29,7 @@
 @endif
 
 @if($field->hasCharacterCount())
-    @include('chief::managers.fieldtypes.charactercount')
+    @include('chief::manager.fieldtypes.charactercount')
 @endif
 
 {{--<error class="caption text-warning" field="{{ $field->getDottedName($locale ?? null) }}" :errors="errors.all()"></error>--}}
