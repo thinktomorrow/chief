@@ -53,7 +53,7 @@
         <div class="xs-column-12 s-column-12 m-column-12 l-column-8 p-6">
             <div class="window window-white space-y-12">
                 @adminCan('fields-edit', $model)
-                    <livewire:fields_component :model="$model" />
+                    <livewire:fields_component title="Algemeen" :model="$model" />
                 @endAdminCan
 
                 @adminCan('fragments-index', $model)

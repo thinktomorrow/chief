@@ -10,6 +10,7 @@ class FieldsComponent extends Component
     public $model;
     public string $componentKey;
     public bool $inlineEdit;
+    public $title;
 
     public function mount($model, ?string $componentKey = null, bool $inlineEdit = false): void
     {
@@ -23,7 +24,7 @@ class FieldsComponent extends Component
      */
     public function render()
     {
-        return view('chief::components.fieldscomponent', [
+        return view('chief::manager.cards.fields.fieldsComponent', [
             'fields' => $this->componentKey !== "default"
                 ? $this->model->fields()->model($this->model)->component($this->componentKey)
                 : $this->model->fields()->model($this->model)->notTagged('component'),

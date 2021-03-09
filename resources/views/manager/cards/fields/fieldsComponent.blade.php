@@ -4,7 +4,7 @@
             {!! $model->{'render'.ucfirst($componentKey).'Component'}() !!}
         @else
             @component('chief::components.card', [
-                'title' => ucfirst($componentKey),
+                'title' => $title ?? ucfirst($componentKey),
                 'edit_request_url' => $manager->route('fields-edit', $model, $componentKey),
                 'type' => 'fields-' . $componentKey
             ])

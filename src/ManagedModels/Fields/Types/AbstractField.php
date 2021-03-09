@@ -481,4 +481,11 @@ abstract class AbstractField
             'key' => $this->getKey(),
         ], $this->viewData);
     }
+
+    public function notOnCreate(): Field
+    {
+        $this->tag('not-on-create');
+
+        return $this;
+    }
 }
