@@ -15,7 +15,7 @@ use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
 use Spatie\Permission\PermissionServiceProvider;
-use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
@@ -51,7 +51,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
         // Register the Chief Exception handler
         $this->app->singleton(
             ExceptionHandler::class,
-            Handler::class
+            ChiefExceptionHandler::class
         );
 
         Factory::guessFactoryNamesUsing(
@@ -142,7 +142,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends Handler {
+        $this->app->instance(ExceptionHandler::class, new class extends ChiefExceptionHandler {
             public function __construct()
             {
             }
