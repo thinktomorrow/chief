@@ -35,7 +35,7 @@ trait LinkAssistant
     {
         $model = $this->fieldsModel($id);
 
-        return view('chief::manager.links.edit', [
+        return view('chief::manager.cards.links.edit', [
             'linkForm' => LinkForm::fromModel($model),
             'manager' => app(Registry::class)->manager($model->managedModelKey()),
             'model' => $model,

@@ -34,7 +34,7 @@ trait FieldsComponentAssistant
 
         $this->guard('fields-edit', $model);
 
-        return view('chief::manager.fields.edit', [
+        return view('chief::manager.cards.fields.edit', [
             'manager' => $this,
             'model' => $model,
             'fields' => $componentKey !== "default"
