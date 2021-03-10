@@ -488,4 +488,12 @@ abstract class AbstractField
 
         return $this;
     }
+
+    public function editAsPageTitle(): Field
+    {
+        $this->tag('chief-component');
+        $this->component('chief-page-title');
+
+        return $this;
+    }
 }

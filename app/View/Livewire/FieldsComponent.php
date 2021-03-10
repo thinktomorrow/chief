@@ -11,12 +11,13 @@ class FieldsComponent extends Component
     public string $componentKey;
     public bool $inlineEdit;
     public $title;
+    public $class;
+    public $template;
 
-    public function mount($model, ?string $componentKey = null, bool $inlineEdit = false): void
+    public function mount($model, ?string $componentKey = null): void
     {
         $this->model = $model;
         $this->componentKey = $componentKey ?? 'default';
-        $this->inlineEdit = $inlineEdit;
     }
 
     /**

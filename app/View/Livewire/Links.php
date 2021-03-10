@@ -11,6 +11,7 @@ class Links extends Component
 {
     public ProvidesUrl $model;
     private LinkForm $linkForm;
+    public $class;
 
     public function mount(ProvidesUrl $model): void
     {
