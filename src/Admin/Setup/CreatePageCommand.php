@@ -69,7 +69,7 @@ class CreatePageCommand extends Command
         );
 
         if($createMigrationFile) {
-            $this->call('chief:page-migration', ['table' => Str::snake($className)]);
+            $this->call('chief:page-migration', ['table' => Str::snake(Str::plural($className))]);
         }
 
         // If already exists: don't overwrite unless --force

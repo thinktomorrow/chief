@@ -19,13 +19,26 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
 
 trait TestingWithManagers
 {
-    protected function setupAndCreateArticle(array $values = []): ArticlePage
+    protected function setupAndCreateArticle(array $values = [], bool $withSetup = true): ArticlePage
     {
-        ArticlePage::migrateUp();
-
-        chiefRegister()->model(ArticlePage::class, PageManager::class);
+        if($withSetup) {
+            ArticlePage::migrateUp();
+            chiefRegister()->model(ArticlePage::class, PageManager::class);
+        }
 
         return ArticlePage::create($values);
+    }
+
+    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $withSetup = true): Quote
+    {
+        if ($withSetup) {
+            Quote::migrateUp();
+            chiefRegister()->model(Quote::class, FragmentManager::class);
+        }
+
+        $quote = Quote::create($values);
+
+        return $this->addAsFragment($quote, $owner);
     }
 
     protected function setupAndCreateArticleWithRequiredFile(array $values = []): ArticlePage
@@ -44,18 +57,6 @@ trait TestingWithManagers
         chiefRegister()->model(ArticlePageWithImageValidation::class, PageManager::class);
 
         return ArticlePageWithImageValidation::create($values);
-    }
-
-    protected function setupAndCreateQuote(FragmentsOwner $owner, array $values = [], $withSetup = true): Quote
-    {
-        if ($withSetup) {
-            Quote::migrateUp();
-            chiefRegister()->model(Quote::class, FragmentManager::class);
-        }
-
-        $quote = Quote::create($values);
-
-        return $this->addAsFragment($quote, $owner);
     }
 
     protected function addAsFragment($model, $owner)

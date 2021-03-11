@@ -53,7 +53,7 @@ trait FragmentAssistant
 
         $modelKey = $this->managedModelClass()::managedModelKey();
 
-        // model is owner for create endpoints
+        // model argument is owner for create endpoints
         if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-add'])) {
             if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for '.$action.' requires a FragmentsOwner Model as second argument.');

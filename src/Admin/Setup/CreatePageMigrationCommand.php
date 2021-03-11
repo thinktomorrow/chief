@@ -31,7 +31,7 @@ class CreatePageMigrationCommand extends Command
         $className = 'Create' . Str::studly($tableName) . 'Table';
 
         $this->fileManipulation->writeFile(
-            database_path('migrations/'. date('Y_m_dHis') .'_' . Str::snake($className, '_').'.php'),
+            database_path('migrations/'. date('Y_m_d_His') .'_' . Str::snake($className, '_').'.php'),
             $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModelMigration.php.stub'), [
                 'className' => $className,
                 'tableName' => $tableName,

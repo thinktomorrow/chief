@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Fragments;
+namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
