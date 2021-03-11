@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
@@ -14,7 +13,7 @@ class AddFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function a_fragment_can_be_added()
+    public function an_existing_fragment_can_be_added()
     {
         $owner = $this->setupAndCreateArticle();
         $owner2 = ArticlePage::create();
@@ -23,8 +22,7 @@ class AddFragmentTest extends ChiefTestCase
 
         $this->asAdmin()->post($fragmentManager->route('fragment-add', $owner2, $fragment));
 
-        $fragments = app(FragmentRepository::class)->getByOwner($owner2);
-        $this->assertCount(1, $fragments);
+        $this->assertFragmentCount($owner2, 1);
     }
 
     /** @test */
@@ -39,7 +37,6 @@ class AddFragmentTest extends ChiefTestCase
         $this->asAdmin()->post($fragmentManager->route('fragment-add', $fragmentOwner, $fragment))
             ->assertStatus(201);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($fragmentOwner->fragmentModel());
-        $this->assertCount(1, $fragments);
+        $this->assertFragmentCount($fragmentOwner->fragmentModel(), 1);
     }
 }

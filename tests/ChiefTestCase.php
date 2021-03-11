@@ -2,6 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests;
 
+use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
+use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
 use Astrotomic\Translatable\TranslatableServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -15,6 +17,7 @@ use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
 use Spatie\Permission\PermissionServiceProvider;
+use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
 use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
@@ -28,6 +31,8 @@ abstract class ChiefTestCase extends OrchestraTestCase
 {
     use RefreshDatabase;
     use TestHelpers;
+    use TestingWithManagers;
+    use TestingWithFiles;
 
     protected $protectTestEnvironment = true;
 
