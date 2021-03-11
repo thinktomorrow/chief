@@ -2,26 +2,57 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
-// TODO:
-- perf: not loading the managers + these routes on frontend? / when not logged in as admin?
-- wat met spirit in chief?
+## BUGS
+- locales voor pagina (view: nl - fr ... version of the page in chief)
+- proper duplicate context feature (with buttons and all)
 - duplicateContext -> nu refereert het nog naar de originele fragmentable indien het geen static fragment is. Is het eerder de bedoeling om ook deze achterliggende class te dupliceren?
 - replace modelReferenceLabel and modelReferenceGroup with simple adminLabels? e.g. select.group and select.label. Probably need to make it easy to extend and overwrite the adminlabel defaults
-- remove menu translations table (=> try to remove astrotomic altogether)
 - menu only connects with 'Pages', need to add model_type as well to allow other models
-- add: menu migration for translations to dynamic values (script instead of standard migration) + and remove translations table
 - menu requires menuLabel for an owner... (internal url) try to remove this and set a title on the menu item itself
-- validation op settings page toont: 'validation.required'.
 - squanto page layouts are messed up.
 - squanto: also percentage seems off (when one item of the translations is saved, he thinks the we are at 100%).
-- allow to revoke invitation.
-- proper duplicate context feature (with buttons and all)
-- list of reserved model keys such as 'fragments' (used for fragmentModel)
-- locales voor pagina (view: nl - fr ... version of the page in chief)
+- validation op settings page toont: 'validation.required'.
+- statusAsLabel() and statusAsPlainLabel()
 
+## DECISIONS
+- wat met spirit in chief?
+
+## IMPROVE
+- transport storeRequest and updateRequest: default urls, default short description, default title for page, ...
+- perf: not loading the managers + these routes on frontend? / when not logged in as admin?
+- remove menu translations table (=> try to remove astrotomic altogether)
+- bundle old migrations
+- allow to revoke invitation.
+- list of reserved model keys such as 'fragments' (used for fragmentModel)
 - global search: 
     - ik had ergens een usp banner toegevoegd en zou die graag op een andere pagina ook willen toevoegen
     - komt er op de site ergens het woord 'kakkerlak' voor?
+- audit records after creation and update
+- WithSnippets behavior
+- refactor MenuItem so it accepts interface 'MenuItemable' or so
+- refactor url stuff (esp. UrlHelper) so it always only uses a 'ProvidesUrl' and add to this interface a 'visitableUrl($locale)' or something to indicate this url is visitable on the site or not.
+- memory usage for memoizedUrlRecords is high (lots of model instances)
+- refactor view components so adminLabel is not needed as much (or as little as possible)
+- remove: translatable logic + migrations + TranslatableCommand in concerns.
+- add: thinktomorrow.chief.locales to replace dependency on translatable.locales -> also than we can autofill for 'locales' method on a field
+- filter views on index: possibly as components? <x-filters>
+
+## RELEASE
+- add: menu migration for translations to dynamic values (script instead of standard migration) + and remove translations table
+
+### types of fragments
+// Possible fragmentables are:
+// module: fixed promobar
+// module: cta block
+// couple of pages
+// card modules
+// automatic collection set (with params like amount, max, sorting, ...)
+// snippet (replaces snippet stuff)
+// fixed fragment: hero or footer
+// ineditable block: promobar
+
+
+------------------------------------------------------------------------------
 
 ## UPCOMING 0.6 (REFACTOR RELEASE)
 high impact on manager setup and admin page customisation.
@@ -34,85 +65,11 @@ A manager takes care of the routing and responses. It basically acts as a contro
 - Filters have gotten a complete overhaul. Each filter should now implement a `Filter` interface. Some preset filters are available out of the box.
 - `UrlField` has been removed. Page urls are no longer maintained as a field. Field behavior for the url management was always a bit too forced. Instead all pages will automatically contain the url management in the sidebar of their admin page.
   The links mgmt segment is auto-injected when that page model implements the `ProvidesUrl` interface.
-
+- Removed: Translatable logic based on the `astrotomic/laravel-translatable` package, which required a separate translation table.
+  This will no longer be required in a blank Chief project. For translatable content, the default models now rely on the `Thinktomorrow/DynamicAttribures` package instead.
 ### View related
 - Removed: custom `project-head` and `project-footer` blade files. These served as a placeholder to add custom code to your projects' admin pages. It is however rarely used and now obsolete due to the new way how admin pages are constructed.
 - Removed: unused `ActsAsMenuItem` interface.
-
-### TODO:
-
-#### ABSTRACTMANAGER
-- ✓ findManaged needed?
-- ✓ indexCollection and indexBuilder filters() from CrudAssistant
-- ✓ indexSorting and indexPagination methods should no longer be necessary -> filters() and indexModels() from CrudAssistant
-- ✓ indexView and indexViewData should no longer be necessary -> index method from CrudAssistant
-- ✓ existingModel() or modelInstance() and hasExistingModel() no longer necessary?
-- ✓ route() method has new signature: route(string $action, $model = null, ...$parameters)
-- ✓ does guard() need to be public? => no is now no longer public
-- ✓ fieldsWithAssistantFields() -> no. was primarily for url field but urlfield is now added as other fields.
-- ✓ createFields / editFields => use field tags 'create'
-- ✓ createView / createViewData => now an create method from CrudAssistant
-- ✓ editView / editViewData => now an create method from CrudAssistant
-
-#### PAGEMANAGER:
-- pagebuilder
-- ✓ pagemanager::authorize() -> check if behavior is there
-- ✓ delete a page (+ confirmation)
-- ✓ try to remove : createFields / saveCreateFields - editFields / saveEditFields
-- transport storeRequest and updateRequest: default urls, default short description, default title for page, ...
-- audit records after creation and update
-- try to remove: Page application classes: storeManager, updateManager and DeleteManager
-- Fix: issue where url is not prefilled in on creation based on title
-
-#### PAGE:
-- ✓ try to remove findPublished() on page
-- ✓ mediaUrls() / mediaUrl() used?
-- snippets: try to remove from Page altogether (now in getAttribute): should be in viewCompiler stuff no?
-- fragments
-- base url segment
-- url -> move logic to class
-- viewpaths for frontend
-- flatReference stuff on Page
-- statusAsLabel() and statusAsPlainLabel()
-- try to remove sortedByCreated() scope on page
-
-#### MODULE and MODULE MANAGER
-- delete a module. There is now a DeleteModule action class.
-- WithSnippets behavior
-- all the same stuff as for page
-
-#### GENERAL
-- ✓ refactor save methods to use array input instead of request object.
-- ✓ Then we can refactor updateModule stuff... -> convert to the TextModule::saveFields()
-
-- refactor MenuItem so it accepts interface 'MenuItemable' or so
-- refactor url stuff (esp. UrlHelper) so it always only uses a 'ProvidesUrl' and add to this interface a 'visitableUrl($locale)' or something to indicate this url is visitable on the site or not.
-- memory usage for memoizedUrlRecords is high (lots of model instances)
-- ✓ rename FlatReference to 'ModelReference';
-- ✓ HOW to remove managerViewModel data element to be passed to views?
-- refactor view components so adminLabel is not needed as much (or as little as possible)
-- BUG: no redactor in pagebuilder
-- CHECK: is module slug needed? Try without. probably used for sorting new text modules in pagebuilder but for something else as well?
-- nested fragment Add
-
-#### Improvements
-- remove: translatable logic + migrations + TranslatableCommand in concerns.
-- TODO: Removed: Translatable logic based on the `astrotomic/laravel-translatable` package, which required a separate translation table.
-  This will no longer be required in a blank Chief project. For translatable content, the default models now rely on the `Thinktomorrow/DynamicAttribures` package instead.
-
-- add: thinktomorrow.chief.locales to replace dependency on translatable.locales -> also than we can autofill for 'locales' method on a field
-- filter views on index: possibly as components? <x-filters>
-
-### types of fragments
-// Possible fragmentables are:
-// module: fixed promobar
-// module: cta block
-// couple of pages
-// card modules
-// automatic collection set (with params like amount, max, sorting, ...)
-// snippet (replaces snippet stuff)
-// fixed fragment: hero or footer
-// ineditable block: promobar
 
 ## 0.6.0
 
