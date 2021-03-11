@@ -16,7 +16,7 @@ class RoleController extends Controller
     {
         $this->authorize('view-role');
 
-        return view('chief::back.authorization.roles.index', [
+        return view('chief::admin.authorization.roles.index', [
             'roles' => Role::all(),
         ]);
     }
@@ -28,7 +28,7 @@ class RoleController extends Controller
     {
         $this->authorize('create-role');
 
-        return view('chief::back.authorization.roles.create', [
+        return view('chief::admin.authorization.roles.create', [
             'role' => new Role(),
             'permission_names' => Permission::all()->pluck('name')->toArray(),
         ]);
@@ -61,7 +61,7 @@ class RoleController extends Controller
         $role = Role::findOrFail($id);
         $permission_names = Permission::all()->pluck('name')->toArray();
 
-        return view('chief::back.authorization.roles.edit', compact('role', 'permission_names'));
+        return view('chief::admin.authorization.roles.edit', compact('role', 'permission_names'));
     }
 
     public function update(Request $request, $id)

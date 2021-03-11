@@ -3890,169 +3890,6 @@ function toComment(sourceMap) {
 
 /***/ }),
 
-/***/ "./node_modules/equalizeheight/lib/equalizeheight.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/equalizeheight/lib/equalizeheight.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var EqualizeHeight = function () {
-    function EqualizeHeight() {
-        var _this = this;
-
-        _classCallCheck(this, EqualizeHeight);
-
-        this.elements = document.querySelectorAll('[data-equalize-height]');
-
-        // If there are no equal height element, return
-        if (!this.elements || this.elements.length === 0) return;
-
-        this.elementObjects = this.initEqualHeightObjects();
-
-        this.calculateEqualHeight();
-
-        window.addEventListener('resize', function () {
-            _this.recalculateRows();
-            _this.calculateEqualHeight();
-        });
-    }
-
-    _createClass(EqualizeHeight, [{
-        key: 'rowsToArrays',
-        value: function rowsToArrays(elements) {
-            var arrays = [[]],
-                currentRow = 1;
-
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].row > currentRow) {
-                    currentRow++;
-                    arrays.push([elements[i].element]);
-                } else {
-                    arrays[currentRow - 1].push(elements[i].element);
-                }
-            }
-
-            return arrays;
-        }
-    }, {
-        key: 'calculateEqualHeight',
-        value: function calculateEqualHeight() {
-            for (var i = 0; i < this.elementObjects.length; i++) {
-                // Sort elements by row
-                this.elementObjects[i].elements.sort(function (a, b) {
-                    return a.row - b.row;
-                });
-
-                var arrays = this.rowsToArrays(this.elementObjects[i].elements);
-                for (var j = 0; j < arrays.length; j++) {
-                    var maxHeight = this.getMaxHeight(arrays[j]);
-                    this.setEqualHeight(maxHeight, arrays[j]);
-                }
-            }
-        }
-    }, {
-        key: 'setEqualHeight',
-        value: function setEqualHeight(height, elements) {
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].style.height = height + 'px';
-            }
-        }
-    }, {
-        key: 'getMaxHeight',
-        value: function getMaxHeight(elements) {
-            var maxHeight = 0;
-
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].style.height = "auto";
-
-                var elementHeight = elements[i].offsetHeight;
-                if (maxHeight < elementHeight) {
-                    maxHeight = elementHeight;
-                }
-            }
-
-            return maxHeight;
-        }
-    }, {
-        key: 'calculateRow',
-        value: function calculateRow(elements, element) {
-            var usedRows = [];
-
-            for (var i = 0; i < elements.length; i++) {
-                usedRows.push(elements[i].row);
-                if (elements[i].element.getBoundingClientRect().top + window.pageYOffset === element.getBoundingClientRect().top + window.pageYOffset) {
-                    return elements[i].row;
-                }
-            }
-
-            return Math.max.apply(Math, usedRows) + 1;
-        }
-    }, {
-        key: 'recalculateRows',
-        value: function recalculateRows() {
-            for (var i = 0; i < this.elementObjects.length; i++) {
-                this.elementObjects[i].elements[0].row = 1;
-                for (var j = 1; j < this.elementObjects[i].elements.length; j++) {
-                    this.elementObjects[i].elements[j].row = this.calculateRow(this.elementObjects[i].elements.slice(0, j), this.elementObjects[i].elements[j].element);
-                }
-            }
-        }
-    }, {
-        key: 'initEqualHeightObjects',
-        value: function initEqualHeightObjects() {
-            var elementObjects = [{
-                name: this.elements[0].dataset.equalHeight,
-                elements: [{
-                    element: this.elements[0],
-                    row: 1
-                }]
-            }];
-
-            for (var i = 1; i < this.elements.length; i++) {
-                for (var j = 0; j < elementObjects.length; j++) {
-
-                    if (this.elements[i].dataset.equalHeight === elementObjects[j].name) {
-                        elementObjects[j].elements.push({
-                            element: this.elements[i],
-                            row: this.calculateRow(elementObjects[j].elements, this.elements[i])
-                        });
-                    } else {
-                        var newElementObject = {
-                            name: this.elements[i].dataset.equalHeight,
-                            elements: [{
-                                element: this.elements[i],
-                                row: 1
-                            }]
-                        };
-                        elementObjects.push(newElementObject);
-                    }
-                }
-            }
-
-            return elementObjects;
-        }
-    }]);
-
-    return EqualizeHeight;
-}();
-
-new EqualizeHeight();
-
-// Initialize resize event to fix wrong pageYOffset values. This fix is temporary because I can't find the reason why they are incorrect.
-var event = document.createEvent('HTMLEvents');
-event.initEvent('resize', true, false);
-window.dispatchEvent(event);
-
-/***/ }),
-
 /***/ "./node_modules/es6-promise/dist/es6-promise.js":
 /*!******************************************************!*\
   !*** ./node_modules/es6-promise/dist/es6-promise.js ***!
@@ -41258,25 +41095,26 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utilities_Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/Errors */ "./resources/assets/js/utilities/Errors.js");
-/* harmony import */ var _utilities_Form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities/Form */ "./resources/assets/js/utilities/Form.js");
-/* harmony import */ var es6_promise__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-promise.js");
-/* harmony import */ var es6_promise__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(es6_promise__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var equalizeheight__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! equalizeheight */ "./node_modules/equalizeheight/lib/equalizeheight.js");
-/* harmony import */ var equalizeheight__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(equalizeheight__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var es6_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-promise.js");
+/* harmony import */ var es6_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(es6_promise__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_Errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities/Errors */ "./resources/assets/js/utilities/Errors.js");
+/* harmony import */ var _utilities_Form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utilities/Form */ "./resources/assets/js/utilities/Form.js");
+// Promise polyfill for support of IE9 and below
+
+
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 __webpack_require__(/*! ./vendors */ "./resources/assets/js/vendors.js");
 
 __webpack_require__(/*! ./utilities/chiefRedactorImageUpload */ "./resources/assets/js/utilities/chiefRedactorImageUpload.js");
 
-
-
-window.Errors = _utilities_Errors__WEBPACK_IMPORTED_MODULE_0__["default"];
-window.Form = _utilities_Form__WEBPACK_IMPORTED_MODULE_1__["default"];
+window.Errors = _utilities_Errors__WEBPACK_IMPORTED_MODULE_1__["default"];
+window.Form = _utilities_Form__WEBPACK_IMPORTED_MODULE_2__["default"];
 /** Chief components */
 
 window.Vue.component('dropdown', __webpack_require__(/*! ./components-vue/Dropdown.vue */ "./resources/assets/js/components-vue/Dropdown.vue")["default"]);
@@ -41291,18 +41129,15 @@ window.Vue.component('alert', __webpack_require__(/*! ./components-vue/Alert.vue
 window.Vue.component('delete', __webpack_require__(/*! ./components-vue/RemoveButton.vue */ "./resources/assets/js/components-vue/RemoveButton.vue")["default"]);
 window.Vue.component('error', __webpack_require__(/*! ./components-vue/Error.vue */ "./resources/assets/js/components-vue/Error.vue")["default"]);
 window.Vue.component('mediagallery', __webpack_require__(/*! ./components-vue/MediaGallery.vue */ "./resources/assets/js/components-vue/MediaGallery.vue")["default"]);
-window.Vue.component('image-component', __webpack_require__(/*! ./components-vue/ImageComponent */ "./resources/assets/js/components-vue/ImageComponent.vue")["default"]);
-window.Vue.component('imagesupload', __webpack_require__(/*! ./components-vue/ImagesUpload */ "./resources/assets/js/components-vue/ImagesUpload.vue")["default"]);
-window.Vue.component('url-redirect', __webpack_require__(/*! ./components-vue/UrlRedirect */ "./resources/assets/js/components-vue/UrlRedirect.vue")["default"]);
-window.Vue.component('link-input', __webpack_require__(/*! ./components-vue/LinkInput */ "./resources/assets/js/components-vue/LinkInput.vue")["default"]);
+window.Vue.component('image-component', __webpack_require__(/*! ./components-vue/ImageComponent.vue */ "./resources/assets/js/components-vue/ImageComponent.vue")["default"]);
+window.Vue.component('imagesupload', __webpack_require__(/*! ./components-vue/ImagesUpload.vue */ "./resources/assets/js/components-vue/ImagesUpload.vue")["default"]);
+window.Vue.component('url-redirect', __webpack_require__(/*! ./components-vue/UrlRedirect.vue */ "./resources/assets/js/components-vue/UrlRedirect.vue")["default"]);
+window.Vue.component('link-input', __webpack_require__(/*! ./components-vue/LinkInput.vue */ "./resources/assets/js/components-vue/LinkInput.vue")["default"]);
 window.Vue.component('notifications', __webpack_require__(/*! ./components-vue/Notifications/Notifications.vue */ "./resources/assets/js/components-vue/Notifications/Notifications.vue")["default"]);
 window.Vue.component('notification', __webpack_require__(/*! ./components-vue/Notifications/Notification.vue */ "./resources/assets/js/components-vue/Notifications/Notification.vue")["default"]); // sticky polyfill init
 
-window.Stickyfill.add(document.querySelectorAll('.sticky')); // Promise polyfill for support of IE9 and below
-
-
-es6_promise__WEBPACK_IMPORTED_MODULE_2___default.a.polyfill();
-
+window.Stickyfill.add(document.querySelectorAll('.sticky'));
+es6_promise__WEBPACK_IMPORTED_MODULE_0___default.a.polyfill();
 
 /***/ }),
 
@@ -41415,7 +41250,6 @@ var Errors = /*#__PURE__*/function () {
         delete errors[field.replace(/\[/g, '.').replace(/\]/g, '')];
         this.errors = {};
         this.errors = errors;
-        return;
       } else if (field) {
         delete errors[field];
         this.errors = {};
@@ -41464,7 +41298,9 @@ var Form = /*#__PURE__*/function () {
     this.originalData = data;
 
     for (var field in data) {
-      this[field] = data[field];
+      if (Object.prototype.hasOwnProperty.call(data, field)) {
+        this[field] = data[field];
+      }
     }
 
     this.errors = new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"]();
@@ -41480,7 +41316,9 @@ var Form = /*#__PURE__*/function () {
       var data = {};
 
       for (var property in this.originalData) {
-        data[property] = this[property];
+        if (Object.prototype.hasOwnProperty.call(this.originalData, property)) {
+          data[property] = this[property];
+        }
       }
 
       return data;
@@ -41499,7 +41337,9 @@ var Form = /*#__PURE__*/function () {
     key: "reset",
     value: function reset() {
       for (var field in this.originalData) {
-        this[field] = '';
+        if (Object.prototype.hasOwnProperty.call(this.originalData, field)) {
+          this[field] = '';
+        }
       }
 
       this.errors.clear();
@@ -41587,11 +41427,13 @@ var Form = /*#__PURE__*/function () {
 window.chiefRedactorImageUpload = function (uploadUrl) {
   return function (formData, files, event, upload) {
     return new Promise(function (resolve, reject) {
+      var token = document.head.querySelector('meta[name="csrf-token"]');
+
       function fileToDataURL(file) {
         var reader = new FileReader();
-        return new Promise(function (resolve) {
+        return new Promise(function (resolveReaderPromise) {
           reader.onload = function () {
-            resolve({
+            resolveReaderPromise({
               data: reader.result,
               filename: file.name
             });
@@ -41601,11 +41443,10 @@ window.chiefRedactorImageUpload = function (uploadUrl) {
         });
       }
 
-      function readAllAsDataURL(files) {
-        return Promise.all(Array.from(files).map(fileToDataURL));
+      function readAllAsDataURL(inputFiles) {
+        return Promise.all(Array.from(inputFiles).map(fileToDataURL));
       }
 
-      var token = document.head.querySelector('meta[name="csrf-token"]');
       readAllAsDataURL(files).then(function (payload) {
         window.axios.post(uploadUrl, {
           files: payload
@@ -41615,17 +41456,14 @@ window.chiefRedactorImageUpload = function (uploadUrl) {
           }
         }).then(function (response) {
           // PostsizeTooLarge is returned as 200 instead of 419 to meet the redactor requirements
-          if (typeof response.data == 'string' && response.data.includes('POST Content-Length')) {
-            reject({
-              error: true,
-              message: 'De afbeelding is te groot en is niet opgeladen.'
-            });
+          if (typeof response.data === 'string' && response.data.includes('POST Content-Length')) {
+            reject(new Error('De afbeelding is te groot en is niet opgeladen.'));
           }
 
           resolve(response.data);
         })["catch"](function (error) {
           console.error(error);
-          reject(error);
+          reject(new Error(error));
         });
       });
     }).then(function (response) {

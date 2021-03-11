@@ -13,7 +13,7 @@ class YouController extends Controller
      */
     public function edit()
     {
-        return view('chief::back.you.edit', [
+        return view('chief::admin.you.edit', [
             'user' => chiefAdmin(),
         ]);
     }

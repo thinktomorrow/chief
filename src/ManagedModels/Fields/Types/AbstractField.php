@@ -459,8 +459,8 @@ abstract class AbstractField
         }
 
         return $this->isLocalized()
-            ? 'chief::back._formgroups.fieldgroup_translatable'
-            : 'chief::back._fields.' . $this->type->get();
+            ? 'chief::manager.cards.fields.formgroup_translatable'
+            : 'chief::manager.fieldtypes.' . $this->type->get();
     }
 
     /**
@@ -480,5 +480,20 @@ abstract class AbstractField
             'field' => $this,
             'key' => $this->getKey(),
         ], $this->viewData);
+    }
+
+    public function notOnCreate(): Field
+    {
+        $this->tag('not-on-create');
+
+        return $this;
+    }
+
+    public function editAsPageTitle(): Field
+    {
+        $this->tag('chief-component');
+        $this->component('chief-page-title');
+
+        return $this;
     }
 }

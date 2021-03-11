@@ -1,0 +1,25 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class __STUB_CLASSNAME__ extends Migration
+{
+    public function up()
+    {
+        Schema::create('__STUB_TABLENAME__', function (Blueprint $table) {
+            $table->id();
+            $table->string('title')->nullable();
+            $table->json('values')->nullable();
+            $table->string('current_state')->default('draft');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('__STUB_TABLENAME__');
+    }
+}

@@ -34,6 +34,11 @@ final class FileManipulation
 
     public function addToMethod($filepath, $method, $content)
     {
+        if (!$this->files->exists($filepath)) {
+            $this->error('Class ' . $filepath .' does not exist.');
+            return;
+        }
+
         $originalContent = file_get_contents($filepath);
         $replacedContent = preg_replace('#('.$method.'\(\)\s*{)#', "$1\n        " . $content, $originalContent);
 

@@ -2,44 +2,56 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 
 class AddFragmentTest extends ChiefTestCase
 {
+    private ArticlePage $owner;
+    private Quote $fragment;
+
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->owner = $this->setupAndCreateArticle();
+        $this->fragment = $this->setupAndCreateQuote($this->owner);
     }
 
     /** @test */
-    public function a_fragment_can_be_added()
+    public function a_page_can_add_an_existing_fragment()
     {
-        $owner = $this->setupAndCreateArticle();
         $owner2 = ArticlePage::create();
-        $fragment = $this->setupAndCreateQuote($owner);
-        $fragmentManager = $this->manager($fragment);
 
-        $this->asAdmin()->post($fragmentManager->route('fragment-add', $owner2, $fragment));
+        $this->asAdmin()->post(
+            $this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment)
+        );
 
-        $fragments = app(FragmentRepository::class)->getByOwner($owner2);
-        $this->assertCount(1, $fragments);
+        $this->assertFragmentCount($owner2, 1);
     }
 
     /** @test */
-    public function a_nested_fragment_can_be_added()
+    public function a_nested_fragment_can_add_an_existing_fragment()
     {
-        $owner = $this->setupAndCreateArticle();
-        $fragmentOwner = $this->setupAndCreateQuote($owner);
+        $fragment = $this->addAsFragment(ArticlePage::create(), $this->owner);
 
-        $fragment = $this->addAsFragment(ArticlePage::create(), $owner);
-        $fragmentManager = $this->manager($fragment);
+        $this->asAdmin()->post(
+            $this->manager($fragment)->route('fragment-add', $this->fragment, $fragment)
+        )->assertStatus(201);
 
-        $this->asAdmin()->post($fragmentManager->route('fragment-add', $fragmentOwner, $fragment))
-            ->assertStatus(201);
+        $this->assertFragmentCount($this->fragment->fragmentModel(), 1);
+    }
 
-        $fragments = app(FragmentRepository::class)->getByOwner($fragmentOwner->fragmentModel());
-        $this->assertCount(1, $fragments);
+    /** @test */
+    public function it_can_check_if_a_model_allows_for_adding_a_fragment()
+    {
+
+    }
+
+    /** @test */
+    public function adding_a_fragment_multiple_times_only_adds_it_once()
+    {
+
     }
 }

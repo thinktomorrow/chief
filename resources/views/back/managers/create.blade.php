@@ -67,5 +67,5 @@
 
 @endpush
 
-@include('chief::back._components.file-component')
-@include('chief::back._components.filesupload-component')
+@include('chief::components.file-component')
+@include('chief::components.filesupload-component')

@@ -2,6 +2,14 @@
  * Lightweight eventbus implementation
  * based on the repo: https://github.com/PierfrancescoSoffritti/light-event-bus.js
  */
+function getIdGenerator() {
+    let lastId = 0;
+
+    return function getNextUniqueId() {
+        lastId += 1;
+        return lastId;
+    };
+}
 
 const subscriptions = {};
 const getNextUniqueId = getIdGenerator();
@@ -25,15 +33,6 @@ function publish(event, arg) {
     if (!subscriptions[event]) return;
 
     Object.keys(subscriptions[event]).forEach((key) => subscriptions[event][key](arg));
-}
-
-function getIdGenerator() {
-    let lastId = 0;
-
-    return function getNextUniqueId() {
-        lastId += 1;
-        return lastId;
-    };
 }
 
 module.exports = { publish, subscribe };

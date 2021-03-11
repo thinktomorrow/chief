@@ -54,6 +54,6 @@ class MediagalleryController extends Controller
 
         $pages = UrlHelper::allOnlineModels();
 
-        return view('chief::back.mediagallery.index', compact('assets', 'pages'));
+        return view('chief::admin.mediagallery.index', compact('assets', 'pages'));
     }
 }

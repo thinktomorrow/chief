@@ -20,7 +20,7 @@
 
                 <div v-cloak>
                     @include('chief::layout.partials.notifications')
-                    @include('chief::managers.sidebar')
+                    @include('chief::manager.sidebar')
 
                     @yield('content')
                 </div>

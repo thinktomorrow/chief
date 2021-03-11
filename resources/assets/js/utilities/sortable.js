@@ -1,5 +1,5 @@
-import EventBus from './EventBus';
 import Sortable from 'sortablejs';
+import EventBus from './EventBus';
 
 const IndexSorting = function (options) {
     this.Sortables = [];
@@ -68,7 +68,7 @@ IndexSorting.prototype.hideSorting = function () {
 };
 
 IndexSorting.prototype._init = function () {
-    let self = this;
+    const self = this;
 
     this.Sortables.push(
         Sortable.create(this.sortableGroupEl, {
@@ -82,28 +82,26 @@ IndexSorting.prototype._init = function () {
             filter: '[data-sortable-ignore]',
 
             store: {
-                set: function (sortable) {
-                    let indices = sortable.toArray();
+                set(sortable) {
+                    const indices = sortable.toArray();
                     // let indices = self._filterSortableIndices(sortable.toArray());
 
                     fetch(self.endpoint, {
                         method: 'post',
                         body: JSON.stringify({
-                            indices: indices,
+                            indices,
                         }),
                         headers: {
                             'Content-Type': 'application/json',
                         },
                     })
-                        .then(function (response) {
-                            return response.json();
-                        })
+                        .then((response) => response.json())
                         .then(() => {
                             window.Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
 
                             EventBus.publish('sortable-stored');
                         })
-                        .catch(function (error) {
+                        .catch((error) => {
                             window.Eventbus.$emit(
                                 'create-notification',
                                 'error',
@@ -124,7 +122,11 @@ IndexSorting.prototype._init = function () {
     });
 
     // Default view
-    this.isSorting ? this.showSorting() : this.hideSorting();
+    if (this.isSorting) {
+        this.showSorting();
+    } else {
+        this.hideSorting();
+    }
 };
 
 // IndexSorting.prototype._filterSortableIndices = function (indices) {
@@ -134,4 +136,4 @@ IndexSorting.prototype._init = function () {
 //     return indices.filter((index) => index !== 'remove-before-post');
 // };
 
-export { IndexSorting };
+export { IndexSorting as default };

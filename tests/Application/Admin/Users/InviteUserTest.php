@@ -17,7 +17,7 @@ class InviteUserTest extends ChiefTestCase
     public function only_admin_can_view_the_invite_form()
     {
         $response = $this->asAdmin()->get(route('chief.back.users.create'));
-        $response->assertViewIs('chief::back.users.create')
+        $response->assertViewIs('chief::admin.users.create')
                  ->assertStatus(200);
     }
 

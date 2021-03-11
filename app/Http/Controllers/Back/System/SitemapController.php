@@ -17,7 +17,7 @@ class SitemapController extends Controller
 
         $sitemapFiles = app(SitemapFiles::class)->allWithin(public_path());
 
-        return view('chief::back.system.sitemap.show', [
+        return view('chief::admin.sitemap.show', [
             'sitemapFiles' => $sitemapFiles,
         ]);
     }

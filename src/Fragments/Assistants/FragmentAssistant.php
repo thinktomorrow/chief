@@ -53,7 +53,7 @@ trait FragmentAssistant
 
         $modelKey = $this->managedModelClass()::managedModelKey();
 
-        // model is owner for create endpoints
+        // model argument is owner for create endpoints
         if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-add'])) {
             if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for '.$action.' requires a FragmentsOwner Model as second argument.');
@@ -116,7 +116,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        return view('chief::fragments.create', [
+        return view('chief::manager.cards.fragments.create', [
             'manager' => $this,
             'owner' => $owner,
             'model' => $fragmentable,
@@ -230,7 +230,7 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        return view('chief::fragments.edit', [
+        return view('chief::manager.cards.fragments.edit', [
             'manager' => $this,
             'model' => $fragmentable,
             'fields' => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),

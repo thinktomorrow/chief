@@ -67,13 +67,15 @@ class StaticFragmentCrudTest extends ChiefTestCase
             ]
         );
 
-        $this->assertEquals('foobar', $this->fragmentRepo->getByOwner($this->owner)->first()->getTitle());
+        $this->firstFragment($this->owner, function($fragment){
+            $this->assertEquals('foobar', $fragment->getTitle());
+        });
     }
 
     /** @test */
     public function a_static_fragmentable_can_be_stored_without_values()
     {
-        $this->assertCount(0, $this->fragmentRepo->getByOwner($this->owner));
+        $this->assertFragmentCount($this->owner, 0);
 
         $this->asAdmin()->post(
             $this->manager->route('fragment-store', $this->owner),
@@ -82,7 +84,7 @@ class StaticFragmentCrudTest extends ChiefTestCase
             ]
         );
 
-        $this->assertCount(1, $this->fragmentRepo->getByOwner($this->owner));
+        $this->assertFragmentCount($this->owner, 1);
     }
 
     /** @test */
@@ -126,6 +128,8 @@ class StaticFragmentCrudTest extends ChiefTestCase
             ]
         );
 
-        $this->assertEquals('foobar updated', $this->fragmentRepo->getByOwner($this->owner)->first()->getTitle());
+        $this->firstFragment($this->owner, function($fragment){
+            $this->assertEquals('foobar updated', $fragment->getTitle());
+        });
     }
 }

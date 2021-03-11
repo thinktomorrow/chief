@@ -3830,11 +3830,11 @@ __webpack_require__.r(__webpack_exports__);
 // --------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container'),
-      componentEls = document.querySelectorAll('[data-fields-component]');
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
+  var componentEls = document.querySelectorAll('[data-fields-component]');
   Array.from(componentEls).forEach(function (el) {
     var livewireComponent = window.Livewire.find(el.getAttribute('wire:id'));
-    var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[' + el.getAttribute('data-fields-component') + ']', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
+    var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]("[".concat(el.getAttribute('data-fields-component'), "]"), new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
       onSubmitPanel: function onSubmitPanel() {
         livewireComponent.reload();
       },
@@ -3918,12 +3918,12 @@ var _default = /*#__PURE__*/function () {
     }
   }, {
     key: "_scanForTriggersIn",
-    value: function _scanForTriggersIn(el) {
+    value: function _scanForTriggersIn(element) {
       var _this2 = this;
 
-      console.log(el);
-      console.log(this.postActionAttribute, el.querySelectorAll("[".concat(this.postActionAttribute, "]")));
-      Array.from(el.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
+      console.log(element);
+      console.log(this.postActionAttribute, element.querySelectorAll("[".concat(this.postActionAttribute, "]")));
+      Array.from(element.querySelectorAll("[".concat(this.postActionAttribute, "]"))).forEach(function (el) {
         el.removeEventListener('click', _this2.handle);
         el.addEventListener('click', _this2.handle);
       });
@@ -3934,11 +3934,11 @@ var _default = /*#__PURE__*/function () {
       var _this3 = this;
 
       event.preventDefault();
-      var el = event.target.hasAttribute(this.postActionAttribute) ? event.target : event.target.closest("[".concat(this.postActionAttribute, "]")),
-          action = el ? el.getAttribute(this.postActionAttribute) : null;
+      var el = event.target.hasAttribute(this.postActionAttribute) ? event.target : event.target.closest("[".concat(this.postActionAttribute, "]"));
+      var action = el ? el.getAttribute(this.postActionAttribute) : null;
       console.log(action);
       if (!action) return;
-      _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__["Api"].submit('POST', action, {}, function (data) {
+      _sidebar_Api__WEBPACK_IMPORTED_MODULE_0__["default"].submit('POST', action, {}, function (data) {
         _this3.scanForTriggers();
 
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('fragment-add', data);
@@ -3987,10 +3987,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 document.addEventListener('DOMContentLoaded', function () {
   var sidebarContainerEl = document.querySelector('#js-sidebar-container');
-  var componentEl = document.querySelector('[data-fragments-component]');
-  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]'); // Do not trigger the sidebar script is DOM element isn't present
+  var componentEl = document.querySelector('[data-fragments-component]'); // Do not trigger the sidebar script is DOM element isn't present
 
-  if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
+  if (!sidebarContainerEl || !componentEl) return;
+  var fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]');
   new _selectFragment__WEBPACK_IMPORTED_MODULE_4__["default"](document, fragmentsContainerEl);
   new _addFragment__WEBPACK_IMPORTED_MODULE_3__["default"](document);
   var fragmentPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-fragments-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
@@ -4035,7 +4035,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var container = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     Array.from(container.querySelectorAll(selector)).forEach(function (el) {
-      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["IndexSorting"](_objectSpread(_objectSpread({}, {
+      new _utilities_sortable__WEBPACK_IMPORTED_MODULE_2__["default"](_objectSpread(_objectSpread({}, {
         sortableGroupEl: el,
         endpoint: el.getAttribute('data-sortable-endpoint'),
         handle: '[data-sortable-handle]',
@@ -4101,6 +4101,8 @@ var _default = /*#__PURE__*/function () {
 
       this._activateTriggerElements();
 
+      this._onlyShowClosestTriggerElement();
+
       var reloadEvents = ['sortable-stored', 'fragments-reloaded'];
       reloadEvents.forEach(function (event) {
         _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe(event, function () {
@@ -4109,41 +4111,37 @@ var _default = /*#__PURE__*/function () {
           _this._addTriggerElements();
 
           _this._activateTriggerElements();
+
+          _this._onlyShowClosestTriggerElement();
         });
       });
       _utilities_EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.subscribe('fragments-new-panel', function (panel) {
         _this._passNewFragmentOrderToPanel(panel);
       });
-
-      this._onlyShowClosestTriggerElement();
-    }
-  }, {
-    key: "_createTriggerElement",
-    value: function _createTriggerElement() {
-      var template = document.querySelector('#js-fragment-add-template');
-      return template.firstElementChild.cloneNode(true);
-    }
-  }, {
-    key: "_createSelectionElement",
-    value: function _createSelectionElement() {
-      var template = document.querySelector('#js-fragment-selection-template');
-      return template.firstElementChild.cloneNode(true);
     }
   }, {
     key: "_addTriggerElements",
     value: function _addTriggerElements() {
       var _this2 = this;
 
-      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector)); // make sure to add a trigger when no fragments exist
+
+      if (fragmentElements.length === 0) {
+        var triggerElement = this.constructor._createTriggerElement();
+
+        this.fragmentsContainer.appendChild(triggerElement);
+        return;
+      }
+
       fragmentElements.forEach(function (element, index) {
-        var triggerElement = _this2._createTriggerElement();
+        var triggerElement = _this2.constructor._createTriggerElement();
 
         _this2.fragmentsContainer.insertBefore(triggerElement, element);
 
         if (index === fragmentElements.length - 1) {
-          var _triggerElement = _this2._createTriggerElement();
+          var lastTriggerElement = _this2.constructor._createTriggerElement();
 
-          _this2.fragmentsContainer.insertBefore(_triggerElement, element.nextSibling);
+          _this2.fragmentsContainer.insertBefore(lastTriggerElement, element.nextSibling);
         }
       });
     }
@@ -4171,12 +4169,12 @@ var _default = /*#__PURE__*/function () {
       var _this4 = this;
 
       element.addEventListener('click', function () {
-        var selectionElement = _this4._createSelectionElement();
+        var selectionElement = _this4.constructor._createSelectionElement();
 
         var existingSelectionElement = _this4.fragmentsContainer.querySelector(_this4.selectionSelector);
 
         if (existingSelectionElement) {
-          var triggerElement = _this4._createTriggerElement();
+          var triggerElement = _this4.constructor._createTriggerElement();
 
           _this4._activateTriggerElement(triggerElement);
 
@@ -4194,7 +4192,16 @@ var _default = /*#__PURE__*/function () {
     value: function _onlyShowClosestTriggerElement() {
       var _this5 = this;
 
-      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector));
+      var fragmentElements = Array.from(this.fragmentsContainer.querySelectorAll(this.fragmentSelector)); // Always show the triggerSelector when there are no fragmentElements
+
+      if (fragmentElements.length === 0) {
+        var triggerElement = this.fragmentsContainer.querySelector(this.triggerSelector);
+
+        this.constructor._showTriggerElement(triggerElement);
+
+        return;
+      }
+
       fragmentElements.forEach(function (element) {
         element.addEventListener('mouseover', function (e) {
           var rect = element.getBoundingClientRect();
@@ -4203,17 +4210,17 @@ var _default = /*#__PURE__*/function () {
           _this5._hideAllTriggerElements();
 
           if (centerY > e.clientY) {
-            var triggerElement = _this5._getPreviousSiblingElement(element, _this5.triggerSelector);
+            var _triggerElement = _this5.constructor._getPreviousSiblingElement(element, _this5.triggerSelector);
 
-            if (!triggerElement) return;
+            if (!_triggerElement) return;
 
-            _this5._showTriggerElement(triggerElement);
+            _this5.constructor._showTriggerElement(_triggerElement);
           } else {
-            var _triggerElement2 = _this5._getNextSiblingElement(element, _this5.triggerSelector);
+            var _triggerElement2 = _this5.constructor._getNextSiblingElement(element, _this5.triggerSelector);
 
             if (!_triggerElement2) return;
 
-            _this5._showTriggerElement(_triggerElement2);
+            _this5.constructor._showTriggerElement(_triggerElement2);
           }
         });
       });
@@ -4225,8 +4232,52 @@ var _default = /*#__PURE__*/function () {
 
       var triggerElements = Array.from(this.fragmentsContainer.querySelectorAll(this.triggerSelector));
       triggerElements.forEach(function (element) {
-        _this6._hideTriggerElement(element);
+        _this6.constructor._hideTriggerElement(element);
       });
+    }
+  }, {
+    key: "_passNewFragmentOrderToPanel",
+    value: function _passNewFragmentOrderToPanel(panel) {
+      var selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
+
+      if (selectionElement) {
+        var order = this._getSelectionElementOrder(selectionElement);
+
+        if (panel.el.querySelector('input[name="order"]')) {
+          panel.el.querySelector('input[name="order"]').value = order;
+        }
+      }
+    }
+  }, {
+    key: "_getSelectionElementOrder",
+    value: function _getSelectionElementOrder(node) {
+      var _this7 = this;
+
+      var nextFragmentElement = this.constructor._getNextSiblingElement(node, this.fragmentSelector);
+
+      var fragmentsContainerChildren = Array.from(this.fragmentsContainer.children);
+      var fragmentElements = fragmentsContainerChildren.filter(function (element) {
+        return element.matches(_this7.fragmentSelector);
+      });
+      var order = fragmentElements.length;
+      fragmentElements.forEach(function (fragmentElement, index) {
+        if (fragmentElement === nextFragmentElement) {
+          order = index;
+        }
+      });
+      return order;
+    }
+  }], [{
+    key: "_createTriggerElement",
+    value: function _createTriggerElement() {
+      var template = document.querySelector('#js-fragment-add-template');
+      return template.firstElementChild.cloneNode(true);
+    }
+  }, {
+    key: "_createSelectionElement",
+    value: function _createSelectionElement() {
+      var template = document.querySelector('#js-fragment-selection-template');
+      return template.firstElementChild.cloneNode(true);
     }
   }, {
     key: "_hideTriggerElement",
@@ -4262,38 +4313,6 @@ var _default = /*#__PURE__*/function () {
 
       return sibling;
     }
-  }, {
-    key: "_passNewFragmentOrderToPanel",
-    value: function _passNewFragmentOrderToPanel(panel) {
-      var selectionElement = this.fragmentsContainer.querySelector(this.selectionSelector);
-
-      if (selectionElement) {
-        var order = this._getSelectionElementOrder(selectionElement);
-
-        if (panel.el.querySelector('input[name="order"]')) {
-          panel.el.querySelector('input[name="order"]').value = order;
-        }
-      }
-    }
-  }, {
-    key: "_getSelectionElementOrder",
-    value: function _getSelectionElementOrder(node) {
-      var _this7 = this;
-
-      var nextFragmentElement = this._getNextSiblingElement(node, this.fragmentSelector);
-
-      var fragmentElements = Array.from(this.fragmentsContainer.children).filter(function (element) {
-        return element.matches(_this7.fragmentSelector);
-      });
-      var order = fragmentElements.length;
-      fragmentElements.forEach(function (fragmentElement, index) {
-        if (fragmentElement === nextFragmentElement) {
-          order = index;
-          return;
-        }
-      });
-      return order;
-    }
   }]);
 
   return _default;
@@ -4320,9 +4339,11 @@ __webpack_require__.r(__webpack_exports__);
 // --------------------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', function () {
-  var sidebarContainerEl = document.querySelector('#js-sidebar-container'),
-      componentEl = document.querySelector('[data-links-component]'),
-      livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
+  var sidebarContainerEl = document.querySelector('#js-sidebar-container');
+  var componentEl = document.querySelector('[data-links-component]'); // Do not trigger the sidebar script is DOM element isn't present
+
+  if (!sidebarContainerEl || !componentEl) return;
+  var livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
   var linkPanelsManager = new _sidebar_PanelsManager__WEBPACK_IMPORTED_MODULE_1__["default"]('[data-sidebar-links-edit]', new _sidebar_Container__WEBPACK_IMPORTED_MODULE_0__["default"](sidebarContainerEl), {
     onSubmitPanel: function onSubmitPanel() {
       livewireComponent.reload();
@@ -4343,12 +4364,12 @@ document.addEventListener('DOMContentLoaded', function () {
 /*!*******************************************************!*\
   !*** ./resources/assets/js/components/sidebar/Api.js ***!
   \*******************************************************/
-/*! exports provided: Api */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Api", function() { return Api; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Api; });
 var Api = {
   get: function get(url, container, successCallback, errorCallback) {
     fetch(url).then(function (response) {
@@ -4373,8 +4394,8 @@ var Api = {
     });
   },
   listenForFormSubmits: function listenForFormSubmits(container, successCallback, errorCallback) {
-    var form = container.querySelector('form');
     var self = this;
+    var form = container.querySelector('form');
     if (!form) return;
     form.addEventListener('submit', function (event) {
       event.preventDefault();
@@ -4382,6 +4403,7 @@ var Api = {
     });
   }
 };
+
 
 /***/ }),
 
@@ -4449,7 +4471,7 @@ var _default = /*#__PURE__*/function () {
     value: function close() {
       var _this = this;
 
-      Promise.all([this._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'), this._closeElement(this.sidebarAside, 'sidebar-slide-from-right')]).then(function () {
+      Promise.all([this.constructor._closeElement(this.sidebarBackdrop, 'sidebar-bg-fade-in'), this.constructor._closeElement(this.sidebarAside, 'sidebar-slide-from-right')]).then(function () {
         _this.el.style.display = 'none';
       })["catch"](function (error) {
         console.error(error);
@@ -4474,15 +4496,16 @@ var _default = /*#__PURE__*/function () {
         }
       });
     }
-  }, {
+  }], [{
     key: "_closeElement",
     value: function _closeElement(element, animationName) {
       return new Promise(function (resolve, reject) {
         try {
           element.style.animationDirection = 'reverse';
           element.classList.remove(animationName);
-          void element.offsetWidth;
-          element.classList.add(animationName);
+          setTimeout(function () {
+            element.classList.add(animationName);
+          }, 0);
 
           var onAnimationEnd = function onAnimationEnd() {
             element.style.animationDirection = 'normal';
@@ -4624,7 +4647,7 @@ var _default = /*#__PURE__*/function () {
       this.collection = [];
       this.activePanel = null;
     }
-  }, {
+  }], [{
     key: "createId",
     value: function createId(url) {
       return encodeURIComponent(url);
@@ -4719,7 +4742,7 @@ var _default = /*#__PURE__*/function () {
   }, {
     key: "show",
     value: function show(url) {
-      var id = this.panels.createId(url); // if present in panels, than show the existing panel.
+      var id = _Panels__WEBPACK_IMPORTED_MODULE_2__["default"].createId(url); // if present in panels, than show the existing panel.
 
       if (this.panels.find(id)) {
         this._activate(id);
@@ -4738,21 +4761,21 @@ var _default = /*#__PURE__*/function () {
       var newPanelContainer = document.createElement('div');
       newPanelContainer.setAttribute('data-panel-id', id);
       this.container.dom().appendChild(newPanelContainer);
-      _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(url, newPanelContainer, function (data) {
+      _Api__WEBPACK_IMPORTED_MODULE_0__["default"].get(url, newPanelContainer, function (data) {
         newPanelContainer.innerHTML = data; // only mount Vue on our vue specific fields and not on the form element itself
         // so that the submit event still works. I know this is kinda hacky.
 
         Array.from(newPanelContainer.querySelectorAll('[data-vue-fields]')).forEach(function (el) {
           new window.Vue({
             el: el
-          });
+          }); // eslint-disable-line
         }); // creating a custom event so redactor js can be initiated async
         // needs to dispatch after vue instances get created otherwise they overrides
         // all redactor event listeners like toolbar clicks ...
 
         var newPanelEvent = new Event('chief::newpanel');
         window.dispatchEvent(newPanelEvent);
-        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].listenForFormSubmits(newPanelContainer, function (response) {
+        _Api__WEBPACK_IMPORTED_MODULE_0__["default"].listenForFormSubmits(newPanelContainer, function (response) {
           console.log(response);
           console.log('SUCCESS');
 
@@ -4762,10 +4785,7 @@ var _default = /*#__PURE__*/function () {
             _this3.onSubmitPanel();
           }
         }, function (error) {
-          console.log(error);
-          console.log('ERROR');
-
-          _this3.showError(error);
+          console.error("showing error: ".concat(error));
         });
 
         if (!_this3.container.isOpen()) {
@@ -4795,12 +4815,6 @@ var _default = /*#__PURE__*/function () {
 
       this.container.renderCloseButton();
       this.scanForPanelTriggers();
-    }
-  }, {
-    key: "showError",
-    value: function showError(message) {
-      // remove current ...
-      console.log('showing error: ' + message);
     }
     /**
      * Handle the closing of the current panel and determine the next one.
@@ -4843,11 +4857,11 @@ var _default = /*#__PURE__*/function () {
 
       Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach(function (el) {
         var componentKey = el.getAttribute('data-sidebar-component');
-        _Api__WEBPACK_IMPORTED_MODULE_0__["Api"].get(_this4.panels.findActive().url, el, function (data) {
+        _Api__WEBPACK_IMPORTED_MODULE_0__["default"].get(_this4.panels.findActive().url, el, function (data) {
           var DOM = document.createElement('div');
           DOM.innerHTML = data;
 
-          _this4.panels.activePanel.replaceComponent('[data-sidebar-component="' + componentKey + '"]', DOM.querySelector('[data-sidebar-component="' + componentKey + '"]').innerHTML);
+          _this4.panels.activePanel.replaceComponent("[data-sidebar-component=\"".concat(componentKey, "\"]"), DOM.querySelector("[data-sidebar-component=\"".concat(componentKey, "\"]")).innerHTML);
 
           _this4.scanForPanelTriggers();
         });
@@ -4872,19 +4886,19 @@ var _default = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/sortable */ "./resources/assets/js/utilities/sortable.js");
+
 /**
  * List here all the js utilities needed to be loaded after the Vue instantiation
  */
+
 __webpack_require__(/*! ./utilities/form-submit */ "./resources/assets/js/utilities/form-submit.js");
 /**
  * Sortable
  */
 
 
-
-
 if (document.getElementById('js-sortable')) {
-  new _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__["IndexSorting"]({
+  new _utilities_sortable__WEBPACK_IMPORTED_MODULE_0__["default"]({
     // any options go here
     isSorting: document.getElementById('js-sortable').hasAttribute('data-sort-on-load'),
     endpoint: document.getElementById('js-sortable').getAttribute('data-sort-route')
@@ -4914,6 +4928,14 @@ __webpack_require__(/*! ./components/fieldcomponents */ "./resources/assets/js/c
  * Lightweight eventbus implementation
  * based on the repo: https://github.com/PierfrancescoSoffritti/light-event-bus.js
  */
+function getIdGenerator() {
+  var lastId = 0;
+  return function getNextUniqueId() {
+    lastId += 1;
+    return lastId;
+  };
+}
+
 var subscriptions = {};
 var getNextUniqueId = getIdGenerator();
 
@@ -4934,14 +4956,6 @@ function publish(event, arg) {
   Object.keys(subscriptions[event]).forEach(function (key) {
     return subscriptions[event][key](arg);
   });
-}
-
-function getIdGenerator() {
-  var lastId = 0;
-  return function getNextUniqueId() {
-    lastId += 1;
-    return lastId;
-  };
 }
 
 module.exports = {
@@ -4977,15 +4991,15 @@ for (var i = 0; i < triggers.length; i++) {
 /*!***************************************************!*\
   !*** ./resources/assets/js/utilities/sortable.js ***!
   \***************************************************/
-/*! exports provided: IndexSorting */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IndexSorting", function() { return IndexSorting; });
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/utilities/EventBus.js");
-/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IndexSorting; });
+/* harmony import */ var sortablejs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sortablejs */ "./node_modules/sortablejs/modular/sortable.esm.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EventBus */ "./resources/assets/js/utilities/EventBus.js");
+/* harmony import */ var _EventBus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_EventBus__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
@@ -5056,7 +5070,7 @@ IndexSorting.prototype._init = function () {
   var _this = this;
 
   var self = this;
-  this.Sortables.push(sortablejs__WEBPACK_IMPORTED_MODULE_1__["default"].create(this.sortableGroupEl, {
+  this.Sortables.push(sortablejs__WEBPACK_IMPORTED_MODULE_0__["default"].create(this.sortableGroupEl, {
     group: 'models',
     fallbackOnBody: true,
     swapThreshold: 0.65,
@@ -5081,10 +5095,10 @@ IndexSorting.prototype._init = function () {
           return response.json();
         }).then(function () {
           window.Eventbus.$emit('create-notification', 'success', 'Nieuwe sortering bewaard.️', 2000);
-          _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('sortable-stored');
+          _EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('sortable-stored');
         })["catch"](function (error) {
           window.Eventbus.$emit('create-notification', 'error', 'Sortering kan niet worden bewaard. Er is iets misgelopen.️');
-          _EventBus__WEBPACK_IMPORTED_MODULE_0___default.a.publish('sortable-stored');
+          _EventBus__WEBPACK_IMPORTED_MODULE_1___default.a.publish('sortable-stored');
           console.error(error);
         });
       }
@@ -5094,7 +5108,11 @@ IndexSorting.prototype._init = function () {
     toggle.addEventListener('click', _this.toggle.bind(_this));
   }); // Default view
 
-  this.isSorting ? this.showSorting() : this.hideSorting();
+  if (this.isSorting) {
+    this.showSorting();
+  } else {
+    this.hideSorting();
+  }
 }; // IndexSorting.prototype._filterSortableIndices = function (indices) {
 //     // Sortablejs will generate '4w1' for elements without data id
 //     // This is used for instance on the plus icons in the fragments,

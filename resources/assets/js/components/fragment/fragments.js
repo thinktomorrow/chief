@@ -1,6 +1,6 @@
 import Container from '../sidebar/Container';
 import PanelsManager from '../sidebar/PanelsManager';
-import { IndexSorting } from '../../utilities/sortable';
+import IndexSorting from '../../utilities/sortable';
 import AddFragment from './addFragment';
 import SelectFragment from './selectFragment';
 import EventBus from '../../utilities/EventBus';
@@ -8,13 +8,14 @@ import EventBus from '../../utilities/EventBus';
 /**
  * Fragments JS
  */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const sidebarContainerEl = document.querySelector('#js-sidebar-container');
     const componentEl = document.querySelector('[data-fragments-component]');
-    const fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]');
 
     // Do not trigger the sidebar script is DOM element isn't present
-    if (!sidebarContainerEl || !componentEl || !fragmentsContainerEl) return;
+    if (!sidebarContainerEl || !componentEl) return;
+
+    const fragmentsContainerEl = componentEl.querySelector('[data-fragments-container]');
 
     new SelectFragment(document, fragmentsContainerEl);
     new AddFragment(document);

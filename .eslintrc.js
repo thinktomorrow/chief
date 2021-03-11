@@ -4,14 +4,26 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    extends: 'eslint:recommended',
-    parserOptions: {
-        ecmaVersion: 12,
-        sourceType: 'module',
-    },
+    extends: ['airbnb-base', 'eslint:recommended'],
     rules: {
-        // strict: ['error', 'never'],
-        // quotes: ['error', 'single'],
-        // indent: ['error', 4],
+        indent: ['error', 4],
+        'comma-dangle': [
+            'error',
+            {
+                arrays: 'always-multiline',
+                objects: 'always-multiline',
+                functions: 'never',
+            },
+        ],
+        'max-len': ['error', 120],
+        'no-param-reassign': [2, { props: false }],
+        'func-names': 0,
+        'no-plusplus': 0,
+        'no-restricted-syntax': 0,
+        'no-underscore-dangle': 0,
+
+        'no-new': process.env.NODE_ENV === 'production' ? 1 : 0,
+        'no-console': process.env.NODE_ENV === 'production' ? 1 : 0,
+        'no-alert': process.env.NODE_ENV === 'production' ? 1 : 0,
     },
 };

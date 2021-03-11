@@ -19,7 +19,7 @@ class MenuController extends Controller
             return $this->show($menus->first()->key());
         }
 
-        return view('chief::back.menu.index', [
+        return view('chief::admin.menu.index', [
             'menus' => $menus,
         ]);
     }
@@ -33,7 +33,7 @@ class MenuController extends Controller
 
         $menu = Menu::find($type);
 
-        return view('chief::back.menu.show', [
+        return view('chief::admin.menu.show', [
             'menuItems' => ChiefMenu::fromMenuItems($type)->includeHidden()->items(),
             'menu' => $menu,
         ]);

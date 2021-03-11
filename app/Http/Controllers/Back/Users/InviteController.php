@@ -21,7 +21,7 @@ class InviteController extends Controller
      */
     public function expired()
     {
-        return view('chief::back.users.invite-expired');
+        return view('chief::admin.users.invite-expired');
     }
 
     public function accept(Request $request)
@@ -49,6 +49,6 @@ class InviteController extends Controller
 
         app(DenyInvite::class)->handle($invitation);
 
-        return view('chief::back.users.invite-denied');
+        return view('chief::admin.users.invite-denied');
     }
 }

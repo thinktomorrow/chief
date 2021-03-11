@@ -16,7 +16,7 @@ class MenuPagesTest extends ChiefTestCase
             ]);
 
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
-        $response->assertViewIs('chief::back.menu.index')
+        $response->assertViewIs('chief::admin.menu.index')
                  ->assertStatus(200);
     }
 
@@ -24,7 +24,7 @@ class MenuPagesTest extends ChiefTestCase
     public function menu_index_route_shows_menu_show_if_there_is_only_one_menu()
     {
         $response = $this->asAdmin()->get(route('chief.back.menus.index'));
-        $response->assertViewIs('chief::back.menu.show')
+        $response->assertViewIs('chief::admin.menu.show')
                  ->assertStatus(200);
     }
 
@@ -34,7 +34,7 @@ class MenuPagesTest extends ChiefTestCase
         $menu = Menu::all()->first();
 
         $response = $this->asAdmin()->get(route('chief.back.menus.show', $menu->key()));
-        $response->assertViewIs('chief::back.menu.show')
+        $response->assertViewIs('chief::admin.menu.show')
                  ->assertStatus(200);
     }
 }

@@ -176,9 +176,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         }));
     }
 
-    public function notTagged(string $tag): Fields
+    public function notTagged($tag): Fields
     {
-        // TODO: to test this...
         return new static(array_filter($this->fields, function (Field $field) use ($tag) {
             return ! $field->tagged($tag);
         }));
