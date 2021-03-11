@@ -46,12 +46,23 @@ class AddFragmentTest extends ChiefTestCase
     /** @test */
     public function it_can_check_if_a_model_allows_for_adding_a_fragment()
     {
-
+        $this->assertTrue($this->manager($this->owner)->can('fragment-add'));
+        $this->assertTrue($this->manager($this->fragment)->can('fragment-add'));
     }
 
     /** @test */
     public function adding_a_fragment_multiple_times_only_adds_it_once()
     {
+        $owner2 = ArticlePage::create();
 
+        $this->asAdmin()->post(
+            $this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment)
+        );
+
+        $this->asAdmin()->post(
+            $this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment)
+        );
+
+        $this->assertFragmentCount($owner2, 1);
     }
 }

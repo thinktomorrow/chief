@@ -4395,11 +4395,13 @@ var Api = {
   },
   listenForFormSubmits: function listenForFormSubmits(container, successCallback, errorCallback) {
     var self = this;
-    var form = container.querySelector('form');
-    if (!form) return;
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-      self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
+    var forms = Array.from(container.querySelectorAll('form'));
+    if (forms.length < 1) return;
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
+      });
     });
   }
 };

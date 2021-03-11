@@ -26,7 +26,7 @@
             <x-chief::fragments :owner="$model"/>
         @endif
 
-        <div>
+        <div class="center-y justify-between">
             <button
                 data-submit-form="updateForm{{ $model->modelReference()->get() }}"
                 type="submit"
@@ -35,6 +35,16 @@
             >
                 Wijzigingen opslaan
             </button>
+            <button
+                data-submit-form="removeFragment{{ $model->modelReference()->get() }}"
+                class="text-error"
+                type="submit"
+                form="removeFragment{{ $model->modelReference()->get() }}">Verwijder</button>
         </div>
     </div>
+</form>
+
+<form id="removeFragment{{ $model->modelReference()->get() }}" method="POST" action="{{ $manager->route('fragment-remove', $owner, $model) }}">
+    @csrf
+    @method('delete')
 </form>

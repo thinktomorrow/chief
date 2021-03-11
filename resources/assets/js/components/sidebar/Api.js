@@ -27,14 +27,15 @@ const Api = {
 
     listenForFormSubmits(container, successCallback, errorCallback) {
         const self = this;
-        const form = container.querySelector('form');
+        const forms = Array.from(container.querySelectorAll('form'));
 
-        if (!form) return;
+        if (forms.length < 1) return;
 
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
+        forms.forEach((form) => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                self.submit(this.method, this.action, new FormData(this), successCallback, errorCallback);
+            });
         });
     },
 };

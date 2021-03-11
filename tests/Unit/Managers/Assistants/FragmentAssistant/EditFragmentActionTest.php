@@ -40,7 +40,7 @@ class EditFragmentActionTest extends ChiefTestCase
     {
         $model = app(FragmentRepository::class)->getByOwner($this->owner)->first();
 
-        $this->asAdmin()->get($this->fragmentManager->route('fragment-edit', $model))
+        $this->asAdmin()->get($this->fragmentManager->route('fragment-edit', $this->owner, $model))
             ->assertStatus(200)
             ->assertViewIs('chief::manager.cards.fragments.edit');
     }
@@ -53,7 +53,7 @@ class EditFragmentActionTest extends ChiefTestCase
 
         $model = app(FragmentRepository::class)->getByOwner($this->owner)->first();
 
-        $this->get($this->fragmentManager->route('fragment-edit', $model))
+        $this->get($this->fragmentManager->route('fragment-edit', $this->owner, $model))
             ->assertStatus(302)
             ->assertRedirect(route('chief.back.login'));
     }

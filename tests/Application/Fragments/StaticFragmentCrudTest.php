@@ -102,7 +102,7 @@ class StaticFragmentCrudTest extends ChiefTestCase
         $fragmentable = $this->fragmentRepo->getByOwner($this->owner)->first();
 
         $this->asAdmin()
-            ->get($this->manager->route('fragment-edit', $fragmentable))
+            ->get($this->manager->route('fragment-edit', $this->owner, $fragmentable))
             ->assertStatus(200);
     }
 
