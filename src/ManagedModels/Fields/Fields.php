@@ -27,6 +27,19 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
         return new static($fields);
     }
 
+    /**
+     * @return static
+     */
+    public static function fromIterable(iterable $generator): self
+    {
+        $fields = [];
+        foreach($generator as $field) {
+            $fields[] = $field;
+        }
+
+        return new static($fields);
+    }
+
     public function all(): array
     {
         return $this->fields;

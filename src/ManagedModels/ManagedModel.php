@@ -9,7 +9,7 @@ interface ManagedModel
 {
     public static function managedModelKey(): string;
 
-    public function fields(): Fields;
+//    public function fields(): Fields;
 
     public function saveFields(Fields $fields, array $input, array $files): void;
 

@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
@@ -169,11 +170,11 @@ trait CrudAssistant
         $model = $this->fieldsModel($id);
 
         $this->guard('edit', $model);
-
+trap(Fields::fromIterable($model->fields()));
         return view('chief::back.managers.edit', [
             'manager' => $this,
             'model' => $model,
-            'fields' => $model->fields()->model($model),
+            'fields' => (new Fields($model->fields()))->model($model),
         ]);
     }
 
