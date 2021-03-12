@@ -68,9 +68,6 @@ module.exports = {
             },
         },
         extend: {
-            scale: {
-                65: 0.65,
-            },
             zIndex: {
                 1: 1,
             },

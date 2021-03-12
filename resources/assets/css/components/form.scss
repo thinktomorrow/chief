@@ -46,7 +46,7 @@ input[type='file'],
 input[type='checkbox'],
 input[type='radio'] {
     appearance: none;
-    @apply relative w-5 h-5 bg-grey-100 border border-grey-150 rounded-full overflow-hidden mr-1;
+    @apply relative w-5 h-5 bg-grey-100 border border-grey-150 overflow-hidden mr-1;
 
     &:focus {
         @apply ring-2 ring-primary-500;
@@ -54,11 +54,27 @@ input[type='radio'] {
 
     &:before {
         content: '';
-        @apply absolute inset-0 bg-primary-500 transform scale-0 z-10 rounded-full transition-all duration-150 ease-in-out;
+        @apply absolute inset-0 bg-primary-500 transform scale-0 z-10 transition-all duration-150 ease-in-out;
     }
 
     &:checked:before {
         @apply transform scale-50;
+    }
+}
+
+input[type='radio'] {
+    @apply rounded-full;
+
+    &:before {
+        @apply rounded-full;
+    }
+}
+
+input[type='checkbox'] {
+    @apply rounded;
+
+    &:before {
+        @apply rounded;
     }
 }
 

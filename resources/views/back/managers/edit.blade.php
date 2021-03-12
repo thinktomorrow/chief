@@ -36,7 +36,7 @@
 @endcomponent
 
 @section('content')
-    <div class="container my">
+    <div class="container">
         <div class="row gutter-6">
             <div class="w-full lg:w-2/3">
                 <div class="window window-white space-y-12">
@@ -58,7 +58,10 @@
 
                     @adminCan('fields-edit', $model)
                         @foreach($fields->tagged('component')->notTagged('chief-component')->groupByComponent() as $componentKey => $componentFields)
-                            <livewire:fields_component :model="$model" :componentKey="$componentKey" class="window window-grey" />
+                            <livewire:fields_component
+                                :model="$model"
+                                :componentKey="$componentKey"
+                                class="window window-grey" />
                         @endforeach
                     @endAdminCan
 

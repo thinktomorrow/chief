@@ -2,30 +2,38 @@
     @if(public_method_exists($model, 'render'.ucfirst($componentKey).'Component'))
         {!! $model->{'render'.ucfirst($componentKey).'Component'}() !!}
     @else
-        @component('chief::components.card', [
-            'title' => $title ?? ucfirst($componentKey),
-            'editRequestUrl' => $manager->route('fields-edit', $model, $componentKey),
-            'type' => 'fields-' . $componentKey
-        ])
-            <div class="space-y-4">
+        <x-chief-card
+            title="{{ $title ?? null }}"
+            :editRequestUrl="{{ $manager->route('fields-edit', $model, $componentKey) }}"
+            type="fields-{{ $componentKey }}"
+        >
+            <div class="space-y-6">
                 @foreach($fields as $field)
                     <div class="space-y-2">
                         <h6 class="mb-0">{{ $field->getLabel() }}</h6>
 
                         <!-- off course, this should be sensible, for all kinds of fieldtypes, checkboxes, images, ... ... -->
                         <!-- as well as localisation ... -->
-                        <div>
-                            @if($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField)
-                                <p>{{ $field->getValue() }}</p>
-                            @elseif($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField)
-                                {{--  --}}
-                            @else
-                                {!! $field->getValue() !!}
-                            @endif
-                        </div>
+                        @if($field->getValue())
+                            <div>
+                                @switch(get_class($field))
+                                    @case(\Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField::class)
+                                        <p>{{ $field->getValue() }}</p>
+                                        @break
+                                    @case(\Thinktomorrow\Chief\ManagedModels\Fields\Types\ImageField::class)
+                                        <img src="{{ $field->getValue() }}" alt="image">
+                                        @break
+                                    @default
+                                        {!! $field->getValue() !!}
+                                        @break
+                                @endswitch
+                            </div>
+                        @else
+                            <p>...</p>
+                        @endif
                     </div>
                 @endforeach
             </div>
-        @endcomponent
+        </x-chief-card>
     @endif
 </div>
