@@ -1,13 +1,13 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\FragmentAssistant;
+namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
-class CreateFragmentActionTest extends ChiefTestCase
+class CreateFragmentTest extends ChiefTestCase
 {
     /** @test */
     public function admin_can_view_the_fragment_create_form()

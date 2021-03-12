@@ -1,14 +1,15 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\FragmentAssistant;
+namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Illuminate\Http\UploadedFile;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
-class UpdateFragmentTest extends ChiefTestCase
+class StoreFragmentTest extends ChiefTestCase
 {
     private $owner;
     private $fragmentManager;
@@ -18,24 +19,27 @@ class UpdateFragmentTest extends ChiefTestCase
         parent::setUp();
 
         $this->owner = $this->setupAndCreateArticle();
-        $this->setupAndCreateQuote($this->owner);
+
+        Quote::migrateUp();
+        chiefRegister()->model(Quote::class, FragmentManager::class);
 
         $this->fragmentManager = app(Registry::class)->manager(Quote::managedModelKey());
     }
 
     /** @test */
-    public function it_can_update_a_model()
+    public function it_can_store_a_fragment()
     {
-        $model = app(FragmentRepository::class)->getByOwner($this->owner)->first();
-
-        $this->asAdmin()->put($this->fragmentManager->route('fragment-update', $model), [
+        $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner), [
             'title' => 'new-title',
             'custom' => 'custom-value',
             'trans' => [
                 'nl' => ['title_trans' => 'title_trans nl value'],
                 'en' => ['title_trans' => 'title_trans en value'],
             ],
+
         ]);
+
+        $this->assertEquals(1, Quote::count());
 
         $quote = app(FragmentRepository::class)->getByOwner($this->owner)->first();
         $this->assertInstanceOf(Quote::class, $quote);
@@ -52,9 +56,7 @@ class UpdateFragmentTest extends ChiefTestCase
     /** @test */
     public function it_can_upload_a_file_field()
     {
-        $model = app(FragmentRepository::class)->getByOwner($this->owner)->first();
-
-        $response = $this->asAdmin()->put($this->fragmentManager->route('fragment-update', $model), [
+        $response = $this->asAdmin()->post($this->fragmentManager->route('fragment-store', $this->owner), [
             'custom' => 'custom-value',
             'files' => [
                 'thumb' => [
@@ -65,7 +67,7 @@ class UpdateFragmentTest extends ChiefTestCase
             ],
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
 
         $quote = app(FragmentRepository::class)->getByOwner($this->owner)->first();
         $this->assertEquals('tt-favicon.png', $quote->asset('thumb')->filename());

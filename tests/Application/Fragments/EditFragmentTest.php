@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Managers\Assistants\FragmentAssistant;
+namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
@@ -10,7 +10,7 @@ use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
 
-class EditFragmentActionTest extends ChiefTestCase
+class EditFragmentTest extends ChiefTestCase
 {
     private $owner;
     private $fragmentManager;
