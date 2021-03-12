@@ -2,9 +2,8 @@
 
 namespace Thinktomorrow\Chief\Admin\Setup;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Str;
 
 class CreatePageMigrationCommand extends Command
 {
@@ -30,14 +29,10 @@ class CreatePageMigrationCommand extends Command
         $tableName = $this->argument('table');
         $className = 'Create' . Str::studly($tableName) . 'Table';
 
-        $this->fileManipulation->writeFile(
-            database_path('migrations/'. date('Y_m_d_His') .'_' . Str::snake($className, '_').'.php'),
-            $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModelMigration.php.stub'), [
+        $this->fileManipulation->writeFile(database_path('migrations/'. date('Y_m_d_His') .'_' . Str::snake($className, '_').'.php'),            $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModelMigration.php.stub'), [
                 'className' => $className,
                 'tableName' => $tableName,
-            ]),
-            $this->option('force')
-        );
+            ]),            $this->option('force'));
     }
 
     protected function replacePlaceholders($content, $values): string

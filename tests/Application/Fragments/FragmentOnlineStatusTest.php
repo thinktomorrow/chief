@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -27,7 +26,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
     /** @test */
     public function a_fragment_is_default_online()
     {
-        $this->firstFragment($this->owner, function($fragment){
+        $this->firstFragment($this->owner, function ($fragment) {
             $this->assertTrue($fragment->fragmentModel()->isOnline());
         });
     }
@@ -42,7 +41,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
             'online_status' => false,
         ]);
 
-        $this->firstFragment($this->owner, function($fragment){
+        $this->firstFragment($this->owner, function ($fragment) {
             $this->assertFalse($fragment->fragmentModel()->isOnline());
         });
     }
@@ -54,7 +53,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
             'online_status' => true,
         ]);
 
-        $this->firstFragment($this->owner, function($fragment){
+        $this->firstFragment($this->owner, function ($fragment) {
             $this->assertTrue($fragment->fragmentModel()->isOnline());
         });
     }

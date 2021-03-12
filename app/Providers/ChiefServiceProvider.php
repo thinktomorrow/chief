@@ -3,24 +3,23 @@
 namespace Thinktomorrow\Chief\App\Providers;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Spatie\Sitemap\SitemapServiceProvider;
-use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
-use Thinktomorrow\Chief\Admin\Setup\CreatePageCommand;
 use Thinktomorrow\AssetLibrary\AssetLibraryServiceProvider;
-use Thinktomorrow\Chief\Admin\Setup\CreatePageMigrationCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GeneratePermissionCommand;
 use Thinktomorrow\Chief\Admin\Authorization\Console\GenerateRoleCommand;
 use Thinktomorrow\Chief\Admin\Nav\Nav;
 use Thinktomorrow\Chief\Admin\Settings\SettingFieldsManager;
 use Thinktomorrow\Chief\Admin\Settings\Settings;
 use Thinktomorrow\Chief\Admin\Settings\SettingsServiceProvider;
+use Thinktomorrow\Chief\Admin\Setup\CreatePageCommand;
+use Thinktomorrow\Chief\Admin\Setup\CreatePageMigrationCommand;
+use Thinktomorrow\Chief\Admin\Setup\FileManipulation;
+use Thinktomorrow\Chief\Admin\Setup\SetupConfig;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Thinktomorrow\Chief\App\Console\ChiefPublishCommand;
 use Thinktomorrow\Chief\App\Console\CreateAdmin;
 use Thinktomorrow\Chief\App\Console\CreateDeveloper;
 use Thinktomorrow\Chief\App\Console\GenerateSitemap;
@@ -161,10 +160,7 @@ class ChiefServiceProvider extends ServiceProvider
 
         // Setup commands
         $this->app->bind(CreatePageCommand::class, function ($app) {
-            return new CreatePageCommand(
-                $app->make(FileManipulation::class),
-                new SetupConfig(config('chief.setup', []))
-            );
+            return new CreatePageCommand($app->make(FileManipulation::class),                new SetupConfig(config('chief.setup', [])));
         });
 
         (new MacrosServiceProvider($this->app))->register();

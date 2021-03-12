@@ -4,24 +4,24 @@
 namespace Thinktomorrow\Chief\Tests\Shared;
 
 use Illuminate\Database\Eloquent\Model;
-use Thinktomorrow\Chief\Managers\Manager;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
-use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
-use Thinktomorrow\Chief\Managers\Presets\PageManager;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
-use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsOwner;
+use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
+use Thinktomorrow\Chief\Managers\Manager;
+use Thinktomorrow\Chief\Managers\Presets\FragmentManager;
+use Thinktomorrow\Chief\Managers\Presets\PageManager;
+use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithFileValidation;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePageWithImageValidation;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 trait TestingWithManagers
 {
     protected function setupAndCreateArticle(array $values = [], bool $withSetup = true): ArticlePage
     {
-        if($withSetup) {
+        if ($withSetup) {
             ArticlePage::migrateUp();
             chiefRegister()->model(ArticlePage::class, PageManager::class);
         }
@@ -61,9 +61,7 @@ trait TestingWithManagers
 
     protected function addAsFragment($model, $owner)
     {
-        return $model->setFragmentModel(
-            app(CreateFragmentModel::class)->create($owner, $model, 1)
-        );
+        return $model->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $model, 1));
     }
 
     protected function manager($managedModel): Manager
@@ -89,11 +87,13 @@ trait TestingWithManagers
     {
         $fragments = app(FragmentRepository::class)->getByOwner($owner);
 
-        if(!$fragments->first()) {
+        if (! $fragments->first()) {
             throw new \Exception('Test failed. Owner doesnt have any fragments.');
         }
 
-        if($callback) $callback($fragments->first());
+        if ($callback) {
+            $callback($fragments->first());
+        }
 
         return $fragments->first();
     }

@@ -44,19 +44,13 @@ class RenderingFragmentsTest extends ChiefTestCase
             ->withModel(FragmentableStub::class)
             ->create();
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
                 'order' => 1,
-            ]
-        );
+            ]);
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
                 'order' => 2,
-            ]
-        );
+            ]);
 
         $this->assertRenderedFragments($owner, 'fragment-stub-1 fragment-stub-2 ');
     }
@@ -74,12 +68,9 @@ class RenderingFragmentsTest extends ChiefTestCase
 
         $manager = app(Registry::class)->manager(SnippetStub::managedModelKey());
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, SnippetStub::managedModelKey()),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, SnippetStub::managedModelKey()), [
                 'order' => 1,
-            ]
-        );
+            ]);
 
         $this->assertRenderedFragments($owner, 'snippet-stub');
     }

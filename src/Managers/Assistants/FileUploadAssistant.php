@@ -40,11 +40,7 @@ trait FileUploadAssistant
             $model = $id ? $this->fieldsModel($id) : new $this->managedModelClass();
             $field = $model->fields()->find($fieldKey);
 
-            $this->validateAsyncFileUpload(
-                $field,
-                $locale,
-                $uploadedFile
-            );
+            $this->validateAsyncFileUpload($field,                $locale,                $uploadedFile);
 
             $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName());
 

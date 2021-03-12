@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Modules;
 
-use Illuminate\Support\Collection;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 
 final class Modules

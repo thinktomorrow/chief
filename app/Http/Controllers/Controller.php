@@ -18,16 +18,10 @@ class Controller extends BaseController
 
     protected function lengthAwarePaginator(Collection $collection, $itemsPerPage, $pageName): LengthAwarePaginator
     {
-        $paginator = new LengthAwarePaginator(
-            $collection->forPage(Paginator::resolveCurrentPage($pageName), $itemsPerPage),
-            $collection->count(),
-            $itemsPerPage,
-            Paginator::resolveCurrentPage($pageName),
-            [
+        $paginator = new LengthAwarePaginator($collection->forPage(Paginator::resolveCurrentPage($pageName), $itemsPerPage),            $collection->count(),            $itemsPerPage,            Paginator::resolveCurrentPage($pageName),            [
                 'path' => Paginator::resolveCurrentPath($pageName),
                 'pageName' => $pageName,
-            ]
-        );
+            ]);
 
         return $paginator;
     }

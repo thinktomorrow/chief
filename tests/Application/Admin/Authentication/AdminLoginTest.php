@@ -143,10 +143,7 @@ class AdminLoginTest extends ChiefTestCase
             'email' => 'foo@example.com',
         ]);
 
-        Notification::assertSentTo(
-            $admin,
-            ResetAdminPassword::class
-        );
+        Notification::assertSentTo($admin, ResetAdminPassword::class);
     }
 
     /** @test */

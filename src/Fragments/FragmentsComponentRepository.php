@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Fragments;
 
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 
 class FragmentsComponentRepository
 {
@@ -32,7 +32,7 @@ class FragmentsComponentRepository
     {
         return $this->fragments()->map(function (Fragmentable $model) {
             return [
-                'model'   => $model,
+                'model' => $model,
                 'manager' => app(Registry::class)->manager($model::managedModelKey()),
             ];
         });
@@ -50,21 +50,21 @@ class FragmentsComponentRepository
 
             return [
                 'manager' => $this->registry->manager($fragmentableClass::managedModelKey()),
-                'model'   => new $modelClass(),
+                'model' => new $modelClass(),
             ];
         }, $this->owner->allowedFragments());
     }
 
     public function getSharedFragments(): array
     {
-        $fragmentModelIds = $this->fragments()->map(fn($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
+        $fragmentModelIds = $this->fragments()->map(fn ($fragment) => $fragment->fragmentModel())->pluck('id')->toArray();
 
         return $this->fragmentRepository->shared()->reject(function ($fragmentable) use ($fragmentModelIds) {
             return in_array($fragmentable->fragmentModel()->id, $fragmentModelIds);
         })->map(function ($fragmentable) {
             return [
                 'manager' => $this->registry->manager($fragmentable::managedModelKey()),
-                'model'   => $fragmentable,
+                'model' => $fragmentable,
             ];
         })->all();
     }

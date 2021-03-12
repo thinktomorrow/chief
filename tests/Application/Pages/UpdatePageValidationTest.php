@@ -32,29 +32,13 @@ final class UpdatePageValidationTest extends ChiefTestCase
     /** @test */
     public function a_required_field_can_be_validated()
     {
-        $this->assertValidation(
-            new ArticlePage(),
-            'title',
-            $this->payload(['title' => '']),
-            $this->manager->route('edit', $this->model),
-            $this->manager->route('update', $this->model),
-            1,
-            'put'
-        );
+        $this->assertValidation(new ArticlePage(), 'title', $this->payload(['title' => '']), $this->manager->route('edit', $this->model), $this->manager->route('update', $this->model), 1, 'put');
     }
 
     /** @test */
     public function a_required_translatable_field_can_be_validated()
     {
-        $this->assertValidation(
-            new ArticlePage(),
-            'trans.nl.content_trans',
-            $this->payload(['trans.nl.content_trans' => '']),
-            $this->manager->route('edit', $this->model),
-            $this->manager->route('update', $this->model),
-            1,
-            'put'
-        );
+        $this->assertValidation(new ArticlePage(), 'trans.nl.content_trans', $this->payload(['trans.nl.content_trans' => '']), $this->manager->route('edit', $this->model), $this->manager->route('update', $this->model), 1, 'put');
     }
 
     /** @test */

@@ -14,9 +14,7 @@ final class PublishAssistantTest extends ChiefTestCase
         $model = $this->setupAndCreateArticle([PageState::KEY => PageState::DRAFT]);
         $manager = $this->manager($model);
 
-        $this->asAdmin()->post(
-            $manager->route('publish', $model)
-        );
+        $this->asAdmin()->post($manager->route('publish', $model));
 
         $this->assertTrue($model->fresh()->isPublished());
     }
@@ -27,9 +25,7 @@ final class PublishAssistantTest extends ChiefTestCase
         $model = $this->setupAndCreateArticle([PageState::KEY => PageState::PUBLISHED]);
         $manager = $this->manager($model);
 
-        $this->asAdmin()->post(
-            $manager->route('unpublish', $model)
-        );
+        $this->asAdmin()->post($manager->route('unpublish', $model));
 
         $this->assertFalse($model->fresh()->isPublished());
     }

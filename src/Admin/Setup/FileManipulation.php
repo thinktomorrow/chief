@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Setup;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Console\Concerns\InteractsWithIO;
+use Illuminate\Filesystem\Filesystem;
 
 final class FileManipulation
 {
@@ -25,6 +25,7 @@ final class FileManipulation
 
         if ($this->files->exists($path) && ! $overwriteIfExists) {
             $this->error('Class already exists at '.str_replace(base_path(), '', $path.''));
+
             return;
         }
 
@@ -34,8 +35,9 @@ final class FileManipulation
 
     public function addToMethod($filepath, $method, $content)
     {
-        if (!$this->files->exists($filepath)) {
+        if (! $this->files->exists($filepath)) {
             $this->error('Class ' . $filepath .' does not exist.');
+
             return;
         }
 

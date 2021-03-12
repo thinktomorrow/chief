@@ -23,9 +23,7 @@ final class StaticFragmentManager implements Manager
 
     private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): void
     {
-        $fragmentable->setFragmentModel(
-            app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order)
-        );
+        $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
 
         $fragmentable->fragmentModel()->saveFields($fragmentable->fields()->notTagged('edit'), $request->all(), $request->allFiles());
     }

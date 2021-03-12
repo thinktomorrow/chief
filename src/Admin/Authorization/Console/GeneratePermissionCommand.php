@@ -28,9 +28,7 @@ class GeneratePermissionCommand extends Command
 
     private function getNameArgument(): string
     {
-        return Str::slug(
-            strtolower(Str::singular($this->argument('name')))
-        );
+        return Str::slug(strtolower(Str::singular($this->argument('name'))));
     }
 
 

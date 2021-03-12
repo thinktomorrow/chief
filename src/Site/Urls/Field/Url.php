@@ -30,17 +30,13 @@ final class Url
         $checkUrl = app(ModelManagers::class)->find($model)->route('checkUrl', $model);
 
         return UrlField::make('url-slugs')
-                ->validation(
-                    [
+                ->validation([
                         'array',
                         'min:1',
                         new UniqueUrlSlugRule($model, $model),
-                    ],
-                    [],
-                    [
+                    ],                    [],                    [
                         'url-slugs.*' => 'taalspecifieke link',
-                    ]
-                )
+                    ])
                 ->view('chief::manager.fieldtypes.url-slugs')
                 ->viewData([
                     'fields' => UrlSlugFields::fromModel($model),

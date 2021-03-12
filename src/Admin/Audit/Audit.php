@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Audit;
 
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Activitylog\ActivityLogger;
 use Spatie\Activitylog\Models\Activity;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Contracts\Pagination\Paginator;
 
 class Audit extends Activity
 {
@@ -25,7 +24,7 @@ class Audit extends Activity
     }
     public function getReadableCreatedAt()
     {
-        if($this->created_at->gte(now()->subDays(6))) {
+        if ($this->created_at->gte(now()->subDays(6))) {
             return $this->created_at->locale(app()->getLocale())->diffForHumans();
         }
 

@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Chief\Admin\Setup;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Str;
 
 class CreatePageCommand extends Command
 {
@@ -46,29 +46,21 @@ class CreatePageCommand extends Command
             $namespace = $this->ask('Which namespace will be used?', $this->config->namespace());
         }
 
-        if($this->confirm('Would you like to create a migration file?', true)) {
+        if ($this->confirm('Would you like to create a migration file?', true)) {
             $createMigrationFile = true;
         }
 
         $className = Str::studly($name);
         $namespacedClassName = '\\' . $namespace . '\\' . $className;
 
-        $this->fileManipulation->writeFile(
-            $this->config->path($className.'.php'),
-            $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
+        $this->fileManipulation->writeFile($this->config->path($className.'.php'),            $this->replacePlaceholders(file_get_contents(__DIR__ .'/stubs/pageModel.php.stub'), [
                 'className' => $className,
                 'namespace' => $namespace,
-            ]),
-            $this->option('force')
-        );
+            ]),            $this->option('force'));
 
-        $this->fileManipulation->addToMethod(
-            app_path('Providers/AppServiceProvider.php'),
-            'boot',
-            'chiefRegister()->model('.$namespacedClassName.'::class, \Thinktomorrow\Chief\Managers\Presets\PageManager::class, \'nav\');'
-        );
+        $this->fileManipulation->addToMethod(app_path('Providers/AppServiceProvider.php'),            'boot',            'chiefRegister()->model('.$namespacedClassName.'::class, \Thinktomorrow\Chief\Managers\Presets\PageManager::class, \'nav\');');
 
-        if($createMigrationFile) {
+        if ($createMigrationFile) {
             $this->call('chief:page-migration', ['table' => Str::snake(Str::plural($className))]);
         }
 
@@ -84,10 +76,7 @@ class CreatePageCommand extends Command
 
     protected function writeFrontendView(): void
     {
-
-        $path = $this->viewPath(
-            str_replace('.', '/', 'components.'.$this->getView()).'.blade.php'
-        );
+        $path = $this->viewPath(str_replace('.', '/', 'components.'.$this->getView()).'.blade.php');
 
         if (! $this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
@@ -99,12 +88,9 @@ class CreatePageCommand extends Command
             return;
         }
 
-        file_put_contents(
-            $path,
-            '<div>
+        file_put_contents($path,            '<div>
     <!-- '.Inspiring::quote().' -->
-</div>'
-        );
+</div>');
     }
     protected function replacePlaceholders($content, $values): string
     {
@@ -113,7 +99,7 @@ class CreatePageCommand extends Command
             '__STUB_CLASSNAME__' => $values['className'],
             '__STUB_FIELDS__' => '// hier komen de fields',
         ];
-// --fields=name:input,online:bool,
+        // --fields=name:input,online:bool,
         return str_replace(array_keys($replacements), array_values($replacements), $content);
     }
 }

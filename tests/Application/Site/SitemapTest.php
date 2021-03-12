@@ -30,9 +30,7 @@ class SitemapTest extends ChiefTestCase
         Carbon::setTestNow($this->carbon);
 
         $this->mockHandler = new MockHandler();
-        $this->sitemapXml = new SitemapXml(
-            new Client(['handler' => $this->mockHandler])
-        );
+        $this->sitemapXml = new SitemapXml(new Client(['handler' => $this->mockHandler]));
 
         $page = ArticlePage::create(['current_state' => PageState::PUBLISHED]);
         UrlRecord::create(['locale' => 'nl', 'slug' => 'bar', 'model_type' => $page->getMorphClass(), 'model_id' => $page->id]);

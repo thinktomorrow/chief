@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldName;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationNames;
@@ -330,7 +329,7 @@ abstract class AbstractField
 
     public function hasValidation(): bool
     {
-        return isset($this->validation) && !$this->validation->isEmpty();
+        return isset($this->validation) && ! $this->validation->isEmpty();
     }
 
     public function required(): bool

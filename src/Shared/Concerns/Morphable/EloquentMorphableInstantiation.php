@@ -103,9 +103,7 @@ trait EloquentMorphableInstantiation
 
         $model->exists = $exists;
 
-        $model->setConnection(
-            $this->getConnectionName()
-        );
+        $model->setConnection($this->getConnectionName());
 
         return $model;
     }

@@ -52,9 +52,7 @@ class UserController extends Controller
             'roles' => 'required|array',
         ]);
 
-        $user = User::create(
-            $request->only(['firstname', 'lastname', 'email'])
-        );
+        $user = User::create($request->only(['firstname', 'lastname', 'email']));
 
         $user->assignRole($request->get('roles', []));
 

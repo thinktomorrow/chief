@@ -2,9 +2,6 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Admin\Setup;
 
-use Thinktomorrow\Chief\Admin\HealthMonitor\Exceptions\InvalidClassException;
-use Thinktomorrow\Chief\Admin\HealthMonitor\Monitor;
-use Thinktomorrow\Chief\Admin\Settings\Setting;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
 

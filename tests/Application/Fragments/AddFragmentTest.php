@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class AddFragmentTest extends ChiefTestCase
 {
@@ -24,9 +24,7 @@ class AddFragmentTest extends ChiefTestCase
     {
         $owner2 = ArticlePage::create();
 
-        $this->asAdmin()->post(
-            $this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment)
-        );
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
 
         $this->assertFragmentCount($owner2, 1);
     }
@@ -36,9 +34,7 @@ class AddFragmentTest extends ChiefTestCase
     {
         $fragment = $this->addAsFragment(ArticlePage::create(), $this->owner);
 
-        $this->asAdmin()->post(
-            $this->manager($fragment)->route('fragment-add', $this->fragment, $fragment)
-        )->assertStatus(201);
+        $this->asAdmin()->post($this->manager($fragment)->route('fragment-add', $this->fragment, $fragment))->assertStatus(201);
 
         $this->assertFragmentCount($this->fragment->fragmentModel(), 1);
     }
@@ -55,13 +51,9 @@ class AddFragmentTest extends ChiefTestCase
     {
         $owner2 = ArticlePage::create();
 
-        $this->asAdmin()->post(
-            $this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment)
-        );
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
 
-        $this->asAdmin()->post(
-            $this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment)
-        );
+        $this->asAdmin()->post($this->manager($this->fragment)->route('fragment-add', $owner2, $this->fragment));
 
         $this->assertFragmentCount($owner2, 1);
     }

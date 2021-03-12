@@ -22,9 +22,7 @@ class ChiefMenu
      */
     public static function fromMenuItems(string $type = 'main'): self
     {
-        return new static(app(BuildMenuItemsTree::class)->build(
-            MenuItem::where('menu_type', $type)->get()
-        ));
+        return new static(app(BuildMenuItemsTree::class)->build(MenuItem::where('menu_type', $type)->get()));
     }
 
 //    public static function fromArray(array $items)

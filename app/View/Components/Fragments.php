@@ -5,9 +5,9 @@ namespace Thinktomorrow\Chief\App\View\Components;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Managers\Register\Registry;
-use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
 
 // Nested fragments component in sidebar (cannot use livewire for this)
 class Fragments extends Component

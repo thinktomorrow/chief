@@ -40,9 +40,7 @@ class BuildMenuItemsTree
             }
         }
 
-        return $this->transformToNodeCollection(
-            array_merge($items->all(), $collectionItems->all())
-        );
+        return $this->transformToNodeCollection(array_merge($items->all(), $collectionItems->all()));
     }
 
     private function transformToNodeCollection(array $items): NodeCollection

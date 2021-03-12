@@ -16,7 +16,7 @@ final class RemoveFragmentModel
             throw new \InvalidArgumentException('No context model found for owner ' . get_class($owner) . ' - ' . $owner->id);
         }
 
-        if (!$context->fragments()->where('id', $fragmentModel->id)->exists()) {
+        if (! $context->fragments()->where('id', $fragmentModel->id)->exists()) {
             throw new FragmentAlreadyRemoved('Fragment [' . $fragmentModel->id . '] does not exist for owner [' . $owner->modelReference()->get().']');
         }
 

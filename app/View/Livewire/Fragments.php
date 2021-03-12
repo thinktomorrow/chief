@@ -4,8 +4,8 @@ namespace Thinktomorrow\Chief\App\View\Livewire;
 
 use Illuminate\Support\Collection;
 use Livewire\Component;
-use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
+use Thinktomorrow\Chief\Fragments\FragmentsComponentRepository;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 

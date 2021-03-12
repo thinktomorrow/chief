@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
-use Thinktomorrow\Chief\Fragments\Fragmentable;
+use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModel;
 use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
+use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
-use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModel;
-use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
@@ -52,7 +52,7 @@ trait FragmentAssistant
 
     public function routeFragmentAssistant(string $action, $model = null, ...$parameters): ?string
     {
-        if (!in_array($action, [
+        if (! in_array($action, [
             'fragment-edit',
             'fragment-update',
             'fragment-delete',
@@ -71,7 +71,7 @@ trait FragmentAssistant
 
         // model argument is owner for create endpoints
         if (in_array($action, ['fragment-create', 'fragment-store', 'fragment-edit', 'fragment-add', 'fragment-remove'])) {
-            if (!$model || !$model instanceof FragmentsOwner) {
+            if (! $model || ! $model instanceof FragmentsOwner) {
                 throw new \Exception('Fragment route definition for ' . $action . ' requires a FragmentsOwner Model as second argument.');
             }
 
@@ -82,10 +82,7 @@ trait FragmentAssistant
 
             // Nested fragments routes
             if ($model instanceof Fragmentable && $model->isFragment()) {
-                return route(
-                    'chief.' . $modelKey . '.nested-' . $action,
-                    array_merge([$model->fragmentModel()->id], $parameters)
-                );
+                return route('chief.' . $modelKey . '.nested-' . $action,                    array_merge([$model->fragmentModel()->id], $parameters));
             }
 
             return route('chief.' . $modelKey . '.' . $action, array_merge([
@@ -95,7 +92,7 @@ trait FragmentAssistant
         }
 
         // Here model refers to the editable fragmentable
-        if (!$model || !$model instanceof Fragmentable) {
+        if (! $model || ! $model instanceof Fragmentable) {
             throw new \Exception('Fragment route definition for ' . $action . ' requires the fragment model as second argument.');
         }
 
@@ -120,16 +117,12 @@ trait FragmentAssistant
 
     public function fragmentCreate(Request $request, string $ownerKey, $ownerId)
     {
-        return $this->renderFragmentCreate(
-            $this->ownerModel($ownerKey, $ownerId)
-        );
+        return $this->renderFragmentCreate($this->ownerModel($ownerKey, $ownerId));
     }
 
     public function nestedFragmentCreate(Request $request, $fragmentModelId)
     {
-        return $this->renderFragmentCreate(
-            $this->fragmentRepository->find($fragmentModelId)
-        );
+        return $this->renderFragmentCreate($this->fragmentRepository->find($fragmentModelId));
     }
 
     /**
@@ -141,9 +134,9 @@ trait FragmentAssistant
 
         return view('chief::manager.cards.fragments.create', [
             'manager' => $this,
-            'owner'   => $owner,
-            'model'   => $fragmentable,
-            'fields'  => $fragmentable->fields()->notTagged('edit'),
+            'owner' => $owner,
+            'model' => $fragmentable,
+            'fields' => $fragmentable->fields()->notTagged('edit'),
         ]);
     }
 
@@ -151,20 +144,14 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentStore(
-            $this->ownerModel($ownerKey, $ownerId),
-            $request
-        );
+        return $this->handleFragmentStore($this->ownerModel($ownerKey, $ownerId),            $request);
     }
 
     public function nestedFragmentStore(Request $request, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentStore(
-            $this->fragmentRepository->find($fragmentModelId)->fragmentModel(),
-            $request
-        );
+        return $this->handleFragmentStore($this->fragmentRepository->find($fragmentModelId)->fragmentModel(),            $request);
     }
 
     private function handleFragmentStore($ownerModel, Request $request)
@@ -179,7 +166,7 @@ trait FragmentAssistant
 
         return response()->json([
             'message' => 'fragment created',
-            'data'    => [],
+            'data' => [],
         ], 201);
     }
 
@@ -187,31 +174,21 @@ trait FragmentAssistant
     {
         $fragmentable->saveFields($fragmentable->fields()->notTagged('edit'), $request->all(), $request->allFiles());
 
-        $fragmentable->setFragmentModel(
-            app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order)
-        );
+        $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
     }
 
     public function fragmentAdd(Request $request, string $ownerKey, $ownerId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd(
-            $this->ownerModel($ownerKey, $ownerId),
-            $fragmentModelId,
-            $request->input('order', 0)
-        );
+        return $this->handleFragmentAdd($this->ownerModel($ownerKey, $ownerId),            $fragmentModelId,            $request->input('order', 0));
     }
 
     public function nestedFragmentAdd(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentAdd(
-            $this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),
-            $fragmentModelId,
-            $request->input('order', 0)
-        );
+        return $this->handleFragmentAdd($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),            $fragmentModelId,            $request->input('order', 0));
     }
 
     private function handleFragmentAdd(Model $ownerModel, string $fragmentModelId, int $order)
@@ -219,21 +196,17 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(AddFragmentModel::class)->handle(
-                $ownerModel,
-                $fragmentable->fragmentModel(),
-                $order
-            );
+            app(AddFragmentModel::class)->handle($ownerModel,                $fragmentable->fragmentModel(),                $order);
         } catch (FragmentAlreadyAdded $e) {
             return response()->json([
                 'message' => 'fragment not added',
-                'data'    => [],
+                'data' => [],
             ], 400);
         }
 
         return response()->json([
             'message' => 'fragment added',
-            'data'    => [],
+            'data' => [],
         ], 201);
     }
 
@@ -241,20 +214,14 @@ trait FragmentAssistant
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove(
-            $this->ownerModel($ownerKey, $ownerId),
-            $fragmentModelId
-        );
+        return $this->handleFragmentRemove($this->ownerModel($ownerKey, $ownerId),            $fragmentModelId);
     }
 
     public function nestedFragmentRemove(Request $request, $fragmentOwnerModelId, $fragmentModelId)
     {
         $this->guard('fragment-delete');
 
-        return $this->handleFragmentRemove(
-            $this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),
-            $fragmentModelId
-        );
+        return $this->handleFragmentRemove($this->fragmentRepository->find($fragmentOwnerModelId)->fragmentModel(),            $fragmentModelId);
     }
 
     private function handleFragmentRemove(Model $ownerModel, string $fragmentModelId)
@@ -262,20 +229,17 @@ trait FragmentAssistant
         $fragmentable = $this->fragmentRepository->find($fragmentModelId);
 
         try {
-            app(RemoveFragmentModel::class)->handle(
-                $ownerModel,
-                $fragmentable->fragmentModel(),
-            );
+            app(RemoveFragmentModel::class)->handle($ownerModel,                $fragmentable->fragmentModel(), );
         } catch (FragmentAlreadyRemoved $e) {
             return response()->json([
                 'message' => 'fragment is already removed.',
-                'data'    => [],
+                'data' => [],
             ], 400);
         }
 
         return response()->json([
             'message' => 'fragment removed',
-            'data'    => [],
+            'data' => [],
         ]);
     }
 
@@ -290,9 +254,9 @@ trait FragmentAssistant
 
         return view('chief::manager.cards.fragments.edit', [
             'manager' => $this,
-            'owner'   => $this->ownerModel($ownerKey, $ownerId),
-            'model'   => $fragmentable,
-            'fields'  => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),
+            'owner' => $this->ownerModel($ownerKey, $ownerId),
+            'model' => $fragmentable,
+            'fields' => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),
         ]);
     }
 
@@ -311,7 +275,7 @@ trait FragmentAssistant
 
         return response()->json([
             'message' => 'fragment updated',
-            'data'    => [],
+            'data' => [],
         ], 200);
     }
 
@@ -325,7 +289,7 @@ trait FragmentAssistant
 
         return response()->json([
             'message' => 'fragment is now shared',
-            'data'    => [],
+            'data' => [],
         ]);
     }
 
@@ -339,7 +303,7 @@ trait FragmentAssistant
 
         return response()->json([
             'message' => 'fragment is no longer shared.',
-            'data'    => [],
+            'data' => [],
         ]);
     }
 
@@ -349,11 +313,11 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        $fragmentable->fragmentModel()->update(['online_status' => !!$request->input('online_status')]);
+        $fragmentable->fragmentModel()->update(['online_status' => ! ! $request->input('online_status')]);
 
         return response()->json([
             'message' => 'fragment online status updated',
-            'data'    => [],
+            'data' => [],
         ]);
     }
 

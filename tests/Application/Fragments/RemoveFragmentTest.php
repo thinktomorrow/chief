@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
-use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
+use Thinktomorrow\Chief\Tests\Shared\Fakes\Quote;
 
 class RemoveFragmentTest extends ChiefTestCase
 {
@@ -24,9 +24,7 @@ class RemoveFragmentTest extends ChiefTestCase
     {
         $this->assertFragmentCount($this->owner, 1);
 
-        $this->asAdmin()->delete(
-            $this->manager($this->fragment)->route('fragment-remove', $this->owner, $this->fragment)
-        );
+        $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-remove', $this->owner, $this->fragment));
 
         $this->assertFragmentCount($this->owner, 0);
     }
@@ -36,9 +34,7 @@ class RemoveFragmentTest extends ChiefTestCase
     {
         $fragment = $this->addAsFragment(ArticlePage::create(), $this->fragment->fragmentModel());
 
-        $this->asAdmin()->delete(
-            $this->manager($this->fragment)->route('fragment-remove', $this->fragment, $fragment)
-        )->assertStatus(200);
+        $this->asAdmin()->delete($this->manager($this->fragment)->route('fragment-remove', $this->fragment, $fragment))->assertStatus(200);
 
         $this->assertFragmentCount($this->fragment->fragmentModel(), 0);
     }
@@ -56,13 +52,9 @@ class RemoveFragmentTest extends ChiefTestCase
         $fragment = $this->addAsFragment(ArticlePage::create(), $this->owner);
         $this->assertFragmentCount($this->owner, 2);
 
-        $this->asAdmin()->delete(
-            $this->manager($this->owner)->route('fragment-remove', $this->owner, $fragment)
-        );
+        $this->asAdmin()->delete($this->manager($this->owner)->route('fragment-remove', $this->owner, $fragment));
 
-        $this->asAdmin()->delete(
-            $this->manager($this->owner)->route('fragment-remove', $this->owner, $fragment)
-        );
+        $this->asAdmin()->delete($this->manager($this->owner)->route('fragment-remove', $this->owner, $fragment));
 
         $this->assertFragmentCount($this->owner, 1);
     }
