@@ -5,20 +5,23 @@
 @stop
 
 @section('content')
-    <div class="row gutter-l stack-xl">
-        <div class="column-6">
-            <h1 class="text-5xl">Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}</h1>
-            <p class="text-lg font-medium text-grey-500">Don't try to follow trends. Create them.</p>
-        </div>
+    <div class="container my">
+        <div class="row gutter-6">
+            <div class="w-full lg:w-1/2 space-y-6 prose prose-dark">
+                <h1 class="text-5xl">Welkom op je dashboard, {{ ucfirst(Auth::user()->firstname) }}</h1>
 
-        <div class="gutter column-6 right">
-            @php
-                app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))->get());
-            @endphp
+                <p class="text-lg font-medium">
+                    <span class="text-grey-500">Don't try to follow trends. Create them.</span>
+                </p>
+            </div>
+
+            <div class="w-full lg:w-1/2">
+                @php
+                    app(Thinktomorrow\Chief\Admin\Widgets\RenderWidgets::class)
+                        ->render(\Thinktomorrow\Chief\Admin\Widgets\Widgets::fromArray(config('chief.widgets', []))
+                        ->get());
+                @endphp
+            </div>
         </div>
     </div>
-@stop
-
-@section('chief-footer')
-    @include('chief::back._layouts._partials.chief-footer')
 @stop

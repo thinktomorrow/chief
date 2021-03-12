@@ -1,0 +1,192 @@
+/**
+* Warpaint stack utility - standard & responsive margins.
+* These can be set for every individual project.
+*/
+@responsive {
+    .mt {
+        @apply mt-8;
+        @screen xs {
+            @apply mt-8;
+        }
+        @screen sm {
+            @apply mt-8;
+        }
+        @screen md {
+            @apply mt-8;
+        }
+        @screen lg {
+            @apply mt-16;
+        }
+        @screen xl {
+            @apply mt-16;
+        }
+        @screen 2xl {
+            @apply mt-24;
+        }
+    }
+    .-mt {
+        @apply -mt-8;
+        @screen xs {
+            @apply -mt-8;
+        }
+        @screen sm {
+            @apply -mt-8;
+        }
+        @screen md {
+            @apply -mt-8;
+        }
+        @screen lg {
+            @apply -mt-16;
+        }
+        @screen xl {
+            @apply -mt-16;
+        }
+        @screen 2xl {
+            @apply -mt-24;
+        }
+    }
+    .mr {
+        @apply mr-8;
+        @screen xs {
+            @apply mr-8;
+        }
+        @screen sm {
+            @apply mr-8;
+        }
+        @screen md {
+            @apply mr-8;
+        }
+        @screen lg {
+            @apply mr-16;
+        }
+        @screen xl {
+            @apply mr-16;
+        }
+        @screen 2xl {
+            @apply mr-24;
+        }
+    }
+    .-mr {
+        @apply -mr-8;
+        @screen xs {
+            @apply -mr-8;
+        }
+        @screen sm {
+            @apply -mr-8;
+        }
+        @screen md {
+            @apply -mr-8;
+        }
+        @screen lg {
+            @apply -mr-16;
+        }
+        @screen xl {
+            @apply -mr-16;
+        }
+        @screen 2xl {
+            @apply -mr-24;
+        }
+    }
+    .mb {
+        @apply mb-8;
+        @screen xs {
+            @apply mb-8;
+        }
+        @screen sm {
+            @apply mb-8;
+        }
+        @screen md {
+            @apply mb-8;
+        }
+        @screen lg {
+            @apply mb-16;
+        }
+        @screen xl {
+            @apply mb-16;
+        }
+        @screen 2xl {
+            @apply mb-24;
+        }
+    }
+    .-mb {
+        @apply -mb-8;
+        @screen xs {
+            @apply -mb-8;
+        }
+        @screen sm {
+            @apply -mb-8;
+        }
+        @screen md {
+            @apply -mb-8;
+        }
+        @screen lg {
+            @apply -mb-16;
+        }
+        @screen xl {
+            @apply -mb-16;
+        }
+        @screen 2xl {
+            @apply -mb-24;
+        }
+    }
+    .ml {
+        @apply ml-8;
+        @screen xs {
+            @apply ml-8;
+        }
+        @screen sm {
+            @apply ml-8;
+        }
+        @screen md {
+            @apply ml-8;
+        }
+        @screen lg {
+            @apply ml-16;
+        }
+        @screen xl {
+            @apply ml-16;
+        }
+        @screen 2xl {
+            @apply ml-24;
+        }
+    }
+    .-ml {
+        @apply -ml-8;
+        @screen xs {
+            @apply -ml-8;
+        }
+        @screen sm {
+            @apply -ml-8;
+        }
+        @screen md {
+            @apply -ml-8;
+        }
+        @screen lg {
+            @apply -ml-16;
+        }
+        @screen xl {
+            @apply -ml-16;
+        }
+        @screen 2xl {
+            @apply -ml-24;
+        }
+    }
+    .my {
+        @extend .mt, .mb;
+    }
+    .-my {
+        @extend .-mt, .-mb;
+    }
+    .mx {
+        @extend .mr, .ml;
+    }
+    .-mx {
+        @extend .-mr, .-ml;
+    }
+    .m {
+        @extend .mt, .mr, .mb, .ml;
+    }
+    .-m {
+        @extend .-mt, .-mr, .-mb, .-ml;
+    }
+}

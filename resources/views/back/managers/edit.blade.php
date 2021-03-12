@@ -33,58 +33,39 @@
             </div>
         @endAdminCan
     @endslot
-
-    {{-- @slot('subtitle')
-        @adminCan('index')
-            <div class="inline-block">
-                <a class="center-y" href="@adminRoute('index')">
-                    <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-                </a>
-            </div>
-        @endAdminCan
-    @endslot --}}
-
-{{--    <div class="inline-group-s flex items-center">--}}
-{{--        {!! $model->adminLabel('online_status') !!}--}}
-
-{{--        @adminCan('update')--}}
-{{--            <button data-submit-form="updateForm{{ $model->getMorphClass().'_'.$model->id }}" type="button" class="btn btn-primary">Wijzigingen opslaan</button>--}}
-{{--        @endAdminCan--}}
-
-{{--        @include('chief::back.managers._index._options')--}}
-{{--    </div>--}}
 @endcomponent
 
 @section('content')
-    <div class="row -m-6">
-        <div class="xs-column-12 s-column-12 m-column-12 l-column-8 p-6">
-            <div class="window window-white space-y-12">
-                @adminCan('fields-edit', $model)
-                    <livewire:fields_component title="Algemeen" :model="$model" />
-                @endAdminCan
+    <div class="container my">
+        <div class="row gutter-6">
+            <div class="w-full lg:w-2/3">
+                <div class="window window-white space-y-12">
+                    @adminCan('fields-edit', $model)
+                        <livewire:fields_component title="Algemeen" :model="$model" />
+                    @endAdminCan
 
-                @adminCan('fragments-index', $model)
-                    <livewire:fragments :owner="$model" />
-                @endAdminCan
+                    @adminCan('fragments-index', $model)
+                        <livewire:fragments :owner="$model" />
+                    @endAdminCan
+                </div>
             </div>
-        </div>
 
-        <div class="xs-column-12 s-column-12 m-column-12 l-column-4 p-6">
-            <div class="space-y-12">
+            <div class="w-full lg:w-1/3">
+                <div class="space-y-12">
+                    @adminCan('links-edit', $model)
+                        <livewire:links :model="$model" class="window window-grey" />
+                    @endAdminCan
 
-                @adminCan('links-edit', $model)
-                    <livewire:links :model="$model" class="window window-grey" />
-                @endAdminCan
+                    @adminCan('fields-edit', $model)
+                        @foreach($fields->tagged('component')->notTagged('chief-component')->groupByComponent() as $componentKey => $componentFields)
+                            <livewire:fields_component :model="$model" :componentKey="$componentKey" class="window window-grey" />
+                        @endforeach
+                    @endAdminCan
 
-                @adminCan('fields-edit', $model)
-                    @foreach($fields->tagged('component')->notTagged('chief-component')->groupByComponent() as $componentKey => $componentFields)
-                        <livewire:fields_component :model="$model" :componentKey="$componentKey" class="window window-grey" />
-                    @endforeach
-                @endAdminCan
-
-                @adminCan('delete', $model)
-                    @include('chief::back.managers._transitions.delete')
-                @endAdminCan
+                    @adminCan('delete', $model)
+                        @include('chief::back.managers._transitions.delete')
+                    @endAdminCan
+                </div>
             </div>
         </div>
     </div>

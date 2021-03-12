@@ -1,6 +1,3 @@
-// Promise polyfill for support of IE9 and below
-import Es6Promise from 'es6-promise';
-
 import Errors from './utilities/Errors';
 import Form from './utilities/Form';
 
@@ -9,8 +6,8 @@ import Form from './utilities/Form';
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-require('./vendors');
-require('./utilities/chiefRedactorImageUpload');
+import './vendors';
+import './utilities/chiefRedactorImageUpload';
 
 window.Errors = Errors;
 window.Form = Form;
@@ -39,7 +36,4 @@ window.Vue.component('link-input', require('./components-vue/LinkInput.vue').def
 window.Vue.component('notifications', require('./components-vue/Notifications/Notifications.vue').default);
 window.Vue.component('notification', require('./components-vue/Notifications/Notification.vue').default);
 
-// sticky polyfill init
 window.Stickyfill.add(document.querySelectorAll('.sticky'));
-
-Es6Promise.polyfill();

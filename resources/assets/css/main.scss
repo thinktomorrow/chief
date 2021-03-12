@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+
+@import './general/base';
+@import './general/animations';
+@import './general/colors';
+@import './general/typography';
+
+@import './components/label';
+@import './components/button';
+@import './components/dropdown';
+@import './components/tabs';
+@import './components/pagebuilder';
+@import './components/modal';
+@import './components/alert';
+@import './components/form';
+@import './components/translation';
+@import './components/thumb';
+@import './components/toggles';
+@import './components/redactor';
+@import './components/slim';
+@import './components/link';
+@import './components/window';
+
+@import './components/prose';
+
+@import 'warpaint/components/_p';
+@import 'warpaint/components/_m';
+@import 'warpaint/components/_base';
+
+@tailwind utilities;
+
+@import './general/utilities';
+@import './general/overrides';

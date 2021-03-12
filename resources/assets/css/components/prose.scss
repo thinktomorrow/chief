@@ -1,0 +1,72 @@
+.prose {
+    $elementsLoose: h1, h2, h3;
+    $elementsRelaxed: h4, h5, h6;
+    $elementsNormal: p, ol, ul, blockquote, code, img, iframe;
+    $elementsTight: figcaption, cite;
+    $elementsAll: h1, h2, h3, h4, h5, h6, p, ol, ul, blockquote, code, img, iframe, figcaption, cite;
+
+    @each $element in $elementsAll {
+        @each $subElement in $elementsLoose {
+            #{$element} + #{$subElement} {
+                @apply mt-6;
+                @screen xs {
+                    @apply mt-8;
+                }
+            }
+        }
+        @each $subElement in $elementsRelaxed {
+            #{$element} + #{$subElement} {
+                @apply mt-4;
+                @screen xs {
+                    @apply mt-6;
+                }
+            }
+        }
+        @each $subElement in $elementsNormal {
+            #{$element} + #{$subElement} {
+                @apply mt-4;
+            }
+        }
+        @each $subElement in $elementsTight {
+            #{$element} + #{$subElement} {
+                @apply mt-2;
+            }
+        }
+    }
+}
+
+.prose-dark {
+    html,
+    body,
+    ul,
+    ol,
+    p,
+    cite,
+    blockquote,
+    figcaption,
+    label {
+        @apply text-grey-700;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply text-grey-900;
+    }
+    code {
+        @apply bg-grey-100 border border-grey-200 rounded;
+    }
+}
+
+.prose-editor,
+.editor-content {
+    img {
+        @apply h-auto #{!important};
+    }
+
+    a:not(.btn):not(.link) {
+        @extend .link, .link-primary;
+    }
+}

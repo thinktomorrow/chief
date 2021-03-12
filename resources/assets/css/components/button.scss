@@ -1,0 +1,122 @@
+// .btn {
+//     line-height: inherit;
+//     text-overflow: ellipsis;
+//     -webkit-appearance: none;
+//     transition: 0.2s all ease;
+//     @apply whitespace-no-wrap align-middle outline-none px-4 py-3 inline-block no-underline cursor-pointer rounded font-semibold leading-tight;
+// }
+
+// .btn-link {
+//     &:after{
+//         content:'';
+//         background-color: currentColor;
+//         transition: 0.3s all ease;
+//         @apply block h-px w-0;
+//     }
+//     &:hover{
+//         &:after{
+//             @apply w-full;
+//         }
+//     }
+// }
+
+// .btn-round {
+//     @apply rounded-lg;
+// }
+
+// .btn-icon {
+//     @apply inline-flex justify-center items-center;
+//     & > *:first-child{
+//         @apply mr-4;
+//     }
+// }
+
+// $buttonColors: (
+//     primary: ($color-primary, $color-grey),
+//     secondary: ($color-secondary, white),
+//     success: ($color-success, white),
+//     error: ($color-error, white),
+//     warning: ($color-warning, white),
+//     information: ($color-information, white),
+// );
+
+// @each $name, $colors in $buttonColors{
+
+//     $bgcolor: nth($colors, 1);
+//     $fontcolor: nth($colors, 2);
+
+//     .btn-group-#{$name},
+//     .btn-#{$name}{
+//         background-color: $bgcolor;
+//         color: $fontcolor;
+//         box-shadow: 0px 2px 0px 0px darken($bgcolor, 10%);
+
+//         &:hover:not([disabled]), &:focus, &:active, &.active {
+//             color: $fontcolor;
+//             background-color: lighten($bgcolor, 3%);
+//             transform: translateY(2px);
+//             box-shadow: 0px 2px 0px 0px transparent;
+//         }
+//     }
+
+//     .btn-o-#{$name}{
+//         @apply bg-transparent;
+//         color: $bgcolor;
+//         border: 1px solid $bgcolor;
+//         &:hover, &:focus, &:active, &.active{
+//             background-color: $bgcolor;
+//             color: $fontcolor;
+//             @apply shadow-lg;
+//         }
+//     }
+
+//     .btn-group-#{$name} .btn-group-btn{
+//         &:first-child{
+//             border-right: 1px solid $bgcolor;
+//         }
+//     }
+// }
+
+// // SPLIT BUTTONS
+// // Buttons are not floated to allow for flex behaviour but this means that there should be no
+// // space between the button elements to avoid an empty space in between.
+// .btn-group {
+//     @apply inline-block;
+
+//     .btn{
+//         line-height: 1.5;
+//         border-top-right-radius: 0;
+//         border-bottom-right-radius: 0;
+//     }
+//     .btn-group-last, .btn-group-last .btn{
+//         border-left: none;
+//         border-top-left-radius: 0;
+//         border-bottom-left-radius: 0;
+//         border-top-right-radius: 5px;
+//         border-bottom-right-radius: 5px;
+//     }
+// }
+
+.btn {
+    @apply inline-block font-bold leading-tight outline-none px-4 py-3 rounded-lg cursor-pointer border-2;
+}
+
+.btn-primary {
+    @apply bg-primary-500 border-primary-500 text-white;
+
+    &:focus {
+        @apply ring-2 ring-primary-500 outline-none bg-primary-600 border-primary-600;
+    }
+}
+
+.btn-primary:hover {
+    @apply bg-primary-600 border-primary-600;
+}
+
+.btn-secondary {
+    @apply text-primary-500 border-primary-500 bg-transparent;
+}
+
+.btn-secondary:hover {
+    @apply bg-primary-500 border-primary-500 text-white;
+}
