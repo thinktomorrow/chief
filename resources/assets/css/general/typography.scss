@@ -13,8 +13,8 @@ li,
 ol,
 input,
 textarea {
-    font-size: 14px;
-    @apply text-grey-700 font-normal;
+    font-size: 15px;
+    @apply font-normal;
     @extend .font-body;
 }
 
@@ -24,7 +24,7 @@ h3,
 h4,
 h5,
 h6 {
-    @apply leading-tight text-grey-900;
+    @apply leading-tight;
     @extend .font-heading;
 }
 

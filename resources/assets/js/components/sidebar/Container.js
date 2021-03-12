@@ -33,6 +33,8 @@ export default class {
 
     open() {
         this.el.style.display = 'block';
+
+        this.sidebarContent.focus();
     }
 
     isOpen() {

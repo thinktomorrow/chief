@@ -41,7 +41,7 @@ final class NavItem
 
     public function render(): string
     {
-        $output = '<a class="' . (isActiveUrl($this->url()) ? 'active' : '') . '" href="' . $this->url() . '">';
+        $output = '<a class="link link-black' . (isActiveUrl($this->url()) ? 'active' : '') . '" href="' . $this->url() . '">';
         $output .= ucfirst($this->label());
         $output .= '</a>';
 

@@ -1,20 +1,24 @@
 .link {
-    @apply font-semibold no-underline;
+    @apply inline-block font-semibold no-underline rounded;
     @extend .transition-150;
+
+    &:focus {
+        @apply ring-4 ring-offset-primary-50 ring-primary-50 bg-primary-50 text-primary-600;
+    }
 }
 
 .link-primary {
     @apply text-primary-500;
-}
 
-.link-primary:hover {
-    @apply text-primary-600;
+    &:hover {
+        @apply text-primary-600;
+    }
 }
 
 .link-black {
     @apply text-grey-700;
-}
 
-.link-black:hover {
-    @apply text-grey-900;
+    &:hover {
+        @apply text-grey-900;
+    }
 }

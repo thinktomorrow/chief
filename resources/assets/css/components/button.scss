@@ -103,6 +103,10 @@
 
 .btn-primary {
     @apply bg-primary-500 border-primary-500 text-white;
+
+    &:focus {
+        @apply ring-2 ring-primary-500 outline-none bg-primary-600 border-primary-600;
+    }
 }
 
 .btn-primary:hover {
@@ -115,24 +119,4 @@
 
 .btn-secondary:hover {
     @apply bg-primary-500 border-primary-500 text-white;
-}
-
-// .btn-secondary {
-//     background-color: #F29177;
-//     border-color: darken(#F29177, 2%);
-//     @apply text-white font-bold border;
-// }
-
-// .btn-secondary:hover {
-//     background-color: lighten(#F29177, 5%);
-// }
-
-.btn-tertiary {
-    background-color: #fffdd0;
-    border-color: darken(#fffdd0, 2%);
-    @apply text-grey-900 border;
-}
-
-.btn-tertiary:hover {
-    background-color: lighten(#fffdd0, 5%);
 }

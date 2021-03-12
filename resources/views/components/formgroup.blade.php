@@ -16,7 +16,7 @@
         <p class="text-grey-500 mb-4 mt-2">{!! $description !!}</p>
     @endif
 
-    <div class="input-group mt-3">
+    <div class="mt-3">
         {{ $slot }}
     </div>
 </div>

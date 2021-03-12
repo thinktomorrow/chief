@@ -171,8 +171,7 @@
             @apply -ml-24;
         }
     }
-    .my,
-    .stack {
+    .my {
         @extend .mt, .mb;
     }
     .-my {
