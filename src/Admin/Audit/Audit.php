@@ -4,16 +4,32 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Admin\Audit;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\Activitylog\ActivityLogger;
 use Spatie\Activitylog\Models\Activity;
 use Thinktomorrow\Chief\Admin\Users\User;
-use Illuminate\Database\Eloquent\Collection;
 
 class Audit extends Activity
 {
     public $with = ['causer'];
+
+    public function getReadableSubject()
+    {
+        return Str::contains($this->subject_type, '\\')
+            ? substr($this->subject_type, strrpos($this->subject_type, '\\') + 1)
+            : $this->subject_type;
+    }
+    public function getReadableCreatedAt()
+    {
+        if ($this->created_at->gte(now()->subDays(6))) {
+            return $this->created_at->locale(app()->getLocale())->diffForHumans();
+        }
+
+        return $this->created_at->format('d/m/Y H:i');
+    }
 
     public static function activity(string $logName = null): ActivityLogger
     {
@@ -27,22 +43,19 @@ class Audit extends Activity
         return self::allActivityFor($subject)->get();
     }
 
-    public static function ScopeAllActivityFor(Builder $query, Model $subject): Builder
+    public static function scopeAllActivityFor(Builder $query, Model $subject): Builder
     {
         return $query
             ->where('subject_type', $subject->getMorphClass());
     }
 
-    public static function getActivityBy(User $causer)
+    public static function getPaginatedAudit(int $perPage = 50): Paginator
     {
-        return self::causedBy($causer)->get()->sortByDesc('created_at');
+        return static::orderBy('created_at', 'DESC')->paginate($perPage);
     }
 
-    /**
-     * @return Collection
-     */
-    public static function getActivity(): Collection
+    public static function getPaginatedAuditBy(User $causer, int $perPage = 50): Paginator
     {
-        return self::all()->sortByDesc('created_at');
+        return static::causedBy($causer)->orderBy('created_at', 'DESC')->paginate($perPage);
     }
 }

@@ -59,48 +59,41 @@ class StaticFragmentCrudTest extends ChiefTestCase
     /** @test */
     public function static_fragmentable_can_be_stored()
     {
-        $this->asAdmin()->post(
-            $this->manager->route('fragment-store', $this->owner),
-            [
+        $this->asAdmin()->post($this->manager->route('fragment-store', $this->owner), [
                 'order' => 1,
                 'title' => 'foobar',
-            ]
-        );
+            ]);
 
-        $this->assertEquals('foobar', $this->fragmentRepo->getByOwner($this->owner)->first()->getTitle());
+        $this->firstFragment($this->owner, function ($fragment) {
+            $this->assertEquals('foobar', $fragment->getTitle());
+        });
     }
 
     /** @test */
     public function a_static_fragmentable_can_be_stored_without_values()
     {
-        $this->assertCount(0, $this->fragmentRepo->getByOwner($this->owner));
+        $this->assertFragmentCount($this->owner, 0);
 
-        $this->asAdmin()->post(
-            $this->manager->route('fragment-store', $this->owner),
-            [
+        $this->asAdmin()->post($this->manager->route('fragment-store', $this->owner), [
                 'order' => 1,
-            ]
-        );
+            ]);
 
-        $this->assertCount(1, $this->fragmentRepo->getByOwner($this->owner));
+        $this->assertFragmentCount($this->owner, 1);
     }
 
     /** @test */
     public function static_fragmentable_can_be_edited()
     {
         // Create fragment
-        $this->asAdmin()->post(
-            $this->manager->route('fragment-store', $this->owner),
-            [
+        $this->asAdmin()->post($this->manager->route('fragment-store', $this->owner), [
                 'order' => 1,
                 'title' => 'foobar',
-            ]
-        );
+            ]);
 
         $fragmentable = $this->fragmentRepo->getByOwner($this->owner)->first();
 
         $this->asAdmin()
-            ->get($this->manager->route('fragment-edit', $fragmentable))
+            ->get($this->manager->route('fragment-edit', $this->owner, $fragmentable))
             ->assertStatus(200);
     }
 
@@ -108,24 +101,20 @@ class StaticFragmentCrudTest extends ChiefTestCase
     public function static_fragmentable_can_be_updated()
     {
         // Create fragment
-        $this->asAdmin()->post(
-            $this->manager->route('fragment-store', $this->owner),
-            [
+        $this->asAdmin()->post($this->manager->route('fragment-store', $this->owner), [
                 'order' => 1,
                 'title' => 'foobar',
-            ]
-        );
+            ]);
 
         $fragmentable = $this->fragmentRepo->getByOwner($this->owner)->first();
 
-        $this->asAdmin()->put(
-            $this->manager->route('fragment-update', $fragmentable),
-            [
-                'order' => 1,
-                'title' => 'foobar updated',
-            ]
-        );
+        $this->asAdmin()->put($this->manager->route('fragment-update', $fragmentable), [
+            'order' => 1,
+            'title' => 'foobar updated',
+        ]);
 
-        $this->assertEquals('foobar updated', $this->fragmentRepo->getByOwner($this->owner)->first()->getTitle());
+        $this->firstFragment($this->owner, function ($fragment) {
+            $this->assertEquals('foobar updated', $fragment->getTitle());
+        });
     }
 }

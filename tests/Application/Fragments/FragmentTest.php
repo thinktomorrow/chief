@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Chief\Tests\Unit\Fragments;
+namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
@@ -41,12 +41,9 @@ class FragmentTest extends ChiefTestCase
 
         $this->assertCount(0, $this->fragmentRepo->getByOwner($owner));
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, $fragmentable),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, $fragmentable), [
                 'order' => 1,
-            ]
-        );
+            ]);
 
         $this->assertCount(1, $this->fragmentRepo->getByOwner($owner));
     }
@@ -66,13 +63,10 @@ class FragmentTest extends ChiefTestCase
             ->withModel($fragmentable)
             ->create();
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, $fragmentable),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, $fragmentable), [
                 'order' => 1,
                 'title' => 'foobar',
-            ]
-        );
+            ]);
 
         $this->assertEquals('foobar', $this->fragmentRepo->getByOwner($owner)->first()->title);
     }

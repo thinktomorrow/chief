@@ -34,9 +34,7 @@ class MenuItemController extends Controller
         $menuitem->type = MenuItem::TYPE_INTERNAL;  // Default menu type
         $menuitem->menu_type = $menutype;
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
-            ChiefMenu::fromMenuItems($menuitem->menuType())->items()
-        );
+        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(ChiefMenu::fromMenuItems($menuitem->menuType())->items());
 
         return view('chief::admin.menu.create', [
             'pages' => UrlHelper::allOnlineModels(),
@@ -68,10 +66,7 @@ class MenuItemController extends Controller
 
         $menuitem = MenuItem::findOrFail($id);
 
-        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(
-            ChiefMenu::fromMenuItems($menuitem->menuType())->items(),
-            $menuitem
-        );
+        $menuitems = $this->prepareMenuItemsForAdminSelect->prepare(ChiefMenu::fromMenuItems($menuitem->menuType())->items(),            $menuitem);
 
         return view('chief::admin.menu.edit', [
             'menuitem' => $menuitem,

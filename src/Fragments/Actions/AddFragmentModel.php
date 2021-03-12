@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Fragments\Actions;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\Fragments\Database\ContextModel;
 use Thinktomorrow\Chief\Fragments\Database\FragmentModel;
-use Thinktomorrow\Chief\Fragments\FragmentAlreadyAdded;
+use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyAdded;
 
 final class AddFragmentModel
 {

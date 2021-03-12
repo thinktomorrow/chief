@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
-use Thinktomorrow\Chief\Fragments\FragmentsRenderer;
 use Thinktomorrow\Chief\Managers\Manager;
 use Thinktomorrow\Chief\Tests\ChiefTestCase;
 use Thinktomorrow\Chief\Tests\Shared\Fakes\ArticlePage;
@@ -27,8 +26,9 @@ class FragmentOnlineStatusTest extends ChiefTestCase
     /** @test */
     public function a_fragment_is_default_online()
     {
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
-        $this->assertTrue($fragments->first()->fragmentModel()->isOnline());
+        $this->firstFragment($this->owner, function ($fragment) {
+            $this->assertTrue($fragment->fragmentModel()->isOnline());
+        });
     }
 
     /** @test */
@@ -41,8 +41,9 @@ class FragmentOnlineStatusTest extends ChiefTestCase
             'online_status' => false,
         ]);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
-        $this->assertFalse($fragments->first()->fragmentModel()->isOnline());
+        $this->firstFragment($this->owner, function ($fragment) {
+            $this->assertFalse($fragment->fragmentModel()->isOnline());
+        });
     }
 
     /** @test */
@@ -52,8 +53,9 @@ class FragmentOnlineStatusTest extends ChiefTestCase
             'online_status' => true,
         ]);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
-        $this->assertTrue($fragments->first()->fragmentModel()->isOnline());
+        $this->firstFragment($this->owner, function ($fragment) {
+            $this->assertTrue($fragment->fragmentModel()->isOnline());
+        });
     }
 
     /** @test */
@@ -72,9 +74,7 @@ class FragmentOnlineStatusTest extends ChiefTestCase
             'online_status' => false,
         ]);
 
-        $fragments = app(FragmentRepository::class)->getByOwner($this->owner);
-        $this->assertCount(3, $fragments);
-
-        $this->assertEquals('quote-contentquote-content', app(FragmentsRenderer::class)->render($this->owner, []));
+        $this->assertFragmentCount($this->owner, 3);
+        $this->assertRenderedFragments($this->owner, 'quote-contentquote-content');
     }
 }

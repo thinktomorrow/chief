@@ -66,57 +66,25 @@ class UpdateRoleTest extends ChiefTestCase
     /** @test */
     public function when_updating_role_name_is_required()
     {
-        $this->assertValidation(
-            new Role(),
-            'name',
-            $this->validUpdateParams(['name' => '']),
-            route('chief.back.roles.index'),
-            route('chief.back.roles.update', $this->newRole->id),
-            Role::count(),
-            'put'
-        );
+        $this->assertValidation(new Role(), 'name', $this->validUpdateParams(['name' => '']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
     /** @test */
     public function when_updating_role_permissions_are_required()
     {
-        $this->assertValidation(
-            new Role(),
-            'permission_names',
-            $this->validParams(['permission_names' => '']),
-            route('chief.back.roles.index'),
-            route('chief.back.roles.update', $this->newRole->id),
-            Role::count(),
-            'put'
-        );
+        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => '']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
     /** @test */
     public function when_updating_role_name_must_be_unique()
     {
-        $this->assertValidation(
-            new Role(),
-            'name',
-            $this->validParams(['name' => 'developer']),
-            route('chief.back.roles.index'),
-            route('chief.back.roles.update', $this->newRole->id),
-            Role::count(),
-            'put'
-        );
+        $this->assertValidation(new Role(), 'name', $this->validParams(['name' => 'developer']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
     /** @test */
     public function when_updating_role_permissions_must_be_passed_as_array()
     {
-        $this->assertValidation(
-            new Role(),
-            'permission_names',
-            $this->validParams(['permission_names' => 'view-role']),
-            route('chief.back.roles.index'),
-            route('chief.back.roles.update', $this->newRole->id),
-            Role::count(),
-            'put'
-        );
+        $this->assertValidation(new Role(), 'permission_names', $this->validParams(['permission_names' => 'view-role']), route('chief.back.roles.index'), route('chief.back.roles.update', $this->newRole->id), Role::count(), 'put');
     }
 
     private function validParams($overrides = [])

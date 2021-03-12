@@ -22,7 +22,7 @@
                 <div class="flex-shrink-0 flex items-center cursor-pointer" data-sortable-ignore>
                     <a
                         data-sidebar-fragments-edit
-                        href="@adminRoute('fragment-edit', $model)"
+                        href="@adminRoute('fragment-edit',$owner, $model)"
                         class="link link-black"
                     >
                         <x-link-label type="edit"></x-link-label>

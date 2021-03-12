@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 
-class Handler extends ExceptionHandler
+class ChiefExceptionHandler extends ExceptionHandler
 {
     /**
      * A list of the exception types that should not be reported.

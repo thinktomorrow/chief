@@ -14,9 +14,7 @@ final class ArchiveAssistantTest extends ChiefTestCase
         $model = $this->setupAndCreateArticle();
         $manager = $this->manager($model);
 
-        $this->asAdmin()->post(
-            $manager->route('archive', $model)
-        );
+        $this->asAdmin()->post($manager->route('archive', $model));
 
         $this->assertTrue($model->fresh()->isArchived());
     }
@@ -27,9 +25,7 @@ final class ArchiveAssistantTest extends ChiefTestCase
         $model = $this->setupAndCreateArticle([PageState::KEY => PageState::ARCHIVED]);
         $manager = $this->manager($model);
 
-        $this->asAdmin()->post(
-            $manager->route('unarchive', $model)
-        );
+        $this->asAdmin()->post($manager->route('unarchive', $model));
 
         $this->assertFalse($model->fresh()->isArchived());
     }

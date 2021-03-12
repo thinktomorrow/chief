@@ -30,11 +30,7 @@ final class ChiefNavigation
                 $modelClass = $managerWithTags->manager->managedModelClass();
                 $navLabel = (new $modelClass)->adminLabel('nav_label');
 
-                $this->container->make(Nav::class)->add(new NavItem(
-                    $navLabel,
-                    $managerWithTags->manager->route('index'),
-                    $managerWithTags->tags
-                ));
+                $this->container->make(Nav::class)->add(new NavItem($navLabel,                    $managerWithTags->manager->route('index'),                    $managerWithTags->tags));
             }
         }
 

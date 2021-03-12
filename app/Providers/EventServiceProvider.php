@@ -15,19 +15,10 @@ class EventServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Event::listen(
-            Login::class,
-            LogSuccessfulLogin::class,
-        );
+        Event::listen(Login::class,            LogSuccessfulLogin::class, );
 
-        Event::listen(
-            UserInvited::class,
-            SendInvite::class
-        );
+        Event::listen(UserInvited::class,            SendInvite::class);
 
-        Event::listen(
-            InviteAccepted::class,
-            EnableUser::class . '@onAcceptingInvite',
-        );
+        Event::listen(InviteAccepted::class,            EnableUser::class . '@onAcceptingInvite', );
     }
 }

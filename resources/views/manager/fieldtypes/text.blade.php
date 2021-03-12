@@ -9,6 +9,6 @@
     >{{ old($key, $field->getValue($locale ?? null)) }}</textarea>
 
     @if($field->hasCharacterCount())
-        @include('chief::managers.fieldtypes.charactercount')
+        @include('chief::manager.fieldtypes.charactercount')
     @endif
 </div>

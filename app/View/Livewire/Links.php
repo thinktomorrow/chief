@@ -11,6 +11,7 @@ class Links extends Component
 {
     public ProvidesUrl $model;
     private LinkForm $linkForm;
+    public $class;
 
     public function mount(ProvidesUrl $model): void
     {
@@ -23,7 +24,7 @@ class Links extends Component
      */
     public function render()
     {
-        return view('chief::components.links', [
+        return view('chief::manager.cards.links.linksComponent', [
             'linkForm' => $this->linkForm,
             'manager' => app(Registry::class)->manager($this->model->managedModelKey()),
         ]);

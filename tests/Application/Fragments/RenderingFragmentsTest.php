@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
 use Thinktomorrow\Chief\App\Providers\ChiefProjectServiceProvider;
-use Thinktomorrow\Chief\Fragments\Actions\RenderFragments;
 use Thinktomorrow\Chief\Fragments\Assistants\FragmentAssistant;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Register\Register;
@@ -45,25 +44,15 @@ class RenderingFragmentsTest extends ChiefTestCase
             ->withModel(FragmentableStub::class)
             ->create();
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
                 'order' => 1,
-            ]
-        );
+            ]);
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, FragmentableStub::managedModelKey()), [
                 'order' => 2,
-            ]
-        );
+            ]);
 
-        $fragments = $this->fragmentRepo->getByOwner($owner);
-
-        $output = app(RenderFragments::class)->render($fragments, $owner);
-
-        $this->assertEquals('fragment-stub-1 fragment-stub-2 ', $output);
+        $this->assertRenderedFragments($owner, 'fragment-stub-1 fragment-stub-2 ');
     }
 
     /** @test */
@@ -79,18 +68,11 @@ class RenderingFragmentsTest extends ChiefTestCase
 
         $manager = app(Registry::class)->manager(SnippetStub::managedModelKey());
 
-        $this->asAdmin()->post(
-            $manager->route('fragment-store', $owner, SnippetStub::managedModelKey()),
-            [
+        $this->asAdmin()->post($manager->route('fragment-store', $owner, SnippetStub::managedModelKey()), [
                 'order' => 1,
-            ]
-        );
+            ]);
 
-        $fragments = $this->fragmentRepo->getByOwner($owner);
-
-        $output = app(RenderFragments::class)->render($fragments, $owner);
-
-        $this->assertEquals('snippet-stub', $output);
+        $this->assertRenderedFragments($owner, 'snippet-stub');
     }
 
     /** @test */
@@ -98,6 +80,6 @@ class RenderingFragmentsTest extends ChiefTestCase
     {
         $owner = OwnerStub::create();
 
-        $this->assertEquals('', app(RenderFragments::class)->render(collect(), $owner));
+        $this->assertRenderedFragments($owner, '');
     }
 }

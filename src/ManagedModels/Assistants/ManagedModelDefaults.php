@@ -28,13 +28,18 @@ trait ManagedModelDefaults
         return (is_string($value) && ! empty($replace)) ? sprintf($value, $replace) : $value;
     }
 
+    private function adminLabels(): array
+    {
+        return $this->defaultAdminLabels();
+    }
+
     /**
      * Default set of admin labels.
      * This can be set per manager for customisation.
      *
      * @return array
      */
-    private function adminLabels(): array
+    private function defaultAdminLabels(): array
     {
         $singular = Str::of(static::managedModelKey())->singular()->replace('_', ' ')->__toString();
 

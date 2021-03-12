@@ -14,7 +14,7 @@ class PagebuilderField extends AbstractField implements Field
     public static function make(string $key): Field
     {
         return (new static(new FieldType(FieldType::PAGEBUILDER), $key))
-            ->view('chief::managers.fieldtypes.pagebuilder')
+            ->view('chief::manager.fieldtypes.pagebuilder')
             ->sections([])
             ->availableModules([])
             ->availablePages([])

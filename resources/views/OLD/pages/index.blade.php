@@ -75,7 +75,7 @@
 
 {{--            </div>--}}
 {{--            @if($managers instanceof Illuminate\Contracts\Pagination\Paginator)--}}
-{{--                {{ $managers->links('chief::managers.pagination') }}--}}
+{{--                {{ $managers->links('chief::manager.pagination') }}--}}
 {{--            @endif--}}
 
 {{--        </div>--}}

@@ -28,10 +28,7 @@ trait FragmentsOwningAssistant
         }
 
         if ($model instanceof Fragmentable && $model->isFragment()) {
-            return route(
-                'chief.' . $this->managedModelClass()::managedModelKey() . '.nested-' . $action,
-                array_merge([$model->fragmentModel()->id], $parameters)
-            );
+            return route('chief.' . $this->managedModelClass()::managedModelKey() . '.nested-' . $action,                array_merge([$model->fragmentModel()->id], $parameters));
         }
 
         return $this->generateRoute($action, $model, ...$parameters);

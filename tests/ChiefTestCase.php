@@ -15,7 +15,7 @@ use Spatie\MediaLibrary\ImageGenerators\FileTypes\Svg;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Video;
 use Spatie\MediaLibrary\ImageGenerators\FileTypes\Webp;
 use Spatie\Permission\PermissionServiceProvider;
-use Thinktomorrow\Chief\App\Exceptions\Handler;
+use Thinktomorrow\Chief\App\Exceptions\ChiefExceptionHandler;
 use Thinktomorrow\Chief\App\Http\Kernel;
 use Thinktomorrow\Chief\App\Http\Middleware\ChiefRedirectIfAuthenticated;
 use Thinktomorrow\Chief\App\Providers\ChiefServiceProvider;
@@ -23,11 +23,16 @@ use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
+use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
+use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
+use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
 
 abstract class ChiefTestCase extends OrchestraTestCase
 {
     use RefreshDatabase;
     use TestHelpers;
+    use TestingWithManagers;
+    use TestingWithFiles;
 
     protected $protectTestEnvironment = true;
 
@@ -49,14 +54,9 @@ abstract class ChiefTestCase extends OrchestraTestCase
         $this->registerResponseMacros();
 
         // Register the Chief Exception handler
-        $this->app->singleton(
-            ExceptionHandler::class,
-            Handler::class
-        );
+        $this->app->singleton(ExceptionHandler::class, ChiefExceptionHandler::class);
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        Factory::guessFactoryNamesUsing(fn (string $modelName) => 'Thinktomorrow\\Chief\\Database\\Factories\\'.class_basename($modelName).'Factory');
 
         $this->setUpChiefEnvironment();
 
@@ -142,7 +142,7 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function disableExceptionHandling()
     {
-        $this->app->instance(ExceptionHandler::class, new class extends Handler {
+        $this->app->instance(ExceptionHandler::class, new class extends ChiefExceptionHandler {
             public function __construct()
             {
             }
@@ -158,14 +158,11 @@ abstract class ChiefTestCase extends OrchestraTestCase
 
     protected function disableCookiesEncryption(array $cookies)
     {
-        $this->app->resolving(
-            EncryptCookies::class,
-            function ($object) use ($cookies) {
-                foreach ($cookies as $cookie) {
-                    $object->disableFor($cookie);
-                }
+        $this->app->resolving(EncryptCookies::class, function ($object) use ($cookies) {
+            foreach ($cookies as $cookie) {
+                $object->disableFor($cookie);
             }
-        );
+        });
 
         return $this;
     }

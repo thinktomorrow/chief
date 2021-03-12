@@ -20,14 +20,7 @@ class SortModels
     {
         $contextId = ContextModel::ownedBy($owner)->id;
 
-        static::batchUpdateColumn(
-            'context_fragment_lookup',
-            'order',
-            $indices,
-            'fragment_id',
-            false,
-            'context_id = "' . $contextId.'"'
-        );
+        static::batchUpdateColumn('context_fragment_lookup',            'order',            $indices,            'fragment_id',            false,            'context_id = "' . $contextId.'"');
     }
 
     /**

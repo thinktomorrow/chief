@@ -30,11 +30,7 @@ final class RegisterManagedRoutes
 
         $this->router->group(['prefix' => $this->routePrefix, 'middleware' => $this->routeMiddleware], function () use ($managedRoutes, $controllerClass) {
             foreach ($managedRoutes as $route) {
-                $this->router->addRoute(
-                    $route->method,
-                    $managedRoutes->getPrefix() .'/'. $route->uri,
-                    [$controllerClass, Str::camel($route->action)]
-                )->name('chief.' . $managedRoutes->getPrefix() . '.' . $route->action);
+                $this->router->addRoute($route->method,                    $managedRoutes->getPrefix() .'/'. $route->uri,                    [$controllerClass, Str::camel($route->action)])->name('chief.' . $managedRoutes->getPrefix() . '.' . $route->action);
             }
         });
     }

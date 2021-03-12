@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
 use Thinktomorrow\Chief\ManagedModels\Fields\FieldName;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationNames;
@@ -330,7 +329,7 @@ abstract class AbstractField
 
     public function hasValidation(): bool
     {
-        return isset($this->validation) && !$this->validation->isEmpty();
+        return isset($this->validation) && ! $this->validation->isEmpty();
     }
 
     public function required(): bool
@@ -459,8 +458,8 @@ abstract class AbstractField
         }
 
         return $this->isLocalized()
-            ? 'chief::managers.fields.formgroup_translatable'
-            : 'chief::managers.fieldtypes.' . $this->type->get();
+            ? 'chief::manager.cards.fields.formgroup_translatable'
+            : 'chief::manager.fieldtypes.' . $this->type->get();
     }
 
     /**
@@ -480,5 +479,20 @@ abstract class AbstractField
             'field' => $this,
             'key' => $this->getKey(),
         ], $this->viewData);
+    }
+
+    public function notOnCreate(): Field
+    {
+        $this->tag('not-on-create');
+
+        return $this;
+    }
+
+    public function editAsPageTitle(): Field
+    {
+        $this->tag('chief-component');
+        $this->component('chief-page-title');
+
+        return $this;
     }
 }

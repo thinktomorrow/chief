@@ -125,29 +125,15 @@ class UpdateUserTest extends ChiefTestCase
     /** @test */
     public function when_updating_user_firstname_is_required()
     {
-        $this->assertValidation(
-            new User(),
-            'firstname',
-            $this->validUpdateParams(['firstname' => '']),
-            route('chief.back.users.index'),
-            route('chief.back.users.update', $this->newUser->id),
-            2, // Admin self and existing one
-            'put'
-        );
+        $this->assertValidation(new User(), 'firstname', $this->validUpdateParams(['firstname' => '']), route('chief.back.users.index'), route('chief.back.users.update', $this->newUser->id), 2, // Admin self and existing one
+            'put');
     }
 
     /** @test */
     public function when_updating_user_lastname_is_required()
     {
-        $this->assertValidation(
-            new User(),
-            'lastname',
-            $this->validUpdateParams(['lastname' => '']),
-            route('chief.back.users.index'),
-            route('chief.back.users.update', $this->newUser->id),
-            2, // Admin self and existing one
-            'put'
-        );
+        $this->assertValidation(new User(), 'lastname', $this->validUpdateParams(['lastname' => '']), route('chief.back.users.index'), route('chief.back.users.update', $this->newUser->id), 2, // Admin self and existing one
+            'put');
     }
 
     private function validParams($overrides = [])

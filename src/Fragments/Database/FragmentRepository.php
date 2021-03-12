@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 use Ramsey\Uuid\Uuid;
 use ReflectionClass;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
-use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 
 final class FragmentRepository
@@ -35,16 +34,12 @@ final class FragmentRepository
 
         $this->prefetchRecords($fragmentModels);
 
-        return $fragmentModels->map(
-            fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel)
-        );
+        return $fragmentModels->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
 
     public function shared(): Collection
     {
-        return FragmentModel::where('shared', 1)->get()->map(
-            fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel)
-        );
+        return FragmentModel::where('shared', 1)->get()->map(fn (FragmentModel $fragmentModel) => $this->fragmentFactory($fragmentModel));
     }
 
     public function find(string $id): Fragmentable

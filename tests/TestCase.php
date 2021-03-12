@@ -8,10 +8,15 @@ use Thinktomorrow\Chief\Shared\Helpers\Memoize;
 use Thinktomorrow\Chief\Site\Urls\MemoizedUrlRecord;
 use Thinktomorrow\Chief\Tests\Shared\ManagedModelFactory;
 use Thinktomorrow\Chief\Tests\Shared\ManagerFactory;
+use Thinktomorrow\Chief\Tests\Shared\TestHelpers;
+use Thinktomorrow\Chief\Tests\Shared\TestingWithFiles;
+use Thinktomorrow\Chief\Tests\Shared\TestingWithManagers;
 
 abstract class TestCase extends OrchestraTestCase
 {
     use TestHelpers;
+    use TestingWithManagers;
+    use TestingWithFiles;
 
     protected $protectTestEnvironment = true;
 
