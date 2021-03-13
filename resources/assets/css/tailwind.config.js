@@ -21,14 +21,11 @@ module.exports = {
             current: 'currentColor',
             black: colors.black,
             white: colors.white,
-
             success: colors.green['500'],
             warning: colors.orange['500'],
             error: colors.red['500'],
             information: colors.blue['500'],
-
             primary: colors.blue,
-
             grey: {
                 50: '#fafafa',
                 100: '#f5f5f5',
@@ -42,7 +39,6 @@ module.exports = {
                 800: '#262626',
                 900: '#171717',
             },
-
             secondary: {
                 50: '#fdf6f5',
                 100: '#FEF4F2',
@@ -66,6 +62,10 @@ module.exports = {
                 800: '#73725E',
                 900: '#4D4C3E',
             },
+            red: colors.red,
+            green: colors.green,
+            blue: colors.blue,
+            orange: colors.orange,
         },
         extend: {
             zIndex: {

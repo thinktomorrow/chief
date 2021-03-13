@@ -43,6 +43,7 @@ class ViewServiceProvider extends ServiceProvider
         Blade::component('chief::components.content', 'chief-content');
         Blade::component('chief::components.card', 'chief-card');
         Blade::component('chief::components.sidebar', 'chief-sidebar');
+        Blade::component('chief::components.inline-notification', 'inline-notification');
         Blade::component('chief::components.link-label', 'link-label');
 
         Blade::aliasComponent('chief::back._layouts._partials.header', 'chiefheader');

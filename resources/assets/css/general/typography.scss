@@ -9,12 +9,11 @@
 html,
 body,
 p,
-li,
+ul,
 ol,
 input,
 textarea {
     font-size: 15px;
-    @apply font-normal;
     @extend .font-body;
 }
 
@@ -52,15 +51,16 @@ h6 {
     @apply text-base font-semibold;
 }
 
-p {
+p,
+ul,
+ol {
     @apply leading-relaxed;
 }
 
-ul,
-ol {
-    @apply break-words pl-0;
+ul {
+    @apply list-disc;
 }
 
-ol li {
-    list-style: inherit;
+ul li {
+    @apply list-inside;
 }
