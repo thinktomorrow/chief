@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Modules\Assistants;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\ManagedModel;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;

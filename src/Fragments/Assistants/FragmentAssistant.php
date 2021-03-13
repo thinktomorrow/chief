@@ -5,6 +5,7 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModel;
@@ -136,7 +137,7 @@ trait FragmentAssistant
             'manager' => $this,
             'owner' => $owner,
             'model' => $fragmentable,
-            'fields' => $fragmentable->fields()->notTagged('edit'),
+            'fields' => Fields::make($fragmentable->fields())->notTagged('edit'),
         ]);
     }
 
@@ -144,7 +145,7 @@ trait FragmentAssistant
     {
         $this->guard('fragment-store');
 
-        return $this->handleFragmentStore($this->ownerModel($ownerKey, $ownerId),            $request);
+        return $this->handleFragmentStore($this->ownerModel($ownerKey, $ownerId), $request);
     }
 
     public function nestedFragmentStore(Request $request, $fragmentModelId)
@@ -158,7 +159,7 @@ trait FragmentAssistant
     {
         $fragmentable = $this->fragmentable();
 
-        $this->fieldValidator()->handle($fragmentable->fields()->notTagged('edit'), $request->all());
+        $this->fieldValidator()->handle(Fields::make($fragmentable->fields())->notTagged('edit'), $request->all());
 
         $request->merge(['order' => (int)$request->input('order', 0)]);
 
@@ -172,7 +173,7 @@ trait FragmentAssistant
 
     private function storeFragmentable(Model $owner, Fragmentable $fragmentable, Request $request): void
     {
-        $fragmentable->saveFields($fragmentable->fields()->notTagged('edit'), $request->all(), $request->allFiles());
+        $fragmentable->saveFields(Fields::make($fragmentable->fields())->notTagged('edit'), $request->all(), $request->allFiles());
 
         $fragmentable->setFragmentModel(app(CreateFragmentModel::class)->create($owner, $fragmentable, $request->order));
     }
@@ -256,7 +257,7 @@ trait FragmentAssistant
             'manager' => $this,
             'owner' => $this->ownerModel($ownerKey, $ownerId),
             'model' => $fragmentable,
-            'fields' => $fragmentable->fields()->model($this->fragmentModel($fragmentable)),
+            'fields' => Fields::make($fragmentable->fields())->model($this->fragmentModel($fragmentable)),
         ]);
     }
 
@@ -266,12 +267,12 @@ trait FragmentAssistant
 
         $fragmentable = $this->fragmentRepository->find($fragmentId);
 
-        $this->fieldValidator()->handle($fragmentable->fields(), $request->all());
+        $this->fieldValidator()->handle(Fields::make($fragmentable->fields()), $request->all());
 
         // TODO: pass order with request
 //        $request->merge(['order' => 1]);
 
-        $this->fragmentModel($fragmentable)->saveFields($fragmentable->fields(), $request->all(), $request->allFiles());
+        $this->fragmentModel($fragmentable)->saveFields(Fields::make($fragmentable->fields()), $request->all(), $request->allFiles());
 
         return response()->json([
             'message' => 'fragment updated',

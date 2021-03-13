@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Http\Request;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;
 
 trait FieldsComponentAssistant
@@ -38,8 +39,8 @@ trait FieldsComponentAssistant
             'manager' => $this,
             'model' => $model,
             'fields' => $componentKey !== "default"
-                ? $model->fields()->model($model)->component($componentKey)
-                : $model->fields()->model($model)->notTagged('component'),
+                ? Fields::make($model->fields())->model($model)->component($componentKey)
+                : Fields::make($model->fields())->model($model)->notTagged('component'),
             'componentKey' => $componentKey,
         ]);
     }
@@ -51,8 +52,8 @@ trait FieldsComponentAssistant
         $this->guard('fields-update', $model);
 
         $fields = $componentKey !== "default"
-            ? $model->fields()->model($model)->component($componentKey)
-            : $model->fields()->model($model)->notTagged('component');
+            ? Fields::make($model->fields())->model($model)->component($componentKey)
+            : Fields::make($model->fields())->model($model)->notTagged('component');
 
         $this->fieldValidator()->handle($fields, $request->all());
 

@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    /** @var array */
-    private $fields;
+    private array $fields;
 
     final public function __construct(array $fields = [])
     {
@@ -22,8 +21,13 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * @return static
      */
-    public static function make(array $fields = []): self
+    public static function make(iterable $generator): self
     {
+        $fields = [];
+        foreach($generator as $field) {
+            $fields[] = $field;
+        }
+
         return new static($fields);
     }
 

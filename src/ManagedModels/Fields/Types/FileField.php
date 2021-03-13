@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 use Thinktomorrow\AssetLibrary\Asset;
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 
 class FileField extends MediaField implements Field
 {

@@ -6,7 +6,7 @@ namespace Thinktomorrow\Chief\Migrate\Legacy\Fragments;
 
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\AbstractField;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField;
 
@@ -113,7 +113,7 @@ class FragmentField extends AbstractField implements Field
         }
 
         // Take the fields from the first fragment as a starting point for duplication
-        return array_map(function (\Thinktomorrow\Chief\ManagedModels\Fields\Types\Field $field) {
+        return array_map(function (\Thinktomorrow\Chief\ManagedModels\Fields\Field $field) {
             return $field->valueResolver(function ($model = null, $locale = null, $field) {
                 if ($field instanceof \Thinktomorrow\Chief\ManagedModels\Fields\Types\MediaField) {
                     return [];
