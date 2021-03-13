@@ -18,6 +18,19 @@ class Filters
         $this->filters = $this->sanitizeFilters($filters);
     }
 
+    /**
+     * @return static
+     */
+    public static function make(iterable $generator): self
+    {
+        $filters = [];
+        foreach($generator as $filter) {
+            $filters[] = $filter;
+        }
+
+        return new static($filters);
+    }
+
     public function all(): array
     {
         return $this->filters;
@@ -27,7 +40,7 @@ class Filters
     {
         foreach ($this->all() as $filter) {
             if ($filter->applicable(request())) {
-                $builder->tap($filter->query($builder));
+                $filter->query()($builder, request()->input($filter->queryKey()));
             }
         }
     }

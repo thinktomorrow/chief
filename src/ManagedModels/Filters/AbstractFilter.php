@@ -85,7 +85,7 @@ abstract class AbstractFilter
 
     public function render(): string
     {
-        $path = $this->view ?? 'chief::back._filters.' . $this->type;
+        $path = $this->view ?? 'chief::manager.filters.' . $this->type;
 
         return view($path, $this->viewData())->render();
     }

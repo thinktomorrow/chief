@@ -34,11 +34,11 @@
             </div>
 
             <div class="w-full lg:w-1/4">
-                @if(isset($filters) && $filters->anyRenderable())
+                @if($manager->filters()->anyRenderable())
                     <h3>Filtering</h3>
 
                     <form method="GET">
-                        {!! $filters->render() !!}
+                        {!! $manager->filters()->render() !!}
                         <div class="stack-xs">
                             <button class="btn btn-primary squished-xs" type="submit">Filter</button>
                         </div>
