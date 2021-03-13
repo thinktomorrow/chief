@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
+namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\ValidationParameters;
 
 interface Field

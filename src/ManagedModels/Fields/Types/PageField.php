@@ -6,6 +6,7 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReference;
 use Thinktomorrow\Chief\Shared\ModelReferences\ModelReferencePresenter;
 use Thinktomorrow\Chief\Site\Urls\UrlHelper;

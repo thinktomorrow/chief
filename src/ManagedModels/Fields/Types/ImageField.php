@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
 use Thinktomorrow\AssetLibrary\HasAsset;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 
 class ImageField extends MediaField implements Field
 {

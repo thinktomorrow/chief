@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
+
 class TextField extends AbstractField implements Field
 {
     use AllowsCharacterCount;

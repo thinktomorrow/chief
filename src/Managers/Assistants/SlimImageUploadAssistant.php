@@ -53,7 +53,7 @@ trait SlimImageUploadAssistant
 
         try {
             $model = $id ? $this->fieldsModel($id) : new $this->managedModelClass();
-            $field = $model->fields()->find($fieldKey);
+            $field = Fields::make($model->fields())->find($fieldKey);
 
             $this->validateAsyncSlimUpload($field, $locale, $imagePayload);
 

@@ -7,7 +7,7 @@ namespace Thinktomorrow\Chief\Admin\Settings;
 use Illuminate\Http\Request;
 use Thinktomorrow\Chief\Admin\Settings\Application\ChangeHomepage;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\PageField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\SelectField;

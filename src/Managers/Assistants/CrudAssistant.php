@@ -139,7 +139,7 @@ trait CrudAssistant
         return view('chief::back.managers.create', [
             'manager' => $this,
             'model' => $model,
-            'fields' => $model->fields()->notTagged(['edit', 'not-on-create']),
+            'fields' => Fields::make($model->fields())->notTagged(['edit', 'not-on-create']),
         ]);
     }
 
@@ -152,7 +152,7 @@ trait CrudAssistant
         /** @var ManagedModel $model */
         $model = new $modelClass();
 
-        $fields = $model->fields()->notTagged(['edit', 'not-on-create']);
+        $fields = Fields::make($model->fields())->notTagged(['edit', 'not-on-create']);
         $this->fieldValidator()->handle($fields, $request->all());
 
         // TODO: extract all uploadedFile instances from the input...
@@ -170,11 +170,11 @@ trait CrudAssistant
         $model = $this->fieldsModel($id);
 
         $this->guard('edit', $model);
-trap(Fields::fromIterable($model->fields()));
+
         return view('chief::back.managers.edit', [
             'manager' => $this,
             'model' => $model,
-            'fields' => (new Fields($model->fields()))->model($model),
+            'fields' => Fields::make($model->fields())->model($model),
         ]);
     }
 
@@ -184,9 +184,9 @@ trap(Fields::fromIterable($model->fields()));
 
         $this->guard('update', $model);
 
-        $this->fieldValidator()->handle($model->fields(), $request->all());
+        $this->fieldValidator()->handle(Fields::make($model->fields()), $request->all());
 
-        $model->saveFields($model->fields(), $request->all(), $request->allFiles());
+        $model->saveFields(Fields::make($model->fields()), $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('index'))
             ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminLabel('title') . '</a> is aangepast');

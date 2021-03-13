@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\Site\Urls\Field;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Site\Urls\UrlRecord;
 

@@ -4,6 +4,7 @@ namespace Thinktomorrow\Chief\App\View\Livewire;
 
 use Livewire\Component;
 use Thinktomorrow\Chief\Managers\Register\Registry;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 
 class FieldsComponent extends Component
 {
@@ -27,8 +28,8 @@ class FieldsComponent extends Component
     {
         return view('chief::manager.cards.fields.fieldsComponent', [
             'fields' => $this->componentKey !== "default"
-                ? $this->model->fields()->model($this->model)->component($this->componentKey)
-                : $this->model->fields()->model($this->model)->notTagged('component'),
+                ? Fields::make($this->model->fields())->model($this->model)->component($this->componentKey)
+                : Fields::make($this->model->fields())->model($this->model)->notTagged('component'),
             'manager' => app(Registry::class)->manager($this->model::managedModelKey()),
         ]);
     }

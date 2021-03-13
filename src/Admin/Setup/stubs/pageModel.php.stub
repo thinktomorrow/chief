@@ -22,15 +22,13 @@ class __STUB_CLASSNAME__ extends Model implements Page
 
     public $guarded = [];
 
-    public function fields(): Fields
+    public function fields(): iterable
     {
-        return new Fields([
-            InputField::make('title')->locales()->editAsPageTitle(),
+            yield InputField::make('title')->locales()->editAsPageTitle();
 
-            InputField::make('seo_title')->locales()->component('seo'),
-            TextField::make('seo_content')->locales()->component('seo'),
+            yield InputField::make('seo_title')->locales()->component('seo');
+            yield TextField::make('seo_content')->locales()->component('seo');
             __STUB_FIELDS__
-        ]);
     }
 
     private function adminLabels()

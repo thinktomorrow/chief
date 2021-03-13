@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Chief\ManagedModels\Fields\Types;
 
+use Thinktomorrow\Chief\ManagedModels\Fields\Field;
+
 class PagebuilderField extends AbstractField implements Field
 {
     private array $sections;
