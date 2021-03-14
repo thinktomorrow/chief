@@ -1,4 +1,4 @@
-<header class="bg-white border-b border-grey-100 sticky top-0 z-20">
+<header class="bg-grey-50">
     <div class="container">
         <div class="row stack flex justify-between">
             <div class="column-9">

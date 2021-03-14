@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-    <div class="container my">
+    <div class="container">
         <div class="row gutter-6">
             <div class="w-full lg:w-3/4">
                 @adminCan('sort-index')

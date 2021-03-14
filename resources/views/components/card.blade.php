@@ -12,9 +12,9 @@
             </a>
         @endif
 
-        <div class="space-y-4">
+        <div class="space-y-6">
             @if(isset($title) && $title)
-                <h3 class="mr-8">{{ $title }}</h3>
+                <h3 class="leading-none mr-8">{{ $title }}</h3>
             @endif
 
             @if($slot)

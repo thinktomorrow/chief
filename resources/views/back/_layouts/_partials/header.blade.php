@@ -1,19 +1,17 @@
 @section('header')
-    <header class="my-10">
-        @if(isset($breadcrumbs))
-            <div class="container mb-2">
+    <div class="my-12">
+        <div class="container space-y-2">
+            @if(isset($breadcrumbs))
                 <div class="row">
-                    <div class="column-12">
+                    <div class="w-full">
                         {!! $breadcrumbs !!}
                     </div>
                 </div>
-            </div>
-        @endif
+            @endif
 
-        <div class="container">
-            <div class="row justify-between items-center">
-                <div class="column-9">
-                    <h1 class="flex items-center mb-0">
+            <div class="row-between-center">
+                <div class="w-3/4">
+                    <h1 class="flex items-center">
                         <span>{!! $subtitle ?? '' !!}</span>
                         <span>{!! ucfirst($title) ?? '' !!}</span>
                     </h1>
@@ -21,10 +19,10 @@
                     {{ $extra ??  '' }}
                 </div>
 
-                <div class="column-3 text-right justify-end center-y">
+                <div class="w-1/4 flex justify-end items-center">
                     {{ $slot }}
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 @endsection
