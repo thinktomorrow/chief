@@ -8,9 +8,11 @@
             </div>
         </div>
 
-        <div class="row-between-center">
+        <div class="row-between-start">
             <div class="w-3/4">
-                <h1 class="text-grey-900">{{ ucfirst($model->adminLabel('page_title')) }}</h1>
+                <h1 class="text-grey-900">
+                    {{ ucfirst($model->adminLabel('page_title')) }}
+                </h1>
             </div>
 
             <div class="w-1/4 flex justify-end items-center">

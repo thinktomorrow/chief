@@ -10,8 +10,8 @@
             @endif
 
             <div class="row-between-center">
-                <div class="w-3/4">
-                    <h1 class="flex items-center">
+                <div class="w-3/4 space-y-2">
+                    <h1 class="text-grey-900">
                         <span>{!! $subtitle ?? '' !!}</span>
                         <span>{!! ucfirst($title) ?? '' !!}</span>
                     </h1>

@@ -17,15 +17,13 @@ module.exports = {
             '2xl': '1536px',
         },
         colors: {
-            transparent: colors.transparent,
             current: 'currentColor',
+            transparent: colors.transparent,
             black: colors.black,
             white: colors.white,
-            success: colors.green['500'],
-            warning: colors.orange['500'],
-            error: colors.red['500'],
-            information: colors.blue['500'],
             primary: colors.blue,
+            secondary: colors.green,
+            tertiary: colors.orange,
             grey: {
                 50: '#fafafa',
                 100: '#f5f5f5',
@@ -39,37 +37,24 @@ module.exports = {
                 800: '#262626',
                 900: '#171717',
             },
-            secondary: {
-                50: '#fdf6f5',
-                100: '#FEF4F2',
-                200: '#FCE4DD',
-                300: '#FAD3C9',
-                400: '#F6B2A1',
-                500: '#F29178',
-                600: '#DA836C',
-                700: '#915748',
-                800: '#6D4136',
-                900: '#492C24',
-            },
-            tertiary: {
-                100: '#FFFFFA',
-                200: '#FFFFF3',
-                300: '#FFFEEC',
-                400: '#FFFEDE',
-                500: '#FFFDD0',
-                600: '#E6E4BB',
-                700: '#99987D',
-                800: '#73725E',
-                900: '#4D4C3E',
-            },
+
             red: colors.red,
             green: colors.green,
             blue: colors.blue,
             orange: colors.orange,
+
+            // TODO: replace by default colors
+            success: colors.green['500'],
+            warning: colors.orange['500'],
+            error: colors.red['500'],
+            information: colors.blue['500'],
         },
         extend: {
             zIndex: {
-                1: 1,
+                1: '1',
+            },
+            lineHeight: {
+                0: '0',
             },
         },
     },
@@ -77,6 +62,11 @@ module.exports = {
         container: false,
     },
     plugins: [WarpaintRow, WarpaintContainer, WarpaintGutter],
+    variants: {
+        extend: {
+            scale: ['group-hover'],
+        },
+    },
 };
 
 // const PurgeCssConfig = require('../../../purgecss.config.js');
