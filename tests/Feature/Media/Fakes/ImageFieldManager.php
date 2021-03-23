@@ -15,6 +15,7 @@ class ImageFieldManager extends PageManager
     {
         return new Fields([
             ImageField::make(MediaType::HERO),
+            ImageField::make('image-on-other-disk')->storageDisk('secondMediaDisk'),
         ]);
     }
 }

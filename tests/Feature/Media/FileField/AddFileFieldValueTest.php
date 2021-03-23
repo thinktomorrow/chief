@@ -18,6 +18,7 @@ use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 class AddFileFieldValueTest extends TestCase
 {
     const FILEFIELD_KEY = 'fake-file';
+    const FILEFIELD_DISK_KEY = 'file-on-other-disk';
 
     use PageFormParams;
 
@@ -155,12 +156,32 @@ class AddFileFieldValueTest extends TestCase
         $this->assertEquals('tt-favicon-en.png', $this->page->asset(static::FILEFIELD_KEY, 'en')->filename());
     }
 
-    private function newFileRequest($payload): TestResponse
+    /** @test */
+    public function it_can_add_a_new_file_on_another_disk()
     {
+        $response = $this->newFileRequest([
+            'nl' => [
+                $this->dummyUploadedFile('tt-document.txt'),
+            ],
+        ], static::FILEFIELD_DISK_KEY);
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertCount(1, $this->page->assets(static::FILEFIELD_DISK_KEY));
+
+        $media = $this->page->asset(static::FILEFIELD_DISK_KEY)->media->first();
+        $this->assertEquals('secondMediaDisk', $media->disk);
+        $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
+    }
+
+    private function newFileRequest($payload, $key = null): TestResponse
+    {
+        $key = $key ?: static::FILEFIELD_KEY;
+
         return $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
                 'files' => [
-                    static::FILEFIELD_KEY => $payload,
+                    $key => $payload,
                 ],
             ]));
     }

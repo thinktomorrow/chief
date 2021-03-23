@@ -14,6 +14,9 @@ abstract class MediaField extends AbstractField implements Field
 
     protected $localizedFormat = 'files.:name.:locale';
 
+    /** @var null|string */
+    private $storageDisk;
+
     public function validation($rules, array $messages = [], array $attributes = []): Field
     {
         parent::validation($rules, $messages, $attributes);
@@ -24,4 +27,21 @@ abstract class MediaField extends AbstractField implements Field
     }
 
     abstract public function getMedia(HasAsset $model = null, ?string $locale = null);
+
+    /**
+     * Store the file on a different disk than the default one
+     *
+     * @return $this
+     */
+    public function storageDisk(string $disk)
+    {
+        $this->storageDisk = $disk;
+
+        return $this;
+    }
+
+    public function getStorageDisk(): ?string
+    {
+        return $this->storageDisk ?: null;
+    }
 }

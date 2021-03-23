@@ -17,7 +17,7 @@
         "spatie/laravel-activitylog": "^3.0",
         "spatie/laravel-permission": "^2.0|^3.0",
         "spatie/laravel-sitemap": "^5.6",
-        "thinktomorrow/assetlibrary": "0.7.*",
+        "thinktomorrow/assetlibrary": "^0.7.6",
         "thinktomorrow/squanto": "0.7.0",
         "thinktomorrow/trap": "^0.1.2",
         "thinktomorrow/url": "~1.0.0",

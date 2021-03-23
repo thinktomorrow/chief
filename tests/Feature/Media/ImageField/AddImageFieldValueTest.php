@@ -11,8 +11,8 @@ use Illuminate\Foundation\Testing\TestResponse;
 use Thinktomorrow\AssetLibrary\Application\AddAsset;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\MediaModule;
+use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldManager;
 use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldModuleManager;
-use Thinktomorrow\Chief\Tests\Feature\Media\Fakes\ImageFieldManagerWithValidation;
 use Thinktomorrow\Chief\Tests\Feature\Pages\PageFormParams;
 
 class AddImageFieldValueTest extends TestCase
@@ -27,7 +27,7 @@ class AddImageFieldValueTest extends TestCase
 
         $this->setUpDefaultAuthorization();
 
-        app(Register::class)->register(ImageFieldManagerWithValidation::class, Single::class);
+        app(Register::class)->register(ImageFieldManager::class, Single::class);
         $this->page = Single::create();
     }
 
@@ -165,12 +165,33 @@ class AddImageFieldValueTest extends TestCase
         $this->assertEquals('tt-favicon-en.png', $this->page->asset(MediaType::HERO, 'en')->filename());
     }
 
-    private function newImageRequest($payload): TestResponse
+    /** @test */
+    public function it_can_add_a_new_image_on_another_disk()
     {
+        $this->disableExceptionHandling();
+        $response = $this->newImageRequest([
+            'nl' => [
+                $this->dummySlimImagePayload('image.png', 'image/png', 150, 150),
+            ],
+        ], 'image-on-other-disk');
+
+        $response->assertSessionHasNoErrors();
+
+        $this->assertCount(1, $this->page->assets('image-on-other-disk'));
+
+        $media = $this->page->asset('image-on-other-disk')->media->first();
+        $this->assertEquals('secondMediaDisk', $media->disk);
+        $this->assertEquals($this->getTempDirectory('media2/' . $media->id.'/'.$media->file_name), $media->getPath());
+    }
+
+    private function newImageRequest($payload, $key = null): TestResponse
+    {
+        $key = $key ?: MediaType::HERO;
+
         return $this->asAdmin()
             ->put(route('chief.back.managers.update', ['singles', $this->page->id]), $this->validUpdatePageParams([
                 'images' => [
-                    MediaType::HERO => $payload,
+                    $key => $payload,
                 ],
             ]));
     }

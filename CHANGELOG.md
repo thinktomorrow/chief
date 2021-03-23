@@ -2,6 +2,9 @@
 All Notable changes to the `chief` application template will be documented in this file. Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/)
 principles.
 
+## Unreleased
+- Added: storageDisk option on ImageField and FileField to choose a custom disk location. 
+
 ## 0.5.16 - 2021-02-19
 - Fixed: index view in admin was squashed due to missing container div
 - Added: default sitemap.xml for the default application locale (based on the app.fallback_locale value)

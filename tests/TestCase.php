@@ -192,7 +192,7 @@ abstract class TestCase extends OrchestraTestCase
         return __DIR__.'/stubs/' . $dir;
     }
 
-    private function getTempDirectory($dir = null)
+    protected function getTempDirectory($dir = null)
     {
         return __DIR__.'/tmp/' . $dir;
     }

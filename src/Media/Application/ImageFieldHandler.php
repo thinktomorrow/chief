@@ -13,6 +13,10 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 {
     public function handle(HasAsset $model, MediaField $field, array $requestValues, Request $request): void
     {
+        if($field->getStorageDisk()) {
+            $this->setDisk($field->getStorageDisk());
+        }
+
         foreach ($requestValues as $locale => $values) {
             $this->handlePayload($model, $field, $locale, $values);
         }
@@ -38,7 +42,7 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 
         $filename = $value->output->name;
 
-        return $this->addAsset->add($model, $base64FileString, $type, $locale, $this->sluggifyFilename($filename));
+        return $this->addAsset->add($model, $base64FileString, $type, $locale, $this->sluggifyFilename($filename), $this->getCollection(), $this->getDisk());
     }
 
     protected function createNewAsset(HasAsset $model, string $locale, string $type, $value): Asset
@@ -55,6 +59,6 @@ class ImageFieldHandler extends AbstractMediaFieldHandler
 
         $filename = $value->output->name;
 
-        return $this->assetUploader->uploadFromBase64($file, $filename);
+        return $this->assetUploader->uploadFromBase64($file, $filename, $this->getCollection(), $this->getDisk());
     }
 }
