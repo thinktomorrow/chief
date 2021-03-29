@@ -4,18 +4,18 @@
             <svg width="18" height="18"><use xlink:href="#settings"/></svg>
         </span>
 
-        <div v-cloak class="dropdown-box inset-s">
+        <div v-cloak class="dropdown-content">
             @can('view-user')
-                <a class="{{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Admins</a>
+                <a class="dropdown-link {{ isActiveUrl('admin/users*') ? 'active' : '' }}" href="{{ route('chief.back.users.index') }}">Admins</a>
             @endcan
             @can('view-role')
-                <a class="{{ isActiveUrl('admin/roles*') ? 'active' : '' }}" href="{{ route('chief.back.roles.index') }}">Rechten</a>
+                <a class="dropdown-link {{ isActiveUrl('admin/roles*') ? 'active' : '' }}" href="{{ route('chief.back.roles.index') }}">Rechten</a>
             @endcan
             @can('update-setting')
-                <a class="{{ isActiveUrl('admin/settings*') ? 'active' : '' }}" href="{{ route('chief.back.settings.edit') }}">Settings</a>
+                <a class="dropdown-link {{ isActiveUrl('admin/settings*') ? 'active' : '' }}" href="{{ route('chief.back.settings.edit') }}">Settings</a>
             @endcan
             @can('view-audit')
-                <a class="{{ isActiveUrl('admin/audit*') ? 'active' : '' }}" href="{{ route('chief.back.audit.index') }}">Audit</a>
+                <a class="dropdown-link {{ isActiveUrl('admin/audit*') ? 'active' : '' }}" href="{{ route('chief.back.audit.index') }}">Audit</a>
             @endcan
         </div>
     </dropdown>
@@ -23,11 +23,13 @@
 
 <dropdown>
     <span class="link link-black" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">{{ chiefAdmin()->firstname }}</span>
-    <div v-cloak class="dropdown-box inset-s">
+
+    <div v-cloak class="dropdown-content ">
         @can('update-you')
-            <a href="{{ route('chief.back.you.edit') }}">Wijzig profiel</a>
+            <a class="dropdown-link" href="{{ route('chief.back.you.edit') }}">Wijzig profiel</a>
         @endcan
-        <a href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
-        <a href="{{ route('chief.back.logout') }}">Log out</a>
+
+        <a class="dropdown-link" href="{{ route('chief.back.password.edit') }}">Wijzig wachtwoord</a>
+        <a class="dropdown-link" href="{{ route('chief.back.logout') }}">Log out</a>
     </div>
 </dropdown>

@@ -29,22 +29,20 @@
                         <div class="font-s text-grey-300">
                             <?= implode(', ', $user->roleNames()) ?>
                         </div>
-
                     </div>
 
                     @if(chiefAdmin()->can('update-user') && (!$user->hasRole('developer') || chiefAdmin()->hasRole('developer')) )
-                        <div style="margin-left:auto;">
-                            <options-dropdown class="inline-block">
-                                <div class="inset-s" v-cloak>
-                                    <a class="block squished --link-with-bg" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
-                                </div>
-                            </options-dropdown>
-                        </div>
+                        <options-dropdown>
+                            <div v-cloak class="dropdown-content">
+                                <a class="dropdown-link" href="{{ route('chief.back.users.edit', $user->id) }}">Aanpassen</a>
+                            </div>
+                        </options-dropdown>
                     @endif
                 </div>
             </div>
         @endforeach
     </div>
+
     <div class="stack inset-xs text-center">
         <a href="{{ route('chief.back.users.create') }}" class="btn btn-secondary">+ Nodig een nieuwe admin uit.</a>
     </div>

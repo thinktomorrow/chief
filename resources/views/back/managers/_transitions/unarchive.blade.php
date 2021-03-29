@@ -1,4 +1,4 @@
-<a data-submit-form="unarchiveForm-{{ $model->id }}" class="block p-3 text-warning --link-with-bg">Herstel</a>
+<a data-submit-form="unarchiveForm-{{ $model->id }}" class="dropdown-link">Herstel</a>
 
 <form class="hidden" id="unarchiveForm-{{ $model->id }}" action="@adminRoute('unarchive', $model)" method="POST">
     {{ csrf_field() }}

@@ -3,7 +3,8 @@
         <slot name="trigger" :toggle="toggle" :isActive="isActive"></slot>
 
         <transition name="fade">
-            <div v-show="isActive" class="absolute" style="z-index: 21; /* above sticky header */">
+            <!-- <div v-show="isActive" class="absolute" style="z-index: 21; /* above sticky header */"> -->
+            <div v-show="isActive" class="absolute z-1">
                 <slot :toggle="toggle"></slot>
             </div>
         </transition>
@@ -116,7 +117,7 @@ export default {
             });
         },
         closeDropdownClickEvent(event) {
-            if (!event.target.matches('.dropdown-box') && !this.isClosing) {
+            if (!event.target.matches('.dropdown-content') && !this.isClosing) {
                 this.close();
             }
         },

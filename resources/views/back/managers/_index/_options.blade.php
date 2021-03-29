@@ -1,13 +1,13 @@
-<options-dropdown class="inline-block">
-    <div class="inset-s" v-cloak>
+<options-dropdown>
+    <div v-cloak class="dropdown-content">
         @adminCan('preview', $model)
-            <a class="block p-3 --link-with-bg" href="@adminRoute('preview', $model)" target="_blank">
+            <a href="@adminRoute('preview', $model)" target="_blank" class="dropdown-link">
                 Bekijk op site
             </a>
         @endAdminCan
 
         @adminCan('edit', $model)
-            <a href="@adminRoute('edit', $model)" class="block p-3 --link-with-bg">
+            <a href="@adminRoute('edit', $model)" class="dropdown-link">
                 Aanpassen
             </a>
         @endAdminCan

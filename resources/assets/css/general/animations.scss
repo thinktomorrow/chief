@@ -39,28 +39,6 @@
     }
 }
 
-/**
-* Animations taken from animate.css
-* @ref: https://daneden.github.io/animate.css/
-*/
-.animated {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-}
-
-.animation-delayed,
-.animation-delayed-2 {
-    animation-delay: 2s;
-}
-
-.animation-delayed-3 {
-    animation-delay: 3s;
-}
-
-.animation-delayed-4 {
-    animation-delay: 4s;
-}
-
 @keyframes fadeOutDown {
     from {
         opacity: 1;
@@ -69,10 +47,6 @@
         opacity: 0;
         transform: translate3d(0, 100%, 0);
     }
-}
-
-.fadeOutDown {
-    animation-name: fadeOutDown;
 }
 
 .pop {
@@ -96,20 +70,19 @@
 */
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s;
+    transition: opacity 300ms ease-in-out;
 }
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
 }
 
-.pop-enter-active {
-    transition: all 300ms cubic-bezier(0.85, 0, 0.15, 1);
-}
+.pop-enter-active,
 .pop-leave-active {
     transition: all 300ms cubic-bezier(0.85, 0, 0.15, 1);
+    transform: scale(1);
 }
 .pop-enter,
 .pop-leave-to {
-    transform: scale(0) translateZ(0);
+    transform: scale(0);
 }

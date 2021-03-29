@@ -2,7 +2,7 @@
     <dropdown>
         <span class="link link-black" slot="trigger" slot-scope="{ toggle, isActive }" @click="toggle">{{ $title }}</span>
 
-        <div v-cloak class="dropdown-box inset-s">
+        <div v-cloak class="dropdown-content">
             @foreach($items as $navItem)
                 {!! $navItem->render() !!}
             @endforeach

@@ -56,6 +56,13 @@ module.exports = {
             lineHeight: {
                 0: '0',
             },
+            minWidth: {
+                xs: '20rem',
+                sm: '24rem',
+                md: '28rem',
+                lg: '32rem',
+                xl: '36rem',
+            },
         },
     },
     corePlugins: {
