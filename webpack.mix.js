@@ -16,7 +16,6 @@ mix.setPublicPath(path.normalize('public/chief-assets/back'))
     })
 
     .sass('resources/assets/css/main.scss', 'public/chief-assets/back/css')
-    .sass('resources/assets/css/login.scss', 'public/chief-assets/back/css')
 
     .polyfill({
         enabled: true,

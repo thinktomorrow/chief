@@ -105,7 +105,7 @@
     @apply bg-primary-500 border-primary-500 text-white;
 
     &:focus {
-        @apply ring-2 ring-primary-500 outline-none bg-primary-600 border-primary-600;
+        @apply outline-none bg-primary-600 border-primary-600;
     }
 }
 

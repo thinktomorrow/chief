@@ -1,20 +1,27 @@
-<header class="bg-white border-b border-grey-100 sticky top-0 z-20">
-    <div class="container">
-        <div class="row stack flex justify-between">
-            <div class="column-9">
-                <h1 class="flex items-center mb-0">
+<div class="my-12">
+    <div class="container space-y-2">
+        <div class="row">
+            <div class="w-full">
+                <a href="{{ route('chief.back.dashboard') }}" class="link link-primary">
+                    <x-link-label type="back">Ga terug</x-link-label>
+                </a>
+            </div>
+        </div>
+
+        <div class="row-between-start">
+            <div class="w-3/4">
+                <h1 class="text-grey-900">
                     @adminConfig('indexTitle')
                 </h1>
             </div>
 
-            <div class="column-3 text-right justify-end">
+            <div class="w-1/4 flex justify-end items-center">
                 @adminCan('create')
-                    <a href="@adminRoute('create')" class="btn btn-secondary inline-flex items-center">
-                        <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
-                        <span>Voeg een @adminConfig('modelName') toe</span>
+                    <a href="@adminRoute('create')" class="btn btn-primary">
+                        <x-link-label type="add">Voeg een @adminConfig('modelName') toe</x-link-label>
                     </a>
                 @endAdminCan
             </div>
         </div>
     </div>
-</header>
+</div>
