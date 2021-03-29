@@ -23,12 +23,17 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public static function make(iterable $generator): self
     {
-        $fields = [];
+        $fields = new static();
+
         foreach($generator as $field) {
-            $fields[] = $field;
+            if(is_iterable($field)) {
+                $fields = $fields->add(...$field);
+            } else {
+                $fields = $fields->add($field);
+            }
         }
 
-        return new static($fields);
+        return $fields;
     }
 
     public function all(): array

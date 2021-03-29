@@ -5,7 +5,7 @@
         <form action="@adminRoute('archive', $model)" method="POST" id="archive-manager-form-{{ $managedModelId }}">
             @csrf
             <div v-cloak>
-                <h2 class="formgroup-label">Archiveer: {{ $model->adminlabel('title') }}</h2>
+                <h2 class="formgroup-label">Archiveer: @adminConfig('pageTitle')</h2>
                 @if(contract($model, \Thinktomorrow\Chief\Site\Urls\ProvidesUrl\ProvidesUrl::class))
                     <p>
                         Opgelet, dit haalt deze pagina van de site en bezoekers krijgen een 404-pagina te zien.<br>
@@ -24,7 +24,7 @@
                         </chief-multiselect>
                     @else
                         <p>
-                            Archiveren haalt de {{ $model->adminLabel('title') }} onmiddellijk van de site.<br>
+                            Archiveren haalt de @adminConfig('pageTitle') onmiddellijk van de site.<br>
                         </p>
                     @endif
                 </div>

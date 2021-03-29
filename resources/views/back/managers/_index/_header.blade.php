@@ -11,14 +11,14 @@
         <div class="row-between-start">
             <div class="w-3/4">
                 <h1 class="text-grey-900">
-                    {{ ucfirst($model->adminLabel('page_title')) }}
+                    @adminConfig('indexTitle')
                 </h1>
             </div>
 
             <div class="w-1/4 flex justify-end items-center">
                 @adminCan('create')
                     <a href="@adminRoute('create')" class="btn btn-primary">
-                        <x-link-label type="add">Voeg een @adminLabel('label') toe</x-link-label>
+                        <x-link-label type="add">Voeg een @adminConfig('modelName') toe</x-link-label>
                     </a>
                 @endAdminCan
             </div>

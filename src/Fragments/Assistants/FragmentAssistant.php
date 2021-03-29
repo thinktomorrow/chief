@@ -329,13 +329,13 @@ trait FragmentAssistant
         $model = $this->managedModelClass()::withoutGlobalScopes()->findOrFail($id);
 
         if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminLabel('title') . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
         }
 
         app(DeleteModel::class)->handle($model);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is verwijderd.');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
     }
 
     private function ownerModel(string $ownerKey, $ownerId): Model

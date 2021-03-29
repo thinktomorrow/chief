@@ -18,7 +18,7 @@
     <div class="mt-8">
             @forelse($allowedFragments as $allowedFragment)
                 <a class="btn btn-primary" href="{{ $allowedFragment['manager']->route('fragment-create', $model) }}">
-                    Voeg een {{ $allowedFragment['model']->adminLabel('label') }} toe
+                    Voeg een {{ $allowedFragment['model']->adminConfig()->getModelName() }} toe
                 </a>
 
                 <!-- // Any shared available? -> selectable

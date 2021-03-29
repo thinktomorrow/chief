@@ -2,7 +2,7 @@ import EventBus from '../../utilities/EventBus';
 
 /**
  * Fragment new
- * submit fragment post request and grab results
+ * show the available and shared fragment options
  */
 export default class {
     constructor(container, fragmentsContainer) {
@@ -25,6 +25,7 @@ export default class {
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
+                console.log('selectfragment event subscribe: ' + event);
                 this._removeTriggerElements();
                 this._addTriggerElements();
                 this._activateTriggerElements();
@@ -105,7 +106,7 @@ export default class {
             element.parentNode.insertBefore(selectionElement, element);
             element.parentNode.removeChild(element);
 
-            EventBus.publish('fragment-new', element);
+            EventBus.publish('fragment-new', selectionElement);
         });
     }
 

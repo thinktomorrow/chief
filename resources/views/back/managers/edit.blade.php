@@ -9,7 +9,7 @@
 @endpush
 
 @section('page-title')
-    {{ $model->adminLabel('title') }}
+    @adminConfig('pageTitle')
 @endsection
 
 @component('chief::back._layouts._partials.header')
@@ -20,7 +20,7 @@
                 :model="$model"
                 template="chief::manager.cards.fields.templates.pagetitle" />
         @else
-            {{ $model->adminLabel('title') }}
+            @adminConfig('pageTitle')
         @endif
     @endslot
 

@@ -78,7 +78,7 @@ trait PublishAssistant
 
         Audit::activity()->performedOn($model)->log('published');
 
-        return redirect()->to($this->route('index'))->with('messages.success', $model->adminLabel('title') . ' is online geplaatst.');
+        return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is online geplaatst.');
     }
 
     public function unpublish(Request $request, $id)
@@ -91,6 +91,6 @@ trait PublishAssistant
 
         Audit::activity()->performedOn($model)->log('unpublished');
 
-        return redirect()->to($this->route('index'))->with('messages.success', $model->adminLabel('title') . ' is offline gehaald.');
+        return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is offline gehaald.');
     }
 }

@@ -20,7 +20,7 @@
                         class="bg-primary-50 font-medium text-grey-900 py-1 px-2 rounded-lg"
                         href="{{ $allowedFragment['manager']->route('fragment-create', $owner) }}"
                     >
-                        {{ ucfirst($allowedFragment['model']->adminLabel('label')) }}
+                        {{ ucfirst($allowedFragment['model']->adminConfig()->getModelName()) }}
                     </a>
                 @empty
                     No available fragments.
@@ -40,8 +40,8 @@
                             data-fragments-add="{{ $sharedFragment['manager']->route('fragment-add', $owner, $sharedFragment['model']) }}"
                             class="bg-primary-50 font-medium text-grey-900 py-1 px-2 rounded-lg"
                         >
-                    {{ ucfirst($sharedFragment['model']->adminLabel('title')) }}
-                            {{ ($sharedFragment['model']->adminLabel('label')) }}
+                    {{ ucfirst($sharedFragment['model']->adminConfig()->getPageTitle()) }}
+                            {{ ($sharedFragment['model']->adminConfig()->getModelName()) }}
                 </span>
                     @endforeach
                 </div>

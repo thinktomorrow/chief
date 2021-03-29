@@ -28,7 +28,7 @@ final class ChiefNavigation
         foreach ($this->registry->managersWithTags() as $managerWithTags) {
             if ($managerWithTags->manager->can('index')) {
                 $modelClass = $managerWithTags->manager->managedModelClass();
-                $navLabel = (new $modelClass)->adminLabel('nav_label');
+                $navLabel = (new $modelClass)->adminConfig()->getNavTitle();
 
                 $this->container->make(Nav::class)->add(new NavItem($navLabel,                    $managerWithTags->manager->route('index'),                    $managerWithTags->tags));
             }

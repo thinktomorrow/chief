@@ -24,6 +24,6 @@ final class ManagerRequestDispatcher
 
     public function __call($method, $arguments)
     {
-        return $this->fromRequest($method,            request()->segment(2),            ...$arguments);
+        return $this->fromRequest($method, request()->segment(2), ...$arguments);
     }
 }
