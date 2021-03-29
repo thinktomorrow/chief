@@ -9,6 +9,7 @@ use Thinktomorrow\Chief\Fields\Fields;
 use Thinktomorrow\Chief\Fields\FieldName;
 use Thinktomorrow\Chief\Management\Managers;
 use Illuminate\Validation\ValidationException;
+use Thinktomorrow\Chief\Fields\Types\FileField;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Thinktomorrow\AssetLibrary\Application\AssetUploader;
 use Thinktomorrow\Chief\App\Http\Controllers\Controller;
@@ -39,18 +40,23 @@ class AsyncUploadFileMediaController extends Controller
         $managerKey = $request->input('managerKey');
         $fieldKey = $request->input('fieldKey');
 
+        $field = $this->getFileField($managerKey, $fieldKey);
+
         try {
             $this->validateUpload(
-                $managerKey,
-                $fieldKey,
+                $field,
                 $locale,
                 $uploadedFile
             );
 
-            $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName());
+            $asset = AssetUploader::upload($uploadedFile, $uploadedFile->getClientOriginalName(), 'default', $field->getStorageDisk() ?: '');
+
+            $url = $field->isStoredOnPublicDisk()
+                ? $asset->url()
+                : ($field->generatesCustomUrl() ? $field->generateCustomUrl($asset) : '');
 
             return response()->json([
-                'url'      => $asset->url(),
+                'url'      => $url,
                 'filename' => $asset->filename(),
                 'id'       => $asset->id,
                 'mimetype' => $asset->getMimeType(),
@@ -76,11 +82,8 @@ class AsyncUploadFileMediaController extends Controller
         }
     }
 
-    protected function validateUpload(string $managerKey, string $fieldKey, string $locale, UploadedFile $uploadedFile)
+    protected function validateUpload(FileField $field, string $locale, UploadedFile $uploadedFile)
     {
-        $manager = $this->managers->findByKey($managerKey);
-        $field = $manager->fields()[$fieldKey];
-
         // Convert this request to an expected format for our validation rules.
         // validation rules expects something as [images.avatar.nl => [payload]]
         $validationPayload = [];
@@ -88,5 +91,12 @@ class AsyncUploadFileMediaController extends Controller
         Arr::set($validationPayload, $dottedFieldName, [$uploadedFile]); // encode it back as a string just as a normal slim request
 
         $this->fieldValidator->handle(new Fields([$field]), $validationPayload);
+    }
+
+    private function getFileField(string $managerKey, string $fieldKey): FileField
+    {
+        $manager = $this->managers->findByKey($managerKey);
+
+        return $manager->fields()[$fieldKey];
     }
 }
