@@ -31,7 +31,7 @@ class BuildMenuItemsTree
                     $item->url = $item->url();
 
                     // Extra info on admin page.
-                    $item->page_label = $owner instanceof ManagedModel ? $owner->adminLabel('title') : '-';
+                    $item->page_label = $owner instanceof ManagedModel ? $owner->adminConfig()->getPageTitle() : '-';
 
                     $item->hidden_in_menu = $owner->hidden_in_menu;
                     $item->draft = (public_method_exists($owner, 'isDraft') && $owner->isDraft());

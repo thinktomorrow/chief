@@ -1,5 +1,5 @@
 <div class="w-full mb-8">
-    <p class="mb-2">Geen @adminLabel('label') gevonden.</p>
+    <p class="mb-2">Geen resultaten gevonden.</p>
     <p><a href="@adminRoute('index')">Bekijk alle resultaten</a></p>
 </div>
 

@@ -20,7 +20,7 @@ class AppServiceProvider {
 The url of the navigation item is the index admin route of the model. This is currently fixed and not configurable.
 Note that only models that have an _index_ route will be shown as link. Other ones, such as static fragments, won't be added automatically in the navigation. 
 
-The label of the navigation can be set via the models' adminLabel method. Provide a *nav_label* value to control the navigation link label.
+The label of the navigation can be set via the models' adminConfig. Provide a *navTitle* value to control the navigation link label.
 
 ## Customising the navigation
 If you'd more control beyond the basic options, you can customize the navigation view by exporting it to your application.

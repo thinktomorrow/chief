@@ -155,11 +155,13 @@ export default class {
     }
 
     /**
-     * Replace components found within the active panel with their updated server html.
-     * A component is marked by the [data-sidebar-component] attribute. A unique
-     * value is required so that the different components can be distinguished.
+     * Replace components found within the active panel with their up to date rendered html
+     * coming from serverside. Each component is marked by the [data-sidebar-component]
+     * attribute. A unique value is required to distinguish the different components.
      */
     replacePanelComponents() {
+        if (!this.panels.findActive()) return;
+
         Array.from(this.panels.findActive().el.querySelectorAll('[data-sidebar-component]')).forEach((el) => {
             const componentKey = el.getAttribute('data-sidebar-component');
 

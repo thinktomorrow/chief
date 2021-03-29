@@ -22,7 +22,6 @@ export default class {
         // });
 
         EventBus.subscribe('fragment-new', (selectionEl) => {
-            console.log('selection...');
             this._scanForTriggersIn(selectionEl);
         });
 
@@ -56,12 +55,10 @@ export default class {
             : event.target.closest(`[${this.postActionAttribute}]`);
         const action = el ? el.getAttribute(this.postActionAttribute) : null;
 
-        console.log(action);
-
         if (!action) return;
 
         Api.submit('POST', action, {}, (data) => {
-            this.scanForTriggers();
+            // this.scanForTriggers();
 
             EventBus.publish('fragment-add', data);
         });

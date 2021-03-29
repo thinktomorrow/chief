@@ -49,15 +49,19 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
-    EventBus.subscribe('fragment-add', () => {
+    function listen() {
+        console.log('livewire comp. ' + componentEl.getAttribute('wire:id') + ' reloaded.');
         livewireComponent.reload();
-    });
+    }
+
+    EventBus.subscribe('fragment-add', listen);
 
     EventBus.subscribe('fragments-submit-panel', () => {
         livewireComponent.reload();
     });
 
     window.Livewire.on('fragmentsReloaded', () => {
+        console.log('reloading fragments');
         EventBus.publish('fragments-reloaded');
     });
 

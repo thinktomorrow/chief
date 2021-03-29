@@ -6,7 +6,7 @@
             @method('DELETE')
             @csrf
             <div v-cloak>
-                <h2>Verwijder {{ $model->adminLabel('title') }}</h2>
+                <h2>Verwijder @adminConfig('pageTitle')</h2>
                 <p>Bevestig jouw actie door hieronder de tekst 'DELETE' te typen:</p>
                 <div class="input-group stack column-6">
                     <input data-delete-confirmation name="deleteconfirmation" placeholder="DELETE" type="text" class="input inset-s" autocomplete="off">

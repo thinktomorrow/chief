@@ -3,8 +3,7 @@
         <div class="column flex flex-col justify-between">
             @adminCan('edit')
                 <a data-context-sidebar href="@adminRoute('edit', $model)" class="flex items-center">
-                    <h3 class="mb-0">{!! $model->adminLabel('title') !!}</h3>
-                    <p>{{ $model->order }}</p>
+                    <h3 class="mb-0">@adminConfig('rowTitle')</h3>
                     @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
                         <span class="label label-tertiary flex items-center ml-2">
                             <svg width="14" height="14" class="fill-current"><use xlink:href="#home"/></svg>
@@ -13,26 +12,15 @@
                     @endif
                 </a>
             @elseAdminCan
-                <span class="text-black font-bold">{!! $model->adminLabel('title') !!}</span>
+                <span class="text-black font-bold">@adminConfig('rowTitle')</span>
             @endAdminCan
-            @if($model->adminLabel('subtitle'))
-                <div>
-                    <span class="text-grey-300">{!! $model->adminLabel('subtitle') !!}</span>
-                </div>
-            @endif
-            @if($model->adminLabel('intro'))
-                <div class="stack-s text-sm">
-                    {!! $model->adminLabel('intro') !!}
-                </div>
-            @endif
-            @if($model instanceof Thinktomorrow\Chief\Modules\Module)
-                <div class="stack-s">{{$manager->details()->singular}}</div>
-            @endif
+            <div>
+                @adminConfig('rowContent')
+            </div>
         </div>
         <div class="column-1 text-right flex flex-col justify-between items-end">
             @include('chief::back.managers._index._options')
-
-            {!! $model->adminLabel('card.online_status') !!}
+            @adminConfig('rowBadge')
         </div>
     </div>
 </div>

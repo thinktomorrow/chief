@@ -1,12 +1,12 @@
 @extends('chief::back._layouts.master')
 
 @section('page-title')
-    @adminLabel('page_title')
+    @adminConfig('modelName')
 @endsection
 
 @component('chief::back._layouts._partials.header')
     @slot('title')
-        @adminLabel('page_title')
+        @adminConfig('modelName')
     @endslot
     @slot('subtitle')
         <div class="inline-block">

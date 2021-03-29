@@ -1,7 +1,7 @@
 @extends('chief::back._layouts.master')
 
 @section('page-title')
-    {{ $model->adminLabel('title') }}
+    @adminConfig('pageTitle')
 @endsection
 
 @component('chief::back._layouts._partials.header')

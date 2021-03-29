@@ -3,7 +3,7 @@
         <div class="row stack flex justify-between">
             <div class="column-9">
                 <h1 class="flex items-center mb-0">
-                    @adminLabel('page_title')
+                    @adminConfig('indexTitle')
                 </h1>
             </div>
 
@@ -11,7 +11,7 @@
                 @adminCan('create')
                     <a href="@adminRoute('create')" class="btn btn-secondary inline-flex items-center">
                         <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
-                        <span>Voeg een @adminLabel('label') toe</span>
+                        <span>Voeg een @adminConfig('modelName') toe</span>
                     </a>
                 @endAdminCan
             </div>

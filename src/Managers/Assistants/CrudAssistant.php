@@ -80,11 +80,10 @@ trait CrudAssistant
     public function index()
     {
         $modelClass = $this->managedModelClass();
-        $model = new $modelClass();
 
         return view('chief::back.managers.index', [
             'manager' => $this,
-            'model' => $model,
+            'model' => new $modelClass(),
             'models' => $this->indexModels(),
         ]);
     }
@@ -93,7 +92,11 @@ trait CrudAssistant
     {
         $this->filters()->apply($builder = $this->managedModelClass()::query());
 
-        return $builder->paginate(12);
+        $pagination = (new $this->managedModelClass())->adminConfig()->getPagination();
+
+        if(!$pagination) return $builder->get();
+
+        return $builder->paginate($pagination);
     }
 
     public function filters(): Filters
@@ -163,7 +166,7 @@ trait CrudAssistant
         $model->saveFields($fields, $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is toegevoegd');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig('pageTitle') . '" is toegevoegd');
     }
 
     /**
@@ -193,7 +196,7 @@ trait CrudAssistant
         $model->saveFields(Fields::make($model->fields()), $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminLabel('title') . '</a> is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  <a href="' . $this->route('edit', $model) . '">' . $model->adminConfig()->getPageTitle() . '</a> is aangepast');
     }
 
     public function delete(Request $request, $id)
@@ -203,12 +206,12 @@ trait CrudAssistant
         $this->guard('delete', $model);
 
         if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminLabel('title') . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
         }
 
         app(DeleteModel::class)->handle($model);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is verwijderd.');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
     }
 }

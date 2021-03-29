@@ -87,7 +87,7 @@ trait ArchiveAssistant
 
         Audit::activity()->performedOn($model)->log('archived');
 
-        return redirect()->to($this->route('index'))->with('messages.success', $model->adminLabel('title') . ' is gearchiveerd.');
+        return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is gearchiveerd.');
     }
 
     public function unarchive(Request $request, $id)
@@ -100,7 +100,7 @@ trait ArchiveAssistant
 
         Audit::activity()->performedOn($model)->log('unarchived');
 
-        return redirect()->to($this->route('index'))->with('messages.success', $model->adminLabel('title') . ' is uit het archief gehaald.');
+        return redirect()->to($this->route('index'))->with('messages.success', $model->adminConfig()->getPageTitle() . ' is uit het archief gehaald.');
     }
 
     /**

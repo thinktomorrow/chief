@@ -20,7 +20,7 @@ function subscribe(event, callback) {
     if (!subscriptions[event]) subscriptions[event] = {};
 
     subscriptions[event][id] = callback;
-
+    console.dir(subscriptions);
     return {
         unsubscribe: () => {
             delete subscriptions[event][id];
@@ -31,7 +31,6 @@ function subscribe(event, callback) {
 
 function publish(event, arg) {
     if (!subscriptions[event]) return;
-
     Object.keys(subscriptions[event]).forEach((key) => subscriptions[event][key](arg));
 }
 

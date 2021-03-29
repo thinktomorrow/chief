@@ -1,7 +1,7 @@
 @extends('chief::back._layouts.master')
 
 @section('page-title')
-    @adminLabel('page_title')
+    @adminConfig('pageTitle')
 @endsection
 
 @section('header')
@@ -26,7 +26,7 @@
                     @foreach($models as $model)
                         <div class="s-column-3 inset-xs flex" data-sortable-id="{{ $model->id }}" style="cursor:grab;">
                             <div class="bg-white border border-grey-100 rounded inset-s" style="flex:1 1 0;">
-                                <span class="text-black font-bold">{!! $model->adminLabel('title') !!}</span>
+                                <span class="text-black font-bold">@adminConfig('pageTitle')</span>
                             </div>
                         </div>
                     @endforeach

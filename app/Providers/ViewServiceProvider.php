@@ -53,8 +53,14 @@ class ViewServiceProvider extends ServiceProvider
             return "<?php echo app(\Thinktomorrow\Chief\Fragments\FragmentsRenderer::class)->render(\$model, get_defined_vars()); ?>";
         });
 
-        Blade::directive('adminLabel', function ($expression) {
-            return "<?php echo \$model->adminLabel($expression); ?>";
+        Blade::directive('adminConfig', function ($expression = null) {
+
+            if($expression) {
+                $method = "get".ucfirst(str_replace("'", '',$expression));
+                return "<?php echo \$model->adminConfig()->$method(); ?>";
+            }
+
+            return "<?php echo \$model->adminConfig(); ?>";
         });
 
         Blade::directive('adminRoute', function ($expression) {

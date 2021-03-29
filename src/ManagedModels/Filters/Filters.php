@@ -23,12 +23,17 @@ class Filters
      */
     public static function make(iterable $generator): self
     {
-        $filters = [];
+        $filters = new static();
+
         foreach($generator as $filter) {
-            $filters[] = $filter;
+            if(is_iterable($filter)) {
+                $filters = $filters->add(...$filter);
+            } else {
+                $filters = $filters->add($filter);
+            }
         }
 
-        return new static($filters);
+        return $filters;
     }
 
     public function all(): array

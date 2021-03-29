@@ -31,13 +31,6 @@ class __STUB_CLASSNAME__ extends Model implements Page
             __STUB_FIELDS__
     }
 
-    private function adminLabels()
-    {
-        return array_merge($this->defaultAdminLabels(), [
-            //
-        ]);
-    }
-
     public function allowedFragments(): array
     {
         return [

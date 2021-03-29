@@ -2,17 +2,17 @@
 @extends('chief::back._layouts.master')
 
 @section('page-title')
-    @adminLabel('page_title')
+    @adminConfig('pageTitle')
 @endsection
 
 
 
 @component('chief::back._layouts._partials.header')
     @slot('title')
-        @adminLabel('page_title')
+        @adminConfig('pageTitle')
     @endslot
 
-    <h1>@adminLabel('page_title')</h1>
+    <h1>@adminConfig('pageTitle')</h1>
 
 
 

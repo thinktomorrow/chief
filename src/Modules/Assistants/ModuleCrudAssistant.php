@@ -60,7 +60,7 @@ trait ModuleCrudAssistant
         $model->saveFields($model->fields()->tagged('create'), $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is toegevoegd');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is toegevoegd');
     }
 
     public function edit($id)
@@ -94,7 +94,7 @@ trait ModuleCrudAssistant
         $model->saveFields($model->fields(), $request->all(), $request->allFiles());
 
         return redirect()->to($this->route('edit', $model))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is aangepast');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is aangepast');
     }
 
     public function delete($id, Request $request)
@@ -104,12 +104,12 @@ trait ModuleCrudAssistant
         $model = $this->managedModelClass()::findOrFail($id);
 
         if ($request->get('deleteconfirmation') !== 'DELETE') {
-            return redirect()->back()->with('messages.warning', $model->adminLabel('title') . ' is niet verwijderd.');
+            return redirect()->back()->with('messages.warning', $model->adminConfig()->getPageTitle() . ' is niet verwijderd.');
         }
 
         app(DeleteModel::class)->handle($model);
 
         return redirect()->to($this->route('index'))
-            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminLabel('title') . '" is verwijderd.');
+            ->with('messages.success', '<i class="fa fa-fw fa-check-circle"></i>  "' . $model->adminConfig()->getPageTitle() . '" is verwijderd.');
     }
 }
