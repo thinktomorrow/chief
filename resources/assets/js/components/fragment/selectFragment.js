@@ -25,7 +25,7 @@ export default class {
 
         reloadEvents.forEach((event) => {
             EventBus.subscribe(event, () => {
-                console.log('selectfragment event subscribe: ' + event);
+                console.log(`selectfragment event subscribe: ${event}`);
                 this._removeTriggerElements();
                 this._addTriggerElements();
                 this._activateTriggerElements();

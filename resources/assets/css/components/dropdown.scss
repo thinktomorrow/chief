@@ -3,9 +3,9 @@
 }
 
 .dropdown-link {
-    @apply font-medium text-grey-700 px-4 py-3 hover:bg-primary-50 hover:text-primary-500;
+    @apply font-medium text-grey-800 px-4 py-3 hover:bg-primary-50 hover:text-primary-500;
 }
 
 .dropdown-link.active {
-    @apply bg-grey-50;
+    @apply bg-grey-50 text-grey-600;
 }

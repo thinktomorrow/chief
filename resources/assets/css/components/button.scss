@@ -120,3 +120,11 @@
 .btn-secondary:hover {
     @apply bg-primary-500 border-primary-500 text-white;
 }
+
+.btn-error {
+    @apply text-red-500 border-red-500 bg-transparent;
+}
+
+.btn-error:hover {
+    @apply bg-red-500 border-red-500 text-white;
+}

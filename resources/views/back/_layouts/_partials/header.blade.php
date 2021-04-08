@@ -12,11 +12,11 @@
             <div class="row-between-center">
                 <div class="w-3/4 space-y-2">
                     <h1 class="text-grey-900">
-                        <span>{!! $subtitle ?? '' !!}</span>
-                        <span>{!! ucfirst($title) ?? '' !!}</span>
+                        {{-- <span>{!! $subtitle ?? '' !!}</span> --}}
+                        {!! ucfirst($title) ?? '' !!}
                     </h1>
 
-                    {{ $extra ??  '' }}
+                    {{-- {{ $extra ??  '' }} --}}
                 </div>
 
                 <div class="w-1/4 flex justify-end items-center">

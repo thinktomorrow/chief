@@ -46,7 +46,7 @@ input[type='file'],
 input[type='checkbox'],
 input[type='radio'] {
     appearance: none;
-    @apply relative w-5 h-5 bg-grey-100 border border-grey-150 overflow-hidden mr-1;
+    @apply relative w-5 h-5 bg-grey-100 border border-grey-150 overflow-hidden mr-1 cursor-pointer;
 
     &:focus {
         @apply ring-2 ring-primary-500;
@@ -58,7 +58,7 @@ input[type='radio'] {
     }
 
     &:checked:before {
-        @apply transform scale-50;
+        @apply transform scale-65;
     }
 }
 

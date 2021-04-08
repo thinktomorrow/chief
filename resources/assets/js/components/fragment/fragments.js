@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const livewireComponent = window.Livewire.find(componentEl.getAttribute('wire:id'));
 
     function listen() {
-        console.log('livewire comp. ' + componentEl.getAttribute('wire:id') + ' reloaded.');
+        console.log(`livewire comp. ${componentEl.getAttribute('wire:id')} reloaded.`);
         livewireComponent.reload();
     }
 

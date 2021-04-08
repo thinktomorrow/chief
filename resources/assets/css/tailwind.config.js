@@ -63,6 +63,9 @@ module.exports = {
                 lg: '32rem',
                 xl: '36rem',
             },
+            scale: {
+                65: '0.65',
+            },
         },
     },
     corePlugins: {
