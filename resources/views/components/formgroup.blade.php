@@ -1,22 +1,25 @@
-<div>
-    @if(isset($label))
-        <h6 class="group flex items-center space-x-2 mb-0 cursor-default">
-            <span>{{ ucfirst($label) }}</span>
+<div class="space-y-3">
+    @if(isset($label) || isset($description))
+        <div class="space-y-1">
+            @isset($label)
+                <h5 class="space-x-1 cursor-default">
+                    <span>{{ ucfirst($label) }}</span>
 
-            @if(isset($isRequired) && $isRequired)
-                <div class="relative flex items-center text-warning">
-                    <div class="relative transform group-hover:scale-0 transition-150"> * </div>
-                    <div class="absolute transform scale-0 group-hover:scale-100 whitespace-nowrap transition-150 font-medium">Verplicht veld</div>
-                </div>
-            @endif
-        </h6>
+                    @if(isset($isRequired) && $isRequired)
+                        <span class="bg-orange-100 text-orange-500 text-xs rounded px-2 py-1">
+                            Verplicht veld
+                        </span>
+                    @endif
+                </h5>
+            @endisset
+
+            @isset($description)
+                <p class="text-grey-500">{!! $description !!}</p>
+            @endisset
+        </div>
     @endif
 
-    @if(isset($description))
-        <p class="text-grey-500 mb-4 mt-2">{!! $description !!}</p>
-    @endif
-
-    <div class="mt-3">
+    <div>
         {{ $slot }}
     </div>
 </div>

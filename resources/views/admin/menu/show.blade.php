@@ -1,6 +1,6 @@
 @extends('chief::back._layouts.master')
 
-@section('page-title','Voeg nieuw menu-item toe')
+@section('page-title', 'Menu ' . $menu->label())
 
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu ' . $menu->label())
@@ -13,52 +13,37 @@
             </a>
         @endslot
     @endif
-    <div class="inline-group-s">
-        <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-secondary inline-flex items-center">
-            <span class="mr-2"><svg width="18" height="18"><use xlink:href="#add"/></svg></span>
-            <span>Voeg een menu-item toe</span>
-        </a>
-    </div>
+
+    <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary">
+        <x-link-label type="add">Voeg een menu item toe</x-link-label>
+    </a>
 @endcomponent
 
 @section('content')
-
-
     @if($menuItems->isEmpty() )
-        <div class="stack-l">
-            <a href="{{ route('chief.back.menuitem.create', $menu->key()) }}" class="btn btn-primary inline-flex items-center">
-                <span class="mr-2"><svg width="18" height="18"><use xlink:href="#zap"/></svg></span>
-                <span>Voeg een menu-item toe</span>
-            </a>
+        <div class="container">
+            <div class="row">
+                <div class="w-full lg:w-2/3 prose prose-dark">
+                    <p> Momenteel zijn er nog geen menu-items toegevoegd. </p>
+                </div>
+            </div>
         </div>
     @else
-        <div class="stack-l container">
-            <div class="row opacity-50">
-                <div class="column center-y">
-                    <strong>Menu label</strong>
-                </div>
-                <div class="column-4 center-y">
-                    <strong>Link</strong>
-                </div>
-                <div class="column-2"></div>
-            </div>
-            @foreach($menuItems as $menuItem)
-                <section class="relative bg-white border border-grey-100 rounded inset-s bg-white stack-s">
-                    @include('chief::admin.menu._partials._rowitem', ['item' => $menuItem])
-
-                    @foreach($menuItem->children as $child)
-                        @include('chief::admin.menu._partials._rowitem', ['level' => 1, 'item' => $child])
-
-                        @foreach($child->children as $subchild)
-                            @include('chief::admin.menu._partials._rowitem', ['level' => 2, 'item' => $subchild])
-
-                            @foreach($subchild->children as $subsubchild)
-                                @include('chief::admin.menu._partials._rowitem', ['level' => 3, 'item' => $subsubchild])
+        <div class="container">
+            <div class="row">
+                <div class="w-full lg:w-2/3">
+                    <div class="window window-white">
+                        <div class="divide-y divide-grey-150 -mx-12 -my-6">
+                            @foreach($menuItems as $menuItem)
+                                @include('chief::admin.menu._partials._rowitem', [
+                                    'item' => $menuItem,
+                                    'level' => 0
+                                ])
                             @endforeach
-                        @endforeach
-                    @endforeach
-                </section>
-            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     @endif
 @stop

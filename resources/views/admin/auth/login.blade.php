@@ -40,7 +40,7 @@
                         <input type="password" name="password" id="password">
                     </div>
 
-                    <label for="rememberCheckbox" class="flex items-center text-grey-700 space-x-2 cursor-pointer with-custom-checkbox">
+                    <label for="rememberCheckbox" class="flex items-center text-grey-700 space-x-2 cursor-pointer">
                         <input id="rememberCheckbox" {{ old('remember') ? 'checked=checked' : null  }} type="checkbox" name="remember">
                         <span>Houd me ingelogd</span>
                     </label>

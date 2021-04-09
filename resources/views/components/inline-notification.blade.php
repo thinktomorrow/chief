@@ -19,17 +19,17 @@
 
     switch($size ?? null) {
         case 'small':
-            $classesForSize = 'p-4';
+            $classesForSize = 'px-2 py-1';
             break;
         case 'large':
-            $classesForSize = 'p-6';
+            $classesForSize = 'px-6 py-4';
             break;
         default:
-            $classesForSize = 'p-4';
+            $classesForSize = 'px-2 py-1';
             break;
     }
 @endphp
 
-<div class="{{ $classesForType }} {{ $classesForSize }} font-medium rounded-lg">
+<div class="{{ $classesForType }} {{ $classesForSize }} inline-block font-medium rounded-lg">
     {{ $slot }}
 </div>

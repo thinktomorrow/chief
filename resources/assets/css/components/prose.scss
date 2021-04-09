@@ -44,7 +44,9 @@
     cite,
     blockquote,
     figcaption,
-    label {
+    label,
+    input,
+    textarea {
         @apply text-grey-800;
     }
     h1,

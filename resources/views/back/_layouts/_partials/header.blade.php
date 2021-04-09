@@ -10,7 +10,7 @@
             @endif
 
             <div class="row-between-center">
-                <div class="w-3/4 space-y-2">
+                <div class="w-full lg:w-1/2 space-y-2">
                     <h1 class="text-grey-900">
                         {{-- <span>{!! $subtitle ?? '' !!}</span> --}}
                         {!! ucfirst($title) ?? '' !!}
@@ -19,7 +19,7 @@
                     {{-- {{ $extra ??  '' }} --}}
                 </div>
 
-                <div class="w-1/4 flex justify-end items-center">
+                <div class="w-full lg:w-1/2 flex justify-end items-center">
                     {{ $slot }}
                 </div>
             </div>
