@@ -9,7 +9,7 @@
                 </div>
             @endif
 
-            <div class="row-between-center">
+            <div class="row-between-start">
                 <div class="w-full lg:w-1/2 space-y-2">
                     <h1 class="text-grey-900">
                         {{-- <span>{!! $subtitle ?? '' !!}</span> --}}

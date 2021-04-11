@@ -1,15 +1,15 @@
 .label {
-    @apply font-medium p-2 rounded-md text-sm bg-grey-100 text-grey-700;
+    @apply font-semibold rounded px-2 py-1 bg-grey-100 text-grey-700;
 }
 
 .label-primary {
-    @apply bg-primary-50 text-primary-500;
+    @apply bg-primary-100 text-primary-500;
 }
 
 .label-secondary {
-    @apply bg-secondary-50 text-secondary-500;
+    @apply bg-secondary-100 text-secondary-500;
 }
 
-.label-tertiary {
-    @apply bg-tertiary-50 text-tertiary-500;
+.label-warning {
+    @apply bg-orange-100 text-orange-500;
 }

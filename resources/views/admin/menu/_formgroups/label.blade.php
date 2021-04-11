@@ -7,14 +7,14 @@
         <tabs v-cloak>
             @foreach(config('chief.locales') as $locale)
                 <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}')}">
-                    <div class="space-y-3 prose prose-dark">
+                    <div class="space-y-2">
                         <input
                             type="text"
                             name="trans[{{ $locale }}][label]"
                             id="trans-{{ $locale }}-label"
                             placeholder="Menu label"
                             value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
-                            class="input w-full"
+                            class="w-full"
                         >
 
                         @error('trans.' . $locale . '.label')
@@ -28,14 +28,14 @@
         </tabs>
     @else
         @foreach(config('chief.locales') as $locale)
-            <div class="space-y-3 prose prose-dark">
+            <div class="space-y-2">
                 <input
                     type="text"
                     name="trans[{{ $locale }}][label]"
                     id="trans-{{ $locale }}-label"
                     placeholder="Menu label"
                     value="{{ old('trans.'.$locale.'.label', $menuitem->dynamic('label', $locale)) }}"
-                    class="input w-full"
+                    class="w-full"
                 >
 
                 @error('trans.' . $locale . '.label')

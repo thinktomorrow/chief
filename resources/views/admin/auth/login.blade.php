@@ -14,45 +14,50 @@
         </div>
 
         <div class="relative row-center-center min-h-screen">
-            <div class="w-full lg:w-1/2 2xl:w-2/5 window window-white space-y-12">
+            <div class="w-full lg:w-1/2 2xl:w-1/3 window window-white space-y-12">
                 <h1 class="text-grey-900">Welkom terug, Chief!</h1>
 
-                <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}" class="space-y-6">
+                <form id="valid" role="form" method="POST" action="{{ route('chief.back.login.store') }}">
                     {{ csrf_field() }}
 
-                    @if($errors and count($errors) > 0)
-                        <x-inline-notification type="error" size="large">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </x-inline-notification>
-                    @endif
+                    <div class="space-y-6">
+                        @if($errors and count($errors) > 0)
+                            <x-inline-notification type="error" size="large">
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </x-inline-notification>
+                        @endif
 
-                    <div class="space-y-2">
-                        <label class="text-grey-700" for="identity">E-mail</label>
-                        <input type="email" name="email" id="identity" value="{{ old('email') }}" autofocus>
+                        <div class="flex flex-col space-y-2">
+                            <label for="identity" class="text-grey-900">E-mail</label>
+                            <input id="identity" name="email" type="email" value="{{ old('email') }}" placeholder="john@doe.com" autofocus>
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <label for="password" class="flex justify-between">
+                                <span class="text-grey-900">Wachtwoord</span>
+
+                                <a href="{{ route('chief.back.password.request') }}" title="Password forgotten" class="link link-primary">
+                                    Wachtwoord vergeten?
+                                </a>
+                            </label>
+
+                            <input id="password" name="password" type="password">
+                        </div>
+
+                        <label for="rememberCheckbox" class="flex items-center space-x-2 cursor-pointer">
+                            <input id="rememberCheckbox" {{ old('remember') ? 'checked=checked' : null  }} type="checkbox" name="remember">
+                            <span class="text-grey-700 font-medium">Houd me ingelogd</span>
+                        </label>
+
+                        <div class="space-x-4">
+                            <button type="submit" form="valid" class="btn btn-primary w-full">Inloggen</button>
+                        </div>
                     </div>
-
-                    <div class="space-y-2">
-                        <label class="text-grey-700" for="password">Wachtwoord</label>
-                        <input type="password" name="password" id="password">
-                    </div>
-
-                    <label for="rememberCheckbox" class="flex items-center text-grey-700 space-x-2 cursor-pointer">
-                        <input id="rememberCheckbox" {{ old('remember') ? 'checked=checked' : null  }} type="checkbox" name="remember">
-                        <span>Houd me ingelogd</span>
-                    </label>
                 </form>
-
-                <div class="space-x-4">
-                    <button type="submit" form="valid" class="btn btn-primary">Inloggen</button>
-
-                    <a href="{{ route('chief.back.password.request') }}" title="Password forgotten" class="link link-primary">
-                        Wachtwoord vergeten?
-                    </a>
-                </div>
             </div>
         </div>
     </div>

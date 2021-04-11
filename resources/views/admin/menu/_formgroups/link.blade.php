@@ -3,9 +3,9 @@
     @slot('isRequired', true)
 
     <radio-options inline-template :errors="errors" default-type="{{ old('type', $menuitem->type) }}">
-        <div class="space-y-3 prose prose-dark">
+        <div class="space-y-2">
             <!-- internal type -->
-            <label for="typeInternal" class="block cursor-pointer space-y-3">
+            <label for="typeInternal" class="block cursor-pointer space-y-2">
                 <div class="flex items-center space-x-2">
                     <input
                         id="typeInternal"
@@ -13,13 +13,13 @@
                         type="radio"
                         value="internal"
                         v-on:click="changeType('internal')"
-                        {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"' : '' }}
+                        {{ (old('type', $menuitem->type) == 'internal') ? 'checked="checked"' : null }}
                     >
 
-                    <span>Kies een interne pagina</span>
+                    <span class="font-medium text-grey-700">Kies een interne pagina</span>
                 </div>
 
-                <div v-if="type == 'internal'" class="relative space-y-3">
+                <div v-if="type == 'internal'" class="relative space-y-2">
                     <chief-multiselect
                         name="owner_reference"
                         :options='@json($pages)'
@@ -39,7 +39,7 @@
             </label>
 
             <!-- custom type -->
-            <label for="typeCustom" class="block cursor-pointer space-y-3">
+            <label for="typeCustom" class="block cursor-pointer space-y-2">
                 <div class="flex items-center space-x-2">
                     <input
                         id="typeCustom"
@@ -47,10 +47,10 @@
                         type="radio"
                         value="custom"
                         v-on:click="changeType('custom')"
-                        {{ (old('type', $menuitem->type) == 'custom') ? 'checked="checked"' : '' }}
+                        {{ (old('type', $menuitem->type) == 'custom') ? 'checked="checked"' : null }}
                     >
 
-                    <span>Kies een eigen link</span>
+                    <span class="font-medium text-grey-700">Kies een eigen link</span>
                 </div>
 
                 {{-- TODO: validation needs to be checked because it looks like this field can be empty? --}}
@@ -59,14 +59,14 @@
                         <tabs v-cloak>
                             @foreach(config('chief.locales') as $locale)
                                 <tab name="{{ $locale }}" :options="{ hasErrors: errors.has('trans.{{ $locale }}.label')}">
-                                    <div class="space-y-3">
+                                    <div class="space-y-2">
                                         <input
                                             id="trans-{{ $locale }}-url"
                                             name="trans[{{ $locale }}][url]"
                                             type="text"
                                             value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                             placeholder="e.g. https://google.com"
-                                            class="input w-full"
+                                            class="w-full"
                                         >
 
                                         @error('trans' . $locale . 'url')
@@ -80,14 +80,14 @@
                         </tabs>
                     @else
                         @foreach(config('chief.locales') as $locale)
-                            <div class="space-y-3">
+                            <div class="space-y-2">
                                 <input
                                     id="trans-{{ $locale }}-url"
                                     name="trans[{{ $locale }}][url]"
                                     type="text"
                                     value="{{ old('trans.'.$locale.'.url', $menuitem->dynamic('url', $locale)) }}"
                                     placeholder="e.g. https://google.com"
-                                    class="input w-full"
+                                    class="w-full"
                                 >
 
                                 @error('trans' . $locale . 'url')
@@ -112,7 +112,7 @@
                     {{ (old('type', $menuitem->type) == 'nolink') ? 'checked="checked"' : '' }}
                 >
 
-                <span>Geen link toevoegen aan dit menu item</span>
+                <span class="font-medium text-grey-700">Geen link toevoegen aan dit menu item</span>
             </label>
         </div>
     </radio-options>

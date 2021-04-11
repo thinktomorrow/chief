@@ -1,16 +1,16 @@
-<div class="space-y-3">
+<div class="space-y-6">
     @if(isset($label) || isset($description))
-        <div class="space-y-1">
+        <div class="space-y-2">
             @isset($label)
-                <h5 class="space-x-1 cursor-default">
+                <label class="text-lg space-x-1">
                     <span>{{ ucfirst($label) }}</span>
 
                     @if(isset($isRequired) && $isRequired)
-                        <span class="bg-orange-100 text-orange-500 text-xs rounded px-2 py-1">
+                        <span class="label label-warning text-xs">
                             Verplicht veld
                         </span>
                     @endif
-                </h5>
+                </label>
             @endisset
 
             @isset($description)

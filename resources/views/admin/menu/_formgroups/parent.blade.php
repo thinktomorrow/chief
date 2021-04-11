@@ -3,17 +3,17 @@
     @slot('description', 'Zet dit item op het hoogste niveau of plaats het onder een bestaand.')
 
     <radio-options inline-template :errors="errors" default-type="{{ !!old('parent_id', $menuitem->parent_id) ? '1' : '0' }}">
-        <div class="space-y-3 prose prose-dark">
+        <div class="space-y-3">
             <label for="withoutParentId" class="flex items-center space-x-2 cursor-pointer">
                 <input
                     id="withoutParentId"
                     name="allow_parent"
                     type="radio"
                     value="0"
-                    v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"' : '' }}
+                    v-on:click="changeType('0')" {{ !old('parent_id', $menuitem->parent_id) ? 'checked="checked"' : null }}
                 >
 
-                <span>Geef dit menu item weer op het hoogste niveau</span>
+                <span class="font-medium text-grey-700">Geef dit menu item weer op het hoogste niveau</span>
             </label>
 
             <label for="parentId" class="block cursor-pointer space-y-3">
@@ -23,10 +23,10 @@
                         name="allow_parent"
                         type="radio"
                         value="1"
-                        v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"' : '' }}
+                        v-on:click="changeType('1')" {{ !!old('parent_id', $menuitem->parent_id) ? 'checked="checked"' : null }}
                     >
 
-                    <span>Selecteer het menu item waaronder dit item behoort</span>
+                    <span class="font-medium text-grey-700">Selecteer het menu item waaronder dit item behoort</span>
                 </div>
 
                 <div v-if="type == '1'" class="relative">

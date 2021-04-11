@@ -44,17 +44,17 @@
     cite,
     blockquote,
     figcaption,
-    label,
     input,
     textarea {
-        @apply text-grey-800;
+        @apply text-grey-700;
     }
     h1,
     h2,
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    label {
         @apply text-grey-900;
     }
     code {

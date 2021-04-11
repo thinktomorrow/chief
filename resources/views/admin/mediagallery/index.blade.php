@@ -8,7 +8,7 @@
     @endslot
 
     @slot('breadcrumbs')
-        {{-- TODO: use route --}}
+        {{-- TODO: use correct route --}}
         <a href="/admin" class="link link-primary">
             <x-link-label type="back">Ga terug</x-link-label>
         </a>

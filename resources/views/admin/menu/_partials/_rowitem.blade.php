@@ -1,26 +1,40 @@
-<div class="px-12 py-6">
-    <div class="flex justify-between items-start" style="padding-left: {{ $level * 2 }}rem">
-        <div>
-            <div>
-                <a href="{{ route('chief.back.menuitem.edit', $item->id) }}" class="color-inherit">{{ $item->label }}</a>
+<div class="flex px-12 py-6">
+    @if($level != 0)
+        <div class="flex-shrink-0 flex flex-col items-end text-grey-700 pr-3" style="width: {{ $level * 2 + 0.5 }}rem">
+            <svg width="18" height="18"><use xlink:href="#icon-arrow-tl-to-br"/></svg>
+            <span class="text-xs pr-2 font-semibold">{{ $level }}</span>
+        </div>
+    @endif
+
+    <div class="w-full flex justify-between items-start space-x-4">
+        <div class="flex flex-wrap items-center">
+            <div class="space-x-1 mr-3">
+                <span class="font-medium text-grey-700">{{ $item->label }}</span>
 
                 {{-- TODO: what is this? --}}
                 @if($item->hidden_in_menu)
-                    &nbsp;<span class="text-subtle"><em>[ONLINE MAAR VERBORGEN IN MENU]</em></span>
+                    <span class="text-grey-500">[ONLINE MAAR VERBORGEN IN MENU]</span>
                 @elseif($item->draft)
-                    &nbsp;<span class="text-subtle"><em>[OFFLINE]</em></span>
+                    <span class="text-grey-500">[OFFLINE]</span>
                 @endif
             </div>
 
-            <div>
-                @if($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_INTERNAL)
-                    <a class="label label-primary" href="{{ $item->url }}" target="_blank">{{ $item->page_label }}</a>
-                @elseif($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
-                    -
-                @else
-                    <a class="link link-primary" href="{{ $item->url }}" target="_blank">{{ $item->url }}</a>
-                @endif
-            </div>
+            @if($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_INTERNAL)
+                <x-link-label type="forward" class="text-primary-500 mr-3"></x-link-label>
+
+                <a class="label label-primary inline-block" href="{{ $item->url }}" target="_blank">
+                    {{-- {{ $item->page_label }} --}}
+                    {{ $item->url }}
+                </a>
+            @elseif($item->type == \Thinktomorrow\Chief\Site\Menu\MenuItem::TYPE_NOLINK)
+                {{-- <span class="text-grey-700">/</span> --}}
+            @else
+                <x-link-label type="forward" class="text-primary-500 mr-3"></x-link-label>
+
+                <a class="link link-primary" href="{{ $item->url }}" target="_blank">
+                    {{ $item->url }}
+                </a>
+            @endif
         </div>
 
         <div class="flex-shrink-0 flex items-center cursor-pointer">

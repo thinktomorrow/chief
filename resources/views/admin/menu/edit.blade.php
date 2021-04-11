@@ -4,13 +4,11 @@
 
 @component('chief::back._layouts._partials.header')
     @slot('title', 'Menu item bewerken')
-    @slot('subtitle')
-        <div class="inline-block">
-            <a class="center-y" href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}">
-                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-                {{-- Terug naar het menu overzicht --}}
-            </a>
-        </div>
+
+    @slot('breadcrumbs')
+        <a href="{{ route('chief.back.menus.index', $menuitem->menu_type) }}" class="link link-primary">
+            <x-link-label type="back">Ga terug</x-link-label>
+        </a>
     @endslot
 
     <div class="space-x-3">
