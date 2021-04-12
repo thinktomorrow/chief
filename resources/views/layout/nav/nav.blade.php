@@ -1,4 +1,4 @@
-<div class="bg-grey-50 py-6">
+<div class="bg-grey-50 py-6 border-b border-grey-200">
     <div class="container">
         <div class="row-between-center">
             <nav class="flex items-center space-x-12">

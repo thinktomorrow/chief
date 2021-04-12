@@ -29,7 +29,7 @@
                     >
                         {{ csrf_field() }}
 
-                        @include('chief::admin.menu._form')
+                        @include('chief::admin.menu._partials.form')
                     </form>
                 </div>
             </div>

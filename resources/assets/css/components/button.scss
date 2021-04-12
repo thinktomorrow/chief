@@ -27,6 +27,10 @@
     @apply text-red-500 border-red-500 bg-transparent;
 }
 
-.btn-error:hover {
+.btn-error-filled {
     @apply bg-red-500 bg-gradient-to-br from-red-500 to-red-600 border-red-500 text-white;
+}
+
+.btn-error:hover {
+    @apply bg-red-500 bg-gradient-to-br from-red-500 to-red-600 border-red-600 text-white;
 }

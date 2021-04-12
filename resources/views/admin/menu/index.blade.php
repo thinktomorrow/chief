@@ -7,23 +7,27 @@
 @endcomponent
 
 @section('content')
-    <div class="row gutter stack">
-        @foreach($menus as $menu)
+    <div class="container">
+        <div class="row">
+            <div class="w-full lg:w-2/3">
+                <div class="window window-white">
+                    <div class="divide-y divide-grey-200 -mx-12 -my-6">
+                        @foreach($menus as $menu)
+                            <div class="px-12 py-6">
+                                <div class="flex justify-between items-center">
+                                    <a href="{{ route('chief.back.menus.show', $menu->key()) }}">
+                                        <span class="text-lg font-semibold text-grey-900">{{ $menu->label() }}</span>
+                                    </a>
 
-            <div class="s-column-4 m-column-4 inset-xs">
-                <div class="row bg-white border border-grey-100 rounded inset-s center-y">
-                    <div class="column">
-                        <a class="text-grey-600 bold" href="{{ route('chief.back.menus.show', $menu->key()) }}">
-                            {{ $menu->label() }}
-                        </a>
-                    </div>
-                    <div class="column-4 text-right flex flex-col justify-between items-end">
-                        <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="hover:underline">Beheren</a>
-
+                                    <a href="{{ route('chief.back.menus.show', $menu->key()) }}" class="hover:underline">
+                                        <x-link-label type="edit"></x-link-label>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        @endforeach
+        </div>
     </div>
-
 @stop

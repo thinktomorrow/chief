@@ -35,7 +35,7 @@
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
 
-                        @include('chief::admin.menu._form')
+                        @include('chief::admin.menu._partials.form')
                     </form>
                 </div>
             </div>

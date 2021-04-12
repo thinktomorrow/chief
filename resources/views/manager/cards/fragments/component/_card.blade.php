@@ -7,7 +7,7 @@
     <div class="space-y-2">
         <div class="flex justify-between items-center flex-grow">
             <div class="flex items-center space-x-2 cursor-default">
-                <span class="bg-primary-50 font-medium text-grey-900 py-1 px-2 rounded-lg">
+                <span class="text-lg font-semibold text-grey-900">
                     {{ ucfirst($model->managedModelKey()) }}
                 </span>
 

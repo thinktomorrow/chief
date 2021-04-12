@@ -1,28 +1,38 @@
 <template>
+    <!-- TODO: fix transition -->
     <transition :name="typedtransition" mode="in-out" appear>
-        <div v-show="isVisible" class="modal" :class="typedclass">
-            <div class="modal-backdrop" @click="close"></div>
-            <div class="modal-content">
-                <div class="panel border border-grey-100 rounded">
-                    <div class="inset">
-                        <div class="modal-header">
-                            <h3 class="uppercase">{{ title }}</h3>
-                        </div>
-                        <div class="modal-body">
-                            <slot></slot>
-                        </div>
+        <div v-show="isVisible" class="fixed inset-0" :class="typedclass">
+            <div class="absolute inset-0 opacity-25 bg-black" @click="close"></div>
+
+            <div class="absolute inset-0 flex justify-center items-center">
+                <div class="relative window window-white shadow-xl max-w-xl">
+                    <div class="mb-4">
+                        <span class="text-sm font-medium tracking-widest text-grey-500 uppercase">
+                            {{ title }}
+                        </span>
                     </div>
-                    <div v-if="showFooter" class="modal-footer inset center-y inline-group bg-grey-100">
+
+                    <div class="prose prose-dark mb-6">
+                        <slot></slot>
+                    </div>
+
+                    <div v-if="showFooter" class="flex items-center space-x-4">
                         <slot name="footer">
-                            <slot name='modal-action-buttons'></slot>
-                            <a @click="close" class="btn btn-link text-grey-500"><slot name='modal-close-btn'>Annuleer</slot></a>
+                            <slot name="modal-action-buttons"></slot>
+
+                            <a @click="close" class="btn btn-secondary">
+                                <slot name="modal-close-btn">Annuleer</slot>
+                            </a>
                         </slot>
                     </div>
+
+                    <button type="button" @click="close" class="absolute top-0 right-0 link link-black link-label m-6">
+                        <svg class="link-label-icon" width="20" height="20">
+                            <use xlink:href="#x" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-            <button type="button" @click="close" class="modal-close">
-                <svg width="18" height="18"><use xlink:href="#x"/></svg>
-            </button>
         </div>
     </transition>
 </template>
@@ -31,60 +41,55 @@
 export default {
     props: {
         id: { required: true },
-        active: { default: false, type: Boolean, },
+        active: { default: false, type: Boolean },
         title: { default: '' },
         type: { default: 'modal' },
     },
-    data(){
+    data() {
         return {
             isVisible: false,
             showFooter: true,
             typedclass: this.type == 'sidebar-large' ? 'sidebar sidebar-large' : this.type,
             typedtransition: this.type == 'sidebar-large' ? 'sidebar' : this.type,
-        }
+        };
     },
-    methods:{
-        open: function(){
+    methods: {
+        open: function () {
             this.isVisible = true;
         },
-        close: function(){
+        close: function () {
             this.isVisible = false;
-            if(this.$el.querySelector('[data-delete-confirmation]')) this.$el.querySelector('[data-delete-confirmation]').value = "";
+            if (this.$el.querySelector('[data-delete-confirmation]'))
+                this.$el.querySelector('[data-delete-confirmation]').value = '';
         },
-
     },
-    created(){
-
-        Eventbus.$on('open-modal',(id) => {
-            if(this.id == id){
+    created() {
+        Eventbus.$on('open-modal', (id) => {
+            if (this.id == id) {
                 this.open();
             }
         });
-        Eventbus.$on('close-modal',(id) => {
-            if(this.id == id){
+        Eventbus.$on('close-modal', (id) => {
+            if (this.id == id) {
                 this.close();
             }
         });
 
         // Hide the footer slot for sidebar if nothing is explicitly given
-        if((this.type == 'sidebar' || this.type == 'sidebar-large') && !this.$slots.footer)
-        {
+        if ((this.type == 'sidebar' || this.type == 'sidebar-large') && !this.$slots.footer) {
             this.showFooter = false;
         }
-
     },
     mounted() {
-
         // Emit the 'open-modal' event in case the modal is set to open on pageload
-        if(this.active === true) Eventbus.$emit('open-modal',this.id);
+        if (this.active === true) Eventbus.$emit('open-modal', this.id);
 
         // Listen to keydown to close modal on escape
-        document.addEventListener("keydown", (e) => {
+        document.addEventListener('keydown', (e) => {
             if (this.isVisible && e.keyCode == 27) {
                 this.close();
             }
         });
-    }
-
+    },
 };
 </script>

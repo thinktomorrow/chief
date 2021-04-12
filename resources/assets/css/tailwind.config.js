@@ -22,7 +22,7 @@ module.exports = {
             black: colors.black,
             white: colors.white,
             primary: colors.blue,
-            secondary: colors.green,
+            secondary: colors.teal,
             tertiary: colors.orange,
             grey: {
                 50: '#fafafa',

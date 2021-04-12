@@ -6,10 +6,9 @@
     @slot('title', 'Menu ' . $menu->label())
 
     @if(Thinktomorrow\Chief\Site\Menu\Menu::all()->count() > 1)
-        @slot('subtitle')
-            <a class="center-y" href="{{ route('chief.back.menus.index') }}">
-                <svg width="24" height="24" class="mr-4"><use xlink:href="#arrow-left"/></svg>
-                {{-- Terug naar het menu overzicht --}}
+        @slot('breadcrumbs')
+            <a href="{{ route('chief.back.menus.index') }}" class="link link-primary">
+                <x-link-label type="back">Menu overzicht</x-link-label>
             </a>
         @endslot
     @endif
@@ -24,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="w-full lg:w-2/3 prose prose-dark">
-                    <p> Momenteel zijn er nog geen menu-items toegevoegd. </p>
+                    <p>Momenteel zijn er nog geen menu items toegevoegd.</p>
                 </div>
             </div>
         </div>
@@ -33,9 +32,9 @@
             <div class="row">
                 <div class="w-full lg:w-2/3">
                     <div class="window window-white">
-                        <div class="divide-y divide-grey-150 -mx-12 -my-6">
+                        <div class="divide-y divide-grey-200 -mx-12 -my-6">
                             @foreach($menuItems as $menuItem)
-                                @include('chief::admin.menu._partials._rowitem', [
+                                @include('chief::admin.menu._partials.menu-item', [
                                     'item' => $menuItem,
                                     'level' => 0
                                 ])

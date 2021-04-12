@@ -36,16 +36,24 @@
             >
                 Wijzigingen opslaan
             </button>
+
             <button
                 data-submit-form="removeFragment{{ $model->modelReference()->get() }}"
                 class="text-error"
                 type="submit"
-                form="removeFragment{{ $model->modelReference()->get() }}">Verwijder</button>
+                form="removeFragment{{ $model->modelReference()->get() }}"
+            >
+                Verwijderen
+            </button>
         </div>
     </div>
 </form>
 
-<form id="removeFragment{{ $model->modelReference()->get() }}" method="POST" action="{{ $manager->route('fragment-remove', $owner, $model) }}">
+<form
+    id="removeFragment{{ $model->modelReference()->get() }}"
+    method="POST"
+    action="{{ $manager->route('fragment-remove', $owner, $model) }}"
+>
     @csrf
     @method('delete')
 </form>

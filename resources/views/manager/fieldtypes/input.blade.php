@@ -8,7 +8,7 @@
             type="text"
             name="{{ $field->getName($locale ?? null) }}"
             id="{{ $field->getDottedName($locale ?? null) }}"
-            class="input"
+            class="w-full"
             placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
             value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
         >
@@ -22,7 +22,7 @@
         type="text"
         name="{{ $field->getName($locale ?? null) }}"
         id="{{ $field->getDottedName($locale ?? null) }}"
-        class="input"
+        class="w-full"
         placeholder="{{ $field->getPlaceholder($locale ?? null) }}"
         value="{{ old($field->getDottedName($locale ?? null), $field->getValue($locale ?? null)) }}"
     >

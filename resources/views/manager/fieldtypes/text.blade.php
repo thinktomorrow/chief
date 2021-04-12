@@ -4,6 +4,7 @@
         id="{{ $key }}"
         cols="5"
         rows="5"
+        class="w-full"
         style="resize: vertical;"
         v-pre
     >{{ old($key, $field->getValue($locale ?? null)) }}</textarea>

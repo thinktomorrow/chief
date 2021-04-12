@@ -2,16 +2,17 @@
     <div class="relative">
         <div class="absolute top-0 right-0">
             @include('chief::back.managers._index._options')
+
             @adminConfig('rowBadge')
         </div>
 
         @adminCan('edit')
             <a href="@adminRoute('edit', $model)" class="flex items-center space-x-2">
         @endAdminCan
-                <h3 class="mb-0">@adminConfig('rowTitle')</h3>
+                <span class="text-lg font-semibold text-grey-900">@adminConfig('rowTitle')</span>
 
                 @if(\Thinktomorrow\Chief\Admin\Settings\Homepage::is($model))
-                    <span class="label label-tertiary">
+                    <span class="label label-secondary text-sm">
                         Homepage
                     </span>
                 @endif
@@ -22,7 +23,6 @@
         <div>
             @adminConfig('rowContent')
         </div>
-
     </div>
 </div>
 
