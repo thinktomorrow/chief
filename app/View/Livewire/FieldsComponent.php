@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Chief\App\View\Livewire;
 
 use Livewire\Component;
-use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
+use Thinktomorrow\Chief\Managers\Register\Registry;
 
 class FieldsComponent extends Component
 {

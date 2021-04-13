@@ -30,11 +30,11 @@ final class AdminConfig
         $this->pageTitle($model->title ?? $singular);
         $this->modelName($singular);
 
-        if(isset($model->created_at) && $model->created_at) {
+        if (isset($model->created_at) && $model->created_at) {
             $this->rowContent('<div><span class="text-grey-300 text-sm">'.$model->created_at->format('d/m/Y').'</span></div>');
         }
 
-        if(public_method_exists($model, 'onlineStatusAsLabel')) {
+        if (public_method_exists($model, 'onlineStatusAsLabel')) {
             $this->rowBadge($model->onlineStatusAsLabel());
         }
 
@@ -135,7 +135,9 @@ final class AdminConfig
 
     private function get(string $key, $default = null)
     {
-        if(!array_key_exists($key, $this->config)) return $default;
+        if (! array_key_exists($key, $this->config)) {
+            return $default;
+        }
 
         return $this->config[$key];
     }

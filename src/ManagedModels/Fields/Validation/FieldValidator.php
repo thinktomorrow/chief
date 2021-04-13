@@ -6,8 +6,8 @@ namespace Thinktomorrow\Chief\ManagedModels\Fields\Validation;
 
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 
 class FieldValidator
 {

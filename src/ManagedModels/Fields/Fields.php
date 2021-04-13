@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Thinktomorrow\Chief\ManagedModels\Fields;
 
 use ArrayIterator;
-use Thinktomorrow\Chief\ManagedModels\Fields\Field;
 
 class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
 {
@@ -25,8 +24,8 @@ class Fields implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         $fields = new static();
 
-        foreach($generator as $field) {
-            if(is_iterable($field)) {
+        foreach ($generator as $field) {
+            if (is_iterable($field)) {
                 $fields = $fields->add(...$field);
             } else {
                 $fields = $fields->add($field);

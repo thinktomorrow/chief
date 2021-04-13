@@ -5,7 +5,6 @@ namespace Thinktomorrow\Chief\Fragments\Assistants;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\Fragments\Actions\AddFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\CreateFragmentModel;
 use Thinktomorrow\Chief\Fragments\Actions\RemoveFragmentModel;
@@ -14,6 +13,7 @@ use Thinktomorrow\Chief\Fragments\Exceptions\FragmentAlreadyRemoved;
 use Thinktomorrow\Chief\Fragments\Fragmentable;
 use Thinktomorrow\Chief\Fragments\FragmentsOwner;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\Managers\Register\Registry;
 use Thinktomorrow\Chief\Managers\Routes\ManagedRoute;

@@ -54,9 +54,9 @@ class ViewServiceProvider extends ServiceProvider
         });
 
         Blade::directive('adminConfig', function ($expression = null) {
+            if ($expression) {
+                $method = "get".ucfirst(str_replace("'", '', $expression));
 
-            if($expression) {
-                $method = "get".ucfirst(str_replace("'", '',$expression));
                 return "<?php echo \$model->adminConfig()->$method(); ?>";
             }
 

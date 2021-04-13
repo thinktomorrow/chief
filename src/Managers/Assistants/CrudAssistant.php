@@ -5,8 +5,8 @@ namespace Thinktomorrow\Chief\Managers\Assistants;
 
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
-use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Application\DeleteModel;
+use Thinktomorrow\Chief\ManagedModels\Fields\Fields;
 use Thinktomorrow\Chief\ManagedModels\Fields\Validation\FieldValidator;
 use Thinktomorrow\Chief\ManagedModels\Filters\Filters;
 use Thinktomorrow\Chief\ManagedModels\Filters\Presets\HiddenFilter;
@@ -94,7 +94,9 @@ trait CrudAssistant
 
         $pagination = (new $this->managedModelClass())->adminConfig()->getPagination();
 
-        if(!$pagination) return $builder->get();
+        if (! $pagination) {
+            return $builder->get();
+        }
 
         return $builder->paginate($pagination);
     }
@@ -114,7 +116,7 @@ trait CrudAssistant
 
         $filters = $this->addUpdatedFilter($filters);
 
-        if(public_method_exists($this->managedModelClass(), 'filters')) {
+        if (public_method_exists($this->managedModelClass(), 'filters')) {
             $filters = $filters->merge(Filters::make($this->managedModelClass()::filters()));
         }
 

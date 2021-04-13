@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Chief\Tests\Unit\Fields;
 
-use Thinktomorrow\Chief\ManagedModels\Fields\Types\AbstractField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Field;
+use Thinktomorrow\Chief\ManagedModels\Fields\Types\AbstractField;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\FieldType;
 use Thinktomorrow\Chief\ManagedModels\Fields\Types\InputField;
 use Thinktomorrow\Chief\Tests\TestCase;

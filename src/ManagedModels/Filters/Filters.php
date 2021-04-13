@@ -25,8 +25,8 @@ class Filters
     {
         $filters = new static();
 
-        foreach($generator as $filter) {
-            if(is_iterable($filter)) {
+        foreach ($generator as $filter) {
+            if (is_iterable($filter)) {
                 $filters = $filters->add(...$filter);
             } else {
                 $filters = $filters->add($filter);
