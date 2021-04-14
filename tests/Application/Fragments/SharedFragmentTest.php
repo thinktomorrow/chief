@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Chief\Tests\Application\Fragments;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Thinktomorrow\Chief\Fragments\Database\FragmentRepository;
 use Thinktomorrow\Chief\Managers\Manager;
@@ -30,7 +31,7 @@ class SharedFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_can_share_a_fragment()
+    public function a_fragment_can_be_flagged_as_shareable()
     {
         $this->assertFalse($this->fragment->fragmentModel()->isShared());
 
@@ -40,7 +41,7 @@ class SharedFragmentTest extends ChiefTestCase
     }
 
     /** @test */
-    public function it_can_unshare_a_fragment()
+    public function a_fragment_can_be_dropped_as_shareable()
     {
         $this->asAdmin()->post($this->fragmentManager->route('fragment-share', $this->fragment));
         $this->asAdmin()->post($this->fragmentManager->route('fragment-unshare', $this->fragment));
@@ -51,15 +52,17 @@ class SharedFragmentTest extends ChiefTestCase
     /** @test */
     public function a_fragment_can_be_shared_by_multiple_owners()
     {
-        $this->disableExceptionHandling();
         $owner2 = ArticlePage::create([]);
 
         $this->asAdmin()->post($this->fragmentManager->route('fragment-add', $owner2, $this->fragment));
 
+        $this->assertCount(1, DB::table('context_fragments')->get());
         $this->assertCount(2, DB::table('context_fragment_lookup')->where('fragment_id', $this->fragment->fragmentModel()->id)->get());
 
         $ownerFragment = $this->fragmentRepo->getByOwner($this->owner)->first();
-        $owner2Fragment = $this->fragmentRepo->getByOwner($this->owner)->first();
-        $this->assertEquals($ownerFragment, $owner2Fragment);
+        $owner2Fragment = $this->fragmentRepo->getByOwner($owner2)->first();
+
+        $this->assertEquals($ownerFragment->toArray(), $owner2Fragment->toArray());
+        $this->assertEquals(Arr::except($ownerFragment->fragmentModel()->toArray(), 'pivot'), Arr::except($owner2Fragment->fragmentModel()->toArray(), 'pivot'));
     }
 }
