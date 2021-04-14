@@ -25,6 +25,11 @@ class ChiefMenu
         return new static(app(BuildMenuItemsTree::class)->build(MenuItem::where('menu_type', $type)->get()));
     }
 
+    public static function empty(): self
+    {
+        return new static(new NodeCollection());
+    }
+
 //    public static function fromArray(array $items)
 //    {
 //        $collection = NodeCollection::fromArray($items);

@@ -36,7 +36,7 @@ class NullMenu
 
     public function menu(): ChiefMenu
     {
-        return new ChiefMenu(new NodeCollection());
+        return ChiefMenu::empty();
     }
 
     public function items(): NodeCollection
