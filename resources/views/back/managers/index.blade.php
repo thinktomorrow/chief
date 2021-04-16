@@ -28,27 +28,28 @@
     <div class="container">
         <div class="row gutter-3">
             <div class="w-full lg:w-2/3">
-                <div class="window window-white">
-                    @adminCan('sort-index')
-                        <div
-                            id="js-sortable"
-                            data-sort-route="{{ $manager->route('sort-index') }}"
-                            class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12"
-                        >
-                    @elseAdminCan
-                        <div class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12">
-                    @endAdminCan
-                        @forelse($models as $model)
-                            @include('chief::back.managers._index._card')
-                        @empty
-                            @include('chief::back.managers._index._empty')
-                        @endforelse
+                @if($models->count())
+                    <div class="window window-white">
+                        @adminCan('sort-index')
+                            <div
+                                id="js-sortable"
+                                data-sort-route="{{ $manager->route('sort-index') }}"
+                                class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12"
+                            >
+                        @elseAdminCan
+                            <div class="relative divide-y divide-grey-200 border-t border-b border-grey-200 -m-12">
+                        @endAdminCan
+                                @foreach($models as $model)
+                                    @include('chief::back.managers._index._card')
+                                @endforeach
+                            </div>
+                        @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
+                            {!! $models->links() !!}
+                        @endif
                     </div>
-
-                    @if($models instanceof \Illuminate\Contracts\Pagination\Paginator)
-                        {!! $models->links() !!}
-                    @endif
-                </div>
+                @else
+                    @include('chief::back.managers._index._empty')
+                @endif
             </div>
 
             <div class="w-full lg:w-1/3">

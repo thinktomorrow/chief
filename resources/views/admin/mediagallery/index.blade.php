@@ -26,17 +26,9 @@
                             <span>Alles selecteren</span>
                         </label>
 
-                        <div>
+                        <div class="space-x-2">
                             <button type="submit" form="selecting" name="type" value="download" class="btn btn-primary">Download de selectie</button>
                             <button v-cloak @click="showModal('mediagallery-bulk-delete-modal')" type="button" class="btn btn-error">Verwijder de selectie</button>
-
-                            <modal id="mediagallery-bulk-delete-modal" class="large-modal" title='Bent u zeker?'>
-                                <p>Je staat op het punt om de geselecteerde bestanden op te ruimen. Enkel ongebruikte bestanden zullen worden verwijderd.</p>
-
-                                <div v-cloak slot="modal-action-buttons">
-                                    <button type="submit" form="selecting" name="type" value="remove" class="btn btn-error">Verwijder de selectie</button>
-                                </div>
-                            </modal>
                         </div>
                     </form>
 
@@ -104,6 +96,16 @@
             </div>
         </div>
     </div>
+
+    <modal id="mediagallery-bulk-delete-modal" title="Selectie verwijderen">
+        <h3>Bent u zeker?</h3>
+
+        <p>Je staat op het punt om de geselecteerde bestanden op te ruimen. Enkel ongebruikte bestanden zullen worden verwijderd.</p>
+
+        <div v-cloak slot="modal-action-buttons">
+            <button type="submit" form="selecting" name="type" value="remove" class="btn btn-error-filled">Verwijder de selectie</button>
+        </div>
+    </modal>
 @stop
 
 @push('custom-scripts-after-vue')

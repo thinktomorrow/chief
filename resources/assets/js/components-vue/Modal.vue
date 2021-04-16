@@ -1,7 +1,7 @@
 <template>
     <!-- TODO: fix transition -->
     <transition :name="typedtransition" mode="in-out" appear>
-        <div v-show="isVisible" class="fixed inset-0" :class="typedclass">
+        <div v-show="isVisible" class="fixed inset-0 z-10" :class="typedclass">
             <div class="absolute inset-0 opacity-25 bg-black" @click="close"></div>
 
             <div class="absolute inset-0 flex justify-center items-center">
